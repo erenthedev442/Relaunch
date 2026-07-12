@@ -20,6 +20,16 @@ coverage_check — a human reads the run log; nothing here fails the build):
    extend the page's generator, use a {{setting:...}} token, or genericize
    the prose ("see the table below").
 
+3. MIRROR CONSTANTS — a generator that re-defines a runtime Lua knob as a
+   module-level numeric constant (e.g. `TRASH_RATE = 30` shadowing
+   `local TRASH_RATE = 30` in modules/custom/lua) is invisible to check 2
+   (its output IS a generator block — just wrong after a retune). This bit
+   twice on 2026-07-11: dungeons.md claimed "treasure pool"/x5 boss loot and
+   affinity-nms.md a "15-minute" respawn, all from stale mirrors. Generators
+   must PARSE the runtime value (patterns: augment_dungeon_drops.py _KNOB_RE,
+   affinity_nms.py RESPAWN_SECONDS); any name collision warns unless
+   allowlisted in MIRROR_ALLOWLIST with a reason.
+
 Pages excluded from the published site (mkdocs_relaunch.yml exclude_docs) and
 generated per-player profile pages are skipped.
 """
@@ -113,6 +123,38 @@ FACT_ALLOWLIST: dict[tuple[str, str], str] = {
     ("progression/hunters-guild.md", "1,540"):
         "derived kill-count estimate, not a tuned value",
 }
+
+# (generator filename, constant name) pairs reviewed and accepted. Every entry
+# needs a reason; prefer parsing the runtime file over allowlisting.
+MIRROR_ALLOWLIST: dict[tuple[str, str], str] = {}
+
+# Module-level ALL_CAPS numeric assignment in a generator / `local` in Lua.
+_PY_CONST_RE  = re.compile(r"^([A-Z][A-Z0-9_]{2,})\s*=\s*(-?\d+(?:\.\d+)?)\s*(?:#.*)?$", re.M)
+_LUA_LOCAL_RE = re.compile(r"^local\s+([A-Z][A-Z0-9_]{2,})\s*=\s*(-?\d+(?:\.\d+)?)", re.M)
+
+
+def _mirror_constants(repo_root: Path) -> list[tuple[str, str, str, str, str]]:
+    """(generator, const, py_value, lua_file, lua_value) for every generator
+    ALL_CAPS numeric constant whose name is also a runtime Lua local."""
+    lua_dir = repo_root / "modules" / "custom" / "lua"
+    if not lua_dir.is_dir():
+        return []
+    lua_locals: dict[str, tuple[str, str]] = {}
+    for lua in sorted(lua_dir.glob("*.lua")):
+        for m in _LUA_LOCAL_RE.finditer(lua.read_text(encoding="utf-8", errors="replace")):
+            lua_locals.setdefault(m.group(1), (lua.name, m.group(2)))
+
+    hits: list[tuple[str, str, str, str, str]] = []
+    for py in sorted(Path(__file__).parent.glob("*.py")):
+        if py.name == Path(__file__).name:
+            continue
+        for m in _PY_CONST_RE.finditer(py.read_text(encoding="utf-8", errors="replace")):
+            name, val = m.group(1), m.group(2)
+            if name in lua_locals and (py.name, name) not in MIRROR_ALLOWLIST:
+                lua_file, lua_val = lua_locals[name]
+                hits.append((py.name, name, val, lua_file, lua_val))
+    return hits
+
 
 _BLOCK_RE = re.compile(
     r'<!--\s*DOCGEN:BEGIN\s+id="[^"]+"\s*-->.*?<!--\s*DOCGEN:END[^>]*-->',
@@ -232,6 +274,15 @@ def generate(repo_root: Path, docs_dir: Path) -> None:  # noqa: ARG001
             if len(hits) > 8:
                 print(f"      ... and {len(hits) - 8} more")
 
-    if not unowned and not naked:
-        print("[sync_audit] OK — every published page is generator-owned and "
-              "no naked facts found in hand prose.")
+    mirrors = _mirror_constants(repo_root)
+    if mirrors:
+        print(f"[sync_audit] MIRROR-CONST — {len(mirrors)} generator constant(s) "
+              "shadow a runtime Lua knob (parse the runtime file instead, or "
+              "allowlist in MIRROR_ALLOWLIST with a reason):")
+        for gen, name, val, lua_file, lua_val in mirrors:
+            drift = "" if val == lua_val else f"  <-- DRIFTED (runtime is {lua_val})"
+            print(f"  - {gen}: {name} = {val}  (runtime: {lua_file}){drift}")
+
+    if not unowned and not naked and not mirrors:
+        print("[sync_audit] OK — every published page is generator-owned, no "
+              "naked facts in hand prose, no mirrored runtime constants.")

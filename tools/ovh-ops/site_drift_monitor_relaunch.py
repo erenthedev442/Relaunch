@@ -7,17 +7,24 @@ Azure). The relaunch docs site rebuilds hourly on OVH from the live server
 docgen error, wrangler/auth failure, disk full -- the PUBLISHED site quietly
 drifts from the live game and nobody notices.
 
-Two independent signals:
+Three independent signals:
   * built site index.html mtime           -> missed task + docgen/mkdocs failure
   * refresh log reached "Deployment complete" -> wrangler/deploy failure
+  * docgen WARN / [sync_audit] lines in the last refresh run -> content/site
+    sync violations (unowned pages, naked facts, mirrored constants, generator
+    warnings). Alerted once per distinct finding-set (fingerprint in state),
+    so a fixed warning re-arms and a standing one doesn't spam. This is the
+    owner-visible half of the "site must match the server" rule -- the audits
+    are warn-loud in a log nobody reads without this.
 
 Alerts go to the Discord webhook in C:\\relaunch-ops\\.discord_webhook (one line).
 A cooldown stops it spamming during a sustained outage. stdlib only; never raises
-fatally. Exit 0 = healthy, 1 = stale.
+fatally. Exit 0 = healthy, 1 = stale site (audit warnings alone stay exit 0).
 
 Tunables (env): DRIFT_THRESHOLD (s, default 5400=90m), DRIFT_COOLDOWN (s, 10800=3h).
 """
 from __future__ import annotations
+import hashlib
 import json
 import os
 import sys
@@ -53,6 +60,27 @@ def tail(path, n=80):
         return ""
 
 
+# Warn-tagged lines emitted by docgen's guard generators (sync_audit,
+# coverage_check, per-generator WARNs). Indented detail lines under a
+# [sync_audit] header are captured by the second pattern.
+AUDIT_TAG = ("[sync_audit]", "UNOWNED-PAGE", "NAKED-FACT", "MIRROR-CONST",
+             "WARN", "MARKER MISSING")
+
+
+def audit_findings(log):
+    """Warn lines from the LAST refresh run in the log (between the final
+    'refresh_site_relaunch START' marker and EOF)."""
+    text = tail(log, 1200)
+    start = text.rfind("refresh_site_relaunch START")
+    if start != -1:
+        text = text[start:]
+    hits = []
+    for line in text.splitlines():
+        if any(tag in line for tag in AUDIT_TAG) and "[sync_audit] OK" not in line:
+            hits.append(line.strip()[:200])
+    return hits
+
+
 def load_state():
     try:
         return json.load(open(STATE))
@@ -84,9 +112,45 @@ for name, idx, log in SITES:
 state = load_state()
 stamp = time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime())
 
+# --- signal 3: content-sync audit warnings from the last publish run -------
+# Independent of staleness: the site published fine but docgen flagged sync
+# violations. Alert once per distinct finding-set (fingerprint), clear when
+# the run comes back clean so the next violation re-alerts.
+findings = audit_findings(SITES[0][2])
+fp = hashlib.md5("\n".join(sorted(findings)).encode("utf-8", "replace")).hexdigest() if findings else ""
+if findings and state.get("audit_fp") != fp:
+    state["audit_fp"] = fp
+    save_state(state)
+    shown = findings[:12]
+    msg = (":warning: **Relaunch site sync audit** -- the last publish raised "
+           f"{len(findings)} warning(s):\n"
+           + "\n".join(f"- `{ln}`" for ln in shown)
+           + (f"\n_... and {len(findings) - len(shown)} more_" if len(findings) > len(shown) else "")
+           + f"\n_fix or allowlist (docs stay live meanwhile); {stamp}_")
+    url = webhook_url()
+    if url:
+        try:
+            urllib.request.urlopen(urllib.request.Request(
+                url, data=json.dumps({"content": msg}).encode(),
+                headers={"Content-Type": "application/json"}), timeout=10)
+            print(f"[drift] {len(findings)} audit warning(s) -- alerted via Discord webhook")
+        except Exception as e:
+            print(f"[drift] audit webhook post FAILED: {e}")
+    else:
+        print(f"[drift] {len(findings)} audit warning(s) -- no webhook, logged only")
+elif findings:
+    print(f"[drift] {len(findings)} audit warning(s) (unchanged -- already alerted)")
+elif state.pop("audit_fp", None) is not None:
+    save_state(state)   # clean run -> re-arm the audit alert
+
 if not problems:
-    if state:               # healthy again -> clear cooldowns
-        save_state({})
+    # Healthy again -> clear the staleness cooldowns, but KEEP audit_fp so a
+    # standing audit finding doesn't re-alert every run.
+    stale_keys = [k for k in state if k != "audit_fp"]
+    if stale_keys:
+        for k in stale_keys:
+            state.pop(k, None)
+        save_state(state)
     print(f"[drift] OK -- fjb-relaunch published within {THRESHOLD // 60} min ({stamp})")
     sys.exit(0)
 
