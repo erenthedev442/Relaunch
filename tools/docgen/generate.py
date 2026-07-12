@@ -160,6 +160,9 @@ def main() -> int:
         domain_invasion,
         domain_spoils,
         live_events,
+        # Omen (2026-07-12): Reisenjima Henge instance -- floors/objectives/
+        # Caturae drop tables all parsed from omen_catalog.lua.
+        omen,
         # --- full-page owners for formerly hand-written pages (2026-07-05):
         # every one rewrites its whole page from live catalogs so nothing drifts.
         home_page,
@@ -429,6 +432,10 @@ def main() -> int:
         # on the Divergence and Unity Concord pages — one parse renders all
         # three surfaces so they can't drift apart.
         ("live_events",          live_events),
+        # omen syncs docs/endgame/omen.md from omen_catalog.lua (entry
+        # economy, floors, objectives, Caturae/Glassy/Ou drop tables,
+        # AF+2/+3 reforge recipes).
+        ("omen",                 omen),
         # differentiators renders why-legendary.md's "What Legendary Does
         # Differently" list from systems_registry.py and writes a drift report
         # of any system detail page that isn't featured. Runs before

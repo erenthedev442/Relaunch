@@ -457,6 +457,8 @@ SOURCE_PAGES = {
     'aeonic-weapons.md': 'Aeonic Forge (Temprix)',
     # Geas Fete roster tables item-link every NM's retail signature drops.
     'endgame/geas-fete.md': 'Geas Fete',
+    # Omen drop tables item-link every Caturae/Glassy/Ou reward (2026-07-12).
+    'endgame/omen.md': 'Omen',
 }
 # Item links now point at FFXIAH by id (ffxiah.com/item/<id>); the few
 # unresolved items fall back to a BG-Wiki search url (?search=<name>). Scan BOTH
