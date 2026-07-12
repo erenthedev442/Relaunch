@@ -627,14 +627,20 @@ def _geas_fete_gear_ids(repo_root: Path) -> set[int]:
 
 
 def _catalog_ids(repo_root: Path, relpath: str) -> set[int]:
-    """All `id = N` stock rows in a vendor/forge catalog lua. The docs pages
+    """All stock-item ids in a vendor/forge catalog lua. The docs pages
     render CURATED SUBSETS of these catalogs, so page-scanning alone
     under-reports -- the catalog is the source of truth (the 'Agony Jerkin'
-    audit, 2026-07-12, found 112 grantable-but-unmapped items this way)."""
+    audit, 2026-07-12, found 112 grantable-but-unmapped items this way).
+
+    Besides `id = N` rows, weapon_forge_catalog's empyrean/mythic/relic
+    chain tables carry their stage items as bare `base/s1/s2/s3 = N`
+    fields -- without these, every Mythic/Empyrean/Relic stage showed NO
+    source in the Gear Finder (the 'Laevateinn' report, 2026-07-12)."""
     text = _read(repo_root, relpath)
     if not text:
         return set()
-    return {int(x) for x in re.findall(r'\bid\s*=\s*(\d{4,5})\b', text)}
+    return {int(x) for x in
+            re.findall(r'\b(?:id|base|s[123])\s*=\s*(\d{4,5})\b', text)}
 
 
 # Catalog-backed sources scanned by id, label -> catalog files. Applied after
