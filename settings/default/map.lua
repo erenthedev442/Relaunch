@@ -202,16 +202,9 @@ xi.settings.map =
     MOB_ERA_HP_LINEAR = 235.0,
     MOB_ERA_HP_QUAD   = 11.0,
 
-    -- Whole-formula HP multiplier for post-75 formula-HP mobs, applied AFTER
-    -- the era curve above. Only touches mobs whose HP the server computes
-    -- (mob_groups.HP = 0) at level 76+ -- explicit DB HP overrides are never
-    -- scaled. Unlike MOB_HP_MULTIPLIER this is not clamped to 2.0.
-    -- PLAIN FIELD MOBS ONLY (2026-07-12): NMs, battlefield mobs, instanced
-    -- mobs, dynamic entities, and pets are excluded, so custom NM systems
-    -- that tune HP by multiplying the spawn formula (Hunting League, waves,
-    -- Colosseum, dungeons, ...) are never compounded by this knob.
-    -- 0 or unset = no-op (1x).
-    MOB_ERA_HP_MULT = 1.0,
+    -- (MOB_ERA_HP_MULT, the post-75 whole-formula x-multiplier, was removed
+    -- 2026-07-12 by owner request. The era curve above is the only post-75
+    -- formula-HP adjustment now.)
 
     -- Adjust max MP pool for NMs, regular mobs, players, and trusts/fellows. Acts as a multiplier, so default is 1. Valid range: 0.1 to 2.0
     NM_MP_MULTIPLIER        = 1.0,

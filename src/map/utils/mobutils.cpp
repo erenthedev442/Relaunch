@@ -757,34 +757,10 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
             // 4. Final mob HP before traits/family modifiers
             uint32 mobHP = baseMobHP + sjHP;
 
-            // Post-75 whole-formula multiplier (relaunch balance knob,
-            // 2026-07-11). Companion to the era curve in CalculateBaseMobHP:
-            // scales the ENTIRE formula result (base + subjob) for 76+ mobs.
-            // Formula path only -- explicit HPmodifier mobs never reach this
-            // branch, so DB HP overrides are untouched. <= 0 / absent = no-op.
-            //
-            // PLAIN FIELD MOBS ONLY (owner correction 2026-07-12): the first
-            // cut multiplied every formula mob over 75, but the custom NM
-            // systems (Hunting League, GameMaster waves, Colosseum, Endless
-            // Tower, Invasions, Domain, dungeons, HTBF, ...) tune their
-            // encounters by MULTIPLYING spawn-time formula HP -- so the x8
-            // compounded under them (e.g. Shinryu hpBoost 72 became 8x72).
-            // Excluding NMs, battlefield mobs, instanced mobs, dynamic
-            // entities, and pets restores every custom system to exactly its
-            // tuned values while era trash keeps the boost.
-            if (mLvl > 75 &&
-                !(PMob->m_Type & MOBTYPE_NOTORIOUS) &&
-                !(PMob->m_Type & MOBTYPE_BATTLEFIELD) &&
-                PMob->PInstance == nullptr &&
-                !PMob->IsDynamicEntity() &&
-                PMob->PMaster == nullptr)
-            {
-                const float eraMult = settings::get<float>("map.MOB_ERA_HP_MULT");
-                if (eraMult > 0.0f)
-                {
-                    mobHP = static_cast<uint32>(mobHP * eraMult);
-                }
-            }
+            // (The post-75 whole-formula MOB_ERA_HP_MULT boost was removed
+            // 2026-07-12 by owner request -- formula HP is now just the era
+            // curve in CalculateBaseMobHP, no extra multiplier. The era curve
+            // itself (MOB_ERA_HP_LINEAR/QUAD) is unchanged.)
 
             // 5. Apply pet multiplier (pets are 30% of base mob HP)
             if (PMob->PMaster != nullptr)
