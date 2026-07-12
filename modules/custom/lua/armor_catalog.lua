@@ -144,7 +144,6 @@ table.insert(s.body, { id = 26970, name = "Lapidary Tunic", cost = 25, jobs = 'M
 -- Legs (11 picks, scored highest first; Herculean Trousers + Chironic Hose
 -- removed 2026-07-11 -- sold by Zurim/Domain QM, medal-vendor exclusivity)
 table.insert(s.legs, { id = 28152, name = "Gorney Brayettes +1", cost = 25, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- TANK score 248
-table.insert(s.legs, { id = 27324, name = "Gyve Trousers", cost = 25, jobs = 'WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO' })  -- TANK score 235
 
 -- Feet (9 picks, scored highest first; Herculean Boots removed 2026-07-11 --
 -- sold by Zurim/Domain QM, medal-vendor exclusivity)
@@ -164,7 +163,6 @@ table.insert(g.head, { id = 25600, name = "Maiitsoh Haube", cost = 50, jobs = 'W
 -- Body (13 picks, scored highest first)
 table.insert(g.body, { id = 23798, name = "Crepuscular Mail", cost = 50, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- TANK score 463
 table.insert(g.body, { id = 27857, name = "Respite Cloak", cost = 50, jobs = 'MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN' })  -- TANK score 451
-table.insert(g.body, { id = 25708, name = "Gyve Doublet", cost = 50, jobs = 'WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO' })  -- TANK score 276
 
 -- Hands (10 picks, scored highest first)
 
