@@ -145,6 +145,7 @@ def main() -> int:
         augment_dungeon_drops,
         dynamis_divergence,
         classic_dynamis,
+        sync_audit,
         fellow,
         spell_skill_mastery,
         gear_vs_retail,
@@ -437,6 +438,11 @@ def main() -> int:
         # coverage_check runs LAST: warns if any custom system has no docs page
         # (enforces the "custom content must match the website" rule).
         ("coverage_check",   coverage_check),
+        # sync_audit runs after everything: warns on published pages with no
+        # generator owner and on server facts sitting in hand prose OUTSIDE
+        # DOCGEN blocks (the "100% generator-tied" rule — facts must live in
+        # generated content so tuning auto-populates the site).
+        ("sync_audit",       sync_audit),
     ]
 
     successes: list[str] = []

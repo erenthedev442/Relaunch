@@ -8,7 +8,7 @@ Sitting on more gil than you'll ever spend? The **Gil Exchange** in <!--npc:gil_
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="gil-exchange-access" -->
-The **Gil Exchange** is in the economy row at **the Celennia Memorial Library** (`!lib`). Speak to it to open the menu — your current gil shows at the top, and your Hunt Mark total is confirmed after each trade.
+The **Gil Exchange** is in the economy row at **<!--npc:gil_exchange-->Purgonorgo Isle<!--/npc-->** (`!hub`). Speak to it to open the menu — your current gil shows at the top, and your Hunt Mark total is confirmed after each trade.
 <!-- DOCGEN:END id="gil-exchange-access" -->
 
 ## Exchange bundles
@@ -28,6 +28,6 @@ Hunting NMs is still by far the fastest way to earn marks — think of this as a
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ff423506ec2a -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 442771f3a9df -->
+_Last updated: 2026-07-11 21:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->

@@ -128,7 +128,7 @@ This command self-rescues you from any frozen state. The server also runs an aut
 
 Your subjob gains **0.25× (25%) EXP** automatically as you gain EXP on your main job. You never need to grind a subjob separately.
 
-EXP banks across subjob swaps. If you switch subjobs, accumulated EXP carries over to the new one.
+Banked EXP is per-subjob: if you switch subjobs, the new sub's bank starts fresh — accumulated EXP does **not** carry over.
 
 For full details, see [Subjob EXP Share](subjob-exp.md).
 
@@ -164,6 +164,6 @@ First Blood moments are real on the Relaunch server. If you're the first person 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f917209b6950 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 135415054a39 -->
+_Last updated: 2026-07-11 21:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->

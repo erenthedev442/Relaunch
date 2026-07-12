@@ -5,7 +5,7 @@
 The Reforge System is a custom NM-hunting + armor-upgrade pipeline that takes you from base AF/Relic/Empyrean armor to +3 versions through three parallel tracks.
 
 !!! tip "Summary"
-    Talk to the **Reforge Spawner** at **Gwora Corridor** `(10, 0, 0)`. Pop one of three NM pools. Each kill drops a random base armor piece from that pool's set plus marks for that set. Take base pieces to the **Reforge Vendor** at `(15, 0, 0)` to upgrade base → +1 → +2 → +3 using the same marks.
+    Warp to the Reforge hub with `!reforged` and talk to any **NM Spawner** station. Pop one of three NM pools. Each kill drops a random base armor piece from that pool's set plus marks for that set. Take base pieces to the **Reforge Vendor** at the hub entrance to upgrade base → +1 → +2 → +3 using the same marks.
 
 !!! info "Want +4?"
     This system caps at **+3**. The **+4** tier for **AF and Relic** armor is a separate, endgame upgrade forged at the [Dynamis-Divergence Forge](../endgame/dynamis-divergence.md) — trade a reforged **+3** piece plus materials farmed in the [D] zones. (Empyrean has no +4.)
@@ -32,11 +32,15 @@ The Reforge Vendor sells progressive upgrades: trade in a base piece + marks for
 
 ## NPC locations
 
-| NPC | Zone | Position |
-|---|---|---|
-| **Reforge Spawner** | Gwora Corridor | `(10.0, 0.0, 0.0)` |
-| **Reforge Vendor** | Gwora Corridor | `(15.0, 0.0, 0.0)` |
-| Dynamic NM spawn point | Gwora Corridor | `(10.0, 0.0, 20.0)` |
+<!-- DOCGEN:BEGIN id="reforge-hub" -->
+The Reforge hub lives in **Diorama Abdhaljs-Ghelsba** — warp straight there with `!reforged`. One shared **Reforge Vendor** and **Mark Exchange** sit at the hub entrance, with **3 independent NM Spawner stations** spread across the zone (each has its own single-occupancy guard, so multiple parties — even popping the same NM — farm side by side).
+
+| Station | Position |
+|---|---|
+| **NM Spawner 1** | `(-0.66, 0.00, -3.10)` |
+| **NM Spawner 2** | `(16.64, -0.54, 52.22)` |
+| **NM Spawner 3** | `(-26.16, 0.28, 94.49)` |
+<!-- DOCGEN:END id="reforge-hub" -->
 
 ## NM pools and rewards
 
@@ -124,6 +128,6 @@ The catalog covers every job. Each job has three named sets across the AF/Relic/
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6e506e692e06 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 6864c7c7eb47 -->
+_Last updated: 2026-07-11 21:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->

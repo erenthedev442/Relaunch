@@ -13,7 +13,7 @@ the Relaunch server layers a handful of custom currencies on top of gil. Here's 
 
 | Currency | How you earn it | Where you spend it |
 |---|---|---|
-| **Hunt Marks** | Killing Hunting League NMs (5–65 per kill by rank), Weekly Hunts, and the Wave Master | Hunt Hub reward shop — rank unlocks, seals, and Sortie job earrings |
+| **Hunt Marks** | Killing Hunting League NMs (5–110 per kill by rank — see the ladder below), Weekly Hunts, and the Wave Master | Hunt Hub reward shop — rank unlocks, seals, and Sortie job earrings |
 | **Seals** (Bronze / Silver / Gold) | Bought with Hunt Marks at the Seals NPC | [Armor & Weapons vendors](gear-vendors.md) at Escha ZiTah |
 | **AF / Relic / Empy Marks** | Killing Sky God / Unity / Abyssea NMs | [Reforge system](reforge.md) — upgrade AF/Relic/Empy armor from base to +3 |
 | **Infamy** | Endgame content — Abyssea NM hunts, Invasions, and the weekly Raid | [Infamy Vendor](gear-vendors.md#infamy-vendor) — relic weapons, instruments & best-in-slot gear; also unlocks the Augment Sage |
@@ -160,6 +160,6 @@ The Hunting League is the main game now, but retail content still has a role:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0d48ad7af2bf -->
-_Last updated: 2026-07-10 17:16 PDT_
+<!-- content-hash: e8c37825117e -->
+_Last updated: 2026-07-11 21:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->

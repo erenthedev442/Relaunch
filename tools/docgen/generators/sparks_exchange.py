@@ -61,7 +61,7 @@ def _parse(text: str) -> dict:
 
 def _render_access(c: dict) -> str:
     return (
-        "The **Eminence Broker** stands in **the Celennia Memorial Library** (`!lib`), in the "
+        "The **Eminence Broker** stands in **{{npc:sparks_exchange}}** (`!hub`), in the "
         "row of gil-service NPCs. Talk to him to convert Sparks of Eminence, Unity "
         "Accolades, Job Points, or Hunting Marks into gil."
     )

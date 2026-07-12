@@ -17,7 +17,7 @@ Want to stand out in town? The **Boutique Moogle** in <!--npc:cosmetic_shop-->Pu
 Every cosmetic in the pool — today's is whichever day the rotation has landed on:
 
 <!-- DOCGEN:BEGIN id="cosmetic-catalog" -->
-_The **Boutique Moogle** at **the Celennia Memorial Library** (`!lib`) features **one** of these 59 cosmetics per day (rotating, resets 00:00 UTC). Pure appearance — **no combat stats**. Paid in **Allied Notes**, earned in (S) zones. Hover an item for its icon, or click through to FFXIAH for the full look._
+_The **Boutique Moogle** at **<!--npc:cosmetic_shop-->Purgonorgo Isle<!--/npc-->** (`!hub`) features **one** of these 59 cosmetics per day (rotating, resets 00:00 UTC). Pure appearance — **no combat stats**. Paid in **Allied Notes**, earned in (S) zones. Hover an item for its icon, or click through to FFXIAH for the full look._
 
 ### YUKATA (Summer Festival)
 
@@ -137,6 +137,6 @@ _The **Boutique Moogle** at **the Celennia Memorial Library** (`!lib`) features 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8f22b0ea47d7 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: c7a13b067bf0 -->
+_Last updated: 2026-07-11 21:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->

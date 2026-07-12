@@ -60,7 +60,7 @@ def _stage_name(n: int) -> str:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return ("The **Race Caller** stands in **the Celennia Memorial Library** (`!lib`). "
+    return ("The **Race Caller** stands in **{{npc:chocobo_derby}}** (`!hub`). "
             "Step up to check the odds board, place a bet, and watch the race "
             "play out.")
 
@@ -126,12 +126,12 @@ def _render_ownbird(c: dict) -> str:
 
 _PAGE = """# Chocobo Derby
 
-In the **Celennia Memorial Library**, the **Race Caller** runs the races. Put gil on a runner and
+In **{{npc:chocobo_derby}}**, the **Race Caller** runs the races. Put gil on a runner and
 watch it play out — and if you've raised a chocobo of your own that's tough
 enough, line it up at the gate and bet on yourself.
 
 !!! tip "Summary"
-    Bet gil on chocobo races at the Race Caller in the Celennia Memorial Library; raise a strong
+    Bet gil on chocobo races at the Race Caller in {{npc:chocobo_derby}}; raise a strong
     enough chocobo of your own and you can enter it as a runner for a bigger
     payout.
 

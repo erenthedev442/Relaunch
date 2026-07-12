@@ -8,7 +8,7 @@ Capped currencies pile up with nothing to spend them on. The **Eminence Broker**
 ## Where to find the Broker
 
 <!-- DOCGEN:BEGIN id="sparks-exchange-access" -->
-The **Eminence Broker** stands in **the Celennia Memorial Library** (`!lib`), in the row of gil-service NPCs. Talk to him to convert Sparks of Eminence, Unity Accolades, Job Points, or Hunting Marks into gil.
+The **Eminence Broker** stands in **<!--npc:sparks_exchange-->Purgonorgo Isle<!--/npc-->** (`!hub`), in the row of gil-service NPCs. Talk to him to convert Sparks of Eminence, Unity Accolades, Job Points, or Hunting Marks into gil.
 <!-- DOCGEN:END id="sparks-exchange-access" -->
 
 ## The exchange rate
@@ -72,6 +72,6 @@ The Broker won't let an exchange overflow your gil — if you're near the gil ca
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5d38c364c214 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: ef977d348895 -->
+_Last updated: 2026-07-11 21:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->

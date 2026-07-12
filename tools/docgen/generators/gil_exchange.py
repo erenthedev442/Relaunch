@@ -53,7 +53,7 @@ def _short_gil(n: int) -> str:
 
 def _render_access(c: dict) -> str:
     return (
-        f"The **{c['name']}** is in the economy row at **the Celennia Memorial Library** (`!lib`). Speak to "
+        f"The **{c['name']}** is in the economy row at **{{{{npc:gil_exchange}}}}** (`!hub`). Speak to "
         f"it to open the menu — your current gil shows at the top, and your Hunt "
         f"Mark total is confirmed after each trade."
     )

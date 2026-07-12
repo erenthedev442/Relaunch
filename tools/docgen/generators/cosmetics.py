@@ -67,7 +67,7 @@ def _fmt_an(price: int) -> str:
 def _render(groups) -> str:
     total = sum(len(items) for _, items in groups)
     lines: list[str] = [
-        f"_The **Boutique Moogle** at **the Celennia Memorial Library** (`!lib`) features **one** of these {total} "
+        f"_The **Boutique Moogle** at **{{{{npc:cosmetic_shop}}}}** (`!hub`) features **one** of these {total} "
         f"cosmetics per day (rotating, resets 00:00 UTC). Pure appearance — "
         f"**no combat stats**. Paid in **Allied Notes**, earned in (S) zones. "
         f"Hover an item for its icon, or click through to FFXIAH for the full look._",

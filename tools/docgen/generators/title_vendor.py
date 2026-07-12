@@ -66,7 +66,7 @@ def _parse(text: str) -> dict:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return (f"The **{c['npc']}** is set up in **the Celennia Memorial Library** (reach it with `!lib`). "
+    return (f"The **{c['npc']}** is set up in **{{{{npc:title_broker}}}}** (reach it with `!hub`). "
             f"Talk to them, pick a price tier, then the title you want — pay the "
             f"gil and it's yours to wear.")
 

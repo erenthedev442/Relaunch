@@ -8,7 +8,7 @@ The **Title Broker** in <!--npc:title_broker-->Purgonorgo Isle<!--/npc--> sells 
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="title-vendor-access" -->
-The **Title Broker** is set up in **the Celennia Memorial Library** (reach it with `!lib`). Talk to them, pick a price tier, then the title you want — pay the gil and it's yours to wear.
+The **Title Broker** is set up in **<!--npc:title_broker-->Purgonorgo Isle<!--/npc-->** (reach it with `!hub`). Talk to them, pick a price tier, then the title you want — pay the gil and it's yours to wear.
 <!-- DOCGEN:END id="title-vendor-access" -->
 
 ## Price tiers
@@ -38,6 +38,6 @@ You can buy and display any title here regardless of whether you've earned it th
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: aaae10485a56 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 6f7b6fd2a436 -->
+_Last updated: 2026-07-11 21:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->

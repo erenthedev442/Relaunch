@@ -41,11 +41,11 @@ A pardon only ever soaks **one** death. Win another from the Mystery Mog to bank
 
 ## Why This Exists
 
-The Hunting League is built around high-level NM combat. A small mark cost on death adds meaningful stakes to hunts without being punishing enough to discourage participation. Losing 10 marks is roughly equivalent to skipping a daily login — noticeable, but not catastrophic.
+The Hunting League is built around high-level NM combat. A small mark cost on death adds meaningful stakes to hunts without being punishing enough to discourage participation. The loss is roughly a couple of low-rank kills' worth of marks — noticeable, but not catastrophic.
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8435a648743a -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 2ed50d55cfda -->
+_Last updated: 2026-07-11 21:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->

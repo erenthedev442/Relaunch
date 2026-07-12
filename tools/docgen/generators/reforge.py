@@ -136,6 +136,39 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # section keeps its previously published content and the other sections
     # still get fresh data.
 
+    def _build_hub():
+        # Zone + station layout from the catalog's placement section, so the
+        # page's "where is it" content moves when the hub moves.
+        zone_m = re.search(r"catalog\.huntZonePath\s*=\s*'xi\.zones\.([\w-]+)'", text)
+        if not zone_m:
+            raise RuntimeError(
+                "catalog.huntZonePath not found in reforge_catalog.lua -- "
+                "placement section changed, update _build_hub."
+            )
+        zone = zone_m.group(1).replace("_", " ")
+        stations = re.findall(
+            r"\{\s*id\s*=\s*(\d+)\s*,\s*spawnerPos\s*=\s*\{\s*x\s*=\s*(-?[\d.]+)\s*,"
+            r"\s*y\s*=\s*(-?[\d.]+)\s*,\s*z\s*=\s*(-?[\d.]+)", text)
+        if "catalog.stations" in text and not stations:
+            raise RuntimeError(
+                "catalog.stations exists but zero stations parsed -- "
+                "station table format changed, update _build_hub."
+            )
+        lines = [
+            f"The Reforge hub lives in **{zone}** — warp straight there with "
+            f"`!reforged`. One shared **Reforge Vendor** and **Mark Exchange** "
+            f"sit at the hub entrance, with **{len(stations)} independent NM "
+            f"Spawner stations** spread across the zone (each has its own "
+            f"single-occupancy guard, so multiple parties — even popping the "
+            f"same NM — farm side by side).",
+            "",
+            "| Station | Position |",
+            "|---|---|",
+        ]
+        for sid, x, y, z in stations:
+            lines.append(f"| **NM Spawner {sid}** | `({x}, {y}, {z})` |")
+        return "\n".join(lines)
+
     def _build_sources():
         sources = _extract_sources(text)
         if "catalog.sources" in text and not sources:
@@ -192,6 +225,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         return wrote
 
     wrote_any = False
+    wrote_any |= _section("reforge-hub",      _build_hub)
     wrote_any |= _section("reforge-sources",  _build_sources)
     wrote_any |= _section("reforge-costs",    _build_costs)
     wrote_any |= _section("reforge-job-sets", _build_job_sets)

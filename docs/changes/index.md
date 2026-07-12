@@ -149,20 +149,13 @@ Three custom NPCs stand side-by-side at **Escha ZiTah** — the endgame zone tha
 - **Hunting League** is the rank-based NM hunting system that drives all progression. Five ranks, ~3 NMs per rank, mark currency, reward shop. → [Full details](../progression/index.md)
 - **Armor Vendor** and **Weapons Vendor** sell tiered gear (Bronze / Silver / Gold) for the three seal currencies. → [Full catalogs](../progression/gear-vendors.md)
 
-## Reforge System (Gwora Corridor)
+## Reforge System
 
-Two NPCs at **Gwora Corridor** drive a parallel NM-farm-to-armor pipeline focused on **AF / Relic / Empyrean** armor.
-
-| NPC | Position | What it does |
-|---|---|---|
-| **Reforge Spawner** | `(10.0, 0.0, 0.0)` | Pops one of three NM pools (Sky Gods / Unity NMs / Abyssea NMs) |
-| **Reforge Vendor** | `(15.0, 0.0, 0.0)` | Upgrades base → +1 → +2 → +3 for marks |
-
-Three currencies (AF Marks, Relic Marks, Empyrean Marks) track separately. Every kill drops a base piece **and** marks for its track. All 22 jobs supported. → [Full details](../progression/reforge.md)
+A dedicated Reforge hub (`!reforged`) drives a parallel NM-farm-to-armor pipeline focused on **AF / Relic / Empyrean** armor: spawner stations pop one of three NM pools (Sky Gods / Unity NMs / Abyssea NMs), and the Reforge Vendor upgrades base → +1 → +2 → +3 for marks. Three currencies track separately, every kill drops a base piece **and** marks for its track, and all jobs are supported. → [Full details, hub layout, and costs](../progression/reforge.md)
 
 ## Custom service NPCs
 
-The server's custom service NPCs are split across two hubs — **Purgonorgo Isle** (endgame progression) and the **Purgonorgo Isle** (beginner services). The summary below auto-updates from the live source.
+The summary below auto-updates from the live source.
 
 <!-- DOCGEN:BEGIN id="gm-home-npcs" -->
 Every custom service NPC now lives on a single island plaza — **Purgonorgo Isle** — reachable any time with the **`!hub`** command (the old `!leaf`, `!lib`, and `!gmhome` commands land there too).
@@ -232,6 +225,6 @@ For reference, these are at retail defaults on this server:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 492705265eb8 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 14c6f4f7edc1 -->
+_Last updated: 2026-07-11 21:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->

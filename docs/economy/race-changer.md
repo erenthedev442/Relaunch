@@ -8,7 +8,7 @@ Want a fresh look? The **Race Changer** in <!--npc:race_changer-->Purgonorgo Isl
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="race-changer-access" -->
-The **Race Changer** stands in the services row of **the Celennia Memorial Library** (`!lib`). Talk to it, choose a new race and face, then confirm.
+The **Race Changer** stands in the services row of **<!--npc:race_changer-->Purgonorgo Isle<!--/npc-->** (`!hub`). Talk to it, choose a new race and face, then confirm.
 <!-- DOCGEN:END id="race-changer-access" -->
 
 ## What it costs and what you get
@@ -22,6 +22,6 @@ Once you confirm, the fee is charged and you rezone for a moment so your new mod
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 89bb439fe80d -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 7a7b012c1eb7 -->
+_Last updated: 2026-07-11 21:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->
