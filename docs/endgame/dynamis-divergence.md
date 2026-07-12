@@ -114,7 +114,7 @@ Trade a reforged **+3 AF or Relic** piece together with the materials below, and
     Only **AF and Relic** armor reach +4. Empyrean armor caps at +3 in the game data (matching retail), so there is no Empyrean +4 to forge here — finish Empyrean sets on the [Reforge System](../progression/reforge.md).
 <!-- DOCGEN:END id="divergence-reforge" -->
 
-The Forge only takes a reforged **+3** AF or Relic piece, and only when you're holding the full material cost (your job's Paragon Card + the Rusted/Black ID Cards) — trade the +3 piece and it comes back +4.
+The Forge accepts the trade either way: put the +3 piece **and** the full material cost (your job's Paragon Card + the Rusted/Black ID Cards) in the trade window together, or trade the +3 piece alone while holding the materials in your main inventory — either way it comes back +4.
 
 ---
 

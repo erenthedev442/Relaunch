@@ -94,7 +94,10 @@ end
 m:addOverride('xi.zones.Southern_San_dOria.Zone.onInitialize', function(zone)
     super(zone)
 
-    local function doForge(player, entry)
+    -- matsInTrade: the materials were traded alongside the +3 piece and are
+    -- already confirmed on the trade -- confirmTrade consumes them. Otherwise
+    -- pull them from MAIN inventory (lone-piece trade).
+    local function doForge(player, entry, matsInTrade)
         local mats = materialsFor(entry)
 
         -- Guard: entries with no job card (pcard 0) can't be forged here.
@@ -103,28 +106,30 @@ m:addOverride('xi.zones.Southern_San_dOria.Zone.onInitialize', function(zone)
             return
         end
 
-        -- Enough of every material?
-        for _, c in ipairs(mats) do
-            if player:getItemCount(c.id) < c.qty then
-                player:printToPlayer(string.format('[+4 Forge] %s -> +4 costs %s. Kupo!', entry.name, costString(entry)), SYS)
-                return
-            end
-        end
-
-        -- Consume materials (abort + refund on any shortfall, BEFORE the trade).
-        local paid = {}
-        for _, c in ipairs(mats) do
-            if not consume(player, c.id, c.qty) then
-                for id, qty in pairs(paid) do
-                    player:addItem({ id = id, quantity = qty })
+        if not matsInTrade then
+            -- Enough of every material?
+            for _, c in ipairs(mats) do
+                if player:getItemCount(c.id) < c.qty then
+                    player:printToPlayer(string.format('[+4 Forge] %s -> +4 costs %s. Kupo!', entry.name, costString(entry)), SYS)
+                    return
                 end
-                player:printToPlayer('[+4 Forge] Keep your cards as single MAIN-inventory stacks and try again, kupo!', SYS)
-                return
             end
-            paid[c.id] = (paid[c.id] or 0) + c.qty
+
+            -- Consume materials (abort + refund on any shortfall, BEFORE the trade).
+            local paid = {}
+            for _, c in ipairs(mats) do
+                if not consume(player, c.id, c.qty) then
+                    for id, qty in pairs(paid) do
+                        player:addItem({ id = id, quantity = qty })
+                    end
+                    player:printToPlayer('[+4 Forge] Keep your cards as single MAIN-inventory stacks and try again, kupo!', SYS)
+                    return
+                end
+                paid[c.id] = (paid[c.id] or 0) + c.qty
+            end
         end
 
-        -- Consume the traded +3 piece and hand back the +4.
+        -- Consume the traded +3 piece (and traded materials) and hand back the +4.
         player:confirmTrade()
         npcUtil.giveItem(player, entry.result)
         player:printToPlayer(string.format('[+4 Forge] %s reforged to +4! Kupo!', entry.name), SYS)
@@ -142,9 +147,28 @@ m:addOverride('xi.zones.Southern_San_dOria.Zone.onInitialize', function(zone)
         widescan   = 1,
 
         onTrade = function(player, npc, trade)
+            -- Accept both trade shapes the NPC/website describe:
+            --   1) +3 piece + the exact materials all in the trade window
+            --   2) +3 piece alone, materials pulled from MAIN inventory
             for tradedId, entry in pairs(plus4map) do
-                if npcUtil.tradeHasExactly(trade, { tradedId }) then
-                    doForge(player, entry)
+                local fullTrade = { tradedId }
+                for _, c in ipairs(materialsFor(entry)) do
+                    if c.id and c.id > 0 then
+                        fullTrade[#fullTrade + 1] = { c.id, c.qty }
+                    end
+                end
+
+                if npcUtil.tradeHasExactly(trade, fullTrade) then
+                    doForge(player, entry, true)
+                    return
+                elseif npcUtil.tradeHasExactly(trade, { tradedId }) then
+                    doForge(player, entry, false)
+                    return
+                elseif npcUtil.tradeHas(trade, { tradedId }) then
+                    -- The +3 piece is in the trade, but with the wrong extras
+                    -- (short on cards / unrelated items alongside it).
+                    player:printToPlayer(string.format('[+4 Forge] %s -> +4 costs %s. Kupo!', entry.name, costString(entry)), SYS)
+                    player:printToPlayer('[+4 Forge] Trade the +3 piece with exactly those materials, or trade it alone with the materials in your inventory, kupo!', SYS)
                     return
                 end
             end
