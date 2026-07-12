@@ -12,16 +12,18 @@ local CONFIG =
     exitZone  = xi.zone.RULUDE_GARDENS,
     entryPos  = { 48.930, 10.002, -71.032, 195 },
     exitPos   = { 48.930, 10.002, -71.032, 195 },
-    wave1Mobs = { 17993729, 17993730, 17993731, 17993732,   -- Goblin Squadron
-                  17993742, 17993743, 17993744, 17993745,
-                  17993746, 17993747, 17993748, 17993749 },
-    statues   = { 17993733, 17993734, 17993750, 17993751 },
-    midBoss   = 17993735,                                   -- Impish Golem
-    wave2Mobs = { 17993736, 17993737, 17993738, 17993739,   -- Goblin Regiment
-                  17993752, 17993753, 17993754, 17993755,
-                  17993756, 17993757, 17993758, 17993759 },
-    megaBoss  = 17993740,                                   -- Obstatrix
-    disjoined = 17993741,                                   -- Disjoined Mithra (wave 3)
+    -- Mobids sit on the stock indexes whose client-DAT names match each role
+    -- (fixed mobs display DAT names by index; server-side names never show).
+    wave1Mobs = { 17993732, 17993741, 17993736, 17993748,   -- Squadron Berserker / 's Wyvern / Arcanomancer
+                  17993778, 17993758, 17993753, 17993787,
+                  17993783, 17993768, 17993806, 17993785 },
+    statues   = { 17993731, 17993737, 17993744, 17993749 }, -- Impish Statue
+    midBoss   = 17993730,                                   -- Impish Golem
+    wave2Mobs = { 17994070, 17994079, 17994074, 17994083,   -- Regiment Berserker / 's Wyvern / Arcanomancer
+                  17994091, 17994120, 17994087, 17994100,
+                  17994127, 17994095, 17994108, 17994155 },
+    megaBoss  = 17994068,                                   -- Obstatrix
+    disjoined = 17994487,                                   -- Disjoined Mithra (wave 3)
 }
 
 instanceObject.registryRequirements = function(player) return true end

@@ -13,16 +13,18 @@ local CONFIG =
     exitZone  = xi.zone.SOUTHERN_SAN_DORIA,
     entryPos  = { 161.838, -2.000, 161.673, 93 },
     exitPos   = { 161.000, -2.000, 161.000, 94 },
-    wave1Mobs = { 17981441, 17981442, 17981443, 17981444,   -- Squadron Orcs
-                  17981454, 17981455, 17981456, 17981457,
-                  17981458, 17981459, 17981460, 17981461 },
-    statues   = { 17981445, 17981446, 17981462, 17981463 }, -- time-extension statues
-    midBoss   = 17981447,                                   -- Overseer's Tombstone
-    wave2Mobs = { 17981448, 17981449, 17981450, 17981451,   -- Regiment Orcs
-                  17981464, 17981465, 17981466, 17981467,
-                  17981468, 17981469, 17981470, 17981471 },
-    megaBoss  = 17981452,                                   -- Halphas
-    disjoined = 17981453,                                   -- Disjoined Elvaan (wave 3)
+    -- Mobids sit on the stock indexes whose client-DAT names match each role
+    -- (fixed mobs display DAT names by index; server-side names never show).
+    wave1Mobs = { 17981448, 17981449, 17981451, 17981470,   -- Squadron Knight / 's Wyvern / Evoker
+                  17981473, 17981471, 17981472, 17981480,
+                  17981474, 17981475, 17981490, 17981481 },
+    statues   = { 17981442, 17981447, 17981452, 17981457 }, -- Corporal Tombstone
+    midBoss   = 17981770,                                   -- Overseer's Tombstone
+    wave2Mobs = { 17981800, 17981801, 17981793, 17981807,   -- Regiment Knight / 's Wyvern / Evoker
+                  17981856, 17981808, 17981794, 17981872,
+                  17981857, 17981854, 17981897, 17981873 },
+    megaBoss  = 17982112,                                   -- Halphas
+    disjoined = 17982238,                                   -- Disjoined Elvaan (wave 3)
 }
 
 instanceObject.registryRequirements = function(player) return true end

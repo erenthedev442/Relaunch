@@ -49,9 +49,13 @@ Every zone reuses the same six-role chain — only the Beastmen change. The **Ru
 | Mob | Role | Drops |
 |---|---|---|
 | **Overseer's Tombstone** | Mid-Boss | Beastmens Medal (100%), Black ID Card (10%) |
-| Orcish Squadron | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron Knight | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron's Wyvern | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron Evoker | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
 | Corporal Tombstone | Time-extension statue | — (fell it for **+1 min** on the clock) |
-| Orcish Regiment | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment Knight | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment's Wyvern | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment Evoker | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
 | **Halphas** | Mega-Boss | Kindreds Medal (100%), Demons Medal (10%), Black ID Card (10%) |
 | **Disjoined Elvaan** | Disjoined NM | Demons Medal (100%), Kindreds Medal (15%) |
 
@@ -60,9 +64,13 @@ Every zone reuses the same six-role chain — only the Beastmen change. The **Ru
 | Mob | Role | Drops |
 |---|---|---|
 | **Mu'Sha Effigy** | Mid-Boss | Beastmens Medal (100%), Black ID Card (10%) |
-| Quadav Squadron | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
-| Adamantking Image | Time-extension statue | — (fell it for **+1 min** on the clock) |
-| Quadav Regiment | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Squadron Weaponmaster | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron's Avatar | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron Magician | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Lithicthrower Image | Time-extension statue | — (fell it for **+1 min** on the clock) |
+| Regiment Weaponmaster | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment's Avatar | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment Magician | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
 | **Ka'Rho Fearsinger** | Mega-Boss | Kindreds Medal (100%), Demons Medal (10%), Black ID Card (10%) |
 | **Disjoined Galka** | Disjoined NM | Demons Medal (100%), Kindreds Medal (15%) |
 
@@ -71,9 +79,13 @@ Every zone reuses the same six-role chain — only the Beastmen change. The **Ru
 | Mob | Role | Drops |
 |---|---|---|
 | **Evincing Idol** | Mid-Boss | Beastmens Medal (100%), Black ID Card (10%) |
-| Yagudo Squadron | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
-| Evincing Statue | Time-extension statue | — (fell it for **+1 min** on the clock) |
-| Yagudo Regiment | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Squadron Hoplite | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron's Wyvern | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron Magian | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Incarnation Icon | Time-extension statue | — (fell it for **+1 min** on the clock) |
+| Regiment Hoplite | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment's Wyvern | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment Magian | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
 | **Fii Pexu the Eternal** | Mega-Boss | Kindreds Medal (100%), Demons Medal (10%), Black ID Card (10%) |
 | **Disjoined Tarutaru** | Disjoined NM | Demons Medal (100%), Kindreds Medal (15%) |
 
@@ -82,9 +94,13 @@ Every zone reuses the same six-role chain — only the Beastmen change. The **Ru
 | Mob | Role | Drops |
 |---|---|---|
 | **Impish Golem** | Mid-Boss | Beastmens Medal (100%), Black ID Card (10%) |
-| Goblin Squadron | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron Berserker | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron's Wyvern | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron Arcanomancer | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
 | Impish Statue | Time-extension statue | — (fell it for **+1 min** on the clock) |
-| Goblin Regiment | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment Berserker | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment's Wyvern | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment Arcanomancer | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
 | **Obstatrix** | Mega-Boss | Kindreds Medal (100%), Demons Medal (10%), Black ID Card (10%) |
 | **Disjoined Mithra** | Disjoined NM | Demons Medal (100%), Kindreds Medal (15%) |
 
@@ -119,6 +135,6 @@ The Forge accepts the trade either way: put the +3 piece **and** the full materi
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1828365c4e11 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: a53e08b5e318 -->
+_Last updated: 2026-07-11 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->
