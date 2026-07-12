@@ -12,6 +12,43 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
 !!! note "Week of July 6–12, 2026"
     **Sunday, July 12**
 
+    - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-12 02:55
+    - **Relaunch/Crafting** — Craft-only gear identified, escutcheon recipes enabled, Crafted Gear page
+    - **Relaunch/Gear Finder** — Source the Mythic/Empyrean/Relic forge stages (+257 items)
+    - **Relaunch/Reforge** — !reforged NM pops spawn claimed to the spawner
+    - Redesign GMHome NPC layout and districts
+    - **Relaunch/Vendors** — RARE pre-check before charging in every upgrade/forge flow
+    - **Relaunch/Site** — Exclude the changelog from site search
+    - **Relaunch/Commands** — Port Legendary's !mystats augment section + !checkascend/!checkrebirth
+    - **Relaunch/Geas Fete** — Triple the difficulty-layer stats, double all NM HP
+    - **Relaunch/Docs** — Item links dead on touch -- emit data-img + harden tooltip JS
+    - **Relaunch/Geas Fete** — Tier-scaled difficulty layer on every fete NM
+    - **Relaunch/Unity** — Junctions are self-service -- no registration, chain-pop freely
+    - **Relaunch/Unity** — Retail Ethereal Junction flow for Wanted battles
+    - **Relaunch/Omen** — Omen joins the Endgame nav; AF reforge removed from Coelestrox
+    - **Relaunch/Drift** — Deployment check reads 300 log lines + portal check tolerates CF WAF
+    - **Relaunch/Drift** — Monitor the player portal + self-heal a dead tunnel
+    - **Relaunch/Prime** — Armory claims the 16 real Stage-5 Primes + loader/exclusion repairs
+    - **Relaunch/Geas Fete** — Retail-style ??? pops in all three zones + Reisenjima roster
+    - **Relaunch/Omen** — Implement Omen (Reisenjima Henge) end to end
+    - **Relaunch/Gear** — Stats for the 69 reward items that shipped statless (847 mod rows)
+    - **Relaunch/Vendors** — Full 20-piece Volte set moves to the Infamy Vendor
+    - **Relaunch/Htbf** — Sprinkle all 4 Skirmish gear families into the battlefield loot
+    - **Relaunch/Geas Fete** — Fete signature drops are fete-exclusive (37 vendor rows pulled)
+    - **Relaunch/Geas Fete** — Full retail NM roster (77 NMs) with retail signature drops
+    - **Relaunch/Unity** — NMs drop base items; +1 via accolade upgrade at the Board
+    - **Relaunch/Mobs** — MOB_ERA_HP_MULT hits plain field mobs only — custom NMs un-compounded
+    - **Relaunch/Docgen** — Source map reads vendor catalogs directly + build-time grant guard
+    - **Relaunch/Docgen** — Gear Finder source scan missed 7 whole systems + a dead path
+    - **Relaunch/Vendors** — Pull all Omen/Escha gear from the medal + infamy vendors
+    - **Relaunch/Ambuscade** — Sell the 10 Ambuscade set rings + close two Gear Finder source gaps
+    - **Relaunch/Deploy** — Apply the sql/zz* overlay layer on every deploy
+    - **Relaunch/Geas Fete** — Reisenjima-crafted armor drops from fete NMs (vendor rows pulled)
+    - **Relaunch/Vendors** — Pull all Odyssey NM gear from vendors (Odyssey lands later)
+    - **Relaunch/Ambuscade** — Ambuscade armor is Ambuscade-exclusive (56 vendor rows pulled)
+    - **Relaunch/Gear Finder** — +4 reforge items are obtainable — tag the Divergence Forge
+    - **Relaunch/Plus4 Forge** — Triple the +3->+4 material costs, body-tax the Paragon Card
+    - **Relaunch/Augments** — Move Treasure Hunter to the Skills category
     - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-12 00:20
     - **Relaunch/Dynamis D** — Superior Lv5 weapons now drop from the Mega-Bosses
     - **Relaunch/Abyssea** — Remove Superior Lv5 weapon drops from Abyssea mobs
@@ -1221,10 +1258,3 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Dungeons** — Mythic+ keystones - endless key levels above Mythic
     - ﻿Retire the new-player linkshell; dedupe the Dungeon Veteran title
     - ﻿docs-in-code: catch comments up to the 5-catalyst reality
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 455b978e01e6 -->
-_Last updated: 2026-07-12 01:17 PDT_
-<!-- DOCGEN:END id="last-updated" -->
