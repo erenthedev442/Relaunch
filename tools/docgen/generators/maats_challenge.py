@@ -3,7 +3,10 @@
 Reads: modules/custom/lua/maat_infamy_fight.lua
 
 Marker IDs:
-  - "maat-stats" -- entry cost, fight level, drop chance
+  - "maat-stats" -- entry cost, fight level, drop chances, despawn timing
+
+The page's hand prose deliberately references "the stat table" instead of
+restating these numbers, so a retune only has to land in one place.
 """
 from __future__ import annotations
 
@@ -24,17 +27,33 @@ def _float_local(text: str, name: str) -> float | None:
     return float(m.group(1)) if m else None
 
 
-def _render_stats(cost: int, level: int, drop_pct: int) -> str:
+def _voucher_chance(text: str) -> float | None:
+    """The Prime Voucher roll is inline (`math.random() < 0.005`), gated on
+    PW_Trial3_Done — grab the literal from that guard."""
+    m = re.search(r"PW_Trial3_Done'\)\s*or\s*0\)\s*==\s*0\s*and\s*math\.random\(\)\s*<\s*([\d.]+)", text)
+    return float(m.group(1)) if m else None
+
+
+def _render_stats(cost: int, level: int, drop_pct: int,
+                  voucher_pct: float | None, idle: int | None) -> str:
     lines = [
         "| Stat | Value |",
         "|---|---|",
         f"| Entry cost | **{cost} Infamy** |",
         f"| Maat's level | **{level}** |",
         f"| Maat's Cap drop chance | **{drop_pct}%** |",
+    ]
+    if voucher_pct is not None:
+        lines.append(f"| Prime Voucher drop chance | **{voucher_pct:g}%** "
+                     f"(until Prime Trial 3 is cleared) |")
+    lines += [
         "| Entry NPC | **Maat's Echo** — Ru'Lude Gardens |",
         "| Fight zone | **Waughroon Shrine** |",
         "| Simultaneous fights | Unlimited — every challenger gets their own |",
     ]
+    if idle is not None:
+        lines.append(f"| Abandoned-fight despawn | ~**{idle} seconds** after "
+                     f"the owner dies or leaves |")
     return "\n".join(lines)
 
 
@@ -51,12 +70,20 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         print(f"[maats_challenge] skip: target page {page} not found")
         return
 
-    cost     = _int_local(text,   "INFAMY_COST") or 50
-    level    = _int_local(text,   "MAAT_LEVEL")  or 250
-    drop_raw = _float_local(text, "DROP_CHANCE") or 0.25
+    cost     = _int_local(text,   "INFAMY_COST")
+    level    = _int_local(text,   "MAAT_LEVEL")
+    drop_raw = _float_local(text, "DROP_CHANCE")
+    if cost is None or level is None or drop_raw is None:
+        print("[maats_challenge] PARSER REGRESSION -- INFAMY_COST/MAAT_LEVEL/"
+              "DROP_CHANCE not found in maat_infamy_fight.lua; keeping "
+              "published content")
+        return
     drop_pct = round(drop_raw * 100)
+    voucher  = _voucher_chance(text)
+    voucher_pct = voucher * 100 if voucher is not None else None
+    idle     = _int_local(text, "IDLE_LIMIT")
 
-    content = _render_stats(cost, level, drop_pct)
+    content = _render_stats(cost, level, drop_pct, voucher_pct, idle)
     wrote = write_between_markers(page, "maat-stats", content)
     if wrote:
         print("[maats_challenge] stats: written into marker")

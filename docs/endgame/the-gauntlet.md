@@ -43,18 +43,23 @@ HP grows **16.6%** each level. Every NM is **Lv99**; difficulty scales through s
 
 ## Combat mechanics
 
+<!-- DOCGEN:BEGIN id="gauntlet-mechanics" -->
 Every Gauntlet NM has the same shared hardcore kit, scaled by level. All of these are real combat interactions — no invisible phantom damage.
 
 | Mechanic | What it does |
 |---|---|
 | **Massive stats** | ATT, ACC, DEF, MDEF, and MEVA all scale steeply per level. Even gear-capped characters will feel the wall. |
-| **Enrage timer** | After a set time the boss gains additional ATT and haste permanently. Ranges from ~155s at level 1 to ~80s at level 10. |
+| **Enrage timer** | After a set time the boss gains additional ATT and haste permanently. Ranges from ~155s at low levels to ~80s at level 10. |
 | **Stance cycling** | The boss periodically shifts between a physical-resist stance (-50% physical damage) and a magic-resist stance (-50% magic damage). Watch the chat log and adapt. |
 | **Hold-fire windows** | A warning announces a danger period. If you deal damage during it, you take a status effect penalty (curse, poison, or blind depending on the boss). Wait for the window to expire to earn a defense-down bonus on the boss. |
 | **Crowd control** | Periodic Terror or Silence pulses. Duration scales with level. |
 | **Self-heal drain** | The boss heals itself every 15 seconds. Heal amount scales from 10k at level 1 to 100k at level 10. |
 | **Phase actions** | At HP thresholds the boss dispels your buffs or enters a fury state (more ATT + haste). Higher levels have more phases. |
 | **Ranged penalty** | Ranged damage is reduced by 50% outside of hold-fire weakness windows. Physical ranged is the intended way to use hold-fire timing. |
+
+!!! warning "Silence on Kirin (7) and Pandemonium Warden (9)"
+    Both bosses have reduced Silence resistance (-75%). Silence is the intended way to interrupt their spell rotations.
+<!-- DOCGEN:END id="gauntlet-mechanics" -->
 
 ### Level-specific behaviour
 
@@ -68,9 +73,6 @@ Some levels also override specific TP moves:
 | 6 | Vrtra | Sable Breath → dark breath damage to the front arc |
 | 7 | Kirin | Deadly Hold and Tail-type moves bypass parry; Stonega IV / Stone V / Quake capped at 5,000 |
 | 8 | Absolute Virtue | Medusa Javelin → physical + Bind 8s (replaces retail Petrify) |
-
-!!! warning "Silence on Kirin (7) and Pandemonium Warden (9)"
-    Both bosses have reduced Silence resistance (-75%). Silence is the intended way to interrupt their spell rotations.
 
 ---
 

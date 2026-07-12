@@ -217,6 +217,69 @@ def _render_milestones(c: dict) -> str:
     return "\n".join(lines)
 
 
+def _render_mechanics(text: str, c: dict) -> str:
+    """Shared combat kit table with the tuned numbers pulled from the catalog
+    (enrage window, stance/ranged reductions, drain cadence and scaling), so
+    a combat retune lands on the page automatically."""
+    enrages = [int(x) for x in re.findall(r"enrage\s*=\s*\{\s*sec\s*=\s*(\d+)", text)]
+    drain = re.search(r"drain\s*=\s*\{\s*periodSec\s*=\s*(\d+),\s*heal\s*=\s*level\s*\*\s*(\d+)", text)
+    stance_pct = re.search(r"DMGPHYS\]\s*=\s*-(\d+)", text)
+    ranged = re.search(r"RANGED_DAMAGE_REDUCTION\s*=\s*-(\d+)", text)
+    if not (enrages and drain and stance_pct and ranged):
+        raise RuntimeError(
+            "gauntlet mechanics parse degraded -- gauntlet_catalog.lua "
+            "enrage/drain/stance/ranged format changed, update _render_mechanics."
+        )
+    n_levels = max(c["nms"]) if c["nms"] else 10
+    period, heal_per = int(drain.group(1)), int(drain.group(2))
+    sp = int(stance_pct.group(1)) // 100
+    rp = int(ranged.group(1)) // 100
+    rows = [
+        ("Massive stats", "ATT, ACC, DEF, MDEF, and MEVA all scale steeply per "
+         "level. Even gear-capped characters will feel the wall."),
+        ("Enrage timer", f"After a set time the boss gains additional ATT and "
+         f"haste permanently. Ranges from ~{max(enrages)}s at low levels to "
+         f"~{min(enrages)}s at level {n_levels}."),
+        ("Stance cycling", f"The boss periodically shifts between a "
+         f"physical-resist stance (-{sp}% physical damage) and a magic-resist "
+         f"stance (-{sp}% magic damage). Watch the chat log and adapt."),
+        ("Hold-fire windows", "A warning announces a danger period. If you deal "
+         "damage during it, you take a status effect penalty (curse, poison, or "
+         "blind depending on the boss). Wait for the window to expire to earn a "
+         "defense-down bonus on the boss."),
+        ("Crowd control", "Periodic Terror or Silence pulses. Duration scales "
+         "with level."),
+        ("Self-heal drain", f"The boss heals itself every {period} seconds. "
+         f"Heal amount scales from {heal_per // 1000}k at level 1 to "
+         f"{heal_per * n_levels // 1000}k at level {n_levels}."),
+        ("Phase actions", "At HP thresholds the boss dispels your buffs or "
+         "enters a fury state (more ATT + haste). Higher levels have more phases."),
+        ("Ranged penalty", f"Ranged damage is reduced by {rp}% outside of "
+         f"hold-fire weakness windows. Physical ranged is the intended way to "
+         f"use hold-fire timing."),
+    ]
+    out = ["Every Gauntlet NM has the same shared hardcore kit, scaled by "
+           "level. All of these are real combat interactions — no invisible "
+           "phantom damage.", "",
+           "| Mechanic | What it does |", "|---|---|"]
+    for name, desc in rows:
+        out.append(f"| **{name}** | {desc} |")
+    # Silence-resistance callout from C.SILENCE_RES_DOWN ([level] = -pct).
+    sil = re.findall(r"\[(\d+)\]\s*=\s*(-\d+),?\s*--", text)
+    sil_rows = [(int(lv), int(pct)) for lv, pct in sil if int(pct) < 0 and int(lv) in c["nms"]]
+    if sil_rows:
+        names = " and ".join(f"{c['nms'][lv]} ({lv})" for lv, _ in sil_rows)
+        pcts = {pct for _, pct in sil_rows}
+        pct_txt = "/".join(f"{p}%" for p in sorted(pcts))
+        out += ["", f'!!! warning "Silence on {names}"',
+                f"    Both bosses have reduced Silence resistance ({pct_txt}). "
+                f"Silence is the intended way to interrupt their spell rotations."
+                if len(sil_rows) > 1 else
+                f"    This boss has reduced Silence resistance ({pct_txt}). "
+                f"Silence is the intended way to interrupt its spell rotation."]
+    return "\n".join(out)
+
+
 def generate(repo_root: Path, docs_dir: Path) -> None:
     src = resolve_source(repo_root, "modules/custom/lua/gauntlet_catalog.lua")
     if src is None:
@@ -236,6 +299,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ("gauntlet-rewards",       _render_rewards(c)),
         ("gauntlet-level-rewards", _render_level_rewards(c)),
         ("gauntlet-milestones",    _render_milestones(c)),
+        ("gauntlet-mechanics",     _render_mechanics(text, c)),
     ]
     written = sum(
         1 for marker, content in blocks

@@ -1,9 +1,9 @@
 # Maat's Challenge
 
-Think you can take on the master? Seek out **Maat's Echo** in **Ru'Lude Gardens** and pay your Infamy for a chance to fight a level-200 incarnation of Maat in the very arena where the Genkai trials once took place — **Waughroon Shrine**. Win, and there's a chance he'll leave behind something that could change the outcome of your next augment.
+Think you can take on the master? Seek out **Maat's Echo** in **Ru'Lude Gardens** and pay your Infamy for a chance to fight a boosted incarnation of Maat in the very arena where the Genkai trials once took place — **Waughroon Shrine**. Win, and there's a chance he'll leave behind something that could change the outcome of your next augment.
 
 !!! tip "Summary"
-    Talk to **Maat's Echo** in Ru'Lude Gardens, pay **150 Infamy**, and you'll be teleported to Waughroon Shrine to face a level-200 Maat — now the **single hardest fight on the server**, tuned above the endgame Ascension bosses. Your **first victory permanently unlocks Tier 5 (Archon) augment catalysts** at the Augment Moogle. Defeat him for a **25% chance** at a **Maat's Cap** — an item that guarantees your next augment at the Augment Moogle will be a critical. He also has a **0.5% chance** to drop a **Prime Voucher** ([Prime Weapon Trial 3](../progression/prime-trials.md)).
+    Talk to **Maat's Echo** in Ru'Lude Gardens, pay the Infamy entry fee (stat table below), and you'll be teleported to Waughroon Shrine to face a boosted Maat — now the **single hardest fight on the server**, tuned above the endgame Ascension bosses. Your **first victory permanently unlocks Tier 5 (Archon) augment catalysts** at the Augment Moogle. Defeat him for a chance at a **Maat's Cap** — an item that guarantees your next augment at the Augment Moogle will be a critical — and a small chance at a **Prime Voucher** ([Prime Weapon Trial 3](../progression/prime-trials.md)).
 
 <!-- DOCGEN:BEGIN id="maat-stats" -->
 | Stat | Value |
@@ -11,9 +11,11 @@ Think you can take on the master? Seek out **Maat's Echo** in **Ru'Lude Gardens*
 | Entry cost | **150 Infamy** |
 | Maat's level | **200** |
 | Maat's Cap drop chance | **25%** |
+| Prime Voucher drop chance | **0.5%** (until Prime Trial 3 is cleared) |
 | Entry NPC | **Maat's Echo** — Ru'Lude Gardens |
 | Fight zone | **Waughroon Shrine** |
 | Simultaneous fights | Unlimited — every challenger gets their own |
+| Abandoned-fight despawn | ~**6 seconds** after the owner dies or leaves |
 <!-- DOCGEN:END id="maat-stats" -->
 
 ## Where to find the NPC
@@ -23,13 +25,13 @@ Maat's Echo stands near the original Maat NPC in **Ru'Lude Gardens**, just to th
 ## How it works
 
 1. Talk to **Maat's Echo** and accept the challenge.
-2. The cost is **150 Infamy**. If your Infamy is short, come back when you've earned more.
+2. The entry fee (see the stat table above) is charged in **Infamy**. If your Infamy is short, come back when you've earned more.
 3. You're immediately transported to **Waughroon Shrine** — the very battlefield where Genkai trials were once decided.
-4. Maat appears before you at **level 200** with a stat block tuned *above* our toughest Ascension boss: brutal melee, accuracy that punches through tank gear, and Chainspell nukes that delete the careless — come prepared.
-5. On death, Maat has a **25% chance** to drop **Maat's Cap**.
+4. Maat appears before you with a stat block tuned *above* our toughest Ascension boss: brutal melee, accuracy that punches through tank gear, and Chainspell nukes that delete the careless — come prepared.
+5. On death, Maat can drop **Maat's Cap** (drop chance in the stat table above).
 
 !!! info "Bring a crowd"
-    Every challenger gets their **own** Maat, claim-locked to them — many people can fight in the shrine at the same time without interfering. Your Maat is yours alone; no one else can tag it, steal it, or help kill it. If you leave or die, your Maat despawns on its own after about 6 seconds.
+    Every challenger gets their **own** Maat, claim-locked to them — many people can fight in the shrine at the same time without interfering. Your Maat is yours alone; no one else can tag it, steal it, or help kill it. If you leave or die, your Maat despawns on its own after a few seconds (exact timing in the stat table).
 
 ## The reward: Tier 5 augments unlocked
 
@@ -48,10 +50,10 @@ The item is **consumed on success**. It is not consumed if the augment fails (e.
 
 ## Tips
 
-- **Come geared.** Maat carries an explicit Lv200 stat block cranked above the endgame Ascension bosses — his attacks, spell damage, and HP all reflect it. This is not a casual fight.
+- **Come geared.** Maat carries an explicit stat block cranked above the endgame Ascension bosses — his attacks, spell damage, and HP all reflect it. This is not a casual fight.
 - **Watch your MP.** Maat's RDM incarnation uses Chainspell + high-tier nukes. Magic defense, Stoneskin, and Utsusemi all help buy time.
 - **You keep the Infamy on his death.** Only the entry fee is spent; you don't lose more if you die.
-- **If you die or leave without killing him**, your Maat despawns after a short lull. The 150 Infamy entry cost is still spent — don't go in unprepared.
+- **If you die or leave without killing him**, your Maat despawns after a short lull. The Infamy entry cost is still spent — don't go in unprepared.
 - **Stack up before augmenting.** Maat's Cap lasts indefinitely while held. You can earn multiple blessings before redeeming them, but the item is RARE so you can only hold one at a time.
 
 ---
