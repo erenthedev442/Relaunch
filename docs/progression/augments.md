@@ -42,23 +42,18 @@ Cancel at any time during the confirm menu to get everything (gear + catalysts) 
 
 ## How augment power scales
 
-Custom augments don't apply a fixed value — each one **scales with your [Augment Sage](augment-sage.md) progress**. Every catalyst you trade fills one of a gear piece's augment slots, and each slot's bonus climbs from a low **floor** (no achievements) up to a **cap** (everything maxed), driven by an achievement **boost of 0 → 31** built from three sources:
+Custom augments don't apply a fixed value — each slot is **rolled** inside a band set by your [Augment Tier](augment-sage.md#how-the-boost-is-calculated) (T1 uses 0–5 of the 0–31 roll space … T5 uses 25–31; bands never overlap, so a higher tier always beats a lower one). Four things move the roll:
 
-- **Augment Mastery rank** — the Sage quest, ranks 1–5 (the global multiplier).
-- **Category affinity** — defeat the category's signature NM and turn in its trophy at the Sage.
-- **A critical augment** — a per-trade roll (5% → 30% as your rank rises) that doubles the boost.
+- **Augment Tier** (custom-content gates, T1–T5) — picks the roll band.
+- **Sage Mastery rank** (1–5) — raises the roll floor inside your band.
+- **Category affinity** — defeat the category's signature NM and register its trophy: that category **rolls twice and keeps the better**.
+- **A critical augment** — a per-trade chance (5% → 30% by rank; Maat's Cap guarantees one) that makes every slot in the trade a **perfect roll** (band max).
 
-A brand-new augment sits at the floor; only a **rank-5, affinity-unlocked, *critical*** augment reaches the cap. Stack the same catalyst across slots to multiply the result.
+The roll is then scaled into each augment's own **per-augment ceiling** — many stats carry one (tightened in the 2026-07-11 rebalance). Uncapped heavyweights like **HP** reach **+128/slot** (+640 on a full 5-slot piece) and **Attack +64/slot** (+320), while deliberately-capped stats stop much earlier — **Fast Cast +4/slot** (+20/piece), **Crit Rate +5/slot** (+25), **Spell Interruption −5/slot** (−25). The **T1–T5 columns in the catalog below are the authority** for every augment's exact range at each tier, and the [Augment Calculator](augment-calculator.md) previews any augment/tier/rank combination.
 
-| Augment | Per slot (floor → cap) | A full piece (×5 slots) |
-|---|---:|---:|
-| **HP, MP, Weapon Damage, Regen, Pet: Regen, resting HP/MP recovery** | 4 → **128** | 20 → **640** |
-| **Attack, Rng.Attack, Accuracy, Rng.Accuracy, Magic Acc., Magic Acc.+Atk., HP+MP, TP Bonus, Refresh** | 2 → **64** | 10 → **320** |
-| *All other augments* | 1 → **32** | 5 → **160** |
+Stack the same catalyst across slots to multiply the result — up to 5 slots per piece.
 
-*Haste and the damage-taken family display as **percentages** (Haste ≈ 6.25%/slot maxed). Some stats have hard engine ceilings no amount of slots can pass — gear Haste caps at **25%**, total damage taken at **−50%** — see the **Cap** column in the catalog below.*
-
-So a maxed tank reaches **+640 HP on a single body piece**, and a sustain build can stack **+640 Regen** (or **+320 Refresh**) on a piece — but only after grinding the Sage's mastery ranks, unlocking the stat's affinity NM, and landing a crit. The retail-style flat "+97" numbers are gone; power is **earned** through the Sage now.
+*Haste and the damage-taken family display as **percentages** (Haste ≈ 6.25%/slot maxed). Some stats also have hard engine ceilings no amount of slots can pass — gear Haste caps at **25%**, total damage taken at **−50%** — see the **Cap** column in the catalog below.*
 
 !!! note "Why a fresh augment looks weak — and what to do about it"
     Your first stamp on a piece gives the **floor** (e.g. HP +4/slot). That's intentional. As your mastery rank climbs, **re-augment the same gear** to push every slot toward its cap. Augment early, augment often, re-augment as you rank up.
