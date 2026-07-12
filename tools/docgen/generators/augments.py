@@ -453,6 +453,44 @@ def _dungeon_drops(data_lua: Path | None, catalog_lua: Path | None,
     return out
 
 
+def _droplist_rate(zz_sql: Path | None, fallback: float = 10.0) -> float:
+    """Retail-droplist rate (%) for catalysts, parsed from
+    zz_catalyst_droplist_rate.sql (owner rule 2026-07-11: flat 10% on every
+    catalyst source). itemRate is out of 1000."""
+    if zz_sql is None or not zz_sql.exists():
+        return fallback
+    m = re.search(r"SET\s+`itemRate`\s*=\s*(\d+)",
+                  zz_sql.read_text(encoding="utf-8", errors="replace"))
+    return int(m.group(1)) / 10 if m else fallback
+
+
+def _world_drops(json_path: Path) -> dict[int, list[str]]:
+    """docs/assets/item-search-data.json (drop_finder.py, live-DB mob_droplist)
+    -> {itemId: ['Mob (Zone)', ...]} — every world mob that drops the item via
+    its retail droplist. Per-mob percentages are deliberately NOT taken from
+    the json (they can lag the DB); the flat catalyst rate comes from
+    _droplist_rate and is printed once on the section header instead."""
+    if not json_path.exists():
+        return {}
+    try:
+        data = json.loads(json_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    out: dict[int, list[str]] = {}
+    for it in data.get("items", []):
+        seen: set[tuple[str, str]] = set()
+        lines: list[str] = []
+        for dr in it.get("d") or []:
+            mob, zone = dr.get("mob"), dr.get("zone")
+            if not mob or not zone or (mob, zone) in seen:
+                continue
+            seen.add((mob, zone))
+            lines.append(f"{mob} ({zone})")
+        if lines:
+            out[it["i"]] = sorted(lines)
+    return out
+
+
 def _parse_hook_rates(drops_lua: Path | None) -> tuple[int, int]:
     """(DROP_RATE, FALLBACK_RATE) percent from augment_catalyst_drops.lua.
     Parsed live so a balance retune shows up on the next docs build."""
@@ -657,6 +695,32 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         print("[augments] catalyst_warp_table.lua not found — 'Drops from' column will show '—'")
     else:
         drops = _warp_table_drops(warp_src)
+
+        # Full retail-droplist mob list per catalyst (owner report 2026-07-11:
+        # the dropdowns only named the one assigned farm camp — players
+        # couldn't see the other world mobs that shed the same catalyst).
+        # Only merged for ids already in the warp table (i.e. catalysts).
+        world = _world_drops(docs_dir / "assets" / "item-search-data.json")
+        wd_rate = _droplist_rate(resolve_source(
+            repo_root, "modules/custom/sql/zz_catalyst_droplist_rate.sql", required=False))
+        # Common materials drop from hundreds of mobs (Ordelle Bronzepiece:
+        # 338) — cap the inline list and point at the searchable Item Database
+        # for the rest. NO silent truncation: the "+N more" line names it.
+        WORLD_CAP = 20
+        world_added = 0
+        for iid, entries in drops.items():
+            mobs = [m for m in world.get(iid, [])
+                    if not any(e.startswith(m) for e in entries)]
+            if mobs:
+                entries.append(
+                    f"<em>Also drops from (retail droplists, {wd_rate:g}% each):</em>")
+                entries.extend(mobs[:WORLD_CAP])
+                if len(mobs) > WORLD_CAP:
+                    entries.append(
+                        f"<em>…plus {len(mobs) - WORLD_CAP} more — search the "
+                        f"<a href='item-database/'>Item Database</a></em>")
+                world_added += min(len(mobs), WORLD_CAP)
+
         hl = _hl_trophy_drops(resolve_source(
             repo_root, "modules/custom/lua/hunting_league_catalog.lua", required=False))
         dg = _dungeon_drops(
@@ -667,7 +731,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         for iid, extras in list(hl.items()) + list(dg.items()):
             drops.setdefault(iid, []).extend(extras)
         print(f"[augments] drop sources: {len(drops)} catalysts from warp table"
-              f" (+{sum(len(v) for v in hl.values())} HL, +{sum(len(v) for v in dg.values())} dungeon)")
+              f" (+{world_added} world droplist mobs @{wd_rate:g}%,"
+              f" +{sum(len(v) for v in hl.values())} HL, +{sum(len(v) for v in dg.values())} dungeon)")
     drop_rate, fallback_rate = _parse_hook_rates(resolve_source(
         repo_root, "modules/custom/lua/augment_catalyst_drops.lua", required=False))
 
