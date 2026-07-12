@@ -116,6 +116,34 @@ try {
     & $Npx --yes wrangler pages deploy site --project-name=$CfProject --branch=main --commit-dirty=true 2>&1 | Out-File -FilePath $Log -Append -Encoding utf8
     if($LASTEXITCODE -ne 0){ Log "[FATAL] wrangler deploy failed (exit $LASTEXITCODE) -- CF token set? $tokSet"; throw "wrangler-failed" }
 
+    # ---- [4/4] DOCS-WRITEBACK: commit regenerated pages back to origin ----
+    # The published site is built from docgen output against the LIVE server,
+    # but until 2026-07-11 those regenerated .md files were never committed, so
+    # the repo's docs/ copies silently rotted (a stale 'Mob drop rate 3x' sat
+    # in git for a month while the live site said 1x). Pushing the regen makes
+    # the repo self-heal within an hour of any divergence: the repo IS the site.
+    # Volatile live-DB-derived pages (player profiles, leaderboards, economy
+    # snapshots, page-index freshness report) are excluded -- they genuinely
+    # change every hour and would bury real content diffs in churn.
+    # Non-fatal by design: a writeback failure never blocks the publish.
+    try {
+        Set-Location $DocsRepo
+        & $Git add docs 2>&1 | Out-File -FilePath $Log -Append -Encoding utf8
+        & $Git reset -q -- docs/community/players docs/community/leaderboards.md `
+            docs/community/economy.md docs/community/status.md docs/admin/page-index.md 2>&1 |
+            Out-File -FilePath $Log -Append -Encoding utf8
+        & $Git diff --cached --quiet
+        if($LASTEXITCODE -ne 0){
+            & $Git commit -m "docs(sync): hourly regen from live server [writeback]" 2>&1 |
+                Out-File -FilePath $Log -Append -Encoding utf8
+            & $Git push origin HEAD:relaunch 2>&1 | Out-File -FilePath $Log -Append -Encoding utf8
+            if($LASTEXITCODE -eq 0){ Log "[4/4] docs writeback: pushed regenerated pages to origin/relaunch" }
+            else { Log "[4/4] docs writeback: PUSH FAILED (non-fatal) -- repo copies lag until next success" }
+        } else {
+            Log "[4/4] docs writeback: no content drift -- repo already matches the live site"
+        }
+    } catch { Log "[4/4] docs writeback error (non-fatal): $_" }
+
     Log "===== refresh_site_relaunch DONE ====="
 }
 catch {

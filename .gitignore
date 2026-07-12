@@ -211,6 +211,14 @@ cmake_install.cmake
 # non-default settings script files containing server specific things
 /scripts/settings/main.lua
 /settings/*.lua
+# ...EXCEPT the balance tunables (2026-07-11): main.lua + map.lua are
+# config-as-code for this single-server fork. Tracking them means the repo is
+# the verifiable source of truth for rates (a box-only DROP_RATE_MULTIPLIER
+# caused a month of doc drift), off-box docgen resolves real values, and the
+# box's vps-rebuild auto-commit carries live edits into git automatically.
+# Credential-bearing files (network.lua, login.lua, ...) STAY ignored.
+!/settings/main.lua
+!/settings/map.lua
 
 # Tool/misc configs
 /tools/config.yaml
