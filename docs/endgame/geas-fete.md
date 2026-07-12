@@ -12,7 +12,7 @@ Geas Fete NMs pop **retail-style, at the `???` points** scattered across **Escha
 
 Every Escha kill pays **Escha Beads** (a real currency — see the Currencies II tab). That one pool funds the Warding Circle material exchange **and** the **Aeonic weapon** path ([Temprix in Reisenjima](../progression/aeonic-weapons.md)). NMs also drop the Aeonic crafting materials directly — **Beitetsu**, **Riftcinder**, **Riftborn Boulder**, and (from bosses) **Attestations**, the weapon-type tokens the Aeonic forge needs.
 
-Every retail Geas Fete NM is implemented, each with its **retail signature drops** (282 items across the roster — see the tables below). Each listed item rolls independently at **15%** per kill (**25%** on the zone bosses).
+Every retail Geas Fete NM is implemented, each with its **retail signature drops** (282 items across the roster — see the tables below). Each listed item rolls independently at **35%** per kill (**60%** on the zone bosses). If every roll misses, one of its drops is **guaranteed** — so a kill always yields at least one signature piece.
 
 Tier 2 and up also drop the **Reisenjima-crafted armor** families as direct drops — **Adhemar, Argosy, Carmine, Rao, Ryuo, Souveran and Naga** (35 base pieces, 30 +1 pieces) — and the fete NMs are their **only source**. Base pieces drop at **20%** from Tier 2, **35%** from Tier 3 and **50%** from bosses; **+1** pieces at **10%** from Tier 3 and **25%** from bosses. Drops are a random piece from the whole pool — the hunt is the gate, not a job lock.
 <!-- DOCGEN:END id="geas-overview" -->
@@ -252,6 +252,6 @@ feed the [Aeonic weapon](../progression/aeonic-weapons.md) forge.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4b8d17de0298 -->
-_Last updated: 2026-07-12 02:53 PDT_
+<!-- content-hash: 921ad0653761 -->
+_Last updated: 2026-07-12 06:25 PDT_
 <!-- DOCGEN:END id="last-updated" -->

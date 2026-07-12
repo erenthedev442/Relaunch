@@ -79,6 +79,7 @@ def _parse(text: str) -> dict:
         m = re.search(r"local " + var + r"\s*=\s*([\d.]+)", text)
         if m:
             rates[key] = float(m.group(1))
+    rates["guarantee"] = bool(re.search(r"local FETE_DROP_GUARANTEE\s*=\s*true", text))
     return {"nms": nms, "exchange": ex, "gear": gear, "rates": rates, "camps": camps}
 
 
@@ -108,12 +109,17 @@ def _drops_para(c: dict) -> str:
     if not r.get("nm"):
         return ""
     n_drops = sum(len(n["drops"]) for n in c["nms"])
+    guarantee = (
+        " If every roll misses, one of its drops is **guaranteed** — so a kill "
+        "always yields at least one signature piece."
+        if r.get("guarantee") else ""
+    )
     return (
         f"\n\nEvery retail Geas Fete NM is implemented, each with its **retail "
         f"signature drops** ({n_drops} items across the roster — see the tables "
         f"below). Each listed item rolls independently at "
         f"**{round(r['nm'] * 100)}%** per kill (**{round(r.get('boss', r['nm']) * 100)}%** "
-        "on the zone bosses)."
+        f"on the zone bosses).{guarantee}"
     )
 
 

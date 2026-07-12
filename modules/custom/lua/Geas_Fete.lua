@@ -43,8 +43,13 @@ local S = xi.msg.channel.SYSTEM_3
 -- ITEMS
 -- ===================================================================
 -- Per-item roll chance for the retail signature drops (NM_CATALOG drops = {}).
-local FETE_DROP_RATE      = 0.15
-local FETE_BOSS_DROP_RATE = 0.25
+-- Raised 2026-07-13 (owner: NMs felt like they never dropped -- at 0.15 a
+-- 2-drop NM whiffed ~72% of kills). Plus FETE_DROP_GUARANTEE: if the
+-- independent rolls all miss, one random signature item is forced, so EVERY
+-- kill yields at least one piece of the NM's gear.
+local FETE_DROP_RATE      = 0.35
+local FETE_BOSS_DROP_RATE = 0.60
+local FETE_DROP_GUARANTEE = true
 
 local BEITETSU         = 4060  -- chunk of beitetsu
 local RIFTBORN_BOULDER = 4061  -- riftborn boulder
@@ -431,15 +436,28 @@ local function awardDrops(player, zoneId, def)
     end
 
     -- Retail signature drops: each NM's own drop list (see NM_CATALOG),
-    -- every listed item rolled independently. Bosses are more generous.
-    if def.drops then
+    -- every listed item rolled independently. Bosses are more generous. If
+    -- FETE_DROP_GUARANTEE and nothing dropped, one random item is forced so
+    -- every kill yields at least one signature piece.
+    if def.drops and #def.drops > 0 then
         local rate = (t == 4) and FETE_BOSS_DROP_RATE or FETE_DROP_RATE
+        local got = 0
         for _, dr in ipairs(def.drops) do
             if math.random() < rate then
                 if player:addItem({ id = dr.id, quantity = 1 }) then
+                    got = got + 1
                     player:printToPlayer(string.format('[Geas Fete] %s drops: %s!',
                         def.name, dr.name), S)
                 end
+            end
+        end
+        if got == 0 and FETE_DROP_GUARANTEE then
+            local dr = def.drops[math.random(#def.drops)]
+            if player:addItem({ id = dr.id, quantity = 1 }) then
+                player:printToPlayer(string.format('[Geas Fete] %s drops: %s!',
+                    def.name, dr.name), S)
+            else
+                player:printToPlayer('[Geas Fete] A drop was lost -- make bag room, kupo!', S)
             end
         end
     end
@@ -544,8 +562,12 @@ local function spawnNM(player, zone, zoneId, def)
         isAggroable          = true,
         releaseIdOnDisappear = true,
 
-        onMobDeath = function(mob, killer, isKiller, noKillTly)
-            if not isKiller then return end
+        -- LSB new signature: onMobDeath(mob, player, optParams). The 3rd arg is
+        -- a table (optParams), NOT a bool -- the old `if not isKiller` guard was
+        -- dead code. Reward every credited alliance member (this fires once per
+        -- member); guard only against a nil player.
+        onMobDeath = function(mob, killer, optParams)
+            if killer == nil then return end
             local cur = defCapture.currency or 0
             if cur > 0 then
                 addCurrency(killer, zoneId, cur)
