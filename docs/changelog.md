@@ -5,8 +5,29 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
 ---
 
 !!! note "Week of July 6–12, 2026"
-    **Saturday, July 11**
+    **Sunday, July 12**
 
+    - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-12 00:20
+    - **Relaunch/Dynamis D** — Superior Lv5 weapons now drop from the Mega-Bosses
+    - **Relaunch/Abyssea** — Remove Superior Lv5 weapon drops from Abyssea mobs
+    - **Relaunch/Cheat Sheet** — Card links 404'd -- emit built URLs, not .md paths
+    - **Relaunch/Reforge** — NM drops are base (i109) pieces again, never +1/+2/+3
+    - **Relaunch/Augments** — Drop dropdowns list every world mob + correct stale 60% rate
+    - **Relaunch/Mobs** — MOB_ERA_HP_MULT -- whole-formula HP multiplier for 76+ mobs
+    - **Relaunch/Portal** — Migrate the Player Portal into the Relaunch repo
+    - **Relaunch/Augments** — Announce retail-droplist catalysts in the treasure pool
+    - **Relaunch/Docs** — Close the sync loop — hourly docs writeback + tracked balance settings
+    - **Relaunch/Domain Qm** — Browse weapons by weapon type, not content source
+    - **Relaunch/Docs** — Correct stale 3x drop-rate claim — live multiplier is 1.0
+    - **Relaunch/Docgen** — Item-database stamp catches count-neutral dataset changes
+    - **Relaunch/Docgen** — Gear Finder page stamp now tracks the dataset, not the shell
+    - **Relaunch/Sync** — Don't burn the audit alert fingerprint on a failed webhook post
+    - **Relaunch/Augments** — Flat 10% catalyst drop rate across every source
+    - **Relaunch/Sync** — Self-deploy ops scripts from the docs checkout (OPS-SELFSYNC)
+    - **Relaunch/Sync** — Machine-enforce site==server -- mirror-constant audit + Discord surfacing
+    - **Relaunch/Dungeons** — Boss x20 random picks, trash to treasure pool, docs parse runtime knobs
+    - **Relaunch/Site** — Downloads page -- packaged client files (DAT pack + Windower addons)
+    - **Relaunch/Windower** — Regen augment addon data to the 11-category catalog
     - **Relaunch/Augments** — Owner tier-curve rebalance -- 19 maxBoost ceilings tightened
     - **Relaunch/Docs** — Sync audit part 4 — lua_const_inject + zero naked facts
     - **Relaunch/Docs** — Sync audit part 3 — Maat + Gauntlet numbers generated
@@ -1166,3 +1187,32 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **JOBS** — Auto-unlock RUN + GEO for all players in the Mog House menu
     - ﻿feat(ops): NPC declutter -- status-0 filter + both-bucket SQL
     - **Gm Home** — Cluster the 3 teleport NPCs on the east side
+    - **Linkshell** — Global Legendary server linkshell for all players
+    - **OPS** — Searchable HTML view for the NPC disable audit
+    - ﻿feat(ops): NPC disable audit -- per-zone "extra NPC" review list
+    - **Systems** — Gate login hooks on gameLogin, not `not zoning`
+    - **Missions** — Skip the SoA/RoV mission tails too
+    - **NPC** — Set customMenu send delay to 30ms (was 50, briefly 15)
+    - **NPC** — Lower customMenu send delay 50ms -> 15ms (all NPCs)
+    - **Missions** — Actually skip CoP in the Mission Moogle
+    - ﻿feat(augments): wire up an Enspell Damage catalyst (Wamoura Scale)
+    - ﻿feat(ops): achievements feed for the Discord watcher (second webhook)
+    - ﻿feat(ops): Discord join watcher for the public launch
+    - Feat(jobs)!: retire the Bouncer, restore retail Geomancer on slot 21
+    - **Commands** — Remove dev notes from player command !help text
+    - ﻿fix(world): stop the ZMQ router busy-spin pinning a core at 100%
+    - ﻿fix(mounts): honor MOUNT_SPEED above 255 and clamp the mount branch
+    - ﻿feat(mystats): Ascension section -- every Provenance AP category
+    - **Concurrency** — Public-launch hardening - menu race + dungeon occupancy
+    - **League** — Reisenjima_Henge zoneId is 292, not 291
+    - **Derby** — Chocobo Derby - simulated racing with betting + raised birds
+    - **Treasure** — Treasure maps, overworld digs, buried strongboxes
+    - **League** — Provisioners' League - the non-combat fishing/crafting league
+    - **Prestige** — Spawn Trial bosses on a ring at the summoner, on the floor
+    - **RAID** — The Star-Devourer - weekly multi-phase raid boss
+    - **Invasion** — Scheduled Voidsent assaults on GM Home
+    - **Colosseum** — Async ranked PvP vs AI replicas of real champions
+    - **Prestige** — Spawn Trial bosses at the summoner, not a fixed off-map point
+    - **Dungeons** — Mythic+ keystones - endless key levels above Mythic
+    - ﻿Retire the new-player linkshell; dedupe the Dungeon Veteran title
+    - ﻿docs-in-code: catch comments up to the 5-catalyst reality
