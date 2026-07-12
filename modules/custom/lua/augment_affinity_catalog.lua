@@ -60,7 +60,7 @@ catalog.affinities =
     { cat=7,  bit=6,  label='Pets',                         nm='King_Vinegarroon', trophy={ id=1017,  qty=1, name='Scorpion Stinger'       }, nmZone='Western Altepa Desert' },
     { cat=8,  bit=7,  label='Potency',                      nm='Phoenix',          trophy={ id=844,   qty=1, name='Phoenix Feather'        }, nmZone='Riverne Site A01'      },
     { cat=9,  bit=8,  label='Skills',                       nm='Absolute_Virtue',  trophy={ id=1567,  qty=1, name='Attestation of Virtue'  }, nmZone="Ru'Aun Gardens"        },
-    { cat=10, bit=9,  label='Exp/Cap Points',               nm='Proto-Omega',      trophy={ id=15800, qty=1, name='Omega Ring'             }, nmZone='Temenos'               },
+    { cat=10, bit=9,  label='Exp/Cap Points',               nm='Proto-Omega',      trophy={ id=15800, qty=1, name='Omega Ring'             }, nmZone="Ru'Aun Gardens"        },
     { cat=11, bit=10, label='Job specific niche utilities', nm='Kirin',            trophy={ id=10038, qty=1, name="Kirin's Mane"           }, nmZone="Shrine of Ru'Avitau"   },
 }
 

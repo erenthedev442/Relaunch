@@ -38,7 +38,7 @@ Twenty-four of Vana'diel's most legendary Notorious Monsters — HNMs, Sky Gods,
 | King Vinegarroon | Western Altepa Desert | Scorpion Stinger | Pets |
 | Phoenix | Riverne Site A01 | Phoenix Feather | Potency |
 | Absolute Virtue | Ru'Aun Gardens | Attestation of Virtue | Skills |
-| Proto-Omega | Temenos | Omega Ring | Exp/Cap Points |
+| Proto-Omega | Ru'Aun Gardens | Omega Ring | Exp/Cap Points |
 | Kirin | Shrine of Ru'Avitau | Kirin's Mane | Job specific niche utilities |
 <!-- DOCGEN:END id="affinity-nm-roster" -->
 
@@ -64,6 +64,6 @@ These NMs are **stat-boosted** beyond their retail versions: 6× base HP, +4,000
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 56bbb9a6d676 -->
-_Last updated: 2026-07-10 03:45 PDT_
+<!-- content-hash: cab4ecc3b57d -->
+_Last updated: 2026-07-11 20:54 PDT_
 <!-- DOCGEN:END id="last-updated" -->

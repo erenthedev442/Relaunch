@@ -106,35 +106,34 @@ local ZONES =
     { 'xi.zones.RuAun_Gardens.Zone.onInitialize',           { 17310619, 17310620, 17310621, 17310622, 17310623, 17310624 } }, -- AV/Proto-Omega + Genbu/Seiryu/Byakko/Suzaku (Sky god corners)
 }
 
--- mobid -> Augment-Sage registration trophy item id. Granted directly to the
--- killer on death: the intended droplists (21000-21023, dropid in mob_groups)
--- exceed the engine's MAX_DROPID (5000), so GetDropList rejects them ("DropID
--- too big") and no drop ever rolls. This Lua grant is the working substitute.
-local TROPHY =
-{
-    [17208197] = 860,   [17298310] = 883,   [17490823] = 8983,  [17228680] = 843,    -- Behemoth/K.Beh/K.Arthro/Simurgh
-    [17302409] = 908,   [17310621] = 1404,  [17269643] = 842,   [17310622] = 1405,   -- Adamantoise/Genbu/Roc/Seiryu
-    [17310623] = 1406,  [17240974] = 2421,  [16896911] = 903,   [17404816] = 2229,   -- Byakko/Aspidochelone/Ouryu/Bune
-    [16901009] = 844,   [17310624] = 1407,  [17507219] = 10038, [17408916] = 10037,  -- Phoenix/Suzaku/Kirin/Fafnir
-    [17408917] = 865,   [17617814] = 1526,  [16798615] = 1816,  [17290136] = 1017,   -- Nidhogg/Vrtra/Tiamat/K.Vinegarroon
-    [17556377] = 2372,  [17556378] = 2169,  [17310619] = 1567,  [17310620] = 15800,  -- Khimaira/Cerberus/AV/Proto-Omega
-}
+-- Trophy grants live in augment_affinity_grants.lua (Zone.onMobDeath hook:
+-- catalog-driven, whole alliance, guarded against duplicates/registered).
+-- The hand-synced TROPHY table that used to duplicate the grant here for all
+-- 24 NMs was removed 2026-07-11: since the 2026-07-06 catalog rework only 11
+-- NMs register, and the extra killer-only grant handed out trophies the Sage
+-- no longer accepts (player report: "hunt NMs did not give me the affinity").
+-- What remains here is a one-time courtesy notice when someone kills one of
+-- the 13 NMs that STOPPED registering, so the missing trophy reads as a
+-- design change instead of a bug.
+local affinityCatalog = require('modules/custom/lua/augment_affinity_catalog')
 
--- Grant the killer this NM's registration trophy (shared by the module + !affinitypop).
-local function grantTrophy(m, killer)
-    local trophy = TROPHY[m:getID()]
-    if not trophy or not killer or not killer:isPC() then
+local function deathNotice(m, killer)
+    if not killer or not killer:isPC() then
         return
     end
-    if killer:getFreeSlotsCount() > 0 then
-        killer:addItem(trophy, 1)
-        killer:printToPlayer('[Affinity] Obtained the affinity registration trophy!', SYS)
-    else
-        killer:printToPlayer('[Affinity] Inventory full -- affinity trophy NOT awarded. Make room and rekill.', SYS)
+    if affinityCatalog.byNm(m:getName()) then
+        return  -- live affinity NM: augment_affinity_grants hands out the trophy
     end
+    if killer:getCharVar('affinityReworkNotice') == 1 then
+        return
+    end
+    killer:setCharVar('affinityReworkNotice', 1)
+    killer:printToPlayer(string.format(
+        '[Affinity] %s does not register a Sage affinity -- only the 11 NMs listed at the Augment Sage do. (This notice shows once.)',
+        m:getName():gsub('_', ' ')), SYS)
 end
 xi.affinityAutopop = xi.affinityAutopop or {}
-xi.affinityAutopop.grantTrophy = grantTrophy  -- reused by the !affinitypop command
+xi.affinityAutopop.deathNotice = deathNotice  -- reused by the !affinitypop command
 
 -- mobid -> proper display name. These reused-pool spawns show as "NPC" on the
 -- client; renameEntity sets ONLY packetName (+ flags UPDATE_NAME to push it live),
@@ -222,9 +221,10 @@ local function configureMob(mobid)
         m:setRespawnTime(RESPAWN_SECONDS)
     end)
 
-    -- Grant the registration trophy on death (droplist is unusable; see TROPHY note).
-    mob:addListener('DEATH', 'AFFINITY_TROPHY', function(m, killer)
-        grantTrophy(m, killer)
+    -- One-time "this NM no longer registers" notice (trophy grants themselves
+    -- live in augment_affinity_grants.lua; see deathNotice above).
+    mob:addListener('DEATH', 'AFFINITY_NOTICE', function(m, killer)
+        deathNotice(m, killer)
     end)
 
     -- Fix the "NPC" display name; re-apply on every spawn (packetName resets are cheap).
