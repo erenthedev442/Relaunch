@@ -88,6 +88,30 @@ local function compass(dx, dz)
 end
 
 -----------------------------------
+-- Navmesh probes. GetFurthestValidPosition(entity, dist, theta) walks
+-- the zone navmesh from the entity toward a point `dist` away and
+-- returns the furthest reachable ground {x,y,z} (nil on failure), but
+-- its theta is relative to the entity's facing: nearPosition() places
+-- the point at world bearing 2*pi - (rotationToRadian(rot) + theta).
+-- worldTheta() inverts that so a probe can aim at an absolute bearing
+-- (atan2(dz, dx) convention) regardless of where the player is looking.
+-----------------------------------
+local atan2 = math.atan2 or math.atan
+
+local function worldTheta(player, bearing)
+    local rotRad = (player:getRotPos() / 256) * 2 * math.pi
+    return 2 * math.pi - bearing - rotRad
+end
+
+local function reachablePoint(player, bearing, dist)
+    local ok, pos = pcall(GetFurthestValidPosition, player, dist, worldTheta(player, bearing))
+    if ok and type(pos) == 'table' and pos.x ~= nil then
+        return pos
+    end
+    return nil
+end
+
+-----------------------------------
 -- The strongbox payout.
 -----------------------------------
 local function openStrongbox(player, mapTier)
@@ -180,14 +204,29 @@ m.onDig = function(player)
     local tz = (player:getCharVar('TH_TZ') or 0) / 10.0
 
     -- First dig in the right zone seeds the strongbox in a ring around
-    -- the player - it always lands relative to ground a player can
-    -- demonstrably reach.
+    -- the player. Each candidate is walked along the navmesh from the
+    -- player outward, so the box can never end up inside a wall, over
+    -- a ledge, or out in the sea - only on ground the digger can reach.
     if tx == 0 and tz == 0 then
-        local angle = math.random() * math.pi * 2
-        local dist  = catalog.dig.seedRingMin
-            + math.random() * (catalog.dig.seedRingMax - catalog.dig.seedRingMin)
-        tx = px + math.cos(angle) * dist
-        tz = pz + math.sin(angle) * dist
+        local best, bestDist = nil, -1
+        for _ = 1, catalog.dig.seedTries do
+            local bearing = math.random() * math.pi * 2
+            local want    = catalog.dig.seedRingMin
+                + math.random() * (catalog.dig.seedRingMax - catalog.dig.seedRingMin)
+            local pos = reachablePoint(player, bearing, want)
+            if pos then
+                local ddx, ddz = pos.x - px, pos.z - pz
+                local d = math.sqrt(ddx * ddx + ddz * ddz)
+                if d > bestDist then
+                    best, bestDist = pos, d
+                end
+                if d >= catalog.dig.seedRingMin then break end
+            end
+        end
+        -- Every probe failed (no navmesh?): bury it underfoot rather
+        -- than risk an unreachable spot.
+        tx = best and best.x or px
+        tz = best and best.z or pz
         player:setCharVar('TH_TX', math.floor(tx * 10))
         player:setCharVar('TH_TZ', math.floor(tz * 10))
         player:printToPlayer(
@@ -198,6 +237,28 @@ m.onDig = function(player)
 
     local dx, dz = tx - px, tz - pz
     local dist = math.sqrt(dx * dx + dz * dz)
+
+    -- Reachability self-heal: in the hottest band, verify the ground
+    -- straight toward the box can actually be walked to within
+    -- successRadius. If not (box seeded before the navmesh fix, or a
+    -- terrain quirk), slide the box back to the furthest ground the
+    -- digger CAN reach so no map is ever impossible to finish.
+    if dist > catalog.dig.successRadius and dist <= catalog.dig.healBand then
+        local pos = reachablePoint(player, atan2(dz, dx), dist)
+        if pos then
+            local gx, gz = tx - pos.x, tz - pos.z
+            if math.sqrt(gx * gx + gz * gz) > catalog.dig.successRadius then
+                tx, tz = pos.x, pos.z
+                player:setCharVar('TH_TX', math.floor(tx * 10))
+                player:setCharVar('TH_TZ', math.floor(tz * 10))
+                dx, dz = tx - px, tz - pz
+                dist = math.sqrt(dx * dx + dz * dz)
+                player:printToPlayer(
+                    '[Treasure] The earth here is impenetrable... the pull shudders and settles into softer ground nearby.',
+                    xi.msg.channel.SYSTEM_3)
+            end
+        end
+    end
 
     if dist <= catalog.dig.successRadius then
         local mapTier = player:getCharVar('TH_MapTier') or 1

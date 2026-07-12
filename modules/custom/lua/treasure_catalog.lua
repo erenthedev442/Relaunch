@@ -55,8 +55,10 @@ catalog.dig =
 {
     cooldownSec   = 5,
     seedRingMin   = 35.0,   -- strongbox lands this far from your FIRST dig...
-    seedRingMax   = 70.0,   -- ...anchored to ground you can clearly stand on
+    seedRingMax   = 70.0,   -- ...walked along the navmesh so it is always reachable
+    seedTries     = 8,      -- navmesh probes to cast before settling for the farthest hit
     successRadius = 12.0,   -- dig within this of the box = found
+    healBand      = 25.0,   -- within this of an unreachable box, it relocates to reachable ground
     -- Temperature feedback bands (2D distance, walked in order).
     bands =
     {
