@@ -36,6 +36,10 @@ Notes / limitations:
   * relaunch_source is derived from item ids referenced in the custom lua
     catalogs/loot pools. A file's label is inferred from its name (see LABELS).
   * An item with neither column populated is currently UNOBTAINABLE in the repo.
+  * score_class / score come from the SAME gear-finder algorithm the vendor
+    scorers use (shared tools/scoring_weights.py + tools/_item_mods.py): the
+    best-scoring role (DPS/WS/TANK/CASTER/HEAL/PET) and its score. These match
+    the "-- DPS score 70" comments the scorers write into the catalogs.
 """
 from __future__ import annotations
 
@@ -122,11 +126,13 @@ for blob in _rows(SQL / "item_equipment.sql", "item_equipment"):
     f = _fields(blob)
     if len(f) > 8 and f[0].isdigit():
         iid = int(f[0])
+        jobmask = int(f[4]) if f[4].isdigit() else 0
         gear[iid] = {
-            "level":  int(f[2]) if f[2].isdigit() else 0,
-            "ilvl":   int(f[3]) if f[3].isdigit() else 0,
-            "jobs":   decode_jobs(int(f[4])) if f[4].isdigit() else "",
-            "slot":   decode_slot(int(f[8])) if f[8].isdigit() else "-",
+            "level":   int(f[2]) if f[2].isdigit() else 0,
+            "ilvl":    int(f[3]) if f[3].isdigit() else 0,
+            "jobs":    decode_jobs(jobmask),
+            "jobmask": jobmask,
+            "slot":    decode_slot(int(f[8])) if f[8].isdigit() else "-",
         }
 
 # ---------------------------------------------------------------------------
@@ -394,6 +400,110 @@ def relaunch_source(iid: int) -> str:
     return " | ".join(sorted(labels))
 
 # ---------------------------------------------------------------------------
+# Gear-finder SCORE + CLASS (role). Reuses the SAME scoring the four vendor
+# scorers use, so the numbers match the "-- DPS score 70" catalog comments:
+#   * shared weights/caps  -> tools/scoring_weights.py (imported)
+#   * merged item mods      -> tools/_item_mods.load_item_mod_map (imported)
+#   * role<->jobs + weapon DMG constants are copied below (small, stable) with
+#     their source file noted -- keep in sync if the scorers change them.
+# score  = the best role's score (rounded, like the catalog's {:.0f}).
+# class  = that best role (DPS / WS / TANK / CASTER / HEAL / PET).
+SCORING = True
+try:
+    try:
+        from tools.scoring_weights import (ROLE_WEIGHTS, MOD_SANITY_CAP,
+                                            CAP_DEFAULT, DD_ALWAYS_LATENTS)
+        from tools._item_mods import load_item_mod_map
+    except ImportError:
+        sys.path.insert(0, str(ROOT / "tools"))
+        from scoring_weights import (ROLE_WEIGHTS, MOD_SANITY_CAP,
+                                     CAP_DEFAULT, DD_ALWAYS_LATENTS)
+        from _item_mods import load_item_mod_map
+except Exception as exc:  # scoring is optional -- never break the source audit
+    print(f"[warn] scoring disabled ({exc}); score/class columns blank")
+    SCORING = False
+
+if SCORING:
+    JOB = {n: 1 << i for i, n in enumerate(JOB_ORDER)}
+    # role -> qualifying jobs (source: tools/score_armor.py ROLE_JOBS)
+    ROLE_JOBS = {
+        'DPS':    ['WAR', 'MNK', 'THF', 'DRK', 'BST', 'BRD', 'RNG', 'SAM',
+                   'NIN', 'DRG', 'BLU', 'COR', 'DNC', 'PUP', 'RUN'],
+        'WS':     ['WAR', 'MNK', 'THF', 'DRK', 'BST', 'BRD', 'RNG', 'SAM',
+                   'NIN', 'DRG', 'BLU', 'COR', 'DNC', 'PUP', 'RUN'],
+        'TANK':   ['PLD', 'RUN', 'WAR', 'NIN'],
+        'CASTER': ['BLM', 'SCH', 'GEO', 'SMN', 'RDM'],
+        'HEAL':   ['WHM', 'SCH', 'RDM', 'BRD', 'GEO'],
+        'PET':    ['SMN', 'BST', 'PUP'],
+    }
+    ROLE_MASKS = {r: sum(JOB[j] for j in js) for r, js in ROLE_JOBS.items()}
+    # weapon DMG terms (source: tools/score_weapons.py)
+    DPS_WEIGHT, WS_DMG_WEIGHT = 2.0, 0.5
+    RANGED_DMG_MULT = {25: 2.0, 26: 3.0}  # 25 Archery, 26 Marksmanship
+
+    def _clamp(mid: int, val: int) -> int:
+        cap = MOD_SANITY_CAP.get(mid, CAP_DEFAULT)
+        return max(-cap, min(cap, val))
+
+    _mod_map = load_item_mod_map(SQL)
+    item_mods: dict[int, list] = {}
+    for (iid, mid), val in _mod_map.items():
+        item_mods.setdefault(iid, []).append((mid, val))
+
+    item_latents: dict[int, list] = {}
+    with (SQL / "item_latents.sql").open(encoding="utf-8", errors="replace") as fh:
+        for line in fh:
+            m = re.match(r"^INSERT INTO `item_latents` VALUES \((\d+),(\d+),(-?\d+),(-?\d+),(-?\d+)\)", line)
+            if m:
+                item_latents.setdefault(int(m.group(1)), []).append(
+                    (int(m.group(2)), int(m.group(3)), int(m.group(4))))
+
+    weapon_stats: dict[int, dict] = {}
+    with (SQL / "item_weapon.sql").open(encoding="utf-8", errors="replace") as fh:
+        for line in fh:
+            m = re.match(r"^INSERT INTO `item_weapon` VALUES "
+                         r"\((\d+),'[^']*',(\d+),-?\d+,-?\d+,-?\d+,-?\d+,\d+,\d+,(\d+),(\d+),", line)
+            if m:
+                weapon_stats[int(m.group(1))] = {
+                    "skill": int(m.group(2)), "delay": int(m.group(3)), "dmg": int(m.group(4))}
+
+    def _score_role(iid: int, role: str) -> float:
+        w = ROLE_WEIGHTS[role]
+        s = 0.0
+        for mid, val in item_mods.get(iid, ()):
+            ww = w.get(mid)
+            if ww:
+                s += _clamp(mid, val) * ww
+        for mid, val, lat in item_latents.get(iid, ()):
+            ww = w.get(mid)
+            if not ww:
+                continue
+            full = role in ("DPS", "WS") and lat in DD_ALWAYS_LATENTS
+            s += _clamp(mid, val) * ww * (1.0 if full else 0.5)
+        ws = weapon_stats.get(iid)
+        if ws and ws["delay"] > 0:
+            rmult = RANGED_DMG_MULT.get(ws["skill"], 1.0)
+            if role == "DPS":
+                s += (ws["dmg"] * 60 / ws["delay"]) * DPS_WEIGHT * rmult
+            elif role == "WS":
+                s += ws["dmg"] * WS_DMG_WEIGHT * rmult
+        return s
+
+    def best_score(iid: int):
+        jm = gear[iid]["jobmask"]
+        best_role, best = "", 0.0
+        for role in ROLE_WEIGHTS:
+            if jm & ROLE_MASKS[role] == 0:
+                continue
+            sc = _score_role(iid, role)
+            if sc > best:
+                best, best_role = sc, role
+        return best_role, best
+else:
+    def best_score(iid: int):
+        return "", 0.0
+
+# ---------------------------------------------------------------------------
 # Emit CSV
 
 out_path = Path(sys.argv[1]) if len(sys.argv) > 1 else (ROOT / "exports" / "gear_source_audit.csv")
@@ -403,15 +513,19 @@ rows = 0
 with out_path.open("w", newline="", encoding="utf-8") as fh:
     w = csv.writer(fh)
     w.writerow(["item_id", "name", "level", "ilvl", "slot", "jobs",
+                "score_class", "score",
                 "retail_source", "relaunch_source", "invasion_pool", "obtainable"])
     for iid in sorted(gear):
         g = gear[iid]
         rt = retail_source(iid)
         rl = relaunch_source(iid)
         inv = iid in invasion_pool
+        role, sc = best_score(iid)
         w.writerow([
             iid, names.get(iid, f"item_{iid}"), g["level"], g["ilvl"],
-            g["slot"], g["jobs"], rt, rl,
+            g["slot"], g["jobs"],
+            role, round(sc) if role else "",
+            rt, rl,
             "yes" if inv else "",
             "yes" if (rt or rl or inv) else "NO",
         ])
