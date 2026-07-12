@@ -201,7 +201,7 @@ A third member of the Escha ZiTah gear-vendor row, paid in the **same Bronze/Sil
 Re-run `tools/rebalance_all.bat` after any DB or scoring-weight change — that one batch refreshes Armor + Weapons + Accessory catalogs together.
 
 <!-- DOCGEN:BEGIN id="accessory-slots" -->
-_149 accessories — 🥉 40 Bronze · 🥈 39 Silver · 🥇 70 Gold. Each slot lists every tier together — pick by your job and the medal you have._
+_147 accessories — 🥉 39 Bronze · 🥈 39 Silver · 🥇 69 Gold. Each slot lists every tier together — pick by your job and the medal you have._
 
 **Tiers:** <span class="tier-pill tier-bronze">🥉&nbsp;Bronze</span> Beastmens Medal · <span class="tier-pill tier-silver">🥈&nbsp;Silver</span> Kindreds Medal · <span class="tier-pill tier-gold">🥇&nbsp;Gold</span> Demons Medal — BiS
 
@@ -325,7 +325,6 @@ _Within each slot, tiers run Bronze → Gold; the top pick per tier is listed fi
 | <a class="item-link" href="https://www.ffxiah.com/item/15816" data-img="https://www.bg-wiki.com/images/0/00/Ladybug_Ring_%2B1_description.png" target="_blank" rel="noopener">Ladybug Ring +1</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 15 | All | TANK (6) | — |
 | <a class="item-link" href="https://www.ffxiah.com/item/10752" data-img="https://www.bg-wiki.com/images/c/c9/Prolix_Ring_description.png" target="_blank" rel="noopener">Prolix Ring</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 15 | All | CASTER (5) | RARE |
 | <a class="item-link" href="https://www.ffxiah.com/item/13284" data-img="https://www.bg-wiki.com/images/b/b7/Eremite%27s_Ring_description.png" target="_blank" rel="noopener">Eremites Ring</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 15 | All | CASTER (4) | — |
-| <a class="item-link" href="https://www.ffxiah.com/item/26195" data-img="https://www.bg-wiki.com/images/4/4e/Jann._Ring_%2B1_description.png" target="_blank" rel="noopener">Janniston Ring +1</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 15 | All | CASTER (2) | RARE,EX |
 | <a class="item-link" href="https://www.ffxiah.com/item/15837" data-img="https://www.bg-wiki.com/images/0/05/Smilodon_Ring_%2B1_description.png" target="_blank" rel="noopener">Smilodon Ring +1</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 15 | All | — | — |
 | <a class="item-link" href="https://www.ffxiah.com/item/11672" data-img="https://www.bg-wiki.com/images/a/a7/Mujin_Band_description.png" target="_blank" rel="noopener">Mujin Band</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 15 | All | — | — |
 | <a class="item-link" href="https://www.ffxiah.com/item/13553" data-img="https://www.bg-wiki.com/images/d/d6/Blitz_Ring_description.png" target="_blank" rel="noopener">Blitz Ring</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 15 | WAR/PLD/DRK/BST/DRG | — | — |
@@ -341,7 +340,6 @@ _Within each slot, tiers run Bronze → Gold; the top pick per tier is listed fi
 | <a class="item-link" href="https://www.ffxiah.com/item/10769" data-img="https://www.bg-wiki.com/images/d/dd/Gelatinous_Ring_%2B1_description.png" target="_blank" rel="noopener">Gelatinous Ring +1</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | TANK (64) | RARE,EX |
 | <a class="item-link" href="https://www.ffxiah.com/item/26184" data-img="https://www.bg-wiki.com/images/8/8b/Stikini_Ring_%2B1_description.png" target="_blank" rel="noopener">Stikini Ring +1</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | HEAL (63) | — |
 | <a class="item-link" href="https://www.ffxiah.com/item/13566" data-img="https://www.bg-wiki.com/images/b/b9/Defending_Ring_description.png" target="_blank" rel="noopener">Defending Ring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | TANK (60) | RARE,EX |
-| <a class="item-link" href="https://www.ffxiah.com/item/26193" data-img="https://www.bg-wiki.com/images/8/8a/Woltaris_Ring_%2B1_description.png" target="_blank" rel="noopener">Woltaris Ring +1</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | HEAL (60) | RARE,EX |
 | <a class="item-link" href="https://www.ffxiah.com/item/28472" data-img="https://www.bg-wiki.com/images/d/d7/Freke_Ring_description.png" target="_blank" rel="noopener">Freke Ring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | WHM/BLM/RDM/SMN/SCH/GEO | CASTER (49) | RARE,EX |
 | <a class="item-link" href="https://www.ffxiah.com/item/10766" data-img="https://www.bg-wiki.com/images/f/f0/Lunette_Ring_description.png" target="_blank" rel="noopener">Lunette Ring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | — | — |
 | <a class="item-link" href="https://www.ffxiah.com/item/26227" data-img="https://www.bg-wiki.com/images/8/8c/Cornelia%27s_Ring_description.png" target="_blank" rel="noopener">Cornelias Ring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | — | — |
@@ -393,7 +391,7 @@ Looking for **+4 armor**? That's no longer bought here — the +4 tier is an ear
 
 ### Accessories
 
-_90 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
+_78 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 
 | Item | Cost | Notes |
 |---|---:|---|
@@ -409,29 +407,17 @@ _90 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 | <a class="item-link" href="https://www.ffxiah.com/item/21431" data-img="https://www.bg-wiki.com/images/7/71/Coiste_Bodhar_description.png" target="_blank" rel="noopener">Coiste Bodhar</a> | 300 | Earring. Double Attack + WS damage. · Top DD earring (Omen). |
 | <a class="item-link" href="https://www.ffxiah.com/item/26108" data-img="https://www.bg-wiki.com/images/0/01/Odr_Earring_description.png" target="_blank" rel="noopener">Odr Earring</a> | 250 | Accessory top-5 (ear) · Jobs: MNK/THF/RNG/NIN/BLU/COR/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/26118" data-img="https://www.bg-wiki.com/images/f/fe/Sroda_Earring_description.png" target="_blank" rel="noopener">Sroda Earring</a> | 300 | Earring. STR + WS damage. · DD earring. |
-| <a class="item-link" href="https://www.ffxiah.com/item/26192" data-img="https://www.bg-wiki.com/images/7/7e/Adoulin_Ring_%2B1_description.png" target="_blank" rel="noopener">Adoulin Ring +1</a> | 10000 | Ring. All-rounder: HP/MP+55, Atk/Rng.Atk+20, Acc/Rng.Acc/MAtk/MAcc+8. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26227" data-img="https://www.bg-wiki.com/images/8/8c/Cornelia%27s_Ring_description.png" target="_blank" rel="noopener">Cornelia's Ring</a> | 500 | Ring. Best WS-damage ring (WS damage +10%, WS Acc+20). · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/13566" data-img="https://www.bg-wiki.com/images/b/b9/Defending_Ring_description.png" target="_blank" rel="noopener">Defending Ring</a> | 1500 | Damage Taken -10%. · Locks itself once equipped. · The grand prize. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26231" data-img="https://www.bg-wiki.com/images/f/f8/Ephramad%27s_Ring_description.png" target="_blank" rel="noopener">Ephramad's Ring</a> | 300 | Ring. MND+15, Cure Potency+10%, Healing Skill+15. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26230" data-img="https://www.bg-wiki.com/images/b/bd/Fickblix%27s_Ring_description.png" target="_blank" rel="noopener">Fickblix's Ring</a> | 300 | Ring. INT+15, Magic Atk+15, Magic Acc+20. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/28471" data-img="https://www.bg-wiki.com/images/0/02/Gere_Ring_description.png" target="_blank" rel="noopener">Gere Ring</a> | 250 | Accessory top-5 (ring) · Jobs: MNK/THF/BST/NIN/PUP/DNC |
-| <a class="item-link" href="https://www.ffxiah.com/item/26197" data-img="https://www.bg-wiki.com/images/4/49/Gorney_Ring_%2B1_description.png" target="_blank" rel="noopener">Gorney Ring +1</a> | 10000 | Ring. THF utility: Steal+3, Treasure Hunter+1, Mug+2, Gilfinder+2. · EX/RARE. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Gurebu%27s+Ring&go=Go" data-img="" target="_blank" rel="noopener">Gurebu's Ring</a> | 300 | Ring. STR+10, VIT+10, Double Attack+5%. · EX/RARE. |
-| <a class="item-link" href="https://www.ffxiah.com/item/26198" data-img="https://www.bg-wiki.com/images/4/44/Haverton_Ring_%2B1_description.png" target="_blank" rel="noopener">Haverton Ring +1</a> | 10000 | Ring. Ranged/NIN: Rng.Acc+23, Ninjutsu+11, Dual Wield+6%, Snapshot+7%. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26186" data-img="https://www.bg-wiki.com/images/5/56/Ilabrat_Ring_description.png" target="_blank" rel="noopener">Ilabrat Ring</a> | 250 | Accessory top-5 (ring) · Jobs: MNK/WHM/RDM/THF/BST/BRD/RNG/SAM/NIN/BLU/COR/DNC/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/26195" data-img="https://www.bg-wiki.com/images/4/4e/Jann._Ring_%2B1_description.png" target="_blank" rel="noopener">Janniston Ring +1</a> | 10000 | Ring. Healer: MP+44, Enmity-8, Cure Potency II+6%. · EX/RARE. |
-| <a class="item-link" href="https://www.ffxiah.com/item/26199" data-img="https://www.bg-wiki.com/images/7/79/Karieyh_Ring_%2B1_description.png" target="_blank" rel="noopener">Karieyh Ring +1</a> | 10000 | Ring. Weaponskill: WS Acc+10, Regain+5, WS damage+4%. · EX/RARE. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Lehko%27s+Ring&go=Go" data-img="" target="_blank" rel="noopener">Lehko's Ring</a> | 300 | Ring. DEX+10, AGI+10, Store TP+5, Haste+2%. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26225" data-img="https://www.bg-wiki.com/images/5/56/Medada%27s_Ring_description.png" target="_blank" rel="noopener">Medada's Ring</a> | 300 | Ring. STR+10, Acc+15, Crit Rate+3%. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26190" data-img="https://www.bg-wiki.com/images/e/e3/Moonlight_Ring_description.png" target="_blank" rel="noopener">Moonlight Ring</a> | 300 | Ring. Hybrid (DT-, Accuracy). · Universal ring. |
-| <a class="item-link" href="https://www.ffxiah.com/item/26203" data-img="https://www.bg-wiki.com/images/a/a4/Orvail_Ring_%2B1_description.png" target="_blank" rel="noopener">Orvail Ring +1</a> | 10000 | Ring. Crafting: Synth success+2%, skill-up+6, material loss-2%, HQ+2. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26228" data-img="https://www.bg-wiki.com/images/6/65/Ragelise%27s_Ring_description.png" target="_blank" rel="noopener">Ragelise's Ring</a> | 300 | Ring. HP+30, DEF+20, MND+10. · EX/RARE. |
-| <a class="item-link" href="https://www.ffxiah.com/item/26196" data-img="https://www.bg-wiki.com/images/2/2d/Renaye_Ring_%2B1_description.png" target="_blank" rel="noopener">Renaye Ring +1</a> | 10000 | Ring. Magic skill (Singing/Blue/Geomancy)+11, Refresh+2. · EX/RARE. |
-| <a class="item-link" href="https://www.ffxiah.com/item/26202" data-img="https://www.bg-wiki.com/images/c/c7/Shneddick_Ring_%2B1_description.png" target="_blank" rel="noopener">Shneddick Ring +1</a> | 10000 | Ring. Movement+18%, Resist Petrify/Bind/Gravity+17. · EX/RARE. |
-| <a class="item-link" href="https://www.ffxiah.com/item/26201" data-img="https://www.bg-wiki.com/images/8/8a/Thur._Ring_%2B1_description.png" target="_blank" rel="noopener">Thurandaut Ring +1</a> | 10000 | Ring. Pet: Atk/Rng.Atk+23, Acc/Rng.Acc+22, Dmg taken-4%, Haste+4%. · EX/RARE. (BST/SMN/PUP/DRG) |
-| <a class="item-link" href="https://www.ffxiah.com/item/26200" data-img="https://www.bg-wiki.com/images/e/ef/Vocane_Ring_%2B1_description.png" target="_blank" rel="noopener">Vocane Ring +1</a> | 10000 | Ring. Tank: Damage taken-8%, Cure Potency Rcvd+6%, Knockback res+2. · EX/RARE. |
-| <a class="item-link" href="https://www.ffxiah.com/item/26194" data-img="https://www.bg-wiki.com/images/0/0e/Weather._Ring_%2B1_description.png" target="_blank" rel="noopener">Weatherspoon Ring +1</a> | 10000 | Ring. Caster: Magic Acc+13, Fast Cast+6%, Light magic+11%, Quick Magic+4%. · EX/RARE. |
-| <a class="item-link" href="https://www.ffxiah.com/item/26193" data-img="https://www.bg-wiki.com/images/8/8a/Woltaris_Ring_%2B1_description.png" target="_blank" rel="noopener">Woltaris Ring +1</a> | 10000 | Ring. Sustain: Refresh+2, Regen+2, Sublimation+2. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/28420" data-img="https://www.bg-wiki.com/images/7/7d/Fotia_Belt_description.png" target="_blank" rel="noopener">Fotia Belt</a> | 250 | Waist. Universal WS belt (WS damage). · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26361" data-img="https://www.bg-wiki.com/images/5/54/Gerdr_Belt_%2B1_description.png" target="_blank" rel="noopener">Gerdr Belt +1</a> | 250 | Accessory top-5 (waist) · Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/26334" data-img="https://www.bg-wiki.com/images/1/18/Ioskeha_Belt_%2B1_description.png" target="_blank" rel="noopener">Ioskeha Belt +1</a> | 300 | Waist. DEX + Double Attack. · DD belt. |
@@ -492,6 +478,6 @@ _90 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3db7ff1976eb -->
-_Last updated: 2026-07-12 08:02 PDT_
+<!-- content-hash: 08bc74fdb82f -->
+_Last updated: 2026-07-12 08:06 PDT_
 <!-- DOCGEN:END id="last-updated" -->

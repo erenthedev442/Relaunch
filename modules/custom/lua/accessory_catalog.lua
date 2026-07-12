@@ -97,7 +97,6 @@ table.insert(b.ring, { id =  15837, name = 'Smilodon Ring +1'                  ,
 table.insert(b.ring, { id =  14616, name = 'Triton Ring'                       , cost =  15, jobs = 'All' })  -- TANK score 6
 table.insert(b.ring, { id =  10752, name = 'Prolix Ring'                       , cost =  15, jobs = 'All' })  -- CASTER score 5 [RARE]
 table.insert(b.ring, { id =  11672, name = 'Mujin Band'                        , cost =  15, jobs = 'All' })  -- WS score 5 [RARE]
-table.insert(b.ring, { id =  26195, name = 'Janniston Ring +1'                 , cost =  15, jobs = 'All' })  -- CASTER score 2 [RARE,EX]
 table.insert(b.ring, { id =  13553, name = 'Blitz Ring'                        , cost =  15, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- DPS score 5 [RARE]
 table.insert(b.ring, { id =  15816, name = 'Ladybug Ring +1'                   , cost =  15, jobs = 'All' })  -- TANK score 6
 table.insert(b.ring, { id =  13284, name = 'Eremites Ring'                     , cost =  15, jobs = 'All' })  -- CASTER score 4
@@ -253,7 +252,6 @@ table.insert(g.ring, { id =  10769, name = 'Gelatinous Ring +1'                ,
 table.insert(g.ring, { id =  26215, name = 'Menelauss Ring'                    , cost =  60, jobs = 'All' })  -- DPS score 96 [RARE]
 table.insert(g.ring, { id =  28471, name = 'Gere Ring'                         , cost =  60, jobs = 'MNK/THF/BST/NIN/PUP/DNC' })  -- DPS score 82 [RARE,EX]
 table.insert(g.ring, { id =  13566, name = 'Defending Ring'                    , cost =  60, jobs = 'All' })  -- TANK score 60 [RARE,EX]
-table.insert(g.ring, { id =  26193, name = 'Woltaris Ring +1'                  , cost =  60, jobs = 'All' })  -- HEAL score 60 [RARE,EX]
 
 -- back
 table.insert(g.back, { id =  28624, name = 'Niht Mantle'                       , cost =  60, jobs = 'DRK' })  -- DPS score 80 [EX]
