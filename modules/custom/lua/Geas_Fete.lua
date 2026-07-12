@@ -37,6 +37,10 @@ local S = xi.msg.channel.SYSTEM_3
 -- ===================================================================
 -- ITEMS
 -- ===================================================================
+-- Per-item roll chance for the retail signature drops (NM_CATALOG drops = {}).
+local FETE_DROP_RATE      = 0.15
+local FETE_BOSS_DROP_RATE = 0.25
+
 local BEITETSU         = 4060  -- chunk of beitetsu
 local RIFTBORN_BOULDER = 4061  -- riftborn boulder
 local RIFTCINDER       = 3499  -- pinch of riftcinder
@@ -99,50 +103,105 @@ local ZITAH = xi.zone.ESCHA_ZITAH  -- 288
 local RUAUN = xi.zone.ESCHA_RUAUN  -- 289
 
 local NM_CATALOG = {
+    -- Full retail Geas Fete roster (BG-wiki, 2026-07-12) + the relaunch
+    -- originals. gids are stock mob_groups rows for zones 288/289. Each
+    -- retail NM carries its retail signature drops (drops = {...}); the
+    -- roll happens in awardDrops (FETE_DROP_RATE / FETE_BOSS_DROP_RATE).
+    -- Kirin has no retail gear table -- he pays beads + the T3 material
+    -- spread. Retail tiering: 119->T1, 125->T2, 135/HELM/AA/gods->T3.
     [ZITAH] = {
-        -- Tier 1 -------------------------------------------------------
-        { name='Hugemaw Harold',   gid=24, tier=1, hp=150000, currency=400, cooldown=1800 },
-        { name='Prickly Pitriv',   gid=25, tier=1, hp=150000, currency=400, cooldown=1800 },
-        { name='Serpopard Ninlil', gid=26, tier=1, hp=120000, currency=350, cooldown=1800 },
-        { name='Abyssdiver',       gid=27, tier=1, hp=100000, currency=300, cooldown=1800 },
-        { name='Eschan Jewelweed', gid=36, tier=1, hp=100000, currency=300, cooldown=1800 },
-        -- Tier 2 -------------------------------------------------------
-        { name='Keeper of Heiligtum', gid=28, tier=2, hp=300000, currency=800,  cooldown=3600 },
-        { name='Jester Malatrix',     gid=33, tier=2, hp=280000, currency=750,  cooldown=3600 },
-        { name='Immanibugard',        gid=34, tier=2, hp=320000, currency=800,  cooldown=3600 },
-        { name='Beist',               gid=35, tier=2, hp=350000, currency=900,  cooldown=3600 },
-        { name='Wepwawet',            gid=37, tier=2, hp=300000, currency=800,  cooldown=3600 },
-        -- Tier 3 -------------------------------------------------------
-        { name='Voso',           gid=32, tier=3, hp=550000, currency=1500, cooldown=5400 },
-        { name='Lustful Lydia',  gid=38, tier=3, hp=500000, currency=1200, cooldown=5400 },
-        { name='Aglaophotis',    gid=39, tier=3, hp=550000, currency=1300, cooldown=5400 },
-        { name='Ferrodon',       gid=46, tier=3, hp=600000, currency=1500, cooldown=5400 },
-        { name='Blazewing',      gid=49, tier=3, hp=520000, currency=1200, cooldown=5400 },
+        -- Tier 1 (retail 119) ------------------------------------------
+        { name='Wepwawet', gid=37, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=27099, name='Naga Tekko' }, { id=27461, name='Pursuer\'s Gaiters' }, { id=21413, name='Clemency Grip' }, { id=26791, name='Eschite Helm' } } },
+        { name='Lustful Lydia', gid=38, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=26947, name='Eschite Breastplate' }, { id=27284, name='Naga Hakama' }, { id=26796, name='Psycloth Tiara' }, { id=22250, name='Seraphic Ampulla' } } },
+        { name='Aglaophotis', gid=39, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=27097, name='Eschite Gauntlets' }, { id=26952, name='Psycloth Vest' }, { id=27459, name='Naga Kyahan' }, { id=27512, name='Marked Gorget' } } },
+        { name='Tangata Manu', gid=40, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=27282, name='Eschite Cuisses' }, { id=27102, name='Psycloth Manillas' }, { id=28474, name='Mendicant\'s Earring' }, { id=26794, name='Rawhide Mask' } } },
+        { name='Vidala', gid=41, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=27552, name='Overbearing Ring' }, { id=27287, name='Psycloth Lappas' }, { id=26950, name='Rawhide Vest' }, { id=27457, name='Eschite Greaves' } } },
+        { name='Gestalt', gid=42, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=27462, name='Psycloth Boots' }, { id=26792, name='Despair Helm' }, { id=27606, name='Disperser\'s Cape' }, { id=27100, name='Rawhide Gloves' } } },
+        { name='Angrboda', gid=43, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=28416, name='Lucidity Sash' }, { id=26948, name='Despair Mail' }, { id=26797, name='Vanya Hood' }, { id=27285, name='Rawhide Trousers' } } },
+        { name='Cunnast', gid=44, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=26953, name='Vanya Robe' }, { id=27098, name='Despair Finger Gauntlets' }, { id=27460, name='Rawhide Boots' }, { id=21414, name='Willpower Grip' } } },
+        { name='Revetaur', gid=45, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=26795, name='Pursuer\'s Beret' }, { id=27103, name='Vanya Cuffs' }, { id=27283, name='Despair Cuisses' }, { id=22251, name='Grenade Core' } } },
+        { name='Ferrodon', gid=46, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=27458, name='Despair Greaves' }, { id=27513, name='Subtlety Spectacles' }, { id=26951, name='Pursuer\'s Doublet' }, { id=27288, name='Vanya Slops' } } },
+        { name='Gulltop', gid=47, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=27101, name='Pursuer\'s Cuffs' }, { id=26793, name='Naga Somen' }, { id=27463, name='Vanya Clogs' }, { id=28475, name='Infused Earring' } } },
+        { name='Vyala', gid=48, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=27553, name='Resonance Ring' }, { id=27286, name='Pursuer\'s Pants' }, { id=26949, name='Naga Samue' } } },
+        -- Tier 1 (relaunch originals) ----------------------------------
+        { name='Hugemaw Harold', gid=24, tier=1, hp=130000, currency=350, cooldown=1800 },
+        { name='Prickly Pitriv', gid=25, tier=1, hp=130000, currency=350, cooldown=1800 },
+        { name='Serpopard Ninlil', gid=26, tier=1, hp=130000, currency=350, cooldown=1800 },
+        { name='Abyssdiver', gid=27, tier=1, hp=130000, currency=350, cooldown=1800 },
+        { name='Eschan Jewelweed', gid=36, tier=1, hp=130000, currency=350, cooldown=1800 },
+        -- Tier 2 (retail 125) ------------------------------------------
+        { name='Ionos', gid=55, tier=2, hp=320000, currency=800, cooldown=3600, drops = { { id=20524, name='Nibiru Sainti' }, { id=21216, name='Nibiru Bow' }, { id=20895, name='Nibiru Sickle' }, { id=27607, name='Thaumaturge\'s Cape' } } },
+        { name='Sensual Sandy', gid=56, tier=2, hp=320000, currency=800, cooldown=3600, drops = { { id=20600, name='Nibiru Knife' }, { id=20939, name='Nibiru Lance' }, { id=21273, name='Nibiru Gun' }, { id=28417, name='Sinew Belt' } } },
+        { name='Nosoi', gid=57, tier=2, hp=320000, currency=800, cooldown=3600, drops = { { id=20710, name='Nibiru Blade' }, { id=28476, name='Calamitous Earring' }, { id=20983, name='Mijin' }, { id=27642, name='Nibiru Shield' } } },
+        { name='Brittlis', gid=58, tier=2, hp=320000, currency=800, cooldown=3600, drops = { { id=27554, name='Purity Ring' }, { id=21699, name='Nibiru Faussar' }, { id=21399, name='Nibiru Harp' }, { id=21031, name='Sensui' } } },
+        { name='Kamohoalii', gid=59, tier=2, hp=320000, currency=800, cooldown=3600, drops = { { id=20801, name='Nibiru Tabar' }, { id=21092, name='Nibiru Cudgel' }, { id=21415, name='Forefathers\' Grip' } } },
+        { name='Umdhlebi', gid=60, tier=2, hp=320000, currency=800, cooldown=3600, drops = { { id=20848, name='Nibiru Chopper' }, { id=21156, name='Nibiru Staff' }, { id=22252, name='Sapience Orb' } } },
+        -- Tier 2 (relaunch originals) ----------------------------------
+        { name='Keeper of Heiligtum', gid=28, tier=2, hp=320000, currency=800, cooldown=3600 },
+        { name='Jester Malatrix', gid=33, tier=2, hp=320000, currency=800, cooldown=3600 },
+        { name='Immanibugard', gid=34, tier=2, hp=320000, currency=800, cooldown=3600 },
+        { name='Beist', gid=35, tier=2, hp=320000, currency=800, cooldown=3600 },
+        -- Tier 3 (retail 135 + HELM NMs) -------------------------------
+        { name='Fleetstalker', gid=61, tier=3, hp=550000, currency=1300, cooldown=5400, drops = { { id=27605, name='Penetrating Cape' }, { id=26958, name='Sweller\'s Harness' }, { id=20847, name='Router' }, { id=27104, name='Shrieker\'s Cuffs' } } },
+        { name='Shockmaw', gid=62, tier=3, hp=550000, currency=1300, cooldown=5400, drops = { { id=27464, name='Inspirited Boots' }, { id=27289, name='Doyen Pants' }, { id=27511, name='Dampener\'s Torque' }, { id=20938, name='Annealed Lance' } } },
+        { name='Urmahlullu', gid=63, tier=3, hp=550000, currency=1300, cooldown=5400, drops = { { id=26963, name='Onca Suit' }, { id=28415, name='Eschan Stone' }, { id=27783, name='Skormoth Mask' }, { id=20523, name='Chastisers' } } },
+        { name='Alpluachra', gid=52, tier=3, hp=550000, currency=1300, cooldown=5400, drops = { { id=28477, name='Hermetic Earring' }, { id=26960, name='Annointed Kalasiris' } } },
+        { name='Bucca', gid=50, tier=3, hp=550000, currency=1300, cooldown=5400, drops = { { id=28477, name='Hermetic Earring' }, { id=26960, name='Annointed Kalasiris' } } },
+        { name='Puca', gid=51, tier=3, hp=550000, currency=1300, cooldown=5400, drops = { { id=28477, name='Hermetic Earring' }, { id=26960, name='Annointed Kalasiris' } } },
+        { name='Blazewing', gid=49, tier=3, hp=550000, currency=1300, cooldown=5400, drops = { { id=22253, name='Falcon Eye' }, { id=26959, name='Kubira Meikogai' } } },
+        { name='Pazuzu', gid=53, tier=3, hp=550000, currency=1300, cooldown=5400, drops = { { id=27514, name='Empath Necklace' }, { id=26961, name='Makora Meikogai' } } },
+        { name='Wrathare', gid=54, tier=3, hp=550000, currency=1300, cooldown=5400, drops = { { id=27555, name='Warden\'s Ring' }, { id=26962, name='Enforcer\'s Harness' } } },
+        { name='Voso', gid=32, tier=3, hp=550000, currency=1500, cooldown=5400 },
         -- Boss ---------------------------------------------------------
         { name='Azi Dahaka', gid=64, tier=4, hp=1500000, currency=5000, cooldown=86400 },
     },
     [RUAUN] = {
-        -- Tier 1 (Six Warders) — label= short menu text to stay under 150-byte menu cap
-        { name='Warder of Temperance', label='Temperance', gid=29, tier=1, hp=180000, currency=500, cooldown=1800 },
-        { name='Warder of Faith',      label='Faith',      gid=31, tier=1, hp=180000, currency=500, cooldown=1800 },
-        { name='Warder of Justice',    label='Justice',    gid=32, tier=1, hp=180000, currency=500, cooldown=1800 },
-        { name='Warder of Hope',       label='Hope',       gid=34, tier=1, hp=160000, currency=450, cooldown=1800 },
-        { name='Warder of Prudence',   label='Prudence',   gid=35, tier=1, hp=160000, currency=450, cooldown=1800 },
-        { name='Warder of Love',       label='Love',       gid=36, tier=1, hp=160000, currency=450, cooldown=1800 },
-        -- Tier 2 -------------------------------------------------------
-        { name='Ma',             gid=47, tier=2, hp=350000, currency=1000, cooldown=3600 },
-        { name='Emputa',         gid=52, tier=2, hp=380000, currency=1000, cooldown=3600 },
-        { name='Peirithoos',     gid=53, tier=2, hp=400000, currency=1100, cooldown=3600 },
-        { name='Sava Savanovic', gid=56, tier=2, hp=420000, currency=1200, cooldown=3600 },
-        { name='Hanbi',          gid=59, tier=2, hp=400000, currency=1100, cooldown=3600 },
-        -- Tier 3 (Celestial Warders)
-        { name='Byakko-Escha',    label='Byakko',  gid=78, tier=3, hp=700000,  currency=2000, cooldown=7200 },
-        { name='Genbu-Escha',     label='Genbu',   gid=79, tier=3, hp=700000,  currency=2000, cooldown=7200 },
-        { name='Seiryu-Escha',    label='Seiryu',  gid=80, tier=3, hp=700000,  currency=2000, cooldown=7200 },
-        { name='Suzaku-Escha',    label='Suzaku',  gid=81, tier=3, hp=700000,  currency=2000, cooldown=7200 },
-        { name='Kouryu',                           gid=84, tier=3, hp=1000000, currency=3500, cooldown=7200 },
+        -- Tier 1 (Six Warders) — label= short menu text (150-byte menu cap)
+        { name='Warder of Temperance', label='Temperance', gid=29, tier=1, hp=170000, currency=475, cooldown=1800 },
+        { name='Warder of Faith', label='Faith', gid=31, tier=1, hp=170000, currency=475, cooldown=1800 },
+        { name='Warder of Justice', label='Justice', gid=32, tier=1, hp=170000, currency=475, cooldown=1800 },
+        { name='Warder of Hope', label='Hope', gid=34, tier=1, hp=170000, currency=475, cooldown=1800 },
+        { name='Warder of Prudence', label='Prudence', gid=35, tier=1, hp=170000, currency=475, cooldown=1800 },
+        { name='Warder of Love', label='Love', gid=36, tier=1, hp=170000, currency=475, cooldown=1800 },
+        -- Tier 1 (retail 119) ------------------------------------------
+        { name='Bia', gid=45, tier=1, hp=170000, currency=475, cooldown=1800, drops = { { id=21390, name='Albin Bane' }, { id=27521, name='Reti Pendant' } } },
+        { name='Ruea', gid=46, tier=1, hp=170000, currency=475, cooldown=1800, drops = { { id=10772, name='Petrov Ring' }, { id=27522, name='Diemer Gorget' } } },
+        { name='Ma', gid=47, tier=1, hp=170000, currency=475, cooldown=1800, drops = { { id=21410, name='Giuoco Grip' }, { id=27611, name='Philidor Mantle' } } },
+        { name='Khon', gid=48, tier=1, hp=170000, currency=475, cooldown=1800, drops = { { id=27612, name='Sokolski Mantle' }, { id=27523, name='Caro Necklace' } } },
+        { name='Met', gid=49, tier=1, hp=170000, currency=475, cooldown=1800, drops = { { id=22262, name='Amar Cluster' }, { id=27534, name='Evans Earring' } } },
+        { name='Khun', gid=50, tier=1, hp=170000, currency=475, cooldown=1800, drops = { { id=28408, name='Grunfeld Rope' }, { id=27535, name='Halasz Earring' } } },
+        { name='Wasserspeier', gid=51, tier=1, hp=170000, currency=475, cooldown=1800, drops = { { id=28409, name='Porous Rope' }, { id=27613, name='Quarrel Mantle' } } },
+        { name='Emputa', gid=52, tier=1, hp=170000, currency=475, cooldown=1800, drops = { { id=10773, name='Fortified Ring' }, { id=27536, name='Assuage Earring' } } },
+        { name='Peirithoos', gid=53, tier=1, hp=170000, currency=475, cooldown=1800, drops = { { id=27537, name='Ishvara Earring' }, { id=22263, name='Hydrocera' } } },
+        { name='Asida', gid=54, tier=1, hp=170000, currency=475, cooldown=1800, drops = { { id=21411, name='Balarama Grip' }, { id=10774, name='Vertigo Ring' } } },
+        { name='Tenodera', gid=55, tier=1, hp=170000, currency=475, cooldown=1800, drops = { { id=28410, name='Sulla Belt' }, { id=22264, name='Mantoptera Eye' } } },
+        { name='Sava Savanovic', gid=56, tier=1, hp=170000, currency=475, cooldown=1800, drops = { { id=27524, name='Nodens Gorget' }, { id=26160, name='Evanescence Ring' } } },
+        -- Tier 2 (retail 125) ------------------------------------------
+        { name='Palila', gid=57, tier=2, hp=380000, currency=1050, cooldown=3600, drops = { { id=20700, name='Nixxer' }, { id=20979, name='Aizushintogo' }, { id=20519, name='Hammerfists' }, { id=20845, name='Instigator' } } },
+        { name='Hanbi', gid=59, tier=2, hp=380000, currency=1050, cooldown=3600, drops = { { id=20597, name='Enchufla' }, { id=21149, name='Espiritus' }, { id=21150, name='Akademos' }, { id=20937, name='Rhomphaia' } } },
+        { name='Yilan', gid=61, tier=2, hp=380000, currency=1050, cooldown=3600, drops = { { id=20701, name='Iris' }, { id=21151, name='Lathi' }, { id=20702, name='Emissary' }, { id=21084, name='Queller Rod' } } },
+        { name='Amymone', gid=63, tier=2, hp=380000, currency=1050, cooldown=3600, drops = { { id=21482, name='Compensator' }, { id=20892, name='Deathbane' }, { id=20598, name='Shijo' }, { id=21698, name='Bidenhander' } } },
+        { name='Naphula', gid=65, tier=2, hp=380000, currency=1050, cooldown=3600, drops = { { id=21085, name='Solstice' }, { id=20797, name='Skullrender' }, { id=21215, name='Vijaya Bow' } } },
+        { name='Kammavaca', gid=67, tier=2, hp=380000, currency=1050, cooldown=3600, drops = { { id=20599, name='Kali' }, { id=21027, name='Ichigohitofuri' }, { id=20520, name='Midnights' } } },
+        -- Tier 3 (retail 135) ------------------------------------------
+        { name='Pakecet', gid=72, tier=3, hp=650000, currency=1800, cooldown=7200, drops = { { id=27614, name='Xucau Mantle' }, { id=27490, name='Tutyr Sabots' }, { id=25703, name='Uac Jerkin' }, { id=27134, name='Kurys Gloves' } } },
+        { name='Duke Vepar', gid=74, tier=3, hp=650000, currency=1800, cooldown=7200, drops = { { id=20518, name='Eshus' }, { id=27319, name='Obatala Subligar' }, { id=25706, name='Shango Robe' }, { id=28411, name='Yemaya Belt' } } },
+        { name='Vir\'ava', gid=76, tier=3, hp=650000, currency=1800, cooldown=7200, drops = { { id=21083, name='Sucellus' }, { id=27538, name='Lempo Earring' }, { id=25704, name='Abnoba Kaftan' }, { id=27320, name='Selvans Subligar' } } },
+        -- Tier 3 (Ark Angels, retail 140) ------------------------------
+        { name='Ark Angel EV', label='AA EV', gid=90, tier=3, hp=800000, currency=2200, cooldown=7200, drops = { { id=20704, name='Deacon Sword' }, { id=22265, name='Elis Tome' } } },
+        { name='Ark Angel GK', label='AA GK', gid=91, tier=3, hp=800000, currency=2200, cooldown=7200, drops = { { id=21028, name='Deacon Blade' }, { id=6415, name='Seki Shuriken Pouch' } } },
+        { name='Ark Angel HM', label='AA HM', gid=85, tier=3, hp=800000, currency=2200, cooldown=7200, drops = { { id=20703, name='Deacon Saber' }, { id=26322, name='Kerygma Belt' }, { id=27744, name='Lithelimb Cap' } } },
+        { name='Ark Angel MR', label='AA MR', gid=87, tier=3, hp=800000, currency=2200, cooldown=7200, drops = { { id=20798, name='Deacon Tabar' }, { id=27617, name='Enuma Mantle' } } },
+        { name='Ark Angel TT', label='AA TT', gid=86, tier=3, hp=800000, currency=2200, cooldown=7200, drops = { { id=20894, name='Deacon Scythe' }, { id=26162, name='Rahab Ring' }, { id=28616, name='Fravashi Mantle' } } },
+        -- Tier 3 (Heavenly Beasts, retail 140/150) ---------------------
+        { name='Byakko-Escha', label='Byakko', gid=78, tier=3, hp=700000, currency=2000, cooldown=7200, drops = { { id=22256, name='Jokushunoibuki' }, { id=20846, name='Jokushuono' }, { id=27318, name='Jokushu Haidate' }, { id=27525, name='Jokushu Chain' } } },
+        { name='Genbu-Escha', label='Genbu', gid=79, tier=3, hp=700000, currency=2000, cooldown=7200, drops = { { id=22257, name='Genmeinoibuki' }, { id=27645, name='Genmei Shield' }, { id=25629, name='Genmei Kabuto' }, { id=27539, name='Genmei Earring' } } },
+        { name='Seiryu-Escha', label='Seiryu', gid=80, tier=3, hp=700000, currency=2000, cooldown=7200, drops = { { id=22259, name='Kobonoibuki' }, { id=20699, name='Koboto' }, { id=27133, name='Kobo Kote' }, { id=26320, name='Kobo Obi' } } },
+        { name='Suzaku-Escha', label='Suzaku', gid=81, tier=3, hp=700000, currency=2000, cooldown=7200, drops = { { id=22258, name='Shukuyunoibuki' }, { id=20893, name='Shukuyu\'s Scythe' }, { id=27489, name='Shukuyu Sune-Ate' }, { id=26161, name='Shukuyu Ring' } } },
+        { name='Kirin', gid=82, tier=3, hp=1200000, currency=3500, cooldown=7200 },
+        { name='Kouryu', gid=84, tier=3, hp=1000000, currency=3500, cooldown=7200, drops = { { id=27615, name='Reiki Cloak' }, { id=20842, name='Reikiono' }, { id=21152, name='Reikikon' }, { id=20690, name='Reikiko' }, { id=26321, name='Reiki Yotai' }, { id=25702, name='Reiki Osode' } } },
         -- Boss ---------------------------------------------------------
-        { name='Warder of Courage', label='Courage', gid=93, tier=4, hp=2000000, currency=8000, cooldown=86400 },
+        { name='Warder of Courage', label='Courage', gid=93, tier=4, hp=2000000, currency=8000, cooldown=86400, drops = { { id=22196, name='Alber Strap' }, { id=20887, name='Dacnomania' }, { id=20932, name='Habile Mazrak' }, { id=19209, name='Molybdosis' }, { id=27545, name='Telos Earring' }, { id=25728, name='Zendik Robe' } } },
     },
 }
 
@@ -250,6 +309,20 @@ local function awardDrops(player, zoneId, def)
         end
     end
 
+    -- Retail signature drops: each NM's own drop list (see NM_CATALOG),
+    -- every listed item rolled independently. Bosses are more generous.
+    if def.drops then
+        local rate = (t == 4) and FETE_BOSS_DROP_RATE or FETE_DROP_RATE
+        for _, dr in ipairs(def.drops) do
+            if math.random() < rate then
+                if player:addItem({ id = dr.id, quantity = 1 }) then
+                    player:printToPlayer(string.format('[Geas Fete] %s drops: %s!',
+                        def.name, dr.name), S)
+                end
+            end
+        end
+    end
+
     -- Reisenjima-crafted armor (Adhemar/Argosy/Carmine/Rao/Ryuo/Souveran/Naga):
     -- T2 rolls an NQ piece, T3/boss roll NQ and the +1. Random piece from the
     -- whole pool -- the hunt is the gate, not a job lock.
@@ -340,30 +413,46 @@ end
 -- ===================================================================
 -- Tier menu: lists NMs of a specific tier with cooldown status.
 -- Returns the options table for the shared menu.
-local function tierOptions(player, zone, zoneId, tierNum, mainFn, menu)
-    local opts = {}
+-- Full-roster tiers hold up to 18 NMs, well past the customMenu byte/entry
+-- budget -- paginate like the shops (NM_PER_PAGE entries + More >> / Back).
+local NM_PER_PAGE = 6
+
+local function tierOptions(player, zone, zoneId, tierNum, mainFn, menu, page, reshowFn)
+    page = page or 0
+    local defs = {}
     for _, def in ipairs(NM_CATALOG[zoneId] or {}) do
         if def.tier == tierNum then
-            local cd  = getCooldown(player, zoneId, def.gid)
-            local lbl = string.format('%s [%s]', def.label or def.name, fmtCD(cd))
-            local d   = def
-            opts[#opts + 1] = { lbl, function(p)
-                local cd2 = getCooldown(p, zoneId, d.gid)
-                if cd2 > 0 then
-                    p:printToPlayer(string.format('[Geas Fete] %s: %s remaining.',
-                        d.name, fmtCD(cd2)), S)
-                    return
-                end
-                local spawned = spawnNM(p, zone, zoneId, d)
-                if spawned then
-                    setCooldown(p, zoneId, d.gid, d.cooldown)
-                    p:printToPlayer(string.format('[Geas Fete] %s emerges from the darkness!',
-                        d.name), S)
-                else
-                    p:printToPlayer('[Geas Fete] The seal will not yield. Try again.', S)
-                end
-            end }
+            defs[#defs + 1] = def
         end
+    end
+    local pages = math.max(1, math.ceil(#defs / NM_PER_PAGE))
+    page = page % pages
+
+    local opts = {}
+    for i = page * NM_PER_PAGE + 1, math.min((page + 1) * NM_PER_PAGE, #defs) do
+        local d   = defs[i]
+        local cd  = getCooldown(player, zoneId, d.gid)
+        local lbl = string.format('%s [%s]', d.label or d.name, fmtCD(cd))
+        opts[#opts + 1] = { lbl, function(p)
+            local cd2 = getCooldown(p, zoneId, d.gid)
+            if cd2 > 0 then
+                p:printToPlayer(string.format('[Geas Fete] %s: %s remaining.',
+                    d.name, fmtCD(cd2)), S)
+                return
+            end
+            local spawned = spawnNM(p, zone, zoneId, d)
+            if spawned then
+                setCooldown(p, zoneId, d.gid, d.cooldown)
+                p:printToPlayer(string.format('[Geas Fete] %s emerges from the darkness!',
+                    d.name), S)
+            else
+                p:printToPlayer('[Geas Fete] The seal will not yield. Try again.', S)
+            end
+        end }
+    end
+    if pages > 1 then
+        opts[#opts + 1] = { string.format('More >> (%d/%d)', page + 1, pages),
+            function(p) reshowFn(p, page + 1) end }
     end
     opts[#opts + 1] = { 'Back', function(p) mainFn(p) end }
     return opts
@@ -465,9 +554,10 @@ local function wardingCircleMenu(player, zone, zoneId)
         p:timer(30, function(p2) p2:customMenu(menu) end)
     end
 
-    local function tierScreen(p, tierNum, tierTitle)
+    local function tierScreen(p, tierNum, tierTitle, page)
         menu.title   = tierTitle
-        menu.options = tierOptions(p, zone, zoneId, tierNum, mainFn, menu)
+        menu.options = tierOptions(p, zone, zoneId, tierNum, mainFn, menu, page,
+            function(p2, nextPage) tierScreen(p2, tierNum, tierTitle, nextPage) end)
         show(p)
     end
 

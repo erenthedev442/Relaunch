@@ -20,8 +20,15 @@ _TIER_NAME = {1: "Tier 1", 2: "Tier 2", 3: "Tier 3", 4: "Boss"}
 
 def _parse(text: str) -> dict:
     nms = []
-    for m in re.finditer(r"name\s*=\s*'([^']+)'[^}\n]*?tier\s*=\s*(\d)[^}\n]*?currency\s*=\s*(\d+)", text):
-        nms.append({"name": m.group(1), "tier": int(m.group(2)), "cur": int(m.group(3))})
+    zitah_at = text.find("[ZITAH] = {")
+    ruaun_at = text.find("[RUAUN] = {")
+    for m in re.finditer(r"name\s*=\s*'((?:[^'\\]|\\.)+)'[^}\n]*?tier\s*=\s*(\d)[^}\n]*?currency\s*=\s*(\d+)(.*)", text):
+        zone = "Escha - Ru'Aun" if ruaun_at != -1 and m.start() > ruaun_at else "Escha - Zi'Tah"
+        drops = [{"id": int(i), "name": n.replace("\\'", "'")} for i, n in
+                 re.findall(r"\{\s*id\s*=\s*(\d+)\s*,\s*name\s*=\s*'((?:[^'\\]|\\.)+)'\s*\}",
+                            m.group(4))]
+        nms.append({"name": m.group(1).replace("\\'", "'"), "tier": int(m.group(2)),
+                    "cur": int(m.group(3)), "zone": zone, "drops": drops})
     ex = []
     for m in re.finditer(r"label\s*=\s*'([^']+)'[^}\n]*?cost\s*=\s*(\d+)", text):
         ex.append({"label": m.group(1), "cost": int(m.group(2))})
@@ -37,7 +44,12 @@ def _parse(text: str) -> dict:
         if m:
             gear[key] = {int(t): float(v) for t, v in
                          re.findall(r"\[(\d)\]\s*=\s*([\d.]+)", m.group(1))}
-    return {"nms": nms, "exchange": ex, "gear": gear}
+    rates = {}
+    for var, key in (("FETE_DROP_RATE", "nm"), ("FETE_BOSS_DROP_RATE", "boss")):
+        m = re.search(r"local " + var + r"\s*=\s*([\d.]+)", text)
+        if m:
+            rates[key] = float(m.group(1))
+    return {"nms": nms, "exchange": ex, "gear": gear, "rates": rates}
 
 
 def _overview(c: dict) -> str:
@@ -51,7 +63,21 @@ def _overview(c: dict) -> str:
         "([Temprix in Reisenjima](../progression/aeonic-weapons.md)). NMs also drop the Aeonic crafting "
         "materials directly — **Beitetsu**, **Riftcinder**, **Riftborn Boulder**, and (from bosses) "
         "**Attestations**, the weapon-type tokens the Aeonic forge needs."
-        + _gear_para(c)
+        + _drops_para(c) + _gear_para(c)
+    )
+
+
+def _drops_para(c: dict) -> str:
+    r = c.get("rates") or {}
+    if not r.get("nm"):
+        return ""
+    n_drops = sum(len(n["drops"]) for n in c["nms"])
+    return (
+        f"\n\nEvery retail Geas Fete NM is implemented, each with its **retail "
+        f"signature drops** ({n_drops} items across the roster — see the tables "
+        f"below). Each listed item rolls independently at "
+        f"**{round(r['nm'] * 100)}%** per kill (**{round(r.get('boss', r['nm']) * 100)}%** "
+        "on the zone bosses)."
     )
 
 
@@ -74,16 +100,30 @@ def _gear_para(c: dict) -> str:
     )
 
 
+def _item_link(d: dict) -> str:
+    return (f'<a class="item-link" href="https://www.ffxiah.com/item/{d["id"]}" '
+            f'target="_blank" rel="noopener">{d["name"]}</a>')
+
+
 def _roster(c: dict) -> str:
     from collections import defaultdict
-    by = defaultdict(list)
-    for n in c["nms"]:
-        by[n["tier"]].append(n)
-    lines = ["| Tier | NM | Escha Beads / kill |", "|---|---|---:|"]
-    for t in sorted(by):
-        for n in by[t]:
-            lines.append(f"| {_TIER_NAME.get(t, t)} | {n['name']} | {n['cur']:,} |")
-    return "\n".join(lines)
+    lines = []
+    for zone in ("Escha - Zi'Tah", "Escha - Ru'Aun"):
+        by = defaultdict(list)
+        for n in c["nms"]:
+            if n["zone"] == zone:
+                by[n["tier"]].append(n)
+        if not by:
+            continue
+        lines += [f"### {zone}", "",
+                  "| Tier | NM | Beads / kill | Signature drops (each rolled per kill) |",
+                  "|---|---|---:|---|"]
+        for t in sorted(by):
+            for n in by[t]:
+                drops = ", ".join(_item_link(d) for d in n["drops"]) or "—"
+                lines.append(f"| {_TIER_NAME.get(t, t)} | {n['name']} | {n['cur']:,} | {drops} |")
+        lines.append("")
+    return "\n".join(lines).rstrip()
 
 
 def _exchange(c: dict) -> str:

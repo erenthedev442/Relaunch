@@ -455,6 +455,8 @@ SOURCE_PAGES = {
     'endgame/dynamis-classic.md': 'Classic Dynamis',
     'endgame/ambuscade.md': 'Ambuscade',
     'aeonic-weapons.md': 'Aeonic Forge (Temprix)',
+    # Geas Fete roster tables item-link every NM's retail signature drops.
+    'endgame/geas-fete.md': 'Geas Fete',
 }
 # Item links now point at FFXIAH by id (ffxiah.com/item/<id>); the few
 # unresolved items fall back to a BG-Wiki search url (?search=<name>). Scan BOTH
