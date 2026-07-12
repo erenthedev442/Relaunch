@@ -307,6 +307,14 @@ def _fmt_week(monday, sunday) -> str:
 
 def _render(weeks: list[dict]) -> str:
     lines = [
+        # Search-excluded (owner, 2026-07-12): the changelog mentions every
+        # system/item ever touched, so it flooded site-search results with
+        # false hits for almost any query.
+        "---",
+        "search:",
+        "  exclude: true",
+        "---",
+        "",
         "# Server Changelog",
         "",
         "Recent updates to Relaunch, newest first — generated from our live deploy history.",

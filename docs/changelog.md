@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Server Changelog
 
 Recent updates to Relaunch, newest first — generated from our live deploy history.
@@ -1216,3 +1221,10 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Dungeons** — Mythic+ keystones - endless key levels above Mythic
     - ﻿Retire the new-player linkshell; dedupe the Dungeon Veteran title
     - ﻿docs-in-code: catch comments up to the 5-catalyst reality
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 455b978e01e6 -->
+_Last updated: 2026-07-12 01:17 PDT_
+<!-- DOCGEN:END id="last-updated" -->
