@@ -178,7 +178,6 @@ local stock =
         { 21302,  50 },  -- Eminent Arrow       (Lv99, EX, DMG 79)
         { 21316,  50 },  -- Eminent Bolt        (Lv99)
         { 21331,  50 },  -- Eminent Bullet      (Lv99)
-        { 21383,  50 },  -- Eminent Sachet      (Lv99)
         { 26347, 50000 }, -- Eradicating Bullet Pouch (waist, RATT30/RACC30, RNG)
         { 17304,  20 },  -- Fuma Shuriken       (Lv60)
         { 19197,  20 },  -- Fusion Bolt         (Lv79)

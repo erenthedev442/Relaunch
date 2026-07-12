@@ -17,7 +17,7 @@ Want to stand out in town? The **Boutique Moogle** in <!--npc:cosmetic_shop-->Pu
 Every cosmetic in the pool — today's is whichever day the rotation has landed on:
 
 <!-- DOCGEN:BEGIN id="cosmetic-catalog" -->
-_The **Boutique Moogle** at **<!--npc:cosmetic_shop-->Purgonorgo Isle<!--/npc-->** (`!hub`) features **one** of these 59 cosmetics per day (rotating, resets 00:00 UTC). Pure appearance — **no combat stats**. Paid in **Allied Notes**, earned in (S) zones. Hover an item for its icon, or click through to FFXIAH for the full look._
+_The **Boutique Moogle** at **{{npc:cosmetic_shop}}** (`!hub`) features **one** of these 58 cosmetics per day (rotating, resets 00:00 UTC). Pure appearance — **no combat stats**. Paid in **Allied Notes**, earned in (S) zones. Hover an item for its icon, or click through to FFXIAH for the full look._
 
 ### YUKATA (Summer Festival)
 
@@ -114,7 +114,6 @@ _The **Boutique Moogle** at **<!--npc:cosmetic_shop-->Purgonorgo Isle<!--/npc-->
 | Cosmetic | Price |
 |---|---:|
 | <a class="item-link" href="https://www.ffxiah.com/item/11500" data-img="https://www.bg-wiki.com/images/9/9a/Chocobo_Beret_description.png" target="_blank" rel="noopener">Chocobo Beret</a> | 10k AN |
-| <a class="item-link" href="https://www.ffxiah.com/item/10293" data-img="https://www.bg-wiki.com/images/8/80/Chocobo_Shirt_description.png" target="_blank" rel="noopener">Chocobo Shirt</a> | 10k AN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25585" data-img="https://www.bg-wiki.com/images/1/14/Bl._Chocobo_Cap_description.png" target="_blank" rel="noopener">Black Chocobo Cap</a> | 15k AN |
 | <a class="item-link" href="https://www.ffxiah.com/item/23731" data-img="https://www.bg-wiki.com/images/8/85/Ryl._Chocobo_Beret_description.png" target="_blank" rel="noopener">Ryl. Chocobo Beret</a> | 15k AN |
 
@@ -137,6 +136,6 @@ _The **Boutique Moogle** at **<!--npc:cosmetic_shop-->Purgonorgo Isle<!--/npc-->
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c7a13b067bf0 -->
-_Last updated: 2026-07-11 21:16 PDT_
+<!-- content-hash: 3bf2e190592b -->
+_Last updated: 2026-07-12 14:23 PDT_
 <!-- DOCGEN:END id="last-updated" -->

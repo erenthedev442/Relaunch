@@ -77,146 +77,101 @@ Domain Points spend at the exchange NPC in the hub. Check the NPC's menu for the
 Capped out on Domain Points for the day? The same gear has a second price tag. The tables below are generated straight from the vendor's live catalog.
 
 <!-- DOCGEN:BEGIN id="domain-spoils" -->
-The **Domain Quartermaster** stands at {{npc:domain_quartermaster}} (`!hub`) and sells the entire Zurim Domain-Points catalog for **Hunt Marks** — the currency earned from [Hunting League](../progression/index.md) NM kills, Weekly Hunts, wave events, and dailies. Everything Zurim sells for daily-capped Domain Points is also here for marks, so you can keep gearing after you've hit the day's Domain-Point ceiling. _113 items across 3 categories._
+The **Domain Quartermaster** stands at {{npc:domain_quartermaster}} (`!hub`) and sells the entire Zurim Domain-Points catalog for **Hunt Marks** — the currency earned from [Hunting League](../progression/index.md) NM kills, Weekly Hunts, wave events, and dailies. Everything Zurim sells for daily-capped Domain Points is also here for marks, so you can keep gearing after you've hit the day's Domain-Point ceiling. _69 items across 3 categories._
 
 Pricing follows one rule: **Hunt Marks cost = Zurim's Domain-Point cost × 2.5**. Domain Points are daily-capped; marks are not.
 
 | Zurim price (Domain Points) | Quartermaster price (Hunt Marks) | Items |
 |---:|---:|---:|
 | 40 DP | 100 | 15 |
-| 80 DP | 200 | 20 |
-| 100 DP | 250 | 6 |
+| 80 DP | 200 | 19 |
+| 100 DP | 250 | 4 |
 | 600 DP | 1,500 | 18 |
-| 800 DP | 2,000 | 39 |
-| 1,000 DP | 2,500 | 15 |
+| 1,000 DP | 2,500 | 13 |
 
 ### Weapons
 
 | Item | Type | Hunt Marks |
 |---|---|---:|
-| <a class="item-link" href="https://www.ffxiah.com/item/21510" data-img="https://static.ffxiah.com/images/icon/21510.png" target="_blank" rel="noopener">Voluspa Knuckles</a> | Hand-to-Hand | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20505" data-img="https://static.ffxiah.com/images/icon/20505.png" target="_blank" rel="noopener">Condemners</a> | Hand-to-Hand | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21566" data-img="https://static.ffxiah.com/images/icon/21566.png" target="_blank" rel="noopener">Voluspa Knife</a> | Dagger | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20579" data-img="https://static.ffxiah.com/images/icon/20579.png" target="_blank" rel="noopener">Skinflayer</a> | Dagger | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21622" data-img="https://static.ffxiah.com/images/icon/21622.png" target="_blank" rel="noopener">Voluspa Sword</a> | Sword | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20677" data-img="https://static.ffxiah.com/images/icon/20677.png" target="_blank" rel="noopener">Colada</a> | Sword | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21665" data-img="https://static.ffxiah.com/images/icon/21665.png" target="_blank" rel="noopener">Voluspa Blade</a> | Gt. Sword | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21686" data-img="https://static.ffxiah.com/images/icon/21686.png" target="_blank" rel="noopener">Zulfiqar</a> | Gt. Sword | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21712" data-img="https://static.ffxiah.com/images/icon/21712.png" target="_blank" rel="noopener">Voluspa Axe</a> | Axe | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21746" data-img="https://static.ffxiah.com/images/icon/21746.png" target="_blank" rel="noopener">Digirbalag</a> | Axe | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21769" data-img="https://static.ffxiah.com/images/icon/21769.png" target="_blank" rel="noopener">Voluspa Chopper</a> | Gt. Axe | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21754" data-img="https://static.ffxiah.com/images/icon/21754.png" target="_blank" rel="noopener">Aganoshe</a> | Gt. Axe | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21822" data-img="https://static.ffxiah.com/images/icon/21822.png" target="_blank" rel="noopener">Voluspa Scythe</a> | Scythe | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21804" data-img="https://static.ffxiah.com/images/icon/21804.png" target="_blank" rel="noopener">Obschine</a> | Scythe | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21864" data-img="https://static.ffxiah.com/images/icon/21864.png" target="_blank" rel="noopener">Voluspa Lance</a> | Polearm | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21854" data-img="https://static.ffxiah.com/images/icon/21854.png" target="_blank" rel="noopener">Reienkyo</a> | Polearm | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21912" data-img="https://static.ffxiah.com/images/icon/21912.png" target="_blank" rel="noopener">Voluspa Katana</a> | Katana | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21904" data-img="https://static.ffxiah.com/images/icon/21904.png" target="_blank" rel="noopener">Kanaria</a> | Katana | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21976" data-img="https://static.ffxiah.com/images/icon/21976.png" target="_blank" rel="noopener">Voluspa Tachi</a> | Gt. Katana | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21021" data-img="https://static.ffxiah.com/images/icon/21021.png" target="_blank" rel="noopener">Umaru</a> | Gt. Katana | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/22006" data-img="https://static.ffxiah.com/images/icon/22006.png" target="_blank" rel="noopener">Voluspa Hammer</a> | Club | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21072" data-img="https://static.ffxiah.com/images/icon/21072.png" target="_blank" rel="noopener">Gada</a> | Club | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/22088" data-img="https://static.ffxiah.com/images/icon/22088.png" target="_blank" rel="noopener">Voluspa Pole</a> | Staff | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/22054" data-img="https://static.ffxiah.com/images/icon/22054.png" target="_blank" rel="noopener">Grioavolr</a> | Staff | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/22133" data-img="https://static.ffxiah.com/images/icon/22133.png" target="_blank" rel="noopener">Voluspa Bow</a> | Archery | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/22113" data-img="https://static.ffxiah.com/images/icon/22113.png" target="_blank" rel="noopener">Teller</a> | Archery | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/22144" data-img="https://static.ffxiah.com/images/icon/22144.png" target="_blank" rel="noopener">Voluspa Gun</a> | Marksmanship | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/22134" data-img="https://static.ffxiah.com/images/icon/22134.png" target="_blank" rel="noopener">Holliday</a> | Marksmanship | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/22219" data-img="https://static.ffxiah.com/images/icon/22219.png" target="_blank" rel="noopener">Voluspa Grip</a> | Grip-Shield | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26413" data-img="https://static.ffxiah.com/images/icon/26413.png" target="_blank" rel="noopener">Voluspa Shield</a> | Grip-Shield | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/21510" data-img="https://www.bg-wiki.com/images/a/af/Voluspa_Knuckles_description.png" target="_blank" rel="noopener">Voluspa Knuckles</a> | Hand-to-Hand | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/21566" data-img="https://www.bg-wiki.com/images/8/8c/Voluspa_Knife_description.png" target="_blank" rel="noopener">Voluspa Knife</a> | Dagger | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/21622" data-img="https://www.bg-wiki.com/images/1/1d/Voluspa_Sword_description.png" target="_blank" rel="noopener">Voluspa Sword</a> | Sword | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/21665" data-img="https://www.bg-wiki.com/images/6/6a/Voluspa_Blade_description.png" target="_blank" rel="noopener">Voluspa Blade</a> | Gt. Sword | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/21769" data-img="https://www.bg-wiki.com/images/0/09/Voluspa_Chopper_description.png" target="_blank" rel="noopener">Voluspa Chopper</a> | Gt. Axe | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/21822" data-img="https://www.bg-wiki.com/images/f/fe/Voluspa_Scythe_description.png" target="_blank" rel="noopener">Voluspa Scythe</a> | Scythe | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/21864" data-img="https://www.bg-wiki.com/images/f/f1/Voluspa_Lance_description.png" target="_blank" rel="noopener">Voluspa Lance</a> | Polearm | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/21912" data-img="https://www.bg-wiki.com/images/9/96/Voluspa_Katana_description.png" target="_blank" rel="noopener">Voluspa Katana</a> | Katana | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/21976" data-img="https://www.bg-wiki.com/images/a/ac/Voluspa_Tachi_description.png" target="_blank" rel="noopener">Voluspa Tachi</a> | Gt. Katana | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/22006" data-img="https://www.bg-wiki.com/images/b/b6/Voluspa_Hammer_description.png" target="_blank" rel="noopener">Voluspa Hammer</a> | Club | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/22088" data-img="https://www.bg-wiki.com/images/0/0b/Voluspa_Pole_description.png" target="_blank" rel="noopener">Voluspa Pole</a> | Staff | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/22133" data-img="https://www.bg-wiki.com/images/8/81/Voluspa_Bow_description.png" target="_blank" rel="noopener">Voluspa Bow</a> | Archery | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/22144" data-img="https://www.bg-wiki.com/images/7/77/Voluspa_Gun_description.png" target="_blank" rel="noopener">Voluspa Gun</a> | Marksmanship | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/22219" data-img="https://www.bg-wiki.com/images/e/e8/Voluspa_Grip_description.png" target="_blank" rel="noopener">Voluspa Grip</a> | Grip-Shield | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26413" data-img="https://www.bg-wiki.com/images/f/f5/Voluspa_Shield_description.png" target="_blank" rel="noopener">Voluspa Shield</a> | Grip-Shield | 200 |
 | <a class="item-link" href="https://www.ffxiah.com/item/6449" data-img="https://static.ffxiah.com/images/icon/6449.png" target="_blank" rel="noopener">Date Shuriken Pouch</a> | Ammo | 200 |
 | <a class="item-link" href="https://www.ffxiah.com/item/6429" data-img="https://static.ffxiah.com/images/icon/6429.png" target="_blank" rel="noopener">Voluspa Bolt Quiver</a> | Ammo | 200 |
 | <a class="item-link" href="https://www.ffxiah.com/item/6438" data-img="https://static.ffxiah.com/images/icon/6438.png" target="_blank" rel="noopener">Voluspa Bullet Pouch</a> | Ammo | 200 |
 | <a class="item-link" href="https://www.ffxiah.com/item/6420" data-img="https://static.ffxiah.com/images/icon/6420.png" target="_blank" rel="noopener">Voluspa Quiver</a> | Ammo | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/22294" data-img="https://static.ffxiah.com/images/icon/22294.png" target="_blank" rel="noopener">Hauksbok Bolt</a> | Ammo | 2,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/22295" data-img="https://static.ffxiah.com/images/icon/22295.png" target="_blank" rel="noopener">Hauksbok Bullet</a> | Ammo | 2,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/22296" data-img="https://static.ffxiah.com/images/icon/22296.png" target="_blank" rel="noopener">Voluspa Tathlum</a> | Ammo | 2,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/22294" data-img="https://www.bg-wiki.com/images/c/c4/Hauksbok_Bolt_description.png" target="_blank" rel="noopener">Hauksbok Bolt</a> | Ammo | 2,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/22295" data-img="https://www.bg-wiki.com/images/f/f4/Hauksbok_Bullet_description.png" target="_blank" rel="noopener">Hauksbok Bullet</a> | Ammo | 2,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/22296" data-img="https://www.bg-wiki.com/images/b/b7/Voluspa_Tathlum_description.png" target="_blank" rel="noopener">Voluspa Tathlum</a> | Ammo | 2,500 |
 
 ### Armor
 
 | Item | Type | Hunt Marks |
 |---|---|---:|
-| <a class="item-link" href="https://www.ffxiah.com/item/23740" data-img="https://static.ffxiah.com/images/icon/23740.png" target="_blank" rel="noopener">Angantyr Beret</a> | Head | 100 |
-| <a class="item-link" href="https://www.ffxiah.com/item/23739" data-img="https://static.ffxiah.com/images/icon/23739.png" target="_blank" rel="noopener">Heidrek Mask</a> | Head | 100 |
-| <a class="item-link" href="https://www.ffxiah.com/item/23738" data-img="https://static.ffxiah.com/images/icon/23738.png" target="_blank" rel="noopener">Hervor Galea</a> | Head | 100 |
-| <a class="item-link" href="https://www.ffxiah.com/item/25644" data-img="https://static.ffxiah.com/images/icon/25644.png" target="_blank" rel="noopener">Chironic Hat</a> | Head | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/25642" data-img="https://static.ffxiah.com/images/icon/25642.png" target="_blank" rel="noopener">Herculean Helm</a> | Head | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/25643" data-img="https://static.ffxiah.com/images/icon/25643.png" target="_blank" rel="noopener">Merlinic Hood</a> | Head | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/25640" data-img="https://static.ffxiah.com/images/icon/25640.png" target="_blank" rel="noopener">Odyssean Helm</a> | Head | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/25641" data-img="https://static.ffxiah.com/images/icon/25641.png" target="_blank" rel="noopener">Valorous Mask</a> | Head | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/23743" data-img="https://static.ffxiah.com/images/icon/23743.png" target="_blank" rel="noopener">Angantyr Robe</a> | Body | 100 |
-| <a class="item-link" href="https://www.ffxiah.com/item/23742" data-img="https://static.ffxiah.com/images/icon/23742.png" target="_blank" rel="noopener">Heidrek Harness</a> | Body | 100 |
-| <a class="item-link" href="https://www.ffxiah.com/item/23741" data-img="https://static.ffxiah.com/images/icon/23741.png" target="_blank" rel="noopener">Hervor Haubert</a> | Body | 100 |
-| <a class="item-link" href="https://www.ffxiah.com/item/25720" data-img="https://static.ffxiah.com/images/icon/25720.png" target="_blank" rel="noopener">Chironic Doublet</a> | Body | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/25718" data-img="https://static.ffxiah.com/images/icon/25718.png" target="_blank" rel="noopener">Herculean Vest</a> | Body | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/25719" data-img="https://static.ffxiah.com/images/icon/25719.png" target="_blank" rel="noopener">Merlinic Jubbah</a> | Body | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/25716" data-img="https://static.ffxiah.com/images/icon/25716.png" target="_blank" rel="noopener">Odyssean Chestplate</a> | Body | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/25717" data-img="https://static.ffxiah.com/images/icon/25717.png" target="_blank" rel="noopener">Valorous Mail</a> | Body | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/23746" data-img="https://static.ffxiah.com/images/icon/23746.png" target="_blank" rel="noopener">Angantyr Mittens</a> | Hands | 100 |
-| <a class="item-link" href="https://www.ffxiah.com/item/23745" data-img="https://static.ffxiah.com/images/icon/23745.png" target="_blank" rel="noopener">Heidrek Gloves</a> | Hands | 100 |
-| <a class="item-link" href="https://www.ffxiah.com/item/23744" data-img="https://static.ffxiah.com/images/icon/23744.png" target="_blank" rel="noopener">Hervor Mouffles</a> | Hands | 100 |
-| <a class="item-link" href="https://www.ffxiah.com/item/27142" data-img="https://static.ffxiah.com/images/icon/27142.png" target="_blank" rel="noopener">Chironic Gloves</a> | Hands | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/27140" data-img="https://static.ffxiah.com/images/icon/27140.png" target="_blank" rel="noopener">Herculean Gloves</a> | Hands | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/27141" data-img="https://static.ffxiah.com/images/icon/27141.png" target="_blank" rel="noopener">Merlinic Dastanas</a> | Hands | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/27138" data-img="https://static.ffxiah.com/images/icon/27138.png" target="_blank" rel="noopener">Odyssean Gauntlets</a> | Hands | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/27139" data-img="https://static.ffxiah.com/images/icon/27139.png" target="_blank" rel="noopener">Valorous Mitts</a> | Hands | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/23749" data-img="https://static.ffxiah.com/images/icon/23749.png" target="_blank" rel="noopener">Angantyr Tights</a> | Legs | 100 |
-| <a class="item-link" href="https://www.ffxiah.com/item/23748" data-img="https://static.ffxiah.com/images/icon/23748.png" target="_blank" rel="noopener">Heidrek Brais</a> | Legs | 100 |
-| <a class="item-link" href="https://www.ffxiah.com/item/23747" data-img="https://static.ffxiah.com/images/icon/23747.png" target="_blank" rel="noopener">Hervor Brayettes</a> | Legs | 100 |
-| <a class="item-link" href="https://www.ffxiah.com/item/25844" data-img="https://static.ffxiah.com/images/icon/25844.png" target="_blank" rel="noopener">Chironic Hose</a> | Legs | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/25842" data-img="https://static.ffxiah.com/images/icon/25842.png" target="_blank" rel="noopener">Herculean Trousers</a> | Legs | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/25843" data-img="https://static.ffxiah.com/images/icon/25843.png" target="_blank" rel="noopener">Merlinic Shalwar</a> | Legs | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/25840" data-img="https://static.ffxiah.com/images/icon/25840.png" target="_blank" rel="noopener">Odyssean Cuisses</a> | Legs | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/25841" data-img="https://static.ffxiah.com/images/icon/25841.png" target="_blank" rel="noopener">Valorous Hose</a> | Legs | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/23752" data-img="https://static.ffxiah.com/images/icon/23752.png" target="_blank" rel="noopener">Angantyr Boots</a> | Feet | 100 |
-| <a class="item-link" href="https://www.ffxiah.com/item/23751" data-img="https://static.ffxiah.com/images/icon/23751.png" target="_blank" rel="noopener">Heidrek Boots</a> | Feet | 100 |
-| <a class="item-link" href="https://www.ffxiah.com/item/23750" data-img="https://static.ffxiah.com/images/icon/23750.png" target="_blank" rel="noopener">Hervor Sollerets</a> | Feet | 100 |
-| <a class="item-link" href="https://www.ffxiah.com/item/27498" data-img="https://static.ffxiah.com/images/icon/27498.png" target="_blank" rel="noopener">Chironic Slippers</a> | Feet | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/27496" data-img="https://static.ffxiah.com/images/icon/27496.png" target="_blank" rel="noopener">Herculean Boots</a> | Feet | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/27497" data-img="https://static.ffxiah.com/images/icon/27497.png" target="_blank" rel="noopener">Merlinic Crackows</a> | Feet | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/27494" data-img="https://static.ffxiah.com/images/icon/27494.png" target="_blank" rel="noopener">Odyssean Greaves</a> | Feet | 2,000 |
-| <a class="item-link" href="https://www.ffxiah.com/item/27495" data-img="https://static.ffxiah.com/images/icon/27495.png" target="_blank" rel="noopener">Valorous Greaves</a> | Feet | 2,000 |
+| <a class="item-link" href="https://www.ffxiah.com/item/23740" data-img="https://www.bg-wiki.com/images/8/85/Angantyr_Beret_description.png" target="_blank" rel="noopener">Angantyr Beret</a> | Head | 100 |
+| <a class="item-link" href="https://www.ffxiah.com/item/23739" data-img="https://www.bg-wiki.com/images/a/a6/Heidrek_Mask_description.png" target="_blank" rel="noopener">Heidrek Mask</a> | Head | 100 |
+| <a class="item-link" href="https://www.ffxiah.com/item/23738" data-img="https://www.bg-wiki.com/images/c/c7/Hervor_Galea_description.png" target="_blank" rel="noopener">Hervor Galea</a> | Head | 100 |
+| <a class="item-link" href="https://www.ffxiah.com/item/23743" data-img="https://www.bg-wiki.com/images/f/fd/Angantyr_Robe_description.png" target="_blank" rel="noopener">Angantyr Robe</a> | Body | 100 |
+| <a class="item-link" href="https://www.ffxiah.com/item/23742" data-img="https://www.bg-wiki.com/images/7/7b/Heidrek_Harness_description.png" target="_blank" rel="noopener">Heidrek Harness</a> | Body | 100 |
+| <a class="item-link" href="https://www.ffxiah.com/item/23741" data-img="https://www.bg-wiki.com/images/2/2e/Hervor_Haubert_description.png" target="_blank" rel="noopener">Hervor Haubert</a> | Body | 100 |
+| <a class="item-link" href="https://www.ffxiah.com/item/23746" data-img="https://www.bg-wiki.com/images/6/6e/Angantyr_Mittens_description.png" target="_blank" rel="noopener">Angantyr Mittens</a> | Hands | 100 |
+| <a class="item-link" href="https://www.ffxiah.com/item/23745" data-img="https://www.bg-wiki.com/images/d/d4/Heidrek_Gloves_description.png" target="_blank" rel="noopener">Heidrek Gloves</a> | Hands | 100 |
+| <a class="item-link" href="https://www.ffxiah.com/item/23744" data-img="https://www.bg-wiki.com/images/2/22/Hervor_Mouffles_description.png" target="_blank" rel="noopener">Hervor Mouffles</a> | Hands | 100 |
+| <a class="item-link" href="https://www.ffxiah.com/item/23749" data-img="https://www.bg-wiki.com/images/9/93/Angantyr_Tights_description.png" target="_blank" rel="noopener">Angantyr Tights</a> | Legs | 100 |
+| <a class="item-link" href="https://www.ffxiah.com/item/23748" data-img="https://www.bg-wiki.com/images/f/f9/Heidrek_Brais_description.png" target="_blank" rel="noopener">Heidrek Brais</a> | Legs | 100 |
+| <a class="item-link" href="https://www.ffxiah.com/item/23747" data-img="https://www.bg-wiki.com/images/c/cf/Hervor_Brayettes_description.png" target="_blank" rel="noopener">Hervor Brayettes</a> | Legs | 100 |
+| <a class="item-link" href="https://www.ffxiah.com/item/23752" data-img="https://www.bg-wiki.com/images/9/9b/Angantyr_Boots_description.png" target="_blank" rel="noopener">Angantyr Boots</a> | Feet | 100 |
+| <a class="item-link" href="https://www.ffxiah.com/item/23751" data-img="https://www.bg-wiki.com/images/1/1e/Heidrek_Boots_description.png" target="_blank" rel="noopener">Heidrek Boots</a> | Feet | 100 |
+| <a class="item-link" href="https://www.ffxiah.com/item/23750" data-img="https://www.bg-wiki.com/images/9/92/Hervor_Sollerets_description.png" target="_blank" rel="noopener">Hervor Sollerets</a> | Feet | 100 |
 
 ### Accessories
 
 | Item | Type | Hunt Marks |
 |---|---|---:|
-| <a class="item-link" href="https://www.ffxiah.com/item/27540" data-img="https://static.ffxiah.com/images/icon/27540.png" target="_blank" rel="noopener">Eabani Earring</a> | Ear | 250 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26101" data-img="https://static.ffxiah.com/images/icon/26101.png" target="_blank" rel="noopener">Bragi Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26103" data-img="https://static.ffxiah.com/images/icon/26103.png" target="_blank" rel="noopener">Dellingr Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26091" data-img="https://static.ffxiah.com/images/icon/26091.png" target="_blank" rel="noopener">Foresti Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26106" data-img="https://static.ffxiah.com/images/icon/26106.png" target="_blank" rel="noopener">Fulla Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26102" data-img="https://static.ffxiah.com/images/icon/26102.png" target="_blank" rel="noopener">Gersemi Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26105" data-img="https://static.ffxiah.com/images/icon/26105.png" target="_blank" rel="noopener">Gna Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26090" data-img="https://static.ffxiah.com/images/icon/26090.png" target="_blank" rel="noopener">Hermodr Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26100" data-img="https://static.ffxiah.com/images/icon/26100.png" target="_blank" rel="noopener">Hnoss Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26092" data-img="https://static.ffxiah.com/images/icon/26092.png" target="_blank" rel="noopener">Hretha Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26097" data-img="https://static.ffxiah.com/images/icon/26097.png" target="_blank" rel="noopener">Ilmr Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26099" data-img="https://static.ffxiah.com/images/icon/26099.png" target="_blank" rel="noopener">Lodurr Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26094" data-img="https://static.ffxiah.com/images/icon/26094.png" target="_blank" rel="noopener">Mani Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26098" data-img="https://static.ffxiah.com/images/icon/26098.png" target="_blank" rel="noopener">Meili Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26095" data-img="https://static.ffxiah.com/images/icon/26095.png" target="_blank" rel="noopener">Mimir Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26104" data-img="https://static.ffxiah.com/images/icon/26104.png" target="_blank" rel="noopener">Njordr Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26089" data-img="https://static.ffxiah.com/images/icon/26089.png" target="_blank" rel="noopener">Ran Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26093" data-img="https://static.ffxiah.com/images/icon/26093.png" target="_blank" rel="noopener">Saxnot Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26096" data-img="https://static.ffxiah.com/images/icon/26096.png" target="_blank" rel="noopener">Vor Earring</a> | Ear | 1,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26111" data-img="https://static.ffxiah.com/images/icon/26111.png" target="_blank" rel="noopener">Beyla Earring</a> | Ear | 2,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26113" data-img="https://static.ffxiah.com/images/icon/26113.png" target="_blank" rel="noopener">Nehalennia Earring</a> | Ear | 2,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26108" data-img="https://static.ffxiah.com/images/icon/26108.png" target="_blank" rel="noopener">Odr Earring</a> | Ear | 2,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26110" data-img="https://static.ffxiah.com/images/icon/26110.png" target="_blank" rel="noopener">Sjofn Earring</a> | Ear | 2,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26109" data-img="https://static.ffxiah.com/images/icon/26109.png" target="_blank" rel="noopener">Snotra Earring</a> | Ear | 2,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26107" data-img="https://static.ffxiah.com/images/icon/26107.png" target="_blank" rel="noopener">Thrud Earring</a> | Ear | 2,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26112" data-img="https://static.ffxiah.com/images/icon/26112.png" target="_blank" rel="noopener">Tuisto Earring</a> | Ear | 2,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26023" data-img="https://static.ffxiah.com/images/icon/26023.png" target="_blank" rel="noopener">Sanctity Necklace</a> | Neck | 250 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26040" data-img="https://static.ffxiah.com/images/icon/26040.png" target="_blank" rel="noopener">Yngvi Choker</a> | Neck | 2,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26163" data-img="https://static.ffxiah.com/images/icon/26163.png" target="_blank" rel="noopener">Etana Ring</a> | Ring | 250 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26216" data-img="https://static.ffxiah.com/images/icon/26216.png" target="_blank" rel="noopener">Dreki Ring</a> | Ring | 2,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26323" data-img="https://static.ffxiah.com/images/icon/26323.png" target="_blank" rel="noopener">Gishdubar Sash</a> | Waist | 250 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26353" data-img="https://static.ffxiah.com/images/icon/26353.png" target="_blank" rel="noopener">Ask Sash</a> | Waist | 2,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26355" data-img="https://static.ffxiah.com/images/icon/26355.png" target="_blank" rel="noopener">Audumbla Sash</a> | Waist | 2,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26354" data-img="https://static.ffxiah.com/images/icon/26354.png" target="_blank" rel="noopener">Embla Sash</a> | Waist | 2,500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/27616" data-img="https://static.ffxiah.com/images/icon/27616.png" target="_blank" rel="noopener">Izdubar Mantle</a> | Back | 250 |
-| <a class="item-link" href="https://www.ffxiah.com/item/26245" data-img="https://static.ffxiah.com/images/icon/26245.png" target="_blank" rel="noopener">Solemnity Cape</a> | Back | 250 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26101" data-img="https://www.bg-wiki.com/images/6/61/Bragi_Earring_description.png" target="_blank" rel="noopener">Bragi Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26103" data-img="https://www.bg-wiki.com/images/8/80/Dellingr_Earring_description.png" target="_blank" rel="noopener">Dellingr Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26091" data-img="https://www.bg-wiki.com/images/f/f2/Foresti_Earring_description.png" target="_blank" rel="noopener">Foresti Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26106" data-img="https://www.bg-wiki.com/images/5/58/Fulla_Earring_description.png" target="_blank" rel="noopener">Fulla Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26102" data-img="https://www.bg-wiki.com/images/a/a2/Gersemi_Earring_description.png" target="_blank" rel="noopener">Gersemi Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26105" data-img="https://www.bg-wiki.com/images/b/b1/Gna_Earring_description.png" target="_blank" rel="noopener">Gna Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26090" data-img="https://www.bg-wiki.com/images/1/12/Hermodr_Earring_description.png" target="_blank" rel="noopener">Hermodr Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26100" data-img="https://www.bg-wiki.com/images/0/09/Hnoss_Earring_description.png" target="_blank" rel="noopener">Hnoss Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26092" data-img="https://www.bg-wiki.com/images/1/1e/Hretha_Earring_description.png" target="_blank" rel="noopener">Hretha Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26097" data-img="https://www.bg-wiki.com/images/4/44/Ilmr_Earring_description.png" target="_blank" rel="noopener">Ilmr Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26099" data-img="https://www.bg-wiki.com/images/5/5f/Lodurr_Earring_description.png" target="_blank" rel="noopener">Lodurr Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26094" data-img="https://www.bg-wiki.com/images/4/4d/Mani_Earring_description.png" target="_blank" rel="noopener">Mani Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26098" data-img="https://www.bg-wiki.com/images/f/f1/Meili_Earring_description.png" target="_blank" rel="noopener">Meili Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26095" data-img="https://www.bg-wiki.com/images/8/8a/Mimir_Earring_description.png" target="_blank" rel="noopener">Mimir Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26104" data-img="https://www.bg-wiki.com/images/a/a6/Njordr_Earring_description.png" target="_blank" rel="noopener">Njordr Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26089" data-img="https://www.bg-wiki.com/images/2/2c/Ran_Earring_description.png" target="_blank" rel="noopener">Ran Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26093" data-img="https://www.bg-wiki.com/images/c/cc/Saxnot_Earring_description.png" target="_blank" rel="noopener">Saxnot Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26096" data-img="https://www.bg-wiki.com/images/3/3f/Vor_Earring_description.png" target="_blank" rel="noopener">Vor Earring</a> | Ear | 1,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26111" data-img="https://www.bg-wiki.com/images/d/dd/Beyla_Earring_description.png" target="_blank" rel="noopener">Beyla Earring</a> | Ear | 2,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26113" data-img="https://www.bg-wiki.com/images/6/66/Nehalennia_Earring_description.png" target="_blank" rel="noopener">Nehalennia Earring</a> | Ear | 2,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26110" data-img="https://www.bg-wiki.com/images/5/56/Sjofn_Earring_description.png" target="_blank" rel="noopener">Sjofn Earring</a> | Ear | 2,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26109" data-img="https://www.bg-wiki.com/images/3/35/Snotra_Earring_description.png" target="_blank" rel="noopener">Snotra Earring</a> | Ear | 2,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26112" data-img="https://www.bg-wiki.com/images/b/b7/Tuisto_Earring_description.png" target="_blank" rel="noopener">Tuisto Earring</a> | Ear | 2,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26040" data-img="https://www.bg-wiki.com/images/9/92/Yngvi_Choker_description.png" target="_blank" rel="noopener">Yngvi Choker</a> | Neck | 2,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26163" data-img="https://www.bg-wiki.com/images/4/47/Etana_Ring_description.png" target="_blank" rel="noopener">Etana Ring</a> | Ring | 250 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26216" data-img="https://www.bg-wiki.com/images/b/be/Dreki_Ring_description.png" target="_blank" rel="noopener">Dreki Ring</a> | Ring | 2,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26323" data-img="https://www.bg-wiki.com/images/7/7a/Gishdubar_Sash_description.png" target="_blank" rel="noopener">Gishdubar Sash</a> | Waist | 250 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26353" data-img="https://www.bg-wiki.com/images/b/b4/Ask_Sash_description.png" target="_blank" rel="noopener">Ask Sash</a> | Waist | 2,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26355" data-img="https://www.bg-wiki.com/images/3/34/Audumbla_Sash_description.png" target="_blank" rel="noopener">Audumbla Sash</a> | Waist | 2,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26354" data-img="https://www.bg-wiki.com/images/4/4a/Embla_Sash_description.png" target="_blank" rel="noopener">Embla Sash</a> | Waist | 2,500 |
+| <a class="item-link" href="https://www.ffxiah.com/item/27616" data-img="https://www.bg-wiki.com/images/8/88/Izdubar_Mantle_description.png" target="_blank" rel="noopener">Izdubar Mantle</a> | Back | 250 |
+| <a class="item-link" href="https://www.ffxiah.com/item/26245" data-img="https://www.bg-wiki.com/images/9/99/Solemnity_Cape_description.png" target="_blank" rel="noopener">Solemnity Cape</a> | Back | 250 |
 <!-- DOCGEN:END id="domain-spoils" -->
 
 ## Tips
@@ -229,6 +184,6 @@ Pricing follows one rule: **Hunt Marks cost = Zurim's Domain-Point cost × 2.5**
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d5ce6d366da7 -->
-_Last updated: 2026-07-12 02:16 PDT_
+<!-- content-hash: d60e7cdcaae3 -->
+_Last updated: 2026-07-12 14:23 PDT_
 <!-- DOCGEN:END id="last-updated" -->

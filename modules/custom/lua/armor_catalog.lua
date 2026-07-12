@@ -92,9 +92,7 @@ local b = catalog.bronze
 -- Head (10 picks, scored highest first; Angantyr Beret removed 2026-07-11 --
 -- sold by Zurim/Domain QM, medal-vendor exclusivity)
 table.insert(b.head, { id = 27720, name = "Umbani Cap", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- TANK score 198
-table.insert(b.head, { id = 27729, name = "Otronif Mask +1", cost = 12, jobs = 'MNK/SAM/NIN/PUP' })  -- TANK score 195
 table.insert(b.head, { id = 27724, name = "Qaaxo Mask", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- TANK score 189
-table.insert(b.head, { id = 26734, name = "Acro Helm", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- TANK score 187
 table.insert(b.head, { id = 25609, name = "Emicho Coronet", cost = 12, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- TANK score 184
 table.insert(b.head, { id = 26669, name = "Lustratio Cap +1", cost = 12, jobs = 'WAR/THF/PLD/DRK/BST/BRD/DRG/DNC/RUN' })  -- WS score 152
 table.insert(b.head, { id = 27775, name = "Nahtirah Hat", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 118
@@ -110,28 +108,23 @@ table.insert(b.hands, { id = 27096, name = "Counts Cuffs", cost = 12, jobs = 'MN
 table.insert(b.hands, { id = 27120, name = "Amalric Gages +1", cost = 12, jobs = 'BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 195
 table.insert(b.hands, { id = 28016, name = "Qaaxo Mitaines", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- TANK score 190
 table.insert(b.hands, { id = 28015, name = "Xaddi Gauntlets", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- TANK score 190
-table.insert(b.hands, { id = 27046, name = "Acro Gauntlets", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- TANK score 189
 table.insert(b.hands, { id = 28013, name = "Hegira Wristbands", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' })  -- TANK score 187
 table.insert(b.hands, { id = 27122, name = "Kaykaus Cuffs +1", cost = 12, jobs = 'WHM/RDM/BRD/SCH' })  -- CASTER score 148
-table.insert(b.hands, { id = 27048, name = "Telchine Gloves", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- HEAL score 97
 
 -- Legs (12 picks, scored highest first)
 table.insert(b.legs, { id = 27304, name = "Amalric Slops", cost = 12, jobs = 'BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 200
-table.insert(b.legs, { id = 28161, name = "Otronif Brais +1", cost = 12, jobs = 'MNK/SAM/NIN/PUP' })  -- TANK score 198
 table.insert(b.legs, { id = 28154, name = "Weatherspoon Pants +1", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- TANK score 195
 table.insert(b.legs, { id = 27306, name = "Kaykaus Tights", cost = 12, jobs = 'WHM/RDM/BRD/SCH' })  -- CASTER score 180
 table.insert(b.legs, { id = 28155, name = "Scufflers Cosciales", cost = 12, jobs = 'WAR/PLD/DRK/SAM/DRG' })  -- DPS score 173
 table.insert(b.legs, { id = 25853, name = "Querkening Brais", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- DPS score 171
 table.insert(b.legs, { id = 28174, name = "Theurgists Slacks", cost = 12, jobs = 'WHM/BLM/SMN/PUP/SCH/GEO' })  -- CASTER score 159
 table.insert(b.legs, { id = 27197, name = "Lustratio Subligar +1", cost = 12, jobs = 'WAR/THF/PLD/DRK/BST/BRD/DRG/DNC/RUN' })  -- TANK score 135
-table.insert(b.legs, { id = 27236, name = "Helios Spats", cost = 12, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' })  -- DPS score 91
 
 -- Feet (11 picks, scored highest first)
 table.insert(b.feet, { id = 28286, name = "Ostro Greaves", cost = 12, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- DPS score 189
 table.insert(b.feet, { id = 27475, name = "Amalric Nails", cost = 12, jobs = 'BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 187
 table.insert(b.feet, { id = 28280, name = "Sokushitsu Sune-Ate", cost = 12, jobs = 'MNK/SAM/NIN' })  -- TANK score 185
 table.insert(b.feet, { id = 28287, name = "Durgai Leggings", cost = 12, jobs = 'MNK/THF/BST/NIN/PUP/DNC/RUN' })  -- DPS score 184
-table.insert(b.feet, { id = 27402, name = "Yorium Sabatons", cost = 12, jobs = 'WAR/PLD/DRK' })  -- TANK score 181
 table.insert(b.feet, { id = 28310, name = "Vanir Boots", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 181
 table.insert(b.feet, { id = 28296, name = "Artsieq Boots", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- DPS score 105
 
@@ -159,7 +152,6 @@ table.insert(s.body, { id = 26970, name = "Lapidary Tunic", cost = 25, jobs = 'M
 
 -- Hands (11 picks, scored highest first; Herculean Gloves removed 2026-07-11 --
 -- sold by Zurim/Domain QM, medal-vendor exclusivity)
-table.insert(s.hands, { id = 27045, name = "Yorium Gauntlets", cost = 25, jobs = 'WAR/PLD/DRK' })  -- TANK score 229
 table.insert(s.hands, { id = 27114, name = "Emicho Gauntlets +1", cost = 25, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- DPS score 216
 
 -- Legs (11 picks, scored highest first; Herculean Trousers + Chironic Hose
@@ -170,7 +162,6 @@ table.insert(s.legs, { id = 27305, name = "Amalric Slops +1", cost = 25, jobs = 
 
 -- Feet (9 picks, scored highest first; Herculean Boots removed 2026-07-11 --
 -- sold by Zurim/Domain QM, medal-vendor exclusivity)
-table.insert(s.feet, { id = 25922, name = "Navon Crackows", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 218
 
 -- Shields (3 picks, scored highest first)
 table.insert(s.shields, { id = 28648, name = "Priwen", cost = 25, jobs = 'PLD' })  -- TANK score 150
@@ -183,7 +174,6 @@ local g = catalog.gold
 
 -- Head (12 picks, scored highest first)
 table.insert(g.head, { id = 25600, name = "Maiitsoh Haube", cost = 50, jobs = 'WAR/PLD/DRK/BST/SAM/NIN/DRG' })  -- DPS score 305
-table.insert(g.head, { id = 27731, name = "Gendewitha Caubeen +1", cost = 50, jobs = 'WHM/RDM/BRD/SCH' })  -- HEAL score 259
 
 -- Body (13 picks, scored highest first)
 table.insert(g.body, { id = 23798, name = "Crepuscular Mail", cost = 50, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- TANK score 463
@@ -200,7 +190,6 @@ table.insert(g.feet, { id = 27476, name = "Amalric Nails +1", cost = 50, jobs = 
 
 -- Shields (2 picks, scored highest first)
 table.insert(g.shields, { id = 26487, name = "Sacro Bulwark", cost = 50, jobs = 'WAR/RDM/PLD/BST' })  -- TANK score 227
-table.insert(g.shields, { id = 26420, name = "Adapa Shield", cost = 50, jobs = 'WAR/DRK/BST' })  -- TANK score 153
 
 
 -- INFAMY TIER  (top-5-per-slot; promoted to the Dungeon Infamy
@@ -227,9 +216,6 @@ table.insert(inf.feet, { id = 24178, name = "Magnificent Sollerets", cost = 500,
 -- Shields (top 5 by score -> Infamy Vendor)
 table.insert(inf.shields, { id = 26400, name = "Culminus", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- CASTER score 368
 table.insert(inf.shields, { id = 26403, name = "Srivatsa", cost = 500, jobs = 'PLD' })  -- TANK score 357
-table.insert(inf.shields, { id = 26495, name = "Duban", cost = 500, jobs = 'PLD' })  -- TANK score 270
-table.insert(inf.shields, { id = 28654, name = "Beatific Shield +1", cost = 500, jobs = 'WAR/RDM/PLD/BST/SAM' })  -- TANK score 249
-table.insert(inf.shields, { id = 26419, name = "Ammurapi Shield", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 232
 
 
 return catalog

@@ -90,7 +90,6 @@ catalog.items = {
 
     -- === CHOCOBO-THEMED ===
     { id = 11500, name = 'Chocobo Beret',     price = 10000 },
-    { id = 10293, name = 'Chocobo Shirt',     price = 10000 },
     { id = 25585, name = 'Black Chocobo Cap', price = 15000 },
     { id = 23731, name = 'Ryl. Chocobo Beret',price = 15000 },
 

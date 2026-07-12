@@ -229,7 +229,7 @@ local NM_CATALOG = {
         { name='Zduhac', gid=55, tier=1, hp=400000, currency=600, cooldown=1800, drops = { { id=25844, name='Chironic Hose' }, { id=22270, name='Expeditious Pinion' } } },
         { name='Oryx', gid=56, tier=1, hp=400000, currency=600, cooldown=1800, drops = { { id=22198, name='Potent Grip' }, { id=25642, name='Herculean Helm' } } },
         -- Tier 2 (retail 129) ------------------------------------
-        { name='Strophadia', gid=57, tier=2, hp=900000, currency=1200, cooldown=1800, drops = { { id=22134, name='Holliday' }, { id=21854, name='Reienkyo' }, { id=20579, name='Skinflayer' }, { id=27547, name='Dignitary\'s Earring' } } },
+        { name='Strophadia', gid=57, tier=2, hp=900000, currency=1200, cooldown=1800, drops = { { id=21854, name='Reienkyo' }, { id=20579, name='Skinflayer' }, { id=27547, name='Dignitary\'s Earring' } } },
         { name='Gajasimha', gid=58, tier=2, hp=900000, currency=1200, cooldown=1800, drops = { { id=20505, name='Condemners' }, { id=21804, name='Obschine' }, { id=26174, name='Persis Ring' }, { id=22113, name='Teller' } } },
         { name='Ironside', gid=59, tier=2, hp=900000, currency=1200, cooldown=1800, drops = { { id=20677, name='Colada' }, { id=26019, name='Homeric Gorget' }, { id=21904, name='Kanaria' } } },
         { name='Sarsaok', gid=60, tier=2, hp=900000, currency=1200, cooldown=1800, drops = { { id=22271, name='Pemphredo Tathlum' }, { id=21021, name='Umaru' }, { id=21686, name='Zulfiqar' } } },

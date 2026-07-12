@@ -89,31 +89,8 @@ catalog.vendorItems =
     { id = 26106, cat = 'Accessories', sub = 'Ear', name = 'Fulla Earring',    cost = 1500 },
 
     -- ============ Reisenjima Fete weapons (Zurim 800 DP -> 2000 marks) ========
-    { id = 20579, cat = 'Weapons', sub = 'Dagger', name = 'Skinflayer',  cost = 2000 },
-    { id = 21686, cat = 'Weapons', sub = 'Gt. Sword', name = 'Zulfiqar',    cost = 2000 },
-    { id = 21746, cat = 'Weapons', sub = 'Axe', name = 'Digirbalag',  cost = 2000 },
-    { id = 21754, cat = 'Weapons', sub = 'Gt. Axe', name = 'Aganoshe',    cost = 2000 },
-    { id = 21804, cat = 'Weapons', sub = 'Scythe', name = 'Obschine',    cost = 2000 },
-    { id = 21904, cat = 'Weapons', sub = 'Katana', name = 'Kanaria',     cost = 2000 },
-    { id = 21021, cat = 'Weapons', sub = 'Gt. Katana', name = 'Umaru',       cost = 2000 },
-    { id = 21072, cat = 'Weapons', sub = 'Club', name = 'Gada',        cost = 2000 },
 
     -- ============ Reisenjima Fete armor (Zurim 800 DP -> 2000 marks) ==========
-    { id = 25640, cat = 'Armor', sub = 'Head',  name = 'Odyssean Helm',        cost = 2000 },
-    { id = 25641, cat = 'Armor', sub = 'Head',  name = 'Valorous Mask',        cost = 2000 },
-    { id = 25716, cat = 'Armor', sub = 'Body',  name = 'Odyssean Chestplate',  cost = 2000 },
-    { id = 25720, cat = 'Armor', sub = 'Body',  name = 'Chironic Doublet',     cost = 2000 },
-    { id = 25719, cat = 'Armor', sub = 'Body',  name = 'Merlinic Jubbah',      cost = 2000 },
-    { id = 27138, cat = 'Armor', sub = 'Hands', name = 'Odyssean Gauntlets',   cost = 2000 },
-    { id = 27139, cat = 'Armor', sub = 'Hands', name = 'Valorous Mitts',       cost = 2000 },
-    { id = 27142, cat = 'Armor', sub = 'Hands', name = 'Chironic Gloves',      cost = 2000 },
-    { id = 27141, cat = 'Armor', sub = 'Hands', name = 'Merlinic Dastanas',    cost = 2000 },
-    { id = 25840, cat = 'Armor', sub = 'Legs',  name = 'Odyssean Cuisses',     cost = 2000 },
-    { id = 25841, cat = 'Armor', sub = 'Legs',  name = 'Valorous Hose',        cost = 2000 },
-    { id = 25843, cat = 'Armor', sub = 'Legs',  name = 'Merlinic Shalwar',     cost = 2000 },
-    { id = 27494, cat = 'Armor', sub = 'Feet',  name = 'Odyssean Greaves',     cost = 2000 },
-    { id = 27495, cat = 'Armor', sub = 'Feet',  name = 'Valorous Greaves',     cost = 2000 },
-    { id = 27498, cat = 'Armor', sub = 'Feet',  name = 'Chironic Slippers',    cost = 2000 },
 
     -- ============ Endgame accessories / ammo (Zurim 1000 DP -> 2500 marks) ====
     { id = 22294, cat = 'Weapons', sub = 'Ammo', name = 'Hauksbok Bolt',     cost = 2500 },
@@ -133,36 +110,16 @@ catalog.vendorItems =
     -- Priced Domain-Points x 2.5 like the rest. (Statless Voluspa set pending.)
     -- ================================================================
     { id = 23742, cat = 'Armor', sub = 'Body', name = 'Heidrek Harness', cost = 100 },
-    { id = 25718, cat = 'Armor', sub = 'Body', name = 'Herculean Vest', cost = 2000 },
-    { id = 27496, cat = 'Armor', sub = 'Feet', name = 'Herculean Boots', cost = 2000 },
-    { id = 27497, cat = 'Armor', sub = 'Feet', name = 'Merlinic Crackows', cost = 2000 },
-    { id = 27140, cat = 'Armor', sub = 'Hands', name = 'Herculean Gloves', cost = 2000 },
-    { id = 25644, cat = 'Armor', sub = 'Head', name = 'Chironic Hat', cost = 2000 },
-    { id = 25642, cat = 'Armor', sub = 'Head', name = 'Herculean Helm', cost = 2000 },
-    { id = 25643, cat = 'Armor', sub = 'Head', name = 'Merlinic Hood', cost = 2000 },
-    { id = 25844, cat = 'Armor', sub = 'Legs', name = 'Chironic Hose', cost = 2000 },
-    { id = 25842, cat = 'Armor', sub = 'Legs', name = 'Herculean Trousers', cost = 2000 },
-    { id = 27540, cat = 'Accessories', sub = 'Ear', name = 'Eabani Earring', cost = 250 },
-    { id = 26108, cat = 'Accessories', sub = 'Ear', name = 'Odr Earring', cost = 2500 },
     { id = 26109, cat = 'Accessories', sub = 'Ear', name = 'Snotra Earring', cost = 2500 },
-    { id = 26107, cat = 'Accessories', sub = 'Ear', name = 'Thrud Earring', cost = 2500 },
-    { id = 26023, cat = 'Accessories', sub = 'Neck', name = 'Sanctity Necklace', cost = 250 },
     { id = 26040, cat = 'Accessories', sub = 'Neck', name = 'Yngvi Choker', cost = 2500 },
     { id = 26216, cat = 'Accessories', sub = 'Ring', name = 'Dreki Ring', cost = 2500 },
     { id = 26323, cat = 'Accessories', sub = 'Waist', name = 'Gishdubar Sash', cost = 250 },
-    { id = 20677, cat = 'Weapons', sub = 'Sword', name = 'Colada', cost = 2000 },
-    { id = 20505, cat = 'Weapons', sub = 'Hand-to-Hand', name = 'Condemners', cost = 2000 },
-    { id = 22054, cat = 'Weapons', sub = 'Staff', name = 'Grioavolr', cost = 2000 },
-    { id = 22134, cat = 'Weapons', sub = 'Marksmanship', name = 'Holliday', cost = 2000 },
-    { id = 21854, cat = 'Weapons', sub = 'Polearm', name = 'Reienkyo', cost = 2000 },
-    { id = 22113, cat = 'Weapons', sub = 'Archery', name = 'Teller', cost = 2000 },
 
     -- Voluspa weapon set + 2 armor bases (statted 2026-07-10 via zz_zurim_gear_mods.sql)
     { id = 21510, cat = 'Weapons', sub = 'Hand-to-Hand', name = 'Voluspa Knuckles', cost = 200 },
     { id = 21566, cat = 'Weapons', sub = 'Dagger', name = 'Voluspa Knife', cost = 200 },
     { id = 21622, cat = 'Weapons', sub = 'Sword', name = 'Voluspa Sword', cost = 200 },
     { id = 21665, cat = 'Weapons', sub = 'Gt. Sword', name = 'Voluspa Blade', cost = 200 },
-    { id = 21712, cat = 'Weapons', sub = 'Axe', name = 'Voluspa Axe', cost = 200 },
     { id = 21769, cat = 'Weapons', sub = 'Gt. Axe', name = 'Voluspa Chopper', cost = 200 },
     { id = 21822, cat = 'Weapons', sub = 'Scythe', name = 'Voluspa Scythe', cost = 200 },
     { id = 21864, cat = 'Weapons', sub = 'Polearm', name = 'Voluspa Lance', cost = 200 },
@@ -173,7 +130,6 @@ catalog.vendorItems =
     { id = 22133, cat = 'Weapons', sub = 'Archery', name = 'Voluspa Bow', cost = 200 },
     { id = 22144, cat = 'Weapons', sub = 'Marksmanship', name = 'Voluspa Gun', cost = 200 },
     { id = 23740, cat = 'Armor', sub = 'Head', name = 'Angantyr Beret', cost = 100 },
-    { id = 25717, cat = 'Armor', sub = 'Body', name = 'Valorous Mail', cost = 2000 },
 
     -- Ammo pouches (Zurim 80 DP -> 200 marks). Player request 2026-07-10:
     -- Date Shuriken shares Zurim's 80 DP pool with the Voluspa pouches, so all
