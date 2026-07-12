@@ -565,22 +565,19 @@ buildSourceNMMenu = function(player, srcDef, station)
                 mob:setSpawn(mPos.x, mPos.y, mPos.z, mPos.rot)
                 mob:spawn()
 
-                -- [DIAG 2026-07-09] Trace for the "all NMs pop at Spawner 3"
-                -- report. Logs the station identity + intended mPos + the mob's
-                -- ACTUAL position after spawn(). Read it as:
-                --   * every pop shows the SAME `station=table: 0x..` address
-                --       => a shared/last-station closure ref (code bug).
-                --   * addresses differ but all mPos land on ONE station's coords
-                --       => stale/wrong catalog data.
-                --   * mPos differs from `actual` => spawn() ignored setSpawn().
-                --   * mPos & actual both match the station you clicked => WORKING
-                --       (the live bug was stale onInitialize NPCs; a restart fixed it).
-                -- Remove once diagnosed.  grep the map log for: [Reforge][DIAG]
+                -- [DIAG 2026-07-09, RESOLVED 2026-07-11] The "all NMs pop at /
+                -- occupancy reports Spawner 3" bug was the shared-closure case:
+                -- all three spawner NPCs were inserted with the SAME name
+                -- ('Reforge_Spawner'), and the engine caches dynamic-entity
+                -- callbacks by name, so every NPC ran the last station's
+                -- onTrigger. Fixed by unique per-station names above. This
+                -- one-line trace stays to verify station routing on live;
+                -- grep the map log for: [Reforge][DIAG]
                 print(string.format(
-                    '[Reforge][DIAG] pop=%s station.id=%d station=%s mPos=(%.2f,%.2f,%.2f) actual=(%.2f,%.2f,%.2f) zone=%d',
-                    tostring(md.name), station.id, tostring(station),
+                    '[Reforge][DIAG] pop=%s station.id=%d mPos=(%.2f,%.2f,%.2f) actual=(%.2f,%.2f,%.2f)',
+                    tostring(md.name), station.id,
                     mPos.x, mPos.y, mPos.z,
-                    mob:getXPos(), mob:getYPos(), mob:getZPos(), mob:getZoneID()))
+                    mob:getXPos(), mob:getYPos(), mob:getZPos()))
 
                 -- Arm the un-engaged despawn (absolute deadline). onMobRoam
                 -- removes the NM if still un-engaged past this time; onMobEngage
@@ -685,7 +682,13 @@ m:addOverride(catalog.huntZonePath .. '.Zone.onInitialize', function(zone)
         local sPos = st.spawnerPos
         local Spawner = zone:insertDynamicEntity({
             objtype    = xi.objType.NPC,
-            name       = 'Reforge_Spawner',
+            -- name MUST be unique per station: the engine caches dynamic-entity
+            -- callbacks by name (luautils GenerateDynamicEntity binds them at
+            -- xi.zones.<zone>.npcs['DE_'..name]), so identical names make every
+            -- spawner run the LAST station's onTrigger -- the 2026-07-11 "all
+            -- spawners say Station 3 occupied" bug. Mirrors HuntingLeague's
+            -- per-tier spawner naming.
+            name       = string.format('Reforge_Spawner_%d', st.id),
             packetName = string.format('%sNM Spawner %d', xi.icon.STAR_LARGE, st.id),
             look       = 92,
             x = sPos.x, y = sPos.y, z = sPos.z, rotation = sPos.rot,

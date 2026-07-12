@@ -411,10 +411,12 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
     super(zone)
     -- One interchangeable Warden per position so multiple players can each run
     -- their own descent at once. All copies share name/look/menu.
-    for _, pos in ipairs(catalog.npcPositions or { catalog.npcPos }) do
+    for i, pos in ipairs(catalog.npcPositions or { catalog.npcPos }) do
         local warden = zone:insertDynamicEntity({
             objtype    = xi.objType.NPC,
-            name       = 'Voidspire_Warden',
+            -- unique per copy: the engine caches DE callbacks by name, so
+            -- same-name NPCs all run the last-bound closures (Reforge bug 2026-07-11)
+            name       = string.format('Voidspire_Warden_%d', i),
             packetName = string.format('%sThe Voidspire Warden', xi.icon.STAR_LARGE),
             look       = 19,   -- distinctive; swap for a darker model if you like
             x = pos.x, y = pos.y, z = pos.z,

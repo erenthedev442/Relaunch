@@ -552,10 +552,12 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
 
     -- One interchangeable Game Master per position so several players can each
     -- run their own wave session at once. All copies share name/look/menu.
-    for _, pos in ipairs(catalog.npcPositions or { catalog.npcPos }) do
+    for i, pos in ipairs(catalog.npcPositions or { catalog.npcPos }) do
         local GameMaster = zone:insertDynamicEntity({
             objtype    = xi.objType.NPC,
-            name       = 'Game_Master',
+            -- unique per copy: the engine caches DE callbacks by name, so
+            -- same-name NPCs all run the last-bound closures (Reforge bug 2026-07-11)
+            name       = string.format('Game_Master_%d', i),
             packetName = string.format('%sGame Master', xi.icon.STAR_LARGE),
             look       = 64,                -- Trust: Prishe (visible/distinctive)
             x          = pos.x,

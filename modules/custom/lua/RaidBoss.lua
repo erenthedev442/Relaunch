@@ -426,10 +426,12 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
     -- One interchangeable Sentinel per position so groups can pop / check the
     -- shared raid from several spots. All copies share name/look/menu; the boss
     -- itself stays a single server-shared fight.
-    for _, pos in ipairs(catalog.npcPositions or { catalog.npcPos }) do
+    for i, pos in ipairs(catalog.npcPositions or { catalog.npcPos }) do
     local sentinel = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
-        name       = 'Voidgate_Sentinel',
+        -- unique per copy: the engine caches DE callbacks by name, so
+        -- same-name NPCs all run the last-bound closures (Reforge bug 2026-07-11)
+        name       = string.format('Voidgate_Sentinel_%d', i),
         packetName = string.format('%sVoidgate Sentinel', xi.icon.STAR_LARGE),
         look       = 18,
         x = pos.x, y = pos.y, z = pos.z,
