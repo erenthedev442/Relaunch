@@ -52,7 +52,7 @@ local function dbg(msg) if DEBUG then print('[CatalystDBG] ' .. msg) end end
 
 -- itemId -> stat label, built once from the catalog (for the drop message).
 local labels
-local function labelFor(itemId)
+local function ensureLabels()
     if not labels then
         labels = {}
         local ok, cat = pcall(require, 'modules/custom/lua/augment_catalog')
@@ -62,7 +62,16 @@ local function labelFor(itemId)
             end
         end
     end
-    return labels[itemId] or 'augment'
+    return labels
+end
+
+local function labelFor(itemId)
+    return ensureLabels()[itemId] or 'augment'
+end
+
+-- nil for non-catalyst items (used to filter treasure-pool announcements).
+local function catalystLabel(itemId)
+    return ensureLabels()[itemId]
 end
 
 -- itemId -> readable ITEM name ("black_tiger_hide" -> "Black Tiger Hide"),
@@ -100,7 +109,7 @@ local function award(player, itemId)
     end
     pcall(function() player:addItem({ id = itemId, quantity = 1 }) end)
     player:printToPlayer(string.format(
-        '[Augments] Catalyst dropped: %s. Trade it to the Augment Moogle to apply.', display), SYS)
+        '[Augments] Catalyst dropped: %s.', display), SYS)
     return true
 end
 
@@ -110,6 +119,23 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
     -- so we drop ONCE per kill (not per member). Non-killer members return silently
     -- (they'd flood the trace); every real player kill logs exactly one line below.
     if not isKiller or player == nil then return end
+
+    -- Announce RETAIL-DROPLIST catalysts (player request 2026-07-12: a plain
+    -- "You find a raptor skin" gives no clue the skin is a catalyst). The
+    -- engine fires a TREASUREPOOL listener per pooled item right after this
+    -- hook (mobentity.cpp: OnMobDeath at L749 runs before DropItems at L784),
+    -- so arm a per-kill listener here and label any catalog item that lands
+    -- in the pool. removeListener first so respawns can't stack duplicates.
+    mob:removeListener('CATALYST_POOL_HINT')
+    mob:addListener('TREASUREPOOL', 'CATALYST_POOL_HINT', function(mobArg, poolChar, poolItemId)
+        local lbl = catalystLabel(poolItemId)
+        if lbl then
+            local iname = itemNameFor(poolItemId)
+            poolChar:printToPlayer(string.format(
+                '[Augments] Catalyst in the treasure pool: %s (%s).',
+                iname or ('item ' .. poolItemId), lbl), SYS)
+        end
+    end)
 
     local mname = mob:getName() or '?'
     if mob:isNM() then dbg(mname .. ' -> skip: NM (catalysts never drop from NMs)'); return end
