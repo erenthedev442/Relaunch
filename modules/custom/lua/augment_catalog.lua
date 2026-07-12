@@ -23,6 +23,17 @@
 --   tier : 0 for all augments (RELAUNCH: every augment available at every
 --          content tier; power scales via the player's Augment Tier roll band).
 --   label: stat name only.
+--
+-- OWNER REBALANCE 2026-07-11 (source: exports/augment_catalog_export_reworked.xlsx):
+--   Per-augment maxBoost ceilings tightened on 19 rows (crit/multi-attack/
+--   Fast Cast/Store TP/Subtle Blow/PDT/Spikes/Spell Interruption/Phalanx
+--   Received/Cure cast time/Gilfinder/Exp+Cap Points). FUTURE ROLLS ONLY --
+--   no sql/augments.sql change, so gear augmented before this keeps its old
+--   values (grandfathered). Exp./Cap. Point: the owner target (1..32%/slot)
+--   needs the engine base (33) changed in sql/augments.sql; Lua-only closest
+--   fit is maxBoost=0 -> flat +33%/slot at every tier.
+--   Save TP / All elemental resists / Pet TP Bonus keep their high base
+--   offsets by owner decision (ceiling kept over low floor).
 -----------------------------------
 return {
     -- ── cat 1: Base stats ───────────────────────────────────────────────────────
@@ -41,18 +52,18 @@ return {
     [861]  = { augId = 65,   base = 1,   mult = 2,   disp = 1,    cat = 2,  tier = 0, label = 'Attack' },
     [937]  = { augId = 66,   base = 1,   mult = 2,   disp = 1,    cat = 2,  tier = 0, label = 'Rng.Attack' },
     [1622]  = { augId = 130,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Attack Rng.Atk' },
-    [880]  = { augId = 132,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Dbl.Atk. Crit.hit rate', maxBoost = 7 },
-    [882]  = { augId = 143,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Dbl.Atk', maxBoost = 7 },
-    [891]  = { augId = 144,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Triple Atk', maxBoost = 5 },
+    [880]  = { augId = 132,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Dbl.Atk. Crit.hit rate', maxBoost = 1 },
+    [882]  = { augId = 143,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Dbl.Atk', maxBoost = 3 },
+    [891]  = { augId = 144,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Triple Atk', maxBoost = 4 },
     [855] = { augId = 353,  base = 1,   mult = 4,   disp = 1,    cat = 2,  tier = 0, label = 'TP Bonus' },
     [857] = { augId = 370,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Reverse Flourish' },
     [2157] = { augId = 333,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Conserve TP' },
     [1516] = { augId = 360,  base = 10,  mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Save TP' },
-    [2148] = { augId = 41,   base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Crit.hit rate', maxBoost = 9 },
-    [2149] = { augId = 328,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Crit. hit damage', maxBoost = 9 },
-    [935]  = { augId = 44,   base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Store TP Subtle Blow', maxBoost = 14 },
-    [1621] = { augId = 142,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Store TP', maxBoost = 14 },
-    [1690] = { augId = 195,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Subtle Blow', maxBoost = 14 },
+    [2148] = { augId = 41,   base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Crit.hit rate', maxBoost = 4 },
+    [2149] = { augId = 328,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Crit. hit damage', maxBoost = 4 },
+    [935]  = { augId = 44,   base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Store TP Subtle Blow', maxBoost = 9 },
+    [1621] = { augId = 142,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Store TP', maxBoost = 12 },
+    [1690] = { augId = 195,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Subtle Blow', maxBoost = 12 },
     [846]  = { augId = 62,   base = 1,   mult = 2,   disp = 1,    cat = 2,  tier = 0, label = 'Accuracy' },
     [847]  = { augId = 63,   base = 1,   mult = 2,   disp = 1,    cat = 2,  tier = 0, label = 'Rng.Accuracy' },
     [927] = { augId = 129,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Accuracy Rng.Acc' },
@@ -68,16 +79,16 @@ return {
     [909]  = { augId = 80,   base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Mag. Acc./Mag. Dmg' },
     [2426] = { augId = 133,  base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Mag.Atk.Bns', maxBoost = 14 },
     [1474] = { augId = 362,  base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Magic Damage' },
-    [2427] = { augId = 140,  base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Fast Cast', maxBoost = 9 },
+    [2427] = { augId = 140,  base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Fast Cast', maxBoost = 3 },
     [2428] = { augId = 237,  base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Occult Acumen' },
     [2889] = { augId = 334,  base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Magic burst dmg', maxBoost = 9 },
     [943] = { augId = 335,  base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Mag. crit. hit dmg' },
     [842]  = { augId = 57,   base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Magic crit. hit rate' },
     [2338] = { augId = 896,  base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Enspell Dmg' },
-    [2166] = { augId = 1157, base = 2,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Spell Interruption Rate Down' },
+    [2166] = { augId = 1157, base = 2,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Spell Interruption Rate Down', maxBoost = 3 },
     [2507] = { augId = 351,  base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Occ. quickens spellcasting', maxBoost = 9 },
     [2335] = { augId = 2044, base = 1,   mult = 15,  disp = 1,    cat = 3, tier = 0, label = 'Helix Damage',          maxBoost = 7 },
-    [2531] = { augId = 2045, base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Spikes Dmg',            maxBoost = 31 },
+    [2531] = { augId = 2045, base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Spikes Dmg',            maxBoost = 9 },
     [1606] = { augId = 2048, base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Immunobreak Chance+',   maxBoost = 31 },
     [955] = { augId = 1370, base = 1,   mult = 10,  disp = 1,    cat = 3, tier = 0, label = 'Enhances', maxBoost = 7 },
 
@@ -86,12 +97,12 @@ return {
     [881]  = { augId = 134,  base = 1,   mult = 1,   disp = 1,    cat = 4,  tier = 0, label = 'Mag.Def.Bns' },
     [936]  = { augId = 55,   base = 3,   mult = 30,  disp = 100,  cat = 4,  tier = 0, label = 'Magic dmg. taken' },
     [1193] = { augId = 56,   base = 3,   mult = 30,  disp = 100,  cat = 4,  tier = 0, label = 'Breath dmg. taken' },
-    [858]  = { augId = 54,   base = 3,   mult = 30,  disp = 100,  cat = 4,  tier = 0, label = 'Phys. dmg. taken' },
+    [858]  = { augId = 54,   base = 3,   mult = 30,  disp = 100,  cat = 4,  tier = 0, label = 'Phys. dmg. taken', maxBoost = 14 },
     [1123] = { augId = 71,   base = 3,   mult = 30,  disp = 100,  cat = 4,  tier = 0, label = 'Damage Taken' },
-    [2151] = { augId = 1155, base = 3,   mult = 30,  disp = 100,  cat = 4,  tier = 0, label = 'Physical Damage Taken' },
+    [2151] = { augId = 1155, base = 3,   mult = 30,  disp = 100,  cat = 4,  tier = 0, label = 'Physical Damage Taken', maxBoost = 14 },
     [2747] = { augId = 1156, base = 3,   mult = 30,  disp = 100,  cat = 4,  tier = 0, label = 'Magic Damage Taken' },
     [889]  = { augId = 363,  base = 1,   mult = 1,   disp = 1,    cat = 4,  tier = 0, label = 'Chance of successful block', maxBoost = 9 },
-    [1449]  = { augId = 368,  base = 1,   mult = 1,   disp = 1,    cat = 4,  tier = 0, label = 'Phalanx Received' },
+    [1449]  = { augId = 368,  base = 1,   mult = 1,   disp = 1,    cat = 4,  tier = 0, label = 'Phalanx Received', maxBoost = 9 },
     [2505]  = { augId = 1472, base = 1,   mult = 1,   disp = 1,    cat = 4,  tier = 0, label = 'Parrying rate' },
     [3504] = { augId = 42,   base = 1,   mult = 1,   disp = 1,    cat = 4,  tier = 0, label = 'Enemy crit. hit rate' },
     [1617] = { augId = 1153, base = 3,   mult = 1,   disp = 1,    cat = 4,  tier = 0, label = 'Evasion' },
@@ -111,7 +122,7 @@ return {
     [849]  = { augId = 348,  base = 1,   mult = 1,   disp = 1,    cat = 5, tier = 0, label = 'Elemental Magic Recast Delay' },
     [859]  = { augId = 349,  base = 1,   mult = 1,   disp = 1,    cat = 5, tier = 0, label = 'Enfeebling Magic Recast Delay' },
     [868]  = { augId = 355,  base = 1,   mult = 1,   disp = 1,    cat = 5, tier = 0, label = 'Enhancing Magic Recast Delay' },
-    [2198]  = { augId = 323,  base = 1,   mult = 1,   disp = 1,    cat = 5, tier = 0, label = 'Cure spellcasting time' },
+    [2198]  = { augId = 323,  base = 1,   mult = 1,   disp = 1,    cat = 5, tier = 0, label = 'Cure spellcasting time', maxBoost = 4 },
     [816]  = { augId = 331,  base = 1,   mult = 1,   disp = 1,    cat = 5, tier = 0, label = 'Waltz ability delay' },
     [838]  = { augId = 347,  base = 1,   mult = 1,   disp = 1,    cat = 5, tier = 0, label = 'Healing Magic Recast Delay' },
     [817]  = { augId = 337,  base = 1,   mult = 1,   disp = 1,    cat = 5, tier = 0, label = 'Song recast delay' },
@@ -171,17 +182,19 @@ return {
     [1608] = { augId = 287,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Parrying Skill' },
 
     -- ── cat 10: Exp/Cap Points ──────────────────────────────────────────────────
-    [2523] = { augId = 73,   base = 33,  mult = 1,   disp = 1,    cat = 10, tier = 0, label = 'Exp. Point +33%' },
+    -- maxBoost=0: owner target is 1..32%/slot, but the +33 base lives in the
+    -- engine (sql/augments.sql) -- Lua-only closest fit = flat +33%/slot.
+    [2523] = { augId = 73,   base = 33,  mult = 1,   disp = 1,    cat = 10, tier = 0, label = 'Exp. Point +33%', maxBoost = 0 },
     -- 942 kept over the 2026-07-10 re-pick (Goblin Mess Tin): the Infamy vendor
     -- sells Philosopher's Stone at 50 Infamy (infamy_vendor_catalog.lua), so it
     -- is purchasable and not NM-gated despite its NM-only retail droplist.
-    [942]  = { augId = 75,   base = 33,  mult = 1,   disp = 1,    cat = 10, tier = 0, label = 'Cap. Point +33%' },
+    [942]  = { augId = 75,   base = 33,  mult = 1,   disp = 1,    cat = 10, tier = 0, label = 'Cap. Point +33%', maxBoost = 0 },
 
     -- ── cat 11: Job specific niche utilities ────────────────────────────────────
     [897]  = { augId = 151,  base = 1,   mult = 1,   disp = 1,    cat = 11,  tier = 0, label = 'Martial Arts' },
     [1615]  = { augId = 194,  base = 1,   mult = 1,   disp = 1,    cat = 11,  tier = 0, label = 'Kick Attacks Rate or Damage' },
     [895]  = { augId = 640,  base = 1,   mult = 2,   disp = 1,    cat = 11,  tier = 0, label = 'Counter' },
-    [1591] = { augId = 354,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Quadruple Attack', maxBoost = 5 },
+    [1591] = { augId = 354,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Quadruple Attack', maxBoost = 3 },
     [926]  = { augId = 198,  base = 1,   mult = 1,   disp = 1,    cat = 11,  tier = 0, label = 'Zanshin' },
     [947]  = { augId = 251,  base = 1,   mult = 1,   disp = 1,    cat = 11,  tier = 0, label = 'Daken' },
     [1619] = { augId = 139,  base = 1,   mult = 1,   disp = 1,    cat = 11,  tier = 0, label = 'Rapid Shot' },
@@ -192,7 +205,7 @@ return {
     [836]  = { augId = 342,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Waltz TP cost' },
     [902]  = { augId = 43,   base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Charm' },
     [1888] = { augId = 67,   base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'All songs',             maxBoost = 1, tierValue = 2 },
-    [1630] = { augId = 148,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Gilfinder' },
+    [1630] = { augId = 148,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Gilfinder', maxBoost = 19 },
     [1269] = { augId = 215,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Ninja tool expertise' },
     -- tierValue = STEP: the line's value is STEP x your Augment Tier (TH 1..5,
     -- All songs 2..10). One catalyst per trade, no roll/affinity/crit; the

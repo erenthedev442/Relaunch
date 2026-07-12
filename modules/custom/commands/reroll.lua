@@ -211,7 +211,14 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
         else
             local hasAff  = (ln.def and ln.def.cat and affinity.hasAffinity(player, ln.def.cat)) or false
             local cap     = (ln.def and ln.def.maxBoost) and math.min(EXDATA_VALUE_MAX, ln.def.maxBoost) or EXDATA_VALUE_MAX
-            local slotMax = math.min(slice.max, cap)
+            -- SCALE maxBoost-capped rolls into [0, cap] like the Moogle does
+            -- (Augment_Moogle.lua 2026-06-30 revamp) instead of hard-clamping:
+            -- a hard clamp saturates every tier band above the cap, so all
+            -- tiers reroll to the SAME value on low-ceiling stats.
+            local function scaleRoll(raw)
+                return math.floor(raw * cap / EXDATA_VALUE_MAX + 0.5)
+            end
+            local slotMax = scaleRoll(slice.max)
 
             local r
             if ln.def and ln.def.tierValue then
@@ -229,7 +236,7 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
                 if isCrit then
                     r = slice.max
                 end
-                r = math.min(r, cap)
+                r = scaleRoll(r)
             end
 
             -- Pack: Augment { Id:11 | Value:5 } -> word = id + value*2048.
