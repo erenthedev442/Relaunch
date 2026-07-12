@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#12151b">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<title>Gear Set Builder — Legendary FFXI</title>
+<style>
+  :root{--bg:#12151b;--panel:#1a1f28;--panel-2:#0d1015;--line:#2b323d;--ink:#e6edf3;--mut:#9aa4b2;
+        --gold:#ecc25f;--gold-2:#d8ab33;--good:#8fe0b0;--gold-rule:linear-gradient(90deg,transparent,#c79a34 45%,#f3d680 50%,#c79a34 55%,transparent);}
+  *{box-sizing:border-box;}
+  body{margin:0;min-height:100vh;padding:28px 20px;font-family:ui-sans-serif,"Segoe UI",Roboto,system-ui,sans-serif;
+       background:radial-gradient(1200px 600px at 50% -10%,#1b212c 0%,var(--bg) 60%);color:var(--ink);
+       display:flex;align-items:flex-start;justify-content:center;}
+  .wrap{width:100%;max-width:940px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 22px;}
+  .nav{display:flex;gap:16px;margin-bottom:14px;font-size:13px;flex-wrap:wrap;}
+  .nav a{color:var(--mut);text-decoration:none;} .nav a:hover,.nav a.on{color:var(--gold);}
+  h1{margin:0;font-size:20px;font-weight:700;} h1 .star{color:var(--gold);}
+  .sub{color:var(--mut);font-size:13px;margin:4px 0 0;}
+  .rule{height:2px;border:0;margin:18px 0;background:var(--gold-rule);}
+  input{width:100%;padding:11px 12px;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;color:var(--ink);font-size:15px;}
+  input:focus{outline:none;border-color:var(--gold);}
+  .results{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}
+  .res{font-size:12.5px;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:5px 10px;cursor:pointer;}
+  .res:hover{border-color:var(--gold-2);color:var(--gold);}
+  .cols{display:grid;grid-template-columns:1fr;gap:18px;margin-top:16px;} @media(min-width:740px){.cols{grid-template-columns:1.15fr .85fr;}}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.6px;color:var(--gold);margin:0 0 10px;}
+  .setlist{list-style:none;margin:0;padding:0;}
+  .gi{padding:9px 0;border-top:1px solid var(--line);} .gi:first-child{border-top:0;}
+  .gitop{display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .giname{font-size:13.5px;font-weight:600;} .giname a{color:var(--ink);text-decoration:none;}
+  .rm{background:transparent;border:1px solid var(--line);color:var(--mut);border-radius:7px;padding:3px 8px;font-size:11px;cursor:pointer;}
+  .rm:hover{color:#f0a0a0;border-color:#7a3b3b;}
+  .mods{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;}
+  .mchip{font-size:11px;color:var(--ink);background:#141922;border:1px solid var(--line);border-radius:6px;padding:2px 7px;}
+  .mchip b{color:var(--gold);}
+  .empty{color:var(--mut);font-size:13px;}
+  .totals{list-style:none;margin:0;padding:0;}
+  .trow{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid var(--line);font-size:13.5px;}
+  .trow:first-child{border-top:0;} .trow .tl{color:var(--ink);} .trow .tv{color:var(--gold);font-weight:700;font-variant-numeric:tabular-nums;}
+  .trow .tv.neg{color:#f0a0a0;}
+  .bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .btn{font-size:12px;padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer;}
+  .btn:hover{color:var(--gold);border-color:var(--gold-2);}
+  #pop{position:fixed;z-index:1000;display:none;pointer-events:none;}
+  #pop img{display:block;max-width:320px;max-height:70vh;border:1px solid var(--gold-2);border-radius:8px;background:#0d1015;box-shadow:0 8px 30px rgba(0,0,0,.6);}
+  .foot{color:var(--mut);font-size:12px;margin-top:16px;}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="card">
+  <div class="nav">
+    <a href="/">Home</a><a href="/community.html">Community</a><a href="/market.html">Market</a>
+    <a href="/gear-builder.html" class="on">Gear</a><a href="/augments.html">Augments</a><a href="/events.html">Live Events</a>
+    <a href="/status.html">Status</a>
+  </div>
+  <h1><span class="star">★</span> Gear Set Builder</h1>
+  <p class="sub">Search real items, build a set, and see the summed stats from the live item database.</p>
+  <hr class="rule">
+  <input id="q" type="text" placeholder="Search items by name — e.g. “Ochain”, “Twilight”, “Coeurl Hide”…" autocomplete="off">
+  <div class="results" id="results"></div>
+  <div class="cols">
+    <div>
+      <div class="bar"><h2 style="margin:0">Your set · <span id="setCount">0</span></h2>
+        <button class="btn" onclick="clearSet()">Clear</button></div>
+      <ul class="setlist" id="setlist"><li class="empty">Add items above to start building.</li></ul>
+    </div>
+    <div>
+      <h2>Total stats</h2>
+      <ul class="totals" id="totals"><li class="empty">No stats yet.</li></ul>
+    </div>
+  </div>
+  <div class="foot">Stats come straight from <code>item_mods</code> — the same values the server applies. Percent-scaled mods show raw engine values.</div>
+</div></div>
+<div id="pop"><img alt=""></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const pop=$('#pop'), popImg=pop.querySelector('img');
+function esc(s){const d=document.createElement('div');d.textContent=s??'';return d.innerHTML;}
+let SET = JSON.parse(localStorage.getItem('lg_gearset')||'[]');   // [{itemId,name}]
+let MODS = {};   // itemId -> {name,img,wiki,mods:[{label,value}]}
+
+function save(){ localStorage.setItem('lg_gearset', JSON.stringify(SET)); }
+
+let t=null;
+$('#q').addEventListener('input', e=>{
+  clearTimeout(t); const q=e.target.value.trim();
+  if(q.length<2){ $('#results').innerHTML=''; return; }
+  t=setTimeout(async()=>{
+    const d=await fetch('/api/items/search?q='+encodeURIComponent(q)).then(r=>r.json());
+    $('#results').innerHTML = d.items.map(it=>`<span class="res" data-id="${it.itemId}" data-img="${it.img||''}">${esc(it.name)}</span>`).join('')
+      || '<span class="empty">No matches.</span>';
+    document.querySelectorAll('.res').forEach(el=>{
+      el.onclick=()=>addItem(+el.dataset.id, el.textContent);
+      el.onmouseenter=()=>showPop(el.dataset.img); el.onmouseleave=hidePop;
+    });
+  }, 200);
+});
+
+function addItem(id, name){
+  if(SET.some(s=>s.itemId===id)) return;
+  SET.push({itemId:id, name}); save(); $('#q').value=''; $('#results').innerHTML=''; refresh();
+}
+function removeItem(id){ SET=SET.filter(s=>s.itemId!==id); save(); refresh(); }
+function clearSet(){ SET=[]; save(); refresh(); }
+
+async function refresh(){
+  $('#setCount').textContent = SET.length;
+  if(!SET.length){ $('#setlist').innerHTML='<li class="empty">Add items above to start building.</li>';
+    $('#totals').innerHTML='<li class="empty">No stats yet.</li>'; return; }
+  const d = await fetch('/api/item-mods?ids='+SET.map(s=>s.itemId).join(',')).then(r=>r.json());
+  MODS=d.items;
+  $('#setlist').innerHTML = SET.map(s=>{
+    const m=MODS[s.itemId]||{mods:[]};
+    const chips = m.mods.length ? m.mods.map(x=>`<span class="mchip">${esc(x.label)} <b>${x.value>0?'+':''}${x.value}</b></span>`).join('')
+      : '<span class="empty">no listed mods</span>';
+    return `<li class="gi"><div class="gitop"><span class="giname"><a href="${m.wiki||'#'}" target="_blank" rel="noopener" data-img="${m.img||''}">${esc(s.name)}</a></span>`+
+      `<button class="rm" data-id="${s.itemId}">remove</button></div><div class="mods">${chips}</div></li>`;
+  }).join('');
+  document.querySelectorAll('.rm').forEach(b=>b.onclick=()=>removeItem(+b.dataset.id));
+  document.querySelectorAll('.giname a').forEach(a=>{ a.onmouseenter=()=>showPop(a.dataset.img); a.onmouseleave=hidePop; });
+  // sum
+  const tot={};
+  for(const s of SET){ for(const m of (MODS[s.itemId]||{mods:[]}).mods){ tot[m.label]=(tot[m.label]||0)+m.value; } }
+  const rows=Object.entries(tot).filter(([,v])=>v!==0).sort((a,b)=>a[0].localeCompare(b[0]));
+  $('#totals').innerHTML = rows.length ? rows.map(([l,v])=>`<li class="trow"><span class="tl">${esc(l)}</span><span class="tv ${v<0?'neg':''}">${v>0?'+':''}${v.toLocaleString()}</span></li>`).join('')
+    : '<li class="empty">These items have no listed mods.</li>';
+}
+function showPop(src){ if(!src)return; popImg.src=src; pop.style.display='block'; }
+function hidePop(){ pop.style.display='none'; }
+document.addEventListener('mousemove',e=>{ if(pop.style.display==='block'){ pop.style.left=(e.clientX+16)+'px'; pop.style.top=(Math.min(e.clientY+16, innerHeight-260))+'px'; }});
+refresh();
+</script>
+</body>
+</html>

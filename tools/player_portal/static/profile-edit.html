@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Customize Profile — Legendary FFXI</title>
+<style>
+  :root {
+    --bg:#12151b; --panel:#1a1f28; --panel-2:#0d1015; --line:#2b323d;
+    --ink:#e6edf3; --mut:#9aa4b2; --ok:#57c98a; --err:#e5534b;
+    --accent:#ecc25f;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; padding:28px 20px; color:var(--ink);
+         font-family: ui-sans-serif, "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+         background: radial-gradient(1000px 500px at 50% -10%, #1b212c 0%, var(--bg) 60%);
+         display:flex; align-items:flex-start; justify-content:center; }
+  .wrap { width:100%; max-width:620px; }
+  .nav { display:flex; gap:16px; margin-bottom:14px; font-size:13px; }
+  .nav a { color:var(--mut); text-decoration:none; } .nav a:hover { color:var(--accent); }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:22px; margin-bottom:16px; }
+  h1 { margin:0 0 4px; font-size:20px; font-weight:700; } h1 .star { color:var(--accent); }
+  .sub { color:var(--mut); font-size:13px; margin:0; }
+  hr { height:2px; border:0; margin:16px 0; background:linear-gradient(90deg,transparent,var(--accent),transparent); opacity:.6; }
+  label { display:block; font-size:11px; color:var(--mut); margin:18px 0 7px; text-transform:uppercase; letter-spacing:.6px; }
+  select, input[type=text] { width:100%; padding:10px 12px; background:var(--panel-2); border:1px solid var(--line);
+           border-radius:8px; color:var(--ink); font-size:15px; }
+  select:focus, input:focus { outline:none; border-color:var(--accent); }
+  .count { float:right; color:var(--mut); text-transform:none; letter-spacing:0; }
+
+  /* live preview */
+  .prev { border-radius:12px; overflow:hidden; border:1px solid var(--line); }
+  .prev .pb { padding:16px 18px; position:relative;
+     background: radial-gradient(500px 160px at 15% -40%, color-mix(in srgb,var(--accent) 26%,transparent), transparent),
+                 linear-gradient(180deg, color-mix(in srgb,var(--accent) 9%,var(--panel)), var(--panel)); }
+  .prev .pb::after { content:""; position:absolute; left:0; right:0; bottom:0; height:2px;
+                     background:linear-gradient(90deg,transparent,var(--accent),transparent); }
+  .prev .pn { font-size:22px; font-weight:800; } .prev .pt { color:var(--accent); font-size:13px; font-weight:600; min-height:16px; }
+  .prev .pbody { padding:14px 18px; background:var(--panel); }
+  .prev .pfeat { display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:700;
+     border:1px solid color-mix(in srgb,var(--accent) 45%,var(--line)); background:color-mix(in srgb,var(--accent) 8%,var(--panel-2));
+     border-radius:20px; padding:5px 12px; margin-bottom:10px; }
+  .prev .pfeat .m { color:var(--accent); }
+  .prev .pshow { display:flex; gap:7px; flex-wrap:wrap; }
+  .prev .pj { font-size:12px; padding:5px 10px; border-radius:7px; background:var(--panel-2);
+     border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line)); color:var(--accent); font-weight:700; }
+
+  /* accent swatches */
+  .swatches { display:flex; gap:10px; flex-wrap:wrap; }
+  .sw { width:34px; height:34px; border-radius:50%; cursor:pointer; border:3px solid transparent; }
+  .sw.on { border-color:var(--ink); }
+
+  /* showcase job toggles */
+  .jobs { display:flex; flex-wrap:wrap; gap:8px; }
+  .jt { font-size:13px; padding:7px 11px; border-radius:8px; cursor:pointer; user-select:none;
+        background:var(--panel-2); border:1px solid var(--line); color:var(--ink); }
+  .jt.on { border-color:var(--accent); color:var(--accent); }
+  .jt.dim { opacity:.4; cursor:default; }
+
+  button.save { width:100%; margin-top:22px; padding:13px; border:0; border-radius:8px; cursor:pointer;
+     background:linear-gradient(180deg,var(--accent),color-mix(in srgb,var(--accent) 70%,#000)); color:#241a00; font-weight:700; font-size:15px; }
+  button.save:disabled { opacity:.5; cursor:default; }
+  .msg { font-size:13px; min-height:18px; margin-top:12px; } .msg.ok{color:var(--ok)} .msg.err{color:var(--err)}
+  .skeleton { color:var(--mut); text-align:center; padding:28px 0; }
+  #editor { display:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="/">&#8592; Portal Home</a></div>
+  <div class="card">
+    <h1><span class="star">&#9733;</span> Customize Profile</h1>
+    <p class="sub">Make your public adventurer page your own. Changes are visible to everyone at your profile link.</p>
+    <hr>
+    <div id="loginMsg" class="skeleton" style="display:none;">You must be <a href="/" style="color:var(--accent)">logged in</a> to customize a profile.</div>
+    <div id="loadingMsg" class="skeleton">Loading&hellip;</div>
+    <div id="editor">
+      <label for="charSelect">Character</label>
+      <select id="charSelect"><option value="">— pick a character —</option></select>
+      <div id="controls" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const api = (p,o)=>fetch(p,{credentials:'include',...o});
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+let characters=[], cid=null, opts=null, sel={title:'',accent:'gold',featured:'',showcase:[]}, accentHex={};
+
+async function init(){
+  const meRes = await api('/api/me');
+  if (meRes.status===401){ document.getElementById('loadingMsg').style.display='none'; document.getElementById('loginMsg').style.display='block'; return; }
+  characters = (await meRes.json()).characters || [];
+  document.getElementById('loadingMsg').style.display='none';
+  document.getElementById('editor').style.display='block';
+  const s=document.getElementById('charSelect');
+  characters.forEach(c=>{ const o=document.createElement('option'); o.value=c.charid; o.textContent=c.name; s.appendChild(o); });
+  s.addEventListener('change',()=>{ const id=parseInt(s.value); if(id) loadChar(id); });
+  const want=parseInt(new URLSearchParams(location.search).get('charid'));
+  const pick=characters.find(c=>c.charid===want)||(characters.length===1?characters[0]:null);
+  if(pick){ s.value=pick.charid; loadChar(pick.charid); }
+}
+
+async function loadChar(id){
+  cid=id;
+  const box=document.getElementById('controls');
+  box.style.display='block'; box.innerHTML='<div class="skeleton">Loading options&hellip;</div>';
+  const res=await api('/api/profile-custom/'+id);
+  if(!res.ok){ box.innerHTML='<div class="skeleton">Could not load.</div>'; return; }
+  const d=await res.json(); opts=d.options;
+  accentHex={}; opts.accents.forEach(a=>accentHex[a.id]=a.hex);
+  sel={ title:d.current.title||'', accent:d.current.accent||'gold',
+        featured:d.current.featured||'', showcase:(d.current.showcase||[]).slice() };
+  renderControls();
+}
+
+function renderControls(){
+  const box=document.getElementById('controls');
+  const name=(characters.find(c=>c.charid===cid)||{}).name||'You';
+  const cname=name;
+  box.innerHTML = `
+    <div class="prev" id="prev"></div>
+
+    <label>Title / Tagline <span class="count"><span id="tcount">0</span>/${opts.maxTitle}</span></label>
+    <input type="text" id="title" maxlength="${opts.maxTitle}" placeholder="e.g. The Undying, Windurst's Finest…">
+
+    <label>Accent Color</label>
+    <div class="swatches" id="swatches">
+      ${opts.accents.map(a=>`<div class="sw" data-a="${a.id}" title="${a.id}" style="background:${a.hex}"></div>`).join('')}
+    </div>
+
+    <label>Featured Accomplishment</label>
+    <select id="featured">
+      <option value="">— none —</option>
+      ${opts.badges.map(b=>`<option value="${esc(b.id)}">${esc(b.label)}</option>`).join('')}
+    </select>
+    ${opts.badges.length?'':'<p class="sub" style="margin-top:6px">Earn accomplishments in-game (Hunting League, NM kills…) to feature one here.</p>'}
+
+    <label>Showcase Jobs <span class="count">up to ${opts.maxShowcase}</span></label>
+    <div class="jobs" id="jobs">
+      ${opts.jobs.map(j=>`<span class="jt" data-j="${j.job}">${esc(j.job)} ${j.lvl}</span>`).join('')}
+    </div>
+
+    <button class="save" id="saveBtn">Save profile</button>
+    <div class="msg" id="msg"></div>
+    <p class="sub" style="margin-top:12px">View it live: <a href="/c/${encodeURIComponent(cname)}" target="_blank" style="color:var(--accent)">/c/${esc(cname)} ↗</a></p>`;
+
+  const title=document.getElementById('title');
+  title.value=sel.title; document.getElementById('tcount').textContent=sel.title.length;
+  title.addEventListener('input',()=>{ sel.title=title.value; document.getElementById('tcount').textContent=title.value.length; preview(); });
+
+  document.querySelectorAll('#swatches .sw').forEach(el=>el.addEventListener('click',()=>{ sel.accent=el.dataset.a; syncSwatches(); preview(); }));
+  document.getElementById('featured').value=sel.featured; document.getElementById('featured').addEventListener('change',e=>{ sel.featured=e.target.value; preview(); });
+  document.querySelectorAll('#jobs .jt').forEach(el=>el.addEventListener('click',()=>toggleJob(el.dataset.j)));
+  document.getElementById('saveBtn').addEventListener('click',save);
+
+  syncSwatches(); syncJobs(); preview();
+}
+
+function syncSwatches(){ document.querySelectorAll('#swatches .sw').forEach(el=>el.classList.toggle('on', el.dataset.a===sel.accent)); }
+function toggleJob(j){
+  const i=sel.showcase.indexOf(j);
+  if(i>=0) sel.showcase.splice(i,1);
+  else { if(sel.showcase.length>=opts.maxShowcase) return; sel.showcase.push(j); }
+  syncJobs(); preview();
+}
+function syncJobs(){
+  const full=sel.showcase.length>=opts.maxShowcase;
+  document.querySelectorAll('#jobs .jt').forEach(el=>{
+    const on=sel.showcase.includes(el.dataset.j);
+    el.classList.toggle('on',on); el.classList.toggle('dim', full&&!on);
+  });
+}
+
+function preview(){
+  const box=document.getElementById('prev');
+  const name=(characters.find(c=>c.charid===cid)||{}).name||'You';
+  document.documentElement.style.setProperty('--accent', accentHex[sel.accent]||'#ecc25f');
+  const fb=(opts.badges.find(b=>b.id===sel.featured)||{}).label;
+  const shows=sel.showcase.map(j=>`<span class="pj">${esc(j)}</span>`).join('');
+  box.innerHTML=`
+    <div class="pb"><div class="pn">${esc(name)}</div><div class="pt">${esc(sel.title||'')}</div></div>
+    <div class="pbody">
+      ${fb?`<div class="pfeat"><span class="m">&#9733;</span> ${esc(fb)}</div><br>`:''}
+      ${shows?`<div class="pshow">${shows}</div>`:'<span class="sub" style="font-size:12px">Pick an accent, title, badge, and showcase jobs above.</span>'}
+    </div>`;
+}
+
+async function save(){
+  const btn=document.getElementById('saveBtn'), msg=document.getElementById('msg');
+  btn.disabled=true; btn.textContent='Saving…'; msg.className='msg'; msg.textContent='';
+  const res=await api('/api/profile-custom',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({charid:cid, title:sel.title, accent:sel.accent, featured:sel.featured, showcase:sel.showcase})});
+  const j=await res.json().catch(()=>({}));
+  btn.disabled=false; btn.textContent='Save profile';
+  if(res.ok){ msg.className='msg ok'; msg.textContent='Saved! Your public profile is updated.'; }
+  else { msg.className='msg err'; msg.textContent=j.detail||'Save failed.'; }
+}
+
+init().catch(()=>{ document.getElementById('loadingMsg').textContent='Failed to connect. Please refresh.'; });
+</script>
+</body>
+</html>

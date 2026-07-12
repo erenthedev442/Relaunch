@@ -1,0 +1,27 @@
+# cloudflared tunnel config for the Player Portal.
+#
+# The FastAPI app serves BOTH the login page (static/) AND the /api/* endpoints
+# on 127.0.0.1:8080, so ONE hostname -> the app is a fully same-origin portal
+# (first-party session cookie, zero CORS). You only need a domain on Cloudflare
+# -- a zone you control. A *.pages.dev subdomain CANNOT host a tunnel hostname,
+# so if you're on legendary-ffxi.pages.dev today you'll need to add a real
+# domain to your Cloudflare account first (then point Pages at it too if you like).
+#
+# One-time setup on the box:
+#   curl -L https://pkg.cloudflare.com/... | sudo bash   # install cloudflared (see CF docs)
+#   cloudflared tunnel login
+#   cloudflared tunnel create ffxi-portal                # prints <UUID>, writes ~/.cloudflared/<UUID>.json
+#   cloudflared tunnel route dns ffxi-portal portal.yourdomain.com
+#   # copy this file to ~/.cloudflared/config.yml and fill in <UUID> + your hostname
+#   sudo cloudflared service install                     # run it as a service (survives reboot)
+#   # ...or foreground for testing:  cloudflared tunnel run ffxi-portal
+
+tunnel: ffxi-portal
+credentials-file: /home/azureuser/.cloudflared/REPLACE_WITH_TUNNEL_UUID.json
+
+ingress:
+  # The whole portal (login page + /api) is this one local service.
+  - hostname: portal.ffxi-legendary.com
+    service: http://127.0.0.1:8080
+  # Required catch-all.
+  - service: http_status:404

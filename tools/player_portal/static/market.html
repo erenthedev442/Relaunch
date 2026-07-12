@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#12151b">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<title>Market — Legendary FFXI</title>
+<style>
+  :root { --bg:#12151b; --panel:#1a1f28; --panel-2:#0d1015; --line:#2b323d; --ink:#e6edf3; --mut:#9aa4b2; --gold:#ecc25f; --ok:#57c98a; }
+  *{box-sizing:border-box} body{margin:0;min-height:100vh;padding:28px 20px;color:var(--ink);
+    font-family:ui-sans-serif,"Segoe UI",Roboto,system-ui,-apple-system,sans-serif;
+    background:radial-gradient(1100px 550px at 50% -10%,#1b212c 0%,var(--bg) 60%);display:flex;justify-content:center}
+  .wrap{width:100%;max-width:760px}
+  .nav{display:flex;gap:16px;margin-bottom:14px;font-size:13px}.nav a{color:var(--mut);text-decoration:none}.nav a:hover{color:var(--gold)}
+  h1{margin:0 0 4px;font-size:20px;font-weight:700}h1 .star{color:var(--gold)}.sub{color:var(--mut);font-size:13px;margin:0 0 16px}
+  .tabs{display:flex;gap:8px;margin-bottom:14px}
+  .tab{padding:8px 16px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--mut);cursor:pointer;font-size:14px;font-weight:600}
+  .tab.on{color:var(--gold);border-color:var(--gold)}
+  input{width:100%;padding:11px 13px;background:var(--panel-2);border:1px solid var(--line);border-radius:9px;color:var(--ink);font-size:15px;margin-bottom:14px}
+  input:focus{outline:none;border-color:var(--gold)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:16px}
+  .row{display:flex;align-items:center;gap:12px;padding:11px 15px;border-bottom:1px solid var(--line)}
+  .row:last-child{border-bottom:0}
+  .row img{width:32px;height:32px;flex:none;border-radius:6px;background:var(--panel-2)}
+  .row .nm{flex:1;min-width:0;font-weight:600;font-size:14px}
+  .row .nm a{color:var(--ink);text-decoration:none}.row .nm a:hover{color:var(--gold)}
+  .row .meta{color:var(--mut);font-size:12px}
+  .row .price{color:var(--gold);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .ah{padding:15px}
+  .ah .head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .ah .head img{width:36px;height:36px;border-radius:7px;background:var(--panel-2)}
+  .ah .head .nm{font-weight:700;font-size:15px}.ah .head .avg{margin-left:auto;color:var(--gold);font-weight:700}
+  .ah .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .ah .col h4{margin:0 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--mut)}
+  .ah .li{display:flex;justify-content:space-between;font-size:13px;padding:3px 0;color:var(--ink)}
+  .ah .li .p{color:var(--gold);font-variant-numeric:tabular-nums}
+  .skeleton{color:var(--mut);text-align:center;padding:30px 0}
+  .count{color:var(--mut);font-size:12px;margin-bottom:8px}
+  .trend{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+  .trend .th{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+  .trend svg{width:100%;height:56px;display:block}
+  .trend .legend{display:flex;gap:14px;font-size:12px;margin-top:6px}
+  .trend .legend b{color:var(--gold)} .trend .legend span{color:var(--mut)}
+  .trend .none{color:var(--mut);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="/">&#8592; Portal Home</a><a href="/community.html">Community</a><a href="/gear-builder.html">Gear</a><a href="/augments.html">Augments</a><a href="/status.html">Server status</a></div>
+  <h1><span class="star">&#9733;</span> Market</h1>
+  <p class="sub">Every bazaar on the server, and Auction House price history — without a single warp.</p>
+  <div class="tabs">
+    <div class="tab on" data-t="bazaar" onclick="pick('bazaar')">Bazaars</div>
+    <div class="tab" data-t="ah" onclick="pick('ah')">AH Prices</div>
+  </div>
+  <div id="baz">
+    <input id="bazq" placeholder="Filter bazaars by item name…" oninput="renderBaz()">
+    <div id="bazcount" class="count"></div>
+    <div id="bazlist"><div class="card"><div class="skeleton">Loading bazaars&hellip;</div></div></div>
+  </div>
+  <div id="ah" style="display:none">
+    <input id="ahq" placeholder="Search an item's price (type 2+ letters)…" oninput="ahSearch()">
+    <div id="ahlist"></div>
+  </div>
+</div>
+<script>
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function gil(x){return Number(x||0).toLocaleString()+"g"}
+let bazaars=[];
+function pick(t){document.querySelectorAll('.tab').forEach(e=>e.classList.toggle('on',e.dataset.t===t));
+  document.getElementById('baz').style.display=t==='bazaar'?'block':'none';
+  document.getElementById('ah').style.display=t==='ah'?'block':'none';}
+
+async function loadBaz(){
+  try{const r=await fetch('/api/bazaars',{credentials:'include'});const d=await r.json();bazaars=d.items||[];renderBaz();}
+  catch{document.getElementById('bazlist').innerHTML='<div class="card"><div class="skeleton">Could not load bazaars.</div></div>';}
+}
+function renderBaz(){
+  const q=(document.getElementById('bazq').value||'').toLowerCase();
+  const items=bazaars.filter(i=>!q||i.name.toLowerCase().includes(q));
+  document.getElementById('bazcount').textContent = items.length? `${items.length} item${items.length===1?'':'s'} for sale`:'';
+  if(!bazaars.length){document.getElementById('bazlist').innerHTML='<div class="card"><div class="skeleton">No bazaars are open right now. Check back when the server is livelier!</div></div>';return;}
+  document.getElementById('bazlist').innerHTML='<div class="card">'+items.slice(0,300).map(i=>`
+    <div class="row"><img src="${esc(i.img)}" loading="lazy" onerror="this.style.visibility='hidden'">
+      <div class="nm"><a href="${esc(i.wiki)}" target="_blank" rel="noopener">${esc(i.name)}</a>
+        <div class="meta">${esc(i.seller)} &middot; ${esc(i.zone)}${i.qty>1?` &middot; x${i.qty}`:''}</div></div>
+      <div class="price">${gil(i.price)}</div></div>`).join('')+'</div>';
+}
+
+let ahTimer=null;
+function ahSearch(){clearTimeout(ahTimer);ahTimer=setTimeout(doAh,250);}
+async function doAh(){
+  const q=document.getElementById('ahq').value.trim();
+  const box=document.getElementById('ahlist');
+  if(q.length<2){box.innerHTML='';return;}
+  box.innerHTML='<div class="card"><div class="skeleton">Searching&hellip;</div></div>';
+  try{
+    const r=await fetch('/api/ah?q='+encodeURIComponent(q),{credentials:'include'});const d=await r.json();
+    if(!d.matches||!d.matches.length){box.innerHTML='<div class="card"><div class="skeleton">No AH data for that item yet.</div></div>';return;}
+    box.innerHTML=d.matches.map(m=>`<div class="card ah">
+      <div class="head"><img src="${esc(m.img)}" onerror="this.style.visibility='hidden'">
+        <div class="nm"><a href="${esc(m.wiki)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${esc(m.name)}</a></div>
+        ${m.avg!=null?`<div class="avg">avg ${gil(m.avg)}</div>`:''}</div>
+      <div class="cols">
+        <div class="col"><h4>Recent sales</h4>${m.sales.length?m.sales.map(s=>`<div class="li"><span>${s.stack>1?'stack':'single'}</span><span class="p">${gil(s.price)}</span></div>`).join(''):'<div class="li"><span style="color:var(--mut)">none yet</span></div>'}</div>
+        <div class="col"><h4>Cheapest listings</h4>${m.listings.length?m.listings.map(l=>`<div class="li"><span>${l.stack>1?'stack':'single'}</span><span class="p">${gil(l.price)}</span></div>`).join(''):'<div class="li"><span style="color:var(--mut)">none listed</span></div>'}</div>
+      </div>
+      <div class="trend" id="tr${m.itemId}"><div class="none">Loading price history&hellip;</div></div></div>`).join('');
+    loadTrends(d.matches);
+  }catch{box.innerHTML='<div class="card"><div class="skeleton">Search failed.</div></div>';}
+}
+
+function sparkline(pts){
+  // pts: [{t,avg,min,max,n}] -> inline SVG line of daily avg with min/max band
+  const W=520,H=56,pad=4;
+  if(pts.length<2) return '<div class="none">Not enough sales yet to chart a trend.</div>';
+  const xs=pts.map(p=>p.t), ys=pts.flatMap(p=>[p.min,p.max]);
+  const x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
+  const sx=t=>pad+(x1===x0?0:(t-x0)/(x1-x0))*(W-2*pad);
+  const sy=v=>H-pad-(y1===y0?H/2:(v-y0)/(y1-y0))*(H-2*pad);
+  const line=pts.map((p,i)=>`${i?'L':'M'}${sx(p.t).toFixed(1)},${sy(p.avg).toFixed(1)}`).join(' ');
+  const band=pts.map(p=>`${sx(p.t).toFixed(1)},${sy(p.max).toFixed(1)}`).join(' ')+' '+
+             pts.slice().reverse().map(p=>`${sx(p.t).toFixed(1)},${sy(p.min).toFixed(1)}`).join(' ');
+  const dots=pts.map(p=>`<circle cx="${sx(p.t).toFixed(1)}" cy="${sy(p.avg).toFixed(1)}" r="2" fill="#ecc25f"/>`).join('');
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><polygon points="${band}" fill="#ecc25f" opacity="0.10"/>`+
+         `<path d="${line}" fill="none" stroke="#ecc25f" stroke-width="1.6"/>${dots}</svg>`;
+}
+
+async function loadTrends(matches){
+  for(const m of matches){
+    const host=document.getElementById('tr'+m.itemId); if(!host) continue;
+    try{
+      const t=await fetch('/api/ah/trend?item='+m.itemId+'&days=90').then(r=>r.json());
+      const s=t.single||[]; const sm=t.summary||{};
+      host.innerHTML = `<div class="th"><span>Price trend · 90 days</span><span>${sm.sales||0} sales</span></div>`+
+        sparkline(s)+
+        (sm.avg!=null?`<div class="legend"><span>low <b>${gil(sm.min)}</b></span><span>avg <b>${gil(sm.avg)}</b></span><span>high <b>${gil(sm.max)}</b></span></div>`:'');
+    }catch{ host.innerHTML='<div class="none">No price history.</div>'; }
+  }
+}
+loadBaz();
+</script>
+</body>
+</html>

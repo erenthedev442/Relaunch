@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Staff — Legendary FFXI</title>
+<style>
+  :root { --bg:#12151b; --panel:#1a1f28; --panel-2:#0d1015; --line:#2b323d; --ink:#e6edf3; --mut:#9aa4b2; --gold:#ecc25f; --ok:#57c98a; --err:#e5534b; }
+  *{box-sizing:border-box} body{margin:0;min-height:100vh;padding:28px 20px;color:var(--ink);
+    font-family:ui-sans-serif,"Segoe UI",Roboto,system-ui,-apple-system,sans-serif;
+    background:radial-gradient(1100px 550px at 50% -10%,#1b212c 0%,var(--bg) 60%);display:flex;justify-content:center}
+  .wrap{width:100%;max-width:720px}
+  .nav{display:flex;gap:16px;margin-bottom:14px;font-size:13px}.nav a{color:var(--mut);text-decoration:none}.nav a:hover{color:var(--gold)}
+  h1{margin:0 0 4px;font-size:20px;font-weight:700}h1 .star{color:var(--gold)}.sub{color:var(--mut);font-size:13px;margin:0 0 16px}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px}
+  .stat .v{font-size:24px;font-weight:800}.stat .k{color:var(--mut);font-size:12px;margin-top:2px}
+  .stat.live .v{color:var(--ok)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:16px}
+  .card h3{margin:0;padding:13px 16px;font-size:13px;text-transform:uppercase;letter-spacing:.6px;color:var(--mut);border-bottom:1px solid var(--line)}
+  .row{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);font-size:14px}
+  .row:last-child{border-bottom:0}.row .nm{flex:1;font-weight:600}.row .meta{color:var(--mut);font-size:12px}
+  .row .acct{color:var(--gold);font-size:12px;font-family:ui-monospace,monospace}
+  .skeleton{color:var(--mut);text-align:center;padding:30px 0}
+  .deny{color:var(--err);text-align:center;padding:30px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="/">&#8592; Portal Home</a><a href="/status.html">Server status</a><a href="/legacy-admin.html">Legacy Reward Review</a></div>
+  <h1><span class="star">&#9733;</span> Staff Dashboard</h1>
+  <p class="sub">Live server pulse — visible to GM accounts only. See <a href="/legacy-admin.html" style="color:var(--gold)">Legacy Reward Review</a> for the migration reward buckets.</p>
+  <div id="root"><div class="skeleton">Loading&hellip;</div></div>
+</div>
+<script>
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+async function load(){
+  const root=document.getElementById('root');
+  let r;
+  try{ r=await fetch('/api/admin/overview',{credentials:'include'}); }catch{ root.innerHTML='<div class="deny">Failed to connect.</div>'; return; }
+  if(r.status===401){ root.innerHTML='<div class="deny">Log in with a staff account to view this page.</div>'; return; }
+  if(r.status===403){ root.innerHTML='<div class="deny">&#128274; Staff access only.</div>'; return; }
+  if(!r.ok){ root.innerHTML='<div class="deny">Could not load.</div>'; return; }
+  const d=await r.json();
+  const online=(d.players||[]).map(p=>`<div class="row"><div class="nm">${esc(p.name)} <span class="meta">${esc(p.job)} ${p.lvl}</span></div>
+      <div class="meta">${esc(p.zone)}</div><div class="acct">${esc(p.login||'')}</div></div>`).join('') || '<div class="row"><span class="meta">Nobody online right now.</span></div>';
+  const recent=(d.recentAccounts||[]).map(a=>`<div class="row"><div class="nm acct">${esc(a.login)}</div><div class="meta">${esc(a.created)}</div></div>`).join('');
+  root.innerHTML=`
+    <div class="stats">
+      <div class="stat live"><div class="v">${d.online}</div><div class="k">Online now</div></div>
+      <div class="stat"><div class="v">${Number(d.accounts).toLocaleString()}</div><div class="k">Accounts</div></div>
+      <div class="stat"><div class="v">${Number(d.characters).toLocaleString()}</div><div class="k">Characters</div></div>
+    </div>
+    <div class="card"><h3>Online players</h3>${online}</div>
+    <div class="card"><h3>Newest accounts</h3>${recent}</div>`;
+}
+load(); setInterval(load, 30000);
+</script>
+</body>
+</html>

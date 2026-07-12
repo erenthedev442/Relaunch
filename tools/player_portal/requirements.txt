@@ -1,0 +1,10 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+bcrypt>=4.1
+PyJWT>=2.8
+PyMySQL>=1.1
+python-dotenv>=1.0
+pydantic>=2.6
+# Optional: Web Push notifications. app.py imports it lazily and degrades to
+# in-app + Discord notifications if it isn't installed.
+pywebpush>=1.14

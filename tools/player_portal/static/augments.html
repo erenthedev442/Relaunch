@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#12151b">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<title>Augment Planner — Legendary FFXI</title>
+<style>
+  :root{--bg:#12151b;--panel:#1a1f28;--panel-2:#0d1015;--line:#2b323d;--ink:#e6edf3;--mut:#9aa4b2;
+        --gold:#ecc25f;--gold-2:#d8ab33;--good:#8fe0b0;--gold-rule:linear-gradient(90deg,transparent,#c79a34 45%,#f3d680 50%,#c79a34 55%,transparent);}
+  *{box-sizing:border-box;}
+  body{margin:0;min-height:100vh;padding:28px 20px;font-family:ui-sans-serif,"Segoe UI",Roboto,system-ui,sans-serif;
+       background:radial-gradient(1200px 600px at 50% -10%,#1b212c 0%,var(--bg) 60%);color:var(--ink);
+       display:flex;align-items:flex-start;justify-content:center;}
+  .wrap{width:100%;max-width:940px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 22px;}
+  .nav{display:flex;gap:16px;margin-bottom:14px;font-size:13px;flex-wrap:wrap;}
+  .nav a{color:var(--mut);text-decoration:none;} .nav a:hover,.nav a.on{color:var(--gold);}
+  h1{margin:0;font-size:20px;font-weight:700;} h1 .star{color:var(--gold);}
+  .sub{color:var(--mut);font-size:13px;margin:4px 0 0;}
+  .rule{height:2px;border:0;margin:18px 0;background:var(--gold-rule);}
+  .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:6px;}
+  input,select{padding:9px 11px;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;color:var(--ink);font-size:14px;}
+  input{flex:1;min-width:200px;} input:focus,select:focus{outline:none;border-color:var(--gold);}
+  .cats{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0;}
+  .catchip{font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--panel-2);color:var(--mut);cursor:pointer;}
+  .catchip.on{color:#241a00;background:linear-gradient(180deg,var(--gold),var(--gold-2));border-color:var(--gold-2);font-weight:700;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+  .aug{background:var(--panel-2);border:1px solid var(--line);border-radius:11px;padding:13px 14px;}
+  .aug .lbl{font-weight:700;font-size:14.5px;} .aug .cat{color:var(--mut);font-size:11px;text-transform:uppercase;letter-spacing:.5px;}
+  .aug .cty{display:flex;align-items:center;gap:8px;margin-top:9px;padding-top:9px;border-top:1px solid var(--line);}
+  .aug .cty a{color:var(--gold);text-decoration:none;font-size:13px;font-weight:600;} .aug .cty a:hover{text-decoration:underline;}
+  .aug .rng{margin-top:8px;font-size:12.5px;color:var(--mut);} .aug .rng b{color:var(--ink);font-weight:700;}
+  .slider{width:100%;margin-top:8px;} .val{font-size:13px;color:var(--gold);font-weight:700;font-variant-numeric:tabular-nums;}
+  .empty{color:var(--mut);font-size:13px;}
+  #pop{position:fixed;z-index:1000;display:none;pointer-events:none;}
+  #pop img{display:block;max-width:320px;max-height:70vh;border:1px solid var(--gold-2);border-radius:8px;background:#0d1015;box-shadow:0 8px 30px rgba(0,0,0,.6);}
+  .foot{color:var(--mut);font-size:12px;margin-top:16px;} .foot a{color:var(--gold);text-decoration:none;}
+  .note{font-size:12.5px;color:var(--mut);background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin-bottom:12px;}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="card">
+  <div class="nav">
+    <a href="/">Home</a><a href="/community.html">Community</a><a href="/market.html">Market</a>
+    <a href="/gear-builder.html">Gear</a><a href="/augments.html" class="on">Augments</a><a href="/events.html">Live Events</a>
+    <a href="/status.html">Status</a>
+  </div>
+  <h1><span class="star">★</span> Augment Planner</h1>
+  <p class="sub">Every catalyst, the augment it grants, and the value you can roll. Trade the catalyst to the Augment Moogle.</p>
+  <hr class="rule">
+  <div class="note" id="formula">Value scales with your Augment Tier roll — drag a card’s slider to preview boost 0 → 31.</div>
+  <div class="controls">
+    <input id="q" type="text" placeholder="Search an augment or catalyst item…" autocomplete="off">
+    <span class="val" id="count"></span>
+  </div>
+  <div class="cats" id="cats"></div>
+  <div class="grid" id="grid"><span class="empty">Loading catalog…</span></div>
+  <div class="foot">Catalyst → augment mapping mirrors the live Moogle. <a href="https://fjb-relaunch.pages.dev/progression/augments/" target="_blank" rel="noopener">Full augmenting guide →</a></div>
+</div></div>
+<div id="pop"><img alt=""></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const pop=$('#pop'), popImg=pop.querySelector('img');
+function esc(s){const d=document.createElement('div');d.textContent=s??'';return d.innerHTML;}
+let ALL=[], CATS={}, curCat=0, curQ='';
+
+async function load(){
+  const d=await fetch('/api/augments').then(r=>r.json());
+  ALL=d.augments; CATS=d.cats||{};
+  if(d.formula) $('#formula').textContent='Formula: '+d.formula+' — drag a slider to preview your roll.';
+  const cats=[...new Set(ALL.map(a=>a.cat))].sort((a,b)=>a-b);
+  $('#cats').innerHTML = `<span class="catchip on" data-c="0">All</span>`+
+    cats.map(c=>`<span class="catchip" data-c="${c}">${esc(CATS[c]||('Cat '+c))}</span>`).join('');
+  document.querySelectorAll('.catchip').forEach(el=>el.onclick=()=>{ curCat=+el.dataset.c;
+    document.querySelectorAll('.catchip').forEach(x=>x.classList.toggle('on',x===el)); render(); });
+  render();
+}
+$('#q').addEventListener('input',e=>{ curQ=e.target.value.trim().toLowerCase(); render(); });
+
+function render(){
+  let rows=ALL;
+  if(curCat) rows=rows.filter(a=>a.cat===curCat);
+  if(curQ) rows=rows.filter(a=>a.label.toLowerCase().includes(curQ)||(a.item||'').toLowerCase().includes(curQ));
+  $('#count').textContent = rows.length+' augment'+(rows.length===1?'':'s');
+  if(!rows.length){ $('#grid').innerHTML='<span class="empty">No augments match.</span>'; return; }
+  $('#grid').innerHTML = rows.map((a,i)=>{
+    const wiki='https://www.ffxiah.com/item/'+a.itemId;
+    return `<div class="aug"><div class="cat">${esc(a.catName||CATS[a.cat]||'')}</div>`+
+      `<div class="lbl">${esc(a.label)}</div>`+
+      `<div class="cty"><span>🧪</span><a href="${wiki}" target="_blank" rel="noopener" data-img="${a.img||''}">${esc(a.item)}</a></div>`+
+      `<div class="rng">Roll range: <b>${a.min}</b> → <b>${a.max}</b></div>`+
+      `<input class="slider" type="range" min="0" max="31" value="0" data-base="${a.base}" data-mult="${a.mult}" data-disp="${a.disp}" data-maxb="${a.maxBoost==null?31:a.maxBoost}" data-i="${i}">`+
+      `<div class="rng">At boost <span class="bv" id="bv${i}">0</span>: <span class="val" id="av${i}">${a.min}</span></div></div>`;
+  }).join('');
+  document.querySelectorAll('.slider').forEach(sl=>{
+    sl.oninput=()=>{ const b=+sl.value, base=+sl.dataset.base, mult=+sl.dataset.mult, disp=+sl.dataset.disp, maxb=+sl.dataset.maxb, i=sl.dataset.i;
+      // Mirror Augment_Moogle.lua: the raw 0-31 roll is SCALED into [0, maxBoost].
+      const scaled=Math.floor(b*maxb/31+0.5);
+      const v=Math.floor((base+scaled)*mult/disp+0.5);
+      $('#bv'+i).textContent=b; $('#av'+i).textContent=v; };
+  });
+  document.querySelectorAll('.cty a').forEach(a=>{ a.onmouseenter=()=>showPop(a.dataset.img); a.onmouseleave=hidePop; });
+}
+function showPop(src){ if(!src)return; popImg.src=src; pop.style.display='block'; }
+function hidePop(){ pop.style.display='none'; }
+document.addEventListener('mousemove',e=>{ if(pop.style.display==='block'){ pop.style.left=(e.clientX+16)+'px'; pop.style.top=(Math.min(e.clientY+16, innerHeight-260))+'px'; }});
+load();
+</script>
+</body>
+</html>

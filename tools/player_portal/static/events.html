@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Events — Legendary FFXI</title>
+<style>
+  :root {
+    --bg:#12151b; --panel:#1a1f28; --panel-2:#0d1015; --line:#2b323d;
+    --ink:#e6edf3; --mut:#9aa4b2; --gold:#ecc25f; --gold-2:#d8ab33;
+    --live:#e5534b; --warn:#f0a53e; --ok:#57c98a;
+    --gold-rule: linear-gradient(90deg, transparent, #c79a34 45%, #f3d680 50%, #c79a34 55%, transparent);
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; padding:28px 20px; color:var(--ink);
+         font-family: ui-sans-serif, "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+         background: radial-gradient(1100px 550px at 50% -10%, #1b212c 0%, var(--bg) 60%);
+         display:flex; align-items:flex-start; justify-content:center; }
+  .wrap { width:100%; max-width:660px; }
+  .nav { display:flex; gap:16px; margin-bottom:14px; font-size:13px; }
+  .nav a { color:var(--mut); text-decoration:none; } .nav a:hover { color:var(--gold); }
+  .head { margin-bottom:6px; }
+  h1 { margin:0 0 4px; font-size:20px; font-weight:700; } h1 .star { color:var(--gold); }
+  .sub { color:var(--mut); font-size:13px; margin:0 0 16px; }
+
+  .ev { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:0; margin-bottom:14px; overflow:hidden; }
+  .ev .top { display:flex; gap:14px; align-items:flex-start; padding:18px 20px 14px; }
+  .ev .ico { width:44px; height:44px; border-radius:11px; flex:none; display:grid; place-items:center; font-size:22px;
+             background:var(--panel-2); border:1px solid var(--line); }
+  .ev .meta { flex:1; min-width:0; }
+  .ev .nm { font-size:17px; font-weight:700; }
+  .ev .zn { color:var(--mut); font-size:12px; margin-top:2px; }
+  .ev .desc { color:var(--mut); font-size:13px; line-height:1.5; margin-top:8px; }
+
+  .clock { padding:14px 20px 18px; border-top:1px solid var(--line);
+           background:linear-gradient(180deg, var(--panel), var(--panel-2)); }
+  .cd { display:flex; align-items:baseline; gap:10px; }
+  .cd .t { font-size:30px; font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:.5px; }
+  .cd .lbl { color:var(--mut); font-size:12px; text-transform:uppercase; letter-spacing:.6px; }
+
+  .state { display:inline-flex; align-items:center; gap:7px; font-size:12px; font-weight:700;
+           text-transform:uppercase; letter-spacing:.5px; padding:4px 10px; border-radius:20px; margin-bottom:2px; }
+  .state .pip { width:8px; height:8px; border-radius:50%; }
+  .state.live { color:var(--live); background:rgba(229,83,75,.1); border:1px solid rgba(229,83,75,.4); }
+  .state.live .pip { background:var(--live); animation:pulse 1.1s infinite; }
+  .state.warn { color:var(--warn); background:rgba(240,165,62,.1); border:1px solid rgba(240,165,62,.4); }
+  .state.warn .pip { background:var(--warn); animation:pulse 1.1s infinite; }
+  .state.soon { color:var(--gold); background:rgba(236,194,95,.08); border:1px solid rgba(236,194,95,.3); }
+  .state.soon .pip { background:var(--gold); }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+  .boss { font-weight:700; }
+  .hpwrap { margin-top:10px; }
+  .hprow { display:flex; justify-content:space-between; font-size:12px; color:var(--mut); margin-bottom:5px; }
+  .hpbar { height:9px; background:#2a1416; border:1px solid #3a2023; border-radius:5px; overflow:hidden; }
+  .hpbar > i { display:block; height:100%; background:linear-gradient(90deg,#b3372f,#e5534b); }
+
+  .skeleton { color:var(--mut); text-align:center; padding:36px 0; }
+  .foot { font-size:12px; color:var(--mut); text-align:center; margin-top:4px; }
+  .foot a { color:var(--gold); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="/">&#8592; Portal Home</a><a href="/status.html">Server status</a></div>
+  <div class="head">
+    <h1><span class="star">&#9733;</span> Live Events</h1>
+    <p class="sub">When the world comes alive. Log in and be there.</p>
+  </div>
+  <div id="root"><div class="ev"><div class="skeleton">Reading the war drums&hellip;</div></div></div>
+  <div class="foot">Times are live from the game server. <a href="/status.html">See who's online &#8594;</a></div>
+</div>
+
+<script>
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+let skew = 0;           // serverNow - clientNow (seconds), keeps countdowns honest
+let events = [];
+
+function serverNow(){ return Math.floor(Date.now()/1000) + skew; }
+
+function fmt(sec){
+  sec = Math.max(0, Math.floor(sec));
+  const d = Math.floor(sec/86400), h = Math.floor(sec%86400/3600), m = Math.floor(sec%3600/60), s = sec%60;
+  const p = n => String(n).padStart(2,'0');
+  if (d > 0) return `${d}d ${p(h)}h ${p(m)}m`;
+  return `${p(h)}:${p(m)}:${p(s)}`;
+}
+
+async function refresh(){
+  try {
+    const res = await fetch('/api/events', {credentials:'include'});
+    if (!res.ok) throw 0;
+    const data = await res.json();
+    skew = data.now - Math.floor(Date.now()/1000);
+    events = data.events || [];
+    tick();
+  } catch { document.getElementById('root').innerHTML = '<div class="ev"><div class="skeleton">Could not reach the event server.</div></div>'; }
+}
+
+function invasionState(e){
+  if (e.active)  return {cls:'live', txt:'Window open — rally to Al Zahbi!'};
+  if (e.warning) return {cls:'warn', txt:'Incoming — 5-minute warning!'};
+  return null;
+}
+
+function tick(){
+  const nowS = serverNow();
+  let html = '';
+  for (const e of events){
+    let clock = '';
+    if (e.id === 'invasion'){
+      const st = invasionState(e);
+      if (st){
+        const extra = e.active ? '' : `<div class="cd" style="margin-top:8px"><div class="t">${fmt(e.next - nowS)}</div><div class="lbl">until it begins</div></div>`;
+        clock = `<span class="state ${st.cls}"><span class="pip"></span>${st.txt}</span>${extra}`;
+      } else {
+        clock = `<span class="state soon"><span class="pip"></span>Next assault</span>
+                 <div class="cd"><div class="t">${fmt(e.next - nowS)}</div><div class="lbl">until it begins</div></div>`;
+      }
+    } else if (e.id === 'worldboss'){
+      const bl = `<div class="boss">This week: ${esc(e.boss)}</div>`;
+      if (e.state === 'alive'){
+        clock = `<span class="state live"><span class="pip"></span>Alive now — West Ronfaure!</span>${bl}
+          <div class="hpwrap"><div class="hprow"><span>${esc(e.boss)}</span><span>${e.hpPct}% HP</span></div>
+          <div class="hpbar"><i style="width:${e.hpPct}%"></i></div></div>`;
+      } else if (e.state === 'defeated'){
+        clock = `<span class="state soon"><span class="pip"></span>Defeated this week</span>${bl}
+          <div class="cd"><div class="t">${fmt(e.next - nowS)}</div><div class="lbl">until the next challenger</div></div>`;
+      } else {
+        clock = `<span class="state soon"><span class="pip"></span>Awaiting the summons</span>${bl}
+          <div class="cd"><div class="t">${fmt(e.next - nowS)}</div><div class="lbl">until it spawns</div></div>`;
+      }
+    } else if (e.rows){
+      // Multi-countdown card (Resets)
+      clock = e.rows.map(r =>
+        `<div class="hprow" style="margin-top:8px"><span>${esc(r.label)}</span><span class="t" style="font-size:1.05rem;color:var(--ink);font-weight:700">${fmt(r.next - nowS)}</span></div>`
+      ).join('');
+    } else {
+      // Generic card: optional featured line, live/warn/soon pill, one countdown
+      const feat = e.featured ? `<div class="boss">${esc(e.featured)}</div>` : '';
+      if (e.active){
+        const extra = e.next ? `<div class="cd" style="margin-top:8px"><div class="t">${fmt(e.next - nowS)}</div><div class="lbl">${esc(e.nextLabel || 'remaining')}</div></div>` : '';
+        clock = `<span class="state live"><span class="pip"></span>${esc(e.stateText || 'Live now!')}</span>${feat}${extra}`;
+      } else {
+        const pill = e.warning ? `<span class="state warn"><span class="pip"></span>Starting soon!</span>`
+                               : `<span class="state soon"><span class="pip"></span>Upcoming</span>`;
+        const cd = e.next ? `<div class="cd"><div class="t">${fmt(e.next - nowS)}</div><div class="lbl">${esc(e.nextLabel || 'until it begins')}</div></div>` : '';
+        clock = `${pill}${feat}${cd}`;
+      }
+    }
+    html += `<div class="ev">
+      <div class="top">
+        <div class="ico">${e.icon || '★'}</div>
+        <div class="meta">
+          <div class="nm">${esc(e.name)}</div>
+          <div class="zn">${esc(e.zone)} &middot; ${esc(e.cadence)}</div>
+          <div class="desc">${esc(e.desc)}</div>
+        </div>
+      </div>
+      <div class="clock">${clock}</div>
+    </div>`;
+  }
+  document.getElementById('root').innerHTML = html;
+}
+
+refresh();
+setInterval(tick, 1000);       // smooth countdown
+setInterval(refresh, 60000);   // re-sync state (active/spawned/defeated) each minute
+</script>
+</body>
+</html>

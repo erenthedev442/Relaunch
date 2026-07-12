@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#12151b">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<title>Community — Legendary FFXI</title>
+<style>
+  :root{--bg:#12151b;--panel:#1a1f28;--panel-2:#0d1015;--line:#2b323d;--ink:#e6edf3;--mut:#9aa4b2;
+        --gold:#ecc25f;--gold-2:#d8ab33;--good:#8fe0b0;--gold-rule:linear-gradient(90deg,transparent,#c79a34 45%,#f3d680 50%,#c79a34 55%,transparent);}
+  *{box-sizing:border-box;}
+  body{margin:0;min-height:100vh;padding:28px 20px;font-family:ui-sans-serif,"Segoe UI",Roboto,system-ui,sans-serif;
+       background:radial-gradient(1200px 600px at 50% -10%,#1b212c 0%,var(--bg) 60%);color:var(--ink);
+       display:flex;align-items:flex-start;justify-content:center;}
+  .wrap{width:100%;max-width:940px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 22px;}
+  .nav{display:flex;gap:16px;margin-bottom:14px;font-size:13px;flex-wrap:wrap;}
+  .nav a{color:var(--mut);text-decoration:none;} .nav a:hover,.nav a.on{color:var(--gold);}
+  h1{margin:0;font-size:20px;font-weight:700;letter-spacing:.3px;} h1 .star{color:var(--gold);}
+  .sub{color:var(--mut);font-size:13px;margin:4px 0 0;}
+  .rule{height:2px;border:0;margin:18px 0;background:var(--gold-rule);}
+  .cols{display:grid;grid-template-columns:1fr;gap:18px;} @media(min-width:760px){.cols{grid-template-columns:1.1fr .9fr;}}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.6px;color:var(--gold);margin:0 0 10px;}
+  /* presence */
+  .presence{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
+  .who{font-size:12px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;}
+  .who b{color:var(--gold);} .who .z{color:var(--mut);}
+  .empty{color:var(--mut);font-size:13px;}
+  /* feed */
+  .feed{list-style:none;margin:0;padding:0;}
+  .ev{display:flex;gap:11px;padding:10px 0;border-top:1px solid var(--line);align-items:flex-start;}
+  .ev:first-child{border-top:0;} .ev .ic{font-size:18px;width:24px;text-align:center;flex:0 0 24px;}
+  .ev .tx{font-size:13.5px;line-height:1.4;} .ev .tx b{color:var(--gold);font-weight:700;}
+  .ev .ago{color:var(--mut);font-size:11.5px;margin-top:2px;}
+  /* leaderboards */
+  .lb{margin-bottom:16px;}
+  .lbtabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+  .lbtab{font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--panel-2);
+         color:var(--mut);cursor:pointer;} .lbtab.on{color:#241a00;background:linear-gradient(180deg,var(--gold),var(--gold-2));border-color:var(--gold-2);font-weight:700;}
+  .ladder{list-style:none;margin:0;padding:0;}
+  .rk{display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--line);}
+  .rk:first-child{border-top:0;} .rk .n{width:22px;color:var(--mut);font-variant-numeric:tabular-nums;font-size:13px;text-align:right;}
+  .rk.top1 .n{color:var(--gold);font-weight:700;} .rk .nm{flex:1;font-size:13.5px;}
+  .rk .nm a{color:var(--ink);text-decoration:none;} .rk .nm a:hover{color:var(--gold);}
+  .rk .v{color:var(--gold);font-weight:700;font-size:13px;font-variant-numeric:tabular-nums;} .rk .v small{color:var(--mut);font-weight:500;}
+  .foot{color:var(--mut);font-size:12px;margin-top:18px;} .foot a{color:var(--gold);text-decoration:none;}
+  .cta{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;}
+  .btn{font-size:12.5px;padding:7px 13px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer;}
+  .btn:hover{color:var(--gold);border-color:var(--gold-2);} .btn.gold{color:#241a00;background:linear-gradient(180deg,var(--gold),var(--gold-2));border-color:var(--gold-2);font-weight:700;}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="card">
+  <div class="nav">
+    <a href="/">Home</a><a href="/community.html" class="on">Community</a><a href="/market.html">Market</a>
+    <a href="/gear-builder.html">Gear</a><a href="/augments.html">Augments</a><a href="/events.html">Live Events</a>
+    <a href="/status.html">Status</a><a href="https://discord.gg/Yd3Kn3dN36" target="_blank" rel="noopener">Discord</a>
+  </div>
+  <h1><span class="star">★</span> Community</h1>
+  <p class="sub">Who’s adventuring right now, the latest legends, and the server’s top players.</p>
+  <div class="cta">
+    <button class="btn gold" data-install style="display:none" onclick="Legendary.install()">📲 Install app</button>
+    <button class="btn" onclick="Legendary.enablePush()">🔔 Enable notifications</button>
+  </div>
+  <hr class="rule">
+  <div class="cols">
+    <div>
+      <h2>Online now · <span id="onlineCount">…</span></h2>
+      <div class="presence" id="presence"><span class="empty">Loading…</span></div>
+      <h2 style="margin-top:20px">Latest happenings</h2>
+      <ul class="feed" id="feed"><li class="empty">Loading the feed…</li></ul>
+    </div>
+    <div>
+      <h2>Leaderboards</h2>
+      <div class="lbtabs" id="lbtabs"></div>
+      <div class="lb"><ul class="ladder" id="ladder"><li class="empty">Loading…</li></ul></div>
+    </div>
+  </div>
+  <div class="foot">Leaderboards exclude staff accounts · <a href="/status.html">Full server status →</a></div>
+</div></div>
+
+<script src="/pwa.js"></script>
+<script>
+const $ = (s) => document.querySelector(s);
+function ago(ts){ const s=Math.max(0,Math.floor(Date.now()/1000-ts));
+  if(s<60)return 'just now'; if(s<3600)return Math.floor(s/60)+'m ago';
+  if(s<86400)return Math.floor(s/3600)+'h ago'; return Math.floor(s/86400)+'d ago'; }
+function esc(s){ const d=document.createElement('div'); d.textContent=s??''; return d.innerHTML; }
+
+async function loadPresence(){
+  try{
+    const d = await fetch('/api/status').then(r=>r.json());
+    $('#onlineCount').textContent = d.online;
+    const host = $('#presence');
+    if(!d.players.length){ host.innerHTML='<span class="empty">No one online right now — be the first!</span>'; return; }
+    host.innerHTML = d.players.map(p=>`<span class="who"><b>${esc(p.name)}</b> <span class="z">${esc(p.job)}${p.lvl}·${esc(p.zone)}</span></span>`).join('');
+  }catch(e){ $('#presence').innerHTML='<span class="empty">Could not load.</span>'; }
+}
+
+async function loadFeed(){
+  try{
+    const d = await fetch('/api/activity?limit=30').then(r=>r.json());
+    const host = $('#feed');
+    if(!d.events.length){ host.innerHTML='<li class="empty">Quiet for now. Great deeds will show up here.</li>'; return; }
+    host.innerHTML = d.events.map(e=>{
+      const who = e.who ? `<b>${esc(e.who)}</b> ` : '';
+      return `<li class="ev"><div class="ic">${esc(e.icon)}</div><div><div class="tx">${who}${esc(e.text)}</div><div class="ago">${ago(e.ts)}</div></div></li>`;
+    }).join('');
+  }catch(e){ $('#feed').innerHTML='<li class="empty">Could not load the feed.</li>'; }
+}
+
+let BOARDS=null, curBoard=null;
+async function loadBoards(){
+  try{
+    const d = await fetch('/api/leaderboards?limit=10').then(r=>r.json());
+    BOARDS=d.boards;
+    $('#lbtabs').innerHTML = d.order.map(k=>`<span class="lbtab" data-k="${k}">${esc(d.boards[k].title)}</span>`).join('');
+    document.querySelectorAll('.lbtab').forEach(t=>t.onclick=()=>showBoard(t.dataset.k));
+    showBoard(d.order.find(k=>d.boards[k].rows.length) || d.order[0]);
+  }catch(e){ $('#ladder').innerHTML='<li class="empty">Could not load leaderboards.</li>'; }
+}
+function showBoard(k){
+  curBoard=k;
+  document.querySelectorAll('.lbtab').forEach(t=>t.classList.toggle('on',t.dataset.k===k));
+  const b=BOARDS[k];
+  if(!b||!b.rows.length){ $('#ladder').innerHTML='<li class="empty">No entries yet.</li>'; return; }
+  $('#ladder').innerHTML = b.rows.map((r,i)=>`<li class="rk ${i===0?'top1':''}"><span class="n">${i+1}</span>`+
+    `<span class="nm"><a href="/c/${encodeURIComponent(r.name)}">${esc(r.name)}</a></span>`+
+    `<span class="v">${Number(r.value).toLocaleString()} <small>${esc(b.unit)}</small></span></li>`).join('');
+}
+
+loadPresence(); loadFeed(); loadBoards();
+setInterval(loadPresence, 30000); setInterval(loadFeed, 45000);
+</script>
+</body>
+</html>

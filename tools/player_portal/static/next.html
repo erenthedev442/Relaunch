@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What's Next — Legendary FFXI</title>
+<style>
+  :root {
+    --bg:#12151b; --panel:#1a1f28; --panel-2:#0d1015; --line:#2b323d;
+    --ink:#e6edf3; --mut:#9aa4b2;
+    --gold:#ecc25f; --gold-2:#d8ab33; --err:#e5534b; --ok:#57c98a; --blue:#6ea8fe;
+    --gold-rule: linear-gradient(90deg, transparent, #c79a34 45%, #f3d680 50%, #c79a34 55%, transparent);
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; padding:28px 20px;
+         font-family: ui-sans-serif, "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+         background: radial-gradient(1200px 600px at 50% -10%, #1b212c 0%, var(--bg) 60%); color:var(--ink);
+         display:flex; align-items:flex-start; justify-content:center; }
+  .wrap { width:100%; max-width:720px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:24px 22px; margin-bottom:16px; }
+  h1 { margin:0 0 4px; font-size:20px; font-weight:700; letter-spacing:.3px; }
+  h1 .star { color:var(--gold); }
+  .sub { color:var(--mut); font-size:13px; margin:0; }
+  hr { height:2px; border:0; margin:18px 0; background:var(--gold-rule); }
+  .nav { display:flex; gap:16px; margin-bottom:14px; font-size:13px; }
+  .nav a { color:var(--mut); text-decoration:none; }
+  .nav a:hover { color:var(--gold); }
+  label { display:block; font-size:11px; color:var(--mut); margin:0 0 6px; text-transform:uppercase; letter-spacing:.6px; }
+  select { width:100%; padding:10px 12px; background:var(--panel-2); border:1px solid var(--line);
+           border-radius:8px; color:var(--ink); font-size:15px; appearance:none; cursor:pointer; }
+  select:focus { outline:none; border-color:var(--gold); }
+  .skeleton { color:var(--mut); font-size:14px; text-align:center; padding:24px 0; }
+  #body { display:none; }
+
+  /* hero summary */
+  .hero { display:flex; align-items:center; gap:16px; }
+  .hero .who { flex:1; min-width:0; }
+  .hero .name { font-size:22px; font-weight:700; }
+  .hero .role { color:var(--mut); font-size:13px; margin-top:2px; }
+  .ring { --p:0; width:74px; height:74px; border-radius:50%; flex:none;
+          background: conic-gradient(var(--gold) calc(var(--p)*1%), #232a35 0);
+          display:grid; place-items:center; }
+  .ring .inner { width:58px; height:58px; border-radius:50%; background:var(--panel);
+                 display:grid; place-items:center; text-align:center; line-height:1.05; }
+  .ring b { font-size:17px; } .ring span { font-size:9px; color:var(--mut); text-transform:uppercase; letter-spacing:.5px; }
+
+  .section-title { font-size:12px; text-transform:uppercase; letter-spacing:.8px; color:var(--mut);
+                   margin:22px 0 10px; display:flex; align-items:center; gap:8px; }
+  .section-title .dot { width:6px; height:6px; border-radius:50%; background:var(--gold); }
+
+  /* focus cards */
+  .focus { display:flex; flex-direction:column; gap:12px; }
+  .fcard { background:var(--panel-2); border:1px solid var(--line); border-radius:11px; padding:15px 16px; position:relative; }
+  .fcard.win { border-color:var(--gold-2); }
+  .fhead { display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
+  .fname { font-weight:700; font-size:15px; }
+  .ftag { font-size:10px; text-transform:uppercase; letter-spacing:.5px; color:#241a00;
+          background:var(--gold); border-radius:5px; padding:2px 7px; font-weight:700; }
+  .fgoal { color:var(--gold); font-size:13px; font-weight:600; white-space:nowrap; }
+  .bar { height:8px; background:#232a35; border-radius:5px; margin:11px 0 9px; overflow:hidden; }
+  .bar > i { display:block; height:100%; border-radius:5px;
+             background:linear-gradient(90deg, var(--gold-2), var(--gold)); transition:width .5s ease; }
+  .fhint { color:var(--mut); font-size:13px; line-height:1.5; }
+
+  /* compact rows */
+  .rows { display:flex; flex-direction:column; gap:9px; }
+  .row { display:grid; grid-template-columns: 1fr auto; gap:4px 12px; align-items:center;
+         padding:11px 14px; background:var(--panel-2); border:1px solid var(--line); border-radius:9px; }
+  .row .rn { font-weight:600; font-size:14px; }
+  .row .rv { color:var(--mut); font-size:12px; text-align:right; white-space:nowrap; }
+  .row .rbar { grid-column:1 / -1; height:5px; background:#232a35; border-radius:4px; overflow:hidden; }
+  .row .rbar > i { display:block; height:100%; background:var(--gold-2); }
+
+  /* mastered chips */
+  .chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip { font-size:12px; padding:6px 11px; border-radius:20px; background:rgba(87,201,138,.08);
+          border:1px solid #2f5e46; color:var(--ok); }
+  .chip::before { content:"\2713 "; }
+
+  .allgood { text-align:center; color:var(--ok); font-size:14px; padding:10px 0; }
+  .foot { font-size:12px; color:var(--mut); line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="/">&#8592; Portal Home</a></div>
+
+  <div class="card">
+    <h1><span class="star">&#9733;</span> What's Next</h1>
+    <p class="sub">Your personal roadmap — where you stand and what to chase next.</p>
+    <hr>
+
+    <div id="loginMsg" class="skeleton" style="display:none;">
+      You must be <a href="/" style="color:var(--gold)">logged in</a> to see your roadmap.
+    </div>
+    <div id="loadingMsg" class="skeleton">Loading your characters&hellip;</div>
+
+    <div id="body">
+      <label for="charSelect">Character</label>
+      <select id="charSelect"><option value="">— pick a character —</option></select>
+      <div id="content"></div>
+    </div>
+  </div>
+
+  <div class="card foot">
+    <strong style="color:var(--ink);">How this works</strong><br>
+    Your roadmap reads your live progress across every custom system — Hunting League, Prime Weapons,
+    Ascensions, the Paragon board and more. <strong style="color:var(--gold)">Focus Now</strong> highlights
+    the goals you're closest to finishing, so you always know the fastest way to grow stronger.
+  </div>
+</div>
+
+<script>
+const api = (p, o) => fetch(p, {credentials:'include', ...o});
+let characters = [];
+
+async function init() {
+  const meRes = await api('/api/me');
+  if (meRes.status === 401) {
+    document.getElementById('loadingMsg').style.display = 'none';
+    document.getElementById('loginMsg').style.display = 'block';
+    return;
+  }
+  const me = await meRes.json();
+  characters = me.characters || [];
+  document.getElementById('loadingMsg').style.display = 'none';
+  document.getElementById('body').style.display = 'block';
+
+  const sel = document.getElementById('charSelect');
+  characters.forEach(c => {
+    const o = document.createElement('option');
+    o.value = c.charid; o.textContent = c.name;
+    sel.appendChild(o);
+  });
+  sel.addEventListener('change', () => { const id = parseInt(sel.value); if (id) loadChar(id); });
+
+  // Deep-link: /next.html?charid=N pre-selects that character; else auto-select if only one.
+  const want = parseInt(new URLSearchParams(location.search).get('charid'));
+  const pick = characters.find(c => c.charid === want) || (characters.length === 1 ? characters[0] : null);
+  if (pick) { sel.value = pick.charid; loadChar(pick.charid); }
+}
+
+async function loadChar(charid) {
+  const box = document.getElementById('content');
+  box.innerHTML = '<div class="skeleton">Reading your progress&hellip;</div>';
+  const res = await api('/api/progress/' + charid);
+  if (!res.ok) { box.innerHTML = '<div class="skeleton">Could not load progress.</div>'; return; }
+  render(box, await res.json());
+  loadRecap(charid);
+}
+
+async function loadRecap(charid) {
+  try {
+    const r = await api('/api/recap/' + charid);
+    if (!r.ok) return;
+    const d = await r.json();
+    if (!d.streaks || !d.streaks.length) return;
+    const html = `<div class="card" style="margin:16px 0 0; padding:16px">
+      <div class="section-title" style="margin:0 0 10px"><span class="dot" style="background:var(--ok)"></span> This week's momentum</div>
+      <div class="chips">${d.streaks.map(s => `<span class="chip">${esc(s.label)}: <b style="color:var(--gold)">${s.value}</b> ${esc(s.unit)}</span>`).join('')}</div></div>`;
+    document.getElementById('content').insertAdjacentHTML('afterbegin', html);
+  } catch {}
+}
+
+// Friendly "X to go / goal" per system type.
+function goalOf(s) {
+  const left = Math.max(0, s.target - s.cur);
+  if (s.type === 'cap')    return { goal: `Rank ${s.cur} / ${s.target}`,  left: `${left} rank${left===1?'':'s'} to go` };
+  if (s.type === 'trials') return { goal: `${s.cur} / ${s.target} trials`, left: `${left} trial${left===1?'':'s'} left` };
+  if (s.type === 'perks')  return { goal: `${s.cur} / ${s.target} perks`,  left: `${left} perk${left===1?'':'s'} left` };
+  return { goal: `${s.cur.toLocaleString()} → ${s.target.toLocaleString()}`, left: `${left.toLocaleString()} to reach ${s.target.toLocaleString()}` };
+}
+
+function render(box, data) {
+  const sys = data.systems || [];
+  const done = sys.filter(s => s.done);
+  const todo = sys.filter(s => !s.done).sort((a,b) => b.pct - a.pct);
+  const focus = todo.slice(0, 3);
+  const rest  = todo.slice(3);
+  const overall = sys.length ? Math.round(done.length * 100 / sys.length) : 0;
+
+  let h = `
+    <div class="card" style="margin:16px 0 0; padding:18px 16px;">
+      <div class="hero">
+        <div class="who">
+          <div class="name">${esc(data.name)}</div>
+          <div class="role">${esc(data.job)} &middot; ${done.length} of ${sys.length} systems mastered</div>
+        </div>
+        <div class="ring" style="--p:${overall}">
+          <div class="inner"><div><b>${overall}%</b><br><span>Journey</span></div></div>
+        </div>
+      </div>
+    </div>`;
+
+  if (focus.length) {
+    h += `<div class="section-title"><span class="dot"></span> Focus Now &mdash; your quickest wins</div><div class="focus">`;
+    focus.forEach((s, i) => {
+      const g = goalOf(s);
+      h += `
+        <div class="fcard ${i===0?'win':''}">
+          <div class="fhead">
+            <div class="fname">${esc(s.name)} ${i===0?'<span class="ftag">Almost there</span>':''}</div>
+            <div class="fgoal">${g.goal}</div>
+          </div>
+          <div class="bar"><i style="width:${s.pct}%"></i></div>
+          <div class="fhint"><strong style="color:var(--ink)">${g.left}.</strong> ${esc(s.hint)}</div>
+        </div>`;
+    });
+    h += `</div>`;
+  }
+
+  if (rest.length) {
+    h += `<div class="section-title"><span class="dot" style="background:var(--mut)"></span> Keep Grinding</div><div class="rows">`;
+    rest.forEach(s => {
+      const g = goalOf(s);
+      h += `<div class="row"><div class="rn">${esc(s.name)}</div><div class="rv">${g.goal}</div>
+             <div class="rbar"><i style="width:${s.pct}%"></i></div></div>`;
+    });
+    h += `</div>`;
+  }
+
+  if (done.length) {
+    h += `<div class="section-title"><span class="dot" style="background:var(--ok)"></span> Mastered</div>
+          <div class="chips">${done.map(s => `<span class="chip">${esc(s.name)}</span>`).join('')}</div>`;
+  }
+
+  if (!todo.length && done.length) {
+    h = `<div class="allgood">&#9733; Every system mastered on ${esc(data.name)}. You are a legend.</div>` + h;
+  }
+  box.innerHTML = h;
+}
+
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+init().catch(() => { document.getElementById('loadingMsg').textContent = 'Failed to connect. Please refresh.'; });
+</script>
+</body>
+</html>

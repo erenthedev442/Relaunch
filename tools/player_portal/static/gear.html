@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gear — Legendary FFXI</title>
+<style>
+  :root { --bg:#12151b; --panel:#1a1f28; --panel-2:#0d1015; --line:#2b323d; --ink:#e6edf3; --mut:#9aa4b2; --gold:#ecc25f; --ok:#57c98a; --warn:#f0a53e; }
+  *{box-sizing:border-box} body{margin:0;min-height:100vh;padding:28px 20px;color:var(--ink);
+    font-family:ui-sans-serif,"Segoe UI",Roboto,system-ui,-apple-system,sans-serif;
+    background:radial-gradient(1100px 550px at 50% -10%,#1b212c 0%,var(--bg) 60%);display:flex;justify-content:center}
+  .wrap{width:100%;max-width:680px}
+  .nav{display:flex;gap:16px;margin-bottom:14px;font-size:13px}.nav a{color:var(--mut);text-decoration:none}.nav a:hover{color:var(--gold)}
+  h1{margin:0 0 4px;font-size:20px;font-weight:700}h1 .star{color:var(--gold)}.sub{color:var(--mut);font-size:13px;margin:0 0 16px}
+  select{width:100%;padding:10px 12px;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;color:var(--ink);font-size:15px;margin-bottom:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .advisor{border-color:color-mix(in srgb,var(--warn) 40%,var(--line));background:color-mix(in srgb,var(--warn) 7%,var(--panel))}
+  .advisor h3{margin:0 0 8px;font-size:14px;color:var(--warn)}
+  .advisor.good{border-color:color-mix(in srgb,var(--ok) 40%,var(--line));background:color-mix(in srgb,var(--ok) 7%,var(--panel))}
+  .advisor.good h3{color:var(--ok)}
+  .advisor p{margin:5px 0;font-size:13px;color:var(--mut)}
+  .advisor b{color:var(--ink)}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+  .slot{display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--panel-2);border:1px solid var(--line);border-radius:9px}
+  .slot img{width:30px;height:30px;flex:none;border-radius:6px}
+  .slot .s{flex:1;min-width:0}
+  .slot .sl{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut)}
+  .slot .it{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .slot .it a{color:var(--ink);text-decoration:none}.slot .it a:hover{color:var(--gold)}
+  .slot.empty .it{color:var(--mut);font-weight:400;font-style:italic}
+  .slot .aug{font-size:10px;font-weight:700;padding:2px 6px;border-radius:5px}
+  .slot .aug.y{color:#241a00;background:var(--gold)}
+  .slot .aug.n{color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 40%,var(--line))}
+  .skeleton{color:var(--mut);text-align:center;padding:28px 0}
+  #body{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="/">&#8592; Portal Home</a><a href="/next.html">What's Next</a></div>
+  <h1><span class="star">&#9733;</span> Gear &amp; Augments</h1>
+  <p class="sub">Your equipped set at a glance, and where your next augment should go.</p>
+  <div id="loginMsg" class="skeleton" style="display:none">You must be <a href="/" style="color:var(--gold)">logged in</a>.</div>
+  <div id="loadingMsg" class="skeleton">Loading&hellip;</div>
+  <div id="body">
+    <select id="charSelect"><option value="">— pick a character —</option></select>
+    <div id="content"></div>
+  </div>
+</div>
+<script>
+const api=(p,o)=>fetch(p,{credentials:'include',...o});
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+let characters=[];
+async function init(){
+  const r=await api('/api/me'); if(r.status===401){document.getElementById('loadingMsg').style.display='none';document.getElementById('loginMsg').style.display='block';return;}
+  characters=(await r.json()).characters||[];
+  document.getElementById('loadingMsg').style.display='none';document.getElementById('body').style.display='block';
+  const s=document.getElementById('charSelect');
+  characters.forEach(c=>{const o=document.createElement('option');o.value=c.charid;o.textContent=c.name;s.appendChild(o)});
+  s.addEventListener('change',()=>{const id=parseInt(s.value);if(id)load(id)});
+  const want=parseInt(new URLSearchParams(location.search).get('charid'));
+  const pick=characters.find(c=>c.charid===want)||(characters.length===1?characters[0]:null);
+  if(pick){s.value=pick.charid;load(pick.charid)}
+}
+async function load(id){
+  const box=document.getElementById('content');box.innerHTML='<div class="card"><div class="skeleton">Reading your gear&hellip;</div></div>';
+  const r=await api('/api/gear/'+id); if(!r.ok){box.innerHTML='<div class="card"><div class="skeleton">Could not load gear.</div></div>';return;}
+  render(box,await r.json());
+}
+function render(box,d){
+  const bare=d.bareSlots||[], empty=d.emptySlots||[];
+  let adv;
+  if(bare.length){
+    adv=`<div class="card advisor"><h3>&#9874; Augment advisor</h3>
+      <p>You have <b>${bare.length}</b> equipped piece${bare.length===1?'':'s'} with <b>no augments</b>: <b>${bare.map(esc).join(', ')}</b>.</p>
+      <p>Trade them to the <b>Augment Moogle</b> to add stats — even a bare ring becomes best-in-slot. ${empty.length?`You also have ${empty.length} empty slot${empty.length===1?'':'s'} (${empty.map(esc).join(', ')}).`:''}</p></div>`;
+  } else if(d.equippedCount){
+    adv=`<div class="card advisor good"><h3>&#10003; Fully augmented</h3><p>Every equipped piece carries augments. Chase higher rolls with <b>!reroll</b> or crystalize your best lines.</p></div>`;
+  } else {
+    adv=`<div class="card advisor"><h3>&#9874; Nothing equipped</h3><p>Equip some gear in-game, then check back here.</p></div>`;
+  }
+  const grid=(d.slots||[]).map(s=>{
+    if(!s.equipped) return `<div class="slot empty"><div class="s"><div class="sl">${esc(s.slot)}</div><div class="it">— empty —</div></div></div>`;
+    return `<div class="slot"><img src="${esc(s.img)}" loading="lazy" onerror="this.style.visibility='hidden'">
+      <div class="s"><div class="sl">${esc(s.slot)}</div><div class="it"><a href="${esc(s.wiki)}" target="_blank" rel="noopener">${esc(s.name)}</a></div></div>
+      <span class="aug ${s.augmented?'y':'n'}">${s.augmented?'AUG':'bare'}</span></div>`;
+  }).join('');
+  box.innerHTML=`${adv}
+    <div class="card"><div class="grid">${grid}</div>
+    <p class="sub" style="margin:12px 0 0">${d.augmentedCount} of ${d.equippedCount} equipped pieces augmented.</p></div>`;
+}
+init().catch(()=>{document.getElementById('loadingMsg').textContent='Failed to connect.'});
+</script>
+</body>
+</html>

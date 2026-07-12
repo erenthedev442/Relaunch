@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Legendary FFXI — Server Status</title>
+<style>
+  :root {
+    --bg:#12151b; --panel:#1a1f28; --panel-2:#0d1015; --line:#2b323d;
+    --ink:#e6edf3; --mut:#9aa4b2; --gold:#ecc25f; --gold-2:#d8ab33;
+    --on:#57c98a; --off:#e5534b;
+    --gold-rule: linear-gradient(90deg, transparent, #c79a34 45%, #f3d680 50%, #c79a34 55%, transparent);
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; padding:28px 20px;
+         font-family: ui-sans-serif, "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+         background: radial-gradient(1200px 600px at 50% -10%, #1b212c 0%, var(--bg) 60%); color:var(--ink);
+         display:flex; align-items:flex-start; justify-content:center; }
+  .wrap { width:100%; max-width:820px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:26px 24px; }
+  .nav { display:flex; gap:16px; margin-bottom:14px; font-size:13px; }
+  .nav a { color:var(--mut); text-decoration:none; }
+  .nav a:hover { color:var(--gold); }
+  .row { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  h1 { margin:0; font-size:20px; font-weight:700; letter-spacing:.3px; }
+  h1 .star { color:var(--gold); }
+  .sub { color:var(--mut); font-size:13px; margin:4px 0 0; }
+  .rule { height:2px; border:0; margin:18px 0; background:var(--gold-rule); }
+  .hero { display:flex; align-items:baseline; gap:12px; }
+  .hero .n { font-size:52px; font-weight:800; color:var(--gold); line-height:1; }
+  .hero .lbl { color:var(--mut); font-size:15px; }
+  .dot { display:inline-block; width:9px; height:9px; border-radius:50%; background:var(--off); }
+  .dot.up { background:var(--on); box-shadow:0 0 8px var(--on); }
+  .spark { margin:18px 0 6px; }
+  .spark svg { width:100%; height:56px; display:block; }
+  .muted { color:var(--mut); font-size:12.5px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:10px; margin-top:14px; }
+  .p { background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:10px 12px; }
+  .p .nm { font-weight:700; font-size:14px; }
+  .p .jb { color:var(--gold); font-weight:600; }
+  .p .zn { color:var(--mut); font-size:12.5px; margin-top:3px; }
+  .empty { color:var(--mut); font-size:14px; padding:18px 0; text-align:center; }
+  .foot { color:var(--mut); font-size:12px; margin-top:18px; }
+  .foot a { color:var(--gold); text-decoration:none; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="nav">
+        <a href="/">Portal</a><a href="/events.html">Live Events</a><a href="/status.html">Server status</a>
+        <a href="https://discord.gg/Yd3Kn3dN36" target="_blank" rel="noopener">Discord</a>
+      </div>
+      <div class="row">
+        <div>
+          <h1><span class="star">★</span> Server status</h1>
+          <p class="sub" id="sub">Live from the game server</p>
+        </div>
+        <div style="text-align:right;">
+          <span class="dot" id="dot"></span>
+          <span class="muted" id="state">connecting…</span>
+        </div>
+      </div>
+      <hr class="rule">
+
+      <div class="hero">
+        <span class="n" id="count">—</span>
+        <span class="lbl">adventurers online</span>
+      </div>
+
+      <div class="spark">
+        <div id="sparkbox"></div>
+        <div class="muted" id="sparklbl"></div>
+      </div>
+
+      <div class="grid" id="roster"></div>
+      <div class="empty" id="empty" style="display:none;">No one is online right now — be the first in.</div>
+
+      <p class="foot">Auto-refreshes every 30s ·
+        <a href="https://discord.gg/Yd3Kn3dN36" target="_blank" rel="noopener">Join the Discord</a></p>
+    </div>
+  </div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"']/g, (m) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+
+function sparkline(hist) {
+  if (!hist || hist.length < 2) {
+    $("sparkbox").innerHTML = "";
+    $("sparklbl").textContent = "Collecting population data…";
+    return;
+  }
+  const w = 772, h = 56, pad = 3;
+  const ns = hist.map((p) => p.n);
+  const max = Math.max(...ns, 1), min = Math.min(...ns, 0);
+  const span = Math.max(max - min, 1);
+  const x = (i) => pad + (i / (hist.length - 1)) * (w - 2 * pad);
+  const y = (n) => pad + (1 - (n - min) / span) * (h - 2 * pad);
+  const line = hist.map((p, i) => `${x(i).toFixed(1)},${y(p.n).toFixed(1)}`).join(" ");
+  const area = `${pad},${h - pad} ${line} ${w - pad},${h - pad}`;
+  $("sparkbox").innerHTML =
+    `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+       <polygon points="${area}" fill="rgba(236,194,95,.10)"></polygon>
+       <polyline points="${line}" fill="none" stroke="#ecc25f" stroke-width="2"
+                 stroke-linejoin="round" stroke-linecap="round"></polyline>
+     </svg>`;
+  $("sparklbl").textContent = `peak ${max} · ${hist.length} samples`;
+}
+
+async function load() {
+  try {
+    const r = await fetch("/api/status", { cache: "no-store" });
+    if (!r.ok) throw new Error();
+    const d = await r.json();
+    $("dot").classList.add("up");
+    $("state").textContent = "online";
+    $("count").textContent = d.online;
+    sparkline(d.history);
+    const roster = $("roster");
+    if (d.players.length) {
+      $("empty").style.display = "none";
+      roster.innerHTML = d.players.map((p) => {
+        const sub = p.sub && p.sub !== "NON" ? ` / <span class="jb">${p.sub}</span>${p.subLvl}` : "";
+        return `<div class="p">
+          <div class="nm">${esc(p.name)}</div>
+          <div><span class="jb">${p.job}</span>${p.lvl}${sub}</div>
+          <div class="zn">${esc(p.zone)}</div>
+        </div>`;
+      }).join("");
+    } else {
+      roster.innerHTML = "";
+      $("empty").style.display = "block";
+    }
+  } catch {
+    $("dot").classList.remove("up");
+    $("state").textContent = "unreachable";
+    $("count").textContent = "—";
+    $("sparklbl").textContent = "Server not responding.";
+  }
+}
+load();
+setInterval(load, 30000);
+</script>
+</body>
+</html>

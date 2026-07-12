@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#12151b">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<title>Adventuring Fellow — Legendary FFXI</title>
+<style>
+  :root { --bg:#12151b; --panel:#1a1f28; --panel-2:#0d1015; --line:#2b323d; --ink:#e6edf3; --mut:#9aa4b2; --gold:#ecc25f; --ok:#57c98a; }
+  *{box-sizing:border-box} body{margin:0;min-height:100vh;padding:28px 20px;color:var(--ink);
+    font-family:ui-sans-serif,"Segoe UI",Roboto,system-ui,-apple-system,sans-serif;
+    background:radial-gradient(1100px 550px at 50% -10%,#1b212c 0%,var(--bg) 60%);display:flex;justify-content:center}
+  .wrap{width:100%;max-width:700px}
+  .nav{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;font-size:13px}.nav a{color:var(--mut);text-decoration:none}.nav a:hover{color:var(--gold)}
+  h1{margin:0 0 4px;font-size:20px;font-weight:700}h1 .star{color:var(--gold)}.sub{color:var(--mut);font-size:13px;margin:0 0 16px}
+  select{width:100%;padding:10px 12px;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;color:var(--ink);font-size:15px;margin-bottom:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:16px}
+  .fname{font-size:22px;font-weight:800}.fname .role{color:var(--gold)}
+  .meta{color:var(--mut);font-size:13px;margin-top:2px}
+  .badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.4px;padding:2px 8px;border-radius:999px;margin-left:8px;vertical-align:middle}
+  .badge.out{background:var(--ok);color:#062}.badge.rest{background:var(--panel-2);color:var(--mut);border:1px solid var(--line)}
+  .badge.master{background:linear-gradient(180deg,#ecc25f,#d8ab33);color:#241a00}
+  .row{display:flex;align-items:center;gap:14px;margin-top:14px}
+  .row .lbl{color:var(--mut);font-size:12px;width:64px;flex:none}
+  .bar{flex:1;height:9px;background:#232a35;border-radius:5px;overflow:hidden}
+  .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),#f3d680)}
+  .bar.mast>i{background:linear-gradient(90deg,var(--ok),#7fe0aa)}
+  .row .val{font-size:13px;font-variant-numeric:tabular-nums;min-width:92px;text-align:right;color:var(--mut)}
+  .stats{margin:2px 0 0}.stats h3{font-size:13px;color:var(--mut);font-weight:700;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  .stat{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--panel-2);border:1px solid var(--line);border-radius:9px;font-size:13.5px}
+  .stat .n{color:var(--mut)}.stat .v{font-weight:800;font-variant-numeric:tabular-nums}
+  .stat.capped{border-color:var(--gold);background:rgba(236,194,95,.08)}.stat.capped .v{color:var(--gold)}
+  .stat.zero{opacity:.5}
+  .pts{font-size:14px;margin-top:10px}.pts b{color:var(--gold)}
+  .skeleton{color:var(--mut);text-align:center;padding:28px 0}#body{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="/">&#8592; Portal Home</a><a href="/next.html">What's Next</a><a href="/gear.html">Gear</a><a href="/achievements.html">Achievements</a><a href="/wrapped.html">Your Legend</a></div>
+  <h1><span class="star">&#128062;</span> Adventuring Fellow</h1>
+  <p class="sub">Your personal companion &mdash; level, role, and how you've built it.</p>
+  <div id="loginMsg" class="skeleton" style="display:none">You must be <a href="/" style="color:var(--gold)">logged in</a>.</div>
+  <div id="loadingMsg" class="skeleton">Loading&hellip;</div>
+  <div id="body">
+    <select id="charSelect"><option value="">&mdash; pick a character &mdash;</option></select>
+    <div id="content"></div>
+  </div>
+</div>
+<script src="/pwa.js"></script>
+<script>
+const api=(p,o)=>fetch(p,{credentials:'include',...o});
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+let characters=[];
+async function init(){
+  const r=await api('/api/me'); if(r.status===401){document.getElementById('loadingMsg').style.display='none';document.getElementById('loginMsg').style.display='block';return;}
+  characters=(await r.json()).characters||[];
+  document.getElementById('loadingMsg').style.display='none';document.getElementById('body').style.display='block';
+  const s=document.getElementById('charSelect');
+  characters.forEach(c=>{const o=document.createElement('option');o.value=c.charid;o.textContent=c.name;s.appendChild(o)});
+  s.addEventListener('change',()=>{const id=parseInt(s.value);if(id)load(id)});
+  const want=parseInt(new URLSearchParams(location.search).get('charid'));
+  const pick=characters.find(c=>c.charid===want)||(characters.length===1?characters[0]:null);
+  if(pick){s.value=pick.charid;load(pick.charid)}
+}
+async function load(id){
+  const box=document.getElementById('content');box.innerHTML='<div class="skeleton">Summoning&hellip;</div>';
+  const r=await api('/api/fellow/'+id);if(!r.ok){box.innerHTML='<div class="skeleton">Could not load.</div>';return;}
+  render(box,await r.json());
+}
+function render(box,d){
+  if(!d.born){
+    box.innerHTML=`<div class="card"><div class="fname">No Fellow yet</div>
+      <div class="meta">${esc(d.name)} hasn't summoned an Adventuring Fellow. In-game, use <b style="color:var(--gold)">!fellow</b> to call one, then build it from kills.</div></div>`;
+    return;
+  }
+  const xpPct = d.xpToNext>0 ? Math.min(100,Math.round(d.xp*100/d.xpToNext)) : 100;
+  const mastPct = d.categoryTotal ? Math.round(d.cappedCount*100/d.categoryTotal) : 0;
+  const statusBadge = d.mastered
+    ? '<span class="badge master">MASTERED</span>'
+    : (d.active ? '<span class="badge out">SUMMONED</span>' : '<span class="badge rest">RESTING</span>');
+  const nameLine = (d.fellowName?esc(d.fellowName):'(unnamed)') + ' <span class="role">&middot; '+esc(d.role)+'</span>' + statusBadge;
+  const lvlLine = d.level>=d.maxLevel
+    ? `<div class="row"><div class="lbl">Level</div><div class="bar"><i style="width:100%"></i></div><div class="val">MAX (${d.level})</div></div>`
+    : `<div class="row"><div class="lbl">Level ${d.level}</div><div class="bar"><i style="width:${xpPct}%"></i></div><div class="val">${d.xp.toLocaleString()} / ${d.xpToNext.toLocaleString()} XP</div></div>`;
+
+  const stats=(d.allocation||[]).map(a=>`
+    <div class="stat ${a.capped?'capped':''} ${a.points===0?'zero':''}">
+      <span class="n">${esc(a.stat)}</span><span class="v">${a.points.toLocaleString()}${a.capped?' &#9733;':''}</span></div>`).join('');
+
+  box.innerHTML=`
+    <div class="card">
+      <div class="fname">${nameLine}</div>
+      <div class="meta">Appearance: ${esc(d.appearance||'Lynx')}</div>
+      ${lvlLine}
+      <div class="row"><div class="lbl">Mastery</div><div class="bar mast"><i style="width:${mastPct}%"></i></div>
+        <div class="val">${d.cappedCount} / ${d.categoryTotal} capped</div></div>
+      <div class="pts">Unspent points: <b>${d.points.toLocaleString()}</b></div>
+    </div>
+    <div class="stats">
+      <h3>Allocation (cap ${d.statCap.toLocaleString()} each)</h3>
+      <div class="grid">${stats}</div>
+    </div>`;
+}
+init().catch(()=>{document.getElementById('loadingMsg').textContent='Failed to connect.'});
+</script>
+</body>
+</html>

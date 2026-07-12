@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#12151b">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<title>Achievements — Legendary FFXI</title>
+<style>
+  :root { --bg:#12151b; --panel:#1a1f28; --panel-2:#0d1015; --line:#2b323d; --ink:#e6edf3; --mut:#9aa4b2; --gold:#ecc25f; --ok:#57c98a; }
+  *{box-sizing:border-box} body{margin:0;min-height:100vh;padding:28px 20px;color:var(--ink);
+    font-family:ui-sans-serif,"Segoe UI",Roboto,system-ui,-apple-system,sans-serif;
+    background:radial-gradient(1100px 550px at 50% -10%,#1b212c 0%,var(--bg) 60%);display:flex;justify-content:center}
+  .wrap{width:100%;max-width:700px}
+  .nav{display:flex;gap:16px;margin-bottom:14px;font-size:13px}.nav a{color:var(--mut);text-decoration:none}.nav a:hover{color:var(--gold)}
+  h1{margin:0 0 4px;font-size:20px;font-weight:700}h1 .star{color:var(--gold)}.sub{color:var(--mut);font-size:13px;margin:0 0 16px}
+  select{width:100%;padding:10px 12px;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;color:var(--ink);font-size:15px;margin-bottom:16px}
+  .prog{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:16px;display:flex;align-items:center;gap:16px}
+  .prog .big{font-size:26px;font-weight:800}.prog .lbl{color:var(--mut);font-size:13px}
+  .prog .bar{flex:1;height:9px;background:#232a35;border-radius:5px;overflow:hidden}
+  .prog .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),#f3d680)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+  .ach{display:flex;gap:11px;padding:12px 13px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+  .ach .m{width:34px;height:34px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:16px;background:var(--panel-2);border:1px solid var(--line);color:var(--mut)}
+  .ach.got .m{background:var(--gold);color:#241a00;border-color:var(--gold)}
+  .ach .n{font-weight:700;font-size:14px}.ach.locked .n{color:var(--mut)}
+  .ach .d{color:var(--mut);font-size:12px;line-height:1.4;margin-top:2px}
+  .ach.locked{opacity:.6}
+  .ach.new{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 6px 24px rgba(236,194,95,.15);position:relative;animation:pop .5s ease}
+  @keyframes pop{0%{transform:scale(.96)}60%{transform:scale(1.02)}100%{transform:scale(1)}}
+  .ach .new-rib{position:absolute;top:-8px;right:-8px;background:linear-gradient(180deg,#ecc25f,#d8ab33);color:#241a00;
+    font-size:10px;font-weight:800;letter-spacing:.5px;padding:2px 7px;border-radius:999px}
+  .newbanner{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(236,194,95,.1);
+    border:1px solid var(--gold);border-radius:10px;padding:11px 14px;margin-bottom:14px;font-size:14px}
+  .newbanner b{color:var(--gold)}
+  .newbanner button{background:transparent;border:1px solid var(--gold);color:var(--gold);border-radius:7px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer}
+  .newbanner button:hover{background:var(--gold);color:#241a00}
+  .skeleton{color:var(--mut);text-align:center;padding:28px 0}#body{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="/">&#8592; Portal Home</a><a href="/community.html">Community</a><a href="/wrapped.html">Your Legend</a><a href="/next.html">What's Next</a></div>
+  <h1><span class="star">&#9733;</span> Achievements</h1>
+  <p class="sub">The deeds you've done — and the ones still calling your name.</p>
+  <div id="loginMsg" class="skeleton" style="display:none">You must be <a href="/" style="color:var(--gold)">logged in</a>.</div>
+  <div id="loadingMsg" class="skeleton">Loading&hellip;</div>
+  <div id="body">
+    <select id="charSelect"><option value="">— pick a character —</option></select>
+    <div id="content"></div>
+  </div>
+</div>
+<script src="/pwa.js"></script>
+<script>
+const api=(p,o)=>fetch(p,{credentials:'include',...o});
+let curId=null;
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+let characters=[];
+async function init(){
+  const r=await api('/api/me'); if(r.status===401){document.getElementById('loadingMsg').style.display='none';document.getElementById('loginMsg').style.display='block';return;}
+  characters=(await r.json()).characters||[];
+  document.getElementById('loadingMsg').style.display='none';document.getElementById('body').style.display='block';
+  const s=document.getElementById('charSelect');
+  characters.forEach(c=>{const o=document.createElement('option');o.value=c.charid;o.textContent=c.name;s.appendChild(o)});
+  s.addEventListener('change',()=>{const id=parseInt(s.value);if(id)load(id)});
+  const want=parseInt(new URLSearchParams(location.search).get('charid'));
+  const pick=characters.find(c=>c.charid===want)||(characters.length===1?characters[0]:null);
+  if(pick){s.value=pick.charid;load(pick.charid)}
+}
+async function load(id){
+  curId=id;
+  const box=document.getElementById('content');box.innerHTML='<div class="skeleton">Reading your deeds&hellip;</div>';
+  const r=await api('/api/achievements/'+id);if(!r.ok){box.innerHTML='<div class="skeleton">Could not load.</div>';return;}
+  render(box,await r.json());
+}
+function render(box,d){
+  const pct=d.total?Math.round(d.earned*100/d.total):0;
+  // new (freshly-unlocked) first, then earned, then locked
+  const list=(d.achievements||[]).slice().sort((a,b)=>(b.isNew-a.isNew)||(b.earned-a.earned));
+  const banner = d.newCount>0
+    ? `<div class="newbanner"><div>🎉 <b>${d.newCount} new achievement${d.newCount===1?'':'s'}</b> unlocked since your last visit!</div>
+         <button onclick="markSeen()">Got it</button></div>` : '';
+  box.innerHTML=`${banner}
+    <div class="prog"><div><div class="big">${d.earned}/${d.total}</div><div class="lbl">earned</div></div>
+      <div class="bar"><i style="width:${pct}%"></i></div></div>
+    <div class="grid">${list.map(a=>`
+      <div class="ach ${a.earned?'got':'locked'} ${a.isNew?'new':''}">
+        ${a.isNew?'<span class="new-rib">NEW</span>':''}
+        <div class="m">${a.earned?'&#9733;':'&#128274;'}</div>
+        <div><div class="n">${esc(a.name)}</div>${a.desc?`<div class="d">${esc(a.desc)}</div>`:''}</div>
+      </div>`).join('')}</div>`;
+  if(d.newCount>0 && window.Legendary){ Legendary.celebrate();
+    Legendary.toast(`You earned ${d.newCount} new achievement${d.newCount===1?'':'s'}!`,'win'); }
+}
+async function markSeen(){
+  if(!curId) return;
+  try{ await api('/api/achievements/seen',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({charid:curId})});
+       load(curId); }catch(e){}
+}
+init().catch(()=>{document.getElementById('loadingMsg').textContent='Failed to connect.'});
+</script>
+</body>
+</html>

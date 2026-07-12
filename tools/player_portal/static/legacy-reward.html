@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Legacy Migration Reward — Legendary FFXI</title>
+<style>
+  :root {
+    --bg:#12151b; --panel:#1a1f28; --panel-2:#0d1015; --line:#2b323d;
+    --ink:#e6edf3; --mut:#9aa4b2;
+    --gold:#ecc25f; --gold-2:#d8ab33; --err:#e5534b; --ok:#57c98a;
+    --gold-rule: linear-gradient(90deg, transparent, #c79a34 45%, #f3d680 50%, #c79a34 55%, transparent);
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; padding:28px 20px;
+         font-family: ui-sans-serif, "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+         background: radial-gradient(1200px 600px at 50% -10%, #1b212c 0%, var(--bg) 60%); color:var(--ink);
+         display:flex; align-items:flex-start; justify-content:center; }
+  .wrap { width:100%; max-width:680px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:26px 24px; margin-bottom:16px; }
+  h1 { margin:0 0 4px; font-size:20px; font-weight:700; letter-spacing:.3px; }
+  h1 .star { color:var(--gold); }
+  .sub { color:var(--mut); font-size:13px; margin:0; }
+  hr { height:2px; border:0; margin:18px 0; background:var(--gold-rule); }
+  .nav { display:flex; gap:16px; margin-bottom:14px; font-size:13px; }
+  .nav a { color:var(--mut); text-decoration:none; }
+  .nav a:hover { color:var(--gold); }
+  /* character selector */
+  label { display:block; font-size:11px; color:var(--mut); margin:16px 0 6px; text-transform:uppercase; letter-spacing:.6px; }
+  select { width:100%; padding:10px 12px; background:var(--panel-2); border:1px solid var(--line);
+           border-radius:8px; color:var(--ink); font-size:15px; appearance:none; cursor:pointer; }
+  select:focus { outline:none; border-color:var(--gold); }
+  /* option cards */
+  .opts { display:flex; flex-direction:column; gap:10px; margin-top:18px; }
+  .opt { background:var(--panel-2); border:2px solid var(--line); border-radius:10px;
+         padding:14px 16px; cursor:pointer; transition:border-color .15s; }
+  .opt:hover { border-color:var(--gold-2); }
+  .opt.selected { border-color:var(--gold); }
+  .opt input[type=radio] { display:none; }
+  .opt-label { font-weight:700; font-size:15px; margin-bottom:4px; }
+  .opt-desc { color:var(--mut); font-size:13px; line-height:1.5; }
+  .opt.selected .opt-label { color:var(--gold); }
+  /* claim button */
+  .claim-wrap { margin-top:20px; }
+  button.claim { width:100%; padding:13px; border:0; border-radius:8px; cursor:pointer;
+                 background:linear-gradient(180deg, var(--gold), var(--gold-2)); color:#241a00;
+                 font-weight:700; font-size:15px; }
+  button.claim:hover { filter:brightness(1.05); }
+  button.claim:disabled { opacity:.5; cursor:default; }
+  /* status messages */
+  .msg { font-size:13px; min-height:18px; margin-top:14px; }
+  .msg.err { color:var(--err); }
+  .msg.ok  { color:var(--ok); }
+  /* claimed banner */
+  .banner { background:rgba(87,201,138,.08); border:1px solid #2f5e46; border-radius:10px;
+            padding:16px 18px; margin-top:16px; }
+  .banner strong { color:var(--ok); display:block; margin-bottom:4px; font-size:15px; }
+  .banner p { margin:0; color:var(--mut); font-size:13px; line-height:1.5; }
+  /* loading skeleton */
+  .skeleton { color:var(--mut); font-size:14px; text-align:center; padding:24px 0; }
+  #charSection { display:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav">
+    <a href="/">&#8592; Portal Home</a>
+  </div>
+
+  <div class="card">
+    <h1><span class="star">&#9733;</span> Legacy Migration Reward</h1>
+    <p class="sub">A one-time thank-you for Legendary community members joining Relaunch.</p>
+    <hr>
+
+    <div id="loginMsg" class="skeleton" style="display:none;">
+      You must be <a href="/" style="color:var(--gold)">logged in</a> to claim this reward.
+    </div>
+
+    <div id="loadingMsg" class="skeleton">Loading your characters&hellip;</div>
+
+    <div id="charSection">
+      <label for="charSelect">Select Character</label>
+      <select id="charSelect">
+        <option value="">— pick a character —</option>
+      </select>
+
+      <div id="charBody">
+        <div class="skeleton" id="charHint" style="margin-top:18px; display:none;">
+          Select a character above to view reward options.
+        </div>
+        <div id="rewardArea" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="font-size:13px; color:var(--mut); line-height:1.6;">
+    <strong style="color:var(--ink); display:block; margin-bottom:8px;">How it works</strong>
+    Each character on your account can claim <strong style="color:var(--gold)">one reward</strong>.
+    Most are cosmetic keepsakes — a title, aura, cape, or emote — purely for recognition. The one
+    exception is the <strong style="color:var(--gold)">Legendary Ring</strong>, a functional heirloom
+    (EXP &amp; Capacity +50%, Auto-Reraise) you may take <em>instead</em> of a cosmetic. It's a thank-you
+    for your time on Legendary. You cannot change your selection after confirming, and the character must
+    be <strong style="color:var(--ink)">logged out</strong> when you claim.
+  </div>
+</div>
+
+<script>
+const api = (path, opts) => fetch(path, {credentials:'include', ...opts});
+
+let characters = [];
+let currentCharid = null;
+let rewardData = null;
+
+async function init() {
+  const meRes = await api('/api/me');
+  if (meRes.status === 401) {
+    document.getElementById('loadingMsg').style.display = 'none';
+    document.getElementById('loginMsg').style.display = 'block';
+    return;
+  }
+  const me = await meRes.json();
+  characters = me.characters || [];
+
+  document.getElementById('loadingMsg').style.display = 'none';
+  document.getElementById('charSection').style.display = 'block';
+
+  const sel = document.getElementById('charSelect');
+  characters.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.charid;
+    opt.textContent = c.name + (c.legacyRewardClaimed ? ' ✓ claimed' : '');
+    sel.appendChild(opt);
+  });
+
+  document.getElementById('charHint').style.display = 'block';
+
+  sel.addEventListener('change', () => {
+    const cid = parseInt(sel.value);
+    if (!cid) return;
+    loadChar(cid);
+  });
+
+  // Auto-select if only one character
+  if (characters.length === 1) {
+    sel.value = characters[0].charid;
+    loadChar(characters[0].charid);
+  }
+}
+
+async function loadChar(charid) {
+  currentCharid = charid;
+  rewardData = null;
+  const area = document.getElementById('rewardArea');
+  const hint = document.getElementById('charHint');
+  hint.style.display = 'none';
+  area.style.display = 'block';
+  area.innerHTML = '<div class="skeleton" style="margin-top:18px;">Loading reward status&hellip;</div>';
+
+  const res = await api('/api/legacy-reward/' + charid);
+  if (!res.ok) {
+    area.innerHTML = '<div class="msg err">Failed to load reward status.</div>';
+    return;
+  }
+  rewardData = await res.json();
+  renderReward(area, rewardData);
+}
+
+function renderReward(area, data) {
+  if (data.claimed) {
+    const chosen = data.options.find(o => o.id === data.claimedId);
+    area.innerHTML = `
+      <div class="banner">
+        <strong>&#10003; Reward claimed</strong>
+        <p>${data.name} has already claimed the <strong>${chosen ? chosen.label : data.claimedId}</strong> reward.
+        Each character may only claim once.</p>
+      </div>`;
+    return;
+  }
+
+  // Record which options require a job pick (Free Job to 99) so selectOpt can
+  // reveal the job dropdown and gate the claim button on it.
+  optNeedsJob = {};
+  data.options.forEach(o => { optNeedsJob[o.id] = !!o.needsJob; });
+
+  let html = `<div class="opts" id="optsList">`;
+  data.options.forEach((o, i) => {
+    html += `
+      <label class="opt" id="opt_${i}" onclick="selectOpt('${o.id}', ${i})">
+        <input type="radio" name="reward" value="${o.id}">
+        <div class="opt-label">${escHtml(o.label)}</div>
+        <div class="opt-desc">${escHtml(o.description)}</div>
+      </label>`;
+  });
+  html += `</div>
+    <div class="job-wrap" id="jobWrap" style="display:none; margin-top:14px;">
+      <label style="display:block; margin-bottom:6px; color:var(--gold); font-size:14px;">Choose the job to raise to 99:</label>
+      <select id="jobPick" onchange="onJobPick()">
+        <option value="">— pick a job —</option>
+        ${Object.entries(JOBS).map(([id,name]) => `<option value="${id}">${escHtml(name)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="claim-wrap">
+      <button class="claim" id="claimBtn" disabled onclick="claimReward()">Select an option to continue</button>
+      <div class="msg" id="claimMsg"></div>
+    </div>`;
+  area.innerHTML = html;
+}
+
+const JOBS = {1:'Warrior',2:'Monk',3:'White Mage',4:'Black Mage',5:'Red Mage',6:'Thief',
+  7:'Paladin',8:'Dark Knight',9:'Beastmaster',10:'Bard',11:'Ranger',12:'Samurai',13:'Ninja',
+  14:'Dragoon',15:'Summoner',16:'Blue Mage',17:'Corsair',18:'Puppetmaster',19:'Dancer',
+  20:'Scholar',21:'Geomancer',22:'Rune Fencer'};
+let selectedOption = null;
+let optNeedsJob = {};
+
+// Enable the claim button only once the requirements for the selected option are
+// met: an option must be chosen, and (for Free Job to 99) a job must be picked.
+function refreshClaimBtn() {
+  const btn = document.getElementById('claimBtn');
+  if (!btn) return;
+  const jobPick = document.getElementById('jobPick');
+  const needJob = selectedOption && optNeedsJob[selectedOption];
+  const ready = selectedOption && (!needJob || (jobPick && jobPick.value));
+  btn.disabled = !ready;
+  btn.textContent = !selectedOption ? 'Select an option to continue'
+                  : (needJob && !(jobPick && jobPick.value)) ? 'Choose a job to continue'
+                  : 'Claim Reward';
+}
+
+function onJobPick() { refreshClaimBtn(); }
+
+function selectOpt(id, idx) {
+  selectedOption = id;
+  document.querySelectorAll('.opt').forEach(el => el.classList.remove('selected'));
+  const el = document.getElementById('opt_' + idx);
+  if (el) el.classList.add('selected');
+  const jobWrap = document.getElementById('jobWrap');
+  if (jobWrap) jobWrap.style.display = optNeedsJob[id] ? 'block' : 'none';
+  refreshClaimBtn();
+}
+
+async function claimReward() {
+  if (!selectedOption || !currentCharid) return;
+  const btn = document.getElementById('claimBtn');
+  const msg = document.getElementById('claimMsg');
+  const jobPick = document.getElementById('jobPick');
+  const needJob = optNeedsJob[selectedOption];
+  const job = needJob ? parseInt(jobPick && jobPick.value, 10) : null;
+  if (needJob && !job) { refreshClaimBtn(); return; }
+  btn.disabled = true;
+  btn.textContent = 'Claiming…';
+  msg.className = 'msg';
+  msg.textContent = '';
+
+  const res = await api('/api/legacy-reward', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({charid: currentCharid, option_id: selectedOption, job: job}),
+  });
+  const json = await res.json().catch(() => ({}));
+
+  if (res.ok) {
+    const area = document.getElementById('rewardArea');
+    area.innerHTML = `
+      <div class="banner">
+        <strong>&#10003; Reward claimed!</strong>
+        <p><strong>${escHtml(json.label)}</strong> has been applied to this character.
+        Log in to the game to see your head start.</p>
+      </div>`;
+    // Update the character select label
+    const sel = document.getElementById('charSelect');
+    const opt = sel.querySelector(`option[value="${currentCharid}"]`);
+    if (opt) opt.textContent = opt.textContent.replace(' ✓ claimed', '') + ' ✓ claimed';
+  } else {
+    msg.className = 'msg err';
+    msg.textContent = json.detail || 'Claim failed. Please try again.';
+    btn.disabled = false;
+    btn.textContent = 'Claim Reward';
+  }
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+init().catch(() => {
+  document.getElementById('loadingMsg').textContent = 'Failed to connect to the portal. Please refresh.';
+});
+</script>
+</body>
+</html>

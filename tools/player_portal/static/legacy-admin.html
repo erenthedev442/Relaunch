@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Legacy Reward Review — Legendary FFXI</title>
+<style>
+  :root { --bg:#12151b; --panel:#1a1f28; --panel-2:#0d1015; --line:#2b323d; --ink:#e6edf3; --mut:#9aa4b2; --gold:#ecc25f; --ok:#57c98a; }
+  *{box-sizing:border-box} body{margin:0;min-height:100vh;padding:28px 20px;color:var(--ink);
+    font-family:ui-sans-serif,"Segoe UI",Roboto,system-ui,-apple-system,sans-serif;
+    background:radial-gradient(1100px 550px at 50% -10%,#1b212c 0%,var(--bg) 60%);display:flex;justify-content:center}
+  .wrap{width:100%;max-width:860px}
+  .nav{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:14px;font-size:13px}.nav a{color:var(--mut);text-decoration:none}.nav a:hover{color:var(--gold)}
+  h1{margin:0 0 4px;font-size:21px;font-weight:700}h1 .star{color:var(--gold)}
+  .sub{color:var(--mut);font-size:13px;margin:0 0 16px}
+  .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+  .bar input{flex:1;min-width:200px;padding:10px 12px;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;color:var(--ink);font-size:14px}
+  .pill{font-size:12px;color:var(--mut);background:var(--panel-2);border:1px solid var(--line);border-radius:20px;padding:5px 11px}
+  .pill b{color:var(--gold)}
+  .cat{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
+  .cat > .head{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;user-select:none}
+  .cat > .head:hover{background:var(--panel-2)}
+  .cat .caret{color:var(--mut);font-size:11px;width:12px;flex:none;transition:transform .15s}
+  .cat.open .caret{transform:rotate(90deg)}
+  .cat .lbl{flex:1;min-width:0}
+  .cat .lbl .t{font-size:15px;font-weight:600}
+  .cat .lbl .d{font-size:12px;color:var(--mut);margin-top:2px}
+  .cat .cnt{font-size:13px;font-weight:700;color:var(--gold);background:var(--panel-2);border:1px solid var(--line);border-radius:20px;padding:4px 12px;flex:none}
+  .cat .body{display:none;border-top:1px solid var(--line)}
+  .cat.open .body{display:block}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;color:var(--mut);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:8px 16px;border-bottom:1px solid var(--line)}
+  td{padding:7px 16px;border-bottom:1px solid var(--panel-2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.who{font-weight:600;white-space:nowrap}
+  td.chars{color:var(--mut)}
+  td.detail{color:var(--ok);white-space:nowrap}
+  .none{padding:14px 16px;color:var(--mut);font-size:13px}
+  .skeleton,.deny{color:var(--mut);text-align:center;padding:40px 0}
+  .deny{color:#f0a0a0}
+  .copy{font-size:11px;color:var(--mut);border:1px solid var(--line);background:transparent;border-radius:6px;padding:4px 9px;cursor:pointer;margin:8px 16px}
+  .copy:hover{color:var(--gold);border-color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="/">&#8592; Portal Home</a><a href="/admin.html">Staff Dashboard</a></div>
+  <h1><span class="star">&#9733;</span> Legacy Reward Review</h1>
+  <p class="sub">Which Legendary accounts land in each migration-reward bucket, from the progression snapshot. Rewards are <b>cosmetic / recognition</b> &mdash; titles, auras, glamours, a statue, mount barding, trust reskins &mdash; with one deliberate exception: the <b>Legendary Ring</b>, a functional heirloom (EXP/Capacity +50%, Auto-Reraise) a veteran may claim <i>instead of</i> a cosmetic keepsake. Everything else has zero functional advantage over an incoming new player. Share this page with staff to review before we finalize.</p>
+  <div id="root"><div class="skeleton">Loading&hellip;</div></div>
+</div>
+<script>
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+let DATA=null;
+
+async function load(){
+  const root=document.getElementById('root');
+  let r; try{ r=await fetch('/api/admin/legacy',{credentials:'include'}); }
+  catch(e){ root.innerHTML='<div class="deny">Failed to connect.</div>'; return; }
+  if(r.status===401){ root.innerHTML='<div class="deny">Log in with a staff (GM) account to view this page.</div>'; return; }
+  if(!r.ok){ root.innerHTML='<div class="deny">Could not load the snapshot.</div>'; return; }
+  DATA=await r.json();
+  render();
+}
+
+function render(){
+  const root=document.getElementById('root');
+  if(!DATA.total_accounts){
+    root.innerHTML='<div class="deny">'+esc(DATA.note||'No snapshot loaded yet.')+'</div>'; return;
+  }
+  const tiers=(DATA.tiers||[]).map(t=>`<span class="pill">T${t.tier} ${esc(t.name)} <b>${t.count}</b></span>`).join('');
+  const bar=`<div class="bar">
+    <input id="q" placeholder="Filter by account login or character name…" autocomplete="off">
+    <span class="pill"><b>${DATA.total_accounts}</b> accounts</span>
+    <span class="pill">snapshot ${esc((DATA.snapshotted_at||'').slice(0,16))}</span>
+  </div>
+  <div class="bar" style="margin-top:-6px">${tiers}</div>`;
+  const cats=DATA.categories.map((c,i)=>`
+    <div class="cat" data-i="${i}">
+      <div class="head"><span class="caret">&#9654;</span>
+        <div class="lbl"><div class="t">${esc(c.label)}</div><div class="d">${esc(c.desc)}</div></div>
+        <span class="cnt" data-cnt>${c.count}</span></div>
+      <div class="body"></div>
+    </div>`).join('');
+  root.innerHTML=bar+cats;
+  document.getElementById('q').addEventListener('input',e=>applyFilter(e.target.value.trim().toLowerCase()));
+  document.querySelectorAll('.cat').forEach(el=>{
+    el.querySelector('.head').addEventListener('click',()=>{ el.classList.toggle('open'); fillBody(el); });
+  });
+}
+
+function rowsFor(i,filter){
+  let rows=DATA.categories[i].accounts;
+  if(filter) rows=rows.filter(a=>(a.login||'').toLowerCase().includes(filter)||(a.characters||'').toLowerCase().includes(filter));
+  return rows;
+}
+function fillBody(el,filter){
+  const i=+el.dataset.i, body=el.querySelector('.body');
+  const rows=rowsFor(i,filter||'');
+  if(!rows.length){ body.innerHTML='<div class="none">No accounts'+(filter?' match the filter':'')+'.</div>'; return; }
+  body.innerHTML=`<button class="copy">Copy logins</button>
+    <table><thead><tr><th>Account</th><th>Characters</th><th>Detail</th></tr></thead><tbody>${
+    rows.map(a=>`<tr><td class="who">${esc(a.login)}</td><td class="chars">${esc(a.characters)}</td><td class="detail">${esc(a.detail)}</td></tr>`).join('')
+  }</tbody></table>`;
+  body.querySelector('.copy').addEventListener('click',()=>navigator.clipboard.writeText(rows.map(a=>a.login).join('\n')));
+}
+
+function applyFilter(filter){
+  document.querySelectorAll('.cat').forEach(el=>{
+    const i=+el.dataset.i;
+    const n=rowsFor(i,filter).length;
+    el.querySelector('[data-cnt]').textContent = filter ? `${n}/${DATA.categories[i].count}` : DATA.categories[i].count;
+    if(filter){ el.classList.add('open'); fillBody(el,filter); }
+    else if(el.classList.contains('open')) fillBody(el,'');
+  });
+}
+load();
+</script>
+</body>
+</html>

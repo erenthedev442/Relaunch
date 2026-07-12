@@ -1,0 +1,32 @@
+# cloudflared tunnel config for the Player Portal -- OVH VPS (Windows).
+#
+# Same tunnel/hostname as the old Azure box; only the machine and the paths
+# change. The FastAPI app serves the login page AND /api on 127.0.0.1:8090, so
+# ONE hostname is a fully same-origin portal (first-party cookie, zero CORS).
+#
+# CUTOVER (reuse the existing tunnel -- no DNS change, seamless):
+#   1. On Azure: stop the tunnel service so the tunnel isn't running in two
+#      places  ->  sudo cloudflared service uninstall   (or: systemctl stop ...)
+#   2. Copy the tunnel credentials file from Azure to the VPS:
+#        Azure  ~/.cloudflared/<UUID>.json
+#        VPS    C:\Users\Administrator\.cloudflared\<UUID>.json
+#   3. Put this file at  C:\Users\Administrator\.cloudflared\config.yml
+#      and fill in <UUID> below (same UUID as the filename).
+#   4. Install + start the Windows service:
+#        cloudflared.exe service install
+#        # the DNS route portal.ffxi-legendary.com already points at this tunnel
+#
+# ALTERNATIVE (fresh tunnel on the VPS): create a new tunnel and re-point DNS:
+#   cloudflared tunnel login
+#   cloudflared tunnel create ffxi-portal-vps
+#   cloudflared tunnel route dns --overwrite-dns ffxi-portal-vps portal.ffxi-legendary.com
+#   # then set tunnel:/credentials-file below to the new name/UUID.
+
+tunnel: ffxi-portal-relaunch
+credentials-file: C:\Users\Administrator\.cloudflared\REPLACE_WITH_TUNNEL_UUID.json
+
+ingress:
+  - hostname: portal.ffxi-legendary.com
+    service: http://127.0.0.1:8090
+  # Required catch-all.
+  - service: http_status:404

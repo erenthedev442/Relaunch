@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#12151b">
+<meta name="description" content="Your Legendary FFXI adventurer — profile, gear, augments, market, achievements and live server events.">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<title>Legendary FFXI — Player Portal</title>
+<style>
+  /* Palette matches the docs site branding (gold on Material slate). */
+  :root {
+    --bg:#12151b; --panel:#1a1f28; --panel-2:#0d1015; --line:#2b323d;
+    --ink:#e6edf3; --mut:#9aa4b2;
+    --gold:#ecc25f; --gold-2:#d8ab33; --err:#e5534b; --discord:#5865f2;
+    --gold-rule: linear-gradient(90deg, transparent, #c79a34 45%, #f3d680 50%, #c79a34 55%, transparent);
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; padding:28px 20px;
+         font-family: ui-sans-serif, "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+         background: radial-gradient(1200px 600px at 50% -10%, #1b212c 0%, var(--bg) 60%); color:var(--ink);
+         display:flex; align-items:flex-start; justify-content:center; }
+  .wrap { width:100%; max-width:820px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:26px 24px; }
+  h1 { margin:0; font-size:20px; font-weight:700; letter-spacing:.3px; }
+  h1 .star { color:var(--gold); }
+  .sub { color:var(--mut); font-size:13px; margin:4px 0 0; }
+  .rule { height:2px; border:0; margin:18px 0; background:var(--gold-rule); }
+  /* login */
+  label { display:block; font-size:11px; color:var(--mut); margin:16px 0 6px; text-transform:uppercase; letter-spacing:.6px; }
+  input { width:100%; padding:11px 12px; background:var(--panel-2); border:1px solid var(--line);
+          border-radius:8px; color:var(--ink); font-size:15px; }
+  input:focus { outline:none; border-color:var(--gold); }
+  button { margin-top:20px; width:100%; padding:12px; border:0; border-radius:8px; cursor:pointer;
+           background:linear-gradient(180deg, var(--gold), var(--gold-2)); color:#241a00; font-weight:700; font-size:15px; }
+  button:hover { filter:brightness(1.05); }
+  button:disabled { opacity:.6; cursor:default; }
+  button.ghost { background:transparent; color:var(--mut); border:1px solid var(--line); font-weight:500; width:auto; padding:8px 14px; margin:0; }
+  .msg { margin-top:14px; font-size:13px; color:var(--err); min-height:18px; }
+  .foot { color:var(--mut); font-size:12px; margin-top:18px; }
+  .foot a { color:var(--gold); text-decoration:none; }
+  /* portal */
+  .row { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:14px; margin-top:16px; }
+  .char { background:var(--panel-2); border:1px solid var(--line); border-radius:12px; padding:16px; }
+  .char .top { display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
+  .char .name { font-weight:700; font-size:17px; }
+  .char .gil { color:var(--gold); font-weight:700; font-size:14px; white-space:nowrap; }
+  .char .job { color:var(--gold); font-weight:600; }
+  .char .line { color:var(--mut); font-size:13px; margin-top:6px; }
+  .char hr { border:0; height:1px; background:var(--line); margin:12px 0; }
+  .stats { display:flex; flex-wrap:wrap; gap:6px; }
+  .pill { font-size:11.5px; color:var(--ink); background:#141922; border:1px solid var(--line);
+          border-radius:999px; padding:3px 9px; }
+  .pill b { color:var(--gold); font-weight:700; }
+  .nav { display:flex; flex-wrap:wrap; gap:10px 16px; margin-bottom:14px; font-size:13px; }
+  .nav a { color:var(--mut); text-decoration:none; }
+  .nav a:hover { color:var(--gold); }
+  .acts { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin-top:12px; }
+  .acts .lnk { color:var(--gold); font-size:12.5px; text-decoration:none; }
+  .acts .lnk:hover { text-decoration:underline; }
+  .mini { margin:0; width:auto; padding:5px 11px; font-size:12px; font-weight:600;
+          background:transparent; color:var(--mut); border:1px solid var(--line); border-radius:7px; cursor:pointer; }
+  .mini:hover { color:var(--gold); border-color:var(--gold-2); }
+  .inv { margin-top:18px; border-top:1px solid var(--line); padding-top:14px; }
+  .invtop { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .invtitle { font-weight:700; font-size:15px; }
+  .invc { margin-bottom:12px; }
+  .invh { font-size:12px; color:var(--gold); font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; cursor:pointer; user-select:none; }
+  .invh .caret { color:var(--mut); font-size:10px; margin-right:2px; display:inline-block; width:9px; }
+  .dim { color:var(--mut); font-weight:500; font-size:12.5px; }
+  .invitems { display:flex; flex-wrap:wrap; gap:5px; }
+  .it { font-size:11.5px; color:var(--ink); background:#141922; border:1px solid var(--line); border-radius:6px; padding:2px 7px; text-decoration:none; cursor:pointer; }
+  .it:hover { border-color:var(--gold-2); color:var(--gold); }
+  .it b { color:var(--gold); font-weight:700; }
+  #itemPop { position:fixed; z-index:1000; display:none; pointer-events:none; max-width:356px; }
+  #itemPop img { display:block; max-width:340px; max-height:70vh; border:1px solid var(--gold-2); border-radius:8px; background:#0d1015; box-shadow:0 8px 30px rgba(0,0,0,.6); }
+  #itemPop .augcap { display:none; margin-top:4px; padding:8px 11px; max-width:340px; font-size:13px; line-height:1.45;
+                     color:var(--ink); background:#141922; border:1px solid var(--gold); border-radius:8px;
+                     box-shadow:0 0 0 1px rgba(236,194,95,.35), 0 8px 30px rgba(0,0,0,.6); }
+  #itemPop .augcap b { color:var(--gold); }
+  #itemPop .augstar { color:var(--gold); }
+  #itemPop .aughint { display:block; color:var(--mut); font-size:11.5px; margin-top:2px; }
+  .invtools { display:flex; gap:8px; align-items:center; }
+  .invnote { font-size:12.5px; margin:2px 0 10px; padding:7px 10px; border-radius:8px; }
+  .invnote.on { color:#8fe0b0; background:rgba(87,201,138,.08); border:1px solid #2f5e46; }
+  .it.act { cursor:pointer; }
+  .it.act:hover { border-color:var(--gold-2); color:var(--gold); }
+  .it.lk { opacity:.5; cursor:not-allowed; }
+  /* augment catalyst: make it pop */
+  .it.cat { border-color:var(--gold); color:var(--gold); font-weight:600;
+            background:linear-gradient(180deg, rgba(236,194,95,.16), #141922);
+            box-shadow:0 0 0 1px rgba(236,194,95,.4), 0 0 8px rgba(236,194,95,.25); }
+  .it.cat::before { content:"\2726 "; color:var(--gold); }
+  .it.cat:hover { border-color:var(--gold); color:var(--gold); }
+  @keyframes catpulse { 0%,100%{box-shadow:0 0 0 1px rgba(236,194,95,.4), 0 0 6px rgba(236,194,95,.2);}
+                        50%{box-shadow:0 0 0 1px rgba(236,194,95,.7), 0 0 12px rgba(236,194,95,.45);} }
+  .it.cat { animation:catpulse 2.2s ease-in-out infinite; }
+  .itmenu { background:var(--panel-2); border:1px solid var(--gold-2); border-radius:10px; padding:12px 14px; margin:6px 0 14px; }
+  .itmenu .mh { font-weight:700; font-size:14px; margin-bottom:6px; }
+  .itmenu .mrow { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:8px; }
+  .itmenu .danger { color:#f0a0a0; border-color:#7a3b3b; }
+  .itmenu .danger:hover { color:#fff; background:#7a3b3b; border-color:#7a3b3b; }
+  .mini.gold { color:var(--gold); border-color:var(--gold-2); }
+  .mini.gold:hover { color:#241a00; background:linear-gradient(180deg, var(--gold), var(--gold-2)); border-color:var(--gold-2); }
+  .invc.vault { border-top:1px solid var(--gold-2); padding-top:12px; margin-top:14px; }
+  .invc.vault .invh { color:var(--gold); }
+  .prow { padding:10px 0; border-top:1px solid var(--line); }
+  .prow:first-child { border-top:0; }
+  .ptop { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .pname { font-weight:600; font-size:14px; }
+  .pval { font-size:12.5px; color:var(--gold); font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .pbar { height:7px; background:var(--panel-2); border:1px solid var(--line); border-radius:999px; margin:6px 0 5px; overflow:hidden; }
+  .pfill { height:100%; background:linear-gradient(90deg, var(--gold-2), var(--gold)); }
+  .phint { font-size:12px; color:var(--mut); }
+  .prow.done .pval { color:#8fe0b0; }
+  .prow.done .pfill { background:#57c98a; }
+  .tsec { border-top:1px solid var(--line); padding:12px 0; }
+  .tlabel { font-size:11px; color:var(--mut); text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; }
+  .invnote { color:var(--mut); background:var(--panel-2); border:1px solid var(--line); }
+  select { background:var(--panel-2); color:var(--ink); border:1px solid var(--line); border-radius:7px; padding:6px 9px; font-size:13px; }
+  .mini:disabled, select:disabled { opacity:.5; cursor:not-allowed; }
+  /* Face/hair preview gallery in the Appearance tool */
+  .facegal { display:grid; grid-template-columns:repeat(8, 1fr); gap:6px; margin-top:10px; }
+  .facecell { display:flex; flex-direction:column; align-items:center; gap:3px; padding:4px;
+              background:var(--panel-2); border:1px solid var(--line); border-radius:8px;
+              cursor:pointer; width:auto; margin:0; }
+  .facecell img { width:100%; height:auto; aspect-ratio:1/1; object-fit:cover; border-radius:5px;
+                  background:var(--panel); display:block; }
+  .facecell span { color:var(--mut); font-size:11px; font-weight:600; line-height:1; }
+  .facecell.sel { border-color:var(--gold); box-shadow:0 0 0 1px var(--gold); }
+  .facecell.sel span { color:var(--gold); }
+  .facecell:hover { border-color:var(--gold-2); }
+  @media (max-width:560px){ .facegal { grid-template-columns:repeat(4, 1fr); } }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <!-- Login view -->
+      <div id="loginView">
+        <div class="nav"><a href="/community.html">Community</a><a href="/market.html">Market</a><a href="/gear-builder.html">Gear</a><a href="/augments.html">Augments</a><a href="/events.html">Live Events</a><a href="/status.html">Status</a><a href="https://discord.gg/Yd3Kn3dN36" target="_blank" rel="noopener">Discord</a></div>
+        <h1><span class="star">★</span> Legendary FFXI — Player Portal</h1>
+        <p class="sub">Sign in with your game account login and password.</p>
+        <hr class="rule">
+        <form id="loginForm" autocomplete="on">
+          <label for="login">Account login</label>
+          <input id="login" name="login" type="text" autocomplete="username" required>
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required>
+          <button type="submit" id="loginBtn">Sign in</button>
+        </form>
+        <div class="msg" id="loginMsg"></div>
+        <p class="foot">Your password is verified against the game server and is never stored by the portal.
+           · <a href="https://discord.gg/Yd3Kn3dN36" target="_blank" rel="noopener">Join the Discord</a></p>
+      </div>
+
+      <!-- Portal view -->
+      <div id="portalView" class="hidden">
+        <div class="nav"><a href="/next.html">What's Next</a><a href="/community.html">Community</a><a href="/wrapped.html">Your Legend</a><a href="/achievements.html">Achievements</a><a href="/market.html">Market</a><a href="/gear-builder.html">Gear</a><a href="/augments.html">Augments</a><a href="/events.html">Live Events</a><a href="/status.html">Status</a><a href="/admin.html" id="adminLink" style="display:none">Staff</a><a href="https://discord.gg/Yd3Kn3dN36" target="_blank" rel="noopener">Discord</a></div>
+        <div class="acts" style="margin:0 0 4px"><button class="mini gold" data-install style="display:none" onclick="Legendary.install()">📲 Install app</button><button class="mini" onclick="Legendary.enablePush()">🔔 Notifications</button></div>
+        <div class="row">
+          <div>
+            <h1 id="hello"><span class="star">★</span> Welcome</h1>
+            <p class="sub" id="acctLine"></p>
+          </div>
+          <button class="ghost" id="logoutBtn">Log out</button>
+        </div>
+        <hr class="rule">
+        <div class="grid" id="chars"></div>
+        <div id="toolsPanel" class="inv hidden"></div>
+        <div id="progPanel" class="inv hidden"></div>
+        <div id="invPanel" class="inv hidden"></div>
+        <div class="msg" id="portalMsg"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const api = (path, opts = {}) => fetch(path, { credentials: "include", ...opts });
+const esc = (s) => String(s).replace(/[&<>"']/g, (m) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+const int = (n) => Number(n || 0).toLocaleString();
+function compact(n) {
+  n = Number(n || 0);
+  if (n >= 1e9) return (n/1e9).toFixed(n >= 1e10 ? 0 : 1) + "B";
+  if (n >= 1e6) return (n/1e6).toFixed(n >= 1e7 ? 0 : 1) + "M";
+  if (n >= 1e3) return (n/1e3).toFixed(n >= 1e4 ? 0 : 1) + "K";
+  return String(n);
+}
+
+function charCard(c) {
+  const sub = c.subJob && c.subJob !== "NON" ? ` / <span class="job">${c.subJob}</span>${c.subLvl}` : "";
+  const pills = [];
+  if (c.hlTier)       pills.push(`<span class="pill">HL Tier <b>${c.hlTier}</b></span>`);
+  if (c.ascensions)   pills.push(`<span class="pill"><b>${c.ascensions}</b> Ascensions</span>`);
+  if (c.rebirthCount) pills.push(`<span class="pill"><b>R${c.rebirthCount}</b> rebirths</span>`);
+  if (c.nmKills)      pills.push(`<span class="pill"><b>${compact(c.nmKills)}</b> NM kills</span>`);
+  const combat = `<span class="pill"><b>${compact(c.kills)}</b> kills</span>` +
+                 `<span class="pill"><b>${int(c.deaths)}</b> KO</span>` +
+                 `<span class="pill"><b>${compact(c.battles)}</b> battles</span>`;
+  return `<div class="char">
+    <div class="top"><span class="name">${esc(c.name)}</span><span class="gil">${compact(c.gil)} gil</span></div>
+    <div class="line"><span class="job">${c.mainJob}</span>${c.mainLvl}${sub}</div>
+    <div class="line">${esc(c.nation)} · HP ${int(c.hp)} · MP ${int(c.mp)} · ${int(c.playtimeH)}h played</div>
+    <hr>
+    <div class="stats">${pills.join("")}${pills.length ? '<span class="pill" style="opacity:0"></span>' : ""}${combat}</div>
+    <div class="acts">
+      <a class="lnk" href="/next.html?charid=${c.charid}">🗺 What's next</a>
+      <a class="lnk" href="/gear.html?charid=${c.charid}">⚔ Gear</a>
+      <a class="lnk" href="/fellow.html?charid=${c.charid}">🐾 Fellow</a>
+      <a class="lnk" href="/achievements.html?charid=${c.charid}">🏆 Achievements</a>
+      <a class="lnk" href="/c/${encodeURIComponent(c.name)}" target="_blank" rel="noopener">Public profile ↗</a>
+      <a class="lnk" href="/profile-edit.html?charid=${c.charid}">🎨 Customize</a>
+      <a class="lnk" href="/legacy-reward" style="${c.legacyRewardClaimed ? 'color:var(--mut);text-decoration:none;' : ''}">${c.legacyRewardClaimed ? '✓ Legacy reward' : '⭐ Legacy reward'}</a>
+      <button class="mini toolsBtn" data-cid="${c.charid}">Tools</button>
+      <button class="mini progBtn" data-cid="${c.charid}">Progress</button>
+      <button class="mini invBtn" data-cid="${c.charid}">Inventory</button>
+    </div>
+  </div>`;
+}
+
+function showPortal(data) {
+  $("loginView").classList.add("hidden");
+  $("portalView").classList.remove("hidden");
+  $("hello").innerHTML = '<span class="star">★</span> ' + esc(data.login);
+  const since = data.since && !data.since.startsWith("0000") ? " · member since " + data.since.slice(0, 10) : "";
+  $("acctLine").textContent = (data.email || "") + since;
+  if (data.isGm) { const al = $("adminLink"); if (al) al.style.display = ""; }
+  $("chars").innerHTML = data.characters.length
+    ? data.characters.map(charCard).join("")
+    : '<p class="sub">No characters on this account yet.</p>';
+}
+
+async function loadMe() {
+  const r = await api("/api/me");
+  if (r.ok) { showPortal(await r.json()); return true; }
+  return false;
+}
+
+$("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("loginMsg").textContent = "";
+  $("loginBtn").disabled = true;
+  try {
+    const r = await api("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ login: $("login").value, password: $("password").value }),
+    });
+    if (r.ok) { $("password").value = ""; await loadMe(); }
+    else { const j = await r.json().catch(() => ({})); $("loginMsg").textContent = j.detail || "Sign-in failed."; }
+  } catch { $("loginMsg").textContent = "Network error — try again."; }
+  finally { $("loginBtn").disabled = false; }
+});
+
+$("logoutBtn").addEventListener("click", async () => {
+  await api("/api/logout", { method: "POST" });
+  $("invPanel").classList.add("hidden");
+  $("progPanel").classList.add("hidden");
+  $("toolsPanel").classList.add("hidden");
+  $("portalView").classList.add("hidden");
+  $("loginView").classList.remove("hidden");
+});
+
+let INV = null;      // last-loaded inventory payload
+let editMode = false;
+
+function catInfo(it) {
+  if (!it.catalyst) return { cls: "", title: "" };
+  const aug = it.catalystAug ? " → " + it.catalystAug : "";
+  // data-aug feeds the hover popup's augment caption; title stays as a
+  // native-tooltip fallback (e.g. keyboard/touch users).
+  const augAttr = it.catalystAug ? ` data-aug="${esc(it.catalystAug)}"` : "";
+  return { cls: " cat", title: `${augAttr} title="Augment catalyst${esc(aug)} — trade it to the Augment Moogle"` };
+}
+
+function invItem(it, loc) {
+  const q = it.qty > 1 ? ` <b>×${int(it.qty)}</b>` : "";
+  const img = it.img ? ` data-img="${esc(it.img)}"` : "";
+  const c = catInfo(it);
+  if (!editMode) {
+    return `<a class="it${c.cls}" href="${esc(it.wiki)}" target="_blank" rel="noopener"${img}${c.title}>${esc(it.name)}${q}</a>`;
+  }
+  if (it.locked) {
+    return `<span class="it lk${c.cls}" title="equipped or in a bazaar"${img}>${esc(it.name)}${q}</span>`;
+  }
+  return `<span class="it act${c.cls}" data-loc="${loc}" data-slot="${it.slot}" data-name="${esc(it.name)}"${img}${c.title}>${esc(it.name)}${q}</span>`;
+}
+
+function invContainer(c) {
+  const cap = c.cap ? ` / ${c.cap}` : "";
+  return `<div class="invc">
+    <div class="invh" role="button" tabindex="0" aria-expanded="true"><span class="caret">▾</span>${esc(c.name)} <span class="dim">${c.count}${cap}</span></div>
+    <div class="invitems">${c.items.map((it) => invItem(it, c.id)).join("")}</div>
+  </div>`;
+}
+
+function invVaultItem(it) {
+  const q = it.qty > 1 ? ` <b>×${int(it.qty)}</b>` : "";
+  const img = it.img ? ` data-img="${esc(it.img)}"` : "";
+  const c = catInfo(it);
+  if (!editMode) {
+    return `<a class="it${c.cls}" href="${esc(it.wiki)}" target="_blank" rel="noopener"${img}${c.title}>${esc(it.name)}${q}</a>`;
+  }
+  return `<span class="it vit act${c.cls}" data-vaultid="${it.vaultId}" data-name="${esc(it.name)}"${img}${c.title}>${esc(it.name)}${q}</span>`;
+}
+
+function renderVault(v) {
+  const items = v.items.length
+    ? v.items.map(invVaultItem).join("")
+    : '<span class="dim">Empty — deposit items here to free up in-game inventory.</span>';
+  return `<div class="invc vault">
+    <div class="invh" role="button" tabindex="0" aria-expanded="true"><span class="caret">▾</span>◆ Vault <span class="dim">offline storage · ${v.count} / ${v.cap}</span></div>
+    <div class="invitems">${items}</div>
+  </div>`;
+}
+
+function renderInv(d) {
+  INV = d;
+  const panel = $("invPanel");
+  panel.classList.remove("hidden");
+  const tools = d.online
+    ? `<span class="dim">online — log out to manage</span>`
+    : `<button class="mini" id="manageBtn">${editMode ? "Done" : "Manage items"}</button>`;
+  const banner = (editMode && !d.online)
+    ? `<div class="invnote on">Click an item to move it, deposit it to your <b>Vault</b> (offline storage that doesn't use in-game slots), or discard it. Equipped and bazaar items are locked.</div>`
+    : "";
+  panel.innerHTML =
+    `<div class="invtop"><span class="invtitle">${esc(d.name)} — inventory <span class="dim">${int(d.total)} items</span></span>
+       <span class="invtools">${tools}<button class="mini" id="invClose">Close</button></span></div>` +
+    banner + `<div id="invMenu"></div>` +
+    (d.containers.length ? d.containers.map(invContainer).join("") : '<p class="dim">No items stored.</p>') +
+    (d.vault ? renderVault(d.vault) : "");
+  $("invClose").addEventListener("click", () => panel.classList.add("hidden"));
+}
+
+function openItemMenu(loc, slot, name) {
+  const dests = (INV.destinations || []).filter((x) => x.id !== loc);
+  const btns = dests.map((x) =>
+    `<button class="mini" data-mv="1" data-loc="${loc}" data-slot="${slot}" data-to="${x.id}">${esc(x.name)} <span class="dim">${x.count}/${x.cap}</span></button>`).join("");
+  $("invMenu").innerHTML = `<div class="itmenu">
+    <div class="mh">${esc(name)}</div>
+    <div class="mrow"><span class="dim">Move to:</span>${btns || ' <span class="dim">no other containers</span>'}</div>
+    <div class="mrow"><button class="mini gold" data-dep="1" data-loc="${loc}" data-slot="${slot}">◆ Deposit to Vault</button><button class="mini danger" data-discard="1" data-loc="${loc}" data-slot="${slot}" data-name="${esc(name)}">Discard</button><button class="mini" data-cancel="1">Cancel</button></div>
+  </div>`;
+  $("invMenu").scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function openVaultMenu(vaultId, name) {
+  const btns = (INV.destinations || []).map((x) =>
+    `<button class="mini" data-wd="1" data-vaultid="${vaultId}" data-to="${x.id}">${esc(x.name)} <span class="dim">${x.count}/${x.cap}</span></button>`).join("");
+  $("invMenu").innerHTML = `<div class="itmenu">
+    <div class="mh">◆ ${esc(name)} <span class="dim">(in Vault)</span></div>
+    <div class="mrow"><span class="dim">Withdraw to:</span>${btns || ' <span class="dim">no container has a free slot</span>'}</div>
+    <div class="mrow"><button class="mini" data-cancel="1">Cancel</button></div>
+  </div>`;
+  $("invMenu").scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+async function reloadInv() {
+  if (!INV) return;
+  try { const r = await api("/api/inventory/" + INV.charid); if (r.ok) renderInv(await r.json()); } catch {}
+}
+
+async function invAction(path, body) {
+  try {
+    const r = await api(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    if (!r.ok) { const j = await r.json().catch(() => ({})); alert(j.detail || "That didn't work."); return false; }
+    return true;
+  } catch { alert("Network error — try again."); return false; }
+}
+
+$("chars").addEventListener("click", async (e) => {
+  const b = e.target.closest(".invBtn");
+  if (!b) return;
+  const panel = $("invPanel");
+  panel.classList.remove("hidden");
+  panel.innerHTML = '<p class="dim">Loading inventory…</p>';
+  panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  try {
+    const r = await api("/api/inventory/" + b.dataset.cid);
+    if (!r.ok) { panel.innerHTML = '<p class="dim">Could not load inventory.</p>'; return; }
+    renderInv(await r.json());
+  } catch { panel.innerHTML = '<p class="dim">Network error loading inventory.</p>'; }
+});
+
+function progRow(s) {
+  const val = s.done ? "Complete ✓" : `${int(s.cur)} / ${int(s.target)}`;
+  const extra = ("extra" in s && s.extra) ? ` · ${int(s.extra)} ${esc(s.extraLabel || "")}` : "";
+  return `<div class="prow${s.done ? " done" : ""}">
+    <div class="ptop"><span class="pname">${esc(s.name)}</span><span class="pval">${val}</span></div>
+    <div class="pbar"><div class="pfill" style="width:${s.pct}%"></div></div>
+    <div class="phint">${esc(s.hint)}${extra}</div>
+  </div>`;
+}
+
+function renderProgress(d) {
+  const panel = $("progPanel");
+  panel.classList.remove("hidden");
+  panel.innerHTML =
+    `<div class="invtop"><span class="invtitle">${esc(d.name)} — progress <span class="dim">${esc(d.job)}</span></span>
+       <button class="mini" id="progClose">Close</button></div>` +
+    d.systems.map(progRow).join("");
+  $("progClose").addEventListener("click", () => panel.classList.add("hidden"));
+  panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+$("chars").addEventListener("click", async (e) => {
+  const b = e.target.closest(".progBtn");
+  if (!b) return;
+  const panel = $("progPanel");
+  panel.classList.remove("hidden");
+  panel.innerHTML = '<p class="dim">Loading progress…</p>';
+  panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  try {
+    const r = await api("/api/progress/" + b.dataset.cid);
+    if (!r.ok) { panel.innerHTML = '<p class="dim">Could not load progress.</p>'; return; }
+    renderProgress(await r.json());
+  } catch { panel.innerHTML = '<p class="dim">Network error.</p>'; }
+});
+
+const RACES = {1:"Hume ♂",2:"Hume ♀",3:"Elvaan ♂",4:"Elvaan ♀",5:"Tarutaru ♂",6:"Tarutaru ♀",7:"Mithra",8:"Galka"};
+// Preview-image filename prefix per race (images live in /faces/, sourced from
+// FFXIclopedia). Face byte 0-15 = 8 face types x 2 hairstyles: type = (v>>1)+1,
+// hair = v&1 ? 'b' : 'a'. So face v -> `${RACE_PREFIX[race]}${type}${hair}.jpg`.
+const RACE_PREFIX = {1:"Hm",2:"Hf",3:"Em",4:"Ef",5:"Tm",6:"Tf",7:"M",8:"G"};
+function faceImg(race, v) {
+  const p = RACE_PREFIX[race]; if (!p) return null;
+  return `/faces/${p}${(v >> 1) + 1}${v & 1 ? "b" : "a"}.webp`;
+}
+function faceLabel(v) { return `${(v >> 1) + 1}${v & 1 ? "B" : "A"}`; }
+// Render the 16 face/hair previews for a race, highlighting the current pick.
+function renderFaceGallery(race, face) {
+  return Array.from({ length: 16 }, (_, v) =>
+    `<button type="button" class="facecell${v === face ? " sel" : ""}" data-face="${v}" title="Face ${faceLabel(v)}">
+       <img src="${faceImg(race, v)}" alt="Face ${faceLabel(v)}" loading="lazy" width="72" height="72">
+       <span>${faceLabel(v)}</span>
+     </button>`).join("");
+}
+
+function renderTools(d) {
+  const panel = $("toolsPanel");
+  panel.classList.remove("hidden");
+  const off = !d.online, dis = off ? "" : " disabled";
+  const banner = off
+    ? `<div class="invnote on">Offline — these tools are ready to use.</div>`
+    : `<div class="invnote">This character is online. Log out of the game to use these tools.</div>`;
+  const raceOpts = Object.entries(RACES).map(([v, n]) => `<option value="${v}"${+v === d.race ? " selected" : ""}>${n}</option>`).join("");
+  const faceOpts = Array.from({ length: 16 }, (_, i) => `<option value="${i}"${i === d.face ? " selected" : ""}>Face ${i}</option>`).join("");
+  const warpOpts = (d.warpDests || []).map((x) => `<option value="${esc(x.key)}">${esc(x.name)}</option>`).join("");
+  const jobOpt = (j, sel) => `<option value="${j.id}"${j.id === sel ? " selected" : ""}>${j.abbr} ${j.lvl}</option>`;
+  const mainOpts = (d.jobs || []).map((j) => jobOpt(j, d.mainJob)).join("");
+  const subOpts = `<option value="0"${!d.subJob ? " selected" : ""}>None</option>` + (d.jobs || []).map((j) => jobOpt(j, d.subJob)).join("");
+  panel.innerHTML =
+    `<div class="invtop"><span class="invtitle">${esc(d.name)} — tools <span class="dim">${esc(d.zone)}</span></span><button class="mini" id="toolsClose">Close</button></div>` +
+    banner +
+    `<div class="tsec"><div class="tlabel">Move</div><div class="mrow">
+       <button class="mini" id="rescueBtn"${dis}>Rescue → GM Home</button>
+       <select id="warpSel"${dis}>${warpOpts}</select><button class="mini" id="warpBtn"${dis}>Warp</button>
+     </div></div>
+     <div class="tsec"><div class="tlabel">Change job</div><div class="mrow">
+       <select id="mjobSel"${dis}>${mainOpts}</select><span class="dim">/</span><select id="sjobSel"${dis}>${subOpts}</select>
+       <button class="mini" id="jobBtn"${dis}>Apply</button>
+     </div><div class="phint">Only unlocked jobs are listed; sub job is capped at half your main level.</div></div>
+     <div class="tsec"><div class="tlabel">Appearance</div><div class="mrow">
+       <select id="raceSel"${dis}>${raceOpts}</select><select id="faceSel"${dis}>${faceOpts}</select>
+       <button class="mini gold" id="appBtn"${dis}>Apply</button>
+     </div>
+     <div class="phint">Examples of every face &amp; hair for the selected race${off ? " — click one to pick it" : ""}. Changes take effect the next time the character logs in.</div>
+     <div class="facegal" id="faceGallery">${renderFaceGallery(d.race, d.face)}</div></div>`;
+  $("toolsClose").addEventListener("click", () => panel.classList.add("hidden"));
+
+  // Keep the preview gallery in sync with the race/face pickers.
+  const syncGallery = () => {
+    const r = +$("raceSel").value, f = +$("faceSel").value;
+    $("faceGallery").innerHTML = renderFaceGallery(r, f);
+  };
+  $("raceSel").addEventListener("change", syncGallery);
+  $("faceSel").addEventListener("change", syncGallery);
+  if (off) {
+    // Click a preview to select that face.
+    $("faceGallery").addEventListener("click", (e) => {
+      const cell = e.target.closest(".facecell"); if (!cell) return;
+      $("faceSel").value = cell.dataset.face;
+      syncGallery();
+    });
+  }
+  if (off) {
+    const act = async (path, body, msg) => { if (await invAction(path, body)) { alert(msg); reloadTools(d.charid); } };
+    $("rescueBtn").addEventListener("click", () => { if (confirm(`Move ${d.name} to GM Home? Use this if the character is stuck.`)) act("/api/char/rescue", { charid: d.charid }, "Moved to GM Home — effective at next login."); });
+    $("warpBtn").addEventListener("click", () => act("/api/char/warp", { charid: d.charid, dest: $("warpSel").value }, "Warped — effective at next login."));
+    $("jobBtn").addEventListener("click", () => act("/api/char/job", { charid: d.charid, mainJob: +$("mjobSel").value, subJob: +$("sjobSel").value }, "Job changed — effective at next login."));
+    $("appBtn").addEventListener("click", () => act("/api/char/appearance", { charid: d.charid, race: +$("raceSel").value, face: +$("faceSel").value }, "Appearance updated — effective at next login."));
+  }
+  panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+async function reloadTools(cid) { try { const r = await api("/api/char/" + cid); if (r.ok) renderTools(await r.json()); } catch {} }
+
+$("chars").addEventListener("click", async (e) => {
+  const b = e.target.closest(".toolsBtn");
+  if (!b) return;
+  const panel = $("toolsPanel");
+  panel.classList.remove("hidden");
+  panel.innerHTML = '<p class="dim">Loading tools…</p>';
+  panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  try {
+    const r = await api("/api/char/" + b.dataset.cid);
+    if (!r.ok) { panel.innerHTML = '<p class="dim">Could not load tools.</p>'; return; }
+    renderTools(await r.json());
+  } catch { panel.innerHTML = '<p class="dim">Network error.</p>'; }
+});
+
+// Hover popup (BG-Wiki stat image + augment-catalyst caption), delegated on the panel.
+// Triggers on items with a wiki image (data-img), an augment caption (data-aug), or both.
+const itemPop = document.createElement("div");
+itemPop.id = "itemPop";
+itemPop.innerHTML = '<img alt=""><div class="augcap"></div>';
+document.body.appendChild(itemPop);
+const popImg = itemPop.firstChild;
+const popAug = itemPop.lastChild;
+popImg.addEventListener("error", () => {
+  // Bad/missing image: keep the popup if it's showing an augment caption.
+  popImg.style.display = "none";
+  if (popAug.style.display === "none") itemPop.style.display = "none";
+});
+
+const invPanelEl = $("invPanel");
+invPanelEl.addEventListener("mouseover", (e) => {
+  const a = e.target.closest(".it[data-img], .it[data-aug]");
+  if (!a) return;
+  if (a.dataset.img) {
+    popImg.style.display = "block";
+    popImg.src = a.dataset.img;
+  } else {
+    popImg.style.display = "none";
+    popImg.removeAttribute("src");
+  }
+  if (a.dataset.aug) {
+    popAug.innerHTML = `<span class="augstar">✦</span> Augment catalyst → <b>${esc(a.dataset.aug)}</b><span class="aughint">trade at the Augment Moogle</span>`;
+    popAug.style.display = "block";
+  } else {
+    popAug.style.display = "none";
+  }
+  itemPop.style.display = "block";
+});
+invPanelEl.addEventListener("mousemove", (e) => {
+  if (itemPop.style.display !== "block") return;
+  const pad = 16, w = 356;
+  let x = e.clientX + pad; const y = e.clientY + pad;
+  if (x + w > window.innerWidth) x = e.clientX - w - pad;
+  itemPop.style.left = Math.max(4, x) + "px";
+  itemPop.style.top = Math.min(y, window.innerHeight - 40) + "px";
+});
+invPanelEl.addEventListener("mouseout", (e) => {
+  if (e.target.closest(".it[data-img], .it[data-aug]")) itemPop.style.display = "none";
+});
+invPanelEl.addEventListener("click", async (e) => {
+  if (e.target.closest("#manageBtn")) { editMode = !editMode; renderInv(INV); return; }
+  const mv = e.target.closest("[data-mv]");
+  if (mv) {
+    if (await invAction("/api/inventory/move", { charid: INV.charid, fromLoc: +mv.dataset.loc, fromSlot: +mv.dataset.slot, toLoc: +mv.dataset.to })) reloadInv();
+    return;
+  }
+  const dc = e.target.closest("[data-discard]");
+  if (dc) {
+    if (confirm(`Discard "${dc.dataset.name}"? It can be recovered by an admin.`)
+        && await invAction("/api/inventory/discard", { charid: INV.charid, fromLoc: +dc.dataset.loc, fromSlot: +dc.dataset.slot })) reloadInv();
+    return;
+  }
+  const dp = e.target.closest("[data-dep]");
+  if (dp) {
+    if (await invAction("/api/vault/deposit", { charid: INV.charid, fromLoc: +dp.dataset.loc, fromSlot: +dp.dataset.slot })) reloadInv();
+    return;
+  }
+  const wd = e.target.closest("[data-wd]");
+  if (wd) {
+    if (await invAction("/api/vault/withdraw", { charid: INV.charid, vaultId: +wd.dataset.vaultid, toLoc: +wd.dataset.to })) reloadInv();
+    return;
+  }
+  if (e.target.closest("[data-cancel]")) { $("invMenu").innerHTML = ""; return; }
+  const vit = e.target.closest(".vit.act");
+  if (vit) { openVaultMenu(+vit.dataset.vaultid, vit.dataset.name); return; }
+  const act = e.target.closest(".it.act");
+  if (act) { openItemMenu(+act.dataset.loc, +act.dataset.slot, act.dataset.name); return; }
+  const h = e.target.closest(".invh");
+  if (h) {
+    const items = h.nextElementSibling;
+    const hide = items.style.display !== "none";
+    items.style.display = hide ? "none" : "";
+    h.setAttribute("aria-expanded", hide ? "false" : "true");
+    const caret = h.querySelector(".caret");
+    if (caret) caret.textContent = hide ? "▸" : "▾";
+  }
+});
+
+loadMe();  // resume an existing session if the cookie is still valid
+</script>
+<script src="/pwa.js"></script>
+</body>
+</html>
