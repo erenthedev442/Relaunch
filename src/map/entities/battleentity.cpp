@@ -23,6 +23,7 @@
 
 #include "common/database.h"
 #include "common/logging.h"
+#include "common/settings.h"
 #include "common/utils.h"
 
 #include "action/action.h"
@@ -950,9 +951,25 @@ int32 CBattleEntity::addMP(int32 mp)
     return abs(mp);
 }
 
-int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACK_TYPE attackType /* = ATTACK_NONE*/, DAMAGE_TYPE damageType /* = DAMAGE_NONE*/, bool isSkillchainDamage /* = false */)
+int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACK_TYPE attackType /* = ATTACK_NONE*/,
+                                DAMAGE_TYPE damageType /* = DAMAGE_NONE*/, bool isSkillchainDamage /* = false */,
+                                bool bypassGlobalHpDamageCap /* = false */)
 {
     TracyZoneScoped;
+
+    // This is the authoritative per-event HP-damage ceiling. It runs before
+    // listeners, tracking, and damage-derived effects so every downstream
+    // system observes the same capped value. Negative damage/healing is left
+    // unchanged. Forced-death scripts must opt into the narrow bypass.
+    if (amount > 0 && !bypassGlobalHpDamageCap)
+    {
+        const int32 globalHpDamageCap = settings::get<int32>("map.GLOBAL_HP_DAMAGE_CAP");
+        if (globalHpDamageCap > 0)
+        {
+            amount = std::min(amount, globalHpDamageCap);
+        }
+    }
+
     if (attacker)
     {
         lastAttackerId_.id     = attacker->id;

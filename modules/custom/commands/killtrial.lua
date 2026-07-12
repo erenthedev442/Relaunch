@@ -66,7 +66,8 @@ commandObj.onTrigger = function(player, targetName, bossArg)
     --   (a) clears summonedTrial[targ:getID()] -> Altar menu unblocks
     --   (b) calls m.onLegendKill(targ, gid)   -> stamps trial charVar
     local lethal = victim:getMaxHP() * 10
-    victim:takeDamage(lethal, targ, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
+    victim:takeDamage(lethal, targ, xi.attackType.PHYSICAL, xi.damageType.SLASHING,
+        { wakeUp = true, breakBind = true, bypassGlobalHpDamageCap = true })
 
     player:printToPlayer(string.format(
         '[KillTrial] %s killed, credited to %s. They can now use the Altar.',

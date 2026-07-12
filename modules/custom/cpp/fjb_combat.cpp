@@ -13,6 +13,7 @@
 #include "modules/custom/cpp/fjb_combat.h"
 
 #include "common/cbasetypes.h"
+#include "common/settings.h"
 
 #include "map/entities/battleentity.h"
 #include "map/entities/charentity.h"
@@ -20,6 +21,7 @@
 #include "map/enums/chat_message_type.h"
 #include "map/packets/s2c/0x017_chat_std.h"
 
+#include <algorithm>
 #include <string>
 #include <string_view>
 
@@ -70,6 +72,12 @@ bool IsPlayerControlled(CBattleEntity* PAttacker)
 
 void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_view type)
 {
+    const int32 globalHpDamageCap = settings::get<int32>("map.GLOBAL_HP_DAMAGE_CAP");
+    if (damage > 0 && globalHpDamageCap > 0)
+    {
+        damage = std::min(damage, globalHpDamageCap);
+    }
+
     if (damage <= 131071)
     {
         return;

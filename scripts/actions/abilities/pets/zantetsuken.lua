@@ -45,7 +45,8 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
             target:getAnimation() ~= 33
         then
             petskill:setMsg(xi.msg.basic.SKILL_ENFEEB_IS)
-            target:takeDamage(target:getHP(), pet, xi.attackType.MAGICAL, xi.damageType.DARK)
+            target:takeDamage(target:getHP(), pet, xi.attackType.MAGICAL, xi.damageType.DARK,
+                { wakeUp = true, breakBind = true, bypassGlobalHpDamageCap = true })
 
             returnParam = xi.effect.KO
         else

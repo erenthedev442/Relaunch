@@ -3595,6 +3595,20 @@ void OnMobSpawn(CBaseEntity* PMob)
         return;
     }
 
+    // Legendary global post-stat spawn hook. CalculateMobStats() has already
+    // completed before this function is called. Run this before entity scripts
+    // and SPAWN listeners so encounter-specific tuning remains the final writer.
+    const sol::function onMobSpawnEx = lua["xi"]["mob"]["onMobSpawnEx"];
+    if (onMobSpawnEx.valid())
+    {
+        const auto result = onMobSpawnEx(PMob);
+        if (!result.valid())
+        {
+            sol::error err = result;
+            ShowError("luautils::onMobSpawnEx: %s", err.what());
+        }
+    }
+
     PMob->PAI->EventHandler.triggerListener("PRESPAWN", PMob);
 
     const sol::function onMobSpawn = getEntityCachedFunction(PMob, "onMobSpawn");

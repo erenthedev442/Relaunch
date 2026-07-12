@@ -29,6 +29,10 @@ xi.settings.map =
     -- Game settings
     -- --------------------------------
 
+    -- Maximum positive HP damage applied by a single damage event.
+    -- Set to 0 to disable. Packet display limits remain separate.
+    GLOBAL_HP_DAMAGE_CAP = 9999999,
+
     -- Minimal number of 0x3A packets which uses for detect lightluggage (set 0 for disable)
     LIGHTLUGGAGE_BLOCK = 4,
 

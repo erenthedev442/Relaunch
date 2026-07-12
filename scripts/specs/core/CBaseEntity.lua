@@ -2145,7 +2145,7 @@ end
 ---@param attacker CBaseEntity?
 ---@param atkType integer?
 ---@param dmgType integer?
----@param flags table?
+---@param flags? { wakeUp: boolean?, removePetrify: boolean?, breakBind: boolean?, bypassGlobalHpDamageCap: boolean? }
 ---@return nil
 function CBaseEntity:takeDamage(damage, attacker, atkType, dmgType, flags)
 end

@@ -10274,6 +10274,7 @@ void CLuaBaseEntity::delHP(int32 delAmt)
  *  Function: takeDamage()
  *  Purpose : Takes damage from the provided attacker. If no attacker is provided then it clears the last attacker.
  *  Example : target:takeDamage(500, attacker=nil, attackType=ATTACK_NONE, damageType=DAMAGE_NONE, flags={wakeUp=true})
+ *  Notes   : flags.bypassGlobalHpDamageCap is reserved for explicit forced-death mechanics.
  ************************************************************************/
 
 void CLuaBaseEntity::takeDamage(int32 damage, const sol::object& attacker, const sol::object& atkType, const sol::object& dmgType, const sol::object& flags)
@@ -10308,9 +10309,10 @@ void CLuaBaseEntity::takeDamage(int32 damage, const sol::object& attacker, const
     }
 
     // Check for special flags which may prevent damage from waking up the target
-    bool wakeUp        = true;
-    bool breakBind     = true;
-    bool removePetrify = false;
+    bool wakeUp                 = true;
+    bool breakBind              = true;
+    bool removePetrify          = false;
+    bool bypassGlobalHpDamageCap = false;
 
     // TODO: Unused in current code, needs testing; change type to sol::table?
     //       Find a way to make this better! (Optional keys as well?)
@@ -10318,9 +10320,10 @@ void CLuaBaseEntity::takeDamage(int32 damage, const sol::object& attacker, const
     {
         auto flag_map = flags.as<std::map<std::string, bool>>();
 
-        wakeUp        = flag_map["wakeUp"];
-        removePetrify = flag_map["removePetrify"];
-        breakBind     = flag_map["breakBind"];
+        wakeUp                 = flag_map["wakeUp"];
+        removePetrify          = flag_map["removePetrify"];
+        breakBind              = flag_map["breakBind"];
+        bypassGlobalHpDamageCap = flag_map["bypassGlobalHpDamageCap"];
     }
 
     // Check to see if the target has a nightmare effect active, reset wakeUp accordingly
@@ -10352,7 +10355,7 @@ void CLuaBaseEntity::takeDamage(int32 damage, const sol::object& attacker, const
     ATTACK_TYPE attackType = (atkType != sol::lua_nil) ? static_cast<ATTACK_TYPE>(atkType.as<uint8>()) : ATTACK_TYPE::NONE;
     DAMAGE_TYPE damageType = (dmgType != sol::lua_nil) ? static_cast<DAMAGE_TYPE>(dmgType.as<uint8>()) : DAMAGE_TYPE::NONE;
 
-    PDefender->takeDamage(damage, PAttacker, attackType, damageType);
+    PDefender->takeDamage(damage, PAttacker, attackType, damageType, false, bypassGlobalHpDamageCap);
 
     // liberate target when applicable
     if (damage > 0)

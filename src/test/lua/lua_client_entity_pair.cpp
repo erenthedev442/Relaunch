@@ -217,8 +217,13 @@ void CLuaClientEntityPair::claimAndKillMob(const sol::object& mobQuery, sol::opt
     const sol::object playerObj = sol::make_object(lua.lua_state(), this);
     mob.updateClaim(playerObj);
 
-    // Deal massive damage
-    mob.takeDamage(2000000000, playerObj, sol::lua_nil, sol::lua_nil, sol::lua_nil);
+    // Deal massive damage. This test helper intentionally forces death and is
+    // not an ordinary combat path, so it explicitly bypasses the per-event cap.
+    auto damageFlags                       = lua.create_table();
+    damageFlags["wakeUp"]                  = true;
+    damageFlags["breakBind"]               = true;
+    damageFlags["bypassGlobalHpDamageCap"] = true;
+    mob.takeDamage(2000000000, playerObj, sol::lua_nil, sol::lua_nil, damageFlags);
 
     // Check death if expected
     if (expectDeath)

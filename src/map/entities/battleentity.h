@@ -398,8 +398,11 @@ public:
     virtual int32 addHP(int32 hp); // increase/decrease the amount of hp
     virtual int32 addMP(int32 mp); // increase/decrease the amount of mp
 
-    // Deals damage and updates the last attacker which is used when sending a player death message
-    virtual int32 takeDamage(int32 amount, CBattleEntity* attacker = nullptr, ATTACK_TYPE attackType = ATTACK_TYPE::NONE, DAMAGE_TYPE damageType = DAMAGE_TYPE::NONE, bool isSkillchainDamage = false);
+    // Deals damage and updates the last attacker which is used when sending a player death message.
+    // bypassGlobalHpDamageCap is reserved for explicit forced-death mechanics.
+    virtual int32 takeDamage(int32 amount, CBattleEntity* attacker = nullptr, ATTACK_TYPE attackType = ATTACK_TYPE::NONE,
+                             DAMAGE_TYPE damageType = DAMAGE_TYPE::NONE, bool isSkillchainDamage = false,
+                             bool bypassGlobalHpDamageCap = false);
 
     int16 getMod(Mod modID);
     int16 getMaxGearMod(Mod modID);

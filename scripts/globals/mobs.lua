@@ -8,6 +8,14 @@ require('scripts/globals/quests')
 xi = xi or {}
 xi.mob = xi.mob or {}
 
+-- Global post-stat spawn hook called by core before entity spawn scripts and
+-- listeners. Custom systems attach a reload-safe function to this stable call.
+xi.mob.onMobSpawnEx = function(mob)
+    if xi.mob.openWorldScalingHook then
+        xi.mob.openWorldScalingHook(mob)
+    end
+end
+
 -- onMobDeathEx is called from the core
 xi.mob.onMobDeathEx = function(mob, player, isKiller, isWeaponSkillKill)
     -- FJB: marks-reward hook. AbysseaMarks sets xi.mob.marksRewardHook; baking the CALL into
