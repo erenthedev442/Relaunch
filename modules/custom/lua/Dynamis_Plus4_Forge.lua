@@ -7,9 +7,9 @@
 -- logic entirely).
 --
 -- Trade a reforged +3 piece + the required materials:
---   * 1x your job's Paragon Card   (entry.pcard, from reforge_plus4_map.lua)
---   * 8x Rusted ID Card    (9538)  [12x for body]
---   * 2x Black  ID Card    (9540)  [ 4x for body]
+--   *  3x your job's Paragon Card  (entry.pcard, from reforge_plus4_map.lua)  [ 6x for body]
+--   * 12x Rusted ID Card   (9538)  [24x for body]
+--   *  6x Black  ID Card   (9540)  [12x for body]
 -- ...and it comes back +4. Empyrean armor has no +4 tier, so it is not in the map.
 --
 -- Materials come from the [D] mobs (see modules/custom/sql/dynamis_plus4_materials.sql
@@ -31,15 +31,16 @@ local m = Module:new('dynamis_plus4_forge')
 -- NPC placement (the retired Divergence Smith's exact spot).
 local NPC_POS = { x = 155.0, y = -2.0, z = 162.0, rot = 96 }
 
--- Material costs (tunable). Paragon Card is per-entry (entry.pcard); the ID cards
--- are flat, with a heavier body tax (body pieces are the strongest slot).
-local PCARD_QTY        = 1      -- x entry.pcard (job-matched Paragon Card)
+-- Material costs (tunable; raised 3x/owner rebalance 2026-07-12). All three
+-- materials are body-taxed (body pieces are the strongest slot).
+local PCARD_QTY        = 3      -- x entry.pcard (job-matched Paragon Card), non-body
+local PCARD_QTY_BODY   = 6      -- body
 local RUSTED_ID        = 9538   -- Rusted Identification Card
-local RUSTED_QTY       = 8      -- non-body
-local RUSTED_QTY_BODY  = 12     -- body
+local RUSTED_QTY       = 12     -- non-body
+local RUSTED_QTY_BODY  = 24     -- body
 local BLACK_ID         = 9540   -- Blackened Identification Card
-local BLACK_QTY        = 2      -- non-body
-local BLACK_QTY_BODY   = 4      -- body
+local BLACK_QTY        = 6      -- non-body
+local BLACK_QTY_BODY   = 12     -- body
 
 -- The 4 [D] mega-bosses. Killing one hands the killer their main-job Paragon
 -- Card (pcard = 9280 + jobId). Names match modules/custom/sql/dynamis_divergence.sql
@@ -74,10 +75,11 @@ end
 
 -- Build the material list for one upgrade (Paragon Card + ID cards, body-taxed).
 local function materialsFor(entry)
+    local pcard  = (entry.slot == 'body') and PCARD_QTY_BODY  or PCARD_QTY
     local rusted = (entry.slot == 'body') and RUSTED_QTY_BODY or RUSTED_QTY
     local black  = (entry.slot == 'body') and BLACK_QTY_BODY  or BLACK_QTY
     return {
-        { id = entry.pcard, qty = PCARD_QTY, name = 'your job\'s Paragon Card' },
+        { id = entry.pcard, qty = pcard,     name = 'your job\'s Paragon Card' },
         { id = RUSTED_ID,   qty = rusted,    name = 'Rusted ID Card'  },
         { id = BLACK_ID,    qty = black,     name = 'Black ID Card'   },
     }
@@ -177,8 +179,8 @@ m:addOverride('xi.zones.Southern_San_dOria.Zone.onInitialize', function(zone)
 
         onTrigger = function(player, npc)
             player:printToPlayer('[+4 Forge] Trade a reforged +3 AF/Relic piece + your job\'s Paragon Card + Rusted/Black ID Cards, and I forge it to +4. Kupo!', SYS)
-            player:printToPlayer(string.format('[+4 Forge] Cost: %dx Paragon Card, %dx Rusted (%dx body) + %dx Black (%dx body) ID Cards. Empyrean has no +4.',
-                PCARD_QTY, RUSTED_QTY, RUSTED_QTY_BODY, BLACK_QTY, BLACK_QTY_BODY), SYS)
+            player:printToPlayer(string.format('[+4 Forge] Cost: %dx Paragon Card (%dx body), %dx Rusted (%dx body) + %dx Black (%dx body) ID Cards. Empyrean has no +4.',
+                PCARD_QTY, PCARD_QTY_BODY, RUSTED_QTY, RUSTED_QTY_BODY, BLACK_QTY, BLACK_QTY_BODY), SYS)
         end,
     })
     utils.unused(forge)

@@ -94,11 +94,12 @@ def _parse_forge(forge_text: str, map_text: str) -> dict:
         m = re.search(rf"\b{name}\s*=\s*(\d+)", forge_text)
         return int(m.group(1)) if m else default
 
-    c["pcard_qty"]       = _knob("PCARD_QTY", 1)
-    c["rusted_qty"]      = _knob("RUSTED_QTY", 8)
-    c["rusted_qty_body"] = _knob("RUSTED_QTY_BODY", 12)
-    c["black_qty"]       = _knob("BLACK_QTY", 2)
-    c["black_qty_body"]  = _knob("BLACK_QTY_BODY", 4)
+    c["pcard_qty"]       = _knob("PCARD_QTY", 3)
+    c["pcard_qty_body"]  = _knob("PCARD_QTY_BODY", 6)
+    c["rusted_qty"]      = _knob("RUSTED_QTY", 12)
+    c["rusted_qty_body"] = _knob("RUSTED_QTY_BODY", 24)
+    c["black_qty"]       = _knob("BLACK_QTY", 6)
+    c["black_qty_body"]  = _knob("BLACK_QTY_BODY", 12)
 
     # Map coverage: how many +3 -> +4 pairs, and which slots/jobs they span.
     # Each entry line: [id] = { result=..., slot='body', job='WAR', pcard=..., name=... }
@@ -172,9 +173,9 @@ def _render_waves(c: dict) -> str:
 def _render_forge(c: dict) -> str:
     """The +3 -> +4 Divergence Forge: recipe (from the forge knobs) + [D] materials,
     with the Empyrean-capped-at-+3 note."""
-    pcard = c.get("pcard_qty", 1)
-    rusted, rusted_b = c.get("rusted_qty", 8), c.get("rusted_qty_body", 12)
-    black, black_b   = c.get("black_qty", 2), c.get("black_qty_body", 4)
+    pcard, pcard_b   = c.get("pcard_qty", 3), c.get("pcard_qty_body", 6)
+    rusted, rusted_b = c.get("rusted_qty", 12), c.get("rusted_qty_body", 24)
+    black, black_b   = c.get("black_qty", 6), c.get("black_qty_body", 12)
     pairs = c.get("pair_count", 0)
     jobs  = len(c.get("jobs", []))
 
@@ -195,7 +196,7 @@ def _render_forge(c: dict) -> str:
         "",
         "| Material | Non-body | Body |",
         "|---|---:|---:|",
-        f"| Your job's **Paragon Card** | {pcard}× | {pcard}× |",
+        f"| Your job's **Paragon Card** | {pcard}× | {pcard_b}× |",
         f"| **Rusted ID Card** | {rusted}× | {rusted_b}× |",
         f"| **Black ID Card** | {black}× | {black_b}× |",
         "",

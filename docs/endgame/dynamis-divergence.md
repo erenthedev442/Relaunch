@@ -147,9 +147,9 @@ Trade a reforged **+3 AF or Relic** piece together with the materials below, and
 
 | Material | Non-body | Body |
 |---|---:|---:|
-| Your job's **Paragon Card** | 1× | 1× |
-| **Rusted ID Card** | 8× | 12× |
-| **Black ID Card** | 2× | 4× |
+| Your job's **Paragon Card** | 3× | 6× |
+| **Rusted ID Card** | 12× | 24× |
+| **Black ID Card** | 6× | 12× |
 
 **Where the materials come from** — all inside the [D] zones:
 
