@@ -23,217 +23,217 @@ DELETE FROM mob_droplist WHERE dropId BETWEEN 50001 AND 50050;
 -- =============================================================================
 
 -- 50001  Abyssdiver (groupId=27)
-INSERT INTO mob_droplist VALUES (50001, 0, 0, 1000, 21350, 500); -- Wingcutter +1
-INSERT INTO mob_droplist VALUES (50001, 0, 0, 1000, 27994, 500); -- Macabre Gaunt. +1
+INSERT INTO mob_droplist VALUES (50001, 0, 0, 1000, 21349, 500); -- Wingcutter
+INSERT INTO mob_droplist VALUES (50001, 0, 0, 1000, 27993, 500); -- Macabre Gaunt.
 
 -- 50002  Keeper of Heiligtum (groupId=28)
-INSERT INTO mob_droplist VALUES (50002, 0, 0, 1000, 21035, 500); -- Kunimune +1
-INSERT INTO mob_droplist VALUES (50002, 0, 0, 1000, 27231, 500); -- Zoar Subligar +1
+INSERT INTO mob_droplist VALUES (50002, 0, 0, 1000, 21034, 500); -- Kunimune
+INSERT INTO mob_droplist VALUES (50002, 0, 0, 1000, 27230, 500); -- Zoar Subligar
 
 -- 50003  Jester Malatrix (groupId=33)
-INSERT INTO mob_droplist VALUES (50003, 0, 0, 1000, 20807, 500); -- Buramgh +1
-INSERT INTO mob_droplist VALUES (50003, 0, 0, 1000, 27637, 500); -- Evalach +1
+INSERT INTO mob_droplist VALUES (50003, 0, 0, 1000, 20806, 500); -- Buramgh
+INSERT INTO mob_droplist VALUES (50003, 0, 0, 1000, 27636, 500); -- Evalach
 
 -- 50004  Immanibugard (groupId=34)
-INSERT INTO mob_droplist VALUES (50004, 0, 0, 1000, 27410, 500); -- Hippo. Socks +1
-INSERT INTO mob_droplist VALUES (50004, 0, 0, 1000, 27561, 500); -- Apeile Ring +1
+INSERT INTO mob_droplist VALUES (50004, 0, 0, 1000, 27409, 500); -- Hippo. Socks
+INSERT INTO mob_droplist VALUES (50004, 0, 0, 1000, 27560, 500); -- Apeile Ring
 
 -- 50005  Orcfeltrap (groupId=70)
-INSERT INTO mob_droplist VALUES (50005, 0, 0, 1000, 20988, 500); -- Tancho +1
-INSERT INTO mob_droplist VALUES (50005, 0, 0, 1000, 28424, 500); -- Shinjutsu-no-Obi +1
+INSERT INTO mob_droplist VALUES (50005, 0, 0, 1000, 20987, 500); -- Tancho
+INSERT INTO mob_droplist VALUES (50005, 0, 0, 1000, 28423, 500); -- Shinjutsu-no-Obi
 
 -- 50006  Sybaritic Samantha (groupId=73)
-INSERT INTO mob_droplist VALUES (50006, 0, 0, 1000, 27563, 500); -- Metamor. Ring +1
-INSERT INTO mob_droplist VALUES (50006, 0, 0, 1000, 27509, 500); -- Unmoving Collar +1
+INSERT INTO mob_droplist VALUES (50006, 0, 0, 1000, 27562, 500); -- Metamor. Ring
+INSERT INTO mob_droplist VALUES (50006, 0, 0, 1000, 27508, 500); -- Unmoving Collar
 
 -- 50007  Valkurm Imperator (groupId=75)
-INSERT INTO mob_droplist VALUES (50007, 0, 0, 1000, 26710, 500); -- Imp. Wing Hair. +1
-INSERT INTO mob_droplist VALUES (50007, 0, 0, 1000, 28274, 500); -- Regal Pumps +1
+INSERT INTO mob_droplist VALUES (50007, 0, 0, 1000, 26709, 500); -- Imp. Wing Hair.
+INSERT INTO mob_droplist VALUES (50007, 0, 0, 1000, 28273, 500); -- Regal Pumps
 
 -- 50008  Joyous Green (groupId=76)
-INSERT INTO mob_droplist VALUES (50008, 0, 0, 1000, 28430, 500); -- Acuity Belt +1
-INSERT INTO mob_droplist VALUES (50008, 0, 0, 1000, 28353, 500); -- Canto Necklace +1
+INSERT INTO mob_droplist VALUES (50008, 0, 0, 1000, 28429, 500); -- Acuity Belt
+INSERT INTO mob_droplist VALUES (50008, 0, 0, 1000, 28352, 500); -- Canto Necklace
 
 -- 50009  Warblade Beak (groupId=77)
-INSERT INTO mob_droplist VALUES (50009, 0, 0, 1000, 27996, 500); -- Shigure Tekko +1
-INSERT INTO mob_droplist VALUES (50009, 0, 0, 1000, 28491, 500); -- Handler's Earring +1
+INSERT INTO mob_droplist VALUES (50009, 0, 0, 1000, 27995, 500); -- Shigure Tekko
+INSERT INTO mob_droplist VALUES (50009, 0, 0, 1000, 28490, 500); -- Handler's Earring
 
 -- 50010  Cactrot Veloz (groupId=78)
-INSERT INTO mob_droplist VALUES (50010, 0, 0, 1000, 21223, 500); -- Mengado +1
-INSERT INTO mob_droplist VALUES (50010, 0, 0, 1000, 28487, 500); -- Arete del Luna +1
+INSERT INTO mob_droplist VALUES (50010, 0, 0, 1000, 21222, 500); -- Mengado
+INSERT INTO mob_droplist VALUES (50010, 0, 0, 1000, 28486, 500); -- Arete del Luna
 
 -- 50011  Woodland Mender (groupId=79)
-INSERT INTO mob_droplist VALUES (50011, 0, 0, 1000, 21163, 500); -- Pouwhenua +1
-INSERT INTO mob_droplist VALUES (50011, 0, 0, 1000, 26869, 500); -- Ros. Jaseran +1
+INSERT INTO mob_droplist VALUES (50011, 0, 0, 1000, 21162, 500); -- Pouwhenua
+INSERT INTO mob_droplist VALUES (50011, 0, 0, 1000, 26868, 500); -- Ros. Jaseran
 
 -- 50012  Emperor Arthro (groupId=80)
-INSERT INTO mob_droplist VALUES (50012, 0, 0, 1000, 28137, 500); -- Augury Cuisses +1
-INSERT INTO mob_droplist VALUES (50012, 0, 0, 1000, 28428, 500); -- Sailfi Belt +1
+INSERT INTO mob_droplist VALUES (50012, 0, 0, 1000, 28136, 500); -- Augury Cuisses
+INSERT INTO mob_droplist VALUES (50012, 0, 0, 1000, 28427, 500); -- Sailfi Belt
 
 -- 50013  Tiyanak (groupId=81)
-INSERT INTO mob_droplist VALUES (50013, 0, 0, 1000, 26897, 500); -- Lugra Cloak +1
-INSERT INTO mob_droplist VALUES (50013, 0, 0, 1000, 28482, 500); -- Lugra Earring +1
+INSERT INTO mob_droplist VALUES (50013, 0, 0, 1000, 26896, 500); -- Lugra Cloak
+INSERT INTO mob_droplist VALUES (50013, 0, 0, 1000, 28481, 500); -- Lugra Earring
 
 -- 50014  Vermillion Fishfly (groupId=82)
-INSERT INTO mob_droplist VALUES (50014, 0, 0, 1000, 25602, 500); -- Blistering Sallet +1
-INSERT INTO mob_droplist VALUES (50014, 0, 0, 1000, 10771, 500); -- Cacoethic Ring +1
+INSERT INTO mob_droplist VALUES (50014, 0, 0, 1000, 25601, 500); -- Blistering Sallet
+INSERT INTO mob_droplist VALUES (50014, 0, 0, 1000, 10770, 500); -- Cacoethic Ring
 
 -- 50015  Intuila (groupId=83)
-INSERT INTO mob_droplist VALUES (50015, 0, 0, 1000, 28135, 500); -- Assid. Pants +1
+INSERT INTO mob_droplist VALUES (50015, 0, 0, 1000, 28134, 500); -- Assid. Pants
 
 -- =============================================================================
 -- TIER 2  (lv 99-119)  — 50% per item
 -- =============================================================================
 
 -- 50016  Muut (groupId=29)
-INSERT INTO mob_droplist VALUES (50016, 0, 0, 1000, 20607, 500); -- Anathema Harpe +1
+INSERT INTO mob_droplist VALUES (50016, 0, 0, 1000, 20606, 500); -- Anathema Harpe
 
 -- 50017  Voso (groupId=32)
-INSERT INTO mob_droplist VALUES (50017, 0, 0, 1000, 26943, 500); -- Agony Jerkin +1
+INSERT INTO mob_droplist VALUES (50017, 0, 0, 1000, 26942, 500); -- Agony Jerkin
 
 -- 50018  Beist (groupId=35)
-INSERT INTO mob_droplist VALUES (50018, 0, 0, 1000, 26715, 500); -- Adorned Helm +1
-INSERT INTO mob_droplist VALUES (50018, 0, 0, 1000, 26873, 500); -- Hime Domaru +1
+INSERT INTO mob_droplist VALUES (50018, 0, 0, 1000, 26714, 500); -- Adorned Helm
+INSERT INTO mob_droplist VALUES (50018, 0, 0, 1000, 26872, 500); -- Hime Domaru
 
 -- 50019  Lumber Jill (groupId=84)
-INSERT INTO mob_droplist VALUES (50019, 0, 0, 1000, 20612, 500); -- Sangarius +1
-INSERT INTO mob_droplist VALUES (50019, 0, 0, 1000, 27602, 500); -- Ground. Mantle +1
+INSERT INTO mob_droplist VALUES (50019, 0, 0, 1000, 20611, 500); -- Sangarius
+INSERT INTO mob_droplist VALUES (50019, 0, 0, 1000, 27601, 500); -- Ground. Mantle
 
 -- 50020  Largantua (groupId=85)
-INSERT INTO mob_droplist VALUES (50020, 0, 0, 1000, 26871, 500); -- Emet Harness +1
-INSERT INTO mob_droplist VALUES (50020, 0, 0, 1000, 27505, 500); -- Warder's Charm +1
+INSERT INTO mob_droplist VALUES (50020, 0, 0, 1000, 26870, 500); -- Emet Harness
+INSERT INTO mob_droplist VALUES (50020, 0, 0, 1000, 27504, 500); -- Warder's Charm
 
 -- 50021  Garbage Gel (groupId=86)
-INSERT INTO mob_droplist VALUES (50021, 0, 0, 1000, 20522, 500); -- Emeici +1
-INSERT INTO mob_droplist VALUES (50021, 0, 0, 1000, 10769, 500); -- Gelatinous Ring +1
+INSERT INTO mob_droplist VALUES (50021, 0, 0, 1000, 20521, 500); -- Emeici
+INSERT INTO mob_droplist VALUES (50021, 0, 0, 1000, 10768, 500); -- Gelatinous Ring
 
 -- 50022  King Uropygid (groupId=87)
-INSERT INTO mob_droplist VALUES (50022, 0, 0, 1000, 26732, 500); -- Stinger Helm +1
+INSERT INTO mob_droplist VALUES (50022, 0, 0, 1000, 26731, 500); -- Stinger Helm
 
 -- 50023  Vedrfolnir (groupId=88)
-INSERT INTO mob_droplist VALUES (50023, 0, 0, 1000, 20528, 500); -- Fists of Fury +1
-INSERT INTO mob_droplist VALUES (50023, 0, 0, 1000, 21160, 500); -- Marin Staff +1
+INSERT INTO mob_droplist VALUES (50023, 0, 0, 1000, 20527, 500); -- Fists of Fury
+INSERT INTO mob_droplist VALUES (50023, 0, 0, 1000, 21159, 500); -- Marin Staff
 
 -- 50024  Glazemane (groupId=89)
-INSERT INTO mob_droplist VALUES (50024, 0, 0, 1000, 20581, 500); -- Kustawi +1
-INSERT INTO mob_droplist VALUES (50024, 0, 0, 1000, 21691, 500); -- Ushenzi +1
+INSERT INTO mob_droplist VALUES (50024, 0, 0, 1000, 20580, 500); -- Kustawi
+INSERT INTO mob_droplist VALUES (50024, 0, 0, 1000, 21690, 500); -- Ushenzi
 
 -- 50025  Volatile Cluster (groupId=90)
-INSERT INTO mob_droplist VALUES (50025, 0, 0, 1000, 21030, 500); -- Norifusa +1
-INSERT INTO mob_droplist VALUES (50025, 0, 0, 1000, 27620, 500); -- Aurist's Cape +1
+INSERT INTO mob_droplist VALUES (50025, 0, 0, 1000, 21029, 500); -- Norifusa
+INSERT INTO mob_droplist VALUES (50025, 0, 0, 1000, 27619, 500); -- Aurist's Cape
 
 -- 50026  Strix (groupId=91)
-INSERT INTO mob_droplist VALUES (50026, 0, 0, 1000, 21100, 500); -- Magesmasher +1
-INSERT INTO mob_droplist VALUES (50026, 0, 0, 1000, 28276, 500); -- Jute Boots +1
+INSERT INTO mob_droplist VALUES (50026, 0, 0, 1000, 21099, 500); -- Magesmasher
+INSERT INTO mob_droplist VALUES (50026, 0, 0, 1000, 28275, 500); -- Jute Boots
 
 -- 50027  Sovereign Behemoth (groupId=92)
-INSERT INTO mob_droplist VALUES (50027, 0, 0, 1000, 22267, 500); -- Antitail +1
-INSERT INTO mob_droplist VALUES (50027, 0, 0, 1000, 27543, 500); -- Domin. Earring +1
-INSERT INTO mob_droplist VALUES (50027, 0, 0, 1000, 26002, 500); -- Loricate Torque +1
+INSERT INTO mob_droplist VALUES (50027, 0, 0, 1000, 22266, 500); -- Antitail
+INSERT INTO mob_droplist VALUES (50027, 0, 0, 1000, 27542, 500); -- Domin. Earring
+INSERT INTO mob_droplist VALUES (50027, 0, 0, 1000, 26001, 500); -- Loricate Torque
 
 -- 50028  Arke (groupId=93)
-INSERT INTO mob_droplist VALUES (50028, 0, 0, 1000, 20614, 500); -- Pukulatmuj +1
-INSERT INTO mob_droplist VALUES (50028, 0, 0, 1000, 21165, 500); -- Ababinili +1
+INSERT INTO mob_droplist VALUES (50028, 0, 0, 1000, 20613, 500); -- Pukulatmuj
+INSERT INTO mob_droplist VALUES (50028, 0, 0, 1000, 21164, 500); -- Ababinili
 
 -- 50029  Douma Weapon (groupId=94)
-INSERT INTO mob_droplist VALUES (50029, 0, 0, 1000, 26888, 500); -- Shomonjijoe +1
-INSERT INTO mob_droplist VALUES (50029, 0, 0, 1000, 21419, 500); -- Rigorous Grip +1
+INSERT INTO mob_droplist VALUES (50029, 0, 0, 1000, 26887, 500); -- Shomonjijoe
+INSERT INTO mob_droplist VALUES (50029, 0, 0, 1000, 21418, 500); -- Rigorous Grip
 
 -- 50030  Kubool Jas Mhuufya (groupId=95)
-INSERT INTO mob_droplist VALUES (50030, 0, 0, 1000, 20800, 500); -- Mdomo Axe +1
-INSERT INTO mob_droplist VALUES (50030, 0, 0, 1000, 27533, 500); -- Zwazo Earring +1
+INSERT INTO mob_droplist VALUES (50030, 0, 0, 1000, 20799, 500); -- Mdomo Axe
+INSERT INTO mob_droplist VALUES (50030, 0, 0, 1000, 27532, 500); -- Zwazo Earring
 
 -- 50031  Thu'ban (groupId=96)
-INSERT INTO mob_droplist VALUES (50031, 0, 0, 1000, 21749, 500); -- Habilitator +1
-INSERT INTO mob_droplist VALUES (50031, 0, 0, 1000, 25924, 500); -- Tatena. Sune. +1
-INSERT INTO mob_droplist VALUES (50031, 0, 0, 1000, 26022, 500); -- Vim Torque +1
+INSERT INTO mob_droplist VALUES (50031, 0, 0, 1000, 21748, 500); -- Habilitator
+INSERT INTO mob_droplist VALUES (50031, 0, 0, 1000, 25923, 500); -- Tatena. Sune.
+INSERT INTO mob_droplist VALUES (50031, 0, 0, 1000, 26021, 500); -- Vim Torque
 
 -- 50032  Tumult Curator (groupId=97)
-INSERT INTO mob_droplist VALUES (50032, 0, 0, 1000, 20508, 500); -- Comeuppances +1
-INSERT INTO mob_droplist VALUES (50032, 0, 0, 1000, 25733, 500); -- Tatena. Harama. +1
-INSERT INTO mob_droplist VALUES (50032, 0, 0, 1000, 22058, 500); -- Contemplator +1
+INSERT INTO mob_droplist VALUES (50032, 0, 0, 1000, 20507, 500); -- Comeuppances
+INSERT INTO mob_droplist VALUES (50032, 0, 0, 1000, 25732, 500); -- Tatena. Harama.
+INSERT INTO mob_droplist VALUES (50032, 0, 0, 1000, 22057, 500); -- Contemplator
 
 -- =============================================================================
 -- TIER 3  (lv 128-145)  — 50% per item
 -- =============================================================================
 
 -- 50033  Specter Worm (groupId=98)
-INSERT INTO mob_droplist VALUES (50033, 0, 0, 1000, 21703, 500); -- Kladenets +1
-INSERT INTO mob_droplist VALUES (50033, 0, 0, 1000, 21344, 500); -- Ghastly Tathlum +1
+INSERT INTO mob_droplist VALUES (50033, 0, 0, 1000, 21702, 500); -- Kladenets
+INSERT INTO mob_droplist VALUES (50033, 0, 0, 1000, 21343, 500); -- Ghastly Tathlum
 
 -- 50034  Bakunawa (groupId=99)
-INSERT INTO mob_droplist VALUES (50034, 0, 0, 1000, 20709, 500); -- Demers. Degen +1
-INSERT INTO mob_droplist VALUES (50034, 0, 0, 1000, 27518, 500); -- Bathy Choker +1
+INSERT INTO mob_droplist VALUES (50034, 0, 0, 1000, 20708, 500); -- Demers. Degen
+INSERT INTO mob_droplist VALUES (50034, 0, 0, 1000, 27517, 500); -- Bathy Choker
 
 -- 50035  Mephitas (groupId=100)
-INSERT INTO mob_droplist VALUES (50035, 0, 0, 1000, 20604, 500); -- Ternion Dagger +1
-INSERT INTO mob_droplist VALUES (50035, 0, 0, 1000, 27559, 500); -- Mephitas's Ring +1
+INSERT INTO mob_droplist VALUES (50035, 0, 0, 1000, 20603, 500); -- Ternion Dagger
+INSERT INTO mob_droplist VALUES (50035, 0, 0, 1000, 27558, 500); -- Mephitas's Ring
 
 -- 50036  Vidmapire (groupId=101)
-INSERT INTO mob_droplist VALUES (50036, 0, 0, 1000, 20981, 500); -- Raicho +1
-INSERT INTO mob_droplist VALUES (50036, 0, 0, 1000, 27610, 500); -- Fi Follet Cape +1
+INSERT INTO mob_droplist VALUES (50036, 0, 0, 1000, 20980, 500); -- Raicho
+INSERT INTO mob_droplist VALUES (50036, 0, 0, 1000, 27609, 500); -- Fi Follet Cape
 
 -- 50037  Shedu (groupId=102)
-INSERT INTO mob_droplist VALUES (50037, 0, 0, 1000, 20682, 500); -- Flyssa +1
-INSERT INTO mob_droplist VALUES (50037, 0, 0, 1000, 21076, 500); -- Septoptic +1
-INSERT INTO mob_droplist VALUES (50037, 0, 0, 1000, 27149, 500); -- Tatena. Gote +1
+INSERT INTO mob_droplist VALUES (50037, 0, 0, 1000, 20681, 500); -- Flyssa
+INSERT INTO mob_droplist VALUES (50037, 0, 0, 1000, 21075, 500); -- Septoptic
+INSERT INTO mob_droplist VALUES (50037, 0, 0, 1000, 27148, 500); -- Tatena. Gote
 
 -- 50038  Azure-toothed Clawberry (groupId=103)
-INSERT INTO mob_droplist VALUES (50038, 0, 0, 1000, 27107, 500); -- Asteria Mitts +1
-INSERT INTO mob_droplist VALUES (50038, 0, 0, 1000, 27109, 500); -- Lamassu Mitts +1
+INSERT INTO mob_droplist VALUES (50038, 0, 0, 1000, 27106, 500); -- Asteria Mitts
+INSERT INTO mob_droplist VALUES (50038, 0, 0, 1000, 27108, 500); -- Lamassu Mitts
 
 -- 50039  Centurio XX-I (groupId=104)
-INSERT INTO mob_droplist VALUES (50039, 0, 0, 1000, 25681, 500); -- Cohort Cloak +1
-INSERT INTO mob_droplist VALUES (50039, 0, 0, 1000, 28413, 500); -- Kentarch Belt +1
+INSERT INTO mob_droplist VALUES (50039, 0, 0, 1000, 25680, 500); -- Cohort Cloak
+INSERT INTO mob_droplist VALUES (50039, 0, 0, 1000, 28412, 500); -- Kentarch Belt
 
 -- 50040  Wyvernhunter Bambrox (groupId=105)
-INSERT INTO mob_droplist VALUES (50040, 0, 0, 1000, 21806, 500); -- Pixquizpan +1
-INSERT INTO mob_droplist VALUES (50040, 0, 0, 1000, 22121, 500); -- Imati +1
+INSERT INTO mob_droplist VALUES (50040, 0, 0, 1000, 21805, 500); -- Pixquizpan
+INSERT INTO mob_droplist VALUES (50040, 0, 0, 1000, 22120, 500); -- Imati
 
 -- 50041  Tolba (groupId=106)
-INSERT INTO mob_droplist VALUES (50041, 0, 0, 1000, 21484, 500); -- Malison +1
-INSERT INTO mob_droplist VALUES (50041, 0, 0, 1000, 25710, 500); -- Obviat. Cuirass +1
-INSERT INTO mob_droplist VALUES (50041, 0, 0, 1000, 26402, 500); -- Forfend +1
+INSERT INTO mob_droplist VALUES (50041, 0, 0, 1000, 21483, 500); -- Malison
+INSERT INTO mob_droplist VALUES (50041, 0, 0, 1000, 25709, 500); -- Obviat. Cuirass
+INSERT INTO mob_droplist VALUES (50041, 0, 0, 1000, 26401, 500); -- Forfend
 
 -- 50042  Ayapec (groupId=107)
-INSERT INTO mob_droplist VALUES (50042, 0, 0, 1000, 20805, 500); -- Perun +1
-INSERT INTO mob_droplist VALUES (50042, 0, 0, 1000, 26785, 500); -- Hike Khat +1
+INSERT INTO mob_droplist VALUES (50042, 0, 0, 1000, 20804, 500); -- Perun
+INSERT INTO mob_droplist VALUES (50042, 0, 0, 1000, 26784, 500); -- Hike Khat
 
 -- 50043  Hidhaegg (groupId=108)
-INSERT INTO mob_droplist VALUES (50043, 0, 0, 1000, 20697, 500); -- Combuster +1
-INSERT INTO mob_droplist VALUES (50043, 0, 0, 1000, 21696, 500); -- Nullis +1
-INSERT INTO mob_droplist VALUES (50043, 0, 0, 1000, 25636, 500); -- Loess Barbuta +1
+INSERT INTO mob_droplist VALUES (50043, 0, 0, 1000, 20696, 500); -- Combuster
+INSERT INTO mob_droplist VALUES (50043, 0, 0, 1000, 21695, 500); -- Nullis
+INSERT INTO mob_droplist VALUES (50043, 0, 0, 1000, 25635, 500); -- Loess Barbuta
 
 -- 50044  Coca (groupId=109)
-INSERT INTO mob_droplist VALUES (50044, 0, 0, 1000, 20943, 500); -- Gae Derg +1
-INSERT INTO mob_droplist VALUES (50044, 0, 0, 1000, 27639, 500); -- Ajax +1
+INSERT INTO mob_droplist VALUES (50044, 0, 0, 1000, 20942, 500); -- Gae Derg
+INSERT INTO mob_droplist VALUES (50044, 0, 0, 1000, 27638, 500); -- Ajax
 
 -- 50045  Grand Grenade (groupId=110)
-INSERT INTO mob_droplist VALUES (50045, 0, 0, 1000, 21091, 500); -- Loxotic Mace +1
-INSERT INTO mob_droplist VALUES (50045, 0, 0, 1000, 22255, 500); -- Seeth. Bomblet +1
+INSERT INTO mob_droplist VALUES (50045, 0, 0, 1000, 21090, 500); -- Loxotic Mace
+INSERT INTO mob_droplist VALUES (50045, 0, 0, 1000, 22254, 500); -- Seeth. Bomblet
 
 -- 50046  Sarama (groupId=111)
-INSERT INTO mob_droplist VALUES (50046, 0, 0, 1000, 21689, 500); -- Montante +1
-INSERT INTO mob_droplist VALUES (50046, 0, 0, 1000, 20680, 500); -- Tanmogayi +1
-INSERT INTO mob_droplist VALUES (50046, 0, 0, 1000, 25856, 500); -- Tatena. Haidate +1
+INSERT INTO mob_droplist VALUES (50046, 0, 0, 1000, 21688, 500); -- Montante
+INSERT INTO mob_droplist VALUES (50046, 0, 0, 1000, 20679, 500); -- Tanmogayi
+INSERT INTO mob_droplist VALUES (50046, 0, 0, 1000, 25855, 500); -- Tatena. Haidate
 
 -- 50047  Azrael (groupId=112)
-INSERT INTO mob_droplist VALUES (50047, 0, 0, 1000, 20852, 500); -- Aizkora +1
-INSERT INTO mob_droplist VALUES (50047, 0, 0, 1000, 26787, 500); -- Alhazen Hat +1
+INSERT INTO mob_droplist VALUES (50047, 0, 0, 1000, 20851, 500); -- Aizkora
+INSERT INTO mob_droplist VALUES (50047, 0, 0, 1000, 26786, 500); -- Alhazen Hat
 
 -- 50048  Carousing Celine (groupId=113)
-INSERT INTO mob_droplist VALUES (50048, 0, 0, 1000, 27151, 500); -- Gazu Bracelets +1
-INSERT INTO mob_droplist VALUES (50048, 0, 0, 1000, 27549, 500); -- Odnowa Earring +1
+INSERT INTO mob_droplist VALUES (50048, 0, 0, 1000, 27150, 500); -- Gazu Bracelets
+INSERT INTO mob_droplist VALUES (50048, 0, 0, 1000, 27548, 500); -- Odnowa Earring
 
 -- 50049  Camahueto (groupId=114)
-INSERT INTO mob_droplist VALUES (50049, 0, 0, 1000, 20899, 500); -- Triska Scythe +1
-INSERT INTO mob_droplist VALUES (50049, 0, 0, 1000, 27408, 500); -- Hygieia Clogs +1
+INSERT INTO mob_droplist VALUES (50049, 0, 0, 1000, 20898, 500); -- Triska Scythe
+INSERT INTO mob_droplist VALUES (50049, 0, 0, 1000, 27407, 500); -- Hygieia Clogs
 
 -- 50050  Borealis Shadow (groupId=115)
-INSERT INTO mob_droplist VALUES (50050, 0, 0, 1000, 20854, 500); -- Beheader +1
-INSERT INTO mob_droplist VALUES (50050, 0, 0, 1000, 20528, 500); -- Fists of Fury +1
-INSERT INTO mob_droplist VALUES (50050, 0, 0, 1000, 21220, 500); -- Paloma Bow +1
-INSERT INTO mob_droplist VALUES (50050, 0, 0, 1000, 27641, 500); -- Deliverance +1
+INSERT INTO mob_droplist VALUES (50050, 0, 0, 1000, 20853, 500); -- Beheader
+INSERT INTO mob_droplist VALUES (50050, 0, 0, 1000, 20527, 500); -- Fists of Fury
+INSERT INTO mob_droplist VALUES (50050, 0, 0, 1000, 21219, 500); -- Paloma Bow
+INSERT INTO mob_droplist VALUES (50050, 0, 0, 1000, 27640, 500); -- Deliverance
 
 -- =============================================================================
 -- Wire up mob_groups.dropid for zone-288 entries

@@ -32,6 +32,24 @@ for _, nm in ipairs(catalog.nms) do
     nmById[nm.id] = nm
 end
 
+-- BASE-item -> +1 upgrade map, built from the catalog's drops (NQ id, +1 id)
+-- and upgradeCost (keyed by the dropping NM's tier). Trade the base item to
+-- the Unity Wanted Board with enough Unity Accolades to receive the +1.
+local upgradeById = {}
+for _, nm in ipairs(catalog.nms) do
+    for _, d in ipairs(nm.drops or {}) do
+        if d.plus1 then
+            upgradeById[d.id] = {
+                plus1     = d.plus1,
+                plus1Name = d.plus1Name or (d.name .. ' +1'),
+                name      = d.name,
+                cost      = catalog.upgradeCost[nm.tier] or 0,
+                tier      = nm.tier,
+            }
+        end
+    end
+end
+
 local function weeklyFeaturedId()
     return (math.floor(os.time() / 604800) % #catalog.nms) + 1
 end
@@ -198,6 +216,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             { string.format('Unity: %s', leaderName(player:getUnityLeader())),
               function(p) pledgeScreen(p, 1) end },
             { 'Unity Rewards',      function(p) rewardScreen(p, 1) end },
+            { 'Upgrades', function(p)
+                p:printToPlayer('[Unity] Wanted NMs drop the BASE version of their gear, kupo!', S)
+                p:printToPlayer(string.format(
+                    '[Unity] Trade the base item to this board + accolades for the +1: T1 %d / T2 %d / T3 %d.',
+                    catalog.upgradeCost[1], catalog.upgradeCost[2], catalog.upgradeCost[3]), S)
+            end },
             { 'Leave', function(p) p:printToPlayer('[Unity] Safe hunting!', S) end },
         }
         show(player)
@@ -367,8 +391,40 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         z          = catalog.boardPos.z,
         rotation   = catalog.boardPos.rot,
         widescan   = 1,
+        -- Upgrade trade: BASE Unity drop + enough Unity Accolades -> the +1.
+        -- One item per trade; unknown items are refused untouched.
         onTrade    = function(player, npc, trade)
-            player:printToPlayer('[Unity] Use the board menu, kupo!', S)
+            local up, slotQty = nil, 0
+            for slot = 0, 7 do
+                local tradeItem = trade:getItem(slot)
+                if tradeItem then
+                    slotQty = slotQty + (trade:getSlotQty(slot) or 1)
+                    up = up or upgradeById[tradeItem:getID()]
+                end
+            end
+            if up == nil or slotQty ~= 1 then
+                player:printToPlayer('[Unity] Trade me ONE base Wanted-NM drop to upgrade it to +1, kupo! (T1 '
+                    .. catalog.upgradeCost[1] .. ' / T2 ' .. catalog.upgradeCost[2]
+                    .. ' / T3 ' .. catalog.upgradeCost[3] .. ' accolades)', S)
+                return
+            end
+            local have = player:getCurrency('unity_accolades')
+            if have < up.cost then
+                player:printToPlayer(string.format(
+                    '[Unity] Upgrading %s to %s costs %d accolades — you have %d, kupo!',
+                    up.name, up.plus1Name, up.cost, have), S)
+                return
+            end
+            if player:getFreeSlotsCount() <= 0 then
+                player:printToPlayer('[Unity] Make a free inventory slot first, kupo!', S)
+                return
+            end
+            player:delCurrency('unity_accolades', up.cost)
+            player:tradeComplete()
+            player:addItem({ id = up.plus1, quantity = 1 })
+            player:printToPlayer(string.format(
+                '[Unity] %s reforged into %s for %d accolades! (%d left)',
+                up.name, up.plus1Name, up.cost, player:getCurrency('unity_accolades')), S)
         end,
         onTrigger  = function(player, npc)
             mainScreen(player)

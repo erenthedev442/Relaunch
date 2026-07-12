@@ -59,6 +59,9 @@ def _parse(text: str) -> dict:
     rewards_blk = section(text, "rewards")
     c["rewards"] = _parse_kv_ints(rewards_blk) if rewards_blk else {1: 400, 2: 1500, 3: 4000}
 
+    upgrade_blk = section(text, "upgradeCost")
+    c["upgrade"] = _parse_kv_ints(upgrade_blk) if upgrade_blk else {}
+
     # Leaders: { id=N, name='...' }
     leaders_blk = section(text, "leaders")
     c["leaders"] = [
@@ -162,7 +165,7 @@ def _render_tiers(c: dict) -> str:
         lines.append(f"### Tier {tier} — {lv_rng}")
         lines.append(f"*Spawn cost: {cost} · Kill reward: {reward} accolades*")
         lines.append("")
-        lines.append("| NM | Level | Notable Drops (50% each) |")
+        lines.append("| NM | Level | Notable Drops (50% each, base version) |")
         lines.append("|---|---:|---|")
         for nm in tier_nms:
             lv = nm["minLv"] if nm["minLv"] == nm["maxLv"] else f"{nm['minLv']}–{nm['maxLv']}"
@@ -186,6 +189,23 @@ def _render_shop(c: dict) -> str:
                             resolve_key=it["token"].replace("_", " ").title())
         lines.append(f"| {label} | {commafy(it['cost'])} accolades |")
     return "\n".join(lines)
+
+
+def _render_upgrades(c: dict) -> str:
+    """+1 upgrade path from catalog.upgradeCost — parsed, never mirrored."""
+    if not c["upgrade"]:
+        return ("_Wanted NMs currently drop their items directly — no upgrade "
+                "step is configured._")
+    rows = "\n".join(
+        f"| Tier {t} | {commafy(c['upgrade'][t])} |" for t in sorted(c["upgrade"]))
+    return (
+        "Wanted NMs drop the **base version** of their gear. To get the **+1**, "
+        "trade the base item to the **Unity Wanted Board** with enough **Unity "
+        "Accolades** banked — the cost depends on the tier of the NM that drops it:\n\n"
+        "| Dropping NM tier | Accolades to upgrade |\n|---|---:|\n" + rows + "\n\n"
+        "One item per trade; the accolades are deducted and the +1 lands in your "
+        "inventory on the spot."
+    )
 
 
 def _render_leaders(c: dict) -> str:
@@ -212,6 +232,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     blocks = [
         ("unity-overview", _render_overview(c)),
         ("unity-tiers",    _render_tiers(c)),
+        ("unity-upgrades", _render_upgrades(c)),
         ("unity-shop",     _render_shop(c)),
         ("unity-leaders",  _render_leaders(c)),
     ]

@@ -584,6 +584,17 @@ def _plus4_forge_ids(repo_root: Path) -> set[int]:
     return {int(x) for x in re.findall(r'\bresult\s*=\s*(\d+)', text)}
 
 
+def _unity_plus1_ids(repo_root: Path) -> set[int]:
+    """The +1 versions of Unity Wanted drops — obtained by trading the base
+    item + Unity Accolades to the Wanted Board (2026-07-12 upgrade path).
+    The base items get tagged from the page's item links; the +1s appear on
+    no page table, so tag them straight from the catalog's plus1 fields."""
+    text = _read(repo_root, 'modules/custom/lua/unity_wanted_catalog.lua')
+    if not text:
+        return set()
+    return {int(x) for x in re.findall(r'\bplus1\s*=\s*(\d+)', text)}
+
+
 def _dynamis_su5_ids(repo_root: Path) -> set[int]:
     """The Su5 (Dynamis Divergence) weapons that drop from the [D] Mega-Bosses
     via the SU5_WEAPONS pool in scripts/globals/dynamis_divergence.lua (moved
@@ -931,6 +942,10 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # to the Gear Finder / item database.
     for iid in _plus4_forge_ids(repo_root):
         obtainable.setdefault(iid, 'Divergence +4 Forge')
+    # Unity Wanted +1s: upgraded from the base drop at the Wanted Board for
+    # accolades. The base items come from the page scan; these have no table.
+    for iid in _unity_plus1_ids(repo_root):
+        obtainable.setdefault(iid, 'Unity upgrade')
     # Full source list per item: merge the coarse system label (vendor /
     # reforge / !shop / dungeon / augment-moogle, from obtainable[iid]) with the
     # COMPLETE drop-source list (live mob_droplist + every scripted drop table)
