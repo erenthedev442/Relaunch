@@ -561,6 +561,17 @@ def _shop_ids(repo_root: Path) -> set[int]:
     return ids
 
 
+def _plus4_forge_ids(repo_root: Path) -> set[int]:
+    """The +4 results of the Divergence Forge (reforge_plus4_map.lua result
+    ids). Without this tag the 220 +4 items are absent from gear-data.json
+    entirely — the audit that flagged 'Foire Tobe +4 not available' was
+    reading that absence (found 2026-07-12)."""
+    text = _read(repo_root, 'modules/custom/lua/reforge_plus4_map.lua')
+    if not text:
+        return set()
+    return {int(x) for x in re.findall(r'\bresult\s*=\s*(\d+)', text)}
+
+
 def _dynamis_su5_ids(repo_root: Path) -> set[int]:
     """The Su5 (Dynamis Divergence) weapons that drop from the [D] Mega-Bosses
     via the SU5_WEAPONS pool in scripts/globals/dynamis_divergence.lua (moved
@@ -825,6 +836,11 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # sold somewhere keeps its more specific tag.
     for iid in _dynamis_su5_ids(repo_root):
         obtainable.setdefault(iid, 'Dynamis [D] Mega-Boss')
+    # +4 reforge results forged at the Divergence Forge (reforge_plus4_map.lua)
+    # — trade a +3 piece + [D] materials. Without this the +4 tier is invisible
+    # to the Gear Finder / item database.
+    for iid in _plus4_forge_ids(repo_root):
+        obtainable.setdefault(iid, 'Divergence +4 Forge')
     # Full source list per item: merge the coarse system label (vendor /
     # reforge / !shop / dungeon / augment-moogle, from obtainable[iid]) with the
     # COMPLETE drop-source list (live mob_droplist + every scripted drop table)
