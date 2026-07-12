@@ -349,19 +349,25 @@ catalog.dungeons =
         hpScale    = 4,
         mobs       = buildRoster(
         {
+            -- Reachability fix (2026-07-11, Lant's report): the retail one-way
+            -- Granite Door at (-180, -159) seals the southern chamber network
+            -- (z -165..-191) off from the instance start (-178.8, -154.9), and
+            -- the zoning leash blocks the long way around. The 6 points that
+            -- sat beyond the door moved into the spawn-side goblin camp
+            -- (midpoints of the kept stock points; boss to the cluster center).
             { -187.556, 3.383, -148.428, 127 },
-            { -171.000, 5.000, -165.000, 101 },
-            { -186.000, 5.000, -166.000, 66  },
+            { -188.757, 3.990, -146.264, 127 }, -- relocated
+            { -193.789, 4.533, -143.942, 127 }, -- relocated
             { -189.958, 4.596, -144.100, 127 },
             { -190.599, 4.586, -143.857, 128 },
             { -197.619, 4.469, -143.783, 192 },
-            { -179.000, 5.000, -182.000, 2   },
+            { -203.504, 4.470, -144.309, 127 }, -- relocated
             { -209.311, 2.998, -149.195, 5   },
             { -209.388, 4.470, -144.834, 127 },
             { -207.632, 3.068, -134.052, 9   },
-            { -172.000, 5.000, -191.000, 127 },
-            { -188.000, 5.000, -191.000, 64  },
-            { -217.000, 4.000, -189.000, 97  },
+            { -203.465, 3.734, -146.489, 127 }, -- relocated
+            { -208.510, 3.769, -139.443, 127 }, -- relocated
+            { -198.866, 3.939, -144.036, 127 }, -- boss, cluster center
         }, 'Ranguemont Eye', 'Ranguemont Weapon', 'Watcher Ahriman', 8),
     },
 }
