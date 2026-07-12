@@ -1,17 +1,18 @@
 # Geas Fete
 
-Escha's on-demand NM playground — and the front door to **Aeonic weapons**. Pop
-tiered Notorious Monsters at a Warding Circle, bank Escha Beads, and collect the
+Escha's NM playground — and the front door to **Aeonic weapons**. Pop
+Notorious Monsters at the retail `???` points across Escha - Zi'Tah,
+Escha - Ru'Aun, and Reisenjima, bank Escha Beads, and collect the
 Aeonic crafting materials as you go.
 
 ## How it works
 
 <!-- DOCGEN:BEGIN id="geas-overview" -->
-Two **Warding Circle** NPCs — one in Escha - Zi'Tah and one in Escha - Ru'Aun — let you pop retail-faithful **Geas Fete NMs** on demand: walk up, pick a tier, pick an NM. **No pop items needed**, but each NM has a per-player cooldown.
+Geas Fete NMs pop **retail-style, at the `???` points** scattered across **Escha - Zi'Tah** (12 points), **Escha - Ru'Aun** (30 points), and **Reisenjima** (23 points). Inspect a `???` to pop one of the NMs camped there — **no pop items needed** (no trinkets or Tribulens), just a per-player cooldown per NM. The full camp map is [below](#camp-map).
 
 Every Escha kill pays **Escha Beads** (a real currency — see the Currencies II tab). That one pool funds the Warding Circle material exchange **and** the **Aeonic weapon** path ([Temprix in Reisenjima](../progression/aeonic-weapons.md)). NMs also drop the Aeonic crafting materials directly — **Beitetsu**, **Riftcinder**, **Riftborn Boulder**, and (from bosses) **Attestations**, the weapon-type tokens the Aeonic forge needs.
 
-Every retail Geas Fete NM is implemented, each with its **retail signature drops** (191 items across the roster — see the tables below). Each listed item rolls independently at **15%** per kill (**25%** on the zone bosses).
+Every retail Geas Fete NM is implemented, each with its **retail signature drops** (282 items across the roster — see the tables below). Each listed item rolls independently at **15%** per kill (**25%** on the zone bosses).
 
 Tier 2 and up also drop the **Reisenjima-crafted armor** families as direct drops — **Adhemar, Argosy, Carmine, Rao, Ryuo, Souveran and Naga** (35 base pieces, 30 +1 pieces) — and the fete NMs are their **only source**. Base pieces drop at **20%** from Tier 2, **35%** from Tier 3 and **50%** from bosses; **+1** pieces at **10%** from Tier 3 and **25%** from bosses. Drops are a random piece from the whole pool — the hunt is the gate, not a job lock.
 <!-- DOCGEN:END id="geas-overview" -->
@@ -107,7 +108,128 @@ Tier 2 and up also drop the **Reisenjima-crafted armor** families as direct drop
 | Tier 3 | Kirin | 3,500 | — |
 | Tier 3 | Kouryu | 3,500 | <a class="item-link" href="https://www.ffxiah.com/item/27615" target="_blank" rel="noopener">Reiki Cloak</a>, <a class="item-link" href="https://www.ffxiah.com/item/20842" target="_blank" rel="noopener">Reikiono</a>, <a class="item-link" href="https://www.ffxiah.com/item/21152" target="_blank" rel="noopener">Reikikon</a>, <a class="item-link" href="https://www.ffxiah.com/item/20690" target="_blank" rel="noopener">Reikiko</a>, <a class="item-link" href="https://www.ffxiah.com/item/26321" target="_blank" rel="noopener">Reiki Yotai</a>, <a class="item-link" href="https://www.ffxiah.com/item/25702" target="_blank" rel="noopener">Reiki Osode</a> |
 | Boss | Warder of Courage | 8,000 | <a class="item-link" href="https://www.ffxiah.com/item/22196" target="_blank" rel="noopener">Alber Strap</a>, <a class="item-link" href="https://www.ffxiah.com/item/20887" target="_blank" rel="noopener">Dacnomania</a>, <a class="item-link" href="https://www.ffxiah.com/item/20932" target="_blank" rel="noopener">Habile Mazrak</a>, <a class="item-link" href="https://www.ffxiah.com/item/19209" target="_blank" rel="noopener">Molybdosis</a>, <a class="item-link" href="https://www.ffxiah.com/item/27545" target="_blank" rel="noopener">Telos Earring</a>, <a class="item-link" href="https://www.ffxiah.com/item/25728" target="_blank" rel="noopener">Zendik Robe</a> |
+
+### Reisenjima
+
+| Tier | NM | Beads / kill | Signature drops (each rolled per kill) |
+|---|---|---:|---|
+| Tier 1 | Crom Dubh | 600 | <a class="item-link" href="https://www.ffxiah.com/item/26326" target="_blank" rel="noopener">Channeler's Stone</a>, <a class="item-link" href="https://www.ffxiah.com/item/25843" target="_blank" rel="noopener">Merlinic Shalwar</a>, <a class="item-link" href="https://www.ffxiah.com/item/27138" target="_blank" rel="noopener">Odyssean Gauntlets</a> |
+| Tier 1 | Golden Kist | 600 | <a class="item-link" href="https://www.ffxiah.com/item/26240" target="_blank" rel="noopener">Tantalic Cape</a>, <a class="item-link" href="https://www.ffxiah.com/item/27495" target="_blank" rel="noopener">Valorous Greaves</a> |
+| Tier 1 | Mauve-Wristed Gomberry | 600 | <a class="item-link" href="https://www.ffxiah.com/item/25644" target="_blank" rel="noopener">Chironic Hat</a>, <a class="item-link" href="https://www.ffxiah.com/item/27139" target="_blank" rel="noopener">Valorous Mitts</a>, <a class="item-link" href="https://www.ffxiah.com/item/26172" target="_blank" rel="noopener">Begrudging Ring</a> |
+| Tier 1 | Dazzling Dolores | 600 | <a class="item-link" href="https://www.ffxiah.com/item/25643" target="_blank" rel="noopener">Merlinic Hood</a>, <a class="item-link" href="https://www.ffxiah.com/item/22197" target="_blank" rel="noopener">Niobid Strap</a>, <a class="item-link" href="https://www.ffxiah.com/item/27494" target="_blank" rel="noopener">Odyssean Greaves</a> |
+| Tier 1 | Taelmoth the Diremaw | 600 | <a class="item-link" href="https://www.ffxiah.com/item/26017" target="_blank" rel="noopener">Clotharius Torque</a>, <a class="item-link" href="https://www.ffxiah.com/item/27140" target="_blank" rel="noopener">Herculean Gloves</a>, <a class="item-link" href="https://www.ffxiah.com/item/25841" target="_blank" rel="noopener">Valorous Hose</a> |
+| Tier 1 | Belphegor | 600 | <a class="item-link" href="https://www.ffxiah.com/item/26327" target="_blank" rel="noopener">Asklepian Belt</a>, <a class="item-link" href="https://www.ffxiah.com/item/25840" target="_blank" rel="noopener">Odyssean Cuisses</a>, <a class="item-link" href="https://www.ffxiah.com/item/27496" target="_blank" rel="noopener">Herculean Boots</a> |
+| Tier 1 | Kabandha | 600 | <a class="item-link" href="https://www.ffxiah.com/item/27141" target="_blank" rel="noopener">Merlinic Dastanas</a>, <a class="item-link" href="https://www.ffxiah.com/item/26241" target="_blank" rel="noopener">Scintillating Cape</a> |
+| Tier 1 | Selkit | 600 | <a class="item-link" href="https://www.ffxiah.com/item/26173" target="_blank" rel="noopener">Apate Ring</a>, <a class="item-link" href="https://www.ffxiah.com/item/25842" target="_blank" rel="noopener">Herculean Trousers</a>, <a class="item-link" href="https://www.ffxiah.com/item/27497" target="_blank" rel="noopener">Merlinic Crackows</a> |
+| Tier 1 | Sang Buaya | 600 | <a class="item-link" href="https://www.ffxiah.com/item/27142" target="_blank" rel="noopener">Chironic Gloves</a>, <a class="item-link" href="https://www.ffxiah.com/item/27546" target="_blank" rel="noopener">Thureous Earring</a>, <a class="item-link" href="https://www.ffxiah.com/item/25641" target="_blank" rel="noopener">Valorous Mask</a> |
+| Tier 1 | Sabotender Royal | 600 | <a class="item-link" href="https://www.ffxiah.com/item/27498" target="_blank" rel="noopener">Chironic Slippers</a>, <a class="item-link" href="https://www.ffxiah.com/item/26018" target="_blank" rel="noopener">Deino Collar</a>, <a class="item-link" href="https://www.ffxiah.com/item/25640" target="_blank" rel="noopener">Odyssean Helm</a> |
+| Tier 1 | Zduhac | 600 | <a class="item-link" href="https://www.ffxiah.com/item/25844" target="_blank" rel="noopener">Chironic Hose</a>, <a class="item-link" href="https://www.ffxiah.com/item/22270" target="_blank" rel="noopener">Expeditious Pinion</a> |
+| Tier 1 | Oryx | 600 | <a class="item-link" href="https://www.ffxiah.com/item/22198" target="_blank" rel="noopener">Potent Grip</a>, <a class="item-link" href="https://www.ffxiah.com/item/25642" target="_blank" rel="noopener">Herculean Helm</a> |
+| Tier 2 | Strophadia | 1,200 | <a class="item-link" href="https://www.ffxiah.com/item/22134" target="_blank" rel="noopener">Holliday</a>, <a class="item-link" href="https://www.ffxiah.com/item/21854" target="_blank" rel="noopener">Reienkyo</a>, <a class="item-link" href="https://www.ffxiah.com/item/20579" target="_blank" rel="noopener">Skinflayer</a>, <a class="item-link" href="https://www.ffxiah.com/item/27547" target="_blank" rel="noopener">Dignitary's Earring</a> |
+| Tier 2 | Gajasimha | 1,200 | <a class="item-link" href="https://www.ffxiah.com/item/20505" target="_blank" rel="noopener">Condemners</a>, <a class="item-link" href="https://www.ffxiah.com/item/21804" target="_blank" rel="noopener">Obschine</a>, <a class="item-link" href="https://www.ffxiah.com/item/26174" target="_blank" rel="noopener">Persis Ring</a>, <a class="item-link" href="https://www.ffxiah.com/item/22113" target="_blank" rel="noopener">Teller</a> |
+| Tier 2 | Ironside | 1,200 | <a class="item-link" href="https://www.ffxiah.com/item/20677" target="_blank" rel="noopener">Colada</a>, <a class="item-link" href="https://www.ffxiah.com/item/26019" target="_blank" rel="noopener">Homeric Gorget</a>, <a class="item-link" href="https://www.ffxiah.com/item/21904" target="_blank" rel="noopener">Kanaria</a> |
+| Tier 2 | Sarsaok | 1,200 | <a class="item-link" href="https://www.ffxiah.com/item/22271" target="_blank" rel="noopener">Pemphredo Tathlum</a>, <a class="item-link" href="https://www.ffxiah.com/item/21021" target="_blank" rel="noopener">Umaru</a>, <a class="item-link" href="https://www.ffxiah.com/item/21686" target="_blank" rel="noopener">Zulfiqar</a> |
+| Tier 2 | Old Shuck | 1,200 | <a class="item-link" href="https://www.ffxiah.com/item/21746" target="_blank" rel="noopener">Digirbalag</a>, <a class="item-link" href="https://www.ffxiah.com/item/21072" target="_blank" rel="noopener">Gada</a>, <a class="item-link" href="https://www.ffxiah.com/item/26242" target="_blank" rel="noopener">Phalangite Mantle</a> |
+| Tier 2 | Bashmu | 1,200 | <a class="item-link" href="https://www.ffxiah.com/item/21754" target="_blank" rel="noopener">Aganoshe</a>, <a class="item-link" href="https://www.ffxiah.com/item/22054" target="_blank" rel="noopener">Grioavolr</a>, <a class="item-link" href="https://www.ffxiah.com/item/26328" target="_blank" rel="noopener">Sarissaphoroi Belt</a> |
+| Tier 3 | Maju | 2,000 | <a class="item-link" href="https://www.ffxiah.com/item/26175" target="_blank" rel="noopener">Hetairoi Ring</a>, <a class="item-link" href="https://www.ffxiah.com/item/25719" target="_blank" rel="noopener">Merlinic Jubbah</a>, <a class="item-link" href="https://www.ffxiah.com/item/25716" target="_blank" rel="noopener">Odyssean Chestplate</a>, <a class="item-link" href="https://www.ffxiah.com/item/26243" target="_blank" rel="noopener">Perimede Cape</a> |
+| Tier 3 | Yakshi | 2,000 | <a class="item-link" href="https://www.ffxiah.com/item/26020" target="_blank" rel="noopener">Ainia Collar</a>, <a class="item-link" href="https://www.ffxiah.com/item/25720" target="_blank" rel="noopener">Chironic Doublet</a>, <a class="item-link" href="https://www.ffxiah.com/item/22199" target="_blank" rel="noopener">Thrace Strap</a>, <a class="item-link" href="https://www.ffxiah.com/item/25717" target="_blank" rel="noopener">Valorous Mail</a> |
+| Tier 3 | Neak | 2,000 | <a class="item-link" href="https://www.ffxiah.com/item/26244" target="_blank" rel="noopener">Agema Cape</a>, <a class="item-link" href="https://www.ffxiah.com/item/25718" target="_blank" rel="noopener">Herculean Vest</a>, <a class="item-link" href="https://www.ffxiah.com/item/26329" target="_blank" rel="noopener">Luminary Sash</a> |
+| Boss | Teles | 4,500 | <a class="item-link" href="https://www.ffxiah.com/item/27143" target="_blank" rel="noopener">Composer's Mitts</a>, <a class="item-link" href="https://www.ffxiah.com/item/27499" target="_blank" rel="noopener">Composer's Sabots</a>, <a class="item-link" href="https://www.ffxiah.com/item/20889" target="_blank" rel="noopener">Misanthropy</a>, <a class="item-link" href="https://www.ffxiah.com/item/20592" target="_blank" rel="noopener">Sangoma</a> |
+| Boss | Zerde | 4,500 | <a class="item-link" href="https://www.ffxiah.com/item/25854" target="_blank" rel="noopener">Arjuna Breeches</a>, <a class="item-link" href="https://www.ffxiah.com/item/25760" target="_blank" rel="noopener">Mrigavyadha Gloves</a>, <a class="item-link" href="https://www.ffxiah.com/item/20506" target="_blank" rel="noopener">Suwaiyas</a>, <a class="item-link" href="https://www.ffxiah.com/item/25721" target="_blank" rel="noopener">Vedic Coat</a> |
+| Boss | Vinipata | 4,500 | <a class="item-link" href="https://www.ffxiah.com/item/21022" target="_blank" rel="noopener">Shishio</a>, <a class="item-link" href="https://www.ffxiah.com/item/21905" target="_blank" rel="noopener">Taka</a>, <a class="item-link" href="https://www.ffxiah.com/item/21073" target="_blank" rel="noopener">Izcalli</a>, <a class="item-link" href="https://www.ffxiah.com/item/25655" target="_blank" rel="noopener">Ipoca Beret</a> |
+| Boss | Schah | 4,500 | <a class="item-link" href="https://www.ffxiah.com/item/21687" target="_blank" rel="noopener">Takoba</a>, <a class="item-link" href="https://www.ffxiah.com/item/22055" target="_blank" rel="noopener">Oranyan</a>, <a class="item-link" href="https://www.ffxiah.com/item/25730" target="_blank" rel="noopener">Nzingha Cuirass</a>, <a class="item-link" href="https://www.ffxiah.com/item/25920" target="_blank" rel="noopener">Ahosi Leggings</a> |
+| Boss | Albumen | 4,500 | <a class="item-link" href="https://www.ffxiah.com/item/25921" target="_blank" rel="noopener">Skaoi Boots</a>, <a class="item-link" href="https://www.ffxiah.com/item/25656" target="_blank" rel="noopener">Ynglinga Sallet</a>, <a class="item-link" href="https://www.ffxiah.com/item/21747" target="_blank" rel="noopener">Freydis</a>, <a class="item-link" href="https://www.ffxiah.com/item/22114" target="_blank" rel="noopener">Steinthor</a> |
+| Boss | Onychophora | 4,500 | <a class="item-link" href="https://www.ffxiah.com/item/20678" target="_blank" rel="noopener">Firangi</a>, <a class="item-link" href="https://www.ffxiah.com/item/22056" target="_blank" rel="noopener">Gozuki Mezuki</a>, <a class="item-link" href="https://www.ffxiah.com/item/21855" target="_blank" rel="noopener">Lembing</a>, <a class="item-link" href="https://www.ffxiah.com/item/25922" target="_blank" rel="noopener">Navon Crackows</a> |
+| Boss | Erinys | 4,500 | <a class="item-link" href="https://www.ffxiah.com/item/21755" target="_blank" rel="noopener">Hodadenon</a>, <a class="item-link" href="https://www.ffxiah.com/item/25761" target="_blank" rel="noopener">Iktomi Dastanas</a>, <a class="item-link" href="https://www.ffxiah.com/item/22119" target="_blank" rel="noopener">Wochowsen</a>, <a class="item-link" href="https://www.ffxiah.com/item/25731" target="_blank" rel="noopener">Sayadio's Kaftan</a> |
 <!-- DOCGEN:END id="geas-roster" -->
+
+---
+
+## Camp map
+
+<!-- DOCGEN:BEGIN id="geas-camps" -->
+Every `???` lists the NMs camped at it — inspect it in-game to pop one. Coordinates are `/pos` (x, z).
+
+### Escha - Zi'Tah
+
+| `???` at | NMs |
+|---|---|
+| (-238, 612) | Wepwawet, Angrboda, Umdhlebi |
+| (-365, 439) | Beist, Cunnast, Keeper of Heiligtum |
+| (35, 126) | Abyssdiver, Eschan Jewelweed, Brittlis, Kamohoalii, Urmahlullu |
+| (-1, -163) | Lustful Lydia, Ferrodon, Jester Malatrix |
+| (-360, -440) | Aglaophotis, Gulltop, Fleetstalker |
+| (-7, -444) | Puca, Vyala, Shockmaw |
+| (244, -295) | Immanibugard, Hugemaw Harold, Alpluachra |
+| (461, -279) | Pazuzu, Prickly Pitriv, Bucca |
+| (519, -480) | Tangata Manu, Serpopard Ninlil, Blazewing |
+| (321, -120) | Revetaur, Ionos, Wrathare |
+| (597, -164) | Vidala, Sensual Sandy, Voso |
+| (396, -641) | Gestalt, Nosoi, Azi Dahaka |
+
+### Escha - Ru'Aun
+
+| `???` at | NMs |
+|---|---|
+| (-47, -419) | Warder of Faith, Ark Angel TT |
+| (-1, -603) | Warder of Hope, Byakko-Escha |
+| (-291, -401) | Ruea, Khon |
+| (-571, -186) | Warder of Prudence, Seiryu-Escha |
+| (-441, -5) | Bia, Suzaku-Escha |
+| (-471, 153) | Yilan, Kirin |
+| (-353, 486) | Peirithoos, Kouryu |
+| (-140, 418) | Warder of Justice, Warder of Courage |
+| (-353, 486) | Ma |
+| (353, 486) | Met |
+| (471, 153) | Naphula |
+| (441, -5) | Wasserspeier |
+| (571, -186) | Emputa |
+| (291, -401) | Khun, Genbu-Escha |
+| (-15, -466) | Warder of Temperance |
+| (-324, -446) | Asida |
+| (-408, -153) | Tenodera |
+| (-524, -272) | Sava Savanovic |
+| (-524, 170) | Palila |
+| (-208, 287) | Hanbi |
+| (-382, 456) | Warder of Love |
+| (0, 552) | Amymone |
+| (328, 255) | Kammavaca |
+| (339, 470) | Pakecet |
+| (523, 170) | Duke Vepar |
+| (365, 58) | Vir'ava |
+| (591, -68) | Ark Angel EV |
+| (324, -446) | Ark Angel GK |
+| (-9, -582) | Ark Angel HM |
+| (0, 0) | Ark Angel MR |
+
+### Reisenjima
+
+| `???` at | NMs |
+|---|---|
+| (-142, 598) | Crom Dubh |
+| (0, 0) | Golden Kist |
+| (0, 0) | Dazzling Dolores |
+| (0, 0) | Taelmoth the Diremaw |
+| (0, 0) | Belphegor |
+| (-640, -255) | Mauve-Wristed Gomberry, Sabotender Royal |
+| (-590, 109) | Zerde, Schah, Albumen |
+| (0, 0) | Kabandha |
+| (0, 0) | Selkit |
+| (0, 0) | Sang Buaya |
+| (0, 0) | Zduhac |
+| (0, 0) | Strophadia |
+| (0, 0) | Gajasimha |
+| (0, 0) | Ironside |
+| (-628, -100) | Sarsaok |
+| (-439, 26) | Bashmu |
+| (106, 264) | Teles, Vinipata |
+| (0, 0) | Maju |
+| (649, -912) | Yakshi |
+| (-378, 212) | Neak |
+| (-592, -1061) | Oryx, Old Shuck |
+| (-389, -843) | Onychophora |
+| (220, 181) | Erinys |
+<!-- DOCGEN:END id="geas-camps" -->
 
 ---
 

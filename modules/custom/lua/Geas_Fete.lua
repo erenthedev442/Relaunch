@@ -2,12 +2,17 @@
 -- Geas_Fete.lua
 --
 -- Escha Geas Fete for the relaunch server.
--- Two Warding Circle NPCs (one per Escha zone) let players pop
--- retail-faithful Geas Fete NMs tier-by-tier.
 --
--- Pop mechanic: walk up to the Warding Circle, pick a tier, pick an NM.
--- No separate pop items required (relaunch-friendly).
--- Per-player per-NM cooldown stored as charVar GF_<zoneId>_<groupId>.
+-- Pop mechanic (retail-style, owner request 2026-07-12): the stock retail
+-- ??? points scattered across Escha - Zi'Tah (12), Escha - Ru'Aun (30), and
+-- Reisenjima (23) each host specific NMs (QM_POINTS below). Inspect a ???
+-- to pop one of ITS NMs -- no trinkets/Tribulens (relaunch-friendly), just
+-- the per-player per-NM cooldown (charVar GF_<zoneId>_<groupId>). NMs with
+-- real retail camps in the stock spawn data got their retail ???; NMs whose
+-- stock spawns are placeholder clusters were spread across the remaining
+-- ???s so every point hosts 1-5 NMs.
+-- The Warding Circle NPCs remain as the Escha Beads material EXCHANGE only
+-- (one per zone; Reisenjima's replaces the old redirect signpost).
 --
 -- Currency (UNIFIED 2026-07-09 -- REAL char_points currency, Currencies II tab):
 --   ALL Escha kills (Zi'Tah AND Ru'Aun) → escha_beads.
@@ -99,8 +104,9 @@ local ATTESTATIONS = {
 --   currency : Escha Beads or Silt awarded on kill
 --   cooldown : seconds before the NM can be re-popped per player
 -- ===================================================================
-local ZITAH = xi.zone.ESCHA_ZITAH  -- 288
-local RUAUN = xi.zone.ESCHA_RUAUN  -- 289
+local ZITAH  = xi.zone.ESCHA_ZITAH  -- 288
+local RUAUN  = xi.zone.ESCHA_RUAUN  -- 289
+local REISEN = xi.zone.REISENJIMA   -- 291
 
 local NM_CATALOG = {
     -- Full retail Geas Fete roster (BG-wiki, 2026-07-12) + the relaunch
@@ -202,6 +208,121 @@ local NM_CATALOG = {
         { name='Kouryu', gid=84, tier=3, hp=1000000, currency=3500, cooldown=7200, drops = { { id=27615, name='Reiki Cloak' }, { id=20842, name='Reikiono' }, { id=21152, name='Reikikon' }, { id=20690, name='Reikiko' }, { id=26321, name='Reiki Yotai' }, { id=25702, name='Reiki Osode' } } },
         -- Boss ---------------------------------------------------------
         { name='Warder of Courage', label='Courage', gid=93, tier=4, hp=2000000, currency=8000, cooldown=86400, drops = { { id=22196, name='Alber Strap' }, { id=20887, name='Dacnomania' }, { id=20932, name='Habile Mazrak' }, { id=19209, name='Molybdosis' }, { id=27545, name='Telos Earring' }, { id=25728, name='Zendik Robe' } } },
+    },
+    [REISEN] = {
+        -- Tier 1 (retail 119) ------------------------------------
+        { name='Crom Dubh', gid=45, tier=1, hp=200000, currency=600, cooldown=1800, drops = { { id=26326, name='Channeler\'s Stone' }, { id=25843, name='Merlinic Shalwar' }, { id=27138, name='Odyssean Gauntlets' } } },
+        { name='Golden Kist', gid=46, tier=1, hp=200000, currency=600, cooldown=1800, drops = { { id=26240, name='Tantalic Cape' }, { id=27495, name='Valorous Greaves' } } },
+        { name='Mauve-Wristed Gomberry', label='Gomberry', gid=47, tier=1, hp=200000, currency=600, cooldown=1800, drops = { { id=25644, name='Chironic Hat' }, { id=27139, name='Valorous Mitts' }, { id=26172, name='Begrudging Ring' } } },
+        { name='Dazzling Dolores', label='Dolores', gid=48, tier=1, hp=200000, currency=600, cooldown=1800, drops = { { id=25643, name='Merlinic Hood' }, { id=22197, name='Niobid Strap' }, { id=27494, name='Odyssean Greaves' } } },
+        { name='Taelmoth the Diremaw', label='Taelmoth', gid=49, tier=1, hp=200000, currency=600, cooldown=1800, drops = { { id=26017, name='Clotharius Torque' }, { id=27140, name='Herculean Gloves' }, { id=25841, name='Valorous Hose' } } },
+        { name='Belphegor', gid=50, tier=1, hp=200000, currency=600, cooldown=1800, drops = { { id=26327, name='Asklepian Belt' }, { id=25840, name='Odyssean Cuisses' }, { id=27496, name='Herculean Boots' } } },
+        { name='Kabandha', gid=51, tier=1, hp=200000, currency=600, cooldown=1800, drops = { { id=27141, name='Merlinic Dastanas' }, { id=26241, name='Scintillating Cape' } } },
+        { name='Selkit', gid=52, tier=1, hp=200000, currency=600, cooldown=1800, drops = { { id=26173, name='Apate Ring' }, { id=25842, name='Herculean Trousers' }, { id=27497, name='Merlinic Crackows' } } },
+        { name='Sang Buaya', gid=53, tier=1, hp=200000, currency=600, cooldown=1800, drops = { { id=27142, name='Chironic Gloves' }, { id=27546, name='Thureous Earring' }, { id=25641, name='Valorous Mask' } } },
+        { name='Sabotender Royal', label='Sab. Royal', gid=54, tier=1, hp=200000, currency=600, cooldown=1800, drops = { { id=27498, name='Chironic Slippers' }, { id=26018, name='Deino Collar' }, { id=25640, name='Odyssean Helm' } } },
+        { name='Zduhac', gid=55, tier=1, hp=200000, currency=600, cooldown=1800, drops = { { id=25844, name='Chironic Hose' }, { id=22270, name='Expeditious Pinion' } } },
+        { name='Oryx', gid=56, tier=1, hp=200000, currency=600, cooldown=1800, drops = { { id=22198, name='Potent Grip' }, { id=25642, name='Herculean Helm' } } },
+        -- Tier 2 (retail 129) ------------------------------------
+        { name='Strophadia', gid=57, tier=2, hp=450000, currency=1200, cooldown=3600, drops = { { id=22134, name='Holliday' }, { id=21854, name='Reienkyo' }, { id=20579, name='Skinflayer' }, { id=27547, name='Dignitary\'s Earring' } } },
+        { name='Gajasimha', gid=58, tier=2, hp=450000, currency=1200, cooldown=3600, drops = { { id=20505, name='Condemners' }, { id=21804, name='Obschine' }, { id=26174, name='Persis Ring' }, { id=22113, name='Teller' } } },
+        { name='Ironside', gid=59, tier=2, hp=450000, currency=1200, cooldown=3600, drops = { { id=20677, name='Colada' }, { id=26019, name='Homeric Gorget' }, { id=21904, name='Kanaria' } } },
+        { name='Sarsaok', gid=60, tier=2, hp=450000, currency=1200, cooldown=3600, drops = { { id=22271, name='Pemphredo Tathlum' }, { id=21021, name='Umaru' }, { id=21686, name='Zulfiqar' } } },
+        { name='Old Shuck', gid=61, tier=2, hp=450000, currency=1200, cooldown=3600, drops = { { id=21746, name='Digirbalag' }, { id=21072, name='Gada' }, { id=26242, name='Phalangite Mantle' } } },
+        { name='Bashmu', gid=62, tier=2, hp=450000, currency=1200, cooldown=3600, drops = { { id=21754, name='Aganoshe' }, { id=22054, name='Grioavolr' }, { id=26328, name='Sarissaphoroi Belt' } } },
+        -- Tier 3 (retail 135) ------------------------------------
+        { name='Maju', gid=63, tier=3, hp=700000, currency=2000, cooldown=5400, drops = { { id=26175, name='Hetairoi Ring' }, { id=25719, name='Merlinic Jubbah' }, { id=25716, name='Odyssean Chestplate' }, { id=26243, name='Perimede Cape' } } },
+        { name='Yakshi', gid=64, tier=3, hp=700000, currency=2000, cooldown=5400, drops = { { id=26020, name='Ainia Collar' }, { id=25720, name='Chironic Doublet' }, { id=22199, name='Thrace Strap' }, { id=25717, name='Valorous Mail' } } },
+        { name='Neak', gid=65, tier=3, hp=700000, currency=2000, cooldown=5400, drops = { { id=26244, name='Agema Cape' }, { id=25718, name='Herculean Vest' }, { id=26329, name='Luminary Sash' } } },
+        -- Apex / HELM bosses (Aeonic-tier) -----------------------
+        { name='Teles', gid=66, tier=4, hp=1400000, currency=4500, cooldown=86400, drops = { { id=27143, name='Composer\'s Mitts' }, { id=27499, name='Composer\'s Sabots' }, { id=20889, name='Misanthropy' }, { id=20592, name='Sangoma' } } },
+        { name='Zerde', gid=67, tier=4, hp=1400000, currency=4500, cooldown=86400, drops = { { id=25854, name='Arjuna Breeches' }, { id=25760, name='Mrigavyadha Gloves' }, { id=20506, name='Suwaiyas' }, { id=25721, name='Vedic Coat' } } },
+        { name='Vinipata', gid=71, tier=4, hp=1400000, currency=4500, cooldown=86400, drops = { { id=21022, name='Shishio' }, { id=21905, name='Taka' }, { id=21073, name='Izcalli' }, { id=25655, name='Ipoca Beret' } } },
+        { name='Schah', gid=74, tier=4, hp=1400000, currency=4500, cooldown=86400, drops = { { id=21687, name='Takoba' }, { id=22055, name='Oranyan' }, { id=25730, name='Nzingha Cuirass' }, { id=25920, name='Ahosi Leggings' } } },
+        { name='Albumen', gid=80, tier=4, hp=1400000, currency=4500, cooldown=86400, drops = { { id=25921, name='Skaoi Boots' }, { id=25656, name='Ynglinga Sallet' }, { id=21747, name='Freydis' }, { id=22114, name='Steinthor' } } },
+        { name='Onychophora', gid=85, tier=4, hp=1400000, currency=4500, cooldown=86400, drops = { { id=20678, name='Firangi' }, { id=22056, name='Gozuki Mezuki' }, { id=21855, name='Lembing' }, { id=25922, name='Navon Crackows' } } },
+        { name='Erinys', gid=87, tier=4, hp=1400000, currency=4500, cooldown=86400, drops = { { id=21755, name='Hodadenon' }, { id=25761, name='Iktomi Dastanas' }, { id=22119, name='Wochowsen' }, { id=25731, name='Sayadio\'s Kaftan' } } },
+    },
+}
+
+-- ===================================================================
+-- ??? POP POINTS (stock npc_list 'qm' NPCs at retail positions)
+-- zone -> ??? npcid -> { NM gids poppable at that point }.
+-- Generated 2026-07-12 from stock mob_spawn_points camps (nearest ???
+-- within 80y = the NM's retail camp); placeholder-cluster NMs were
+-- spread across remaining ???s (1-5 NMs per point).
+-- ===================================================================
+local QM_POINTS = {
+    [ZITAH] = {
+        [17957437] = { 37, 43, 60 },  -- Wepwawet, Angrboda, Umdhlebi
+        [17957438] = { 35, 44, 28 },  -- Beist, Cunnast, Keeper of Heiligtum
+        [17957439] = { 27, 36, 58, 59, 63 },  -- Abyssdiver, Eschan Jewelweed, Brittlis, Kamohoalii, Urmahlullu
+        [17957440] = { 38, 46, 33 },  -- Lustful Lydia, Ferrodon, Jester Malatrix
+        [17957441] = { 39, 47, 61 },  -- Aglaophotis, Gulltop, Fleetstalker
+        [17957442] = { 51, 48, 62 },  -- Puca, Vyala, Shockmaw
+        [17957443] = { 34, 24, 52 },  -- Immanibugard, Hugemaw Harold, Alpluachra
+        [17957444] = { 53, 25, 50 },  -- Pazuzu, Prickly Pitriv, Bucca
+        [17957445] = { 40, 26, 49 },  -- Tangata Manu, Serpopard Ninlil, Blazewing
+        [17957446] = { 45, 55, 54 },  -- Revetaur, Ionos, Wrathare
+        [17957447] = { 41, 56, 32 },  -- Vidala, Sensual Sandy, Voso
+        [17957448] = { 42, 57, 64 },  -- Gestalt, Nosoi, Azi Dahaka
+    },
+    [RUAUN] = {
+        [17961682] = { 31, 86 },  -- Warder of Faith, Ark Angel TT
+        [17961683] = { 34, 78 },  -- Warder of Hope, Byakko-Escha
+        [17961699] = { 46, 48 },  -- Ruea, Khon
+        [17961700] = { 35, 80 },  -- Warder of Prudence, Seiryu-Escha
+        [17961701] = { 45, 81 },  -- Bia, Suzaku-Escha
+        [17961702] = { 61, 82 },  -- Yilan, Kirin
+        [17961703] = { 53, 84 },  -- Peirithoos, Kouryu
+        [17961704] = { 32, 93 },  -- Warder of Justice, Warder of Courage
+        [17961705] = { 47 },  -- Ma
+        [17961706] = { 49 },  -- Met
+        [17961707] = { 65 },  -- Naphula
+        [17961708] = { 51 },  -- Wasserspeier
+        [17961709] = { 52 },  -- Emputa
+        [17961710] = { 50, 79 },  -- Khun, Genbu-Escha
+        [17961728] = { 29 },  -- Warder of Temperance
+        [17961729] = { 54 },  -- Asida
+        [17961730] = { 55 },  -- Tenodera
+        [17961731] = { 56 },  -- Sava Savanovic
+        [17961732] = { 57 },  -- Palila
+        [17961733] = { 59 },  -- Hanbi
+        [17961734] = { 36 },  -- Warder of Love
+        [17961735] = { 63 },  -- Amymone
+        [17961736] = { 67 },  -- Kammavaca
+        [17961737] = { 72 },  -- Pakecet
+        [17961738] = { 74 },  -- Duke Vepar
+        [17961739] = { 76 },  -- Vir'ava
+        [17961740] = { 90 },  -- Ark Angel EV
+        [17961741] = { 91 },  -- Ark Angel GK
+        [17961742] = { 85 },  -- Ark Angel HM
+        [17961777] = { 87 },  -- Ark Angel MR
+    },
+    [REISEN] = {
+        [17969915] = { 45 },  -- Crom Dubh
+        [17969919] = { 46 },  -- Golden Kist
+        [17969923] = { 48 },  -- Dazzling Dolores
+        [17969924] = { 49 },  -- Taelmoth the Diremaw
+        [17969926] = { 50 },  -- Belphegor
+        [17969965] = { 47, 54 },  -- Mauve-Wristed Gomberry, Sabotender Royal
+        [17969966] = { 67, 74, 80 },  -- Zerde, Schah, Albumen
+        [17969967] = { 51 },  -- Kabandha
+        [17969968] = { 52 },  -- Selkit
+        [17969969] = { 53 },  -- Sang Buaya
+        [17969970] = { 55 },  -- Zduhac
+        [17969971] = { 57 },  -- Strophadia
+        [17969972] = { 58 },  -- Gajasimha
+        [17969973] = { 59 },  -- Ironside
+        [17969974] = { 60 },  -- Sarsaok
+        [17969975] = { 62 },  -- Bashmu
+        [17969976] = { 66, 71 },  -- Teles, Vinipata
+        [17969989] = { 63 },  -- Maju
+        [17969990] = { 64 },  -- Yakshi
+        [17969991] = { 65 },  -- Neak
+        [17969992] = { 56, 61 },  -- Oryx, Old Shuck
+        [17969993] = { 85 },  -- Onychophora
+        [17969994] = { 87 },  -- Erinys
     },
 }
 
@@ -411,19 +532,32 @@ end
 -- ===================================================================
 -- MENU SYSTEM
 -- ===================================================================
--- Tier menu: lists NMs of a specific tier with cooldown status.
--- Returns the options table for the shared menu.
--- Full-roster tiers hold up to 18 NMs, well past the customMenu byte/entry
--- budget -- paginate like the shops (NM_PER_PAGE entries + More >> / Back).
+-- Fast def lookup for the ??? pop points: zone -> gid -> catalog def.
+local DEF_BY_GID = {}
+for zoneId, defs in pairs(NM_CATALOG) do
+    DEF_BY_GID[zoneId] = {}
+    for _, def in ipairs(defs) do
+        DEF_BY_GID[zoneId][def.gid] = def
+    end
+end
+
+-- ??? pop menu: lists ONLY the NMs camped at this point (retail-style),
+-- with cooldown status. Busy points paginate past NM_PER_PAGE.
 local NM_PER_PAGE = 6
 
-local function tierOptions(player, zone, zoneId, tierNum, mainFn, menu, page, reshowFn)
+local function qmPopMenu(player, npc, zoneId, gids, page)
     page = page or 0
+    local zone = npc:getZone()
     local defs = {}
-    for _, def in ipairs(NM_CATALOG[zoneId] or {}) do
-        if def.tier == tierNum then
-            defs[#defs + 1] = def
+    for _, gid in ipairs(gids) do
+        local d = DEF_BY_GID[zoneId] and DEF_BY_GID[zoneId][gid]
+        if d then
+            defs[#defs + 1] = d
         end
+    end
+    if #defs == 0 then
+        player:printToPlayer('You sense nothing out of the ordinary.', S)
+        return
     end
     local pages = math.max(1, math.ceil(#defs / NM_PER_PAGE))
     page = page % pages
@@ -452,10 +586,12 @@ local function tierOptions(player, zone, zoneId, tierNum, mainFn, menu, page, re
     end
     if pages > 1 then
         opts[#opts + 1] = { string.format('More >> (%d/%d)', page + 1, pages),
-            function(p) reshowFn(p, page + 1) end }
+            function(p) qmPopMenu(p, npc, zoneId, gids, page + 1) end }
     end
-    opts[#opts + 1] = { 'Back', function(p) mainFn(p) end }
-    return opts
+    opts[#opts + 1] = { 'Leave', function(p) end }
+
+    local menu = { title = 'Planar Rift', options = opts }
+    player:timer(30, function(p) p:customMenu(menu) end)
 end
 
 -- Exchange shop: spend currency on materials. Each material opens a quantity
@@ -544,7 +680,8 @@ local function buildShop(player, zone, zoneId, mainFn, menu)
     return shopFn
 end
 
--- Main Warding Circle menu for one zone.
+-- Main Warding Circle menu for one zone. EXCHANGE ONLY since the retail-???
+-- rework (2026-07-12): NMs pop at the ??? points, not here.
 local function wardingCircleMenu(player, zone, zoneId)
     local clbl  = CURRENCY_LABEL[zoneId] or 'pts'
     local menu  = { title = '', options = {} }
@@ -554,24 +691,16 @@ local function wardingCircleMenu(player, zone, zoneId)
         p:timer(30, function(p2) p2:customMenu(menu) end)
     end
 
-    local function tierScreen(p, tierNum, tierTitle, page)
-        menu.title   = tierTitle
-        menu.options = tierOptions(p, zone, zoneId, tierNum, mainFn, menu, page,
-            function(p2, nextPage) tierScreen(p2, tierNum, tierTitle, nextPage) end)
-        show(p)
-    end
-
     shopFn = buildShop(player, zone, zoneId, function(p) mainFn(p) end, menu)
 
     mainFn = function(p)
         local cur = getCurrency(p, zoneId)
         menu.title   = string.format('Warding Circle [%s: %d]', clbl, cur)
         menu.options = {
-            { 'Tier I NMs',   function(pp) tierScreen(pp, 1, '-- Tier I NMs --')   end },
-            { 'Tier II NMs',  function(pp) tierScreen(pp, 2, '-- Tier II NMs --')  end },
-            { 'Tier III NMs', function(pp) tierScreen(pp, 3, '-- Tier III NMs --') end },
-            { 'Zone Boss',    function(pp) tierScreen(pp, 4, '-- Zone Boss --')     end },
             { string.format('Exchange %s', clbl), function(pp) shopFn(pp) end },
+            { 'Where are the NMs?', function(pp)
+                pp:printToPlayer('[Geas Fete] The NMs answer at the ??? points scattered across Escha - Zi\'Tah, Escha - Ru\'Aun, and Reisenjima -- inspect one to pop the NMs camped there. Check the website\'s Geas Fete page for every camp.', S)
+            end },
             { 'Leave', function(pp) end },
         }
         show(p)
@@ -604,48 +733,51 @@ local function spawnWardingCircle(zone, zoneId, x, y, z, rot)
     utils.unused(wc)
 end
 
+-- Attach the pop menu to every stock ??? point this zone owns (QM_POINTS).
+-- The qm NPCs are plain npc_list rows with no script of their own -- verified
+-- unreferenced by any quest/mission -- so an ON_TRIGGER listener is the whole
+-- wiring (same pattern as battlefield armoury crates).
+local function bindQmPoints(zoneId)
+    local bound = 0
+    for npcId, gids in pairs(QM_POINTS[zoneId] or {}) do
+        local npc = GetNPCByID(npcId)
+        if npc then
+            local g = gids
+            npc:addListener('ON_TRIGGER', 'GEAS_FETE_QM', function(player, trigNpc)
+                qmPopMenu(player, trigNpc, zoneId, g)
+            end)
+            bound = bound + 1
+        else
+            printf('[geas_fete] ??? npc %i missing in zone %i', npcId, zoneId)
+        end
+    end
+    printf('[geas_fete] zone %i: %i ??? pop points bound', zoneId, bound)
+end
+
 -- Escha - Zi'Tah (288)
--- Placed near the HL zone guide (x≈3, z≈-30) but offset slightly.
+-- Circle near the HL zone guide (x≈3, z≈-30); NMs pop at the 12 ??? points.
 m:addOverride('xi.zones.Escha_ZiTah.Zone.onInitialize', function(zone)
     super(zone)
     spawnWardingCircle(zone, ZITAH, 3.0, -0.5, -20.0, 128)
+    bindQmPoints(ZITAH)
 end)
 
 -- Escha - Ru'Aun (289)
--- Placed near the zone entry point, clear of the GM wave NPC area.
+-- Circle near the zone entry point; NMs pop at the 30 ??? points.
 m:addOverride('xi.zones.Escha_RuAun.Zone.onInitialize', function(zone)
     super(zone)
     spawnWardingCircle(zone, RUAUN, 5.0, -34.277, -455.0, 64)
+    bindQmPoints(RUAUN)
 end)
 
--- Reisenjima (291) redirect signpost. Players come here for Temprix (the Aeonic
--- vendor) and, out of retail habit, hunt for a Geas Fete Warding Circle in the
--- old spot -- but on relaunch the Geas Fete NMs live in Escha. This signpost
--- sits right at the zone-in point (arrival is -500.0, -19.1, -487.7) so anyone
--- looking for the circle gets pointed to the right zone.
-local function spawnReisenSignpost(zone)
-    local sp = zone:insertDynamicEntity({
-        objtype    = xi.objType.NPC,
-        name       = 'GF_Reisen_Signpost',
-        packetName = string.format('%sGeas Fete Notice', xi.icon.STAR_LARGE),
-        look       = 171,
-        x          = -497.0,
-        y          = -19.07,
-        z          = -484.0,
-        rotation   = 190,
-        widescan   = 1,
-
-        onTrigger = function(player, npc)
-            player:printToPlayer('[Geas Fete] The Warding Circles are in ESCHA now. Fight the Geas Fete NMs (Escha Beads/Silt + Attestations) at the Warding Circle in Escha - Zi\'Tah and Escha - Ru\'Aun -- type !hunt to warp to the Zi\'Tah hub.', S)
-            player:printToPlayer('[Geas Fete] Reisenjima still hosts Temprix, the Aeonic weapon vendor (Malformed base weapons for 50,000 Escha Beads), further into the zone.', S)
-        end,
-    })
-    utils.unused(sp)
-end
-
+-- Reisenjima (291)
+-- The old redirect signpost at the zone-in point is now a full Warding Circle
+-- (exchange) -- Reisenjima hosts its own retail Geas Fete roster at 23 ???
+-- points since the 2026-07-12 rework. Temprix (Aeonic vendor) is unchanged.
 m:addOverride('xi.zones.Reisenjima.Zone.onInitialize', function(zone)
     super(zone)
-    spawnReisenSignpost(zone)
+    spawnWardingCircle(zone, REISEN, -497.0, -19.07, -484.0, 190)
+    bindQmPoints(REISEN)
 end)
 
 return m

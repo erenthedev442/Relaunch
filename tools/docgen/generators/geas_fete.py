@@ -1,11 +1,12 @@
 """Generate docs/endgame/geas-fete.md from Geas_Fete.lua.
 
-Escha Geas Fete: two Warding Circle NPCs (Escha Zi'Tah + Ru'Aun) pop tiered NMs
-that drop Escha Beads + Aeonic materials (Beitetsu / Riftcinder / Riftborn
-Boulder / Attestations). Reads the NM roster + the material exchange from the Lua
-so the tables can't drift.
+Escha Geas Fete, retail-??? edition (2026-07-12): NMs pop at the stock retail
+??? points across Escha Zi'Tah, Escha Ru'Aun, and Reisenjima (QM_POINTS in the
+Lua); the Warding Circles are the material exchange. Reads the NM roster, the
+??? camp map (positions joined from sql/npc_list.sql), and the exchange from
+the Lua so the tables can't drift.
 
-Marker IDs: geas-overview, geas-roster, geas-exchange
+Marker IDs: geas-overview, geas-roster, geas-camps, geas-exchange
 """
 from __future__ import annotations
 
@@ -16,22 +17,50 @@ from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
 
 _TIER_NAME = {1: "Tier 1", 2: "Tier 2", 3: "Tier 3", 4: "Boss"}
+_ZONES = ["Escha - Zi'Tah", "Escha - Ru'Aun", "Reisenjima"]
+
+
+def _zone_of(text: str, pos: int) -> str:
+    """Which NM_CATALOG zone block a text offset falls in (blocks are ordered)."""
+    marks = [(text.find("[ZITAH] = {"), _ZONES[0]),
+             (text.find("[RUAUN] = {"), _ZONES[1]),
+             (text.find("[REISEN] = {"), _ZONES[2])]
+    zone = _ZONES[0]
+    for at, name in marks:
+        if at != -1 and pos > at:
+            zone = name
+    return zone
 
 
 def _parse(text: str) -> dict:
     nms = []
-    zitah_at = text.find("[ZITAH] = {")
-    ruaun_at = text.find("[RUAUN] = {")
-    for m in re.finditer(r"name\s*=\s*'((?:[^'\\]|\\.)+)'[^}\n]*?tier\s*=\s*(\d)[^}\n]*?currency\s*=\s*(\d+)(.*)", text):
-        zone = "Escha - Ru'Aun" if ruaun_at != -1 and m.start() > ruaun_at else "Escha - Zi'Tah"
+    for m in re.finditer(r"name\s*=\s*'((?:[^'\\]|\\.)+)'[^}\n]*?gid\s*=\s*(\d+)[^}\n]*?tier\s*=\s*(\d)[^}\n]*?currency\s*=\s*(\d+)(.*)", text):
+        zone = _zone_of(text, m.start())
         drops = [{"id": int(i), "name": n.replace("\\'", "'")} for i, n in
                  re.findall(r"\{\s*id\s*=\s*(\d+)\s*,\s*name\s*=\s*'((?:[^'\\]|\\.)+)'\s*\}",
-                            m.group(4))]
-        nms.append({"name": m.group(1).replace("\\'", "'"), "tier": int(m.group(2)),
-                    "cur": int(m.group(3)), "zone": zone, "drops": drops})
+                            m.group(5))]
+        nms.append({"name": m.group(1).replace("\\'", "'"), "gid": int(m.group(2)),
+                    "tier": int(m.group(3)), "cur": int(m.group(4)),
+                    "zone": zone, "drops": drops})
     ex = []
     for m in re.finditer(r"label\s*=\s*'([^']+)'[^}\n]*?cost\s*=\s*(\d+)", text):
         ex.append({"label": m.group(1), "cost": int(m.group(2))})
+
+    # ??? camp map: QM_POINTS npcid -> gid list, per zone sub-block.
+    camps = {z: [] for z in _ZONES}
+    qm_block = re.search(r"local QM_POINTS = \{(.*?)\n\}", text, re.DOTALL)
+    if qm_block:
+        qtext = qm_block.group(1)
+        marks = [(qtext.find("[ZITAH] = {"), _ZONES[0]),
+                 (qtext.find("[RUAUN] = {"), _ZONES[1]),
+                 (qtext.find("[REISEN] = {"), _ZONES[2])]
+        for m in re.finditer(r"\[(17\d{6})\]\s*=\s*\{\s*([\d,\s]+)\}", qtext):
+            zone = _ZONES[0]
+            for at, name in marks:
+                if at != -1 and m.start() > at:
+                    zone = name
+            camps[zone].append({"npcid": int(m.group(1)),
+                                "gids": [int(g) for g in re.findall(r"\d+", m.group(2))]})
 
     # Reisenjima-crafted armor drops (GEAR_NQ/GEAR_HQ pools + tier chances).
     gear = {"nq": 0, "hq": 0, "nq_pct": {}, "hq_pct": {}}
@@ -49,15 +78,18 @@ def _parse(text: str) -> dict:
         m = re.search(r"local " + var + r"\s*=\s*([\d.]+)", text)
         if m:
             rates[key] = float(m.group(1))
-    return {"nms": nms, "exchange": ex, "gear": gear, "rates": rates}
+    return {"nms": nms, "exchange": ex, "gear": gear, "rates": rates, "camps": camps}
 
 
 def _overview(c: dict) -> str:
+    n_camps = {z: len(c["camps"].get(z, [])) for z in _ZONES}
     return (
-        "Two **Warding Circle** NPCs — one in Escha - Zi'Tah and one in "
-        "Escha - Ru'Aun — let you pop retail-faithful **Geas Fete NMs** "
-        "on demand: walk up, pick a tier, pick an NM. **No pop items needed**, but each NM has a "
-        "per-player cooldown.\n\n"
+        "Geas Fete NMs pop **retail-style, at the `???` points** scattered across "
+        f"**Escha - Zi'Tah** ({n_camps[_ZONES[0]]} points), **Escha - Ru'Aun** "
+        f"({n_camps[_ZONES[1]]} points), and **Reisenjima** ({n_camps[_ZONES[2]]} points). "
+        "Inspect a `???` to pop one of the NMs camped there — **no pop items needed** "
+        "(no trinkets or Tribulens), just a per-player cooldown per NM. "
+        "The full camp map is [below](#camp-map).\n\n"
         "Every Escha kill pays **Escha Beads** (a real currency — see the Currencies II tab). That one "
         "pool funds the Warding Circle material exchange **and** the **Aeonic weapon** path "
         "([Temprix in Reisenjima](../progression/aeonic-weapons.md)). NMs also drop the Aeonic crafting "
@@ -105,10 +137,46 @@ def _item_link(d: dict) -> str:
             f'target="_blank" rel="noopener">{d["name"]}</a>')
 
 
+def _camps(c: dict, qm_pos: dict) -> str:
+    """Per-zone ??? camp tables: /pos + the NMs popped there."""
+    name_by_zone_gid = {}
+    for n in c["nms"]:
+        name_by_zone_gid.setdefault(n["zone"], {})[n["gid"]] = n["name"]
+    lines = ["Every `???` lists the NMs camped at it — inspect it in-game to pop "
+             "one. Coordinates are `/pos` (x, z).", ""]
+    for zone in _ZONES:
+        rows = c["camps"].get(zone) or []
+        if not rows:
+            continue
+        lines += [f"### {zone}", "", "| `???` at | NMs |", "|---|---|"]
+        for r in sorted(rows, key=lambda r: r["npcid"]):
+            pos = qm_pos.get(r["npcid"])
+            where = f"({pos[0]:.0f}, {pos[2]:.0f})" if pos else "—"
+            names = ", ".join(name_by_zone_gid.get(zone, {}).get(g, f"gid {g}")
+                              for g in r["gids"])
+            lines.append(f"| {where} | {names} |")
+        lines.append("")
+    return "\n".join(lines).rstrip()
+
+
+def _load_qm_positions(repo_root: Path) -> dict:
+    """npcid -> (x, y, z) for the stock 'qm' ??? NPCs, from sql/npc_list.sql."""
+    src = resolve_source(repo_root, "sql/npc_list.sql", required=False)
+    out = {}
+    if src is None:
+        return out
+    for m in re.finditer(
+        r"VALUES \((17\d{6}),'qm[^']*','\?\?\?',\d+,(-?[\d.]+),(-?[\d.]+),(-?[\d.]+)",
+        src.read_text(encoding="utf-8", errors="replace"),
+    ):
+        out[int(m.group(1))] = (float(m.group(2)), float(m.group(3)), float(m.group(4)))
+    return out
+
+
 def _roster(c: dict) -> str:
     from collections import defaultdict
     lines = []
-    for zone in ("Escha - Zi'Tah", "Escha - Ru'Aun"):
+    for zone in _ZONES:
         by = defaultdict(list)
         for n in c["nms"]:
             if n["zone"] == zone:
@@ -143,8 +211,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         print("[geas_fete] skip: Geas_Fete.lua not found")
         return
     c = _parse(src.read_text(encoding="utf-8", errors="replace"))
+    qm_pos = _load_qm_positions(repo_root)
     page = docs_dir / "endgame" / "geas-fete.md"
     page.parent.mkdir(parents=True, exist_ok=True)
-    blocks = [("geas-overview", _overview(c)), ("geas-roster", _roster(c)), ("geas-exchange", _exchange(c))]
+    blocks = [("geas-overview", _overview(c)), ("geas-roster", _roster(c)),
+              ("geas-camps", _camps(c, qm_pos)), ("geas-exchange", _exchange(c))]
     written = sum(1 for marker, content in blocks if write_between_markers(page, marker, content))
-    print(f"[geas_fete] {written}/{len(blocks)} blocks ({len(c['nms'])} NMs, {len(c['exchange'])} exchange rows)")
+    n_camps = sum(len(v) for v in c["camps"].values())
+    print(f"[geas_fete] {written}/{len(blocks)} blocks ({len(c['nms'])} NMs, "
+          f"{n_camps} ??? camps, {len(c['exchange'])} exchange rows)")
