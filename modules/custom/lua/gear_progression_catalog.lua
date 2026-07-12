@@ -109,7 +109,6 @@ catalog.silver =
         { id = 21568, name = "Acrontica", cost = 25, jobs = 'THF/DNC' },
         { id = 21569, name = "Chocobo Knife", cost = 25, jobs = 'RDM/THF/BRD/RNG/DNC' },
         { id = 21570, name = "Air Knife", cost = 25, jobs = 'THF/DNC' },
-        { id = 22118, name = "Venery Bow", cost = 25, jobs = 'RNG' },
     },
 }
 
@@ -172,7 +171,6 @@ do
     -- Clubs: 5 pick(s) -> Infamy Vendor
     local inf_clubs = cat(catalog.infamy.weapons, 'Clubs')
     table.insert(inf_clubs, { id = 22042, name = "Wizards Rod", cost = 500, jobs = 'BLM/RDM/SCH/GEO' })  -- CASTER score 1060, DMG 149/Dly 216
-    table.insert(inf_clubs, { id = 22040, name = "Daybreak", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 1033, DMG 150/Dly 216
     table.insert(inf_clubs, { id = 21071, name = "Cath Palug Hammer", cost = 500, jobs = 'WHM/GEO' })  -- CASTER score 1013, DMG 212/Dly 300
 
     -- Staves: 5 pick(s) -> Infamy Vendor

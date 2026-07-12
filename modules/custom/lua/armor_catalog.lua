@@ -161,7 +161,6 @@ local g = catalog.gold
 table.insert(g.head, { id = 25600, name = "Maiitsoh Haube", cost = 50, jobs = 'WAR/PLD/DRK/BST/SAM/NIN/DRG' })  -- DPS score 305
 
 -- Body (13 picks, scored highest first)
-table.insert(g.body, { id = 23798, name = "Crepuscular Mail", cost = 50, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- TANK score 463
 table.insert(g.body, { id = 27857, name = "Respite Cloak", cost = 50, jobs = 'MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN' })  -- TANK score 451
 
 -- Hands (10 picks, scored highest first)

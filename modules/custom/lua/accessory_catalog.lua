@@ -203,7 +203,6 @@ table.insert(g.back, { id =  28624, name = 'Niht Mantle'                       ,
 table.insert(g.back, { id =  28591, name = 'Aenotherus Mantle +1'              , cost =  60, jobs = 'WHM/BLM/RDM/PLD/DRK/SMN/BLU/SCH/GEO/RUN' })  -- TANK score 74
 table.insert(g.back, { id =  26268, name = 'Moonbeam Cape'                     , cost =  60, jobs = 'All' })  -- TANK score 68
 table.insert(g.back, { id =  15471, name = 'Merciful Cape'                     , cost =  60, jobs = 'All' })  -- DPS score 25 [RARE,EX]
-table.insert(g.back, { id =  27618, name = 'Laic Mantle'                       , cost =  60, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 70 [RARE,EX]
 table.insert(g.back, { id =  10971, name = 'Strendu Mantle'                    , cost =  60, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- TANK score 73 [RARE,EX]
 table.insert(g.back, { id =  28636, name = 'Bookworms Cape'                    , cost =  60, jobs = 'SCH' })  -- CASTER score 74 [EX]
 -- net-new gold options (2026-07-06, hand-curated from score_accessories.py recommendations)
