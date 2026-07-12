@@ -611,6 +611,30 @@ def _geas_fete_gear_ids(repo_root: Path) -> set[int]:
     return ids
 
 
+def _catalog_ids(repo_root: Path, relpath: str) -> set[int]:
+    """All `id = N` stock rows in a vendor/forge catalog lua. The docs pages
+    render CURATED SUBSETS of these catalogs, so page-scanning alone
+    under-reports -- the catalog is the source of truth (the 'Agony Jerkin'
+    audit, 2026-07-12, found 112 grantable-but-unmapped items this way)."""
+    text = _read(repo_root, relpath)
+    if not text:
+        return set()
+    return {int(x) for x in re.findall(r'\bid\s*=\s*(\d{4,5})\b', text)}
+
+
+# Catalog-backed sources scanned by id, label -> catalog files. Applied after
+# the page scan (page labels are equivalent anyway) and before the fallbacks.
+CATALOG_SOURCES = [
+    ('Gear Vendor', ['modules/custom/lua/armor_catalog.lua',
+                     'modules/custom/lua/accessory_catalog.lua',
+                     'modules/custom/lua/gear_progression_catalog.lua']),
+    ('Infamy Vendor', ['modules/custom/lua/infamy_vendor_catalog.lua']),
+    ('Weapon Forge', ['modules/custom/lua/weapon_forge_catalog.lua',
+                      'modules/custom/lua/Relic_Forge.lua']),
+    ('Affinity NMs', ['modules/custom/lua/augment_affinity_catalog.lua']),
+]
+
+
 def _ambuscade_ids(repo_root: Path) -> set[int]:
     """Every item the Ambuscade system hands out: the 10 armor sets
     (NQ/+1/+2 from ARMOR_SETS in scripts/globals/ambuscade.lua -- NQ/+1 via
@@ -878,6 +902,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # Prime weapon also sold by a vendor keeps its more specific vendor tag.
     for iid in _prime_armory_ids(repo_root):
         obtainable.setdefault(iid, 'Prime Armory')
+    # Catalog-backed vendors/forges by id: the pages render curated subsets,
+    # so the catalogs themselves are scanned too (full stock counts).
+    for label, files in CATALOG_SOURCES:
+        for relpath in files:
+            for iid in _catalog_ids(repo_root, relpath):
+                obtainable.setdefault(iid, label)
     # Ambuscade: the 10 armor sets (NQ/+1/+2) + weapon chains are earned inside
     # Ambuscade (vouchers, Hallmarks, Abdhaljs upgrades). Exclusive since the
     # 2026-07 vendor sweep -- this tag is their only source.
@@ -913,6 +943,51 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # gear is no longer wrongly shown/filtered as unobtainable).
     SRC_CAP = 15  # cap drop rows per item so gear-data.json stays compact
     drop_sources, _db_ok = collect_drop_sources(repo_root)
+
+    # ---- GRANT GUARD -------------------------------------------------------
+    # Sweep every code path that can hand a player an item (custom droplist
+    # SQL, catalog luas, addItem/giveItem literals) and warn about equippable
+    # ids the source map above does NOT know. Every warning here is a
+    # player-visible lie in the Gear Finder ("obtainable gear shown as
+    # unobtainable") -- fix by adding a SOURCE_PAGES entry, a CATALOG_SOURCES
+    # row, or a dedicated *_ids gap-fill. Added after the 'Agony Jerkin +1 is
+    # Unity' report (2026-07-12) so these gaps surface at build time, not via
+    # player reports.
+    all_ids = {obj['i'] for obj in items}
+    grantable: dict = {}
+    sql_dir = repo_root / 'modules' / 'custom' / 'sql'
+    if sql_dir.exists():
+        for p in sql_dir.glob('*.sql'):
+            t = p.read_text(encoding='utf-8', errors='replace')
+            for m in re.finditer(
+                    r'INSERT INTO\s+`?mob_droplist`?\s+VALUES\s*\(\s*\d+\s*,'
+                    r'\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*(\d+)', t):
+                grantable.setdefault(int(m.group(1)), p.name)
+    _grant_pat = re.compile(
+        r'(?:addItem|giveItem)\s*\(\s*(?:player\s*,\s*)?\{?\s*(?:id\s*=\s*)?(\d{4,5})\b')
+    _row_pat = re.compile(r'\bid\s*=\s*(\d{4,5})\b')
+    for base in ('modules/custom', 'scripts/commands', 'scripts/globals'):
+        broot = repo_root / base
+        if not broot.exists():
+            continue
+        for p in broot.rglob('*.lua'):
+            t = p.read_text(encoding='utf-8', errors='replace')
+            for m in _grant_pat.finditer(t):
+                grantable.setdefault(int(m.group(1)), p.name)
+            if 'catalog' in p.name.lower():
+                for m in _row_pat.finditer(t):
+                    grantable.setdefault(int(m.group(1)), p.name)
+    unmapped = sorted(
+        (iid, fn) for iid, fn in grantable.items()
+        if iid in all_ids and iid not in obtainable
+        and iid not in drop_sources)
+    if unmapped:
+        print(f'[gear_finder] !! GRANT GUARD: {len(unmapped)} grantable '
+              f'equippable item(s) missing from the source map:')
+        for iid, fn in unmapped[:20]:
+            print(f'[gear_finder] !!   {iid}  (granted by {fn})')
+        if len(unmapped) > 20:
+            print(f'[gear_finder] !!   ... +{len(unmapped) - 20} more')
     for obj in items:
         iid = obj['i']
         sys_label = obtainable.get(iid)
