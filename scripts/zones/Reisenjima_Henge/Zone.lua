@@ -1,10 +1,28 @@
 -----------------------------------
 -- Zone: Reisenjima_Henge (292)
+--
+-- The public copy hosts hub NPCs; private instance copies host Omen
+-- (modules/custom/lua/omen_instance.lua, loaded via instances/omen.lua).
 -----------------------------------
+local omenCatalog = require('modules/custom/lua/omen_catalog')
+
 ---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
+end
+
+zoneObject.onInstanceZoneIn = function(player, instance)
+    player:setPos(
+        omenCatalog.arena.entryPos.x,
+        omenCatalog.arena.entryPos.y,
+        omenCatalog.arena.entryPos.z,
+        omenCatalog.arena.entryPos.rotation)
+end
+
+zoneObject.onInstanceLoadFailed = function()
+    -- Send strays back to Reisenjima beside the Omen ingress.
+    return omenCatalog.entry.zoneId
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
