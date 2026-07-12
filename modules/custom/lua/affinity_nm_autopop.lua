@@ -160,6 +160,35 @@ local function applyName(m)
 end
 xi.affinityAutopop.applyName = applyName  -- reused by the !affinitypop command
 
+-- Sky god mobid -> its island's yellow-portal offset from PORTAL_OFFSET
+-- (RuAun_Gardens). The retail god scripts CLOSE that portal in onMobSpawn and
+-- reopen it in onMobDespawn -- correct for short-lived pop NMs, but our gods
+-- are always up, so the portals stay permanently shut and the god islands
+-- become unreachable (player report 2026-07-10: "sky god teleporters off,
+-- no teleport symbol on the platforms"). Re-open right after every spawn:
+-- the entity script's onMobSpawn runs BEFORE SPAWN listeners (mobentity.cpp
+-- Spawn: OnMobSpawn -> triggerListener), so our listener is the last writer.
+local GOD_PORTAL =
+{
+    [17310622] = 2,   -- Seiryu (SE island)
+    [17310621] = 5,   -- Genbu  (NE island)
+    [17310623] = 8,   -- Byakko (NW island)
+    [17310624] = 11,  -- Suzaku (SW island)
+}
+
+local function openGodPortal(m)
+    local off = GOD_PORTAL[m:getID()]
+    if not off then
+        return
+    end
+    local ids    = zones[xi.zone.RUAUN_GARDENS]
+    local portal = ids and GetNPCByID(ids.npc.PORTAL_OFFSET + off)
+    if portal then
+        portal:setAnimation(xi.anim.OPEN_DOOR)
+    end
+end
+xi.affinityAutopop.openGodPortal = openGodPortal  -- reused by the !affinitypop command
+
 -- Apply the difficulty stat block. Offensive mods overwrite (idempotent); HP is
 -- scaled ONCE per fresh spawn (guarded by a localVar the SPAWN listener resets), so
 -- a re-configure (e.g. !affinitypop) never compounds the multiplier.
@@ -203,6 +232,13 @@ local function configureMob(mobid)
         applyName(m)
     end)
     if mob:isSpawned() then applyName(mob) end
+
+    -- Sky gods: undo the retail portal-close so the god islands stay reachable
+    -- while the gods are permanently up (no-op for the other 20 NMs).
+    mob:addListener('SPAWN', 'AFFINITY_PORTAL', function(m)
+        openGodPortal(m)
+    end)
+    if mob:isSpawned() then openGodPortal(mob) end
 
     -- Difficulty stat block; re-apply on every spawn. Reset the HP-scale guard first
     -- so each fresh spawn re-scales from base HP (SPAWN fires with the mob at base).

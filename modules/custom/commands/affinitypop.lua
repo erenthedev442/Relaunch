@@ -60,6 +60,14 @@ commandObj.onTrigger = function(player)
                 end)
                 if mob:isSpawned() then xi.affinityAutopop.applyName(mob) end
             end
+            -- Sky gods: re-open the island yellow portal their retail onMobSpawn
+            -- closes -- always-up gods otherwise lock the islands permanently.
+            if xi.affinityAutopop and xi.affinityAutopop.openGodPortal then
+                mob:addListener('SPAWN', 'AFFINITY_PORTAL', function(m)
+                    xi.affinityAutopop.openGodPortal(m)
+                end)
+                if mob:isSpawned() then xi.affinityAutopop.openGodPortal(mob) end
+            end
             mob:setRespawnTime(RESPAWN_SECONDS)
             if not mob:isSpawned() then
                 SpawnMob(mobid)
