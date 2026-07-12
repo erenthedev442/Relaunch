@@ -1368,6 +1368,14 @@ Job Rebirth borrows `prestige_catalog.categories` for its boost list — same st
 
 ## Legacy Reward Program
 
+> **SUPERSEDED 2026-07-09 — the reward matrix below never shipped.** The
+> implemented program is portal claims (portal.ffxi-legendary.com): the
+> **Legendary Ring** (legacy_ring_grant.lua, the one functional reward),
+> the **Legendary Track Suit** cosmetic set (legacy_tracksuit_grant.lua),
+> and **Free Job to 99** (legacy_freejob_grant.lua). docs/admin/review.html
+> reflects the shipped program; the tier gates below remain the eligibility
+> snapshot logic. This section is kept for the planning record.
+
 Players who built this community are recognized at relaunch. Rewards are based on each **account's** best character, snapshotted at wipe date. **GMs excluded** (any account with any character at gmlevel > 0 is excluded from all tiers).
 
 ### Tier Gates
