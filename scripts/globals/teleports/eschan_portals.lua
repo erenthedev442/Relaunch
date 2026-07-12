@@ -109,17 +109,17 @@ xi.escha.portals.eschanPortalOnTrigger = function(player, npc)
 
     -- Escha Ru'Aun only.
     elseif zoneId == xi.zone.ESCHA_RUAUN then
-        -- Eschan droplet.
+        -- Eschan droplet still works if a player happens to hold one (retail
+        -- bootstrap item from the ??? / qm_droplet), but is NO LONGER REQUIRED.
+        -- RELAUNCH (2026-07-12): dropped the retail "blinding light" gate that
+        -- returned early when zonePortalsUnlocked == 0 and you had no droplet --
+        -- it made a fresh player's first Ru'Aun portal a silent no-op (the
+        -- BLINDING_LIGHT text is nil here, so examining the portal did nothing:
+        -- reported as "eschan portals aren't working"). Ru'Aun now unlocks on
+        -- touch, exactly like Escha - Zi'Tah, since these zones are a Geas Fete
+        -- content hub and free travel is intended. Silt cost is unchanged.
         if player:hasItem(xi.item.CLUMP_OF_ESCHAN_DROPLETS, xi.inv.TEMPITEMS) then
             lockValue = lockValue + 2
-
-        -- Default message.
-        elseif zonePortalsUnlocked == 0 then
-            local blindMsg = zones[zoneId].text.BLINDING_LIGHT_OBSCURES_YOUR_VISION
-            if blindMsg then
-                player:messageSpecial(blindMsg)
-            end
-            return
         end
     end
 
