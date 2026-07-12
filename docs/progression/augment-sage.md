@@ -8,7 +8,7 @@ The **Augment Sage** is the side-quest progression layer on top of the [Augment 
     The "Mastery ×" and crit values on this page boost the **stat numbers written onto your gear** when you augment a piece at the Moogle — they fill an achievement **boost of 0–31** per slot, e.g. an Attack line climbs from **+2/slot fresh to +64/slot** at rank-5 + affinity + crit. They have **no effect on EXP gain, gil drops, or anything outside the augmentation trade itself.** If you want faster leveling, see [Subjob EXP Share](subjob-exp.md) or the EXP rates on [Retail Differences](../changes/index.md#rates-at-a-glance).
 
 !!! tip "Summary"
-    Two parallel tracks. **Sage Mastery** (5 ranks) raises the achievement boost + crit chance on _every gear augment_. **NM Affinities** (24 bits) add a per-category bonus on top. Stack both to max the 0–31 boost; do neither and every augment sits at its floor.
+    Two parallel tracks. **Sage Mastery** (5 ranks) raises the achievement boost + crit chance on _every gear augment_. **NM Affinities** (11 categories) add a per-category bonus on top. Stack both to max the 0–31 boost; do neither and every augment sits at its floor.
 
 ## Where to find the Sage
 
@@ -83,7 +83,7 @@ The `Augment_Count` charvar is bumped by **+1 every time you confirm an augmenta
 
 ## Track 2 — NM Affinities
 
-Each augment in the catalog has a thematic category, unlocked by a **signature NM**. Defeating that NM drops its **unique trophy**; bring the trophy to the Augment Sage's _Register NM Affinity_ menu to permanently unlock the affinity. Registration **costs Hunting League Rank 3 and 1,000 Hunt Marks**, and consumes the trophy. From that point on, any augment whose category matches one of your unlocked affinities gets the bonus multiplier.
+Each augment in the catalog has a thematic category, unlocked by a **signature NM**. Defeating that NM drops its **unique trophy**; bring the trophy to the Augment Sage's _Register NM Affinity_ menu to permanently unlock the affinity. Registration **costs Hunting League Rank 3 and 1,000 Hunt Marks**, and consumes the trophy. From that point on, any augment whose category matches one of your unlocked affinities is rolled twice, keeping the better result.
 
 You can register affinities in any order once you reach Hunting League Rank 3 — each costs 1,000 Hunt Marks plus the NM's trophy. Affinities are permanent once registered. In the menu, **[ ]** means locked, **[!]** means you're holding that NM's trophy and can register it, and **[*]** means already unlocked.
 
@@ -110,7 +110,7 @@ Holding an affinity gives augments **in that category** roll advantage: the Moog
 | Name | Range | Purpose |
 |---|---|---|
 | `Augment_Mastery`    | 0–5            | Highest Sage rank cleared. Drives the global multiplier + crit chance. |
-| `Augment_Affinities` | 24-bit field   | One bit per registered NM affinity. Drives the per-category bonus. |
+| `Augment_Affinities` | 11-bit field   | One bit per registered NM affinity. Drives the per-category bonus. |
 | `Augment_Count`      | 0–N            | Lifetime successful augments. Tracked for reference; no longer gates rank-up. |
 
 These three charvars are independent — nothing else on the server reads or writes them. You can inspect a player's progress with `!charvar Augment_Mastery` etc. from a GM account.

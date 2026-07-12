@@ -5,7 +5,8 @@
 -- registers the affinity, which requires a Hunting League rank
 -- (affinityRankReq) and costs Hunt Marks (affinityMarkCost). When the player
 -- augments an item whose cat matches an affinity they hold, the Augment
--- Moogle multiplies that augment's value by catalog.affinityMult (1.5x).
+-- Moogle rolls that augment TWICE and keeps the better result (see
+-- Augment_Moogle.lua; affinityMult below is legacy).
 --
 -- Bitfield layout (Augment_Affinities charvar):
 --   bit 0  = Base stats                    cat 1   Behemoth          Batallia Downs
@@ -17,7 +18,7 @@
 --   bit 6  = Pets                          cat 7   King Vinegarroon  Western Altepa Desert
 --   bit 7  = Potency                       cat 8   Phoenix           Riverne Site A01
 --   bit 8  = Skills                        cat 9   Absolute Virtue   Ru'Aun Gardens
---   bit 9  = Exp/Cap Points                cat 10  Proto-Omega       Temenos
+--   bit 9  = Exp/Cap Points                cat 10  Proto-Omega       Ru'Aun Gardens
 --   bit 10 = Job specific niche utilities  cat 11  Kirin             Shrine of Ru'Avitau
 --
 -- Each bit = cat - 1.  augment_catalog.lua uses cat 1..11 as the key.
@@ -27,6 +28,8 @@
 -----------------------------------
 local catalog = {}
 
+-- LEGACY: the live Moogle path uses roll-twice-keep-better, not a multiplier.
+-- Still read by scripts/commands/augment.lua (GM command) exdata math.
 catalog.affinityMult = 1.5
 
 -----------------------------------

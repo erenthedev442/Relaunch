@@ -187,14 +187,14 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
         player:setCharVar('HL_Points', marks - markCost)
         affinity.grantAffinity(player, row.cat)
         player:printToPlayer(string.format(
-            '[Augment Sage] %s affinity registered! Augments in this category are now %.0f%% stronger.',
-            row.label, (affinity.affinityMult - 1.0) * 100), S)
+            '[Augment Sage] %s affinity registered! Augments in this category now roll twice and keep the better result.',
+            row.label), S)
         buildAffinityMenu(player)
     end
 
     -----------------------------------
     -- Affinity submenu (paginated). Shows unlocked-state on each row.
-    -- 24 entries + nav; AFF_PAGE_SZ=4 keeps each page under the 150-byte cap.
+    -- #affinity.affinities entries + nav; AFF_PAGE_SZ=4 keeps each page under the 150-byte cap.
     -----------------------------------
     local AFF_PAGE_SZ = 4
 

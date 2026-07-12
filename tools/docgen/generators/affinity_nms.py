@@ -7,13 +7,16 @@ drift. The repop delay is read from affinity_nm_autopop.lua (RESPAWN_SECONDS)
 for the same reason.
 
 Markers written:
-  affinity-overview     — "What affinities do" (the affinityMult multiplier)
+  affinity-overview     — "What affinities do" (roll twice, keep the better;
+                          affinityMult is legacy and deliberately not rendered)
   affinity-how-it-works — the 5-step flow + registration cost (rank + marks).
                           The trophy goes to the whole in-zone party/alliance,
                           NOT just the killer (augment_affinity_grants.lua drops
                           the isKiller gate), so no killing-blow text is emitted.
   affinity-nm-roster    — one row per registering NM: name, zone, trophy,
                           augment category (11 since the 2026-07-06 rework)
+  affinity-difficulty   — HP multiplier + stat-boost table from NM_HP_MULT /
+                          NM_MODS in affinity_nm_autopop.lua
 """
 from __future__ import annotations
 
@@ -84,6 +87,46 @@ def _parse(text: str) -> list[dict]:
     return rows
 
 
+# xi.mod.* -> (display label, formatter), in render order. HASTE_GEAR is
+# engine units (1/10 of a percent); the percent-flagged mods are plain %.
+_MOD_DISPLAY = [
+    ('ATT',           'Attack',            lambda v: f'+{v:,}'),
+    ('ACC',           'Accuracy',          lambda v: f'+{v:,}'),
+    ('DEF',           'Defense',           lambda v: f'+{v:,}'),
+    ('EVA',           'Evasion',           lambda v: f'+{v:,}'),
+    ('MATT',          'Magic Attack',      lambda v: f'+{v:,}'),
+    ('MDEF',          'Magic Defense',     lambda v: f'+{v:,}'),
+    ('STR',           'STR',               lambda v: f'+{v:,}'),
+    ('DEX',           'DEX',               lambda v: f'+{v:,}'),
+    ('HASTE_GEAR',    'Haste',             lambda v: f'~+{v / 10:.0f}%'),
+    ('DOUBLE_ATTACK', 'Double Attack',     lambda v: f'+{v}%'),
+    ('CRITHITRATE',   'Critical Hit Rate', lambda v: f'+{v}%'),
+    ('STORETP',       'Store TP',          lambda v: f'+{v}'),
+]
+
+
+def _render_difficulty(hp_mult: float | None, mods: dict) -> str:
+    lines = [
+        "These NMs are **stat-boosted far beyond their retail versions**. Treat every "
+        "Affinity NM as a party-level encounter unless you are heavily geared:",
+        "",
+        '| Boost | Value |',
+        '|---|---:|',
+    ]
+    if hp_mult and hp_mult > 1.0:
+        lines.append(f'| HP | ×{hp_mult:g} |')
+    rendered = set()
+    for key, label, fmt in _MOD_DISPLAY:
+        if key in mods:
+            lines.append(f'| {label} | {fmt(mods[key])} |')
+            rendered.add(key)
+    # Anything tuned in that this table doesn't know yet: emit raw so a new
+    # mod is never silently dropped from the player-facing block.
+    for key in sorted(k for k in mods if k not in rendered):
+        lines.append(f'| {key} | +{mods[key]:,} |')
+    return '\n'.join(lines)
+
+
 def _render_overview() -> str:
     # affinityMult in the catalog is LEGACY -- the live Augment Moogle path
     # rolls a registered-category augment TWICE and keeps the better result
@@ -139,13 +182,22 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     rank_req  = int(_num(text, 'affinityRankReq')  or 3)
     mark_cost = int(_num(text, 'affinityMarkCost') or 1000)
 
-    # Repop delay comes from the autopop module so a retune updates the docs.
+    # Repop delay + difficulty numbers come from the autopop module so a
+    # respawn or stat-block retune updates the docs.
     respawn = 30
+    hp_mult: float | None = None
+    mods: dict = {}
     autopop = resolve_source(repo_root, 'modules/custom/lua/affinity_nm_autopop.lua')
     if autopop is not None:
-        m = re.search(r'\bRESPAWN_SECONDS\s*=\s*(\d+)', autopop.read_text(encoding='utf-8', errors='replace'))
+        ap_text = autopop.read_text(encoding='utf-8', errors='replace')
+        m = re.search(r'\bRESPAWN_SECONDS\s*=\s*(\d+)', ap_text)
         if m:
             respawn = int(m.group(1))
+        m = re.search(r'\bNM_HP_MULT\s*=\s*([0-9]+(?:\.[0-9]+)?)', ap_text)
+        if m:
+            hp_mult = float(m.group(1))
+        for mod_m in re.finditer(r'\[xi\.mod\.(\w+)\]\s*=\s*(\d+)', ap_text):
+            mods[mod_m.group(1)] = int(mod_m.group(2))
 
     page = docs_dir / 'endgame' / 'affinity-nms.md'
     if not page.exists():
@@ -157,6 +209,14 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ('affinity-how-it-works', _render_how_it_works(rank_req, mark_cost, respawn)),
         ('affinity-nm-roster',    _render_roster(rows)),
     ]
+    # Fail-closed: if the difficulty numbers didn't parse, keep the block's
+    # previous content rather than publishing an empty table.
+    if mods or hp_mult:
+        blocks.append(('affinity-difficulty', _render_difficulty(hp_mult, mods)))
+    else:
+        print('[affinity_nms] warn: no NM_MODS/NM_HP_MULT parsed — '
+              'affinity-difficulty keeps previous content')
+
     written = 0
     for marker_id, content in blocks:
         if write_between_markers(page, marker_id, content):
@@ -164,4 +224,5 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         else:
             print(f'[affinity_nms] marker not found: {marker_id}')
     print(f'[affinity_nms] {written}/{len(blocks)} markers written '
-          f'(rows={len(rows)}, rank={rank_req}, marks={mark_cost}, respawn={respawn}s)')
+          f'(rows={len(rows)}, rank={rank_req}, marks={mark_cost}, respawn={respawn}s, '
+          f'hp_mult={hp_mult}, mods={len(mods)})')

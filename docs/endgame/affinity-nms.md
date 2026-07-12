@@ -46,7 +46,25 @@ Twenty-four of Vana'diel's most legendary Notorious Monsters — HNMs, Sky Gods,
 
 ## Difficulty and notes
 
-These NMs are **stat-boosted** far beyond their retail versions: 12× base HP, +6,000 ATT, +2,400 ACC, +1,800 DEF, +20% Haste, +25 Double Attack, +12 Crit. Hit Rate. Treat every Affinity NM as a party-level encounter unless you are heavily geared.
+<!-- DOCGEN:BEGIN id="affinity-difficulty" -->
+These NMs are **stat-boosted far beyond their retail versions**. Treat every Affinity NM as a party-level encounter unless you are heavily geared:
+
+| Boost | Value |
+|---|---:|
+| HP | ×12 |
+| Attack | +6,000 |
+| Accuracy | +2,400 |
+| Defense | +1,800 |
+| Evasion | +1,000 |
+| Magic Attack | +500 |
+| Magic Defense | +60 |
+| STR | +400 |
+| DEX | +400 |
+| Haste | ~+20% |
+| Double Attack | +25% |
+| Critical Hit Rate | +12% |
+| Store TP | +50 |
+<!-- DOCGEN:END id="affinity-difficulty" -->
 
 **Zone clusters to know:**
 
