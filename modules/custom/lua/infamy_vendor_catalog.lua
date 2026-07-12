@@ -121,6 +121,32 @@ catalog.vendorItems =
     -- Philosopher Stone too scarce; ~80 catalyst per gear set). Native shop charges
     -- Infamy; shows under the browser's "Other" sub-bucket. Peiste skins untouched.
     { id = 942, sub = "Other", name = "Philosopher's Stone", cost = 50, stats = { 'Augment catalyst: Capacity Point +33%.', 'Alchemy material / stacks to 12.' } },
+
+    -- Volte set (owner move 2026-07-12): the full 20-piece set relocated
+    -- here from the Armor Vendor (which carried only 15 of 20 pieces; the
+    -- other 5 were unobtainable). cat='Armor' puts them under the vendor's
+    -- Armor category browser.
+    { id = 23710, cat = 'Armor', sub = "Head", name = "Volte Beret", cost = 400, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO' } },
+    { id = 23711, cat = 'Armor', sub = "Head", name = "Volte Tiara", cost = 400, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN' } },
+    { id = 23712, cat = 'Armor', sub = "Head", name = "Volte Salade", cost = 400, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: WAR/PLD/DRK' } },
+    { id = 23713, cat = 'Armor', sub = "Head", name = "Volte Cap", cost = 400, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: All jobs' } },
+    { id = 23714, cat = 'Armor', sub = "Body", name = "Volte Doublet", cost = 500, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO' } },
+    { id = 23715, cat = 'Armor', sub = "Body", name = "Volte Harness", cost = 500, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN' } },
+    { id = 23716, cat = 'Armor', sub = "Body", name = "Volte Haubert", cost = 500, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: WAR/PLD/DRK' } },
+    { id = 23717, cat = 'Armor', sub = "Body", name = "Volte Jupon", cost = 500, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: All jobs' } },
+    { id = 23718, cat = 'Armor', sub = "Hands", name = "Volte Gloves", cost = 400, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO' } },
+    { id = 23719, cat = 'Armor', sub = "Hands", name = "Volte Mittens", cost = 400, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN' } },
+    { id = 23720, cat = 'Armor', sub = "Hands", name = "Volte Moufles", cost = 400, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: WAR/PLD/DRK' } },
+    { id = 23721, cat = 'Armor', sub = "Hands", name = "Volte Bracers", cost = 400, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: All jobs' } },
+    { id = 23722, cat = 'Armor', sub = "Legs", name = "Volte Brais", cost = 500, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO' } },
+    { id = 23723, cat = 'Armor', sub = "Legs", name = "Volte Tights", cost = 500, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN' } },
+    { id = 23724, cat = 'Armor', sub = "Legs", name = "Volte Brayettes", cost = 500, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: WAR/PLD/DRK' } },
+    { id = 23725, cat = 'Armor', sub = "Legs", name = "Volte Hose", cost = 500, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: All jobs' } },
+    { id = 23726, cat = 'Armor', sub = "Feet", name = "Volte Gaiters", cost = 400, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO' } },
+    { id = 23727, cat = 'Armor', sub = "Feet", name = "Volte Spats", cost = 400, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN' } },
+    { id = 23728, cat = 'Armor', sub = "Feet", name = "Volte Sollerets", cost = 400, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: WAR/PLD/DRK' } },
+    { id = 23729, cat = 'Armor', sub = "Feet", name = "Volte Boots", cost = 400, stats = { 'Volte set (Dynamis [D] armor)', 'Jobs: All jobs' } },
+
 }
 
 return catalog

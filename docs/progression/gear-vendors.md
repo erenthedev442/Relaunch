@@ -34,7 +34,7 @@ Both vendors use the same three currencies, tier-gated:
 Tiered armor across the five main slots. Items are listed with the seal cost and the jobs allowed to equip each piece.
 
 <!-- DOCGEN:BEGIN id="armor-slots" -->
-_78 pieces — 🥉 38 Bronze · 🥈 19 Silver · 🥇 21 Gold. Each slot lists every tier together — pick by your job and the medal you have._
+_62 pieces — 🥉 35 Bronze · 🥈 18 Silver · 🥇 9 Gold. Each slot lists every tier together — pick by your job and the medal you have._
 
 **Tiers:** <span class="tier-pill tier-bronze">🥉&nbsp;Bronze</span> Beastmens Medal — entry ilvl 119 · <span class="tier-pill tier-silver">🥈&nbsp;Silver</span> Kindreds Medal — HQ +1 / +2 augmented · <span class="tier-pill tier-gold">🥇&nbsp;Gold</span> Demons Medal — BiS (Volte / Omen bodies / exclusives)
 
@@ -57,8 +57,6 @@ _78 pieces — 🥉 38 Bronze · 🥈 19 Silver · 🥇 21 Gold. Each slot lists
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Welkin+Crown&go=Go" data-img="" target="_blank" rel="noopener">Welkin Crown</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Amalric+Coif+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Amalric Coif +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | BLM/RDM/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Maiitsoh+Haube&go=Go" data-img="" target="_blank" rel="noopener">Maiitsoh Haube</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/PLD/DRK/BST/SAM/NIN/DRG |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Beret&go=Go" data-img="" target="_blank" rel="noopener">Volte Beret</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Cap&go=Go" data-img="" target="_blank" rel="noopener">Volte Cap</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Gendewitha+Caubeen+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Gendewitha Caubeen +1</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WHM/RDM/BRD/SCH |
 
 ### Body
@@ -66,16 +64,13 @@ _78 pieces — 🥉 38 Bronze · 🥈 19 Silver · 🥇 21 Gold. Each slot lists
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Emicho+Haubert+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Emicho Haubert +1</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/PLD/DRK/BST/DRG |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Emet+Harness&go=Go" data-img="" target="_blank" rel="noopener">Emet Harness</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Kaykaus+Bliaut&go=Go" data-img="" target="_blank" rel="noopener">Kaykaus Bliaut</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/RDM/BRD/SCH |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Rosette+Jaseran&go=Go" data-img="" target="_blank" rel="noopener">Rosette Jaseran</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Vanir+Cotehardie&go=Go" data-img="" target="_blank" rel="noopener">Vanir Cotehardie</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Amalric+Doublet&go=Go" data-img="" target="_blank" rel="noopener">Amalric Doublet</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | BLM/RDM/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Kyujutsugi&go=Go" data-img="" target="_blank" rel="noopener">Kyujutsugi</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG/SAM |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Lapidary+Tunic&go=Go" data-img="" target="_blank" rel="noopener">Lapidary Tunic</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | MNK/THF/RNG/NIN/BLU/COR/DNC/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Crepuscular+Mail&go=Go" data-img="" target="_blank" rel="noopener">Crepuscular Mail</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/PLD/DRK/BST/SAM/DRG |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Respite+Cloak&go=Go" data-img="" target="_blank" rel="noopener">Respite Cloak</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Harness&go=Go" data-img="" target="_blank" rel="noopener">Volte Harness</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Gyve+Doublet&go=Go" data-img="" target="_blank" rel="noopener">Gyve Doublet</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO |
 
 ### Hands
@@ -93,10 +88,6 @@ _78 pieces — 🥉 38 Bronze · 🥈 19 Silver · 🥇 21 Gold. Each slot lists
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Telchine+Gloves&go=Go" data-img="" target="_blank" rel="noopener">Telchine Gloves</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Yorium+Gauntlets&go=Go" data-img="" target="_blank" rel="noopener">Yorium Gauntlets</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/DRK |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Emicho+Gauntlets+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Emicho Gauntlets +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/DRK/BST/DRG |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Moufles&go=Go" data-img="" target="_blank" rel="noopener">Volte Moufles</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/PLD/DRK |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Mittens&go=Go" data-img="" target="_blank" rel="noopener">Volte Mittens</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Gloves&go=Go" data-img="" target="_blank" rel="noopener">Volte Gloves</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Bracers&go=Go" data-img="" target="_blank" rel="noopener">Volte Bracers</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 
 ### Legs
 
@@ -110,14 +101,11 @@ _78 pieces — 🥉 38 Bronze · 🥈 19 Silver · 🥇 21 Gold. Each slot lists
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Querkening+Brais&go=Go" data-img="" target="_blank" rel="noopener">Querkening Brais</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Theurgists+Slacks&go=Go" data-img="" target="_blank" rel="noopener">Theurgists Slacks</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/SMN/PUP/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Lustratio+Subligar+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Lustratio Subligar +1</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/THF/PLD/DRK/BST/BRD/DRG/DNC/RUN |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Zoar+Subligar&go=Go" data-img="" target="_blank" rel="noopener">Zoar Subligar</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Helios+Spats&go=Go" data-img="" target="_blank" rel="noopener">Helios Spats</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Gorney+Brayettes+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Gorney Brayettes +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/DRK/BST/SAM/DRG |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Gyve+Trousers&go=Go" data-img="" target="_blank" rel="noopener">Gyve Trousers</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Amalric+Slops+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Amalric Slops +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | BLM/RDM/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Revelation+Brais&go=Go" data-img="" target="_blank" rel="noopener">Revelation Brais</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/BRD/NIN |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Brais&go=Go" data-img="" target="_blank" rel="noopener">Volte Brais</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Hose&go=Go" data-img="" target="_blank" rel="noopener">Volte Hose</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 
 ### Feet
 
@@ -130,11 +118,7 @@ _78 pieces — 🥉 38 Bronze · 🥈 19 Silver · 🥇 21 Gold. Each slot lists
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Yorium+Sabatons&go=Go" data-img="" target="_blank" rel="noopener">Yorium Sabatons</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/PLD/DRK |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Vanir+Boots&go=Go" data-img="" target="_blank" rel="noopener">Vanir Boots</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Artsieq+Boots&go=Go" data-img="" target="_blank" rel="noopener">Artsieq Boots</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Boots&go=Go" data-img="" target="_blank" rel="noopener">Volte Boots</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Navon+Crackows&go=Go" data-img="" target="_blank" rel="noopener">Navon Crackows</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Spats&go=Go" data-img="" target="_blank" rel="noopener">Volte Spats</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Sollerets&go=Go" data-img="" target="_blank" rel="noopener">Volte Sollerets</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/PLD/DRK |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Gaiters&go=Go" data-img="" target="_blank" rel="noopener">Volte Gaiters</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Amalric+Nails+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Amalric Nails +1</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | BLM/RDM/SMN/BLU/SCH/GEO |
 
 ### Shields
@@ -479,7 +463,7 @@ Looking for **+4 armor**? That's no longer bought here — the +4 tier is an ear
 
 ### Accessories
 
-_94 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
+_114 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 
 | Item | Cost | Notes |
 |---|---:|---|
@@ -577,11 +561,31 @@ _94 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Toutatis%27s+Cape&go=Go" data-img="" target="_blank" rel="noopener">Toutatis's Cape</a> | 4000 | Back. THF JSE cape. DEF+16. · Sneak Atk+10, Triple Atk dmg+20. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Visucius%27s+Mantle&go=Go" data-img="" target="_blank" rel="noopener">Visucius's Mantle</a> | 4000 | Back. PUP JSE cape. DEF+16. · Automaton Lv+1, Overload-10. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Philosopher%27s+Stone&go=Go" data-img="" target="_blank" rel="noopener">Philosopher's Stone</a> | 50 | Augment catalyst: Capacity Point +33%. · Alchemy material / stacks to 12. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Beret&go=Go" data-img="" target="_blank" rel="noopener">Volte Beret</a> | 400 | Volte set (Dynamis [D] armor) · Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Tiara&go=Go" data-img="" target="_blank" rel="noopener">Volte Tiara</a> | 400 | Volte set (Dynamis [D] armor) · Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Salade&go=Go" data-img="" target="_blank" rel="noopener">Volte Salade</a> | 400 | Volte set (Dynamis [D] armor) · Jobs: WAR/PLD/DRK |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Cap&go=Go" data-img="" target="_blank" rel="noopener">Volte Cap</a> | 400 | Volte set (Dynamis [D] armor) · Jobs: All jobs |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Doublet&go=Go" data-img="" target="_blank" rel="noopener">Volte Doublet</a> | 500 | Volte set (Dynamis [D] armor) · Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Harness&go=Go" data-img="" target="_blank" rel="noopener">Volte Harness</a> | 500 | Volte set (Dynamis [D] armor) · Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Haubert&go=Go" data-img="" target="_blank" rel="noopener">Volte Haubert</a> | 500 | Volte set (Dynamis [D] armor) · Jobs: WAR/PLD/DRK |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Jupon&go=Go" data-img="" target="_blank" rel="noopener">Volte Jupon</a> | 500 | Volte set (Dynamis [D] armor) · Jobs: All jobs |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Gloves&go=Go" data-img="" target="_blank" rel="noopener">Volte Gloves</a> | 400 | Volte set (Dynamis [D] armor) · Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Mittens&go=Go" data-img="" target="_blank" rel="noopener">Volte Mittens</a> | 400 | Volte set (Dynamis [D] armor) · Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Moufles&go=Go" data-img="" target="_blank" rel="noopener">Volte Moufles</a> | 400 | Volte set (Dynamis [D] armor) · Jobs: WAR/PLD/DRK |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Bracers&go=Go" data-img="" target="_blank" rel="noopener">Volte Bracers</a> | 400 | Volte set (Dynamis [D] armor) · Jobs: All jobs |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Brais&go=Go" data-img="" target="_blank" rel="noopener">Volte Brais</a> | 500 | Volte set (Dynamis [D] armor) · Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Tights&go=Go" data-img="" target="_blank" rel="noopener">Volte Tights</a> | 500 | Volte set (Dynamis [D] armor) · Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Brayettes&go=Go" data-img="" target="_blank" rel="noopener">Volte Brayettes</a> | 500 | Volte set (Dynamis [D] armor) · Jobs: WAR/PLD/DRK |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Hose&go=Go" data-img="" target="_blank" rel="noopener">Volte Hose</a> | 500 | Volte set (Dynamis [D] armor) · Jobs: All jobs |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Gaiters&go=Go" data-img="" target="_blank" rel="noopener">Volte Gaiters</a> | 400 | Volte set (Dynamis [D] armor) · Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Spats&go=Go" data-img="" target="_blank" rel="noopener">Volte Spats</a> | 400 | Volte set (Dynamis [D] armor) · Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Sollerets&go=Go" data-img="" target="_blank" rel="noopener">Volte Sollerets</a> | 400 | Volte set (Dynamis [D] armor) · Jobs: WAR/PLD/DRK |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Boots&go=Go" data-img="" target="_blank" rel="noopener">Volte Boots</a> | 400 | Volte set (Dynamis [D] armor) · Jobs: All jobs |
 <!-- DOCGEN:END id="infamy-vendor" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 703c08f7ca95 -->
-_Last updated: 2026-07-12 02:16 PDT_
+<!-- content-hash: c5554a461701 -->
+_Last updated: 2026-07-12 02:30 PDT_
 <!-- DOCGEN:END id="last-updated" -->

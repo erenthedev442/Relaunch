@@ -123,9 +123,10 @@ local function groupCurated()
     local items = buildCuratedItems()
     local g     = {}
     for _, it in ipairs(items) do
-        -- Accessories-only vendor: category is fixed; each item carries its own
-        -- slot sub-category (Neck/Ear/Ring/Waist/Back) in catalog.vendorItems.
-        local cat, sub = 'Accessories', (it.sub or 'Other')
+        -- Each item carries its own slot sub-category; `cat` is optional and
+        -- defaults to Accessories (the vendor was accessories-only until the
+        -- Volte set moved here 2026-07-12 with cat='Armor').
+        local cat, sub = (it.cat or 'Accessories'), (it.sub or 'Other')
         g[cat]      = g[cat] or {}
         g[cat][sub] = g[cat][sub] or {}
         table.insert(g[cat][sub], { item = it })
