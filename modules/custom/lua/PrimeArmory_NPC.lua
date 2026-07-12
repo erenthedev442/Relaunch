@@ -417,10 +417,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         name       = 'Prime_Armory',
         packetName = string.format('%sPrime Armory', xi.icon.STAR_LARGE),
         look       = 216,
-        x          =  584.971,
+        x          =  574.600,
         y          =   -3.360,
-        z          =  526.586,
-        rotation   =  192,
+        z          =  531.800,
+        rotation   =  208,
         widescan   =  1,
 
         onTrade = function(player, npc, trade)

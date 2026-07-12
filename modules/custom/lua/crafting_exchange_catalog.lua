@@ -18,10 +18,10 @@ catalog.npcPos =
 {
     zone     = 'Abdhaljs_Isle-Purgonorgo',
     zoneId   = 44,
-    x        = 578.971,
+    x        = 556.000,
     y        =   -3.360,
-    z        =  526.586,
-    rotation =  190,
+    z        =  520.300,
+    rotation =    0,
 }
 
 catalog.npcLook = 2430    -- Elvaan merchant look (same as Armor/Accessory vendors)

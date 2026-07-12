@@ -16,7 +16,7 @@ catalog.zoneId   = xi.zone.ABDHALJS_ISLE_PURGONORGO
 catalog.zonePath = 'xi.zones.Abdhaljs_Isle-Purgonorgo'
 catalog.npcName  = 'Title Broker'
 catalog.npcLook  = 3017
-catalog.npcPos   = { x = 560.971, y = -3.360, z = 520.586, rot = 64 }
+catalog.npcPos   = { x = 580.000, y = -3.360, z = 520.500, rot = 160 }
 
 -- Tiered title catalog. Cheap = silly flavor, mid = decent prestige,
 -- expensive = rare endgame titles. Player can buy + display anything

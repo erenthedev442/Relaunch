@@ -31,7 +31,7 @@ local ARENA = {
 }
 
 -- Board NPC location in Celennia Memorial Library.
-local BOARD_POS = { x = 560.971, y = -3.360, z = 544.586, rot = 64 }
+local BOARD_POS = { x = 529.200, y = -3.038, z = 554.500, rot = 224 }
 
 -- Second "Re-Hunt" board IN the hunt zone (Escha-Zi'tah), so players can spawn
 -- the next NM without warping back to the hub. Placed by the T1 landing point

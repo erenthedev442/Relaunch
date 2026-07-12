@@ -474,10 +474,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         packetName = string.format('%sAugment Moogle', xi.icon.STAR_LARGE),
         look       = 1834,   -- Alexander model: divine mechanical deity, colossal scale
         -- GM Home Augment Sanctum (z=-45): centered, standalone, far from the main NPC cluster.
-        x          = 554.971,
+        x          = 562.400,
         y          =   -3.360,
-        z          =  526.586,
-        rotation   =  64,
+        z          =  532.000,
+        rotation   =  96,
         widescan   =  1,
 
         onTrigger = function(player, npc)

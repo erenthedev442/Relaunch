@@ -37,10 +37,10 @@ catalog.npcPos =
 {
     zone     = 'Abdhaljs_Isle-Purgonorgo',
     zoneId   = 44,
-    x        = 578.971,
+    x        = 576.500,
     y        =   -3.360,
-    z        =  538.586,
-    rotation =  128,
+    z        =  537.000,
+    rotation =    0,
 }
 
 -- Duels may only be fought in this zone (the replica spawns relative

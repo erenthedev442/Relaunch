@@ -284,10 +284,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         name       = 'Apex_Arbiter',
         packetName = string.format('%sApex Arbiter', xi.icon.STAR_LARGE),
         look       = 75,
-        x          = 554.971,
+        x          = 573.500,
         y          =   -3.360,
-        z          =  538.586,
-        rotation   =  64,
+        z          =  544.000,
+        rotation   =  80,
         widescan   =  1,
 
         onTrigger = function(player, npc)

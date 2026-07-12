@@ -22,10 +22,10 @@ catalog.npcPos =
 {
     zone     = 'Abdhaljs_Isle-Purgonorgo',
     zoneId   = 44,
-    x        = 572.971,
-    y        =  -3.360,
-    z        = 544.586,
-    rotation =  190,
+    x        = 523.500,
+    y        =  -3.038,
+    z        = 551.000,
+    rotation =   48,
 }
 
 -- How many objectives per day.

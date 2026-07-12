@@ -17,7 +17,7 @@ local catalog = {}
 
 catalog.GIL_COST = 10000000  -- 10,000,000 gil each, matching the Ability Trainer
 catalog.cvPrefix = 'CJTrait_' -- per-trait ownership charVar: CJTrait_<id> = 1
-catalog.npcPos   = { x = 560.971, y = -3.360, z = 532.586, rot = 64 }
+catalog.npcPos   = { x = 559.000, y = -3.360, z = 536.800, rot = 64 }
 
 catalog.traits =
 {

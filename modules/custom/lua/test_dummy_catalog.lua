@@ -49,10 +49,10 @@ catalog.npcPos =
 {
     zone     = 'Abdhaljs_Isle-Purgonorgo',
     zoneId   = 44,
-    x        =  584.971,
+    x        =  548.500,
     y        =  -3.360,
-    z        = 532.586,
-    rotation =  128,
+    z        = 515.000,
+    rotation =   64,
 }
 
 -- Where the dummy mob appears when summoned. Pulled WELL away from the

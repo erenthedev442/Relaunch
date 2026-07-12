@@ -16,10 +16,10 @@ catalog.npcPos =
 {
     zone     = 'Abdhaljs_Isle-Purgonorgo',
     zoneId   = 44,
-    x        =  554.971,
+    x        =  552.500,
     y        =  -3.360,
-    z        = 520.586,
-    rotation = 128,
+    z        = 520.500,
+    rotation =  64,
 }
 
 catalog.vendorItems =

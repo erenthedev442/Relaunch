@@ -19,10 +19,10 @@ catalog.npcPos =
 {
     zone     = 'Abdhaljs_Isle-Purgonorgo',
     zoneId   = 44,
-    x        = 584.971,
+    x        = 582.000,
     y        =   -3.360,
-    z        = 520.586,
-    rotation =  190,
+    z        = 528.000,
+    rotation = 160,
 }
 
 -- Bet sizes offered in the menu (gil).

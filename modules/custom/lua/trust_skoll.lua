@@ -83,7 +83,7 @@ local NPC_NAME  = 'Void_Keeper'
 local NPC_LOOK  = 3017          -- 3017 = Trust: Prishe - a silver-haired divine warrior model; far more fitting
                                 -- for a 50M-gil vendor of legendary Trusts than a generic Moogle.
                                 -- Change this value if you have a preferred divine/godlike NPC look ID.
-local NPC_POS   = { x = 578.971, y = -3.360, z = 532.586, rot = 192 }
+local NPC_POS   = { x = 566.000, y = -3.360, z = 539.500, rot = 192 }
 
 m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)

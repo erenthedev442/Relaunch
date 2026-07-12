@@ -11,7 +11,7 @@
 -----------------------------------
 local C = {}
 
-C.NPC_POS = { x = 560.971, y = -3.360, z = 538.586, rot = 64 }  -- Leafallia, endgame NPC row
+C.NPC_POS = { x = 583.200, y = -3.360, z = 541.700, rot = 192 }  -- Leafallia, endgame NPC row
 
 -- ── Paragon Level (infinite prestige) ───────────────────────────────────────
 -- Cost in Paragon Points to go from level `cur` to `cur + 1`. Ramps.

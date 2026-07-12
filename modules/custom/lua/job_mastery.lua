@@ -447,10 +447,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         name       = 'Weapon_Mastery_Sage',
         packetName = 'Weapon Mastery Sage',
         look       = 212,
-        x          =  572.971,
+        x          =  563.500,
         y          =   -3.360,
-        z          =  532.586,
-        rotation   =  192,
+        z          =  542.500,
+        rotation   =  224,
         widescan   =  1,
 
         onTrigger = function(player, npc)

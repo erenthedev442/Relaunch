@@ -17,7 +17,7 @@ local catalog = {}
 
 catalog.npcName = 'Boutique'
 catalog.npcLook = 2419  -- Moogle
-catalog.npcPos  = { x = 572.971, y = -3.360, z = 520.586, rot = 192 }
+catalog.npcPos  = { x = 580.500, y = -3.360, z = 524.500, rot = 128 }
 
 -- Daily rotation table. One item per entry.
 -- Fields: id (item_basic itemId), name (display string ≤20 chars), price (allied notes)
