@@ -341,6 +341,14 @@ INSERT IGNORE INTO `item_mods` VALUES (22219, 30, 40);   -- MACC (MACC: 80 (50% 
 INSERT IGNORE INTO `item_mods` VALUES (22219, 25, 40);   -- ACC (ACC: 80 (50% of latent))
 INSERT IGNORE INTO `item_mods` VALUES (22219, 23, 40);   -- ATT (ATT: 80 (50% of latent))
 
+-- date_shuriken (22292) -- Date Shuriken
+INSERT IGNORE INTO `item_mods` VALUES (22292, 26, 5);   -- RACC (RACC: 5)
+INSERT IGNORE INTO `item_mods` VALUES (22292, 25, 5);   -- ACC (ACC: 5)
+INSERT IGNORE INTO `item_mods` VALUES (22292, 68, 5);   -- EVA (EVA: 5)
+INSERT IGNORE INTO `item_mods` VALUES (22292, 27, 3);   -- ENMITY (ENMITY: 3)
+INSERT IGNORE INTO `item_mods` VALUES (22292, 9, 5);   -- DEX (DEX: 5)
+INSERT IGNORE INTO `item_mods` VALUES (22292, 11, 5);   -- AGI (AGI: 5)
+
 -- hauksbok_bolt (22294) -- Hauksbok Bolt
 INSERT IGNORE INTO `item_mods` VALUES (22294, 28, 30);   -- MATT (MATT: 30)
 INSERT IGNORE INTO `item_mods` VALUES (22294, 30, 30);   -- MACC (MACC: 30)

@@ -77,14 +77,14 @@ Domain Points spend at the exchange NPC in the hub. Check the NPC's menu for the
 Capped out on Domain Points for the day? The same gear has a second price tag. The tables below are generated straight from the vendor's live catalog.
 
 <!-- DOCGEN:BEGIN id="domain-spoils" -->
-The **Domain Quartermaster** stands at <!--npc:domain_quartermaster-->Purgonorgo Isle<!--/npc--> (`!hub`) and sells the entire Zurim Domain-Points catalog for **Hunt Marks** — the currency earned from [Hunting League](../progression/index.md) NM kills, Weekly Hunts, wave events, and dailies. Everything Zurim sells for daily-capped Domain Points is also here for marks, so you can keep gearing after you've hit the day's Domain-Point ceiling. _131 items across 3 categories._
+The **Domain Quartermaster** stands at <!--npc:domain_quartermaster-->Purgonorgo Isle<!--/npc--> (`!hub`) and sells the entire Zurim Domain-Points catalog for **Hunt Marks** — the currency earned from [Hunting League](../progression/index.md) NM kills, Weekly Hunts, wave events, and dailies. Everything Zurim sells for daily-capped Domain Points is also here for marks, so you can keep gearing after you've hit the day's Domain-Point ceiling. _135 items across 3 categories._
 
 Pricing follows one rule: **Hunt Marks cost = Zurim's Domain-Point cost × 2.5**. Domain Points are daily-capped; marks are not.
 
 | Zurim price (Domain Points) | Quartermaster price (Hunt Marks) | Items |
 |---:|---:|---:|
 | 40 DP | 100 | 15 |
-| 80 DP | 200 | 16 |
+| 80 DP | 200 | 20 |
 | 100 DP | 250 | 6 |
 | 200 DP | 500 | 22 |
 | 600 DP | 1,500 | 18 |
@@ -133,6 +133,10 @@ Pricing follows one rule: **Hunt Marks cost = Zurim's Domain-Point cost × 2.5**
 | <a class="item-link" href="https://www.ffxiah.com/item/21686" data-img="https://www.bg-wiki.com/images/1/12/Zulfiqar_description.png" target="_blank" rel="noopener">Zulfiqar</a> | Reisenjima | 2,000 |
 | <a class="item-link" href="https://www.ffxiah.com/item/22219" data-img="https://www.bg-wiki.com/images/e/e8/Voluspa_Grip_description.png" target="_blank" rel="noopener">Voluspa Grip</a> | Grip-Shield | 200 |
 | <a class="item-link" href="https://www.ffxiah.com/item/26413" data-img="https://www.bg-wiki.com/images/f/f5/Voluspa_Shield_description.png" target="_blank" rel="noopener">Voluspa Shield</a> | Grip-Shield | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/6449" data-img="https://static.ffxiah.com/images/icon/6449.png" target="_blank" rel="noopener">Date Shuriken Pouch</a> | Ammo | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/6429" data-img="https://static.ffxiah.com/images/icon/6429.png" target="_blank" rel="noopener">Voluspa Bolt Quiver</a> | Ammo | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/6438" data-img="https://static.ffxiah.com/images/icon/6438.png" target="_blank" rel="noopener">Voluspa Bullet Pouch</a> | Ammo | 200 |
+| <a class="item-link" href="https://www.ffxiah.com/item/6420" data-img="https://static.ffxiah.com/images/icon/6420.png" target="_blank" rel="noopener">Voluspa Quiver</a> | Ammo | 200 |
 | <a class="item-link" href="https://www.ffxiah.com/item/22294" data-img="https://www.bg-wiki.com/images/c/c4/Hauksbok_Bolt_description.png" target="_blank" rel="noopener">Hauksbok Bolt</a> | Ammo | 2,500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/22295" data-img="https://www.bg-wiki.com/images/f/f4/Hauksbok_Bullet_description.png" target="_blank" rel="noopener">Hauksbok Bullet</a> | Ammo | 2,500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/22296" data-img="https://www.bg-wiki.com/images/b/b7/Voluspa_Tathlum_description.png" target="_blank" rel="noopener">Voluspa Tathlum</a> | Ammo | 2,500 |
@@ -248,6 +252,6 @@ Pricing follows one rule: **Hunt Marks cost = Zurim's Domain-Point cost × 2.5**
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e45f8d5aaa50 -->
-_Last updated: 2026-07-10 17:13 PDT_
+<!-- content-hash: 2e84b2d276a8 -->
+_Last updated: 2026-07-11 20:56 PDT_
 <!-- DOCGEN:END id="last-updated" -->

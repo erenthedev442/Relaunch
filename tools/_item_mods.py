@@ -32,6 +32,7 @@ SOURCES = [
     ("zz_reforge_plus4_displayed_stats.sql", False),
     ("zz_relic_119iii_mods.sql", False),
     ("zz_tokko_voluspa_mods.sql", False),
+    ("zz_zurim_gear_mods.sql", False),
     ("zzz_reforge_carryforward.sql", False),
 ]
 # Tolerate spaces after commas: some item_mods rows are written "(23756, 1, 152)"

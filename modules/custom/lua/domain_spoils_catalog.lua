@@ -193,6 +193,15 @@ catalog.vendorItems =
     { id = 22144, cat = 'Weapons', sub = 'Voluspa', name = 'Voluspa Gun', cost = 200 },
     { id = 23740, cat = 'Armor', sub = 'Head', name = 'Angantyr Beret', cost = 100 },
     { id = 25717, cat = 'Armor', sub = 'Body', name = 'Valorous Mail', cost = 2000 },
+
+    -- Ammo pouches (Zurim 80 DP -> 200 marks). Player request 2026-07-10:
+    -- Date Shuriken shares Zurim's 80 DP pool with the Voluspa pouches, so all
+    -- four dispensers belong here too. Usable items (99x ammo per use), sold
+    -- through the same native shop window as everything else.
+    { id = 6420, cat = 'Weapons', sub = 'Ammo', name = 'Voluspa Quiver',      cost = 200 },
+    { id = 6429, cat = 'Weapons', sub = 'Ammo', name = 'Voluspa Bolt Quiver', cost = 200 },
+    { id = 6438, cat = 'Weapons', sub = 'Ammo', name = 'Voluspa Bullet Pouch', cost = 200 },
+    { id = 6449, cat = 'Weapons', sub = 'Ammo', name = 'Date Shuriken Pouch', cost = 200 },
 }
 
 return catalog

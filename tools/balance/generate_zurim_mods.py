@@ -88,6 +88,11 @@ ITEMS: dict[int, str] = {
     21976: 'voluspa_tachi', 22006: 'voluspa_hammer', 22088: 'voluspa_pole',
     22133: 'voluspa_bow', 22144: 'voluspa_gun',
     23740: 'angantyr_beret', 25717: 'valorous_mail',
+    # 2026-07-11 player request: Date Shuriken (80pt pool, via Date Shuriken
+    # Pouch) shipped statless too. Throwing skill +242 is intrinsic (item_weapon
+    # ilvl_skill, fixed in sql/item_weapon.sql) and stripped here like all
+    # weapon skill lines.
+    22292: 'date_shuriken',
 }
 
 # Combat-skill mod ids that are INTRINSIC on weapons (item_weapon ilvl columns),
