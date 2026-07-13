@@ -80,6 +80,98 @@ catalog.bronze =
 {
     weapons =
     {
+        -- HUNT-VENDOR BATCH (owner 2026-07-13): exclusive Escha/Delve weapons (flat ilvl band)
+        { id = 20955, name = "Agilis Lance", cost = 12, jobs = 'DRG' },  -- ilvl 109
+        { id = 20910, name = "Anaimatos Scythe", cost = 12, jobs = 'DRK' },  -- ilvl 109
+        { id = 20819, name = "Antican Axe", cost = 12, jobs = 'WAR/DRK/BST/RNG/RUN' },  -- ilvl 109
+        { id = 20776, name = "Beorc Sword", cost = 12, jobs = 'RUN' },  -- ilvl 109
+        { id = 20626, name = "Blitto Needle", cost = 12, jobs = 'RDM/THF/BRD/RNG/NIN' },  -- ilvl 109
+        { id = 21185, name = "Boonwell Staff", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' },  -- ilvl 109
+        { id = 21045, name = "Bukyoku", cost = 12, jobs = 'SAM' },  -- ilvl 109
+        { id = 20823, name = "Camaraderie Axe", cost = 12, jobs = 'WAR/BST' },  -- ilvl 109
+        { id = 20735, name = "Camaraderie Blade", cost = 12, jobs = 'RDM/PLD/BLU' },  -- ilvl 109
+        { id = 21235, name = "Camaraderie Bow", cost = 12, jobs = 'RNG' },  -- ilvl 109
+        { id = 21254, name = "Camaraderie Bowgun", cost = 12, jobs = 'RNG' },  -- ilvl 109
+        { id = 20771, name = "Camaraderie Claymore", cost = 12, jobs = 'PLD/DRK/RUN' },  -- ilvl 109
+        { id = 20633, name = "Camaraderie Dagger", cost = 12, jobs = 'THF/BRD/DNC' },  -- ilvl 109
+        { id = 21285, name = "Camaraderie Gun", cost = 12, jobs = 'RNG/COR' },  -- ilvl 109
+        { id = 21003, name = "Camaraderie Katana", cost = 12, jobs = 'NIN' },  -- ilvl 109
+        { id = 20545, name = "Camaraderie Knuckles", cost = 12, jobs = 'MNK/PUP' },  -- ilvl 109
+        { id = 20960, name = "Camaraderie Lance", cost = 12, jobs = 'DRG' },  -- ilvl 109
+        { id = 21189, name = "Camaraderie Pole", cost = 12, jobs = 'SMN' },  -- ilvl 109
+        { id = 20869, name = "Camaraderie Reaver", cost = 12, jobs = 'WAR/DRK/RUN' },  -- ilvl 109
+        { id = 20914, name = "Camaraderie Scythe", cost = 12, jobs = 'DRK' },  -- ilvl 109
+        { id = 21188, name = "Camaraderie Staff", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' },  -- ilvl 109
+        { id = 21050, name = "Camaraderie Tachi", cost = 12, jobs = 'SAM' },  -- ilvl 109
+        { id = 21123, name = "Camaraderie Wand", cost = 12, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' },  -- ilvl 109
+        { id = 20957, name = "Concido Course", cost = 12, jobs = 'WAR/SAM/DRG' },  -- ilvl 109
+        { id = 21124, name = "Dowsers Wand", cost = 12, jobs = 'GEO' },  -- ilvl 109
+        { id = 20542, name = "Gnafrons Adargas", cost = 12, jobs = 'PUP' },  -- ilvl 109
+        { id = 20999, name = "Habukatana", cost = 12, jobs = 'NIN' },  -- ilvl 109
+        { id = 20818, name = "Hurlbat", cost = 12, jobs = 'RNG' },  -- ilvl 109
+        { id = 20728, name = "Kheshig Blade", cost = 12, jobs = 'PLD' },  -- ilvl 109
+        { id = 21046, name = "Kiikanemitsu", cost = 12, jobs = 'SAM/NIN' },  -- ilvl 109
+        { id = 20911, name = "Last Rest", cost = 12, jobs = 'WAR/BLM/DRK/BST' },  -- ilvl 109
+        { id = 20629, name = "Legato Dagger", cost = 12, jobs = 'BRD' },  -- ilvl 109
+        { id = 21000, name = "Magorokuhocho", cost = 12, jobs = 'NIN' },  -- ilvl 109
+        { id = 20767, name = "Medicor Sword", cost = 12, jobs = 'WAR/PLD/DRK/RUN' },  -- ilvl 109
+        { id = 20628, name = "Mindmeld Kris", cost = 12, jobs = 'BLM/SMN/SCH/GEO' },  -- ilvl 109
+        { id = 21252, name = "One-Eyed", cost = 12, jobs = 'THF/RNG' },  -- ilvl 109
+        { id = 20866, name = "Parashu", cost = 12, jobs = 'WAR/DRK/RUN' },  -- ilvl 109
+        { id = 21120, name = "Patriarch Cane", cost = 12, jobs = 'WHM/BLM/SMN/SCH/GEO' },  -- ilvl 109
+        { id = 21232, name = "Phulax Bow", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' },  -- ilvl 109
+        { id = 20541, name = "Pinion Cesti", cost = 12, jobs = 'MNK' },  -- ilvl 109
+        { id = 20730, name = "Predatrice", cost = 12, jobs = 'BLU' },  -- ilvl 109
+        { id = 21282, name = "Qasama Hexagun", cost = 12, jobs = 'COR' },  -- ilvl 109
+        { id = 20625, name = "Secespita", cost = 12, jobs = 'RDM' },  -- ilvl 109
+        { id = 20956, name = "Sibat", cost = 12, jobs = 'WAR/PLD/SAM/DRG' },  -- ilvl 109
+        { id = 20627, name = "Surcoufs Jambiya", cost = 12, jobs = 'COR' },  -- ilvl 109
+        { id = 21184, name = "Surma Staff", cost = 12, jobs = 'MNK/WHM/PLD/DRG' },  -- ilvl 109
+        { id = 20727, name = "Tabahi Fleuret", cost = 12, jobs = 'RDM/DRG' },  -- ilvl 109
+        { id = 20749, name = "Trial Blade", cost = 12, jobs = 'RUN' },  -- ilvl 109
+        { id = 21066, name = "Trial Wand", cost = 12, jobs = 'GEO' },  -- ilvl 109
+        { id = 20729, name = "Vivifiante", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BRD/RNG/NIN/DRG/BLU/RUN' },  -- ilvl 109
+        { id = 20740, name = "Camatlatia", cost = 12, jobs = 'RDM/PLD/BLU' },  -- ilvl 106
+        { id = 21454, name = "Forefront Animator", cost = 12, jobs = 'PUP' },  -- ilvl 106
+        { id = 20825, name = "Forefront Axe", cost = 12, jobs = 'WAR/BST' },  -- ilvl 106
+        { id = 20737, name = "Forefront Blade", cost = 12, jobs = 'WAR/THF/DRK/BST/RNG/SAM/BLU' },  -- ilvl 106
+        { id = 21237, name = "Forefront Bow", cost = 12, jobs = 'RNG' },  -- ilvl 106
+        { id = 21255, name = "Forefront Bowgun", cost = 12, jobs = 'RNG' },  -- ilvl 106
+        { id = 20547, name = "Forefront Cesti", cost = 12, jobs = 'MNK/PUP' },  -- ilvl 106
+        { id = 20777, name = "Forefront Claymore", cost = 12, jobs = 'PLD/DRK/RUN' },  -- ilvl 106
+        { id = 20635, name = "Forefront Dagger", cost = 12, jobs = 'THF/BRD/DNC' },  -- ilvl 106
+        { id = 21287, name = "Forefront Gun", cost = 12, jobs = 'RNG/COR' },  -- ilvl 106
+        { id = 20871, name = "Forefront Labrys", cost = 12, jobs = 'WAR' },  -- ilvl 106
+        { id = 20962, name = "Forefront Lance", cost = 12, jobs = 'DRG' },  -- ilvl 106
+        { id = 21197, name = "Forefront Scepter", cost = 12, jobs = 'SMN' },  -- ilvl 106
+        { id = 20916, name = "Forefront Scythe", cost = 12, jobs = 'DRK' },  -- ilvl 106
+        { id = 21196, name = "Forefront Staff", cost = 12, jobs = 'BLM/SCH/GEO' },  -- ilvl 106
+        { id = 21127, name = "Forefront Wand", cost = 12, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' },  -- ilvl 106
+        { id = 21014, name = "Ichijintanto", cost = 12, jobs = 'NIN' },  -- ilvl 106
+        { id = 21059, name = "Ichijinto", cost = 12, jobs = 'SAM' },  -- ilvl 106
+        { id = 20829, name = "Icoyoca", cost = 12, jobs = 'WAR/BST' },  -- ilvl 106
+        { id = 20643, name = "Macoquetza", cost = 12, jobs = 'RDM/THF/BRD/RNG/NIN/COR/DNC' },  -- ilvl 106
+        { id = 21054, name = "Suijingiri Kanemitsu", cost = 12, jobs = 'SAM' },  -- ilvl 106
+        { id = 20554, name = "Tlalpoloani", cost = 12, jobs = 'MNK/PUP' },  -- ilvl 106
+        { id = 20965, name = "Tlamini", cost = 12, jobs = 'DRG' },  -- ilvl 106
+        { id = 21257, name = "Zoquittihuitz", cost = 12, jobs = 'RNG' },  -- ilvl 106
+        { id = 21191, name = "Voay Staff -1", cost = 12, jobs = 'WAR/MNK/WHM/BLM/PLD/BRD/DRG/SMN/SCH/GEO' },  -- ilvl 105
+        { id = 20772, name = "Voay Sword -1", cost = 12, jobs = 'PLD/DRK/RUN' },  -- ilvl 105
+        { id = 21205, name = "Avitap Pole", cost = 12, jobs = 'SMN' },  -- ilvl 100
+        { id = 20830, name = "Coalition Axe", cost = 12, jobs = 'WAR/BST' },  -- ilvl 100
+        { id = 20741, name = "Coalition Blade", cost = 12, jobs = 'RDM/PLD/BLU' },  -- ilvl 100
+        { id = 21241, name = "Coalition Bow", cost = 12, jobs = 'RNG' },  -- ilvl 100
+        { id = 20638, name = "Coalition Dirk", cost = 12, jobs = 'THF/BRD/DNC' },  -- ilvl 100
+        { id = 20966, name = "Coalition Lance", cost = 12, jobs = 'DRG' },  -- ilvl 100
+        { id = 21131, name = "Coalition Rod", cost = 12, jobs = 'WHM/GEO' },  -- ilvl 100
+        { id = 20782, name = "Coalition Sword", cost = 12, jobs = 'PLD/DRK/RUN' },  -- ilvl 100
+        { id = 20921, name = "Fieldrazer Scythe", cost = 12, jobs = 'DRK' },  -- ilvl 100
+        { id = 21055, name = "Kashiwadachi", cost = 12, jobs = 'SAM' },  -- ilvl 100
+        { id = 21008, name = "Kotekirigo", cost = 12, jobs = 'NIN' },  -- ilvl 100
+        { id = 21291, name = "Shadeshot Gun", cost = 12, jobs = 'RNG/COR' },  -- ilvl 100
+        { id = 21204, name = "Sortilevel Staff", cost = 12, jobs = 'BLM/SCH/GEO' },  -- ilvl 100
+        { id = 20876, name = "Trunkcleaver", cost = 12, jobs = 'WAR' },  -- ilvl 100
+        { id = 20550, name = "Vineslash Cesti", cost = 12, jobs = 'MNK/PUP' },  -- ilvl 100
         -- 2026-07: removed Tokko Knuckles (21515) -- it is the Hand-to-Hand Stage-2 (119II)
         -- forge output in weapon_forge_catalog.lua, so selling it here violates the
         -- medal-vendor exclusivity rule (validate_vendor_exclusivity.py). MNK/PUP keep
@@ -95,6 +187,38 @@ catalog.silver =
 {
     weapons =
     {
+        -- HUNT-VENDOR BATCH (owner 2026-07-13): exclusive Escha/Delve weapons (flat ilvl band)
+        { id = 21233, name = "Ajjub Bow", cost = 25, jobs = 'RNG' },  -- ilvl 115
+        { id = 21253, name = "Atetepeyorg", cost = 25, jobs = 'RNG' },  -- ilvl 115
+        { id = 20630, name = "Atoyac", cost = 25, jobs = 'RDM/THF/BRD/RNG/NIN/COR/DNC' },  -- ilvl 115
+        { id = 21047, name = "Azukinagamitsu", cost = 25, jobs = 'SAM' },  -- ilvl 115
+        { id = 21186, name = "Baqil Staff", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' },  -- ilvl 115
+        { id = 20820, name = "Hatxiik", cost = 25, jobs = 'WAR/BST' },  -- ilvl 115
+        { id = 20826, name = "Hunahpu", cost = 25, jobs = 'BST' },  -- ilvl 115
+        { id = 20872, name = "Ixtab", cost = 25, jobs = 'WAR' },  -- ilvl 115
+        { id = 20768, name = "Kaquljaan", cost = 25, jobs = 'WAR/PLD/DRK/RUN' },  -- ilvl 115
+        { id = 20958, name = "Kuakuakait", cost = 25, jobs = 'DRG' },  -- ilvl 115
+        { id = 20543, name = "Maochinoli", cost = 25, jobs = 'MNK/PUP' },  -- ilvl 115
+        { id = 20992, name = "Taikogane", cost = 25, jobs = 'NIN' },  -- ilvl 115
+        { id = 21125, name = "Tamaxchi", cost = 25, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' },  -- ilvl 115
+        { id = 20917, name = "Xbalanque", cost = 25, jobs = 'DRK' },  -- ilvl 115
+        { id = 20731, name = "Xiutleato", cost = 25, jobs = 'RDM/PLD/BLU' },  -- ilvl 115
+        { id = 21455, name = "Alternator", cost = 25, jobs = 'PUP' },  -- ilvl 113
+        { id = 20637, name = "Aphotic Kukri", cost = 25, jobs = 'WAR/THF/DRK/RNG/NIN/COR/PUP/DNC' },  -- ilvl 113
+        { id = 20778, name = "Bereaver", cost = 25, jobs = 'PLD/DRK/RUN' },  -- ilvl 113
+        { id = 20873, name = "Bloodbath Axe", cost = 25, jobs = 'WAR' },  -- ilvl 113
+        { id = 20828, name = "Brethren Axe", cost = 25, jobs = 'BST' },  -- ilvl 113
+        { id = 20918, name = "Dimmet Scythe", cost = 25, jobs = 'DRK' },  -- ilvl 113
+        { id = 20739, name = "Halachuinic Sword", cost = 25, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' },  -- ilvl 113
+        { id = 21005, name = "Kiji", cost = 25, jobs = 'NIN' },  -- ilvl 113
+        { id = 21128, name = "Mondaha Cudgel", cost = 25, jobs = 'WAR/MNK/WHM/BLM/PLD/SMN/BLU/SCH/GEO' },  -- ilvl 113
+        { id = 20964, name = "Ophidian Trident", cost = 25, jobs = 'DRG' },  -- ilvl 113
+        { id = 20549, name = "Rigor Baghnakhs", cost = 25, jobs = 'MNK/PUP' },  -- ilvl 113
+        { id = 21198, name = "Soothsayer Staff", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' },  -- ilvl 113
+        { id = 21238, name = "Speleogen Bow", cost = 25, jobs = 'RNG/SAM' },  -- ilvl 113
+        { id = 21288, name = "Surefire Arquebus", cost = 25, jobs = 'RNG/COR' },  -- ilvl 113
+        { id = 21053, name = "Uguisumaru", cost = 25, jobs = 'SAM' },  -- ilvl 113
+        { id = 21199, name = "Yaskomos Pole", cost = 25, jobs = 'SMN' },  -- ilvl 113
         { id = 20615, name = "Levante Dagger", cost = 25, jobs = 'WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/SCH/GEO' },
         { id = 20808, name = "Tramontane Axe", cost = 25, jobs = 'WAR/DRK/BST/RUN' },
         { id = 20827, name = "Kerehcatl", cost = 25, jobs = 'WAR/BST' },
@@ -119,6 +243,9 @@ catalog.gold =
 {
     weapons =
     {
+        -- HUNT-VENDOR BATCH (owner 2026-07-13): exclusive Escha/Delve weapons (flat ilvl band)
+        { id = 21478, name = "Moros Crossbow +1", cost = 50, jobs = 'RNG' },  -- ilvl 118
+        { id = 21375, name = "Magneto", cost = 50, jobs = 'PUP' },  -- ilvl 117
     },
 }
 -----------------------------------

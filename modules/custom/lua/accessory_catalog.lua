@@ -235,4 +235,207 @@ table.insert(inf.back, { id =  28628, name = 'Takaha Mantle'                    
 -- ear (Sortie +2, one per job)
 
 
+
+-----------------------------------
+-- HUNT-VENDOR BATCH (owner 2026-07-13): Escha/Delve/Skirmish gear NOT obtainable
+-- anywhere else on relaunch (exclusive). Tier = flat ilvl band:
+--   gold >=116 | silver 110-115 | bronze <110 (accessories have no ilvl -> bronze).
+-----------------------------------
+table.insert(b.back, { id = 26275, name = "Alabaster Mantle", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 11004, name = "Algidus Cape", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.back, { id = 28618, name = "Anchorets Mantle", cost = 15, jobs = 'MNK' })  -- ilvl 0
+table.insert(b.back, { id = 10979, name = "Balladeers Cape", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.back, { id = 28620, name = "Bane Cape", cost = 15, jobs = 'BLM' })  -- ilvl 0
+table.insert(b.back, { id = 27600, name = "Bleating Mantle", cost = 15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 10988, name = "Blithe Mantle", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 11576, name = "Bond Cape", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.back, { id = 28612, name = "Buquwik Cape", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 28622, name = "Canny Cape", cost = 15, jobs = 'THF' })  -- ilvl 0
+table.insert(b.back, { id = 10981, name = "Chela Cape", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.back, { id = 10994, name = "Chuparrosa Mantle", cost = 15, jobs = 'DRK' })  -- ilvl 0
+table.insert(b.back, { id = 26246, name = "Cichols Mantle", cost = 15, jobs = 'WAR' })  -- ilvl 0
+table.insert(b.back, { id = 28642, name = "Contrivers Cape", cost = 15, jobs = 'PUP' })  -- ilvl 0
+table.insert(b.back, { id = 28632, name = "Cornflower Cape", cost = 15, jobs = 'BLU' })  -- ilvl 0
+table.insert(b.back, { id = 28634, name = "Dispersal Mantle", cost = 15, jobs = 'PUP' })  -- ilvl 0
+table.insert(b.back, { id = 10993, name = "Drachenblut Cape", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 28608, name = "Earthcry Mantle", cost = 15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 10990, name = "Engulfer Cape", cost = 15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 28599, name = "Engulfer Cape +1", cost = 15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 28638, name = "Evasionists Cape", cost = 15, jobs = 'RUN' })  -- ilvl 0
+table.insert(b.back, { id = 28589, name = "Felicitas Cape +1", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.back, { id = 11010, name = "Feline Mantle", cost = 15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 11005, name = "Fierabrass Mantle", cost = 15, jobs = 'WAR/PLD' })  -- ilvl 0
+table.insert(b.back, { id = 28592, name = "Forban Cape +1", cost = 15, jobs = 'RNG/COR' })  -- ilvl 0
+table.insert(b.back, { id = 28593, name = "Fugacity Mantle +1", cost = 15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 28621, name = "Ghostfyre Cape", cost = 15, jobs = 'RDM' })  -- ilvl 0
+table.insert(b.back, { id = 28633, name = "Gunslingers Cape", cost = 15, jobs = 'COR' })  -- ilvl 0
+table.insert(b.back, { id = 11012, name = "Gwyddions Cape", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.back, { id = 28610, name = "Ik Cape", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 27622, name = "Impassive Mantle", cost = 15, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- ilvl 0
+table.insert(b.back, { id = 28614, name = "Iximulew Cape", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 28588, name = "Karagoz Mantle +1", cost = 15, jobs = 'PUP' })  -- ilvl 0
+table.insert(b.back, { id = 28613, name = "Kayapa Cape", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 28603, name = "Kumbira Cape", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.back, { id = 28637, name = "Lifestream Cape", cost = 15, jobs = 'GEO' })  -- ilvl 0
+table.insert(b.back, { id = 27608, name = "Lupine Cape", cost = 15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 28627, name = "Lutian Cape", cost = 15, jobs = 'RNG' })  -- ilvl 0
+table.insert(b.back, { id = 28617, name = "Maulers Mantle", cost = 15, jobs = 'WAR' })  -- ilvl 0
+table.insert(b.back, { id = 10987, name = "Meanagh Cape", cost = 15, jobs = 'MNK/THF/BST/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 28597, name = "Meanagh Cape +1", cost = 15, jobs = 'MNK/THF/BST/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 27596, name = "Mecistopins Mantle", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 28619, name = "Mending Cape", cost = 15, jobs = 'WHM' })  -- ilvl 0
+table.insert(b.back, { id = 10978, name = "Misuuchi Kappa", cost = 15, jobs = 'MNK/SAM/NIN' })  -- ilvl 0
+table.insert(b.back, { id = 10980, name = "Mollusca Mantle", cost = 15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 10985, name = "Moondoe Mantle", cost = 15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 28595, name = "Moondoe Mantle +1", cost = 15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 28604, name = "Mubvumbamiri Mantle", cost = 15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 26276, name = "Murky Mantle", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 26274, name = "Null Shawl", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 10986, name = "Oretanias Cape", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.back, { id = 28596, name = "Oretanias Cape +1", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.back, { id = 28640, name = "Pahtli Cape", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.back, { id = 28625, name = "Pastoralists Mantle", cost = 15, jobs = 'BST' })  -- ilvl 0
+table.insert(b.back, { id = 11003, name = "Prodigious Mantle", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 10991, name = "Rancorous Mantle", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 28643, name = "Refraction Cape", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.back, { id = 27621, name = "Relucent Cape", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 28639, name = "Repulse Mantle", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 28626, name = "Rhapsodes Cape", cost = 15, jobs = 'BRD' })  -- ilvl 0
+table.insert(b.back, { id = 10977, name = "Romanus Cape", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.back, { id = 26270, name = "Sacro Mantle", cost = 15, jobs = 'MNK/THF/BST/NIN/PUP/DNC' })  -- ilvl 0
+table.insert(b.back, { id = 28605, name = "Samanisi Cape", cost = 15, jobs = 'SMN' })  -- ilvl 0
+table.insert(b.back, { id = 28609, name = "Savior Mantle", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.back, { id = 11013, name = "Taubran Cape", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.back, { id = 10989, name = "Tempered Cape", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 28598, name = "Tempered Cape +1", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 11006, name = "Thall Mantle", cost = 15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 28635, name = "Toetapper Mantle", cost = 15, jobs = 'DNC' })  -- ilvl 0
+table.insert(b.back, { id = 28615, name = "Toro Cape", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 28611, name = "Tuilha Cape", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.back, { id = 10992, name = "Vassals Mantle", cost = 15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 28590, name = "Vates Cape +1", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.back, { id = 28594, name = "Vellaunus Mantle +1", cost = 15, jobs = 'MNK/RDM/THF/BST/RNG/NIN/DRG/COR/PUP/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 10982, name = "Vimukti Mantle", cost = 15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.back, { id = 28623, name = "Weard Mantle", cost = 15, jobs = 'PLD' })  -- ilvl 0
+table.insert(b.back, { id = 28629, name = "Yokaze Mantle", cost = 15, jobs = 'NIN' })  -- ilvl 0
+table.insert(b.back, { id = 10995, name = "Zaffre Cape", cost = 15, jobs = 'BLU' })  -- ilvl 0
+table.insert(b.neck, { id = 28357, name = "Acesos Choker +1", cost = 15, jobs = 'WHM' })  -- ilvl 0
+table.insert(b.neck, { id = 28394, name = "Analgesia Torque", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28355, name = "Ardor Pendant +1", cost = 15, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.neck, { id = 28402, name = "Asperity Necklace", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28385, name = "Atzintli Necklace", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 10937, name = "Calcitrant Stole", cost = 15, jobs = 'MNK/RDM/THF/BST/RNG/NIN/DRG/COR/PUP/DNC/RUN' })  -- ilvl 0
+table.insert(b.neck, { id = 28350, name = "Cloud Hairpin", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28351, name = "Cloud Hairpin +1", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28363, name = "Coatl Gorget +1", cost = 15, jobs = 'PLD/DRK' })  -- ilvl 0
+table.insert(b.neck, { id = 28386, name = "Cuamiz Collar", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 27506, name = "Defiant Collar", cost = 15, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.neck, { id = 27507, name = "Deviant Necklace", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 10939, name = "Dualism Collar", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28362, name = "Dualism Collar +1", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28401, name = "Eddy Necklace", cost = 15, jobs = 'WHM/BLM/RDM/PLD/DRK/SMN/BLU/SCH/GEO/RUN' })  -- ilvl 0
+table.insert(b.neck, { id = 28356, name = "Eidolon Pendant +1", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.neck, { id = 28397, name = "Ensnaring Torque", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28398, name = "Farr Torque", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 10928, name = "Ganeshas Mala", cost = 15, jobs = 'DRK/SAM/DRG' })  -- ilvl 0
+table.insert(b.neck, { id = 28366, name = "Gaudryi Necklace", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28395, name = "Hamrammr Torque", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 10938, name = "Houyis Gorget", cost = 15, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.neck, { id = 26043, name = "Hoxne Torque", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28384, name = "Huani Collar", cost = 15, jobs = 'MNK/RDM/THF/BST/RNG/NIN/DRG/COR/PUP/DNC/RUN' })  -- ilvl 0
+table.insert(b.neck, { id = 28381, name = "Imbodla Necklace", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- ilvl 0
+table.insert(b.neck, { id = 28403, name = "Inquisitor Bead Necklace", cost = 15, jobs = 'MNK/RDM/THF/BST/RNG/NIN/DRG/COR/PUP/DNC/RUN' })  -- ilvl 0
+table.insert(b.neck, { id = 10959, name = "Inquisitors Chain", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28380, name = "Iqabi Necklace", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 10397, name = "Ishtars Collar", cost = 15, jobs = 'WAR/MNK/THF/BST/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC' })  -- ilvl 0
+table.insert(b.neck, { id = 10934, name = "Justiciars Torque", cost = 15, jobs = 'MNK/THF/DRK/BST/SAM/DRG/DNC/RUN' })  -- ilvl 0
+table.insert(b.neck, { id = 28358, name = "Katipo Charm +1", cost = 15, jobs = 'WAR/PLD/DRK/BST/SAM/NIN/DRG' })  -- ilvl 0
+table.insert(b.neck, { id = 28360, name = "Lacono Necklace +1", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 10395, name = "Lasaia Pendant", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- ilvl 0
+table.insert(b.neck, { id = 28399, name = "Melioration Torque", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 10958, name = "Nefarious Collar", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28365, name = "Nefarious Collar +1", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28400, name = "Ocachi Gorget", cost = 15, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.neck, { id = 10394, name = "Orunmilas Torque", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28383, name = "Pentalagus Charm", cost = 15, jobs = 'THF' })  -- ilvl 0
+table.insert(b.neck, { id = 10960, name = "Phalaina Locket", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28387, name = "Quanpur Necklace", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 0
+table.insert(b.neck, { id = 25415, name = "Republican Platinum Medal", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 10396, name = "Rioters Collar", cost = 15, jobs = 'WAR/PLD/DRK/BST/SAM/NIN' })  -- ilvl 0
+table.insert(b.neck, { id = 28364, name = "Saevus Pendant +1", cost = 15, jobs = 'WHM/BLM/SMN/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.neck, { id = 27516, name = "Satlada Necklace", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28359, name = "Shifting Necklace +1", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 26041, name = "Sroda Necklace", cost = 15, jobs = 'WHM/RDM' })  -- ilvl 0
+table.insert(b.neck, { id = 10957, name = "Stoicheion Medal", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28396, name = "Sverrir Torque", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 28388, name = "Tlamiztli Collar", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 10398, name = "Weike Torque", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.neck, { id = 10936, name = "Wiglen Gorget", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 28435, name = "Acerbic Sash +1", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 28426, name = "Acipayam Belt", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 26344, name = "Artemiss Quiver", cost = 15, jobs = 'RNG' })  -- ilvl 0
+table.insert(b.waist, { id = 10829, name = "Artful Belt", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 10830, name = "Artful Belt +1", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 10840, name = "Aswang Sash", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- ilvl 0
+table.insert(b.waist, { id = 28434, name = "Austerity Belt +1", cost = 15, jobs = 'WHM/BLM/RDM/PLD/DRK/SMN/BLU/SCH/GEO/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 28433, name = "Belisamas Rope +1", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- ilvl 0
+table.insert(b.waist, { id = 10820, name = "Bishops Sash", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 10842, name = "Bougonia Rope", cost = 15, jobs = 'WHM/BLM/BRD/SMN/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.waist, { id = 10832, name = "Carriers Sash", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 10824, name = "Casso Sash", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 10844, name = "Caudata Belt", cost = 15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 28460, name = "Cetl Belt", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 28450, name = "Chaac Belt", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 10825, name = "Chiners Belt", cost = 15, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 28438, name = "Chiners Belt +1", cost = 15, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 26345, name = "Chrono Quiver", cost = 15, jobs = 'RNG' })  -- ilvl 0
+table.insert(b.waist, { id = 28459, name = "Chuqaba Belt", cost = 15, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 10823, name = "Cimmerian Sash", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 26365, name = "Cornelias Belt", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 10814, name = "Corvax Sash", cost = 15, jobs = 'MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 10845, name = "Elanid Belt", cost = 15, jobs = 'THF/RNG/COR' })  -- ilvl 0
+table.insert(b.waist, { id = 28414, name = "Engraved Belt", cost = 15, jobs = 'WAR/MNK/THF/BST/NIN/DNC/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 28422, name = "Famine Sash", cost = 15, jobs = 'MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 28431, name = "Flax Sash", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 10819, name = "Flume Belt", cost = 15, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 28452, name = "Fucho-No-Obi", cost = 15, jobs = 'MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 28453, name = "Gevaudan Belt", cost = 15, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- ilvl 0
+table.insert(b.waist, { id = 10816, name = "Glassblowers Belt", cost = 15, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 10822, name = "Harfners Sash", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 28462, name = "Hurchlan Sash", cost = 15, jobs = 'MNK/THF/BST/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 28418, name = "Incarnation Sash", cost = 15, jobs = 'BST/DRG/SMN/PUP' })  -- ilvl 0
+table.insert(b.waist, { id = 28451, name = "Isa Belt", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 10846, name = "Istio Belt", cost = 15, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- ilvl 0
+table.insert(b.waist, { id = 28458, name = "Jaqij Sash", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- ilvl 0
+table.insert(b.waist, { id = 28456, name = "Kasiri Belt", cost = 15, jobs = 'MNK/WHM/RDM/THF/BST/BRD/RNG/SAM/NIN/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 28457, name = "Kuku Stone", cost = 15, jobs = 'BST/DRG/SMN/PUP' })  -- ilvl 0
+table.insert(b.waist, { id = 26358, name = "Ligeia Sash", cost = 15, jobs = 'SMN' })  -- ilvl 0
+table.insert(b.waist, { id = 10833, name = "Maniacus Sash", cost = 15, jobs = 'WHM/BLM/BRD/SMN/PUP/SCH/GEO' })  -- ilvl 0
+table.insert(b.waist, { id = 26367, name = "Null Belt", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 26363, name = "Obstinate Sash", cost = 15, jobs = 'WHM/RDM/BRD/SCH' })  -- ilvl 0
+table.insert(b.waist, { id = 28442, name = "Olseni Belt", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 10821, name = "Olympus Sash", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 10839, name = "Othila Sash", cost = 15, jobs = 'WHM/BLM/RDM/SMN/SCH/GEO' })  -- ilvl 0
+table.insert(b.waist, { id = 10831, name = "Paewr Belt", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 10841, name = "Panthalassa Sash", cost = 15, jobs = 'MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 10838, name = "Patentia Sash", cost = 15, jobs = 'WAR/BLM/THF/DRK/BST/RNG/NIN/DRG/PUP/DNC/SCH' })  -- ilvl 0
+table.insert(b.waist, { id = 10815, name = "Phasmida Belt", cost = 15, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 26366, name = "Platinum Moogle Belt", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 10827, name = "Prosilio Belt", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 26346, name = "Quelling Bolt Quiver", cost = 15, jobs = 'RNG' })  -- ilvl 0
+table.insert(b.waist, { id = 26325, name = "Refoccilation Stone", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- ilvl 0
+table.insert(b.waist, { id = 28421, name = "Rumination Sash", cost = 15, jobs = 'MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 28461, name = "Sekhmet Corset", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/GEO' })  -- ilvl 0
+table.insert(b.waist, { id = 10835, name = "Slipor Sash", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- ilvl 0
+table.insert(b.waist, { id = 26364, name = "Sroda Belt", cost = 15, jobs = 'PLD/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 28436, name = "Sveltesse Gouriz +1", cost = 15, jobs = 'MNK/WHM/RDM/THF/BST/BRD/RNG/SAM/NIN/BLU/COR/DNC/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 26362, name = "Tellen Belt", cost = 15, jobs = 'RNG/COR' })  -- ilvl 0
+table.insert(b.waist, { id = 10834, name = "Wanion Belt", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 10828, name = "Windbuffet Belt", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 28440, name = "Windbuffet Belt +1", cost = 15, jobs = 'All' })  -- ilvl 0
+table.insert(b.waist, { id = 10826, name = "Witful Belt", cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- ilvl 0
+table.insert(b.waist, { id = 28443, name = "Yamabuki-No-Obi", cost = 15, jobs = 'MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 0
+table.insert(b.waist, { id = 26343, name = "Yoichis Quiver", cost = 15, jobs = 'RNG/SAM' })  -- ilvl 0
+table.insert(b.waist, { id = 28463, name = "Zorans Belt", cost = 15, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- ilvl 0
+
 return catalog

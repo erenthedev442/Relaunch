@@ -28,23 +28,59 @@ local m = Module:new('accessory_npc')
 m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
     super(zone)
 
-    local function openShop(player, sealDef, items)
-        if #items == 0 then
+    -- Native shop windows hold at most 16 items (createShop cap). A (tier, slot)
+    -- with more is PAGED so nothing is silently hidden (previously it truncated
+    -- at 16). `offset` is the 0-based index of the page's first item. Mirrors the
+    -- Weapons NPC (GearProgression_NPC).
+    local SHOP_PAGE = 16
+
+    local function openShop(player, sealDef, items, offset)
+        offset = offset or 0
+        local total = #items
+        if total == 0 then
             player:printToPlayer('No items available here.', xi.msg.channel.SYSTEM_3)
             return
         end
-        local count = math.min(#items, 16)
+        local count    = math.min(total - offset, SHOP_PAGE)
+        local pageNote = total > SHOP_PAGE
+            and string.format(' [items %d-%d of %d]', offset + 1, offset + count, total)
+            or ''
         player:printToPlayer(
-            string.format('Browsing %s accessories. Currency: %s (you have %d). Hover items to preview.',
-                sealDef.name, sealDef.name, player:getItemCount(sealDef.id)),
+            string.format('Browsing %s accessories%s. Currency: %s (you have %d). Hover items to preview.',
+                sealDef.name, pageNote, sealDef.name, player:getItemCount(sealDef.id)),
             xi.msg.channel.SYSTEM_3)
         player:timer(50, function(p)
             p:createShop(count)
             for i = 1, count do
-                p:addShopItem(items[i].id, items[i].cost)
+                p:addShopItem(items[offset + i].id, items[offset + i].cost)
             end
             p:setShopCurrency(sealDef.id)
             p:sendMenu(xi.menuType.SHOP)
+        end)
+    end
+
+    -- Open a slot's items directly (<=16) or via a page picker when larger.
+    local function openSlotShop(player, sealDef, items, slotLabel)
+        if #items <= SHOP_PAGE then
+            openShop(player, sealDef, items)
+            return
+        end
+        local pages   = math.ceil(#items / SHOP_PAGE)
+        local options = {}
+        for pg = 1, pages do
+            local first = (pg - 1) * SHOP_PAGE + 1
+            local last  = math.min(pg * SHOP_PAGE, #items)
+            options[#options + 1] = {
+                string.format('Page %d  (items %d-%d)', pg, first, last),
+                function(playerArg) openShop(playerArg, sealDef, items, first - 1) end,
+            }
+        end
+        options[#options + 1] = { 'Close', function() end }
+        player:timer(30, function(p)
+            p:customMenu({
+                title   = string.format('%s %s - Choose Page', sealDef.name:match('^(%S+)') or '', slotLabel or ''),
+                options = options,
+            })
         end)
     end
 
@@ -65,7 +101,7 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
                 table.insert(options, {
                     string.format('%s (%d)', SLOT_LABEL[slotKey], #items),
                     function(playerArg)
-                        openShop(playerArg, capturedSealDef, capturedItems)
+                        openSlotShop(playerArg, capturedSealDef, capturedItems, SLOT_LABEL[slotKey])
                     end,
                 })
             end

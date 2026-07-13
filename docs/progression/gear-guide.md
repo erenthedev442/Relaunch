@@ -37,7 +37,7 @@ Hunt Marks come from participating in [Hunting League](index.md) spawns at Escha
 ## The Weapons Vendor
 
 **Location:** Escha ZiTah — next to the Hunting League NPCs  
-This NPC sells weapons in 8 categories across three tiers. All items are ilvl 119 and available immediately to any job that can equip them. Browse the menu by weapon type; the NPC filters to categories relevant to your current job.
+This NPC sells weapons in 15 categories across three tiers. All items are ilvl 119 and available immediately to any job that can equip them. Browse the menu by weapon type; the NPC filters to categories relevant to your current job.
 
 ---
 
@@ -46,13 +46,27 @@ This NPC sells weapons in 8 categories across three tiers. All items are ilvl 11
 **Currency:** 12 Beastmens Medals each (= 60 Hunt Marks per weapon)  
 **For:** new characters who just hit level 99, or anyone who needs a solid baseline weapon fast.
 
-Bronze weapons are curated for vendor exclusivity — the NPC stocks only gear you can't earn elsewhere (1 weapon across 1 category). Current stock covers 4 of 22 jobs — everyone else gears up via the Infamy picks, the forge paths, or Silver.
+Bronze weapons are curated for vendor exclusivity — the NPC stocks only gear you can't earn elsewhere (92 weapons across 15 categories). Every job has at least one option.
 
 ### Selected highlights
 
 | Category | Standout picks | Jobs |
 |---|---|---|
-| Marksmanship | <a class="item-link" href="https://www.ffxiah.com/item/21274" data-img="https://www.bg-wiki.com/images/9/90/Donar_Gun_description.png" target="_blank" rel="noopener">Donar Gun</a> | THF/RNG/NIN/COR |
+| Swords | <a class="item-link" href="https://www.ffxiah.com/item/20735" data-img="https://static.ffxiah.com/images/icon/20735.png" target="_blank" rel="noopener">Camaraderie Blade</a>, <a class="item-link" href="https://www.ffxiah.com/item/20728" data-img="https://static.ffxiah.com/images/icon/20728.png" target="_blank" rel="noopener">Kheshig Blade</a>, <a class="item-link" href="https://www.ffxiah.com/item/20730" data-img="https://static.ffxiah.com/images/icon/20730.png" target="_blank" rel="noopener">Predatrice</a> | RDM/PLD/BLU |
+| Daggers | <a class="item-link" href="https://www.ffxiah.com/item/20626" data-img="https://static.ffxiah.com/images/icon/20626.png" target="_blank" rel="noopener">Blitto Needle</a>, <a class="item-link" href="https://www.ffxiah.com/item/20633" data-img="https://static.ffxiah.com/images/icon/20633.png" target="_blank" rel="noopener">Camaraderie Dagger</a>, <a class="item-link" href="https://www.ffxiah.com/item/20629" data-img="https://static.ffxiah.com/images/icon/20629.png" target="_blank" rel="noopener">Legato Dagger</a> | RDM/THF/BRD/RNG/NIN/DNC |
+| Clubs | <a class="item-link" href="https://www.ffxiah.com/item/21123" data-img="https://static.ffxiah.com/images/icon/21123.png" target="_blank" rel="noopener">Camaraderie Wand</a>, <a class="item-link" href="https://www.ffxiah.com/item/21124" data-img="https://static.ffxiah.com/images/icon/21124.png" target="_blank" rel="noopener">Dowsers Wand</a>, <a class="item-link" href="https://www.ffxiah.com/item/21120" data-img="https://static.ffxiah.com/images/icon/21120.png" target="_blank" rel="noopener">Patriarch Cane</a> | WHM/BLM/RDM/SMN/BLU/SCH/GEO |
+| Staves | <a class="item-link" href="https://www.ffxiah.com/item/21185" data-img="https://static.ffxiah.com/images/icon/21185.png" target="_blank" rel="noopener">Boonwell Staff</a>, <a class="item-link" href="https://www.ffxiah.com/item/21189" data-img="https://static.ffxiah.com/images/icon/21189.png" target="_blank" rel="noopener">Camaraderie Pole</a>, <a class="item-link" href="https://www.ffxiah.com/item/21188" data-img="https://static.ffxiah.com/images/icon/21188.png" target="_blank" rel="noopener">Camaraderie Staff</a> | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
+| Great Swords | <a class="item-link" href="https://www.ffxiah.com/item/20776" data-img="https://static.ffxiah.com/images/icon/20776.png" target="_blank" rel="noopener">Beorc Sword</a>, <a class="item-link" href="https://www.ffxiah.com/item/20771" data-img="https://static.ffxiah.com/images/icon/20771.png" target="_blank" rel="noopener">Camaraderie Claymore</a>, <a class="item-link" href="https://www.ffxiah.com/item/20767" data-img="https://static.ffxiah.com/images/icon/20767.png" target="_blank" rel="noopener">Medicor Sword</a> | RUN/PLD/DRK/WAR |
+| Axes | <a class="item-link" href="https://www.ffxiah.com/item/20819" data-img="https://static.ffxiah.com/images/icon/20819.png" target="_blank" rel="noopener">Antican Axe</a>, <a class="item-link" href="https://www.ffxiah.com/item/20823" data-img="https://static.ffxiah.com/images/icon/20823.png" target="_blank" rel="noopener">Camaraderie Axe</a>, <a class="item-link" href="https://www.ffxiah.com/item/20818" data-img="https://static.ffxiah.com/images/icon/20818.png" target="_blank" rel="noopener">Hurlbat</a> | WAR/DRK/BST/RNG/RUN |
+| Great Axes | <a class="item-link" href="https://www.ffxiah.com/item/20869" data-img="https://static.ffxiah.com/images/icon/20869.png" target="_blank" rel="noopener">Camaraderie Reaver</a>, <a class="item-link" href="https://www.ffxiah.com/item/20866" data-img="https://static.ffxiah.com/images/icon/20866.png" target="_blank" rel="noopener">Parashu</a>, <a class="item-link" href="https://www.ffxiah.com/item/20871" data-img="https://static.ffxiah.com/images/icon/20871.png" target="_blank" rel="noopener">Forefront Labrys</a> | WAR/DRK/RUN |
+| Scythes | <a class="item-link" href="https://www.ffxiah.com/item/20910" data-img="https://static.ffxiah.com/images/icon/20910.png" target="_blank" rel="noopener">Anaimatos Scythe</a>, <a class="item-link" href="https://www.ffxiah.com/item/20914" data-img="https://static.ffxiah.com/images/icon/20914.png" target="_blank" rel="noopener">Camaraderie Scythe</a>, <a class="item-link" href="https://www.ffxiah.com/item/20911" data-img="https://static.ffxiah.com/images/icon/20911.png" target="_blank" rel="noopener">Last Rest</a> | DRK/WAR/BLM/BST |
+| Polearms | <a class="item-link" href="https://www.ffxiah.com/item/20955" data-img="https://static.ffxiah.com/images/icon/20955.png" target="_blank" rel="noopener">Agilis Lance</a>, <a class="item-link" href="https://www.ffxiah.com/item/20960" data-img="https://static.ffxiah.com/images/icon/20960.png" target="_blank" rel="noopener">Camaraderie Lance</a>, <a class="item-link" href="https://www.ffxiah.com/item/20957" data-img="https://static.ffxiah.com/images/icon/20957.png" target="_blank" rel="noopener">Concido Course</a> | DRG/WAR/SAM |
+| Katana | <a class="item-link" href="https://www.ffxiah.com/item/21003" data-img="https://static.ffxiah.com/images/icon/21003.png" target="_blank" rel="noopener">Camaraderie Katana</a>, <a class="item-link" href="https://www.ffxiah.com/item/20999" data-img="https://static.ffxiah.com/images/icon/20999.png" target="_blank" rel="noopener">Habukatana</a>, <a class="item-link" href="https://www.ffxiah.com/item/21000" data-img="https://static.ffxiah.com/images/icon/21000.png" target="_blank" rel="noopener">Magorokuhocho</a> | NIN |
+| Great Katana | <a class="item-link" href="https://www.ffxiah.com/item/21045" data-img="https://static.ffxiah.com/images/icon/21045.png" target="_blank" rel="noopener">Bukyoku</a>, <a class="item-link" href="https://www.ffxiah.com/item/21050" data-img="https://static.ffxiah.com/images/icon/21050.png" target="_blank" rel="noopener">Camaraderie Tachi</a>, <a class="item-link" href="https://www.ffxiah.com/item/21046" data-img="https://static.ffxiah.com/images/icon/21046.png" target="_blank" rel="noopener">Kiikanemitsu</a> | SAM/NIN |
+| Archery | <a class="item-link" href="https://www.ffxiah.com/item/21235" data-img="https://static.ffxiah.com/images/icon/21235.png" target="_blank" rel="noopener">Camaraderie Bow</a>, <a class="item-link" href="https://www.ffxiah.com/item/21232" data-img="https://static.ffxiah.com/images/icon/21232.png" target="_blank" rel="noopener">Phulax Bow</a>, <a class="item-link" href="https://www.ffxiah.com/item/21237" data-img="https://static.ffxiah.com/images/icon/21237.png" target="_blank" rel="noopener">Forefront Bow</a> | RNG/WAR/RDM/THF/PLD/DRK/BST/SAM/… |
+| Marksmanship | <a class="item-link" href="https://www.ffxiah.com/item/21254" data-img="https://static.ffxiah.com/images/icon/21254.png" target="_blank" rel="noopener">Camaraderie Bowgun</a>, <a class="item-link" href="https://www.ffxiah.com/item/21285" data-img="https://static.ffxiah.com/images/icon/21285.png" target="_blank" rel="noopener">Camaraderie Gun</a>, <a class="item-link" href="https://www.ffxiah.com/item/21252" data-img="https://static.ffxiah.com/images/icon/21252.png" target="_blank" rel="noopener">One-Eyed</a> | RNG/COR/THF |
+| Hand-to-Hand | <a class="item-link" href="https://www.ffxiah.com/item/20545" data-img="https://static.ffxiah.com/images/icon/20545.png" target="_blank" rel="noopener">Camaraderie Knuckles</a>, <a class="item-link" href="https://www.ffxiah.com/item/20542" data-img="https://static.ffxiah.com/images/icon/20542.png" target="_blank" rel="noopener">Gnafrons Adargas</a>, <a class="item-link" href="https://www.ffxiah.com/item/20541" data-img="https://static.ffxiah.com/images/icon/20541.png" target="_blank" rel="noopener">Pinion Cesti</a> | MNK/PUP |
+| Grips | <a class="item-link" href="https://www.ffxiah.com/item/21454" data-img="https://static.ffxiah.com/images/icon/21454.png" target="_blank" rel="noopener">Forefront Animator</a> | PUP |
 
 !!! tip "60 Hunt Marks per weapon"
     At Bronze tier, 60 Hunt Marks = 12 Beastmens Medals = one weapon. A typical Hunting League session yields enough to buy one or two weapons. Prioritize your main weapon first, then fill in an offhand or ranged slot.
@@ -64,20 +78,27 @@ Bronze weapons are curated for vendor exclusivity — the NPC stocks only gear y
 **Currency:** 25 Kindreds Medals each (= 375 Hunt Marks per weapon)  
 **For:** characters with Hunting League Rank I–III who want a significant step up from Bronze.
 
-Silver weapons have higher base damage and often better weapon skills or secondary stats (14 weapons across 8 categories), with a wider selection than Bronze.
+Silver weapons have higher base damage and often better weapon skills or secondary stats (42 weapons across 15 categories), with a wider selection than Bronze.
 
 ### Selected highlights
 
 | Category | Standout picks | Jobs |
 |---|---|---|
-| Daggers | <a class="item-link" href="https://www.ffxiah.com/item/20615" data-img="https://www.bg-wiki.com/images/2/28/Levante_Dagger_description.png" target="_blank" rel="noopener">Levante Dagger</a>, <a class="item-link" href="https://www.ffxiah.com/item/21568" data-img="https://www.bg-wiki.com/images/2/28/Acrontica_description.png" target="_blank" rel="noopener">Acrontica</a>, <a class="item-link" href="https://www.ffxiah.com/item/21569" data-img="https://www.bg-wiki.com/images/3/3a/Chocobo_Knife_description.png" target="_blank" rel="noopener">Chocobo Knife</a> | WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/… |
-| Clubs | <a class="item-link" href="https://www.ffxiah.com/item/21104" data-img="https://www.bg-wiki.com/images/b/bf/Eosuchus_Club_description.png" target="_blank" rel="noopener">Eosuchus Club</a> | All |
-| Axes | <a class="item-link" href="https://www.ffxiah.com/item/20808" data-img="https://www.bg-wiki.com/images/f/f7/Tramontane_Axe_description.png" target="_blank" rel="noopener">Tramontane Axe</a>, <a class="item-link" href="https://www.ffxiah.com/item/20827" data-img="https://www.bg-wiki.com/images/9/9b/Kerehcatl_description.png" target="_blank" rel="noopener">Kerehcatl</a> | WAR/DRK/BST/RUN |
-| Scythes | <a class="item-link" href="https://www.ffxiah.com/item/20893" data-img="https://www.bg-wiki.com/images/d/db/Shukuyu%27s_Scythe_description.png" target="_blank" rel="noopener">Shukuyus Scythe</a> | WAR/DRK/BST |
-| Polearms | <a class="item-link" href="https://www.ffxiah.com/item/20945" data-img="https://www.bg-wiki.com/images/d/dc/Nativus_Halberd_description.png" target="_blank" rel="noopener">Nativus Halberd</a> | WAR/PLD/SAM/DRG |
-| Archery | <a class="item-link" href="https://www.ffxiah.com/item/21228" data-img="https://www.bg-wiki.com/images/7/73/Falubeza_description.png" target="_blank" rel="noopener">Falubeza</a>, <a class="item-link" href="https://www.ffxiah.com/item/22118" data-img="https://www.bg-wiki.com/images/3/31/Venery_Bow_description.png" target="_blank" rel="noopener">Venery Bow</a> | RNG |
-| Marksmanship | <a class="item-link" href="https://www.ffxiah.com/item/21256" data-img="https://www.bg-wiki.com/images/f/f9/Illapa_description.png" target="_blank" rel="noopener">Illapa</a>, <a class="item-link" href="https://www.ffxiah.com/item/22119" data-img="https://www.bg-wiki.com/images/e/e5/Wochowsen_description.png" target="_blank" rel="noopener">Wochowsen</a> | RNG |
-| Hand-to-Hand | <a class="item-link" href="https://www.ffxiah.com/item/21529" data-img="https://www.bg-wiki.com/images/f/ff/Premium_Heart_description.png" target="_blank" rel="noopener">Premium Heart</a> | MNK/PUP |
+| Swords | <a class="item-link" href="https://www.ffxiah.com/item/20731" data-img="https://static.ffxiah.com/images/icon/20731.png" target="_blank" rel="noopener">Xiutleato</a>, <a class="item-link" href="https://www.ffxiah.com/item/20739" data-img="https://static.ffxiah.com/images/icon/20739.png" target="_blank" rel="noopener">Halachuinic Sword</a> | RDM/PLD/BLU/WAR/THF/DRK/BST/BRD/… |
+| Daggers | <a class="item-link" href="https://www.ffxiah.com/item/20630" data-img="https://static.ffxiah.com/images/icon/20630.png" target="_blank" rel="noopener">Atoyac</a>, <a class="item-link" href="https://www.ffxiah.com/item/20637" data-img="https://static.ffxiah.com/images/icon/20637.png" target="_blank" rel="noopener">Aphotic Kukri</a>, <a class="item-link" href="https://www.ffxiah.com/item/20615" data-img="https://static.ffxiah.com/images/icon/20615.png" target="_blank" rel="noopener">Levante Dagger</a> | RDM/THF/BRD/RNG/NIN/COR/DNC/WAR/… |
+| Clubs | <a class="item-link" href="https://www.ffxiah.com/item/21125" data-img="https://static.ffxiah.com/images/icon/21125.png" target="_blank" rel="noopener">Tamaxchi</a>, <a class="item-link" href="https://www.ffxiah.com/item/21128" data-img="https://static.ffxiah.com/images/icon/21128.png" target="_blank" rel="noopener">Mondaha Cudgel</a>, <a class="item-link" href="https://www.ffxiah.com/item/21104" data-img="https://static.ffxiah.com/images/icon/21104.png" target="_blank" rel="noopener">Eosuchus Club</a> | WHM/BLM/RDM/SMN/BLU/SCH/GEO/WAR/… |
+| Staves | <a class="item-link" href="https://www.ffxiah.com/item/21186" data-img="https://static.ffxiah.com/images/icon/21186.png" target="_blank" rel="noopener">Baqil Staff</a>, <a class="item-link" href="https://www.ffxiah.com/item/21198" data-img="https://static.ffxiah.com/images/icon/21198.png" target="_blank" rel="noopener">Soothsayer Staff</a>, <a class="item-link" href="https://www.ffxiah.com/item/21199" data-img="https://static.ffxiah.com/images/icon/21199.png" target="_blank" rel="noopener">Yaskomos Pole</a> | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
+| Great Swords | <a class="item-link" href="https://www.ffxiah.com/item/20768" data-img="https://static.ffxiah.com/images/icon/20768.png" target="_blank" rel="noopener">Kaquljaan</a>, <a class="item-link" href="https://www.ffxiah.com/item/20778" data-img="https://static.ffxiah.com/images/icon/20778.png" target="_blank" rel="noopener">Bereaver</a> | WAR/PLD/DRK/RUN |
+| Axes | <a class="item-link" href="https://www.ffxiah.com/item/20820" data-img="https://static.ffxiah.com/images/icon/20820.png" target="_blank" rel="noopener">Hatxiik</a>, <a class="item-link" href="https://www.ffxiah.com/item/20826" data-img="https://static.ffxiah.com/images/icon/20826.png" target="_blank" rel="noopener">Hunahpu</a>, <a class="item-link" href="https://www.ffxiah.com/item/20828" data-img="https://static.ffxiah.com/images/icon/20828.png" target="_blank" rel="noopener">Brethren Axe</a> | WAR/BST |
+| Great Axes | <a class="item-link" href="https://www.ffxiah.com/item/20872" data-img="https://static.ffxiah.com/images/icon/20872.png" target="_blank" rel="noopener">Ixtab</a>, <a class="item-link" href="https://www.ffxiah.com/item/20873" data-img="https://static.ffxiah.com/images/icon/20873.png" target="_blank" rel="noopener">Bloodbath Axe</a> | WAR |
+| Scythes | <a class="item-link" href="https://www.ffxiah.com/item/20917" data-img="https://static.ffxiah.com/images/icon/20917.png" target="_blank" rel="noopener">Xbalanque</a>, <a class="item-link" href="https://www.ffxiah.com/item/20918" data-img="https://static.ffxiah.com/images/icon/20918.png" target="_blank" rel="noopener">Dimmet Scythe</a> | DRK |
+| Polearms | <a class="item-link" href="https://www.ffxiah.com/item/20958" data-img="https://static.ffxiah.com/images/icon/20958.png" target="_blank" rel="noopener">Kuakuakait</a>, <a class="item-link" href="https://www.ffxiah.com/item/20964" data-img="https://static.ffxiah.com/images/icon/20964.png" target="_blank" rel="noopener">Ophidian Trident</a>, <a class="item-link" href="https://www.ffxiah.com/item/20945" data-img="https://static.ffxiah.com/images/icon/20945.png" target="_blank" rel="noopener">Nativus Halberd</a> | DRG/WAR/PLD/SAM |
+| Katana | <a class="item-link" href="https://www.ffxiah.com/item/20992" data-img="https://static.ffxiah.com/images/icon/20992.png" target="_blank" rel="noopener">Taikogane</a>, <a class="item-link" href="https://www.ffxiah.com/item/21005" data-img="https://static.ffxiah.com/images/icon/21005.png" target="_blank" rel="noopener">Kiji</a> | NIN |
+| Great Katana | <a class="item-link" href="https://www.ffxiah.com/item/21047" data-img="https://static.ffxiah.com/images/icon/21047.png" target="_blank" rel="noopener">Azukinagamitsu</a>, <a class="item-link" href="https://www.ffxiah.com/item/21053" data-img="https://static.ffxiah.com/images/icon/21053.png" target="_blank" rel="noopener">Uguisumaru</a> | SAM |
+| Archery | <a class="item-link" href="https://www.ffxiah.com/item/21233" data-img="https://static.ffxiah.com/images/icon/21233.png" target="_blank" rel="noopener">Ajjub Bow</a>, <a class="item-link" href="https://www.ffxiah.com/item/21238" data-img="https://static.ffxiah.com/images/icon/21238.png" target="_blank" rel="noopener">Speleogen Bow</a>, <a class="item-link" href="https://www.ffxiah.com/item/21228" data-img="https://static.ffxiah.com/images/icon/21228.png" target="_blank" rel="noopener">Falubeza</a> | RNG/SAM |
+| Marksmanship | <a class="item-link" href="https://www.ffxiah.com/item/21253" data-img="https://static.ffxiah.com/images/icon/21253.png" target="_blank" rel="noopener">Atetepeyorg</a>, <a class="item-link" href="https://www.ffxiah.com/item/21288" data-img="https://static.ffxiah.com/images/icon/21288.png" target="_blank" rel="noopener">Surefire Arquebus</a>, <a class="item-link" href="https://www.ffxiah.com/item/21256" data-img="https://static.ffxiah.com/images/icon/21256.png" target="_blank" rel="noopener">Illapa</a> | RNG/COR |
+| Hand-to-Hand | <a class="item-link" href="https://www.ffxiah.com/item/20543" data-img="https://static.ffxiah.com/images/icon/20543.png" target="_blank" rel="noopener">Maochinoli</a>, <a class="item-link" href="https://www.ffxiah.com/item/20549" data-img="https://static.ffxiah.com/images/icon/20549.png" target="_blank" rel="noopener">Rigor Baghnakhs</a>, <a class="item-link" href="https://www.ffxiah.com/item/21529" data-img="https://static.ffxiah.com/images/icon/21529.png" target="_blank" rel="noopener">Premium Heart</a> | MNK/PUP |
+| Grips | <a class="item-link" href="https://www.ffxiah.com/item/21455" data-img="https://static.ffxiah.com/images/icon/21455.png" target="_blank" rel="noopener">Alternator</a> | PUP |
 
 !!! info "Silver is the sweet spot for mid-progression"
     Silver weapons represent a major power jump over Bronze and are within reach after a few weeks of regular Hunting League participation. Many players stay on Silver weapons for quite a while while building out their armor sets via Reforge.
@@ -89,13 +110,14 @@ Silver weapons have higher base damage and often better weapon skills or seconda
 **Currency:** 50 Demons Medals each (= 2,000 Hunt Marks per weapon)  
 **For:** players with Hunting League Rank IV–V who are approaching or in endgame content.
 
-Gold weapons are the top-end purchases from the vendor system (1 weapon across 1 category), priced for players deep into the Hunting League ladder.
+Gold weapons are the top-end purchases from the vendor system (2 weapons across 2 categories), priced for players deep into the Hunting League ladder.
 
 ### Selected highlights
 
 | Category | Standout picks | Jobs |
 |---|---|---|
-| Marksmanship | <a class="item-link" href="https://www.ffxiah.com/item/21273" data-img="https://www.bg-wiki.com/images/4/45/Nibiru_Gun_description.png" target="_blank" rel="noopener">Nibiru Gun</a> | RNG/COR |
+| Marksmanship | <a class="item-link" href="https://www.ffxiah.com/item/21478" data-img="https://static.ffxiah.com/images/icon/21478.png" target="_blank" rel="noopener">Moros Crossbow +1</a> | RNG |
+| Grips | <a class="item-link" href="https://www.ffxiah.com/item/21375" data-img="https://static.ffxiah.com/images/icon/21375.png" target="_blank" rel="noopener">Magneto</a> | PUP |
 
 !!! warning "Gold weapons are a large Hunt Mark investment"
     50 Demons Medals = 2,000 Hunt Marks per weapon. Plan your spending carefully — fill in Silver weapons for secondary jobs first, and save Gold purchases for your main job's primary weapon. The armor in the Armor Vendor's Gold tier competes for the same Demons Medals.
@@ -110,7 +132,7 @@ Armor does not come from the Weapons Vendor — it comes from two other sources:
 
 **Reforge System:** AF, Relic, and Empyrean armor sets are upgraded from base through +3 using Reforge marks earned from spawner NMs in Diorama Abdhaljs-Ghelsba (+1 300 / +2 900 / +3 2,000 marks per piece, in that set's own currency). This is your primary armor progression path alongside the medal vendors. See [Reforge System](reforge.md).
 
-**Infamy gear:** High-end armor and weapons are sold by the [Infamy Vendor](gear-vendors.md#infamy-vendor) for **Infamy** earned from endgame content — including 38 weapons auto-promoted from the top of the scored catalogs and the per-job +4 Reforge Sets. These compete with or surpass Reforge +3 in some slots.
+**Infamy gear:** High-end armor and weapons are sold by the [Infamy Vendor](gear-vendors.md#infamy-vendor) for **Infamy** earned from endgame content — including 22 weapons auto-promoted from the top of the scored catalogs and the per-job +4 Reforge Sets. These compete with or surpass Reforge +3 in some slots.
 
 ---
 
@@ -129,7 +151,7 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 
 - You have enough Hunting League experience to be earning marks consistently.
 - Prioritize filling out your **Bronze weapon** (if not done) and a secondary slot.
-- Grab per-job **Sortie earrings** from the Hunt Accessories NPC — paid directly in Hunt Marks (NQ 100 / +1 200 each) — and start saving Beastmens Medals for accessories from the medal-paid Accessories Vendor. Earrings and a back piece are efficient early purchases.
+- Grab per-job **Sortie earrings** from the Hunt Accessories NPC — paid directly in Hunt Marks — and start saving Beastmens Medals for accessories from the medal-paid Accessories Vendor. Earrings and a back piece are efficient early purchases.
 - Begin hunting Reforge NMs to accumulate AF Marks for your first base Reforge armor pieces.
 
 ### Rank II–III (second to fourth week)
@@ -168,10 +190,3 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 
 !!! tip "One weapon at a time"
     Do not try to gear every job simultaneously. Pick your main job, get its weapon to Gold, and build the armor set around it. Then move on to a second job. Hunt Marks are a finite resource per session — focus pays off faster than spreading thin.
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bf5291fcf707 -->
-_Last updated: 2026-07-11 21:20 PDT_
-<!-- DOCGEN:END id="last-updated" -->
