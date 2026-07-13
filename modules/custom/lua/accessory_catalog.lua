@@ -126,7 +126,7 @@ catalog.gold = emptySlots()
 local g = catalog.gold
 
 -- neck
-table.insert(g.neck, { id =  26037, name = 'Moonlight Necklace'                , cost =  60, jobs = 'WAR/MNK/PLD/NIN/RUN' })  -- TANK score 72
+-- Do NOT add 26037 Moonlight Necklace here: HQ1 craft (Gold 110 + Cloth 110).
 table.insert(g.neck, { id =  26016, name = 'Incanters Torque'                  , cost =  60, jobs = 'All' })  -- DPS score 50 [RARE,EX]
 -- net-new gold options (2026-07-06, hand-curated from score_accessories.py recommendations)
 table.insert(g.neck, { id =  26086, name = 'Nicanders Necklace'                , cost =  60, jobs = 'All' })  -- DPS score 93 [RARE]
@@ -141,8 +141,8 @@ table.insert(g.waist, { id =  26360, name = 'Gerdr Belt'                        
 table.insert(g.waist, { id =  28437, name = 'Flume Belt +1'                     , cost =  60, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- TANK score 55 [RARE]
 table.insert(g.waist, { id =  26351, name = 'Sacro Cord'                        , cost =  60, jobs = 'WHM/BLM/RDM/BLU/SCH/GEO' })  -- CASTER score 64 [RARE,EX]
 -- net-new gold options (2026-07-06, hand-curated from score_accessories.py recommendations)
-table.insert(g.waist, { id =  26332, name = 'Tempus Fugit +1'                   , cost =  60, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 91
-table.insert(g.waist, { id =  28447, name = 'Sweordfaetels +1'                  , cost =  60, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 87
+-- Do NOT add 26332 Tempus Fugit +1 here: HQ1 craft (Leather 114).
+-- Do NOT add 28447 Sweordfaetels +1 here: HQ1 craft (Leather 109).
 table.insert(g.waist, { id =  28439, name = 'Prosilio Belt +1'                  , cost =  60, jobs = 'All' })  -- WS score 67 [RARE]
 -- Do NOT add 28461 Sekhmet Corset here: HTBF Ark Angels 3 drop.
 
@@ -160,7 +160,7 @@ table.insert(g.ear, { id =  27540, name = 'Eabani Earring'                    , 
 -- ring
 table.insert(s.ring, { id =  10766, name = 'Lunette Ring'                      , cost =  32, jobs = 'All' } )  -- DPS score 96 [RARE]
 table.insert(g.ring, { id =  28472, name = 'Freke Ring'                        , cost =  60, jobs = 'WHM/BLM/RDM/SMN/SCH/GEO' })  -- CASTER score 49 [RARE,EX]
-table.insert(g.ring, { id =  26184, name = 'Stikini Ring +1'                   , cost =  60, jobs = 'All' })  -- HEAL score 63
+-- Do NOT add 26184 Stikini Ring +1 here: HQ1 craft (Gold 115).
 table.insert(g.ring, { id =  26189, name = 'Moonbeam Ring'                     , cost =  60, jobs = 'WAR/THF/PLD/DRK/BST/BRD/DRG/DNC/RUN' })  -- DPS score 96
 table.insert(g.ring, { id =  10769, name = 'Gelatinous Ring +1'                , cost =  60, jobs = 'All' })  -- TANK score 64 [RARE,EX]
 -- net-new gold options (2026-07-06, hand-curated from score_accessories.py recommendations)
@@ -184,7 +184,7 @@ catalog.infamy = emptySlots()
 local inf = catalog.infamy
 
 -- neck (top 5 by score -> Infamy Vendor)
-table.insert(inf.neck, { id =  26035, name = 'Moonlight Nodowa'                  , cost = 300, jobs = 'MNK/SAM/NIN' })  -- DPS score 98
+-- Do NOT add 26035 Moonlight Nodowa here: HQ1 craft (Smith 110 + Cloth 110).
 
 -- waist (top 5 by score -> Infamy Vendor)
 

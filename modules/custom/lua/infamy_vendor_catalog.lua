@@ -24,10 +24,10 @@ catalog.npcPos =
 
 catalog.vendorItems =
 {
-    { id = 25461, sub = "Neck", name = "Abyssal Bead Necklace +2", cost = 3000, stats = { 'WS score 90', 'Accessory top-5 (neck)', 'Jobs: DRK' } },
+    -- Do NOT add 25461 Abyssal Bead Necklace +2 here: HQ2 craft (Wood 110 + Cloth 55).
     { id = 26003, sub = "Neck", name = "Baetyl Pendant", cost = 3000, stats = { 'Neck. Caster (Magic Attack).', 'EX/RARE.' } },
     { id = 26015, sub = "Neck", name = "Combatants Torque", cost = 3000, stats = { 'Neck. DD (Accuracy / Attack).', 'EX/RARE.' } },
-    { id = 25497, sub = "Neck", name = "Dragoons Collar +2", cost = 3000, stats = { 'WS score 83', 'Accessory top-5 (neck)', 'Jobs: DRG' } },
+    -- Do NOT add 25497 Dragoons Collar +2 here: HQ2 craft (Leather 110 + Bone 55).
     { id = 27510, sub = "Neck", name = "Fotia Gorget", cost = 3000, stats = { 'Neck. Universal WS gorget (WS damage).', 'EX/RARE.' } },
     { id = 26004, sub = "Neck", name = "Lissome Necklace", cost = 3000, stats = { 'DPS score 140', 'Accessory top-5 (neck)', 'Jobs: All' } },
     { id = 26023, sub = "Neck", name = "Sanctity Necklace", cost = 3000, stats = { 'CASTER score 252', 'Accessory top-5 (neck)', 'Jobs: All' } },
@@ -40,14 +40,14 @@ catalog.vendorItems =
     { id = 26190, sub = "Ring", name = "Moonlight Ring", cost = 3000, stats = { 'Ring. Hybrid (DT-, Accuracy).', 'Universal ring.' } },
     { id = 28420, sub = "Waist", name = "Fotia Belt", cost = 3000, stats = { 'Waist. Universal WS belt (WS damage).', 'EX/RARE.' } },
     { id = 26361, sub = "Waist", name = "Gerdr Belt +1", cost = 3000, stats = { 'DPS score 136', 'Accessory top-5 (waist)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN' } },
-    { id = 26334, sub = "Waist", name = "Ioskeha Belt +1", cost = 3000, stats = { 'Waist. DEX + Double Attack.', 'DD belt.' } },
+    -- Do NOT add 26334 Ioskeha Belt +1 here: HQ1 craft (Leather 118).
     { id = 26341, sub = "Waist", name = "Moonbow Belt +1", cost = 3000, stats = { 'DPS score 162', 'Accessory top-5 (waist)', 'Jobs: MNK/PUP' } },
     { id = 26359, sub = "Waist", name = "Orpheuss Sash", cost = 3000, stats = { 'DPS score 92', 'Accessory top-5 (waist)', 'Jobs: All' } },
     { id = 26357, sub = "Waist", name = "Skrymir Cord +1", cost = 3000, stats = { 'CASTER score 175', 'Accessory top-5 (waist)', 'Jobs: All' } },
     { id = 26248, sub = "Back", name = "Alaunus's Cape", cost = 4000, stats = { 'Back. WHM JSE cape. DEF+15.', 'Afflatus Solace+10, Cursna+25.' } },
     { id = 26258, sub = "Back", name = "Andartia's Mantle", cost = 4000, stats = { 'Back. NIN JSE cape. DEF+16.', 'Utsusemi: extra shadow+1.' } },
     { id = 26253, sub = "Back", name = "Ankou's Mantle", cost = 4000, stats = { 'Back. DRK JSE cape. DEF+18.', 'Absorb duration+10.' } },
-    { id = 28607, sub = "Back", name = "Aput Mantle +1", cost = 3000, stats = { 'CASTER score 80', 'Accessory top-5 (back)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' } },
+    -- Do NOT add 28607 Aput Mantle +1 here: HQ1 craft (Leather 112).
     { id = 27595, sub = "Back", name = "Argochampsa Mantle", cost = 3000, stats = { 'Back. Caster cape (Magic Acc / Atk).', 'EX/RARE.' } },
     { id = 26254, sub = "Back", name = "Artio's Mantle", cost = 4000, stats = { 'Back. BST JSE cape. DEF+18.', 'Reward HP+30, Spur+10.' } },
     { id = 27620, sub = "Back", name = "Aurists Cape +1", cost = 3000, stats = { 'CASTER score 177', 'Accessory top-5 (back)', 'Jobs: WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' } },

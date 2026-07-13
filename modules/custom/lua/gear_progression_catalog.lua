@@ -272,7 +272,7 @@ do
     -- Great Swords: 5 pick(s) -> Infamy Vendor
     local inf_greatswords = cat(catalog.infamy.weapons, 'Great Swords')
     table.insert(inf_greatswords, { id = 21683, name = "Ragnarok 119 Iii", cost = 500, jobs = 'WAR/PLD/DRK', cat = 'Great Swords' })  -- WS score 296, DMG 304/Dly 431
-    table.insert(inf_greatswords, { id = 21663, name = "Raetic Algol +1", cost = 500, jobs = 'WAR/PLD/DRK/RUN', cat = 'Great Swords' })  -- WS score 256, DMG 327/Dly 474
+    -- Do NOT add 21663 Raetic Algol +1 here: HQ1 craft (Alchemy 119).
 
     -- Axes: 5 pick(s) -> Infamy Vendor
     local inf_axes = cat(catalog.infamy.weapons, 'Axes')
@@ -281,22 +281,22 @@ do
 
     -- Great Axes: 5 pick(s) -> Infamy Vendor
     local inf_greataxes = cat(catalog.infamy.weapons, 'Great Axes')
-    table.insert(inf_greataxes, { id = 21766, name = "Hepatizon Axe +1", cost = 500, jobs = 'WAR/DRK/RUN', cat = 'Great Axes' })  -- WS score 273, DMG 330/Dly 489
-    table.insert(inf_greataxes, { id = 21768, name = "Raetic Chopper +1", cost = 500, jobs = 'WAR/BLM/DRK/BRD/SMN/SCH/RUN', cat = 'Great Axes' })  -- WS score 262, DMG 337/Dly 489
+    -- Do NOT add 21766 Hepatizon Axe +1 here: HQ1 craft (Gold 106).
+    -- Do NOT add 21768 Raetic Chopper +1 here: HQ1 craft (Smith 110).
 
     -- Scythes: 5 pick(s) -> Infamy Vendor
     local inf_scythes = cat(catalog.infamy.weapons, 'Scythes')
-    table.insert(inf_scythes, { id = 21816, name = "Maliya Sickle +1", cost = 500, jobs = 'WAR/BLM/DRK/BST', cat = 'Scythes' })  -- WS score 272, DMG 328/Dly 490
-    table.insert(inf_scythes, { id = 21819, name = "Raetic Scythe +1", cost = 500, jobs = 'WAR/BLM/DRK/BST', cat = 'Scythes' })  -- WS score 270, DMG 353/Dly 513
+    -- Do NOT add 21816 Maliya Sickle +1 here: HQ1 craft (Bone 106).
+    -- Do NOT add 21819 Raetic Scythe +1 here: HQ1 craft (Bone 110).
 
     -- Polearms: 5 pick(s) -> Infamy Vendor
     local inf_polearms = cat(catalog.infamy.weapons, 'Polearms')
-    table.insert(inf_polearms, { id = 21870, name = "Exalted Spear +1", cost = 500, jobs = 'WAR/PLD/SAM/DRG', cat = 'Polearms' })  -- WS score 278, DMG 259/Dly 385
-    table.insert(inf_polearms, { id = 21872, name = "Raetic Halberd +1", cost = 500, jobs = 'WAR/BLM/PLD/BRD/SAM/DRG/SMN/SCH', cat = 'Polearms' })  -- WS score 226, DMG 265/Dly 385
+    -- Do NOT add 21870 Exalted Spear +1 here: HQ1 craft (Wood 106).
+    -- Do NOT add 21872 Raetic Halberd +1 here: HQ1 craft (Wood 110).
 
     -- Great Katana: 5 pick(s) -> Infamy Vendor
     local inf_gkatana = cat(catalog.infamy.weapons, 'Great Katana')
-    table.insert(inf_gkatana, { id = 21964, name = "Beryllium Tachi +1", cost = 500, jobs = 'SAM/NIN', cat = 'Great Katana' })  -- WS score 286, DMG 275/Dly 407
+    -- Do NOT add 21964 Beryllium Tachi +1 here: HQ1 craft (Smith 106).
 
     -- Clubs: 5 pick(s) -> Infamy Vendor
     local inf_clubs = cat(catalog.infamy.weapons, 'Clubs')
@@ -305,19 +305,19 @@ do
 
     -- Staves: 5 pick(s) -> Infamy Vendor
     local inf_staves = cat(catalog.infamy.weapons, 'Staves')
-    table.insert(inf_staves, { id = 22081, name = "Raetic Staff +1", cost = 500, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO', cat = 'Staves' })  -- CASTER score 1019, DMG 245/Dly 356
+    -- Do NOT add 22081 Raetic Staff +1 here: HQ1 craft (Wood 110).
     table.insert(inf_staves, { id = 22058, name = "Contemplator +1", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO', cat = 'Staves' })  -- CASTER score 1004, DMG 232/Dly 390
 
     -- Archery: 5 pick(s) -> Infamy Vendor
     local inf_archery = cat(catalog.infamy.weapons, 'Archery')
     table.insert(inf_archery, { id = 21221, name = "Brahmastra", cost = 500, jobs = 'RNG', cat = 'Archery' })  -- WS score 326, DMG 261/Dly 600
-    table.insert(inf_archery, { id = 22123, name = "Arasy Bow +1", cost = 500, jobs = 'RNG', cat = 'Archery' })  -- WS score 295, DMG 227/Dly 524
+    -- Do NOT add 22123 Arasy Bow +1 here: HQ1 craft (Wood 102 + Alchemy 110).
     table.insert(inf_archery, { id = 21220, name = "Paloma Bow +1", cost = 500, jobs = 'RNG', cat = 'Archery' })  -- WS score 272, DMG 220/Dly 480
 
     -- Marksmanship: 5 pick(s) -> Infamy Vendor
     local inf_marksmanship = cat(catalog.infamy.weapons, 'Marksmanship')
     table.insert(inf_marksmanship, { id = 22121, name = "Imati +1", cost = 500, jobs = 'RNG', cat = 'Marksmanship' })  -- WS score 307, DMG 146/Dly 424
-    table.insert(inf_marksmanship, { id = 22136, name = "Arasy Gun +1", cost = 500, jobs = 'RNG/COR', cat = 'Marksmanship' })  -- WS score 252, DMG 108/Dly 582
+    -- Do NOT add 22136 Arasy Gun +1 here: HQ1 craft (Wood 110 + Smith 102).
 
 end
 return catalog
