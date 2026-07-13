@@ -73,7 +73,7 @@ table.insert(b.waist, { id =  28424, name = 'Shinjutsu-no-obi +1'               
 
 -- ear
 table.insert(b.ear, { id =  14794, name = 'Quantzs Earring'                   , cost =  15, jobs = 'All' })  -- CASTER score 4 [RARE,EX]
-table.insert(b.ear, { id =  11060, name = 'Evader Earring'                    , cost =  15, jobs = 'All' })  -- TANK score 4
+-- Do NOT add 11060 Evader Earring here: craftable (Goldsmithing 100).
 table.insert(b.ear, { id =  11700, name = 'Gifted Earring'                    , cost =  15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- CASTER score 2 [RARE,EX]
 
 -- ring
@@ -110,7 +110,7 @@ table.insert(s.ring, { id =  10759, name = 'Aifes Annulet'                     ,
 
 -- back
 table.insert(s.back, { id =  10976, name = 'Kaikias Cape'                      , cost =  32, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- CASTER score 18 [RARE]
-table.insert(s.back, { id =  11000, name = 'Swith Cape'                        , cost =  32, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- HEAL score 18
+-- Do NOT add 11000 Swith Cape here: craftable (Clothcraft 100).
 
 -- ammo
 
@@ -150,7 +150,7 @@ table.insert(g.ear, { id =  28506, name = 'Andoaa Earring'                    , 
 table.insert(g.ear, { id =  26079, name = 'Hypaspist Earring'                 , cost =  60, jobs = 'All' })  -- DPS score 54 [RARE]
 table.insert(g.ear, { id =  28483, name = 'Cryptic Earring'                   , cost =  60, jobs = 'All' })  -- TANK score 36 [RARE,EX]
 -- net-new gold options (2026-07-06, hand-curated from score_accessories.py recommendations)
-table.insert(g.ear, { id =  26114, name = 'Balder Earring'                    , cost =  60, jobs = 'All' })  -- DPS score 53
+-- Do NOT add 26114 Balder Earring here: craftable (Goldsmithing 110 + Alchemy 110).
 table.insert(g.ear, { id =  27540, name = 'Eabani Earring'                    , cost =  60, jobs = 'All' })  -- TANK score 31 [RARE,EX]
 
 -- ring
