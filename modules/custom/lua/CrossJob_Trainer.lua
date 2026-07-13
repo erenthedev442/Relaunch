@@ -299,12 +299,11 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         name       = 'CrossJob_Trainer',
         packetName = string.format('%sBuy: Abilities', xi.icon.STAR_LARGE),
         look       = 167,
-        -- Extends the GM Home progression row at z=-7:
-        --   Gear (-3) / Augment Moogle (0) / Augment Sage (+3) / Trainer (+6).
-        x          = 557.000,
-        y          =   -3.360,
-        z          =  539.500,
-        rotation   =  48,
+        -- Left side of the mastery conversation semicircle, facing Traits.
+        x          = 534.9993,
+        y          =  -3.4665,
+        z          = 498.0069,
+        rotation   = 38,
         widescan   =  1,
 
         onTrigger = function(player, npc)

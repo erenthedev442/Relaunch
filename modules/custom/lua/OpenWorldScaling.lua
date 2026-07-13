@@ -16,9 +16,10 @@ local function isExcluded(exclusions, key, value)
 end
 
 local function isDynamicEntity(mob)
-    -- Dynamic entities occupy targids 0x700-0x8FF. The low 12 bits of the
-    -- full entity ID are the targid, so no new Lua binding is required.
-    local targid = mob:getID() % 0x1000
+    -- Dynamic entities occupy targids 0x700-0x8FF. Use the entity's actual
+    -- targid: the low bits of a static database mob ID are not guaranteed to
+    -- match its targid (for example, the Inner Ra'Kaznar 5x spawn rows).
+    local targid = mob:getTargID()
     return targid >= 0x700 and targid < 0x900
 end
 

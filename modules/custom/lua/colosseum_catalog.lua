@@ -30,17 +30,15 @@
 -----------------------------------
 local catalog = {}
 
--- Arena Herald placement - GM Home Activities cluster (z=-21 row):
--- ExpCamp / Weekly Hunts / Dungeon Master (1.5) / Infamy Vendor (4.5)
--- / Arena Herald (7.5).
+-- Arena Herald placement - GM Home beach arena entrance.
 catalog.npcPos =
 {
     zone     = 'Abdhaljs_Isle-Purgonorgo',
     zoneId   = 44,
-    x        = 622.000,
-    y        =   -3.360,
-    z        =  516.500,
-    rotation =  135,
+    x        = 614.0245,
+    y        =  -2.9986,
+    z        = 513.5217,
+    rotation = 145,
 }
 
 -- Duels may only be fought in this zone (the replica spawns relative

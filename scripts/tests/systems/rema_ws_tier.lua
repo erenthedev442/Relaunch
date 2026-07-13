@@ -136,6 +136,43 @@ describe('Legendary REMA native-weaponskill enhancement', function()
         assert(bonus(ranged, xi.weaponskill.LEADEN_SALUTE, xi.slot.RANGED) == 140)
     end)
 
+    it('applies per-WS fTP tuning without mutating native parameters', function()
+        local player = makePlayer({ [xi.slot.MAIN] = 20685 })
+        local native = { numHits = 1, ftpMod = { 3, 3, 3 }, str_wsc = 0.4 }
+        local tuned  = xi.remaWsTier.getTunedParams(
+            player, xi.weaponskill.KNIGHTS_OF_ROUND, xi.slot.MAIN, native)
+
+        assert(tuned ~= native)
+        assert(tuned.ftpMod ~= native.ftpMod)
+        assert(tuned.numHits == 1 and tuned.str_wsc == 0.4)
+        assert(math.abs(tuned.ftpMod[1] - 23.7) < 0.0001)
+        assert(math.abs(tuned.ftpMod[3] - 23.7) < 0.0001)
+        assert(native.ftpMod[1] == 3 and native.ftpMod[3] == 3)
+    end)
+
+    it('accounts for the effective WoTG Death Blossom parameters', function()
+        local player = makePlayer({ [xi.slot.MAIN] = 20686 })
+        local native = { numHits = 3, ftpMod = { 1.125, 1.125, 1.125 } }
+        local tuned  = xi.remaWsTier.getTunedParams(
+            player, xi.weaponskill.DEATH_BLOSSOM, xi.slot.MAIN, native)
+
+        assert(tuned.numHits == 3)
+        assert(tuned.ftpMod[1] == 45)
+        assert(tuned.ftpMod[3] == 45)
+        assert(native.ftpMod[1] == 1.125)
+    end)
+
+    it('leaves fTP unchanged for non-qualifying weapons', function()
+        local native = { ftpMod = { 5, 5, 5 } }
+        local tuned  = xi.remaWsTier.getTunedParams(
+            makePlayer({ [xi.slot.MAIN] = 16535 }),
+            xi.weaponskill.KNIGHTS_OF_ROUND,
+            xi.slot.MAIN,
+            native)
+
+        assert(tuned == native)
+    end)
+
     it('removes the temporary modifier after successful calculation', function()
         local player = makePlayer({ [xi.slot.MAIN] = 20509 })
         local modId  = xi.mod.WEAPONSKILL_DAMAGE_BASE + xi.weaponskill.FINAL_HEAVEN
@@ -297,13 +334,16 @@ describe('Legendary REMA native-weaponskill enhancement', function()
         assert(bonus(makePlayer({ [xi.slot.MAIN] = 21147 }), xi.weaponskill.SHATTERSOUL) == 0)
     end)
 
-    it('has a valid default tuning and bonus for every enabled entry', function()
+    it('has explicit fTP tuning and a family bonus for every enabled entry', function()
         for _, entry in ipairs(catalog.WEAPONS) do
-            assert(catalog.getTuning(entry.wsId) == 1.00)
-
             local expected = entry.enabled and
                 math.floor(catalog.PRIME_EQUIVALENT_BONUS * catalog.REMA_TIER_SCALE[entry.family] * 100 + 0.5) or
                 0
+
+            if entry.enabled then
+                assert(catalog.getTuning(entry.wsId) ~= nil)
+                assert(catalog.getTuning(entry.wsId) > 0)
+            end
 
             assert(catalog.getBonusPercent(entry.itemId, entry.wsId, entry.slot) == expected)
         end

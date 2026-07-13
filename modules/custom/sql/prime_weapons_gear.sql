@@ -88,7 +88,7 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
 -- stat values: the real mods ship `TODO: Not implemented` in LSB and are
 -- image-only on BG-Wiki, so this is an original balanced package, tunable here.
 -- Extra ids used: VIT 10, CHR 14, HP 2, MP 5, MEVA 31, DEF 1; new-type WS
--- Great Sword -> 60 Resolution, Axe -> 72 Decimation. Dokoku (Katana) +
+-- Great Sword -> 60 Resolution, Axe -> 78 Blitz. Dokoku (Katana) +
 -- Kusanagi (Great Katana): uses ADDS_WEAPONSKILL -> 159 (Tachi: Mumei) since
 -- Mumei is a custom Prime WS (commented out in stock weapon_skills.sql) and
 -- cannot be obtained any other way; enabled by tachi_mumei_ws.sql.
@@ -122,8 +122,8 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
     (21646, 8, 40), (21646, 9, 40), (21646, 25, 60), (21646, 23, 60), (21646, 73, 10), (21646, 288, 10), (21646, 355, 233),
     -- 21653 Helheim (Great Sword) -> Resolution
     (21653, 8, 40), (21653, 10, 20), (21653, 25, 60), (21653, 23, 70), (21653, 73, 10), (21653, 288, 10), (21653, 355, 60),
-    -- 21730 Spalirisos (Axe) -> Decimation
-    (21730, 8, 40), (21730, 9, 20), (21730, 25, 60), (21730, 23, 60), (21730, 73, 10), (21730, 288, 10), (21730, 355, 72),
+    -- 21730 Spalirisos (Axe) -> Blitz
+    (21730, 8, 40), (21730, 9, 20), (21730, 25, 60), (21730, 23, 60), (21730, 73, 10), (21730, 288, 10), (21730, 355, 78),
     -- 21785 Laphria (Great Axe) -> Disaster
     (21785, 8, 40), (21785, 10, 30), (21785, 25, 60), (21785, 23, 70), (21785, 73, 10), (21785, 288, 10), (21785, 355, 94),
     -- 21837 Foenaria (Scythe) -> Origin

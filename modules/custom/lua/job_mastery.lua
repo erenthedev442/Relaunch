@@ -438,7 +438,7 @@ end
 -- Module overrides
 -----------------------------------
 
--- GM Home: place the Mastery Sage NPC at z = -35.
+-- GM Home: right side of the mastery conversation semicircle.
 m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
@@ -447,10 +447,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         name       = 'Weapon_Mastery_Sage',
         packetName = 'Weapon Mastery Sage',
         look       = 212,
-        x          =  563.500,
-        y          =   -3.360,
-        z          =  542.500,
-        rotation   =  224,
+        x          = 540.9993,
+        y          =  -3.4665,
+        z          = 498.0069,
+        rotation   = 90,
         widescan   =  1,
 
         onTrigger = function(player, npc)

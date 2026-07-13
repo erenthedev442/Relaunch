@@ -33,14 +33,13 @@ C.NM_POOL = {
     [10] = { groupId = 11369, name = 'Shinryu',            skillListId = 475 },
 }
 
--- HP: a steep exponential wall calibrated against this server's overflow-fixed
--- endgame DPS (pets/ranged/WS all ride near the 131k cap). 2026-06-24: pushed
--- the top end hard to force a long endurance fight THROUGH the mechCfg() kit --
--- L1 ≈ 3.5M (a real fight, never a faceroll) climbing to L10 ≈ 119M (a maxed
--- char must sustain many minutes of capped DPS while surviving the mechanics).
+-- HP: a steep exponential wall calibrated against the server's 1M Prime WS
+-- ceiling. 2026-07-13: reduced the full curve by 90% alongside the damage-
+-- ceiling rebalance, preserving the original time-to-kill and mechanic cadence.
+-- L1 = 5M, climbing to L10 ≈ 19.9M.
 -- HP is the boss's int32 health, so this has huge headroom (no overflow); it's
 -- the primary "harder" lever once the int16-capped mods below are maxed out.
-C.NM_BASE_HP = 50000000
+C.NM_BASE_HP = 5000000
 C.HP_GROWTH  = 1.166
 function C.nmHp(level)
     return math.floor(C.NM_BASE_HP * (C.HP_GROWTH ^ (level - 1)))
@@ -263,7 +262,8 @@ end
 --
 -- DMGPHYS/DMGMAGIC = -5000 is the engine's -50% cap (heavy RESIST, not immunity)
 -- so a solo player locked to one damage type is slowed, never hard-walled. The
--- drain is a fixed 15s self-heal tick, scaling 10k at L1 to 100k at L10.
+-- drain is a fixed 15s self-heal tick, scaling 1k at L1 to 10k at L10. It was
+-- reduced with HP so its relative effect on fight duration remains unchanged.
 -- xi.* is resolved at call time.
 function C.holdFireCfg(level)
     local messages =
@@ -365,7 +365,7 @@ function C.mechCfg(level)
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'wards the arcane -- magic fizzles!' },
             } },
             cc     = { periodSec = 14, effect = xi.effect.SILENCE, dur = 8, msg = 'roars -- your voice is stolen!' },
-            drain  = { periodSec = 15, heal = level * 10000 },
+            drain  = { periodSec = 15, heal = level * 1000 },
             holdFire = C.holdFireCfg(level),
             phases = {
                 { hp = 75, action = 'dispel', count = 7, msg = 'tears your blessings away!' },
@@ -384,7 +384,7 @@ function C.mechCfg(level)
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'deflects magic -- use steel!' },
             } },
             cc     = { periodSec = 16, effect = xi.effect.TERROR, dur = 8, msg = 'projects raw dread!' },
-            drain  = { periodSec = 15, heal = level * 10000 },
+            drain  = { periodSec = 15, heal = level * 1000 },
             holdFire = C.holdFireCfg(level),
             phases = {
                 { hp = 65, action = 'dispel', count = 6, msg = 'strips your enhancements!' },
@@ -401,7 +401,7 @@ function C.mechCfg(level)
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'turns magic aside -- cut it down!' },
             } },
             cc     = { periodSec = 18, effect = xi.effect.TERROR, dur = 7, msg = 'unleashes a wave of terror!' },
-            drain  = { periodSec = 15, heal = level * 10000 },
+            drain  = { periodSec = 15, heal = level * 1000 },
             holdFire = C.holdFireCfg(level),
             phases = {
                 { hp = 50, action = 'dispel', count = 5, msg = 'rips your buffs away!' },
@@ -418,7 +418,7 @@ function C.mechCfg(level)
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'shrugs off magic -- use steel!' },
             } },
             cc     = { periodSec = 26, effect = xi.effect.TERROR, dur = 3, msg = 'looses a petrifying roar!' },
-            drain  = { periodSec = 15, heal = level * 10000 },
+            drain  = { periodSec = 15, heal = level * 1000 },
             holdFire = C.holdFireCfg(level),
             phases = {
                 { hp = 45, action = 'dispel', count = 4, msg = 'tears your buffs away!' },
@@ -434,7 +434,7 @@ function C.mechCfg(level)
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'wards itself -- steel only!' },
             } },
             cc     = { periodSec = (level == 4) and 35 or 20, effect = xi.effect.TERROR, dur = 5, msg = 'shrieks -- you freeze in fear!' },
-            drain  = { periodSec = 15, heal = level * 10000 },
+            drain  = { periodSec = 15, heal = level * 1000 },
             holdFire = C.holdFireCfg(level),
             phases = {
                 { hp = 40, action = 'dispel', count = 3, msg = 'strips your enhancements!' },
@@ -447,7 +447,7 @@ function C.mechCfg(level)
             name   = (level == 2) and 'Serket' or 'Aquarius',
             enrage = { sec = 155, att = 5500, haste = 160, msg = 'grows impatient -- attacks quicken!' },
             cc     = { periodSec = 22, effect = xi.effect.TERROR, dur = 4, msg = 'looses a paralyzing screech!' },
-            drain  = { periodSec = 15, heal = level * 10000 },
+            drain  = { periodSec = 15, heal = level * 1000 },
             holdFire = C.holdFireCfg(level),
             phases = {
                 { hp = 45, action = 'dispel', count = 2, msg = 'tears at your buffs!' },

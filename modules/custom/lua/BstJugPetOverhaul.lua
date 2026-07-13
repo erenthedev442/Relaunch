@@ -76,9 +76,11 @@ local CONFIG =
     -- flatMagicDamage: flat additive to base damage before fTP (xi.mod.MAGIC_DAMAGE=311).
     -- flatMagicDMGMult: gives the pet a blood-pact-style multiplier (xi.mod.BP_DAMAGE=126).
     --   mobskills.lua line 1195 now applies this for any player-owned pet (not avatar-only).
-    --   Formula: finalDmg × (1 + BP_DAMAGE/100); e.g. 2000 → ×21.
+    --   Formula: finalDmg × (1 + BP_DAMAGE/100). Reduced from 2000 (×21) to
+    --   300 (×4) for the 1M damage ceiling; a reported 1.9M Fireball should land
+    --   around 360k before differences in target resistance and magic bursts.
     flatMagicDamage  = 500,
-    flatMagicDMGMult = 2000,
+    flatMagicDMGMult = 300,
 
     -- Auto-Ready: pet fires its TP move on its own once it caps TP.
     autoReady           = true,
@@ -177,7 +179,7 @@ local function applyEndgameScaling(master, pet)
     pet:addMod(xi.mod.MACC, math.floor(CONFIG.flatMACC * floorMult) + math.floor(mMACC * CONFIG.masterMACCShare))
 
     -- Magical Ready-move damage: MAGIC_DAMAGE adds to base before fTP in mobMagicalMove;
-    -- BP_DAMAGE is a post-MAB multiplier (×21 at 2000) now enabled for player pets in
+    -- BP_DAMAGE is a post-MAB multiplier (×4 at 300) now enabled for player pets in
     -- scripts/globals/mobskills.lua. Scales with beastAffMult so Beast Affinity boosts
     -- magical output too.
     pet:addMod(xi.mod.MAGIC_DAMAGE, math.floor(CONFIG.flatMagicDamage  * floorMult))

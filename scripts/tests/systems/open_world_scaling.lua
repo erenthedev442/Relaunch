@@ -30,6 +30,10 @@ describe('Legendary open world scaling', function()
                 return options.mobId or 0x110
             end,
 
+            getTargID = function()
+                return options.targId or 0x110
+            end,
+
             getSpecies = function()
                 return options.speciesId or 409
             end,
@@ -184,13 +188,27 @@ describe('Legendary open world scaling', function()
             makeMob({ battlefield = {} }),
             makeMob({ master = {} }),
             makeMob({ inDynamis = true }),
-            makeMob({ mobId = 0x700 }),
+            makeMob({ targId = 0x700 }),
         }
 
         for _, mob in ipairs(cases) do
             local eligible = xi.openWorldScaling.checkEligibility(mob)
             assert(not eligible, 'Expected special or encounter mob to be excluded')
         end
+    end)
+
+    it('does not mistake static database IDs for dynamic targids', function()
+        local mob = makeMob({
+            mobId = 17909614, -- Low 12 bits fall inside the dynamic targid range.
+            targId = 0x76,
+            level = 137,
+        })
+
+        local eligible, reason = xi.openWorldScaling.checkEligibility(mob)
+        assert(eligible, string.format('Expected static Apex Poxhound to be eligible, got %s', reason))
+
+        xi.openWorldScaling.apply(mob)
+        assert(mob:getMaxHP() == 600000)
     end)
 
     it('honors runtime exclusion markers used by custom content', function()

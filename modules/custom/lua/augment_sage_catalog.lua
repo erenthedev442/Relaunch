@@ -27,8 +27,8 @@ local catalog = {}
 -----------------------------------
 catalog.zoneId    = xi.zone.ABDHALJS_ISLE_PURGONORGO
 catalog.zonePath  = 'xi.zones.Abdhaljs_Isle-Purgonorgo'
--- GM Home Gear Progression cluster (z=-25): Augment Moogle / Augment Sage / CrossJob Trainers / Cosmetic Shop.
-catalog.vendorPos = { x = 565.000, y = -3.360, z = 534.400, rot = 248 }
+-- GM Home Gear Progression cluster; face north toward the forge row.
+catalog.vendorPos = { x = 565.000, y = -3.360, z = 534.400, rot = 64 }
 
 -----------------------------------
 -- SEAL CURRENCY (shared with Armor / Weapons / Hunting League NPCs)

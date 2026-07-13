@@ -33,17 +33,57 @@ end
 
 local activeCalculations = setmetatable({}, { __mode = 'k' })
 
-xi.remaWsTier.getBonusPercent = function(attacker, wsId, slot)
+local function copyAndScaleFtp(wsParams, ftpScale)
+    if not wsParams or not wsParams.ftpMod or ftpScale == 1 then
+        return wsParams
+    end
+
+    local tunedParams = {}
+    for key, value in pairs(wsParams) do
+        tunedParams[key] = value
+    end
+
+    tunedParams.ftpMod = {}
+    for index, value in ipairs(wsParams.ftpMod) do
+        tunedParams.ftpMod[index] = value * ftpScale
+    end
+
+    return tunedParams
+end
+
+xi.remaWsTier.getEntry = function(attacker, wsId, slot)
     if
         not attacker or
         not attacker:isPC() or
         (slot ~= xi.slot.MAIN and slot ~= xi.slot.RANGED)
     then
+        return nil
+    end
+
+    return catalog.getEntry(attacker:getEquipID(slot), wsId, slot)
+end
+
+xi.remaWsTier.getBonusPercent = function(attacker, wsId, slot)
+    local entry = xi.remaWsTier.getEntry(attacker, wsId, slot)
+    if not entry then
         return 0
     end
 
-    local equippedItemId = attacker:getEquipID(slot)
-    return catalog.getBonusPercent(equippedItemId, wsId, slot)
+    return catalog.getBonusPercent(entry.itemId, wsId, slot)
+end
+
+xi.remaWsTier.getTunedParams = function(attacker, wsId, slot, wsParams)
+    local entry = xi.remaWsTier.getEntry(attacker, wsId, slot)
+    if not entry then
+        return wsParams
+    end
+
+    local ftpScale = catalog.getTuning(wsId)
+    if not ftpScale then
+        error(string.format('Missing REMA fTP tuning for enabled WS %d', wsId))
+    end
+
+    return copyAndScaleFtp(wsParams, ftpScale)
 end
 
 xi.remaWsTier.withTemporaryBonus = function(attacker, wsId, slot, callback)
@@ -99,20 +139,24 @@ m:addOverride('xi.weaponskills.doPhysicalWeaponskill',
         -- Capture the module loader's preserved original before creating the
         -- callback. The reload guard above prevents this wrapper being applied
         -- to itself, so this call cannot recurse.
-        local original = super
+        local original    = super
+        local tunedParams = xi.remaWsTier.getTunedParams(
+            attacker, wsId, xi.slot.MAIN, wsParams)
 
         return xi.remaWsTier.callPreservedOriginal(
             attacker, wsId, xi.slot.MAIN, original,
-            attacker, target, wsId, wsParams, tp, action, primaryMsg, taChar)
+            attacker, target, wsId, tunedParams, tp, action, primaryMsg, taChar)
     end)
 
 m:addOverride('xi.weaponskills.doRangedWeaponskill',
     function(attacker, target, wsId, wsParams, tp, action, primaryMsg)
-        local original = super
+        local original    = super
+        local tunedParams = xi.remaWsTier.getTunedParams(
+            attacker, wsId, xi.slot.RANGED, wsParams)
 
         return xi.remaWsTier.callPreservedOriginal(
             attacker, wsId, xi.slot.RANGED, original,
-            attacker, target, wsId, wsParams, tp, action, primaryMsg)
+            attacker, target, wsId, tunedParams, tp, action, primaryMsg)
     end)
 
 m:addOverride('xi.weaponskills.doMagicWeaponskill',
@@ -126,9 +170,12 @@ m:addOverride('xi.weaponskills.doMagicWeaponskill',
             slot = xi.slot.RANGED
         end
 
+        local tunedParams = xi.remaWsTier.getTunedParams(
+            attacker, wsId, slot, wsParams)
+
         return xi.remaWsTier.callPreservedOriginal(
             attacker, wsId, slot, original,
-            attacker, target, wsId, wsParams, tp, action, primaryMsg)
+            attacker, target, wsId, tunedParams, tp, action, primaryMsg)
     end)
 
 xi.remaWsTier.moduleInstalled = true

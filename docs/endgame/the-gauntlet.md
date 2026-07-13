@@ -25,16 +25,16 @@ You fight ten bosses in sequence. Defeat each NM to unlock the next. Level 10 (S
 <!-- DOCGEN:BEGIN id="gauntlet-levels" -->
 | Level | NM | Mob level | HP |
 |---:|---|---:|---:|
-| 1 | **Aquarius** | 99 | 50.0M |
-| 2 | **Serket** | 99 | 58.3M |
-| 3 | **Simurgh** | 99 | 68.0M |
-| 4 | **Nidhogg** | 99 | 79.3M |
-| 5 | **King Behemoth** | 99 | 92.4M |
-| 6 | **Vrtra** | 99 | 107.8M |
-| 7 | **Kirin** | 99 | 125.6M |
-| 8 | **Absolute Virtue** | 99 | 146.5M |
-| 9 | **Pandemonium Warden** | 99 | 170.8M |
-| 10 | **Shinryu** *(final)* | 99 | 199.2M |
+| 1 | **Aquarius** | 99 | 5.0M |
+| 2 | **Serket** | 99 | 5.8M |
+| 3 | **Simurgh** | 99 | 6.8M |
+| 4 | **Nidhogg** | 99 | 7.9M |
+| 5 | **King Behemoth** | 99 | 9.2M |
+| 6 | **Vrtra** | 99 | 10.8M |
+| 7 | **Kirin** | 99 | 12.6M |
+| 8 | **Absolute Virtue** | 99 | 14.7M |
+| 9 | **Pandemonium Warden** | 99 | 17.1M |
+| 10 | **Shinryu** *(final)* | 99 | 19.9M |
 
 HP grows **16.6%** each level. Every NM is **Lv99**; difficulty scales through stats and hardcore mechanics.
 <!-- DOCGEN:END id="gauntlet-levels" -->
@@ -53,7 +53,7 @@ Every Gauntlet NM has the same shared hardcore kit, scaled by level. All of thes
 | **Stance cycling** | The boss periodically shifts between a physical-resist stance (-50% physical damage) and a magic-resist stance (-50% magic damage). Watch the chat log and adapt. |
 | **Hold-fire windows** | A warning announces a danger period. If you deal damage during it, you take a status effect penalty (curse, poison, or blind depending on the boss). Wait for the window to expire to earn a defense-down bonus on the boss. |
 | **Crowd control** | Periodic Terror or Silence pulses. Duration scales with level. |
-| **Self-heal drain** | The boss heals itself every 15 seconds. Heal amount scales from 10k at level 1 to 100k at level 10. |
+| **Self-heal drain** | The boss heals itself every 15 seconds. Heal amount scales from 1k at level 1 to 10k at level 10. |
 | **Phase actions** | At HP thresholds the boss dispels your buffs or enters a fury state (more ATT + haste). Higher levels have more phases. |
 | **Ranged penalty** | Ranged damage is reduced by 50% outside of hold-fire weakness windows. Physical ranged is the intended way to use hold-fire timing. |
 
@@ -118,7 +118,7 @@ Milestone bonuses are paid immediately after the per-level reward when you defea
 
 After clearing all nine levels Shinryu is the only thing left. Approach the **Final Trial** NPC in the arena to summon it.
 
-Shinryu carries the full mechCfg kit at maximum intensity: a short enrage (~80s), rapid stance cycling, CC, heavy drain, and multiple phase thresholds including a 10% berserker state. It has **~199M HP** and its physical TP moves bypass parry.
+Shinryu carries the full mechCfg kit at maximum intensity: a short enrage (~80s), rapid stance cycling, CC, heavy drain, and multiple phase thresholds including a 10% berserker state. It has **~19.9M HP** and its physical TP moves bypass parry.
 
 There is no clock, no time limit beyond the enrage timer. Defeat it to trigger the jackpot reward and warp back to Purgonorgo Isle.
 

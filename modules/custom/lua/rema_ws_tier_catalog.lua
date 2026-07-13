@@ -22,9 +22,75 @@ catalog.REMA_TIER_SCALE =
     AEONIC   = 0.80,
 }
 
--- Optional outlier tuning. Unlisted weaponskills use 1.00.
-catalog.WS_TUNING =
+-- Beta fTP tuning.  Every enabled native WS has an explicit, independently
+-- adjustable scale.  The runtime applies this to a private copy of ftpMod,
+-- preserving the native hit count, damage path, crit rules and utility.
+catalog.REMA_WS_TUNING =
 {
+    -- Relic
+    [xi.weaponskill.FINAL_HEAVEN]     = 12.10,
+    [xi.weaponskill.MERCY_STROKE]     = 7.80,
+    [xi.weaponskill.KNIGHTS_OF_ROUND] = 7.90,
+    [xi.weaponskill.SCOURGE]          = 10.50,
+    [xi.weaponskill.ONSLAUGHT]        = 14.40,
+    [xi.weaponskill.METATRON_TORMENT] = 8.70,
+    [xi.weaponskill.CATASTROPHE]      = 8.60,
+    [xi.weaponskill.GEIRSKOGUL]       = 8.20,
+    [xi.weaponskill.BLADE_METSU]      = 5.00,
+    [xi.weaponskill.TACHI_KAITEN]     = 8.30,
+    [xi.weaponskill.RANDGRITH]        = 11.60,
+    [xi.weaponskill.GATE_OF_TARTARUS] = 8.60,
+    [xi.weaponskill.NAMAS_ARROW]      = 3.10,
+    [xi.weaponskill.CORONACH]         = 2.60,
+
+    -- Empyrean
+    [xi.weaponskill.VICTORY_SMITE]    = 7.20,
+    [xi.weaponskill.RUDRAS_STORM]     = 3.50,
+    [xi.weaponskill.CHANT_DU_CYGNE]   = 5.90,
+    [xi.weaponskill.TORCLEAVER]       = 4.50,
+    [xi.weaponskill.CLOUDSPLITTER]    = 5.40,
+    [xi.weaponskill.UKKOS_FURY]       = 13.30,
+    [xi.weaponskill.QUIETUS]          = 9.00,
+    [xi.weaponskill.CAMLANNS_TORMENT] = 7.00,
+    [xi.weaponskill.BLADE_HI]         = 5.70,
+    [xi.weaponskill.TACHI_FUDO]       = 3.60,
+    [xi.weaponskill.JISHNUS_RADIANCE] = 1.90,
+    [xi.weaponskill.WILDFIRE]         = 2.40,
+
+    -- Mythic
+    [xi.weaponskill.ASCETICS_FURY]    = 24.00,
+    [xi.weaponskill.STRINGING_PUMMEL] = 57.33,
+    [xi.weaponskill.MANDALIC_STAB]    = 6.00,
+    [xi.weaponskill.MORDANT_RIME]     = 9.90,
+    [xi.weaponskill.PYRRHIC_KLEOS]    = 7.20,
+    [xi.weaponskill.DEATH_BLOSSOM]    = 40.00,
+    [xi.weaponskill.EXPIACION]        = 20.00,
+    [xi.weaponskill.KINGS_JUSTICE]    = 19.33,
+    [xi.weaponskill.PRIMAL_REND]      = 6.80,
+    [xi.weaponskill.INSURGENCY]       = 27.60,
+    [xi.weaponskill.DRAKESBANE]       = 30.00,
+    [xi.weaponskill.BLADE_KAMU]       = 20.00,
+    [xi.weaponskill.TACHI_RANA]       = 30.00,
+    [xi.weaponskill.MYSTIC_BOON]      = 5.90,
+    [xi.weaponskill.VIDOHUNIR]        = 19.20,
+    [xi.weaponskill.GARLAND_OF_BLISS] = 14.90,
+    [xi.weaponskill.OMNISCIENCE]      = 16.80,
+    [xi.weaponskill.TRUEFLIGHT]        = 1.55,
+    [xi.weaponskill.LEADEN_SALUTE]     = 1.50,
+
+    -- Aeonic
+    [xi.weaponskill.SHIJIN_SPIRAL] = 7.10,
+    [xi.weaponskill.EXENTERATOR]   = 11.80,
+    [xi.weaponskill.REQUIESCAT]    = 16.50,
+    [xi.weaponskill.DIMIDIATION]   = 8.20,
+    [xi.weaponskill.RUINATOR]      = 13.10,
+    [xi.weaponskill.UPHEAVAL]      = 4.80,
+    [xi.weaponskill.ENTROPY]       = 4.20,
+    [xi.weaponskill.STARDIVER]     = 5.00,
+    [xi.weaponskill.BLADE_SHUN]    = 3.50,
+    [xi.weaponskill.TACHI_SHOHA]   = 9.30,
+    [xi.weaponskill.APEX_ARROW]    = 4.00,
+    [xi.weaponskill.LAST_STAND]    = 2.05,
 }
 
 local function weapon(itemId, name, family, wsId, slot, options)
@@ -131,10 +197,10 @@ for _, entry in ipairs(catalog.WEAPONS) do
 end
 
 catalog.getTuning = function(wsId)
-    return catalog.WS_TUNING[wsId] or 1.00
+    return catalog.REMA_WS_TUNING[wsId]
 end
 
-catalog.getBonusPercent = function(itemId, wsId, slot)
+catalog.getEntry = function(itemId, wsId, slot)
     local entry = catalog.BY_ITEM_ID[itemId]
     if
         not entry or
@@ -142,13 +208,21 @@ catalog.getBonusPercent = function(itemId, wsId, slot)
         entry.wsId ~= wsId or
         entry.slot ~= slot
     then
+        return nil
+    end
+
+    return entry
+end
+
+catalog.getBonusPercent = function(itemId, wsId, slot)
+    local entry = catalog.getEntry(itemId, wsId, slot)
+    if not entry then
         return 0
     end
 
     local tierScale = catalog.REMA_TIER_SCALE[entry.family]
-    local tuning    = catalog.getTuning(wsId)
 
-    return math.floor(catalog.PRIME_EQUIVALENT_BONUS * tierScale * tuning * 100 + 0.5)
+    return math.floor(catalog.PRIME_EQUIVALENT_BONUS * tierScale * 100 + 0.5)
 end
 
 return catalog
