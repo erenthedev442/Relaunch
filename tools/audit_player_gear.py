@@ -22,9 +22,11 @@ DB (xi_relaunch, credentials from settings/network.lua):
   chars, char_inventory, char_vars
 
 Writes:
-  exports/player_gear_audit.csv                       -- one row per anomaly
+  exports/player_gear_audit.csv                       -- one row per anomaly (item held above progression)
   exports/player_gear_audit.json                      -- structured (same data)
-  exports/player_gear_audit.summary.md                -- top-line summary
+  exports/player_gear_audit.summary.md                -- Item | Character detail table + aggregates
+  exports/player_gear_audit.locked.csv                -- items on the server the char can't unlock yet
+  exports/player_gear_audit.locked.summary.md         -- per-character locked-items table
 
 Flagging philosophy:
   An item's sources are the UNION of every path the item can legitimately
@@ -35,6 +37,13 @@ Flagging philosophy:
   item flagged. This keeps false positives low: someone lucky at Domain
   Invasion legitimately holds a lot of gear, and items with any craft or
   retail-drop source are effectively obtainable by anyone.
+
+Locked-items scan (2nd pass):
+  For every character, walks every server item that has a KNOWN gated source
+  and reports the ones where the char meets none of the gates. Filters out
+  items whose only sources are UNGATED_LABELS (Craft/Retail/AH/etc.) since
+  those are effectively obtainable by anyone. Bounded by the size of the
+  gated-source pool (~a few hundred items), not by player count.
 """
 from __future__ import annotations
 
@@ -61,10 +70,21 @@ WEAPONS_PATH     = REPO_ROOT / 'modules' / 'custom' / 'lua' / 'gear_progression_
 INFAMY_PATH      = REPO_ROOT / 'modules' / 'custom' / 'lua' / 'infamy_vendor_catalog.lua'
 NETWORK_LUA_PATH = REPO_ROOT / 'settings' / 'network.lua'
 
-OUT_DIR   = REPO_ROOT / 'exports'
-OUT_CSV   = OUT_DIR / 'player_gear_audit.csv'
-OUT_JSON  = OUT_DIR / 'player_gear_audit.json'
-OUT_SUMM  = OUT_DIR / 'player_gear_audit.summary.md'
+OUT_DIR         = REPO_ROOT / 'exports'
+OUT_CSV         = OUT_DIR / 'player_gear_audit.csv'
+OUT_JSON        = OUT_DIR / 'player_gear_audit.json'
+OUT_SUMM        = OUT_DIR / 'player_gear_audit.summary.md'
+OUT_LOCKED_CSV  = OUT_DIR / 'player_gear_audit.locked.csv'
+OUT_LOCKED_SUMM = OUT_DIR / 'player_gear_audit.locked.summary.md'
+
+# Cap the number of locked-items rows shown per character in the markdown
+# summary (the CSV always has the full list). Keeps the summary readable
+# when a low-progression char is locked out of ~all vendor tiers at once.
+LOCKED_MD_ROWS_PER_CHAR = 40
+# Cap the flat (Item x Character) table in the locked summary. A live server
+# with 20+ chars easily produces 40k+ locked rows; a markdown table that big
+# is unreadable and the CSV has the full list.
+LOCKED_MD_FLAT_MAX = 500
 
 # ---------------------------------------------------------------------------
 # MySQL client
@@ -438,25 +458,114 @@ def check_item(state: dict, iid: int, qty: int, sources: ItemSources) -> Finding
     )
 
 # ---------------------------------------------------------------------------
+# Locked-items scan (2nd pass)
+#
+# For each character, walk every item in the source map and report items the
+# character can't currently obtain (no source's gate is met). Bounded to
+# items that have at least ONE non-ungated source -- if every source is
+# ungated (Craft/AH/Retail Drop/Domain Invasion), the item is effectively
+# open to everyone and doesn't belong on a "locked" report.
+# ---------------------------------------------------------------------------
+@dataclass
+class LockedItem:
+    charid:   int
+    charname: str
+    itemid:   int
+    itemname: str
+    sources:  list[str]     # every known source with (met/unmet) tag
+
+def _source_line(label: str, iid: int, state: dict, sub: str = '') -> str:
+    """Human-readable 'system-label(needs=...)' tag for a locked-source row."""
+    if label in UNGATED_LABELS:
+        return f'{label}[open]'
+    vg = vendor_gates.get(iid)
+    if label == 'Gear Vendor' and vg and vg.kind == 'hl_tier':
+        return f'{label}[need HL_Tier>={vg.required}]'
+    if label in ('Gear Vendor', 'Infamy Vendor') and vg and vg.kind == 'infamy_lifetime':
+        return f'{label}[need Infamy_Lifetime>={vg.required}]'
+    return f'{label}[gate not met]'
+
+def has_any_progression_gate(src: ItemSources) -> bool:
+    """True if any of the item's sources is NOT in UNGATED_LABELS.
+
+    Items whose only sources are Craft/AH/Retail Drop/Domain Invasion etc.
+    are effectively open to everyone; filtering them out keeps the locked
+    report focused on progression-content-gated items.
+    """
+    for lbl in src.system_labels:
+        if lbl not in UNGATED_LABELS:
+            return True
+    for d in src.drop_mobs:
+        mob = d.get('m', '?')
+        z   = d.get('z', '?')
+        pm = re.search(r'\(([^)]+)\)', mob)
+        drop_sys = pm.group(1) if pm else z
+        if drop_sys and drop_sys not in UNGATED_LABELS:
+            return True
+    return False
+
+def find_locked_items(state: dict, sources_map: dict[int, ItemSources]) -> list[LockedItem]:
+    """Return items the char can't obtain: every source's gate fails."""
+    out: list[LockedItem] = []
+    for iid, src in sources_map.items():
+        if src.is_untracked():
+            continue
+        if not has_any_progression_gate(src):
+            continue   # open to everyone -- not "locked"
+        # any source reachable? then it's obtainable, skip.
+        reachable = False
+        source_tags: list[str] = []
+        for lbl in src.system_labels:
+            if gate_ok(lbl, iid, state):
+                reachable = True
+                break
+            source_tags.append(_source_line(lbl, iid, state))
+        if reachable:
+            continue
+        for d in src.drop_mobs:
+            mob = d.get('m', '?')
+            z   = d.get('z', '?')
+            pm = re.search(r'\(([^)]+)\)', mob)
+            drop_sys = pm.group(1) if pm else z
+            if drop_sys and gate_ok(drop_sys, iid, state):
+                reachable = True
+                break
+            source_tags.append(f'drop:{mob}({z})[gate not met]')
+        if reachable:
+            continue
+        out.append(LockedItem(
+            charid=0, charname='',
+            itemid=iid, itemname=src.name,
+            sources=source_tags,
+        ))
+    return out
+
+# ---------------------------------------------------------------------------
 # Output
 # ---------------------------------------------------------------------------
+def _md_escape(text: str) -> str:
+    """Escape pipe chars so cell content doesn't break table columns."""
+    return text.replace('|', '\\|')
+
 def write_outputs(findings: list[Finding], player_count: int) -> None:
     OUT_DIR.mkdir(exist_ok=True)
 
-    # CSV
+    # CSV -- one row per (character, item) finding. Item first so a text-sort
+    # groups by item across characters (useful when triaging a single mis-drop).
     with OUT_CSV.open('w', newline='', encoding='utf-8') as f:
         w = csv.writer(f)
-        w.writerow(['charid', 'charname', 'itemid', 'itemname', 'quantity',
+        w.writerow(['itemname', 'itemid', 'charname', 'charid', 'quantity',
                     'reason', 'sources'])
-        for x in findings:
-            w.writerow([x.charid, x.charname, x.itemid, x.itemname, x.quantity,
+        for x in sorted(findings, key=lambda x: (x.itemname.lower(), x.charname.lower())):
+            w.writerow([x.itemname, x.itemid, x.charname, x.charid, x.quantity,
                         x.reason, ' | '.join(x.sources)])
 
     # JSON
     with OUT_JSON.open('w', encoding='utf-8') as f:
         json.dump([x.__dict__ for x in findings], f, indent=2)
 
-    # Summary
+    # Summary: single Item | Character detail table (the deliverable) followed
+    # by count aggregates for scanning at a glance.
     by_reason: dict[str, int]  = {}
     by_item:   dict[str, int]  = {}
     by_char:   dict[str, int]  = {}
@@ -469,20 +578,104 @@ def write_outputs(findings: list[Finding], player_count: int) -> None:
     top_chars = sorted(by_char.items(), key=lambda kv: -kv[1])[:25]
 
     with OUT_SUMM.open('w', encoding='utf-8') as f:
-        f.write(f'# Player gear audit summary\n\n')
+        f.write('# Player gear audit -- items held above progression\n\n')
         f.write(f'- Non-GM characters scanned: **{player_count}**\n')
         f.write(f'- Total findings: **{len(findings)}**\n\n')
         f.write('## By reason\n\n')
         for k, v in sorted(by_reason.items(), key=lambda kv: -kv[1]):
             f.write(f'- **{k}**: {v}\n')
+
+        # The requested table: Item + Character in the same row, alphabetized
+        # by item so the same item across multiple players is contiguous.
+        f.write('\n## Findings (Item x Character)\n\n')
+        if findings:
+            f.write('| Item | Item ID | Character | Qty | Reason | Sources |\n')
+            f.write('|---|---:|---|---:|---|---|\n')
+            for x in sorted(findings, key=lambda x: (x.itemname.lower(), x.charname.lower())):
+                srcs = _md_escape(' \\| '.join(x.sources) if x.sources else '(none)')
+                f.write(
+                    f'| {_md_escape(x.itemname)} | {x.itemid} '
+                    f'| {_md_escape(x.charname)} | {x.quantity} '
+                    f'| {x.reason} | {srcs} |\n'
+                )
+        else:
+            f.write('_No anomalies._\n')
+
         f.write('\n## Top 25 items (most-flagged)\n\n')
         f.write('| Item | Count |\n|---|---:|\n')
         for name, c in top_items:
-            f.write(f'| {name} | {c} |\n')
+            f.write(f'| {_md_escape(name)} | {c} |\n')
         f.write('\n## Top 25 characters (most-flagged)\n\n')
         f.write('| Character | Count |\n|---|---:|\n')
         for name, c in top_chars:
-            f.write(f'| {name} | {c} |\n')
+            f.write(f'| {_md_escape(name)} | {c} |\n')
+
+def write_locked_outputs(locked: list[LockedItem], player_count: int) -> None:
+    """Write the 2nd-pass 'items on the server the char can't unlock' report.
+
+    CSV has every row; the markdown summary caps per-character rows at
+    LOCKED_MD_ROWS_PER_CHAR to stay readable for low-progression chars who
+    are locked out of nearly every vendor tier at once.
+    """
+    OUT_DIR.mkdir(exist_ok=True)
+
+    with OUT_LOCKED_CSV.open('w', newline='', encoding='utf-8') as f:
+        w = csv.writer(f)
+        w.writerow(['itemname', 'itemid', 'charname', 'charid', 'locked_sources'])
+        for x in sorted(locked, key=lambda x: (x.itemname.lower(), x.charname.lower())):
+            w.writerow([x.itemname, x.itemid, x.charname, x.charid,
+                        ' | '.join(x.sources)])
+
+    # Per-character bucket for the summary markdown.
+    by_char: dict[str, list[LockedItem]] = {}
+    for x in locked:
+        by_char.setdefault(x.charname, []).append(x)
+
+    with OUT_LOCKED_SUMM.open('w', encoding='utf-8') as f:
+        f.write('# Player gear audit -- items available but not yet unlocked\n\n')
+        f.write(f'- Non-GM characters scanned: **{player_count}**\n')
+        f.write(f'- Total locked-item rows: **{len(locked)}**\n')
+        f.write(f'- Characters with at least one locked item: **{len(by_char)}**\n\n')
+        f.write(
+            'Each row is an item that exists on the server with at least one\n'
+            'progression-gated source, but the character hasn\'t met any of\n'
+            f'those gates. Full detail in `{OUT_LOCKED_CSV.name}`; summary caps\n'
+            f'at {LOCKED_MD_ROWS_PER_CHAR} rows per character.\n\n'
+        )
+
+        # Flat "Item x Character" table so this file mirrors the anomaly
+        # summary's shape. Capped at LOCKED_MD_FLAT_MAX rows -- the CSV is the
+        # complete list. Pick the first N alphabetized rows so the sample is
+        # deterministic and consecutive characters/items stay together.
+        f.write('## Locked items (Item x Character)\n\n')
+        if locked:
+            flat = sorted(locked, key=lambda x: (x.itemname.lower(), x.charname.lower()))
+            f.write(f'Showing first **{min(len(flat), LOCKED_MD_FLAT_MAX)}** of '
+                    f'**{len(flat)}** rows. Full list in `{OUT_LOCKED_CSV.name}`.\n\n')
+            f.write('| Item | Item ID | Character | Locked sources |\n')
+            f.write('|---|---:|---|---|\n')
+            for x in flat[:LOCKED_MD_FLAT_MAX]:
+                srcs = _md_escape(' \\| '.join(x.sources) if x.sources else '(none)')
+                f.write(
+                    f'| {_md_escape(x.itemname)} | {x.itemid} '
+                    f'| {_md_escape(x.charname)} | {srcs} |\n'
+                )
+        else:
+            f.write('_No locked items._\n')
+
+        # Per-character breakdown, capped for readability.
+        f.write('\n## By character\n\n')
+        for name in sorted(by_char):
+            rows = sorted(by_char[name], key=lambda x: x.itemname.lower())
+            f.write(f'### {name} ({len(rows)} locked)\n\n')
+            f.write('| Item | Item ID | Locked sources |\n')
+            f.write('|---|---:|---|\n')
+            for x in rows[:LOCKED_MD_ROWS_PER_CHAR]:
+                srcs = _md_escape(' \\| '.join(x.sources) if x.sources else '(none)')
+                f.write(f'| {_md_escape(x.itemname)} | {x.itemid} | {srcs} |\n')
+            if len(rows) > LOCKED_MD_ROWS_PER_CHAR:
+                f.write(f'\n_...{len(rows) - LOCKED_MD_ROWS_PER_CHAR} more in `{OUT_LOCKED_CSV.name}`._\n')
+            f.write('\n')
 
 # ---------------------------------------------------------------------------
 # Main
@@ -503,9 +696,14 @@ def main() -> int:
     print(f'  {len(players)} characters to scan')
 
     findings: list[Finding] = []
+    locked:   list[LockedItem] = []
     for i, p in enumerate(players, 1):
         if i % 50 == 0 or i == len(players):
-            print(f'  {i}/{len(players)} {p.name} ({len(findings)} findings so far)', flush=True)
+            print(
+                f'  {i}/{len(players)} {p.name} '
+                f'({len(findings)} findings, {len(locked)} locked so far)',
+                flush=True,
+            )
         populate_player(p)
         for iid, qty in p.items.items():
             src = sources.get(iid)
@@ -519,11 +717,21 @@ def main() -> int:
                 f.charname = p.name
                 findings.append(f)
 
+        # 2nd pass: items on the server this char hasn't unlocked yet.
+        for li in find_locked_items(p.state, sources):
+            li.charid   = p.charid
+            li.charname = p.name
+            locked.append(li)
+
     print(f'\nTotal findings: {len(findings)}')
+    print(f'Total locked-item rows: {len(locked)}')
     write_outputs(findings, len(players))
+    write_locked_outputs(locked, len(players))
     print(f'Wrote {OUT_CSV}')
     print(f'Wrote {OUT_JSON}')
     print(f'Wrote {OUT_SUMM}')
+    print(f'Wrote {OUT_LOCKED_CSV}')
+    print(f'Wrote {OUT_LOCKED_SUMM}')
     return 0
 
 if __name__ == '__main__':
