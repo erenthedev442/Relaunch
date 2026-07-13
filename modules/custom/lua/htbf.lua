@@ -301,6 +301,23 @@ function htbf.register(fightKey, tier)
     -- sourced from bg-wiki; this is the guaranteed completion reward on top.
     function content:onEventFinishWin(player, csid, option, npc)
         if not rew then return end
+        -- Idempotency latch. On 2026-07-13 the Ark Angel HM T3 clear paid the
+        -- reward FOUR times to the same player (400k gil * 4, 600 marks * 4,
+        -- Copy of Rem's Tale ch6 * 4). Root cause is engine-side: the LSB win
+        -- path fires per player via CBattlefield::Cleanup -> OnBattlefieldLeave
+        -- -> onBattlefieldWin -> startEvent(32001) -> here, and something in
+        -- that chain re-invokes it per-player when it shouldn't. Latch on a
+        -- battlefield-instance-scoped var (localVars die with the instance,
+        -- so a legit next run isn't affected) so a replay is a hard no-op --
+        -- covers every current caller AND anything the engine gains later.
+        local bf = player:getBattlefield()
+        if bf then
+            local latch = 'htbfPaid_' .. player:getID()
+            if bf:getLocalVar(latch) == 1 then
+                return
+            end
+            bf:setLocalVar(latch, 1)
+        end
         if rew.gil and rew.gil > 0 then
             pcall(function() player:addGil(rew.gil) end)
         end
