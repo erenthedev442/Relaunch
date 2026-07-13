@@ -29,7 +29,12 @@ local FARMS =
     {
         keys    = { 'ranperre', 'r', 'tomb', 'kt', 'krt' },
         zone    = xi.zone.KING_RANPERRES_TOMB,
-        pos     = { -26.0, 7.0, 21.0, 0 },
+        -- Moved 2026-07-13 from (-26, 7, 21) which spawned the player on top of
+        -- a Nachzehrer (0.0 yalms) with 5 more aggressive mobs within 12 yalms.
+        -- (-26, 7, -15) is 35 yalms from the nearest aggro (well outside the
+        -- ~20-yalm sight/sound range) and a short jog north to the farm cluster.
+        -- Keep in sync with warpPos in ranperre_farm_catalog.lua.
+        pos     = { -26.0, 7.0, -15.0, 0 },
         label   = "King Ranperre's Tomb",
     },
 }

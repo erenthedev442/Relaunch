@@ -10,9 +10,12 @@ catalog.zoneId   = xi.zone.KING_RANPERRES_TOMB  -- 190
 catalog.zonePath = 'xi.zones.King_Ranperres_Tomb'
 catalog.logTag   = 'ranperre_farm'
 
--- Where !ranperre warps the player. Matches a native walkable spawn
--- point on the main floor (y~7) near the center of the zone.
-catalog.warpPos    = { x = -26.0, y = 7.0, z = 21.0, rot = 0 }
+-- Where !ranperre warps the player. Moved 2026-07-13: (-26, 7, 21) was a
+-- Nachzehrer's own spawn point (0.0 yalms), instantly aggroing 5 mobs at
+-- once. New spot is 36 yalms south of the same X -- still on the main
+-- floor, mob-free at ~20-yalm sight/sound range, short jog to the cluster.
+-- Keep in sync with the !capacity ranperre pos in commands/capacity.lua.
+catalog.warpPos    = { x = -26.0, y = 7.0, z = -15.0, rot = 0 }
 
 -- Fallback camp-center patch (used when spawnPoints is nil/empty).
 catalog.campCenter = { x = -26.0, y = 7.0, z = 21.0 }
