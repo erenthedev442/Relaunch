@@ -107,7 +107,7 @@ table.insert(b.hands, { id = 28015, name = "Xaddi Gauntlets", cost = 12, jobs = 
 table.insert(b.hands, { id = 28013, name = "Hegira Wristbands", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' })  -- TANK score 187
 
 -- Legs (12 picks, scored highest first)
-table.insert(b.legs, { id = 28154, name = "Weatherspoon Pants +1", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- TANK score 195
+table.insert(s.legs, { id = 28154, name = "Weatherspoon Pants +1", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' } )  -- TANK score 195
 table.insert(b.legs, { id = 28155, name = "Scufflers Cosciales", cost = 12, jobs = 'WAR/PLD/DRK/SAM/DRG' })  -- DPS score 173
 table.insert(b.legs, { id = 25853, name = "Querkening Brais", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- DPS score 171
 table.insert(b.legs, { id = 28174, name = "Theurgists Slacks", cost = 12, jobs = 'WHM/BLM/SMN/PUP/SCH/GEO' })  -- CASTER score 159
@@ -212,20 +212,20 @@ table.insert(inf.shields, { id = 26403, name = "Srivatsa", cost = 500, jobs = 'P
 -- anywhere else on relaunch (exclusive). Tier = flat ilvl band:
 --   gold >=116 | silver 110-115 | bronze <110 (accessories have no ilvl -> bronze).
 -----------------------------------
-table.insert(b.body, { id = 27895, name = "Karieyh Haubert +1", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- ilvl 109
+table.insert(s.body, { id = 27895, name = "Karieyh Haubert +1", cost = 25, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' } )  -- ilvl 109
 table.insert(b.body, { id = 27826, name = "Maxixi Casaque", cost = 12, jobs = 'DNC' })  -- ilvl 109
-table.insert(b.body, { id = 27897, name = "Orvail Robe +1", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 109
-table.insert(b.body, { id = 27896, name = "Thurandaut Tabard +1", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- ilvl 109
+table.insert(s.body, { id = 27897, name = "Orvail Robe +1", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' } )  -- ilvl 109
+table.insert(s.body, { id = 27896, name = "Thurandaut Tabard +1", cost = 25, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' } )  -- ilvl 109
 table.insert(b.body, { id = 27907, name = "Gorney Haubert", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- ilvl 106
 table.insert(b.body, { id = 27908, name = "Shneddick Tabard", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- ilvl 106
 table.insert(b.body, { id = 27909, name = "Weatherspoon Robe", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 106
 table.insert(b.body, { id = 27925, name = "Karieyh Haubert", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- ilvl 100
 table.insert(b.body, { id = 27922, name = "Orvail Robe", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 100
 table.insert(b.body, { id = 27924, name = "Thurandaut Tabard", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- ilvl 100
-table.insert(b.feet, { id = 28320, name = "Karieyh Sollerets +1", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- ilvl 109
+table.insert(s.feet, { id = 28320, name = "Karieyh Sollerets +1", cost = 25, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' } )  -- ilvl 109
 table.insert(b.feet, { id = 28242, name = "Maxixi Toe Shoes", cost = 12, jobs = 'DNC' })  -- ilvl 109
-table.insert(b.feet, { id = 28322, name = "Orvail Souliers +1", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 109
-table.insert(b.feet, { id = 28321, name = "Thurandaut Boots +1", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- ilvl 109
+table.insert(s.feet, { id = 28322, name = "Orvail Souliers +1", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' } )  -- ilvl 109
+table.insert(s.feet, { id = 28321, name = "Thurandaut Boots +1", cost = 25, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' } )  -- ilvl 109
 table.insert(b.feet, { id = 28304, name = "Litany Clogs", cost = 12, jobs = 'WHM' })  -- ilvl 107
 table.insert(b.feet, { id = 28343, name = "Chocaliztli Boots", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- ilvl 106
 table.insert(b.feet, { id = 28327, name = "Gorney Sollerets", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- ilvl 106
@@ -235,10 +235,10 @@ table.insert(b.feet, { id = 28345, name = "Karieyh Sollerets", cost = 12, jobs =
 table.insert(b.feet, { id = 28342, name = "Orvail Souliers", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 100
 table.insert(b.feet, { id = 28344, name = "Thurandaut Boots", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- ilvl 100
 table.insert(b.hands, { id = 28027, name = "Boor Bracelets", cost = 12, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- ilvl 109
-table.insert(b.hands, { id = 28042, name = "Karieyh Moufles +1", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- ilvl 109
+table.insert(s.hands, { id = 28042, name = "Karieyh Moufles +1", cost = 25, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' } )  -- ilvl 109
 table.insert(b.hands, { id = 27962, name = "Maxixi Bangles", cost = 12, jobs = 'DNC' })  -- ilvl 109
-table.insert(b.hands, { id = 28044, name = "Orvail Cuffs +1", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 109
-table.insert(b.hands, { id = 28043, name = "Thurandaut Gloves +1", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- ilvl 109
+table.insert(s.hands, { id = 28044, name = "Orvail Cuffs +1", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' } )  -- ilvl 109
+table.insert(s.hands, { id = 28043, name = "Thurandaut Gloves +1", cost = 25, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' } )  -- ilvl 109
 table.insert(b.hands, { id = 28026, name = "Aiwon Gauntlets", cost = 12, jobs = 'PLD/DRK' })  -- ilvl 107
 table.insert(b.hands, { id = 28046, name = "Gorney Moufles", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- ilvl 106
 table.insert(b.hands, { id = 28062, name = "Quauhpilli Gloves", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- ilvl 106
@@ -247,10 +247,10 @@ table.insert(b.hands, { id = 28048, name = "Weatherspoon Cuffs", cost = 12, jobs
 table.insert(b.hands, { id = 28065, name = "Karieyh Moufles", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- ilvl 100
 table.insert(b.hands, { id = 28061, name = "Orvail Cuffs", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 100
 table.insert(b.hands, { id = 28064, name = "Thurandaut Gloves", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- ilvl 100
-table.insert(b.head, { id = 27752, name = "Karieyh Morion +1", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- ilvl 109
+table.insert(s.head, { id = 27752, name = "Karieyh Morion +1", cost = 25, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' } )  -- ilvl 109
 table.insert(b.head, { id = 27682, name = "Maxixi Tiara", cost = 12, jobs = 'DNC' })  -- ilvl 109
-table.insert(b.head, { id = 27754, name = "Orvail Corona +1", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 109
-table.insert(b.head, { id = 27753, name = "Thurandaut Chapeau +1", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- ilvl 109
+table.insert(s.head, { id = 27754, name = "Orvail Corona +1", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' } )  -- ilvl 109
+table.insert(s.head, { id = 27753, name = "Thurandaut Chapeau +1", cost = 25, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' } )  -- ilvl 109
 table.insert(b.head, { id = 27735, name = "Enedron Glasses", cost = 12, jobs = 'All' })  -- ilvl 107
 table.insert(b.head, { id = 27780, name = "Chocaliztli Mask", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- ilvl 106
 table.insert(b.head, { id = 27761, name = "Gorney Morion", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- ilvl 106
@@ -261,10 +261,10 @@ table.insert(b.head, { id = 27781, name = "Xux Hat", cost = 12, jobs = 'WHM/BLM/
 table.insert(b.head, { id = 27785, name = "Karieyh Morion", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- ilvl 100
 table.insert(b.head, { id = 27782, name = "Orvail Corona", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 100
 table.insert(b.head, { id = 27784, name = "Thurandaut Chapeau", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- ilvl 100
-table.insert(b.legs, { id = 28182, name = "Karieyh Brayettes +1", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- ilvl 109
+table.insert(s.legs, { id = 28182, name = "Karieyh Brayettes +1", cost = 25, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' } )  -- ilvl 109
 table.insert(b.legs, { id = 28109, name = "Maxixi Tights", cost = 12, jobs = 'DNC' })  -- ilvl 109
-table.insert(b.legs, { id = 28184, name = "Orvail Pants +1", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- ilvl 109
-table.insert(b.legs, { id = 28183, name = "Thurandaut Tights +1", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- ilvl 109
+table.insert(s.legs, { id = 28184, name = "Orvail Pants +1", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' } )  -- ilvl 109
+table.insert(s.legs, { id = 28183, name = "Thurandaut Tights +1", cost = 25, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' } )  -- ilvl 109
 table.insert(b.legs, { id = 28165, name = "Laktisma Hose", cost = 12, jobs = 'MNK/SAM/NIN' })  -- ilvl 107
 table.insert(b.legs, { id = 28188, name = "Gorney Brayettes", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- ilvl 106
 table.insert(b.legs, { id = 28189, name = "Shneddick Tights", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- ilvl 106
