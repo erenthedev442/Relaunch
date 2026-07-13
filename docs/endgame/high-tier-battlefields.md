@@ -15,6 +15,14 @@ Buy your **Phantom Gem** from the **Phantom Gems** vendor in {{npc:htbf_vendor}}
 The vendor also offers a **free warp** straight to any battlefield entrance -- pick *Warp to a Battlefield*, choose the expansion, then the fight, and you're teleported there. You still need the gem in hand and a clear to enter, but it saves the cross-zone trek.
 
 You can only hold one gem of a given type at a time, and entering a battlefield consumes it -- buy a fresh gem for each attempt.
+
+!!! warning "Entry requirements"
+    High-Tier Battlefields are **endgame-gated**. Holding the gem is not enough -- to enter, on the **job you are entering with** you must:
+
+    1. **Have mastered that job** -- 2,100 Job Points spent (every JP gift unlocked; the job must be level 99). This is checked against your **current main job**, so master the job you intend to fight on.
+    2. **Have registered all 11 NM affinities** at the [Augment Sage](../progression/augment-sage.md#track-2-nm-affinities).
+
+    If you fall short, the fight won't appear in the battlefield menu and the entrance tells you exactly what you're missing.
 <!-- DOCGEN:END id="htbf-access" -->
 
 ## Phantom Gems

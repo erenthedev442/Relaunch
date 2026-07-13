@@ -17,6 +17,62 @@ local catalog = require('modules/custom/lua/htbf_catalog')
 local htbf = {}
 
 -- ---------------------------------------------------------------------------
+-- ACCESS REQUIREMENTS (owner request 2026-07-12)
+-- To enter ANY High-Tier Battlefield, on the job you are entering with you must
+--   1. have MASTERED that job -- getSpentJobPoints() >= MASTER_JP. That binding
+--      reads the CURRENT main job and returns 0 below Lv99, and 2100 == every JP
+--      gift unlocked (full mastery). We source the bar from job_rebirth_catalog
+--      so the server's one mastery number never drifts (JobRebirth uses it too).
+--   2. have registered ALL NM affinities (the Augment_Affinities bitfield full).
+-- Enforced by overriding each content's entryRequirement (in register), so an
+-- unqualified player never sees the fight in the burning-circle menu; the menu
+-- wrapper (printEntranceLegend) prints exactly what's missing when they hold the
+-- gem but fall short -- silent menu-hiding would otherwise be baffling.
+-- ---------------------------------------------------------------------------
+local function popcount(n)
+    local c = 0
+    while n > 0 do c = c + bit.band(n, 1); n = bit.rshift(n, 1) end
+    return c
+end
+
+local MASTER_JP = 2100  -- fallback; overwritten from job_rebirth_catalog below
+do
+    local ok, reb = pcall(require, 'modules/custom/lua/job_rebirth_catalog')
+    if ok and reb and reb.jpRequired then MASTER_JP = reb.jpRequired end
+end
+
+-- Full-affinity mask, derived from the catalog so it tracks the roster (never a
+-- hardcoded 0x7FF that rots if a category is added/removed). Fail-SAFE: if the
+-- catalog can't be read, keep the 11-bit fallback so the gate stays CLOSED
+-- rather than silently letting everyone in.
+local AFFINITY_FULL_MASK = 0x7FF
+do
+    local ok, aff = pcall(require, 'modules/custom/lua/augment_affinity_catalog')
+    if ok and aff and aff.affinities then
+        local mask = 0
+        for _, row in ipairs(aff.affinities) do mask = bit.bor(mask, bit.lshift(1, row.bit)) end
+        if mask ~= 0 then AFFINITY_FULL_MASK = mask end
+    end
+end
+local AFFINITY_COUNT = popcount(AFFINITY_FULL_MASK)
+
+-- Returns ok(bool), missing(list of human-readable requirement strings).
+function htbf.accessCheck(player)
+    local missing = {}
+    local spent = player:getSpentJobPoints() or 0
+    if spent < MASTER_JP then
+        missing[#missing + 1] = string.format(
+            'master the job you enter with (Job Points %d/%d)', spent, MASTER_JP)
+    end
+    local field = bit.band(player:getCharVar('Augment_Affinities') or 0, AFFINITY_FULL_MASK)
+    if field ~= AFFINITY_FULL_MASK then
+        missing[#missing + 1] = string.format(
+            'register all %d NM affinities (have %d/%d)', AFFINITY_COUNT, popcount(field), AFFINITY_COUNT)
+    end
+    return #missing == 0, missing
+end
+
+-- ---------------------------------------------------------------------------
 -- Let players field Trusts inside HTBF battlefields.
 -- The engine gates battlefield trust summons on
 --   xi.trust.checkBattlefieldTrustCount = (players + trusts) < maxParticipants
@@ -90,6 +146,21 @@ function htbf.printEntranceLegend(player, npc)
     end
 
     if #rows == 0 then return end
+
+    -- Holding the gem isn't enough: HTBF is gated on mastering the entering job
+    -- and holding every NM affinity (see accessCheck at top). If they fall short,
+    -- the entryRequirement override has already hidden these tiers from the menu,
+    -- so tell them exactly what's missing rather than print a legend for rows the
+    -- menu (correctly) won't offer.
+    local canEnter, missing = htbf.accessCheck(player)
+    if not canEnter then
+        player:printToPlayer('[HTBF] You hold a Phantom Gem, but High-Tier Battlefields have entry requirements you have not met:', xi.msg.channel.SYSTEM_3)
+        for _, req in ipairs(missing) do
+            player:printToPlayer('[HTBF]   - ' .. req, xi.msg.channel.SYSTEM_3)
+        end
+        return
+    end
+
     table.sort(rows, function(a, b) return a.idx < b.idx end)
 
     player:printToPlayer('[HTBF] Some entries below show no name (client limit). High-Tier Battlefields:', xi.msg.channel.SYSTEM_3)
@@ -138,6 +209,15 @@ function htbf.register(fightKey, tier)
         canLoseExp       = false,
         requiredKeyItems = { f.gem },   -- consumed on entry (no keep); HTBF is gem-gated
     })
+
+    -- ACCESS GATE (see top): only a master of the entering job who holds every
+    -- NM affinity may enter. checkRequirements calls entryRequirement LAST, so
+    -- overriding it hides the fight from the burning-circle menu for anyone who
+    -- falls short; printEntranceLegend prints the specific reason. Parens force
+    -- the single bool return (the missing-list is dropped).
+    function content:entryRequirement(player, npc, isRegistrant, trade)
+        return (htbf.accessCheck(player))
+    end
 
     -- Groups. Simple single-boss fights name the boss (f.mobs). Complex fights
     -- (multi-group, per-arena mobIds, skillchain AI, phase sections) instead

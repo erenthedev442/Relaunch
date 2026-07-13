@@ -257,6 +257,8 @@ def _parse_loot(text: str) -> dict:
 # ── Render ──────────────────────────────────────────────────────────────────
 
 def _render_access(c: dict) -> str:
+    master_jp = c.get("master_jp", 2100)
+    aff_count = c.get("affinity_count", 11)
     return (
         "Buy your **Phantom Gem** from the **Phantom Gems** vendor in "
         "{{npc:htbf_vendor}} (`!hub`, the relaunch hub). Each gem is a key item bought with "
@@ -269,7 +271,17 @@ def _render_access(c: dict) -> str:
         "the fight, and you're teleported there. You still need the gem in hand "
         "and a clear to enter, but it saves the cross-zone trek.\n\n"
         "You can only hold one gem of a given type at a time, and entering a "
-        "battlefield consumes it -- buy a fresh gem for each attempt."
+        "battlefield consumes it -- buy a fresh gem for each attempt.\n\n"
+        "!!! warning \"Entry requirements\"\n"
+        "    High-Tier Battlefields are **endgame-gated**. Holding the gem is not "
+        "enough -- to enter, on the **job you are entering with** you must:\n\n"
+        f"    1. **Have mastered that job** -- {master_jp:,} Job Points spent (every "
+        "JP gift unlocked; the job must be level 99). This is checked against your "
+        "**current main job**, so master the job you intend to fight on.\n"
+        f"    2. **Have registered all {aff_count} NM affinities** at the "
+        "[Augment Sage](../progression/augment-sage.md#track-2-nm-affinities).\n\n"
+        "    If you fall short, the fight won't appear in the battlefield menu and "
+        "the entrance tells you exactly what you're missing."
     )
 
 
@@ -384,6 +396,19 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
     text = src.read_text(encoding="utf-8", errors="replace")
     c = _parse(text)
+
+    # Entry-requirement numbers are sourced from the systems that own them so the
+    # access block can't drift from htbf.lua's gate: the mastery bar from
+    # job_rebirth_catalog.jpRequired, the affinity count from the affinity roster.
+    reb_src = resolve_source(repo_root, "modules/custom/lua/job_rebirth_catalog.lua")
+    if reb_src is not None:
+        m = re.search(r"jpRequired\s*=\s*(\d+)", reb_src.read_text(encoding="utf-8", errors="replace"))
+        if m:
+            c["master_jp"] = int(m.group(1))
+    aff_src = resolve_source(repo_root, "modules/custom/lua/augment_affinity_catalog.lua")
+    if aff_src is not None:
+        c["affinity_count"] = len(re.findall(
+            r"\{\s*cat=\d+", aff_src.read_text(encoding="utf-8", errors="replace")))
 
     # Per-fight armoury-crate loot lives in its own file (catalog.fightLoot).
     loot_src = resolve_source(repo_root, "modules/custom/lua/htbf_loot.lua")
