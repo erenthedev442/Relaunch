@@ -154,7 +154,7 @@ title: Progression Map
     <h3>The Gauntlet &amp; Apex <span class="chip c-paragon">Paragon Points</span></h3>
     <div class="who">Solo boss ladders — the Gauntlet's champion climb and the Apex arena in Walk of Echoes [P2]</div>
     <div class="rung"><b>Apex Trials</b><span>Scaled boss tiers · Paragon Points per clear</span></div>
-    <div class="rung"><b>Paragon board</b><span>Caps: <b>+5,000</b> HP · <b>+1,000</b> ATT, RATT · <b>+1,000</b> ACC, RACC · <b>+2,000</b> DEF</span></div>
+    <div class="rung"><b>Paragon board</b><span>Caps: <b>+5,000</b> HP · <b>+1,000</b> ATT, RATT · <b>+1,000</b> ACC, RACC · <b>+2,000</b> DEF · <b>+1,000</b> MATT, MACC, M.Dmg · <b>+1,000</b> Pet ATK/DEF, Pet ACC/EVA, Pet MAB/MDB, Pet MACC/MEVA, Pet Attr, Pet TP</span></div>
     <div class="rung"><b>No ceiling</b><span>The Apex ladder itself keeps scaling — the leaderboard war never ends</span></div>
   </div>
   <div class="lane">

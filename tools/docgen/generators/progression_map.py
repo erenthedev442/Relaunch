@@ -163,13 +163,26 @@ def _parse_trials(text: str) -> list[tuple[str, str]]:
     return rows
 
 
+_PARAGON_STAT_LABEL = {
+    "HP": "HP",
+    "ATT": "ATT", "RATT": "RATT",
+    "ACC": "ACC", "RACC": "RACC",
+    "DEF": "DEF",
+    "MATT": "MATT", "MACC": "MACC", "MAGIC_DAMAGE": "M.Dmg",
+    "PET_ATK_DEF": "Pet ATK/DEF", "PET_ACC_EVA": "Pet ACC/EVA",
+    "PET_MAB_MDB": "Pet MAB/MDB", "PET_MACC_MEVA": "Pet MACC/MEVA",
+    "PET_ATTR_BONUS": "Pet Attr", "PET_TP_BONUS": "Pet TP",
+}
+
+
 def _parse_paragon(text: str) -> list[dict]:
     perks = []
     for m in re.finditer(
             r"label\s*=\s*'([^']+)',\s*modKeys\s*=\s*\{([^}]*)\},\s*perRank\s*=\s*(\d+),\s*maxRank\s*=\s*(\d+)",
             text):
         label, keys, per, mx = m.group(1), m.group(2), int(m.group(3)), int(m.group(4))
-        stats = ", ".join(re.findall(r"'(\w+)'", keys))
+        raw_keys = re.findall(r"'(\w+)'", keys)
+        stats = ", ".join(_PARAGON_STAT_LABEL.get(k, k) for k in raw_keys)
         perks.append({"label": label, "stats": stats, "cap": per * mx})
     if len(perks) < 2:
         raise RuntimeError(f"progression_map: paragon perk parse failed ({len(perks)})")

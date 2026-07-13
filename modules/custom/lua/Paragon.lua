@@ -7,7 +7,8 @@
 --     !reallevel + the website leaderboard, with a scaling title flair.
 --   * Perks -- small, HARD-CAPPED permanent stat boosts (login-applied addMods):
 --       Vigor +HP (cap 5000), Might +ATT/RATT (1000), Precision +ACC/RACC
---       (1000), Warding +DEF (2000).
+--       (1000), Warding +DEF (2000), Arcana +MATT/MACC/M.Dmg (1000),
+--       Dominion +Pet ATK/ACC/MAB/MACC/attr/TP (1000).
 --   * Daily Might -- unlock once, then claim a 2-hour throughput/sustain surge
 --     once per UTC day (proven Henge-style status effects).
 --
@@ -129,7 +130,16 @@ end
 
 -----------------------------------
 -- Menu
+--
+-- Two-tier structure because the client's GMPROMPT UI caps at 8 rows -- with 6
+-- perks + Ascend + Daily Might + Close, a flat list would overflow. Main menu
+-- keeps the top-level choices (Ascend, Perks..., Daily Might, Close); the
+-- Perks submenu is a flat list of every perk in the catalog plus Back. Adding
+-- another perk in paragon_catalog.lua auto-shows up in the submenu (up to 7 --
+-- one more slot before the submenu itself needs to page).
 -----------------------------------
+local openPerksMenu  -- forward decl
+
 openMenu = function(player)
     local lvl  = player:getCharVar('Paragon_Level') or 0
     local pp   = player:getCharVar('Paragon_Points') or 0
@@ -137,24 +147,35 @@ openMenu = function(player)
     player:printToPlayer(string.format(
         '[Paragon] Level %d (%s).  Paragon Points: %d.  Next Ascend: %d PP.',
         lvl, C.titleFor(lvl), pp, C.levelCost(lvl)), SYS)
+
+    local options = {
+        { 'Ascend',      function(p) ascend(p);           reopen(p)          end },
+        { 'Perks...',    function(p) openPerksMenu(p)                        end },
+        { 'Daily Might', function(p) dailyMight(p);       reopen(p)          end },
+        { 'Close',       function(p) end },
+    }
+    player:customMenu({ title = 'Paragon', options = options })
+end
+xi._paragon_openMenu = openMenu
+
+openPerksMenu = function(player)
+    local pp = player:getCharVar('Paragon_Points') or 0
+    player:printToPlayer(string.format('[Paragon] Perks -- Paragon Points: %d.', pp), SYS)
     for _, perk in ipairs(C.PERKS) do
         local rank = player:getCharVar('Paragon_Perk_' .. perk.id) or 0
         local cost = (rank < perk.maxRank) and tostring(C.perkRankCost(perk, rank)) .. ' PP' or 'MAX'
         player:printToPlayer(string.format('   %-10s rank %d/%d  (next: %s)', perk.label, rank, perk.maxRank, cost), SYS)
     end
 
-    local options = {
-        { 'Ascend',      function(p) ascend(p);                     reopen(p) end },
-        { 'Vigor',       function(p) buyPerk(p, C.perkById('vigor'));     reopen(p) end },
-        { 'Might',       function(p) buyPerk(p, C.perkById('might'));     reopen(p) end },
-        { 'Precision',   function(p) buyPerk(p, C.perkById('precision')); reopen(p) end },
-        { 'Warding',     function(p) buyPerk(p, C.perkById('warding'));   reopen(p) end },
-        { 'Daily Might', function(p) dailyMight(p);                  reopen(p) end },
-        { 'Close',       function(p) end },
-    }
-    player:customMenu({ title = 'Paragon', options = options })
+    local options = {}
+    for _, perk in ipairs(C.PERKS) do
+        local p = perk  -- capture per-iteration so the closure binds THIS row's perk
+        options[#options + 1] = { perk.label, function(pl) buyPerk(pl, p); pl:timer(30, function(q) openPerksMenu(q) end) end }
+    end
+    options[#options + 1] = { 'Back', function(pl) reopen(pl) end }
+    player:customMenu({ title = 'Paragon Perks', options = options })
 end
-xi._paragon_openMenu = openMenu
+xi._paragon_openPerksMenu = openPerksMenu
 
 -----------------------------------
 -- Re-apply perks on every game-in (login AND zone) -- mods are wiped on zone.

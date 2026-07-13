@@ -40,6 +40,15 @@ _MOD_LABEL = {
     "ACC": "Accuracy",
     "RACC": "Ranged Accuracy",
     "DEF": "Defense",
+    "MATT": "Magic Attack",
+    "MACC": "Magic Accuracy",
+    "MAGIC_DAMAGE": "Magic Damage",
+    "PET_ATK_DEF": "Pet ATK/RATK/DEF",
+    "PET_ACC_EVA": "Pet ACC/RACC/EVA",
+    "PET_MAB_MDB": "Pet Magic ATK/DEF",
+    "PET_MACC_MEVA": "Pet Magic ACC/EVA",
+    "PET_ATTR_BONUS": "Pet Attributes",
+    "PET_TP_BONUS": "Pet TP Bonus",
 }
 
 

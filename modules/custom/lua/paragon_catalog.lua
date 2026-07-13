@@ -20,13 +20,19 @@ C.LEVEL_COST_STEP = 5
 function C.levelCost(cur) return C.LEVEL_COST_BASE + cur * C.LEVEL_COST_STEP end
 
 -- ── Perks (permanent, capped, login-applied addMods) ────────────────────────
--- perRank * maxRank = the hard cap (owner-set: ATT/ACC +1000, DEF +2000,
--- HP +5000). modKeys are xi.mod field NAMES, resolved at call time in modIds().
+-- perRank * maxRank = the hard cap (owner-set: ATT/ACC/magic/pet +1000,
+-- DEF +2000, HP +5000). modKeys are xi.mod field NAMES, resolved at call time
+-- in modIds(). Every mod in a perk gets the FULL total (rank * perRank) --
+-- Arcana therefore gives +1000 MATT AND +1000 MACC AND +1000 magic damage at
+-- max, and Dominion gives +1000 to each of six pet mods at max. Same shape
+-- as Might (ATT+RATT) and Precision (ACC+RACC), which stack two mods each.
 C.PERKS = {
     { id = 'vigor',     label = 'Vigor',     modKeys = { 'HP' },           perRank = 500, maxRank = 10, costBase = 20, costStep =  8 },
     { id = 'might',     label = 'Might',     modKeys = { 'ATT', 'RATT' },  perRank = 100, maxRank = 10, costBase = 30, costStep = 12 },
     { id = 'precision', label = 'Precision', modKeys = { 'ACC', 'RACC' },  perRank = 100, maxRank = 10, costBase = 30, costStep = 12 },
     { id = 'warding',   label = 'Warding',   modKeys = { 'DEF' },          perRank = 200, maxRank = 10, costBase = 20, costStep =  8 },
+    { id = 'arcana',    label = 'Arcana',    modKeys = { 'MATT', 'MACC', 'MAGIC_DAMAGE' }, perRank = 100, maxRank = 10, costBase = 30, costStep = 12 },
+    { id = 'dominion',  label = 'Dominion',  modKeys = { 'PET_ATK_DEF', 'PET_ACC_EVA', 'PET_MAB_MDB', 'PET_MACC_MEVA', 'PET_ATTR_BONUS', 'PET_TP_BONUS' }, perRank = 100, maxRank = 10, costBase = 30, costStep = 12 },
 }
 
 function C.perkById(id)

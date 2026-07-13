@@ -58,6 +58,8 @@ Permanent stat boosts, applied automatically every time you log in or zone. Each
 | **Might** | Attack & Ranged Attack | +100 | **+1,000** |
 | **Precision** | Accuracy & Ranged Accuracy | +100 | **+1,000** |
 | **Warding** | Defense | +200 | **+2,000** |
+| **Arcana** | Magic Attack & Magic Accuracy & Magic Damage | +100 | **+1,000** |
+| **Dominion** | Pet ATK/RATK/DEF & Pet ACC/RACC/EVA & Pet Magic ATK/DEF & Pet Magic ACC/EVA & Pet Attributes & Pet TP Bonus | +100 | **+1,000** |
 <!-- DOCGEN:END id="paragon-perks" -->
 
 ### Paragon Levels & titles
