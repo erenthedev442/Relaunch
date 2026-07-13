@@ -43,12 +43,14 @@ local S = xi.msg.channel.SYSTEM_3
 -- ITEMS
 -- ===================================================================
 -- Per-item roll chance for the retail signature drops (NM_CATALOG drops = {}).
--- Raised 2026-07-13 (owner: NMs felt like they never dropped -- at 0.15 a
--- 2-drop NM whiffed ~72% of kills). Plus FETE_DROP_GUARANTEE: if the
--- independent rolls all miss, one random signature item is forced, so EVERY
--- kill yields at least one piece of the NM's gear.
-local FETE_DROP_RATE      = 0.35
-local FETE_BOSS_DROP_RATE = 0.60
+-- Tuned down 2026-07-13 (owner: 10%/25% -- signature loot should feel scarce).
+-- FETE_DROP_GUARANTEE stays ON: if all independent rolls miss, one random
+-- signature item is force-granted so EVERY kill still yields at least one
+-- piece. At 10%/25% the guarantee becomes the dominant drop path (a 4-item
+-- NM at 10% only naturally drops something ~34% of the time), which is
+-- intentional -- floor of one, upside of two+ on lucky rolls.
+local FETE_DROP_RATE      = 0.10
+local FETE_BOSS_DROP_RATE = 0.25
 local FETE_DROP_GUARANTEE = true
 
 local BEITETSU         = 4060  -- chunk of beitetsu
@@ -117,6 +119,28 @@ local ABJURATIONS = {
     8772, 8773, 8774, 8775, 8776,
     -- Hadean (-> Herculean)
     2434, 2435, 2436, 2437, 2438,
+}
+
+-- ===================================================================
+-- POP-TRIGGER KEY ITEMS  (owner request 2026-07-13, retail-authentic)
+-- ===================================================================
+-- Inspecting a ??? still costs the 30-min per-player cooldown, but ALSO
+-- consumes a tier-matched Eschan KI on pop. KIs are sold at the Warding
+-- Circle's "Pop Triggers" sub-menu (Escha currency). Retail Escha uses this
+-- exact 3-KI mapping to gate T1 / T2 / T3 pops:
+--   T1 NMs  -> Eschan Urn        (200 Escha)
+--   T2 NMs  -> Eschan Cellar     (500 Escha)
+--   T3 NMs  -> Eschan Nef       (1000 Escha)
+--   T4 boss -> Eschan Nef       (1000 Escha; bosses share the top-tier KI)
+-- KIs are Boolean holds (one at a time per player), so a farm loop is
+-- buy -> pop -> kill -> buy -> pop. The 30-min cooldown still prevents
+-- chain-popping the same NM even with stacked KIs.
+--   short is the compact label used in the ??? menu (byte-cap safe).
+local POP_KI = {
+    [1] = { ki = xi.ki.ESCHAN_URN,    name = 'Eschan Urn',    short = 'Urn'    },
+    [2] = { ki = xi.ki.ESCHAN_CELLAR, name = 'Eschan Cellar', short = 'Cellar' },
+    [3] = { ki = xi.ki.ESCHAN_NEF,    name = 'Eschan Nef',    short = 'Nef'    },
+    [4] = { ki = xi.ki.ESCHAN_NEF,    name = 'Eschan Nef',    short = 'Nef'    },
 }
 
 -- ===================================================================
@@ -674,9 +698,20 @@ local function qmPopMenu(player, npc, zoneId, gids, page)
 
     local opts = {}
     for i = page * NM_PER_PAGE + 1, math.min((page + 1) * NM_PER_PAGE, #defs) do
-        local d   = defs[i]
-        local cd  = getCooldown(player, zoneId, d.gid)
-        local lbl = string.format('%s [%s]', d.label or d.name, fmtCD(cd))
+        local d      = defs[i]
+        local cd     = getCooldown(player, zoneId, d.gid)
+        local kiSpec = POP_KI[d.tier]
+        -- Label status priority: cooldown (still on) -> missing-KI (can't pop
+        -- yet) -> ready. Short KI codes keep the row under the ~150-byte cap.
+        local status
+        if cd > 0 then
+            status = fmtCD(cd)
+        elseif kiSpec and not player:hasKeyItem(kiSpec.ki) then
+            status = kiSpec.short
+        else
+            status = 'ready'
+        end
+        local lbl = string.format('%s [%s]', d.label or d.name, status)
         opts[#opts + 1] = { lbl, function(p)
             local cd2 = getCooldown(p, zoneId, d.gid)
             if cd2 > 0 then
@@ -684,8 +719,19 @@ local function qmPopMenu(player, npc, zoneId, gids, page)
                     d.name, fmtCD(cd2)), S)
                 return
             end
+            -- KI gate (owner 2026-07-13). Consumed on successful spawn only --
+            -- a failed insertDynamicEntity must NOT eat the KI (players report
+            -- it as robbery when they respawn nothing for a KI they just paid).
+            local ki2 = POP_KI[d.tier]
+            if ki2 and not p:hasKeyItem(ki2.ki) then
+                p:printToPlayer(string.format(
+                    '[Geas Fete] %s requires a %s -- buy one at the Warding Circle "Pop Triggers" menu.',
+                    d.name, ki2.name), S)
+                return
+            end
             local spawned = spawnNM(p, zone, zoneId, d)
             if spawned then
+                if ki2 then p:delKeyItem(ki2.ki) end
                 setCooldown(p, zoneId, d.gid, d.cooldown)
                 p:printToPlayer(string.format('[Geas Fete] %s emerges from the darkness!',
                     d.name), S)
@@ -790,26 +836,76 @@ local function buildShop(player, zone, zoneId, mainFn, menu)
     return shopFn
 end
 
--- Main Warding Circle menu for one zone. EXCHANGE ONLY since the retail-???
--- rework (2026-07-12): NMs pop at the ??? points, not here.
+-- Pop-trigger KI sub-menu (owner 2026-07-13). Retail Eschan Urn / Cellar / Nef
+-- gate the ??? pops (POP_KI at file top). KIs are boolean holds (one at a time
+-- per player), so no quantity selector -- buy or back out. Prices tuned to
+-- match the material-shop scale: Urn 200 / Cellar 500 / Nef 1000, in Escha
+-- currency (same pool as the material Exchange). Byte budget: title ~38b +
+-- 3 rows ~26b + Back ~4b = ~120b, comfortably under the ~150b menu cap.
+local function buildKIShop(player, zone, zoneId, mainFn, menu)
+    local clbl = CURRENCY_LABEL[zoneId] or 'pts'
+    local KI_SHOP = {
+        { label = 'Eschan Urn',    ki = xi.ki.ESCHAN_URN,    cost = 200,  tier = 'T1'    },
+        { label = 'Eschan Cellar', ki = xi.ki.ESCHAN_CELLAR, cost = 500,  tier = 'T2'    },
+        { label = 'Eschan Nef',    ki = xi.ki.ESCHAN_NEF,    cost = 1000, tier = 'T3/T4' },
+    }
+    local kiShopFn
+    kiShopFn = function(p)
+        local cur    = getCurrency(p, zoneId)
+        menu.title   = string.format('Pop Triggers [%s: %d]', clbl, cur)
+        menu.options = {}
+        for _, item in ipairs(KI_SHOP) do
+            local it  = item
+            local has = p:hasKeyItem(it.ki) and ' [have]' or ''
+            menu.options[#menu.options + 1] = {
+                string.format('%s %s%s (%d)', it.tier, it.label, has, it.cost),
+                function(pp)
+                    if pp:hasKeyItem(it.ki) then
+                        pp:printToPlayer(string.format('[Geas Fete] You already hold a %s (only one at a time).', it.label), S)
+                    elseif getCurrency(pp, zoneId) < it.cost then
+                        pp:printToPlayer(string.format('[Geas Fete] Need %d %s to buy a %s.', it.cost, clbl, it.label), S)
+                    else
+                        -- Grant first, charge only if grant succeeded (mirror the
+                        -- material shop's grant-then-charge pattern; a bag-full
+                        -- can't happen for KIs but keep the fail-safe symmetry).
+                        if npcUtil.giveKeyItem(pp, it.ki) then
+                            takeCurrency(pp, zoneId, it.cost)
+                            pp:printToPlayer(string.format('[Geas Fete] Received %s for %d %s.', it.label, it.cost, clbl), S)
+                        end
+                    end
+                    pp:timer(30, function(p2) kiShopFn(p2) end)
+                end,
+            }
+        end
+        menu.options[#menu.options + 1] = { 'Back', function(pp) mainFn(pp) end }
+        p:timer(30, function(p2) p2:customMenu(menu) end)
+    end
+    return kiShopFn
+end
+
+-- Main Warding Circle menu for one zone. EXCHANGE + Pop-trigger KI shop since
+-- the retail-??? rework (2026-07-12) + KI-gate (2026-07-13). NMs still pop at
+-- the ??? points; this NPC hands out the KIs and the materials.
 local function wardingCircleMenu(player, zone, zoneId)
     local clbl  = CURRENCY_LABEL[zoneId] or 'pts'
     local menu  = { title = '', options = {} }
-    local mainFn, shopFn
+    local mainFn, shopFn, kiShopFn
 
     local function show(p)
         p:timer(30, function(p2) p2:customMenu(menu) end)
     end
 
-    shopFn = buildShop(player, zone, zoneId, function(p) mainFn(p) end, menu)
+    shopFn   = buildShop  (player, zone, zoneId, function(p) mainFn(p) end, menu)
+    kiShopFn = buildKIShop(player, zone, zoneId, function(p) mainFn(p) end, menu)
 
     mainFn = function(p)
         local cur = getCurrency(p, zoneId)
         menu.title   = string.format('Warding Circle [%s: %d]', clbl, cur)
         menu.options = {
             { string.format('Exchange %s', clbl), function(pp) shopFn(pp) end },
+            { 'Pop Triggers',                     function(pp) kiShopFn(pp) end },
             { 'Where are the NMs?', function(pp)
-                pp:printToPlayer('[Geas Fete] The NMs answer at the ??? points scattered across Escha - Zi\'Tah, Escha - Ru\'Aun, and Reisenjima -- inspect one to pop the NMs camped there. Check the website\'s Geas Fete page for every camp.', S)
+                pp:printToPlayer('[Geas Fete] The NMs answer at the ??? points scattered across Escha - Zi\'Tah, Escha - Ru\'Aun, and Reisenjima -- inspect one to pop the NMs camped there. Each pop consumes an Eschan Urn / Cellar / Nef (tier-matched) -- buy them from this NPC. Check the website\'s Geas Fete page for every camp.', S)
             end },
             { 'Leave', function(pp) end },
         }
