@@ -12,6 +12,32 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
 !!! note "Week of July 13–19, 2026"
     **Monday, July 13**
 
+    - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-13 14:56
+    - **Relaunch/Audit** — Item x character table + locked-items 2nd pass
+    - **Relaunch/Geas Fete** — Redistribute Reisenjima NMs onto findable ???s
+    - Implement REMA rebalance, Gauntlet tuning and GM Home redesign
+    - **Relaunch/Audit** — Add player_gear_audit -- flag gear players hold above progression
+    - **Relaunch/Htbf** — Stop the reward payout from firing multiple times per player
+    - **Relaunch/Vendors** — Strict sweep -- remove 20 craftable items (NQ + HQ)
+    - **Relaunch/Sparkshop** — Stop retail Sparks vendors from selling equipment
+    - **Relaunch/Dynamis D** — NM difficulties -- rival HL T5 caliber + consistency pass
+    - **Relaunch/Dnc** — Make Climactic Flourish actually force crits
+    - **Relaunch/Ambuscade** — Restore original HP curve (Intense VD back to 5.0x)
+    - **Relaunch/Ambuscade** — Deadly difficulty scaling -- stats & mechanics, not HP
+    - **Relaunch/Ambuscade** — 20-second grace before the auto-warp to Mhaura
+    - **Relaunch/Mastery** — Remove Splash (AoE) WS effect + dead !aoews command
+    - **Relaunch/Mobs** — Anti-sponge pass #2 -- defensive + tempo axes
+    - **Relaunch/Abyssea** — 1.5x "no trusts" bonus was awarded on every kill
+    - **Relaunch/Mobs** — Anti-sponge pass -- Geas Fete + Unity Wanted
+    - **Relaunch/Htbf** — Drop-rate curve by ilvl (BiS 5% / Endgame 8% / Mid 12% / …)
+    - **Relaunch/Items** — Backfill retail stats for 289 attainable statless items
+    - **Relaunch/Hunt** — Enforce "no NQ+HQ in the same tier" across hunt vendors
+    - **Relaunch/Capacity** — Filter farm spawn points within aggro range of warp
+    - **Relaunch/Hunt** — Demote NQ accessory when HQ is on the same hunt vendor
+    - **Relaunch/Vendors** — Remove 3 craftable items from HL Accessories vendor
+    - **Relaunch/Hunt** — Remove single-job accessories from Hunting League vendor
+    - **Relaunch/Weapons Vendor** — Browse by weapon category first, then tier
+    - **Relaunch/Vendors** — Remove 9 HTBF/vendor gear duplicates
     - **Relaunch/Gm** — !phantomfarm refill spawnpoint access (p.x/y/z not p[1..3])
     - **Relaunch/Nyzul** — Enemy-leader objective could not complete (missing mob script)
     - **Relaunch/Gm** — Add !phantomfarm to diagnose + force-refill capacity farms
@@ -1259,26 +1285,3 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Seal Drops** — Guaranteed escalating quantity per mob
     - **Launch** — RaidBoss + Reforge NPC + Impetus bugs; add mob seal drops
     - **Invasion** — Increase + enrich GM Home defense rewards
-    - **Gmhome** — Unlocker NPC can unlock all automaton parts (PUP)
-    - **Magic** — Expose custom spells as !aegis/!convergence/!silencega
-    - **Hunting League** — Price the Armor NPC [TEST] preview shop at 100M gil (was ~12)
-    - **Prestige** — Make Raja (Voidfang) silenceable
-    - **Hunting League** — Bump Simurgh difficulty a notch (T3)
-    - **Weapons Vendor** — Cap Prime/Su5/Ambuscade ranged, spread across tiers, drop ammo
-    - **Weapons Vendor** — Add capped ranged weapons (archery + marksmanship)
-    - **Trusts** — Block the retail San d'Oria Excenmille NPC from granting Meat (899)
-    - **Trusts** — Exclude Meat (899) from the grant-all NPC + !addalltrusts
-    - **Augments** — Restore 37 dropped augments (magic/skill/utility) via FORCED_CATALYST
-    - **Commands** — Drop the per-line "SystemMessage" banner across all custom commands
-    - **PUP** — !pup unlock -- grant all automaton frames & heads instantly
-    - **Commands** — Drop the per-line "SystemMessage" banner spam
-    - **Hunting League** — Spread the Reisenjima Henge vendor NPCs (fix label overlap)
-    - **Hunting League** — Un-engaged NM despawn 180s -> 30s
-    - **GEO** — Allow GEO luopan (Geo- spells) across all Reisenjima zones
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 59047af64da3 -->
-_Last updated: 2026-07-13 11:11 PDT_
-<!-- DOCGEN:END id="last-updated" -->
