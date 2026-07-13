@@ -134,8 +134,20 @@ end
 
 -- Returns (partyMult, trustMult).
 -- partyMult = 2.0 when 2+ real PCs are in party, else 1.0.
--- trustMult = 1.5 when NO non-PC members (trusts) are in party, else 1.0.
--- Wrapped in pcall so a missing API never breaks the reward path.
+-- trustMult = 1.5 when NO trusts anywhere in the party, else 1.0.
+--
+-- IMPORTANT: getPartyMember / PParty->members hold PC-type entities ONLY
+-- (src/map/party.cpp:604 gates AddMember to TYPE_PC). Trusts live in each
+-- PC's own PChar->PTrusts vector, so the previous getPartyMember loop could
+-- never see them and the "no trusts" bonus was awarded on EVERY Abyssea
+-- kill regardless of trust presence.
+--
+-- getPartyWithTrusts() (src/map/lua/lua_baseentity.cpp:11493) wraps
+-- CCharEntity::ForPartyWithTrusts which iterates PCs AND every PC's PTrusts
+-- (charentity.h:418) -- for solo it yields self + own PTrusts, for a party
+-- it yields all PCs + all their PTrusts. So counting isTrust() entries
+-- gives an accurate zone-wide trust total. Wrapped in pcall so a missing
+-- API never breaks the reward path.
 local function calcMultipliers(player)
     local partyMult = 1.0
     local trustMult = 1.0
@@ -143,14 +155,12 @@ local function calcMultipliers(player)
     local ok = pcall(function()
         local pcCount    = 0
         local trustCount = 0
-        for i = 0, (player:getPartySize() or 1) - 1 do
-            local mem = player:getPartyMember(i, 0)
-            if mem then
-                if mem:getObjType() == xi.objType.PC then
-                    pcCount    = pcCount    + 1
-                else
-                    trustCount = trustCount + 1
-                end
+        local all = player:getPartyWithTrusts() or {}
+        for _, mem in ipairs(all) do
+            if mem:isTrust() then
+                trustCount = trustCount + 1
+            else
+                pcCount = pcCount + 1
             end
         end
         if pcCount >= 2    then partyMult = 2.0 end
