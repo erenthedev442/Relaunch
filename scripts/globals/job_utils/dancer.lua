@@ -533,6 +533,24 @@ xi.job_utils.dancer.useTernaryFlourishAbility = function(player, target, ability
     return xi.effect.TERNARY_FLOURISH
 end
 
+-- Climactic Flourish (RELAUNCH FIX 2026-07-13): stock LSB left the effect as a
+-- bare stub -- no engine code checked it, so nothing forced crits and nothing
+-- consumed on hit. The old ability code also deleted all 5 FINISHING_MOVE_N
+-- enums and re-added CLIMACTIC 5 times, both wrong for the current single-
+-- effect finishing-move system. Now: consume 1 finishing move, apply effect
+-- once with power=3 and duration=60s. The effect handler grants CRITHITRATE
+-- +100 and CRIT_DMG_INCREASE +50 while up. climactic_flourish_consumer.lua
+-- (custom module) drops the effect after the next WS so it matches the retail
+-- "next weaponskill" semantic.
+xi.job_utils.dancer.useClimacticFlourishAbility = function(player, target, ability)
+    local numMoves = getFinishingMoveCount(player)
+
+    player:addStatusEffect(xi.effect.CLIMACTIC_FLOURISH, { power = 3, duration = 60, origin = player })
+    setFinishingMoves(player, numMoves - 1)
+
+    return xi.effect.CLIMACTIC_FLOURISH
+end
+
 xi.job_utils.dancer.useContradanceAbility = function(player, target, ability)
     player:addStatusEffect(xi.effect.CONTRADANCE, { duration = 60, origin = player })
 
