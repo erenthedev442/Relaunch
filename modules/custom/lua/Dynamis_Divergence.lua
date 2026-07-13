@@ -15,9 +15,27 @@ require('scripts/zones/RuLude_Gardens/Zone')
 
 local m = Module:new('dynamis_divergence_portals')
 
--- Relaunch-friendly toll: one Dynamis currency item. Tunable.
---   1455 One Byne Bill, 1453 M. Silverpiece, 1450 L. Jadeshell, 1456 100 Byne Bill
-local ENTRY_COST = { id = 1455, qty = 1, name = 'One Byne Bill' }
+-- Relaunch-friendly toll (owner 2026-07-12): 250 Reforge Marks in any of the
+-- three families -- AF Marks (Sky Gods), Relic Marks (Unity NMs), or Empyrean
+-- Marks (Abyssea NMs). Marks are integer charVars managed by the Reforge System
+-- (see modules/custom/lua/reforge_catalog.lua for the sources and rewards).
+--
+-- The old One-Byne-Bill toll was a stack-based item cost; marks are per-player
+-- balances so the entry menu can offer all three and debit the one the player
+-- picks. `name` on ENTRY_COST is kept for docgen (parses this section for the
+-- entry-toll sentence on docs/endgame/dynamis-divergence.md).
+local ENTRY_COST =
+{
+    qty  = 250,
+    name = 'Reforge Marks (AF, Relic, or Empyrean)',
+}
+
+local ENTRY_OPTIONS =
+{
+    { cv = 'RF_AF_Marks',    short = 'AF'    },
+    { cv = 'RF_Relic_Marks', short = 'Relic' },
+    { cv = 'RF_Empy_Marks',  short = 'Empy'  },
+}
 
 -- One portal per city. pos = {x, y, z, rot} near each Dynamis entrance.
 local PORTALS =
@@ -28,49 +46,44 @@ local PORTALS =
     { zone = 'RuLude_Gardens',     instanceId = 29700, label = 'Jeuno [D]',       pos = {   48.93, 10.0,  -69.0, 195 } },
 }
 
--- delItem only debits the first MAIN-inventory stack; measure the delta and refund
--- a satchel/split shortfall.
-local function consume(player, id, qty)
-    local before = player:getItemCount(id)
-    if before < qty then
-        return false
+-- Debit `qty` marks of the given charVar; returns (ok, remainingBalance).
+-- Marks are simple integer charVars (no stack/inventory quirks like items).
+local function consumeMarks(player, cv, qty)
+    local bal = player:getCharVar(cv)
+    if bal < qty then
+        return false, bal
     end
-    player:delItem(id, qty)
-    local removed = before - player:getItemCount(id)
-    if removed < qty then
-        if removed > 0 then
-            player:addItem({ id = id, quantity = removed })
-        end
-        return false
-    end
-    return true
+    player:setCharVar(cv, bal - qty)
+    return true, bal - qty
 end
 
-local function enter(player, instanceId, label)
+local function enter(player, portal, opt)
     if player:getInstance() ~= nil then
         player:printToPlayer('[Divergence] You are already bound to a rift, kupo!', xi.msg.channel.SYSTEM_3)
         return
     end
-    if player:getItemCount(ENTRY_COST.id) < ENTRY_COST.qty then
-        player:printToPlayer(string.format('[Divergence] You need %d %s to open the rift, kupo!',
-            ENTRY_COST.qty, ENTRY_COST.name), xi.msg.channel.SYSTEM_3)
+    local ok, remaining = consumeMarks(player, opt.cv, ENTRY_COST.qty)
+    if not ok then
+        player:printToPlayer(string.format('[Divergence] You need %d %s Marks to open the rift, kupo! (you have %d)',
+            ENTRY_COST.qty, opt.short, remaining), xi.msg.channel.SYSTEM_3)
         return
     end
-    if not consume(player, ENTRY_COST.id, ENTRY_COST.qty) then
-        player:printToPlayer('[Divergence] Keep the toll as a single stack in your MAIN inventory and try again, kupo!', xi.msg.channel.SYSTEM_3)
-        return
-    end
-    player:printToPlayer(string.format('[Divergence] The rift to %s opens. Good luck, kupo!', label), xi.msg.channel.SYSTEM_3)
-    player:createInstance(instanceId)
+    player:printToPlayer(string.format('[Divergence] The rift to %s opens (paid %d %s Marks, %d remain). Good luck, kupo!',
+        portal.label, ENTRY_COST.qty, opt.short, remaining), xi.msg.channel.SYSTEM_3)
+    player:createInstance(portal.instanceId)
 end
 
 local function sendMenu(player, portal)
-    local options =
-    {
-        { string.format('Enter %s  (%d %s)', portal.label, ENTRY_COST.qty, ENTRY_COST.name),
-            function(p) enter(p, portal.instanceId, portal.label) end },
-        { 'Not yet.', function() end },
-    }
+    local options = {}
+    for _, opt in ipairs(ENTRY_OPTIONS) do
+        local bal = player:getCharVar(opt.cv)
+        -- Label kept tight for the ~150-byte customMenu cap: "Enter (250 X Marks - 999)".
+        table.insert(options, {
+            string.format('Enter (%d %s Marks - %d)', ENTRY_COST.qty, opt.short, bal),
+            function(p) enter(p, portal, opt) end,
+        })
+    end
+    table.insert(options, { 'Not yet.', function() end })
     local snapshot = { title = 'Dynamis - Divergence', options = options }
     player:timer(30, function(p) p:customMenu(snapshot) end)
 end

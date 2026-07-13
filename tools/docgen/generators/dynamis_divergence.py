@@ -133,14 +133,17 @@ def _render_access(c: dict) -> str:
     toll = f"{qty} {name}" if qty != 1 else f"a {name}"
     portals = " · ".join(f"**{label}**" for label in c["portals"]) if c["portals"] else "the four city instances"
     lines = [
-        "A **Divergence Portal** stands at each city's Dynamis entrance. Trade the "
-        f"toll, confirm, and you're warped — solo is fine — into that city's "
-        "alternate-timeline instance:",
+        "A **Divergence Portal** stands at each city's Dynamis entrance. Pay the "
+        f"toll from the portal's menu — solo is fine — and you're warped into "
+        "that city's alternate-timeline instance:",
         "",
         portals + ".",
         "",
-        f"**Entry toll:** {toll} per run. There is no rank or slot gate — the only "
-        "gate on the +4 upgrade is farming the [D] materials (below).",
+        f"**Entry toll:** {toll} per run. Marks come from the "
+        "[Reforge System](../progression/reforge.md) — farm any of its three NM "
+        "pools (Sky Gods / Unity NMs / Abyssea NMs) and pick your currency at the "
+        "portal. There is no rank or slot gate — the only gate on the +4 upgrade "
+        "is farming the [D] materials (below).",
     ]
     return "\n".join(lines)
 

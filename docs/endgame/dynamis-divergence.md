@@ -1,18 +1,18 @@
 # Dynamis — Divergence
 
-A custom take on Dynamis built for the relaunch. Each of the four nations has a **Divergence Portal** at its old Dynamis entrance that tears open an alternate-timeline instance. Pay a single Dynamis currency, step through — solo is fine — and fight through escalating waves of Beastmen to fell the zone's Mega-Boss. Dynamis-Divergence is the **+3 → +4 Forge**: the tail of the reforged-armor ladder. The base [Reforge System](../progression/reforge.md) takes AF/Relic/Empyrean armor to **+3** with marks; the materials you farm here take a reforged **+3 AF or Relic** piece the rest of the way to **+4** at the **Divergence Forge**. (Empyrean caps at +3 — only AF and Relic reach +4.)
+A custom take on Dynamis built for the relaunch. Each of the four nations has a **Divergence Portal** at its old Dynamis entrance that tears open an alternate-timeline instance. Pay 250 Reforge Marks (AF, Relic, or Empyrean — your choice), step through — solo is fine — and fight through escalating waves of Beastmen to fell the zone's Mega-Boss. Dynamis-Divergence is the **+3 → +4 Forge**: the tail of the reforged-armor ladder. The base [Reforge System](../progression/reforge.md) takes AF/Relic/Empyrean armor to **+3** with marks; the materials you farm here take a reforged **+3 AF or Relic** piece the rest of the way to **+4** at the **Divergence Forge**. (Empyrean caps at +3 — only AF and Relic reach +4.)
 
 !!! tip "Summary"
-    Four city Dynamis instances reached through entry portals for one Dynamis currency each. Clear the waves to farm the +4 materials (Rusted/Black ID Cards + a Mega-Boss Paragon Card), then trade a reforged **+3** AF/Relic piece at the **Divergence Forge** in San d'Oria to make it **+4**. Empyrean has no +4. One city is **featured each day** — clear it for bonus medals (see [Live Events](live-events.md)).
+    Four city Dynamis instances reached through entry portals — pay 250 Reforge Marks (AF, Relic, or Empyrean — your choice) per run. Clear the waves to farm the +4 materials (Rusted/Black ID Cards + a Mega-Boss Paragon Card), then trade a reforged **+3** AF/Relic piece at the **Divergence Forge** in San d'Oria to make it **+4**. Empyrean has no +4. One city is **featured each day** — clear it for bonus medals (see [Live Events](live-events.md)).
 
 ## Getting in
 
 <!-- DOCGEN:BEGIN id="divergence-access" -->
-A **Divergence Portal** stands at each city's Dynamis entrance. Trade the toll, confirm, and you're warped — solo is fine — into that city's alternate-timeline instance:
+A **Divergence Portal** stands at each city's Dynamis entrance. Pay the toll from the portal's menu — solo is fine — and you're warped into that city's alternate-timeline instance:
 
 **San d'Oria [D]** · **Bastok [D]** · **Windurst [D]** · **Jeuno [D]**.
 
-**Entry toll:** a One Byne Bill per run. There is no rank or slot gate — the only gate on the +4 upgrade is farming the [D] materials (below).
+**Entry toll:** 250 Reforge Marks (AF, Relic, or Empyrean) per run. Marks come from the [Reforge System](../progression/reforge.md) — farm any of its three NM pools (Sky Gods / Unity NMs / Abyssea NMs) and pick your currency at the portal. There is no rank or slot gate — the only gate on the +4 upgrade is farming the [D] materials (below).
 <!-- DOCGEN:END id="divergence-access" -->
 
 ## City of the Day
@@ -80,12 +80,12 @@ Every zone reuses the same six-role chain — only the Beastmen change. The **Ru
 |---|---|---|
 | **Evincing Idol** | Mid-Boss | Beastmens Medal (100%), Black ID Card (10%) |
 | Squadron Hoplite | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
-| Squadron's Wyvern | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
-| Squadron Magian | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron's Vessel | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron Scryer | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
 | Incarnation Icon | Time-extension statue | — (fell it for **+1 min** on the clock) |
 | Regiment Hoplite | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
-| Regiment's Wyvern | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
-| Regiment Magian | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment's Vessel | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment Scryer | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
 | **Fii Pexu the Eternal** | Mega-Boss | Kindreds Medal (100%), Demons Medal (10%), Black ID Card (10%) |
 | **Disjoined Tarutaru** | Disjoined NM | Demons Medal (100%), Kindreds Medal (15%) |
 
@@ -95,12 +95,12 @@ Every zone reuses the same six-role chain — only the Beastmen change. The **Ru
 |---|---|---|
 | **Impish Golem** | Mid-Boss | Beastmens Medal (100%), Black ID Card (10%) |
 | Squadron Berserker | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
-| Squadron's Wyvern | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
-| Squadron Arcanomancer | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron's Fiend | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron Trickster | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
 | Impish Statue | Time-extension statue | — (fell it for **+1 min** on the clock) |
 | Regiment Berserker | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
-| Regiment's Wyvern | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
-| Regiment Arcanomancer | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment's Fiend | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment Trickster | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
 | **Obstatrix** | Mega-Boss | Kindreds Medal (100%), Demons Medal (10%), Black ID Card (10%) |
 | **Disjoined Mithra** | Disjoined NM | Demons Medal (100%), Kindreds Medal (15%) |
 
