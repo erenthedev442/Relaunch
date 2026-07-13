@@ -45,6 +45,12 @@ fightLoot.trial_by_fire =
         { itemId = 20787, weight = 15 },  -- Crobaci (Skirmish weapon)
         { itemId = 20775, weight = 9 },  -- Crobaci +1 (Skirmish weapon)
         { itemId = 20764, weight = 5 },  -- Crobaci +2 (Skirmish weapon)
+        -- Retail Trial by Fire (Ifrit Prime) HTBF flagship drops (audit 2026-07-12).
+        { itemId = 20716, weight = 14 },  -- Perfervid Sword (RDM Sword)
+        { itemId = 21036, weight = 14 },  -- Atakigiri (Katana)
+        { itemId = 28285, weight = 14 },  -- Coalrake Sabots (Feet)
+        { itemId = 27594, weight = 14 },  -- Annealed Mantle (Back)
+        { itemId = 21421, weight = 14 },  -- Immolation Grip (Grip)
     },
 }
 
@@ -95,6 +101,12 @@ fightLoot.trial_by_wind =
         { itemId = 20742, weight = 15 },  -- Iztaasu (Skirmish weapon)
         { itemId = 20736, weight = 9 },  -- Iztaasu +1 (Skirmish weapon)
         { itemId = 20725, weight = 5 },  -- Iztaasu +2 (Skirmish weapon)
+        -- Retail Trial by Wind (Garuda Prime) HTBF flagship drops (audit 2026-07-12).
+        { itemId = 20615, weight = 14 },  -- Levante Dagger
+        { itemId = 20808, weight = 14 },  -- Tramontane Axe
+        { itemId = 28538, weight = 14 },  -- Lebeche Ring
+        { itemId = 28441, weight = 14 },  -- Ponente Sash (Waist)
+        { itemId = 28286, weight = 14 },  -- Ostro Greaves (Legs)
     },
 }
 
@@ -116,6 +128,12 @@ fightLoot.trial_by_earth =
         { itemId = 21208, weight = 15 },  -- Lehbrailg (Skirmish weapon)
         { itemId = 21194, weight = 9 },  -- Lehbrailg +1 (Skirmish weapon)
         { itemId = 21179, weight = 5 },  -- Lehbrailg +2 (Skirmish weapon)
+        -- Retail Trial by Earth (Titan Prime) HTBF flagship drops (audit 2026-07-12).
+        { itemId = 21102, weight = 14 },  -- Mafic Cudgel (Club)
+        { itemId = 20757, weight = 14 },  -- Foreshock Sword
+        { itemId = 21357, weight = 14 },  -- Togakushi Shuriken (NIN Throwing)
+        { itemId = 28535, weight = 14 },  -- Supershear Ring
+        { itemId = 21358, weight = 14 },  -- Plumose Sachet (Waist)
     },
 }
 
@@ -140,6 +158,12 @@ fightLoot.trial_by_lightning =
         { itemId = 20967, weight = 15 },  -- Qatsunoci (Skirmish weapon)
         { itemId = 20961, weight = 9 },  -- Qatsunoci +1 (Skirmish weapon)
         { itemId = 20952, weight = 5 },  -- Qatsunoci +2 (Skirmish weapon)
+        -- Retail Trial by Lightning (Ramuh Prime) HTBF flagship drops (audit 2026-07-12).
+        { itemId = 21166, weight = 14 },  -- Staccato Staff
+        { itemId = 21274, weight = 14 },  -- Donar Gun (COR)
+        { itemId = 28354, weight = 14 },  -- Voltsurge Torque (Neck)
+        { itemId = 28432, weight = 14 },  -- Ukko Sash (Waist)
+        { itemId = 28142, weight = 14 },  -- Brontes Cuisses (Legs)
     },
 }
 
@@ -195,6 +219,12 @@ fightLoot.the_savage =
         { itemId = 21585, weight = 14 },  -- Crepuscular Knife (Dagger)
         { itemId = 22300, weight = 14 },  -- Crepuscular Pebble (Ammo)
         { itemId = 18566, weight = 14 },  -- Crepuscular Scythe (Scythe)
+        -- Retail The Savage (Ouryu) HTBF flagship drops (audit 2026-07-12).
+        { itemId = 15322, weight = 14 },  -- Herald's Gaiters (SAM/DRG Feet)
+        -- Shared HTBF weapons trio.
+        { itemId = 21381, weight = 12 },  -- Seraphicaller (BRD horn)
+        { itemId = 21452, weight = 12 },  -- Divinator (mage club)
+        { itemId = 22261, weight = 12 },  -- Divinator II (mage club HQ)
     },
 }
 
@@ -222,6 +252,9 @@ fightLoot.warriors_path =
         { itemId = 28297, weight = 10 },  -- Cizin Greaves +1 (Skirmish armor)
         { itemId = 28662, weight = 15 },  -- Beatific Shield (Skirmish armor)
         { itemId = 28654, weight = 10 },  -- Beatific Shield +1 (Skirmish armor)
+        -- Retail Warrior's Path HTBF missing drop (Divinator II; audit 2026-07-12).
+        -- Seraphicaller + Divinator already above as retail base drops.
+        { itemId = 22261, weight = 12 },  -- Divinator II (mage club HQ)
     },
 }
 
@@ -325,6 +358,16 @@ fightLoot.puppet_in_peril =
         { itemId = 28022, weight = 10 },  -- Hagondes Cuffs +1 (Skirmish armor)
         { itemId = 28164, weight = 10 },  -- Hagondes Pants +1 (Skirmish armor)
         { itemId = 28301, weight = 10 },  -- Hagondes Sabots +1 (Skirmish armor)
+        -- Retail Puppet in Peril (Lancelord Gaheel Ja) HTBF flagship drops (audit 2026-07-12).
+        { itemId = 21368, weight = 14 },  -- Bestas Bane (Great Axe)
+        { itemId = 27862, weight = 14 },  -- Savas Jawshan (Body)
+        { itemId = 28151, weight = 14 },  -- Sifahir Slacks (Legs)
+        { itemId = 27710, weight = 14 },  -- Sahip Helm (Head)
+        { itemId = 28498, weight = 14 },  -- Pratik Earring
+        -- Shared HTBF weapons trio.
+        { itemId = 21381, weight = 12 },  -- Seraphicaller (BRD horn)
+        { itemId = 21452, weight = 12 },  -- Divinator (mage club)
+        { itemId = 22261, weight = 12 },  -- Divinator II (mage club HQ)
     },
 }
 
@@ -347,6 +390,16 @@ fightLoot.legacy_of_the_lost =
         { itemId = 28021, weight = 10 },  -- Gendewitha Gages +1 (Skirmish armor)
         { itemId = 28163, weight = 10 },  -- Gendewitha Spats +1 (Skirmish armor)
         { itemId = 28300, weight = 10 },  -- Gendewitha Galoshes +1 (Skirmish armor)
+        -- Retail Legacy of the Lost (Gessho) HTBF flagship drops (audit 2026-07-12).
+        { itemId = 27709, weight = 14 },  -- Ptica Headgear
+        { itemId = 27861, weight = 14 },  -- Karmesin Vest (Body)
+        { itemId = 28288, weight = 14 },  -- Kandza Crackows (Feet)
+        { itemId = 21367, weight = 14 },  -- Tengu-no-Hane (NIN Back)
+        { itemId = 28448, weight = 14 },  -- Tengu-no-Obi (Waist)
+        -- Shared HTBF weapons trio.
+        { itemId = 21381, weight = 12 },  -- Seraphicaller (BRD horn)
+        { itemId = 21452, weight = 12 },  -- Divinator (mage club)
+        { itemId = 22261, weight = 12 },  -- Divinator II (mage club HQ)
     },
 }
 
@@ -376,6 +429,16 @@ fightLoot.shadow_lord =
         { itemId = 23735, weight = 14 },  -- Malignance Tights (Legs)
         { itemId = 23736, weight = 14 },  -- Malignance Boots (Feet)
         { itemId = 21635, weight = 14 },  -- Malignance Sword
+        -- Retail Shadow Lord HTBF drops (audit 2026-07-12; missed on original build).
+        { itemId = xi.item.TREPIDITY_MANTLE, weight = 14 },
+        { itemId = 20858, weight = 14 },  -- Lightreaver (Great Sword)
+        { itemId = 28009, weight = 14 },  -- Onimusha-no-Kote (Hands)
+        { itemId = 27858, weight = 14 },  -- Dread Jupon (DRK Body)
+        { itemId = 28148, weight = 14 },  -- Perdition Slops (MNK/BLM Legs)
+        -- Shared HTBF weapons trio (retail: drops from multiple named-boss HTBFs).
+        { itemId = 21381, weight = 12 },  -- Seraphicaller (BRD horn)
+        { itemId = 21452, weight = 12 },  -- Divinator (mage club)
+        { itemId = 22261, weight = 12 },  -- Divinator II (mage club HQ)
     },
 }
 
@@ -397,6 +460,15 @@ fightLoot.stellar_fulcrum =
         { itemId = 27049, weight = 12 },  -- Helios Gloves (Alluvion Skirmish armor)
         { itemId = 27236, weight = 12 },  -- Helios Spats (Alluvion Skirmish armor)
         { itemId = 27406, weight = 12 },  -- Helios Boots (Alluvion Skirmish armor)
+        -- Retail Stellar Fulcrum HTBF flagship drops (Mes'yohi set; audit 2026-07-12).
+        { itemId = 20770, weight = 14 },  -- Mes'yohi Sword
+        { itemId = 21122, weight = 14 },  -- Mes'yohi Rod
+        { itemId = 27886, weight = 14 },  -- Mes'yohi Haubergeon (Body)
+        { itemId = 28172, weight = 14 },  -- Mes'yohi Slacks (Legs)
+        -- Shared HTBF weapons trio.
+        { itemId = 21381, weight = 12 },  -- Seraphicaller (BRD horn)
+        { itemId = 21452, weight = 12 },  -- Divinator (mage club)
+        { itemId = 22261, weight = 12 },  -- Divinator II (mage club HQ)
     },
 }
 
@@ -423,6 +495,16 @@ fightLoot.celestial_nexus =
         { itemId = 22040, weight = 15 },  -- Daybreak (healer Club)
         { itemId = 22087, weight = 15 },  -- Malignance Pole (Staff)
         { itemId = 26088, weight = 15 },  -- Malignance Earring
+        -- Retail Celestial Nexus HTBF flagship drops (Vanir set; audit 2026-07-12).
+        { itemId = 20632, weight = 14 },  -- Vanir Knife (Dagger)
+        { itemId = 21284, weight = 14 },  -- Vanir Gun
+        { itemId = 27887, weight = 14 },  -- Vanir Cotehardie (Body)
+        { itemId = 21380, weight = 14 },  -- Vanir Battery (Ammo)
+        { itemId = 28310, weight = 14 },  -- Vanir Boots
+        -- Shared HTBF weapons trio.
+        { itemId = 21381, weight = 12 },  -- Seraphicaller (BRD horn)
+        { itemId = 21452, weight = 12 },  -- Divinator (mage club)
+        { itemId = 22261, weight = 12 },  -- Divinator II (mage club HQ)
     },
 }
 
@@ -459,6 +541,21 @@ fightLoot.divine_might =
         { itemId = 23732, weight = 14 },  -- Malignance Chapeau (Head)
         { itemId = 23733, weight = 14 },  -- Malignance Tabard (Body)
         { itemId = 23734, weight = 14 },  -- Malignance Gloves (Hands)
+        -- Retail Divine Might II HTBF drops (audit 2026-07-12). The "-io" earring
+        -- set + Kyujutsugi body + Lentus Grip + Fravashi Mantle back. Kept alongside
+        -- the 5 base-quest earrings above -- both remain obtainable per user call.
+        { itemId = 27888, weight = 14 },  -- Kyujutsugi (SAM/GEO Body)
+        { itemId = 21425, weight = 14 },  -- Lentus Grip
+        { itemId = 28616, weight = 14 },  -- Fravashi Mantle (Back)
+        { itemId = 28517, weight = 14 },  -- Crematio Earring
+        { itemId = 28515, weight = 14 },  -- Trux Earring
+        { itemId = 28519, weight = 14 },  -- Tripudio Earring
+        { itemId = 28516, weight = 14 },  -- Sanare Earring
+        { itemId = 28518, weight = 14 },  -- Gelai Earring
+        -- Shared HTBF weapons trio.
+        { itemId = 21381, weight = 12 },  -- Seraphicaller (BRD horn)
+        { itemId = 21452, weight = 12 },  -- Divinator (mage club)
+        { itemId = 22261, weight = 12 },  -- Divinator II (mage club HQ)
     },
 }
 
