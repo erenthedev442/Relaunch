@@ -12,6 +12,31 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
 !!! note "Week of July 13–19, 2026"
     **Monday, July 13**
 
+    - **Relaunch/Gm** — !phantomfarm refill spawnpoint access (p.x/y/z not p[1..3])
+    - **Relaunch/Nyzul** — Enemy-leader objective could not complete (missing mob script)
+    - **Relaunch/Gm** — Add !phantomfarm to diagnose + force-refill capacity farms
+    - **Relaunch/Paragon** — Add Arcana (magic) + Dominion (pet) perks to the Paragon board
+    - **Relaunch/Nyzul** — Drop the un-soloable "Activate all lamps" objective
+    - **Relaunch/Dungeons** — Rebuild 6 rosters from retail stock coords + Gusgen entry Y + per-dungeon leash
+    - **Relaunch/Ops** — Runtime-consumer drift validator (the !affinitynm blind spot)
+    - **Relaunch/Ambuscade** — Instant auto-exit to Mhaura on completion / failure
+    - **Relaunch/Ws** — AoE weaponskill kills now claim every target (was only primary)
+    - **Relaunch/Weapon Forge** — Name the real empyrean material, not "X material"
+    - Update meat.lua
+    - **Relaunch/Affinity** — !affinitynm reads the live catalog, not a stale 24-NM list
+    - **Relaunch/Smn** — Cut FJB avatar boosts by 80% (OP outside endgame NMs)
+    - **Relaunch/Hunt Vendor** — List gear-vendor shops alphabetically
+    - **Relaunch/Dynamis D** — Repack corridor mobids under zoneMin+1024 boundary
+    - **Relaunch/Voidwatch** — Remove hidden GEAR_BANDS -- drops now match the docs
+    - **Relaunch/Hunt Vendor** — Keep paginated shop pickers under the 150-byte menu cap
+    - **Relaunch/Prime** — Match Legendary Prime WS damage output
+    - **Relaunch/Pup** — Cut FJB automaton boosts by 80% (OP vs everything below lv150)
+    - **Relaunch/Hunt Vendor** — Add 460 exclusive Escha/Delve/Skirmish pieces
+    - **Relaunch/Gauntlet** — P3 -- port Apex solo/stability hardening
+    - **Relaunch/Gauntlet** — P2 -- port !primetrial GM cmd + !apex cleanup subcommand
+    - **Relaunch/Gauntlet** — P1 -- port hold-fire runtime + 8 Shinryu mob skills + WoE[P2] safety warp
+    - **Relaunch/Gm** — Add !givereforge -- grant AF/Relic/Empy Reforge Marks
+    - **Relaunch/Rng** — Drop the RATT floor 28k -> 2k so gear matters again
     - **Relaunch/Htbf** — Move elemental trials off DAT-labeled slot 4 to slot 8
     - **Relaunch/Geas Fete** — Scarce signature drops -- 10% NM / 25% boss
     - **Relaunch/Htbf** — Warp players into arena on La'Loff HTBF entries (Ark Angels + Divine Might)
@@ -1250,46 +1275,3 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Hunting League** — Spread the Reisenjima Henge vendor NPCs (fix label overlap)
     - **Hunting League** — Un-engaged NM despawn 180s -> 30s
     - **GEO** — Allow GEO luopan (Geo- spells) across all Reisenjima zones
-    - **Reforge** — Idle-despawn un-engaged NMs after a few minutes
-    - **Gear Vendor** — Complete the Taliah +2 set in the Armor NPC (silver)
-    - **PUP** — !pup automaton quick-loadout manager (save/swap frames + attachments)
-    - **Crossjob** — Add Tier 1+2 abilities to the Cross-Job Trainer (39 -> 63)
-    - **Hunting League** — Idle-despawn un-engaged NMs after a few minutes
-    - **Shop** — Add subjob ninja tools to !shop ninja (1 gil)
-    - **Shop** — Add !shop ninja -- universal ninja tools at 1 gil
-    - **QOL** — Make Auction House usable in every zone (!ah anywhere)
-    - **Augments** — Remove Physical Damage Limit augment (redundant after cap raise)
-    - **Trusts** — Meat + Gemma 500M -> 50M gil (Void Keeper)
-    - **Shop** — Add Matre bell to !shop weapons
-    - **Links** — Correct Discord invite across docs, server message, announcer
-    - **Mysterymog** — Add Pupil set pieces to the gil-gamble prize pool
-    - **Gear Mods** — Refresh item-mods pipeline output
-    - **QOL** — Open !release to all players (permission 1 -> 0)
-    - **RAID** — Re-enable Star-Devourer stances (correct nil xi.mod names)
-    - **Shop** — Custom-currency shops deduct across all stacks/containers (no more free buys)
-    - **Hunting League** — Let pet jobs call pets in Reisenjima Henge
-    - **Hunting League** — Consume seals across all stacks/containers, not just the first inventory stack
-    - **Shop** — Add !shop ammo - leveling ladder of arrows/bolts/bullets/shuriken
-    - **Shop** — Add !shop pets -- curated BST jug pets + pet food
-    - **Custom Chat** — Move custom command/login output off linkshell channels
-    - **Gear Vendor** — Add Ryuo Domaru (bronze) + Agony Jerkin +1 (gold) bodies
-    - **Gear Vendor** — Fill body-slot coverage gaps (lean set)
-    - **WARP** — Use verified in-game !pos for Ra'Kaznar Inner Court warp
-    - **WARP** — Add Ra'Kaznar Inner Court to the Warpman (Endgame tier)
-    - **Gear Vendor** — Pull Argosy Hauberk base from silver + add gap-report tool
-    - **Gear Vendor** — Add 5 melee/tank body pieces to bronze tier
-    - **Shop** — Optional custom-currency shops (charge an item instead of gil)
-    - **Sparkshop** — Never leave the event menu hanging (Rolandienne lock-up)
-    - **QOL** — Personal per-character waypoints (!waypoint)
-    - **Crash** — Null-guard CLuaBaseEntity::getZoneID() (Abyssea casket crash)
-    - **Shop** — Add Mumeito to !shop weapons (15k gil)
-    - **Shop** — Add !shop dice - all 31 Corsair roll dice at 1 gil
-    - **Gm Home** — Buff GM-Home Serket HP to match the Hunt League fix
-    - **Hunting League** — Buff Serket HP (Rank III was too soft)
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 422ecda6947c -->
-_Last updated: 2026-07-13 02:03 PDT_
-<!-- DOCGEN:END id="last-updated" -->
