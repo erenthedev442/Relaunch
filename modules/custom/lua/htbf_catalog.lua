@@ -339,46 +339,60 @@ catalog.fights =
     },
     -- Divine Might: 18-player, multi-entrance (qm1_1..qm1_5). Base uses index 5
     -- across them; HTBF at 13/14/15 (kept above the Ark Angel HTBF range 10-12).
+    -- entryPos (2026-07-13 bug fix): the base fight's arena-warp is driven by the
+    -- client DAT keyed on battlefieldId; our custom HTBF ids (4150+) aren't in
+    -- the DAT, so the client never warps and the player is left at the entry NPC
+    -- (shimmering circle) with the countdown ticking. htbf.register() reads this
+    -- and setPos'es the player itself after enterBattlefield(). Coord derived
+    -- from Ark_Angel_HM arena-1 mob spawn (-14, -18, 14) offset +6z so the party
+    -- lands facing the mob.
     divine_might =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpcs = { 'qm1_1', 'qm1_2', 'qm1_3', 'qm1_4', 'qm1_5' },
         exitNpc = 'qm2',
         gem = xi.ki.DIVINE_PHANTOM_GEM, baseIndex = 13, baseBattlefieldId = 4150,
         reuseBaseId = xi.battlefield.id.DIVINE_MIGHT, maxPlayers = 18, label = 'Divine Might',
+        entryPos = { -14.0, -18.5, 20.0, 128 },
     },
 
     -- Ark Angels: 5 separate fights, each on its own La'Loff entrance (qm1_1..
     -- qm1_5) with its own gem. Base uses idx 0-4 per entrance (+ Divine Might at
     -- idx 5 / its HTBF at 13-15), so Ark Angel HTBF tiers sit at 10/11/12.
+    -- entryPos: same DAT-warp workaround as Divine Might above.
     ark_angels_1 =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_1', exitNpc = 'qm2',
         gem = xi.ki.PHANTOM_GEM_OF_APATHY, baseIndex = 10, baseBattlefieldId = 4160,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_1, label = 'Ark Angels I',
+        entryPos = { -14.0, -18.5, 20.0, 128 },
     },
     ark_angels_2 =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_2', exitNpc = 'qm2',
         gem = xi.ki.PHANTOM_GEM_OF_COWARDICE, baseIndex = 10, baseBattlefieldId = 4170,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_2, label = 'Ark Angels II',
+        entryPos = { -14.0, -18.5, 20.0, 128 },
     },
     ark_angels_3 =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_3', exitNpc = 'qm2',
         gem = xi.ki.PHANTOM_GEM_OF_ENVY, baseIndex = 10, baseBattlefieldId = 4180,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_3, label = 'Ark Angels III',
+        entryPos = { -14.0, -18.5, 20.0, 128 },
     },
     ark_angels_4 =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_4', exitNpc = 'qm2',
         gem = xi.ki.PHANTOM_GEM_OF_ARROGANCE, baseIndex = 10, baseBattlefieldId = 4190,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_4, label = 'Ark Angels IV',
+        entryPos = { -14.0, -18.5, 20.0, 128 },
     },
     ark_angels_5 =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_5', exitNpc = 'qm2',
         gem = xi.ki.PHANTOM_GEM_OF_RAGE, baseIndex = 10, baseBattlefieldId = 4200,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_5, label = 'Ark Angels V',
+        entryPos = { -14.0, -18.5, 20.0, 128 },
     },
 }
 

@@ -362,6 +362,24 @@ function htbf.register(fightKey, tier)
         content.loot = loot
     end
 
+    -- Client-side arena warp fix (2026-07-13). The base battlefield's DAT knows
+    -- arena coords keyed on battlefieldId, so entering a base fight teleports
+    -- the client into the arena. Custom HTBF battlefieldIds (4000+) are NOT in
+    -- the DAT, so the client receives no warp packet and the player is left at
+    -- the entry NPC (shimmering circle) with the countdown ticking -- the exact
+    -- symptom reported for Ark Angels + Divine Might. When the fight defines
+    -- f.entryPos, do the warp ourselves right after the player is inserted.
+    -- Chain any base onBattlefieldEnter so multi-phase fights keep their setup.
+    if f.entryPos then
+        local baseEnter = rawget(content, 'onBattlefieldEnter')
+        function content:onBattlefieldEnter(player, battlefield)
+            if baseEnter then pcall(function() baseEnter(self, player, battlefield) end) end
+            pcall(function()
+                player:setPos(f.entryPos[1], f.entryPos[2], f.entryPos[3], f.entryPos[4] or 0)
+            end)
+        end
+    end
+
     return content:register()
 end
 
