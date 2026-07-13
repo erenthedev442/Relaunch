@@ -110,7 +110,7 @@ table.insert(s.ear, { id =  28484, name = 'Nourishing Earring'                , 
 -- ring
 table.insert(s.ring, { id =  10784, name = 'Dhanurveda Ring'                   , cost =  32, jobs = 'All' })  -- DPS score 12 [RARE]
 table.insert(s.ring, { id =  15545, name = 'Tamas Ring'                        , cost =  32, jobs = 'All' })  -- CASTER score 12 [RARE,EX]
-table.insert(s.ring, { id =  13564, name = 'Lightning Ring'                    , cost =  32, jobs = 'All' })  -- DPS score 11 [RARE,EX]
+-- Do NOT add the 6 elemental rings (13560-13565) here: HTBF trial-by-element drops.
 table.insert(s.ring, { id =  10759, name = 'Aifes Annulet'                     , cost =  32, jobs = 'All' })  -- CASTER score 10 [RARE,EX]
 
 -- back
@@ -175,7 +175,7 @@ table.insert(g.waist, { id =  26351, name = 'Sacro Cord'                        
 table.insert(g.waist, { id =  26332, name = 'Tempus Fugit +1'                   , cost =  60, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 91
 table.insert(g.waist, { id =  28447, name = 'Sweordfaetels +1'                  , cost =  60, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 87
 table.insert(g.waist, { id =  28439, name = 'Prosilio Belt +1'                  , cost =  60, jobs = 'All' })  -- WS score 67 [RARE]
-table.insert(g.waist, { id =  28461, name = 'Sekhmet Corset'                    , cost =  60, jobs = 'WHM/BLM/RDM/BRD/SMN/GEO' })  -- CASTER score 60 [RARE,EX]
+-- Do NOT add 28461 Sekhmet Corset here: HTBF Ark Angels 3 drop.
 
 -- ear
 table.insert(g.ear, { id =  26078, name = 'Kyrenes Earring'                   , cost =  60, jobs = 'All' })  -- DPS score 54 [RARE]
