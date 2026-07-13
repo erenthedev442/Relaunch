@@ -59,50 +59,53 @@ local function applyAvatarBoost(master, pet)
 
     local skillOverCap = math.max(xi.summon.getSummoningSkillOverCap(pet), 0)
 
-    -- BP_DAMAGE: +700 = 8x multiplier on Blood Pact Rage/Ward damage.
-    -- formula: finalDmg × (1 + BP_DAMAGE/100); 700 → 8x.
-    -- +5 per summoning-skill point over cap for modest skill-gear progression.
-    safeAddMod(pet, xi.mod.BP_DAMAGE, 700 + skillOverCap * 5)
+    -- 2026-07-13 owner call: cut every added value below by 80% (SMN avatars were
+    -- OP relative to everything on the server outside the endgame NMs the stack
+    -- was originally dimensioned against). Every constant here is 20% of what it
+    -- used to be; comments call out the pre-cut number in parentheses.
+
+    -- BP_DAMAGE: +140 = 2.4x multiplier on Blood Pact Rage/Ward damage (was +700 / 8x).
+    -- formula: finalDmg × (1 + BP_DAMAGE/100); 140 → 2.4x.
+    -- +1 per summoning-skill point over cap (was +5) for modest skill-gear progression.
+    safeAddMod(pet, xi.mod.BP_DAMAGE, 140 + skillOverCap * 1)
 
     -- Magic stats so magical BPs (Inferno, Judgment Bolt, Geocrush...) survive
-    -- the (100+MATT)/(100+MDEF) ratio vs Legendary NMs. MATT=300 gives a 1.0-
-    -- 1.5x magicBonusDiff against typical NM MDEF (200-300).
-    pet:addMod(xi.mod.MATT, 300)
-    pet:addMod(xi.mod.MACC, 2500)
-    pet:addMod(xi.mod.INT,  1000)
+    -- the (100+MATT)/(100+MDEF) ratio vs Legendary NMs. MATT=60 (was 300) gives a
+    -- ~1.05-1.15x magicBonusDiff against typical NM MDEF (200-300) — noticeably
+    -- less shove than before, still meaningful.
+    pet:addMod(xi.mod.MATT, 60)   -- was 300
+    pet:addMod(xi.mod.MACC, 500)  -- was 2500
+    pet:addMod(xi.mod.INT,  200)  -- was 1000
 
     -- Physical stats so PHYSICAL Blood Pacts (Predator Claws, Flaming Crush,
-    -- Mountain Buster, Chaotic Strike, Spinning Dive, Eclipse Bite...) work too.
-    -- A physical BP's damage is pDif = avatarATT / targetDEF, and a raw avatar's
-    -- ATT collapses against Legendary's 150-160 NM DEF -> ~0 damage. These flat
-    -- values max pDif (hard-capped at 4.25x); the 8x BP_DAMAGE mult then lands
-    -- the hit. +per-skill-over-cap so gear/skillups matter.
-    safeAddMod(pet, xi.mod.ATT, 6000 + skillOverCap * 40)
-    safeAddMod(pet, xi.mod.ACC, 4500 + skillOverCap * 10)
-    pet:addMod(xi.mod.STR, 500)
-    pet:addMod(xi.mod.DEX, 300) -- feeds avatar physical-BP crit rate (getDexCritRate)
+    -- Mountain Buster, Chaotic Strike, Spinning Dive, Eclipse Bite...) still land.
+    -- A physical BP's damage is pDif = avatarATT / targetDEF; the reduced +1200 flat
+    -- (was +6000) still helps vs Legendary's 150-160 NM DEF, but pDif no longer
+    -- pegs the 4.25x cap on tap. +per-skill-over-cap so gear/skillups matter.
+    safeAddMod(pet, xi.mod.ATT, 1200 + skillOverCap * 8)   -- was 6000 + skillOverCap * 40
+    safeAddMod(pet, xi.mod.ACC, 900  + skillOverCap * 2)   -- was 4500 + skillOverCap * 10
+    pet:addMod(xi.mod.STR, 100) -- was 500
+    pet:addMod(xi.mod.DEX,  60) -- was 300; feeds avatar physical-BP crit rate (getDexCritRate)
 
     -- ===== EVERY avatar action, not just Blood Pacts =====
-    -- The boosts above mainly land on Blood Pacts (BP_DAMAGE is BP-ONLY); a raw
-    -- avatar otherwise just auto-attacks once for chip damage. These make its
-    -- MELEE auto-attacks a real damage source and let it survive to keep swinging,
-    -- mirroring the BST jug-pet overhaul (BstJugPetOverhaul.lua) which proves the
-    -- model. (ATT above already maxes pDif vs NM DEF; ATTP adds headroom.)
-    pet:addMod(xi.mod.ATTP,              50)    -- +50% attack, on top of the flat ATT
-    pet:addMod(xi.mod.DOUBLE_ATTACK,     100)   -- guaranteed double...
-    pet:addMod(xi.mod.TRIPLE_ATTACK,     100)   -- ...and triple attack -> ~3 hits/round
-    pet:addMod(xi.mod.DOUBLE_ATTACK_DMG, 100)   -- +100% damage on those extra...
-    pet:addMod(xi.mod.TRIPLE_ATTACK_DMG, 100)   -- ...multi-hit swings
-    pet:addMod(xi.mod.HASTE_GEAR,        2500)  -- +25% attack speed (engine gear-haste cap)
+    -- These give melee auto-attacks a real damage floor and let the avatar survive
+    -- to keep swinging. Cut to 20% too so a raw (non-BP) auto-attacking avatar
+    -- contributes but doesn't dominate.
+    pet:addMod(xi.mod.ATTP,              10)    -- +10% attack (was +50)
+    pet:addMod(xi.mod.DOUBLE_ATTACK,     20)    -- 20% double-attack (was 100/guaranteed)
+    pet:addMod(xi.mod.TRIPLE_ATTACK,     20)    -- 20% triple-attack (was 100/guaranteed)
+    pet:addMod(xi.mod.DOUBLE_ATTACK_DMG, 20)    -- +20% damage on double (was +100)
+    pet:addMod(xi.mod.TRIPLE_ATTACK_DMG, 20)    -- +20% damage on triple (was +100)
+    pet:addMod(xi.mod.HASTE_GEAR,        500)   -- +5% attack speed (was 25% engine cap)
 
-    -- Survivability so it lives to keep meleeing a Legendary NM. DMGPHYS/DMGMAGIC
-    -- are /10000 and the engine HARD-CAPS each at -50% (-5000).
-    pet:addMod(xi.mod.DMGPHYS,  -5000)
-    pet:addMod(xi.mod.DMGMAGIC, -5000)
+    -- Survivability trimmed proportionally. DMGPHYS/DMGMAGIC are /10000 and the
+    -- engine HARD-CAPS each at -50% (-5000); -1000 is a real but modest -10%.
+    pet:addMod(xi.mod.DMGPHYS,  -1000)  -- was -5000 (-50% cap)
+    pet:addMod(xi.mod.DMGMAGIC, -1000)  -- was -5000 (-50% cap)
     -- HP must use setMaxHP/addHP (mirrors BstJugPetOverhaul pattern) because
     -- addMod(HP) stores in the int16 mod array and safeAddMod clamps it to 32,000.
     -- setMaxHP writes the int32 max-HP field directly; addHP fills the new room.
-    local bonusHP = 150000
+    local bonusHP = 30000 -- was 150000
     pet:setMaxHP(pet:getMaxHP() + bonusHP)
     pet:addHP(bonusHP)
 end

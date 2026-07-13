@@ -13,12 +13,12 @@
 -- only a few avatars feel good -- the "only Siren works" report.
 --
 -- THE FIX: override the two avatar-BP damage choke-points and REPLACE the final damage
--- with a flat target landed just under the 131k cap -- xi.summon.avatarFinalAdjustments
+-- with a flat target in the CONFIG.base..ceiling band -- xi.summon.avatarFinalAdjustments
 -- for PHYSICAL pacts (camisado, eclipse_bite, rush, hysteric_assault, ...) and
 -- xi.mobskills.processDamage for MAGICAL pacts (inferno, diamond_dust, ...); see each
--- override below. Siren's pact already sits in that band, so it stays put while everyone
--- else rises to meet it. We also no-op the pet over-cap whisper for SMN avatars, since
--- their normalized damage is under the cap (the pre-normalization report would be noise).
+-- override below. Original tuning sat right under the 131k display-wrap cap; the
+-- 2026-07-13 80% cut brings it well below that (see CONFIG comment). We also no-op the
+-- pet over-cap whisper for SMN avatars since normalized damage stays under the cap.
 --
 -- Only REAL damage is replaced. The original's miss / Perfect Dodge / Third Eye /
 -- shield / invincible returns (0), full shadow-absorb (a small shadowsUsed count),
@@ -42,12 +42,16 @@ require('scripts/globals/summon')
 
 local m = Module:new('smn_avatar_equalize')
 
+-- 2026-07-13 owner call: cut normalized damage target by 80% (SMN avatars were OP
+-- against everything outside the endgame NMs this was originally dimensioned for).
+-- The 131,071 client display-wrap cap is no longer the shape constraint at these
+-- numbers; ceiling stays well under it.
 local CONFIG =
 {
-    base      = 100000, -- target Blood Pact damage with summoning skill exactly at cap
-    perSkill  =   1500, -- + per point of summoning skill OVER cap (keeps gear progression)
-    ceiling   = 128000, -- hard ceiling, just under the 131,071 display-wrap cap
-    threshold =   5000, -- only normalize REAL damage; at/below this it's shadows/anticipate/miss/0
+    base      = 20000, -- target Blood Pact damage with summoning skill exactly at cap (was 100000)
+    perSkill  =   300, -- + per point of summoning skill OVER cap (was 1500)
+    ceiling   = 25600, -- hard ceiling on the normalized damage (was 128000)
+    threshold =  5000, -- only normalize REAL damage; at/below this it's shadows/anticipate/miss/0
 }
 
 local function isSmnAvatar(mob)

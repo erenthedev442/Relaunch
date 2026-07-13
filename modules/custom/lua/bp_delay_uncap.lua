@@ -29,11 +29,17 @@ require('scripts/globals/job_utils/summoner')
 
 local m = Module:new('bp_delay_uncap')
 
+-- 2026-07-13 owner call: cut the boost above stock by 80%.
+--   * perModCap was 60 (engine stock 15, delta +45); cut delta to 9 -> new cap 24.
+--     Gear/augments still push past the stock 15s wall but not as far.
+--   * floor was 5s (retail effective minimum with maxed gear+favor is ~20s,
+--     delta -15s); cut delta to -3s -> new floor 17s. BPs stay noticeably
+--     faster than retail but the "5s BP spam" pattern is gone.
 local CONFIG =
 {
-    perModCap = 60, -- per-mod reduction cap (engine stock = 15). 60 = effectively uncapped vs a 60s base.
-    floor     =  5, -- a Blood Pact can never recast faster than this many seconds.
-    favorCap  = 10, -- Avatar's Favor reduction cap (retail).
+    perModCap = 24, -- was 60; engine stock is 15. Gear/augments still count past 15.
+    floor     = 17, -- was 5s; ~3s below the retail-with-max-gear floor.
+    favorCap  = 10, -- Avatar's Favor reduction cap (retail). Unchanged.
 }
 
 m:addOverride('xi.job_utils.summoner.onUseBloodPact', function(target, petskill, summoner, action)
