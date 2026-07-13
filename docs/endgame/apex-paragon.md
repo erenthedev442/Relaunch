@@ -89,6 +89,6 @@ Unlock **Daily Might** once for **80 Paragon Points**, then claim it from the Pa
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7abc059fbdf8 -->
-_Last updated: 2026-07-10 03:45 PDT_
+<!-- content-hash: d08497b725a7 -->
+_Last updated: 2026-07-13 11:11 PDT_
 <!-- DOCGEN:END id="last-updated" -->

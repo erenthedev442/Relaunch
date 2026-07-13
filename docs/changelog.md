@@ -1275,3 +1275,10 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Hunting League** — Spread the Reisenjima Henge vendor NPCs (fix label overlap)
     - **Hunting League** — Un-engaged NM despawn 180s -> 30s
     - **GEO** — Allow GEO luopan (Geo- spells) across all Reisenjima zones
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 59047af64da3 -->
+_Last updated: 2026-07-13 11:11 PDT_
+<!-- DOCGEN:END id="last-updated" -->
