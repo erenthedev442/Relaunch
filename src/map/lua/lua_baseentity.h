@@ -788,6 +788,7 @@ public:
 
     auto   spawnTrust(uint16 trustId) -> CBaseEntity*;
     void   clearTrusts();
+    void   despawnTrust(CLuaBaseEntity* PLuaTrust);  // RELAUNCH: despawn ONE trust (clearTrusts is all-or-nothing)
     uint32 getTrustID();
     void   trustPartyMessage(uint32 message_id) const;
     auto   addGambit(uint16 targ, const sol::table& predicates, const sol::table& reactions, const sol::object& retry) -> std::string;

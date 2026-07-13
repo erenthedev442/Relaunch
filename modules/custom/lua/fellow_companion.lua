@@ -6,24 +6,31 @@
 -- choose, plus pick its NAME and APPEARANCE. Inspired by retail's Adventuring
 -- Fellow, but the progression is fully player-driven.
 --
--- WHY A PET (not the retail fellow entity): the engine's CFellowEntity is an
--- empty // TODO stub on this fork (no stats, no spawn, no Lua hook), so there is
--- nothing to drive. Pets are a proven, Lua-drivable companion: Ascension_Companion
--- already spawns one for any job via RAW player:spawnPet(). Crucially, raw spawnPet
--- does NOT route through xi.pet.spawnPet, so the BST / SMN / WSTracker spawn-
--- overrides never touch the Fellow -- we apply its stats directly after spawn,
--- mirroring BstJugPetOverhaul's addMod-after-calc pattern.
+-- WHY A TRUST (converted from a pet, 2026-07-12): the Fellow used to be a raw
+-- pet, which occupies the engine's SINGLE pet slot -- so a DRG wyvern / BST jug
+-- / SMN avatar / PUP automaton could not be out at the same time. A TRUST is a
+-- party ally, NOT a pet, so the Fellow now COEXISTS with any job pet. It's
+-- spawned via RAW player:spawnTrust(baseTrustId) -- a raw spawn that bypasses
+-- the learned / party-space / cap checks (like the old raw spawnPet did) -- and
+-- CTrustEntity is a CMobEntity, so the exact stat/name/model/ability overlay we
+-- used on the pet ports over unchanged (addMod / setDamage / setMaxHP /
+-- renameEntity / setModelId / useMobAbility). The Fellow-trust is flagged
+-- (localVar fellowApplied) and made EXEMPT from the trust-count cap
+-- (trust_progression_cap.lua) so it is a FREE EXTRA, not one of your slots.
+-- Dismiss uses player:despawnTrust(trust) (a relaunch C++ binding -- vanilla
+-- clearTrusts is all-or-nothing and would wipe the player's real trusts).
+--
+-- Combat: a trust follows the master and assists the master's target on its own
+-- AI (so the old petAttack auto-assist is gone); the combat loop only FORCES the
+-- role's signature TP move at TP cap and runs the role behaviours (heal/tank/
+-- nuke). The base trust (Naji) may also occasionally use its own native moves --
+-- acceptable; tune/suppress if a playtest shows it's noisy.
 --
 -- NAME + APPEARANCE:
---   * NAME  -> pet:renameEntity(str, true). setPetName is a no-op for jug pets
---     (it only writes char_pet wyvern/chocobo rows); renameEntity sets the LIVE
---     displayed name to an arbitrary string on any pet. Re-applied each spawn.
---   * MODEL -> we spawn a single combat chassis (LYNX_FAMILIAR) then immediately
---     call pet:setModelId(id) to overlay an NPC/avatar model. This gives authentic
---     NPC visuals while keeping jug-pet combat AI (auto-engages; SMN avatar AI
---     only follows). Avatar model IDs 791-798 confirmed in Fantoccini_Avatar.lua.
---     Note: player-character looks (race/face/equipment slots) are NOT supported
---     via setModelId on CPetEntity -- NPC/mob model IDs work fine.
+--   * NAME  -> trust:renameEntity(str, true). Sets the LIVE displayed name to
+--     an arbitrary string on the trust entity. Re-applied each spawn.
+--   * MODEL -> the base trust is spawned, then trust:setModelId(id) overlays an
+--     NPC/mob model. NPC/mob model IDs work; player-character looks do not.
 --
 -- PHASE 1 (MVP): summon/dismiss, allocate stat points, pick role, name + model,
 --   kill-XP -> levels, keeper + onGameIn persistence. Roles: Vanguard / Bulwark.
@@ -44,10 +51,17 @@ local SYS = xi.msg.channel.SYSTEM_3
 -- ════════════════════════════════ CONFIG ════════════════════════════════════
 local CONFIG =
 {
-    -- DEFAULT chassis (a jug familiar; auto-engages in melee). The Appearance
-    -- picker swaps this petId to another familiar. Spawned via RAW player:spawnPet,
-    -- so it bypasses the xi.pet.spawnPet overrides (no BST/SMN collision).
-    petId = xi.petId.LYNX_FAMILIAR,
+    -- BASE TRUST loaded as the Fellow's chassis. spawnTrust(id) is a RAW spawn
+    -- (bypasses the trust cap / party-space / learned checks), and a trust does
+    -- NOT occupy the pet slot -- so the Fellow now COEXISTS with a DRG wyvern /
+    -- BST jug / SMN avatar / PUP automaton (owner change 2026-07-12; it used to
+    -- be a pet, which blocked those). A melee base gives the follow-and-assist
+    -- AI; the Fellow's model / name / stats / role TP moves are overlaid on top
+    -- (setModelId / renameEntity / addMod / useMobAbility all work on a trust,
+    -- which is a CMobEntity). The Fellow-trust is flagged (localVar fellowApplied)
+    -- so it is EXEMPT from the trust-count cap (trust_progression_cap.lua) -- a
+    -- free extra ally, not one of your trust slots.
+    baseTrustId = 897,  -- Naji (WAR trust): a plain melee follow/assist chassis
 
     maxLevel       = 120,
     startingPoints = 6,        -- granted once, when the Fellow is first created
@@ -577,9 +591,11 @@ scheduleCombatLoop = function(master, pet)
                 if tgt and not tgt:isDead() then
                     pcall(function() tgt:updateClaim(master) end)
                 end
-                if not p:isEngaged() then
-                    if tgt and not tgt:isDead() then master:petAttack(tgt) end
-                elseif p:getTP() >= CONFIG.autoReadyTP then
+                -- As a TRUST the Fellow follows the master and engages the
+                -- master's target on its own AI (no petAttack needed -- that was
+                -- a BST/pet order). We just force its signature role TP move when
+                -- it's engaged with capped TP.
+                if p:isEngaged() and p:getTP() >= CONFIG.autoReadyTP then
                     local ws = chosenWs(master)
                     if ws and ws > 0 and tgt and not tgt:isDead() then
                         p:useMobAbility(ws, tgt)  -- the chosen FORM's signature TP move (forced)
@@ -608,11 +624,31 @@ end
 -- Live-add N allocated points' worth of mods to an out Fellow (n defaults to 1).
 -- Scaling by n in a single addMod keeps a bulk allocation cheap (one call per
 -- mod, not one per point) and matches applyFellow's mv[2]*pts on summon.
+
+-- The Fellow runs as a TRUST (party ally), NOT a pet, so it coexists with a real
+-- job pet. entityIsFellow flags the live trust; getFellowTrust finds it among the
+-- player's party-with-trusts (nil if none out). Defined here -- ahead of the
+-- first user (liveAddStat) -- so the local is in scope for every call site.
+local function entityIsFellow(e)
+    return e ~= nil and e:getLocalVar('fellowApplied') == 1
+end
+local function getFellowTrust(p)
+    local ok, party = pcall(function() return p:getPartyWithTrusts() end)
+    if not ok or not party then return nil end
+    for _, member in pairs(party) do
+        if member and member:getObjType() == xi.objType.TRUST and entityIsFellow(member) then
+            return member
+        end
+    end
+    return nil
+end
+local function hasFellowOut(p) return getFellowTrust(p) ~= nil end
+
 local function liveAddStat(p, stat, n)
     n = n or 1
-    if n <= 0 or not p:hasPet() then return end
-    local pet = p:getPet()
-    if pet and pet:getLocalVar('fellowApplied') == 1 then
+    if n <= 0 then return end
+    local pet = getFellowTrust(p)
+    if pet then
         for _, mv in ipairs(CONFIG.statMods[stat]) do pet:addMod(mv[1], mv[2] * n) end
         if stat == 'VIT' then
             pet:setMaxHP(pet:getMaxHP() + CONFIG.hpPerVitPt * n)
@@ -624,40 +660,19 @@ end
 -- ════════════════════════════ Summon / keeper ═══════════════════════════════
 local genByName = {}
 
-local function petIsFellow(pet)
-    return pet ~= nil and pet:getLocalVar('fellowApplied') == 1
-end
-
--- AUTO-YIELD (Duff report 2026-07-12): the Fellow is a pet and occupies the
--- single engine pet slot, so a DRG Call Wyvern / BST Call Beast+Bestial Loyalty
--- / SMN summon / PUP Activate would be blocked ("You already have a pet"). When
--- a player summons a REAL job pet, step the Fellow aside (despawn it) so the
--- call succeeds. `active` stays 1, so the keeper auto-RETURNS the Fellow once
--- the job pet is later dismissed. The yield-grace suppresses the keeper long
--- enough to cover SMN summon CAST time, so it can't reclaim the slot mid-cast.
-local FELLOW_YIELD_GRACE = 10  -- seconds
-local function yieldFellowForJobPet(player)
-    if player and player:hasPet() and petIsFellow(player:getPet()) then
-        pcall(function() player:despawnPet() end)
-        player:setLocalVar('FellowYieldUntil', os.time() + FELLOW_YIELD_GRACE)
-    end
-end
-
 -- Keeper: while active, (re)spawn the chosen chassis whenever the player has NO
 -- pet and pets are allowed here -- survives zoning/death, yields to real job pets.
 local function keeper(p, name, gen)
     if not p or genByName[name] ~= gen then return end
     if getN(p, V.active) ~= 1 then return end
 
-    -- Grace: after yielding to a job pet the slot must stay free through the
-    -- job pet's spawn (incl. SMN summon cast time), or the keeper would reclaim
-    -- it mid-call and re-block the summon. See yieldFellowForJobPet.
-    if not p:hasPet() and p:canUseMisc(xi.zoneMisc.PET)
-       and (p:getLocalVar('FellowYieldUntil') or 0) <= os.time() then
+    -- (Re)spawn the Fellow-trust whenever it isn't currently out. A trust does
+    -- not use the pet slot, so this never conflicts with a job pet. spawnTrust
+    -- is a raw spawn; applyFellow overlays the model/name/stats.
+    if not hasFellowOut(p) then
         pcall(function()
-            p:spawnPet(CONFIG.petId)  -- always Lynx (combat AI); setModelId applied in applyFellow
-            local pet = p:getPet()
-            if pet then applyFellow(p, pet) end
+            local trust = p:spawnTrust(CONFIG.baseTrustId)
+            if trust then applyFellow(p, trust) end
         end)
     end
 
@@ -674,9 +689,8 @@ end
 local function summon(p)
     ensureBorn(p)
     setN(p, V.active, 1)
-    if p:hasPet() and not petIsFellow(p:getPet()) then
-        p:printToPlayer('[Fellow] Dismiss your current pet first; your Fellow will appear.', SYS)
-    end
+    -- No "dismiss your pet first" -- the Fellow is a trust now and coexists
+    -- with any job pet.
     armKeeper(p, 30)
     p:printToPlayer('[Fellow] Your Adventuring Fellow heeds the call.', SYS)
 end
@@ -684,8 +698,9 @@ end
 local function dismiss(p)
     setN(p, V.active, 0)
     genByName[p:getName()] = (genByName[p:getName()] or 0) + 1
-    if p:hasPet() and petIsFellow(p:getPet()) then
-        pcall(function() p:despawnPet() end)  -- the proper pet-release call (BST Leave / SMN Release)
+    local trust = getFellowTrust(p)
+    if trust then
+        pcall(function() p:despawnTrust(trust) end)  -- despawns ONLY the Fellow, not real trusts
     end
     p:printToPlayer('[Fellow] Your Adventuring Fellow returns to rest.', SYS)
 end
@@ -693,8 +708,9 @@ end
 -- Re-spawn the live Fellow now (used after an appearance change). No-op if not out.
 local function respawnIfOut(p)
     if getN(p, V.active) ~= 1 then return end
-    if p:hasPet() and petIsFellow(p:getPet()) then
-        pcall(function() p:despawnPet() end)
+    local trust = getFellowTrust(p)
+    if trust then
+        pcall(function() p:despawnTrust(trust) end)
     end
     armKeeper(p, 700)  -- keeper re-spawns the new chassis shortly
 end
@@ -1314,12 +1330,13 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
         -- If you kill with the Fellow out and DON'T see it, ownership didn't resolve.
         -- Levels are logged too: a credited kill despite pet Lv>you proves the 10-level
         -- gap is NOT counting the Fellow. Toggle: !setplayervar FellowExpDbg 1
-        if player:getCharVar('FellowExpDbg') == 1 and player:hasPet() and petIsFellow(player:getPet()) then
+        if player:getCharVar('FellowExpDbg') == 1 and hasFellowOut(player) then
             pcall(function()
+                local ft = getFellowTrust(player)
                 player:printToPlayer(string.format(
-                    '[FellowDbg] kill CREDITED to you: %s (mobLv%d) | you Lv%d, pet Lv%d | isKiller=%s',
+                    '[FellowDbg] kill CREDITED to you: %s (mobLv%d) | you Lv%d, fellowLv%d | isKiller=%s',
                     mob:getName(), mob:getMainLvl() or 0, player:getMainLvl() or 0,
-                    player:getPet():getMainLvl() or 0, tostring(isKiller)), xi.msg.channel.SYSTEM_3)
+                    (ft and ft:getMainLvl()) or 0, tostring(isKiller)), xi.msg.channel.SYSTEM_3)
             end)
         end
 
@@ -1328,7 +1345,7 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
 
         local function credit(pc)
             if pc and pc:getObjType() == xi.objType.PC
-               and getN(pc, V.active) == 1 and pc:hasPet() and petIsFellow(pc:getPet()) then
+               and getN(pc, V.active) == 1 and hasFellowOut(pc) then
                 addXp(pc, xp)
             end
         end
@@ -1357,37 +1374,9 @@ m:addOverride('xi.player.onGameIn', function(player, gameLogin, zoning)
     end)
 end)
 
--- ════════════════════════════ Job-pet auto-yield ════════════════════════════
--- Each real job-pet summon gates on `player:getPet() ~= nil` -- the Fellow trips
--- it. Yield the Fellow (despawn) BEFORE the vanilla check runs, then defer to it
--- so every other rule (jug item present, zone allows pets, recast, etc.) still
--- applies. `return super(...)` preserves the check's multi-value return.
-require('scripts/globals/job_utils/beastmaster')
-require('scripts/globals/job_utils/dragoon')
-require('scripts/globals/job_utils/puppetmaster')
-require('scripts/globals/pets')
-
-m:addOverride('xi.job_utils.beastmaster.checkCallBeast', function(player, target, ability)
-    yieldFellowForJobPet(player)
-    return super(player, target, ability)
-end)
-m:addOverride('xi.job_utils.beastmaster.checkBestialLoyalty', function(player, target, ability)
-    yieldFellowForJobPet(player)
-    return super(player, target, ability)
-end)
-m:addOverride('xi.job_utils.dragoon.abilityCheckCallWyvern', function(player, target, ability)
-    yieldFellowForJobPet(player)
-    return super(player, target, ability)
-end)
-m:addOverride('xi.job_utils.puppetmaster.onAbilityCheckActivate', function(player, target, ability)
-    yieldFellowForJobPet(player)
-    return super(player, target, ability)
-end)
--- SMN summon spells route their "already have a pet" gate through onCastingCheck.
-m:addOverride('xi.pet.onCastingCheck', function(caster, target, spell)
-    yieldFellowForJobPet(caster)
-    return super(caster, target, spell)
-end)
+-- (The 2026-07-12 job-pet auto-yield overrides were REMOVED with the trust
+-- conversion -- the Fellow is a trust now, not a pet, so it no longer occupies
+-- the pet slot and job pets are never blocked. Nothing to yield.)
 
 -- ════════════════════════════════ Public API ════════════════════════════════
 xi.fellow = xi.fellow or {}
@@ -1402,11 +1391,11 @@ xi.fellow.grantPoints = function(p, n) ensureBorn(p); setN(p, V.points, getPoint
 -- the spawned pet. Spend a point (it applies instantly while the Fellow is out) and
 -- re-run to watch the matching number move -- verifiable proof the allocation lands.
 xi.fellow.debug = function(p)
-    if not (p:hasPet() and petIsFellow(p:getPet())) then
-        p:printToPlayer('[Fellow] Summon your Fellow first -- this reads mods off the live pet.', SYS)
+    local pet = getFellowTrust(p)
+    if not pet then
+        p:printToPlayer('[Fellow] Summon your Fellow first -- this reads mods off the live Fellow.', SYS)
         return
     end
-    local pet = p:getPet()
     local function m(mod) return pet:getMod(mod) end
     p:printToPlayer('=== Fellow live mods (straight off the spawned pet) ===', SYS)
     p:printToPlayer(string.format('  ATT %d  ACC %d  DEF %d  EVA %d', m(xi.mod.ATT), m(xi.mod.ACC), m(xi.mod.DEF), m(xi.mod.EVA)), SYS)
@@ -1432,11 +1421,11 @@ for k, v in pairs(xi.mod) do if type(v) == 'number' then MODNAME[v] = MODNAME[v]
 -- actually boost the Fellow?". (Whether the engine then USES a mod is a separate
 -- question; see the mods known to be read by mob combat in the audit footer.)
 xi.fellow.audit = function(p)
-    if not (p:hasPet() and petIsFellow(p:getPet())) then
-        p:printToPlayer('[Fellow] Summon your Fellow first -- the audit reads mods off the live pet.', SYS)
+    local pet = getFellowTrust(p)
+    if not pet then
+        p:printToPlayer('[Fellow] Summon your Fellow first -- the audit reads mods off the live Fellow.', SYS)
         return
     end
-    local pet     = p:getPet()
     local lvl     = getLevel(p)
     local roleKey = getRole(p)
     local role    = CONFIG.roles[roleKey] or {}

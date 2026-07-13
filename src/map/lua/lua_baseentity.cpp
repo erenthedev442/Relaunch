@@ -15946,6 +15946,28 @@ void CLuaBaseEntity::clearTrusts()
 }
 
 /************************************************************************
+ *  Function: despawnTrust()
+ *  Purpose : Despawn a SINGLE trust (ClearTrusts removes them all). Added
+ *            for the relaunch Adventuring Fellow, which runs as a trust and
+ *            must be dismissable without clearing the player's real trusts.
+ *  Example : player:despawnTrust(fellowTrust)
+ ************************************************************************/
+
+void CLuaBaseEntity::despawnTrust(CLuaBaseEntity* PLuaTrust)
+{
+    if (m_PBaseEntity->objtype != TYPE_PC || PLuaTrust == nullptr)
+    {
+        return;
+    }
+
+    CBaseEntity* PEntity = PLuaTrust->GetBaseEntity();
+    if (PEntity != nullptr && PEntity->objtype == TYPE_TRUST)
+    {
+        static_cast<CCharEntity*>(m_PBaseEntity)->RemoveTrust(static_cast<CTrustEntity*>(PEntity));
+    }
+}
+
+/************************************************************************
  *  Function: getTrustID()
  *  Purpose :
  *  Example : trust:getTrustID()
@@ -20654,6 +20676,7 @@ void CLuaBaseEntity::Register()
     // Trust related
     SOL_REGISTER("spawnTrust", CLuaBaseEntity::spawnTrust);
     SOL_REGISTER("clearTrusts", CLuaBaseEntity::clearTrusts);
+    SOL_REGISTER("despawnTrust", CLuaBaseEntity::despawnTrust);
     SOL_REGISTER("getTrustID", CLuaBaseEntity::getTrustID);
     SOL_REGISTER("trustPartyMessage", CLuaBaseEntity::trustPartyMessage);
     SOL_REGISTER("addGambit", CLuaBaseEntity::addGambit);

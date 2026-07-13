@@ -17,8 +17,8 @@ Type `!fellow` at any time to open the main menu. Your Fellow doesn't exist unti
 | `!fellow status` | Chat dump of level, XP, points, and allocation |
 | `!fellowname <name>` | Give your Fellow a custom name (letters and spaces, max 15 chars) |
 
-!!! note "Using a job pet (DRG / BST / SMN / PUP)"
-    The Fellow shares the game's single pet slot, so it can't be out at the same time as a real job pet. Calling your **wyvern**, **jug pet**, **avatar**, or **automaton** now automatically steps the Fellow aside — and it returns on its own the moment you release that pet. You never have to dismiss it by hand.
+!!! note "Works alongside your job pet (DRG / BST / SMN / PUP)"
+    The Fellow is a **trust-style ally**, not a pet, so it can be out **at the same time** as your **wyvern**, **jug pet**, **avatar**, or **automaton** — call both, no conflict. It's a **free extra**: it doesn't use up one of your trust slots.
 
 ## Leveling and stat points
 

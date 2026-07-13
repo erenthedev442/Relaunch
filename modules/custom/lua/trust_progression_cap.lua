@@ -119,7 +119,11 @@ m:addOverride('xi.trust.canCast', function(caster, spell, notAllowedTrustIds)
 
         local numTrusts = 0
         for _, member in pairs(caster:getPartyWithTrusts()) do
-            if member:getObjType() == xi.objType.TRUST then
+            -- The Adventuring Fellow runs as a trust but is a FREE EXTRA -- it
+            -- must not consume a trust slot (owner, 2026-07-12). It is flagged
+            -- with localVar fellowApplied by fellow_companion.lua's applyFellow.
+            if member:getObjType() == xi.objType.TRUST
+               and member:getLocalVar('fellowApplied') ~= 1 then
                 numTrusts = numTrusts + 1
             end
         end
