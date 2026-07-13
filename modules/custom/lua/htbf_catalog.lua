@@ -202,49 +202,56 @@ catalog.fightLoot = require('modules/custom/lua/htbf_loot')
 -- baseBattlefieldId-> first battlefield id for this fight (tiers take +0,+1,+2);
 --                     high range (4000+) to avoid the stock id space.
 -- mobs             -> the base boss entity name(s) to reuse + scale.
--- The 6 Avatar Prime trials share AVATAR_PHANTOM_GEM (retail). Indices 0/1/2 on
--- each Cloister FP/IP/etc. entrance are taken by base/trial-size/waking -> tiers
--- start at 3.
+-- The 6 Avatar Prime trials share AVATAR_PHANTOM_GEM (retail). Base fights sit at
+-- indices 0..3 on each Cloister entrance; retail also RESERVED slot 4 in the
+-- client dialog DAT for an unimplemented HTMBF tier (e.g. Cloister of Flames DAT
+-- slot 4 = "Trial by Fire"). A tier landing on slot 4 renders a duplicate-looking
+-- row instead of the intended blank ("Which battlefield will you enter?" >
+-- Trial by Fire / Waking the Beast / Trial by Fire again). So HTBF tiers start
+-- at slot 8 -- well past every retail-defined DAT label -- and rely on the
+-- printEntranceLegend chat message (htbf.lua) to name the blank rows.
 catalog.fights =
 {
     -- The 6 Avatar Prime trials. All share AVATAR_PHANTOM_GEM (retail: one gem
-    -- enters any trial). baseIndex = first FREE menu slot on that Cloister's
-    -- entrance (audited: each Cloister uses 0..3 or 0..4 for base/trial-size/
-    -- waking/sugar-coated/carbuncle/class-reunion/puppet). 30-min, 6-player.
+    -- enters any trial). baseIndex = 8 uniformly: retail base fights sit at
+    -- indices 0..3 and the DAT has labeled slot 4 as "Trial by [Element]"
+    -- (unimplemented HTMBF placeholder), so a tier landing there renders a
+    -- duplicate-looking row -- see header. Slot 8 is well past every
+    -- retail-defined DAT label on these entrances. 30-min, 6-player.
     trial_by_fire =
     {
         zone = xi.zone.CLOISTER_OF_FLAMES,  entryNpc = 'FP_Entrance', exitNpc = 'Fire_Protocrystal',
-        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 4, baseBattlefieldId = 4000,
+        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4000,
         mobs = { 'Ifrit_Prime_TBF' }, label = 'Trial by Fire',
     },
     trial_by_ice =
     {
         zone = xi.zone.CLOISTER_OF_FROST,   entryNpc = 'IP_Entrance', exitNpc = 'Ice_Protocrystal',
-        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4010,
+        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4010,
         mobs = { 'Shiva_Prime_TBI' }, label = 'Trial by Ice',
     },
     trial_by_wind =
     {
         zone = xi.zone.CLOISTER_OF_GALES,   entryNpc = 'WP_Entrance', exitNpc = 'Wind_Protocrystal',
-        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4020,
+        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4020,
         mobs = { 'Garuda_Prime_TBW' }, label = 'Trial by Wind',
     },
     trial_by_earth =
     {
         zone = xi.zone.CLOISTER_OF_TREMORS, entryNpc = 'EP_Entrance', exitNpc = 'Earth_Protocrystal',
-        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4030,
+        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4030,
         mobs = { 'Titan_Prime_TBE' }, label = 'Trial by Earth',
     },
     trial_by_lightning =
     {
         zone = xi.zone.CLOISTER_OF_STORMS,  entryNpc = 'LP_Entrance', exitNpc = 'Lightning_Protocrystal',
-        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4040,
+        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4040,
         mobs = { 'Ramuh_Prime_TBL' }, label = 'Trial by Lightning',
     },
     trial_by_water =
     {
         zone = xi.zone.CLOISTER_OF_TIDES,   entryNpc = 'WP_Entrance', exitNpc = 'Water_Protocrystal',
-        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 4, baseBattlefieldId = 4050,
+        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4050,
         mobs = { 'Leviathan_Prime_TBW' }, label = 'Trial by Water',
     },
 
