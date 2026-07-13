@@ -45,8 +45,16 @@ commandObj.onTrigger = function(player)
             mob:addListener('DESPAWN', 'AFFINITY_AUTOPOP', function(m)
                 m:setRespawnTime(RESPAWN_SECONDS)
             end)
-            -- One-time "no longer registers" notice for the 13 reworked-out NMs
-            -- (trophy grants live in augment_affinity_grants.lua, catalog-driven).
+            -- On death: registered affinity NM -> grant the trophy alliance-wide;
+            -- reworked-out NM -> one-time "no longer registers" notice. Mirror
+            -- of affinity_nm_autopop.configureMob (which does the same at zone
+            -- boot). Two listeners with distinct names, so a re-run replaces
+            -- each cleanly instead of stacking.
+            if xi.affinityAutopop and xi.affinityAutopop.grantTrophy then
+                mob:addListener('DEATH', 'AFFINITY_TROPHY', function(m, killer)
+                    xi.affinityAutopop.grantTrophy(m, killer)
+                end)
+            end
             if xi.affinityAutopop and xi.affinityAutopop.deathNotice then
                 mob:addListener('DEATH', 'AFFINITY_NOTICE', function(m, killer)
                     xi.affinityAutopop.deathNotice(m, killer)

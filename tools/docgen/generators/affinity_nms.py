@@ -11,8 +11,9 @@ Markers written:
                           affinityMult is legacy and deliberately not rendered)
   affinity-how-it-works — the 5-step flow + registration cost (rank + marks).
                           The trophy goes to the whole in-zone party/alliance,
-                          NOT just the killer (augment_affinity_grants.lua drops
-                          the isKiller gate), so no killing-blow text is emitted.
+                          NOT just the killer (affinity_nm_autopop.grantTrophy
+                          walks the killer's alliance), so no killing-blow text
+                          is emitted.
   affinity-nm-roster    — one row per registering NM: name, zone, trophy,
                           augment category (11 since the 2026-07-06 rework)
   affinity-difficulty   — HP multiplier + stat-boost table from NM_HP_MULT /

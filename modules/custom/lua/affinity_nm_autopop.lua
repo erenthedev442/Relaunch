@@ -108,23 +108,65 @@ local ZONES =
     { 'xi.zones.RuAun_Gardens.Zone.onInitialize',           { 17310619, 17310620, 17310621, 17310622, 17310623, 17310624 } }, -- AV/Proto-Omega + Genbu/Seiryu/Byakko/Suzaku (Sky god corners)
 }
 
--- Trophy grants live in augment_affinity_grants.lua (Zone.onMobDeath hook:
--- catalog-driven, whole alliance, guarded against duplicates/registered).
--- The hand-synced TROPHY table that used to duplicate the grant here for all
--- 24 NMs was removed 2026-07-11: since the 2026-07-06 catalog rework only 11
--- NMs register, and the extra killer-only grant handed out trophies the Sage
--- no longer accepts (player report: "hunt NMs did not give me the affinity").
--- What remains here is a one-time courtesy notice when someone kills one of
--- the 13 NMs that STOPPED registering, so the missing trophy reads as a
--- design change instead of a bug.
+-- Death-time trophy grants + one-time notice for reworked-out NMs.
+-- History: 88f443b677 (2026-07-11) removed the hand-synced TROPHY table that
+-- used to duplicate a killer-only grant here, and re-homed grants in
+-- augment_affinity_grants.lua on an `xi.zones.<Zone>.Zone.onMobDeath` hook.
+-- That hook was fictitious -- the engine never calls a zone-level onMobDeath
+-- (luautils::OnMobDeath routes to xi.mob.onMobDeathEx, InteractionGlobal, and
+-- per-mob entity scripts; grep proved zero callers of any Zone.onMobDeath).
+-- Result: for ~24h the entire affinity-hunt trophy path was dead, and no
+-- registered NM's trophy dropped. Restored here as a mob DEATH listener
+-- (which does fire), catalog-driven and fanned to the whole in-zone alliance.
 local affinityCatalog = require('modules/custom/lua/augment_affinity_catalog')
 
+-- Hand THIS in-zone alliance member the NM's registration trophy. Guarded so
+-- repeat kills / the alliance fan-out never stack duplicates.
+local function grantTrophyToMember(player, row)
+    if affinityCatalog.hasAffinity(player, row.cat) then return end   -- already registered
+    if player:hasItem(row.trophy.id) then return end                  -- already holding one
+    if player:getFreeSlotsCount() < 1 then
+        player:printToPlayer(string.format(
+            '[Augment] %s dropped a trophy, but your inventory is full -- make room and defeat it again.',
+            row.nm:gsub('_', ' ')), SYS)
+        return
+    end
+    player:addItem(row.trophy.id)
+    player:printToPlayer(string.format(
+        '[Augment] Obtained %s! Take it to the Augment Sage to register the %s affinity (Hunting League Rank %d + %d Hunt Marks).',
+        row.trophy.name, row.label, affinityCatalog.affinityRankReq, affinityCatalog.affinityMarkCost), SYS)
+end
+
+-- Fan the trophy to every in-zone alliance member (matches the "whole alliance"
+-- semantic the dead zone-override was trying to provide). Solo players get a
+-- one-element alliance table containing just themselves.
+local function grantTrophy(m, killer)
+    if not killer or not killer:isPC() then return end
+    local row = affinityCatalog.byNm(m:getName())
+    if not row or not row.trophy then return end
+    local zoneId = m:getZoneID()
+    local alliance = killer:getAlliance()
+    if alliance then
+        for _, member in ipairs(alliance) do
+            if member and member:getZoneID() == zoneId then
+                grantTrophyToMember(member, row)
+            end
+        end
+    else
+        grantTrophyToMember(killer, row)
+    end
+end
+
+-- One-time notice for the 13 reworked-out NMs (kill of e.g. Simurgh/Roc/Bune
+-- etc. no longer registers a Sage affinity since the 2026-07-06 rework). Only
+-- fires for NMs NOT in the current catalog, so it and grantTrophy are mutually
+-- exclusive per kill.
 local function deathNotice(m, killer)
     if not killer or not killer:isPC() then
         return
     end
     if affinityCatalog.byNm(m:getName()) then
-        return  -- live affinity NM: augment_affinity_grants hands out the trophy
+        return  -- live affinity NM: grantTrophy handles it
     end
     if killer:getCharVar('affinityReworkNotice') == 1 then
         return
@@ -134,8 +176,10 @@ local function deathNotice(m, killer)
         '[Affinity] %s does not register a Sage affinity -- only the 11 NMs listed at the Augment Sage do. (This notice shows once.)',
         m:getName():gsub('_', ' ')), SYS)
 end
+
 xi.affinityAutopop = xi.affinityAutopop or {}
-xi.affinityAutopop.deathNotice = deathNotice  -- reused by the !affinitypop command
+xi.affinityAutopop.grantTrophy = grantTrophy   -- reused by the !affinitypop command
+xi.affinityAutopop.deathNotice = deathNotice   -- reused by the !affinitypop command
 
 -- mobid -> proper display name. These reused-pool spawns show as "NPC" on the
 -- client; renameEntity sets ONLY packetName (+ flags UPDATE_NAME to push it live),
@@ -223,8 +267,13 @@ local function configureMob(mobid)
         m:setRespawnTime(RESPAWN_SECONDS)
     end)
 
-    -- One-time "this NM no longer registers" notice (trophy grants themselves
-    -- live in augment_affinity_grants.lua; see deathNotice above).
+    -- On death: registered affinity NM -> grant the trophy alliance-wide;
+    -- reworked-out NM -> one-time "no longer registers" courtesy notice.
+    -- (Split into two listeners so re-runs of !affinitypop are still idempotent
+    -- -- addListener replaces by name, so the two names must stay distinct.)
+    mob:addListener('DEATH', 'AFFINITY_TROPHY', function(m, killer)
+        grantTrophy(m, killer)
+    end)
     mob:addListener('DEATH', 'AFFINITY_NOTICE', function(m, killer)
         deathNotice(m, killer)
     end)
