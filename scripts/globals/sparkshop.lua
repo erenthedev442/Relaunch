@@ -646,6 +646,20 @@ function xi.sparkshop.onEventUpdate(player, csid, option, npc)
     local category = bit.band(option, 0xFF)
     local selection = bit.rshift(option, 16)
 
+    -- Relaunch policy: retail Sparks vendors do not sell equipment. Gear tiers
+    -- are categories 3-10 (Equipment Lv.1-9 through Lv.99, see optionToItem
+    -- above). Reject the purchase but refresh the menu so the client doesn't
+    -- lock (same lesson as the Rolandienne fix below at 665). Non-gear tiers
+    -- (Items, Skill tomes, Trust ciphers, Currency exchange, Provisions) stay
+    -- available. Farm HL medals at Escha - Zi'Tah for equipment instead.
+    if category >= 3 and category <= 10 then
+        player:updateEvent(sparks, 0, 0, 0, 0, remainingLimit)
+        player:printToPlayer(
+            '[Sparks] Equipment is no longer sold here. Farm Hunting League medals at Escha - Zi\'Tah for gear.',
+            xi.msg.channel.SYSTEM_3)
+        return
+    end
+
     local qty = 1
     local requestedQty = bit.band(bit.rshift(option, 10), 0x3F)
 
