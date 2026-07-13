@@ -48,24 +48,42 @@ local m = Module:new('rng_overhaul')
 --   * the final attack (RATT mod + skill + STR + RATTP%) must stay < 32,767,
 -- or it WRAPS NEGATIVE and std::max floors it to 1. The old values (ratt 40000/
 -- 80000, rattp 800/2100) blew past BOTH ceilings -> negative/garbage -> R-atk 1.
--- 28,000 flat RATT already MAXES ranged pDIF vs normal NM DEF; RNG's damage then
--- comes from that capped pDIF + RANGED_DMG_RATING + ranged WS (which ride the
--- uncapped 131k path) -- NOT from an impossible >32k attack number.
-local RATT_CAP = 29000  -- ceiling for the RATT mod (base + gear); leaves headroom
-                        -- for skill/STR so the final RATT() stays under int16.
+-- RETUNED 2026-07-13 (owner: an ungeared 99 RNG was sitting at 28,579 RATT --
+-- gear could NOT move the needle because the ranged pDIF cap was already maxed).
+-- New identity: RNG keeps its "fast, multi-shot" utility (Snapshot / Rapid Shot /
+-- Double Shot / StoreTP all untouched at 50/50/50/100), but the raw-damage
+-- floor is reduced dramatically so GEAR meaningfully adds. Ungeared 99 RNG
+-- now sits ~2,500 RATT (500 base + 2,000 flat) and a fully-geared kit reaches
+-- ~4,000+ RATT -- plenty strong, but pDIF now scales with the gear/food/buffs
+-- you actually equipped instead of being flat-capped at ceiling.
+local RATT_CAP = 8000   -- ceiling for the RATT mod (base + gear); way under int16.
+                        -- Raised the old 29,000 clamp only mattered when the flat
+                        -- add was 28,000; at 2,000 flat, an 8k cap is comfortable
+                        -- headroom for any realistic gear/food stack.
 
 local CONFIG =
 {
-    ratt            = 28000, -- Mod.RATT  (24)  : flat ranged attack, CLAMPED to RATT_CAP
+    ratt            = 2000,  -- Mod.RATT  (24)  : flat ranged attack, CLAMPED to RATT_CAP
+                             --                   Retuned 28,000 -> 2,000 (owner call
+                             --                   2026-07-13). Was auto-capping pDIF.
     rattp           = 0,     -- Mod.RATTP (66)  : MUST be 0 -- it MULTIPLIES the whole
-                             --                   ~28k attack and instantly overflows int16
-    racc            = 4000,  -- Mod.RACC  (26)  : land on high-EVA Legendary NMs
-    rangedDmgRating = 2000,  -- Mod.RANGED_DMG_RATING (376) : flat damage added to each shot
-    damageLimit     = 600,   -- Mod.DAMAGE_LIMITP (1081) : pDIF cap 3.25*(100+600)/100 = 22.75x
-    storeTP         = 100,   -- Mod.STORETP (73): faster TP gain -> more weaponskills
-    snapshot        = 50,    -- Mod.SNAPSHOT (365) : % ranged-delay reduction (faster shots)
-    rapidShot       = 50,    -- Mod.RAPID_SHOT (359) : % chance of an instant shot
-    doubleShotRate  = 50,    -- Mod.DOUBLE_SHOT_RATE (422) : +% Double Shot proc (extra arrow)
+                             --                   attack and can overflow int16 fast.
+    racc            = 500,   -- Mod.RACC  (26)  : land on high-EVA NMs; gear adds on top.
+                             --                   Retuned 4,000 -> 500.
+    rangedDmgRating = 100,   -- Mod.RANGED_DMG_RATING (376) : flat damage added to each
+                             --                   shot. Retuned 2,000 -> 100 -- was
+                             --                   drowning gear/ammo D-rating entirely.
+    damageLimit     = 100,   -- Mod.DAMAGE_LIMITP (1081) : pDIF cap 3.25*(100+100)/100
+                             --                   = 6.5x (was 22.75x -- effectively no
+                             --                   cap). Still doubles vanilla headroom.
+    storeTP         = 100,   -- Mod.STORETP (73): faster TP gain -> more weaponskills.
+                             --                   UNCHANGED -- utility, defines RNG.
+    snapshot        = 50,    -- Mod.SNAPSHOT (365) : % ranged-delay reduction.
+                             --                   UNCHANGED -- utility, defines RNG.
+    rapidShot       = 50,    -- Mod.RAPID_SHOT (359) : % chance of an instant shot.
+                             --                   UNCHANGED -- utility, defines RNG.
+    doubleShotRate  = 50,    -- Mod.DOUBLE_SHOT_RATE (422) : +% Double Shot proc.
+                             --                   UNCHANGED -- utility, defines RNG.
 }
 
 -- Clamp the RATT mod's running TOTAL (our flat + the player's gear RATT) to
