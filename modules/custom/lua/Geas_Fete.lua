@@ -5,7 +5,9 @@
 --
 -- Pop mechanic (retail-style, owner request 2026-07-12): the stock retail
 -- ??? points scattered across Escha - Zi'Tah (12), Escha - Ru'Aun (30), and
--- Reisenjima (23) each host specific NMs (QM_POINTS below). Inspect a ???
+-- Reisenjima (11 findable of 23 stock qms -- the remaining 12 are hidden at
+-- (0,0,0), their NMs consolidated onto the 11 findable qms) each host specific
+-- NMs (QM_POINTS below). Inspect a ???
 -- to pop one of ITS NMs -- no trinkets/Tribulens (relaunch-friendly), just
 -- the per-player per-NM cooldown (charVar GF_<zoneId>_<groupId>). NMs with
 -- real retail camps in the stock spawn data got their retail ???; NMs whose
@@ -349,29 +351,30 @@ local QM_POINTS = {
         [17961777] = { 87 },  -- Ark Angel MR
     },
     [REISEN] = {
-        [17969915] = { 45 },  -- Crom Dubh
-        [17969919] = { 46 },  -- Golden Kist
-        [17969923] = { 48 },  -- Dazzling Dolores
-        [17969924] = { 49 },  -- Taelmoth the Diremaw
-        [17969926] = { 50 },  -- Belphegor
-        [17969965] = { 47, 54 },  -- Mauve-Wristed Gomberry, Sabotender Royal
-        [17969966] = { 67, 74, 80 },  -- Zerde, Schah, Albumen
-        [17969967] = { 51 },  -- Kabandha
-        [17969968] = { 52 },  -- Selkit
-        [17969969] = { 53 },  -- Sang Buaya
-        [17969970] = { 55 },  -- Zduhac
-        [17969971] = { 57 },  -- Strophadia
-        [17969972] = { 58 },  -- Gajasimha
-        [17969973] = { 59 },  -- Ironside
-        [17969974] = { 60 },  -- Sarsaok
-        [17969975] = { 62 },  -- Bashmu
-        [17969976] = { 66, 71 },  -- Teles, Vinipata
-        [17969989] = { 63 },  -- Maju
-        [17969990] = { 64 },  -- Yakshi
-        [17969991] = { 65 },  -- Neak
-        [17969992] = { 56, 61 },  -- Oryx, Old Shuck
-        [17969993] = { 85 },  -- Onychophora
-        [17969994] = { 87 },  -- Erinys
+        -- 2026-07-13 REDISTRIBUTION: of the 23 stock 'qm' npcs originally mapped
+        -- here, TWELVE sit at (0,0,0) with status=2 (disabled/hidden) and one
+        -- (17969989/Maju) sits at (0,0,0) with status=0 -- all invisible or
+        -- unclickable regardless of the ON_TRIGGER listener we attached. Player
+        -- report: "are there actually ???s in the zone, I can't find any." So
+        -- every NM from a broken point (Golden Kist, Dazzling Dolores, Taelmoth,
+        -- Belphegor, Kabandha, Selkit, Sang Buaya, Zduhac, Strophadia, Gajasimha,
+        -- Ironside, Maju) is folded onto the 11 findable qms below at 1-4 NMs
+        -- per point (Zi'Tah pattern). Cooldowns are still per-NM (setCooldown
+        -- keys on gid, not qm), so a shared point never blocks unrelated pops.
+        -- The 990-993 range are the qm_ethereal_droplet ???s -- our ON_TRIGGER
+        -- listener stacks under the droplet trigger; players get both the temp
+        -- item AND the Geas Fete menu, which is fine.
+        [17969915] = { 45, 46, 50 },       -- Crom Dubh, Golden Kist, Belphegor
+        [17969965] = { 47, 48, 54 },       -- Mauve-Wristed Gomberry, Dazzling Dolores, Sabotender Royal
+        [17969966] = { 51, 67, 74, 80 },   -- Kabandha, Zerde, Schah, Albumen
+        [17969974] = { 49, 55, 60 },       -- Taelmoth the Diremaw, Zduhac, Sarsaok
+        [17969975] = { 52, 62 },           -- Selkit, Bashmu
+        [17969976] = { 57, 66, 71 },       -- Strophadia, Teles, Vinipata
+        [17969990] = { 58, 64 },           -- Gajasimha, Yakshi (droplet ???)
+        [17969991] = { 53, 65 },           -- Sang Buaya, Neak (droplet ???)
+        [17969992] = { 56, 59, 61 },       -- Oryx, Ironside, Old Shuck (droplet ???)
+        [17969993] = { 63, 85 },           -- Maju, Onychophora (droplet ???)
+        [17969994] = { 87 },               -- Erinys
     },
 }
 
