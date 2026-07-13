@@ -39,6 +39,9 @@ Notes / limitations:
   * relaunch_source is derived from item ids referenced in the custom lua
     catalogs/loot pools. A file's label is inferred from its name (see LABELS).
   * An item with neither column populated is currently UNOBTAINABLE in the repo.
+  * Any columns you ADD to the CSV (e.g. a "notes" column) are preserved on
+    re-run: they're read back by item_id and re-attached after the generated
+    columns, so hand-written notes survive a regenerate.
   * score_class / score come from the SAME gear-finder algorithm the vendor
     scorers use (shared tools/scoring_weights.py + tools/_item_mods.py): the
     best-scoring role (DPS/WS/TANK/CASTER/HEAL/PET) and its score. These match
@@ -571,18 +574,40 @@ else:
 out_path = Path(sys.argv[1]) if len(sys.argv) > 1 else (ROOT / "exports" / "gear_source_audit.csv")
 out_path.parent.mkdir(parents=True, exist_ok=True)
 
+GEN_COLS = ["item_id", "name", "level", "ilvl", "slot", "jobs",
+            "score_class", "score",
+            "retail_source", "relaunch_source", "invasion_pool", "obtainable"]
+
+# Preserve ANY user-added columns (e.g. "notes") from a prior run of this CSV.
+# We only generate GEN_COLS; every other column in the existing file is kept,
+# re-attached by item_id, so hand-written notes survive a regenerate.
+extra_cols: list[str] = []
+preserved: dict[str, dict] = {}
+if out_path.exists():
+    try:
+        with out_path.open(encoding="utf-8", newline="") as fh:
+            reader = csv.DictReader(fh)
+            extra_cols = [c for c in (reader.fieldnames or []) if c and c not in GEN_COLS]
+            if extra_cols:
+                for r in reader:
+                    vals = {c: (r.get(c) or "") for c in extra_cols}
+                    if any(vals.values()):  # only keep rows that actually carry notes
+                        preserved[str(r.get("item_id", "")).strip()] = vals
+    except Exception as exc:
+        print(f"[warn] could not read existing CSV to preserve notes ({exc})")
+        extra_cols, preserved = [], {}
+
 rows = 0
 with out_path.open("w", newline="", encoding="utf-8") as fh:
     w = csv.writer(fh)
-    w.writerow(["item_id", "name", "level", "ilvl", "slot", "jobs",
-                "score_class", "score",
-                "retail_source", "relaunch_source", "invasion_pool", "obtainable"])
+    w.writerow(GEN_COLS + extra_cols)
     for iid in sorted(gear):
         g = gear[iid]
         rt = retail_source(iid)
         rl = relaunch_source(iid)
         inv = iid in invasion_pool
         role, sc = best_score(iid)
+        kept = preserved.get(str(iid), {})
         w.writerow([
             iid, names.get(iid, f"item_{iid}"), g["level"], g["ilvl"],
             g["slot"], g["jobs"],
@@ -590,7 +615,7 @@ with out_path.open("w", newline="", encoding="utf-8") as fh:
             rt, rl,
             "yes" if inv else "",
             "yes" if (rt or rl or inv) else "NO",
-        ])
+        ] + [kept.get(c, "") for c in extra_cols])
         rows += 1
 
 n_retail   = sum(1 for iid in gear if retail_source(iid))
