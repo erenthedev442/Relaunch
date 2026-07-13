@@ -36,18 +36,50 @@ local function gemOf(id)
     return { id = id, price = catalog.gemPrice[id], name = catalog.gemName[id] or ('Phantom Gem ' .. id) }
 end
 
-local showMenu, showCategory, showBuy
+local showMenu, showCategory, showBuy, showWarpMenu, showWarpCategory
 
--- Top level: one button per expansion category. A flat 16-gem list would exceed
--- both client caps (8 options / 150 bytes) and hide gems, so we drill down.
+-- Top level: one button per expansion category, plus a warp shortcut. A flat
+-- 16-gem list would exceed both client caps (8 options / 150 bytes) and hide
+-- gems, so we drill down.
 showMenu = function(p)
     local options = {}
     for _, cat in ipairs(catalog.gemCategories) do
         local cc = cat
         options[#options + 1] = { cc.label, function(pp) showCategory(pp, cc) end }
     end
+    options[#options + 1] = { 'Warp to a Battlefield', function(pp) showWarpMenu(pp) end }
     options[#options + 1] = { 'Close', function(pp) end }
     p:timer(30, function(pp) pp:customMenu({ title = 'Phantom Gems', options = options }) end)
+end
+
+-- Warp: same expansion grouping as the gems. Free QoL teleport straight to a
+-- battlefield entrance (you still need the gem + a clear to enter the fight).
+showWarpMenu = function(p)
+    local options = {}
+    for _, grp in ipairs(catalog.warpDestinations) do
+        local gg = grp
+        options[#options + 1] = { gg.label, function(pp) showWarpCategory(pp, gg) end }
+    end
+    options[#options + 1] = { 'Back', function(pp) showMenu(pp) end }
+    p:timer(30, function(pp) pp:customMenu({ title = 'Warp -- pick expansion', options = options }) end)
+end
+
+-- One expansion's battlefields (<= 6). Selecting one teleports the player to
+-- that entrance's zone/coords via cross-zone setPos(x, y, z, rot, zone).
+showWarpCategory = function(p, grp)
+    local options = {}
+    for _, d in ipairs(grp.dests) do
+        local dd = d
+        options[#options + 1] = {
+            dd.name,
+            function(pp)
+                pp:printToPlayer(string.format('[HTBF] Warping to %s...', dd.name), SYS)
+                pp:setPos(dd.x, dd.y, dd.z, dd.rot, dd.zone)
+            end,
+        }
+    end
+    options[#options + 1] = { 'Back', function(pp) showWarpMenu(pp) end }
+    p:timer(30, function(pp) pp:customMenu({ title = grp.label, options = options }) end)
 end
 
 -- One category's gems (<= 8). "* " marks a gem already held. Short labels + kPrice

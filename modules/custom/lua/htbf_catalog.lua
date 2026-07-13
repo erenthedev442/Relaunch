@@ -77,6 +77,53 @@ catalog.gemCategories =
     { label = 'Ark Angels',              gems = { xi.ki.PHANTOM_GEM_OF_APATHY, xi.ki.PHANTOM_GEM_OF_COWARDICE, xi.ki.PHANTOM_GEM_OF_ENVY, xi.ki.PHANTOM_GEM_OF_ARROGANCE, xi.ki.PHANTOM_GEM_OF_RAGE } },
 }
 
+-- WARP DESTINATIONS: the HTBF vendor can warp you straight to any battlefield
+-- entrance (owner request 2026-07-12 -- saves the cross-zone trek). Coords are
+-- each fight's entrance-NPC position pulled live from npc_list; grouped by the
+-- same expansions as the gem menu so it browses the same way. FREE (a QoL warp;
+-- you still need the gem + a clear at the entrance). One entry per fight -- some
+-- share an entrance (Warrior's Path / One to be Feared) and that's fine.
+catalog.warpDestinations =
+{
+    { label = 'Avatar Prime Trials', dests =
+        {
+            { name = 'Trial by Fire',      zone = 207, x = -722.13, y =  -1.40, z = -597.96, rot =   0 },
+            { name = 'Trial by Ice',       zone = 203, x =  560.01, y =  -0.83, z =  600.02, rot =   0 },
+            { name = 'Trial by Wind',      zone = 201, x = -359.05, y =  -0.13, z = -379.98, rot =   0 },
+            { name = 'Trial by Earth',     zone = 209, x = -539.95, y =   0.46, z = -493.87, rot =   0 },
+            { name = 'Trial by Lightning', zone = 202, x =  535.09, y = -14.93, z =  493.01, rot =   0 },
+            { name = 'Trial by Water',     zone = 211, x =  558.99, y =  35.10, z =  562.96, rot =   0 },
+        } },
+    { label = 'Chains of Promathia', dests =
+        {
+            { name = 'The Savage',          zone =  31, x =  -39.11, y =  -3.35, z = -539.99, rot =   0 },
+            { name = "The Warrior's Path",  zone =  32, x =  612.00, y = 130.90, z =  770.03, rot =   0 },
+            { name = 'One to be Feared',    zone =  32, x =  612.00, y = 130.90, z =  770.03, rot =   0 },
+            { name = 'Head Wind',           zone =   8, x = -619.42, y =  -1.52, z =  505.67, rot =   0 },
+            { name = 'Dawn',                zone =  36, x =  540.04, y =  -1.18, z = -597.68, rot =   0 },
+        } },
+    { label = 'Treasures of Aht Urhgan', dests =
+        {
+            { name = 'Puppet in Peril',     zone =  67, x =  300.00, y =  -2.52, z = -200.00, rot =   0 },
+            { name = 'Legacy of the Lost',  zone =  57, x = -100.00, y =  -9.40, z =  -87.00, rot =   0 },
+        } },
+    { label = 'Rise of the Zilart', dests =
+        {
+            { name = 'Shadow Lord',               zone = 165, x = -115.85, y =  -8.66, z =    0.00, rot =   0 },
+            { name = "Return to Delkfutt's Tower",zone = 179, x = -519.99, y =  -6.30, z =   22.35, rot =   0 },
+            { name = 'The Celestial Nexus',       zone = 181, x = -582.07, y =  -8.07, z =  -32.35, rot =   0 },
+            { name = 'Divine Might',              zone = 180, x = -605.06, y = -22.68, z =  483.94, rot = 190 },
+        } },
+    { label = 'Ark Angels', dests =
+        {
+            { name = 'Ark Angels I',   zone = 180, x = -605.06, y =  -22.68, z = 483.94, rot = 190 },
+            { name = 'Ark Angels II',  zone = 180, x = -264.78, y = -137.31, z = 374.52, rot = 115 },
+            { name = 'Ark Angels III', zone = 180, x =   14.15, y = -224.33, z = 488.12, rot = 166 },
+            { name = 'Ark Angels IV',  zone = 180, x =  235.65, y = -173.57, z = 361.27, rot = 217 },
+            { name = 'Ark Angels V',   zone = 180, x =  556.00, y =  -38.21, z = 520.63, rot =  11 },
+        } },
+}
+
 -- Per-tier scaling applied to the reused base boss(es) (silent difficulty -- no
 -- player-visible multiplier). lvl/hp are multipliers; att/def/macc/meva are flat
 -- mod adds layered on top. Tier I ~ a slightly-buffed base; III is the wall.

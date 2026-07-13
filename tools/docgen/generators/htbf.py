@@ -264,6 +264,10 @@ def _render_access(c: dict) -> str:
         "full roster. Once you hold a gem, travel to that battlefield's zone, "
         "trade the gem at the entrance, and pick a difficulty tier (I / II / "
         "III).\n\n"
+        "The vendor also offers a **free warp** straight to any battlefield "
+        "entrance -- pick *Warp to a Battlefield*, choose the expansion, then "
+        "the fight, and you're teleported there. You still need the gem in hand "
+        "and a clear to enter, but it saves the cross-zone trek.\n\n"
         "You can only hold one gem of a given type at a time, and entering a "
         "battlefield consumes it -- buy a fresh gem for each attempt."
     )
