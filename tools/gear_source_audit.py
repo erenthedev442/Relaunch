@@ -4,10 +4,11 @@ Emit a CSV of EVERY equippable item in the DB with its level / item level,
 slot, jobs, and WHERE it comes from -- split into:
 
   * retail_source   -- the stock (retail-accurate) LSB acquisition: mob drops
-                       (which mob) / crafting / guild-shop sale from SQL, PLUS
-                       battlefield-BCNM loot, quest rewards, and mission rewards
-                       scraped from the Lua scripts (which reference items by
-                       the xi.item.* enum).
+                       (which mob) / crafting / guild-shop sale / Sparks of
+                       Eminence shop from SQL + sparkshop.lua, PLUS battlefield-
+                       BCNM loot, quest rewards, and mission rewards scraped
+                       from the Lua scripts (which reference items by the
+                       xi.item.* enum).
   * relaunch_source -- the CUSTOM relaunch overlay that references the item id:
                        the medal / Infamy vendors, HTBF, Omen, Ambuscade,
                        Voidwatch, Domain, the forges, Unity, etc. UPGRADE tiers
@@ -19,6 +20,8 @@ slot, jobs, and WHERE it comes from -- split into:
                        Empyrean/Mythic/Aeonic/Prime), at any forge stage, is
                        additionally tagged "REMA/Prime: <Type>" -- classified
                        from the authoritative weapon_forge_catalog.lua chains.
+                       Job-specific AF/Relic/Empyrean ARMOR is likewise tagged
+                       "AF/Relic/Emp: <Type>" from reforge_catalog.lua.
 
 Everything is read straight from the repo working tree (sql/*.sql +
 modules/custom/**), so the output reflects the CURRENT source -- including
@@ -242,6 +245,17 @@ def _capped(names: set, n: int = 3) -> str:
     shown = sorted(names)
     return ", ".join(shown[:n]) + (f" +{len(shown) - n} more" if len(shown) > n else "")
 
+# Sparks of Eminence shop (retail Records of Eminence reward shop) --
+# scripts/globals/sparkshop.lua lists purchasable items as `id = N`.
+# (SparksExchange.lua is a currency converter, not a gear vendor.)
+item_sparks: set = set()
+_spark = SCRIPTS / "globals" / "sparkshop.lua"
+if _spark.exists():
+    for m in re.finditer(r"\bid\s*=\s*(\d+)", _spark.read_text(encoding="utf-8", errors="replace")):
+        iid = int(m.group(1))
+        if iid in gear:
+            item_sparks.add(iid)
+
 def retail_source(iid: int) -> str:
     parts = []
     mobs = item_drop_mobs.get(iid)
@@ -251,6 +265,8 @@ def retail_source(iid: int) -> str:
         parts.append("Craft")
     if iid in guild_sold:
         parts.append("Guild Shop")
+    if iid in item_sparks:
+        parts.append("Sparks")
     if iid in item_bcnm:
         parts.append(f"BCNM: {_capped(item_bcnm[iid])}")
     if iid in item_quest:
@@ -453,6 +469,37 @@ def _rema_label(iid: int) -> str:
         t = rema_name.get(_norm(names.get(iid, "")))
     return f"REMA/Prime: {t}" if t else ""
 
+# --- AF / Relic / Empyrean job-specific ARMOR classification -----------------
+# The armour analogue of the REMA/Prime weapon tag. reforge_catalog.lua groups
+# each job's reforged sets as pieces[job] = { af = {...}, relic = {...},
+# empy = {...} }, each a head/body/hands/legs/feet -> { base,+1,+2,+3 } map.
+# Every id in a group is tagged "AF/Relic/Emp: <Type>" so the job sets are
+# categorised (the Reforge / Reforge-upgrade acquisition labels stay too).
+armor_type: dict[int, str] = {}
+_rf = _read_custom("reforge_catalog.lua")
+# Bound to the real pieces assignments (the first `catalog.pieces[xi.job.` --
+# NOT the doc comment `catalog.pieces[...]`, and NOT the mechCfgs/NM config
+# that also uses `af = { ... }` with unrelated groupIds).
+_ps = _rf.find("catalog.pieces[xi.job.")
+_pe = _rf.find("catalog.mechCfgs", _ps) if _ps != -1 else -1
+_pieces = _rf[_ps:(_pe if _pe != -1 else len(_rf))] if _ps != -1 else ""
+# Locate each af/relic/empy marker, then assign every { b,+1,+2,+3 } slot array
+# to the NEAREST PRECEDING marker's type.
+_markers = sorted((m.start(), {"af": "AF", "relic": "Relic", "empy": "Empyrean"}[m.group(1)])
+                  for m in re.finditer(r"\b(af|relic|empy)\s*=", _pieces))
+for m in re.finditer(r"\{\s*(\d{4,5})\s*,\s*(\d{4,5})\s*,\s*(\d{4,5})\s*,\s*(\d{4,5})\s*\}", _pieces):
+    lbl = None
+    for pos, label in _markers:
+        if pos < m.start():
+            lbl = label
+        else:
+            break
+    if lbl:
+        for g in m.groups():
+            iid = int(g)
+            if iid in gear:
+                armor_type[iid] = lbl
+
 def relaunch_source(iid: int) -> str:
     labels = set(item_custom.get(iid, ()))
     labels |= sys_base.get(iid, set())
@@ -462,6 +509,9 @@ def relaunch_source(iid: int) -> str:
     rema = _rema_label(iid)
     if rema:
         labels.add(rema)
+    at = armor_type.get(iid)
+    if at:
+        labels.add(f"AF/Relic/Emp: {at}")
     return " | ".join(sorted(labels))
 
 # ---------------------------------------------------------------------------
@@ -598,7 +648,14 @@ if out_path.exists():
         extra_cols, preserved = [], {}
 
 rows = 0
-with out_path.open("w", newline="", encoding="utf-8") as fh:
+try:
+    _fh = out_path.open("w", newline="", encoding="utf-8")
+except PermissionError:
+    print(f"\n[error] Can't write {out_path} -- it's open in another program "
+          f"(Excel?). Close it and re-run, or pass a different output path:\n"
+          f"        python tools/gear_source_audit.py some_other.csv")
+    sys.exit(1)
+with _fh as fh:
     w = csv.writer(fh)
     w.writerow(GEN_COLS + extra_cols)
     for iid in sorted(gear):
