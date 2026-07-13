@@ -689,6 +689,23 @@ xi.ambuscade.onEventFinishTome = function(player, csid, option, npc)
 end
 
 -- ─── Instance rewards ─────────────────────────────────────────────────────────
+-- Retail auto-exit position: the walkable dock spot directly opposite the
+-- Ambuscade Tome (matching Jamesta's Discord report 2026-07-13: retail
+-- "auto exits to Mhaura instantly ... opposite the entry book"). The Tome sits
+-- at (-28.030, -15.500, 52.279) facing rot 249; players interact with it from
+-- rot 249, so the opposite side of the book is behind it (rot 121). Placing the
+-- player 2y behind the Tome and rotating 121 puts them face-to-face with the
+-- Tome the instant they arrive back in Mhaura.
+local MHAURA_EXIT_X   = -28.030
+local MHAURA_EXIT_Y   = -15.500
+local MHAURA_EXIT_Z   =  50.279  -- ~2y behind the Tome (on the dock, walkable)
+local MHAURA_EXIT_ROT =  121     -- facing the Tome
+local MHAURA_ZONE_ID  = 249
+
+local function warpToMhaura(player)
+    player:setPos(MHAURA_EXIT_X, MHAURA_EXIT_Y, MHAURA_EXIT_Z, MHAURA_EXIT_ROT, MHAURA_ZONE_ID)
+end
+
 xi.ambuscade.onInstanceComplete = function(instance)
     -- Belt-and-braces idempotency: rewards are paid at most once per instance,
     -- even if complete() somehow fires again (the time-update loop used to
@@ -747,7 +764,10 @@ xi.ambuscade.onInstanceComplete = function(instance)
                 actualHM, bonusStr, player:getCurrency('current_hallmarks'), pGal, sealStr), SYS)
         end
 
-        player:startEvent(10001)
+        -- INSTANT auto-exit (retail behavior). Was startEvent(10001) which needed
+        -- the player to click through a cutscene before the onEventFinish warp
+        -- fired -- players reported it read as "no auto-exit."
+        warpToMhaura(player)
     end
 end
 
@@ -755,7 +775,7 @@ xi.ambuscade.onInstanceFailure = function(instance)
     local chars = instance:getChars()
     for _, player in pairs(chars) do
         player:printToPlayer('[Ambuscade] Time limit reached. Your effort is not forgotten.', SYS)
-        player:startEvent(10001)
+        warpToMhaura(player)
     end
 end
 
