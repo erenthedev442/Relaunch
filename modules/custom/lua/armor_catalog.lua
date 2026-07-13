@@ -99,7 +99,8 @@ table.insert(b.head, { id = 27725, name = "Artsieq Hat", cost = 12, jobs = 'WHM/
 -- Body (12 picks, scored highest first)
 
 -- Hands (10 picks, scored highest first)
-table.insert(b.hands, { id = 28009, name = "Onimusha-No-Kote", cost = 12, jobs = 'MNK/SAM/NIN' })  -- DPS score 199
+-- Onimusha-No-Kote (28009) REMOVED 2026-07-13 (single-source: added to
+-- Shadow Lord HTBF pool in commit f753d47641, so vendor row is the duplicate).
 table.insert(b.hands, { id = 27096, name = "Counts Cuffs", cost = 12, jobs = 'MNK/SAM/NIN/PUP' })  -- TANK score 195
 table.insert(b.hands, { id = 28016, name = "Qaaxo Mitaines", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- TANK score 190
 table.insert(b.hands, { id = 28015, name = "Xaddi Gauntlets", cost = 12, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- TANK score 190
@@ -112,10 +113,12 @@ table.insert(b.legs, { id = 25853, name = "Querkening Brais", cost = 12, jobs = 
 table.insert(b.legs, { id = 28174, name = "Theurgists Slacks", cost = 12, jobs = 'WHM/BLM/SMN/PUP/SCH/GEO' })  -- CASTER score 159
 
 -- Feet (11 picks, scored highest first)
-table.insert(b.feet, { id = 28286, name = "Ostro Greaves", cost = 12, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- DPS score 189
+-- Ostro Greaves (28286) REMOVED 2026-07-13 (single-source: added to
+-- Trial by Wind HTBF pool in commit f753d47641, so vendor row is the duplicate).
 table.insert(b.feet, { id = 28280, name = "Sokushitsu Sune-Ate", cost = 12, jobs = 'MNK/SAM/NIN' })  -- TANK score 185
 table.insert(b.feet, { id = 28287, name = "Durgai Leggings", cost = 12, jobs = 'MNK/THF/BST/NIN/PUP/DNC/RUN' })  -- DPS score 184
-table.insert(b.feet, { id = 28310, name = "Vanir Boots", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 181
+-- Vanir Boots (28310) REMOVED 2026-07-13 (single-source: added to
+-- Celestial Nexus HTBF pool in commit f753d47641, so vendor row is the duplicate).
 table.insert(b.feet, { id = 28296, name = "Artsieq Boots", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- DPS score 105
 
 -- Shields (1 picks, scored highest first)
@@ -129,13 +132,16 @@ local s = catalog.silver
 table.insert(s.head, { id = 26702, name = "Gavialis Helm", cost = 25, jobs = 'WAR/PLD/DRK/BST/SAM/NIN/DRG' })  -- TANK score 248
 table.insert(s.head, { id = 26721, name = "Rabid Visor", cost = 25, jobs = 'WAR/RDM/PLD/DRK/BST/RNG/SAM/DRG/BLU/RUN' })  -- TANK score 246
 table.insert(s.head, { id = 24274, name = "Amin Turban", cost = 25, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- TANK score 237
-table.insert(s.head, { id = 27710, name = "Sahip Helm", cost = 25, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- TANK score 228
+-- Sahip Helm (27710) REMOVED 2026-07-13 (single-source: added to
+-- Puppet in Peril HTBF pool in commit f753d47641, so vendor row is the duplicate).
 table.insert(s.head, { id = 25654, name = "Welkin Crown", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 208
 
 -- Body (7 picks, scored highest first; Valorous Mail removed 2026-07-11 --
 -- sold by Zurim/Domain QM, medal-vendor exclusivity)
-table.insert(s.body, { id = 27887, name = "Vanir Cotehardie", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- TANK score 244
-table.insert(s.body, { id = 27888, name = "Kyujutsugi", cost = 25, jobs = 'RNG/SAM' })  -- DPS score 211
+-- Vanir Cotehardie (27887) REMOVED 2026-07-13 (single-source: added to
+-- Celestial Nexus HTBF pool in commit f753d47641, so vendor row is the duplicate).
+-- Kyujutsugi (27888) REMOVED 2026-07-13 (single-source: added to
+-- Divine Might HTBF pool in commit f753d47641, so vendor row is the duplicate).
 table.insert(s.body, { id = 26970, name = "Lapidary Tunic", cost = 25, jobs = 'MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' })  -- TANK score 204
 
 -- Hands (11 picks, scored highest first; Herculean Gloves removed 2026-07-11 --
