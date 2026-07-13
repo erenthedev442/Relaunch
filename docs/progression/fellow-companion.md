@@ -17,6 +17,9 @@ Type `!fellow` at any time to open the main menu. Your Fellow doesn't exist unti
 | `!fellow status` | Chat dump of level, XP, points, and allocation |
 | `!fellowname <name>` | Give your Fellow a custom name (letters and spaces, max 15 chars) |
 
+!!! note "Using a job pet (DRG / BST / SMN / PUP)"
+    The Fellow shares the game's single pet slot, so it can't be out at the same time as a real job pet. Calling your **wyvern**, **jug pet**, **avatar**, or **automaton** now automatically steps the Fellow aside — and it returns on its own the moment you release that pet. You never have to dismiss it by hand.
+
 ## Leveling and stat points
 
 <!-- DOCGEN:BEGIN id="fellow-progression" -->

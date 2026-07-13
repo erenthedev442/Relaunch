@@ -628,13 +628,32 @@ local function petIsFellow(pet)
     return pet ~= nil and pet:getLocalVar('fellowApplied') == 1
 end
 
+-- AUTO-YIELD (Duff report 2026-07-12): the Fellow is a pet and occupies the
+-- single engine pet slot, so a DRG Call Wyvern / BST Call Beast+Bestial Loyalty
+-- / SMN summon / PUP Activate would be blocked ("You already have a pet"). When
+-- a player summons a REAL job pet, step the Fellow aside (despawn it) so the
+-- call succeeds. `active` stays 1, so the keeper auto-RETURNS the Fellow once
+-- the job pet is later dismissed. The yield-grace suppresses the keeper long
+-- enough to cover SMN summon CAST time, so it can't reclaim the slot mid-cast.
+local FELLOW_YIELD_GRACE = 10  -- seconds
+local function yieldFellowForJobPet(player)
+    if player and player:hasPet() and petIsFellow(player:getPet()) then
+        pcall(function() player:despawnPet() end)
+        player:setLocalVar('FellowYieldUntil', os.time() + FELLOW_YIELD_GRACE)
+    end
+end
+
 -- Keeper: while active, (re)spawn the chosen chassis whenever the player has NO
 -- pet and pets are allowed here -- survives zoning/death, yields to real job pets.
 local function keeper(p, name, gen)
     if not p or genByName[name] ~= gen then return end
     if getN(p, V.active) ~= 1 then return end
 
-    if not p:hasPet() and p:canUseMisc(xi.zoneMisc.PET) then
+    -- Grace: after yielding to a job pet the slot must stay free through the
+    -- job pet's spawn (incl. SMN summon cast time), or the keeper would reclaim
+    -- it mid-call and re-block the summon. See yieldFellowForJobPet.
+    if not p:hasPet() and p:canUseMisc(xi.zoneMisc.PET)
+       and (p:getLocalVar('FellowYieldUntil') or 0) <= os.time() then
         pcall(function()
             p:spawnPet(CONFIG.petId)  -- always Lynx (combat AI); setModelId applied in applyFellow
             local pet = p:getPet()
@@ -1336,6 +1355,38 @@ m:addOverride('xi.player.onGameIn', function(player, gameLogin, zoning)
             armKeeper(player, CONFIG.firstMs)
         end
     end)
+end)
+
+-- ════════════════════════════ Job-pet auto-yield ════════════════════════════
+-- Each real job-pet summon gates on `player:getPet() ~= nil` -- the Fellow trips
+-- it. Yield the Fellow (despawn) BEFORE the vanilla check runs, then defer to it
+-- so every other rule (jug item present, zone allows pets, recast, etc.) still
+-- applies. `return super(...)` preserves the check's multi-value return.
+require('scripts/globals/job_utils/beastmaster')
+require('scripts/globals/job_utils/dragoon')
+require('scripts/globals/job_utils/puppetmaster')
+require('scripts/globals/pets')
+
+m:addOverride('xi.job_utils.beastmaster.checkCallBeast', function(player, target, ability)
+    yieldFellowForJobPet(player)
+    return super(player, target, ability)
+end)
+m:addOverride('xi.job_utils.beastmaster.checkBestialLoyalty', function(player, target, ability)
+    yieldFellowForJobPet(player)
+    return super(player, target, ability)
+end)
+m:addOverride('xi.job_utils.dragoon.abilityCheckCallWyvern', function(player, target, ability)
+    yieldFellowForJobPet(player)
+    return super(player, target, ability)
+end)
+m:addOverride('xi.job_utils.puppetmaster.onAbilityCheckActivate', function(player, target, ability)
+    yieldFellowForJobPet(player)
+    return super(player, target, ability)
+end)
+-- SMN summon spells route their "already have a pet" gate through onCastingCheck.
+m:addOverride('xi.pet.onCastingCheck', function(caster, target, spell)
+    yieldFellowForJobPet(caster)
+    return super(caster, target, spell)
 end)
 
 -- ════════════════════════════════ Public API ════════════════════════════════
