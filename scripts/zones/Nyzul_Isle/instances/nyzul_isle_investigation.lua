@@ -29,16 +29,29 @@ local function pickSetPoint(instance)
             currentInstance:setProgress(15)
         end) -- Completes objective for free floor
     else
-        -- Build the valid objectives list
+        -- Build the valid objectives list. ACTIVATE_ALL_LAMPS is EXCLUDED
+        -- (relaunch, owner/Bro report 2026-07-13): the lamp objectives need
+        -- several lamps lit at once and are impossible for a solo/small party,
+        -- so Nyzul only assigns the soloable objectives.
         local objective = {}
 
         for i = xi.nyzul.objective.ELIMINATE_ENEMY_LEADER, xi.nyzul.objective.ELIMINATE_ALL_ENEMIES do
-            table.insert(objective, i)
+            if i ~= xi.nyzul.objective.ACTIVATE_ALL_LAMPS then
+                table.insert(objective, i)
+            end
         end
 
-        -- Only remove objectives if not the staging room or free floor
-        if instance:getStage() ~= 0 and instance:getStage() ~= 6 then
-            table.remove(objective, instance:getStage())
+        -- Don't repeat the previous floor's objective (skip in the staging room
+        -- or right after a free floor). Remove by VALUE -- the pool is no longer
+        -- 1:1 with its indices now that lamps is excluded.
+        local prevStage = instance:getStage()
+        if prevStage ~= 0 and prevStage ~= xi.nyzul.objective.FREE_FLOOR then
+            for idx, obj in ipairs(objective) do
+                if obj == prevStage then
+                    table.remove(objective, idx)
+                    break
+                end
+            end
         end
 
         -- Randomly pick the objective from the generated list

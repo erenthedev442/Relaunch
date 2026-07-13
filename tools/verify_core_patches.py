@@ -68,6 +68,12 @@ CHECKS = [
     # silently re-break them.
     ("Reward: Pet Roborant/Poultice accepted (beastmaster.lua)",
      "scripts/globals/job_utils/beastmaster.lua", r"PET_ROBORANT", "min", 2),
+    # Nyzul: ACTIVATE_ALL_LAMPS objective excluded from the floor pool (2026-07-13,
+    # owner/Bro) -- lamp objectives are impossible solo. A merge of the upstream
+    # instance script would re-add the un-soloable objective.
+    ("Nyzul: lamps objective excluded from floor pool (nyzul_isle_investigation.lua)",
+     "scripts/zones/Nyzul_Isle/instances/nyzul_isle_investigation.lua",
+     r"~=\s*xi\.nyzul\.objective\.ACTIVATE_ALL_LAMPS", "present", 1),
     ("Patch markers present across src/ (broad-revert tripwire)",
      "src", r"FJB|LEGENDARY[- ]CUSTOM", "min", 30),
 ]
