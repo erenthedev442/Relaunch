@@ -108,10 +108,18 @@ instanceObject.onInstanceTimeUpdate = function(instance, elapsed)
         return
     end
 
-    local mobs   = instance:getMobs()
-    local anyMob = false
+    -- CLEAR-DETECT FIX (2026-07-12): the old check compared getName()
+    -- against the packet name 'Ambuscade_Housemaker' with an underscore,
+    -- but getName() returns the DISPLAY name ('Ambuscade Housemaker' with
+    -- a space) -- so the passive Housemaker was ALWAYS counted as a live
+    -- kill target, this loop always early-returned, and completion never
+    -- fired even after the player killed Breadwinner + all Urchins. Match
+    -- on mob ID (which is exact) instead of a name string.
+    local mobs      = instance:getMobs()
+    local anyMob    = false
+    local hmId      = ID.mob.AMBUSCADE_HOUSEMAKER
     for _, mob in pairs(mobs) do
-        if mob:getName() ~= 'Ambuscade_Housemaker' then
+        if mob:getID() ~= hmId then
             -- Only count non-passive mobs toward the kill condition.
             anyMob = true
             if mob:isAlive() then return end
