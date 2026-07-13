@@ -7,6 +7,7 @@
 --   !apex          -- show your Apex record + unspent Paragon Points
 --   !apex enter    -- begin a climb (same as the Apex Arbiter NPC)
 --   !apex abort    -- end your current climb (banked points are kept)
+--   !apex cleanup  -- GM: remove orphaned Apex bosses from the arena
 --
 -- The engine + tunables live in modules/custom/lua/ApexTrials.lua /
 -- apex_catalog.lua; this file is just the chat front-end.
@@ -42,6 +43,21 @@ commandObj.onTrigger = function(player, sub)
             xi._apex_enter(player)
         else
             player:printToPlayer('[Apex] Apex Trials are not loaded.', SYS)
+        end
+        return
+    end
+
+    if sub == 'cleanup' then
+        if player:getGMLevel() < 1 then
+            player:printToPlayer('[Apex] GM permission required.', SYS)
+            return
+        end
+
+        if xi._apex_cleanupOrphans then
+            local killed = xi._apex_cleanupOrphans()
+            player:printToPlayer(string.format('[Apex] Cleanup complete. Removed %d orphaned Apex mob(s).', killed), SYS)
+        else
+            player:printToPlayer('[Apex] Apex cleanup is not loaded.', SYS)
         end
         return
     end
