@@ -109,6 +109,6 @@ Shows your current Mastery Sigil balance, every potency tier you own, and all tr
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5bc2e84d5eb4 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: a894a816f976 -->
+_Last updated: 2026-07-13 15:06 PDT_
 <!-- DOCGEN:END id="last-updated" -->

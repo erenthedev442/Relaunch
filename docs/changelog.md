@@ -1285,3 +1285,10 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Seal Drops** — Guaranteed escalating quantity per mob
     - **Launch** — RaidBoss + Reforge NPC + Impetus bugs; add mob seal drops
     - **Invasion** — Increase + enrich GM Home defense rewards
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: d77149bff0b6 -->
+_Last updated: 2026-07-13 15:06 PDT_
+<!-- DOCGEN:END id="last-updated" -->

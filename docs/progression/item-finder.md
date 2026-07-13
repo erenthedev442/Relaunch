@@ -467,5 +467,5 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
 <!-- content-hash: 0a15b25d40a2 -->
-_Last updated: 2026-07-13 17:38 PDT_
+_Last updated: 2026-07-13 15:06 PDT_
 <!-- DOCGEN:END id="last-updated" -->

@@ -13,7 +13,7 @@ Three categories are tracked:
 <!-- DOCGEN:BEGIN id="gear-vs-retail-data" -->
 *3169 items compared · retail data from [FFXIAH.com](https://www.ffxiah.com) · cache date 2026-07-01*
 
-*3865 missing/lower · 3869 different · 1036 server-only stats found. Each section lists the biggest differences first; long tails are truncated.*
+*2968 missing/lower · 3949 different · 1045 server-only stats found. Each section lists the biggest differences first; long tails are truncated.*
 
 ## Stats Missing or Lower on Server
 
@@ -37,11 +37,7 @@ split across separate physical/magic mods).
 | enticers_pants | TP Bonus | +650 | — |
 | nukumi_manoplas_+2 | TP Bonus | +650 | — |
 | nukumi_manoplas_+1 | TP Bonus | +600 | — |
-| ratri_gadlings | HP | +399 | — |
-| regal_gloves | HP | +342 | — |
 | final_sickle | HP | +250 | — |
-| arke_corazza | HP | +205 | — |
-| regal_gauntlets | HP | +205 | — |
 | suit_of_adamantite_armor | DEF | +200 | — |
 | final_sickle | HP | +200 | — |
 | clemency_haramaki | DEF | +187 | — |
@@ -51,26 +47,20 @@ split across separate physical/magic mods).
 | perfection_platemail | DEF | +184 | — |
 | hope_platemail | DEF | +183 | — |
 | suit_of_adamantite_armor | HP | +182 | — |
-| regal_captains_gloves | HP | +182 | — |
 | sacro_breastplate | HP | +182 | — |
 | duty_cyclas | DEF | +174 | — |
 | magnificent_cyclas | DEF | +173 | — |
 | justice_cyclas | DEF | +172 | — |
-| arke_cosciales | HP | +171 | — |
-| mousai_manteel | HP | +171 | — |
 | sacro_breastplate | DEF | +170 | — |
 | clemency_haidate | DEF | +169 | — |
 | grace_haidate | DEF | +168 | — |
 | mercy_haidate | DEF | +167 | — |
 | perfection_brais | DEF | +166 | — |
 | hope_brais | DEF | +165 | — |
-| obviation_cuirass | DEF | +165 | — |
-| arke_corazza | DEF | +159 | — |
 | cohort_cloak | Magic Evasion | +156 | — |
 | grace_somen | DEF | +156 | — |
 | magnificent_flanchard | DEF | +155 | — |
 | mercy_somen | DEF | +155 | — |
-| nzingha_cuirass | DEF | +155 | — |
 | revelation_masque | DEF | +155 | — |
 | justice_flanchard | DEF | +154 | — |
 | perfection_masque | DEF | +154 | — |
@@ -79,33 +69,23 @@ split across separate physical/magic mods).
 | agwus_claymore | HP | +150 | — |
 | duban | DEF | +150 | — |
 | duban | DEF | +145 | — |
-| ravenous_breastplate | DEF | +145 | — |
-| turms_harness | DEF | +145 | — |
 | grace_kote | DEF | +144 | — |
 | vatic_byrnie | DEF | +144 | — |
 | mercy_kote | DEF | +143 | — |
-| sulevias_platemail | DEF | +143 | — |
 | csf_boots_+1 | Magic Evasion | +142 | — |
 | csm_boots_+1 | Magic Evasion | +142 | — |
 | el_sandals_+1 | Magic Evasion | +142 | — |
-| forfend_+1 | DEF | +142 | — |
 | justice_crown | DEF | +142 | — |
 | mgf_ledelsens_+1 | Magic Evasion | +142 | — |
 | mgm_ledelsens_+1 | Magic Evasion | +142 | — |
 | perfection_gauntlets | DEF | +142 | — |
 | sv_gaiters_+1 | Magic Evasion | +142 | — |
 | wn_clomps_+1 | Magic Evasion | +142 | — |
-| arke_cosciales | DEF | +141 | — |
 | duty_cyclas | HP | +141 | — |
 | hope_gauntlets | DEF | +141 | — |
 | duban | DEF | +140 | — |
-| forfend | DEF | +140 | — |
-| hime_domaru | DEF | +140 | — |
-| kendatsuba_samue | DEF | +140 | — |
 | lustratio_harness | DEF | +140 | — |
 | prime_shield | DEF | +140 | — |
-| heyoka_harness | DEF | +139 | — |
-| oshosi_vest | DEF | +139 | — |
 | hope_sabatons | Evasion | +138 | — |
 | samnuha_coat | DEF | +138 | — |
 | clemency_haidate | Magic Evasion | +137 | — |
@@ -117,22 +97,12 @@ split across separate physical/magic mods).
 | pinga_pumps | Magic Evasion | +137 | — |
 | turms_subligar | Magic Evasion | +137 | — |
 | magnificent_cyclas | HP | +136 | — |
-| mousai_seraweels | HP | +136 | — |
 | passion_jacket | DEF | +136 | — |
-| tatenashi_haramaki | DEF | +136 | — |
-| agony_jerkin | DEF | +135 | — |
-| arjuna_breeches | DEF | +135 | — |
 | diamond_aspis | DEF | +135 | — |
 | grace_haidate | Magic Evasion | +135 | — |
-| mousai_manteel | DEF | +135 | — |
-| pinga_tunic | DEF | +135 | — |
-| sayadios_kaftan | DEF | +135 | — |
 | bravery_petasos | DEF | +133 | — |
-| ea_houppelande | DEF | +133 | — |
 | mercy_haidate | Magic Evasion | +133 | — |
 | mercy_sune-ate | Magic Evasion | +133 | — |
-| baayami_robe | DEF | +132 | — |
-| hizamaru_haramaki | DEF | +131 | — |
 | justice_cyclas | HP | +131 | — |
 | magnificent_gauntlets | DEF | +131 | — |
 | blurred_shield_+1 | DEF | +130 | — |
@@ -145,40 +115,25 @@ split across separate physical/magic mods).
 | kendatsuba_hakama | Magic Evasion | +129 | — |
 | magnificent_flanchard | Magic Evasion | +129 | — |
 | sacro_breastplate | Magic Evasion | +129 | — |
-| tatenashi_haidate | DEF | +129 | — |
 | justice_flanchard | Magic Evasion | +128 | — |
 | justice_sollerets | Magic Evasion | +128 | — |
 | witching_robe | DEF | +128 | — |
-| turms_subligar | DEF | +127 | — |
 | duty_cyclas | Magic Evasion | +126 | — |
-| regal_gauntlets | DEF | +126 | — |
-| shomonjijoe | DEF | +126 | — |
-| wildheitdiechlings | DEF | +126 | — |
-| gefechtdiechlings | DEF | +125 | — |
 | magnificent_flanchard | HP | +125 | — |
 | mercy_sune-ate | DEF | +125 | — |
 | perfection_platemail | HP | +125 | — |
-| sulevias_cuisses | DEF | +125 | — |
-| vedic_coat | DEF | +125 | — |
 | magnificent_cyclas | Magic Evasion | +124 | — |
-| augury_cuisses | DEF | +123 | — |
 | hope_sabatons | DEF | +123 | — |
 | justice_cyclas | Magic Evasion | +123 | — |
 | revelation_platemail | Evasion | +123 | — |
-| ajax_+1 | DEF | +122 | — |
-| kendatsuba_hakama | DEF | +122 | — |
 | perfection_platemail | Evasion | +122 | — |
-| heyoka_subligar | DEF | +121 | — |
 | hope_platemail | Evasion | +121 | — |
 | oshosi_leggings | Magic Evasion | +121 | — |
-| oshosi_trousers | DEF | +121 | — |
 | oshosi_trousers | Magic Evasion | +121 | — |
-| ajax | DEF | +120 | — |
 | anchorites_gaiters_+4 | Attack | +120 | — |
 | blurred_shield | DEF | +120 | — |
 | hope_platemail | HP | +120 | — |
 | justice_flanchard | HP | +120 | — |
-| loess_barbuta | DEF | +120 | — |
 | voluspa_pole | Ranged Accuracy | +120 | — |
 | voluspa_pole | Attack | +120 | — |
 | voluspa_pole | Ranged Attack | +120 | — |
@@ -190,32 +145,15 @@ split across separate physical/magic mods).
 | perfection_brais | Evasion | +118 | — |
 | pinga_tunic | Magic Evasion | +118 | — |
 | turms_harness | Magic Evasion | +118 | — |
-| ynglinga_sallet | DEF | +118 | — |
-| arke_manopolas | DEF | +117 | — |
 | hope_brais | Evasion | +117 | — |
-| mousai_seraweels | DEF | +117 | — |
-| pinga_pants | DEF | +117 | — |
-| deliverance_+1 | DEF | +116 | — |
 | justice_sollerets | Evasion | +116 | — |
-| regal_captains_gloves | DEF | +116 | — |
 | clemency_haramaki | Magic Evasion | +115 | — |
-| ea_slops | DEF | +115 | — |
 | talab_trousers | DEF | +115 | — |
-| arke_gambieras | HP | +114 | — |
-| baayami_slops | DEF | +114 | — |
-| deliverance | DEF | +114 | — |
 | grace_haramaki | HP | +114 | — |
 | perfection_brais | HP | +114 | — |
-| ratri_gadlings | DEF | +114 | — |
-| turms_harness | HP | +114 | — |
-| wildheitschaller | DEF | +114 | — |
 | darraigners_brais | DEF | +113 | — |
-| gefechtschaller | DEF | +113 | — |
 | grace_haramaki | Magic Evasion | +113 | — |
 | highwing_helm | DEF | +113 | — |
-| hizamaru_hizayoroi | DEF | +113 | — |
-| sombra_tights | DEF | +113 | — |
-| sulevias_mask | DEF | +113 | — |
 | baayami_robe | Magic Evasion | +112 | — |
 | homestead_shield | DEF | +112 | — |
 | justice_sollerets | DEF | +112 | — |
@@ -225,10 +163,8 @@ split across separate physical/magic mods).
 | justice_crown | Magic Evasion | +111 | — |
 | mercy_haramaki | Magic Evasion | +111 | — |
 | archdukes_shield | DEF | +110 | — |
-| blistering_sallet | DEF | +110 | — |
 | gae_derg_+1 | HP | +110 | — |
 | gae_derg_+1 | MP | +110 | — |
-| stinger_helm | DEF | +110 | — |
 | zoar_subligar | DEF | +110 | — |
 | csf_boots_+1 | Evasion | +109 | — |
 | csm_boots_+1 | Evasion | +109 | — |
@@ -249,7 +185,6 @@ split across separate physical/magic mods).
 | ahosi_leggings | Magic Evasion | +107 | — |
 | assiduity_pants | Magic Evasion | +107 | — |
 | clemency_haidate | HP | +107 | — |
-| composers_mitts | DEF | +107 | — |
 | enticers_pants | Magic Evasion | +107 | — |
 | heyoka_harness | Magic Evasion | +107 | — |
 | hippomenes_socks | Magic Evasion | +107 | — |
@@ -260,63 +195,42 @@ split across separate physical/magic mods).
 | lengo_pants | Magic Evasion | +107 | — |
 | mediums_sabots | Magic Evasion | +107 | — |
 | revelation_masque | HP | +107 | — |
-| turms_subligar | HP | +107 | — |
 | csf_gloves_+1 | DEF | +106 | — |
 | csm_gloves_+1 | DEF | +106 | — |
 | mg_gauntlets_+1 | DEF | +106 | — |
 | mg_gloves_+1 | DEF | +106 | — |
-| regal_gloves | DEF | +106 | — |
 | sv_gauntlets_+1 | DEF | +106 | — |
 | wn_mittens_+1 | DEF | +106 | — |
-| hizamaru_somen | DEF | +105 | — |
 | lengo_pants | DEF | +105 | — |
 | lilitu_headpiece | DEF | +105 | — |
-| assiduity_pants | DEF | +104 | — |
 | anguine_dastanas | DEF | +103 | — |
 | baayami_robe | MP | +103 | — |
 | grace_somen | Magic Evasion | +103 | — |
-| iktomi_dastanas | DEF | +103 | — |
-| tatenashi_gote | DEF | +103 | — |
-| turms_mittens | DEF | +103 | — |
-| arke_manopolas | HP | +102 | — |
 | clemency_haramaki | Evasion | +102 | — |
 | enticers_pants | DEF | +102 | — |
 | grace_haidate | HP | +102 | — |
-| kendatsuba_samue | HP | +102 | — |
 | magnificent_gauntlets | HP | +102 | — |
 | mercy_somen | Magic Evasion | +102 | — |
 | perfection_masque | HP | +102 | — |
 | dampening_tam | DEF | +101 | — |
 | grace_haramaki | Evasion | +101 | — |
-| macabre_gauntlets | DEF | +101 | — |
-| sombra_tiara | DEF | +101 | — |
-| sulevias_gauntlets | DEF | +101 | — |
 | artemiss_bow_+2 | Ranged Attack | +100 | — |
 | bravery_petasos | MP | +100 | — |
-| evalach | DEF | +100 | — |
 | gae_derg | HP | +100 | — |
 | gae_derg | MP | +100 | — |
-| hizamaru_haramaki | HP | +100 | — |
 | homestead_scepter | Regain | +100 | — |
-| loess_barbuta | HP | +100 | — |
 | loess_barbuta | MP | +100 | — |
 | mercy_haramaki | Evasion | +100 | — |
 | revelation_platemail | Magic Evasion | +100 | — |
-| arke_gambieras | DEF | +99 | — |
 | befouled_crown | DEF | +99 | — |
-| ipoca_beret | DEF | +99 | — |
-| mrigavyadha_gloves | DEF | +99 | — |
 | chironic_hat | DEF | +98 | — |
-| kendatsuba_tekko | DEF | +98 | — |
 | perfection_platemail | Magic Evasion | +98 | — |
 | hope_masque | HP | +97 | — |
 | justice_gauntlets | HP | +97 | — |
 | magnificent_gauntlets | Magic Evasion | +97 | — |
 | mercy_haidate | HP | +97 | — |
-| oshosi_gloves | DEF | +97 | — |
 | bewegt_cuffs | DEF | +96 | — |
 | hizamaru_sune-ate | Evasion | +96 | — |
-| hizamaru_kote | DEF | +96 | — |
 | hope_platemail | Magic Evasion | +96 | — |
 | mercy_sune-ate | Evasion | +96 | — |
 | oshosi_vest | Magic Evasion | +96 | — |
@@ -324,41 +238,27 @@ split across separate physical/magic mods).
 | sombra_tights | Magic Evasion | +96 | — |
 | umuthi_hat | DEF | +96 | — |
 | duty_cyclas | Evasion | +95 | — |
-| hike_khat | DEF | +95 | — |
 | justice_gauntlets | Magic Evasion | +95 | — |
-| kendatsuba_hakama | HP | +95 | — |
-| revealers_crown | DEF | +95 | — |
 | ea_houppelande | MP | +94 | — |
 | magnificent_cyclas | Evasion | +94 | — |
 | justice_cyclas | Evasion | +93 | — |
-| mousai_gages | DEF | +93 | — |
-| pinga_mittens | DEF | +93 | — |
 | perfection_gauntlets | Evasion | +92 | — |
-| cohort_cloak | HP | +91 | — |
 | cohort_cloak | MP | +91 | — |
-| ea_cuffs | DEF | +91 | — |
 | ea_cuffs | Magic Evasion | +91 | — |
 | grace_somen | HP | +91 | — |
-| heyoka_harness | HP | +91 | — |
 | hope_gauntlets | Evasion | +91 | — |
 | leyline_gloves | DEF | +91 | — |
 | mousai_gages | Magic Evasion | +91 | — |
-| oshosi_vest | HP | +91 | — |
 | perfection_gauntlets | HP | +91 | — |
 | pinga_mittens | Magic Evasion | +91 | — |
 | regal_cuffs | HP | +91 | — |
 | turms_mittens | Magic Evasion | +91 | — |
 | vedic_coat | Magic Evasion | +91 | — |
 | witching_robe | Magic Evasion | +91 | — |
-| baayami_cuffs | DEF | +90 | — |
 | bravery_petasos | Magic Evasion | +90 | — |
-| gazu_bracelets | DEF | +90 | — |
-| septoptic_+1 | HP | +90 | — |
 | septoptic_+1 | MP | +90 | — |
-| composers_sabots | DEF | +89 | — |
 | floral_gauntlets | DEF | +89 | — |
 | revelation_masque | Magic Evasion | +89 | — |
-| sombra_mittens | DEF | +89 | — |
 | gridarvor | MP | +88 | — |
 | halitus_helm | HP | +88 | — |
 | homestead_scepter | MP | +88 | — |
@@ -366,7 +266,6 @@ split across separate physical/magic mods).
 | perfection_masque | Magic Evasion | +88 | — |
 | pinga_tunic | MP | +88 | — |
 | regal_cuffs | MP | +88 | — |
-| shigure_tekko | DEF | +88 | — |
 | tumafyrig | MP | +88 | — |
 | turms_harness | Evasion | +88 | — |
 | arjuna_breeches | Magic Evasion | +86 | — |
@@ -377,7 +276,6 @@ split across separate physical/magic mods).
 | justice_sollerets | HP | +86 | — |
 | mercy_somen | HP | +86 | — |
 | regal_cuffs | DEF | +86 | — |
-| tatenashi_sune-ate_+1 | DEF | +86 | — |
 | csf_boots_+1 | DEF | +85 | — |
 | csm_boots_+1 | DEF | +85 | — |
 | el_sandals_+1 | DEF | +85 | — |
@@ -389,55 +287,41 @@ split across separate physical/magic mods).
 | mgm_ledelsens_+1 | DEF | +85 | — |
 | sv_gaiters_+1 | DEF | +85 | — |
 | shomonjijoe | MP | +85 | — |
-| tatenashi_sune-ate | DEF | +85 | — |
 | wn_clomps_+1 | DEF | +85 | — |
 | wn_clomps_+1 | HP | +85 | — |
-| ahosi_leggings | DEF | +84 | — |
-| heyoka_subligar | HP | +84 | — |
 | kachimusha_kote | DEF | +84 | — |
 | magnificent_gauntlets | Evasion | +84 | — |
-| oshosi_trousers | HP | +84 | — |
 | suit_of_adamantite_armor | Evasion | +83 | — |
 | baayami_cuffs | Magic Evasion | +83 | — |
 | justice_gauntlets | Evasion | +83 | — |
 | maenadic_gambieras | DEF | +83 | — |
 | magnificent_flanchard | Evasion | +83 | — |
 | mercy_kote | Magic Evasion | +83 | — |
-| sulevias_leggings | DEF | +83 | — |
 | justice_flanchard | Evasion | +82 | — |
-| pinga_tunic | HP | +81 | — |
 | artemiss_bow_+2 | Ranged Attack | +80 | — |
 | augury_cuisses | Magic Evasion | +80 | — |
 | blackshell_hairpin | DEF | +80 | — |
 | blackshell_hairpin | MP | +80 | — |
 | composers_sabots | Magic Evasion | +80 | — |
-| hizamaru_sune-ate_+1 | DEF | +80 | — |
 | ischkur_turban | Evasion | +80 | — |
 | kendatsuba_tekko | Magic Evasion | +80 | — |
 | kladenets | MP | +80 | — |
 | passion_jacket | Magic Evasion | +80 | — |
 | ratri_gadlings | Magic Evasion | +80 | — |
-| septoptic | HP | +80 | — |
 | septoptic | MP | +80 | — |
 | shomonjijoe | Magic Evasion | +80 | — |
 | tatenashi_haidate | Magic Evasion | +80 | — |
 | tatenashi_sune-ate | Magic Evasion | +80 | — |
 | tatenashi_sune-ate_+1 | Magic Evasion | +80 | — |
 | grace_kote | HP | +79 | — |
-| heyoka_leggings | DEF | +79 | — |
-| mousai_crackows | HP | +79 | — |
-| oshosi_leggings | DEF | +79 | — |
 | thereoid_greaves | DEF | +79 | — |
 | grace_somen | Evasion | +78 | — |
 | loyalist_sabatons | HP | +78 | — |
-| mousai_crackows | DEF | +78 | — |
-| pinga_pumps | DEF | +78 | — |
 | ahosi_leggings | Evasion | +77 | — |
 | bravery_petasos | Evasion | +77 | — |
 | cohort_cloak | Evasion | +77 | — |
 | hizamaru_haramaki | Evasion | +77 | — |
 | mercy_somen | Evasion | +77 | — |
-| sombra_tights | HP | +77 | — |
 | tatenashi_sune-ate_+1 | Evasion | +76 | — |
 | azimuth_turban | Evasion | +75 | — |
 | azimuth_turban | Magic Evasion | +75 | — |
@@ -445,7 +329,6 @@ split across separate physical/magic mods).
 | gefechtdiechlings | Magic Evasion | +75 | — |
 | hike_khat | Magic Evasion | +75 | — |
 | hizamaru_hizayoroi | Magic Evasion | +75 | — |
-| hizamaru_sune-ate | DEF | +75 | — |
 | hizamaru_sune-ate | Magic Evasion | +75 | — |
 | hizamaru_sune-ate_+1 | Magic Evasion | +75 | — |
 | ipoca_beret | Magic Evasion | +75 | — |
@@ -462,10 +345,8 @@ split across separate physical/magic mods).
 | hope_sabatons | HP | +74 | — |
 | mercy_kote | HP | +74 | — |
 | turms_subligar | Evasion | +74 | — |
-| ea_pigaches | DEF | +73 | — |
 | pinga_mittens | MP | +73 | — |
 | sacro_breastplate | MP | +73 | — |
-| baayami_sabots | DEF | +72 | — |
 | csf_gloves_+1 | Magic Evasion | +72 | — |
 | csm_gloves_+1 | Magic Evasion | +72 | — |
 | hizamaru_somen | Evasion | +72 | — |
@@ -487,7 +368,6 @@ split across separate physical/magic mods).
 | ischkur_turban | Magic Evasion | +70 | — |
 | montante_+1 | HP | +70 | — |
 | pixquizpan_+1 | MP | +70 | — |
-| sulevias_platemail | HP | +70 | — |
 | sulevias_platemail | MP | +70 | — |
 | turms_mittens | Evasion | +70 | — |
 | darraigners_brais | Magic Evasion | +69 | — |
@@ -500,12 +380,9 @@ split across separate physical/magic mods).
 | sayadios_kaftan | Magic Evasion | +69 | — |
 | talab_trousers | Magic Evasion | +69 | — |
 | thereoid_greaves | Magic Evasion | +69 | — |
-| baayami_robe | HP | +68 | — |
 | clemency_haidate | Evasion | +68 | — |
-| ea_houppelande | HP | +68 | — |
 | halitus_helm | Evasion | +68 | — |
 | hope_gauntlets | Magic Evasion | +68 | — |
-| mousai_gages | HP | +68 | — |
 | grace_haidate | Evasion | +67 | — |
 | grace_kote | Evasion | +67 | — |
 | vedic_coat | MP | +67 | — |
@@ -514,30 +391,20 @@ split across separate physical/magic mods).
 | mediums_sabots | DEF | +66 | — |
 | mercy_haidate | Evasion | +66 | — |
 | mercy_kote | Evasion | +66 | — |
-| nzingha_cuirass | HP | +66 | — |
-| obviation_cuirass | HP | +66 | — |
 | pinga_pumps | MP | +66 | — |
-| tatenashi_haramaki | HP | +66 | — |
-| hippomenes_socks | DEF | +65 | — |
 | passion_jacket | Evasion | +65 | — |
 | agony_jerkin | Magic Evasion | +64 | — |
 | loyalist_sabatons | Magic Evasion | +64 | — |
-| pinga_pants | HP | +64 | — |
-| pinga_pumps | HP | +64 | — |
-| hime_domaru | HP | +63 | — |
 | hizamaru_hizayoroi | Evasion | +63 | — |
 | mercy_sune-ate | HP | +63 | — |
 | mousai_crackows | Evasion | +63 | — |
 | oshosi_leggings | Evasion | +63 | — |
-| ravenous_breastplate | HP | +63 | — |
 | samnuha_coat | HP | +63 | — |
 | csf_gloves_+1 | HP | +62 | — |
 | csm_gloves_+1 | HP | +62 | — |
 | leyline_gloves | Magic Evasion | +62 | — |
 | revealers_crown | MP | +62 | — |
 | spaekonas_gloves | Accuracy | +62 | — |
-| baayami_slops | HP | +61 | — |
-| ea_slops | HP | +61 | — |
 | mercy_sune-ate | AGI | +61 | — |
 | vatic_byrnie | HP | +61 | — |
 | anguine_dastanas | Evasion | +60 | — |
@@ -546,14 +413,11 @@ split across separate physical/magic mods).
 | caliburnus | Attack | +60 | — |
 | chanters_shield | DEF | +60 | — |
 | heyoka_harness | Evasion | +60 | — |
-| hizamaru_hizayoroi | HP | +60 | — |
-| hizamaru_somen | HP | +60 | — |
 | ischkur_turban | Accuracy | +60 | — |
 | kendatsuba_samue | Evasion | +60 | — |
 | montante | HP | +60 | — |
 | pixquizpan | MP | +60 | — |
 | sacro_breastplate | Attack | +60 | — |
-| agony_jerkin | HP | +59 | — |
 | chironic_hat | MP | +59 | — |
 | hizamaru_somen | Magic Evasion | +59 | — |
 | jumalik_mail | MP | +59 | — |
@@ -565,12 +429,8 @@ split across separate physical/magic mods).
 | sayadios_kaftan | MP | +59 | — |
 | sulevias_platemail | Magic Evasion | +59 | — |
 | tatenashi_haramaki | Magic Evasion | +59 | — |
-| turms_mittens | HP | +59 | — |
 | amini_gapette_+3 | Enmity | -58 | — |
 | hizamaru_kote | Evasion | +58 | — |
-| arjuna_breeches | HP | +57 | — |
-| kendatsuba_tekko | DEX | +57 | — |
-| sayadios_kaftan | HP | +57 | — |
 | amini_gapette_+2 | Enmity | -56 | — |
 | baayami_sabots | Evasion | +56 | — |
 | ea_pigaches | Evasion | +56 | — |
@@ -578,11 +438,8 @@ split across separate physical/magic mods).
 | grace_kote | DEX | +56 | — |
 | perfection_brais | STR | +56 | — |
 | pinga_pumps | Evasion | +56 | — |
-| sombra_tiara | HP | +56 | — |
 | csf_boots_+1 | HP | +55 | — |
 | csm_boots_+1 | HP | +55 | — |
-| cohort_cloak | INT | +55 | — |
-| cohort_cloak | MND | +55 | — |
 | composers_sabots | Evasion | +55 | — |
 | hope_brais | STR | +55 | — |
 | mediums_sabots | Evasion | +55 | — |
@@ -590,7 +447,6 @@ split across separate physical/magic mods).
 | mousai_manteel | Evasion | +55 | — |
 | oshosi_vest | Evasion | +55 | — |
 | samnuha_coat | Evasion | +55 | — |
-| tanmogayi_+1 | HP | +55 | — |
 | tanmogayi_+1 | MP | +55 | — |
 | amini_gapette_+1 | Enmity | -54 | — |
 | passion_jacket | HP | +54 | — |
@@ -612,7 +468,6 @@ split across separate physical/magic mods).
 | grace_haramaki | DEX | +51 | — |
 | justice_gauntlets | DEX | +51 | — |
 | magnificent_flanchard | STR | +51 | — |
-| oshosi_leggings | AGI | +51 | — |
 | perfection_gauntlets | DEX | +51 | — |
 | agwus_axe | Accuracy | +50 | — |
 | agwus_axe | Magic Accuracy | +50 | — |
@@ -624,7 +479,6 @@ split across separate physical/magic mods).
 | angantyr_tights | Subtle Blow II | +50 | — |
 | anguine_dastanas | Ranged Attack | +50 | — |
 | artemiss_bow_+2 | Ranged Accuracy | +50 | — |
-| augury_cuisses | HP | +50 | — |
 | azimuth_turban | HP | +50 | — |
 | azimuth_turban | MP | +50 | — |
 | azimuth_turban | Ranged Accuracy | +50 | — |
@@ -642,7 +496,6 @@ split across separate physical/magic mods).
 | clemency_haramaki | AGI | +50 | — |
 | dathaba_sickle | Physical damage limit | +50% | — |
 | dathaba_wand | Attack | +50 | — |
-| deacon_tabar | HP | +50 | — |
 | demonic_axe | Accuracy | +50 | — |
 | demonic_axe | Ranged Accuracy | +50 | — |
 | demonic_axe | Magic Accuracy | +50 | — |
@@ -657,7 +510,6 @@ split across separate physical/magic mods).
 | final_sickle | Magic Accuracy | +50 | — |
 | flametongue | Accuracy | +50 | — |
 | flametongue | Magic Accuracy | +50 | — |
-| gefechtdiechlings | HP | +50 | — |
 | gletis_boots | Ranged Accuracy | +50 | — |
 | gletis_cuirass | Ranged Accuracy | +50 | — |
 | gletis_gauntlets | Ranged Accuracy | +50 | — |
@@ -701,15 +553,9 @@ split across separate physical/magic mods).
 | save_the_queen_iii | Accuracy | +50 | — |
 | save_the_queen_iii | Magic Accuracy | +50 | — |
 | scufflers_cosciales | HP | +50 | — |
-| shomonjijoe | HP | +50 | — |
-| sulevias_cuisses | HP | +50 | — |
 | sulevias_cuisses | MP | +50 | — |
 | taka | Ranged Accuracy | +50 | — |
-| tanmogayi | HP | +50 | — |
 | tanmogayi | MP | +50 | — |
-| tatenashi_haidate | HP | +50 | — |
-| vedic_coat | HP | +50 | — |
-| wildheitdiechlings | HP | +50 | — |
 | witching_robe | HP | +50 | — |
 | wizards_rod | Magic Accuracy | +50 | — |
 | xiucoatl | Ranged Accuracy | +50 | — |
@@ -721,7 +567,6 @@ split across separate physical/magic mods).
 | loyalist_sabatons | Evasion | +49 | — |
 | mercy_haidate | AGI | +49 | — |
 | sv_gauntlets_+1 | MP | +49 | — |
-| cohort_cloak | CHR | +48 | — |
 | geirrothr | Attack | +48 | — |
 | hime_domaru | Magic Evasion | +48 | — |
 | mercy_haramaki | AGI | +48 | — |
@@ -730,7 +575,6 @@ split across separate physical/magic mods).
 | regal_gauntlets | Magic Evasion | +48 | — |
 | ynglinga_sallet | Magic Evasion | +48 | — |
 | zantetsuken_x | Attack | +48 | — |
-| baayami_slops | INT | +47 | — |
 | clemency_haidate | STR | +47 | — |
 | darraigners_brais | HP | +47 | — |
 | magnificent_gauntlets | VIT | +47 | — |
@@ -738,11 +582,9 @@ split across separate physical/magic mods).
 | revelation_platemail | STR | +47 | — |
 | talab_trousers | HP | +47 | — |
 | grace_haidate | STR | +46 | — |
-| heyoka_harness | DEX | +46 | — |
 | justice_gauntlets | VIT | +46 | — |
 | perfection_platemail | STR | +46 | — |
 | taliah_manteel_+2 | Ranged Accuracy | +46 | — |
-| turms_mittens | DEX | +46 | — |
 | baayami_robe | Evasion | +45 | — |
 | duty_cyclas | DEX | +45 | — |
 | el_sandals_+1 | HP | +45 | — |
@@ -769,18 +611,12 @@ split across separate physical/magic mods).
 | mousai_seraweels | Evasion | +44 | — |
 | nzingha_cuirass | Evasion | +44 | — |
 | oshosi_trousers | Evasion | +44 | — |
-| oshosi_vest | AGI | +44 | — |
 | perfection_platemail | DEX | +44 | — |
-| pinga_mittens | MND | +44 | — |
 | sombra_tights | Evasion | +44 | — |
 | sulevias_leggings | Evasion | +44 | — |
-| tatenashi_haidate | STR | +44 | — |
 | tatenashi_haramaki | Evasion | +44 | — |
 | vatic_byrnie | MP | +44 | — |
-| assiduity_pants | HP | +43 | — |
 | dampening_tam | Magic Evasion | +43 | — |
-| ea_houppelande | INT | +43 | — |
-| ea_slops | INT | +43 | — |
 | gazu_bracelets | Magic Evasion | +43 | — |
 | gefechtschaller | MP | +43 | — |
 | gefechtschaller | Magic Evasion | +43 | — |
@@ -793,15 +629,11 @@ split across separate physical/magic mods).
 | magnificent_cyclas | VIT | +43 | — |
 | mrigavyadha_gloves | Magic Evasion | +43 | — |
 | pinga_pants | MP | +43 | — |
-| ratri_gadlings | DEX | +43 | — |
 | sombra_tiara | Magic Evasion | +43 | — |
 | sulevias_mask | Magic Evasion | +43 | — |
 | taliah_gages_+2 | Ranged Accuracy | +43 | — |
 | wildheitschaller | Magic Evasion | +43 | — |
-| ynglinga_sallet | HP | +43 | — |
 | arke_corazza | Accuracy | +42 | — |
-| arke_manopolas | VIT | +42 | — |
-| baayami_robe | INT | +42 | — |
 | clemency_haidate | Accuracy | +42 | — |
 | clemency_haidate | Attack | +42 | — |
 | clemency_haidate | Ranged Accuracy | +42 | — |
@@ -822,12 +654,180 @@ split across separate physical/magic mods).
 | geirrothr | Accuracy | +42 | — |
 | heyoka_harness | Accuracy | +42 | — |
 | heyoka_harness | Ranged Accuracy | +42 | — |
-| hizamaru_hizayoroi | STR | +42 | — |
 | justice_cyclas | VIT | +42 | — |
 | kendatsuba_samue | Accuracy | +42 | — |
 | mousai_manteel | Magic Accuracy | +42 | — |
+| oshosi_vest | Magic Accuracy | +42 | — |
+| perfection_brais | INT | +42 | — |
+| raetic_axe_+1 | Accuracy | +42 | — |
+| raetic_blade_+1 | Accuracy | +42 | — |
+| raetic_kris_+1 | Accuracy | +42 | — |
+| revelation_masque | Accuracy | +42 | — |
+| revelation_masque | Attack | +42 | — |
+| revelation_masque | Ranged Accuracy | +42 | — |
+| revelation_masque | Ranged Attack | +42 | — |
+| revelation_masque | Magic Accuracy | +42 | — |
+| revelation_platemail | Accuracy | +42 | — |
+| revelation_platemail | Attack | +42 | — |
+| revelation_platemail | Ranged Accuracy | +42 | — |
+| revelation_platemail | Ranged Attack | +42 | — |
+| revelation_platemail | Magic Accuracy | +42 | — |
+| taliah_crackows_+2 | Ranged Accuracy | +42 | — |
+| taliah_turban_+2 | Ranged Accuracy | +42 | — |
+| turms_harness | Accuracy | +42 | — |
+| wn_mittens_+1 | HP | +42 | — |
+| zantetsuken_x | Accuracy | +42 | — |
+| arjuna_breeches | MP | +41 | — |
+| arke_cosciales | Accuracy | +41 | — |
+| dampening_tam | Evasion | +41 | — |
+| ea_slops | Magic Accuracy | +41 | — |
+| grace_haidate | Accuracy | +41 | — |
+| grace_haidate | Attack | +41 | — |
+| grace_haidate | Ranged Accuracy | +41 | — |
+| grace_haidate | Ranged Attack | +41 | — |
+| grace_haidate | Magic Accuracy | +41 | — |
+| grace_haramaki | STR | +41 | — |
+| grace_haramaki | Accuracy | +41 | — |
+| grace_haramaki | Attack | +41 | — |
+| grace_haramaki | Ranged Accuracy | +41 | — |
+| grace_haramaki | Ranged Attack | +41 | — |
+| grace_haramaki | Magic Accuracy | +41 | — |
+| grace_kote | Accuracy | +41 | — |
+| grace_kote | Attack | +41 | — |
+| grace_kote | Ranged Accuracy | +41 | — |
+| grace_kote | Ranged Attack | +41 | — |
+| grace_kote | Magic Accuracy | +41 | — |
+| grace_somen | Accuracy | +41 | — |
+| grace_somen | Attack | +41 | — |
+| grace_somen | Ranged Accuracy | +41 | — |
+| grace_somen | Ranged Attack | +41 | — |
+| grace_somen | Magic Accuracy | +41 | — |
+| heyoka_subligar | Accuracy | +41 | — |
+| heyoka_subligar | Ranged Accuracy | +41 | — |
+| hime_domaru | Evasion | +41 | — |
+| hope_brais | INT | +41 | — |
+| hope_sabatons | AGI | +41 | — |
+| izcalli | Attack | +41 | — |
+| kendatsuba_hakama | Accuracy | +41 | — |
+| kendatsuba_tekko | Evasion | +41 | — |
+| magnificent_cyclas | STR | +41 | — |
+| magnificent_cyclas | Accuracy | +41 | — |
+| magnificent_cyclas | Attack | +41 | — |
+| magnificent_cyclas | Magic Accuracy | +41 | — |
+| magnificent_cyclas | Ranged Accuracy | +41 | — |
+| magnificent_flanchard | VIT | +41 | — |
+| magnificent_flanchard | Accuracy | +41 | — |
+| magnificent_flanchard | Attack | +41 | — |
+| magnificent_flanchard | Magic Accuracy | +41 | — |
+| magnificent_flanchard | Ranged Accuracy | +41 | — |
+| magnificent_gauntlets | Accuracy | +41 | — |
+| magnificent_gauntlets | Attack | +41 | — |
+| magnificent_gauntlets | Magic Accuracy | +41 | — |
+| magnificent_gauntlets | Ranged Accuracy | +41 | — |
+| malfeasance_+1 | Attack | +41 | — |
+| oshosi_trousers | Magic Accuracy | +41 | — |
+| perfection_brais | Accuracy | +41 | — |
+| perfection_brais | Attack | +41 | — |
+| perfection_brais | Ranged Accuracy | +41 | — |
+| perfection_brais | Ranged Attack | +41 | — |
+| perfection_brais | Magic Accuracy | +41 | — |
+| perfection_gauntlets | Accuracy | +41 | — |
+| perfection_gauntlets | Attack | +41 | — |
+| perfection_gauntlets | Ranged Accuracy | +41 | — |
+| perfection_gauntlets | Ranged Attack | +41 | — |
+| perfection_gauntlets | Magic Accuracy | +41 | — |
+| perfection_masque | Accuracy | +41 | — |
+| perfection_masque | Attack | +41 | — |
+| perfection_masque | Ranged Accuracy | +41 | — |
+| perfection_masque | Ranged Attack | +41 | — |
+| perfection_masque | Magic Accuracy | +41 | — |
+| perfection_platemail | Accuracy | +41 | — |
+| perfection_platemail | Attack | +41 | — |
+| perfection_platemail | Ranged Accuracy | +41 | — |
+| perfection_platemail | Ranged Attack | +41 | — |
+| perfection_platemail | Magic Accuracy | +41 | — |
+| ratri_gadlings | Evasion | +41 | — |
+| ravenous_breastplate | Evasion | +41 | — |
+| regal_captains_gloves | Evasion | +41 | — |
+| regal_gauntlets | Evasion | +41 | — |
+| revelation_masque | STR | +41 | — |
+| shomonjijoe | Evasion | +41 | — |
+| sombra_tiara | Evasion | +41 | — |
+| turms_subligar | Accuracy | +41 | — |
+| vatic_byrnie | Evasion | +41 | — |
+| suit_of_adamantite_armor | Accuracy | +40 | — |
+| suit_of_adamantite_armor | Magic Accuracy | +40 | — |
+| agwus_claymore | Accuracy | +40 | — |
+| agwus_claymore | Magic Accuracy | +40 | — |
+| agwus_scythe | Accuracy | +40 | — |
+| air_knife | AGI | +40 | — |
+| alhazen_hat | Accuracy | +40 | — |
+| alhazen_hat | Ranged Accuracy | +40 | — |
+| alhazen_hat | Evasion | +40 | — |
+| alhazen_hat | Magic Evasion | +40 | — |
+| ankusa_axe | Ranged Accuracy | +40 | — |
+| annealed_lance | Attack | +40 | — |
+| archdukes_sword | Magic Accuracy | +40 | — |
+| artemiss_bow_+2 | Ranged Accuracy | +40 | — |
+| artemiss_bow_+2 | AGI | +40 | — |
+| brave_blade_iii | Accuracy | +40 | — |
+| brave_blade_iii | Magic Accuracy | +40 | — |
+| brave_blade_iii | STR | +40 | — |
+| bravery_petasos | Magic Accuracy | +40 | — |
+| bravery_petasos | Ranged Accuracy | +40 | — |
+| bunzis_chopper | Accuracy | +40 | — |
+| bunzis_chopper | Magic Accuracy | +40 | — |
+| bunzis_rod | MP | +40 | — |
+| bunzis_rod | Accuracy | +40 | — |
+| bunzis_rod | Magic Accuracy | +40 | — |
+| csf_boots_+1 | Accuracy | +40 | — |
+| csf_boots_+1 | Attack | +40 | — |
+| csf_boots_+1 | Ranged Accuracy | +40 | — |
+| csf_boots_+1 | Ranged Attack | +40 | — |
+| csf_boots_+1 | Magic Accuracy | +40 | — |
+| csf_gloves_+1 | Accuracy | +40 | — |
+| csf_gloves_+1 | Attack | +40 | — |
+| csf_gloves_+1 | Ranged Accuracy | +40 | — |
+| csf_gloves_+1 | Ranged Attack | +40 | — |
+| csf_gloves_+1 | Magic Accuracy | +40 | — |
+| csm_boots_+1 | Accuracy | +40 | — |
+| csm_boots_+1 | Attack | +40 | — |
+| csm_boots_+1 | Ranged Accuracy | +40 | — |
+| csm_boots_+1 | Ranged Attack | +40 | — |
+| csm_boots_+1 | Magic Accuracy | +40 | — |
+| csm_gloves_+1 | Accuracy | +40 | — |
+| csm_gloves_+1 | Attack | +40 | — |
+| csm_gloves_+1 | Ranged Accuracy | +40 | — |
+| csm_gloves_+1 | Ranged Attack | +40 | — |
+| csm_gloves_+1 | Magic Accuracy | +40 | — |
+| chanters_shield | MP | +40 | — |
+| chocobo_knife | AGI | +40 | — |
+| demonic_axe | STR | +40 | — |
+| diamond_aspis | Accuracy | +40 | — |
+| diamond_aspis | Magic Accuracy | +40 | — |
+| dragon_fangs | Ranged Accuracy | +40 | — |
+| dragon_fangs | Magic Accuracy | +40 | — |
+| dragon_fangs | DEX | +40 | — |
+| drastic_axe | Accuracy | +40 | — |
+| drastic_axe | VIT | +40 | — |
+| el_sandals_+1 | Accuracy | +40 | — |
+| el_sandals_+1 | Attack | +40 | — |
+| el_sandals_+1 | Ranged Accuracy | +40 | — |
+| el_sandals_+1 | Ranged Attack | +40 | — |
+| el_sandals_+1 | Magic Accuracy | +40 | — |
+| exeter | Ranged Accuracy | +40 | — |
+| exeter | Magic Accuracy | +40 | — |
+| exeter | AGI | +40 | — |
+| final_sickle | Accuracy | +40 | — |
+| final_sickle | Magic Accuracy | +40 | — |
+| firangi | Attack | +40 | — |
+| flametongue | STR | +40 | — |
+| fomalhaut | Magic Accuracy | +40 | — |
+| gekkei | Accuracy | +40 | — |
+| gekkei | Magic Accuracy | +40 | — |
+| gletis_crossbow | Ranged Accuracy | +40 | — |
 
-*…and 3065 more, omitted for length (sorted biggest-first; raise `MAX_ROWS_PER_SECTION` for the full audit).*
+*…and 2168 more, omitted for length (sorted biggest-first; raise `MAX_ROWS_PER_SECTION` for the full audit).*
 
 ## Stats with Different Values
 
@@ -1409,6 +1409,7 @@ Both retail and server have the stat, but the values differ.
 | runeist_coat_+4 | Magic Evasion | +119 | +103 | -16 |
 | totemic_gaiters_+4 | Magic Evasion | +114 | +98 | -16 |
 | totemic_trousers_+4 | Magic Evasion | +114 | +98 | -16 |
+| turms_mittens | HP | +59 | +75 | +16 |
 | vishap_armet_+2 | Accuracy | +21 | +37 | +16 |
 | vishap_armet_+3 | Accuracy | +31 | +47 | +16 |
 | academics_gown_+4 | Magic Evasion | +125 | +110 | -15 |
@@ -1634,9 +1635,8 @@ Both retail and server have the stat, but the values differ.
 | pitre_churidars_+4 | Magic Accuracy | +53 | +44 | -9 |
 | pitre_churidars_+4 | Evasion | +78 | +69 | -9 |
 | pitre_tobe_+4 | DEF | +158 | +167 | +9 |
-| reverence_coronet_+4 | DEF | +144 | +153 | +9 |
 
-*…and 3069 more, omitted for length (sorted biggest-first; raise `MAX_ROWS_PER_SECTION` for the full audit).*
+*…and 3149 more, omitted for length (sorted biggest-first; raise `MAX_ROWS_PER_SECTION` for the full audit).*
 
 ## Server-Only Stats (Custom Buffs)
 
@@ -1651,6 +1651,7 @@ Stats the server adds that don't exist on the retail item.
 | lugra_cloak | DEF | +225 |
 | respite_cloak | DEF | +219 |
 | cohort_cloak_+1 | DEF | +218 |
+| cohort_cloak | DEF | +217 |
 | lethargy_houseaux_+3 | Magic Evasion | +157 |
 | nyame_sollerets | Magic Evasion | +150 |
 | beckoners_doublet_+3 | Magic Evasion | +130 |
@@ -1695,6 +1696,8 @@ Stats the server adds that don't exist on the retail item.
 | nukumi_manoplas_+2 | Magic Evasion | +72 |
 | nukumi_manoplas_+3 | Attack | +72 |
 | peltasts_vambraces_+2 | Magic Evasion | +72 |
+| ajax | HP | +70 |
+| ajax_+1 | HP | +70 |
 | foenaria | Attack | +70 |
 | gae_buide | Attack | +70 |
 | helheim | Attack | +70 |
@@ -1749,8 +1752,8 @@ Stats the server adds that don't exist on the retail item.
 | vitiation_boots_+4 | Magic Attack Bonus | +61 |
 | beckoners_pigaches_+3 | Accuracy | +60 |
 | dokoku | Attack | +60 |
-| earp | Ranged Attack | +60 |
 | earp | Ranged Accuracy | +60 |
+| earp | Ranged Attack | +60 |
 | fallens_cuirass_+3 | Magic Attack Bonus | +60 |
 | glyphic_horn_+3 | Magic Attack Bonus | +60 |
 | karagoz_scarpe_+3 | Attack | +60 |
@@ -1760,26 +1763,26 @@ Stats the server adds that don't exist on the retail item.
 | lethargy_houseaux_+3 | Accuracy | +60 |
 | lethargy_houseaux_+3 | Attack | +60 |
 | lorg_mor | Attack | +60 |
-| pinaka | Ranged Attack | +60 |
 | pinaka | Ranged Accuracy | +60 |
+| pinaka | Ranged Attack | +60 |
 | pitre_babouches_+4 | Magic Attack Bonus | +60 |
-| prime_bow | Ranged Accuracy | +60 |
 | prime_bow | Ranged Attack | +60 |
-| prime_fists | Attack | +60 |
+| prime_bow | Ranged Accuracy | +60 |
 | prime_fists | Accuracy | +60 |
-| prime_great_axe | Accuracy | +60 |
+| prime_fists | Attack | +60 |
 | prime_great_axe | Attack | +60 |
+| prime_great_axe | Accuracy | +60 |
 | prime_gun | Ranged Accuracy | +60 |
 | prime_gun | Ranged Attack | +60 |
-| prime_lance | Attack | +60 |
 | prime_lance | Accuracy | +60 |
-| prime_maul | Accuracy | +60 |
+| prime_lance | Attack | +60 |
 | prime_maul | Attack | +60 |
+| prime_maul | Accuracy | +60 |
 | prime_scythe | Attack | +60 |
 | prime_scythe | Accuracy | +60 |
 | prime_staff | Magic Accuracy | +60 |
-| prime_sword | Attack | +60 |
 | prime_sword | Accuracy | +60 |
+| prime_sword | Attack | +60 |
 | spalirisos | Attack | +60 |
 | varga_purnikawa | Attack | +60 |
 | varga_purnikawa | Attack | +60 |
@@ -2004,11 +2007,11 @@ Stats the server adds that don't exist on the retail item.
 | prime_maul | MND | +40 |
 | prime_maul | STR | +40 |
 | prime_scythe | STR | +40 |
-| prime_staff | MND | +40 |
-| prime_staff | Magic Attack Bonus | +40 |
 | prime_staff | INT | +40 |
-| prime_sword | STR | +40 |
+| prime_staff | Magic Attack Bonus | +40 |
+| prime_staff | MND | +40 |
 | prime_sword | DEX | +40 |
+| prime_sword | STR | +40 |
 | tupsimati_119 | Magic Attack Bonus | +40 |
 | tupsimati_119_ii | Magic Attack Bonus | +40 |
 | wizards_rod | Magic Attack Bonus | +40 |
@@ -2072,6 +2075,7 @@ Stats the server adds that don't exist on the retail item.
 | assimilators_keffiyeh_+4 | Magic Attack Bonus | +31 |
 | raetic_staff_+1 | Magic Attack Bonus | +31 |
 | solstice | Magic Attack Bonus | +31 |
+| alhazen_hat | HP | +30 |
 | amalric_slops | Magic Attack Bonus | +30 |
 | bunzis_gloves | Magic Attack Bonus | +30 |
 | bunzis_hat | Magic Attack Bonus | +30 |
@@ -2127,8 +2131,8 @@ Stats the server adds that don't exist on the retail item.
 | hashishin_basmak_+1 | Magic Attack Bonus | +27 |
 | ignominy_sollerets_+3 | Magic Attack Bonus | +27 |
 | jhakri_slops | Magic Attack Bonus | +27 |
-| tokko_bow | Ranged Attack | +27 |
 | tokko_bow | Ranged Accuracy | +27 |
+| tokko_bow | Ranged Attack | +27 |
 | tokko_knuckles | Attack | +27 |
 | tokko_knuckles | Accuracy | +27 |
 | tokko_scythe | Attack | +27 |
@@ -2411,8 +2415,8 @@ Stats the server adds that don't exist on the retail item.
 | artsieq_jubbah | Magic Attack Bonus | +10 |
 | atrophy_tabard_+1 | Magic Attack Bonus | +10 |
 | beckoners_doublet_+3 | Magic Def. Bonus | +10 |
-| caliburnus | Double Attack | +10% |
 | caliburnus | Store TP | +10 |
+| caliburnus | Double Attack | +10% |
 | castigation | Attack | +10 |
 | castigation | Magic Attack Bonus | +10 |
 | chevaliers_armet_+2 | Damage taken | -10% |
@@ -2440,17 +2444,13 @@ Stats the server adds that don't exist on the retail item.
 | hattori_ningi_+3 | Dual Wield | +10 |
 | helheim | Double Attack | +10% |
 | helios_gloves | Magic Attack Bonus | +10 |
-| herculean_boots | Magic Attack Bonus | +10 |
-| herculean_helm | Magic Attack Bonus | +10 |
-| iuitl_tights_+1 | Magic Attack Bonus | +10 |
-| jushimatsu | Attack | +10 |
 
-*…and 236 more, omitted for length (sorted biggest-first; raise `MAX_ROWS_PER_SECTION` for the full audit).*
+*…and 245 more, omitted for length (sorted biggest-first; raise `MAX_ROWS_PER_SECTION` for the full audit).*
 <!-- DOCGEN:END id="gear-vs-retail-data" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9a78f196ace8 -->
-_Last updated: 2026-07-13 11:11 PDT_
+<!-- content-hash: 79a4243ca7ed -->
+_Last updated: 2026-07-13 15:06 PDT_
 <!-- DOCGEN:END id="last-updated" -->
