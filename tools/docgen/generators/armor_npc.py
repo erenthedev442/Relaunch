@@ -284,6 +284,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             "wiki": _quoted_value(wiki_m) if wiki_m else None,
         })
 
+    # Alphabetical within each tier/slot (owner request) — matches how the
+    # in-game shops display (case-insensitive by name).
+    for slot_map in tiers.values():
+        for rows in slot_map.values():
+            rows.sort(key=lambda r: r["name"].lower())
+
     page = docs_dir / "progression" / "gear-vendors.md"
 
     # Fill the top-of-page intro + NPC location table so the zone name

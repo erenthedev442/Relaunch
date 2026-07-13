@@ -154,6 +154,11 @@ def _parse_flat_tiers(text: str, item_cat: dict) -> dict:
                 continue
             category = item_cat.get(row["id"], "Other")
             tiers[tier].setdefault(category, []).append(row)
+    # Alphabetical within each tier/category (owner request) — matches the
+    # in-game shop display (case-insensitive by name).
+    for cat_map in tiers.values():
+        for rows in cat_map.values():
+            rows.sort(key=lambda r: r["name"].lower())
     return tiers
 
 

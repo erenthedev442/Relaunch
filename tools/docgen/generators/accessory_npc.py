@@ -126,6 +126,11 @@ def _extract(text: str) -> dict:
             "score": int(score_m.group(2)) if score_m else 0,
             "flags": score_m.group(3) if score_m and score_m.group(3) else "",
         })
+    # Alphabetical within each tier/slot (owner request) — matches the in-game
+    # shop display (case-insensitive by name).
+    for slot_map in out.values():
+        for rows in slot_map.values():
+            rows.sort(key=lambda r: r["name"].lower())
     return out
 
 
