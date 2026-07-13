@@ -148,7 +148,7 @@ Trade a reforged **+3 AF or Relic** piece together with the materials below, and
 | Material | Non-body | Body |
 |---|---:|---:|
 | Your job's **Paragon Card** | 3× | 6× |
-| **Rusted ID Card** | 12× | 24× |
+| **Rusted ID Card** | 99× | 99× |
 | **Black ID Card** | 6× | 12× |
 
 **Where the materials come from** — all inside the [D] zones:
@@ -166,6 +166,6 @@ The Forge accepts the trade either way: put the +3 piece **and** the full materi
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 608c05587f2e -->
-_Last updated: 2026-07-12 23:42 PDT_
+<!-- content-hash: d03c1ca2a801 -->
+_Last updated: 2026-07-13 15:32 PDT_
 <!-- DOCGEN:END id="last-updated" -->

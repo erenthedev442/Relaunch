@@ -36,8 +36,11 @@ local NPC_POS = { x = 155.0, y = -2.0, z = 162.0, rot = 96 }
 local PCARD_QTY        = 3      -- x entry.pcard (job-matched Paragon Card), non-body
 local PCARD_QTY_BODY   = 6      -- body
 local RUSTED_ID        = 9538   -- Rusted Identification Card
-local RUSTED_QTY       = 12     -- non-body
-local RUSTED_QTY_BODY  = 24     -- body
+-- 2026-07-13 (owner): raised to a full stack (99) for both slots. Body tax
+-- retained on Paragon + Black cards; Rusted is the trash-drop material and
+-- the owner wants it to feel like a real farm gate, not a light tax.
+local RUSTED_QTY       = 99     -- non-body
+local RUSTED_QTY_BODY  = 99     -- body
 local BLACK_ID         = 9540   -- Blackened Identification Card
 local BLACK_QTY        = 6      -- non-body
 local BLACK_QTY_BODY   = 12     -- body
