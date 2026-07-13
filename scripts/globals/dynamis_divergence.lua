@@ -80,13 +80,33 @@ local function isDead(instance, mobid)
     return mob ~= nil and not mob:isAlive()
 end
 
--- Attach a boss's mechCfg (from xi.divergence.bossMechCfgs) right after its
--- SpawnMob(). A missing cfg is a silent no-op so we can add mechs incrementally.
+-- Apply a boss's stat baseline (absolute HP + mods override). Mirrors the
+-- Hunting-League NM pattern (HuntingLeague.lua ~890): setMod overrides the
+-- pool-derived value, then setMaxHP + setHP resize the health bar in one shot.
+-- Runs BEFORE mechanics.attach so the mechanics library records the correct
+-- starting HP for phase-transition thresholds.
+local function applyStats(mob, stats)
+    if not stats then return end
+    if stats.mods then
+        for modId, value in pairs(stats.mods) do
+            mob:setMod(modId, value)
+        end
+    end
+    if stats.hp then
+        mob:setMaxHP(stats.hp)
+        mob:setHP(stats.hp)
+    end
+end
+
+-- Attach a boss's stat baseline + mechCfg (from xi.divergence.bossMechCfgs)
+-- right after its SpawnMob(). A missing cfg is a silent no-op so we can add
+-- mechs incrementally.
 local function attachBoss(instance, mobId)
     local cfg = xi.divergence.bossMechCfgs and xi.divergence.bossMechCfgs[mobId]
     if not cfg then return end
     local mob = GetMobByID(mobId, instance)
     if mob then
+        applyStats(mob, cfg.stats)
         mechanics.attach(mob, cfg)
     end
 end
@@ -276,10 +296,12 @@ xi.divergence.onInstanceFailure = function(instance, cfg)
 end
 
 -----------------------------------
--- Boss mechanics (owner 2026-07-12 audit follow-up: the 12 uniquely-named
--- Dynamis-Divergence bosses had their donor pool's retail Dynamis TP/spell
--- kit but no authored personality on top). Attached at the SpawnMob call
--- sites above via attachBoss(); ticked every second via tickBoss().
+-- Boss mechanics + stat baselines (owner 2026-07-12 audit + 2026-07-13
+-- rival-HL-T5 rebalance: every cfg carries a `stats` block so the 12
+-- Dynamis-Divergence bosses hit like their target tier -- Mega + Disjoined
+-- now rival Hunting League T5 NM caliber). Attached at the SpawnMob call
+-- sites above via attachBoss() (applies stats -> then mechanics); ticked
+-- every second via tickBoss().
 --
 -- Keyed by mobId (from the four zones' instances/<zone>.lua CONFIG blocks).
 -- Every cfg sets targetPartyOnly = true (private/small-alliance instances --
@@ -288,11 +310,84 @@ end
 -- and every cfg is added ON TOP of the retail Dynamis skill_list + spell_list
 -- inherited from the donor pool -- these mechs COMPLEMENT that kit, not
 -- duplicate it. Tuning tiers, from lightest to heaviest:
---   * Mid-Bosses (statue/idol/golem family): 1-2 mechanics + optional phase.
---   * Mega-Bosses (Fomor NMs, retail Dynamis boss caliber): 3-4 mechanics +
---     stance dance + phases.
---   * Disjoined (wave-3 endgame race NMs): full kit + doom.
+--   * Mid-Bosses (statue/idol/golem family): 500k HP, half-T5 mods, 1-2
+--     mechanics + a phase transition (uniform across the four cities).
+--   * Mega-Bosses (Fomor NMs, retail Dynamis boss caliber): 2.5M HP, full
+--     HL T5 mods (ATT 7776, HASTE_GEAR 450, DA 20, REGEN 300, etc.), 3-4
+--     mechanics + stance dance + phases -- rivals HL T5 AV/PW.
+--   * Disjoined (wave-3 endgame race NMs): 5M HP, T5+12% ATT (8700), full
+--     kit + doom -- top-of-Dynamis-D ceiling.
+-- Per-boss timing flavor (stance cycle sec, aoe %, enrage window) stays
+-- UNIQUE so each city still feels distinct; the shared stat baseline just
+-- pins the raw stat wall so no boss is an outlier.
 -----------------------------------
+
+-- STAT BASELINES -- keyed to the three difficulty tiers. Every boss carries
+-- one of these via `stats = STATS_*`. HP is ABSOLUTE (setMaxHP overrides
+-- mob_groups). Mods use setMod (override) so the pool-derived stats are
+-- fully replaced -- same pattern as HuntingLeague.lua.
+--
+-- Baseline mirrors HL Rank V - Legend (AV/PW) at hunting_league_catalog.lua
+-- line 340+: DEF 1375, ATT 7776, ACC 3240, EVASION 900, MEVA/MDEF 1080,
+-- HASTE_GEAR 450 (over the ~25% engine cap; deliberately headroom for
+-- stacking), DA 20 / TA 8, REGEN 300, STR/DEX 750.
+local STATS_MID =
+{
+    hp = 500000,
+    mods =
+    {
+        [xi.mod.DEF]           =  700,
+        [xi.mod.ATT]           = 4000,
+        [xi.mod.ACC]           = 1600,
+        [xi.mod.EVASION]       =  500,
+        [xi.mod.MEVA]          =  550,
+        [xi.mod.MDEF]          =  550,
+        [xi.mod.STR]           =  400,
+        [xi.mod.DEX]           =  400,
+        [xi.mod.HASTE_GEAR]    =  225,   -- ~22%
+        [xi.mod.DOUBLE_ATTACK] =   10,
+        [xi.mod.TRIPLE_ATTACK] =    3,
+        [xi.mod.REGEN]         =  150,
+    },
+}
+local STATS_MEGA =
+{
+    hp = 2500000,
+    mods =
+    {
+        [xi.mod.DEF]           = 1375,
+        [xi.mod.ATT]           = 7776,
+        [xi.mod.ACC]           = 3240,
+        [xi.mod.EVASION]       =  900,
+        [xi.mod.MEVA]          = 1080,
+        [xi.mod.MDEF]          = 1080,
+        [xi.mod.STR]           =  750,
+        [xi.mod.DEX]           =  750,
+        [xi.mod.HASTE_GEAR]    =  450,   -- ~44% (engine caps at ~25% -- headroom)
+        [xi.mod.DOUBLE_ATTACK] =   20,
+        [xi.mod.TRIPLE_ATTACK] =    8,
+        [xi.mod.REGEN]         =  300,
+    },
+}
+local STATS_DISJOINED =
+{
+    hp = 5000000,
+    mods =
+    {
+        [xi.mod.DEF]           = 1375,
+        [xi.mod.ATT]           = 8700,   -- +12% over T5 baseline (owner call)
+        [xi.mod.ACC]           = 3240,
+        [xi.mod.EVASION]       =  900,
+        [xi.mod.MEVA]          = 1080,
+        [xi.mod.MDEF]          = 1080,
+        [xi.mod.STR]           =  750,
+        [xi.mod.DEX]           =  750,
+        [xi.mod.HASTE_GEAR]    =  450,
+        [xi.mod.DOUBLE_ATTACK] =   20,
+        [xi.mod.TRIPLE_ATTACK] =    8,
+        [xi.mod.REGEN]         =  300,
+    },
+}
 xi.divergence.bossMechCfgs =
 {
     -- ── San d'Oria [D] (zone 294) ───────────────────────────────────────────
@@ -301,6 +396,7 @@ xi.divergence.bossMechCfgs =
     {
         name            = "Overseer's Tombstone",
         targetPartyOnly = true,
+        stats  = STATS_MID,
         drain  = { periodSec = 10, healPct = 3 },
         enrage = { sec = 300, att = 3500, haste = 100, msg = "Overseer's Tombstone hums with unbroken vigil!" },
         phases =
@@ -313,6 +409,7 @@ xi.divergence.bossMechCfgs =
     {
         name            = 'Halphas',
         targetPartyOnly = true,
+        stats  = STATS_MEGA,
         stance = { startHpp = 85, periodSec = 16, stances = {
             { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Halphas raises his shield -- steel breaks against it!' },
             { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Halphas invokes divine ward -- magic dissolves!' },
@@ -331,6 +428,7 @@ xi.divergence.bossMechCfgs =
     {
         name            = 'Disjoined Elvaan',
         targetPartyOnly = true,
+        stats  = STATS_DISJOINED,
         stance = { startHpp = 80, periodSec = 14, stances = {
             { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Disjoined Elvaan\'s guard hardens -- steel is turned!' },
             { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Disjoined Elvaan wards the arcane -- magic scatters!' },
@@ -349,19 +447,26 @@ xi.divergence.bossMechCfgs =
 
     -- ── Bastok [D] (zone 295) ───────────────────────────────────────────────
     -- Mu'Sha Effigy -- giant-slayer effigy mid-boss. Echo silence + slow drain.
+    -- HP50 fury added 2026-07-13 (consistency pass: every Mid has a phase now).
     [17985538] =
     {
         name            = "Mu'Sha Effigy",
         targetPartyOnly = true,
+        stats  = STATS_MID,
         drain  = { periodSec = 10, healPct = 3 },
         cc     = { periodSec = 25, effect = xi.effect.SILENCE, power = 1, dur = 5, msg = "Mu'Sha Effigy resonates -- the echo dampens all sound!" },
         enrage = { sec = 300, att = 3500, haste = 100, msg = "Mu'Sha Effigy rings with the wrath of the twin moons!" },
+        phases =
+        {
+            { hp = 50, action = 'fury', att = 2500, haste = 100, msg = "Mu'Sha Effigy resonates in furious echo -- assault peaks!" },
+        },
     },
     -- Ka'Rho Fearsinger -- Fomor bard/mage mega-boss. Silence + fear + dispel + finale.
     [17985895] =
     {
         name            = "Ka'Rho Fearsinger",
         targetPartyOnly = true,
+        stats  = STATS_MEGA,
         cc     = { periodSec = 22, effect = xi.effect.SILENCE, power = 1, dur = 6, msg = "Ka'Rho Fearsinger begins a dread lay -- your voice is stolen!" },
         aoe    = { periodSec = 12, dmgPct = 20, msg = "Ka'Rho Fearsinger unleashes a Fearscream -- the walls tremble!" },
         drain  = { periodSec = 8,  healPct = 2 },
@@ -373,15 +478,19 @@ xi.divergence.bossMechCfgs =
         },
     },
     -- Disjoined Galka -- Wave 3 endgame Fomor Galka. Slow, heavy brute + roar + doom.
+    -- CC TERROR added 2026-07-13 (consistency pass: every other Disjoined boss
+    -- carries some cc; the war-bellow was thematic but toothless without a lock).
     [17986326] =
     {
         name            = 'Disjoined Galka',
         targetPartyOnly = true,
+        stats  = STATS_DISJOINED,
         stance = { startHpp = 80, periodSec = 16, stances = {
             { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Disjoined Galka bunches his shoulders -- weapons rebound!' },
             { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Disjoined Galka wards the arcane -- spells ripple off!' },
         } },
         aoe    = { periodSec = 12, dmgPct = 25, msg = 'Disjoined Galka slams the ground -- a giant shockwave rolls out!' },
+        cc     = { periodSec = 26, effect = xi.effect.TERROR, power = 1, dur = 4, msg = "Disjoined Galka's war-bellow shakes your bones -- you cannot move!" },
         drain  = { periodSec = 8,  healPct = 3 },
         enrage = { sec = 300, att = 5500, haste = 120, msg = 'Disjoined Galka lets loose a war-bellow -- Fomor blood erupts!' },
         phases =
@@ -398,6 +507,7 @@ xi.divergence.bossMechCfgs =
     {
         name            = 'Evincing Idol',
         targetPartyOnly = true,
+        stats  = STATS_MID,
         drain  = { periodSec = 10, healPct = 3 },
         enrage = { sec = 300, att = 3500, haste = 100, msg = 'Evincing Idol\'s runes blaze crimson -- it channels forbidden aid!' },
         phases =
@@ -410,6 +520,7 @@ xi.divergence.bossMechCfgs =
     {
         name            = 'Fii Pexu the Eternal',
         targetPartyOnly = true,
+        stats  = STATS_MEGA,
         stance = { startHpp = 85, periodSec = 16, stances = {
             { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Fii Pexu\'s form reforges as steel -- weapons cannot bite!' },
             { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Fii Pexu shifts to sorcerous flesh -- magic is undone!' },
@@ -428,6 +539,7 @@ xi.divergence.bossMechCfgs =
     {
         name            = 'Disjoined Tarutaru',
         targetPartyOnly = true,
+        stats  = STATS_DISJOINED,
         drain  = { periodSec = 8,  healPct = 3 },
         aoe    = { periodSec = 11, dmgPct = 22, msg = 'Disjoined Tarutaru unleashes a spell-burst -- arcane shards fly!' },
         cc     = { periodSec = 20, effect = xi.effect.SILENCE, power = 1, dur = 7, msg = 'Disjoined Tarutaru weaves a silence trap -- your voice is snuffed!' },
@@ -446,6 +558,7 @@ xi.divergence.bossMechCfgs =
     {
         name            = 'Impish Golem',
         targetPartyOnly = true,
+        stats  = STATS_MID,
         drain  = { periodSec = 10, healPct = 3 },
         stance = { startHpp = 60, periodSec = 18, stances = {
             { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Impish Golem plate-rotates -- weapons glance off!' },
@@ -462,6 +575,7 @@ xi.divergence.bossMechCfgs =
     {
         name            = 'Obstatrix',
         targetPartyOnly = true,
+        stats  = STATS_MEGA,
         stance = { startHpp = 85, periodSec = 14, stances = {
             { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Obstatrix blinks -- weapons find no purchase!' },
             { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Obstatrix\'s pupils widen -- spells scatter!' },
@@ -480,6 +594,7 @@ xi.divergence.bossMechCfgs =
     {
         name            = 'Disjoined Mithra',
         targetPartyOnly = true,
+        stats  = STATS_DISJOINED,
         stance = { startHpp = 80, periodSec = 12, stances = {
             { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Disjoined Mithra shifts stance -- steel bites nothing!' },
             { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Disjoined Mithra wards magic -- spells fizzle!' },
