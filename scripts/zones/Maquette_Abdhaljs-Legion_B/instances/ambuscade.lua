@@ -18,18 +18,20 @@ local instanceObject = {}
 -- ─── Difficulty tuning (owner call 2026-07-13) ────────────────────────────────
 -- The prior HP-only scaling (Intense VD = 5x HP) played "easy" because a level-
 -- 119 Breadwinner with stock mods can't hurt an ilvl-119 party -- more HP just
--- meant longer autoattacks. Rebuild: modest HP scaling, aggressive stat + mech
--- scaling. Owner directive: "make them very deadly, not necessarily with HP".
--- Intense VD HP cap set to 2.5x (was 5.0). Doom lands on the Intense VD tier
--- only.
+-- meant longer autoattacks. Rebuild layers aggressive stat + mech scaling on
+-- top of the original HP curve. Owner directive: "make them very deadly, not
+-- necessarily with HP" -- read here as "STACK deadliness on top of the HP,
+-- don't replace it" (the 2026-07-13 mid-day cut to 2.5x turned out to shrink
+-- fights below the point where the new mechanics could land, so it was
+-- restored). Doom lands on the Intense VD tier only.
 local DIFF_HP_SCALE =
 {
-    -- Intense VD→VE (was 5.0/3.5/2.5/1.8/1.0)
-    [1]  = 2.5,  [2]  = 2.0,  [3]  = 1.7,  [4]  = 1.4,  [5]  = 1.0,
-    -- Regular VD→VE (was 4.0/2.8/2.0/1.5/1.0)
-    [6]  = 2.0,  [7]  = 1.7,  [8]  = 1.4,  [9]  = 1.2,  [10] = 1.0,
-    -- Light VD→VE (was 1.3/1.2/1.0/0.9/0.8) -- kept as a true easy-mode ladder
-    [11] = 1.0,  [12] = 1.0,  [13] = 1.0,  [14] = 0.9,  [15] = 0.8,
+    -- Intense VD→VE
+    [1]  = 5.0,  [2]  = 3.5,  [3]  = 2.5,  [4]  = 1.8,  [5]  = 1.0,
+    -- Regular VD→VE
+    [6]  = 4.0,  [7]  = 2.8,  [8]  = 2.0,  [9]  = 1.5,  [10] = 1.0,
+    -- Light VD→VE
+    [11] = 1.3,  [12] = 1.2,  [13] = 1.0,  [14] = 0.9,  [15] = 0.8,
 }
 
 -- Flat stat bumps applied to Breadwinner + Urchins at spawn. Every field is a
