@@ -1286,3 +1286,10 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Shop** — Add !shop dice - all 31 Corsair roll dice at 1 gil
     - **Gm Home** — Buff GM-Home Serket HP to match the Hunt League fix
     - **Hunting League** — Buff Serket HP (Rank III was too soft)
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 422ecda6947c -->
+_Last updated: 2026-07-13 02:03 PDT_
+<!-- DOCGEN:END id="last-updated" -->
