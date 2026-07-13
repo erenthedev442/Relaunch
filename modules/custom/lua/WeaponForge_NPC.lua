@@ -538,7 +538,15 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         item(FM.imperialSilver,  step.silver,      'Imperial Silver Piece')
         item(FM.imperialGold,    step.gold,        'Imperial Gold Piece')
         item(FM.beitetsu,        step.beitetsu,    'Beitetsu')
-        if step.mat then item(chain.mat, step.mat, chain.name .. ' material') end
+        if step.mat then
+            -- Print the REAL item name ("Orthrus's Claw"), not "Twashtar material".
+            -- The generic label had players looking up retail info and bringing the
+            -- wrong item (Jamesta report, 2026-07-13). Falls back to the old label
+            -- if a new mat id was added without a lookup entry -- add one over in
+            -- catalog.empyreanMatNames rather than relying on the fallback.
+            local matName = catalog.empyreanMatNames[chain.mat] or (chain.name .. ' material')
+            item(chain.mat, step.mat, matName)
+        end
         return list, step.marks
     end
 

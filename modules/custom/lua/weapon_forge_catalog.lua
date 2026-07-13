@@ -263,6 +263,25 @@ catalog.forgeMats = { beastcoin = 1875, riftbornBoulder = 4061, byneBill = 1455,
     silverpiece = 1453, jadeshell = 1450, pluton = 4059, imperialBronze = 2184,
     imperialSilver = 2185, imperialGold = 2187, beitetsu = 4060 }
 
+-- Display names for empyrean chain materials, keyed by item id. Used by the
+-- Weapon Forger NPC so its recipe/error lines print the REAL item name
+-- ("Orthrus's Claw") instead of the generic chain-name label ("Twashtar
+-- material") that had players looking up retail info and grabbing the wrong
+-- material (Jamesta report, 2026-07-13: brought 50 Glavoid Shells for the
+-- Twashtar 119 upgrade -- Glavoid is Verethragna's mat; Twashtar wants
+-- Orthrus's Claw). Add a row here when you add a new empyrean chain.mat id.
+catalog.empyreanMatNames =
+{
+    [2927] = 'Glavoid Shell',            -- Verethragna
+    [2928] = 'Two-leaf Chloris Bud',     -- Ukonvasara, Gambanteinn
+    [2962] = "Itzpapalotl's Scale",      -- Caladbolg
+    [2963] = "Ulhuadshi's Fang",         -- Farsha, Gandiva
+    [3287] = "Orthrus's Claw",           -- Twashtar, Armageddon
+    [3288] = "Dragua's Scale",           -- Almace
+    [3498] = 'Clump of Riftdross',       -- Rhongomiant, Masamune
+    [3499] = 'Pinch of Riftcinder',      -- Redemption, Kannagi, Hvergelmir
+}
+
 -- Per-step: hlRank gate + material amounts. currency drained via delCurrency.
 catalog.empyreanCosts =
 {
