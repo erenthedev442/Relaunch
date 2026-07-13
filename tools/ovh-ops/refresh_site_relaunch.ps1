@@ -136,6 +136,16 @@ try {
         if($LASTEXITCODE -ne 0){
             & $Git commit -m "docs(sync): hourly regen from live server [writeback]" 2>&1 |
                 Out-File -FilePath $Log -Append -Encoding utf8
+            # origin is a local-path repo (C:\server) with 'relaunch' checked
+            # out, so a plain push is rejected by the default denyCurrentBranch.
+            # Assert push-to-checkout (updateInstead) on it so the push also
+            # updates its work tree. Idempotent; skipped if origin is ever a URL.
+            # Fixes the hourly writeback PUSH FAILED (2026-07-12).
+            $originUrl = (& $Git remote get-url origin 2>$null | Out-String).Trim()
+            if($originUrl -and (Test-Path $originUrl)){
+                & $Git -C $originUrl config receive.denyCurrentBranch updateInstead 2>&1 |
+                    Out-File -FilePath $Log -Append -Encoding utf8
+            }
             & $Git push origin HEAD:relaunch 2>&1 | Out-File -FilePath $Log -Append -Encoding utf8
             if($LASTEXITCODE -eq 0){ Log "[4/4] docs writeback: pushed regenerated pages to origin/relaunch" }
             else { Log "[4/4] docs writeback: PUSH FAILED (non-fatal) -- repo copies lag until next success" }
