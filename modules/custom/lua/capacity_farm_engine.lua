@@ -17,6 +17,37 @@ local function makeFarm(catalog)
     local logTag = catalog.logTag or ('capacity_farm_' .. (_zoneName or 'unknown'))
     local m = Module:new(logTag)
 
+    -- Aggro-safe warp: filter any spawn point within noSpawnRadius (default 25y,
+    -- comfortably above the 20-yalm sight/sound range for Lv150 mobs) of warpPos.
+    -- Farm mobs are isAggroable + SIGHT_AND_HEARING, so a point closer than that
+    -- would engage the player the instant !capacity drops them in. Runs once at
+    -- module load; the giant auto-generated point files stay untouched.
+    local aggroBuffer = catalog.noSpawnRadius or 25.0
+    local warp        = catalog.warpPos
+    local safePoints  = nil
+    if catalog.spawnPoints and warp then
+        local wx, wy, wz = warp.x, warp.y, warp.z
+        local r2 = aggroBuffer * aggroBuffer
+        safePoints = {}
+        local dropped = 0
+        for _, p in ipairs(catalog.spawnPoints) do
+            local dx, dy, dz = p.x - wx, p.y - wy, p.z - wz
+            if (dx*dx + dy*dy + dz*dz) > r2 then
+                safePoints[#safePoints + 1] = p
+            else
+                dropped = dropped + 1
+            end
+        end
+        print(string.format('[%s] warp-safe spawn pool: %d kept, %d dropped within %.1fy of warp (%.1f, %.1f, %.1f)',
+            logTag, #safePoints, dropped, aggroBuffer, wx, wy, wz))
+    end
+
+    local function insideAggro(x, y, z)
+        if not warp then return false end
+        local dx, dy, dz = x - warp.x, y - warp.y, z - warp.z
+        return (dx*dx + dy*dy + dz*dz) <= (aggroBuffer * aggroBuffer)
+    end
+
     local campZone
     local ensurePopulation  -- forward decl
     local pendingRespawns = 0  -- timers in-flight; keeps ensurePopulation from double-spawning
@@ -25,15 +56,25 @@ local function makeFarm(catalog)
         if not campZone then return end
 
         local x, y, z
-        local pts = catalog.spawnPoints
+        local pts = safePoints
         if pts and #pts > 0 then
             local p = pts[math.random(#pts)]
             x, y, z = p.x, p.y, p.z
         else
+            -- Random fallback around campCenter: reject picks inside the warp
+            -- aggro buffer and retry a few times before falling back to the
+            -- centre coord (safer than a spinning loop if the buffer swallows
+            -- the whole spread box).
             local c = catalog.campCenter
-            x = c.x + math.random(-catalog.spreadX, catalog.spreadX)
-            y = c.y
-            z = c.z + math.random(-catalog.spreadZ, catalog.spreadZ)
+            for _ = 1, 8 do
+                x = c.x + math.random(-catalog.spreadX, catalog.spreadX)
+                y = c.y
+                z = c.z + math.random(-catalog.spreadZ, catalog.spreadZ)
+                if not insideAggro(x, y, z) then break end
+            end
+            if insideAggro(x, y, z) then
+                x, y, z = c.x, c.y, c.z
+            end
         end
 
         -- Templates may be plain numbers (use catalog.groupZoneId) or
