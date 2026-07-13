@@ -17,7 +17,11 @@ VALUES
     (16600, 'dungeon_ranguemont_pass',  166, 210, 30, -178.8350,   4.0000, -154.8855, 192, NULL, NULL, NULL, NULL),
     (17400, 'dungeon_kuftal_tunnel',    174, 210, 30,   44.4200,  -9.8930,  260.3208,   8, NULL, NULL, NULL, NULL),
     (19300, 'dungeon_ordelles_caves',   193, 210, 30,   15.000,  32.000,  185.000, 127, NULL, NULL, NULL, NULL),
-    (19600, 'dungeon_gusgen_mines',     196, 210, 30,   46.4247, -67.8759, -340.0449, 249, NULL, NULL, NULL, NULL),
+    -- 2026-07-13 (Lant): Y=-67.88 was ~7 units below the walkable floor -- players spawned
+    -- underground and needed the leash tick to snap them up. Y=-60.20 matches the stock
+    -- Gusgen floor Y (56 stock spawns cluster at Y=-60). Restart-gated (instance_list is
+    -- read at map boot); a fresh run after the deploy loads the corrected entry.
+    (19600, 'dungeon_gusgen_mines',     196, 210, 30,   46.4247, -60.2000, -340.0449, 249, NULL, NULL, NULL, NULL),
     (19700, 'dungeon_crawlers_nest',    197, 210, 30,  380.617, -34.610,    4.581,  59, NULL, NULL, NULL, NULL),
     -- Fei'Yin entry moved 2026-07-10 (Jamesta: the 07-09 z=5.45 point spawns
     -- the player in a sealed alcove SOUTH of the Fei'Yin gate -- the door

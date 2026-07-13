@@ -99,23 +99,30 @@ catalog.dungeons =
         hpScale    = 4,
         mobs       = buildRoster(
         {
-            -- PROACTIVE reachability fix (2026-07-07, unverified): 5 far
-            -- mobs pulled from disconnected sections into the reachable cluster
-            -- near the instance start (594.4312, 0.192, -258.5914); midpoints of kept points.
-            { 564.529, -0.527, -279.526, 25 },
-            { 535.266, -1.34, -254.953, 127 },
-            { 518.664, -0.342, -269.722, 127 },
-            { 516.95, 0.007, -260.931, 127 },
-            { 444.05, -0.593, -199.797, 16 },
-            { 426.335, -0.087, -200.88, 40 },
-            { 423.001, -1.352, -212.33, 127 },
-            { 549.898, -0.933, -267.24, 127 }, -- relocated
-            { 403.335, -0.3, -165.684, 127 },
-            { 526.965, -0.841, -262.337, 127 }, -- relocated
-            { 517.807, -0.168, -265.327, 127 }, -- relocated
-            { 480.5, -0.293, -230.364, 127 }, -- relocated
-            { 479.016, -0.567, -230.478, 127 }, -- boss, cluster center
+            -- Roster fully rebuilt from retail zone-112 stock spawn coords
+            -- (2026-07-13, Lant's "1 mob + boss inside wall" report). Xarcabard
+            -- stock density near entry is thin -- only 4 unique Lost_Soul
+            -- points within 100u of entry, then an 84u gap. The 4 close coords
+            -- repeat 3x each for the 12 trash slots (safe: mobs are dynamic
+            -- entities with unique groupIds, they stack visually but don't
+            -- collide). The old (479, -0.5, -230) boss was between the two
+            -- tiers matching NO stock spawn -- that's the wall-clip source.
+            { 564.530, -0.530, -279.530,  25 },   -- Lost_Soul   36.5u
+            { 535.270, -1.340, -254.950, 127 },   -- Lost_Soul   59.3u
+            { 518.660, -0.340, -269.720, 127 },   -- Lost_Soul   76.6u
+            { 516.950,  0.010, -260.930, 127 },   -- Lost_Soul   77.5u
+            { 564.530, -0.530, -279.530,  25 },   -- Lost_Soul  (dup)
+            { 535.270, -1.340, -254.950, 127 },   -- Lost_Soul  (dup)
+            { 518.660, -0.340, -269.720, 127 },   -- Lost_Soul  (dup)
+            { 516.950,  0.010, -260.930, 127 },   -- Lost_Soul  (dup)
+            { 564.530, -0.530, -279.530,  25 },   -- Lost_Soul  (dup)
+            { 535.270, -1.340, -254.950, 127 },   -- Lost_Soul  (dup)
+            { 518.660, -0.340, -269.720, 127 },   -- Lost_Soul  (dup)
+            { 516.950,  0.010, -260.930, 127 },   -- Lost_Soul  (dup)
+            { 444.050, -0.590, -199.800,  16 },   -- Glacier Wyrm boss (161.5u)
         }, 'Frostbound Demon', 'Rimebound Weapon', 'Glacier Wyrm', 8),
+        -- Boss coord 161u from entry -- per-dungeon leash 175u to include it.
+        leash = 175,
     },
 
     boyahdaTree =
@@ -129,25 +136,27 @@ catalog.dungeons =
         hpScale    = 4,
         mobs       = buildRoster(
         {
-            -- Crawlers 01-04 were on the UPPER Y~11 ledge (X 345-418, Z -99), but the
-            -- instance drops players onto the Y~8.5 level (start_y 8.81), so these four
-            -- were stranded overhead and unreachable. Moved down to the Y~8.5 floor
-            -- beside Crawler 06/07. 05-13 (incl. the Ancient Guardian boss) already sit
-            -- on the reachable level. PROACTIVE/UNVERIFIED -- report if a straggler remains.
-            { 301.000, 8.450, -85.000, 205 },
-            { 298.000, 8.450, -80.000, 135 },
-            { 299.500, 8.500, -70.000, 141 },
-            { 296.000, 8.500, -76.000, 27  },
-            { 303.380, 8.358, -102.750, 164 },
-            { 299.610, 8.395, -83.037, 62   },
-            { 297.220, 8.540, -73.097, 185  },
-            { 298.560, 8.567, -4.452, 78    },
-            { 299.420, 8.636, 5.120, 183    },
-            { 303.130, 8.506, 20.774, 100   },
-            { 319.540, 8.647, 23.494, 73    },
-            { 335.780, 8.481, 16.539, 36    },
-            { 320.740, 8.673, -34.479, 119  },
+            -- Roster fully rebuilt from retail zone-153 stock spawn coords
+            -- (2026-07-13, Ropraz's early boss-order report + general cleanup).
+            -- Cluster follows the west z=-99..-105 corridor from entry into the
+            -- Death_Cap chamber at the dead end. Avoids the perpendicular
+            -- z=-25 tunnel that was catching players sideways.
+            { 417.910, 11.120,  -99.090, 205 },   -- Bark_Spider     33.6u
+            { 405.430, 11.400,  -98.610, 135 },   -- Bark_Spider     36.8u
+            { 364.360, 11.610,  -99.150, 141 },   -- Bark_Spider     66.6u
+            { 345.310, 11.480, -100.750,  27 },   -- Bark_Spider     84.2u
+            { 299.610,  8.390,  -83.040,  62 },   -- Bark_Spider    123.5u
+            { 303.380,  8.360, -102.750, 164 },   -- Death_Cap      124.1u
+            { 297.220,  8.540,  -73.100, 185 },   -- Bark_Spider    124.9u
+            { 290.120,  7.990, -105.880, 241 },   -- Death_Cap      137.7u
+            { 287.370,  7.760, -102.740,  29 },   -- Death_Cap      139.5u
+            { 286.350,  7.090,  -99.000, 222 },   -- Death_Cap      139.6u
+            { 265.290,  8.550, -100.020, 158 },   -- Bark_Spider    160.3u
+            { 264.020,  8.530,  -98.120,  42 },   -- Bark_Spider    161.1u
+            { 260.990,  8.510, -102.200, 253 },   -- Ancient Guardian boss 165.0u
         }, 'Boyahda Crawler', 'Boyahda Crab', 'Ancient Guardian', 8),
+        -- Boss ~165u from entry (corridor dead end); leash 180u to include it.
+        leash = 180,
     },
 
     ordellesCaves =
@@ -193,23 +202,32 @@ catalog.dungeons =
         hpScale    = 4,
         mobs       = buildRoster(
         {
-            -- Skeleton 01-03,05: original round-number coords clipped walls (Duff 2026-07-06).
-            -- Replaced with verified stock Gusgen (zone 196) floor spawn points. 04 left as-is
-            -- (Duff confirmed it reachable). Boss (idx 13) moved to the far platform per Duff.
-            { 18.982, -59.922, -169.474, 127  }, -- 01 (was 45,-67,-320 in wall)
-            { -58.000, -59.826, -207.000, 127 }, -- 02 (was 42,-66,-300 in wall)
-            { -47.129, -60.036, -218.823, 57  }, -- 03 (was 38,-64,-280 in wall)
-            { 34.000, -62.000, -260.000, 127  }, -- 04 (reachable, unchanged)
-            { 69.590, -59.701, -181.616, 127  }, -- 05 (was 28,-61,-240 in wall)
-            { 19.490, -60.205, -225.113, 78   },
-            { 15.079, -59.919, -216.982, 131  },
-            { 20.000, -60.234, -212.000, 68   },
-            { 13.000, -59.000, -183.000, 18   },
-            { 19.282, -59.874, -175.445, 127  },
-            { -14.282, -59.900, -177.424, 15 },
-            { -28.088, -59.560, -180.088, 127 },
-            { 20.000, -60.000, -13.000, 127 }, -- boss: far platform (was -60,-59,-177 near entrance)
+            -- Roster fully rebuilt from retail zone-196 stock spawn coords
+            -- (2026-07-13, Lant's "you spawn underground" + Ropraz's zone-line
+            -- to Oldton reports). Every coord verbatim from stock. Cluster
+            -- sits in the central Gusgen chamber (x=-55..+70, z=-225..-176)
+            -- -- well inside the map interior, away from the Oldton zone-line
+            -- at the map edge. Entry Y in dungeon_instances.sql corrected
+            -- from -67.88 (underground) to -60.20 (walkable floor).
+            { 19.490, -60.200, -225.110,  78 },   -- Skeleton_Warrior 118.3u
+            { 15.080, -59.920, -216.980, 131 },   -- Skeleton_Warrior 127.2u
+            { 15.000, -59.880, -217.000, 109 },   -- Ghoul            127.2u
+            { 20.000, -60.230, -212.000,  68 },   -- Skeleton_Warrior 131.0u
+            {-29.000, -60.830, -219.000,  26 },   -- Skeleton_Warrior 142.8u
+            {-47.130, -60.040, -218.820,  57 },   -- Ghoul            153.3u
+            { 62.000, -59.480, -186.000, 127 },   -- Fly_Agaric       155.1u
+            {-55.780, -60.970, -223.590,  21 },   -- Ghoul            155.1u
+            { 69.590, -59.700, -181.620, 127 },   -- Fly_Agaric       160.3u
+            { 13.000, -59.000, -183.000,  18 },   -- Skeleton_Warrior 160.8u
+            { 56.340, -59.620, -178.880, 127 },   -- Fly_Agaric       161.7u
+            { 63.000, -59.670, -176.000, 127 },   -- Fly_Agaric       165.1u
+            {-16.710, -59.780, -186.030,  66 },   -- Grieving Spirit boss 166.6u
         }, 'Gusgen Skeleton', 'Gusgen Hound', 'Grieving Spirit', 8),
+        -- Cluster is ~118-167u from entry (Gusgen entry sits in a north
+        -- alcove disconnected from the mob chamber). Leash 180u encloses the
+        -- whole cluster + a bit of margin so the walk from entry to first
+        -- mob doesn't get snapped back constantly.
+        leash = 180,
     },
 
     kuftalTunnel =
@@ -223,22 +241,23 @@ catalog.dungeons =
         hpScale    = 4,
         mobs       = buildRoster(
         {
-            -- PROACTIVE reachability fix (2026-07-07, unverified): 5 far
-            -- mobs pulled from disconnected sections into the reachable cluster
-            -- near the instance start (44.42, -9.893, 260.3208); midpoints of kept points.
-            { 57.0, -10.0, 260.0, 19 },
-            { 53.604, -11.836, 251.394, 127 },
-            { 60.398, -10.361, 252.211, 127 },
-            { 61.791, -10.452, 244.355, 21 },
-            { 79.0, -10.0, 220.0, 39 },
-            { 69.106, -11.538, 209.402, 127 },
-            { 91.0, -9.0, 220.0, 127 },
-            { 60.906, -9.031, 198.387, 127 },
-            { 55.302, -10.918, 255.697, 127 }, -- relocated
-            { 57.001, -11.099, 251.803, 127 }, -- relocated
-            { 61.094, -10.407, 248.283, 127 }, -- relocated
-            { 70.395, -10.226, 232.178, 127 }, -- relocated
-            { 66.601, -10.277, 231.969, 127 }, -- boss, cluster center
+            -- Roster fully rebuilt from retail zone-174 stock spawn coords
+            -- (2026-07-13, Lant's "1 mob spawned inside the wall" report).
+            -- Every coord below is verbatim from sql/mob_spawn_points.sql --
+            -- guaranteed walkable navmesh. Sorted by distance from entry.
+            { 57.000, -10.000, 260.000,  19 },   -- Robber_Crab      12.6u
+            { 53.600, -11.840, 251.390, 127 },   -- Robber_Crab      13.0u
+            { 60.400, -10.360, 252.210, 127 },   -- Robber_Crab      17.9u
+            { 61.790, -10.450, 244.350,  21 },   -- Robber_Crab      23.6u
+            { 79.000, -10.000, 220.000,  39 },   -- Robber_Crab      53.1u
+            { 69.110, -11.540, 209.400, 127 },   -- Robber_Crab      56.6u
+            { 91.000,  -9.000, 220.000, 127 },   -- Robber_Crab      61.6u
+            { 60.910,  -9.030, 198.390, 127 },   -- Fire_Elemental   64.1u
+            { 55.520,  -6.610, 190.470, 127 },   -- Cave_Worm        70.8u
+            { 100.000, -9.000, 215.000, 127 },   -- Robber_Crab      71.7u
+            { 61.000,  -5.000, 185.000, 127 },   -- Cave_Worm        77.3u
+            { 97.550, -10.380, 202.470, 127 },   -- Robber_Crab      78.6u
+            { 59.630,  -3.670, 180.910,  22 },   -- Needleback boss  81.1u
         }, 'Kuftal Worm', 'Kuftal Lizard', 'Needleback', 8),
     },
 
@@ -253,23 +272,28 @@ catalog.dungeons =
         hpScale    = 4,
         mobs       = buildRoster(
         {
-            -- PROACTIVE reachability fix (2026-07-07, unverified): 5 far
-            -- mobs pulled from disconnected sections into the reachable cluster
-            -- near the instance start (300.8949, -40.1816, 69.8268); midpoints of kept points.
-            { 334.0, -33.0, 53.0, 118 },
-            { 323.0, -30.884, 20.0, 127 },
-            { 300.0, -25.0, 21.0, 100 },
-            { 278.257, -20.612, 20.825, 127 },
-            { 261.059, -19.39, -7.422, 127 },
-            { 245.0, -19.0, -20.0, 127 },
-            { 238.0, -18.0, -19.0, 127 },
-            { 216.0, -20.0, -21.0, 127 },
-            { 328.5, -31.942, 36.5, 127 }, -- relocated
-            { 311.5, -27.942, 20.5, 127 }, -- relocated
-            { 289.129, -22.806, 20.913, 127 }, -- relocated
-            { 269.658, -20.001, 6.701, 127 }, -- relocated
-            { 274.414, -23.236, 5.925, 127 }, -- boss, cluster center
+            -- Roster fully rebuilt from retail zone-212 stock spawn coords
+            -- (2026-07-13, Lant's "1 mob + boss inside wall" report). Every
+            -- coord verbatim from sql/mob_spawn_points.sql. Cluster follows the
+            -- tunnel from Y=-33 down and up to Y=-10 as it ramps -- Y=+10
+            -- cavern excluded (unreachable perpendicular level).
+            { 334.000, -33.000,  53.000, 118 },   -- Hell_Bat          37.8u
+            { 300.000, -25.000,  21.000, 100 },   -- Hell_Bat          51.1u
+            { 323.000, -30.880,  20.000, 127 },   -- Hell_Bat          55.3u
+            { 278.260, -20.610,  20.820, 127 },   -- Hell_Bat          57.4u
+            { 259.000, -18.000,   1.000, 127 },   -- Goblin_Reaper     83.6u
+            { 261.060, -19.390,  -7.420, 127 },   -- Hawker            89.4u
+            { 245.000, -19.000, -20.000, 127 },   -- Goblin_Poacher   107.9u
+            { 238.000, -18.000, -19.000, 127 },   -- Hawker           111.1u
+            { 216.000, -20.000, -21.000, 127 },   -- Hawker           126.0u
+            { 176.950, -11.420, -28.130, 104 },   -- Goblin_Robber    160.6u
+            { 164.000, -10.000, -39.000,  28 },   -- Hawker           177.5u
+            { 158.290, -10.660, -36.630,  75 },   -- Goblin_Robber    180.4u
+            { 158.260, -10.840, -39.340, 127 },   -- Ironclaw boss    182.0u
         }, 'Gustav Bat', 'Gustav Fly', 'Ironclaw', 8),
+        -- Boss ~182u from entry (natural tunnel ramp end); per-dungeon leash
+        -- 200u to keep player chasing the boss inside the bubble.
+        leash = 200,
     },
 
     ifritsCauldron =
@@ -313,29 +337,36 @@ catalog.dungeons =
         hpScale    = 4,
         mobs       = buildRoster(
         {
-            -- PROACTIVE reachability fix (2026-07-07, unverified): 5 far
-            -- mobs pulled from disconnected sections into the reachable cluster
-            -- near the instance start; midpoints of kept points.
-            -- 2026-07-09: the instance start itself moved to the stock Talos
-            -- point (-49.72, -0.112, 5.45) -- the old (-40, 0, -5) floated 16
-            -- yalms above the real floor (Jamesta: spawned outside the map).
-            -- The mob that sat on the Talos point moved ~18y up the corridor
-            -- (between the stock Goblin_Bandit and Talos camps) so players
-            -- don't zone in on top of a golem.
-            { -52.0, -0.25, 24.0, 104 },
-            { -51.19, -0.018, 32.207, 251 },
-            { -62.33, -0.5, 19.027, 10 },
-            { -71.84, -0.112, 30.037, 129 },
-            { -90.0, -0.112, 72.0, 37 },
-            { -87.73, -0.108, 90.366, 172 },
-            { -90.48, -0.024, 111.93, 225 },
-            { -50.455, -0.065, 18.829, 127 }, -- relocated
-            { -56.76, -0.259, 25.617, 127 }, -- relocated
-            { -67.085, -0.306, 24.532, 127 }, -- relocated
-            { -48.0, -0.112, 110.0, 67 },
-            { -80.92, -0.112, 51.019, 127 }, -- relocated
-            { -68.911, -0.137, 58.877, 127 }, -- boss, cluster center
+            -- Roster fully rebuilt from retail zone-204 stock spawn coords
+            -- (2026-07-13, Lant + Jamesta reports: players running the wrong
+            -- way get pulled back into a dead-end room, can't reach the mobs
+            -- in the next hallway). Prior roster spanned z=18..111 -- boss at
+            -- z=+58 was 33u from the entry cluster, past the default 55u
+            -- leash bubble, so players who chased west-arm mobs got snapped
+            -- back to entry and couldn't reach them again. New roster is 13
+            -- unique upper-level (Y ~ 0) stock points across three arms
+            -- (tight core, east arm, west arm), per-dungeon leash raised to
+            -- 65u to keep the whole cluster inside the bubble. All coords
+            -- verbatim from stock; NO lower-level (Y=-16) points -- those
+            -- required an unreachable ramp and were the dead-end trap.
+            { -62.330, -0.500, 19.030,  10 },   -- Talos            5.7u
+            { -47.990, -0.110, 21.130,   3 },   -- Underworld_Bats  9.0u
+            { -51.190, -0.020, 32.210, 251 },   -- Talos           12.6u
+            { -49.720, -0.110,  5.450, 104 },   -- Talos           17.2u
+            { -71.840, -0.110, 30.040, 129 },   -- Talos           17.4u
+            { -87.660, -0.110, 20.640, 245 },   -- Underworld_Bats 30.7u
+            {  -3.780, -0.130, 28.430,  18 },   -- Droma           53.7u
+            {-100.500, -0.110, 54.800, 196 },   -- Underworld_Bats 55.1u
+            {  -4.410,  0.340, 40.530, 246 },   -- Camazotz        56.1u
+            { -91.150, -0.500, 68.630,  37 },   -- Killing_Weapon  58.6u
+            {   1.870, -0.120, 27.340,  10 },   -- Droma           59.2u
+            { -90.740, -0.030, 70.510, 196 },   -- Hellish_Weapon  59.9u
+            { -90.000, -0.110, 72.000,  37 },   -- Frostmaw Morbol boss 60.7u
         }, "Fei'Yin Golem", "Fei'Yin Pot", 'Frostmaw Morbol', 8),
+        -- Boss 60.7u from entry (west arm end); leash 65u encloses it with
+        -- ~4u of margin. All 13 mobs on the upper level so no cross-level
+        -- ramping / dead-end trap.
+        leash = 65,
     },
 
     ranguemontPass =

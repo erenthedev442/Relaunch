@@ -10,6 +10,9 @@ local mechanics    = require('modules/custom/lua/mob_mechanics_library')
 -- private instance and ends the run -- so we pull them back first. Generous so
 -- normal fighting near the route never trips it; tune down if players still slip
 -- out, up if legitimate positions get yanked.
+-- Per-dungeon override via dungeon.leash in dungeon_catalog.lua (2026-07-13
+-- Xarcabard needs 175u to include the boss coord 161u from entry; Fei-Yin
+-- needs 65u to reach the west-arm mobs 60u out).
 local DUNGEON_LEASH = 55
 
 -- Hot-reloadable: reuse the cached table so a FileWatcher re-run updates
@@ -313,7 +316,8 @@ runtime.create = function(dungeonKey)
                         bestDef = def
                     end
                 end
-                if bestDef and bestSq > DUNGEON_LEASH * DUNGEON_LEASH then
+                local leash = dungeon.leash or DUNGEON_LEASH
+                if bestDef and bestSq > leash * leash then
                     player:setPos(bestDef.x, bestDef.y, bestDef.z, bestDef.r)
                     player:printToPlayer(
                         '[Dungeon] You strayed toward a zone line and were pulled back onto the route.',
