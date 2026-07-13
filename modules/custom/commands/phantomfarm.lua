@@ -49,12 +49,15 @@ local function spawnOnePhantom(zone, catalog)
     local x, y, z
     if pts and #pts > 0 then
         local p = pts[math.random(#pts)]
-        x, y, z = p[1], p[2], p[3]
+        -- Points use named keys (capacity_farm_points.lua: { x = ..., y = ...,
+        -- z = ... }), not numeric indices -- p[1] would be nil and setSpawn
+        -- would then throw "expected number, received nil". Matches the engine.
+        x, y, z = p.x, p.y, p.z
     else
         local c = catalog.campCenter
-        x = c.x + (math.random() * 2 - 1) * (catalog.spreadX or 5)
+        x = c.x + math.random(-catalog.spreadX, catalog.spreadX)
         y = c.y
-        z = c.z + (math.random() * 2 - 1) * (catalog.spreadZ or 5)
+        z = c.z + math.random(-catalog.spreadZ, catalog.spreadZ)
     end
 
     local tpl = catalog.templates[math.random(#catalog.templates)]
