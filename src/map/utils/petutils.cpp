@@ -582,12 +582,15 @@ void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats,
         static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setSkillType(SKILL_AUTOMATON_MELEE);
         static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setDelay(petStats->cmbDelay); // every pet should use this eventually
         static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setBaseDelay(petStats->cmbDelay);
-        // FJB: increased weapon rating so automatons can deal meaningful damage vs high-level custom NMs.
-        // Old formula (skill/9)*2+3 gives D87 at rank-5 lv99; new formula gives D146 — closer to a real lv99 weapon.
-        static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setDamage(PPet->GetSkill(SKILL_AUTOMATON_MELEE) / 3 + 20);
+        // FJB: bumped weapon rating so automatons contribute vs high-level custom NMs.
+        // Stock formula (skill/9)*2+3 gives D87 at rank-5 lv99 (skill 380); the initial FJB
+        // formula skill/3+20 pushed that to D146 (+59). 2026-07-13 owner call: cut the boost
+        // by 80% -> (skill/9)*2 + 15 gives a flat +12 over stock at every skill level (D99 at
+        // rank-5 lv99). Retail-shaped scaling, small headroom for lv150 NMs.
+        static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_MELEE) / 9) * 2 + 15);
 
         static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_RANGED])->setSkillType(SKILL_AUTOMATON_RANGED);
-        static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_RANGED])->setDamage(PPet->GetSkill(SKILL_AUTOMATON_RANGED) / 3 + 20);
+        static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_RANGED])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_RANGED) / 9) * 2 + 15);
         static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_RANGED])->setDmgType(DAMAGE_TYPE::PIERCING);
 
         // Automatons are hard to interrupt
@@ -628,38 +631,45 @@ void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats,
             PPet->addModifier(Mod::MEVA, PMaster->getMod(Mod::PET_MACC_MEVA));
             // FJB: flat ACC/ATT bonus so automatons can meaningfully participate against
             // level-150 custom NMs. Skill is capped at lv99 but our NMs are lv150 with
-            // large EVA/DEF mods — without this boost automatons miss constantly and do
+            // large EVA/DEF mods -- without a bump automatons miss constantly and do
             // near-zero damage even with optimal attachments.
             //
+            // 2026-07-13 owner call: cut all six flats by 80% (ATT 400->80, ACC 300->60,
+            // DEF 400->80, REGEN 100->20, HP 10k+MaxHP/2 clamp 28k -> 2k+MaxHP/10 clamp 5.6k)
+            // because the previous stack was tuned against lv150 NMs but stomped everything
+            // else on the server. Trim leaves the shape retail-adjacent with headroom for
+            // lv150 fights.
+            //
             // IDEMPOTENT RE-ENTRY GUARD (ported from Legendary): this block re-runs
-            // against the LIVING pet on every mid-life recalc — stock LSB calls
+            // against the LIVING pet on every mid-life recalc -- stock LSB calls
             // puppetutils::LoadAutomaton on EVERY master level-up (charutils
             // AddExperiencePoints), plus head/frame changes (0x102) and
             // level-restriction recalcs. addModifier stacking wrapped the int16 HP mod
             // negative after 1-2 level-ups and the automaton dropped dead the moment
             // its master leveled. Strip the previous application (tracked in entity
             // local vars, which live and die with the same entity the mods live on)
-            // before re-adding.
+            // before re-adding. IMPORTANT: the del constants MUST match the current add
+            // constants -- if you retune, retune both sides together.
             if (PPet->GetLocalVar("fjb_auto_boost") == 1)
             {
-                PPet->delModifier(Mod::ATT, 400);
-                PPet->delModifier(Mod::ACC, 300);
-                PPet->delModifier(Mod::DEF, 400);
-                PPet->delModifier(Mod::REGEN, 100);
+                PPet->delModifier(Mod::ATT, 80);
+                PPet->delModifier(Mod::ACC, 60);
+                PPet->delModifier(Mod::DEF, 80);
+                PPet->delModifier(Mod::REGEN, 20);
                 PPet->delModifier(Mod::HP, (int16)PPet->GetLocalVar("fjb_auto_hp"));
             }
-            PPet->addModifier(Mod::ATT, 400);
-            PPet->addModifier(Mod::ACC, 300);
+            PPet->addModifier(Mod::ATT, 80);
+            PPet->addModifier(Mod::ACC, 60);
 
             // FJB: survivability pass -- lv99-capped automatons fight lv150 NMs, so the
-            // stock ~2-3k HP gets them one-shot by NM hits/AoEs. Give a big flat HP buffer
+            // stock ~2-3k HP gets them one-shot by NM hits/AoEs. Give a modest flat HP buffer
             // (partly scaled to the master's own max HP so the pet grows with your gear;
-            // clamped to the int16 modifier ceiling), extra DEF on top of the frame's, and
-            // light regen for between-Repair sustain. Spawn at full HP.
-            const int16 fjbAutoHp = (int16)std::min(28000, 10000 + (int32)(PMaster->GetMaxHP() / 2));
+            // clamped well below the int16 modifier ceiling), extra DEF on top of the
+            // frame's, and light regen for between-Repair sustain. Spawn at full HP.
+            const int16 fjbAutoHp = (int16)std::min(5600, 2000 + (int32)(PMaster->GetMaxHP() / 10));
             PPet->addModifier(Mod::HP, fjbAutoHp);
-            PPet->addModifier(Mod::DEF, 400);
-            PPet->addModifier(Mod::REGEN, 100);
+            PPet->addModifier(Mod::DEF, 80);
+            PPet->addModifier(Mod::REGEN, 20);
             PPet->SetLocalVar("fjb_auto_boost", 1);
             PPet->SetLocalVar("fjb_auto_hp", (uint32)fjbAutoHp);
             PPet->health.hp = PPet->GetMaxHP(); // full HP on (re)apply — mirrors the master's own level-up heal

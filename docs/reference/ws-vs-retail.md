@@ -40,9 +40,10 @@ Two related tweaks build on this:
 - **Prime Aftermath** grants a *Damage Limit +%* bonus on several Prime
   weapons, which raises the ceiling further before the uncap even matters — see
   [Prime Armory](../progression/prime-armory.md).
-- **Automatons** get a flat outgoing-damage multiplier so a level-99-capped
-  puppet can still contribute against the server's level-150 NMs. A PUP's
-  weapon skills therefore hit far harder here than on retail.
+- **Automatons** get a small flat outgoing-damage multiplier so a level-99-capped
+  puppet can still contribute against the server's level-150 NMs. PUP's automaton
+  hits land modestly harder here than on retail — headroom for high-level NMs,
+  not a DD-tier boost.
 
 ---
 

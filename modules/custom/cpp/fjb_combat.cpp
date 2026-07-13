@@ -51,7 +51,10 @@ namespace
     // weaponskills, which all funnel through TakePhysical/TakeWeaponskillDamage).
     // Does NOT touch magic-frame nukes or any non-automaton entity.
     // 2026-07-06: turned down 20 -> 5 (relaunch PUP power reduction).
-    constexpr float AUTOMATON_DMG_MULTIPLIER = 5.0f;
+    // 2026-07-13: owner call to cut the boost by 80%. The "boost" is the delta above
+    // baseline 1.0x, so 5.0x (boost +4.0) -> 1.8x (boost +0.8). Small headroom over
+    // stock damage; stat block in petutils.cpp got the same 80% trim in the same pass.
+    constexpr float AUTOMATON_DMG_MULTIPLIER = 1.8f;
 
     // Main-job-RNG player ranged-damage multiplier (auto-shots, Barrage,
     // ranged weaponskills, Eagle Eye Shot — everything funnels through
