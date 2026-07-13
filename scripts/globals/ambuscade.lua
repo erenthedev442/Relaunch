@@ -576,7 +576,40 @@ local function findPartyAmbuscade(player)
     return nil
 end
 
+-- ENTRY GATE: requires proof of endgame combat readiness before Ambuscade
+-- opens. The two thresholds:
+--   * >=1 HNM King kill  (any of the 6 Land Kings; tracked in custom_HNM_system.lua)
+--   * >=1 HTBF clear at EACH of T1, T2, T3  (tracked in htbf.lua onEventFinishWin)
+-- Gate runs on both createInstance (host) AND setInstance (party join), so a
+-- qualified host can't smuggle unqualified party members into the fight.
+local function checkAmbuscadeEntryReqs(player)
+    local kings = player:getCharVar('HNM_King_Kills') or 0
+    local t1 = player:getCharVar('HTBF_Cleared_T1') or 0
+    local t2 = player:getCharVar('HTBF_Cleared_T2') or 0
+    local t3 = player:getCharVar('HTBF_Cleared_T3') or 0
+    if kings >= 1 and t1 >= 1 and t2 >= 1 and t3 >= 1 then
+        return true
+    end
+    -- Concise, one-line status so the player knows exactly what's missing.
+    local missing = {}
+    if kings < 1 then missing[#missing + 1] = 'HNM King kill' end
+    if t1 < 1 then missing[#missing + 1] = 'HTBF T1' end
+    if t2 < 1 then missing[#missing + 1] = 'HTBF T2' end
+    if t3 < 1 then missing[#missing + 1] = 'HTBF T3' end
+    player:printToPlayer(
+        '[Ambuscade] Entry requires: 1 HNM King kill + 1 HTBF clear at each of T1/T2/T3.',
+        SYS)
+    player:printToPlayer(
+        string.format('[Ambuscade] Still needed: %s.', table.concat(missing, ', ')),
+        SYS)
+    return false
+end
+
 local function enterAmbuscade(player, diffOption)
+    if not checkAmbuscadeEntryReqs(player) then
+        return
+    end
+
     local partyInst = findPartyAmbuscade(player)
     if partyInst then
         -- setInstance registers the char on the instance (numChars now counts

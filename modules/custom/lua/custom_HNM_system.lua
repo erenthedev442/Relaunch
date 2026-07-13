@@ -430,4 +430,50 @@ hnmSystem:addOverride('xi.zones.East_Sarutabaruta.mobs.Spiny_Spipi.onMobDespawn'
     xi.mob.updateNMSpawnPoint(eastSarutabarutaID.mob.SPINY_SPIPI)
 end)
 
+-----------------------------------
+-- HNM King kill-credit (per-player)
+-----------------------------------
+-- Bump the HNM_King_Kills charVar for every player who received EXP from a King
+-- kill (the whole alliance -- not just the killing-blow player). Used as an
+-- entry gate for content that requires proof of endgame combat readiness
+-- (e.g. Ambuscade). The 6 IDs below are the Land Kings from docs/progression/hnm.md:
+-- NQ + HQ pair per zone (Fafnir/Nidhogg, Adamantoise/Aspidochelone, Behemoth/King Behemoth).
+-- Lazy-init: some zone IDs (esp. Valley_of_Sorrows.mob.ASPIDOCHELONE) can be
+-- nil at module-load time if their IDs.lua hasn't run yet. Building the table
+-- at kill-time guarantees the zone is fully loaded (a King is dying in it).
+local _hnm_king_ids = nil
+local function getHnmKingIds()
+    if _hnm_king_ids then return _hnm_king_ids end
+    local t = {}
+    local function add(id, name) if id then t[id] = name end end
+    add(dragonsAeryID.mob.FAFNIR,          'Fafnir')
+    add(dragonsAeryID.mob.NIDHOGG,         'Nidhogg')
+    add(valleySorrowsID.mob.ADAMANTOISE,   'Adamantoise')
+    add(valleySorrowsID.mob.ASPIDOCHELONE, 'Aspidochelone')
+    add(behemothDomID.mob.BEHEMOTH,        'Behemoth')
+    add(behemothDomID.mob.KING_BEHEMOTH,   'King Behemoth')
+    _hnm_king_ids = t
+    return t
+end
+
+hnmSystem:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSkillKill)
+    super(mob, player, isKiller, isWeaponSkillKill)
+
+    -- onMobDeathEx fires once per reward-eligible player, so every alliance
+    -- member who tagged the mob gets credit -- no reliance on final-hit RNG.
+    local kingName = getHnmKingIds()[mob:getID()]
+    if not kingName or not player then return end
+
+    pcall(function()
+        local now = (player:getCharVar('HNM_King_Kills') or 0) + 1
+        player:setCharVar('HNM_King_Kills', now)
+        if now == 1 then
+            -- Only annouce the first credit -- avoid spamming on subsequent HNMs.
+            player:printToPlayer(string.format(
+                '[HNM] %s vanquished -- first HNM King kill recorded (%d total).',
+                kingName, now), xi.msg.channel.SYSTEM_3)
+        end
+    end)
+end)
+
 return hnmSystem

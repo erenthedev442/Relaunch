@@ -232,6 +232,15 @@ function htbf.register(fightKey, tier)
                     (player:getCharVar('HL_Points_Lifetime') or 0) + rew.marks)
             end)
         end
+        -- Per-tier clear flag: used as an entry gate for Ambuscade (must have
+        -- cleared at least one HTBF at each of T1/T2/T3). tier is the register()
+        -- arg captured in this closure -- one flag per player per tier, sticky
+        -- (never cleared).
+        pcall(function()
+            if tier and tier >= 1 and tier <= 3 then
+                player:setCharVar('HTBF_Cleared_T' .. tier, 1)
+            end
+        end)
         -- Item loot. HTBF fights use a custom battlefieldId with NO C++ retail
         -- treasure, and the reuse-base fights end their win in varied ways (most
         -- on a bare setStatus(WON) that never opens an Armoury Crate), so the

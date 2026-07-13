@@ -5,6 +5,15 @@ Retail-style instanced boss fights in Mhaura, on demand and freely repeatable. C
 !!! tip "Summary"
     Talk to the **Ambuscade Tome** in Mhaura to enter a private instance (three modes × five difficulties). Clears pay **Hallmarks** (monthly-capped) and **Gallantry**. Spend Hallmarks at **Gorpa-Masorpa** on gear vouchers and Abdhaljs materials. Redeem vouchers at the **Voucher Clerk** for your job's Ambuscade armor — then trade the piece + Abdhaljs Metal/Fiber back to Gorpa-Masorpa to upgrade it to +1/+2.
 
+## Entry requirements
+
+Ambuscade is endgame content. Before the Tome will let you in, you must have:
+
+- **At least 1 [HNM King](../progression/hnm.md) kill** — Fafnir, Nidhogg, Adamantoise, Aspidochelone, Behemoth, or King Behemoth. Any alliance member on the kill is credited.
+- **At least 1 [HTBF](high-tier-battlefields.md) clear at each of T1, T2, and T3** — three separate clears total, one per tier.
+
+The gate applies both to the host and to anyone joining a party member's instance — every player who zones in must qualify individually. The Tome will tell you exactly what's missing if you're short.
+
 ## The NPCs
 
 All three stand together in Mhaura:
