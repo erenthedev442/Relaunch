@@ -417,4 +417,253 @@ catalog.getDungeonByInstanceId = function(instanceId)
     return nil
 end
 
+-----------------------------------
+-- Boss mechanics (owner 2026-07-12 audit: bosses previously had HP-scaled
+-- retail kit only -- felt indistinguishable per dungeon). Each cfg is consumed
+-- by modules/custom/lua/mob_mechanics_library.lua via mechanics.attach(mob, cfg)
+-- from dungeon_instance.lua's spawnDungeonMob when the boss slot spawns.
+--
+-- Tuning target: dungeons are 30-min timed clears at ILV 125 with hpScale=8;
+-- these sit roughly at Hunting League Rank III intensity -- memorable pressure
+-- without wall-tier lockouts. Enrage timers land around 200-240s so a clean
+-- clear beats them, a slow clear feels them.
+-----------------------------------
+catalog.bossMechCfgs =
+{
+    -- Fungus/spore theme: parasitic drain + poison cloud + spore burst.
+    crawlersNest =
+    {
+        name            = 'Nestblight Exoray',
+        targetPartyOnly = true,
+        drain  = { periodSec = 8,  healPct = 3 },
+        cc     = { periodSec = 30, effect = xi.effect.POISON, power = 250, dur = 30, msg = 'Nestblight Exoray releases a cloud of noxious spores!' },
+        aoe    = { periodSec = 15, dmgPct = 18, msg = 'Nestblight Exoray erupts -- fungal spores burst outward!' },
+        enrage = { sec = 240, att = 3500, haste = 100, msg = 'Nestblight Exoray swells -- the whole colony vibrates with rage!' },
+    },
+
+    -- Ice wyrm: phys/mag stance dance + freezing breath + two flight phases.
+    xarcabard =
+    {
+        name            = 'Glacier Wyrm',
+        targetPartyOnly = true,
+        stance = { startHpp = 90, periodSec = 16, stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Glacier Wyrm\'s scales sheet with ice -- use magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Glacier Wyrm shrugs off magic -- cut it with steel!' },
+        } },
+        aoe    = { periodSec = 13, dmgPct = 22, msg = 'Glacier Wyrm inhales -- a frost breath is coming!' },
+        enrage = { sec = 220, att = 4000, haste = 120, msg = 'Glacier Wyrm rears back -- the whole cavern chills!' },
+        phases =
+        {
+            { hp = 66, action = 'fury', att = 2500, haste = 90,  msg = 'Glacier Wyrm takes flight -- its assault quickens!' },
+            { hp = 33, action = 'fury', att = 3500, haste = 120, msg = 'Glacier Wyrm slams down in a bloodied frenzy!' },
+        },
+    },
+
+    -- Treant/golem: root-fed drain + bark stance + wind-shear dispel at 40%.
+    boyahdaTree =
+    {
+        name            = 'Ancient Guardian',
+        targetPartyOnly = true,
+        drain  = { periodSec = 8, healPct = 3 },
+        stance = { startHpp = 85, periodSec = 18, stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Ancient Guardian\'s bark thickens -- iron will not bite!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Ancient Guardian shrugs off spellcraft -- strike with steel!' },
+        } },
+        enrage = { sec = 240, att = 3500, haste = 100, msg = 'Ancient Guardian creaks -- its roots draw fresh strength!' },
+        phases =
+        {
+            { hp = 40, action = 'dispel', count = 3, msg = 'Ancient Guardian sheds a wind of leaves -- your blessings scatter!' },
+        },
+    },
+
+    -- Ooze: heavy consume-drain + acid burst + two "split & reform" fury phases.
+    ordellesCaves =
+    {
+        name            = 'Mireheart Slime',
+        targetPartyOnly = true,
+        drain  = { periodSec = 7,  healPct = 4 },
+        aoe    = { periodSec = 11, dmgPct = 18, msg = 'Mireheart Slime bursts -- acid sprays in every direction!' },
+        enrage = { sec = 240, att = 3500, haste = 100, msg = 'Mireheart Slime coalesces -- a single ferocious mass rises!' },
+        phases =
+        {
+            { hp = 66, action = 'fury', att = 2500, haste = 90,  msg = 'Mireheart Slime splits -- and reforms tougher!' },
+            { hp = 33, action = 'fury', att = 3000, haste = 110, msg = 'Mireheart Slime pulses -- devouring the cavern floor for strength!' },
+        },
+    },
+
+    -- Wraith: soul-drain + terror wail + mourning AoE + low-HP doom mark.
+    gusgenMines =
+    {
+        name            = 'Grieving Spirit',
+        targetPartyOnly = true,
+        drain  = { periodSec = 8,  healPct = 3 },
+        cc     = { periodSec = 22, effect = xi.effect.TERROR, power = 1, dur = 5, msg = 'Grieving Spirit wails -- the dread stills your heart!' },
+        aoe    = { periodSec = 14, dmgPct = 20, msg = 'Grieving Spirit mourns -- a wave of sorrow crushes the party!' },
+        enrage = { sec = 230, att = 4000, haste = 120, msg = 'Grieving Spirit fills with fury -- the mines groan!' },
+        doom   = { startHpp = 15, dur = 25, msg = 'Grieving Spirit marks you for the grave!' },
+    },
+
+    -- Worm/spike: rapid needle spray AoE + BIND barbs + spike-fury phase.
+    kuftalTunnel =
+    {
+        name            = 'Needleback',
+        targetPartyOnly = true,
+        aoe    = { periodSec = 10, dmgPct = 20, msg = 'Needleback fires a volley of spines!' },
+        cc     = { periodSec = 20, effect = xi.effect.BIND, power = 1, dur = 6, msg = 'Needleback\'s barbs snag you in place!' },
+        enrage = { sec = 240, att = 3500, haste = 100, msg = 'Needleback\'s spines glow -- every barb aches to fire!' },
+        phases =
+        {
+            { hp = 40, action = 'fury', att = 3000, haste = 100, msg = 'Needleback bristles -- its whole hide rises like blades!' },
+        },
+    },
+
+    -- Bat/fly swarm: heavy blood-drain + wing-buffet AoE + brutal fast enrage.
+    gustavTunnel =
+    {
+        name            = 'Ironclaw',
+        targetPartyOnly = true,
+        drain  = { periodSec = 7,  healPct = 4 },
+        aoe    = { periodSec = 12, dmgPct = 17, msg = 'Ironclaw whirls up a storm of wings and claws!' },
+        enrage = { sec = 200, att = 4500, haste = 140, msg = 'Ironclaw flies into a killing frenzy!' },
+    },
+
+    -- Fire lord: big fire-nova AoE + molten stance + flare-dispel + meteor + doom.
+    ifritsCauldron =
+    {
+        name            = 'Cinderlord Ifrit',
+        targetPartyOnly = true,
+        aoe    = { periodSec = 12, dmgPct = 25, msg = 'Cinderlord Ifrit ignites -- a fire nova rolls out!' },
+        stance = { startHpp = 85, periodSec = 16, stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Cinderlord Ifrit\'s flame-shell hardens -- steel is useless!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Cinderlord Ifrit turns molten -- magic runs off it!' },
+        } },
+        enrage = { sec = 210, att = 4500, haste = 130, msg = 'Cinderlord Ifrit\'s core detonates -- the cauldron trembles!' },
+        phases =
+        {
+            { hp = 60, action = 'dispel', count = 3,            msg = 'Cinderlord Ifrit exhales flare wind -- your enhancements burn away!' },
+            { hp = 30, action = 'nuke',   dmgPct = 45,          msg = 'Cinderlord Ifrit hurls a meteor!' },
+        },
+        doom   = { startHpp = 15, dur = 25, msg = 'Cinderlord Ifrit marks you for immolation!' },
+    },
+
+    -- Morbol: silencing bad breath + frozen breath AoE + full-dispel bad breath at 50%.
+    feiYin =
+    {
+        name            = 'Frostmaw Morbol',
+        targetPartyOnly = true,
+        cc     = { periodSec = 20, effect = xi.effect.SILENCE, power = 1, dur = 6, msg = 'Frostmaw Morbol exhales -- the fumes silence the party!' },
+        aoe    = { periodSec = 13, dmgPct = 20, msg = 'Frostmaw Morbol coughs up a frozen breath cloud!' },
+        enrage = { sec = 230, att = 4000, haste = 110, msg = 'Frostmaw Morbol\'s vines lash -- it goes berserk!' },
+        phases =
+        {
+            { hp = 50, action = 'dispel', count = 4, msg = 'Frostmaw Morbol unleashes its full Bad Breath -- everything is stripped!' },
+        },
+    },
+
+    -- Multi-eye ahriman: fastest stance dance + silencing Chaotic Eye + petrifying
+    -- gaze AoE + Evil-Eye-open dispel + fury + doom. Toughest of the 10.
+    ranguemontPass =
+    {
+        name            = 'Watcher Ahriman',
+        targetPartyOnly = true,
+        stance = { startHpp = 80, periodSec = 14, stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Watcher Ahriman blinks -- weapon strikes glance off!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Watcher Ahriman\'s pupils dilate -- magic scatters!' },
+        } },
+        cc     = { periodSec = 22, effect = xi.effect.SILENCE, power = 1, dur = 7, msg = 'Watcher Ahriman opens a Chaotic Eye -- your voice fails!' },
+        aoe    = { periodSec = 12, dmgPct = 22, msg = 'Watcher Ahriman glares -- a petrifying gaze sweeps the room!' },
+        enrage = { sec = 210, att = 5000, haste = 140, msg = 'Watcher Ahriman\'s eyes bulge -- every pupil ignites!' },
+        phases =
+        {
+            { hp = 60, action = 'dispel', count = 4,            msg = 'Watcher Ahriman opens every eye -- your blessings vanish!' },
+            { hp = 30, action = 'fury',   att = 3000, haste = 120, msg = 'Watcher Ahriman roars -- pupils flare crimson!' },
+        },
+        doom   = { startHpp = 12, dur = 25, msg = 'Watcher Ahriman fixes you with an Evil Eye!' },
+    },
+}
+
+-----------------------------------
+-- Trash mechanics (owner 2026-07-12 audit follow-up: dungeon trash was pure
+-- stat-block mobs -- felt indistinguishable from any retail pull). Same wiring
+-- as bossMechCfgs: dungeon_instance.lua's spawnDungeonMob attaches these when a
+-- non-boss slot spawns, keyed by dungeonKey then by mob-type slot.
+--
+-- Roster convention (see buildRoster above): slots 1-6 spawn firstName mobs
+-- (e.g. Dungeon Crawler); slots 7-12 spawn secondName (Dungeon Wasp). So `first`
+-- is the pack lead-mob's cfg, `second` is the follow-up mob's cfg. Slot 13 is
+-- the boss (uses bossMechCfgs instead).
+--
+-- Stacking safety: trash dies fast + up to 12 of them can be engaged at once.
+-- Every cfg here uses AT MOST ONE mechanic:
+--   * drain          -- silent per-mob self-heal, safe to stack across all 12
+--   * cc (single ping) -- addStatusEffect no-ops on duplicates, so a linked pack
+--                        firing the same effect resolves to one application
+-- NO aoe (per-mob damage stacks -- 6 mobs at 5% dmgPct = 30% max HP burst).
+-- NO phases / doom / enrage (trash die before those windows land meaningfully).
+-- CC periods sit at 18-28s so most solo pulls don't see them; linked/AoE pulls
+-- eat one refresh per effect while the pack is up.
+-----------------------------------
+catalog.trashMechCfgs =
+{
+    crawlersNest =
+    {
+        first  = { name = 'Dungeon Crawler', targetPartyOnly = true, drain = { periodSec = 10, healPct = 3 } },
+        second = { name = 'Dungeon Wasp',    targetPartyOnly = true, cc = { periodSec = 20, effect = xi.effect.PARALYZE, power = 30, dur = 5, msg = 'A Dungeon Wasp\'s sting paralyses!' } },
+    },
+
+    xarcabard =
+    {
+        first  = { name = 'Frostbound Demon', targetPartyOnly = true, cc = { periodSec = 22, effect = xi.effect.PARALYZE, power = 40, dur = 6, msg = 'Frostbound Demon\'s aura chills your muscles!' } },
+        second = { name = 'Rimebound Weapon', targetPartyOnly = true, drain = { periodSec = 10, healPct = 3 } },
+    },
+
+    boyahdaTree =
+    {
+        first  = { name = 'Boyahda Crawler', targetPartyOnly = true, drain = { periodSec = 9,  healPct = 3 } },
+        second = { name = 'Boyahda Crab',    targetPartyOnly = true, cc = { periodSec = 22, effect = xi.effect.BIND, power = 1, dur = 5, msg = 'A Boyahda Crab clamps its pincer around you!' } },
+    },
+
+    ordellesCaves =
+    {
+        first  = { name = 'Ordelle Leech', targetPartyOnly = true, drain = { periodSec = 8,  healPct = 4 } },
+        second = { name = 'Ordelle Crab',  targetPartyOnly = true, cc = { periodSec = 22, effect = xi.effect.BIND, power = 1, dur = 5, msg = 'An Ordelle Crab pins you with its pincers!' } },
+    },
+
+    gusgenMines =
+    {
+        first  = { name = 'Gusgen Skeleton', targetPartyOnly = true, cc = { periodSec = 24, effect = xi.effect.TERROR, power = 1, dur = 3, msg = 'A Gusgen Skeleton\'s hollow gaze freezes you!' } },
+        second = { name = 'Gusgen Hound',    targetPartyOnly = true, drain = { periodSec = 10, healPct = 3 } },
+    },
+
+    kuftalTunnel =
+    {
+        first  = { name = 'Kuftal Worm',   targetPartyOnly = true, drain = { periodSec = 10, healPct = 3 } },
+        second = { name = 'Kuftal Lizard', targetPartyOnly = true, cc = { periodSec = 22, effect = xi.effect.PARALYZE, power = 30, dur = 5, msg = 'A Kuftal Lizard\'s bite floods you with neurotoxin!' } },
+    },
+
+    gustavTunnel =
+    {
+        first  = { name = 'Gustav Bat', targetPartyOnly = true, drain = { periodSec = 8,  healPct = 4 } },
+        second = { name = 'Gustav Fly', targetPartyOnly = true, cc = { periodSec = 20, effect = xi.effect.SILENCE, power = 1, dur = 5, msg = 'A Gustav Fly buzzes past your ear -- silence!' } },
+    },
+
+    ifritsCauldron =
+    {
+        first  = { name = 'Cauldron Bomb',   targetPartyOnly = true, drain = { periodSec = 10, healPct = 3 } },
+        second = { name = 'Cauldron Goblin', targetPartyOnly = true, cc = { periodSec = 22, effect = xi.effect.BIND, power = 1, dur = 5, msg = 'A Cauldron Goblin flings a molten net -- bound!' } },
+    },
+
+    feiYin =
+    {
+        first  = { name = "Fei'Yin Golem", targetPartyOnly = true, cc = { periodSec = 24, effect = xi.effect.BIND, power = 1, dur = 5, msg = "A Fei'Yin Golem locks you in a stone grasp!" } },
+        second = { name = "Fei'Yin Pot",   targetPartyOnly = true, cc = { periodSec = 20, effect = xi.effect.SILENCE, power = 1, dur = 5, msg = "A Fei'Yin Pot vents freezing gas -- silenced!" } },
+    },
+
+    ranguemontPass =
+    {
+        first  = { name = 'Ranguemont Eye',    targetPartyOnly = true, cc = { periodSec = 20, effect = xi.effect.SILENCE, power = 1, dur = 5, msg = 'A Ranguemont Eye opens on you -- your voice fails!' } },
+        second = { name = 'Ranguemont Weapon', targetPartyOnly = true, drain = { periodSec = 10, healPct = 3 } },
+    },
+}
+
 return catalog

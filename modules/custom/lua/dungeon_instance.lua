@@ -3,6 +3,7 @@
 -----------------------------------
 local catalog      = require('modules/custom/lua/dungeon_catalog')
 local augmentDrops = require('modules/custom/lua/augment_dungeon_drops')
+local mechanics    = require('modules/custom/lua/mob_mechanics_library')
 
 -- Zoning leash (world units): a player more than this far from EVERY roster
 -- anchor is heading for a wall / zone line -- crossing one drops them from the
@@ -167,7 +168,12 @@ runtime.create = function(dungeonKey)
             isAggroable          = true,
             releaseIdOnDisappear = true,
 
+            onMobFight = function(mob, target)
+                mechanics.tick(mob, target)
+            end,
+
             onMobDeath = function(deadMob, player, optParams)
+                mechanics.cleanup(deadMob)
                 onDungeonMobDeath(instance, deadMob)
                 -- Catalyst payouts (Augmentation Dungeons only; acts on the
                 -- optParams.isKiller dispatch, no-op otherwise). Pass the roster
@@ -196,6 +202,26 @@ runtime.create = function(dungeonKey)
         local scaledHP = math.floor(mob:getMaxHP() * (def.hpScale or dungeon.hpScale))
         mob:setMaxHP(scaledHP)
         mob:setHP(scaledHP)
+
+        -- Attach mob_mechanics_library config: boss gets the rich bossMechCfg
+        -- (stance / AoE / CC / drain / phases / doom / enrage); trash gets a
+        -- SINGLE-mechanic trashMechCfg keyed by mob-type slot (1-6 = first,
+        -- 7-12 = second) so leads and follow-ups feel distinct. tick + cleanup
+        -- are wired on every mob in the def and no-op without state, so
+        -- unconfigured slots stay cheap.
+        local cfg
+        if index == bossIndex then
+            cfg = catalog.bossMechCfgs and catalog.bossMechCfgs[dungeonKey]
+        else
+            local trashSet = catalog.trashMechCfgs and catalog.trashMechCfgs[dungeonKey]
+            if trashSet then
+                cfg = (index <= 6) and trashSet.first or trashSet.second
+            end
+        end
+        if cfg then
+            mechanics.attach(mob, cfg)
+        end
+
         return mob
     end
 
