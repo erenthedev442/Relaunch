@@ -162,30 +162,68 @@ C.NM_COMMON =
     823, 1132, 859, 830, 1116, 1122, 844, 1465, 942,
     1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262,
 }
+-- Sortie JSE earring families -- 22 jobs x NQ/+1/+2 = 66 items (25420..25548).
+-- Added to every Voidwalker's rare pool per NM tier (owner 2026-07-12):
+--   T3 NMs (5) -> +2 pool  (best tier, hardest NMs -- true chase drops)
+--   T2 NMs (10) -> +1 pool (mid-tier)
+--   T1 NMs (4) -> NQ pool  (entry tier, most farmable)
+-- Signature drops dilute (chase items now compete with 22 earrings in the rare
+-- roll), which the owner accepted as the trade-off for putting the whole
+-- Sortie earring family in-game via Voidwatch. Full family list matches the
+-- removed vendor rows (see commit 435e01c79 -- Boii/Bhikku/Ebers/.../Erilaz).
+local SORTIE_NQ_EARRINGS =
+{
+    25420, 25426, 25432, 25438, 25444, 25450, 25456, 25462, 25468, 25474, 25480,
+    25486, 25492, 25498, 25504, 25510, 25516, 25522, 25528, 25534, 25540, 25546,
+}
+local SORTIE_PLUS1_EARRINGS =
+{
+    25421, 25427, 25433, 25439, 25445, 25451, 25457, 25463, 25469, 25475, 25481,
+    25487, 25493, 25499, 25505, 25511, 25517, 25523, 25529, 25535, 25541, 25547,
+}
+local SORTIE_PLUS2_EARRINGS =
+{
+    25422, 25428, 25434, 25440, 25446, 25452, 25458, 25464, 25470, 25476, 25482,
+    25488, 25494, 25500, 25506, 25512, 25518, 25524, 25530, 25536, 25542, 25548,
+}
+
+-- Concatenate a base rare list with a Sortie earring pool. Used inline in
+-- NM_LOOT below; keeps each row a single expression so future retail additions
+-- to the signature side stay obvious next to the (constant) sprinkle side.
+local function extend(base, extra)
+    local out = {}
+    for _, v in ipairs(base) do out[#out+1] = v end
+    for _, v in ipairs(extra) do out[#out+1] = v end
+    return out
+end
+
 C.NM_LOOT =
 {
     -- Rich pools (retail Tier-III Voidwalkers): gear + signature material.
-    Krabkatoa    = { rare = { 11502, 11632 },              uncommon = { 2884, 2879, 4172, 4174, 4173, 4175 } },
-    Blobdingnag  = { rare = { 11631, 11585 },              uncommon = { 2876, 2882, 4172, 4174, 4173, 4175 } },
-    Dawon        = { rare = { 15859, 16151 },              uncommon = { 2570, 4172, 4174, 4173, 4175 } },
-    Lord_Ruthven = { rare = { 11628, 15953 },              uncommon = { 2883, 2877, 4172, 4174, 4173, 4175 } },
-    Yilbegan     = { rare = { 11629, 11633, 14162, 19248 },uncommon = { 2878, 4172, 4174, 4173, 4175 } },
+    -- T3 -> Sortie +2 earring sprinkle (owner 2026-07-12).
+    Krabkatoa    = { rare = extend({ 11502, 11632 },               SORTIE_PLUS2_EARRINGS), uncommon = { 2884, 2879, 4172, 4174, 4173, 4175 } },
+    Blobdingnag  = { rare = extend({ 11631, 11585 },               SORTIE_PLUS2_EARRINGS), uncommon = { 2876, 2882, 4172, 4174, 4173, 4175 } },
+    Dawon        = { rare = extend({ 15859, 16151 },               SORTIE_PLUS2_EARRINGS), uncommon = { 2570, 4172, 4174, 4173, 4175 } },
+    Lord_Ruthven = { rare = extend({ 11628, 15953 },               SORTIE_PLUS2_EARRINGS), uncommon = { 2883, 2877, 4172, 4174, 4173, 4175 } },
+    Yilbegan     = { rare = extend({ 11629, 11633, 14162, 19248 }, SORTIE_PLUS2_EARRINGS), uncommon = { 2878, 4172, 4174, 4173, 4175 } },
     -- Single-gear pools (retail Tier-II): the signature equip + shared consumables.
-    Yacumama     = { rare = { 11586 },                     uncommon = { 4172, 4174, 4173, 4175 } },
-    Farruca_Fly  = { rare = { 11635 },                     uncommon = { 4172, 4174, 4173, 4175 } },
-    Skuld        = { rare = { 11544 },                     uncommon = { 4172, 4174, 4173, 4175 } },
-    Capricornus  = { rare = { 15954 },                     uncommon = { 4172, 4174, 4173, 4175 } },
-    Lamprey_Lord = { rare = { 16054 },                     uncommon = { 4172, 4174, 4173, 4175 } },
-    Jyeshtha     = { rare = { 15955 },                     uncommon = { 4172, 4174, 4173, 4175 } },
-    Feuerunke    = { rare = { 16056 },                     uncommon = { 4172, 4174, 4173, 4175 } },
-    Tammuz       = { rare = { 16307 },                     uncommon = { 4172, 4174, 4173, 4175 } },
-    Erebus       = { rare = { 11587 },                     uncommon = { 4172, 4174, 4173, 4175 } },
-    Shoggoth     = { rare = { 19245 },                     uncommon = { 4172, 4174, 4173, 4175 } },
+    -- T2 -> Sortie +1 earring sprinkle.
+    Yacumama     = { rare = extend({ 11586 }, SORTIE_PLUS1_EARRINGS), uncommon = { 4172, 4174, 4173, 4175 } },
+    Farruca_Fly  = { rare = extend({ 11635 }, SORTIE_PLUS1_EARRINGS), uncommon = { 4172, 4174, 4173, 4175 } },
+    Skuld        = { rare = extend({ 11544 }, SORTIE_PLUS1_EARRINGS), uncommon = { 4172, 4174, 4173, 4175 } },
+    Capricornus  = { rare = extend({ 15954 }, SORTIE_PLUS1_EARRINGS), uncommon = { 4172, 4174, 4173, 4175 } },
+    Lamprey_Lord = { rare = extend({ 16054 }, SORTIE_PLUS1_EARRINGS), uncommon = { 4172, 4174, 4173, 4175 } },
+    Jyeshtha     = { rare = extend({ 15955 }, SORTIE_PLUS1_EARRINGS), uncommon = { 4172, 4174, 4173, 4175 } },
+    Feuerunke    = { rare = extend({ 16056 }, SORTIE_PLUS1_EARRINGS), uncommon = { 4172, 4174, 4173, 4175 } },
+    Tammuz       = { rare = extend({ 16307 }, SORTIE_PLUS1_EARRINGS), uncommon = { 4172, 4174, 4173, 4175 } },
+    Erebus       = { rare = extend({ 11587 }, SORTIE_PLUS1_EARRINGS), uncommon = { 4172, 4174, 4173, 4175 } },
+    Shoggoth     = { rare = extend({ 19245 }, SORTIE_PLUS1_EARRINGS), uncommon = { 4172, 4174, 4173, 4175 } },
     -- Retail-empty NMs: seeded so every NM has a full table (see note above).
-    Aglaophotis  = { rare = { 15544 },                     uncommon = { 4172, 4174, 4173, 4175 } },
-    Gjenganger   = { rare = { 942 },                       uncommon = { 4172, 4174, 4173, 4175 } },
-    Gorehound    = { rare = { 942 },                       uncommon = { 4172, 4174, 4173, 4175 } },
-    Raker_Bee    = { rare = { 942 },                       uncommon = { 4172, 4174, 4173, 4175 } },
+    -- T1 -> Sortie NQ earring sprinkle (entry-tier farm target).
+    Aglaophotis  = { rare = extend({ 15544 }, SORTIE_NQ_EARRINGS), uncommon = { 4172, 4174, 4173, 4175 } },
+    Gjenganger   = { rare = extend({ 942 },   SORTIE_NQ_EARRINGS), uncommon = { 4172, 4174, 4173, 4175 } },
+    Gorehound    = { rare = extend({ 942 },   SORTIE_NQ_EARRINGS), uncommon = { 4172, 4174, 4173, 4175 } },
+    Raker_Bee    = { rare = extend({ 942 },   SORTIE_NQ_EARRINGS), uncommon = { 4172, 4174, 4173, 4175 } },
 }
 function C.nmLoot(name)
     local t = C.NM_LOOT[name]

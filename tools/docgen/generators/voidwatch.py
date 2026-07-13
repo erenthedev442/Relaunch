@@ -226,15 +226,45 @@ def _zone_stratum_map(strata: list[dict]) -> dict:
 
 
 def _parse_nm_loot(text: str) -> dict[str, dict[str, list[int]]]:
-    """C.NM_LOOT: nmName -> { rare: [ids], uncommon: [ids] } (one entry per line)."""
+    """C.NM_LOOT: nmName -> { rare: [ids], uncommon: [ids] } (one entry per line).
+
+    Supports two rare-list shapes:
+      * bare literal:   rare = { 111, 222, ... }
+      * extended:       rare = extend({ 111, 222 }, SOME_ARRAY_NAME)
+    For the extended shape, SOME_ARRAY_NAME is looked up as a `local NAME = { ... }`
+    literal earlier in the file (e.g. SORTIE_PLUS2_EARRINGS -- the Sortie earring
+    sprinkle added 2026-07-12), and its ids are appended to the parsed rare list.
+    """
+    stripped = re.sub(r"--[^\n]*", "", text)
+    # 1. Harvest all `local NAME = { ...literal ids... }` arrays so extend() calls
+    #    below can inline them into the parsed rare list.
+    local_arrays: dict[str, list[int]] = {}
+    for m in re.finditer(
+        r"local\s+(\w+)\s*=\s*\{\s*([\d,\s]+?)\s*\}", stripped):
+        name, body = m.group(1), m.group(2)
+        ids = [int(x) for x in re.findall(r"\d+", body)]
+        if ids:
+            local_arrays[name] = ids
+
     block = re.sub(r"--[^\n]*", "", section(text, "C.NM_LOOT"))
     out: dict[str, dict[str, list[int]]] = {}
-    for m in re.finditer(
-        r"(\w+)\s*=\s*\{\s*rare\s*=\s*\{([^}]*)\}\s*,\s*uncommon\s*=\s*\{([^}]*)\}", block):
-        out[m.group(1)] = {
-            "rare":     [int(x) for x in re.findall(r"\d+", m.group(2))],
-            "uncommon": [int(x) for x in re.findall(r"\d+", m.group(3))],
-        }
+    # Row shapes (rare side): `{ ids }` OR `extend({ ids }, IDENT)`.
+    # uncommon is always a bare literal in the current catalog.
+    row_re = re.compile(
+        r"(\w+)\s*=\s*\{\s*rare\s*=\s*"
+        r"(?:extend\s*\(\s*\{([^}]*)\}\s*,\s*(\w+)\s*\)|\{([^}]*)\})"
+        r"\s*,\s*uncommon\s*=\s*\{([^}]*)\}")
+    for m in row_re.finditer(block):
+        name = m.group(1)
+        ext_ids  = [int(x) for x in re.findall(r"\d+", m.group(2) or "")]
+        ext_name = m.group(3)
+        bare_ids = [int(x) for x in re.findall(r"\d+", m.group(4) or "")]
+        uncommon = [int(x) for x in re.findall(r"\d+", m.group(5) or "")]
+        if ext_name is not None:
+            rare = ext_ids + local_arrays.get(ext_name, [])
+        else:
+            rare = bare_ids
+        out[name] = { "rare": rare, "uncommon": uncommon }
     return out
 
 
