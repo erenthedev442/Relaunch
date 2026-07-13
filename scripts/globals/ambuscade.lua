@@ -701,9 +701,29 @@ local MHAURA_EXIT_Y   = -15.500
 local MHAURA_EXIT_Z   =  50.279  -- ~2y behind the Tome (on the dock, walkable)
 local MHAURA_EXIT_ROT =  121     -- facing the Tome
 local MHAURA_ZONE_ID  = 249
+local AMBUSCADE_ZONE_ID = xi.zone.MAQUETTE_ABDHALJS_LEGION_B
+
+-- Grace period before the auto-warp fires, so the player has time to see the
+-- Victory / Time-limit message, look around, and (in case completion mis-fires
+-- while more of the fight actually remains) keep swinging. 2026-07-13 report
+-- (Jamesta): Intense VD, a few minutes in, "warped out with no message" --
+-- the instant zone-out from the prior fix (2bb9ceade8) was too sudden.
+local EXIT_GRACE_MS = 20000
 
 local function warpToMhaura(player)
     player:setPos(MHAURA_EXIT_X, MHAURA_EXIT_Y, MHAURA_EXIT_Z, MHAURA_EXIT_ROT, MHAURA_ZONE_ID)
+end
+
+-- Delay the warp so the player sees the outcome message and has a moment to
+-- react. Guard: only warp if they're still IN the Ambuscade zone at fire time;
+-- if they zoned elsewhere during the grace (GM tools, /shutdown, another exit
+-- path), the timer becomes a no-op instead of yanking them back to Mhaura.
+local function scheduleWarpToMhaura(player)
+    player:timer(EXIT_GRACE_MS, function(p)
+        if p:getZoneID() == AMBUSCADE_ZONE_ID then
+            warpToMhaura(p)
+        end
+    end)
 end
 
 xi.ambuscade.onInstanceComplete = function(instance)
@@ -764,10 +784,14 @@ xi.ambuscade.onInstanceComplete = function(instance)
                 actualHM, bonusStr, player:getCurrency('current_hallmarks'), pGal, sealStr), SYS)
         end
 
-        -- INSTANT auto-exit (retail behavior). Was startEvent(10001) which needed
-        -- the player to click through a cutscene before the onEventFinish warp
-        -- fired -- players reported it read as "no auto-exit."
-        warpToMhaura(player)
+        -- Delayed auto-exit (2026-07-13). Was an INSTANT warpToMhaura since
+        -- 2bb9ceade8, but Jamesta reported being warped out mid-fight without
+        -- seeing a message; the 20s grace gives the Victory/Time-limit line time
+        -- to land in chat and gives the player a beat to look around instead of
+        -- yanking them back to Mhaura in the same server tick.
+        player:printToPlayer(string.format(
+            '[Ambuscade] Auto-exit to Mhaura in %ds.', EXIT_GRACE_MS / 1000), SYS)
+        scheduleWarpToMhaura(player)
     end
 end
 
@@ -775,7 +799,9 @@ xi.ambuscade.onInstanceFailure = function(instance)
     local chars = instance:getChars()
     for _, player in pairs(chars) do
         player:printToPlayer('[Ambuscade] Time limit reached. Your effort is not forgotten.', SYS)
-        warpToMhaura(player)
+        player:printToPlayer(string.format(
+            '[Ambuscade] Auto-exit to Mhaura in %ds.', EXIT_GRACE_MS / 1000), SYS)
+        scheduleWarpToMhaura(player)
     end
 end
 
