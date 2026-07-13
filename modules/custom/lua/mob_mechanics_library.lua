@@ -185,6 +185,20 @@ local function shout(mob, msg, st)
 end
 M.shout = shout
 
+-- Some mechanics are instructions players must see to play correctly, even while
+-- ambient boss shouts are disabled globally to avoid chat spam.
+local function forcedMessage(mob, msg, st)
+    if not msg then return end
+    local tag   = (st and st.name) and ('[%s] '):format(st.name) or '[NM] '
+    local owner = st and st.ownerName
+    for _, p in ipairs(playersNear(mob, 80.0)) do
+        pcall(function()
+            if owner and p:getName() ~= owner then return end
+            p:printToPlayer(tag .. msg, xi.msg.channel.SYSTEM_1)
+        end)
+    end
+end
+
 -----------------------------------
 -- addMod that won't overflow the engine's int16 modifier storage (max 32767).
 -- The custom bosses already carry large BASE mods (ATT in the 20k+ range, REGEN
@@ -326,6 +340,243 @@ local function spawnAdds(mob, phase, st)
 end
 
 -----------------------------------
+-- Hold-fire pressure phase (Prime Trial / Gauntlet bosses).
+-- Boss telegraphs an unstable-energy window: strike the boss during the window
+-- and the striker eats a 1-shot; hold fire and the boss enters exhaustion where
+-- it stops attacking and eats bonus damage. During the warning window a
+-- catalog-supplied "pressure" status effect ticks the whole party so the DPS
+-- window is REAL: you have to survive the tick, not just idle-through. Reader
+-- gates in TheGauntlet.lua (holdFireLocked) fire off Gauntlet_HoldFireActive /
+-- Gauntlet_HoldFireExhausted local-vars set here.
+-----------------------------------
+local function setBossFrozen(mob, frozen)
+    pcall(function() mob:setAutoAttackEnabled(not frozen) end)
+    pcall(function() mob:setMagicCastingEnabled(not frozen) end)
+    pcall(function() mob:setMobAbilityEnabled(not frozen) end)
+    pcall(function() mob:setMobMod(xi.mobMod.NO_MOVE, frozen and 1 or 0) end)
+end
+
+local function setBossTpLocked(mob, locked)
+    pcall(function() mob:setMobAbilityEnabled(not locked) end)
+end
+
+local function clearHoldFireTpLock(mob, st)
+    if st and st.holdFireMobTpLocked then
+        setBossTpLocked(mob, false)
+    end
+    if st then
+        st.holdFireMobTpLocked  = false
+        st.holdFireMobTpUnlockAt = nil
+    end
+end
+
+local function holdFireDelay(holdCfg, isInitial)
+    local fixed = isInitial and holdCfg.initialSec or holdCfg.periodSec
+    local minDelay = isInitial and holdCfg.initialSecMin or holdCfg.periodSecMin
+    local maxDelay = isInitial and holdCfg.initialSecMax or holdCfg.periodSecMax
+
+    if minDelay and maxDelay then
+        return math.random(minDelay, math.max(minDelay, maxDelay))
+    end
+
+    return fixed or 40
+end
+
+local function holdFirePressureTarget(mob, target, st)
+    local ownerName = st and st.ownerName
+    if ownerName then
+        for _, player in ipairs(playersNear(mob, 80.0)) do
+            if entityName(player) == ownerName then
+                return player
+            end
+        end
+    end
+
+    return playerOwner(target) or target
+end
+
+local function clearHoldFirePressure(st)
+    st.holdFirePressureTarget = nil
+    st.holdFirePressureEffect = nil
+    st.nextHoldFirePressureTick = nil
+end
+
+local function clearActionBlockingCc(target)
+    if not target then return end
+
+    pcall(function() target:delStatusEffectSilent(xi.effect.TERROR) end)
+    pcall(function() target:delStatusEffectSilent(xi.effect.STUN) end)
+    pcall(function() target:delStatusEffectSilent(xi.effect.SLEEP_I) end)
+    pcall(function() target:delStatusEffectSilent(xi.effect.SLEEP_II) end)
+    pcall(function() target:delStatusEffectSilent(xi.effect.PETRIFICATION) end)
+    pcall(function() target:delStatusEffectSilent(xi.effect.GRADUAL_PETRIFICATION) end)
+    pcall(function() target:delStatusEffectSilent(xi.effect.AMNESIA) end)
+end
+
+local function applyHoldFirePressure(mob, target, holdCfg, st, now)
+    local pressure = holdCfg.pressure
+    if holdCfg.pressureOptions and #holdCfg.pressureOptions > 0 then
+        pressure = holdCfg.pressureOptions[math.random(1, #holdCfg.pressureOptions)]
+    end
+
+    if not pressure or not pressure.effect then
+        clearHoldFirePressure(st)
+        return
+    end
+
+    local pressureTarget = holdFirePressureTarget(mob, target, st)
+    if not pressureTarget then
+        clearHoldFirePressure(st)
+        return
+    end
+
+    st.holdFirePressureTarget = pressureTarget
+    st.holdFirePressureEffect = pressure.effect
+    st.nextHoldFirePressureTick = now + (holdCfg.pressureDelaySec or holdCfg.pressureTickSec or 3)
+
+    clearActionBlockingCc(pressureTarget)
+
+    if pressure.effect == xi.effect.CURSE_I or pressure.effect == xi.effect.CURSE_II then
+        st.curseGraceUntil = now + (holdCfg.curseGraceSec or holdCfg.pressureDelaySec or 5)
+        pcall(function() mob:setLocalVar('Gauntlet_CurseGraceUntil', st.curseGraceUntil) end)
+    end
+
+    pcall(function()
+        pressureTarget:addStatusEffect(pressure.effect, {
+            power = pressure.power or 1,
+            duration = holdCfg.warnSec or 15,
+            origin = mob,
+            tick = pressure.tick,
+        })
+    end)
+end
+
+local function tickHoldFirePressure(mob, holdCfg, st, now)
+    if not st.nextHoldFirePressureTick or now < st.nextHoldFirePressureTick then
+        return
+    end
+
+    if st.curseGraceUntil and now < st.curseGraceUntil then
+        st.nextHoldFirePressureTick = st.curseGraceUntil
+        return
+    end
+
+    local target = st.holdFirePressureTarget
+    local effect = st.holdFirePressureEffect
+    if not target or not effect then
+        clearHoldFirePressure(st)
+        return
+    end
+
+    local blocked = false
+    pcall(function()
+        blocked =
+            target:hasStatusEffect(xi.effect.TERROR) or
+            target:hasStatusEffect(xi.effect.STUN) or
+            target:hasStatusEffect(xi.effect.SLEEP_I) or
+            target:hasStatusEffect(xi.effect.SLEEP_II) or
+            target:hasStatusEffect(xi.effect.PETRIFICATION) or
+            target:hasStatusEffect(xi.effect.GRADUAL_PETRIFICATION) or
+            target:hasStatusEffect(xi.effect.AMNESIA)
+    end)
+    if blocked then
+        st.nextHoldFirePressureTick = now + 1
+        return
+    end
+
+    local active = false
+    pcall(function() active = target:hasStatusEffect(effect) end)
+    if not active then
+        clearHoldFirePressure(st)
+        return
+    end
+
+    pcall(function()
+        local damage = math.max(1, math.floor(target:getMaxHP() * (holdCfg.pressureTickPct or 20) / 100))
+        target:takeDamage(damage, mob, xi.attackType.SPECIAL, xi.damageType.NONE)
+    end)
+    st.nextHoldFirePressureTick = now + (holdCfg.pressureTickSec or 3)
+end
+
+local function enterHoldFireExhaustion(mob, holdCfg, st, now)
+    st.holdFireActive     = false
+    st.holdFirePunished   = false
+    st.holdFireDangerAt   = nil
+    st.holdFireExhausted  = true
+    st.holdFireExhaustEnd = now + (holdCfg.exhaustedSec or 20)
+    clearHoldFirePressure(st)
+    pcall(function()
+        mob:setLocalVar('Gauntlet_HoldFireActive', 0)
+        mob:setLocalVar('Gauntlet_HoldFireExhausted', 1)
+    end)
+    st.holdFireMods = {
+        [xi.mod.DEF]  = -(holdCfg.defDown  or 0),
+        [xi.mod.MDEF] = -(holdCfg.mdefDown or 0),
+        [xi.mod.EVA]  = -(holdCfg.evaDown  or 0),
+        [xi.mod.MEVA] = -(holdCfg.mevaDown or 0),
+        [xi.mod.DMGRANGE] = holdCfg.rangedRelief or 0,
+    }
+
+    clearHoldFireTpLock(mob, st)
+    if st.stanceOn then
+        pcall(function() mob:setMod(xi.mod.DMGPHYS, 0) end)
+        pcall(function() mob:setMod(xi.mod.DMGMAGIC, 0) end)
+    end
+    setBossFrozen(mob, true)
+    for modId, amount in pairs(st.holdFireMods) do
+        if amount ~= 0 then
+            pcall(function() mob:addMod(modId, amount) end)
+        end
+    end
+
+    forcedMessage(mob, holdCfg.successMsg or 'The boss is exhausted and its defenses falter!', st)
+end
+
+local function exitHoldFireExhaustion(mob, holdCfg, st, now)
+    st.holdFireExhausted  = false
+    st.holdFireExhaustEnd = nil
+
+    clearHoldFireTpLock(mob, st)
+    for modId, amount in pairs(st.holdFireMods or {}) do
+        if amount ~= 0 then
+            pcall(function() mob:addMod(modId, -amount) end)
+        end
+    end
+    st.holdFireMods = nil
+
+    setBossFrozen(mob, false)
+    pcall(function() mob:setLocalVar('Gauntlet_HoldFireExhausted', 0) end)
+    if st.stanceOn and st.cfg and st.cfg.stance then
+        applyStance(mob, st.cfg.stance, st.stanceIdx or 1, st)
+    end
+    clearHoldFirePressure(st)
+    st.nextHoldFireAt = now + holdFireDelay(holdCfg, false)
+    forcedMessage(mob, holdCfg.recoverMsg or 'The boss recovers its strength.', st)
+end
+
+local function beginHoldFire(mob, target, holdCfg, st, now)
+    st.holdFireActive   = true
+    st.holdFirePunished = false
+    st.holdFireDangerAt = now + (holdCfg.graceSec or 0)
+    st.holdFireUntil    = now + (holdCfg.warnSec or 15)
+    st.nextHoldFireAt   = nil
+    if (holdCfg.mobNoTpSec or 0) > 0 then
+        st.holdFireMobTpLocked   = true
+        st.holdFireMobTpUnlockAt = now + holdCfg.mobNoTpSec
+        setBossTpLocked(mob, true)
+    end
+    pcall(function()
+        mob:setLocalVar('Gauntlet_HoldFireActive', 1)
+        mob:setLocalVar('Gauntlet_HoldFireExhausted', 0)
+    end)
+    applyHoldFirePressure(mob, target, holdCfg, st, now)
+    if st.nextCcAt then
+        st.nextCcAt = now + (holdCfg.warnSec or 15) + (holdCfg.exhaustedSec or 20) + 3
+    end
+    forcedMessage(mob, holdCfg.warningMsg or 'The boss draws in unstable energy...', st)
+end
+
+-----------------------------------
 -- HP-phase dispatcher.
 -----------------------------------
 local function firePhase(mob, phase, st, target)
@@ -379,10 +630,44 @@ function M.attach(mob, cfg, ownerName)
         nextAoeAt       = cfg.aoe   and (now + (cfg.aoe.periodSec   or 12)) or nil,
         nextCcAt        = cfg.cc    and (now + (cfg.cc.periodSec    or 24)) or nil,
         nextDrainAt     = cfg.drain and (now + (cfg.drain.periodSec or 10)) or nil,
+        nextHoldFireAt  = cfg.holdFire and (now + holdFireDelay(cfg.holdFire, true)) or nil,
         enraged         = false,
         doomFired       = false,
         regenActive     = false,
     }
+
+    -- Punish-on-strike for hold-fire windows. Once the boss begins holding fire
+    -- (st.holdFireActive), any WS landed on the boss inside the window sets the
+    -- striker's HP to 0. Grace + WEAPONSKILL_TAKE is a mob-side listener so it
+    -- also catches Trust/pet WS through their owner via playerOwner.
+    if cfg.holdFire then
+        local listenerId = 'HOLD_FIRE_WS_' .. tostring(id)
+        pcall(function() mob:removeListener(listenerId) end)
+        mob:addListener('WEAPONSKILL_TAKE', listenerId, function(user, targetMob, skill, tp, action)
+            local st = mechState[id]
+            if not st or not st.holdFireActive or st.holdFirePunished then return end
+
+            local striker = playerOwner(user) or user
+            if st.ownerName and entityName(striker) ~= st.ownerName then return end
+
+            local now = os.time()
+            if st.holdFireDangerAt and now < st.holdFireDangerAt then return end
+
+            local holdCfg = st.cfg.holdFire or {}
+            st.holdFirePunished = true
+            st.holdFireActive   = false
+            st.holdFireUntil    = nil
+            st.holdFireDangerAt = nil
+            clearHoldFireTpLock(mob, st)
+            clearHoldFirePressure(st)
+            st.nextHoldFireAt   = now + holdFireDelay(holdCfg, false)
+
+            forcedMessage(mob, holdCfg.failMsg or 'The gathered power erupts without mercy.', st)
+            pcall(function()
+                striker:setHP(0)
+            end)
+        end)
+    end
 end
 
 -----------------------------------
@@ -397,6 +682,32 @@ function M.tick(mob, target)
     local now = os.time()
     local hpp = 100
     pcall(function() hpp = mob:getHPP() end)
+
+    -- Hold-fire warning / exhaustion reward. During exhaustion, suppress the rest
+    -- of the scripted kit so the player gets a real punish window.
+    if cfg.holdFire then
+        if st.holdFireExhausted then
+            if st.holdFireExhaustEnd and now >= st.holdFireExhaustEnd then
+                exitHoldFireExhaustion(mob, cfg.holdFire, st, now)
+            else
+                return
+            end
+        end
+
+        if st.holdFireActive then
+            if st.holdFireMobTpLocked and st.holdFireMobTpUnlockAt and now >= st.holdFireMobTpUnlockAt then
+                clearHoldFireTpLock(mob, st)
+            end
+            tickHoldFirePressure(mob, cfg.holdFire, st, now)
+        end
+
+        if st.holdFireActive and st.holdFireUntil and now >= st.holdFireUntil then
+            enterHoldFireExhaustion(mob, cfg.holdFire, st, now)
+            return
+        elseif st.nextHoldFireAt and now >= st.nextHoldFireAt then
+            beginHoldFire(mob, target, cfg.holdFire, st, now)
+        end
+    end
 
     -- Soft enrage (time-based DPS check).
     if cfg.enrage and not st.enraged and now >= st.startedAt + (cfg.enrage.sec or 180) then
