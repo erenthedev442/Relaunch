@@ -2,7 +2,7 @@
 
 These chat commands are available to every player on this server (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 101
+**Total player-accessible commands:** 100
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
@@ -20,7 +20,6 @@ These chat commands are available to every player on this server (no GM rank req
 | `!affinitypop` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!ah` | — | opens the Auction House menu anywhere in the world |  |
 | `!ambuscade` | string | _(no description)_ | :material-puzzle: **custom** |
-| `!aoews` | string | Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (Leafallia, !leaf). Cannot be changed after setting. |  |
 | `!apex` | string | Apex Trials helper -- check your record / Paragon Points, start a climb, or bail out of one. | :material-puzzle: **custom** |
 | `!auginfo` | — | _(no description)_ |  |
 | `!augment` | t, r, u, e | _(no description)_ |  |
@@ -243,14 +242,6 @@ Shows all personal milestone achievements - earned and unearned - with their rew
 ### `!ambuscade`  _(custom)_
 
 **Usage:** `ambuscade`
-
-**Parameter types:** string
-
-### `!aoews`
-
-Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (Leafallia, !leaf). Cannot be changed after setting.
-
-**Usage:** `aoews`
 
 **Parameter types:** string
 
@@ -737,10 +728,3 @@ Lists players who have logged in during this server session, sorted by Hunting L
 ---
 
 _This list reflects the commands currently live on the server._
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 014aded3eb22 -->
-_Last updated: 2026-07-12 23:42 PDT_
-<!-- DOCGEN:END id="last-updated" -->

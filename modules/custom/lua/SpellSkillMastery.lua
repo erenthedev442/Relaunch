@@ -5,9 +5,9 @@
 -- currency) to permanently empower their weapon skills and magic:
 --   * POTENCY  -- tiered % power-ups (additive mods, re-applied on login).
 --   * TRAITS   -- one-time passive riders (additive mods, re-applied on login).
---   * WS EFFECTS -- per-player weapon-skill procs (crit burst / AoE splash /
---                 lifesteal) run from a WEAPONSKILL_USE listener; read live from
---                 charVars each WS, so they need NO login re-apply.
+--   * WS EFFECTS -- per-player weapon-skill procs (crit burst / lifesteal) run
+--                 from a WEAPONSKILL_USE listener; read live from charVars
+--                 each WS, so they need NO login re-apply.
 --
 -- Sigils come from an NM ROTATION (kill the active target NMs each period for a
 -- big chunk) plus an optional small trickle from any NM. The mod-based pattern
@@ -97,10 +97,10 @@ end
 local function applyWSEffects(attacker, target, damage)
     if not damage or damage <= 0 or attacker == nil or target == nil then return end
     -- IMPORTANT: WEAPONSKILL_USE fires AFTER the hit lands, so on a killing blow
-    -- `target` is already dead. We must NOT bail on that -- lifesteal and splash
-    -- still owe the player their effect (bailing here was why the effects felt
-    -- "off and on" / "none of it works": WS routinely one-shot the mob). Only the
-    -- crit BONUS (extra damage to the primary target) is pointless once it's dead.
+    -- `target` is already dead. We must NOT bail on that -- lifesteal still owes
+    -- the player their effect (bailing here was why the effect felt "off and on"
+    -- / "none of it works": WS routinely one-shot the mob). Only the crit BONUS
+    -- (extra damage to the primary target) is pointless once it's dead.
     local damType     = attacker:getWeaponDamageType(xi.slot.MAIN)
     local targetAlive = not target:isDead()
     for _, fx in ipairs(C.wsEffects) do
@@ -111,22 +111,6 @@ local function applyWSEffects(attacker, target, damage)
                     local bonus = math.floor(damage * fx.bonusPct / 100)
                     if bonus > 0 then
                         target:takeDamage(bonus, attacker, xi.attackType.PHYSICAL, damType)
-                    end
-                end
-            elseif fx.kind == 'splash' then
-                local splash = math.floor(damage * (tier * fx.pctPerTier) / 100)
-                if splash > 0 then
-                    -- IGNORE_BATTLEID so the splash reaches EVERY mob in the radius,
-                    -- not only the ones already claimed/engaged. findFlags=0 limited
-                    -- it to the couple of mobs in the current battle.
-                    local enemies = attacker:getEntitiesInRange(
-                        target, xi.aoeType.ROUND, xi.aoeRadius.TARGET, fx.radius or 10,
-                        xi.findFlag.IGNORE_BATTLEID, xi.targetType.ENEMY)
-                    local tid = target:getID()
-                    for _, e in ipairs(enemies) do
-                        if e ~= nil and not e:isDead() and e:getID() ~= tid then
-                            e:takeDamage(splash, attacker, xi.attackType.PHYSICAL, damType)
-                        end
                     end
                 end
             elseif fx.kind == 'lifesteal' then

@@ -113,9 +113,14 @@ catalog.spellPotency =
 
 -- ── WS Effects (per-player WEAPONSKILL_USE procs; read live, no re-apply) ────
 -- Tiered like potency (cost = EFFECT_COST[tier]). `kind` selects the handler in
--- SpellSkillMastery.lua: 'crit' (chance for bonus dmg), 'splash' (AoE % of the
--- hit), 'lifesteal' (heal % of the hit). Add a new effect = add a row (+ a kind
--- handler if it is a new kind).
+-- SpellSkillMastery.lua: 'crit' (chance for bonus dmg), 'lifesteal' (heal % of
+-- the hit). Add a new effect = add a row (+ a kind handler if it is a new kind).
+--
+-- The old 'splash' (AoE) effect was removed on 2026-07-13: single-target WS
+-- was never meant to become AoE on this server, and it duplicated the earlier
+-- retired Rupture Sage / !aoews feature (a22038d3b5). Existing
+-- Mastery_WSFx_splash charvars go inert; players keep the sigils they had left
+-- but the ones spent on splash tiers are not refunded.
 catalog.EFFECT_COST = { 20, 40, 70, 110, 160 }
 
 catalog.wsEffects =
@@ -123,9 +128,6 @@ catalog.wsEffects =
     { id = 'empstrike', var = 'Mastery_WSFx_crit',   name = 'Empowered Strike', max = 5,
       kind = 'crit',      chancePerTier = 8, bonusPct = 60,
       desc = 'Per tier: +8% chance your WS lands a critical burst (+60% damage).' },
-    { id = 'splash',    var = 'Mastery_WSFx_splash', name = 'Splash (AoE)',     max = 5,
-      kind = 'splash',    pctPerTier = 12, radius = 10,
-      desc = 'Per tier: your WS splashes +12% of its damage to foes within 10y.' },
     { id = 'lifesteal', var = 'Mastery_WSFx_drain',  name = 'Lifesteal',        max = 5,
       kind = 'lifesteal', pctPerTier = 4,
       desc = 'Per tier: heal +4% of your WS damage as HP.' },
