@@ -88,8 +88,12 @@ return {
     -- regain for constant TP moves, DA/TA for spike damage, macc/matt so
     -- casters bite. Tripled the previous multipliers.
     difficulty = {
-        [1] = { hp =  180000, att =  600, acc = 200, macc = 200, matt =  60, def = 200, eva = 120, regain =  90, da = 45, ta =  0, dmgMult = 150 },
-        [2] = { hp =  750000, att = 1200, acc = 300, macc = 300, matt = 105, def = 350, eva = 200, regain = 150, da = 75, ta = 15, dmgMult = 175 },
+        -- 2026-07-13 rebalance #2 (player report: 'T1 and T2 still too easy').
+        -- Ladder compressed: T1 now uses the old T2 numbers; T2 the old T3
+        -- numbers; T3 unchanged. T2 and T3 are intentionally identical -- the
+        -- ladder is now cost/reward + weekly-bonus rotation, not raw stats.
+        [1] = { hp =  750000, att = 1200, acc = 300, macc = 300, matt = 105, def = 350, eva = 200, regain = 150, da = 75, ta = 15, dmgMult = 175 },
+        [2] = { hp = 2400000, att = 1800, acc = 400, macc = 400, matt = 150, def = 500, eva = 260, regain = 240, da = 90, ta = 30, dmgMult = 200 },
         [3] = { hp = 2400000, att = 1800, acc = 400, macc = 400, matt = 150, def = 500, eva = 260, regain = 240, da = 90, ta = 30, dmgMult = 200 },
     },
 
