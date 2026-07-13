@@ -72,7 +72,7 @@ def tail(path, n=80):
 # coverage_check, per-generator WARNs). Indented detail lines under a
 # [sync_audit] header are captured by the second pattern.
 AUDIT_TAG = ("[sync_audit]", "UNOWNED-PAGE", "NAKED-FACT", "MIRROR-CONST",
-             "WARN", "MARKER MISSING")
+             "WARN", "MARKER MISSING", "[runtime-consumers]")
 
 
 def audit_findings(log):

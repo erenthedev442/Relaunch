@@ -55,6 +55,7 @@ def main() -> int:
     print()
 
     from tools.docgen import stamp
+    from tools import validate_runtime_consumers
     from tools.docgen.generators import (
         achievements,
         ambuscade,
@@ -472,6 +473,11 @@ def main() -> int:
         # DOCGEN blocks (the "100% generator-tied" rule — facts must live in
         # generated content so tuning auto-populates the site).
         ("sync_audit",       sync_audit),
+        # runtime_consumers: extends the spider-web guard PAST the docs, to the
+        # runtime Lua (commands + custom modules). Prints [runtime-consumers]
+        # WARN/ERROR lines the site drift monitor scans -- catches a rework that
+        # leaves a hardcoded consumer behind (e.g. the !affinitynm 24-NM drift).
+        ("runtime_consumers", validate_runtime_consumers),
     ]
 
     successes: list[str] = []
