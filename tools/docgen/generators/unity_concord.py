@@ -183,7 +183,7 @@ def _render_tiers(c: dict, junctions: dict) -> str:
         lines.append(f"### Tier {tier} — {lv_rng}")
         lines.append(f"*Spawn cost: {cost} · Kill reward: {reward} accolades*")
         lines.append("")
-        lines.append("| NM | Junction zone | Level | Notable Drops (50% each, base version) |")
+        lines.append("| NM | Junction zone | Level | Notable Drops (5% each, base version) |")
         lines.append("|---|---|---:|---|")
         for nm in tier_nms:
             lv = nm["minLv"] if nm["minLv"] == nm["maxLv"] else f"{nm['minLv']}–{nm['maxLv']}"

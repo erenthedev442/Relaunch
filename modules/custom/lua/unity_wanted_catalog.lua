@@ -12,7 +12,7 @@
 -- Weekly double-reward bonus is handled in unity_wanted.lua.
 -- groupId + groupZoneId are the zone-288 mob_groups entries populated by
 -- unity_wanted_mobs.sql (or already present for the Escha-origin NMs).
--- Item drops (50% each) are wired via unity_wanted_drops.sql. NMs drop the
+-- Item drops (5% each) are wired via unity_wanted_drops.sql. NMs drop the
 -- BASE (NQ) items (owner change 2026-07-12); the +1 versions come from
 -- trading the base item to the Unity Wanted Board with Unity Accolades
 -- (upgradeCost below, keyed by the dropping NM's tier).
@@ -56,7 +56,7 @@ local WARP_POS = {
 --   minLv      : min level passed to insertDynamicEntity
 --   maxLv      : max level
 --   groupId    : zone-288 mob_groups.groupid
---   drops      : item drop table (50% each via unity_wanted_drops.sql):
+--   drops      : item drop table (5% each via unity_wanted_drops.sql):
 --                { id=<NQ itemId>, name='<NQ name>', plus1=<+1 itemId>, plus1Name='<+1 name>' }
 --                NQ drops from the NM; +1 comes from the Board upgrade trade.
 --                The docs page + gear finder + the upgrade handler all read this.
