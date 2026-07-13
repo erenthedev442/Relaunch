@@ -20,8 +20,11 @@ slot, jobs, and WHERE it comes from -- split into:
                        Empyrean/Mythic/Aeonic/Prime), at any forge stage, is
                        additionally tagged "REMA/Prime: <Type>" -- classified
                        from the authoritative weapon_forge_catalog.lua chains.
-                       Job-specific AF/Relic/Empyrean ARMOR is likewise tagged
-                       "AF/Relic/Emp: <Type>" from reforge_catalog.lua.
+                       The il119 reforged job ARMOR is tagged "AF/Relic/Emp:
+                       <Type>" from reforge_catalog.lua; the classic Lv74-90
+                       AF/Relic/Empyrean job sets (Abyss, Warrior's, etc. --
+                       the predecessors, whether attainable or not) are tagged
+                       "Reforged Sub Item" from validated family prefixes.
 
 Everything is read straight from the repo working tree (sql/*.sql +
 modules/custom/**), so the output reflects the CURRENT source -- including
@@ -122,12 +125,15 @@ def decode_slot(mask: int) -> str:
     return "/".join(n for b, n in SLOT_NAMES if mask & b) or "-"
 
 # ---------------------------------------------------------------------------
-# 1. item_basic -> display name
+# 1. item_basic -> display name (+ raw underscore name for family matching)
 names: dict[int, str] = {}
+raw_names: dict[int, str] = {}
 for blob in _rows(SQL / "item_basic.sql", "item_basic"):
     f = _fields(blob)
     if len(f) > 2 and f[0].isdigit():
-        names[int(f[0])] = _pretty(_unq(f[2]))
+        raw = _unq(f[2])
+        names[int(f[0])] = _pretty(raw)
+        raw_names[int(f[0])] = raw
 
 # 2. item_equipment -> level / ilevel / jobs / slot  (the gear universe)
 gear: dict[int, dict] = {}
@@ -500,6 +506,31 @@ for m in re.finditer(r"\{\s*(\d{4,5})\s*,\s*(\d{4,5})\s*,\s*(\d{4,5})\s*,\s*(\d{
             if iid in gear:
                 armor_type[iid] = lbl
 
+# --- Classic AF / Relic / Empyrean job armor (the Lv74-90 predecessors of the
+# reforged il119 sets) -- tagged "Reforged Sub Item" whether attainable or not.
+# These aren't in reforge_catalog (only their il119 reforges are), so they'd
+# otherwise be blank. Family prefixes VALIDATED against item_basic as single-
+# job EX armour sets (every job's AF + the major Relic/Empyrean sets).
+_CLASSIC_RE_ARMOR = frozenset((
+    # AF (Lv74), one per job
+    "fighters", "temple", "healers", "wizards", "warlocks", "rogues", "gallant",
+    "chaos", "beast", "choral", "hunters", "myochin", "ninja", "drachen",
+    "evokers", "magus", "commodore", "puppetry", "etoile", "argute", "bagua",
+    "runeist",
+    # Relic (Dynamis) + Empyrean (Abyssea), single-job
+    "warriors", "melee", "clerics", "sorcerers", "duelists", "assassins",
+    "valor", "abyss", "monster", "scouts", "saotome", "koga", "wyrm", "callers",
+    "summoners", "ravagers", "tantra", "unkai", "bale", "goetia", "creed",
+    "aoidos", "maculele", "iga", "pitre",
+))
+_ARMOR_SLOTS = {"Head", "Body", "Hands", "Legs", "Feet"}
+
+def _is_classic_reforged(iid: int) -> bool:
+    if gear[iid]["slot"] not in _ARMOR_SLOTS:
+        return False  # excludes same-family accessories (e.g. Warrior's Beads neck)
+    nm = raw_names.get(iid, "")
+    return any(nm.startswith(p + "_") for p in _CLASSIC_RE_ARMOR)
+
 def relaunch_source(iid: int) -> str:
     labels = set(item_custom.get(iid, ()))
     labels |= sys_base.get(iid, set())
@@ -512,6 +543,8 @@ def relaunch_source(iid: int) -> str:
     at = armor_type.get(iid)
     if at:
         labels.add(f"AF/Relic/Emp: {at}")
+    if _is_classic_reforged(iid):
+        labels.add("Reforged Sub Item")
     return " | ".join(sorted(labels))
 
 # ---------------------------------------------------------------------------
