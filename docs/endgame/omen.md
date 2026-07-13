@@ -14,6 +14,7 @@ The chessboard awaits. **Omen** is the Reisenjima Henge gauntlet from the Novemb
 
 - **Phoenix's blessing** — permanent key item; Incantrix bestows it on any level-99 adventurer.
 - **Mystical canteen** — one per entrant, consumed on entry. Incantrix fills one every **20 hours** and banks up to **3** for you while you're away.
+- **An ultimate weapon** — every entrant must have **forged one of the server's ultimate weapons**: any final (iLvl 119&nbsp;III) **Relic, Empyrean, Mythic,** or **Aeonic**, or a claimed **Prime**. Owning one is enough — equipped or stored, and it is **not** consumed. Anyone in the group without one blocks entry.
 - **Group size** — solo up to a full alliance of **18**. Only the leader initiates; everyone needs their own canteen and must be standing nearby.
 - **Time** — **10 minutes** on entry, **+10** per ethereal ingress used, **+30** for the smaller light, hard cap **50 minutes**.
 <!-- DOCGEN:END id="omen-entry" -->
@@ -132,6 +133,6 @@ wherever the data exists. Known deviations, kept deliberately small:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 402f494f0a4c -->
-_Last updated: 2026-07-12 03:20 PDT_
+<!-- content-hash: 0c8fc52fb144 -->
+_Last updated: 2026-07-12 05:35 PDT_
 <!-- DOCGEN:END id="last-updated" -->

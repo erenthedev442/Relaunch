@@ -11,10 +11,35 @@
 -- Runtime: modules/custom/lua/omen_instance.lua
 -- Data:    modules/custom/lua/omen_catalog.lua
 -----------------------------------
-local catalog = require('modules/custom/lua/omen_catalog')
+local catalog     = require('modules/custom/lua/omen_catalog')
+local remaCatalog = require('modules/custom/lua/rema_ws_tier_catalog')
 
 ---@type TNpcEntity
 local entity = {}
+
+-- REMA/Prime entry gate (owner 2026-07-12): every entrant must have BUILT one of
+-- the server's ultimate weapons before Omen will open for them --
+--   * any final (iLvl 119 III) Relic / Empyrean / Mythic or final Aeonic, owned
+--     in ANY container (hasItem scans inventory, wardrobes, storage, and the
+--     equipped slots), sourced from rema_ws_tier_catalog so the list never drifts, OR
+--   * a claimed Prime (PrimeArmory stamps PW_WeaponClaimed = item_id on claim).
+-- Ownership isn't consumed -- you keep fighting with the weapon you built.
+local remaWeaponIds = {}
+for _, w in ipairs(remaCatalog.WEAPONS) do
+    remaWeaponIds[#remaWeaponIds + 1] = w.itemId
+end
+
+local function hasBuiltUltimateWeapon(player)
+    if (player:getCharVar('PW_WeaponClaimed') or 0) ~= 0 then
+        return true
+    end
+    for _, itemId in ipairs(remaWeaponIds) do
+        if player:hasItem(itemId) then
+            return true
+        end
+    end
+    return false
+end
 
 local function accrueCanteens(player)
     local now    = os.time()
@@ -106,6 +131,8 @@ local function validateEntry(player)
             return nil, string.format('%s lacks Phoenix\'s blessing.', member:getName())
         elseif not member:hasKeyItem(catalog.ki.canteen) then
             return nil, string.format('%s lacks a mystical canteen.', member:getName())
+        elseif not hasBuiltUltimateWeapon(member) then
+            return nil, string.format('%s must first forge an ultimate weapon (Relic, Empyrean, Mythic, Aeonic, or Prime).', member:getName())
         elseif member:getInstance() or member:getLocalVar('OmenInstancePending') ~= 0 then
             return nil, string.format('%s is already bound to an instance.', member:getName())
         elseif member:getCharVar('OmenActive') ~= 0 then
