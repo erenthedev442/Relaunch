@@ -78,9 +78,12 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
 
         -- Too many for one window -> offer a page picker so all items are reachable.
         local pages    = math.ceil(#items / SHOP_PAGE)
+        -- Title + labels concatenate into a 150-byte chat packet (Mes[150],
+        -- truncated hard). Keep the title short so a 6-7 page picker (bronze can
+        -- reach ~92 weapons = 6 pages) stays well under 150 bytes.
         local pageMenu =
         {
-            title   = string.format('%s Weapons - Choose Page', sealDef.name:match('^(%S+)') or ''),
+            title   = string.format('%s Weapons', sealDef.name:match('^(%S+)') or ''),
             options = {},
         }
         for pg = 1, pages do
@@ -88,7 +91,7 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
             local last  = math.min(pg * SHOP_PAGE, #items)
             pageMenu.options[#pageMenu.options + 1] =
             {
-                string.format('Page %d  (items %d-%d)', pg, first, last),
+                string.format('Page %d (%d-%d)', pg, first, last),
                 function(playerArg)
                     openShop(playerArg, sealDef, items, first - 1)
                 end,
