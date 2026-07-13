@@ -61,6 +61,14 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
 
     -- Open a slot's items directly (<=16) or via a page picker when larger.
     local function openSlotShop(player, sealDef, items, slotLabel)
+        -- Display the whole slot list alphabetically by name (a sorted copy, so
+        -- the catalog's source order is untouched and paging is consistent).
+        do
+            local sorted = {}
+            for _, it in ipairs(items) do sorted[#sorted + 1] = it end
+            table.sort(sorted, function(a, b) return (a.name or ''):lower() < (b.name or ''):lower() end)
+            items = sorted
+        end
         if #items <= SHOP_PAGE then
             openShop(player, sealDef, items)
             return

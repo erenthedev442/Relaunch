@@ -70,6 +70,10 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
             if not AMBU_WPN_IDS[it.id] then items[#items + 1] = it end
         end
 
+        -- Display the whole tier alphabetically by name so paging is consistent
+        -- and browsing is predictable (catalog source order is untouched).
+        table.sort(items, function(a, b) return (a.name or ''):lower() < (b.name or ''):lower() end)
+
         -- Fits in one shop window -> open it directly (unchanged behaviour).
         if #items <= SHOP_PAGE then
             openShop(player, sealDef, items)
