@@ -13,6 +13,7 @@
 mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
 local ID = zones[xi.zone.MAQUETTE_ABDHALJS_LEGION_B]
+local mechanics = require('modules/custom/lua/mob_mechanics_library')
 -----------------------------------
 local entity = {}
 
@@ -101,12 +102,21 @@ entity.onMobEngage = function(mob, target)
 end
 
 entity.onMobFight = function(mob, target)
+    -- Tier-scaled mechanics attached in instances/ambuscade.lua's
+    -- onInstanceProgressUpdate (stance dance / aoe pulses / drain / doom /
+    -- phase triggers). No-op if the current tier has no mechCfg attached.
+    mechanics.tick(mob, target)
 end
 
 entity.onMobWeaponSkill = function(mob, target, skill, action)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
+    -- Free the mechanics-library state for this mob id BEFORE anything else --
+    -- library docstring says cleanup must run at the top of onMobDeath so
+    -- despawns of any phase-spawned adds fire cleanly.
+    mechanics.cleanup(mob)
+
     -- Clean up Housemaker buff so mob mod table doesn't leak across runs.
     if mob:getLocalVar('hm_buffed') == 1 then
         pcall(function()
