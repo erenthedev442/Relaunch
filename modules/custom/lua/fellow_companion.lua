@@ -566,31 +566,39 @@ scheduleCombatLoop = function(master, pet)
             end
 
             -- Combat: every role fights (assist when idle, Ready at TP cap).
-            if master:isEngaged() then
-                local tgt = master:getTarget()
-                -- [FellowDbg] toggle with `!setplayervar FellowExpDbg 1` (0 to stop).
-                -- Logged BEFORE the claim force below, so it shows the NATURAL state:
-                -- if you see "do NOT own" while your Fellow is fighting, the Fellow's
-                -- own hits were failing to claim the mob for you -> that's the EXP bug.
-                if tgt and not tgt:isDead() and master:getCharVar('FellowExpDbg') == 1 then
+            -- CLAIM FIX (2026-07-12): reports of "lose claim when my Fellow attacks"
+            -- in Ambuscade. Old code only re-claimed when master:isEngaged(); if the
+            -- Fellow (Bulwark) taunted/hit a wave mob first, or the mob's highest
+            -- enmity flipped from master to Fellow mid-fight, the client would show
+            -- the mob as "not yours" until master hit again. Now: assert master
+            -- ownership on BOTH targets (master's + Fellow's) every tick regardless
+            -- of master's engaged state, so as long as the Fellow is out, whatever
+            -- it's fighting is claimed to the master.
+            local mtgt = master:getTarget()
+            local ptgt = p:getTarget()
+            local function forceClaim(t)
+                if not t or t:isDead() then return end
+                pcall(function() t:updateClaim(master) end)
+            end
+            -- [FellowDbg] toggle with `!setplayervar FellowExpDbg 1` (0 to stop).
+            -- Logged BEFORE the claim force, so it shows the NATURAL state.
+            if master:getCharVar('FellowExpDbg') == 1 then
+                local dbgTgt = mtgt or ptgt
+                if dbgTgt and not dbgTgt:isDead() then
                     pcall(function()
-                        if not master:hasClaim(tgt) then
+                        if not master:hasClaim(dbgTgt) then
                             master:printToPlayer(string.format(
-                                '[FellowDbg] you do NOT own %s yet (mobLv%d, you Lv%d, pet Lv%d) -- forcing claim',
-                                tgt:getName(), tgt:getMainLvl() or 0, master:getMainLvl() or 0, p:getMainLvl() or 0),
+                                '[FellowDbg] you do NOT own %s (mobLv%d, you Lv%d, pet Lv%d) -- forcing claim',
+                                dbgTgt:getName(), dbgTgt:getMainLvl() or 0, master:getMainLvl() or 0, p:getMainLvl() or 0),
                                 xi.msg.channel.SYSTEM_3)
                         end
                     end)
                 end
-                -- EXP FIX (2026-07-07): players reported no kill-EXP while the Fellow
-                -- was out, and DISMISSING it restored EXP. The mob's death only pays
-                -- EXP if its owner (m_OwnerID) resolves to a PC; when the Fellow does
-                -- the damage/kill that ownership wasn't reliably landing on the master.
-                -- Force the master to own whatever it's fighting each tick so the kill
-                -- always distributes EXP to the player, whoever lands the last blow.
-                if tgt and not tgt:isDead() then
-                    pcall(function() tgt:updateClaim(master) end)
-                end
+            end
+            forceClaim(mtgt)
+            if ptgt and ptgt ~= mtgt then forceClaim(ptgt) end
+            if master:isEngaged() then
+                local tgt = mtgt
                 -- As a TRUST the Fellow follows the master and engages the
                 -- master's target on its own AI (no petAttack needed -- that was
                 -- a BST/pet order). We just force its signature role TP move when
