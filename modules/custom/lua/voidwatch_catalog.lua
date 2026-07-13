@@ -377,39 +377,18 @@ for _, s in ipairs(C.STRATA) do
 end
 
 
--- ── Tier-gated gear: infamy-UNIQUE weapons + armor relocated here ──
--- (the Mythic/Relic III weapons, apex Trust/Prestige/Sworn sets, etc. that had
--- no other source once the Infamy vendor went accessories-only). Gear drops only
--- on a top quality roll AND when the band is unlocked by your abyssite tier, so
--- higher rank both unlocks and up-weights better pieces. Items that still have
--- another home (forge/reforge/gear vendors/crafting) were intentionally NOT added.
-C.GEAR_QUALITY_AT = 118   -- q (d100 + 8*RED) must reach this to yield a gear piece
-C.GEAR_BANDS =
-{
-    { minTier = 1, items = {  -- entry gear (<=400)
-        21403, 21461, 21462, 21602, 21777, 22212, 22281, 23761, 23775,
-        23782, 23789, 25592, 25603, 25809, 25868, 25934, 25953, 27928, 28330,
-    } },
-    { minTier = 4, items = {  -- mid gear (500-800)
-        16199, 18839, 21372, 23712, 23734, 23758, 23768, 23771, 23773, 23785,
-        23787, 25578, 25766, 25794,
-    } },
-    { minTier = 8, items = {  -- misc endgame weapons (Aeonic/Ergon/horns; no forge path)
-        21080, 21398, 21482, 21685, } },
-    { minTier = 12, items = {  -- apex sets + signature weapons (10000-15000)
-        22300, 24135, 24136, 24137, 24138, 24139, 24140, 24141, 24142,
-        24143, 24144, 24145, 24146, 24147, 24148, 24149,
-    } },
-}
--- Highest band unlocked by tier, weighted to the top band for progression feel.
-function C.gearRoll(tier)
-    local unlocked = {}
-    for _, bnd in ipairs(C.GEAR_BANDS) do
-        if tier >= bnd.minTier and #bnd.items > 0 then unlocked[#unlocked + 1] = bnd end
-    end
-    if #unlocked == 0 then return nil end
-    local pick = (math.random(100) <= 60) and unlocked[#unlocked] or unlocked[math.random(#unlocked)]
-    return pick.items[math.random(#pick.items)]
-end
+-- REMOVED 2026-07-13 (owner: Voidwatch drops should match the docs page): the
+-- tier-gated GEAR_BANDS + gearRoll system fired on top-quality Pyxis rolls and
+-- silently injected 53 items (Nyame/Malignance/Sakpata/Agwu/Jhakri +1/+2,
+-- Ochain, Daurdabla, Idris/Marsyas/Compensator/Epeolatry, Trust/Prestige/
+-- Sworn apex sets) that never appeared on docs/endgame/voidwatch.md -- so a
+-- player who got an Epeolatry from a Yacumama pyxis had no way to know it was
+-- even possible. Voidwatch drops are now strictly the per-NM rare/uncommon
+-- pool + shared common (documented) -- see C.NM_LOOT above. If a future
+-- redesign wants to reintroduce tier-gated bonus gear, do it with docgen
+-- coverage from the start (a new marker section, item lists parsed by
+-- tools/docgen/generators/voidwatch.py) so the site never lags again.
+-- The Voidwatch.lua roll loop stops calling C.gearRoll in the same commit,
+-- so nothing else references these constants -- safe to hard-delete.
 
 return C
