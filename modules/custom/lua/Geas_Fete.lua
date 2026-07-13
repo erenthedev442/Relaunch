@@ -556,16 +556,24 @@ end
 --   mp=N        : max MP (casters need a pool; stock WAR/WAR mobs have 0)
 --   mods={ [xi.mod.X]=v, ... } : any extra modifier
 -- ===================================================================
+-- ANTI-SPONGE PASS 2026-07-13: base pools are rank-1 stat mobs at Lv149, which
+-- gives ~200 base ATT even at ATTP=210 -- an effective ~620 ATT vs 3M HP =
+-- HP:ATT ratio 4800+ (a paper-doll sponge). Owner audit: "custom mobs feel
+-- like HP sponges". Fix: add a flat ATT bonus AND raise ATTP so the flat +
+-- percent combine to push effective ATT into the 1500-2500 range typical for
+-- retail bosses of these HP tiers (HP:ATT 600-1500 = "hits hard, but you have
+-- time to react"). ACC + MATT boosted proportionally so mobs don't just miss.
 local TIER_TUNING = {
-    [1] = { attP =  75, acc = 225, macc = 225, matt =  60, regain =  90, da =  45, ta = 0  },
-    [2] = { attP = 120, acc = 300, macc = 300, matt = 105, regain = 150, da =  75, ta = 15 },
-    [3] = { attP = 165, acc = 375, macc = 375, matt = 150, regain = 240, da =  90, ta = 30 },
-    [4] = { attP = 210, acc = 450, macc = 450, matt = 210, regain = 360, da = 105, ta = 45 },
+    [1] = { attP = 120, att =  400, acc = 350, macc = 350, matt = 100, regain =  90, da =  45, ta = 0  },
+    [2] = { attP = 180, att =  800, acc = 500, macc = 500, matt = 180, regain = 180, da =  75, ta = 15 },
+    [3] = { attP = 260, att = 1200, acc = 650, macc = 650, matt = 260, regain = 300, da =  90, ta = 30 },
+    [4] = { attP = 350, att = 1800, acc = 800, macc = 800, matt = 360, regain = 450, da = 110, ta = 45 },
 }
 
 local function applyDifficulty(mob, def)
     local t = TIER_TUNING[def.tier] or TIER_TUNING[1]
     mob:addMod(xi.mod.ATTP,          t.attP)
+    if t.att then mob:addMod(xi.mod.ATT, t.att) end  -- flat ATT floor (anti-sponge pass)
     mob:addMod(xi.mod.ACC,           t.acc)
     mob:addMod(xi.mod.MACC,          t.macc)
     mob:addMod(xi.mod.MATT,          t.matt)

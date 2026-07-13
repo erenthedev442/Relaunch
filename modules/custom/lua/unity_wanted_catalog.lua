@@ -92,9 +92,13 @@ return {
         -- Ladder compressed: T1 now uses the old T2 numbers; T2 the old T3
         -- numbers; T3 unchanged. T2 and T3 are intentionally identical -- the
         -- ladder is now cost/reward + weekly-bonus rotation, not raw stats.
-        [1] = { hp =  750000, att = 1200, acc = 300, macc = 300, matt = 105, def = 350, eva = 200, regain = 150, da = 75, ta = 15, dmgMult = 175 },
-        [2] = { hp = 2400000, att = 1800, acc = 400, macc = 400, matt = 150, def = 500, eva = 260, regain = 240, da = 90, ta = 30, dmgMult = 200 },
-        [3] = { hp = 2400000, att = 1800, acc = 400, macc = 400, matt = 150, def = 500, eva = 260, regain = 240, da = 90, ta = 30, dmgMult = 200 },
+        -- ANTI-SPONGE PASS 2026-07-13 (audit finding: T2/T3 was 2.4M HP @ 1800 ATT =
+        -- HP:ATT ratio 1333 -- heavy sponge). Trimmed HP ~40% and pushed ATT/ACC/MATT
+        -- so fights end sooner AND hit harder. Target ~500-700 HP/ATT (aggressive
+        -- endgame boss shape). T1 stayed same HP but got ATT/ACC bumps.
+        [1] = { hp =  500000, att = 1500, acc = 400, macc = 400, matt = 150, def = 350, eva = 200, regain = 180, da = 80, ta = 20, dmgMult = 175 },
+        [2] = { hp = 1500000, att = 2500, acc = 550, macc = 550, matt = 220, def = 500, eva = 260, regain = 300, da = 95, ta = 35, dmgMult = 200 },
+        [3] = { hp = 1500000, att = 2500, acc = 550, macc = 550, matt = 220, def = 500, eva = 260, regain = 300, da = 95, ta = 35, dmgMult = 200 },
     },
 
     -- Grace period (seconds) after spawn during which the mob is untargetable
