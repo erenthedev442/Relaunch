@@ -20,7 +20,7 @@ uses.
 
 <!-- DOCGEN:BEGIN id="gear-finder-dataset" -->
 **15,359** equippable items indexed (9,015 obtainable on the Relaunch server, 9,015 with acquisition sources) — the dataset regenerates from live server data on every deploy.
-<!-- dataset-rev: a4fba6a5181c -->
+<!-- dataset-rev: 5a459d2f4620 -->
 <!-- DOCGEN:END id="gear-finder-dataset" -->
 
 <div id="gear-finder">
@@ -30,6 +30,6 @@ uses.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9cfb79659470 -->
-_Last updated: 2026-07-13 15:06 PDT_
+<!-- content-hash: 269ce0285844 -->
+_Last updated: 2026-07-13 15:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->
