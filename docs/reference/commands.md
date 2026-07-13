@@ -2,13 +2,13 @@
 
 These chat commands are available to every player on this server (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 100
+**Total player-accessible commands:** 101
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
 
 !!! note "Custom commands"
-    71 of the commands below are **unique to this server** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
+    72 of the commands below are **unique to this server** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
 
 ## Quick reference
 
@@ -100,6 +100,7 @@ These chat commands are available to every player on this server (no GM rank req
 | `!tournament` | string, string, string | Legendary Tournament — last-person-standing PvE wave event. | :material-puzzle: **custom** |
 | `!tower` | string, string | _(no description)_ | :material-puzzle: **custom** |
 | `!trustattack` | — | Run once to turn ON: while on, you AUTO-ENGAGE whatever mob you have targeted (cursor target), so you and your trusts attack it hands-free -- point at the next mob and you all switch to it. Run again to turn OFF. Macro:  /console !trustattack | :material-puzzle: **custom** |
+| `!unity` | string | _(no description)_ | :material-puzzle: **custom** |
 | `!unstick` | — | Self-rescue from stuck event/sequence state. |  |
 | `!visitant` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!voidwatch` | string, int | Voidwatch-flavored rift battles. Open the menu, or tear a rift in the field. | :material-puzzle: **custom** |
@@ -210,6 +211,12 @@ prints stats of cursor target into chatlog, for debugging.
 Self-targeted dump of EVERY stat the player has, with equipment and buff contributions baked into the totals. Single command, no arguments, no cursor-target needed.
 
 **Usage:** `mystats`
+
+### `!unity`  _(custom)_
+
+**Usage:** `unity`
+
+**Parameter types:** string
 
 ## Misc
 
@@ -734,6 +741,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 15557543c77c -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: 014aded3eb22 -->
+_Last updated: 2026-07-12 23:42 PDT_
 <!-- DOCGEN:END id="last-updated" -->

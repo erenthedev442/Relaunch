@@ -8,11 +8,11 @@ A custom take on Dynamis built for the relaunch. Each of the four nations has a 
 ## Getting in
 
 <!-- DOCGEN:BEGIN id="divergence-access" -->
-A **Divergence Portal** stands at each city's Dynamis entrance. Trade the toll, confirm, and you're warped — solo is fine — into that city's alternate-timeline instance:
+A **Divergence Portal** stands at each city's Dynamis entrance. Pay the toll from the portal's menu — solo is fine — and you're warped into that city's alternate-timeline instance:
 
 **San d'Oria [D]** · **Bastok [D]** · **Windurst [D]** · **Jeuno [D]**.
 
-**Entry toll:** a One Byne Bill per run. There is no rank or slot gate — the only gate on the +4 upgrade is farming the [D] materials (below).
+**Entry toll:** 250 Reforge Marks (AF, Relic, or Empyrean) per run. Marks come from the [Reforge System](../progression/reforge.md) — farm any of its three NM pools (Sky Gods / Unity NMs / Abyssea NMs) and pick your currency at the portal. There is no rank or slot gate — the only gate on the +4 upgrade is farming the [D] materials (below).
 <!-- DOCGEN:END id="divergence-access" -->
 
 ## City of the Day
@@ -80,12 +80,12 @@ Every zone reuses the same six-role chain — only the Beastmen change. The **Ru
 |---|---|---|
 | **Evincing Idol** | Mid-Boss | Beastmens Medal (100%), Black ID Card (10%) |
 | Squadron Hoplite | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
-| Squadron's Wyvern | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
-| Squadron Magian | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron's Vessel | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron Scryer | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
 | Incarnation Icon | Time-extension statue | — (fell it for **+1 min** on the clock) |
 | Regiment Hoplite | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
-| Regiment's Wyvern | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
-| Regiment Magian | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment's Vessel | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment Scryer | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
 | **Fii Pexu the Eternal** | Mega-Boss | Kindreds Medal (100%), Demons Medal (10%), Black ID Card (10%) |
 | **Disjoined Tarutaru** | Disjoined NM | Demons Medal (100%), Kindreds Medal (15%) |
 
@@ -95,12 +95,12 @@ Every zone reuses the same six-role chain — only the Beastmen change. The **Ru
 |---|---|---|
 | **Impish Golem** | Mid-Boss | Beastmens Medal (100%), Black ID Card (10%) |
 | Squadron Berserker | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
-| Squadron's Wyvern | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
-| Squadron Arcanomancer | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron's Fiend | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
+| Squadron Trickster | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
 | Impish Statue | Time-extension statue | — (fell it for **+1 min** on the clock) |
 | Regiment Berserker | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
-| Regiment's Wyvern | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
-| Regiment Arcanomancer | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment's Fiend | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| Regiment Trickster | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
 | **Obstatrix** | Mega-Boss | Kindreds Medal (100%), Demons Medal (10%), Black ID Card (10%) |
 | **Disjoined Mithra** | Disjoined NM | Demons Medal (100%), Kindreds Medal (15%) |
 
@@ -166,6 +166,6 @@ The Forge accepts the trade either way: put the +3 piece **and** the full materi
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cab45b1c4140 -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: 608c05587f2e -->
+_Last updated: 2026-07-12 23:42 PDT_
 <!-- DOCGEN:END id="last-updated" -->

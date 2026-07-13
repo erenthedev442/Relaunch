@@ -105,6 +105,6 @@ With `Party-wide XP` enabled (the default), any party member who has their Fello
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3b3e10722e15 -->
-_Last updated: 2026-07-10 16:40 PDT_
+<!-- content-hash: d8ee2bb4d0ab -->
+_Last updated: 2026-07-12 23:42 PDT_
 <!-- DOCGEN:END id="last-updated" -->

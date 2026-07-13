@@ -34,7 +34,7 @@ Both vendors use the same three currencies, tier-gated:
 Tiered armor across the five main slots. Items are listed with the seal cost and the jobs allowed to equip each piece.
 
 <!-- DOCGEN:BEGIN id="armor-slots" -->
-_51 pieces — 🥉 28 Bronze · 🥈 16 Silver · 🥇 7 Gold. Each slot lists every tier together — pick by your job and the medal you have._
+_33 pieces — 🥉 18 Bronze · 🥈 11 Silver · 🥇 4 Gold. Each slot lists every tier together — pick by your job and the medal you have._
 
 **Tiers:** <span class="tier-pill tier-bronze">🥉&nbsp;Bronze</span> Beastmens Medal — entry ilvl 119 · <span class="tier-pill tier-silver">🥈&nbsp;Silver</span> Kindreds Medal — HQ +1 / +2 augmented · <span class="tier-pill tier-gold">🥇&nbsp;Gold</span> Demons Medal — BiS (Volte / Omen bodies / exclusives)
 
@@ -44,8 +44,6 @@ _51 pieces — 🥉 28 Bronze · 🥈 16 Silver · 🥇 7 Gold. Each slot lists 
 |---|---|--:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/27720" data-img="https://www.bg-wiki.com/images/6/63/Umbani_Cap_description.png" target="_blank" rel="noopener">Umbani Cap</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/27724" data-img="https://www.bg-wiki.com/images/1/1d/Qaaxo_Mask_description.png" target="_blank" rel="noopener">Qaaxo Mask</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/25609" data-img="https://www.bg-wiki.com/images/7/78/Emicho_Coronet_description.png" target="_blank" rel="noopener">Emicho Coronet</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/PLD/DRK/BST/DRG |
-| <a class="item-link" href="https://www.ffxiah.com/item/26669" data-img="https://www.bg-wiki.com/images/9/91/Lustratio_Cap_%2B1_description.png" target="_blank" rel="noopener">Lustratio Cap +1</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/THF/PLD/DRK/BST/BRD/DRG/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/27775" data-img="https://www.bg-wiki.com/images/1/15/Nahtirah_Hat_description.png" target="_blank" rel="noopener">Nahtirah Hat</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/27725" data-img="https://www.bg-wiki.com/images/a/ac/Artsieq_Hat_description.png" target="_blank" rel="noopener">Artsieq Hat</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/26702" data-img="https://www.bg-wiki.com/images/7/77/Gavialis_Helm_description.png" target="_blank" rel="noopener">Gavialis Helm</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/DRK/BST/SAM/NIN/DRG |
@@ -53,22 +51,16 @@ _51 pieces — 🥉 28 Bronze · 🥈 16 Silver · 🥇 7 Gold. Each slot lists 
 | <a class="item-link" href="https://www.ffxiah.com/item/24274" data-img="https://www.bg-wiki.com/images/6/6d/Amin_Turban_description.png" target="_blank" rel="noopener">Amin Turban</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/27710" data-img="https://www.bg-wiki.com/images/d/db/Sahip_Helm_description.png" target="_blank" rel="noopener">Sahip Helm</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/DRK/BST/SAM/DRG |
 | <a class="item-link" href="https://www.ffxiah.com/item/25654" data-img="https://www.bg-wiki.com/images/3/33/Welkin_Crown_description.png" target="_blank" rel="noopener">Welkin Crown</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
-| <a class="item-link" href="https://www.ffxiah.com/item/25616" data-img="https://www.bg-wiki.com/images/4/40/Amalric_Coif_%2B1_description.png" target="_blank" rel="noopener">Amalric Coif +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | BLM/RDM/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/25600" data-img="https://static.ffxiah.com/images/icon/25600.png" target="_blank" rel="noopener">Maiitsoh Haube</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/PLD/DRK/BST/SAM/NIN/DRG |
 
 ### Body
 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/25683" data-img="https://www.bg-wiki.com/images/7/7b/Emicho_Haubert_%2B1_description.png" target="_blank" rel="noopener">Emicho Haubert +1</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/PLD/DRK/BST/DRG |
-| <a class="item-link" href="https://www.ffxiah.com/item/25690" data-img="https://www.bg-wiki.com/images/4/46/Kaykaus_Bliaut_description.png" target="_blank" rel="noopener">Kaykaus Bliaut</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/RDM/BRD/SCH |
 | <a class="item-link" href="https://www.ffxiah.com/item/27887" data-img="https://www.bg-wiki.com/images/f/ff/Vanir_Cotehardie_description.png" target="_blank" rel="noopener">Vanir Cotehardie</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/25688" data-img="https://www.bg-wiki.com/images/c/c4/Amalric_Doublet_description.png" target="_blank" rel="noopener">Amalric Doublet</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | BLM/RDM/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/27888" data-img="https://www.bg-wiki.com/images/2/2c/Kyujutsugi_description.png" target="_blank" rel="noopener">Kyujutsugi</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG/SAM |
 | <a class="item-link" href="https://www.ffxiah.com/item/26970" data-img="https://www.bg-wiki.com/images/6/68/Lapidary_Tunic_description.png" target="_blank" rel="noopener">Lapidary Tunic</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | MNK/THF/RNG/NIN/BLU/COR/DNC/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/23798" data-img="https://www.bg-wiki.com/images/1/1e/Crepuscular_Mail_description.png" target="_blank" rel="noopener">Crepuscular Mail</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/PLD/DRK/BST/SAM/DRG |
 | <a class="item-link" href="https://www.ffxiah.com/item/27857" data-img="https://www.bg-wiki.com/images/b/b4/Respite_Cloak_description.png" target="_blank" rel="noopener">Respite Cloak</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/25708" data-img="https://www.bg-wiki.com/images/5/5a/Gyve_Doublet_description.png" target="_blank" rel="noopener">Gyve Doublet</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO |
 
 ### Hands
 
@@ -76,27 +68,19 @@ _51 pieces — 🥉 28 Bronze · 🥈 16 Silver · 🥇 7 Gold. Each slot lists 
 |---|---|--:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/28009" data-img="https://www.bg-wiki.com/images/a/af/Onimusha-no-Kote_description.png" target="_blank" rel="noopener">Onimusha-No-Kote</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | MNK/SAM/NIN |
 | <a class="item-link" href="https://www.ffxiah.com/item/27096" data-img="https://www.bg-wiki.com/images/7/7d/Count%27s_Cuffs_description.png" target="_blank" rel="noopener">Counts Cuffs</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | MNK/SAM/NIN/PUP |
-| <a class="item-link" href="https://www.ffxiah.com/item/27120" data-img="https://www.bg-wiki.com/images/a/a5/Amalric_Gages_%2B1_description.png" target="_blank" rel="noopener">Amalric Gages +1</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | BLM/RDM/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/28016" data-img="https://www.bg-wiki.com/images/9/97/Qaaxo_Mitaines_description.png" target="_blank" rel="noopener">Qaaxo Mitaines</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/28015" data-img="https://www.bg-wiki.com/images/b/b5/Xaddi_Gauntlets_description.png" target="_blank" rel="noopener">Xaddi Gauntlets</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/PLD/DRK/BST/SAM/DRG |
 | <a class="item-link" href="https://www.ffxiah.com/item/28013" data-img="https://www.bg-wiki.com/images/2/2a/Hegira_Wristbands_description.png" target="_blank" rel="noopener">Hegira Wristbands</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | MNK/THF/RNG/NIN/BLU/COR/DNC/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/27122" data-img="https://www.bg-wiki.com/images/1/13/Kaykaus_Cuffs_%2B1_description.png" target="_blank" rel="noopener">Kaykaus Cuffs +1</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/RDM/BRD/SCH |
-| <a class="item-link" href="https://www.ffxiah.com/item/27114" data-img="https://www.bg-wiki.com/images/d/d6/Emi._Gauntlets_%2B1_description.png" target="_blank" rel="noopener">Emicho Gauntlets +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/DRK/BST/DRG |
 
 ### Legs
 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/27304" data-img="https://www.bg-wiki.com/images/0/08/Amalric_Slops_description.png" target="_blank" rel="noopener">Amalric Slops</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | BLM/RDM/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/28154" data-img="https://www.bg-wiki.com/images/0/0e/Weath._Pants_%2B1_description.png" target="_blank" rel="noopener">Weatherspoon Pants +1</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/27306" data-img="https://www.bg-wiki.com/images/4/41/Kaykaus_Tights_description.png" target="_blank" rel="noopener">Kaykaus Tights</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/RDM/BRD/SCH |
 | <a class="item-link" href="https://www.ffxiah.com/item/28155" data-img="https://www.bg-wiki.com/images/b/b4/Scuff._Cosciales_description.png" target="_blank" rel="noopener">Scufflers Cosciales</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/PLD/DRK/SAM/DRG |
 | <a class="item-link" href="https://www.ffxiah.com/item/25853" data-img="https://www.bg-wiki.com/images/8/85/Querkening_Brais_description.png" target="_blank" rel="noopener">Querkening Brais</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/28174" data-img="https://www.bg-wiki.com/images/a/a6/Theurgist%27s_Slacks_description.png" target="_blank" rel="noopener">Theurgists Slacks</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/SMN/PUP/SCH/GEO |
-| <a class="item-link" href="https://www.ffxiah.com/item/27197" data-img="https://www.bg-wiki.com/images/1/1c/Lustr._Subligar_%2B1_description.png" target="_blank" rel="noopener">Lustratio Subligar +1</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/THF/PLD/DRK/BST/BRD/DRG/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/28152" data-img="https://www.bg-wiki.com/images/9/9b/Gor._Brayettes_%2B1_description.png" target="_blank" rel="noopener">Gorney Brayettes +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/DRK/BST/SAM/DRG |
-| <a class="item-link" href="https://www.ffxiah.com/item/27324" data-img="https://www.bg-wiki.com/images/9/91/Gyve_Trousers_description.png" target="_blank" rel="noopener">Gyve Trousers</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO |
-| <a class="item-link" href="https://www.ffxiah.com/item/27305" data-img="https://www.bg-wiki.com/images/3/3f/Amalric_Slops_%2B1_description.png" target="_blank" rel="noopener">Amalric Slops +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | BLM/RDM/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/24131" data-img="https://www.bg-wiki.com/images/5/59/Revelation_Brais_description.png" target="_blank" rel="noopener">Revelation Brais</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/BRD/NIN |
 
 ### Feet
@@ -104,12 +88,10 @@ _51 pieces — 🥉 28 Bronze · 🥈 16 Silver · 🥇 7 Gold. Each slot lists 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/28286" data-img="https://www.bg-wiki.com/images/b/be/Ostro_Greaves_description.png" target="_blank" rel="noopener">Ostro Greaves</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/PLD/DRK/BST/DRG |
-| <a class="item-link" href="https://www.ffxiah.com/item/27475" data-img="https://www.bg-wiki.com/images/e/ea/Amalric_Nails_description.png" target="_blank" rel="noopener">Amalric Nails</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | BLM/RDM/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/28280" data-img="https://www.bg-wiki.com/images/3/38/Soku._Sune-Ate_description.png" target="_blank" rel="noopener">Sokushitsu Sune-Ate</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | MNK/SAM/NIN |
 | <a class="item-link" href="https://www.ffxiah.com/item/28287" data-img="https://www.bg-wiki.com/images/7/75/Durgai_Leggings_description.png" target="_blank" rel="noopener">Durgai Leggings</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | MNK/THF/BST/NIN/PUP/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/28310" data-img="https://www.bg-wiki.com/images/1/16/Vanir_Boots_description.png" target="_blank" rel="noopener">Vanir Boots</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/28296" data-img="https://www.bg-wiki.com/images/3/3f/Artsieq_Boots_description.png" target="_blank" rel="noopener">Artsieq Boots</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
-| <a class="item-link" href="https://www.ffxiah.com/item/27476" data-img="https://www.bg-wiki.com/images/a/a8/Amalric_Nails_%2B1_description.png" target="_blank" rel="noopener">Amalric Nails +1</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | BLM/RDM/SMN/BLU/SCH/GEO |
 
 ### Shields
 
@@ -127,7 +109,7 @@ _51 pieces — 🥉 28 Bronze · 🥈 16 Silver · 🥇 7 Gold. Each slot lists 
 Tiered weapons grouped by category. Empty categories are hidden — only categories with stocked weapons appear.
 
 <!-- DOCGEN:BEGIN id="weapons-slots" -->
-_13 weapons — 🥉 1 Bronze · 🥈 12 Silver · 🥇 0 Gold. Each slot lists every tier together — pick by your job and the medal you have._
+_12 weapons — 🥉 1 Bronze · 🥈 11 Silver · 🥇 0 Gold. Each slot lists every tier together — pick by your job and the medal you have._
 
 **Tiers:** <span class="tier-pill tier-bronze">🥉&nbsp;Bronze</span> Beastmens Medal — entry endgame ilvl 119 · <span class="tier-pill tier-silver">🥈&nbsp;Silver</span> Kindreds Medal — event / Dynamis-D / Omen / Escha · <span class="tier-pill tier-gold">🥇&nbsp;Gold</span> Demons Medal — REMA + Aeonic
 
@@ -164,7 +146,6 @@ _13 weapons — 🥉 1 Bronze · 🥈 12 Silver · 🥇 0 Gold. Each slot lists 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/21228" data-img="https://www.bg-wiki.com/images/7/73/Falubeza_description.png" target="_blank" rel="noopener">Falubeza</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
-| <a class="item-link" href="https://www.ffxiah.com/item/22118" data-img="https://www.bg-wiki.com/images/3/31/Venery_Bow_description.png" target="_blank" rel="noopener">Venery Bow</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
 
 ### Marksmanship
 
@@ -189,7 +170,7 @@ A third member of the Escha ZiTah gear-vendor row, paid in the **same Bronze/Sil
 Re-run `tools/rebalance_all.bat` after any DB or scoring-weight change — that one batch refreshes Armor + Weapons + Accessory catalogs together.
 
 <!-- DOCGEN:BEGIN id="accessory-slots" -->
-_91 accessories — 🥉 12 Bronze · 🥈 19 Silver · 🥇 60 Gold. Each slot lists every tier together — pick by your job and the medal you have._
+_88 accessories — 🥉 12 Bronze · 🥈 18 Silver · 🥇 58 Gold. Each slot lists every tier together — pick by your job and the medal you have._
 
 **Tiers:** <span class="tier-pill tier-bronze">🥉&nbsp;Bronze</span> Beastmens Medal · <span class="tier-pill tier-silver">🥈&nbsp;Silver</span> Kindreds Medal · <span class="tier-pill tier-gold">🥇&nbsp;Gold</span> Demons Medal — BiS
 
@@ -246,7 +227,6 @@ _Within each slot, tiers run Bronze → Gold; the top pick per tier is listed fi
 | <a class="item-link" href="https://www.ffxiah.com/item/11734" data-img="https://www.bg-wiki.com/images/b/b1/Shaolin_Belt_description.png" target="_blank" rel="noopener">Shaolin Belt</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 32 | WAR/MNK/BST/NIN/PUP | — | — |
 | <a class="item-link" href="https://www.ffxiah.com/item/26356" data-img="https://www.bg-wiki.com/images/b/bd/Skrymir_Cord_description.png" target="_blank" rel="noopener">Skrymir Cord</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | CASTER (145) | — |
 | <a class="item-link" href="https://www.ffxiah.com/item/26351" data-img="https://www.bg-wiki.com/images/6/68/Sacro_Cord_description.png" target="_blank" rel="noopener">Sacro Cord</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | WHM/BLM/RDM/BLU/SCH/GEO | CASTER (64) | RARE,EX |
-| <a class="item-link" href="https://www.ffxiah.com/item/28461" data-img="https://www.bg-wiki.com/images/6/6f/Sekhmet_Corset_description.png" target="_blank" rel="noopener">Sekhmet Corset</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | WHM/BLM/RDM/BRD/SMN/GEO | CASTER (60) | RARE,EX |
 | <a class="item-link" href="https://www.ffxiah.com/item/11750" data-img="https://www.bg-wiki.com/images/d/d4/Creed_Baudrier_description.png" target="_blank" rel="noopener">Creed Baudrier</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | PLD | TANK (57) | RARE,EX |
 | <a class="item-link" href="https://www.ffxiah.com/item/28437" data-img="https://www.bg-wiki.com/images/d/d2/Flume_Belt_%2B1_description.png" target="_blank" rel="noopener">Flume Belt +1</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN | TANK (55) | RARE |
 | <a class="item-link" href="https://www.ffxiah.com/item/26340" data-img="https://www.bg-wiki.com/images/8/89/Moonbow_Belt_description.png" target="_blank" rel="noopener">Moonbow Belt</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | MNK/PUP | — | — |
@@ -281,7 +261,6 @@ _Within each slot, tiers run Bronze → Gold; the top pick per tier is listed fi
 | <a class="item-link" href="https://www.ffxiah.com/item/15545" data-img="https://www.bg-wiki.com/images/2/24/Tamas_Ring_description.png" target="_blank" rel="noopener">Tamas Ring</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 32 | All | CASTER (12) | RARE,EX |
 | <a class="item-link" href="https://www.ffxiah.com/item/10759" data-img="https://www.bg-wiki.com/images/6/66/Aife%27s_Annulet_description.png" target="_blank" rel="noopener">Aifes Annulet</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 32 | All | CASTER (10) | RARE,EX |
 | <a class="item-link" href="https://www.ffxiah.com/item/10784" data-img="https://www.bg-wiki.com/images/4/44/Dhanurveda_Ring_description.png" target="_blank" rel="noopener">Dhanurveda Ring</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 32 | All | — | — |
-| <a class="item-link" href="https://www.ffxiah.com/item/13564" data-img="https://www.bg-wiki.com/images/3/3a/Lightning_Ring_description.png" target="_blank" rel="noopener">Lightning Ring</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 32 | All | — | — |
 | <a class="item-link" href="https://www.ffxiah.com/item/10769" data-img="https://www.bg-wiki.com/images/d/dd/Gelatinous_Ring_%2B1_description.png" target="_blank" rel="noopener">Gelatinous Ring +1</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | TANK (64) | RARE,EX |
 | <a class="item-link" href="https://www.ffxiah.com/item/26184" data-img="https://www.bg-wiki.com/images/8/8b/Stikini_Ring_%2B1_description.png" target="_blank" rel="noopener">Stikini Ring +1</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | HEAL (63) | — |
 | <a class="item-link" href="https://www.ffxiah.com/item/28472" data-img="https://www.bg-wiki.com/images/d/d7/Freke_Ring_description.png" target="_blank" rel="noopener">Freke Ring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | WHM/BLM/RDM/SMN/SCH/GEO | CASTER (49) | RARE,EX |
@@ -307,7 +286,6 @@ _Within each slot, tiers run Bronze → Gold; the top pick per tier is listed fi
 | <a class="item-link" href="https://www.ffxiah.com/item/26268" data-img="https://www.bg-wiki.com/images/d/d2/Moonbeam_Cape_description.png" target="_blank" rel="noopener">Moonbeam Cape</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | TANK (68) | — |
 | <a class="item-link" href="https://www.ffxiah.com/item/28624" data-img="https://www.bg-wiki.com/images/9/90/Niht_Mantle_description.png" target="_blank" rel="noopener">Niht Mantle</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | DRK | — | — |
 | <a class="item-link" href="https://www.ffxiah.com/item/15471" data-img="https://www.bg-wiki.com/images/2/29/Merciful_Cape_description.png" target="_blank" rel="noopener">Merciful Cape</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | — | — |
-| <a class="item-link" href="https://www.ffxiah.com/item/27618" data-img="https://www.bg-wiki.com/images/c/cc/Laic_Mantle_description.png" target="_blank" rel="noopener">Laic Mantle</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN | — | — |
 | <a class="item-link" href="https://www.ffxiah.com/item/28641" data-img="https://www.bg-wiki.com/images/8/8c/Vespid_Mantle_description.png" target="_blank" rel="noopener">Vespid Mantle</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN | — | — |
 | <a class="item-link" href="https://www.ffxiah.com/item/28630" data-img="https://www.bg-wiki.com/images/0/07/Updraft_Mantle_description.png" target="_blank" rel="noopener">Updraft Mantle</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | DRG | — | — |
 <!-- DOCGEN:END id="accessory-slots" -->
@@ -323,7 +301,7 @@ Looking for **+4 armor**? That's no longer bought here — the +4 tier is an ear
 
 ### Accessories
 
-_75 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
+_67 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 
 | Item | Cost | Notes |
 |---|---:|---|
@@ -338,16 +316,9 @@ _75 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 | <a class="item-link" href="https://www.ffxiah.com/item/21431" data-img="https://www.bg-wiki.com/images/7/71/Coiste_Bodhar_description.png" target="_blank" rel="noopener">Coiste Bodhar</a> | 3000 | Earring. Double Attack + WS damage. · Top DD earring (Omen). |
 | <a class="item-link" href="https://www.ffxiah.com/item/26108" data-img="https://www.bg-wiki.com/images/0/01/Odr_Earring_description.png" target="_blank" rel="noopener">Odr Earring</a> | 3000 | Accessory top-5 (ear) · Jobs: MNK/THF/RNG/NIN/BLU/COR/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/26118" data-img="https://www.bg-wiki.com/images/f/fe/Sroda_Earring_description.png" target="_blank" rel="noopener">Sroda Earring</a> | 3000 | Earring. STR + WS damage. · DD earring. |
-| <a class="item-link" href="https://www.ffxiah.com/item/26227" data-img="https://www.bg-wiki.com/images/8/8c/Cornelia%27s_Ring_description.png" target="_blank" rel="noopener">Cornelia's Ring</a> | 3000 | Ring. Best WS-damage ring (WS damage +10%, WS Acc+20). · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/13566" data-img="https://www.bg-wiki.com/images/b/b9/Defending_Ring_description.png" target="_blank" rel="noopener">Defending Ring</a> | 3000 | Damage Taken -10%. · Locks itself once equipped. · The grand prize. |
-| <a class="item-link" href="https://www.ffxiah.com/item/26231" data-img="https://www.bg-wiki.com/images/f/f8/Ephramad%27s_Ring_description.png" target="_blank" rel="noopener">Ephramad's Ring</a> | 3000 | Ring. MND+15, Cure Potency+10%, Healing Skill+15. · EX/RARE. |
-| <a class="item-link" href="https://www.ffxiah.com/item/26230" data-img="https://www.bg-wiki.com/images/b/bd/Fickblix%27s_Ring_description.png" target="_blank" rel="noopener">Fickblix's Ring</a> | 3000 | Ring. INT+15, Magic Atk+15, Magic Acc+20. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/28471" data-img="https://www.bg-wiki.com/images/0/02/Gere_Ring_description.png" target="_blank" rel="noopener">Gere Ring</a> | 3000 | Accessory top-5 (ring) · Jobs: MNK/THF/BST/NIN/PUP/DNC |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Gurebu%27s+Ring&go=Go" data-img="" target="_blank" rel="noopener">Gurebu's Ring</a> | 3000 | Ring. STR+10, VIT+10, Double Attack+5%. · EX/RARE. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Lehko%27s+Ring&go=Go" data-img="" target="_blank" rel="noopener">Lehko's Ring</a> | 3000 | Ring. DEX+10, AGI+10, Store TP+5, Haste+2%. · EX/RARE. |
-| <a class="item-link" href="https://www.ffxiah.com/item/26225" data-img="https://www.bg-wiki.com/images/5/56/Medada%27s_Ring_description.png" target="_blank" rel="noopener">Medada's Ring</a> | 3000 | Ring. STR+10, Acc+15, Crit Rate+3%. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26190" data-img="https://www.bg-wiki.com/images/e/e3/Moonlight_Ring_description.png" target="_blank" rel="noopener">Moonlight Ring</a> | 3000 | Ring. Hybrid (DT-, Accuracy). · Universal ring. |
-| <a class="item-link" href="https://www.ffxiah.com/item/26228" data-img="https://www.bg-wiki.com/images/6/65/Ragelise%27s_Ring_description.png" target="_blank" rel="noopener">Ragelise's Ring</a> | 3000 | Ring. HP+30, DEF+20, MND+10. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/28420" data-img="https://www.bg-wiki.com/images/7/7d/Fotia_Belt_description.png" target="_blank" rel="noopener">Fotia Belt</a> | 3000 | Waist. Universal WS belt (WS damage). · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26361" data-img="https://www.bg-wiki.com/images/5/54/Gerdr_Belt_%2B1_description.png" target="_blank" rel="noopener">Gerdr Belt +1</a> | 3000 | Accessory top-5 (waist) · Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/26334" data-img="https://www.bg-wiki.com/images/1/18/Ioskeha_Belt_%2B1_description.png" target="_blank" rel="noopener">Ioskeha Belt +1</a> | 3000 | Waist. DEX + Double Attack. · DD belt. |
@@ -365,7 +336,6 @@ _75 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 | <a class="item-link" href="https://www.ffxiah.com/item/26259" data-img="https://www.bg-wiki.com/images/5/57/Brigantia%27s_Mantle_description.png" target="_blank" rel="noopener">Brigantia's Mantle</a> | 4000 | Back. DRG JSE cape. DEF+18. · All Jumps: DA+20%. Wyvern: Breath+15. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26260" data-img="https://www.bg-wiki.com/images/f/f0/Campestres%27s_Cape_description.png" target="_blank" rel="noopener">Campestres's Cape</a> | 4000 | Back. SMN JSE cape. DEF+15. · Avatar Lv+1, Blood Pact dmg+5. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26262" data-img="https://www.bg-wiki.com/images/9/95/Camulus%27s_Mantle_description.png" target="_blank" rel="noopener">Camulus's Mantle</a> | 4000 | Back. COR JSE cape. DEF+16. · Phantom Roll dur+30, Triple Shot+5%. |
-| <a class="item-link" href="https://www.ffxiah.com/item/26246" data-img="https://www.bg-wiki.com/images/5/59/Cichol%27s_Mantle_description.png" target="_blank" rel="noopener">Cichol's Mantle</a> | 4000 | Back. WAR JSE cape. DEF+18. · Double Atk dmg+20, Berserk dur+15. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26255" data-img="https://www.bg-wiki.com/images/7/78/Intarabus%27s_Cape_description.png" target="_blank" rel="noopener">Intarabus's Cape</a> | 4000 | Back. BRD JSE cape. DEF+15. · Madrigal+1, Prelude+1. |
 | <a class="item-link" href="https://www.ffxiah.com/item/11007" data-img="https://www.bg-wiki.com/images/8/88/Letalis_Mantle_description.png" target="_blank" rel="noopener">Letalis Mantle</a> | 3000 | Back. DD cape (STR, Double Attack). · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26265" data-img="https://www.bg-wiki.com/images/f/f2/Lugh%27s_Cape_description.png" target="_blank" rel="noopener">Lugh's Cape</a> | 4000 | Back. SCH JSE cape. DEF+15. · Skillchain Bonus+10, Regen dur+15. |
@@ -407,6 +377,6 @@ _75 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: be7f8100f239 -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: 083ea6fa2bf4 -->
+_Last updated: 2026-07-12 23:42 PDT_
 <!-- DOCGEN:END id="last-updated" -->

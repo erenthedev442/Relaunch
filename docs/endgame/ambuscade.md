@@ -29,7 +29,7 @@ All three stand together in Mhaura:
 - Three modes — **Intense**, **Regular**, **Light** — each at five difficulties (VD/D/N/E/VE). Harder = more Hallmarks.
 - **Time bonus:** up to +50% on sub-5-minute clears.
 <!-- DOCGEN:BEGIN id="amb-cap" -->
-- **Monthly cap:** 75,000 Hallmarks per calendar month (Gallantry is uncapped).
+- **Monthly cap:** 200,000 Hallmarks per calendar month (Gallantry is uncapped).
 <!-- DOCGEN:END id="amb-cap" -->
 
 ### Hallmarks per clear
@@ -138,6 +138,6 @@ Gorpa-Masorpa also runs the Ambuscade weapon path: redeem a base **Tokko** weapo
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2544e69a1f46 -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: 1f140f71aaca -->
+_Last updated: 2026-07-12 23:42 PDT_
 <!-- DOCGEN:END id="last-updated" -->

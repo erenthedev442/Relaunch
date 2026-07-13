@@ -1195,3 +1195,10 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     **Saturday, June 13**
 
     - **Retire Laptop Publish** — Deploy-everything now publishes the site FROM THE BOX
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: ca67a1746dfd -->
+_Last updated: 2026-07-12 23:42 PDT_
+<!-- DOCGEN:END id="last-updated" -->

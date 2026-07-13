@@ -1749,8 +1749,8 @@ Stats the server adds that don't exist on the retail item.
 | vitiation_boots_+4 | Magic Attack Bonus | +61 |
 | beckoners_pigaches_+3 | Accuracy | +60 |
 | dokoku | Attack | +60 |
-| earp | Ranged Attack | +60 |
 | earp | Ranged Accuracy | +60 |
+| earp | Ranged Attack | +60 |
 | fallens_cuirass_+3 | Magic Attack Bonus | +60 |
 | glyphic_horn_+3 | Magic Attack Bonus | +60 |
 | karagoz_scarpe_+3 | Attack | +60 |
@@ -1763,23 +1763,23 @@ Stats the server adds that don't exist on the retail item.
 | pinaka | Ranged Accuracy | +60 |
 | pinaka | Ranged Attack | +60 |
 | pitre_babouches_+4 | Magic Attack Bonus | +60 |
-| prime_bow | Ranged Accuracy | +60 |
 | prime_bow | Ranged Attack | +60 |
+| prime_bow | Ranged Accuracy | +60 |
 | prime_fists | Accuracy | +60 |
 | prime_fists | Attack | +60 |
 | prime_great_axe | Attack | +60 |
 | prime_great_axe | Accuracy | +60 |
-| prime_gun | Ranged Attack | +60 |
 | prime_gun | Ranged Accuracy | +60 |
+| prime_gun | Ranged Attack | +60 |
 | prime_lance | Accuracy | +60 |
 | prime_lance | Attack | +60 |
-| prime_maul | Accuracy | +60 |
 | prime_maul | Attack | +60 |
+| prime_maul | Accuracy | +60 |
 | prime_scythe | Attack | +60 |
 | prime_scythe | Accuracy | +60 |
 | prime_staff | Magic Accuracy | +60 |
-| prime_sword | Accuracy | +60 |
 | prime_sword | Attack | +60 |
+| prime_sword | Accuracy | +60 |
 | spalirisos | Attack | +60 |
 | varga_purnikawa | Attack | +60 |
 | varga_purnikawa | Attack | +60 |
@@ -1996,17 +1996,17 @@ Stats the server adds that don't exist on the retail item.
 | onca_suit | Magic Accuracy | +40 |
 | opashoro | Magic Attack Bonus | +40 |
 | prime_bow | AGI | +40 |
-| prime_fists | STR | +40 |
 | prime_fists | DEX | +40 |
+| prime_fists | STR | +40 |
 | prime_great_axe | STR | +40 |
 | prime_gun | AGI | +40 |
 | prime_lance | STR | +40 |
-| prime_maul | MND | +40 |
 | prime_maul | STR | +40 |
+| prime_maul | MND | +40 |
 | prime_scythe | STR | +40 |
+| prime_staff | Magic Attack Bonus | +40 |
 | prime_staff | MND | +40 |
 | prime_staff | INT | +40 |
-| prime_staff | Magic Attack Bonus | +40 |
 | prime_sword | DEX | +40 |
 | prime_sword | STR | +40 |
 | tupsimati_119 | Magic Attack Bonus | +40 |
@@ -2127,8 +2127,8 @@ Stats the server adds that don't exist on the retail item.
 | hashishin_basmak_+1 | Magic Attack Bonus | +27 |
 | ignominy_sollerets_+3 | Magic Attack Bonus | +27 |
 | jhakri_slops | Magic Attack Bonus | +27 |
-| tokko_bow | Ranged Attack | +27 |
 | tokko_bow | Ranged Accuracy | +27 |
+| tokko_bow | Ranged Attack | +27 |
 | tokko_knuckles | Attack | +27 |
 | tokko_knuckles | Accuracy | +27 |
 | tokko_scythe | Attack | +27 |
@@ -2418,8 +2418,8 @@ Stats the server adds that don't exist on the retail item.
 | chevaliers_armet_+2 | Damage taken | -10% |
 | cohort_cloak_+1 | Magic Accuracy | +10 |
 | dokoku | Double Attack | +10% |
-| earp | Store TP | +10 |
 | earp | Rapid Shot | +10% |
+| earp | Store TP | +10 |
 | eletta_axe | Magic Attack Bonus | +10 |
 | eletta_claymore | Magic Attack Bonus | +10 |
 | eletta_katana | Magic Attack Bonus | +10 |
@@ -2451,6 +2451,6 @@ Stats the server adds that don't exist on the retail item.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ae5c3e55bda8 -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: 51083ef79bc9 -->
+_Last updated: 2026-07-12 23:42 PDT_
 <!-- DOCGEN:END id="last-updated" -->

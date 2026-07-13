@@ -49,7 +49,7 @@ The feature moves to the next NM on the roster every **Thursday at 00:00 UTC**. 
 ### Tier 1 — lv 75–80
 *Spawn cost: 200 · Kill reward: 400 accolades*
 
-| NM | Junction zone | Level | Notable Drops (50% each, base version) |
+| NM | Junction zone | Level | Notable Drops (5% each, base version) |
 |---|---|---:|---|
 | Hugemaw Harold | East Ronfaure | 78 | — |
 | Prickly Pitriv | East Sarutabaruta | 78 | — |
@@ -76,7 +76,7 @@ The feature moves to the next NM on the roster every **Thursday at 00:00 UTC**. 
 ### Tier 2 — lv 99–119
 *Spawn cost: 600 · Kill reward: 1,500 accolades*
 
-| NM | Junction zone | Level | Notable Drops (50% each, base version) |
+| NM | Junction zone | Level | Notable Drops (5% each, base version) |
 |---|---|---:|---|
 | Muut | Attohwa Chasm | 110 | <a class="item-link" href="https://www.ffxiah.com/item/20606" data-img="https://www.bg-wiki.com/images/4/47/Anathema_Harpe_description.png" target="_blank" rel="noopener">Anathema Harpe</a> |
 | Voso | Labyrinth of Onzozo | 119 | <a class="item-link" href="https://www.ffxiah.com/item/26942" data-img="https://www.bg-wiki.com/images/b/b1/Agony_Jerkin_description.png" target="_blank" rel="noopener">Agony Jerkin</a> |
@@ -99,7 +99,7 @@ The feature moves to the next NM on the roster every **Thursday at 00:00 UTC**. 
 ### Tier 3 — lv 128–145
 *Spawn cost: 1,500 · Kill reward: 4,000 accolades*
 
-| NM | Junction zone | Level | Notable Drops (50% each, base version) |
+| NM | Junction zone | Level | Notable Drops (5% each, base version) |
 |---|---|---:|---|
 | Specter Worm | Kuftal Tunnel | 128 | <a class="item-link" href="https://www.ffxiah.com/item/21702" data-img="https://www.bg-wiki.com/images/1/13/Kladenets_description.png" target="_blank" rel="noopener">Kladenets</a>, <a class="item-link" href="https://www.ffxiah.com/item/21343" data-img="https://www.bg-wiki.com/images/8/89/Ghastly_Tathlum_description.png" target="_blank" rel="noopener">Ghastly Tathlum</a> |
 | Bakunawa | Sea Serpent Grotto | 128 | <a class="item-link" href="https://www.ffxiah.com/item/20708" data-img="https://www.bg-wiki.com/images/a/a1/Demersal_Degen_description.png" target="_blank" rel="noopener">Demers. Degen</a>, <a class="item-link" href="https://www.ffxiah.com/item/27517" data-img="https://www.bg-wiki.com/images/3/3d/Bathy_Choker_description.png" target="_blank" rel="noopener">Bathy Choker</a> |
@@ -167,6 +167,6 @@ Pledge to one of the **11 Unity leaders** from the board. Your pledge is cosmeti
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9dafb3b1734b -->
-_Last updated: 2026-07-12 03:53 PDT_
+<!-- content-hash: 38949d92c648 -->
+_Last updated: 2026-07-12 23:42 PDT_
 <!-- DOCGEN:END id="last-updated" -->
