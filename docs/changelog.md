@@ -12,6 +12,67 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
 !!! note "Week of July 6–12, 2026"
     **Sunday, July 12**
 
+    - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-12 23:28
+    - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-12 14:30
+    - **Relaunch/Vendors** — Remove 2 gear items missed by single-source cleanup
+    - **Relaunch/Voidwatch** — Sprinkle Sortie JSE earrings on Voidwalker NMs by tier
+    - **Relaunch/Omen** — Require a built REMA/Prime weapon to enter
+    - **Relaunch/Htbf** — Gate entry on job mastery + all NM affinities
+    - **Relaunch/Dynamis Divergence** — Entry toll now 250 Reforge Marks (AF, Relic, or Empy)
+    - **Relaunch/Dynamis Divergence** — Corridor population pass -- ~120 mobs per zone, boss at far end
+    - **Relaunch/Ambuscade** — Gate entry on HNM King kill + T1/T2/T3 HTBF wins
+    - **Relaunch/Ambuscade** — Actually complete instance after clear (was stuck)
+    - **Relaunch/Fellow** — Stop losing claim in Ambuscade when Fellow attacks
+    - **Relaunch/Dynamis Divergence** — Give 12 named bosses real mechanics on top of retail kit
+    - **Relaunch/Ambuscade** — Monthly Hallmark cap 75k -> 200k
+    - **Relaunch/Ops** — Docs writeback push no longer fails on C:\server
+    - **Relaunch/Dungeons** — Give bosses + trash real mechanics via mob_mechanics_library
+    - **Relaunch/Capacity** — !capacity ranperre no longer spawns you on a mob
+    - **Relaunch/Unity** — Compress tier ladder -- T1 <- T2, T2 <- T3 (T3 unchanged)
+    - **Relaunch/Unity** — Labyrinth of Onzozo junction + warp coords (Jbae !pos)
+    - **Relaunch/Unity** — Drop rate 50% -> 5% per item
+    - **Relaunch/Htbf** — Fill retail drop gaps across 12 HTBF pools
+    - **Relaunch/Htbf** — Add free warp menu to the Phantom Gem vendor
+    - **Gear Source Audit** — REMA/Prime name-match strips stage tiers (Almace 90/95/99)
+    - **Gear Source Audit** — Tag classic AF/Relic/Empyrean armor "Reforged Sub Item"
+    - **Relaunch/Escha** — Stop Eschan Yovra spawning in Escha - Ru'Aun
+    - **Relaunch/Fellow** — Convert the Adventuring Fellow from a pet to a trust
+    - **Gear Source Audit** — Add Sparks source + AF/Relic/Empyrean armor category
+    - **Gear Source Audit** — Preserve user-added columns (notes) across regenerates
+    - **Relaunch/Fellow** — Auto-yield the pet slot so job pets aren't blocked
+    - **Gear Source Audit** — Tag REMA/Prime weapons with sub-type in relaunch_source
+    - **Relaunch/Legacy** — Legendary Ring aura = real glow (AFTERGLOW) + zone persistence
+    - **Relaunch/Geas Fete** — Reisenjima abjuration drops + hub Forge NPC for trades & upgrades
+    - **Relaunch/Legacy** — Supercharge the Legendary Ring (Legacy 1.0 heirloom)
+    - **Gear Source Audit** — Add score_class + score columns (gear-finder algorithm)
+    - **Relaunch/Unity** — Buff NM difficulty, 60s prep grace, add !unity progress
+    - **Gear Source Audit** — Distinguish base drop vs "<System> upgrade" tiers
+    - **Gear Source Audit** — Add BCNM/battlefield + quest + mission to retail_source
+    - Gear_source_audit.py -- per-item retail vs relaunch source CSV
+    - **Relaunch/Vendors** — Drop HTBF-owned loot from custom vendors (4 items)
+    - **Relaunch/Htbf** — Implement Dawn + sprinkle unimplemented-fight loot
+    - **Relaunch/Vendors** — Remove TVR mission rewards + Gyve from custom vendors (10 items)
+    - **Relaunch/Domain Qm** — 5,000-mark floor on every Domain Quartermaster item
+    - **Relaunch/Vendors** — Remove Nolan-augmented gear from Gear Vendor (15 items)
+    - **Relaunch/Deploy** — Pre-flight lists files coming from other collaborators
+    - **Relaunch/Vendors** — Drop AH-bot gear from custom vendors (49 items)
+    - **Relaunch/Vendors** — Make all custom gear single-source (92 duplicates resolved)
+    - **Relaunch/Infamy** — Floor every Infamy Vendor item at 3,000
+    - **Relaunch/Infamy** — Flat 5,000 Infamy per Volte piece
+    - **Relaunch/Mobs** — Remove the post-75 x8 formula-HP boost (MOB_ERA_HP_MULT)
+    - Add open world mob scaling framework
+    - **Relaunch/Capacity** — Stop Bibiki Phantoms spawning over the ocean
+    - Added invisible walls to keep players on the intended part of the beach.
+    - Character Create module to handle the TrustUpgraded VAR. System not managed yet, but leaving as 0 causes all of the trust's MOD's to return as 0 as it will always be multiplying by 0.
+    - Redesign GMHome NPC layout
+    - Added spawn/death messages to Corvus and Meat.
+    - **Relaunch/Vendors** — Remove Adoulin reive rings from custom vendors
+    - **Relaunch/Vendors** — Remove all Sortie JSE earrings from custom vendors
+    - **Relaunch/Nyzul** — Resolve appraisal +1 drops (dead P1 links) by enum id
+    - **Relaunch/Shop** — Sell Miner's Pendant in !shop armor
+    - **Relaunch/Geas Fete** — NMs reliably drop their signature gear
+    - **Relaunch/Escha** — Ru'Aun eschan portals unlock on touch (were a silent no-op)
+    - **Relaunch/Geas Fete** — Uniform 30-minute NM cooldown
     - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-12 02:55
     - **Relaunch/Crafting** — Craft-only gear identified, escutcheon recipes enabled, Crafted Gear page
     - **Relaunch/Gear Finder** — Source the Mythic/Empyrean/Relic forge stages (+257 items)
@@ -1134,134 +1195,3 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     **Saturday, June 13**
 
     - **Retire Laptop Publish** — Deploy-everything now publishes the site FROM THE BOX
-    - **Docs Deploy** — Add git pull to Azure cron so docs auto-update
-    - **Login Streak** — Boost milestone bonuses 30x
-    - **Docs Deploy** — Venv + token-file + cron-safe PATH in refresh_site_azure
-    - **Wavemaster** — Award completionBonus to all party members
-    - **Branding** — Replace repo logo with the Legendary dragon emblem
-    - **Trusts** — Repair Void Keeper menu (quote-in-label) + add !givetrust
-    - **Prime Weapons** — 1% Prime Voucher drop from any Hunting League NM
-    - **Weapon Skills** — Enable the other 5 Prime weapon types (GA/Scythe/Polearm/Bow/Gun)
-    - **Trusts** — Give Corvus a hard hitter -- Apex Arrow at 1000 TP
-    - **Gmhome** — Paginate Cross-Job Ability Trainer menu (un-hide Ninja + How-it-works)
-    - **Prime Weapons** — Reusable Prime Voucher reward helper (source-agnostic)
-    - **Ascension** — Show master stars + menacing title for ascended players
-    - **Trusts** — Make Corvus actually hit hard (give his empty bow real DMG)
-    - **Prime Weapons** — Add !primevoucher GM command to grant the bound voucher
-    - **Weapon Skills** — Enable 6 more Prime weapon skills + voucher-gated Prime Armory
-    - **Trusts** — Corvus look -> Elvaan Male ranger (LotR elf) with a longbow
-    - **Gmhome** — Add Cross-Job Trait Trainer (6 borrowed job traits)
-    - **Trusts** — Add Corvus, a ranged-DPS custom trust on the Curilla (902) slot
-    - **Onboarding** — Linkpearl ask in login Quick Tips bar
-    - **AURA** — Add !aura sweep <mode> <start> <end> to audition effect ranges
-    - **Gmhome** — Sparks Exchange rate 50->10 gil/spark
-    - **Weapon Skills** — Implement Maru Kala (231) as a player weapon skill
-    - **Gmhome** — Add Sparks Exchange (sparks->gil) + fix Casino position collision
-    - **QOL** — !trustattack -- send your trusts at your target before you engage
-    - **Shop** — Add Chocobo Shirt + Destrier Beret to !shop armor
-    - **Gmhome** — Add the Lady Luck casino (slots, high-low, roulette, dice)
-    - **Seal Drops** — Cumulative quantity roll (X% = drop N-or-more)
-    - **Seal Drops** — Guaranteed escalating quantity per mob
-    - **Launch** — RaidBoss + Reforge NPC + Impetus bugs; add mob seal drops
-    - **Invasion** — Increase + enrich GM Home defense rewards
-    - **Gmhome** — Unlocker NPC can unlock all automaton parts (PUP)
-    - **Magic** — Expose custom spells as !aegis/!convergence/!silencega
-    - **Hunting League** — Price the Armor NPC [TEST] preview shop at 100M gil (was ~12)
-    - **Prestige** — Make Raja (Voidfang) silenceable
-    - **Hunting League** — Bump Simurgh difficulty a notch (T3)
-    - **Weapons Vendor** — Cap Prime/Su5/Ambuscade ranged, spread across tiers, drop ammo
-    - **Weapons Vendor** — Add capped ranged weapons (archery + marksmanship)
-    - **Trusts** — Block the retail San d'Oria Excenmille NPC from granting Meat (899)
-    - **Trusts** — Exclude Meat (899) from the grant-all NPC + !addalltrusts
-    - **Augments** — Restore 37 dropped augments (magic/skill/utility) via FORCED_CATALYST
-    - **Commands** — Drop the per-line "SystemMessage" banner across all custom commands
-    - **PUP** — !pup unlock -- grant all automaton frames & heads instantly
-    - **Commands** — Drop the per-line "SystemMessage" banner spam
-    - **Hunting League** — Spread the Reisenjima Henge vendor NPCs (fix label overlap)
-    - **Hunting League** — Un-engaged NM despawn 180s -> 30s
-    - **GEO** — Allow GEO luopan (Geo- spells) across all Reisenjima zones
-    - **Reforge** — Idle-despawn un-engaged NMs after a few minutes
-    - **Gear Vendor** — Complete the Taliah +2 set in the Armor NPC (silver)
-    - **PUP** — !pup automaton quick-loadout manager (save/swap frames + attachments)
-    - **Crossjob** — Add Tier 1+2 abilities to the Cross-Job Trainer (39 -> 63)
-    - **Hunting League** — Idle-despawn un-engaged NMs after a few minutes
-    - **Shop** — Add subjob ninja tools to !shop ninja (1 gil)
-    - **Shop** — Add !shop ninja -- universal ninja tools at 1 gil
-    - **QOL** — Make Auction House usable in every zone (!ah anywhere)
-    - **Augments** — Remove Physical Damage Limit augment (redundant after cap raise)
-    - **Trusts** — Meat + Gemma 500M -> 50M gil (Void Keeper)
-    - **Shop** — Add Matre bell to !shop weapons
-    - **Links** — Correct Discord invite across docs, server message, announcer
-    - **Mysterymog** — Add Pupil set pieces to the gil-gamble prize pool
-    - **Gear Mods** — Refresh item-mods pipeline output
-    - **QOL** — Open !release to all players (permission 1 -> 0)
-    - **RAID** — Re-enable Star-Devourer stances (correct nil xi.mod names)
-    - **Shop** — Custom-currency shops deduct across all stacks/containers (no more free buys)
-    - **Hunting League** — Let pet jobs call pets in Reisenjima Henge
-    - **Hunting League** — Consume seals across all stacks/containers, not just the first inventory stack
-    - **Shop** — Add !shop ammo - leveling ladder of arrows/bolts/bullets/shuriken
-    - **Shop** — Add !shop pets -- curated BST jug pets + pet food
-    - **Custom Chat** — Move custom command/login output off linkshell channels
-    - **Gear Vendor** — Add Ryuo Domaru (bronze) + Agony Jerkin +1 (gold) bodies
-    - **Gear Vendor** — Fill body-slot coverage gaps (lean set)
-    - **WARP** — Use verified in-game !pos for Ra'Kaznar Inner Court warp
-    - **WARP** — Add Ra'Kaznar Inner Court to the Warpman (Endgame tier)
-    - **Gear Vendor** — Pull Argosy Hauberk base from silver + add gap-report tool
-    - **Gear Vendor** — Add 5 melee/tank body pieces to bronze tier
-    - **Shop** — Optional custom-currency shops (charge an item instead of gil)
-    - **Sparkshop** — Never leave the event menu hanging (Rolandienne lock-up)
-    - **QOL** — Personal per-character waypoints (!waypoint)
-    - **Crash** — Null-guard CLuaBaseEntity::getZoneID() (Abyssea casket crash)
-    - **Shop** — Add Mumeito to !shop weapons (15k gil)
-    - **Shop** — Add !shop dice - all 31 Corsair roll dice at 1 gil
-    - **Gm Home** — Buff GM-Home Serket HP to match the Hunt League fix
-    - **Hunting League** — Buff Serket HP (Rank III was too soft)
-    - **Shop** — Augment catalysts 1,000,000 -> 100,000 gil
-    - **Shop** — Surface EXP/Capacity augments as their own !shop group
-    - Fix(linkshell)!: remove global LS auto-grant entirely (was crash-looping server)
-    - Fix(linkshell)!: stop auto-equipping global LS - it crash-loops the server
-
-    **Friday, June 12**
-
-    - **OPS** — NPC declutter -- safety-filtered set + deliberate one-shot apply
-    - **Prestige** — Cosmetic Ascension aura for ascended players
-    - **Augments** — Restore Exp./Cap. Point catalysts durably via generator
-    - **JOBS** — Auto-unlock RUN + GEO for all players in the Mog House menu
-    - ﻿feat(ops): NPC declutter -- status-0 filter + both-bucket SQL
-    - **Gm Home** — Cluster the 3 teleport NPCs on the east side
-    - **Linkshell** — Global Legendary server linkshell for all players
-    - **OPS** — Searchable HTML view for the NPC disable audit
-    - ﻿feat(ops): NPC disable audit -- per-zone "extra NPC" review list
-    - **Systems** — Gate login hooks on gameLogin, not `not zoning`
-    - **Missions** — Skip the SoA/RoV mission tails too
-    - **NPC** — Set customMenu send delay to 30ms (was 50, briefly 15)
-    - **NPC** — Lower customMenu send delay 50ms -> 15ms (all NPCs)
-    - **Missions** — Actually skip CoP in the Mission Moogle
-    - ﻿feat(augments): wire up an Enspell Damage catalyst (Wamoura Scale)
-    - ﻿feat(ops): achievements feed for the Discord watcher (second webhook)
-    - ﻿feat(ops): Discord join watcher for the public launch
-    - Feat(jobs)!: retire the Bouncer, restore retail Geomancer on slot 21
-    - **Commands** — Remove dev notes from player command !help text
-    - ﻿fix(world): stop the ZMQ router busy-spin pinning a core at 100%
-    - ﻿fix(mounts): honor MOUNT_SPEED above 255 and clamp the mount branch
-    - ﻿feat(mystats): Ascension section -- every Provenance AP category
-    - **Concurrency** — Public-launch hardening - menu race + dungeon occupancy
-    - **League** — Reisenjima_Henge zoneId is 292, not 291
-    - **Derby** — Chocobo Derby - simulated racing with betting + raised birds
-    - **Treasure** — Treasure maps, overworld digs, buried strongboxes
-    - **League** — Provisioners' League - the non-combat fishing/crafting league
-    - **Prestige** — Spawn Trial bosses on a ring at the summoner, on the floor
-    - **RAID** — The Star-Devourer - weekly multi-phase raid boss
-    - **Invasion** — Scheduled Voidsent assaults on GM Home
-    - **Colosseum** — Async ranked PvP vs AI replicas of real champions
-    - **Prestige** — Spawn Trial bosses at the summoner, not a fixed off-map point
-    - **Dungeons** — Mythic+ keystones - endless key levels above Mythic
-    - ﻿Retire the new-player linkshell; dedupe the Dungeon Veteran title
-    - ﻿docs-in-code: catch comments up to the 5-catalyst reality
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6b1caca1e98f -->
-_Last updated: 2026-07-12 21:15 PDT_
-<!-- DOCGEN:END id="last-updated" -->
