@@ -1738,6 +1738,18 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                     }
                 }
             }
+
+            // RELAUNCH FIX 2026-07-13 (Spyro report: "AoE WS kills give no exp/gil,
+            // just does the kill"). The post-loop ClaimMob below only claims the
+            // PRIMARY target. Every OTHER mob hit by an AoE WS was damaged (and
+            // often killed) without ClaimMob ever running -- so m_OwnerID stayed
+            // 0 and no PC could collect exp/gil on the death. Claim each valid
+            // hostile mob in the AoE. Guard mirrors the magic path (battleentity
+            // .cpp:2597) so we do not spuriously claim allies/pets/summons.
+            if (PTarget->objtype == TYPE_MOB && PTarget->allegiance != this->allegiance)
+            {
+                battleutils::ClaimMob(PTarget, this);
+            }
         }
         battleutils::ClaimMob(PBattleTarget, this);
     }
