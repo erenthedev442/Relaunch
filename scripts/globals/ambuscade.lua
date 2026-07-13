@@ -7,7 +7,7 @@
 --
 -- Three modes: Intense (1-5), Regular (6-10), Light (11-15).
 -- Freely repeatable; no key-item gate.
--- Monthly Hallmark cap: 75,000 HM per calendar month.
+-- Monthly Hallmark cap: 200,000 HM per calendar month.
 -- Time bonus: up to +50% on sub-5-minute clears.
 -- Party scaling: +50% Breadwinner HP per extra party member (handled at engage).
 -----------------------------------
@@ -46,7 +46,7 @@ local GALLANTRY_PER_EXTRA =
     [11]=5,  [12]=4,  [13]=3,  [14]=2,  [15]=1,
 }
 
-local MONTHLY_HM_CAP = 75000  -- resets each calendar month
+local MONTHLY_HM_CAP = 200000  -- resets each calendar month (owner rebalance 2026-07-13: was 75000)
 
 -- ─── Time bonus ───────────────────────────────────────────────────────────────
 -- elapsed = seconds used (from onInstanceTimeUpdate when all mobs die).

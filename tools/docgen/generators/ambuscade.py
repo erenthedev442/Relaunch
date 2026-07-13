@@ -71,7 +71,7 @@ def _parse_armor_sets(text: str) -> tuple[dict, list]:
 
 def _parse(text: str) -> dict:
     c: dict = {}
-    c["cap"] = _int(r"MONTHLY_HM_CAP\s*=\s*(\d+)", text, 45000)
+    c["cap"] = _int(r"MONTHLY_HM_CAP\s*=\s*(\d+)", text, 200000)
     c["sets"], c["job_sets"] = _parse_armor_sets(text)
     c["hm"]  = _idx_map(section(text, "HALLMARKS"))
     c["gal"] = _idx_map(section(text, "GALLANTRY_PER_EXTRA"))
