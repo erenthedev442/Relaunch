@@ -252,9 +252,11 @@ return {
             { id = 0, x = 298.0, y = -40.7, z = 66.0, rot = 96, custom = true },
         } },
         [213] = { zoneName = 'Labyrinth_of_Onzozo', points = {
-            { id = 17649908, x = 0.0, y = 0.0, z = 0.0, rot = 0 },
-            { id = 17649909, x = 0.0, y = 0.0, z = 0.0, rot = 0 },
-            { id = 17649910, x = 0.0, y = 0.0, z = 0.0, rot = 0 },
+            -- Stock npc_list junction rows carried (0,0,0) placeholders; verified
+            -- safe anchor from Jbae's !pos 2026-07-13. Single custom junction (same
+            -- pattern as zone 212) -- the Board warp uses points[1] so this doubles
+            -- as the warp target.
+            { id = 0, x = 35.86, y = 10.0, z = -0.51, rot = 94, custom = true },
         } },
     },
 }
