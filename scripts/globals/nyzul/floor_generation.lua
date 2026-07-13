@@ -1206,6 +1206,27 @@ end
 xi.nyzul.prepareMobs = function(instance)
     local currentFloor = instance:getLocalVar('Nyzul_Current_Floor')
 
+    -- [Nyzul diagnostics/robustness 2026-07-13] Testers reported the objective
+    -- shown as "Enemy Leader" with no leader on the floor. Data is complete (all
+    -- 25 leader mobs exist + are registered to the instance) and no Lua error is
+    -- logged, so the spawn executes -- this logs exactly what it spawns and guards
+    -- every objective-mob spawn so a mob id that ISN'T found in the instance logs
+    -- a precise line instead of silently aborting the rest of the floor's spawns.
+    local function safeSpawn(mobId, x, y, z, rot, what)
+        local m = GetMobByID(mobId, instance)
+        if not m then
+            print(string.format('[Nyzul] MISSING objective mob id=%d (%s) on floor %d -- not in instance; spawn skipped',
+                mobId, what or '?', currentFloor))
+            return false
+        end
+        m:setSpawn(x, y, z, rot or math.random(0, 255))
+        SpawnMob(mobId, instance)
+        return true
+    end
+
+    print(string.format('[Nyzul] prepareMobs: floor=%d stage=%d layout=%d',
+        currentFloor, instance:getStage(), instance:getLocalVar('Nyzul_Isle_FloorLayout')))
+
     -- Failsafe: Initialize variable
     instance:setLocalVar('Nyzul_Specified_Enemy', 0)
 
@@ -1219,10 +1240,8 @@ xi.nyzul.prepareMobs = function(instance)
             floorBoss = math.random(pTableEnemyLeaders[100][1], pTableEnemyLeaders[100][2])
         end
 
-        GetMobByID(ID.mob.ARCHAIC_RAMPART_OFFSET, instance):setSpawn(-36, 0, -362, 0)
-        GetMobByID(floorBoss, instance):setSpawn(-55.000, 1, -380.000, 250)
-        SpawnMob(ID.mob.ARCHAIC_RAMPART_OFFSET, instance)
-        SpawnMob(floorBoss, instance)
+        safeSpawn(ID.mob.ARCHAIC_RAMPART_OFFSET, -36, 0, -362, 0, 'Archaic Rampart (boss floor)')
+        safeSpawn(floorBoss, -55.000, 1, -380.000, 250, 'floor-20 boss')
 
     -- All other floors except free.
     elseif instance:getStage() ~= xi.nyzul.objective.FREE_FLOOR then
@@ -1251,8 +1270,9 @@ xi.nyzul.prepareMobs = function(instance)
                 end
 
                 -- Spawn Mob.
-                GetMobByID(floorBoss, instance):setSpawn(spawnPoint.x, spawnPoint.y, spawnPoint.z, math.random(0, 255))
-                SpawnMob(floorBoss, instance)
+                print(string.format('[Nyzul] enemy-leader spawn: id=%d at (%.1f, %.1f, %.1f)',
+                    floorBoss, spawnPoint.x, spawnPoint.y, spawnPoint.z))
+                safeSpawn(floorBoss, spawnPoint.x, spawnPoint.y, spawnPoint.z, math.random(0, 255), 'enemy leader')
 
                 -- Remove table entry.
                 table.remove(dTableSpawnPoint, spawnPointIndex)
