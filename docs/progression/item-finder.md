@@ -8,7 +8,7 @@ Every purchasable item on the Relaunch server in one searchable list — armor, 
 Each **Item** links to its BG-Wiki page for full stats. The **Source** links to the exact vendor section where you buy it, and **Cost** spells out the currency, since each vendor tier is paid in a different seal or medal.
 
 <!-- DOCGEN:BEGIN id="item-finder" -->
-453 items in stock — **167** Armor · **219** Accessories · **67** Infamy.
+450 items in stock — **167** Armor · **216** Accessories · **67** Infamy.
 
 _This list is **rebuilt from the live vendor catalogs on every deploy**, so it always reflects current stock (the "Last updated" date only moves when the stock itself changes)._
 
@@ -45,7 +45,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Aurists Cape +1](https://www.bg-wiki.com/index.php?search=Aurists+Cape+%2B1&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Austerity Belt +1](https://www.bg-wiki.com/index.php?search=Austerity+Belt+%2B1&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WHM/BLM/RDM/PLD/DRK/SMN/BLU/SCH/GEO/RUN |
 | [Baetyl Pendant](https://www.bg-wiki.com/index.php?search=Baetyl+Pendant&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
-| [Balder Earring](https://www.bg-wiki.com/index.php?search=Balder+Earring&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | All |
 | [Balladeers Cape](https://www.bg-wiki.com/index.php?search=Balladeers+Cape&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
 | [Belenus's Cape](https://www.bg-wiki.com/index.php?search=Belenus%27s+Cape&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Belisamas Rope +1](https://www.bg-wiki.com/index.php?search=Belisamas+Rope+%2B1&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO |
@@ -85,7 +84,7 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Cloud Hairpin](https://www.bg-wiki.com/index.php?search=Cloud+Hairpin&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Cloud Hairpin +1](https://www.bg-wiki.com/index.php?search=Cloud+Hairpin+%2B1&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Coalition Shield](https://www.bg-wiki.com/index.php?search=Coalition+Shield&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Shields | 12 Beastmens Medal | WAR/PLD/DRK |
-| [Coatl Gorget](https://www.bg-wiki.com/index.php?search=Coatl+Gorget&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | PLD/DRK |
+| [Coatl Gorget](https://www.bg-wiki.com/index.php?search=Coatl+Gorget&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | PLD/DRK |
 | [Coatl Gorget +1](https://www.bg-wiki.com/index.php?search=Coatl+Gorget+%2B1&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | PLD/DRK |
 | [Coiste Bodhar](https://www.bg-wiki.com/index.php?search=Coiste+Bodhar&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Combatants Torque](https://www.bg-wiki.com/index.php?search=Combatants+Torque&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
@@ -117,7 +116,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Engulfer Cape +1](https://www.bg-wiki.com/index.php?search=Engulfer+Cape+%2B1&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Ensnaring Torque](https://www.bg-wiki.com/index.php?search=Ensnaring+Torque&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Etiolation Earring](https://www.bg-wiki.com/index.php?search=Etiolation+Earring&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | All |
-| [Evader Earring](https://www.bg-wiki.com/index.php?search=Evader+Earring&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Earring | 15 Beastmens Medal | All |
 | [Famine Sash](https://www.bg-wiki.com/index.php?search=Famine+Sash&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Farr Torque](https://www.bg-wiki.com/index.php?search=Farr+Torque&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Felicitas Cape +1](https://www.bg-wiki.com/index.php?search=Felicitas+Cape+%2B1&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
@@ -347,7 +345,7 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Sacro Bulwark](https://www.bg-wiki.com/index.php?search=Sacro+Bulwark&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Shields | 50 Demons Medal | WAR/RDM/PLD/BST |
 | [Sacro Cord](https://www.bg-wiki.com/index.php?search=Sacro+Cord&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | WHM/BLM/RDM/BLU/SCH/GEO |
 | [Sacro Mantle](https://www.bg-wiki.com/index.php?search=Sacro+Mantle&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | MNK/THF/BST/NIN/PUP/DNC |
-| [Saevus Pendant](https://www.bg-wiki.com/index.php?search=Saevus+Pendant&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | WHM/BLM/SMN/PUP/SCH/GEO |
+| [Saevus Pendant](https://www.bg-wiki.com/index.php?search=Saevus+Pendant&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | WHM/BLM/SMN/PUP/SCH/GEO |
 | [Saevus Pendant +1](https://www.bg-wiki.com/index.php?search=Saevus+Pendant+%2B1&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | WHM/BLM/SMN/PUP/SCH/GEO |
 | [Sanctity Necklace](https://www.bg-wiki.com/index.php?search=Sanctity+Necklace&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Sasuke Tekko +1](https://www.bg-wiki.com/index.php?search=Sasuke+Tekko+%2B1&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Hands | 50 Demons Medal | MNK/SAM/NIN |
@@ -387,7 +385,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Sveltesse Gouriz +1](https://www.bg-wiki.com/index.php?search=Sveltesse+Gouriz+%2B1&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | MNK/WHM/RDM/THF/BST/BRD/RNG/SAM/NIN/BLU/COR/DNC/RUN |
 | [Sverrir Torque](https://www.bg-wiki.com/index.php?search=Sverrir+Torque&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Sweordfaetels +1](https://www.bg-wiki.com/index.php?search=Sweordfaetels+%2B1&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| [Swith Cape](https://www.bg-wiki.com/index.php?search=Swith+Cape&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
 | [Tamas Ring](https://www.bg-wiki.com/index.php?search=Tamas+Ring&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Ring | 32 Kindreds Medal | All |
 | [Tandem Necklace +1](https://www.bg-wiki.com/index.php?search=Tandem+Necklace+%2B1&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Taranus's Cape](https://www.bg-wiki.com/index.php?search=Taranus%27s+Cape&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |

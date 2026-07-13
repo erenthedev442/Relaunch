@@ -66,6 +66,9 @@ local b = catalog.bronze
 table.insert(b.neck, { id =  28393, name = 'Goetic Torque'                     , cost =  15, jobs = 'All' })  -- CASTER score 7 [EX]
 table.insert(b.neck, { id =  13141, name = 'Republican Gold Medal'             , cost =  15, jobs = 'All' })  -- CASTER score 1 [EX]
 table.insert(b.neck, { id =  10919, name = 'Tandem Necklace +1'                , cost =  15, jobs = 'All' })  -- TANK score 6 [RARE,EX]
+-- Demoted from silver 2026-07-13 (owner rule: NQ + HQ both on Hunt vendors -> NQ drops one tier).
+table.insert(b.neck, { id =  10947, name = 'Saevus Pendant'                    , cost =  15, jobs = 'WHM/BLM/SMN/PUP/SCH/GEO' })  -- CASTER score 21 [RARE]
+table.insert(b.neck, { id =  10946, name = 'Coatl Gorget'                      , cost =  15, jobs = 'PLD/DRK' })  -- TANK score 18 [RARE]
 
 -- waist
 table.insert(b.waist, { id =  15942, name = 'Summoning Belt'                    , cost =  15, jobs = 'WHM/BLM/RDM/PLD/DRK/SMN/BLU/SCH/GEO/RUN' })  -- PET score 4 [RARE,EX]
@@ -90,10 +93,11 @@ catalog.silver = emptySlots()
 local s = catalog.silver
 
 -- neck
-table.insert(s.neck, { id =  10947, name = 'Saevus Pendant'                    , cost =  32, jobs = 'WHM/BLM/SMN/PUP/SCH/GEO' })  -- CASTER score 21 [RARE]
+-- Saevus Pendant NQ and Coatl Gorget NQ moved to bronze 2026-07-13 (owner rule:
+-- when NQ + HQ both live on the Hunt vendors, the NQ drops one tier). Their +1
+-- versions were already at bronze from the 2026-07-13 hunt-vendor batch below.
 table.insert(s.neck, { id =  15527, name = 'Praecis Gorget'                    , cost =  32, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- WS score 21 [RARE,EX]
 table.insert(s.neck, { id =  16306, name = 'Halting Stole'                     , cost =  32, jobs = 'All' })  -- DPS score 21 [RARE,EX]
-table.insert(s.neck, { id =  10946, name = 'Coatl Gorget'                      , cost =  32, jobs = 'PLD/DRK' })  -- TANK score 18 [RARE]
 
 -- waist
 table.insert(s.waist, { id =  11734, name = 'Shaolin Belt'                      , cost =  32, jobs = 'WAR/MNK/BST/NIN/PUP' })  -- DPS score 16 [RARE,EX]
