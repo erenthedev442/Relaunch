@@ -96,9 +96,17 @@ return {
         -- HP:ATT ratio 1333 -- heavy sponge). Trimmed HP ~40% and pushed ATT/ACC/MATT
         -- so fights end sooner AND hit harder. Target ~500-700 HP/ATT (aggressive
         -- endgame boss shape). T1 stayed same HP but got ATT/ACC bumps.
-        [1] = { hp =  500000, att = 1500, acc = 400, macc = 400, matt = 150, def = 350, eva = 200, regain = 180, da = 80, ta = 20, dmgMult = 175 },
-        [2] = { hp = 1500000, att = 2500, acc = 550, macc = 550, matt = 220, def = 500, eva = 260, regain = 300, da = 95, ta = 35, dmgMult = 200 },
-        [3] = { hp = 1500000, att = 2500, acc = 550, macc = 550, matt = 220, def = 500, eva = 260, regain = 300, da = 95, ta = 35, dmgMult = 200 },
+        -- ANTI-SPONGE PASS #2 2026-07-13 (defensive/tempo axis): audit follow-up
+        -- found the offensive tune-up left magic side wide open (no MDEF/MEVA =
+        -- casters land 100% MB/nukes) and no HASTE_GEAR (mob swings at base
+        -- delay). Added mdef/meva + hasteGear + str/dex so the fight is a
+        -- rounded threat, not a one-dimensional physical exchange.
+        [1] = { hp =  500000, att = 1500, acc = 400, macc = 400, matt = 150, def = 350, eva = 200, regain = 180, da = 80, ta = 20, dmgMult = 175,
+                mdef = 200, meva = 200, str = 100, dex = 100, hasteGear = 150 },
+        [2] = { hp = 1500000, att = 2500, acc = 550, macc = 550, matt = 220, def = 500, eva = 260, regain = 300, da = 95, ta = 35, dmgMult = 200,
+                mdef = 400, meva = 300, str = 200, dex = 200, hasteGear = 250 },
+        [3] = { hp = 1500000, att = 2500, acc = 550, macc = 550, matt = 220, def = 500, eva = 260, regain = 300, da = 95, ta = 35, dmgMult = 200,
+                mdef = 400, meva = 300, str = 200, dex = 200, hasteGear = 250 },
     },
 
     -- Grace period (seconds) after spawn during which the mob is untargetable

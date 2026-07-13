@@ -190,6 +190,13 @@ local function spawnWantedNm(player, nm, pos)
         if d.da      then mob:addMod(xi.mod.DOUBLE_ATTACK, d.da)  end
         if d.ta and d.ta > 0 then mob:addMod(xi.mod.TRIPLE_ATTACK, d.ta) end
         if d.dmgMult then mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, d.dmgMult) end
+        -- Anti-sponge pass #2 (defensive/tempo axis): each optional so a shorter
+        -- difficulty row still applies cleanly.
+        if d.mdef      then mob:addMod(xi.mod.MDEF,       d.mdef)      end
+        if d.meva      then mob:addMod(xi.mod.MEVA,       d.meva)      end
+        if d.str       then mob:addMod(xi.mod.STR,        d.str)       end
+        if d.dex       then mob:addMod(xi.mod.DEX,        d.dex)       end
+        if d.hasteGear then mob:addMod(xi.mod.HASTE_GEAR, d.hasteGear) end
     end
 
     -- Grace period: spawn UNTARGETABLE + pre-claimed to the paying player, then

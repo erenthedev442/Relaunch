@@ -563,11 +563,27 @@ end
 -- percent combine to push effective ATT into the 1500-2500 range typical for
 -- retail bosses of these HP tiers (HP:ATT 600-1500 = "hits hard, but you have
 -- time to react"). ACC + MATT boosted proportionally so mobs don't just miss.
+--
+-- ANTI-SPONGE PASS #2 2026-07-13: audit found the tuning covered ATT/ACC/MATT
+-- but NOTHING on the defensive or tempo axis. Casters could nuke unopposed
+-- (no MEVA/MDEF), physical DDs could stack ACC and hit forever (no EVA),
+-- and mobs swung at base delay (no HASTE_GEAR) -- so the "sponge" feel was
+-- reinforced by combats where the mob didn't threaten and the player poured
+-- damage into a wall. Now every tier gets a full defensive block matched to
+-- the Hunting League tier tunings (which players agree feel "right").
+--   * DEF/EVA           -- physical durability + evasion so ACC matters
+--   * MDEF/MEVA         -- magic durability + evasion so MACC matters
+--   * STR/DEX           -- feed the ACC/damage formulas
+--   * HASTE_GEAR        -- swing tempo; 150 = ~10%, 450 = ~30% engine cap
 local TIER_TUNING = {
-    [1] = { attP = 120, att =  400, acc = 350, macc = 350, matt = 100, regain =  90, da =  45, ta = 0  },
-    [2] = { attP = 180, att =  800, acc = 500, macc = 500, matt = 180, regain = 180, da =  75, ta = 15 },
-    [3] = { attP = 260, att = 1200, acc = 650, macc = 650, matt = 260, regain = 300, da =  90, ta = 30 },
-    [4] = { attP = 350, att = 1800, acc = 800, macc = 800, matt = 360, regain = 450, da = 110, ta = 45 },
+    [1] = { attP = 120, att =  400, acc = 350, macc = 350, matt = 100, regain =  90, da =  45, ta = 0,
+            def =  600, eva = 180, mdef = 200, meva = 180, str =  75, dex =  75, hasteGear = 150 },
+    [2] = { attP = 180, att =  800, acc = 500, macc = 500, matt = 180, regain = 180, da =  75, ta = 15,
+            def =  900, eva = 240, mdef = 300, meva = 240, str = 150, dex = 150, hasteGear = 225 },
+    [3] = { attP = 260, att = 1200, acc = 650, macc = 650, matt = 260, regain = 300, da =  90, ta = 30,
+            def = 1200, eva = 300, mdef = 400, meva = 300, str = 250, dex = 250, hasteGear = 300 },
+    [4] = { attP = 350, att = 1800, acc = 800, macc = 800, matt = 360, regain = 450, da = 110, ta = 45,
+            def = 1500, eva = 400, mdef = 500, meva = 400, str = 350, dex = 350, hasteGear = 400 },
 }
 
 local function applyDifficulty(mob, def)
@@ -582,6 +598,15 @@ local function applyDifficulty(mob, def)
     if t.ta > 0 then
         mob:addMod(xi.mod.TRIPLE_ATTACK, t.ta)
     end
+    -- Anti-sponge pass #2 (defensive + tempo): guarded so removing a field in
+    -- TIER_TUNING doesn't hard-fail the spawn.
+    if t.def       then mob:addMod(xi.mod.DEF,        t.def)       end
+    if t.eva       then mob:addMod(xi.mod.EVASION,    t.eva)       end
+    if t.mdef      then mob:addMod(xi.mod.MDEF,       t.mdef)      end
+    if t.meva      then mob:addMod(xi.mod.MEVA,       t.meva)      end
+    if t.str       then mob:addMod(xi.mod.STR,        t.str)       end
+    if t.dex       then mob:addMod(xi.mod.DEX,        t.dex)       end
+    if t.hasteGear then mob:addMod(xi.mod.HASTE_GEAR, t.hasteGear) end
 
     if def.delay then
         mob:setDelay(def.delay)
