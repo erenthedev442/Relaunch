@@ -1,0 +1,3535 @@
+[
+  {
+    "charid": 4,
+    "charname": "Rirint",
+    "itemid": 12631,
+    "itemname": "Hume Tunic",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 4,
+    "charname": "Rirint",
+    "itemid": 12754,
+    "itemname": "Hume M Gloves",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 4,
+    "charname": "Rirint",
+    "itemid": 12883,
+    "itemname": "Hume Slacks",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 4,
+    "charname": "Rirint",
+    "itemid": 13005,
+    "itemname": "Hume M Boots",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 4,
+    "charname": "Rirint",
+    "itemid": 16534,
+    "itemname": "Onion Sword",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 5,
+    "charname": "Molly",
+    "itemid": 12631,
+    "itemname": "Hume Tunic",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 5,
+    "charname": "Molly",
+    "itemid": 12754,
+    "itemname": "Hume M Gloves",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 5,
+    "charname": "Molly",
+    "itemid": 12883,
+    "itemname": "Hume Slacks",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 5,
+    "charname": "Molly",
+    "itemid": 13005,
+    "itemname": "Hume M Boots",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 5,
+    "charname": "Molly",
+    "itemid": 16534,
+    "itemname": "Onion Sword",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 6,
+    "charname": "Eir",
+    "itemid": 12634,
+    "itemname": "Elvaan Bodice",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 6,
+    "charname": "Eir",
+    "itemid": 12759,
+    "itemname": "Elvaan Gauntlets",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 6,
+    "charname": "Eir",
+    "itemid": 12889,
+    "itemname": "Elvaan F Chausses",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 6,
+    "charname": "Eir",
+    "itemid": 13011,
+    "itemname": "Elv. F Ledelsens",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 6,
+    "charname": "Eir",
+    "itemid": 17068,
+    "itemname": "Onion Rod",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 7,
+    "charname": "Testa",
+    "itemid": 12631,
+    "itemname": "Hume Tunic",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 7,
+    "charname": "Testa",
+    "itemid": 12754,
+    "itemname": "Hume M Gloves",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 7,
+    "charname": "Testa",
+    "itemid": 12883,
+    "itemname": "Hume Slacks",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 7,
+    "charname": "Testa",
+    "itemid": 13005,
+    "itemname": "Hume M Boots",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 7,
+    "charname": "Testa",
+    "itemid": 16534,
+    "itemname": "Onion Sword",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 9,
+    "charname": "Ririntwo",
+    "itemid": 12635,
+    "itemname": "Tarutaru Kaftan",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 9,
+    "charname": "Ririntwo",
+    "itemid": 12756,
+    "itemname": "Tarutaru Mitts",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 9,
+    "charname": "Ririntwo",
+    "itemid": 12886,
+    "itemname": "Tarutaru Braccae",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 9,
+    "charname": "Ririntwo",
+    "itemid": 13007,
+    "itemname": "Tarutaru Clomps",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 9,
+    "charname": "Ririntwo",
+    "itemid": 16534,
+    "itemname": "Onion Sword",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 11024,
+    "itemname": "Auster's Pearl",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 11689,
+    "itemname": "Auster's Earring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 12389,
+    "itemname": "Mercenary's Targe",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 12396,
+    "itemname": "Killer Targe",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 12399,
+    "itemname": "Beater's Aspis",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 12400,
+    "itemname": "Ashigaru Targe",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 12632,
+    "itemname": "Hume Vest",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 12760,
+    "itemname": "Hume F Gloves",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 12884,
+    "itemname": "Hume Pants",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 13010,
+    "itemname": "Hume F Boots",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 13093,
+    "itemname": "Justice Badge",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 13211,
+    "itemname": "Friar's Rope",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 13398,
+    "itemname": "Physical Earring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 13497,
+    "itemname": "Bastokan Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 13659,
+    "itemname": "Mercen. Mantle",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 13670,
+    "itemname": "Ashigaru Mantle",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 14586,
+    "itemname": "Cobra Tunica",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 14587,
+    "itemname": "Pilgrim Tunica",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 14670,
+    "itemname": "Safeguard Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 15180,
+    "itemname": "Cache-nez",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 21281,
+    "itemname": "Eminent Gun",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 23385,
+    "itemname": "Orion Beret +3",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 23408,
+    "itemname": "Arcadian Beret +3",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 23564,
+    "itemname": "Amini Glovelettes +3",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 23609,
+    "itemname": "Arc. Braccae +3",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 23698,
+    "itemname": "Amini Bottillons +3",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 26227,
+    "itemname": "Cornelia's Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 26231,
+    "itemname": "Ephramad's Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 26820,
+    "itemname": "Arcadian Jerkin",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 26944,
+    "itemname": "Tartarus Platemail",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 26996,
+    "itemname": "Arcadian Bracers",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 27257,
+    "itemname": "Amini Bragues",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 27348,
+    "itemname": "Arcadian Socks",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 27740,
+    "itemname": "Outrider Mask",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 28029,
+    "itemname": "Outrider Mittens",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 28168,
+    "itemname": "Outrider Hose",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 11,
+    "charname": "Burtgang",
+    "itemid": 28306,
+    "itemname": "Outrider Greaves",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 12631,
+    "itemname": "Hume Tunic",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 12754,
+    "itemname": "Hume M Gloves",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 12883,
+    "itemname": "Hume Slacks",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 13005,
+    "itemname": "Hume M Boots",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 16534,
+    "itemname": "Onion Sword",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 16807,
+    "itemname": "Cmb.cst. Scimitar",
+    "quantity": 2,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 17440,
+    "itemname": "Kraken Club",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 20583,
+    "itemname": "Mandau",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Weapon Forge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 21618,
+    "itemname": "Ajja Sword",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Weapon Forge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 21919,
+    "itemname": "Ajja Katana",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Weapon Forge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 25445,
+    "itemname": "Leth. Earring +1",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Voidwatch"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 25811,
+    "itemname": "Aya. Manopolas +1",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Ambuscade"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 25870,
+    "itemname": "Aya. Cosciales +1",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Ambuscade"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 25935,
+    "itemname": "Aya. Gambieras",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Ambuscade"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 26632,
+    "itemname": "Vitiation Chapeau",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 26648,
+    "itemname": "Mochi. Hatsuburi",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 26748,
+    "itemname": "Lethargy Chappel",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 26764,
+    "itemname": "Hattori Zukin",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 26808,
+    "itemname": "Vitiation Tabard",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 26824,
+    "itemname": "Mochi. Chainmail",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 26906,
+    "itemname": "Lethargy Sayon",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 26922,
+    "itemname": "Hattori Ningi",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 26984,
+    "itemname": "Vitiation Gloves",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27000,
+    "itemname": "Mochizuki Tekko",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27060,
+    "itemname": "Leth. Gantherots",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27076,
+    "itemname": "Hattori Tekko",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27160,
+    "itemname": "Vitiation Tights",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27176,
+    "itemname": "Mochizuki Hakama",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27245,
+    "itemname": "Leth. Fuseau",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27261,
+    "itemname": "Hattori Hakama",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27336,
+    "itemname": "Vitiation Boots",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27352,
+    "itemname": "Mochizuki Kyahan",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27419,
+    "itemname": "Leth. Houseaux",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27435,
+    "itemname": "Hattori Kyahan",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27667,
+    "itemname": "Atrophy Chapeau",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27675,
+    "itemname": "Hachiya Hatsuburi",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27811,
+    "itemname": "Atrophy Tabard",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27819,
+    "itemname": "Hachi. Chainmail",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27947,
+    "itemname": "Atrophy Gloves",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 27955,
+    "itemname": "Hachiya Tekko",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 28094,
+    "itemname": "Atrophy Tights",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 28102,
+    "itemname": "Hachiya Hakama",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 28227,
+    "itemname": "Atrophy Boots",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 12,
+    "charname": "Souls",
+    "itemid": 28235,
+    "itemname": "Hachiya Kyahan",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 11385,
+    "itemname": "Comm. Bottes",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 11478,
+    "itemname": "Etoile Tiara",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 12486,
+    "itemname": "Emperor Hairpin",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 12637,
+    "itemname": "Galkan Surcoat",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 12758,
+    "itemname": "Galkan Bracers",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 12888,
+    "itemname": "Galkan Braguette",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 13009,
+    "itemname": "Galkan Sandals",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 13014,
+    "itemname": "Leaping Boots",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 13184,
+    "itemname": "White Belt",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 15078,
+    "itemname": "Valor Coronet",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 15092,
+    "itemname": "Assassin's Vest",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 15095,
+    "itemname": "Monster Jackcoat",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 15106,
+    "itemname": "Duelist's Gloves",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 15111,
+    "itemname": "Bard's Cuffs",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 15113,
+    "itemname": "Saotome Kote",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 15116,
+    "itemname": "Summoner's Brcr.",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 15120,
+    "itemname": "Sorcerer's Tonban",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 15133,
+    "itemname": "Melee Gaiters",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 15139,
+    "itemname": "Abyss Sollerets",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 16346,
+    "itemname": "Mirage Shalwar",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 16362,
+    "itemname": "Argute Pants",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 18278,
+    "itemname": "Relic Blade",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 18302,
+    "itemname": "Relic Scythe",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 19294,
+    "itemname": "Ichi-an +1",
+    "quantity": 2,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 21044,
+    "itemname": "Ichimonji-yofusa",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 26164,
+    "itemname": "Caliber Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 26764,
+    "itemname": "Hattori Zukin",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 26909,
+    "itemname": "Skulker's Vest +1",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 26922,
+    "itemname": "Hattori Ningi",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 27076,
+    "itemname": "Hattori Tekko",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 27261,
+    "itemname": "Hattori Hakama",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 27435,
+    "itemname": "Hattori Kyahan",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 27740,
+    "itemname": "Outrider Mask",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 27881,
+    "itemname": "Outrider Mail",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 28029,
+    "itemname": "Outrider Mittens",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 28168,
+    "itemname": "Outrider Hose",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 28306,
+    "itemname": "Outrider Greaves",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 28549,
+    "itemname": "Enlivened Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 13,
+    "charname": "Duffaluffagus",
+    "itemid": 28550,
+    "itemname": "Vehemence Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 14,
+    "charname": "Corvinos",
+    "itemid": 12637,
+    "itemname": "Galkan Surcoat",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 14,
+    "charname": "Corvinos",
+    "itemid": 12758,
+    "itemname": "Galkan Bracers",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 14,
+    "charname": "Corvinos",
+    "itemid": 12888,
+    "itemname": "Galkan Braguette",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 14,
+    "charname": "Corvinos",
+    "itemid": 13009,
+    "itemname": "Galkan Sandals",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 14,
+    "charname": "Corvinos",
+    "itemid": 13184,
+    "itemname": "White Belt",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 14,
+    "charname": "Corvinos",
+    "itemid": 13497,
+    "itemname": "Bastokan Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 15,
+    "charname": "Enko",
+    "itemid": 10967,
+    "itemname": "Aisance Mantle +1",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 15,
+    "charname": "Enko",
+    "itemid": 11672,
+    "itemname": "Mujin Band",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 15,
+    "charname": "Enko",
+    "itemid": 12636,
+    "itemname": "Mithran Separates",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 15,
+    "charname": "Enko",
+    "itemid": 12757,
+    "itemname": "Mithran Gauntlets",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 15,
+    "charname": "Enko",
+    "itemid": 12887,
+    "itemname": "Mithran Loincloth",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 15,
+    "charname": "Enko",
+    "itemid": 13008,
+    "itemname": "Mithran Gaiters",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 15,
+    "charname": "Enko",
+    "itemid": 16483,
+    "itemname": "Onion Knife",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 12637,
+    "itemname": "Galkan Surcoat",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 12758,
+    "itemname": "Galkan Bracers",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 12888,
+    "itemname": "Galkan Braguette",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 13009,
+    "itemname": "Galkan Sandals",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 13497,
+    "itemname": "Bastokan Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 16534,
+    "itemname": "Onion Sword",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 26642,
+    "itemname": "Bihu Roundlet",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 26758,
+    "itemname": "Fili Calot",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 26818,
+    "itemname": "Bihu Justaucorps",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 26916,
+    "itemname": "Fili Hongreline",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 26994,
+    "itemname": "Bihu Cuffs",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 27070,
+    "itemname": "Fili Manchettes",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 27170,
+    "itemname": "Bihu Cannions",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 27255,
+    "itemname": "Fili Rhingrave",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 27346,
+    "itemname": "Bihu Slippers",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 27429,
+    "itemname": "Fili Cothurnes",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 27672,
+    "itemname": "Brioso Roundlet",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 27816,
+    "itemname": "Brioso Just.",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 27952,
+    "itemname": "Brioso Cuffs",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 28099,
+    "itemname": "Brioso Cannions",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 16,
+    "charname": "Nut",
+    "itemid": 28232,
+    "itemname": "Brioso Slippers",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 17,
+    "charname": "Spaz",
+    "itemid": 12632,
+    "itemname": "Hume Vest",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 17,
+    "charname": "Spaz",
+    "itemid": 12760,
+    "itemname": "Hume F Gloves",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 17,
+    "charname": "Spaz",
+    "itemid": 12884,
+    "itemname": "Hume Pants",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 17,
+    "charname": "Spaz",
+    "itemid": 13010,
+    "itemname": "Hume F Boots",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 17,
+    "charname": "Spaz",
+    "itemid": 16482,
+    "itemname": "Onion Dagger",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 11022,
+    "itemname": "Vulcan's Pearl",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 12486,
+    "itemname": "Emperor Hairpin",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 12633,
+    "itemname": "Elvaan Jerkin",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 12755,
+    "itemname": "Elvaan Gloves",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 12885,
+    "itemname": "Elv. M Chausses",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 13006,
+    "itemname": "Elv. M Ledelsens",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 13054,
+    "itemname": "Fuma Kyahan",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 13184,
+    "itemname": "White Belt",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 13202,
+    "itemname": "Brown Belt",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 13495,
+    "itemname": "San Dorian Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 13952,
+    "itemname": "Ochiudo's Kote",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 17472,
+    "itemname": "Cross-counters",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 20540,
+    "itemname": "Em. Baghnakhs",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 23064,
+    "itemname": "Hes. Crown +2",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 23153,
+    "itemname": "Bhikku Cyclas +2",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 23175,
+    "itemname": "Anchor. Gloves +2",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 23287,
+    "itemname": "Bhikku Hose +2",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 23354,
+    "itemname": "Bhikku Gaiters +2",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 23399,
+    "itemname": "Hes. Crown +3",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 26227,
+    "itemname": "Cornelia's Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 26627,
+    "itemname": "Hes. Crown +1",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 26742,
+    "itemname": "Bhikku Crown",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 26802,
+    "itemname": "Hes. Cyclas",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 26978,
+    "itemname": "Hes. Gloves",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 27054,
+    "itemname": "Bhikku Gloves",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 27154,
+    "itemname": "Hes. Hose",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 27239,
+    "itemname": "Bhikku Hose",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 27330,
+    "itemname": "Hes. Gaiters",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 27664,
+    "itemname": "Anchorites Crown",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 27741,
+    "itemname": "Espial Cap",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 27808,
+    "itemname": "Anchorites Cyclas",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 27882,
+    "itemname": "Espial Gambison",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 27944,
+    "itemname": "Anchorites Gloves",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 28030,
+    "itemname": "Espial Bracers",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 28091,
+    "itemname": "Anchorites Hose",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 28169,
+    "itemname": "Espial Hose",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 28224,
+    "itemname": "Anch. Gaiters",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 18,
+    "charname": "Ropraz",
+    "itemid": 28307,
+    "itemname": "Espial Socks",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 19,
+    "charname": "Spyro",
+    "itemid": 16482,
+    "itemname": "Onion Dagger",
+    "quantity": 2,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 19,
+    "charname": "Spyro",
+    "itemid": 21808,
+    "itemname": "Apocalypse",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Weapon Forge"
+    ]
+  },
+  {
+    "charid": 19,
+    "charname": "Spyro",
+    "itemid": 26632,
+    "itemname": "Vitiation Chapeau",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 19,
+    "charname": "Spyro",
+    "itemid": 26808,
+    "itemname": "Vitiation Tabard",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 19,
+    "charname": "Spyro",
+    "itemid": 26984,
+    "itemname": "Vitiation Gloves",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 19,
+    "charname": "Spyro",
+    "itemid": 27160,
+    "itemname": "Vitiation Tights",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 19,
+    "charname": "Spyro",
+    "itemid": 27336,
+    "itemname": "Vitiation Boots",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 19,
+    "charname": "Spyro",
+    "itemid": 27356,
+    "itemname": "Glyphic Pigaches",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 19,
+    "charname": "Spyro",
+    "itemid": 27439,
+    "itemname": "Beck. Pigaches",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 19,
+    "charname": "Spyro",
+    "itemid": 28104,
+    "itemname": "Convoker's Spats",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 19,
+    "charname": "Spyro",
+    "itemid": 28237,
+    "itemname": "Con. Pigaches",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 10930,
+    "itemname": "Veisa Collar",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 11022,
+    "itemname": "Vulcan's Pearl",
+    "quantity": 2,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 11423,
+    "itemname": "Rager Ledelsens",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 11504,
+    "itemname": "Aurore Beret",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 11565,
+    "itemname": "Vellaunus' Mantle",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 11582,
+    "itemname": "Ire Torque +1",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 11764,
+    "itemname": "Beir Belt +1",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 11958,
+    "itemname": "Calmecac Trousers",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 12622,
+    "itemname": "Juogi +1",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 12746,
+    "itemname": "Aurore Gloves",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 12846,
+    "itemname": "Wukong's Hakama",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 13184,
+    "itemname": "White Belt",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 13202,
+    "itemname": "Brown Belt",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 17005,
+    "itemname": "Lufaise Fly",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 17472,
+    "itemname": "Cross-counters",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 18350,
+    "itemname": "Tourney Patas",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 18356,
+    "itemname": "Martial Knuckles",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 18775,
+    "itemname": "Savate Fists +1",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 18784,
+    "itemname": "Metasoma Katars",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 26646,
+    "itemname": "Sakonji Kabuto",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 26742,
+    "itemname": "Bhikku Crown",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 26762,
+    "itemname": "Kasuga Kabuto",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 26822,
+    "itemname": "Sakonji Domaru",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 26900,
+    "itemname": "Bhikku Cyclas",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 26901,
+    "itemname": "Bhikku Cyclas +1",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 26920,
+    "itemname": "Kasuga Domaru",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 26998,
+    "itemname": "Sakonji Kote",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 27054,
+    "itemname": "Bhikku Gloves",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 27074,
+    "itemname": "Kasuga Kote",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 27174,
+    "itemname": "Sakonji Haidate",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 27239,
+    "itemname": "Bhikku Hose",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 27240,
+    "itemname": "Bhikku Hose +1",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 27259,
+    "itemname": "Kasuga Haidate",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 27350,
+    "itemname": "Sakonji Sune-ate",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 27413,
+    "itemname": "Bhikku Gaiters",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 27433,
+    "itemname": "Kasuga Sune-ate",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 27664,
+    "itemname": "Anchorites Crown",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 27674,
+    "itemname": "Wakido Kabuto",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 27808,
+    "itemname": "Anchorites Cyclas",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 27818,
+    "itemname": "Wakido Domaru",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 27944,
+    "itemname": "Anchorites Gloves",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 27954,
+    "itemname": "Wakido Kote",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 28091,
+    "itemname": "Anchorites Hose",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 28101,
+    "itemname": "Wakido Haidate",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 28224,
+    "itemname": "Anch. Gaiters",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 28234,
+    "itemname": "Wakido Sune-ate",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 10930,
+    "itemname": "Veisa Collar",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 10966,
+    "itemname": "Aisance Mantle",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 11764,
+    "itemname": "Beir Belt +1",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 12631,
+    "itemname": "Hume Tunic",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 12754,
+    "itemname": "Hume M Gloves",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 12883,
+    "itemname": "Hume Slacks",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 13005,
+    "itemname": "Hume M Boots",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 13514,
+    "itemname": "Archer's Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 14762,
+    "itemname": "Attila's Earring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 16534,
+    "itemname": "Onion Sword",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 19766,
+    "itemname": "Fracas Grenade",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 20865,
+    "itemname": "Eminent Voulge",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 21182,
+    "itemname": "Eminent Staff",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 25874,
+    "itemname": "Flamma Dirs +1",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Ambuscade"
+    ]
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 27740,
+    "itemname": "Outrider Mask",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 27741,
+    "itemname": "Espial Cap",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 27742,
+    "itemname": "Wayfarer Circlet",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 27881,
+    "itemname": "Outrider Mail",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 27882,
+    "itemname": "Espial Gambison",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 27883,
+    "itemname": "Wayfarer Robe",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 28029,
+    "itemname": "Outrider Mittens",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 28030,
+    "itemname": "Espial Bracers",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 28031,
+    "itemname": "Wayfarer Cuffs",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 28168,
+    "itemname": "Outrider Hose",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 28169,
+    "itemname": "Espial Hose",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 28170,
+    "itemname": "Wayfarer Slops",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 28306,
+    "itemname": "Outrider Greaves",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 28307,
+    "itemname": "Espial Socks",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 28308,
+    "itemname": "Wayfarer Clogs",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 28549,
+    "itemname": "Enlivened Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 21,
+    "charname": "Garvtest",
+    "itemid": 28550,
+    "itemname": "Vehemence Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 12636,
+    "itemname": "Mithran Separates",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 12757,
+    "itemname": "Mithran Gauntlets",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 12887,
+    "itemname": "Mithran Loincloth",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 13008,
+    "itemname": "Mithran Gaiters",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 13231,
+    "itemname": "Life Belt",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 16483,
+    "itemname": "Onion Knife",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 20817,
+    "itemname": "Eminent Axe",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 20908,
+    "itemname": "Eminent Sickle",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 21777,
+    "itemname": "Eletta Chopper",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Ambuscade"
+    ]
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 23761,
+    "itemname": "Nyame Helm",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 23763,
+    "itemname": "Gleti's Cuirass",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 23775,
+    "itemname": "Nyame Gauntlets",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 23777,
+    "itemname": "Gleti's Breeches",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 23784,
+    "itemname": "Gleti's Boots",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 25470,
+    "itemname": "Nukumi Earring +2",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Voidwatch"
+    ]
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 26230,
+    "itemname": "Fickblix's Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 27740,
+    "itemname": "Outrider Mask",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 27881,
+    "itemname": "Outrider Mail",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 28029,
+    "itemname": "Outrider Mittens",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 28168,
+    "itemname": "Outrider Hose",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 22,
+    "charname": "Herdofturtles",
+    "itemid": 28306,
+    "itemname": "Outrider Greaves",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 16575,
+    "itemname": "Curtana",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 23408,
+    "itemname": "Arcadian Beret +3",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 23430,
+    "itemname": "Amini Gapette +3",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 23497,
+    "itemname": "Amini Caban +3",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 23698,
+    "itemname": "Amini Bottillons +3",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 25482,
+    "itemname": "Amini Earring +2",
+    "quantity": 2,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Voidwatch"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 26231,
+    "itemname": "Ephramad's Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 26644,
+    "itemname": "Arcadian Beret",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 26760,
+    "itemname": "Amini Gapette",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 26774,
+    "itemname": "Karagoz Cappello",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 26820,
+    "itemname": "Arcadian Jerkin",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 26918,
+    "itemname": "Amini Caban",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 26930,
+    "itemname": "Chasseurs Frac",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 26996,
+    "itemname": "Arcadian Bracers",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 27070,
+    "itemname": "Fili Manchettes",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 27072,
+    "itemname": "Amini Glovelettes",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 27172,
+    "itemname": "Arcadian Braccae",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 27257,
+    "itemname": "Amini Bragues",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 27265,
+    "itemname": "Beckoner's Spats",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 27348,
+    "itemname": "Arcadian Socks",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 27431,
+    "itemname": "Amini Bottillons",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 27449,
+    "itemname": "Arbatel Loafers",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 27673,
+    "itemname": "Orion Beret",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 27817,
+    "itemname": "Orion Jerkin",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 27953,
+    "itemname": "Orion Bracers",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 28100,
+    "itemname": "Orion Braccae",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 25,
+    "charname": "Lanty",
+    "itemid": 28233,
+    "itemname": "Orion Socks",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 26,
+    "charname": "Lantyisstuck",
+    "itemid": 16483,
+    "itemname": "Onion Knife",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  }
+]
