@@ -135,6 +135,8 @@
 .wf-widget .wc-nm { font-size: .85rem; color: var(--text); line-height: 1.2; }
 .wf-widget .wc-jb { font-family: "Courier New",monospace; font-size: .57rem; color: var(--muted); margin-top: 3px; }
 .wf-widget .wc-id { font-family: "Courier New",monospace; font-size: .52rem; color: var(--dim); margin-top: 2px; letter-spacing: .02em; }
+.wf-widget .wc-mat { font-family: "Courier New",monospace; font-size: .58rem; letter-spacing: .04em; color: var(--cat); margin-top: 4px; }
+.wf-widget .wc-mat span { color: var(--muted); margin-right: 4px; }
 .wf-widget .stg-id { font-family: "Courier New",monospace; font-size: .52rem; color: var(--dim); margin-top: 3px; letter-spacing: .02em; position: relative; z-index: 1; }
 .wf-widget .empty-grid { grid-column: 1/-1; text-align: center; padding: 36px; color: var(--dim); font-style: italic; font-size: .84rem; }
 
@@ -265,7 +267,7 @@ const CATS = {
     label:'Empyrean', sub:'14 weapons · 4 stages',
     accent:'#2060a0', dim:'#103860',
     lore:'Weapons shaped by the light of Abyssea — forged where the barriers between worlds grew thin and the strongest monsters walked unchecked.',
-    source:'<strong>Empyrean weapons</strong> drop from <strong>Abyssea Marks NMs</strong> (high-tier ??? pops). Each weapon type has a corresponding NM that drops that weapon\'s specific material and the weapon itself. Drop rates are rare at Tier I; much higher at Tier III. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III Bring the material to the <strong>Weapon Forge</strong> in {{npc:weapon_forger}}: it issues the base weapon and forges each stage (gated by HL Rank + Abyssea progress)..',
+    source:'<strong>Empyrean weapons</strong> drop from <strong>Abyssea Marks NMs</strong> (high-tier ??? pops). Each weapon type has a corresponding NM that drops that weapon\'s specific material and the weapon itself. Drop rates are rare at Tier I; much higher at Tier III. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III. Bring the material to the <strong>Weapon Forge</strong> in {{npc:weapon_forger}}: it issues the base weapon and forges each stage (gated by HL Rank + Abyssea progress). <strong style="color:var(--cat)">Each empyrean weapon needs its OWN material — Twashtar wants Orthrus\'s Claw, Verethragna wants Glavoid Shell, and so on.</strong> The exact item is shown on each weapon\'s card below; bring THAT item, not a different empyrean drop.',
     s3lbl:'Stage III · Empyrean',
     forge:[
       {lbl:'Base → Stage I', mats:[['2,000×','Cruor'],['50×','[see weapon]'],['10×','Ancient Beastcoin']], gate:'HL Rank III (Elite) · Abyssea Tier I NM killed'},
@@ -580,7 +582,20 @@ function buildGrid(k, filter) {
     d.className = 'wc';
     const real = REAL[k] && REAL[k][w.type];
     const id = (real && real.id) ? real.id : (w.id || null);
-    d.innerHTML = `<div class="wc-tp">${w.type}</div><div class="wc-nm">${w.name}</div><div class="wc-jb">${w.jobs}</div>${id ? `<div class="wc-id">#${id}</div>` : ''}`;
+    // For categories whose forge step lists a per-weapon material placeholder
+    // ([see weapon]), surface the actual item on the card so a player scanning
+    // the grid can see at a glance that Twashtar wants Orthrus's Claw (not
+    // Verethragna's Glavoid Shell). Empyrean = one NM drop per weapon type;
+    // relic = the Beitetsu-vs-Pluton class split.
+    const catMat = (k === 'empyrean' && EMPY_MAT[w.type])
+                || (k === 'relic'    && RELIC_MAT[w.type])
+                || null;
+    d.innerHTML =
+        `<div class="wc-tp">${w.type}</div>` +
+        `<div class="wc-nm">${w.name}</div>` +
+        `<div class="wc-jb">${w.jobs}</div>` +
+        (catMat ? `<div class="wc-mat"><span>Mat</span>${catMat}</div>` : '') +
+        (id ? `<div class="wc-id">#${id}</div>` : '');
     d.onclick = () => { if (selCard) selCard.classList.remove('sel'); d.classList.add('sel'); selCard = d; updateChain(w); };
     grid.appendChild(d);
   });
