@@ -10,7 +10,7 @@ Entry is gated by a **Phantom Gem** key item, bought for gil from a vendor on Pu
 ## Getting in
 
 <!-- DOCGEN:BEGIN id="htbf-access" -->
-Buy your **Phantom Gem** from the **Phantom Gems** vendor in {{npc:htbf_vendor}} (`!hub`, the relaunch hub). Each gem is a key item bought with gil; the vendor's menu is grouped by expansion so you can browse the full roster. Once you hold a gem, travel to that battlefield's zone, trade the gem at the entrance, and pick a difficulty tier (I / II / III).
+Buy your **Phantom Gem** from the **Phantom Gems** vendor in <!--npc:htbf_vendor-->Purgonorgo Isle<!--/npc--> (`!hub`, the relaunch hub). Each gem is a key item bought with gil; the vendor's menu is grouped by expansion so you can browse the full roster. Once you hold a gem, travel to that battlefield's zone, trade the gem at the entrance, and pick a difficulty tier (I / II / III).
 
 The vendor also offers a **free warp** straight to any battlefield entrance -- pick *Warp to a Battlefield*, choose the expansion, then the fight, and you're teleported there. You still need the gem in hand and a clear to enter, but it saves the cross-zone trek.
 
@@ -128,6 +128,6 @@ Every win spawns a treasure chest. **All three tiers of a fight share the same d
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2ebbf56fbe07 -->
-_Last updated: 2026-07-12 02:30 PDT_
+<!-- content-hash: fb42ec0da924 -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

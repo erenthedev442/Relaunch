@@ -77,7 +77,7 @@ Domain Points spend at the exchange NPC in the hub. Check the NPC's menu for the
 Capped out on Domain Points for the day? The same gear has a second price tag. The tables below are generated straight from the vendor's live catalog.
 
 <!-- DOCGEN:BEGIN id="domain-spoils" -->
-The **Domain Quartermaster** stands at {{npc:domain_quartermaster}} (`!hub`) and sells the entire Zurim Domain-Points catalog for **Hunt Marks** — the currency earned from [Hunting League](../progression/index.md) NM kills, Weekly Hunts, wave events, and dailies. Everything Zurim sells for daily-capped Domain Points is also here for marks, so you can keep gearing after you've hit the day's Domain-Point ceiling. _69 items across 3 categories._
+The **Domain Quartermaster** stands at <!--npc:domain_quartermaster-->Purgonorgo Isle<!--/npc--> (`!hub`) and sells the entire Zurim Domain-Points catalog for **Hunt Marks** — the currency earned from [Hunting League](../progression/index.md) NM kills, Weekly Hunts, wave events, and dailies. Everything Zurim sells for daily-capped Domain Points is also here for marks, so you can keep gearing after you've hit the day's Domain-Point ceiling. _69 items across 3 categories._
 
 Pricing follows one rule: **Hunt Marks cost = Zurim's Domain-Point cost × 2.5**. Domain Points are daily-capped; marks are not.
 
@@ -184,6 +184,6 @@ Pricing follows one rule: **Hunt Marks cost = Zurim's Domain-Point cost × 2.5**
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d60e7cdcaae3 -->
-_Last updated: 2026-07-12 14:23 PDT_
+<!-- content-hash: 68effc6bbe4a -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

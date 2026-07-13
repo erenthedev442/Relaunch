@@ -72,6 +72,6 @@ You claim **one Prime per character**, so pick the weapon that fits your main jo
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 593c03c7e9fc -->
-_Last updated: 2026-07-10 03:45 PDT_
+<!-- content-hash: 31f30cb61fa8 -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

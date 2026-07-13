@@ -20,7 +20,7 @@ A rotating set of weekly objectives that *amplify* your normal hunting. Every Mo
 |---|---|
 | Objectives rolled per week | 5 |
 | Reset cadence | Every Monday 00:00 UTC (ISO week) |
-| All-cleared bonus | a large Hunt Marks bonus (shown in the board table below) + lifetime sweep counter |
+| All-cleared bonus | **5,000 Hunt Marks** + lifetime sweep counter |
 | Reset trigger | Lazy — first player interaction in a new week auto-rolls |
 <!-- DOCGEN:END id="weekly-hunts-config" -->
 
@@ -71,6 +71,6 @@ The **Weekly Hunt Sweeps** leaderboard on the [Leaderboards page](../community/l
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7b69ba4c2399 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 21cfc43f0dad -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

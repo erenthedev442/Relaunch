@@ -8,7 +8,7 @@ The **Prime Armory** in <!--npc:prime_armory-->Purgonorgo Isle<!--/npc--> hands 
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="prime-armory-access" -->
-The **Prime Armory** is in {{npc:prime_armory}} (`!hub`), in the endgame NPC row. cluster. Talk to it to browse the Prime weapons; bring your **750M gil** when you're ready to forge (all 5 trials, including the voucher turn-in, must already be done).
+The **Prime Armory** is in <!--npc:prime_armory-->Purgonorgo Isle<!--/npc--> (`!hub`), in the endgame NPC row. cluster. Talk to it to browse the Prime weapons; bring your **750M gil** when you're ready to forge (all 5 trials, including the voucher turn-in, must already be done).
 <!-- DOCGEN:END id="prime-armory-access" -->
 
 ## The cost
@@ -57,6 +57,6 @@ Browsing is free — you can read every weapon's stats and weapon skill before d
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 734aa2bbde89 -->
-_Last updated: 2026-07-12 02:53 PDT_
+<!-- content-hash: 801bca747774 -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

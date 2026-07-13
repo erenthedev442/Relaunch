@@ -41,6 +41,6 @@ Escha Beads come from *any* Escha Geas Fete kill, so the whole path is fuelled b
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b36d3e0ff8d4 -->
-_Last updated: 2026-07-11 21:16 PDT_
+<!-- content-hash: bcc6a2347e20 -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

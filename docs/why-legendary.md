@@ -37,9 +37,11 @@ The Relaunch fixes that. Everyone starts equal. The economy is fresh. The stat b
 
 - **[High-Tier Battlefields](endgame/high-tier-battlefields.md)** — Repeatable, tier-scaled versions of the classic mission boss battlefields. Buy a Phantom Gem with gil on Purgonorgo Isle, trade it at the battlefield entrance, pick a tier (I / II / III), and win for scaling gil + Hunt Mark rewards.
 
-- **[Unity Concord](endgame/unity-concord.md)** — Hunt Wanted NMs in Escha - Zi'Tah to earn Unity Accolades, then spend them in the board's shop. Three tiers of difficulty — lv 75 classic NMs up to lv 145 endgame superbosses.
+- **[Unity Concord](endgame/unity-concord.md)** — Hunt Wanted NMs at their retail homes across Vana'diel to earn Unity Accolades, then spend them in the board's shop. Three tiers of difficulty — lv 75 classic NMs up to lv 145 endgame superbosses.
 
 - **[Dungeons](endgame/dungeons.md)** — Classic Vana'diel zones become private expedition grounds.
+
+- **[Omen](endgame/omen.md)** — The chessboard awaits. Omen is the Reisenjima Henge gauntlet from the November 2016 era of retail: five gates of trials, three Glassy sentinels, and the Caturae — Kin, Gin, Fu, Kyou and Kei — with the hidden Prime, Ou, beyond them.
 
 - **[Live Events](endgame/live-events.md)** — Three standing bonuses on fixed clocks: a daily Happy Hour EXP and Capacity-Point boost for everyone online, a Divergence City of the Day that pays bonus medals on a clear, and a Unity weekly featured NM that pays double accolades.
 <!-- DOCGEN:END id="relaunch-exclusive" -->
@@ -53,7 +55,7 @@ The Relaunch fixes that. Everyone starts equal. The economy is fresh. The stat b
 Everything that made the original server worth playing:
 
 <!-- DOCGEN:BEGIN id="differentiators" -->
-- **Fast progression, real endgame.** <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP (and <!--setting:main.EXP_RATE:int-->10<!--/setting-->× from books, FoV/GoV & Records of Eminence) means you hit 99 in days, not months. But 99 is the *beginning*, not the finish line. The Hunting League, Reforge gear, augments, and a full tier of endgame events are all designed to hold your interest for months. There's always a next thing.
+- **Fast progression, real endgame.** <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP (and <!--setting:main.EXP_RATE:int-->3<!--/setting-->× from books, FoV/GoV & Records of Eminence) means you hit 99 in days, not months. But 99 is the *beginning*, not the finish line. The Hunting League, Reforge gear, augments, and a full tier of endgame events are all designed to hold your interest for months. There's always a next thing.
 
 - **Hunting League — a custom 5-tier progression system.** Retail FFXI has NMs. This server turns them into a structured progression ladder. Five ranks, each harder than the last, each with meaningful rewards and increasing HL Point rates. If you love the hunt, this server was built for you.
 
@@ -92,6 +94,6 @@ Everything that made the original server worth playing:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5a272ca92011 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: a9c3b660cfbb -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

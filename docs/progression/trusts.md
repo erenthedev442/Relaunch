@@ -146,3 +146,10 @@ _Spells are sorted by ID._
 | 1017 | Arciela II | Support |
 | 1018 | Iroha II | Melee Fighter |
 | 1019 | Shantotto II | Offensive Caster |
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 2616736a7dd5 -->
+_Last updated: 2026-07-12 21:15 PDT_
+<!-- DOCGEN:END id="last-updated" -->

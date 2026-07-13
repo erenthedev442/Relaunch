@@ -85,6 +85,6 @@ The Daily Board NPC is in **Purgonorgo Isle** (the main hub zone).
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 64b83c719514 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 140368ab646b -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

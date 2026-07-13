@@ -59,6 +59,6 @@ The item is **consumed on success**. It is not consumed if the augment fails (e.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 60db8ef23c2d -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: 8e73a41615c0 -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

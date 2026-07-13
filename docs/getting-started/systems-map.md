@@ -167,7 +167,7 @@ Job Points fuel Rebirth, and the **[Capacity farm](../progression/capacity-farm.
 
 ### Prime Weapons
 
-The **Prime Armory** at `!hub` forges a Prime Weapon after **5 trials** — 12 named forms, 750,000,000 gil per forge. See [Prime Armory](../progression/prime-armory.md).
+The **Prime Armory** at `!hub` forges a Prime Weapon after **5 trials** — 16 named forms, 750,000,000 gil per forge. See [Prime Armory](../progression/prime-armory.md).
 
 ### Mastery systems
 
@@ -200,6 +200,6 @@ The **Prime Armory** at `!hub` forges a Prime Weapon after **5 trials** — 12 n
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f7ecea3781bc -->
-_Last updated: 2026-07-10 17:16 PDT_
+<!-- content-hash: 3ee0e51df970 -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

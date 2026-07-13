@@ -10,24 +10,24 @@ This is a heavily-customized FFXI server. Beyond the settings tweaks (rates, cap
 <!-- DOCGEN:BEGIN id="rates-at-a-glance" -->
 | | Multiplier | Notes |
 |---|---:|---|
-| **EXP** (scripted, FoV/GoV, ROE) | **10×** | All script-based EXP sources |
+| **EXP** (scripted, FoV/GoV, ROE) | **3×** | All script-based EXP sources |
 | **EXP** (mob kills) | **3×** | Base mob EXP |
-| **Capacity Points** (scripted) | **10×** | Records of Eminence, etc. |
-| **Capacity Points** (mob kills) | **3×** |  |
-| **Sparks** | **10×** |  |
-| **TABs** (FoV) | **10×** |  |
+| **Capacity Points** (scripted) | **3×** | Records of Eminence, etc. |
+| **Capacity Points** (mob kills) | **1×** |  |
+| **Sparks** | **3×** |  |
+| **TABs** (FoV) | **3×** |  |
 | **Mob drop rate** | **1×** |  |
-| **Gil from mobs** | **10×** | Plus the **+N gil/mob level** bonus shown below |
-| **Gil bonus per mob level** | **+1,000** | Flat bonus added to every mob kill |
-| **Gil from quests** | **100×** |  |
-| **Bayld from quests** | **2×** |  |
-| **Fame gain** | **10×** |  |
-| **Skill-up rate** | **10×** | All combat & magic skills |
+| **Gil from mobs** | **1×** | Plus the **+N gil/mob level** bonus shown below |
+| **Gil bonus per mob level** | **0×** | Flat bonus added to every mob kill |
+| **Gil from quests** | **1×** |  |
+| **Bayld from quests** | **1×** |  |
+| **Fame gain** | **1×** |  |
+| **Skill-up rate** | **1×** | All combat & magic skills |
 | **Craft skill-up rate** | **10×** |  |
-| **Craft HQ chance** | **10×** |  |
-| **Player / Pet / Trust / Fellow TP gain** | **3×** |  |
-| **NPC shop prices** | **2×** | Things cost more at vendors |
-| **EXP loss on death** | **3×** | Death is costly — be careful |
+| **Craft HQ chance** | **2×** |  |
+| **Player / Pet / Trust / Fellow TP gain** | **1×** |  |
+| **NPC shop prices** | **1×** | Things cost more at vendors |
+| **EXP loss on death** | **1×** | Death is costly — be careful |
 <!-- DOCGEN:END id="rates-at-a-glance" -->
 
 _If a stat maps to more than one underlying setting and they differ, both values are shown (e.g. `10× / 3×`)._
@@ -38,7 +38,7 @@ You start with way more than retail:
 
 | Setting | This server | Retail |
 |---|---|---|
-| **Starting gil** | <!--setting:START_GIL:comma-->5,000,000<!--/setting--> | 10 |
+| **Starting gil** | <!--setting:START_GIL:comma-->10<!--/setting--> | 10 |
 | **Starting inventory & satchel** | <!--setting:START_INVENTORY-->80<!--/setting--> (max) | 30 |
 | **All 8 Mog Wardrobes** | <!--setting:START_INVENTORY-->80<!--/setting--> slots each, at creation | 0 (must be quested individually) |
 | **Starting level cap** | 99 | 50 (Limit Break required) |
@@ -54,19 +54,19 @@ Magic and weapon skills hit harder; defensive spells last longer:
 
 | Effect | This server | Retail |
 |---|---:|---:|
-| Cure power | <!--setting:CURE_POWER-->2<!--/setting-->× | 1× |
-| Elemental magic damage | <!--setting:ELEMENTAL_POWER-->2<!--/setting-->× | 1× |
-| Divine magic damage | <!--setting:DIVINE_POWER-->2<!--/setting-->× | 1× |
-| Ninjutsu damage | <!--setting:NINJUTSU_POWER-->2<!--/setting-->× | 1× |
-| Blue magic damage | <!--setting:BLUE_POWER-->2<!--/setting-->× | 1× |
-| Dark magic drain | <!--setting:DARK_POWER-->2<!--/setting-->× | 1× |
-| Weapon skill damage | <!--setting:WEAPON_SKILL_POWER-->2<!--/setting-->× | 1× |
-| Item potency (potions/ethers) | <!--setting:ITEM_POWER-->2<!--/setting-->× | 1× |
-| **Stoneskin HP cap** | <!--setting:STONESKIN_CAP:comma-->1,000<!--/setting--> | 350 |
-| **Blink shadows** | <!--setting:BLINK_SHADOWS-->6<!--/setting--> | 2 |
+| Cure power | <!--setting:CURE_POWER-->1<!--/setting-->× | 1× |
+| Elemental magic damage | <!--setting:ELEMENTAL_POWER-->1<!--/setting-->× | 1× |
+| Divine magic damage | <!--setting:DIVINE_POWER-->1<!--/setting-->× | 1× |
+| Ninjutsu damage | <!--setting:NINJUTSU_POWER-->1<!--/setting-->× | 1× |
+| Blue magic damage | <!--setting:BLUE_POWER-->1<!--/setting-->× | 1× |
+| Dark magic drain | <!--setting:DARK_POWER-->1<!--/setting-->× | 1× |
+| Weapon skill damage | <!--setting:WEAPON_SKILL_POWER-->1<!--/setting-->× | 1× |
+| Item potency (potions/ethers) | <!--setting:ITEM_POWER-->1<!--/setting-->× | 1× |
+| **Stoneskin HP cap** | <!--setting:STONESKIN_CAP:comma-->10,000<!--/setting--> | 350 |
+| **Blink shadows** | <!--setting:BLINK_SHADOWS-->10<!--/setting--> | 2 |
 | **Spike effects last** | <!--setting:SPIKE_EFFECT_DURATION-->1800<!--/setting-->s | 180s |
 | **Elemental debuffs last** | <!--setting:ELEMENTAL_DEBUFF_DURATION-->1200<!--/setting-->s | 120s |
-| **Aquaveil hits absorbed** | <!--setting:AQUAVEIL_COUNTER-->5<!--/setting--> | 1 |
+| **Aquaveil hits absorbed** | <!--setting:AQUAVEIL_COUNTER-->10<!--/setting--> | 1 |
 
 ## Movement
 
@@ -74,9 +74,9 @@ You move *fast*:
 
 | | This server | Retail |
 |---|---:|---:|
-| Base run speed | <!--setting:BASE_SPEED-->100<!--/setting--> | 50 |
-| Speed cap (with gear) | <!--setting:SPEED_LIMIT-->500<!--/setting--> | 80 |
-| Mount speed | <!--setting:MOUNT_SPEED-->510<!--/setting--> | 80 |
+| Base run speed | <!--setting:BASE_SPEED-->150<!--/setting--> | 50 |
+| Speed cap (with gear) | <!--setting:SPEED_LIMIT-->250<!--/setting--> | 80 |
+| Mount speed | <!--setting:MOUNT_SPEED-->200<!--/setting--> | 80 |
 
 ## Subjob
 
@@ -90,7 +90,7 @@ Higher caps and unlimited spending:
 
 | | This server | Retail |
 |---|---:|---:|
-| Max merit points held | <!--setting:MAX_MERIT_POINTS:comma-->127<!--/setting--> | 30 |
+| Max merit points held | <!--setting:MAX_MERIT_POINTS:comma-->30<!--/setting--> | 30 |
 | Sparks cap | <!--setting:CAP_CURRENCY_SPARKS:comma-->999,999<!--/setting--> | 99,999 |
 | Accolades cap | <!--setting:CAP_CURRENCY_ACCOLADES:comma-->999,999<!--/setting--> | 99,999 |
 | Valor cap | <!--setting:CAP_CURRENCY_VALOR:comma-->500,000<!--/setting--> | 50,000 |
@@ -103,10 +103,10 @@ Built for grinding:
 
 - **Cooldown between Dynamis runs:** <!--setting:BETWEEN_2DYNA_WAIT_TIME-->0<!--/setting-->h (retail: 24h).
 - **Level minimum:** <!--setting:DYNA_LEVEL_MIN-->1<!--/setting--> (retail: 65).
-- **Prismatic Hourglass cost:** <!--setting:PRISMATIC_HOURGLASS_COST:comma-->1<!--/setting--> gil (retail: 50,000).
+- **Prismatic Hourglass cost:** <!--setting:PRISMATIC_HOURGLASS_COST:comma-->50,000<!--/setting--> gil (retail: 50,000).
 - **Currency exchange rate:** <!--setting:CURRENCY_EXCHANGE_RATE-->10<!--/setting-->:1 (retail: 100:1) — cheaper to upgrade ancient currency.
 - **100s → 1s exchange enabled.**
-- **COP Dynamis** has no Chains of Promathia mission prerequisite (FREE_COP_DYNAMIS = <!--setting:FREE_COP_DYNAMIS-->1<!--/setting-->).
+- **COP Dynamis** has no Chains of Promathia mission prerequisite (FREE_COP_DYNAMIS = <!--setting:FREE_COP_DYNAMIS-->0<!--/setting-->).
 
 ## Trusts
 
@@ -119,13 +119,13 @@ Built for grinding:
 - **`@unstuck` self-rescue command** enabled (24h cooldown).
 - **Unlimited AH listings** (retail: 7).
 - **Equip from Mog Satchel / Sack / Case** allowed (requires a client addon).
-- **Explorer Moogle teleports** available from level <!--setting:EXPLORER_MOOGLE_LV-->1<!--/setting--> (retail: 10).
+- **Explorer Moogle teleports** available from level <!--setting:EXPLORER_MOOGLE_LV-->10<!--/setting--> (retail: 10).
 - **Records of Eminence timed records** active.
 - **Synergy crafting** enabled.
 - **Login Campaign** active — daily rewards for logging in.
-- **Daily tally / Gobbie Mystery Box** — <!--setting:DAILY_TALLY_AMOUNT-->50<!--/setting--> points/day (retail: 10), eligible after <!--setting:GOBBIE_BOX_MIN_AGE-->1<!--/setting--> day (retail: 45).
-- **ENM key-item cooldown** — <!--setting:ENM_COOLDOWN-->0<!--/setting-->h (retail: 120h).
-- **No regime level penalty** — REGIME_REWARD_THRESHOLD = <!--setting:REGIME_REWARD_THRESHOLD-->150<!--/setting--> (retail: 15).
+- **Daily tally / Gobbie Mystery Box** — <!--setting:DAILY_TALLY_AMOUNT-->50<!--/setting--> points/day (retail: 10), eligible after <!--setting:GOBBIE_BOX_MIN_AGE-->0<!--/setting--> day (retail: 45).
+- **ENM key-item cooldown** — <!--setting:ENM_COOLDOWN-->120<!--/setting-->h (retail: 120h).
+- **No regime level penalty** — REGIME_REWARD_THRESHOLD = <!--setting:REGIME_REWARD_THRESHOLD-->15<!--/setting--> (retail: 15).
 - **EXP rings** — multiple ownership allowed, no one-per-week limit, up to **<!--setting:NUMBER_OF_DM_EARRINGS-->10<!--/setting--> Divine Might earrings**.
 - **Homepoint teleport system** enabled.
 
@@ -225,6 +225,6 @@ For reference, these are at retail defaults on this server:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 14c6f4f7edc1 -->
-_Last updated: 2026-07-11 21:16 PDT_
+<!-- content-hash: b47d78c711ae -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

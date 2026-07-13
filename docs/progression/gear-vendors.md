@@ -317,7 +317,7 @@ _Within each slot, tiers run Bronze → Gold; the top pick per tier is listed fi
 ## Infamy Vendor
 
 <!-- DOCGEN:BEGIN id="infamy-vendor" -->
-The **Infamy Vendor** stands at {{npc:infamy_vendor}} (`!hub`) and is paid in **Infamy**, earned from endgame content -- Abyssea NM hunts, Invasions, and the weekly Raid. It is a hand-curated **accessory shop** -- best-in-slot neck, ear, ring, waist, and back pieces. Weapons and armor are no longer sold here; they drop from the [Voidwatch](../endgame/voidwatch.md) NMs instead. All costs below are in Infamy.
+The **Infamy Vendor** stands at <!--npc:infamy_vendor-->Purgonorgo Isle<!--/npc--> (`!hub`) and is paid in **Infamy**, earned from endgame content -- Abyssea NM hunts, Invasions, and the weekly Raid. It is a hand-curated **accessory shop** -- best-in-slot neck, ear, ring, waist, and back pieces. Weapons and armor are no longer sold here; they drop from the [Voidwatch](../endgame/voidwatch.md) NMs instead. All costs below are in Infamy.
 
 Looking for **+4 armor**? That's no longer bought here — the +4 tier is an earned upgrade at the [Dynamis-Divergence Forge](../endgame/dynamis-divergence.md) (trade a reforged +3 AF/Relic piece plus [D] materials). The Infamy Vendor sells accessories only.
 
@@ -407,6 +407,6 @@ _75 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e5e7280122b6 -->
-_Last updated: 2026-07-12 14:29 PDT_
+<!-- content-hash: be7f8100f239 -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

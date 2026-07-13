@@ -1,21 +1,28 @@
-﻿# Hall of Fame
+# Hall of Fame
 
 This page celebrates the server's biggest moments — server firsts, record clears, and community milestones. As the server grows, so does this list.
 
 !!! info "This page grows with the community."
-    We're still early. The rows below will fill in fast. Check back often — and if you hit a milestone, post it in Discord so we can add it here.
+    We're still early. The rows below fill in automatically as the world-first trackers fire — and staff add the rest from Discord submissions. Check back often, and if you hit a milestone, post it so we can celebrate it here.
 
 ---
 
 ## Server Firsts
 
+Rows marked with a player name are pulled live from the server's world-first records (the in-game announcement trackers). Rows still showing dashes are waiting on their first — or on a tracker.
+
 | Achievement | Player | Date | Notes |
 |---|---|---|---|
-| First Rank V (Legend) in Hunting League | — | — | |
-| First Reforge +3 piece | — | — | |
-| First Wave Master Insane clear | — | — | |
-| First Weekly Hunt Board sweep (all 5 completed) | — | — | |
-| First Hunter's Guild Trinity status | — | — | Max standing in all 4 guilds |
+| First Rank V (Legend) in Hunting League | — | — | First Tier V NM kill — the *Apex Hunter* achievement |
+| First Reforge +3 piece | — | — |  |
+| First Wave Master Insane clear | — | — |  |
+| First Weekly Hunt Board sweep (all 5 completed) | — | — |  |
+| First Hunter's Guild Trinity status | — | — | Grandmaster in all 3 Reforge guilds (AF / Relic / Empy) |
+| First adventurer to reach level 99 | [Rirint](players/rirint.md) | 2026-05-26 | Dragoon (DRG) |
+| First NM slain in Vana'diel | [Rirint](players/rirint.md) | 2026-05-25 | Megamaw Mikey |
+| First player to fall in battle | — | — | The server's first KO — wear it proudly |
+| First Prestige Ascension | [Ropraz](players/ropraz.md) | 2026-07-09 | The *First Ascension* achievement |
+| First Star-Devourer raid kill | — | — | The *Star-Slayer* achievement |
 
 ---
 
@@ -28,6 +35,8 @@ This page celebrates the server's biggest moments — server firsts, record clea
 | Highest augmented item score | — | — | — |
 | Most NMs killed in a single day | — | — | — |
 
+_Looking for live, always-current records? The [Leaderboards](leaderboards.md) page tracks combat records, speed runs, and every grind metric straight from the database._
+
 ---
 
 ## Submit a Highlight
@@ -39,6 +48,6 @@ Community milestones — total kills, total marks earned, total Infamy banked �
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1abe26252b0b -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 82cafc25ef81 -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

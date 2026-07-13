@@ -25,9 +25,9 @@ Each sub level costs the **same EXP your main job needs for that level** (the mo
 
 ## How this differs from `SUBJOB_RATIO`
 
-`SUBJOB_RATIO = 1` on the Relaunch server (see [Retail Differences](../changes/index.md#subjob)) sets the **effective sub level cap** to the retail cap — half of main (a 99 main caps the sub at 49) — but that setting doesn't grant EXP. Without the Subjob EXP Share module, a never-leveled SAM sub on a WAR/99 main still has actual sub level = 1, and `min(actual sub level, ratio cap)` is what gets used for stats — the cap alone does nothing until the sub has real levels.
+`SUBJOB_RATIO = 3` on the Relaunch server (see [Retail Differences](../changes/index.md#subjob)) sets the **effective sub level cap** to your main's full level (99 main → sub can be 99 too) — but that setting doesn't grant EXP. Without the Subjob EXP Share module, a never-leveled SAM sub on a WAR/99 main still has actual sub level = 1, and `min(actual sub level, ratio cap)` is what gets used for stats — the cap alone does nothing until the sub has real levels.
 
-This module is what actually fills the gap: as you play, the sub's real stored level climbs, and `SUBJOB_RATIO = 1` lets the sub's full level count once it's there.
+This module is what actually fills the gap: as you play, the sub's real stored level climbs, and `SUBJOB_RATIO = 3` lets the sub's full level count once it's there.
 
 ## Tracking your sub's progress
 
@@ -53,6 +53,6 @@ The bank is **scoped to your active subjob** — switching subs starts the new s
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f7acce95196b -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: 8d8e5329c5bd -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

@@ -80,6 +80,6 @@ These NMs are **stat-boosted far beyond their retail versions**. Treat every Aff
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3d73f06ba740 -->
-_Last updated: 2026-07-11 20:58 PDT_
+<!-- content-hash: 55d2fddda401 -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

@@ -114,15 +114,15 @@ After the kill a system message confirms your payout and any active multiplier b
 ## What to Spend Infamy On
 
 <!-- DOCGEN:BEGIN id="abyssea-infamy-costs" -->
-Infamy is spent at the **Infamy Vendor** in {{npc:infamy_vendor}}. The full catalog — accessories, best-in-slot armor, and Relic / Mythic / Aeonic weapons — is listed with exact prices on the [Gear Vendors](../progression/gear-vendors.md#infamy-vendor) page. A few reference points, priced against the top **Heroes** payout:
+Infamy is spent at the **Infamy Vendor** in <!--npc:infamy_vendor-->Purgonorgo Isle<!--/npc-->. The full catalog — accessories, best-in-slot armor, and Relic / Mythic / Aeonic weapons — is listed with exact prices on the [Gear Vendors](../progression/gear-vendors.md#infamy-vendor) page. A few reference points, priced against the top **Heroes** payout:
 
 | Reward | Infamy | Heroes kills _(party, no trusts — ×3.0)_ |
 |---|---:|---:|
-| Cheapest item | 50 | 1 kill |
-| Standard endgame weapon _(Relic / Mythic / Aeonic)_ | 10,000 | 56 kills |
-| Most expensive item | 10,000 | 56 kills |
+| Cheapest item | 3,000 | 17 kills |
+| Standard endgame weapon _(Relic / Mythic / Aeonic)_ | 5,000 | 28 kills |
+| Most expensive item | 5,000 | 28 kills |
 
-A full party clearing **Heroes** NMs without trusts earns **180 Infamy per kill** (the ×3.0 rate from the reward table above) — so a standard endgame weapon works out to roughly **56 kills**.
+A full party clearing **Heroes** NMs without trusts earns **180 Infamy per kill** (the ×3.0 rate from the reward table above) — so a standard endgame weapon works out to roughly **28 kills**.
 <!-- DOCGEN:END id="abyssea-infamy-costs" -->
 
 ---
@@ -137,6 +137,6 @@ A full party clearing **Heroes** NMs without trusts earns **180 Infamy per kill*
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c93607165ce9 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 7364115d7908 -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

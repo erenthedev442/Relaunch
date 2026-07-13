@@ -15,12 +15,16 @@ The following system detail pages exist but are **not** represented on the [Why 
 |---|---|
 | [`progression/aeonic-weapons.md`](../progression/aeonic-weapons.md) | The 119III relics — Godhands, Aeneas, Sequence, and the rest — are relaunch's top melee reward, forged from Escha Geas Fete spoils. |
 | [`progression/capacity-farms.md`](../progression/capacity-farms.md) | Two always-open camps built for one thing: turning time into Job Points. |
-| [`endgame/geas-fete.md`](../endgame/geas-fete.md) | Escha's on-demand NM playground — and the front door to Aeonic weapons. Pop tiered Notorious Monsters at a Warding Circle, bank Escha Beads, and collect the Aeo |
+| [`progression/trusts.md`](../progression/trusts.md) | ??? note "Locked trusts — the Void Keeper's marquee allies" |
+| [`endgame/dynamis-classic.md`](../endgame/dynamis-classic.md) | The original ten Dynamis zones — the four cities, Beaucedine, Xarcabard, and the four Dreamlands — are live on relaunch as the home of Dynamis currency, reforge |
+| [`endgame/geas-fete.md`](../endgame/geas-fete.md) | Escha's NM playground — and the front door to Aeonic weapons. Pop Notorious Monsters at the retail ??? |
+| [`economy/auction-house.md`](../economy/auction-house.md) | Relaunch's Auction House never runs dry: a server-side market maker keeps the boards stocked with leveling gear and specialty items, and buys your listings back |
+| [`economy/crafted-gear.md`](../economy/crafted-gear.md) | Some of the strongest equipment on the server never drops from a monster and never sits on a vendor — it comes off a crafter's bench. |
 <!-- DOCGEN:END id="unfeatured" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f577ca424e8b -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: f8d922c0a02a -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

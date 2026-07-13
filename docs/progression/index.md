@@ -5,7 +5,7 @@
 Forget what you know about retail progression on the Relaunch server. Story missions still exist, but the real path through the game runs through the **Hunting League** — a custom rank-based NM hunting system that drives both gear acquisition and endgame challenge.
 
 !!! tip "Summary"
-    Level to 99 (a couple of hours with <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP / <!--setting:main.EXP_RATE-->10<!--/setting-->× scripted), type **`!hunt`** to warp to **Escha ZiTah**, find the **Hunt Seals** and **Spawner** NPCs, pop NMs, earn **Hunt Marks**, unlock the next rank, buy endgame gear. Repeat through 5 ranks until you take down Shinryu at the top.
+    Level to 99 (a couple of hours with <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP / <!--setting:main.EXP_RATE-->3<!--/setting-->× scripted), type **`!hunt`** to warp to **Escha ZiTah**, find the **Hunt Seals** and **Spawner** NPCs, pop NMs, earn **Hunt Marks**, unlock the next rank, buy endgame gear. Repeat through 5 ranks until you take down Shinryu at the top.
 
 ## Currencies at a glance
 
@@ -110,13 +110,11 @@ Each rank has 3 NMs to hunt. You can repeatedly kill the same NM to farm marks. 
 Spend Hunt Marks at the Seals NPC. The shop is paginated (3 items per page). Inventory must have a free slot or the purchase fails.
 
 <!-- DOCGEN:BEGIN id="hunting-league-rewards" -->
-The reward shop is organized into 3 categories — 47 purchasable entries in all, every price in Hunt Marks. The **Seals** category converts marks into the Bronze/Silver/Gold seals you spend at the Armor and Weapons vendors, while the **Sortie** categories sell job earrings. The full per-item earring list lives on the [Gear Vendors](gear-vendors.md) page.
+The reward shop is organized into 1 categories — 3 purchasable entries in all, every price in Hunt Marks. The **Seals** category converts marks into the Bronze/Silver/Gold seals you spend at the Armor and Weapons vendors, while the **Sortie** categories sell job earrings. The full per-item earring list lives on the [Gear Vendors](gear-vendors.md) page.
 
 | Category | Items | Cost each (Hunt Marks) |
 |---|---:|---:|
 | Seals | 3 | 5–40 |
-| Sortie: NQ | 22 | 100 |
-| Sortie: +1 | 22 | 200 |
 <!-- DOCGEN:END id="hunting-league-rewards" -->
 
 **Approximate full clear:** 5,300 marks for rank unlocks + ~5,500+ marks for every shop item.
@@ -125,7 +123,7 @@ The reward shop is organized into 3 categories — 47 purchasable entries in all
 
 <!-- DOCGEN:BEGIN id="progression-order" -->
 1. **Orient yourself at the hub.** Every custom NPC stands together on **<!--npc:hunt_board-->Purgonorgo Isle<!--/npc-->** (`!hub`) — the economy row (Hunt Board, Gil Exchange, Sparks Exchange, Race Changer, Home Point) and the endgame row (Apex Trials, Prime Armory, Colosseum, Infamy Vendor, Augment Sage) side by side, plus the Test Dummy for DPS testing. The old `!lib`, `!leaf`, and `!gmhome` commands still work and land you there too.
-2. **Hit level 99.** Use FoV books, ROE, trust grinding, or EXP rings. With <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP and <!--setting:main.EXP_RATE-->10<!--/setting-->× scripted EXP, expect an afternoon.
+2. **Hit level 99.** Use FoV books, ROE, trust grinding, or EXP rings. With <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP and <!--setting:main.EXP_RATE-->3<!--/setting-->× scripted EXP, expect an afternoon.
 3. **Warp to Escha ZiTah** with `!hunt`. The command drops you right at the Seals and Spawner NPCs. _(Without `!hunt` the zone is gated behind mid-Seekers progression — use the command.)_
 4. **Start Rank I - Initiate.** Pop any of the three NMs from the Spawner: Leaping Lizzy, Valkurm Emperor, Tom Tit Tat. Each kill pays **5 Hunt Marks**. Grind until you have **150 Hunt Marks** to unlock Rank II — talk to the Seals NPC to advance.
 5. **Pick up Weekly Hunt objectives.** Visit the Weekly Hunt Board at **<!--npc:hunt_board-->Purgonorgo Isle<!--/npc-->** (`!hub`) or type `!weekly` for a status check. Five random objectives roll fresh each Monday. Sweeping all 5 objectives in a single week pays a **5,000 Hunt Marks** meta-bonus on top of the per-objective rewards. Completing these adds a big mark income boost alongside your regular NM grind.
@@ -142,8 +140,8 @@ The Hunting League is the main game now, but retail content still has a role:
 
 | Content | Why it's still worth doing |
 |---|---|
-| **Crafting** | <!--setting:SKILLUP_CHANCE_MULTIPLIER-->10<!--/setting-->× skill-up and <!--setting:CRAFT_HQ_CHANCE_MULTIPLIER-->10<!--/setting-->× HQ multipliers make it lucrative. Sell to fund consumables. |
-| **ROE** | <!--setting:ROE_EXP_RATE-->10<!--/setting-->× ROE EXP, no weekly sparks cap. Quick way to add to your Hunt Marks income. |
+| **Crafting** | <!--setting:SKILLUP_CHANCE_MULTIPLIER-->1<!--/setting-->× skill-up and <!--setting:CRAFT_HQ_CHANCE_MULTIPLIER-->2<!--/setting-->× HQ multipliers make it lucrative. Sell to fund consumables. |
+| **ROE** | <!--setting:ROE_EXP_RATE-->3<!--/setting-->× ROE EXP, no weekly sparks cap. Quick way to add to your Hunt Marks income. |
 
 ## What's NOT here
 
@@ -160,6 +158,6 @@ The Hunting League is the main game now, but retail content still has a role:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e8c37825117e -->
-_Last updated: 2026-07-11 21:16 PDT_
+<!-- content-hash: 10c03d0eee24 -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

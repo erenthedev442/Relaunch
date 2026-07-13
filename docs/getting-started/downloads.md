@@ -7,8 +7,8 @@ Every archive on this page is **packaged straight from the server repo on each s
 | Download | What it is | Size | SHA-256 (first 12) |
 |---|---|---:|---|
 | [`relaunch-custom-dats.zip`](../assets/downloads/relaunch-custom-dats.zip) | Cosmetic client DAT overrides (custom item names, tooltips, and textures) with a one-click installer | 5.2 MB | `c5cd67b4b601` |
-| [`augment_browser.zip`](../assets/downloads/augment_browser.zip) | **AugmentBrowser** Windower addon (`//ab`) — browse the augment catalog, tiers, and your Sage rank in-game | 7 KB | `aa45a396816c` |
-| [`augment_trade.zip`](../assets/downloads/augment_trade.zip) | **AugmentTrade** Windower addon (`//at`) — plan and stage catalyst trades for the Augment Moogle | 8 KB | `aa070b4b3226` |
+| [`augment_browser.zip`](../assets/downloads/augment_browser.zip) | **AugmentBrowser** Windower addon (`//ab`) — browse the augment catalog, tiers, and your Sage rank in-game | 7 KB | `bcbe86164462` |
+| [`augment_trade.zip`](../assets/downloads/augment_trade.zip) | **AugmentTrade** Windower addon (`//at`) — plan and stage catalyst trades for the Augment Moogle | 8 KB | `60aa58005283` |
 
 !!! note "Looking for the loader?"
     `xiloader.exe` is pinned in the **Discord** getting-started channel — see [Install the Client](install.md#get-the-loader).
@@ -39,3 +39,9 @@ Both addons carry a snapshot of the live augment catalog, so **re-download them 
 
 Commands: `//ab` toggles the browser (filter by tier, category, owned catalysts); `//at` opens the trade planner (pick catalysts, see the pending trade, hand it to the Augment Moogle). Each addon prints its full command list when run with no arguments.
 
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 68e2bfdaa68c -->
+_Last updated: 2026-07-12 21:15 PDT_
+<!-- DOCGEN:END id="last-updated" -->

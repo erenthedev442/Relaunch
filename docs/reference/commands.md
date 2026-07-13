@@ -730,3 +730,10 @@ Lists players who have logged in during this server session, sorted by Hunting L
 ---
 
 _This list reflects the commands currently live on the server._
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 15557543c77c -->
+_Last updated: 2026-07-12 21:15 PDT_
+<!-- DOCGEN:END id="last-updated" -->

@@ -24,3 +24,10 @@ Once you're connected, the [Downloads page](downloads.md) has the **Relaunch cli
 
 !!! tip "Hitting a snag?"
     Connection failures and version-mismatch errors are almost always a patching or config issue. The [Troubleshooting](troubleshoot.md) page covers the common ones.
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 0811cb880945 -->
+_Last updated: 2026-07-12 21:15 PDT_
+<!-- DOCGEN:END id="last-updated" -->

@@ -46,6 +46,6 @@ The Hunting League is built around high-level NM combat. A small mark cost on de
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2ed50d55cfda -->
-_Last updated: 2026-07-11 21:16 PDT_
+<!-- content-hash: 652105ec529b -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

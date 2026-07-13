@@ -27,7 +27,7 @@ The **Cross-Job Ability Trainer** in <!--npc:cross_job_ability-->Purgonorgo Isle
 ## Available Abilities
 
 <!-- DOCGEN:BEGIN id="cross-job-abilities-catalog" -->
-_Each ability costs **<!--luaconst:cross_job_ability_catalog.lua:GIL_COST:comma-->10,000,000<!--/luaconst--> gil** — a one-time, per-character, per-ability purchase. After buying, activate via macro: `/ja "Ability Name" <me>`. Purchased abilities do **not** appear in the in-game Job Abilities menu (the menu is client-side); they are enforced server-side and their recast timers work normally._
+_Each ability costs **10,000,000 gil** — a one-time, per-character, per-ability purchase. After buying, activate via macro: `/ja "Ability Name" <me>`. Purchased abilities do **not** appear in the in-game Job Abilities menu (the menu is client-side); they are enforced server-side and their recast timers work normally._
 
 _**9 abilities** available across 4 job groups._
 
@@ -95,6 +95,6 @@ There's no wrong choice — the 10M gil cost means you'll pick deliberately, but
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c2a95ec31556 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: e6eac5d82780 -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

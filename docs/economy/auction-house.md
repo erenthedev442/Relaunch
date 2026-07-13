@@ -103,5 +103,9 @@ List at or below the floor and the bot takes it on its next hourly pass, paying 
     The market maker runs **hourly** — listings are topped up and buy-backs
     paid on its next pass, with gil delivered to your delivery box.
 
+---
+
 <!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 1b6b7ac95513 -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

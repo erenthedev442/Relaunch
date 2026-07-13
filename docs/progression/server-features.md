@@ -164,6 +164,6 @@ First Blood moments are real on the Relaunch server. If you're the first person 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 135415054a39 -->
-_Last updated: 2026-07-11 21:16 PDT_
+<!-- content-hash: 3cef4877b214 -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

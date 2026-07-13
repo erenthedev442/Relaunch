@@ -1258,3 +1258,10 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Dungeons** — Mythic+ keystones - endless key levels above Mythic
     - ﻿Retire the new-player linkshell; dedupe the Dungeon Veteran title
     - ﻿docs-in-code: catch comments up to the 5-catalyst reality
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 6b1caca1e98f -->
+_Last updated: 2026-07-12 21:15 PDT_
+<!-- DOCGEN:END id="last-updated" -->

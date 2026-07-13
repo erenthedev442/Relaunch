@@ -210,6 +210,6 @@ Boosts are **permanent and stacking** — they re-apply automatically every time
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 29d3e944d356 -->
-_Last updated: 2026-07-11 21:16 PDT_
+<!-- content-hash: 4094c2238a21 -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

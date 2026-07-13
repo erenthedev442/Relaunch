@@ -14,7 +14,7 @@ No. The Relaunch server runs against a private server built on [LandSandBoat](ht
 
 ### How do I create a character?
 
-Once connected, the standard FFXI character-creation flow runs as usual. Your first login then triggers a one-time auto-setup that grants every weapon skill, every spell, capped combat/magic skills, every trust, all quests flagged complete, all missions flagged complete, all key items and maps, all outpost warps, every home point, all survival guides, expanded wardrobes, and all automaton attachments (the paid Void Keeper trusts stay locked), plus **500 starter Unity Accolades** for the Unity Wanted board. You begin with a **{{setting:START_GIL:comma}} gil** wallet, and first login adds a **300,000 gil** welcome gift and **25 Hunt Marks** — enough for a first Bronze-tier weapon. The level cap is {{setting:INITIAL_LEVEL_CAP}} from day one (no Limit Break quests); type `!gmhome` to visit the setup Moogles and start leveling at {{setting:map.EXP_RATE}}× EXP.
+Once connected, the standard FFXI character-creation flow runs as usual. Your first login then triggers a one-time auto-setup that grants every weapon skill, every spell, capped combat/magic skills, every trust, all quests flagged complete, all missions flagged complete, all key items and maps, all outpost warps, every home point, all survival guides, expanded wardrobes, and all automaton attachments (the paid Void Keeper trusts stay locked), plus **500 starter Unity Accolades** for the Unity Wanted board. You begin with a **<!--setting:START_GIL:comma-->10<!--/setting--> gil** wallet, and first login adds a **300,000 gil** welcome gift and **25 Hunt Marks** — enough for a first Bronze-tier weapon. The level cap is <!--setting:INITIAL_LEVEL_CAP-->99<!--/setting--> from day one (no Limit Break quests); type `!gmhome` to visit the setup Moogles and start leveling at <!--setting:map.EXP_RATE-->3<!--/setting-->× EXP.
 
 ---
 
@@ -95,9 +95,9 @@ Ping a GM in [Discord](https://discord.gg/Yd3Kn3dN36). Specify your character na
 
 The [Retail Differences](../changes/index.md) page is the authoritative list. Highlights:
 
-- Faster rates — {{setting:map.EXP_RATE}}× mob EXP, {{setting:main.CAPACITY_RATE}}× capacity points, {{setting:DROP_RATE_MULTIPLIER}}× drops (full table on the [home page](../index.md))
-- Level cap {{setting:INITIAL_LEVEL_CAP}} from character creation — no Limit Break quests
-- Retail subjob ratio (half of main) plus a background [Subjob EXP Share](../progression/subjob-exp.md)
+- Faster rates — <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP, <!--setting:main.CAPACITY_RATE-->3<!--/setting-->× capacity points, <!--setting:DROP_RATE_MULTIPLIER-->1<!--/setting-->× drops (full table on the [home page](../index.md))
+- Level cap <!--setting:INITIAL_LEVEL_CAP-->99<!--/setting--> from character creation — no Limit Break quests
+- Full-level subjob that also [levels itself in the background](../progression/subjob-exp.md)
 - Everything unlocked at creation: spells, weapon skills, trusts, maps, outpost warps
 - Custom Hunting League, Reforge System, Augment Sage, Job Rebirth, and Weekly Hunt Board systems
 - Every player command listed in [Reference → Player Commands](../reference/commands.md)
@@ -117,6 +117,6 @@ _Have a question that should be on this page? Ping a GM in [Discord](https://dis
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bc66999d7767 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 7e3c2f6ebc1c -->
+_Last updated: 2026-07-12 21:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->
