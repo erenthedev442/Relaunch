@@ -15,7 +15,10 @@ slot, jobs, and WHERE it comes from -- split into:
                        drop/reward): e.g. the Unity NM drops Ababinili ("Unity")
                        and its +1 is forged up ("Unity upgrade"). Covers Unity
                        (+1), Reforge AF/Relic/Empy (+1/+2/+3), Weapon Forge
-                       stages, and Dynamis +4.
+                       stages, and Dynamis +4. Any REMA/Prime weapon (Relic/
+                       Empyrean/Mythic/Aeonic/Prime), at any forge stage, is
+                       additionally tagged "REMA/Prime: <Type>" -- classified
+                       from the authoritative weapon_forge_catalog.lua chains.
 
 Everything is read straight from the repo working tree (sql/*.sql +
 modules/custom/**), so the output reflects the CURRENT source -- including
@@ -391,12 +394,71 @@ if cox.exists():
                 for job_id in range(1, 23):
                     _mk_up(base + job_id, "Omen upgrade")
 
+# --- REMA / Prime classification -------------------------------------------
+# Relic / Empyrean / Mythic / Aeonic / Prime. Any version (every forge stage)
+# is tagged "REMA/Prime: <Type>" in relaunch_source. Authoritative, server-
+# accurate ids come from weapon_forge_catalog.lua: the empyrean/mythic/relic
+# chains list every stage (base + s1/s2/s3) per weapon with its type; Prime
+# finals come from PrimeArmory_NPC.lua, Aeonic finals from the chains' aeonic
+# blocks. A name fallback catches any same-name variant id not in a chain.
+rema_type: dict[int, str] = {}       # item id -> Relic/Empyrean/Mythic/Prime/Aeonic
+rema_name: dict[str, str] = {}       # normalized family name -> type
+
+def _norm(nm: str) -> str:
+    nm = re.sub(r"\s*\+\d+\s*$", "", nm)              # drop a trailing +N
+    return re.sub(r"[^a-z0-9]", "", nm.lower())
+
+_wf = _read_custom("weapon_forge_catalog.lua")
+
+# 1. Empyrean / Mythic / Relic chains -- id per stage + the family name.
+_bounds = [("Empyrean", "catalog.empyreanChains", "catalog.mythicChains"),
+           ("Mythic",   "catalog.mythicChains",   "catalog.relicChains"),
+           ("Relic",    "catalog.relicChains",    "catalog.byId")]
+for rtype, start, end in _bounds:
+    si, ei = _wf.find(start), _wf.find(end)
+    if si == -1:
+        continue
+    block = _wf[si:ei if ei != -1 else len(_wf)]
+    for m in re.finditer(r"name\s*=\s*'([^']+)'\s*,\s*base\s*=\s*(\d+)\s*,"
+                         r"\s*s1\s*=\s*(\d+)\s*,\s*s2\s*=\s*(\d+)\s*,\s*s3\s*=\s*(\d+)", block):
+        rema_name[_norm(m.group(1))] = rtype
+        for gi in range(2, 6):
+            iid = int(m.group(gi))
+            if iid in gear:
+                rema_type[iid] = rtype
+
+# 2. Prime finals (PrimeArmory_NPC.lua WEAPONS list; currencies filtered by gear).
+_prime = (ROOT / "modules" / "custom" / "lua" / "PrimeArmory_NPC.lua")
+if _prime.exists():
+    for m in re.finditer(r"\{\s*id\s*=\s*(\d+)\s*,\s*name\s*=\s*'([^']+)'\s*,\s*ws\s*=",
+                         _prime.read_text(encoding="utf-8", errors="replace")):
+        iid = int(m.group(1))
+        if iid in gear:
+            rema_type[iid] = "Prime"
+            rema_name[_norm(m.group(2))] = "Prime"
+
+# 3. Aeonic finals -- the s3 inside each chain's aeonic block.
+for m in re.finditer(r"aeonic\s*=\s*\{\s*base\s*=\s*\{[^}]*\}[^}]*?s3\s*=\s*\{\s*id\s*=\s*(\d+)\s*,\s*name\s*=\s*'([^']+)'", _wf, re.S):
+    iid = int(m.group(1))
+    if iid in gear:
+        rema_type[iid] = "Aeonic"
+        rema_name[_norm(m.group(2))] = "Aeonic"
+
+def _rema_label(iid: int) -> str:
+    t = rema_type.get(iid)
+    if not t:
+        t = rema_name.get(_norm(names.get(iid, "")))
+    return f"REMA/Prime: {t}" if t else ""
+
 def relaunch_source(iid: int) -> str:
     labels = set(item_custom.get(iid, ()))
     labels |= sys_base.get(iid, set())
     for up in sys_upgrade.get(iid, ()):
         labels.discard(up.rsplit(" upgrade", 1)[0])  # drop the plain form
         labels.add(up)
+    rema = _rema_label(iid)
+    if rema:
+        labels.add(rema)
     return " | ".join(sorted(labels))
 
 # ---------------------------------------------------------------------------
