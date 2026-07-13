@@ -166,6 +166,6 @@ The Forge accepts the trade either way: put the +3 piece **and** the full materi
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a53e08b5e318 -->
-_Last updated: 2026-07-11 21:15 PDT_
+<!-- content-hash: cab45b1c4140 -->
+_Last updated: 2026-07-12 01:17 PDT_
 <!-- DOCGEN:END id="last-updated" -->
