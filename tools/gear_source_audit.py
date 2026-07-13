@@ -430,8 +430,15 @@ rema_type: dict[int, str] = {}       # item id -> Relic/Empyrean/Mythic/Prime/Ae
 rema_name: dict[str, str] = {}       # normalized family name -> type
 
 def _norm(nm: str) -> str:
-    nm = re.sub(r"\s*\+\d+\s*$", "", nm)              # drop a trailing +N
-    return re.sub(r"[^a-z0-9]", "", nm.lower())
+    # Reduce a weapon name to its FAMILY by dropping trailing stage tokens --
+    # a version number (75/90/99/119), a Roman tier (Ii/Iii), or a +N. So
+    # "Almace 90", "Almace 99 Ii", "Almace 119 Iii", "Almace +1" all -> "almace".
+    out = []
+    for tok in nm.split():
+        if re.fullmatch(r"\+?\d+", tok) or re.fullmatch(r"i{1,3}", tok, re.I):
+            break
+        out.append(tok)
+    return re.sub(r"[^a-z0-9]", "", " ".join(out).lower())
 
 _wf = _read_custom("weapon_forge_catalog.lua")
 
@@ -469,9 +476,14 @@ for m in re.finditer(r"aeonic\s*=\s*\{\s*base\s*=\s*\{[^}]*\}[^}]*?s3\s*=\s*\{\s
         rema_type[iid] = "Aeonic"
         rema_name[_norm(m.group(2))] = "Aeonic"
 
+# REMA/Prime are weapons, shields (Sub) and instruments (Range) -- never body
+# armour. Guard the NAME fallback to those slots so a family-name collision
+# with an armour piece can't mistag it (id-based hits are authoritative).
+_WEAPON_SLOTS = {"Main", "Sub", "Range", "Ammo", "Main/Sub"}
+
 def _rema_label(iid: int) -> str:
-    t = rema_type.get(iid)
-    if not t:
+    t = rema_type.get(iid)  # id-based: authoritative
+    if not t and gear[iid]["slot"] in _WEAPON_SLOTS:
         t = rema_name.get(_norm(names.get(iid, "")))
     return f"REMA/Prime: {t}" if t else ""
 
