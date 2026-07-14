@@ -36,11 +36,15 @@ local NPC_POS = { x = 155.0, y = -2.0, z = 162.0, rot = 96 }
 local PCARD_QTY        = 3      -- x entry.pcard (job-matched Paragon Card), non-body
 local PCARD_QTY_BODY   = 6      -- body
 local RUSTED_ID        = 9538   -- Rusted Identification Card
--- 2026-07-13 (owner): raised to a full stack (99) for both slots. Body tax
--- retained on Paragon + Black cards; Rusted is the trash-drop material and
--- the owner wants it to feel like a real farm gate, not a light tax.
-local RUSTED_QTY       = 99     -- non-body
-local RUSTED_QTY_BODY  = 99     -- body
+-- 2026-07-13 (owner): a full-stack (99) requirement triggered a client/server
+-- inventory-sync race in the trade path -- putting the ENTIRE stack of an item
+-- into the trade window and having any part of the trade fail leaves the
+-- client with an underflowed (-99 -> 4294967197) count, and the server flags
+-- the cards as reserved. Jbae hit exactly this. Rolled back to sub-99 so
+-- players always have leftover cards -- keeps the "this is a real farm gate"
+-- intent (60/90 is still 5x the original 12/24 cost) without the edge case.
+local RUSTED_QTY       = 60     -- non-body
+local RUSTED_QTY_BODY  = 90     -- body
 local BLACK_ID         = 9540   -- Blackened Identification Card
 local BLACK_QTY        = 6      -- non-body
 local BLACK_QTY_BODY   = 12     -- body
