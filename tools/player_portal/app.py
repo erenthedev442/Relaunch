@@ -213,7 +213,15 @@ LEGACY_REWARD_OPTIONS = [
     # picker no longer offers them to future migrators.
 ]
 _REWARD_BY_ID = {o["id"]: o for o in LEGACY_REWARD_OPTIONS}
+# Legacy single-slot indicator. Kept for backwards-compat with any code that
+# reads "did this character claim ANYTHING" as a boolean. Still stamped when a
+# player claims any reward. Individual claims live under _reward_claim_var().
 LEGACY_REWARD_CLAIMED_VAR = "Legacy_Reward_Claimed"
+
+def _reward_claim_var(option_id: str) -> str:
+    """Per-option claim charVar (2026-07-13 owner call: rewards are no longer
+    mutually exclusive -- players claim each one independently)."""
+    return f"Legacy_Reward_Claim_{option_id}"
 
 
 def compute_progress(charvars: dict, mjob: int) -> list:
@@ -1272,28 +1280,35 @@ class LegacyRewardBody(BaseModel):
 
 @app.get("/api/legacy-reward/{charid}")
 def legacy_reward_get(charid: int, request: Request):
-    """Options + claimed status for the one-time Legendary migration reward. Own-account only."""
+    """Per-option claim status for the Legendary migration rewards. Own-account only.
+    Rewards are independently claimable (2026-07-13 owner call) -- one entry per
+    option, each with its own `claimed` boolean."""
     acct = require_account(request)
     conn = db()
     try:
         with conn.cursor() as cur:
             owner = owned_char(cur, acct["id"], charid)
-            claimed_idx = _get_charvar(cur, charid, LEGACY_REWARD_CLAIMED_VAR)
+            option_claims = {
+                o["id"]: bool(_get_charvar(cur, charid, _reward_claim_var(o["id"])))
+                for o in LEGACY_REWARD_OPTIONS
+            }
     finally:
         conn.close()
-
-    claimed_id = None
-    if claimed_idx and 1 <= claimed_idx <= len(LEGACY_REWARD_OPTIONS):
-        claimed_id = LEGACY_REWARD_OPTIONS[claimed_idx - 1]["id"]
 
     return {
         "charid":    charid,
         "name":      owner["charname"],
-        "claimed":   bool(claimed_idx),
-        "claimedId": claimed_id,
+        # allClaimed = true only when every reward is claimed; drives the ✓
+        # indicator in the character-selector.
+        "allClaimed": all(option_claims.values()) if option_claims else False,
         "options":   [
-            {"id": o["id"], "label": o["label"], "description": o["description"],
-             "needsJob": o.get("needs_job", False)}
+            {
+                "id":          o["id"],
+                "label":       o["label"],
+                "description": o["description"],
+                "needsJob":    o.get("needs_job", False),
+                "claimed":     option_claims[o["id"]],
+            }
             for o in LEGACY_REWARD_OPTIONS
         ],
     }
@@ -1313,14 +1328,18 @@ def legacy_reward_claim(body: LegacyRewardBody, request: Request):
             owned_char(cur, acct["id"], body.charid)
             if not is_offline(cur, body.charid):
                 raise HTTPException(status_code=409, detail="That character is online -- log out of the game first.")
-            # Row-lock to prevent double-claim races
+            # Per-option claim lock (2026-07-13 owner call: each reward is
+            # independently claimable). Row-lock the specific option's var to
+            # prevent a double-click race on that option, while leaving the
+            # other rewards freely available on the same character.
+            claim_var = _reward_claim_var(body.option_id)
             cur.execute(
                 "SELECT value FROM char_vars WHERE charid=%s AND varname=%s FOR UPDATE",
-                (body.charid, LEGACY_REWARD_CLAIMED_VAR),
+                (body.charid, claim_var),
             )
             existing = cur.fetchone()
             if existing and int(existing.get("value") or 0):
-                raise HTTPException(status_code=409, detail="Legacy reward already claimed on this character.")
+                raise HTTPException(status_code=409, detail=f"'{option['label']}' already claimed on this character.")
 
             # Write reward vars.
             if option.get("needs_job"):
@@ -1337,9 +1356,10 @@ def legacy_reward_claim(body: LegacyRewardBody, request: Request):
                     if value > _get_charvar(cur, body.charid, varname):
                         _upsert_charvar(cur, body.charid, varname, value)
 
-            # Stamp the claim with the 1-based index so the UI can show which option was chosen
-            idx = next(i + 1 for i, o in enumerate(LEGACY_REWARD_OPTIONS) if o["id"] == body.option_id)
-            _upsert_charvar(cur, body.charid, LEGACY_REWARD_CLAIMED_VAR, idx)
+            # Stamp both the per-option claim var and the legacy indicator (so
+            # any code that reads "has claimed anything" still works).
+            _upsert_charvar(cur, body.charid, claim_var, 1)
+            _upsert_charvar(cur, body.charid, LEGACY_REWARD_CLAIMED_VAR, 1)
 
         conn.commit()
         return {"ok": True, "option": option["id"], "label": option["label"]}

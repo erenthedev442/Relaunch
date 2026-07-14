@@ -33,13 +33,12 @@
   /* option cards */
   .opts { display:flex; flex-direction:column; gap:10px; margin-top:18px; }
   .opt { background:var(--panel-2); border:2px solid var(--line); border-radius:10px;
-         padding:14px 16px; cursor:pointer; transition:border-color .15s; }
-  .opt:hover { border-color:var(--gold-2); }
-  .opt.selected { border-color:var(--gold); }
-  .opt input[type=radio] { display:none; }
+         padding:14px 16px; transition:border-color .15s; }
+  .opt:not(.claimed):hover { border-color:var(--gold-2); }
+  .opt.claimed { border-color:#2f5e46; background:rgba(87,201,138,.05); opacity:.85; }
+  .opt.claimed .opt-label { color:var(--ok); }
   .opt-label { font-weight:700; font-size:15px; margin-bottom:4px; }
   .opt-desc { color:var(--mut); font-size:13px; line-height:1.5; }
-  .opt.selected .opt-label { color:var(--gold); }
   /* claim button */
   .claim-wrap { margin-top:20px; }
   button.claim { width:100%; padding:13px; border:0; border-radius:8px; cursor:pointer;
@@ -166,43 +165,54 @@ async function loadChar(charid) {
 }
 
 function renderReward(area, data) {
-  if (data.claimed) {
-    const chosen = data.options.find(o => o.id === data.claimedId);
-    area.innerHTML = `
-      <div class="banner">
-        <strong>&#10003; Reward claimed</strong>
-        <p>${data.name} has already claimed the <strong>${chosen ? chosen.label : data.claimedId}</strong> reward.
-        Each character may only claim once.</p>
-      </div>`;
-    return;
-  }
-
-  // Record which options require a job pick (Free Job to 99) so selectOpt can
-  // reveal the job dropdown and gate the claim button on it.
+  // Owner call 2026-07-13: rewards are no longer mutually exclusive. Every
+  // option is independently claimable -- each shows its own "Claim" (or "✓
+  // Claimed") button. Free Job to 99 still needs a job pick before claiming.
   optNeedsJob = {};
   data.options.forEach(o => { optNeedsJob[o.id] = !!o.needsJob; });
 
-  let html = `<div class="opts" id="optsList">`;
-  data.options.forEach((o, i) => {
+  const claimedCount = data.options.filter(o => o.claimed).length;
+  const totalCount   = data.options.length;
+  let html = '';
+  if (claimedCount === totalCount) {
     html += `
-      <label class="opt" id="opt_${i}" onclick="selectOpt('${o.id}', ${i})">
-        <input type="radio" name="reward" value="${o.id}">
-        <div class="opt-label">${escHtml(o.label)}</div>
+      <div class="banner">
+        <strong>&#10003; All rewards claimed</strong>
+        <p>${escHtml(data.name)} has collected every Legacy Migration Reward.</p>
+      </div>`;
+  } else if (claimedCount > 0) {
+    html += `
+      <div class="banner">
+        <p>${escHtml(data.name)} has claimed ${claimedCount} of ${totalCount} rewards. Pick up the rest below whenever you like.</p>
+      </div>`;
+  }
+
+  html += `<div class="opts" id="optsList">`;
+  data.options.forEach((o, i) => {
+    const btnLabel = o.claimed ? '&#10003; Claimed'
+                  : o.needsJob ? 'Choose job to claim'
+                  : 'Claim';
+    const jobHtml = (o.needsJob && !o.claimed) ? `
+      <div class="job-wrap" style="margin-top:8px;">
+        <label style="display:block; margin-bottom:4px; color:var(--gold); font-size:13px;">Job to raise to 99:</label>
+        <select id="jobPick_${i}" onchange="onJobPick(${i}, '${o.id}')">
+          <option value="">— pick a job —</option>
+          ${Object.entries(JOBS).map(([id,name]) => `<option value="${id}">${escHtml(name)}</option>`).join('')}
+        </select>
+      </div>` : '';
+    html += `
+      <div class="opt ${o.claimed ? 'claimed' : ''}" id="opt_${i}">
+        <div class="opt-label">${escHtml(o.label)}${o.claimed ? ' &#10003;' : ''}</div>
         <div class="opt-desc">${escHtml(o.description)}</div>
-      </label>`;
+        ${jobHtml}
+        <div style="margin-top:10px;">
+          <button class="claim" id="claimBtn_${i}" ${o.claimed ? 'disabled' : ''}
+            onclick="claimReward('${o.id}', ${i})">${btnLabel}</button>
+          <div class="msg" id="claimMsg_${i}"></div>
+        </div>
+      </div>`;
   });
-  html += `</div>
-    <div class="job-wrap" id="jobWrap" style="display:none; margin-top:14px;">
-      <label style="display:block; margin-bottom:6px; color:var(--gold); font-size:14px;">Choose the job to raise to 99:</label>
-      <select id="jobPick" onchange="onJobPick()">
-        <option value="">— pick a job —</option>
-        ${Object.entries(JOBS).map(([id,name]) => `<option value="${id}">${escHtml(name)}</option>`).join('')}
-      </select>
-    </div>
-    <div class="claim-wrap">
-      <button class="claim" id="claimBtn" disabled onclick="claimReward()">Select an option to continue</button>
-      <div class="msg" id="claimMsg"></div>
-    </div>`;
+  html += `</div>`;
   area.innerHTML = html;
 }
 
@@ -210,43 +220,27 @@ const JOBS = {1:'Warrior',2:'Monk',3:'White Mage',4:'Black Mage',5:'Red Mage',6:
   7:'Paladin',8:'Dark Knight',9:'Beastmaster',10:'Bard',11:'Ranger',12:'Samurai',13:'Ninja',
   14:'Dragoon',15:'Summoner',16:'Blue Mage',17:'Corsair',18:'Puppetmaster',19:'Dancer',
   20:'Scholar',21:'Geomancer',22:'Rune Fencer'};
-let selectedOption = null;
 let optNeedsJob = {};
 
-// Enable the claim button only once the requirements for the selected option are
-// met: an option must be chosen, and (for Free Job to 99) a job must be picked.
-function refreshClaimBtn() {
-  const btn = document.getElementById('claimBtn');
+// Per-option job-pick handler. Enables the claim button when the job dropdown
+// has a real value.
+function onJobPick(idx, optId) {
+  const btn = document.getElementById('claimBtn_' + idx);
+  const jobPick = document.getElementById('jobPick_' + idx);
   if (!btn) return;
-  const jobPick = document.getElementById('jobPick');
-  const needJob = selectedOption && optNeedsJob[selectedOption];
-  const ready = selectedOption && (!needJob || (jobPick && jobPick.value));
+  const ready = jobPick && jobPick.value;
   btn.disabled = !ready;
-  btn.textContent = !selectedOption ? 'Select an option to continue'
-                  : (needJob && !(jobPick && jobPick.value)) ? 'Choose a job to continue'
-                  : 'Claim Reward';
+  btn.textContent = ready ? 'Claim' : 'Choose job to claim';
 }
 
-function onJobPick() { refreshClaimBtn(); }
-
-function selectOpt(id, idx) {
-  selectedOption = id;
-  document.querySelectorAll('.opt').forEach(el => el.classList.remove('selected'));
-  const el = document.getElementById('opt_' + idx);
-  if (el) el.classList.add('selected');
-  const jobWrap = document.getElementById('jobWrap');
-  if (jobWrap) jobWrap.style.display = optNeedsJob[id] ? 'block' : 'none';
-  refreshClaimBtn();
-}
-
-async function claimReward() {
-  if (!selectedOption || !currentCharid) return;
-  const btn = document.getElementById('claimBtn');
-  const msg = document.getElementById('claimMsg');
-  const jobPick = document.getElementById('jobPick');
-  const needJob = optNeedsJob[selectedOption];
+async function claimReward(optId, idx) {
+  if (!currentCharid) return;
+  const btn = document.getElementById('claimBtn_' + idx);
+  const msg = document.getElementById('claimMsg_' + idx);
+  const jobPick = document.getElementById('jobPick_' + idx);
+  const needJob = optNeedsJob[optId];
   const job = needJob ? parseInt(jobPick && jobPick.value, 10) : null;
-  if (needJob && !job) { refreshClaimBtn(); return; }
+  if (needJob && !job) { onJobPick(idx, optId); return; }
   btn.disabled = true;
   btn.textContent = 'Claiming…';
   msg.className = 'msg';
@@ -255,27 +249,29 @@ async function claimReward() {
   const res = await api('/api/legacy-reward', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({charid: currentCharid, option_id: selectedOption, job: job}),
+    body: JSON.stringify({charid: currentCharid, option_id: optId, job: job}),
   });
   const json = await res.json().catch(() => ({}));
 
   if (res.ok) {
-    const area = document.getElementById('rewardArea');
-    area.innerHTML = `
-      <div class="banner">
-        <strong>&#10003; Reward claimed!</strong>
-        <p><strong>${escHtml(json.label)}</strong> has been applied to this character.
-        Log in to the game to see your head start.</p>
-      </div>`;
-    // Update the character select label
-    const sel = document.getElementById('charSelect');
-    const opt = sel.querySelector(`option[value="${currentCharid}"]`);
-    if (opt) opt.textContent = opt.textContent.replace(' ✓ claimed', '') + ' ✓ claimed';
+    // Re-fetch and re-render so the just-claimed option flips to "Claimed"
+    // and the running "X of N" counter updates.
+    loadChar(currentCharid);
+    // Update the character select label if everything is now claimed
+    api('/api/legacy-reward/' + currentCharid).then(r => r.ok && r.json()).then(fresh => {
+      if (!fresh) return;
+      const sel = document.getElementById('charSelect');
+      const opt = sel.querySelector(`option[value="${currentCharid}"]`);
+      if (opt) {
+        opt.textContent = opt.textContent.replace(' ✓ all claimed', '')
+                        + (fresh.allClaimed ? ' ✓ all claimed' : '');
+      }
+    });
   } else {
     msg.className = 'msg err';
     msg.textContent = json.detail || 'Claim failed. Please try again.';
     btn.disabled = false;
-    btn.textContent = 'Claim Reward';
+    btn.textContent = needJob ? 'Choose job to claim' : 'Claim';
   }
 }
 
