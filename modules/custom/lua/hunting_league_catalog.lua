@@ -54,8 +54,11 @@ return
     -- the lower relaunch player power curve (Legendary keeps the values above).
     -- T1 minor DEF bump; T2 minor DA cut; T3 -40% ATT/-25% DEF, DA->12, TA
     -- removed; T4 -45% ATT/-35% DEF, DA->15/TA->5; T5 (AV/PW) -52% ATT/-50%
-    -- DEF, DA->20/TA->8; Shinryu -60% ATT/-78% DEF, DA->25/TA->10. REGEN cut
-    -- per-tier (T1 75->30 ... Shinryu 3000->500). hpBoost is UNCHANGED here:
+    -- DEF, DA->20/TA->8; Shinryu -60% ATT/-78% DEF, DA->25/TA->10.
+    -- 2026-07-14 damage-ceiling pass: flat REGEN was cut to 12/24/40/70/120
+    -- (Shinryu 175), and percentage drain from 2% to 0.25%. This keeps
+    -- anti-turtle pressure without erasing typical 200k-300k weaponskills.
+    -- hpBoost is UNCHANGED here:
     -- HP targets need base mob HP from mob_groups (DB) - resolve in a follow-up.
     --
     --   Every tier now has hpBoost (was T5-only) so fights actually
@@ -99,7 +102,7 @@ return
                       [xi.mod.DEX] = 75,    -- DEX feeds ACC formula (~0.75 DEX = 1 ACC)
                       [xi.mod.HASTE_GEAR] = 150,   -- ~10%
                       [xi.mod.DOUBLE_ATTACK] = 8,
-                      [xi.mod.REGEN] = 30,
+                      [xi.mod.REGEN] = 12,
                   },
                 },
                 { name = 'Valkurm_Emperor',  label = 'Valkurm Emperor',  points = 5,  groupId = 11356, minLv = 150, maxLv = 150,
@@ -114,7 +117,7 @@ return
                       [xi.mod.MEVA] = 180,
                       [xi.mod.HASTE_GEAR] = 150,
                       [xi.mod.DOUBLE_ATTACK] = 8,
-                      [xi.mod.REGEN] = 30,
+                      [xi.mod.REGEN] = 12,
                   },
                 },
                 { name = 'Tom_Tit_Tat',      label = 'Tom Tit Tat',      points = 5,  groupId = 11357, minLv = 150, maxLv = 150,
@@ -128,7 +131,7 @@ return
                       [xi.mod.MEVA] = 180,
                       [xi.mod.HASTE_GEAR] = 150,
                       [xi.mod.DOUBLE_ATTACK] = 8,
-                      [xi.mod.REGEN] = 30,
+                      [xi.mod.REGEN] = 12,
                   },
                 },
             },
@@ -156,7 +159,7 @@ return
                       [xi.mod.MDEF] = 180,
                       [xi.mod.HASTE_GEAR] = 225,   -- ~15%
                       [xi.mod.DOUBLE_ATTACK] = 12,
-                      [xi.mod.REGEN] = 60,
+                      [xi.mod.REGEN] = 24,
                   },
                 },
                 { name = 'Bomb_Queen',  label = 'Bomb Queen',  points = 12, groupId = 11359, minLv = 150, maxLv = 150,
@@ -173,7 +176,7 @@ return
                       [xi.mod.DEX] = 150,
                       [xi.mod.HASTE_GEAR] = 225,
                       [xi.mod.DOUBLE_ATTACK] = 12,
-                      [xi.mod.REGEN] = 60,
+                      [xi.mod.REGEN] = 24,
                   },
                 },
                 { name = 'Aquarius',    label = 'Aquarius',    points = 12, groupId = 11360, minLv = 150, maxLv = 150,
@@ -191,7 +194,7 @@ return
                       [xi.mod.DEX] = 150,
                       [xi.mod.HASTE_GEAR] = 225,
                       [xi.mod.DOUBLE_ATTACK] = 12,
-                      [xi.mod.REGEN] = 60,
+                      [xi.mod.REGEN] = 24,
                   },
                 },
             },
@@ -220,7 +223,7 @@ return
                       [xi.mod.HASTE_GEAR] = 300,   -- ~20%
                       [xi.mod.DOUBLE_ATTACK] = 12,
                       [xi.mod.TRIPLE_ATTACK] = 0,   -- relaunch: TA removed
-                      [xi.mod.REGEN] = 100,
+                      [xi.mod.REGEN] = 40,
                   },
                 },
                 { name = 'Vrtra',     label = 'Vrtra',     points = 22, groupId = 11362, minLv = 150, maxLv = 150,
@@ -239,7 +242,7 @@ return
                       [xi.mod.HASTE_GEAR] = 300,
                       [xi.mod.DOUBLE_ATTACK] = 12,
                       [xi.mod.TRIPLE_ATTACK] = 0,   -- relaunch: TA removed
-                      [xi.mod.REGEN] = 100,
+                      [xi.mod.REGEN] = 40,
                   },
                 },
                 { name = 'Simurgh',   label = 'Simurgh',   points = 22, groupId = 11363, minLv = 150, maxLv = 150,
@@ -262,7 +265,7 @@ return
                       [xi.mod.HASTE_GEAR] = 345,   -- ~22% (was 200)
                       [xi.mod.DOUBLE_ATTACK] = 12,    -- relaunch (was 30)
                       [xi.mod.TRIPLE_ATTACK] = 0,     -- relaunch: TA removed
-                      [xi.mod.REGEN] = 100,   -- relaunch (was 413)
+                      [xi.mod.REGEN] = 40,   -- damage-ceiling pass (was 413)
                   },
                 },
             },
@@ -291,7 +294,7 @@ return
                       [xi.mod.HASTE_GEAR] = 375,   -- ~25%
                       [xi.mod.DOUBLE_ATTACK] = 15,
                       [xi.mod.TRIPLE_ATTACK] = 5,
-                      [xi.mod.REGEN] = 180,
+                      [xi.mod.REGEN] = 70,
                   },
                 },
                 { name = 'King_Behemoth', label = 'King Behemoth', points = 38, groupId = 11365, minLv = 150, maxLv = 150,
@@ -310,7 +313,7 @@ return
                       [xi.mod.HASTE_GEAR] = 375,
                       [xi.mod.DOUBLE_ATTACK] = 15,
                       [xi.mod.TRIPLE_ATTACK] = 5,
-                      [xi.mod.REGEN] = 180,
+                      [xi.mod.REGEN] = 70,
                   },
                 },
                 { name = 'Kirin',         label = 'Kirin',         points = 38, groupId = 11366, minLv = 150, maxLv = 150,
@@ -329,7 +332,7 @@ return
                       [xi.mod.HASTE_GEAR] = 375,
                       [xi.mod.DOUBLE_ATTACK] = 15,
                       [xi.mod.TRIPLE_ATTACK] = 5,
-                      [xi.mod.REGEN] = 180,
+                      [xi.mod.REGEN] = 70,
                   },
                 },
             },
@@ -360,7 +363,7 @@ return
                       [xi.mod.HASTE_GEAR] = 450,   -- ~30% (capped by engine)
                       [xi.mod.DOUBLE_ATTACK] = 20,
                       [xi.mod.TRIPLE_ATTACK] = 8,
-                      [xi.mod.REGEN] = 300,
+                      [xi.mod.REGEN] = 120,
                   },
                 },
                 { name = 'Pandemonium_Warden', label = 'Pandemonium Warden', points = 65, groupId = 11368, minLv = 150, maxLv = 150,
@@ -377,7 +380,7 @@ return
                       [xi.mod.HASTE_GEAR] = 450,
                       [xi.mod.DOUBLE_ATTACK] = 20,
                       [xi.mod.TRIPLE_ATTACK] = 8,
-                      [xi.mod.REGEN] = 300,
+                      [xi.mod.REGEN] = 120,
                   },
                 },
                 { name = 'Shinryu',            label = 'Shinryu',            points = 110, groupId = 11369, minLv = 225, maxLv = 250,
@@ -396,7 +399,7 @@ return
                       [xi.mod.HASTE_GEAR] = 600,
                       [xi.mod.DOUBLE_ATTACK] = 25,
                       [xi.mod.TRIPLE_ATTACK] = 10,
-                      [xi.mod.REGEN] = 500,
+                      [xi.mod.REGEN] = 175,
                   },
                 },
             },
@@ -477,17 +480,17 @@ return
         -- =========================================================
         [11355] = {  -- Leaping Lizzy
             name   = 'Leaping Lizzy',
-            drain  = { periodSec = 10, healPct = 2 },
+            drain  = { periodSec = 10, healPct = 0.25 },
             enrage = { sec = 240, att = 2000, haste = 80, msg = 'Leaping Lizzy quickens -- finish it fast!' },
         },
         [11356] = {  -- Valkurm Emperor
             name   = 'Valkurm Emperor',
-            drain  = { periodSec = 10, healPct = 2 },
+            drain  = { periodSec = 10, healPct = 0.25 },
             enrage = { sec = 240, att = 2000, haste = 80, msg = 'Valkurm Emperor\'s wings beat faster -- it enrages!' },
         },
         [11357] = {  -- Tom Tit Tat
             name   = 'Tom Tit Tat',
-            drain  = { periodSec = 10, healPct = 2 },
+            drain  = { periodSec = 10, healPct = 0.25 },
             enrage = { sec = 240, att = 2000, haste = 80, msg = 'Tom Tit Tat howls -- its assault intensifies!' },
         },
 
@@ -498,19 +501,19 @@ return
         -- =========================================================
         [11358] = {  -- Roc
             name   = 'Roc',
-            drain  = { periodSec = 9, healPct = 2 },
+            drain  = { periodSec = 9, healPct = 0.25 },
             cc     = { periodSec = 28, effect = xi.effect.PARALYZE, power = 40, dur = 8, msg = 'Roc hammers the air -- its wingbeat paralyses!' },
             enrage = { sec = 220, att = 3000, haste = 100, msg = 'Roc unleashes its full fury!' },
         },
         [11359] = {  -- Bomb Queen
             name   = 'Bomb Queen',
-            drain  = { periodSec = 9, healPct = 2 },
+            drain  = { periodSec = 9, healPct = 0.25 },
             cc     = { periodSec = 26, effect = xi.effect.BIND, power = 1, dur = 6, msg = 'Bomb Queen erupts -- binding heat pins you down!' },
             enrage = { sec = 220, att = 3000, haste = 100, msg = 'Bomb Queen\'s core flares -- it detonates with fury!' },
         },
         [11360] = {  -- Aquarius
             name   = 'Aquarius',
-            drain  = { periodSec = 9, healPct = 2 },
+            drain  = { periodSec = 9, healPct = 0.25 },
             cc     = { periodSec = 26, effect = xi.effect.SLOW, power = 512, dur = 10, msg = 'Aquarius surges -- water pressure slows you!' },
             enrage = { sec = 220, att = 3000, haste = 100, msg = 'Aquarius roars -- tidal force builds!' },
         },
@@ -522,7 +525,7 @@ return
         -- =========================================================
         [11361] = {  -- Serket
             name   = 'Serket',
-            drain  = { periodSec = 8, healPct = 2 },
+            drain  = { periodSec = 8, healPct = 0.25 },
             stance = { startHpp = 90, periodSec = 18, stances = {
                 { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Serket\'s carapace hardens -- use magic!' },
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Serket wards the mystic arts -- strike with steel!' },
@@ -531,7 +534,7 @@ return
         },
         [11362] = {  -- Vrtra
             name   = 'Vrtra',
-            drain  = { periodSec = 8, healPct = 2 },
+            drain  = { periodSec = 8, healPct = 0.25 },
             aoe    = { periodSec = 14, dmgPct = 20, msg = 'Vrtra breathes a torrent -- get clear!' },
             enrage = { sec = 200, att = 3500, haste = 110, msg = 'Vrtra thrashes -- its breath weapon quickens!' },
             phases = {
@@ -540,7 +543,7 @@ return
         },
         [11363] = {  -- Simurgh
             name   = 'Simurgh',
-            drain  = { periodSec = 8, healPct = 2 },
+            drain  = { periodSec = 8, healPct = 0.25 },
             stance = { startHpp = 85, periodSec = 16, stances = {
                 { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Simurgh\'s feathers become living armor -- use magic!' },
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Simurgh shrugs off magic -- cut it with steel!' },
@@ -562,7 +565,7 @@ return
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Nidhogg nullifies the arcane -- steel only!' },
             } },
             aoe    = { periodSec = 12, dmgPct = 22, msg = 'Nidhogg erupts -- draconic pressure crushes all!' },
-            drain  = { periodSec = 8, healPct = 2 },
+            drain  = { periodSec = 8, healPct = 0.25 },
             enrage = { sec = 195, att = 4500, haste = 130, msg = 'Nidhogg\'s eyes go crimson -- it accelerates!' },
             phases = {
                 { hp = 60, action = 'dispel', count = 3, msg = 'Nidhogg roars -- your enhancements are torn away!' },
@@ -573,7 +576,7 @@ return
             name   = 'King Behemoth',
             aoe    = { periodSec = 11, dmgPct = 23, msg = 'King Behemoth thunderclaps -- shockwaves ripple out!' },
             cc     = { periodSec = 24, effect = xi.effect.TERROR, power = 1, dur = 5, msg = 'King Behemoth bellows -- you freeze in terror!' },
-            drain  = { periodSec = 8, healPct = 2 },
+            drain  = { periodSec = 8, healPct = 0.25 },
             enrage = { sec = 190, att = 4500, haste = 130, msg = 'King Behemoth stamps the earth -- the assault peaks!' },
             phases = {
                 { hp = 65, action = 'dispel', count = 3, msg = 'King Behemoth snorts -- blessings stripped!' },
@@ -587,7 +590,7 @@ return
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Kirin wards the arcane -- pierce it with steel!' },
             } },
             cc     = { periodSec = 22, effect = xi.effect.SILENCE, power = 1, dur = 7, msg = 'Kirin\'s celestial scream silences the battlefield!' },
-            drain  = { periodSec = 8, healPct = 2 },
+            drain  = { periodSec = 8, healPct = 0.25 },
             enrage = { sec = 185, att = 5000, haste = 140, msg = 'Kirin\'s mane ignites -- it ascends its true power!' },
             phases = {
                 { hp = 70, action = 'dispel', count = 4, msg = 'Kirin exhales holy wind -- your enhancements dissolve!' },
@@ -609,7 +612,7 @@ return
                 { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Absolute Virtue transcends flesh -- magic only!' },
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Absolute Virtue banishes magic -- steel only!' },
             } },
-            drain  = { periodSec = 7, healPct = 2 },
+            drain  = { periodSec = 7, healPct = 0.25 },
             enrage = { sec = 185, att = 5500, haste = 150, msg = 'Absolute Virtue abandons restraint -- it goes all out!' },
             phases = {
                 { hp = 50, action = 'fury', att = 3000, haste = 100, msg = 'Absolute Virtue surges -- power escalates!' },
@@ -620,7 +623,7 @@ return
             name   = 'Pandemonium Warden',
             aoe    = { periodSec = 11, dmgPct = 24, msg = 'Pandemonium Warden erupts -- chaos tears outward!' },
             cc     = { periodSec = 22, effect = xi.effect.TERROR, power = 1, dur = 5, msg = 'Pandemonium Warden unleashes pandemonium -- frozen in dread!' },
-            drain  = { periodSec = 7, healPct = 2 },
+            drain  = { periodSec = 7, healPct = 0.25 },
             enrage = { sec = 180, att = 6000, haste = 160, msg = 'Pandemonium Warden reaches its true form!' },
             phases = {
                 { hp = 70, action = 'dispel', count = 4, msg = 'Pandemonium Warden howls -- enhancements erased!' },
@@ -638,7 +641,7 @@ return
             } },
             aoe    = { periodSec = 10, dmgPct = 26, msg = 'Shinryu detonates -- dragonfire scours everything!' },
             cc     = { periodSec = 20, effect = xi.effect.SILENCE, power = 1, dur = 8, msg = 'Shinryu roars -- the battlefield falls silent!' },
-            drain  = { periodSec = 6, healPct = 2 },
+            drain  = { periodSec = 6, healPct = 0.25 },
             enrage = { sec = 165, att = 8000, haste = 200, msg = 'Shinryu crosses into legend -- unmatched fury!' },
             phases = {
                 { hp = 55, action = 'dispel', count = 5, msg = 'Shinryu exhales tempest-breath -- buffs annihilated!' },

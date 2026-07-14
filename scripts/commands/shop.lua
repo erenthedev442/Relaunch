@@ -55,6 +55,7 @@ local stock =
         { xi.item.HI_POTION,                 400 },
         { xi.item.FLASK_OF_HOLY_WATER,       100 },
         { xi.item.POTION,                    100 },
+        { xi.item.REMEDY,                    500 },
         { xi.item.FLASK_OF_SLEEPING_POTION,  200 },
         { xi.item.VILE_ELIXIR,             3000 },
         { xi.item.VILE_ELIXIR_P1,          5000 },

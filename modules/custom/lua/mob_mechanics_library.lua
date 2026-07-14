@@ -32,6 +32,7 @@
 --     aoe    = { periodSec=12, dmgPct=22, msg='unleashes a shockwave!' }, -- % of victim max HP
 --     cc     = { periodSec=24, effect=xi.effect.TERROR, power=1, dur=5, msg='lets out a paralysing roar!' },
 --     drain  = { periodSec=10, healPct=3 },                              -- self-heal % max HP (anti-turtle)
+--     drain  = { periodSec=15, heal=10000 },                             -- fixed self-heal; takes precedence
 --     phases = { { hp=75, action='adds',   count=3, addGroupId=..., addZoneId=210, addLevel=150, regen=120, msg='...' },
 --                { hp=50, action='fury',   att=3000, haste=120, msg='...' },
 --                { hp=25, action='nuke',   dmgPct=40, msg='...' },
@@ -43,6 +44,16 @@ local M = {}
 
 -- [mobId] = per-fight state table
 local mechState = {}
+
+-- Resolve a drain pulse without touching entity state. Fixed healing is useful
+-- for encounters whose HP pools change independently of their intended regen.
+function M.calculateDrainHeal(maxHp, drain)
+    if drain.heal ~= nil then
+        return math.floor(drain.heal)
+    end
+
+    return math.floor(maxHp * (drain.healPct or 2) / 100)
+end
 
 -----------------------------------
 -- Small geometry/broadcast helpers (mirrors RaidBoss).
@@ -746,7 +757,9 @@ function M.tick(mob, target)
     -- Self-heal / lifesteal (anti-turtle pressure).
     if cfg.drain and st.nextDrainAt and now >= st.nextDrainAt then
         st.nextDrainAt = now + (cfg.drain.periodSec or 10)
-        pcall(function() mob:addHP(math.floor(mob:getMaxHP() * (cfg.drain.healPct or 2) / 100)) end)
+        pcall(function()
+            mob:addHP(M.calculateDrainHeal(mob:getMaxHP(), cfg.drain))
+        end)
     end
 
     -- HP phases (catalog order; a big hit can fire several in one tick -- intended).
