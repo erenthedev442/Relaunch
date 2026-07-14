@@ -371,10 +371,17 @@ C.STRATA =
 -- Precomputed lookups.
 C.STRATUM_BY_KEY = {}
 C.ZONE_STRATUM   = {}
+C.UNIQUE_NMS     = {}  -- set: NM name -> true; length = unique roster size
 for _, s in ipairs(C.STRATA) do
     C.STRATUM_BY_KEY[s.key] = s
     for _, z in ipairs(s.zones) do C.ZONE_STRATUM[z] = s.key end
+    for _, nm in ipairs(s.roster or {}) do C.UNIQUE_NMS[nm.name] = true end
 end
+-- Cached count of the unique NM roster across all strata (deduped, since
+-- Gorehound and Erebus each appear in two strata). Read by the Weapon Forge
+-- Mythic Stage II preflight via xi.voidwatch.uniqueNmCount below.
+C.UNIQUE_NM_COUNT = 0
+for _ in pairs(C.UNIQUE_NMS) do C.UNIQUE_NM_COUNT = C.UNIQUE_NM_COUNT + 1 end
 
 
 -- REMOVED 2026-07-13 (owner: Voidwatch drops should match the docs page): the

@@ -41,6 +41,12 @@ require('scripts/zones/Reisenjima/Zone')  -- for the redirect signpost override
 local m = Module:new('geas_fete')
 local S = xi.msg.channel.SYSTEM_3
 
+-- Public namespace for cross-module reads. Populated below with the unique-NM
+-- roster size so the Weapon Forge's Empyrean Stage I preflight can compare
+-- CharVar 'GF_Unique_Kills' against xi.geasFete.uniqueNmCount without needing
+-- to require this whole file (avoids a circular-require risk).
+xi.geasFete = xi.geasFete or {}
+
 -- ===================================================================
 -- ITEMS
 -- ===================================================================
@@ -295,6 +301,15 @@ local NM_CATALOG = {
         { name='Erinys', gid=87, tier=4, hp=2800000, currency=4500, cooldown=1800, drops = { { id=21755, name='Hodadenon' }, { id=25761, name='Iktomi Dastanas' }, { id=22119, name='Wochowsen' }, { id=25731, name='Sayadio\'s Kaftan' } } },
     },
 }
+
+-- Unique NM count across all three zones -- read by the Weapon Forge Empyrean
+-- Stage I preflight. Computed once at module load; recount happens on Lua
+-- hot-reload (a new NM row goes live the moment this file is recached).
+do
+    local total = 0
+    for _, defs in pairs(NM_CATALOG) do total = total + #defs end
+    xi.geasFete.uniqueNmCount = total
+end
 
 -- ===================================================================
 -- ??? POP POINTS (stock npc_list 'qm' NPCs at retail positions)
@@ -673,8 +688,16 @@ local function spawnNM(player, zone, zoneId, def)
             -- Per-NM lifetime kill flag (2026-07-13). Read by the Weapon Forge
             -- Empyrean Stage I preflight ("All Geas Fete bosses killed at
             -- least once"); one flag per (zone, gid) pair covers Zi'Tah,
-            -- Ru'Aun, and Reisenjima with a single check.
-            killer:setCharVar(string.format('GF_Kill_%d_%d', zoneId, defCapture.gid), 1)
+            -- Ru'Aun, and Reisenjima with a single check. Bumps the companion
+            -- GF_Unique_Kills counter on the FIRST kill only so the gate can
+            -- compare against xi.geasFete.uniqueNmCount in O(1) instead of
+            -- iterating every (zone, gid) pair.
+            local key = string.format('GF_Kill_%d_%d', zoneId, defCapture.gid)
+            if (killer:getCharVar(key) or 0) == 0 then
+                killer:setCharVar(key, 1)
+                killer:setCharVar('GF_Unique_Kills',
+                    (killer:getCharVar('GF_Unique_Kills') or 0) + 1)
+            end
         end,
     })
 

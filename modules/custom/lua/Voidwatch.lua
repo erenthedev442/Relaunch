@@ -251,11 +251,18 @@ local function spawnVoidwalker(owner, tier, roster)
             if not resolved then sessions[ownerName] = nil; return end
             -- Per-NM lifetime kill flag (2026-07-13). Read by the Weapon
             -- Forge Mythic Stage II preflight ("All Voidwatch NMs killed").
-            -- Keyed on the session's NM name so a preflight iterates the
-            -- voidwatch_catalog strata roster and checks each flag.
+            -- Bumps the companion VW_Unique_Kills counter on the FIRST kill
+            -- of each NM name so the gate can compare against
+            -- xi.voidwatch.uniqueNmCount in O(1) instead of iterating
+            -- every stratum's roster.
             pcall(function()
                 if sess.nmName then
-                    resolved:setCharVar('VW_NM_' .. sess.nmName, 1)
+                    local key = 'VW_NM_' .. sess.nmName
+                    if (resolved:getCharVar(key) or 0) == 0 then
+                        resolved:setCharVar(key, 1)
+                        resolved:setCharVar('VW_Unique_Kills',
+                            (resolved:getCharVar('VW_Unique_Kills') or 0) + 1)
+                    end
                 end
             end)
             resolved:timer(10, function(p) onRiftCleared(p) end)   -- never re-entrant
@@ -676,5 +683,10 @@ xi.voidwatch.reveal     = function(p) revealWeaknesses(p) end
 xi.voidwatch.refiner    = function(p) openRefiner(p) end
 xi.voidwatch.grantCruor = function(p, n) ensureBorn(p); addCruor(p, math.max(0, n)) end  -- GM test
 xi.voidwatch.grantShards = function(p, n) ensureBorn(p); p:setCharVar(C.V.shards, getShards(p) + math.max(0, n)) end  -- GM test
+
+-- Cross-module read for the Weapon Forge Mythic Stage II preflight
+-- ("All Voidwatch NMs killed"). Comparison: getCharVar('VW_Unique_Kills')
+-- >= xi.voidwatch.uniqueNmCount.
+xi.voidwatch.uniqueNmCount = C.UNIQUE_NM_COUNT
 
 return m

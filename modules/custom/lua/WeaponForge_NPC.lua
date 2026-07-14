@@ -99,12 +99,122 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     end
 
     -- -------------------------------------------------------------------------
+    -- STAGE GATES (checked BEFORE any material is consumed)
+    -- -------------------------------------------------------------------------
+    -- Gates match docs/progression/weapon-forge/ verbatim. Each entry is
+    -- {label, check(player) -> bool}. checkGate() below prints the label when
+    -- a gate fails and returns false; the calling forge site short-circuits.
+    -- Owner spec 2026-07-13: enforces the 11 gates surfaced on the widget.
+    -- fromStage indexing:
+    --   0 = "Base -> Stage I"      (player currently holds nothing / base)
+    --   1 = "Stage I -> Stage II"  (player currently holds 119 I)
+    --   2 = "Stage II -> Stage III" (player currently holds 119 II)
+    local function _anyRebirthCap()
+        -- Returns a check(p) that scans job-scoped Rebirth counters for a
+        -- single-job total >= 50. The 22 lookup is a hardcoded ceiling
+        -- (retail job count) shared with prestige/rebirth catalogs.
+        return function(p)
+            for jobId = 1, 22 do
+                if (p:getCharVar('Rebirth_Count_' .. jobId) or 0) >= 50 then return true end
+            end
+            return false
+        end
+    end
+    local function _anyAscensionCap()
+        return function(p)
+            for jobId = 1, 22 do
+                if (p:getCharVar(('Prestige_Level_%d'):format(jobId)) or 0) >= 100 then return true end
+            end
+            return false
+        end
+    end
+    local function _allPrimeTrialsAndApexHunter()
+        return function(p)
+            for i = 1, 5 do
+                if (p:getCharVar('PW_Trial' .. i .. '_Done') or 0) ~= 1 then return false end
+            end
+            return (p:getCharVar('Title_Apex_Hunter') or 0) == 1
+        end
+    end
+    local function _anyForgeFinal()
+        return function(p)
+            return (p:getCharVar('WF_Relic_Final')    or 0) == 1
+                or (p:getCharVar('WF_Mythic_Final')   or 0) == 1
+                or (p:getCharVar('WF_Empyrean_Final') or 0) == 1
+                or (p:getCharVar('WF_Aeonic_Final')   or 0) == 1
+        end
+    end
+    local STAGE_GATES = {
+        empyrean = {
+            [0] = { label = 'All Geas Fete bosses killed at least once',
+                    check = function(p)
+                        local need = (xi.geasFete and xi.geasFete.uniqueNmCount) or math.huge
+                        return (p:getCharVar('GF_Unique_Kills') or 0) >= need
+                    end },
+            [1] = { label = 'Voidspire Floor 100 reached',
+                    check = function(p) return (p:getCharVar('Voidspire_Best_Floor') or 0) >= 100 end },
+            [2] = { label = 'Fellow Mastery achieved',
+                    check = function(p) return (p:getCharVar('Fellow_Mastered') or 0) == 1 end },
+        },
+        mythic = {
+            [0] = { label = 'Nyzul Isle Floor 100 cleared',
+                    check = function(p) return (p:getCharVar('Nyzul_F100_Cleared') or 0) == 1 end },
+            [1] = { label = 'All Voidwatch NMs killed',
+                    check = function(p)
+                        local need = (xi.voidwatch and xi.voidwatch.uniqueNmCount) or math.huge
+                        return (p:getCharVar('VW_Unique_Kills') or 0) >= need
+                    end },
+            [2] = { label = '1 successful win of The Gauntlet',
+                    check = function(p) return (p:getCharVar('Gauntlet_Clears') or 0) >= 1 end },
+        },
+        aeonic = {
+            [0] = { label = '50 rebirths on a single job (not combined)',
+                    check = _anyRebirthCap() },
+            [1] = { label = '100 Ascensions on a single job (not combined)',
+                    check = _anyAscensionCap() },
+            [2] = { label = 'All Dungeons cleared + 10 wins against Maat\'s Echo',
+                    check = function(p)
+                        local need = (xi.dungeonInstances and xi.dungeonInstances.uniqueDungeonCount) or math.huge
+                        return (p:getCharVar('Dungeon_Unique_Clears') or 0) >= need
+                           and (p:getCharVar('Maat_Kills') or 0) >= 10
+                    end },
+        },
+        prime = {
+            [0] = { label = 'Built a Relic, Mythic, Empyrean, or Aeonic final weapon',
+                    check = _anyForgeFinal() },
+            [1] = { label = 'All 5 Prime Armory Trials complete + Apex Hunter in the Hunter\'s Guild',
+                    check = _allPrimeTrialsAndApexHunter() },
+            -- Stage III has no NEW gate (existing HL_Tier + all-trials + gil
+            -- checks in doUpgrade cover it) -- STAGE_GATES[prime][2] omitted.
+        },
+        -- Relic and Ergon are unchanged from prior tuning: Relic keeps its
+        -- Divergence-city-wins gate enforced inline (see doForge below),
+        -- Ergon isn't part of this pass.
+    }
+
+    local function checkGate(player, category, fromStage)
+        local cat = STAGE_GATES[category]
+        if not cat then return true end
+        local gate = cat[fromStage]
+        if not gate then return true end
+        if gate.check(player) then return true end
+        player:printToPlayer(
+            string.format('[Weapon Forge] Gate not met: %s.', gate.label),
+            xi.msg.channel.SYSTEM_3)
+        return false
+    end
+
+    -- -------------------------------------------------------------------------
     -- Aeonic upgrade execution
     -- -------------------------------------------------------------------------
 
     local RIFTBORN_BOULDER_ID = 4061
 
     local function doAeonicUpgrade(player, chain, fromStage)
+        -- Owner spec 2026-07-13: new progression gates enforced BEFORE any
+        -- inventory / currency / mark inspection so a locked player never
+        -- sees "you have 24 of 25 marks" -- they see the actual blocker.
+        if not checkGate(player, 'aeonic', fromStage) then return false end
         local ae       = chain.aeonic
         local costs    = catalog.aeonicCosts
         local stepCost = fromStage == 0 and costs.toStage1
@@ -216,6 +326,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -- Check and execute the upgrade. Prints a failure reason on any shortfall;
     -- does NOT remove any items until all checks pass.
     local function doUpgrade(player, chain, fromStage)
+        -- Owner spec 2026-07-13 gate check. doUpgrade only ever gets
+        -- fromStage 1 or 2 (Prime base is issued by Prime Armory NPC, not
+        -- Weapon Forge). STAGE_GATES.prime[2] is nil so fromStage=2 short-
+        -- circuits with true and falls through to the existing HL_Tier +
+        -- all-trials + gil checks below.
+        if not checkGate(player, 'prime', fromStage) then return false end
         local fromItem = fromStage == 1 and chain.s1 or chain.s2
         local toItem   = fromStage == 1 and chain.s2 or chain.s3
         local cost     = fromStage == 1 and catalog.costs.toStage2 or catalog.costs.toStage3
@@ -579,6 +695,15 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer(string.format('[Weapon Forge] Your %s is already fully forged, kupo!', chain.name), S)
             return
         end
+        -- Owner spec 2026-07-13. NEW_CATS held-stage indexing:
+        --   k=0 -> issue base (no widget gate; the widget starts at "Base")
+        --   k=1 -> base -> 119 I  == widget "Base -> Stage I"      -> STAGE_GATES[0]
+        --   k=2 -> 119I -> 119II  == widget "Stage I -> Stage II"  -> STAGE_GATES[1]
+        --   k=3 -> 119II -> 119III == widget "Stage II -> Stage III" -> STAGE_GATES[2]
+        -- The (k-1) offset lines the code's held-stage counter up with the
+        -- widget's forge[i] index so the label the player sees matches the
+        -- string in the docs verbatim.
+        if k >= 1 and not checkGate(player, def.key, k - 1) then return end
         local fromId, toId, step
         if k == 0 then
             step, toId = def.base, chain.base          -- issue the base weapon

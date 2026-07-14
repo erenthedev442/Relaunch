@@ -372,10 +372,16 @@ runtime.create = function(dungeonKey)
                     catalog.completionDelay),
                 xi.msg.channel.SYSTEM_3)
             -- Per-dungeon lifetime clear flag (2026-07-13). Read by the Weapon
-            -- Forge Aeonic Stage III preflight ("All Dungeons cleared"); a
-            -- preflight iterates catalog.dungeons and asserts every key's
-            -- flag == 1.
-            player:setCharVar('Dungeon_Clear_' .. dungeonKey, 1)
+            -- Forge Aeonic Stage III preflight ("All Dungeons cleared"); the
+            -- companion Dungeon_Unique_Clears counter bumps on the FIRST
+            -- clear of each dungeonKey so the gate can compare against
+            -- xi.dungeonInstances.uniqueDungeonCount in O(1).
+            local key = 'Dungeon_Clear_' .. dungeonKey
+            if (player:getCharVar(key) or 0) == 0 then
+                player:setCharVar(key, 1)
+                player:setCharVar('Dungeon_Unique_Clears',
+                    (player:getCharVar('Dungeon_Unique_Clears') or 0) + 1)
+            end
         end)
     end
 

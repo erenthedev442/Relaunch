@@ -199,4 +199,14 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npc.zone), 
     utils.unused(npc)
 end)
 
+-- Cross-module read for the Weapon Forge Aeonic Stage III preflight
+-- ("All Dungeons cleared + 10 wins against Maat's Echo"). Comparison:
+-- getCharVar('Dungeon_Unique_Clears') >= xi.dungeonInstances.uniqueDungeonCount.
+xi.dungeonInstances = xi.dungeonInstances or {}
+do
+    local total = 0
+    for _ in pairs(catalog.dungeons) do total = total + 1 end
+    xi.dungeonInstances.uniqueDungeonCount = total
+end
+
 return m
