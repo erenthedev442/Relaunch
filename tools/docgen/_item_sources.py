@@ -105,7 +105,6 @@ _HL_SUFFIX = " (Hunting League)"
 # Augmentation Dungeon catalyst drops (Lua-scripted; NOT in mob_droplists)
 # ---------------------------------------------------------------------------
 
-_DUNGEON_TRASH_PCT = 30.0
 _LABEL_RE = re.compile(r'''label\s*=\s*(?:"([^"]*)"|'([^']*)')''')
 _ROSTER_CLOSE_RE = re.compile(r"\}\s*,\s*(.+)\s*,\s*\d+\s*\)")
 _DKEY_RE = re.compile(r"^    (\w+)\s*=\s*$")
@@ -119,6 +118,15 @@ def _dungeon_augment_drops(repo_root: Path) -> dict[int, list[dict]]:
     drop_p = resolve_source(repo_root, "modules/custom/lua/augment_dungeon_drops_data.lua")
     if not cat_p or not drop_p:
         return {}
+    # Pull the trash-drop rate LIVE from the runtime module. Used to be hardcoded
+    # 30.0 here and drifted for weeks after augment_dungeon_drops.lua:TRASH_RATE
+    # was retuned to 10 -- exactly the pattern the lua_const helper exists to end.
+    trash_pct = lua_const(
+        repo_root,
+        "modules/custom/lua/augment_dungeon_drops.lua",
+        "TRASH_RATE",
+        default=10, cast=float,
+    )
 
     meta: dict[str, dict] = {}
     cur_key: str | None = None
@@ -183,7 +191,7 @@ def _dungeon_augment_drops(repo_root: Path) -> dict[int, list[dict]]:
             out.setdefault(iid, []).append({
                 "mob": f"{mob} (Dungeon)",
                 "zone": zone,
-                "pct": _DUNGEON_TRASH_PCT,
+                "pct": trash_pct,
             })
         pool = data["boss"]
         if pool:
@@ -319,6 +327,18 @@ def _catalyst_mob_drops(repo_root: Path) -> dict[int, list[dict]]:
 # Voidwatch Riftworn Pyxis loot (quality-tiered: 60% common / 32% unc / 8% rare)
 # ---------------------------------------------------------------------------
 
+def _catalog_number(text: str, name: str, default: int) -> int:
+    """Parse `C.NAME = N` or `local NAME = N` from a catalog Lua text.
+
+    Prefer lua_const() when the assignment sits at module scope with a canonical
+    name; this helper handles the `C.` / `catalog.` prefix that catalog modules
+    use (which lua_const's parser skips by design).
+    """
+    m = re.search(rf"^\s*(?:local\s+|C\.|catalog\.)?{name}\s*=\s*(-?\d+)",
+                  text, re.MULTILINE)
+    return int(m.group(1)) if m else default
+
+
 def _voidwatch_drops(repo_root: Path) -> dict[int, list[dict]]:
     p = resolve_source(repo_root, "modules/custom/lua/voidwatch_catalog.lua")
     if not p:
@@ -328,7 +348,18 @@ def _voidwatch_drops(repo_root: Path) -> dict[int, list[dict]]:
     def nums(s: str) -> list[int]:
         return [int(x) for x in re.findall(r"\b(\d{3,})\b", s)]
 
-    TIER_PCT = {"common": 60.0, "uncommon": 32.0, "rare": 8.0}
+    # Compute the quality-tier percentages from the LIVE thresholds in
+    # voidwatch_catalog.lua rather than hardcoding 60/32/8 -- the numbers
+    # come directly from RARE_AT / UNCOMMON_AT which are the actual d100
+    # roll thresholds enforced at runtime. TIER_PCT used to be a hardcoded
+    # mirror and would silently misreport if either threshold were retuned.
+    rare_at = _catalog_number(text, "QUALITY_RARE_AT", 92)
+    unc_at  = _catalog_number(text, "QUALITY_UNCOMMON_AT", 60)
+    TIER_PCT = {
+        "common":   float(unc_at - 1),          # d100 < unc_at (baseline, no red bias)
+        "uncommon": float(rare_at - unc_at),    # unc_at <= d100 < rare_at
+        "rare":     float(101 - rare_at),       # d100 >= rare_at
+    }
     out: dict[int, list[dict]] = {}
 
     loot_start = text.find("C.LOOT")

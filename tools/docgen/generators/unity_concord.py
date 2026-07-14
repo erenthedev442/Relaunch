@@ -153,7 +153,23 @@ def _parse(text: str) -> dict:
 
 
 _TIER_NAMES = {1: "Tier 1", 2: "Tier 2", 3: "Tier 3"}
-_LV_RANGES  = {1: "lv 75–80", 2: "lv 99–119", 3: "lv 128–145"}
+# Level bands drift when the roster is retuned (the T3 spread moved 128->120 on
+# 2026-07-13). Rather than hardcoding another mirror, _load_lv_ranges() reads
+# the Lua's header comment (which the tier author keeps authoritative).
+_LV_HEADER_RE = re.compile(
+    r"^--\s*(\d+)\s*=\s*Lv\s*(\d+)\s*-\s*(\d+)", re.MULTILINE)
+
+
+def _load_lv_ranges(catalog_text: str) -> dict[int, str]:
+    """Parse `--   1 = Lv 75-80  ...` lines from unity_wanted_catalog.lua header."""
+    out = {}
+    for m in _LV_HEADER_RE.finditer(catalog_text):
+        tier, lo, hi = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        out[tier] = f"lv {lo}–{hi}"   # en-dash
+    return out
+
+
+_LV_RANGES: dict[int, str] = {}   # populated in generate() from the Lua header
 
 
 def _render_overview(c: dict) -> str:
@@ -244,6 +260,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     text = src.read_text(encoding="utf-8", errors="replace")
     c = _parse(text)
     junctions = _parse_junctions(repo_root)
+    global _LV_RANGES
+    _LV_RANGES = _load_lv_ranges(text)   # picks up header retunes automatically
 
     page = docs_dir / "endgame" / "unity-concord.md"
     page.parent.mkdir(parents=True, exist_ok=True)

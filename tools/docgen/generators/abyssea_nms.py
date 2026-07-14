@@ -15,6 +15,7 @@ from pathlib import Path
 
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
+from tools.docgen._lua_consts import lua_const
 
 # ---------------------------------------------------------------------------
 # Zone key → player-facing display name (in tier order)
@@ -35,9 +36,17 @@ _ZONE_DISPLAY: dict[str, str] = {
     "ABYSSEA_ULEGUERAND": "Uleguerand",
 }
 
-# Multipliers (mirrors the if-conditions in calcMultipliers())
-_PARTY_MULT = 2.0
-_TRUST_MULT = 1.5
+# Multipliers -- read LIVE from the runtime module rather than hardcoded here
+# (used to be `_PARTY_MULT = 2.0 / _TRUST_MULT = 1.5` mirrors and would drift
+# every time the Abyssea reward pass was tuned; the Lua now hoists them to
+# named constants for exactly this).
+def _mults(repo_root: Path) -> tuple[float, float]:
+    return (
+        lua_const(repo_root, "modules/custom/lua/AbysseaMarks.lua",
+                  "PARTY_MULT", default=2.0, cast=float),
+        lua_const(repo_root, "modules/custom/lua/AbysseaMarks.lua",
+                  "TRUST_MULT", default=1.5, cast=float),
+    )
 
 # ---------------------------------------------------------------------------
 # Parser
@@ -113,7 +122,8 @@ def _render_tiers(tiers: list[dict]) -> str:
     return '\n'.join(rows)
 
 
-def _render_rewards(tiers: list[dict]) -> str:
+def _render_rewards(tiers: list[dict], party_mult: float, trust_mult: float) -> str:
+    _PARTY_MULT, _TRUST_MULT = party_mult, trust_mult   # keep the local names below
     max_mult = _PARTY_MULT * _TRUST_MULT
 
     lines: list[str] = [
@@ -182,7 +192,9 @@ def _kills(cost: int, per_kill: int) -> str:
     return f"{n} kill" if n == 1 else f"{n} kills"
 
 
-def _render_infamy_reference(repo_root: Path, heroes_infamy: int) -> str | None:
+def _render_infamy_reference(repo_root: Path, heroes_infamy: int,
+                             party_mult: float, trust_mult: float) -> str | None:
+    _PARTY_MULT, _TRUST_MULT = party_mult, trust_mult
     # Import here (not at module load) to avoid any import-order coupling with
     # the dungeons generator, whose vendor-item parser we reuse verbatim.
     from tools.docgen.generators import dungeons
@@ -259,10 +271,11 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         return
 
     tiers = _group_tiers(zones)
+    party_mult, trust_mult = _mults(repo_root)
 
     for marker_id, content in [
         ("abyssea-tiers",   _render_tiers(tiers)),
-        ("abyssea-rewards", _render_rewards(tiers)),
+        ("abyssea-rewards", _render_rewards(tiers, party_mult, trust_mult)),
     ]:
         wrote  = write_between_markers(page, marker_id, content)
         status = "written" if wrote else f"MARKER NOT FOUND: {marker_id}"
@@ -272,7 +285,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # the live Infamy Vendor catalog (see _render_infamy_reference). Uses the
     # highest-cost tier's infamy as "Heroes" so it tracks a tier rename/retune.
     heroes_infamy = max((t["infamy"] for t in tiers), default=0)
-    ref = _render_infamy_reference(repo_root, heroes_infamy)
+    ref = _render_infamy_reference(repo_root, heroes_infamy, party_mult, trust_mult)
     if ref:
         wrote = write_between_markers(page, "abyssea-infamy-costs", ref)
         print(f"[abyssea_nms] abyssea-infamy-costs: {'written' if wrote else 'MARKER NOT FOUND'}")

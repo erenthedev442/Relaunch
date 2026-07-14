@@ -176,9 +176,14 @@ def _render_waves(c: dict) -> str:
 def _render_forge(c: dict) -> str:
     """The +3 -> +4 Divergence Forge: recipe (from the forge knobs) + [D] materials,
     with the Empyrean-capped-at-+3 note."""
-    pcard, pcard_b   = c.get("pcard_qty", 3), c.get("pcard_qty_body", 6)
-    rusted, rusted_b = c.get("rusted_qty", 12), c.get("rusted_qty_body", 24)
-    black, black_b   = c.get("black_qty", 6), c.get("black_qty_body", 12)
+    # Fallbacks reflect the CURRENT runtime (Dynamis_Plus4_Forge.lua as of
+    # 2026-07-13: RUSTED_QTY = 99 both slots after the trash-mat rebalance).
+    # The parser normally supplies these; the .get defaults only fire if the
+    # forge file is missing entirely, in which case the docs should still
+    # print a value consistent with the last-known live state.
+    pcard, pcard_b   = c.get("pcard_qty", 3),  c.get("pcard_qty_body", 6)
+    rusted, rusted_b = c.get("rusted_qty", 99), c.get("rusted_qty_body", 99)
+    black, black_b   = c.get("black_qty", 6),  c.get("black_qty_body", 12)
     pairs = c.get("pair_count", 0)
     jobs  = len(c.get("jobs", []))
 

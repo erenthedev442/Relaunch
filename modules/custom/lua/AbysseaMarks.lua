@@ -132,6 +132,12 @@ local function offerMarksPop(player, mobId, cfg)
     end)
 end
 
+-- Tuning knobs, hoisted so tools/docgen can read the LIVE values via
+-- lua_const() instead of mirroring them (the docgen previously hardcoded
+-- 2.0 / 1.5 in abyssea_nms.py — same drift pattern as elsewhere).
+local PARTY_MULT = 2.0    -- >=2 real PCs in party -> Gil/Infamy x this
+local TRUST_MULT = 1.5    -- 0 trusts in party    -> Gil/Infamy x this
+
 -- Returns (partyMult, trustMult).
 -- partyMult = 2.0 when 2+ real PCs are in party, else 1.0.
 -- trustMult = 1.5 when NO trusts anywhere in the party, else 1.0.
@@ -163,8 +169,8 @@ local function calcMultipliers(player)
                 pcCount = pcCount + 1
             end
         end
-        if pcCount >= 2    then partyMult = 2.0 end
-        if trustCount == 0 then trustMult = 1.5 end
+        if pcCount >= 2    then partyMult = PARTY_MULT end
+        if trustCount == 0 then trustMult = TRUST_MULT end
     end)
 
     -- If the API call failed, default to no bonus (safe fallback).

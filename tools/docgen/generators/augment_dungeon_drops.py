@@ -26,10 +26,13 @@ from tools.docgen._bgwiki import item_anchor
 # Runtime knobs (TRASH_RATE / BOSS_QTY) are PARSED from
 # modules/custom/lua/augment_dungeon_drops.lua in generate() -- never mirror
 # them here: a hardcoded copy silently drifted when the runtime was retuned
-# (the 2026-07-11 "treasure pool" doc lie). Fallbacks below only cover a
-# missing/unparseable runtime file.
+# (the 2026-07-11 "treasure pool" doc lie). Fallbacks match the CURRENT
+# runtime values so that if the file is missing the docs render whatever the
+# server was last known to enforce, not a museum value from months ago; the
+# absent-file case is rare (CI without the checkout) so the fallbacks are
+# just a courtesy.
 _KNOB_RE = re.compile(r"^local\s+(TRASH_RATE|BOSS_QTY)\s*=\s*(\d+)", re.M)
-_KNOB_DEFAULTS = {"TRASH_RATE": 30, "BOSS_QTY": 20}
+_KNOB_DEFAULTS = {"TRASH_RATE": 10, "BOSS_QTY": 20}
 
 
 def _parse_knobs(runtime_text: str) -> dict[str, int]:

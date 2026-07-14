@@ -28,7 +28,7 @@ Every junction is **self-service**: touch it at any time — no registration nee
 |---:|---|---:|---:|
 | **1** | lv 75–80 | 200 accolades | 400 accolades |
 | **2** | lv 99–119 | 600 accolades | 1,500 accolades |
-| **3** | lv 128–145 | 1,500 accolades | 4,000 accolades |
+| **3** | lv 120–145 | 1,500 accolades | 4,000 accolades |
 <!-- DOCGEN:END id="unity-overview" -->
 
 ---
@@ -96,7 +96,7 @@ The feature moves to the next NM on the roster every **Thursday at 00:00 UTC**. 
 | Thu'ban | Wajaom Woodlands | 115 | <a class="item-link" href="https://www.ffxiah.com/item/21748" data-img="https://www.bg-wiki.com/images/a/a4/Habilitator_description.png" target="_blank" rel="noopener">Habilitator</a>, <a class="item-link" href="https://www.ffxiah.com/item/25923" data-img="https://www.bg-wiki.com/images/4/45/Tatena._Sune._description.png" target="_blank" rel="noopener">Tatena. Sune.</a>, <a class="item-link" href="https://www.ffxiah.com/item/26021" data-img="https://www.bg-wiki.com/images/f/f7/Vim_Torque_description.png" target="_blank" rel="noopener">Vim Torque</a> |
 | Tumult Curator | Aydeewa Subterrane | 119 | <a class="item-link" href="https://www.ffxiah.com/item/20507" data-img="https://www.bg-wiki.com/images/5/56/Comeuppances_description.png" target="_blank" rel="noopener">Comeuppances</a>, <a class="item-link" href="https://www.ffxiah.com/item/25732" data-img="https://www.bg-wiki.com/images/c/c8/Tatena._Haramaki_description.png" target="_blank" rel="noopener">Tatena. Harama.</a>, <a class="item-link" href="https://www.ffxiah.com/item/22057" data-img="https://www.bg-wiki.com/images/5/5b/Contemplator_description.png" target="_blank" rel="noopener">Contemplator</a> |
 
-### Tier 3 — lv 128–145
+### Tier 3 — lv 120–145
 *Spawn cost: 1,500 · Kill reward: 4,000 accolades*
 
 | NM | Junction zone | Level | Notable Drops (5% each, base version) |
@@ -167,6 +167,6 @@ Pledge to one of the **11 Unity leaders** from the board. Your pledge is cosmeti
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 38949d92c648 -->
-_Last updated: 2026-07-12 23:42 PDT_
+<!-- content-hash: ab2035bd9250 -->
+_Last updated: 2026-07-13 18:51 PDT_
 <!-- DOCGEN:END id="last-updated" -->
