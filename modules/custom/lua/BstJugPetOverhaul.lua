@@ -38,32 +38,37 @@ local CONFIG =
     -- Flat endgame floors so even a fresh BST's pet is immediately viable. These
     -- are the LEVEL-99 values; applyEndgameScaling multiplies them by mainLvl/99
     -- so low-level pets aren't overtuned (see floorMult below).
-    -- (Relaunch economy pass: flatATT 11200->5000, flatHP 280k->100k->60k to
-    -- match the tighter post-wipe curve + keep gear/master-share relevant.
-    -- ACC/STR floors unchanged.)
-    flatATT = 5000,
+    -- Curve history:
+    --   pre-relaunch  flatATT 11200, flatHP 280k (pet was OP outside endgame NMs)
+    --   Jun-24 nerf   flatATT 5000,  flatHP 100k (matched post-wipe power curve)
+    --   Jul-07 tweak  flatHP 60k (owner: gear/master-share should carry more)
+    --   Jul-13 bump   flatATT 8100, flatHP 180k -- halfway back from the Jun-24
+    --                 nerf. Owner call: current pet felt undertuned; restore
+    --                 half the ATT/HP without going back to fully-OP.
+    flatATT = 8100,
     flatACC = 9000,
     flatSTR = 720,
-    flatHP  = 60000,
+    flatHP  = 180000,
 
     -- Gear-scaling: the pet inherits this share of the MASTER's stats, so it
     -- gets stronger as the BST gears/augments up (the "scales toward the cap" bit).
-    -- Doubled to >1.0, so the pet now inherits MORE than the master itself has.
     masterSTRShare = 1.20,  -- + masterSTRShare * master STR  (into STR and ATT)
-    masterATTShare = 0.80,  -- + masterATTShare * master's ATT mods  (relaunch: 1.60->0.80)
+    masterATTShare = 1.20,  -- + masterATTShare * master's ATT mods  (Jul-13: 0.80->1.20 halfway back)
     masterACCShare = 1.40,  -- + masterACCShare * master's ACC mods
     masterHPShare  = 2.00,  -- + masterHPShare  * master max HP
 
     attp = 50,   -- +50% attack (Mod.ATTP, percent)
 
-    -- Survivability. DMGPHYS/DMGMAGIC are /100 and the engine HARD-CAPS each at
-    -- -50% (-5000). Relaunch: -25% (-2500), half the old at-cap value.
-    pdt = -2500,
-    mdt = -2500,
+    -- Survivability. DMGPHYS/DMGMAGIC are /100 and the engine HARD-CAPS each
+    -- at -50% (-5000). Jul-13: -3750 (-37.5%), halfway back from the -25% nerf.
+    pdt = -3750,
+    mdt = -3750,
 
-    -- Melee throughput (percent). Relaunch: 20% DA / 5% TA (was 100/100).
-    doubleAttack = 20,
-    tripleAttack = 5,
+    -- Melee throughput (percent). Jul-13: 60 DA / 50 TA -- halfway back from the
+    -- 20/5 nerf. Uncapped multi-hit hurts against non-endgame content; the
+    -- master's own gear/augment DA/TA still stacks on top.
+    doubleAttack = 60,
+    tripleAttack = 50,
 
     -- Magical pet damage floor (for Fly/Funguar/Cactuar Ready moves like
     -- Cursed Sphere, Dark Spore, 1000 Needles which use magic formulas).
