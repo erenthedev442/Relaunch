@@ -129,6 +129,12 @@ FACT_ALLOWLIST: dict[tuple[str, str], str] = {
 # needs a reason; prefer parsing the runtime file over allowlisting.
 MIRROR_ALLOWLIST: dict[tuple[str, str], str] = {}
 
+# (generator filename, line-substring) pairs accepted as non-drifting. Only add
+# entries here when a shadow-literal hit is coincidental (the number matched a
+# Lua constant by luck, not by mirroring it). Prefer converting the site to
+# lua_const() over allowlisting.
+SHADOW_LITERAL_ALLOWLIST: dict[tuple[str, str], str] = {}
+
 # Custom Lua modules that are legitimately NOT referenced by any docs file --
 # plumbing, internal libraries, dev tools, etc. Every entry needs a reason so
 # a reviewer can decide later whether the module actually became player-facing
@@ -227,6 +233,156 @@ def _mirror_constants(repo_root: Path) -> list[tuple[str, str, str, str, str]]:
             if name in lua_locals and (py.name, name) not in MIRROR_ALLOWLIST:
                 lua_file, lua_val = lua_locals[name]
                 hits.append((py.name, name, val, lua_file, lua_val))
+    return hits
+
+
+# ---------------------------------------------------------------------------
+# Shadow-literal drift scanner.
+#
+# The original MIRROR-CONST check only fires when a Python module-level ALL_CAPS
+# assignment shares a NAME with a Lua `local`. That misses the common cases:
+#   * bare literal inside a dict:  "pct": 50.0
+#   * fallback default:            c.get("rusted_qty", 12)
+#   * renamed constant:            CATALYST_PCT = 50  (Lua local is DROP_RATE)
+#
+# Shadow-literals scans every generator source for numeric literals that match
+# ANY Lua constant's value, in a drift-prone context. Findings are WARN, not
+# fatal -- but they surface every docgen run so no new drift can hide.
+#
+# Signal-shaping: only "drift-prone contexts" fire. A literal is flagged when
+# it appears
+#   (a) on a line matching _DRIFT_CONTEXT_RE (pct/qty/cost/rate/count keys,
+#       or a percentage-string like `50%`), AND
+#   (b) it is >= 6 or has a decimal (skip {0..5} = too many false positives
+#       for iterator seeds / small collection sizes / signs), AND
+#   (c) it matches a value assigned via `local X = N` in some Lua module, AND
+#   (d) the same line does NOT already call `lua_const(` nor carry a
+#       `# @from-lua` marker nor a `# not-lua:` exemption.
+# ---------------------------------------------------------------------------
+# A line is drift-prone if a literal appears right after a known drift-prone
+# dict-key OR a known drift-prone ALL_CAPS variable assignment. We DON'T fire
+# on bare "N%" prose strings -- those match too many math conversions
+# (percent-of-100, ms-to-sec) and produce mostly noise.
+_DRIFT_LINE_RE = re.compile(
+    r'''(?xi)
+        # dict-key -> value:  "pct": N.N  or  'qty': N
+        ["'](?:pct|qty|cost|rate|count|weight|tier|chance|amount|drop_rate
+              |droprate|drop|percent|prob|probability|max_rolls|threshold)["']
+            \s*:\s*(-?\d+(?:\.\d+)?)
+        |
+        # ALL_CAPS mirror name assignment at any indent:
+        #   DROP_RATE = 10 / TRASH_RATE = 30 / MAX_ROLLS = 5
+        \b([A-Z][A-Z0-9_]*(?:PCT|RATE|QTY|COST|CHANCE|COUNT|WEIGHT|TIER
+            |ROLLS|SEC(?:ONDS)?|MINUTES?|HOURS?|LIMIT|MAX|MIN))\b
+            \s*=\s*(-?\d+(?:\.\d+)?)\b
+    '''
+)
+_LUA_CONST_CALL_RE = re.compile(r"lua_const\s*\(")
+_FROM_LUA_MARKER_RE = re.compile(r"#\s*@from-lua\b|#\s*not-lua\b")
+
+# Signs / iterator seeds / tiny counts / "guaranteed" sentinel. Any other
+# value with a drift-keyword-tagged Lua-side name must be inspected on each hit.
+# 100 IS a common drop-rate knob but it's also the universal "guaranteed" and
+# percent-scale value, so collisions are overwhelmingly incidental -- the
+# Lua-name filter below (`_DRIFT_KEYWORD_RE` on the constant name) restores
+# specificity for the values that stay in.
+_CONVERSION_LITERALS = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 100.0}
+
+# Only match Lua constants whose NAME hints at a tunable knob. Filters out
+# purely mechanical constants (JP_PER_LEVEL, MAAT_GROUP_ZID, byte budgets,
+# byte masks) that happen to share a value with an unrelated Python literal.
+_DRIFT_KEYWORD_RE = re.compile(
+    r"RATE|PCT|PERCENT|QTY|QUANTITY|COST|CHANCE|COUNT|WEIGHT|TIER"
+    r"|ROLLS|DROP|RESPAWN|AMOUNT|LIMIT|MAX|MIN|BONUS|TOLL|PRICE|FEE"
+    r"|CHARGE|POINTS|MARKS|REWARD|PAYOUT|DAMAGE|DMG|POWER|SECONDS?|MINUTES?",
+    re.IGNORECASE,
+)
+
+
+def _shadow_literals(repo_root: Path) -> list[tuple[str, int, str, float, list[str]]]:
+    """(generator, line#, snippet, literal, [lua_files_hosting_the_value])
+
+    Warns for every literal on a drift-prone line that also happens to be a
+    live Lua constant value. Skips lines that already call lua_const() or
+    carry a `# @from-lua` / `# not-lua` marker.
+    """
+    from tools.docgen._lua_consts import scan_lua_constants
+    lua = scan_lua_constants(repo_root)   # {lua_file: [(name, val), ...]}
+    if not lua:
+        return []
+    # Build value -> list of (lua_file, name). Only index constants whose NAME
+    # looks like a tuning knob (drift keyword). Skips JP_PER_LEVEL / group ids /
+    # byte masks so their coincidental values don't spam the report.
+    val_index: dict[float, list[tuple[str, str]]] = {}
+    for lua_file, hits in lua.items():
+        for name, val in hits:
+            if not _DRIFT_KEYWORD_RE.search(name):
+                continue
+            val_index.setdefault(val, []).append((lua_file, name))
+
+    gen_dir = Path(__file__).parent
+    # Cover both the per-generator dir and the shared helpers one level up
+    # (_item_sources.py, _paths.py, ...). Dedup via `seen` below so a file
+    # matched by both globs isn't scanned twice.
+    parent_dirs = [gen_dir, gen_dir.parent]
+    py_files: list[Path] = []
+    for d in parent_dirs:
+        py_files.extend(sorted(d.glob("*.py")))
+    seen: set[Path] = set()
+
+    # Files whose whole reason for existing is DESCRIBING the shadow-literal
+    # pattern. Their docstrings quote example literals; exempt them so the
+    # scanner doesn't recurse on its own explanation.
+    HELPER_EXEMPT = {"_lua_consts.py", "sync_audit.py"}
+
+    hits: list[tuple[str, int, str, float, list[str]]] = []
+    for py in py_files:
+        if py in seen or py.name == Path(__file__).name:
+            continue
+        if py.name in HELPER_EXEMPT:
+            continue
+        seen.add(py)
+        try:
+            src = py.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        for lineno, line in enumerate(src.splitlines(), 1):
+            # Skip pure-comment lines: a comment describing "the Lua line
+            # `RATE = 10` becomes ..." isn't drift, it's prose. Code that
+            # actually emits a Rate value into a doc is not a comment.
+            if line.lstrip().startswith("#"):
+                continue
+            if _LUA_CONST_CALL_RE.search(line) or _FROM_LUA_MARKER_RE.search(line):
+                continue
+            m = _DRIFT_LINE_RE.search(line)
+            if not m:
+                continue
+            # The literal is captured in group 1 (dict-key form) or group 3
+            # (ALL_CAPS mirror). group(2) is the mirror name in the second arm.
+            lit_str = m.group(1) or m.group(3)
+            if lit_str is None:
+                continue
+            try:
+                v = float(lit_str)
+            except ValueError:
+                continue
+            if v in _CONVERSION_LITERALS:
+                continue
+            sources = val_index.get(v)
+            if not sources:
+                continue
+            snippet = line.strip()
+            if (py.name, snippet) in SHADOW_LITERAL_ALLOWLIST:
+                continue
+            # Prefer Lua matches whose NAME hints at the same concept as the
+            # Python line (higher confidence). Fall back to raw value matches
+            # if no name match wins.
+            preferred = [(lf, nm) for lf, nm in sources
+                         if any(tok in line.lower()
+                                for tok in (nm.lower(),))]
+            top = preferred if preferred else sources
+            lua_refs = [f"{lf}:{nm}" for lf, nm in top[:3]]
+            hits.append((py.name, lineno, snippet[:120], v, lua_refs))
     return hits
 
 
@@ -409,6 +565,24 @@ def generate(repo_root: Path, docs_dir: Path) -> None:  # noqa: ARG001
             drift = "" if val == lua_val else f"  <-- DRIFTED (runtime is {lua_val})"
             print(f"  - {gen}: {name} = {val}  (runtime: {lua_file}){drift}")
 
+    # Shadow-literal scan: catches the bare-literal / dict-value / rename cases
+    # the name-mirror check above misses. Root cause of every "why does the doc
+    # say 50% when the runtime is 10%" report to date.
+    shadows = _shadow_literals(repo_root)
+    if shadows:
+        print(f"[sync_audit] SHADOW-LITERAL — {len(shadows)} generator literal(s) "
+              "match a live Lua constant on a drift-prone line. Switch to "
+              "lua_const() from tools/docgen/_lua_consts.py, or add a "
+              "'# not-lua: <reason>' comment on the same line, or allowlist "
+              "in SHADOW_LITERAL_ALLOWLIST with a reason:")
+        for gen, lineno, snippet, lit, lua_refs in shadows[:30]:
+            refs = ", ".join(lua_refs)
+            print(f"  - {gen}:{lineno}  literal {lit}  matches {refs}")
+            print(f"      {snippet}")
+        if len(shadows) > 30:
+            print(f"  ... and {len(shadows) - 30} more (rerun after the first "
+                  "batch is fixed).")
+
     uncovered = _uncovered_modules(repo_root, docs_dir)
     if uncovered:
         print(f"[sync_audit] UNCOVERED-MODULE — {len(uncovered)} custom Lua "
@@ -418,7 +592,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:  # noqa: ARG001
         for mod in uncovered:
             print(f"  - modules/custom/lua/{mod}")
 
-    if not unowned and not naked and not mirrors and not uncovered:
+    if not unowned and not naked and not mirrors and not shadows and not uncovered:
         print("[sync_audit] OK — every published page is generator-owned, no "
-              "naked facts in hand prose, no mirrored runtime constants, every "
-              "custom module has doc coverage.")
+              "naked facts in hand prose, no mirrored runtime constants, no "
+              "shadow-literal drift, every custom module has doc coverage.")

@@ -8,17 +8,14 @@ Every purchasable item on the Relaunch server in one searchable list — armor, 
 Each **Item** links to its BG-Wiki page for full stats. The **Source** links to the exact vendor section where you buy it, and **Cost** spells out the currency, since each vendor tier is paid in a different seal or medal.
 
 <!-- DOCGEN:BEGIN id="item-finder" -->
-524 items in stock — **173** Armor · **284** Accessories · **67** Infamy.
+442 items in stock — **167** Armor · **212** Accessories · **63** Infamy.
 
 _This list is **rebuilt from the live vendor catalogs on every deploy**, so it always reflects current stock (the "Last updated" date only moves when the stock itself changes)._
 
 | Item | Source | Cost | For |
 |---|---|---:|---|
-| [Abyssal Bead Necklace +1](https://www.ffxiah.com/item/25460) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | DRK |
-| [Abyssal Bead Necklace +2](https://www.ffxiah.com/item/25461) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Accord Hat +1](https://www.ffxiah.com/item/26697) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Head | 50 Demons Medal | SMN |
 | [Acerbic Sash +1](https://www.ffxiah.com/item/28435) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
-| [Acesos Choker +1](https://www.ffxiah.com/item/28357) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | WHM |
 | [Acipayam Belt](https://www.ffxiah.com/item/28426) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
 | [Adapas Slacks +1](https://www.ffxiah.com/item/28144) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Legs | 50 Demons Medal | WHM/BLM/RDM/BRD/SMN/GEO |
 | [Aenotherus Mantle +1](https://www.ffxiah.com/item/28591) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Back | 60 Demons Medal | WHM/BLM/RDM/PLD/DRK/SMN/BLU/SCH/GEO/RUN |
@@ -30,33 +27,23 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Alrunas Gloves +1](https://www.ffxiah.com/item/28005) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Hands | 50 Demons Medal | THF/RNG/COR |
 | [Amin Turban](https://www.ffxiah.com/item/24274) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 | [Analgesia Torque](https://www.ffxiah.com/item/28394) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
-| [Anchorets Mantle](https://www.ffxiah.com/item/28618) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | MNK |
 | [Andartia's Mantle](https://www.ffxiah.com/item/26258) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Andoaa Earring](https://www.ffxiah.com/item/28506) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | All |
 | [Ankou's Mantle](https://www.ffxiah.com/item/26253) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
-| [Aput Mantle +1](https://www.ffxiah.com/item/28607) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Ardor Pendant +1](https://www.ffxiah.com/item/28355) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Argochampsa Mantle](https://www.ffxiah.com/item/27595) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
-| [Argute Stole +2](https://www.ffxiah.com/item/25533) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | SCH |
-| [Artemiss Quiver](https://www.ffxiah.com/item/26344) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | RNG |
 | [Artful Belt](https://www.ffxiah.com/item/10829) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
-| [Artful Belt +1](https://www.ffxiah.com/item/10830) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
+| [Artful Belt +1](https://www.ffxiah.com/item/10830) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Waist | 32 Kindreds Medal | All |
 | [Artio's Mantle](https://www.ffxiah.com/item/26254) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Artsieq Boots](https://www.ffxiah.com/item/28296) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Artsieq Hat](https://www.ffxiah.com/item/27725) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Asperity Necklace](https://www.ffxiah.com/item/28402) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
-| [Assassins Gorget +2](https://www.ffxiah.com/item/25449) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | THF |
 | [Aswang Sash](https://www.ffxiah.com/item/10840) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO |
 | [Atzintli Necklace](https://www.ffxiah.com/item/28385) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Aurists Cape +1](https://www.ffxiah.com/item/27620) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Austerity Belt +1](https://www.ffxiah.com/item/28434) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WHM/BLM/RDM/PLD/DRK/SMN/BLU/SCH/GEO/RUN |
 | [Baetyl Pendant](https://www.ffxiah.com/item/26003) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
-| [Bagua Charm +2](https://www.ffxiah.com/item/25539) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | GEO |
-| [Balder Earring](https://www.ffxiah.com/item/26114) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | All |
 | [Balladeers Cape](https://www.ffxiah.com/item/10979) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
-| [Bane Cape](https://www.ffxiah.com/item/28620) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | BLM |
-| [Bards Charm +2](https://www.ffxiah.com/item/25473) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | BRD |
-| [Beastmaster Collar +2](https://www.ffxiah.com/item/25467) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | BST |
 | [Belenus's Cape](https://www.ffxiah.com/item/26256) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Belisamas Rope +1](https://www.ffxiah.com/item/28433) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO |
 | [Bishops Sash](https://www.ffxiah.com/item/10820) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
@@ -68,7 +55,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Bokwus Robe](https://www.ffxiah.com/item/27919) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Bokwus Slops](https://www.ffxiah.com/item/28200) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Bond Cape](https://www.ffxiah.com/item/11576) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
-| [Bookworms Cape](https://www.ffxiah.com/item/28636) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Back | 60 Demons Medal | SCH |
 | [Boor Bracelets](https://www.ffxiah.com/item/28027) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Bougonia Rope](https://www.ffxiah.com/item/10842) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WHM/BLM/BRD/SMN/PUP/SCH/GEO |
 | [Brigantia's Mantle](https://www.ffxiah.com/item/26259) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
@@ -76,12 +62,9 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Buremte Gloves](https://www.ffxiah.com/item/28050) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Hands | 25 Kindreds Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Buremte Hat](https://www.ffxiah.com/item/27767) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Calcitrant Stole](https://www.ffxiah.com/item/10937) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | MNK/RDM/THF/BST/RNG/NIN/DRG/COR/PUP/DNC/RUN |
-| [Callers Earring](https://www.ffxiah.com/item/11717) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Earring | 15 Beastmens Medal | SMN |
-| [Callers Pendant](https://www.ffxiah.com/item/11619) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | SMN |
 | [Camaraderie Shield](https://www.ffxiah.com/item/28659) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Shields | 12 Beastmens Medal | WAR/PLD/DRK |
 | [Campestres's Cape](https://www.ffxiah.com/item/26260) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Camulus's Mantle](https://www.ffxiah.com/item/26262) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
-| [Canny Cape](https://www.ffxiah.com/item/28622) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | THF |
 | [Carriers Sash](https://www.ffxiah.com/item/10832) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
 | [Casso Sash](https://www.ffxiah.com/item/10824) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
 | [Caudata Belt](https://www.ffxiah.com/item/10844) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN |
@@ -90,45 +73,32 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Chela Cape](https://www.ffxiah.com/item/10981) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
 | [Chersos Helm +1](https://www.ffxiah.com/item/26698) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Head | 50 Demons Medal | WAR/PLD |
 | [Chiners Belt](https://www.ffxiah.com/item/10825) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| [Chiners Belt +1](https://www.ffxiah.com/item/28438) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
+| [Chiners Belt +1](https://www.ffxiah.com/item/28438) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Waist | 32 Kindreds Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Chocaliztli Boots](https://www.ffxiah.com/item/28343) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Chocaliztli Mask](https://www.ffxiah.com/item/27780) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
-| [Chrono Quiver](https://www.ffxiah.com/item/26345) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | RNG |
-| [Chuparrosa Mantle](https://www.ffxiah.com/item/10994) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | DRK |
 | [Chuqaba Belt](https://www.ffxiah.com/item/28459) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| [Cichols Mantle](https://www.ffxiah.com/item/26246) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR |
 | [Cimmerian Sash](https://www.ffxiah.com/item/10823) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
 | [Cizin Mufflers](https://www.ffxiah.com/item/28051) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Hands | 25 Kindreds Medal | WAR/PLD/DRK/DRG |
-| [Clerics Torque +2](https://www.ffxiah.com/item/25431) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | WHM |
 | [Cloud Hairpin](https://www.ffxiah.com/item/28350) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
-| [Cloud Hairpin +1](https://www.ffxiah.com/item/28351) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
+| [Cloud Hairpin +1](https://www.ffxiah.com/item/28351) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | All |
 | [Coalition Shield](https://www.ffxiah.com/item/28666) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Shields | 12 Beastmens Medal | WAR/PLD/DRK |
-| [Coatl Gorget](https://www.ffxiah.com/item/10946) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | PLD/DRK |
-| [Coatl Gorget +1](https://www.ffxiah.com/item/28363) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | PLD/DRK |
+| [Coatl Gorget](https://www.ffxiah.com/item/10946) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | PLD/DRK |
+| [Coatl Gorget +1](https://www.ffxiah.com/item/28363) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | PLD/DRK |
 | [Coiste Bodhar](https://www.ffxiah.com/item/21431) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Combatants Torque](https://www.ffxiah.com/item/26015) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
-| [Commodore Charm +2](https://www.ffxiah.com/item/25515) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | COR |
 | [Conduit Shoes +1](https://www.ffxiah.com/item/28282) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Feet | 50 Demons Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
-| [Contrivers Cape](https://www.ffxiah.com/item/28642) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | PUP |
-| [Conveyance Cape](https://www.ffxiah.com/item/28631) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | SMN |
 | [Cornelias Belt](https://www.ffxiah.com/item/26365) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
-| [Cornflower Cape](https://www.ffxiah.com/item/28632) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | BLU |
 | [Corvax Sash](https://www.ffxiah.com/item/10814) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Counts Cuffs](https://www.ffxiah.com/item/27096) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | MNK/SAM/NIN/PUP |
-| [Creed Baudrier](https://www.ffxiah.com/item/11750) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | PLD |
 | [Cryptic Earring](https://www.ffxiah.com/item/28483) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | All |
 | [Cuamiz Collar](https://www.ffxiah.com/item/28386) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Defending Ring](https://www.ffxiah.com/item/13566) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Defiant Collar](https://www.ffxiah.com/item/27506) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Deviant Necklace](https://www.ffxiah.com/item/27507) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Dhanurveda Ring](https://www.ffxiah.com/item/10784) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Ring | 32 Kindreds Medal | All |
-| [Dispersal Mantle](https://www.ffxiah.com/item/28634) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | PUP |
 | [Drachenblut Cape](https://www.ffxiah.com/item/10993) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | All |
-| [Dragoons Collar +1](https://www.ffxiah.com/item/25496) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | DRG |
-| [Dragoons Collar +2](https://www.ffxiah.com/item/25497) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Dualism Collar](https://www.ffxiah.com/item/10939) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
-| [Dualism Collar +1](https://www.ffxiah.com/item/28362) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
-| [Duelists Torque +2](https://www.ffxiah.com/item/25443) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | RDM |
+| [Dualism Collar +1](https://www.ffxiah.com/item/28362) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | All |
 | [Durgai Leggings](https://www.ffxiah.com/item/28287) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | MNK/THF/BST/NIN/PUP/DNC/RUN |
 | [Eabani Earring](https://www.ffxiah.com/item/27540) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | All |
 | [Earthcry Mantle](https://www.ffxiah.com/item/28608) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
@@ -140,19 +110,13 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Enedron Glasses](https://www.ffxiah.com/item/27735) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | All |
 | [Engraved Belt](https://www.ffxiah.com/item/28414) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WAR/MNK/THF/BST/NIN/DNC/RUN |
 | [Engulfer Cape](https://www.ffxiah.com/item/10990) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| [Engulfer Cape +1](https://www.ffxiah.com/item/28599) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
+| [Engulfer Cape +1](https://www.ffxiah.com/item/28599) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Ensnaring Torque](https://www.ffxiah.com/item/28397) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
-| [Estoqueurs Collar](https://www.ffxiah.com/item/11594) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | RDM |
 | [Etiolation Earring](https://www.ffxiah.com/item/28478) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | All |
-| [Etoile Gorget +2](https://www.ffxiah.com/item/25527) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | DNC |
-| [Evader Earring](https://www.ffxiah.com/item/11060) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Earring | 15 Beastmens Medal | All |
-| [Evasionists Cape](https://www.ffxiah.com/item/28638) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | RUN |
-| [Evokers Ring](https://www.ffxiah.com/item/14625) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Ring | 60 Demons Medal | SMN |
 | [Famine Sash](https://www.ffxiah.com/item/28422) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Farr Torque](https://www.ffxiah.com/item/28398) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Felicitas Cape +1](https://www.ffxiah.com/item/28589) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
 | [Feline Mantle](https://www.ffxiah.com/item/11010) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| [Ferine Mantle](https://www.ffxiah.com/item/11555) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | BST |
 | [Fierabrass Mantle](https://www.ffxiah.com/item/11005) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR/PLD |
 | [Flax Sash](https://www.ffxiah.com/item/28431) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
 | [Flume Belt](https://www.ffxiah.com/item/10819) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
@@ -164,8 +128,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Fucho-No-Obi](https://www.ffxiah.com/item/28452) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Fugacity Beret +1](https://www.ffxiah.com/item/26695) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Head | 50 Demons Medal | MNK/WHM/RDM/THF/BST/BRD/RNG/SAM/NIN/BLU/COR/DNC/RUN |
 | [Fugacity Mantle +1](https://www.ffxiah.com/item/28593) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| [Futhark Torque](https://www.ffxiah.com/item/25543) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | RUN |
-| [Futhark Torque +2](https://www.ffxiah.com/item/25545) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | RUN |
 | [Gallian Helm +1](https://www.ffxiah.com/item/26700) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Head | 50 Demons Medal | WAR/PLD/DRK/BST/SAM/NIN |
 | [Ganeshas Mala](https://www.ffxiah.com/item/10928) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | DRK/SAM/DRG |
 | [Gaudryi Necklace](https://www.ffxiah.com/item/28366) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
@@ -180,11 +142,9 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Gerdr Belt +1](https://www.ffxiah.com/item/26361) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Gere Ring](https://www.ffxiah.com/item/28471) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Gevaudan Belt](https://www.ffxiah.com/item/28453) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WAR/PLD/DRK/BST/DRG |
-| [Ghostfyre Cape](https://www.ffxiah.com/item/28621) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | RDM |
 | [Gifted Earring](https://www.ffxiah.com/item/11700) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Earring | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO |
 | [Gigantes Boots +1](https://www.ffxiah.com/item/28283) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Feet | 50 Demons Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Glassblowers Belt](https://www.ffxiah.com/item/10816) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| [Goetia Mantle](https://www.ffxiah.com/item/16203) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | BLM |
 | [Goetic Torque](https://www.ffxiah.com/item/28393) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Gorney Brayettes](https://www.ffxiah.com/item/28188) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Gorney Brayettes +1](https://www.ffxiah.com/item/28152) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/DRG |
@@ -192,7 +152,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Gorney Morion](https://www.ffxiah.com/item/27761) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Gorney Moufles](https://www.ffxiah.com/item/28046) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Gorney Sollerets](https://www.ffxiah.com/item/28327) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
-| [Gunslingers Cape](https://www.ffxiah.com/item/28633) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | COR |
 | [Gwyddions Cape](https://www.ffxiah.com/item/11012) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
 | [Hagondes Coat](https://www.ffxiah.com/item/27916) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | BLM/RDM/SMN/BLU/SCH/GEO |
 | [Hagondes Cuffs](https://www.ffxiah.com/item/28055) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Hands | 25 Kindreds Medal | BLM/RDM/SMN/BLU/SCH/GEO |
@@ -218,7 +177,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Inquisitor Bead Necklace](https://www.ffxiah.com/item/28403) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | MNK/RDM/THF/BST/RNG/NIN/DRG/COR/PUP/DNC/RUN |
 | [Inquisitors Chain](https://www.ffxiah.com/item/10959) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Intarabus's Cape](https://www.ffxiah.com/item/26255) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
-| [Ioskeha Belt +1](https://www.ffxiah.com/item/26334) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Iqabi Necklace](https://www.ffxiah.com/item/28380) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Isa Belt](https://www.ffxiah.com/item/28451) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
 | [Ishtars Collar](https://www.ffxiah.com/item/10397) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | WAR/MNK/THF/BST/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC |
@@ -236,38 +194,32 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Kaabnax Trousers](https://www.ffxiah.com/item/28167) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Kaidate](https://www.ffxiah.com/item/28657) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Shields | 12 Beastmens Medal | WAR/THF/PLD/DRK/BST/SAM |
 | [Kaikias Cape](https://www.ffxiah.com/item/10976) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
-| [Karagoz Mantle +1](https://www.ffxiah.com/item/28588) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | PUP |
 | [Karieyh Brayettes](https://www.ffxiah.com/item/28205) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
-| [Karieyh Brayettes +1](https://www.ffxiah.com/item/28182) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
+| [Karieyh Brayettes +1](https://www.ffxiah.com/item/28182) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Karieyh Haubert](https://www.ffxiah.com/item/27925) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
-| [Karieyh Haubert +1](https://www.ffxiah.com/item/27895) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
+| [Karieyh Haubert +1](https://www.ffxiah.com/item/27895) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Karieyh Morion](https://www.ffxiah.com/item/27785) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
-| [Karieyh Morion +1](https://www.ffxiah.com/item/27752) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
+| [Karieyh Morion +1](https://www.ffxiah.com/item/27752) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Karieyh Moufles](https://www.ffxiah.com/item/28065) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
-| [Karieyh Moufles +1](https://www.ffxiah.com/item/28042) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
+| [Karieyh Moufles +1](https://www.ffxiah.com/item/28042) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Hands | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Karieyh Sollerets](https://www.ffxiah.com/item/28345) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
-| [Karieyh Sollerets +1](https://www.ffxiah.com/item/28320) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
+| [Karieyh Sollerets +1](https://www.ffxiah.com/item/28320) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Feet | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Kasiri Belt](https://www.ffxiah.com/item/28456) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | MNK/WHM/RDM/THF/BST/BRD/RNG/SAM/NIN/BLU/COR/DNC/RUN |
 | [Katipo Charm +1](https://www.ffxiah.com/item/28358) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | WAR/PLD/DRK/BST/SAM/NIN/DRG |
 | [Kayapa Cape](https://www.ffxiah.com/item/28613) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | All |
-| [Knights Bead Necklace +2](https://www.ffxiah.com/item/25455) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | PLD |
 | [Kuku Stone](https://www.ffxiah.com/item/28457) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | BST/DRG/SMN/PUP |
 | [Kumbira Cape](https://www.ffxiah.com/item/28603) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
 | [Kyrenes Earring](https://www.ffxiah.com/item/26078) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | All |
-| [Kyujutsugi](https://www.ffxiah.com/item/27888) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | RNG/SAM |
 | [Lacono Necklace +1](https://www.ffxiah.com/item/28360) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Laktisma Hose](https://www.ffxiah.com/item/28165) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | MNK/SAM/NIN |
 | [Lapidary Tunic](https://www.ffxiah.com/item/26970) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/DNC/RUN |
 | [Lasaia Pendant](https://www.ffxiah.com/item/10395) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO |
 | [Letalis Mantle](https://www.ffxiah.com/item/11007) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
-| [Lifestream Cape](https://www.ffxiah.com/item/28637) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | GEO |
-| [Ligeia Sash](https://www.ffxiah.com/item/26358) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | SMN |
 | [Lissome Necklace](https://www.ffxiah.com/item/26004) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Litany Clogs](https://www.ffxiah.com/item/28304) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WHM |
 | [Lugh's Cape](https://www.ffxiah.com/item/26265) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
-| [Lunette Ring](https://www.ffxiah.com/item/10766) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Ring | 60 Demons Medal | All |
+| [Lunette Ring](https://www.ffxiah.com/item/10766) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Ring | 32 Kindreds Medal | All |
 | [Lupine Cape](https://www.ffxiah.com/item/27608) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| [Lutian Cape](https://www.ffxiah.com/item/28627) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | RNG |
 | [Maiitsoh Haube](https://www.ffxiah.com/item/25600) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Head | 50 Demons Medal | WAR/PLD/DRK/BST/SAM/NIN/DRG |
 | [Maniacus Sash](https://www.ffxiah.com/item/10833) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WHM/BLM/BRD/SMN/PUP/SCH/GEO |
 | [Manibozho Beret](https://www.ffxiah.com/item/27777) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
@@ -275,19 +227,17 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Manibozho Brais](https://www.ffxiah.com/item/28199) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Manibozho Gloves](https://www.ffxiah.com/item/28058) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Hands | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Manibozho Jerkin](https://www.ffxiah.com/item/27918) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
-| [Maulers Mantle](https://www.ffxiah.com/item/28617) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR |
 | [Maxixi Bangles](https://www.bg-wiki.com/index.php?search=Maxixi+Bangles&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | DNC |
 | [Maxixi Casaque](https://www.bg-wiki.com/index.php?search=Maxixi+Casaque&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | DNC |
 | [Maxixi Tiara](https://www.bg-wiki.com/index.php?search=Maxixi+Tiara&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | DNC |
 | [Maxixi Tights](https://www.bg-wiki.com/index.php?search=Maxixi+Tights&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | DNC |
 | [Maxixi Toe Shoes](https://www.bg-wiki.com/index.php?search=Maxixi+Toe+Shoes&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | DNC |
 | [Meanagh Cape](https://www.ffxiah.com/item/10987) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | MNK/THF/BST/RNG/NIN/BLU/COR/PUP/DNC/RUN |
-| [Meanagh Cape +1](https://www.ffxiah.com/item/28597) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | MNK/THF/BST/RNG/NIN/BLU/COR/PUP/DNC/RUN |
+| [Meanagh Cape +1](https://www.ffxiah.com/item/28597) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | MNK/THF/BST/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Mecistopins Mantle](https://www.ffxiah.com/item/27596) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | All |
 | [Medala Cape](https://www.ffxiah.com/item/11008) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
 | [Medbs Gauntlets +1](https://www.ffxiah.com/item/28004) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Hands | 50 Demons Medal | WAR/PLD/DRK |
 | [Melioration Torque](https://www.ffxiah.com/item/28399) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
-| [Mending Cape](https://www.ffxiah.com/item/28619) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM |
 | [Menelauss Ring](https://www.ffxiah.com/item/26215) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Ring | 60 Demons Medal | All |
 | [Merciful Cape](https://www.ffxiah.com/item/15471) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Back | 60 Demons Medal | All |
 | [Mikinaak Breastplate](https://www.ffxiah.com/item/27917) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/DRG |
@@ -296,29 +246,23 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Mikinaak Greaves](https://www.ffxiah.com/item/28338) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Feet | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Mikinaak Helm](https://www.ffxiah.com/item/27776) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Mirador Trousers +1](https://www.ffxiah.com/item/28145) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Legs | 50 Demons Medal | RNG/COR |
-| [Mirage Stole +2](https://www.ffxiah.com/item/25509) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | BLU |
 | [Misuuchi Kappa](https://www.ffxiah.com/item/10978) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | MNK/SAM/NIN |
 | [Mollusca Mantle](https://www.ffxiah.com/item/10980) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| [Monks Nodowa +2](https://www.ffxiah.com/item/25425) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | MNK |
 | [Moonbeam Cape](https://www.ffxiah.com/item/26268) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Back | 60 Demons Medal | All |
 | [Moonbeam Ring](https://www.ffxiah.com/item/26189) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Ring | 60 Demons Medal | WAR/THF/PLD/DRK/BST/BRD/DRG/DNC/RUN |
 | [Moonbow Belt](https://www.ffxiah.com/item/26340) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | MNK/PUP |
 | [Moonbow Belt +1](https://www.ffxiah.com/item/26341) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
-| [Moonbow Whistle +1](https://www.ffxiah.com/item/26033) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | BRD |
 | [Moondoe Mantle](https://www.ffxiah.com/item/10985) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| [Moondoe Mantle +1](https://www.ffxiah.com/item/28595) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
+| [Moondoe Mantle +1](https://www.ffxiah.com/item/28595) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Moonlight Cape](https://www.ffxiah.com/item/26269) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
-| [Moonlight Necklace](https://www.ffxiah.com/item/26037) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | WAR/MNK/PLD/NIN/RUN |
 | [Moonlight Ring](https://www.ffxiah.com/item/26190) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Mubvumbamiri Mantle](https://www.ffxiah.com/item/28604) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Murky Mantle](https://www.ffxiah.com/item/26276) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | All |
 | [Nahtirah Hat](https://www.ffxiah.com/item/27775) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Nantosuelta's Cape](https://www.ffxiah.com/item/26266) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Nefarious Collar](https://www.ffxiah.com/item/10958) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
-| [Nefarious Collar +1](https://www.ffxiah.com/item/28365) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
+| [Nefarious Collar +1](https://www.ffxiah.com/item/28365) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | All |
 | [Nicanders Necklace](https://www.ffxiah.com/item/26086) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | All |
-| [Niht Mantle](https://www.ffxiah.com/item/28624) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Back | 60 Demons Medal | DRK |
-| [Ninja Nodowa +2](https://www.ffxiah.com/item/25491) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | NIN |
 | [Nomkahpa Mittens +1](https://www.ffxiah.com/item/28007) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Hands | 50 Demons Medal | MNK/THF/BST/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Nourishing Earring](https://www.ffxiah.com/item/28484) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Earring | 32 Kindreds Medal | WHM/PLD |
 | [Null Belt](https://www.ffxiah.com/item/26367) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
@@ -329,23 +273,20 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Ogma's Cape](https://www.ffxiah.com/item/26267) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Olseni Belt](https://www.ffxiah.com/item/28442) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
 | [Olympus Sash](https://www.ffxiah.com/item/10821) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
-| [Onimusha-No-Kote](https://www.ffxiah.com/item/28009) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | MNK/SAM/NIN |
 | [Oretanias Cape](https://www.ffxiah.com/item/10986) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
-| [Oretanias Cape +1](https://www.ffxiah.com/item/28596) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
-| [Orison Cape](https://www.ffxiah.com/item/11554) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM |
+| [Oretanias Cape +1](https://www.ffxiah.com/item/28596) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
 | [Orpheuss Sash](https://www.ffxiah.com/item/26359) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Orunmilas Torque](https://www.ffxiah.com/item/10394) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Orvail Corona](https://www.ffxiah.com/item/27782) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
-| [Orvail Corona +1](https://www.ffxiah.com/item/27754) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
+| [Orvail Corona +1](https://www.ffxiah.com/item/27754) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Orvail Cuffs](https://www.ffxiah.com/item/28061) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
-| [Orvail Cuffs +1](https://www.ffxiah.com/item/28044) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
+| [Orvail Cuffs +1](https://www.ffxiah.com/item/28044) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Hands | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Orvail Pants](https://www.ffxiah.com/item/28203) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
-| [Orvail Pants +1](https://www.ffxiah.com/item/28184) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
+| [Orvail Pants +1](https://www.ffxiah.com/item/28184) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Orvail Robe](https://www.ffxiah.com/item/27922) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
-| [Orvail Robe +1](https://www.ffxiah.com/item/27897) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
+| [Orvail Robe +1](https://www.ffxiah.com/item/27897) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Orvail Souliers](https://www.ffxiah.com/item/28342) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
-| [Orvail Souliers +1](https://www.ffxiah.com/item/28322) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
-| [Ostro Greaves](https://www.ffxiah.com/item/28286) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WAR/PLD/DRK/BST/DRG |
+| [Orvail Souliers +1](https://www.ffxiah.com/item/28322) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Feet | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Othila Sash](https://www.ffxiah.com/item/10839) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WHM/BLM/RDM/SMN/SCH/GEO |
 | [Otomi Gloves](https://www.ffxiah.com/item/28028) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Hands | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Otomi Helm](https://www.ffxiah.com/item/27739) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/DRG |
@@ -358,9 +299,7 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Paewr Belt](https://www.ffxiah.com/item/10831) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
 | [Pahtli Cape](https://www.ffxiah.com/item/28640) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
 | [Panthalassa Sash](https://www.ffxiah.com/item/10841) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/DNC/RUN |
-| [Pastoralists Mantle](https://www.ffxiah.com/item/28625) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | BST |
 | [Patentia Sash](https://www.ffxiah.com/item/10838) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WAR/BLM/THF/DRK/BST/RNG/NIN/DRG/PUP/DNC/SCH |
-| [Pentalagus Charm](https://www.ffxiah.com/item/28383) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | THF |
 | [Phalaina Locket](https://www.ffxiah.com/item/10960) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Phasmida Belt](https://www.ffxiah.com/item/10815) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Philosopher's Stone](https://www.ffxiah.com/item/942) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
@@ -372,14 +311,12 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Prolix Ring](https://www.ffxiah.com/item/10752) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Ring | 15 Beastmens Medal | All |
 | [Prosilio Belt](https://www.ffxiah.com/item/10827) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
 | [Prosilio Belt +1](https://www.ffxiah.com/item/28439) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | All |
-| [Puppetmasters Collar +2](https://www.ffxiah.com/item/25521) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | PUP |
 | [Qaaxo Mask](https://www.ffxiah.com/item/27724) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Qaaxo Mitaines](https://www.ffxiah.com/item/28016) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Quanpur Necklace](https://www.ffxiah.com/item/28387) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Quantzs Earring](https://www.ffxiah.com/item/14794) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Earring | 15 Beastmens Medal | All |
 | [Quauhpilli Gloves](https://www.ffxiah.com/item/28062) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Quauhpilli Helm](https://www.ffxiah.com/item/27779) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
-| [Quelling Bolt Quiver](https://www.ffxiah.com/item/26346) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | RNG |
 | [Querkening Brais](https://www.ffxiah.com/item/25853) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Quiahuiz Helm](https://www.ffxiah.com/item/27736) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | WAR/PLD/DRK/BST/DRG |
 | [Quiahuiz Trousers](https://www.ffxiah.com/item/28166) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
@@ -394,7 +331,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Repulse Mantle](https://www.ffxiah.com/item/28639) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | All |
 | [Respite Cloak](https://www.ffxiah.com/item/27857) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Body | 50 Demons Medal | MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Revelation Brais](https://www.ffxiah.com/item/24131) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Legs | 50 Demons Medal | WAR/BRD/NIN |
-| [Rhapsodes Cape](https://www.ffxiah.com/item/28626) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | BRD |
 | [Rinda Shield](https://www.ffxiah.com/item/28649) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Shields | 25 Kindreds Medal | WAR/PLD/DRK |
 | [Rioters Collar](https://www.ffxiah.com/item/10396) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | WAR/PLD/DRK/BST/SAM/NIN |
 | [Romanus Cape](https://www.ffxiah.com/item/10977) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
@@ -404,17 +340,13 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Sacro Bulwark](https://www.ffxiah.com/item/26487) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Shields | 50 Demons Medal | WAR/RDM/PLD/BST |
 | [Sacro Cord](https://www.ffxiah.com/item/26351) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | WHM/BLM/RDM/BLU/SCH/GEO |
 | [Sacro Mantle](https://www.ffxiah.com/item/26270) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | MNK/THF/BST/NIN/PUP/DNC |
-| [Saevus Pendant](https://www.ffxiah.com/item/10947) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | WHM/BLM/SMN/PUP/SCH/GEO |
-| [Saevus Pendant +1](https://www.ffxiah.com/item/28364) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | WHM/BLM/SMN/PUP/SCH/GEO |
-| [Sahip Helm](https://www.ffxiah.com/item/27710) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/DRG |
-| [Samanisi Cape](https://www.ffxiah.com/item/28605) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | SMN |
-| [Samurais Nodowa +2](https://www.ffxiah.com/item/25485) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | SAM |
+| [Saevus Pendant](https://www.ffxiah.com/item/10947) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | WHM/BLM/SMN/PUP/SCH/GEO |
+| [Saevus Pendant +1](https://www.ffxiah.com/item/28364) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | WHM/BLM/SMN/PUP/SCH/GEO |
 | [Sanctity Necklace](https://www.ffxiah.com/item/26023) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Sasuke Tekko +1](https://www.ffxiah.com/item/28001) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Hands | 50 Demons Medal | MNK/SAM/NIN |
 | [Satlada Necklace](https://www.ffxiah.com/item/27516) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Savior Mantle](https://www.ffxiah.com/item/28609) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
 | [Scopuli Nails +1](https://www.ffxiah.com/item/28284) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Feet | 50 Demons Medal | MNK/THF/RNG/NIN/BLU/COR/DNC/RUN |
-| [Scouts Gorget +2](https://www.ffxiah.com/item/25479) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | RNG |
 | [Scufflers Cosciales](https://www.ffxiah.com/item/28155) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WAR/PLD/DRK/SAM/DRG |
 | [Segomo's Mantle](https://www.ffxiah.com/item/26247) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Sekhmet Corset](https://www.ffxiah.com/item/28461) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/GEO |
@@ -435,30 +367,24 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Smertrios's Mantle](https://www.ffxiah.com/item/26257) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Smilodon Mask +1](https://www.ffxiah.com/item/26701) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Head | 50 Demons Medal | WAR/MNK/THF/BST/NIN/DNC/RUN |
 | [Sokushitsu Sune-Ate](https://www.ffxiah.com/item/28280) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | MNK/SAM/NIN |
-| [Sorcerers Stole +2](https://www.ffxiah.com/item/25437) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | BLM |
 | [Sors Shield](https://www.ffxiah.com/item/28658) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Shields | 12 Beastmens Medal | WHM/BLM/RDM/PLD/DRK/SMN/BLU/SCH/GEO/RUN |
 | [Sroda Belt](https://www.ffxiah.com/item/26364) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | PLD/RUN |
 | [Sroda Earring](https://www.ffxiah.com/item/26118) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 3,000 Infamy | — |
 | [Sroda Necklace](https://www.ffxiah.com/item/26041) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | WHM/RDM |
 | [Steadfast Shield](https://www.ffxiah.com/item/28663) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Shields | 25 Kindreds Medal | WAR/PLD/DRK |
-| [Stikini Ring +1](https://www.ffxiah.com/item/26184) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Ring | 60 Demons Medal | All |
 | [Stoicheion Medal](https://www.ffxiah.com/item/10957) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Strendu Mantle](https://www.ffxiah.com/item/10971) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Back | 60 Demons Medal | WAR/PLD/DRK/BST/DRG |
 | [Sucellos's Cape](https://www.ffxiah.com/item/26250) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
-| [Summoners Collar +2](https://www.ffxiah.com/item/25503) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | SMN |
 | [Summoning Belt](https://www.ffxiah.com/item/15942) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WHM/BLM/RDM/PLD/DRK/SMN/BLU/SCH/GEO/RUN |
 | [Sveltesse Gouriz +1](https://www.ffxiah.com/item/28436) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | MNK/WHM/RDM/THF/BST/BRD/RNG/SAM/NIN/BLU/COR/DNC/RUN |
 | [Sverrir Torque](https://www.ffxiah.com/item/28396) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
-| [Sweordfaetels +1](https://www.ffxiah.com/item/28447) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| [Swith Cape](https://www.ffxiah.com/item/11000) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
 | [Tamas Ring](https://www.ffxiah.com/item/15545) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Ring | 32 Kindreds Medal | All |
 | [Tandem Necklace +1](https://www.ffxiah.com/item/10919) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Taranus's Cape](https://www.ffxiah.com/item/26249) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Taubran Cape](https://www.ffxiah.com/item/11013) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
 | [Tellen Belt](https://www.ffxiah.com/item/26362) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | RNG/COR |
 | [Tempered Cape](https://www.ffxiah.com/item/10989) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
-| [Tempered Cape +1](https://www.ffxiah.com/item/28598) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
-| [Tempus Fugit +1](https://www.ffxiah.com/item/26332) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
+| [Tempered Cape +1](https://www.ffxiah.com/item/28598) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Thall Mantle](https://www.ffxiah.com/item/11006) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Theias Hairpin +1](https://www.ffxiah.com/item/26699) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Head | 50 Demons Medal | All |
 | [Theurgists Slacks](https://www.ffxiah.com/item/28174) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WHM/BLM/SMN/PUP/SCH/GEO |
@@ -466,26 +392,22 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Thrud Earring](https://www.ffxiah.com/item/26107) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Thuellaic Ecu +1](https://www.ffxiah.com/item/27630) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Shields | 50 Demons Medal | WAR/WHM/RDM/THF/PLD/BST/SAM |
 | [Thurandaut Boots](https://www.ffxiah.com/item/28344) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
-| [Thurandaut Boots +1](https://www.ffxiah.com/item/28321) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
+| [Thurandaut Boots +1](https://www.ffxiah.com/item/28321) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Feet | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Thurandaut Chapeau](https://www.ffxiah.com/item/27784) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
-| [Thurandaut Chapeau +1](https://www.ffxiah.com/item/27753) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
+| [Thurandaut Chapeau +1](https://www.ffxiah.com/item/27753) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Thurandaut Gloves](https://www.ffxiah.com/item/28064) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
-| [Thurandaut Gloves +1](https://www.ffxiah.com/item/28043) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
+| [Thurandaut Gloves +1](https://www.ffxiah.com/item/28043) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Hands | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Thurandaut Tabard](https://www.ffxiah.com/item/27924) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
-| [Thurandaut Tabard +1](https://www.ffxiah.com/item/27896) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
+| [Thurandaut Tabard +1](https://www.ffxiah.com/item/27896) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Thurandaut Tights](https://www.ffxiah.com/item/28204) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
-| [Thurandaut Tights +1](https://www.ffxiah.com/item/28183) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
+| [Thurandaut Tights +1](https://www.ffxiah.com/item/28183) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Tlamiztli Collar](https://www.ffxiah.com/item/28388) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
-| [Toetapper Mantle](https://www.ffxiah.com/item/28635) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | DNC |
 | [Toro Cape](https://www.ffxiah.com/item/28615) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | All |
 | [Toutatis's Cape](https://www.ffxiah.com/item/26251) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Tuilha Cape](https://www.ffxiah.com/item/28611) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | All |
 | [Ukuxkaj Boots](https://www.ffxiah.com/item/28331) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Feet | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Ukuxkaj Cap](https://www.ffxiah.com/item/27766) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Umbani Cap](https://www.ffxiah.com/item/27720) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
-| [Updraft Mantle](https://www.ffxiah.com/item/28630) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Back | 60 Demons Medal | DRG |
-| [Vanir Boots](https://www.ffxiah.com/item/28310) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| [Vanir Cotehardie](https://www.ffxiah.com/item/27887) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Vassals Mantle](https://www.ffxiah.com/item/10992) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Vates Cape +1](https://www.ffxiah.com/item/28590) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
 | [Vellaunus Mantle +1](https://www.ffxiah.com/item/28594) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | MNK/RDM/THF/BST/RNG/NIN/DRG/COR/PUP/DNC/RUN |
@@ -514,20 +436,18 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Volte Tiara](https://www.ffxiah.com/item/23711) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Volte Tights](https://www.ffxiah.com/item/23723) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Wanion Belt](https://www.ffxiah.com/item/10834) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
-| [Warriors Bead Necklace +2](https://www.ffxiah.com/item/25419) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | WAR |
-| [Weard Mantle](https://www.ffxiah.com/item/28623) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | PLD |
 | [Weathering Shield +1](https://www.ffxiah.com/item/27629) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Shields | 50 Demons Medal | PLD |
 | [Weatherspoon Corona](https://www.ffxiah.com/item/27763) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Weatherspoon Cuffs](https://www.ffxiah.com/item/28048) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Weatherspoon Pants](https://www.ffxiah.com/item/28190) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
-| [Weatherspoon Pants +1](https://www.ffxiah.com/item/28154) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
+| [Weatherspoon Pants +1](https://www.ffxiah.com/item/28154) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Weatherspoon Robe](https://www.ffxiah.com/item/27909) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Weatherspoon Souliers](https://www.ffxiah.com/item/28329) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Weike Torque](https://www.ffxiah.com/item/10398) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Welkin Crown](https://www.ffxiah.com/item/25654) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Wiglen Gorget](https://www.ffxiah.com/item/10936) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Windbuffet Belt](https://www.ffxiah.com/item/10828) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
-| [Windbuffet Belt +1](https://www.ffxiah.com/item/28440) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | All |
+| [Windbuffet Belt +1](https://www.ffxiah.com/item/28440) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Waist | 32 Kindreds Medal | All |
 | [Witful Belt](https://www.ffxiah.com/item/10826) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO |
 | [Wukongs Hakama +1](https://www.ffxiah.com/item/28143) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Legs | 50 Demons Medal | WAR/MNK/RNG/SAM/NIN |
 | [Xaddi Gauntlets](https://www.ffxiah.com/item/28015) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
@@ -535,8 +455,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Xux Trousers](https://www.ffxiah.com/item/28201) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Yamabuki-No-Obi](https://www.ffxiah.com/item/28443) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Yoichis Quiver](https://www.ffxiah.com/item/26343) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | RNG/SAM |
-| [Yokaze Mantle](https://www.ffxiah.com/item/28629) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | NIN |
-| [Zaffre Cape](https://www.ffxiah.com/item/10995) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | BLU |
 | [Zorans Belt](https://www.ffxiah.com/item/28463) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WAR/PLD/DRK/BST/DRG |
 <!-- DOCGEN:END id="item-finder" -->
 
@@ -548,6 +466,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: db9077a04f41 -->
-_Last updated: 2026-07-13 11:11 PDT_
+<!-- content-hash: 0a15b25d40a2 -->
+_Last updated: 2026-07-13 17:38 PDT_
 <!-- DOCGEN:END id="last-updated" -->

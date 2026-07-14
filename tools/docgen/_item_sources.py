@@ -26,6 +26,7 @@ from pathlib import Path
 
 from tools.docgen._paths import resolve_source
 from tools.docgen._db import connect
+from tools.docgen._lua_consts import lua_const
 
 
 # ---------------------------------------------------------------------------
@@ -293,13 +294,23 @@ def _catalyst_mob_drops(repo_root: Path) -> dict[int, list[dict]]:
     p = resolve_source(repo_root, "modules/custom/lua/augment_catalyst_mobs.lua")
     if not p:
         return {}
+    # Pull the LIVE drop rate from the runtime module rather than mirroring
+    # a literal here -- this used to be a hardcoded 50 that drifted after the
+    # rate was lowered to 10, and the docs kept quoting 50 until a player
+    # complained. lua_const() reads the current value every docgen pass.
+    drop_pct = lua_const(
+        repo_root,
+        "modules/custom/lua/augment_catalyst_drops.lua",
+        "DROP_RATE",
+        default=10, cast=float,
+    )
     out: dict[int, list[dict]] = {}
     for m in _CAT_MOB_RE.finditer(
             p.read_text(encoding="utf-8", errors="replace")):
         out.setdefault(int(m.group(2)), []).append({
             "mob": m.group(1).replace("_", " "),
             "zone": "Open World",
-            "pct": 50.0,
+            "pct": drop_pct,
         })
     return out
 
