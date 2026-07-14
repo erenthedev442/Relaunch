@@ -88,6 +88,14 @@ void GP_CLI_COMMAND_ITEM_TRANSFER::process(MapSession* PSession, CCharEntity* PC
         return;
     }
 
+    // RELAUNCH FIX: a prior trade attempt that reserved some items but returned
+    // early (invalid/reserved/locked on a later slot) OR a client disconnect
+    // between OnTrade and the trade-confirm packet leaves stale reserves on
+    // the player's inventory items with no other path to clear them. Walk the
+    // container FIRST and unreserve any orphans; THEN wipe the container.
+    // (Clean() blanks m_PItem, so calling unreserveUnconfirmed afterward would
+    // walk a table of nullptrs and do nothing. Order matters.)
+    PChar->TradeContainer->unreserveUnconfirmed();
     PChar->TradeContainer->Clean();
 
     for (int32 slotId = 0; slotId < this->ItemNum; ++slotId)
