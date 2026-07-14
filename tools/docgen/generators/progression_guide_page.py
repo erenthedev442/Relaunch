@@ -84,10 +84,15 @@ _CATALOG_GROUPS: list[tuple[str, list[tuple[str, str]]]] = [
         ("endgame/tournament.md",         "!leaf"),
     ]),
     ("Activities", [
-        ("endgame/casino.md",               "!gmhome"),
-        ("endgame/chocobo-derby.md",        "!lib"),
+        # !gmhome retired 01ffbd875e -> !leaf. Provisioners' League NPC lives in
+        # Escha - Zi'Tah (not Purgonorgo), so its chip is the zone, not a warp.
+        # Chocobo Derby: chip was !lib but blurb text said !hub; normalized to
+        # !leaf (all three commands warp to Purgonorgo Isle; !leaf is the
+        # canonical shorthand this file already uses everywhere else).
+        ("endgame/casino.md",               "!leaf"),
+        ("endgame/chocobo-derby.md",        "!leaf"),
         ("endgame/treasure-hunts.md",       "overworld"),
-        ("endgame/provisioners-league.md",  "!lib"),
+        ("endgame/provisioners-league.md",  "Escha ZiTah"),
         ("endgame/seasonal-events.md",      "seasonal"),
         ("endgame/live-events.md",          "scheduled"),
         ("endgame/dungeons.md",             "instanced"),
@@ -95,8 +100,8 @@ _CATALOG_GROUPS: list[tuple[str, list[tuple[str, str]]]] = [
     # The former "Supporting Systems" table — now filterable cards alongside the rest.
     ("Supporting", [
         ("progression/login-rewards.md",       "automatic"),
-        ("progression/daily-board.md",         "!lib"),
-        ("progression/weekly-hunts.md",        "!lib"),
+        ("progression/daily-board.md",         "!leaf"),
+        ("progression/weekly-hunts.md",        "!leaf"),
         ("progression/hunters-guild.md",       "passive"),
         ("progression/game-master.md",         "!wavemaster"),
         ("progression/cross-job-abilities.md", "!leaf"),
