@@ -124,7 +124,6 @@ return {
     [ 2748] = { cat =  8, tier = 0, label = 'Repair potency' },
     [ 1196] = { cat =  8, tier = 0, label = 'Waltz potency' },
     [ 1889] = { cat =  9, tier = 0, label = 'Magic skill' },
-    [ 1616] = { cat =  9, tier = 0, label = 'Melee skill' },
     [ 1608] = { cat =  9, tier = 0, label = 'Parrying Skill' },
     [ 1663] = { cat =  9, tier = 0, label = 'Ranged skill' },
     [ 1607] = { cat =  9, tier = 0, label = 'Shield skill' },

@@ -175,7 +175,12 @@ return {
     [2748] = { augId = 341,  base = 1,   mult = 1,   disp = 1,    cat = 8, tier = 0, label = 'Repair potency' },
 
     -- ── cat 9: Skills ───────────────────────────────────────────────────────────
-    [1616] = { augId = 278,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Melee skill' },
+    -- Do NOT re-add [1616] 'Melee skill' (augId 278): the SQL mod is 101
+    -- AUTO_MELEE_SKILL, which the LSB enum flags as automaton-only ("apply only
+    -- to master, does not work properly on pet mods"). It was a misleading
+    -- non-PUP-only catalog row -- a WAR/MNK etc. trading Antlion Jaw got no
+    -- effective boost. Same trap on augId 279 (Ranged skill) and 280 (Magic
+    -- skill) below; keeping them for now because owner only removed the melee row.
     [1663] = { augId = 279,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Ranged skill' },
     [1889] = { augId = 280,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Magic skill' },
     [1607] = { augId = 286,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Shield skill' },

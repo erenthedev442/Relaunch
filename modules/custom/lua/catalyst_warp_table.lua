@@ -104,7 +104,7 @@ return {
     [1608] = { item='Remnant Of A Fleeting Memory', label='Parrying Skill', cat=9, tier=0, zone=157, zoneName='Middle Delkfutts Tower', x=24.365, y=-63.707, z=98.173, mob='Evil Spirit', lvl=34, rate=100 },
     [1609] = { item='Remnant Of A Profane Memory', label='Drain/Aspir Potency', cat=8, tier=0, zone=123, zoneName='Yuhtunga Jungle', x=-224.851, y=0.483, z=-392.204, mob='Brook Sahagin', lvl=40, rate=100 },
     [1615] = { item='Buffalo Horn', label='Kick Attacks Rate or Damage', cat=11, tier=0, zone=5, zoneName='Uleguerand Range', x=398.455, y=-4.728, z=-161.342, mob='Giant Buffalo', lvl=68, rate=100 },
-    [1616] = { item='Antlion Jaw', label='Melee skill', cat=9, tier=0, zone=105, zoneName='Batallia Downs', x=-349.451, y=-21.181, z=-50.632, mob='Goblin Smithy', lvl=28, rate=100 },
+    -- 1616 Antlion Jaw 'Melee skill' removed with the catalog row (automaton-only mod).
     [1617] = { item='Flytrap Leaf', label='Evasion', cat=4, tier=0, zone=30, zoneName='Riverne-Site A01', x=682.740, y=-31.763, z=-500.811, mob='Hawkertrap', lvl=38, rate=100 },
     [1619] = { item='Hippogryph Feather', label='Rapid Shot', cat=11, tier=0, zone=30, zoneName='Riverne-Site A01', x=122.381, y=-0.320, z=431.164, mob='Cloud Hippogryph', lvl=45, rate=100 },
     [1620] = { item='Taurus Horn', label='STR', cat=1, tier=0, zone=5, zoneName='Uleguerand Range', x=333.038, y=19.371, z=-294.737, mob='Brontotaur', lvl=68, rate=100 },

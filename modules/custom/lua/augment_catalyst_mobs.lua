@@ -129,7 +129,8 @@ return {
     ['Goblin_Trader'] = 828,  -- Resist Slow (T0, Goblin Trader L40)
     ['Goblin_Pathfinder'] = 938,  -- Pet STR DEX VIT (T1, Goblin_Pathfinder L28)
     ['Goblin_Shaman'] = 942,  -- Cap. Point +33% (T1, Goblin_Shaman L28)
-    ['Goblin_Smithy'] = 1616,  -- Melee skill (T1, Goblin_Smithy L28)
+    -- Goblin_Smithy: was 1616 'Melee skill' -- removed with the catalog row
+    -- (mod 101 AUTO_MELEE_SKILL is automaton-only, misleading label).
     ['Gnole'] = 2521,  -- Pet Dbl.Atk. Crit.hit rate (T0, Gnole L65)
     ['Goblin_Thug'] = 937,  -- Earth resist (T0, Goblin_Thug L1)
     ['Giant_Buffalo'] = 1615,  -- Kick Attacks Rate or Damage (T0, Giant Buffalo L68)
