@@ -1,6 +1,6 @@
 -----------------------------------
 -- AugmentBrowser — Windower 4 Addon
--- FJB Relaunch server augment system UI
+-- Legendary server augment system UI
 -- Uses the standard Windower texts library (no extra install needed).
 --
 -- Toggle:  //ab

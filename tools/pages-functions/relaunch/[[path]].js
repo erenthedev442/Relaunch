@@ -8,10 +8,10 @@ export async function onRequest(context) {
   const auth = context.request.headers.get('Authorization');
 
   if (!auth || !auth.startsWith('Basic ')) {
-    return new Response('FJB Relaunch Docs — GM access only.', {
+    return new Response('Legendary Docs — GM access only.', {
       status: 401,
       headers: {
-        'WWW-Authenticate': 'Basic realm="FJB Relaunch"',
+        'WWW-Authenticate': 'Basic realm="Legendary"',
         'Content-Type': 'text/plain',
       },
     });
@@ -26,7 +26,7 @@ export async function onRequest(context) {
     return new Response('Invalid credentials.', {
       status: 401,
       headers: {
-        'WWW-Authenticate': 'Basic realm="FJB Relaunch"',
+        'WWW-Authenticate': 'Basic realm="Legendary"',
         'Content-Type': 'text/plain',
       },
     });

@@ -1,6 +1,6 @@
 -----------------------------------
 -- AugmentTrade — Windower 4 Addon  (v2 — adds in-addon trade execution)
--- FJB Relaunch server augment system UI + one-command augment trading.
+-- Legendary server augment system UI + one-command augment trading.
 --
 -- Requires: scripts/commands/augment.lua deployed on the relaunch server.
 -- No extra Windower libraries needed beyond the standard texts library.

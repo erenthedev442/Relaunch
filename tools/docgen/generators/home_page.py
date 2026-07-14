@@ -323,7 +323,7 @@ hide:
 ---
 
 <div class="lgnd-hero" markdown="0">
-  <h1 class="lgnd-hero__sr">FJB Relaunch — FFXI Private Server</h1>
+  <h1 class="lgnd-hero__sr">Legendary — FFXI Private Server</h1>
   <img class="lgnd-hero__crest" src="assets/logo.png" alt="FJB crest">
   <p class="lgnd-hero__subtitle">Fresh Start Server</p>
   <hr class="lgnd-hero__rule">

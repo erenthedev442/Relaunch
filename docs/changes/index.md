@@ -1,6 +1,6 @@
 ﻿# Retail Differences
 
-**Server name:** FJB Relaunch
+**Server name:** Legendary
 **Tagline:** _Extreme QoL & Fast Progression_
 
 This is a heavily-customized FFXI server. Beyond the settings tweaks (rates, caps, durations), it adds custom NPCs, hunt systems, gear pipelines, and background overrides that don't exist on retail. This page is the index — every custom system is listed here. Detail pages link out for the big content.
@@ -158,7 +158,7 @@ A dedicated Reforge hub (`!reforged`) drives a parallel NM-farm-to-armor pipelin
 The summary below auto-updates from the live source.
 
 <!-- DOCGEN:BEGIN id="gm-home-npcs" -->
-Every custom service NPC now lives on a single island plaza — **Purgonorgo Isle** — reachable any time with the **`!hub`** command (the old `!leaf`, `!lib`, and `!gmhome` commands land there too).
+Every custom service NPC now lives on a single island plaza — **Purgonorgo Isle** — reachable any time with the **`!hub`** command (the `!leaf` and `!lib` aliases land there too).
 
 - **[The Hub — Purgonorgo Isle](../progression/hub.md)** — everything in one place: home point, Warpman, the Gil / Sparks / Crafting exchanges, Title Broker, Cosmetic Shop, Daily & Hunt boards, Unity, Casino, Mystery Mog, Chocobo Derby, Race Changer, Prime Armory, Relic Forge, Augment Moogle & Sage, the mastery trainers, Apex Trials, the Gauntlet, Colosseum, Endless Tower, the combat Test Dummy, and the HTBF / Infamy / Voidwatch vendors — spaced out so a crowd can shop at once.
 
@@ -225,6 +225,6 @@ For reference, these are at retail defaults on this server:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b47d78c711ae -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: 02bf5930d314 -->
+_Last updated: 2026-07-13 22:00 PDT_
 <!-- DOCGEN:END id="last-updated" -->
