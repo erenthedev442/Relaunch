@@ -569,6 +569,14 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         local fromId, toId, step
         if k == 0 then
             step, toId = def.base, chain.base          -- issue the base weapon
+        elseif chain.singleStep then
+            -- Retail 2-step mythics (Epeolatry, Idris): the DB only has base +
+            -- 119III, no +1/+2 stages. Charge the SUM of all three mythic tier
+            -- costs at once (catalog.mythicCostsSum) so the total investment
+            -- matches the other mythics and forge directly base -> s3.
+            step   = catalog.mythicCostsSum
+            fromId = chain.base
+            toId   = chain.s3
         else
             step   = def.costs[k]                       -- k=1 base->119I, 2 ->II, 3 ->III
             fromId = ({ chain.base, chain.s1, chain.s2 })[k]
@@ -618,12 +626,19 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         local k = heldStage(player, chain)
         player:printToPlayer(string.format('[%s] %s (%s) -- you hold: %s', def.label, chain.name, chain.jobs, STAGE_LBL[k]), S)
         if k == 4 then return end
-        local step        = (k == 0) and def.base or def.costs[k]
+        -- singleStep chains (Epeolatry, Idris): quote the combined cost + label
+        -- the target as "119 III" directly rather than the intermediate stages
+        -- that don't exist for these two weapons.
+        local step        = (k == 0) and def.base
+                            or (chain.singleStep and catalog.mythicCostsSum)
+                            or def.costs[k]
         local reqs, marks = stepReqs(chain, step)
         local parts       = { string.format('HL Rank %d', step.hlRank or 1) }
         for _, req in ipairs(reqs) do parts[#parts + 1] = string.format('%dx %s', req.qty, req.name) end
         if marks then parts[#parts + 1] = string.format('%d Reforge Marks', marks) end
-        local what = (k == 0) and 'Obtain base' or ('-> ' .. STAGE_LBL[k + 1])
+        local what = (k == 0) and 'Obtain base'
+                     or (chain.singleStep and '-> 119 III (combined mythic cost)')
+                     or ('-> ' .. STAGE_LBL[k + 1])
         player:printToPlayer('  ' .. what .. ':  ' .. table.concat(parts, '  |  '), S)
     end
 

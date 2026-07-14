@@ -346,6 +346,29 @@ catalog.mythicChains =
     { type = 'Staff', jobs = 'SCH', name = 'Tupsimati', base = 19838, s1 = 21137, s2 = 21138, s3 = 22061 },
     { type = 'Archery', jobs = 'RNG', name = 'Gastraphetes', base = 19829, s1 = 21247, s2 = 21266, s3 = 22139 },
     { type = 'Marksmanship', jobs = 'COR', name = 'Death Penalty', base = 19835, s1 = 21263, s2 = 21268, s3 = 22141 },
+    -- Owner call 2026-07-13: promote Epeolatry (GS/WAR-DRK) and Idris (Club/GEO)
+    -- into the Mythic category. Retail these are 2-step upgrades (base -> 119 III
+    -- direct, no +1/+2 stages), and the DB only carries 2 item IDs each. Marked
+    -- singleStep so WeaponForge_NPC skips the missing intermediates and charges
+    -- the SUM of all three mythic tier costs in one payment (see mythicCostsSum
+    -- below). s1/s2 duplicate the base id so the stage-detection loop still
+    -- reports "has base = ready to forge" without special-casing every helper.
+    { type = 'Great Sword', jobs = 'WAR/DRK', name = 'Epeolatry', base = 20753, s1 = 20753, s2 = 20753, s3 = 21685, singleStep = true },
+    { type = 'Club',        jobs = 'GEO',     name = 'Idris',     base = 21070, s1 = 21070, s2 = 21070, s3 = 21080, singleStep = true },
+}
+
+-- Combined single-step cost: SUM of all three mythicCosts entries. Used only by
+-- singleStep chains (Epeolatry, Idris) so their total investment matches the
+-- other mythics; only the ceremony changes (one big payment, not three).
+catalog.mythicCostsSum =
+{
+    hlRank = 5,          -- highest gate wins
+    standing = 4000,     -- 1000 + 3000
+    bronze = 10,
+    silver = 25,
+    gold = 5,
+    beitetsu = 10300,    -- 300 + 10000
+    marks = 20000,
 }
 
 catalog.relicChains =
