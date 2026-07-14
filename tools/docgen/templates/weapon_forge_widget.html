@@ -212,8 +212,8 @@ const CATS = {
     source:'The <strong>Prime</strong> path is the pinnacle of the server. Earn the base weapon by completing all <strong>five Prime Armory Trials</strong> at the Prime Armory NPC in {{npc:prime_armory}}, then forge it up through 119 / 119 II / 119 III. The final forge is the hardest step anywhere: it demands <strong>Legend rank</strong>, <strong>all five Trials</strong>, <strong>750,000,000 gil</strong>, 30,000 Reforge Marks, and the steepest medal cost on the board.',
     s3lbl:'Stage III · Prime',
     forge:[
-      {lbl:'Base → Stage I', mats:[['50×','Kindred\'s Seal'],['25×','High Kindred\'s Crest']], gate:'HL Rank II (Hunter)'},
-      {lbl:'Stage I → Stage II', mats:[['100×','High Kindred\'s Crest'],['50×','Demon\'s Medal'],['1,500','Reforge Marks']], gate:'HL Rank IV (Champion)'},
+      {lbl:'Base → Stage I', mats:[['50×','Kindred\'s Seal'],['25×','High Kindred\'s Crest']], gate:'Built a Relic, Mythic, Empyrean, or Aeonic final weapon'},
+      {lbl:'Stage I → Stage II', mats:[['100×','High Kindred\'s Crest'],['50×','Demon\'s Medal'],['1,500','Reforge Marks']], gate:'All 5 Prime Armory Trials complete · Apex Hunter in the Hunter\'s Guild'},
       {lbl:'Stage II → Stage III', mats:[['100×','Demon\'s Medal'],['5×','Ancient Beastcoin'],['5,000','Reforge Marks']], gate:'HL Rank V (Legend) · All five trials cleared'},
     ],
     weapons:[
@@ -270,9 +270,9 @@ const CATS = {
     source:'<strong>Empyrean weapons</strong> drop from <strong>Abyssea Marks NMs</strong> (high-tier ??? pops). Each weapon type has a corresponding NM that drops that weapon\'s specific material and the weapon itself. Drop rates are rare at Tier I; much higher at Tier III. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III. Bring the material to the <strong>Weapon Forge</strong> in {{npc:weapon_forger}}: it issues the base weapon and forges each stage (gated by HL Rank + Abyssea progress). <strong style="color:var(--cat)">Each empyrean weapon needs its OWN material — Twashtar wants Orthrus\'s Claw, Verethragna wants Glavoid Shell, and so on.</strong> The exact item is shown on each weapon\'s card below; bring THAT item, not a different empyrean drop.',
     s3lbl:'Stage III · Empyrean',
     forge:[
-      {lbl:'Base → Stage I', mats:[['2,000×','Cruor'],['50×','[see weapon]'],['10×','Ancient Beastcoin']], gate:'HL Rank III (Elite) · Abyssea Tier I NM killed'},
-      {lbl:'Stage I → Stage II', mats:[['10,000×','Cruor'],['300×','Riftborn Boulder'],['30×','Ancient Beastcoin']], gate:'HL Rank IV (Champion) · Abyssea Tier II NM killed'},
-      {lbl:'Stage II → Stage III', mats:[['5,000×','Riftborn Boulder'],['50×','Ancient Beastcoin'],['15,000','Reforge Marks']], gate:'All Abyssea Tier III bosses cleared'},
+      {lbl:'Base → Stage I', mats:[['2,000×','Cruor'],['50×','[see weapon]'],['10×','Ancient Beastcoin']], gate:'All Geas Fete bosses killed at least once'},
+      {lbl:'Stage I → Stage II', mats:[['10,000×','Cruor'],['300×','Riftborn Boulder'],['30×','Ancient Beastcoin']], gate:'Voidspire Floor 100 reached'},
+      {lbl:'Stage II → Stage III', mats:[['5,000×','Riftborn Boulder'],['50×','Ancient Beastcoin'],['15,000','Reforge Marks']], gate:'Fellow Mastery achieved'},
     ],
     weapons:[
       {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Verethragna',id:20512},
@@ -298,9 +298,9 @@ const CATS = {
     source:'<strong>Mythic weapons</strong> drop from <strong>Nyzul Isle floor bosses</strong> (Floor 60 and above). Each floor boss drops weapon-type-specific weapons. Floor 80 clears are required for 119 II; Floor 100 (all lamps lit) is required for 119 III. <strong>Imperial Standing</strong> is earned from all Assault missions Bring the materials to the <strong>Weapon Forge</strong> in {{npc:weapon_forger}}: it issues the base weapon and forges each stage (gated by HL Rank + Nyzul progress)..',
     s3lbl:'Stage III · Mythic',
     forge:[
-      {lbl:'Base → Stage I', mats:[['1,000×','Imperial Standing'],['10×','Imperial Bronze Piece']], gate:'HL Rank III (Elite) · Nyzul Isle Floor 60 cleared'},
-      {lbl:'Stage I → Stage II', mats:[['3,000×','Imperial Standing'],['25×','Imperial Silver Piece'],['300×','Beitetsu']], gate:'HL Rank IV (Champion) · Nyzul Isle Floor 80 cleared'},
-      {lbl:'Stage II → Stage III', mats:[['5×','Imperial Gold Piece'],['10,000×','Beitetsu'],['20,000','Reforge Marks']], gate:'HL Rank V (Legend) · Nyzul Floor 100 cleared (all lamps) · Nyzul boss killed'},
+      {lbl:'Base → Stage I', mats:[['1,000×','Imperial Standing'],['10×','Imperial Bronze Piece']], gate:'Nyzul Isle Floor 100 cleared'},
+      {lbl:'Stage I → Stage II', mats:[['3,000×','Imperial Standing'],['25×','Imperial Silver Piece'],['300×','Beitetsu']], gate:'All Voidwatch NMs killed'},
+      {lbl:'Stage II → Stage III', mats:[['5×','Imperial Gold Piece'],['10,000×','Beitetsu'],['20,000','Reforge Marks']], gate:'1 successful win of The Gauntlet'},
     ],
     weapons:[
       {type:'Hand-to-Hand',jobs:'MNK',name:'Glanzfaust',id:20510},
@@ -332,9 +332,9 @@ const CATS = {
     source:'The <strong>Malformed</strong> base weapon is purchased from <strong>Temprix</strong> in Reisenjima for <strong>50,000 Escha Beads</strong>. Escha Beads drop from Geas Fete NMs in Escha – Zi\'Tah and Escha – Ru\'Aun. <strong>Attestations</strong> are weapon-type-specific drops from the Geas Fete zone bosses (Azi Dahaka and Warder of Courage).',
     s3lbl:'Stage III · Aeonic',
     forge:[
-      {lbl:'Base → Stage I', mats:[['1×','Attestation (weapon-specific)'],['25×','Riftborn Boulder']], gate:'HL Rank IV (Champion) · 3 Geas Fete NMs killed'},
-      {lbl:'Stage I → Stage II', mats:[['3×','Attestation (weapon-specific)'],['100×','Riftborn Boulder'],['10,000×','Escha Silt']], gate:'HL Rank V (Legend) · All Geas Fete NMs cleared (Zi\'Tah + Ru\'Aun)'},
-      {lbl:'Stage II → Stage III', mats:[['10×','Attestation (weapon-specific)'],['300×','Riftborn Boulder'],['50,000×','Escha Silt'],['20,000','Reforge Marks']], gate:'HL Rank V · All Geas Fete NMs cleared (all 3 zones)'},
+      {lbl:'Base → Stage I', mats:[['1×','Attestation (weapon-specific)'],['25×','Riftborn Boulder']], gate:'50 rebirths on a single job (not combined)'},
+      {lbl:'Stage I → Stage II', mats:[['3×','Attestation (weapon-specific)'],['100×','Riftborn Boulder'],['10,000×','Escha Silt']], gate:'100 Ascensions on a single job (not combined)'},
+      {lbl:'Stage II → Stage III', mats:[['10×','Attestation (weapon-specific)'],['300×','Riftborn Boulder'],['50,000×','Escha Silt'],['20,000','Reforge Marks']], gate:'All Dungeons cleared · 10 wins against Maat\'s Echo'},
     ],
     weapons:[
       {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Godhands'},
