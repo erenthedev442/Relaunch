@@ -204,6 +204,19 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         return false
     end
 
+    -- Recipe-preview companion to checkGate: returns the gate label suffixed
+    -- with a met/not-met marker so players see the target BEFORE they try to
+    -- forge instead of eating a "gate not met" line as their only feedback.
+    -- Empty string when the (category, fromStage) has no new gate.
+    local function gateLine(player, category, fromStage)
+        local cat = STAGE_GATES[category]
+        if not cat then return '' end
+        local gate = cat[fromStage]
+        if not gate then return '' end
+        local mark = gate.check(player) and '✓' or '✗'
+        return string.format('  Gate: %s [%s]', gate.label, mark)
+    end
+
     -- -------------------------------------------------------------------------
     -- Aeonic upgrade execution
     -- -------------------------------------------------------------------------
@@ -535,9 +548,13 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                     ae.base.name, chain.s1.name, chain.s2.name, ae.s3.name, ae.s3.name),
                 xi.msg.channel.SYSTEM_3)
             player:printToPlayer('Cost: ' .. aeonicCostLine(chain, fromStage), xi.msg.channel.SYSTEM_3)
+            local gl = gateLine(player, 'aeonic', fromStage)
+            if gl ~= '' then player:printToPlayer(gl, xi.msg.channel.SYSTEM_3) end
         else
             player:printToPlayer(chainLine(chain, fromStage),   xi.msg.channel.SYSTEM_3)
             player:printToPlayer('Cost: ' .. costLine(fromStage), xi.msg.channel.SYSTEM_3)
+            local gl = gateLine(player, 'prime', fromStage)
+            if gl ~= '' then player:printToPlayer(gl, xi.msg.channel.SYSTEM_3) end
         end
     end
 
@@ -799,6 +816,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                      or (chain.singleStep and '-> 119 III (combined mythic cost)')
                      or ('-> ' .. STAGE_LBL[k + 1])
         player:printToPlayer('  ' .. what .. ':  ' .. table.concat(parts, '  |  '), S)
+        if k >= 1 then
+            local gl = gateLine(player, def.key, k - 1)
+            if gl ~= '' then player:printToPlayer(gl, S) end
+        end
     end
 
     local showNewCat  -- forward decl
