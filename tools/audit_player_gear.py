@@ -290,8 +290,37 @@ UNGATED_LABELS = {
     'Coalition',
 }
 
+def _has_engaged_endgame(state: dict) -> bool:
+    """A char who's engaged any custom endgame content at all. Used as a
+    fallback gate for system labels whose specific charvar isn't tracked
+    (Voidwatch/Nyzul/etc.) -- if the char is a total starter with no NM
+    kills and no HL progress, endgame content is genuinely gated for them."""
+    return (
+        _cv(state, 'Custom_NM_Kills')       > 0 or
+        _cv(state, 'HL_Points_Lifetime')    > 0 or
+        _cv(state, 'HNM_King_Kills')        > 0 or
+        _cv(state, 'HTBF_Cleared_T1')       > 0 or
+        _cv(state, 'HTBF_Cleared_T2')       > 0 or
+        _cv(state, 'HTBF_Cleared_T3')       > 0 or
+        _cv(state, 'Amb_HM_Earned')         > 0 or
+        _cv(state, 'DI_Kills')              > 0 or
+        _cv(state, 'Inv_Kills')             > 0 or
+        _cv(state, 'RF_AF_Marks_Lifetime')  > 0 or
+        _cv(state, 'RF_Relic_Marks_Lifetime') > 0 or
+        _cv(state, 'RF_Empy_Marks_Lifetime')  > 0 or
+        _cv(state, 'Gauntlet_Clears')       > 0 or
+        _cv(state, 'Apex_HighestTier')      > 0 or
+        _cv(state, 'Paragon_Points')        > 0 or
+        _cv(state, 'Dungeon_Clears_Total')  > 0 or
+        _cv(state, 'Infamy_Lifetime')       > 0
+    )
+
 def gate_ok(label: str, iid: int, state: dict) -> bool:
-    """True if this SYSTEM label's gate is met by the player."""
+    """True if this SYSTEM label's gate is met by the player.
+
+    Charvar names calibrated 2026-07-13 against real Relaunch usage found
+    via `grep -rEho "setCharVar\\('[A-Za-z_]+'" modules/custom scripts/globals`.
+    """
     if label in UNGATED_LABELS:
         return True
 
@@ -312,27 +341,33 @@ def gate_ok(label: str, iid: int, state: dict) -> bool:
         need = vg.required if vg else 3000
         return _cv(state, 'Infamy_Lifetime') >= need
 
-    # HTBF: catch-all -- any T1/T2/T3 clear counts as "unlocked HTBF".
+    # HTBF: any TN clear counts as "unlocked HTBF".
     if label == 'HTBF':
         return (_cv(state, 'HTBF_Cleared_T1') +
                 _cv(state, 'HTBF_Cleared_T2') +
                 _cv(state, 'HTBF_Cleared_T3')) > 0
 
-    # Voidwatch: any Voidwalker credit = open.
-    if label == 'Voidwatch':
-        return _cv(state, 'Voidwalker_Kills') > 0 or _cv(state, 'Voidwatch_Kills') > 0
-
     if label == 'Ambuscade':
-        return _cv(state, 'Amb_HM_Earned') > 0 or _cv(state, 'Amb_Cap_Month') > 0
+        return (_cv(state, 'Amb_HM_Earned') > 0 or
+                _cv(state, 'Amb_Cap_Month') > 0 or
+                _cv(state, 'Ambuscade_Difficulty') > 0)
 
-    if label.startswith('Prime') or label == 'Prime Armory':
-        return any(_cv(state, f'PW_Trial{i}_Done') > 0 for i in (1, 2, 3, 4, 5))
-
+    # Reforge system: Sky Gods / Unity NMs / Abyssea NMs -> RF_*_Marks. Lifetime
+    # counters never decrement. Any lifetime > 0 means the char has looted
+    # the underlying NMs at least once, which is the real gate.
     if label == 'Reforge' or label.startswith('Reforge'):
-        return _cv(state, 'Reforge_Unlocked') > 0 or _cv(state, 'Job_Mastery_Total') > 0
+        return (_cv(state, 'RF_AF_Marks_Lifetime')    > 0 or
+                _cv(state, 'RF_Relic_Marks_Lifetime') > 0 or
+                _cv(state, 'RF_Empy_Marks_Lifetime')  > 0 or
+                _cv(state, 'RF_AF_Marks')             > 0 or
+                _cv(state, 'RF_Relic_Marks')          > 0 or
+                _cv(state, 'RF_Empy_Marks')           > 0)
 
-    if label.startswith('Dynamis'):
-        return _cv(state, 'Dynamis_Clears') > 0 or _cv(state, 'Dynamis_D_Clears') > 0
+    # Prime: PW_WeaponClaimed exists for the reward step; PW_TrialN_Done
+    # tracks each of the 5 trials. Any trial credit means Prime is open.
+    if label.startswith('Prime') or label == 'Prime Armory':
+        return (_cv(state, 'PW_WeaponClaimed') > 0 or
+                any(_cv(state, f'PW_Trial{i}_Done') > 0 for i in (1, 2, 3, 4, 5)))
 
     if label == 'Custom Dungeon' or label.startswith('Dungeon'):
         return _cv(state, 'Dungeon_Clears_Total') > 0
@@ -340,15 +375,30 @@ def gate_ok(label: str, iid: int, state: dict) -> bool:
     if label == 'HNM' or label.endswith(' King') or label.startswith('HNM'):
         return _cv(state, 'HNM_King_Kills') > 0
 
-    if label == 'Weapon Forge' or label == 'Forge':
-        return _cv(state, 'Weapon_Forge_Progress') > 0
+    if label == 'Apex' or label.startswith('Apex'):
+        return _cv(state, 'Apex_HighestTier') > 0 or _cv(state, 'Paragon_Points') > 0
 
-    if label == 'Nyzul':
-        return _cv(state, 'Nyzul_Floor_Cleared') > 0
+    if label == 'Gauntlet' or label.startswith('Gauntlet'):
+        return _cv(state, 'Gauntlet_Clears') > 0
 
-    # Unknown label -- err on the side of "assume reachable" so we don't
-    # generate noise from a new label the mapping hasn't been updated for.
-    return True
+    if label == 'Maat' or label.startswith('Maat'):
+        return _cv(state, 'Maat_Kills') > 0
+
+    # Systems where we don't have a per-system charvar. Fall back to
+    # "engaged with any endgame content at all" -- catches the starter-char
+    # case (which is the real signal) without false-flagging every endgame
+    # char just because we haven't wired their exact source's charvar.
+    if label in ('Voidwatch', 'Nyzul', 'Weapon Forge', 'Forge', 'Aeonic',
+                 'Sortie', 'JSE +3', 'Sortie +3', 'Sortie +3 upgrade'):
+        return _has_engaged_endgame(state)
+
+    if label.startswith('Dynamis'):
+        return _has_engaged_endgame(state)
+
+    # Unknown label -- err on the side of "endgame char = reachable" to
+    # avoid noise from labels the mapping hasn't been updated for. Starter
+    # chars still get flagged if they hold gated content.
+    return _has_engaged_endgame(state)
 
 # ---------------------------------------------------------------------------
 # Player state fetch
