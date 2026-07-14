@@ -10,6 +10,24 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
 ---
 
 !!! note "Week of July 13–19, 2026"
+    **Tuesday, July 14**
+
+    - **Relaunch/Hunters Guild** — Guarantee 30-min respawn on every hunt NM
+    - **Relaunch/Hunters Guild** — Raise per-NM rep cooldown 30 min -> 24 h
+    - **Relaunch/Plus4 Forge** — Back Rusted qty off max-stack to dodge client desync
+    - **Relaunch/Commands** — !huntwarp -- 100k-gil warp to Hunters Guild NM spawns
+    - **Relaunch/Weapon Forge** — !forgegates command + Player Portal gate dashboard
+    - **Relaunch/Map** — Clear 5 map-server errors from the deploy load pass
+    - **Relaunch/Weapon Forge** — Show gate line in-menu (not just on failure)
+    - **Relaunch/Portal** — Let players claim every Legacy Migration Reward
+    - **Relaunch/Weapon Forge** — Enforce the 11 new stage gates at the forge sites
+    - **Relaunch/Portal** — Drop 3 unimplemented cosmetic legacy migration rewards
+    - **Relaunch/Weapon Forge** — Reorder categories + stand up 5 missing gate charvars
+    - **Relaunch/Weapon Forge** — Real Relic gate = N unique Divergence city wins
+    - **Relaunch/Forge** — Promote Epeolatry + Idris into the Mythic category
+    - **Relaunch/Augments** — Remove Ranged + Magic skill catalysts (same PUP-only trap)
+    - **Relaunch/Augments** — Remove 'Melee skill' catalyst -- was a PUP-only trap
+
     **Monday, July 13**
 
     - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-13 20:24
@@ -1181,10 +1199,82 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Capacity Points** — Wipe Bibiki Bay native pop, keep 6 scripted NMs
     - **Expcamp** — Extend the GM Home EXP-camp Moogle through Lv99
     - **Capacity Farm** — Populate the whole Bibiki Bay zone with CP mobs
+    - **Warpman** — Add Bibiki Bay (Capacity Farm) to the gil-warp NPC
+    - **Capacity Farm** — +2000 bonus CP per kill at the Bibiki Bay JP camp
+    - **Capacity Farm** — 3x mobs, -25% HP in the Bibiki Bay JP camp
+    - **Hl Vendor** — Add one-handed katanas (NIN) to the gear progression vendor
 
----
+??? note "Week of June 8–14, 2026"
+    **Sunday, June 14**
 
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ed6bb294c893 -->
-_Last updated: 2026-07-13 20:33 PDT_
-<!-- DOCGEN:END id="last-updated" -->
+    - **PUP** — Bump automaton damage multiplier 12x -> 20x
+    - **Shop** — Real infinite-ammo bullet pouches in !shop ammo
+    - **PUP** — ~12x automaton outgoing physical-damage multiplier vs custom NMs
+    - **Shop** — Add endgame arrows + Devastating Bullet to !shop ammo
+    - **Capacity Points** — Shared CP farm camp in Bibiki Bay (!capacity)
+    - **Shop** — Add Chrono/Living/Eradicating Bullets to !shop ammo
+    - **Hunt+Reforge** — Silent +20% on all Hunting League & Reforge NMs
+    - **Augments** — Wire up Fafnir's Scale + Kirin's Mane trophy drops
+    - **Augments** — King Arthro drops its affinity trophy (Emperor Arthro's Shell)
+    - **Ascension** — Bake the +20% into boss stat blocks (silent)
+    - **Ascension** — +20% difficulty on all Ascension trial NMs
+    - **Infamy** — Infamy Vendor uses the native shop window (icons + stat tooltips)
+    - **Shop** — Let the native shop charge a CharVar currency (setShopCurrencyVar)
+    - **Dungeons** — Defer abort teardown out of onZoneIn (re-entrant setPos crash)
+    - **Invasion** — !iwarp drops players on the spawn plaza (synced to catalog)
+    - **Invasion** — Point players to !iwarp in the warning + start broadcasts
+    - **Invasion** — Announcements said GM Home, battleground is Al Zahbi
+    - **Job Points** — Enable Capacity Points on single-target NMs (Reforge/HL/Prestige)
+    - **AH** — Raise buyback cap 50->200, run cron every 2h
+    - **Progression** — Auto-grant LIMIT_BREAKER + JOB_BREAKER so merit/JP menus aren't greyed
+    - **Infamy** — Finish Aeonic Anguta weapon + add to Infamy Vendor
+    - **Ascension** — Opt Jbae out of the shadow-companion familiar
+    - **Infamy** — Finish Aeonic Trishula weapon + add to Infamy Vendor
+    - **Reforge** — Keep !reforged spawn menu under 150-byte wire cap (Hadhayosh unspawnable)
+    - **DEV** — Add local test server workflow
+    - **Alzahbi** — Loot fountain - every kill drops a random DB item
+    - **Invasion** — Enable trusts + mounts in Al Zahbi (zone misc 5784->7838)
+    - **Zone Entities** — Clear entity enmity before freeing in releaseIdOnDisappear path
+    - **Reforge** — Move Reforge Exchange NPC from !hunt to !reforged
+    - **Crash** — Guard cure-enmity against dangling notoriety pointers (SIGQUIT)
+    - **Hunt Vendor** — Re-add Malignance Boots to Gold feet (pin in scorer)
+    - **Shop** — Remove the Gobbie Dial Keys !shop that shadowed the main shop
+    - **Iwarp** — Move warp point 70y north of spawn anchor (Gajaad coords)
+    - **Invasion** — Set warp + spawn anchor to confirmed coords (42.4,0,46.4)
+    - **Invasion** — Use real Al Zahbi ground coords (-35,-1,-31)
+    - **Iwarp** — Use setPos instead of teleport for cross-zone warp
+    - **Invasion** — Update error message from 'GM Home' to 'Al Zahbi (zone 48)'
+    - **Invasion** — Expand to 5 waves, add all unused mob groups
+    - **Invasion** — Fixed spawn anchor at Al Zahbi center (0, 0, 36)
+    - **Invasion** — Add !iwarp command - warps player to Al Zahbi invasion zone
+    - **Invasion** — Move battleground from GM Home to Al Zahbi (zone 48)
+    - **Invasion** — Full-DB item drops per kill + auto-reraise at full HP
+    - **Trustattack** — Make it a toggle that auto-attacks your target until turned off
+    - **Ah Bot** — Universal buy-back (all AH items, 200%-NPC floor) + move to box cron
+    - **Invasion** — Move !invasion to modules/custom/commands/ (hot-reload path)
+    - **Invasion** — Add !invasion GM command (start/end/status)
+    - **Gear Vendor** — Add Malignance Boots to Gold feet (completes the set)
+    - **Invasion** — NonExclusive claim so the whole raid can fight every invader
+    - **RNG** — Implement Hover Shot (RNG L95 JA, stacking RACC+RATT)
+    - **Trusts** — Meat 50M->25M, Corvus 15M->75M (Gemma stays 50M default)
+    - **Shop** — Add Trizek Ring (27557) to general shop at 100k gil
+    - **Server** — Hide the disabled RoE/Sparks NPCs in the 3 capitals (DISAPPEAR)
+    - **Server** — Disable RoE + Sparks NPCs in the 3 starting capitals
+    - **Dungeons** — Add 4 parallel-track dungeons (D5-D8) to double concurrent capacity
+    - **PUP** — Automaton survivability buff (HP/DEF/regen) for lv150 NMs
+    - **Ascension** — Swap companion to LynxFamiliar (small non-avatar jug pet)
+    - **Ascension** — Swap shadow companion to Carbuncle (small pet); clear opt-out
+    - **Ascension** — Per-char opt-out for the shadow companion (Jbae off by request)
+    - **AEP** — Resolve duplicate CLuaBaseEntity::hasTrait blocking the C++ build
+    - **LUA** — Guard GetSystemTime() nil returns in setLocalVar calls
+    - **Prime Armory** — Reduce PAGE_SIZE 7->4 to fix pagination
+    - **Trusts** — Guard nil return from getPartyLastMemberJoinedTime
+    - **Trusts** — Guard nil skill/target in Valaineral WEAPONSKILL_USE listener (crash 2026-06-14)
+    - **Shop** — Add Antacid to consumables; ship PUP Animators + free reforge-set claim
+    - **Voidspire** — Bump depth-milestone bonus marks (200/500/1500/3000/6000 -> 2500/10000/25000/40000/70000)
+    - **Ascension** — Shadow companion for ascended; revert rejected stars+title
+    - **AEP** — Alter Ego Points system (March 2026 retail)
+    - **PUP** — Boost automaton weapon damage and ACC/ATT vs custom high-level NMs
+    - **PUP** — Keep loadout menu under the ~8-option cap
+    - **PUP** — Add 'Unlock all attachments' to !pup menu + !pup attachments (runs addallattachments)
+    - **Prime Weapons** — Open !primevoucher to all players (permission 0)
