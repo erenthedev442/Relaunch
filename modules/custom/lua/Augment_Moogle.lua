@@ -755,6 +755,33 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 [143] = 'Double Attack caps at 100% per swing.',
                 [144] = 'Triple Attack caps at 100% per swing.',
                 [354] = 'Quad. Attack caps at 100% per swing.',
+                -- ENMITY (mod 27) - hate calc clamps each event to
+                -- [-50, +100] in src/map/enmity_container.cpp:150.
+                [ 39] = 'Enmity contribution clamped to [-50, +100] per hate event.',
+                -- FASTCAST (mod 170) - cast-time cap +50%, then
+                -- recast-side re-clamp caps combined at +80% (40%
+                -- recast reduction) in battleutils.cpp:5935/6085.
+                [140] = 'Fast Cast caps at +80% total (recast reduction capped at 40%).',
+                -- SUBTLE_BLOW (mod 289) - Lua clamp 50% in
+                -- scripts/globals/combat/tp.lua:204; SB + SB_II combined
+                -- floors at 75% (same file:207).
+                [195] = 'Subtle Blow caps at 50% total. (SB + SB II combined floors at 75%.)',
+                -- ZANSHIN (mod 306) - per-round clamp 100% in
+                -- src/map/entities/battleentity.cpp:3785 (after merits).
+                [198] = 'Zanshin caps at 100% per round.',
+                -- SNAPSHOT (mod 253) - delay-reduction cap 70% in
+                -- src/map/utils/battleutils.cpp:5610.
+                [211] = 'Snapshot caps at 70% total across gear.',
+                -- CURE_POTENCY (mod 374) - Lua clamp 50% in
+                -- scripts/globals/magic.lua:42 (mod header modifier.h:890
+                -- also documents "capped at 50").
+                [329] = 'Cure Potency caps at +50% total.',
+                -- TP_BONUS (mod 345) - hard ceiling 3000 TP applied at
+                -- weaponskill time in battleutils.cpp:6298.
+                [353] = 'TP Bonus caps at +3000 total at weaponskill time.',
+                -- COUNTER (mod 291) - 80% cap (with merits) in
+                -- src/map/attack.cpp:482.
+                [640] = 'Counter caps at 80% per swing (with merits).',
             }
 
             for _, itemId in ipairs(catalystOrder) do

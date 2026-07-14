@@ -329,22 +329,65 @@ def _load_gap_set(gap_json_path: Path | None) -> set[int]:
     return {int(entry["itemId"]) for entry in data.get("items", []) if "itemId" in entry}
 
 
-# In-engine caps for the "Cap" column, keyed by augId. Mirrors the Augment
-# Moogle's CAPPED_MOD_AUGS so the docs match what the engine actually enforces;
-# any augId not listed shows "no cap" (additive stats like Attack / HP / Acc).
-_CAP_BY_AUG = {
-    49: "+25%", 50: "+25%",                 # Haste (gear) cap +25%
-    54: "-50%", 1155: "-50%",               # Phys. dmg. taken (floor)
-    71: "-50%",                             # Dmg. taken (floor)
-    55: "-50%", 1156: "-50%",               # Magic dmg. taken (floor)
-    56: "-50%",                             # Breath dmg. taken (floor)
-    334: "+40%",                            # Magic Burst Bonus
-    328: "+100%",                           # Crit. hit damage
-    41: "100%/swing",                       # Crit hit rate
-    132: "100%/swing", 143: "100%/swing",   # Double Attack
-    144: "100%/swing",                      # Triple Attack
-    354: "100%/swing",                      # Quad. Attack
-}
+# In-engine caps for the "Cap" column. READ LIVE from the Augment Moogle's
+# CAPPED_MOD_AUGS table -- previously mirrored here as a Python dict and would
+# drift the moment someone added a new cap to the runtime (which is why the
+# docs shipped only 11 of the 19 caps until 2026-07-13). The parser regexes
+# the short cap value out of each entry's message (e.g. "at +25%" -> "+25%",
+# "100% per swing" -> "100%/swing"). Any augId not in the Lua shows "no cap".
+_CAP_MSG_RE = re.compile(
+    r"\[\s*(\d+)\s*\]\s*=\s*'((?:[^'\\]|\\.)*)'"
+)
+_CAP_VALUE_RES = [
+    # Order matters: try the tightest / earliest-in-sentence patterns first.
+    # SB messages read "caps at 50% ... floors at 75%" -- we want the FIRST
+    # cap, so `cap*` runs before `floor*`.
+    #
+    # `cap\w*` covers "cap", "caps", "capped", "capping". `\s*at\s*\+?` eats
+    # the "at " and any leading + on the value so we always render one.
+    (re.compile(r"(-?\d+%)\s*per\s*(swing|round)", re.I),
+        lambda m: f"{m.group(1)}/swing" if m.group(2).lower() == "swing"
+                  else f"{m.group(1)}/round"),
+    (re.compile(r"cap\w*\s*at\s*\+(\d+)\s*total", re.I),
+        lambda m: f"+{m.group(1)} TP"),   # TP_BONUS: "capped at +3000 total"
+    (re.compile(r"cap\w*\s*at\s*\+?([+-]?\d+%)", re.I),
+        lambda m: m.group(1) if m.group(1).startswith(('+','-'))
+                  else f"+{m.group(1)}"),
+    (re.compile(r"floor\w*\s*at\s*([+-]?\d+%)", re.I),
+        lambda m: m.group(1)),
+    (re.compile(r"clamped\s*to\s*\[(-?\d+),\s*\+?(-?\d+)\]", re.I),
+        lambda m: f"[{m.group(1)}, +{m.group(2)}]"),
+]
+
+
+_CAP_BY_AUG: dict[int, str] = {}   # populated by _load_capped_augs() at generate() time
+
+
+def _load_capped_augs(moogle_lua: Path) -> dict[int, str]:
+    """Parse CAPPED_MOD_AUGS from Augment_Moogle.lua -> {augId: 'short cap'}.
+
+    Runs at docgen time so any addition to the runtime table lands in the
+    docs on the next run -- no Python-side mirror.
+    """
+    if not moogle_lua.exists():
+        return {}
+    text = moogle_lua.read_text(encoding="utf-8", errors="replace")
+    # Isolate the table body so we don't sweep other tables with `[N]='X'` shapes.
+    m = re.search(r"CAPPED_MOD_AUGS\s*=\s*\{(.*?)\n\s{12}\}", text, re.DOTALL)
+    body = m.group(1) if m else text
+    out: dict[int, str] = {}
+    for m in _CAP_MSG_RE.finditer(body):
+        aug_id = int(m.group(1))
+        msg = m.group(2).replace("\\'", "'")
+        short = None
+        for rx, fmt in _CAP_VALUE_RES:
+            mm = rx.search(msg)
+            if mm:
+                short = fmt(mm)
+                break
+        # Fallback: show the whole message if the regex bank misses.
+        out[aug_id] = short or msg
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -646,6 +689,15 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # Gap list is optional — generator works without it (just no warning marks).
     gap_src = resolve_source(repo_root, "tools/augment_catalog_gaps.json", required=False)
     gap_set = _load_gap_set(gap_src)
+
+    # Load engine-cap map LIVE from Augment_Moogle.lua's CAPPED_MOD_AUGS table
+    # -- see _load_capped_augs() docstring. Setting the module-level dict lets
+    # every downstream row-render pick up the fresh caps automatically.
+    moogle_src = resolve_source(repo_root, "modules/custom/lua/Augment_Moogle.lua",
+                                required=False)
+    global _CAP_BY_AUG
+    _CAP_BY_AUG = _load_capped_augs(moogle_src) if moogle_src else {}
+    print(f"[augments] loaded {len(_CAP_BY_AUG)} engine cap(s) from Augment_Moogle.lua")
 
     text = cat_src.read_text(encoding="utf-8", errors="replace")
 
