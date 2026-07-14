@@ -249,10 +249,16 @@ catalog.huntTargets =
           zone = 'Gustav_Tunnel',           zoneId = 212, groupId =  6 },
         { tier = 2, baseRep =  750, name = 'Carmine_Dobsonfly',  label = 'Carmine Dobsonfly',
           zone = 'Riverne-Site_A01',        zoneId =  30, groupId = 12 },
-        { tier = 3, baseRep = 1000, name = 'Aspidochelone',      label = 'Aspidochelone',
-          zone = 'Valley_of_Sorrows',       zoneId = 128, groupId =  7 },
-        { tier = 4, baseRep = 1500, name = 'Behemoth',           label = 'Behemoth',
-          zone = 'Behemoths_Dominion',      zoneId = 127, groupId =  9 },
+        -- Aspidochelone (Valley_of_Sorrows) and Behemoth (Behemoths_Dominion)
+        -- were REMOVED from huntTargets 2026-07-13. hunters_guild_hunts.lua
+        -- installs one addOverride per target on `xi.zones.<Z>.mobs.<M>.onMobDeath`,
+        -- but those xi.zones tables are only populated when a mob first spawns
+        -- (C++ CacheLuaObjectFromFile is lazy) -- these two never got pre-cached
+        -- pre-boot, so applyOverride's walk failed and the hunt-rep hook silently
+        -- no-op'd. Log confirmed 8+ days of "Override not applied" at every deploy.
+        -- To re-enable hunt-rep for these: hook via xi.mob.onMobDeathEx (real
+        -- engine hook, fires per alliance member) or attach a DEATH listener from
+        -- their Zone.onInitialize -- both are supported patterns.
         { tier = 5, baseRep = 2500, name = 'Jormungand',         label = 'Jormungand',
           zone = 'Uleguerand_Range',        zoneId =   5, groupId = 40 },
     },

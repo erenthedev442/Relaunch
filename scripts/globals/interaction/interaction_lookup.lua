@@ -222,6 +222,13 @@ end
 
 -- Remove handlers for a container
 function InteractionLookup:removeContainer(container)
+    -- Defensive: FileWatcher hot-reloads of battlefield scripts (Empyreal_Paradox
+    -- dawn_ht1/2/3.lua etc.) hand this function whatever the file returned last,
+    -- and some `return require('modules/custom/lua/htbf').register(...)` paths
+    -- can hand back a bool (e.g. a failed accessCheck short-circuit), which then
+    -- errored at `container.sections` on every reload. No-op on non-container
+    -- inputs -- the actual container removal ran on the previous reload cycle.
+    if type(container) ~= 'table' or not container.sections then return end
     for _, section in ipairs(container.sections) do
         for zoneid, secondLevel in pairs(section) do
             if zoneid ~= 'check' and self.data[zoneid] then

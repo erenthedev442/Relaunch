@@ -15,14 +15,15 @@ local m = Module:new('persist_nm_time_of_deaths')
 -- Format:
 local nmsToPersist =
 {
-    -- 21 - 24 hours with half hour windows
-    {
-        'Behemoths_Dominion',
-        'Behemoth',
-        function()
-            return 75600 + math.random(0, 6) * 1800
-        end
-    },
+    -- Behemoth (Behemoths_Dominion) entry removed 2026-07-13. The onMobDespawn
+    -- addOverride below targets xi.zones.<Z>.mobs.<M>.onMobDespawn, which is
+    -- lazy-loaded (C++ CacheLuaObjectFromFile only fires when the mob first
+    -- spawns). Behemoth never pre-cached pre-boot -> override silently failed
+    -- for 8+ days per the map-server log. The Zone.onInitialize half worked
+    -- (that hook target IS eagerly loaded) but the ToD-save half never fired,
+    -- so restored ToDs came from an eternally-stale server var.
+    -- To re-enable: hook via xi.mob.onMobDeathEx (real engine hook) or attach
+    -- a DEATH listener from Zone.onInitialize -- both actually fire.
 }
 
 -- NOTE: At the time we iterate over these entries, the Lua zone and mob objects won't be ready,

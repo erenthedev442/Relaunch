@@ -203,4 +203,14 @@ local function makeFarm(catalog)
     return m
 end
 
-return makeFarm
+-- Return as a callable table so moduleutils::LoadLuaModules (which scans every
+-- .lua under modules/custom and rejects bare-function returns as "Invalid
+-- object returned") stops erroring on this file at every boot. Consumers keep
+-- their `local makeFarm = require(...)` + `makeFarm(catalog)` calls unchanged
+-- thanks to the __call metamethod. Empty overrides list satisfies the Module
+-- shape check but adds no runtime hooks -- the actual capacity-farm Modules
+-- are created dynamically by makeFarm() and registered as normal per zone.
+return setmetatable(
+    { overrides = {}, makeFarm = makeFarm },
+    { __call = function(_, catalog) return makeFarm(catalog) end }
+)

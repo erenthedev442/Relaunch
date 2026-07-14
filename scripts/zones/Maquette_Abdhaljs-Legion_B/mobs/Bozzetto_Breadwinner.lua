@@ -38,7 +38,11 @@ doWarble = function(mob)
         local hm = GetMobByID(ID.mob.AMBUSCADE_HOUSEMAKER)
         if hm and not hm:isAlive() and mob:getLocalVar('hm_buffed') == 0 then
             local zone = mob:getZone()
-            local inst = zone and zone:getInstance and zone:getInstance() or nil
+            -- `zone:getInstance` (method reference w/o call) is a Lua syntax
+            -- error next to `and`, so this file failed to load on every
+            -- FileWatcher tick. Zone objects always have :getInstance in LSB,
+            -- so the defensive nil-guard was superfluous anyway.
+            local inst = zone and zone:getInstance() or nil
             if inst then
                 SpawnMob(ID.mob.AMBUSCADE_HOUSEMAKER, inst)
             end

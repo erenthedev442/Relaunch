@@ -107,7 +107,10 @@ table.insert(b.hands, { id = 28015, name = "Xaddi Gauntlets", cost = 12, jobs = 
 table.insert(b.hands, { id = 28013, name = "Hegira Wristbands", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' })  -- TANK score 187
 
 -- Legs (12 picks, scored highest first)
-table.insert(s.legs, { id = 28154, name = "Weatherspoon Pants +1", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' } )  -- TANK score 195
+-- Weatherspoon Pants +1 (28154) was misplaced HERE using `s.legs` in the bronze
+-- block (silver `s` isn't declared until line 129) -- crashed armor_catalog on
+-- every deploy since 2026-07-13, taking Armor_NPC.lua down with it. Moved to
+-- the silver.legs block below.
 table.insert(b.legs, { id = 28155, name = "Scufflers Cosciales", cost = 12, jobs = 'WAR/PLD/DRK/SAM/DRG' })  -- DPS score 173
 table.insert(b.legs, { id = 25853, name = "Querkening Brais", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- DPS score 171
 table.insert(b.legs, { id = 28174, name = "Theurgists Slacks", cost = 12, jobs = 'WHM/BLM/SMN/PUP/SCH/GEO' })  -- CASTER score 159
@@ -150,6 +153,7 @@ table.insert(s.body, { id = 26970, name = "Lapidary Tunic", cost = 25, jobs = 'M
 -- Legs (11 picks, scored highest first; Herculean Trousers + Chironic Hose
 -- removed 2026-07-11 -- sold by Zurim/Domain QM, medal-vendor exclusivity)
 table.insert(s.legs, { id = 28152, name = "Gorney Brayettes +1", cost = 25, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- TANK score 248
+table.insert(s.legs, { id = 28154, name = "Weatherspoon Pants +1", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- TANK score 195
 
 -- Feet (9 picks, scored highest first; Herculean Boots removed 2026-07-11 --
 -- sold by Zurim/Domain QM, medal-vendor exclusivity)

@@ -170,25 +170,14 @@ hnmSystem:addOverride('xi.zones.Behemoths_Dominion.Zone.onInitialize', function(
     end
 end)
 
-hnmSystem:addOverride('xi.zones.Behemoths_Dominion.mobs.Behemoth.onMobDespawn', function(mob)
-    super(mob)
-
-    -- Only the real HNM reschedules its own window. Affinity-NM replicas
-    -- reuse this retail name/script (affinity_nm_autopop.lua); without this
-    -- id check, killing a replica would stomp the real HNM's ToD/respawn.
-    if mob:getID() ~= behemothDomID.mob.BEHEMOTH then
-        return
-    end
-
-    -- Server Variable work.
-    local randomPopTime = 75600 + math.random(0, 6) * 1800
-
-    SetServerVariable('[HNM]Behemoth', GetSystemTime() + randomPopTime) -- Save next pop time.
-
-    -- Set spawn time and position.
-    GetMobByID(behemothDomID.mob.BEHEMOTH):setRespawnTime(randomPopTime)
-    xi.mob.updateNMSpawnPoint(behemothDomID.mob.BEHEMOTH)
-end)
+-- Behemoth.onMobDespawn override REMOVED 2026-07-13: the target path
+-- xi.zones.Behemoths_Dominion.mobs.Behemoth was nil at TryApplyLuaModules time
+-- (mob scripts are cached on first spawn, not at boot), so this addOverride
+-- silently failed at every deploy since at least 2026-07-11 -- confirmed via
+-- 8+ days of "Override not applied" log entries. The behavior (ToD server-var +
+-- respawn scheduling for the real Behemoth) hasn't been active. If needed,
+-- reimplement via a DEATH listener attached from Zone.onInitialize -- that
+-- pattern actually fires (same as affinity_nm_autopop.lua).
 
 hnmSystem:addOverride('xi.zones.Behemoths_Dominion.npcs.qm2.onTrade', function(player, npc, trade)
     if
