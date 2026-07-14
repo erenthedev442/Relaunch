@@ -40,6 +40,7 @@
 custom/commands/
 custom/sql/
 custom/lua/
+custom/sql/trusts/
 
 # Custom C++ modules — listed per-file so disabled experiments
 # (ah_announcement.cpp, ah_pagination.cpp) stay opted out.
