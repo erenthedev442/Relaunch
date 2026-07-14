@@ -113,6 +113,11 @@ local function spawnWantedNm(player, nm, pos)
 
         onMobEngage = function(engMob)
             engMob:setLocalVar('UW_DespawnAt', 0)
+            -- Player opened the fight themselves during the grace window --
+            -- flip the mob back to normal aggression so it fights back and
+            -- flag the grace timer to no-op when it fires.
+            engMob:setLocalVar('UW_GraceCleared', 1)
+            engMob:setMobMod(xi.mobMod.NO_AGGRO, 0)
         end,
 
         onMobDisengage = function(disMob)
@@ -199,24 +204,35 @@ local function spawnWantedNm(player, nm, pos)
         if d.hasteGear then mob:addMod(xi.mod.HASTE_GEAR, d.hasteGear) end
     end
 
-    -- Grace period: spawn UNTARGETABLE + pre-claimed to the paying player, then
-    -- flip to targetable after N seconds. Retail semantics -- the mob's name
-    -- reads red to the owner, un-attackable to anyone outside their alliance
-    -- (updateClaim locks it to the owner's alliance). Player report 2026-07-13:
-    -- 'NM spawned right on top of me, no time to summon trusts before aggro'.
+    -- Grace period: spawn pre-claimed to the paying player with the NM's
+    -- AGGRO SUPPRESSED for N seconds -- the player can prepare in peace, but
+    -- can OPEN THE FIGHT AT ANY TIME by attacking the mob directly. The mob
+    -- reads red to the owner (updateClaim locks it to the owner's alliance)
+    -- but stays fully targetable, so the player never has to wait through the
+    -- grace timer if they're ready sooner. Player report 2026-07-13:
+    -- - "NM spawned right on top of me, no time to summon trusts before aggro"
+    --   -> keep grace, but only for the NM->player direction.
+    -- - "60s wait needs to only be for the NM attacking, if we attack it we
+    --   should be able to start the fight" (owner escalation 2026-07-13).
+    --   -> NO_AGGRO suppresses mob-side aggression; onMobEngage clears the
+    --      flag the instant the player attacks, restoring normal AI.
     mob:updateClaim(player)
     local grace = catalog.graceSeconds or 0
     if grace > 0 then
-        mob:setUntargetable(true)
+        mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
+        mob:setLocalVar('UW_GraceCleared', 0)
         player:printToPlayer(string.format(
-            '[Unity] %s awakens... you have %ds to prepare before it strikes!',
+            "[Unity] %s awakens... it holds back for %ds -- attack when you're ready.",
             nm.label, grace), S)
         mob:timer(grace * 1000, function(m)
-            if m and not m:isDead() then
-                m:setUntargetable(false)
-                m:updateEnmity(player)
-                player:printToPlayer(string.format('[Unity] %s attacks!', nm.label), S)
-            end
+            if not m or m:isDead() then return end
+            -- If the player already engaged, onMobEngage flipped this to 1;
+            -- do nothing so the message doesn't double-print.
+            if m:getLocalVar('UW_GraceCleared') == 1 then return end
+            m:setLocalVar('UW_GraceCleared', 1)
+            m:setMobMod(xi.mobMod.NO_AGGRO, 0)
+            m:updateEnmity(player)
+            player:printToPlayer(string.format('[Unity] %s attacks!', nm.label), S)
         end)
     end
 
