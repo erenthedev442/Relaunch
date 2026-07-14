@@ -1,12 +1,51 @@
 -----------------------------------
--- Relaunch Prime weaponskill beta tuning
+-- Relaunch Prime weaponskill pinnacle tuning
 --
--- Only approved final Prime weapon stages are listed.  The fTP scale is
--- applied to a private copy of the WS parameter table at execution time, so
--- ordinary uses of shared WSs (for example Resolution) remain unchanged.
+-- Only approved final Prime weapon stages are listed. Prime-native WSs receive
+-- both their private fTP scale and a +300% WS-damage layer, then use a job-tier
+-- cap above the universal 999,999 ceiling. Ordinary uses of shared WSs (for
+-- example Resolution) remain unchanged.
 -----------------------------------
 
 local catalog = {}
+
+catalog.DAMAGE_CAP_LOCAL_VAR = 'PrimeWsDamageCap'
+catalog.WS_DAMAGE_BONUS      = 300
+
+catalog.DAMAGE_CAPS =
+{
+    SUPPORT = 1499999,
+    HYBRID  = 1749999,
+    DAMAGE  = 1999999,
+}
+
+catalog.JOB_DAMAGE_CAP =
+{
+    [xi.job.WHM] = catalog.DAMAGE_CAPS.SUPPORT,
+    [xi.job.BLM] = catalog.DAMAGE_CAPS.SUPPORT,
+    [xi.job.PLD] = catalog.DAMAGE_CAPS.SUPPORT,
+    [xi.job.SMN] = catalog.DAMAGE_CAPS.SUPPORT,
+    [xi.job.PUP] = catalog.DAMAGE_CAPS.SUPPORT,
+    [xi.job.SCH] = catalog.DAMAGE_CAPS.SUPPORT,
+    [xi.job.GEO] = catalog.DAMAGE_CAPS.SUPPORT,
+
+    [xi.job.RDM] = catalog.DAMAGE_CAPS.HYBRID,
+    [xi.job.BRD] = catalog.DAMAGE_CAPS.HYBRID,
+    [xi.job.BLU] = catalog.DAMAGE_CAPS.HYBRID,
+    [xi.job.COR] = catalog.DAMAGE_CAPS.HYBRID,
+    [xi.job.DNC] = catalog.DAMAGE_CAPS.HYBRID,
+    [xi.job.RUN] = catalog.DAMAGE_CAPS.HYBRID,
+
+    [xi.job.WAR] = catalog.DAMAGE_CAPS.DAMAGE,
+    [xi.job.MNK] = catalog.DAMAGE_CAPS.DAMAGE,
+    [xi.job.THF] = catalog.DAMAGE_CAPS.DAMAGE,
+    [xi.job.DRK] = catalog.DAMAGE_CAPS.DAMAGE,
+    [xi.job.BST] = catalog.DAMAGE_CAPS.DAMAGE,
+    [xi.job.RNG] = catalog.DAMAGE_CAPS.DAMAGE,
+    [xi.job.SAM] = catalog.DAMAGE_CAPS.DAMAGE,
+    [xi.job.NIN] = catalog.DAMAGE_CAPS.DAMAGE,
+    [xi.job.DRG] = catalog.DAMAGE_CAPS.DAMAGE,
+}
 
 catalog.PRIME_WS_TUNING =
 {
@@ -42,6 +81,10 @@ catalog.PRIME_WS_TUNING =
     {
         name = 'Diarmuid', itemId = 21891, slot = xi.slot.MAIN, ftpScale = 2.80,
     },
+    [xi.weaponskill.ZESHO_MEPPO] =
+    {
+        name = 'Zesho Meppo', itemId = 21932, slot = xi.slot.MAIN, ftpScale = 2.00,
+    },
     [xi.weaponskill.TACHI_MUMEI] =
     {
         name = 'Tachi: Mumei', itemId = 21986, slot = xi.slot.MAIN, ftpScale = 3.51,
@@ -75,6 +118,10 @@ catalog.getEntry = function(itemId, wsId, slot)
     end
 
     return tuning
+end
+
+catalog.getDamageCap = function(jobId)
+    return catalog.JOB_DAMAGE_CAP[jobId] or catalog.DAMAGE_CAPS.SUPPORT
 end
 
 return catalog

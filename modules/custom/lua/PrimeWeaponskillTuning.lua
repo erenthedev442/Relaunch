@@ -1,5 +1,5 @@
 -----------------------------------
--- Relaunch Prime weaponskill beta tuning
+-- Relaunch Prime weaponskill pinnacle tuning
 -----------------------------------
 
 require('modules/module_utils')
@@ -14,6 +14,12 @@ if xi.primeWsTuning.moduleInstalled then
 end
 
 local m = Module:new('prime_weaponskill_tuning')
+
+local function pack(...)
+    return { n = select('#', ...), ... }
+end
+
+local activeCalculations = setmetatable({}, { __mode = 'k' })
 
 local function copyAndScaleFtp(wsParams, ftpScale)
     if not wsParams or not wsParams.ftpMod or ftpScale == 1 then
@@ -54,13 +60,65 @@ xi.primeWsTuning.getTunedParams = function(attacker, wsId, slot, wsParams)
     return copyAndScaleFtp(wsParams, tuning.ftpScale)
 end
 
+xi.primeWsTuning.withPrimeEffects = function(attacker, wsId, slot, callback)
+    local tuning = xi.primeWsTuning.getEntry(attacker, wsId, slot)
+    if not tuning or activeCalculations[attacker] then
+        return callback()
+    end
+
+    local modId        = xi.mod.WEAPONSKILL_DAMAGE_BASE + wsId
+    local priorMod     = attacker:getMod(modId)
+    local capVar       = catalog.DAMAGE_CAP_LOCAL_VAR
+    local priorCap     = attacker:getLocalVar(capVar)
+    local primeCap     = catalog.getDamageCap(attacker:getMainJob())
+
+    attacker:addMod(modId, catalog.WS_DAMAGE_BONUS)
+    attacker:setLocalVar(capVar, primeCap)
+    activeCalculations[attacker] = true
+
+    local results
+    local ok, err = xpcall(
+        function()
+            results = pack(callback())
+        end,
+        function(message)
+            return debug.traceback(message, 2)
+        end)
+
+    local cleanupOk, cleanupErr = pcall(function()
+        attacker:setMod(modId, priorMod)
+        attacker:setLocalVar(capVar, priorCap)
+    end)
+    activeCalculations[attacker] = nil
+
+    if not cleanupOk then
+        error(string.format('Prime WS effect cleanup failed: %s', cleanupErr), 0)
+    end
+
+    if not ok then
+        error(err, 0)
+    end
+
+    return unpack(results, 1, results.n)
+end
+
+xi.primeWsTuning.callPreservedOriginal = function(attacker, wsId, slot, original, ...)
+    local args = pack(...)
+
+    return xi.primeWsTuning.withPrimeEffects(attacker, wsId, slot,
+        function()
+            return original(unpack(args, 1, args.n))
+        end)
+end
+
 m:addOverride('xi.weaponskills.doPhysicalWeaponskill',
     function(attacker, target, wsId, wsParams, tp, action, primaryMsg, taChar)
         local original    = super
         local tunedParams = xi.primeWsTuning.getTunedParams(
             attacker, wsId, xi.slot.MAIN, wsParams)
 
-        return original(
+        return xi.primeWsTuning.callPreservedOriginal(
+            attacker, wsId, xi.slot.MAIN, original,
             attacker, target, wsId, tunedParams, tp, action, primaryMsg, taChar)
     end)
 
@@ -70,7 +128,8 @@ m:addOverride('xi.weaponskills.doRangedWeaponskill',
         local tunedParams = xi.primeWsTuning.getTunedParams(
             attacker, wsId, xi.slot.RANGED, wsParams)
 
-        return original(
+        return xi.primeWsTuning.callPreservedOriginal(
+            attacker, wsId, xi.slot.RANGED, original,
             attacker, target, wsId, tunedParams, tp, action, primaryMsg)
     end)
 

@@ -48,7 +48,7 @@ local WEAPONS =
     { id = 21785, name = 'Laphria',         ws = 'Disaster',         info = 'Great Axe. STR/VIT, Acc, Att, Store TP, Double Attack.' },
     { id = 21837, name = 'Foenaria',        ws = 'Origin',           info = 'Scythe. STR/INT, Acc, Att, Store TP, Double Attack.' },
     { id = 21891, name = 'Gae Buide',       ws = 'Diarmuid',         info = 'Polearm. STR/VIT, Acc, Att, Store TP, Double Attack.' },
-    { id = 21932, name = 'Dokoku',          ws = '(native katana WS)'  , info = 'Katana. DEX/AGI, Acc, Att, Store TP, Double Attack.' },
+    { id = 21932, name = 'Dokoku',          ws = 'Zesho Meppo',       info = 'Katana. DEX/AGI, Acc, Att, Store TP, Double Attack.' },
     { id = 21986, name = 'Kusanagi',        ws = 'Tachi: Mumei',     info = 'Great Katana. STR/DEX, Acc, Att, Store TP, Double Attack.' },
     { id = 22002, name = 'Lorg Mor',        ws = 'Dagda',            info = 'Club. STR/MND, Acc, Att, Store TP, Double Attack.' },
     { id = 22106, name = 'Opashoro',        ws = 'Oshala',           info = 'Staff. INT/MND, Magic Acc/Att, Magic Dmg, Acc, Att.' },
