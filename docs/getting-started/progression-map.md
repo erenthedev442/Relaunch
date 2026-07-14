@@ -221,5 +221,5 @@ title: Progression Map
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
 <!-- content-hash: c99c4e6b6944 -->
-_Last updated: 2026-07-13 21:48 PDT_
+_Last updated: 2026-07-13 20:33 PDT_
 <!-- DOCGEN:END id="last-updated" -->
