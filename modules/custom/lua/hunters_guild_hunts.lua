@@ -50,14 +50,15 @@ for guildKey, targets in pairs(catalog.huntTargets) do
     end
 end
 
--- Per-player, per-NM rep cooldown (seconds). ANTI-FARM: two hunt targets
--- (King Vinegarroon, Fafnir) double as Affinity NMs in the SAME zone, which the
--- affinity system repops every 30s -- without this a player could farm one
--- (e.g. King Vinegarroon, 1000 rep) every 30s. Gate only the GUILD REP behind a
--- cooldown; the kill + augment trophy still drop every time. Set EQUAL to the
--- hunt targets' 1800s respawn (hunters_guild_hunt_respawns.sql) so a legit
--- camper killing every respawn never hits it. Tune in the catalog.
-local REP_COOLDOWN = catalog.repCooldownSeconds or 1800
+-- Per-player, per-NM rep cooldown (seconds). ANTI-FARM: (1) two hunt targets
+-- (King Vinegarroon, Fafnir) double as Affinity NMs in the SAME zone, which
+-- the affinity system repops every 30s; (2) hunt NMs themselves respawn every
+-- 30 min per hunters_guild_hunt_respawns.sql, letting a determined camper
+-- burn through guild rep on a single NM. The 24h floor (86400s, set in
+-- catalog.repCooldownSeconds) makes each unique hunt NM a once-a-day rep
+-- source, forcing breadth over depth. Kills + augment trophies still drop
+-- every time -- only guild rep is gated. Tune in the catalog.
+local REP_COOLDOWN = catalog.repCooldownSeconds or 86400
 
 -- Award helper. Pulled out so we can keep the override closures tight.
 -- Bumps rep through the existing hunters_guild API (which handles
