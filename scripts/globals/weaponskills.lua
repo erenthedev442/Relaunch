@@ -231,20 +231,26 @@ local function modifyMeleeHitDamage(attacker, target, attackTbl, wsParams, rawDa
     return adjustedDamage
 end
 
+-- Hybrid elemental riders use half of their listed fTP. The physical hit remains
+-- unchanged; this only reins in the second, magical damage pass.
+xi.weaponskills.HYBRID_MAGIC_FTP_SCALE = 0.5
+
+xi.weaponskills.getHybridMagicFtp = function(tp, wsParams)
+    local ftpScale = wsParams.hybridFtpScale or xi.weaponskills.HYBRID_MAGIC_FTP_SCALE
+    return xi.weaponskills.fTP(tp, wsParams.hybridFtpMod or wsParams.ftpMod) * ftpScale
+end
+
 -- Compute magic damage component of hybrid weaponskill
 -- https://wiki.ffo.jp/html/1261.html
 -- https://www.ffxiah.com/forum/topic/33470/the-sealed-dagger-a-ninja-guide/151/#3420836
 -- https://www.ffxiah.com/forum/topic/49614/blade-chi-damage-formula/2/#3171538
-local function calculateHybridMagicDamage(tp, physicaldmg, attacker, target, wsParams, calcParams, wsID)
-    local ftp      = xi.weaponskills.fTP(tp, wsParams.hybridFtpMod or wsParams.ftpMod)
+local function calculateHybridMagicDamage(tp, physicaldmg, attacker, target, wsParams, calcParams)
+    local ftp      = xi.weaponskills.getHybridMagicFtp(tp, wsParams)
     local magicdmg = math.floor(physicaldmg * ftp + attacker:getMod(xi.mod.MAGIC_DAMAGE))
-    local wsd      = attacker:getMod(xi.mod.ALL_WSDMG_ALL_HITS)
 
-    if attacker:getMod(xi.mod.WEAPONSKILL_DAMAGE_BASE + wsID) > 0 then
-        wsd = wsd + attacker:getMod(xi.mod.WEAPONSKILL_DAMAGE_BASE + wsID)
-    end
-
-    magicdmg = math.floor(magicdmg * (100 + wsd) / 100)
+    -- physicaldmg already includes both general and WS-specific damage bonuses.
+    -- Applying them again here made hybrid WS double-dip WSD before MAB, causing
+    -- their elemental riders to outscale ordinary physical WS by orders of magnitude.
     magicdmg = math.floor(addBonusesAbility(attacker, wsParams.ele, target, magicdmg, wsParams))
     magicdmg = math.floor(magicdmg + calcParams.bonusfTP * physicaldmg)
     magicdmg = math.floor(magicdmg * xi.combat.magicHitRate.calculateResistRate(attacker, target, 0, wsParams.skill, 0, wsParams.ele, 0, 0, calcParams.bonusAcc))
@@ -704,7 +710,7 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
     -- Add in magic damage for hybrid weaponskills
     -- Only procs if the mob still has HP remaining
     if wsParams.hybridWS and target:getHP() > finaldmg then
-        finaldmg = finaldmg + calculateHybridMagicDamage(tp, finaldmg, attacker, target, wsParams, calcParams, wsID)
+        finaldmg = finaldmg + calculateHybridMagicDamage(tp, finaldmg, attacker, target, wsParams, calcParams)
     end
 
     -- Delete statuses that may have been spent by the WS
@@ -791,7 +797,7 @@ xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams,
     -- Add in magic damage for hybrid weaponskills
     -- Only procs if the mob still has HP remaining
     if wsParams.hybridWS and target:getHP() > finaldmg then
-        finaldmg = finaldmg + calculateHybridMagicDamage(tp, finaldmg, attacker, target, wsParams, calcParams, wsID)
+        finaldmg = finaldmg + calculateHybridMagicDamage(tp, finaldmg, attacker, target, wsParams, calcParams)
     end
 
     finaldmg            = finaldmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
@@ -1023,12 +1029,19 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
     if finaldmg > 0 then
         -- Pack the weaponskill ID in the top 8 bits of this variable which is utilized
         -- in OnMobDeath in luautils.  Max WSID is 255.
-        -- Use the pre-cap value (wsResults.finalDmg) when it exceeds finaldmg so the
-        -- WEAPONSKILL_USE listener and leaderboard record the true server-calculated hit,
-        -- not the 131,071 engine cap.  wsResults.finalDmg is set by doPhysicalWeaponskill
-        -- before calling takeWeaponskillDamage and is NOT mutated by the C++ call here.
-        local preCap   = wsResults.finalDmg or 0
-        local trackDmg = (preCap > finaldmg) and preCap or finaldmg
+        -- The C++ return is packet-safe (131,071), so track the pre-packet value,
+        -- but never report theoretical damage above the amount HP can actually
+        -- lose. Final-Prime native WSs synchronously expose their job cap through
+        -- PrimeWsDamageCap; every other WS uses the universal cap.
+        local preCap       = wsResults.finalDmg or 0
+        local globalCap    = xi.settings.map.GLOBAL_HP_DAMAGE_CAP or 0
+        local primeCap     = attacker:getLocalVar('PrimeWsDamageCap')
+        local effectiveCap = (primeCap and primeCap > globalCap) and primeCap or globalCap
+        local trackDmg     = (preCap > finaldmg) and preCap or finaldmg
+        if effectiveCap > 0 then
+            trackDmg = math.min(trackDmg, effectiveCap)
+        end
+
         defender:setLocalVar('weaponskillHit', bit.lshift(wsResults.wsID, 24) + trackDmg)
     end
 
