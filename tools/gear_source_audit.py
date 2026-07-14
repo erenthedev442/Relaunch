@@ -572,12 +572,14 @@ SCORING = True
 try:
     try:
         from tools.scoring_weights import (ROLE_WEIGHTS, MOD_SANITY_CAP,
-                                            CAP_DEFAULT, DD_ALWAYS_LATENTS)
+                                            CAP_DEFAULT, DD_ALWAYS_LATENTS,
+                                            score_latents)
         from tools._item_mods import load_item_mod_map
     except ImportError:
         sys.path.insert(0, str(ROOT / "tools"))
         from scoring_weights import (ROLE_WEIGHTS, MOD_SANITY_CAP,
-                                     CAP_DEFAULT, DD_ALWAYS_LATENTS)
+                                     CAP_DEFAULT, DD_ALWAYS_LATENTS,
+                                     score_latents)
         from _item_mods import load_item_mod_map
 except Exception as exc:  # scoring is optional -- never break the source audit
     print(f"[warn] scoring disabled ({exc}); score/class columns blank")
@@ -634,12 +636,10 @@ if SCORING:
             ww = w.get(mid)
             if ww:
                 s += _clamp(mid, val) * ww
-        for mid, val, lat in item_latents.get(iid, ()):
-            ww = w.get(mid)
-            if not ww:
-                continue
-            full = role in ("DPS", "WS") and lat in DD_ALWAYS_LATENTS
-            s += _clamp(mid, val) * ww * (1.0 if full else 0.5)
+        # Latent rows are (mid, val, lat) tuples; scoring_weights.score_latents
+        # buckets by (mod, lat) and takes max per bucket so mutually-exclusive
+        # food/weather/day latents don't stack (see helper docstring).
+        s += score_latents(item_latents.get(iid, ()), w, role)
         ws = weapon_stats.get(iid)
         if ws and ws["delay"] > 0:
             rmult = RANGED_DMG_MULT.get(ws["skill"], 1.0)

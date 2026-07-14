@@ -330,11 +330,23 @@ def role_score(iid, role):
     for mid_, val in imods.get(iid, {}).items():
         ww = w.get(mid_)
         if ww: s += _clamp(mid_, val) * ww
+    # Bucket latents by (modId, latentId) and take max per bucket -- same-mod
+    # rows sharing a latentId are mutually-exclusive game conditions (lat=49
+    # FOOD_ACTIVE: only one food buff active at a time). Summing them all
+    # inflates food-heavy pieces (Roshi Jinpachi 380 -> ~135). Mirrors
+    # scoring_weights.score_latents; kept inline here because this file has
+    # its own local ROLE_WEIGHTS/MOD_SANITY_CAP/DD_ALWAYS_LATENTS assignments.
+    _lat_best = {}
     for row in item_latents.get(iid, []):
         ww = w.get(row["modId"])
         if not ww: continue
         full = role in ("DPS", "WS") and row["latentId"] in DD_ALWAYS_LATENTS
-        s += _clamp(row["modId"], row["value"]) * ww * (1.0 if full else 0.5)
+        contrib = _clamp(row["modId"], row["value"]) * ww * (1.0 if full else 0.5)
+        key = (row["modId"], row["latentId"])
+        cur = _lat_best.get(key)
+        if cur is None or abs(contrib) > abs(cur):
+            _lat_best[key] = contrib
+    s += sum(_lat_best.values())
     ws_ = weapon_stats.get(iid)
     if ws_ and ws_["delay"] > 0:
         if role == "DPS": s += (ws_["dmg"] * 60 / ws_["delay"]) * 2.0

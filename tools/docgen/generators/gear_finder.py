@@ -113,9 +113,9 @@ ROLE_MASKS = {r: sum(JOB_BIT[j] for j in js) for r, js in ROLE_JOBS.items()}
 # THERE, not here. (Previously each scorer kept its own hand-synced copy.)
 # ---------------------------------------------------------------------------
 try:
-    from tools.scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS
+    from tools.scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS, score_latents
 except ImportError:  # run as `python tools/score_*.py` (tools/ is sys.path[0])
-    from scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS
+    from scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS, score_latents
 
 # Weapon-skill ids that count as real melee/ranged COMBAT weapons: weapon_bonus
 # only credits dmg/delay DPS for these (1-12 melee, 25/26/27 ranged) -- excludes
@@ -845,12 +845,10 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             ww = w.get(mid)
             if ww:
                 s += _clamp(mid, val) * ww
-        for mid, val, latent_id in latents.get(iid, []):
-            ww = w.get(mid)
-            if not ww:
-                continue
-            full = role in ('DPS', 'WS') and latent_id in DD_ALWAYS_LATENTS
-            s += _clamp(mid, val) * ww * (1.0 if full else 0.5)
+        # score_latents buckets by (mod, lat) and takes max per bucket so
+        # mutually-exclusive food/weather/day latents don't stack. See
+        # scoring_weights.score_latents (Roshi Jinpachi 380 fix).
+        s += score_latents(latents.get(iid, ()), w, role)
         return s
 
     def weapon_bonus(iid: int, slotmask: int, role: str) -> float:

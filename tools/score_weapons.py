@@ -265,7 +265,7 @@ ROLE_MASKS = {role: sum(JOB[j] for j in jobs) for role, jobs in ROLE_JOBS.items(
 try:
     from tools.scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS
 except ImportError:  # run as `python tools/score_*.py` (tools/ is sys.path[0])
-    from scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS
+    from scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS, score_latents
 
 
 def _clamp(mid: int, val: int) -> int:
@@ -295,12 +295,14 @@ def score_weapon(iid: int, role: str) -> float:
         w = weights.get(mid)
         if w:
             score += _clamp(mid, val) * w
-    for row in item_latents.get(iid, []):
-        w = weights.get(row['modId'])
-        if not w:
-            continue
-        full = role in ('DPS', 'WS') and row['latentId'] in DD_ALWAYS_LATENTS
-        score += _clamp(row['modId'], row['value']) * w * (1.0 if full else 0.5)
+    # score_latents buckets by (mod, lat) and takes max per bucket so
+    # mutually-exclusive food/weather/day latents don't stack. See
+    # scoring_weights.score_latents for the rationale (Roshi Jinpachi 380 fix).
+    score += score_latents(
+        ((row['modId'], row['value'], row['latentId'])
+         for row in item_latents.get(iid, [])),
+        weights, role,
+    )
     # Weapon output: sustained DPS for the DPS role; raw base damage for WS.
     ws = weapon_stats.get(iid)
     if ws and ws['delay'] > 0:

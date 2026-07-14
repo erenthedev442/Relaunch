@@ -144,6 +144,50 @@ ROLE_WEIGHTS = {
 DD_ALWAYS_LATENTS = [7, 10, 41]
 CAP_DEFAULT = 200
 
+
+def score_latents(rows, weights, role):
+    """Score item_latents rows with mutual-exclusion aware bucketing.
+
+    Same-mod latents that share a latentId are mutually-exclusive game
+    conditions -- most notably lat=49 (FOOD_ACTIVE), where different foods
+    give different bonuses but only ONE food buff can be active at a time.
+    Previously each scorer summed all rows independently, inflating pieces
+    like Roshi Jinpachi (6 rice-ball ATT+ latents summed for +300 phantom
+    Attack, scoring 380 despite being a level 73 head).
+
+    Rule: bucket by (modId, latentId) and keep the single row with the
+    largest absolute contribution. Cross-condition latents still stack --
+    (ATT lat=7 HP<25%) and (ATT lat=49 FOOD) are different keys and both
+    count. Different mods under the same condition (ATT lat=7 + DEX lat=7)
+    are also different keys and both count.
+
+    rows: iterable of (modId, value, latentId) tuples. Each scorer stores
+    latent rows in a slightly different shape (tuples vs dicts); the caller
+    is responsible for producing (mid, val, lat) tuples before calling this.
+
+    weights: role weight map (ROLE_WEIGHTS[role]).
+    role:    role name, used to decide DD_ALWAYS_LATENTS full-weight vs 0.5.
+    """
+    best = {}   # (mod, lat) -> largest |contribution| seen
+    for mid, val, lat in rows:
+        w = weights.get(mid)
+        if not w:
+            continue
+        cap = MOD_SANITY_CAP.get(mid, CAP_DEFAULT)
+        if val > cap:
+            v = cap
+        elif val < -cap:
+            v = -cap
+        else:
+            v = val
+        full = role in ('DPS', 'WS') and lat in DD_ALWAYS_LATENTS
+        contrib = v * w * (1.0 if full else 0.5)
+        key = (mid, lat)
+        cur = best.get(key)
+        if cur is None or abs(contrib) > abs(cur):
+            best[key] = contrib
+    return sum(best.values())
+
 MOD_SANITY_CAP = {
     31: 300,          # MEVA
     62: 30,           # ATTP
