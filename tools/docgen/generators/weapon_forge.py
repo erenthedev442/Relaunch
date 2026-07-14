@@ -166,15 +166,55 @@ def _parse(text: str) -> dict:
     }
 
 
-def _build_real(c: dict) -> dict:
+def _parse_gate_labels(text: str) -> dict:
+    """Parse STAGE_GATES labels from weapon_forge_gates.lua.
+
+    Returns {category: {fromStage: label}}. Missing tuples fall through as no
+    override. Kept live so the widget can never drift from the labels the
+    runtime WeaponForge_NPC preflight and the in-game !forgegates command
+    read from the same file.
+    """
+    out: dict[str, dict[int, str]] = {}
+    # Slice each `<category> = { ... }` sub-table out of the STAGE_GATES table.
+    body = _slice(text, "M.STAGE_GATES", "\n-- ── Display order")
+    for cat_m in re.finditer(r"(\w+)\s*=\s*\{(.*?)\n\s{4}\}", body, re.DOTALL):
+        cat = cat_m.group(1)
+        cat_body = cat_m.group(2)
+        rows: dict[int, str] = {}
+        for row in re.finditer(
+            r"\[(\d+)\]\s*=\s*\{\s*label\s*=\s*(['\"])(.+?)\2",
+            cat_body,
+        ):
+            rows[int(row.group(1))] = row.group(3)
+        if rows:
+            out[cat] = rows
+    return out
+
+
+def _build_real(c: dict, gate_labels: dict | None = None) -> dict:
     pc, ac = c["prime_cost"], c["aeonic_cost"]
-    gate_p2 = "Hunting League " + RANKS.get(pc["s2"]["rank"], f"Rank {pc['s2']['rank']}")
-    gate_p3 = "Hunting League " + RANKS.get(pc["s3"]["rank"], f"Rank {pc['s3']['rank']}")
-    if pc["s3"].get("trials"):
-        gate_p3 += " · All 5 Prime Armory Trials"
+    gate_labels = gate_labels or {}
+    prime_gates = gate_labels.get("prime", {})
+    aeonic_gates = gate_labels.get("aeonic", {})
+    # Prime widget forge[0] (Stage I -> Stage II) mirrors prime STAGE_GATES[1].
+    # Prime widget forge[1] (Stage II -> Stage III) mirrors prime STAGE_GATES[2]
+    # -- if unset, keep the catalog-derived HL Rank + Trials gate.
+    if 1 in prime_gates:
+        gate_p2 = prime_gates[1]
+    else:
+        gate_p2 = "Hunting League " + RANKS.get(pc["s2"]["rank"], f"Rank {pc['s2']['rank']}")
+    if 2 in prime_gates:
+        gate_p3 = prime_gates[2]
+    else:
+        gate_p3 = "Hunting League " + RANKS.get(pc["s3"]["rank"], f"Rank {pc['s3']['rank']}")
+        if pc["s3"].get("trials"):
+            gate_p3 += " · All 5 Prime Armory Trials"
     ae_rank = ac.get("rank", 0)
-    gate_ae = ("Hunting League " + RANKS.get(ae_rank, f"Rank {ae_rank}")
-               if ae_rank else "Materials only — no rank gate")
+    fallback_ae = ("Hunting League " + RANKS.get(ae_rank, f"Rank {ae_rank}")
+                   if ae_rank else "Materials only — no rank gate")
+    gate_ae_0 = aeonic_gates.get(0, fallback_ae)
+    gate_ae_1 = aeonic_gates.get(1, fallback_ae)
+    gate_ae_2 = aeonic_gates.get(2, fallback_ae)
 
     prime, aeonic = {}, {}
     for ch in c["chains"]:
@@ -209,14 +249,14 @@ def _build_real(c: dict) -> dict:
                 "ids":    [ch["ae_base_id"] or None, ch["s1_id"] or None, ch["s2_id"] or None, ch["ae_s3_id"] or None],
                 "forge": [
                     {"mats": [[_qty(ac["s1"]["att"]), att],
-                              [_qty(ac["s1"]["boulder"]), "Riftborn Boulder"]], "gate": gate_ae},
+                              [_qty(ac["s1"]["boulder"]), "Riftborn Boulder"]], "gate": gate_ae_0},
                     {"mats": [[_qty(ac["s2"]["att"]), att],
                               [_qty(ac["s2"]["boulder"]), "Riftborn Boulder"],
-                              [_qty(ac["s2"]["silt"]), "Escha Silt"]], "gate": gate_ae},
+                              [_qty(ac["s2"]["silt"]), "Escha Silt"]], "gate": gate_ae_1},
                     {"mats": [[_qty(ac["s3"]["att"]), att],
                               [_qty(ac["s3"]["boulder"]), "Riftborn Boulder"],
                               [_qty(ac["s3"]["silt"]), "Escha Silt"],
-                              [_num(ac["s3"]["marks"]), "Reforge Marks"]], "gate": gate_ae},
+                              [_num(ac["s3"]["marks"]), "Reforge Marks"]], "gate": gate_ae_2},
                 ],
             }
 
@@ -236,9 +276,13 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     src = resolve_source(repo_root, "modules/custom/lua/weapon_forge_catalog.lua")
     real = {}
     relic_wins: list[int] = []
+    gates_src = resolve_source(repo_root, "modules/custom/lua/weapon_forge_gates.lua", required=False)
+    gate_labels: dict = {}
+    if gates_src is not None:
+        gate_labels = _parse_gate_labels(gates_src.read_text(encoding="utf-8", errors="replace"))
     if src is not None:
         parsed = _parse(src.read_text(encoding="utf-8", errors="replace"))
-        real = _build_real(parsed)
+        real = _build_real(parsed, gate_labels)
         relic_wins = parsed.get("relic_wins", [])
         n_p, n_a = len(real["prime"]), len(real["aeonic"])
         print(f"[weapon_forge] parsed catalog: {n_p} prime + {n_a} aeonic real chains"
