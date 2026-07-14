@@ -19,8 +19,8 @@ uses.
     - Hover (or tap) any item name for its BG-Wiki preview.
 
 <!-- DOCGEN:BEGIN id="gear-finder-dataset" -->
-**15,359** equippable items indexed (9,015 obtainable on the Relaunch server, 9,015 with acquisition sources) — the dataset regenerates from live server data on every deploy.
-<!-- dataset-rev: 5a459d2f4620 -->
+**15,359** equippable items indexed (7,859 obtainable on the Relaunch server, 7,859 with acquisition sources) — the dataset regenerates from live server data on every deploy.
+<!-- dataset-rev: ee4f0e45009c -->
 <!-- DOCGEN:END id="gear-finder-dataset" -->
 
 <div id="gear-finder">
@@ -30,6 +30,6 @@ uses.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 269ce0285844 -->
-_Last updated: 2026-07-13 15:15 PDT_
+<!-- content-hash: 6ed1b281b9de -->
+_Last updated: 2026-07-13 22:00 PDT_
 <!-- DOCGEN:END id="last-updated" -->

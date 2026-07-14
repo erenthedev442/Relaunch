@@ -14,7 +14,7 @@ No. The Relaunch server runs against a private server built on [LandSandBoat](ht
 
 ### How do I create a character?
 
-Once connected, the standard FFXI character-creation flow runs as usual. Your first login then triggers a one-time auto-setup that grants every weapon skill, every spell, capped combat/magic skills, every trust, all quests flagged complete, all missions flagged complete, all key items and maps, all outpost warps, every home point, all survival guides, expanded wardrobes, and all automaton attachments (the paid Void Keeper trusts stay locked), plus **500 starter Unity Accolades** for the Unity Wanted board. You begin with a **<!--setting:START_GIL:comma-->10<!--/setting--> gil** wallet, and first login adds a **300,000 gil** welcome gift and **25 Hunt Marks** — enough for a first Bronze-tier weapon. The level cap is <!--setting:INITIAL_LEVEL_CAP-->99<!--/setting--> from day one (no Limit Break quests); type `!gmhome` to visit the setup Moogles and start leveling at <!--setting:map.EXP_RATE-->3<!--/setting-->× EXP.
+Once connected, the standard FFXI character-creation flow runs as usual. Your first login then triggers a one-time auto-setup that grants every weapon skill, every spell, capped combat/magic skills, every trust, all quests flagged complete, all missions flagged complete, all key items and maps, all outpost warps, every home point, all survival guides, expanded wardrobes, and all automaton attachments (the paid Void Keeper trusts stay locked), plus **500 starter Unity Accolades** for the Unity Wanted board. You begin with a **<!--setting:START_GIL:comma-->10<!--/setting--> gil** wallet, and first login adds a **300,000 gil** welcome gift and **25 Hunt Marks** — enough for a first Bronze-tier weapon. The level cap is <!--setting:INITIAL_LEVEL_CAP-->99<!--/setting--> from day one (no Limit Break quests); type `!leaf` to visit the setup Moogles and start leveling at <!--setting:map.EXP_RATE-->3<!--/setting-->× EXP.
 
 ---
 
@@ -117,6 +117,6 @@ _Have a question that should be on this page? Ping a GM in [Discord](https://dis
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7e3c2f6ebc1c -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: 7824383b48ef -->
+_Last updated: 2026-07-13 22:00 PDT_
 <!-- DOCGEN:END id="last-updated" -->

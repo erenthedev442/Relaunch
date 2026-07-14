@@ -46,7 +46,7 @@ If something was lost due to a server bug (not player error), a GM can investiga
 
 ## Hub Warp (`!hub`) Not Working
 
-`!hub` warps you to Purgonorgo Isle, where every custom NPC lives. `!gmhome`, `!leaf`, `!lib` are legacy aliases that land in the same place. If a hub warp isn't working:
+`!hub` warps you to Purgonorgo Isle, where every custom NPC lives. `!leaf`, `!lib` are legacy aliases that land in the same place. If a hub warp isn't working:
 
 - **Nothing happens / an error in the log.** `!hub` is available to every player — if it isn't firing at all, check the chat log for a message (usually a typo, or you're somewhere it's blocked).
 - **Command is on cooldown.** Some warp commands have a short cooldown between uses. Wait a few seconds and try again.
@@ -90,6 +90,6 @@ If your problem isn't covered here:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2e38020760b8 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 67c85b7e8817 -->
+_Last updated: 2026-07-13 22:00 PDT_
 <!-- DOCGEN:END id="last-updated" -->

@@ -244,5 +244,5 @@ feed the [Aeonic weapon](../progression/aeonic-weapons.md) forge.
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
 <!-- content-hash: ec2d2b1c39a0 -->
-_Last updated: 2026-07-13 15:06 PDT_
+_Last updated: 2026-07-13 21:48 PDT_
 <!-- DOCGEN:END id="last-updated" -->

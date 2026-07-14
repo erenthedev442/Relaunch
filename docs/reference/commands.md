@@ -95,7 +95,7 @@ These chat commands are available to every player on this server (no GM rank req
 | `!thcheck` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!tier` | — | Shows the player's current Hunting League tier, the NMs available at that tier, and exactly what is needed to unlock the next rank. | :material-puzzle: **custom** |
 | `!time` | — | Shows server time (UTC), hours until daily reset, days until weekly reset (Monday 00:00 UTC), and any active seasonal event. | :material-puzzle: **custom** |
-| `!top` | string | Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at fjb-relaunch.pages.dev | :material-puzzle: **custom** |
+| `!top` | string | Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at www.ffxi-legendary.com | :material-puzzle: **custom** |
 | `!tournament` | string, string, string | Legendary Tournament — last-person-standing PvE wave event. | :material-puzzle: **custom** |
 | `!tower` | string, string | _(no description)_ | :material-puzzle: **custom** |
 | `!trustattack` | — | Run once to turn ON: while on, you AUTO-ENGAGE whatever mob you have targeted (cursor target), so you and your trusts attack it hands-free -- point at the next mob and you all switch to it. Run again to turn OFF. Macro:  /console !trustattack | :material-puzzle: **custom** |
@@ -629,7 +629,7 @@ Shows server time (UTC), hours until daily reset, days until weekly reset (Monda
 
 ### `!top`  _(custom)_
 
-Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at fjb-relaunch.pages.dev
+Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at www.ffxi-legendary.com
 
 **Usage:** `top`
 
@@ -733,5 +733,5 @@ _This list reflects the commands currently live on the server._
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
 <!-- content-hash: 06d60b36ddfb -->
-_Last updated: 2026-07-13 15:06 PDT_
+_Last updated: 2026-07-13 21:48 PDT_
 <!-- DOCGEN:END id="last-updated" -->

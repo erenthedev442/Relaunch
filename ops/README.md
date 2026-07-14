@@ -35,7 +35,7 @@ and in this repo. **No laptop is involved.** Code comes from GitHub
 `Relaunch - Rebuild.bat` → `C:\server\vps-rebuild.ps1`. Windows locks running
 `.exe`, so the servers are stopped before compiling. Binaries output to
 `C:\server` root (Ninja/MSVC 2022 Release). The Azure `[5]` website-publish
-step (fjb-relaunch.pages.dev) is NOT ported — that was box-side docs infra.
+step (www.ffxi-legendary.com) is NOT ported — that was box-side docs infra.
 
 ## Git / GitHub
 - `git pull` / `git push` work from an **interactive RDP session** (Windows

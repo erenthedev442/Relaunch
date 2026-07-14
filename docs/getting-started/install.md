@@ -29,5 +29,5 @@ Once you're connected, the [Downloads page](downloads.md) has the **Relaunch cli
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
 <!-- content-hash: 0811cb880945 -->
-_Last updated: 2026-07-12 21:15 PDT_
+_Last updated: 2026-07-13 22:00 PDT_
 <!-- DOCGEN:END id="last-updated" -->

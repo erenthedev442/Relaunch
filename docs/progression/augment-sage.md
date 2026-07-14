@@ -100,7 +100,7 @@ Holding an affinity gives augments **in that category** roll advantage: the Moog
 | 6 | Duration | Aspidochelone | Spirit Turtle Shell | 4 |
 | 7 | Pets | King_Vinegarroon | Scorpion Stinger | 24 |
 | 8 | Potency | Phoenix | Phoenix Feather | 12 |
-| 9 | Skills | Absolute_Virtue | Attestation of Virtue | 6 |
+| 9 | Skills | Absolute_Virtue | Attestation of Virtue | 3 |
 | 10 | Exp/Cap Points | Proto-Omega | Omega Ring | 2 |
 | 11 | Job specific niche utilities | Kirin | Kirin's Mane | 16 |
 <!-- DOCGEN:END id="sage-affinities" -->
@@ -135,6 +135,6 @@ Only the **affinity registration** trophy (Track 2) is removed from inventory on
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9da8762caf8c -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: 24c431886da9 -->
+_Last updated: 2026-07-13 22:00 PDT_
 <!-- DOCGEN:END id="last-updated" -->

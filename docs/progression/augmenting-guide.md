@@ -105,7 +105,7 @@ Because every line re-rolls together, a **crit** (or a guaranteed one from a **M
 
 ## Catalyst access
 
-Every augment catalyst (146 total) is available at **every Augment Tier**. Your tier determines the **power** of the roll (via the roll band above), not which augments you can access — a Tier 1 player can trade the same catalysts as a Tier 5 player, just with weaker rolls. Browse the full [catalog](augments.md#catalyst--augment-catalog) to see every available stat.
+Every augment catalyst (143 total) is available at **every Augment Tier**. Your tier determines the **power** of the roll (via the roll band above), not which augments you can access — a Tier 1 player can trade the same catalysts as a Tier 5 player, just with weaker rolls. Browse the full [catalog](augments.md#catalyst--augment-catalog) to see every available stat.
 
 ## Good first moves
 
@@ -113,7 +113,7 @@ Every augment catalyst (146 total) is available at **every Augment Tier**. Your 
 - **Stack one stat for a big swing.** 5× the same catalyst on one piece concentrates the bonus where you want it.
 - **Start the Augment Sage early.** Mastery ranks unlock automatically as you hit Hunting League Rank / Prestige Level milestones — each rank lifts your worst rolls and raises crit chance. Don't wait.
 - **Re-augment after every tier-up.** Same gear, same catalysts, a strictly higher band — a tier-up re-roll is never a downgrade.
-- **Browse the full catalog** on the [Augment Moogle page](augments.md#catalyst--augment-catalog) — 146 catalysts across a wide range of stat families, each with its full per-trade stat values.
+- **Browse the full catalog** on the [Augment Moogle page](augments.md#catalyst--augment-catalog) — 143 catalysts across a wide range of stat families, each with its full per-trade stat values.
 
 ## A few rules to remember
 
@@ -129,6 +129,6 @@ Every augment catalyst (146 total) is available at **every Augment Tier**. Your 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b70915eb80a6 -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: fe3fee0ddae8 -->
+_Last updated: 2026-07-13 22:00 PDT_
 <!-- DOCGEN:END id="last-updated" -->

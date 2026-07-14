@@ -45,7 +45,7 @@ m:addOverride('xi.player.onPlayerLogin', function(player)
             '  - Gear Moogle         -- a starter gear kit to get you going',
             'Then summon your Trusts and type  !hunt  to start the Hunting League.',
             'Handy anytime:  !buff (Refresh/Regen)  -  !progress  -  !help',
-            'Full walkthrough: https://fjb-relaunch.pages.dev/getting-started/first-steps/',
+            'Full walkthrough: https://www.ffxi-legendary.com/getting-started/first-steps/',
             'Good luck, and enjoy the hunt!',
         }
         for _, line in ipairs(lines) do

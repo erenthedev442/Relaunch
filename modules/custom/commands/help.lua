@@ -38,7 +38,7 @@ commandObj.onTrigger = function(player)
     player:printToPlayer('  !time            - Server time + daily/weekly reset countdowns', B)
     player:printToPlayer('  !optin / !optout - Opt in or out of public leaderboards', B)
     player:printToPlayer('  =====================================================', B)
-    player:printToPlayer('  Docs: fjb-relaunch.pages.dev', B)
+    player:printToPlayer('  Docs: www.ffxi-legendary.com', B)
 end
 
 return commandObj

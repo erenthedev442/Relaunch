@@ -12,7 +12,7 @@ echo.
 echo   Players DISCONNECT during the rebuild (~2-5 min).
 echo   If the build fails, the previous binaries are restored
 echo   automatically so the server still comes back up.
-echo   Website (fjb-relaunch.pages.dev) is NOT published here.
+echo   Website (www.ffxi-legendary.com) is NOT published here.
 echo ============================================================
 echo.
 set "GO="

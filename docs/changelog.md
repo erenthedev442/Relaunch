@@ -1181,3 +1181,10 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Capacity Points** — Wipe Bibiki Bay native pop, keep 6 scripted NMs
     - **Expcamp** — Extend the GM Home EXP-camp Moogle through Lv99
     - **Capacity Farm** — Populate the whole Bibiki Bay zone with CP mobs
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: ed6bb294c893 -->
+_Last updated: 2026-07-13 21:48 PDT_
+<!-- DOCGEN:END id="last-updated" -->

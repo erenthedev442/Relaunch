@@ -25,5 +25,5 @@ from the live server, so the rates here are the ones the game actually uses.
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
 <!-- content-hash: 001842be219e -->
-_Last updated: 2026-07-13 15:06 PDT_
+_Last updated: 2026-07-13 21:48 PDT_
 <!-- DOCGEN:END id="last-updated" -->

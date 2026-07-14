@@ -19,7 +19,7 @@
 #         Skipped when the build failed.
 #   [B] WEBSITE -> Relaunch-DocsRefresh task (refresh_site_relaunch.ps1)
 #         docgen (live C:\server tree + xi_relaunch) -> mkdocs -> Cloudflare
-#         Pages (fjb-relaunch.pages.dev).  vps-rebuild.ps1 deliberately SKIPS
+#         Pages (www.ffxi-legendary.com).  vps-rebuild.ps1 deliberately SKIPS
 #         this ("that was Azure-box infra") -- so we add it here.
 #
 # WHY a wrapper and not one big script: vps-rebuild.ps1 is the code-only path
@@ -46,7 +46,7 @@ Say ''
 Say '============================================================' 'Cyan'
 Say '  RELAUNCH - DEPLOY EVERYTHING  (code + website)' 'Cyan'
 Say '  [A] git sync -> stop -> SQL -> C++ rebuild -> restart -> push' 'Cyan'
-Say '  [B] docgen -> mkdocs -> Cloudflare  (fjb-relaunch.pages.dev)' 'Cyan'
+Say '  [B] docgen -> mkdocs -> Cloudflare  (www.ffxi-legendary.com)' 'Cyan'
 Say '  LIVE relaunch server: players briefly disconnect on the restart.' 'Cyan'
 Say '  (Legendary / ~server is a separate box and is NOT touched.)' 'Cyan'
 Say '============================================================' 'Cyan'
@@ -164,7 +164,7 @@ if ($goodBuild -and $onOrigin) {
 
 # ---- [B] WEBSITE: trigger the docs task, wait for it, verify ----
 Say ''
-Say '########## [B] PUBLISH WEBSITE  (fjb-relaunch.pages.dev) ##########' 'Cyan'
+Say '########## [B] PUBLISH WEBSITE  (www.ffxi-legendary.com) ##########' 'Cyan'
 Say '  ~2-3 min: docgen -> mkdocs -> Cloudflare. Relaunch players unaffected.'
 $before = (Get-ScheduledTaskInfo -TaskName $docsTask -ErrorAction SilentlyContinue).LastRunTime
 schtasks /run /tn $docsTask 2>&1 | Out-Null

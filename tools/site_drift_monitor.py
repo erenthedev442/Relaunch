@@ -2,7 +2,7 @@
 """site_drift_monitor.py -- dead-man's-switch for the two player docs sites.
 
 Both sites rebuild hourly from the live servers (legendary-ffxi.pages.dev from
-~/server + xidb; fjb-relaunch.pages.dev from ~/relaunch + xi_relaunch). If a
+~/server + xidb; www.ffxi-legendary.com from ~/relaunch + xi_relaunch). If a
 refresh silently dies -- cron broken, docgen error, wrangler/auth failure, disk
 full -- the PUBLISHED site quietly drifts from the live game and nobody notices.
 

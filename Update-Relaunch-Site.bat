@@ -2,7 +2,7 @@
 title Update Relaunch Website
 echo.
 echo ============================================================
-echo  Publishing fjb-relaunch.pages.dev from the AZURE BOX
+echo  Publishing www.ffxi-legendary.com from the AZURE BOX
 echo.
 echo  Pulls the latest docs from the relaunch branch, regenerates
 echo  every page against the xi_relaunch database, and deploys to
@@ -19,7 +19,7 @@ if errorlevel 1 (
 echo.
 echo ============================================================
 echo  Done. Look for 'Deployment complete' in the output above.
-echo  Live at https://fjb-relaunch.pages.dev
+echo  Live at https://www.ffxi-legendary.com
 echo  (give Cloudflare ~30 seconds to swap the new build in)
 echo ============================================================
 echo.

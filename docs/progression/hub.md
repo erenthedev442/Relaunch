@@ -1,6 +1,6 @@
 # Purgonorgo Isle — The Hub
 
-Purgonorgo Isle is the relaunch's **one and only hub** — every custom service NPC, from getting-started tools to endgame progression, lives here on a single island plaza, spaced out so a crowd can shop at once. Reach it any time with the `!hub` command (the old `!leaf`, `!lib`, and `!gmhome` commands now land here too).
+Purgonorgo Isle is the relaunch's **one and only hub** — every custom service NPC, from getting-started tools to endgame progression, lives here on a single island plaza, spaced out so a crowd can shop at once. Reach it any time with the `!hub` command (the `!leaf` and `!lib` aliases land here too).
 
 Reach it any time with the `!hub` command.
 
@@ -77,6 +77,6 @@ Reach it any time with the `!hub` command.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 760339ae2bbd -->
-_Last updated: 2026-07-10 17:15 PDT_
+<!-- content-hash: cddf653ae664 -->
+_Last updated: 2026-07-13 22:00 PDT_
 <!-- DOCGEN:END id="last-updated" -->

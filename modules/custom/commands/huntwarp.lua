@@ -12,7 +12,7 @@
 -- substring). Sorted most-accessible first: guild order (AF -> Relic -> Empy ->
 -- HL), then lowest tier. Source of truth for the NM list + coords is
 -- modules/custom/lua/huntnm_warp_table.lua, which mirrors the site's
--- Hunters' Guild page (fjb-relaunch.pages.dev/progression/hunters-guild/).
+-- Hunters' Guild page (www.ffxi-legendary.com/progression/hunters-guild/).
 --
 -- Same shape as !augwarp -- if you know that command, you know this one.
 -----------------------------------
@@ -60,7 +60,7 @@ local function usage(player)
     player:printToPlayer(string.format(
         '!huntwarp <name>  --  Warp to a Hunters Guild NM (%d gil).', GIL_COST), SYS)
     player:printToPlayer('  e.g.  !huntwarp fafnir  |  !huntwarp king vinegarroon  |  !huntwarp jormungand', SYS)
-    player:printToPlayer('  Full NM list: https://fjb-relaunch.pages.dev/progression/hunters-guild/', SYS)
+    player:printToPlayer('  Full NM list: https://www.ffxi-legendary.com/progression/hunters-guild/', SYS)
 end
 
 commandObj.onTrigger = function(player, arg)

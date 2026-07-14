@@ -176,5 +176,6 @@
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-_Last updated: pending first generation._
+<!-- content-hash: c92832131f3d -->
+_Last updated: 2026-07-13 21:48 PDT_
 <!-- DOCGEN:END id="last-updated" -->

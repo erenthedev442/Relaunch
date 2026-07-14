@@ -17,7 +17,7 @@ Every custom NPC lives on a single island plaza — **Purgonorgo Isle**. Type **
 - **Economy** — Gil Exchange, Sparks Exchange, Race Changer, Title Broker, Mystery Mog, Cosmetic Shop; the Casino; the Daily & Hunt boards; Unity and Chocobo Derby.
 - **Endgame** — Apex Trials, Prime Armory, Relic Forge, Colosseum, Endless Tower, the Gauntlet, Infamy / HTBF / Voidwatch vendors, Augment Moogle & Sage, the mastery trainers, Cross-Job Trainers, and the combat **Test Dummy** for DPS testing.
 
-The NPCs are spaced out across the plaza so a crowd can shop at once. The old `!leaf`, `!lib`, and `!gmhome` commands all still work — they now land you on Purgonorgo Isle too.
+The NPCs are spaced out across the plaza so a crowd can shop at once. `!leaf` and `!lib` are the two aliases that warp you to Purgonorgo Isle.
 
 ---
 
@@ -99,6 +99,6 @@ If something isn't working, you're not sure what to do next, or you just want to
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c5f5d1dcce07 -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: 26180aa2c6c0 -->
+_Last updated: 2026-07-13 22:00 PDT_
 <!-- DOCGEN:END id="last-updated" -->

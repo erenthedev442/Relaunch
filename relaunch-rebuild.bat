@@ -9,7 +9,7 @@ REM  [1] Ship FULL relaunch branch -> ~/relaunch/
 REM  [2] Apply modules/custom/sql/*.sql to xi_relaunch DB
 REM  [3] C++ rebuild in ~/relaunch/build (self-contained, no ~/server dependency)
 REM  [4] Restart ALL relaunch services + health check
-REM  [5] Publish the relaunch website (fjb-relaunch.pages.dev) from the box
+REM  [5] Publish the relaunch website (www.ffxi-legendary.com) from the box
 REM
 REM  LIVE SERVER (~server): NEVER TOUCHED.  ~/relaunch has its own source
 REM  tree, build directory, and binaries.  No files are read from or
@@ -36,7 +36,7 @@ echo   [1] Ship full relaunch branch  --^>  %REMOTE%/
 echo   [2] Apply SQL  --^>  xi_relaunch (if any)
 echo   [3] C++ rebuild in ~/relaunch/build  (self-contained)
 echo   [4] Restart all relaunch services + health check
-echo   [5] Publish the relaunch website (fjb-relaunch.pages.dev)
+echo   [5] Publish the relaunch website (www.ffxi-legendary.com)
 echo   PRODUCTION SERVER (~server): NOT TOUCHED
 echo(
 set "GO="
@@ -165,13 +165,13 @@ if errorlevel 1 ( echo   WARNING: xi_map_relaunch not confirmed active.& set "SR
 (echo [%TIME%] [4/5] health done, SRVOK=%SRVOK%)>> "%LOG%"
 
 REM ---- [5] Publish the relaunch website from the box ----
-REM  Builds fjb-relaunch.pages.dev from the relaunch branch + xi_relaunch DB
+REM  Builds www.ffxi-legendary.com from the relaunch branch + xi_relaunch DB
 REM  ON THE BOX (the laptop reads an empty DB, so this MUST run box-side).
 REM  Docs-only: regenerates docs -> mkdocs -> Cloudflare; does NOT touch the
 REM  game services (neither relaunch nor Legendary). Reached only when steps
 REM  [1]-[4] above did not hard-fail.
 echo(
-echo  [5/5] Publishing the relaunch website (fjb-relaunch.pages.dev) from the box...
+echo  [5/5] Publishing the relaunch website (www.ffxi-legendary.com) from the box...
 echo        (~2-3 min: docgen -^> mkdocs -^> Cloudflare; relaunch players unaffected)
 (echo [%TIME%] [5/5] site: start)>> "%LOG%"
 ssh -i "%KEY%" %SSHOPT% %HOST% "bash ~/relaunch-docs/tools/refresh_site_relaunch.sh; echo; echo ===== RESULT =====; tail -14 ~/refresh_site_relaunch.log" > "%OUT%" 2>&1

@@ -209,10 +209,7 @@ _Trash: **10%** · **×1** · to the treasure pool (anyone in the run can lot) �
 | <a class="item-link" href="https://www.ffxiah.com/item/942" data-img="https://www.bg-wiki.com/images/9/90/Phil._Stone_description.png" target="_blank" rel="noopener">Philosophers Stone</a> | Cap. Point +33% |
 | <a class="item-link" href="https://www.ffxiah.com/item/2198" data-img="https://www.bg-wiki.com/images/0/04/W._Spider%27s_Web_description.png" target="_blank" rel="noopener">Water Spiders Web</a> | Cure spellcasting time |
 | <a class="item-link" href="https://www.ffxiah.com/item/2523" data-img="https://www.bg-wiki.com/images/e/ec/Peiste_Skin_description.png" target="_blank" rel="noopener">Peiste Skin</a> | Exp. Point +33% |
-| <a class="item-link" href="https://www.ffxiah.com/item/1889" data-img="https://static.ffxiah.com/images/icon/1889.png" target="_blank" rel="noopener">Sack Of White Sand</a> | Magic skill |
-| <a class="item-link" href="https://www.ffxiah.com/item/1616" data-img="https://www.bg-wiki.com/images/9/9e/Antlion_Jaw_description.png" target="_blank" rel="noopener">Antlion Jaw</a> | Melee skill |
 | <a class="item-link" href="https://www.ffxiah.com/item/1608" data-img="https://static.ffxiah.com/images/icon/1608.png" target="_blank" rel="noopener">Remnant Of A Fleeting Memory</a> | Parrying Skill |
-| <a class="item-link" href="https://www.ffxiah.com/item/1663" data-img="https://www.bg-wiki.com/images/0/08/Arnica_Root_description.png" target="_blank" rel="noopener">Arnica Root</a> | Ranged skill |
 | <a class="item-link" href="https://www.ffxiah.com/item/1607" data-img="https://static.ffxiah.com/images/icon/1607.png" target="_blank" rel="noopener">Remnant Of A Bitter Memory</a> | Shield skill |
 | <a class="item-link" href="https://www.ffxiah.com/item/1667" data-img="https://www.bg-wiki.com/images/a/af/Cluster_Core_description.png" target="_blank" rel="noopener">Cluster Core</a> | Song spellcasting time |
 | <a class="item-link" href="https://www.ffxiah.com/item/863" data-img="https://www.bg-wiki.com/images/8/8a/Coeurl_Hide_description.png" target="_blank" rel="noopener">Coeurl Hide</a> | Treasure Hunter |
@@ -318,6 +315,6 @@ _Trash: **10%** · **×1** · to the treasure pool (anyone in the run can lot) �
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ccc6ec8a6386 -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: 5b5ee1bf9165 -->
+_Last updated: 2026-07-13 22:00 PDT_
 <!-- DOCGEN:END id="last-updated" -->

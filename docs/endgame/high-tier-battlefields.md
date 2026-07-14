@@ -129,5 +129,5 @@ Every win spawns a treasure chest. **All three tiers of a fight share the same d
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
 <!-- content-hash: f72f1b5f28d7 -->
-_Last updated: 2026-07-13 15:06 PDT_
+_Last updated: 2026-07-13 21:48 PDT_
 <!-- DOCGEN:END id="last-updated" -->

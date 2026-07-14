@@ -122,7 +122,7 @@ The reward shop is organized into 1 categories — 3 purchasable entries in all,
 ## Recommended progression order
 
 <!-- DOCGEN:BEGIN id="progression-order" -->
-1. **Orient yourself at the hub.** Every custom NPC stands together on **<!--npc:hunt_board-->Purgonorgo Isle<!--/npc-->** (`!hub`) — the economy row (Hunt Board, Gil Exchange, Sparks Exchange, Race Changer, Home Point) and the endgame row (Apex Trials, Prime Armory, Colosseum, Infamy Vendor, Augment Sage) side by side, plus the Test Dummy for DPS testing. The old `!lib`, `!leaf`, and `!gmhome` commands still work and land you there too.
+1. **Orient yourself at the hub.** Every custom NPC stands together on **<!--npc:hunt_board-->Purgonorgo Isle<!--/npc-->** (`!hub`) — the economy row (Hunt Board, Gil Exchange, Sparks Exchange, Race Changer, Home Point) and the endgame row (Apex Trials, Prime Armory, Colosseum, Infamy Vendor, Augment Sage) side by side, plus the Test Dummy for DPS testing. `!leaf` and `!lib` are the two aliases that land you there too.
 2. **Hit level 99.** Use FoV books, ROE, trust grinding, or EXP rings. With <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP and <!--setting:main.EXP_RATE-->3<!--/setting-->× scripted EXP, expect an afternoon.
 3. **Warp to Escha ZiTah** with `!hunt`. The command drops you right at the Seals and Spawner NPCs. _(Without `!hunt` the zone is gated behind mid-Seekers progression — use the command.)_
 4. **Start Rank I - Initiate.** Pop any of the three NMs from the Spawner: Leaping Lizzy, Valkurm Emperor, Tom Tit Tat. Each kill pays **5 Hunt Marks**. Grind until you have **150 Hunt Marks** to unlock Rank II — talk to the Seals NPC to advance.
@@ -158,6 +158,6 @@ The Hunting League is the main game now, but retail content still has a role:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 10c03d0eee24 -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: 5c11a3ad98b6 -->
+_Last updated: 2026-07-13 22:00 PDT_
 <!-- DOCGEN:END id="last-updated" -->

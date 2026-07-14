@@ -141,7 +141,7 @@ Every **Mega-Boss kill** drops **1 random Superior Lv5 weapon** from the pool be
 ## The +3 → +4 Forge
 
 <!-- DOCGEN:BEGIN id="divergence-reforge" -->
-Dynamis-Divergence is the **+3 → +4 Forge**. The base [Reforge System](../progression/reforge.md) takes armor to **+3** with marks; the **Divergence Forge** (an NPC in **Southern San d'Oria**, where the old Divergence Smith stood) takes a reforged **+3** piece the rest of the way to **+4**. The forge covers **220 pieces** — every AF and Relic slot across all 22 jobs.
+Dynamis-Divergence is the **+3 → +4 Forge**. The base [Reforge System](../progression/reforge.md) takes armor to **+3** with marks; the **Divergence Forge** NPC in **Southern San d'Oria** takes a reforged **+3** piece the rest of the way to **+4**. The forge covers **220 pieces** — every AF and Relic slot across all 22 jobs.
 
 Trade a reforged **+3 AF or Relic** piece together with the materials below, and it comes back **+4**:
 
@@ -166,6 +166,6 @@ The Forge accepts the trade either way: put the +3 piece **and** the full materi
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d03c1ca2a801 -->
-_Last updated: 2026-07-13 15:32 PDT_
+<!-- content-hash: f4bd3c2034e8 -->
+_Last updated: 2026-07-13 22:00 PDT_
 <!-- DOCGEN:END id="last-updated" -->

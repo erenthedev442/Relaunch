@@ -35,7 +35,7 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
             playerArg:printToPlayer('  LINKSHELL     - ask Jbae, Bdr, Bro, Kahz or Kirin in-game for a linkpearl!', B)
             playerArg:printToPlayer('  !leaf', B)
             playerArg:printToPlayer('  !lib', B)
-            playerArg:printToPlayer('  Visit the site for information ya noobs - https://fjb-relaunch.pages.dev/', B)
+            playerArg:printToPlayer('  Visit the site for information ya noobs - https://www.ffxi-legendary.com/', B)
             playerArg:printToPlayer('  If stuck logging in, message @admin in Discord', B)
         end)
     end

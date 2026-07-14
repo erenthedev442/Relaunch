@@ -67,7 +67,7 @@ commandObj.onTrigger = function(player, targetName)
 
     if targ ~= player then
         player:printToPlayer(
-            '  (Full leaderboards at fjb-relaunch.pages.dev/community/leaderboards/)', B)
+            '  (Full leaderboards at www.ffxi-legendary.com/community/leaderboards/)', B)
     end
 end
 

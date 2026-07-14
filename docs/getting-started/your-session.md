@@ -143,5 +143,5 @@ Welcome to the hunt.
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
 <!-- content-hash: c09afd0189e5 -->
-_Last updated: 2026-07-05 07:37 UTC_
+_Last updated: 2026-07-13 22:00 PDT_
 <!-- DOCGEN:END id="last-updated" -->

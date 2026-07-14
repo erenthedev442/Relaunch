@@ -493,7 +493,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             end
             player:printToPlayer(string.format('[ Augment Moogle ] Trade me 1 piece of gear + up to %d catalyst items (incl. stacks), kupo!', MAX_CATALYST_COUNT), xi.msg.channel.SYSTEM_3)
             player:printToPlayer('  Each catalyst = 1 augment line, up to 5 per item -- stack one type (5 of one = 5x) or mix several. Cost: 10,000 gil.', xi.msg.channel.SYSTEM_3)
-            player:printToPlayer('  See the full catalyst -> augment list on the wiki: fjb-relaunch.pages.dev/progression/augments', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('  See the full catalyst -> augment list on the wiki: www.ffxi-legendary.com/progression/augments', xi.msg.channel.SYSTEM_3)
             player:printToPlayer('  Perfect (max) rolls can CRYSTALIZE (lock forever, by Sage rank). Crystalized slots are kept free on re-rolls.', xi.msg.channel.SYSTEM_3)
             player:printToPlayer(string.format('  Trade the gear ALONE to SCOUR it (strip every augment, incl. crystalized, for %d gil) and start anew.', SCOUR_GIL_COST), xi.msg.channel.SYSTEM_3)
         end,

@@ -1,6 +1,6 @@
 -----------------------------------
 -- huntnm_warp_table.lua
--- One row per NM listed at https://fjb-relaunch.pages.dev/progression/hunters-guild/
+-- One row per NM listed at https://www.ffxi-legendary.com/progression/hunters-guild/
 -- (source: modules/custom/lua/hunters_guild_catalog.lua huntTargets). Used by
 -- the !huntwarp command to drop the player near each NM's stock spawn point.
 --
