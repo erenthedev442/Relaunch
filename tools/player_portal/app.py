@@ -170,7 +170,102 @@ PROGRESSION = [
      "hint": "Rack up kills in Domain Invasion."},
     {"key": "reforge", "name": "Reforge Sets", "type": "flagcount", "prefix": "ReforgeClaimed_", "step": 3,
      "hint": "Claim Reforged AF/Relic/Empyrean armor at the Reforge hub (Diorama)."},
+    {"key": "forgegates", "name": "Weapon Forge Gates", "type": "forge_gates",
+     "hint": "The 11 stage prerequisites for Empyrean / Mythic / Aeonic / Prime forging."},
 ]
+
+
+# ---- Weapon Forge gate targets ------------------------------------------
+# Mirror the runtime counts exposed at Lua load-time via
+# xi.geasFete.uniqueNmCount / xi.voidwatch.uniqueNmCount /
+# xi.dungeonInstances.uniqueDungeonCount. Parsed here from the same catalogs
+# so the Portal dashboard tallies the same numerator the in-game NPC does.
+# Failure-tolerant: any parse miss becomes a math.huge-style guard (target=0
+# reads as "no gate") -- so a temporarily-broken catalog degrades gracefully
+# instead of dropping the whole page.
+def _count_forge_gate_targets() -> dict[str, int]:
+    root = Path(__file__).resolve().parents[2]
+    out = {"gf_total": 0, "vw_total": 0, "dungeon_total": 0}
+    try:
+        text = (root / "modules/custom/lua/Geas_Fete.lua").read_text(encoding="utf-8", errors="replace")
+        m = re.search(r"^local NM_CATALOG = \{(.*?)\n\}\n", text, re.MULTILINE | re.DOTALL)
+        if m:
+            out["gf_total"] = len(re.findall(r"gid\s*=\s*\d+", m.group(1)))
+    except OSError:
+        pass
+    try:
+        text = (root / "modules/custom/lua/voidwatch_catalog.lua").read_text(encoding="utf-8", errors="replace")
+        strata = re.search(r"C\.STRATA\s*=\s*\{(.*?)\n\}", text, re.DOTALL)
+        if strata:
+            names = set()
+            for r in re.findall(r"roster\s*=\s*\{(.*?)\}\s*\}", strata.group(1), re.DOTALL):
+                for n in re.findall(r"name\s*=\s*'([^']+)'", r):
+                    names.add(n)
+            out["vw_total"] = len(names)
+    except OSError:
+        pass
+    try:
+        text = (root / "modules/custom/lua/dungeon_catalog.lua").read_text(encoding="utf-8", errors="replace")
+        out["dungeon_total"] = len(re.findall(r"^\s+instanceId\s*=\s*\d", text, re.MULTILINE))
+    except OSError:
+        pass
+    return out
+
+
+FORGE_GATE_TARGETS = _count_forge_gate_targets()
+
+
+# Static spec for the 11 Weapon Forge gates, keyed by dashboard order. Each
+# entry is (label, check(charvars, targets) -> bool). Matches the Lua
+# STAGE_GATES table in modules/custom/lua/weapon_forge_gates.lua verbatim so
+# the Portal card, the in-game !forgegates command, and the actual forge
+# preflight all read from equivalent sources.
+def _cv(charvars: dict, name: str) -> int:
+    try:
+        return int(charvars.get(name, 0) or 0)
+    except (TypeError, ValueError):
+        return 0
+
+def _any_rebirth_50(cv, _):
+    return any(_cv(cv, f"Rebirth_Count_{j}") >= 50 for j in range(1, 23))
+
+def _any_ascension_100(cv, _):
+    return any(_cv(cv, f"Prestige_Level_{j}") >= 100 for j in range(1, 23))
+
+def _all_trials_and_apex(cv, _):
+    return all(_cv(cv, f"PW_Trial{i}_Done") == 1 for i in range(1, 6)) \
+        and _cv(cv, "Title_Apex_Hunter") == 1
+
+def _any_forge_final(cv, _):
+    return any(_cv(cv, k) == 1 for k in
+               ("WF_Relic_Final", "WF_Mythic_Final", "WF_Empyrean_Final", "WF_Aeonic_Final"))
+
+FORGE_GATES: list[dict] = [
+    {"cat": "Empyrean", "stage": "I",   "label": "All Geas Fete bosses killed at least once",
+     "check": lambda cv, t: _cv(cv, "GF_Unique_Kills") >= (t["gf_total"] or 10**9)},
+    {"cat": "Empyrean", "stage": "II",  "label": "Voidspire Floor 100 reached",
+     "check": lambda cv, _: _cv(cv, "Voidspire_Best_Floor") >= 100},
+    {"cat": "Empyrean", "stage": "III", "label": "Fellow Mastery achieved",
+     "check": lambda cv, _: _cv(cv, "Fellow_Mastered") == 1},
+    {"cat": "Mythic",   "stage": "I",   "label": "Nyzul Isle Floor 100 cleared",
+     "check": lambda cv, _: _cv(cv, "Nyzul_F100_Cleared") == 1},
+    {"cat": "Mythic",   "stage": "II",  "label": "All Voidwatch NMs killed",
+     "check": lambda cv, t: _cv(cv, "VW_Unique_Kills") >= (t["vw_total"] or 10**9)},
+    {"cat": "Mythic",   "stage": "III", "label": "1 successful win of The Gauntlet",
+     "check": lambda cv, _: _cv(cv, "Gauntlet_Clears") >= 1},
+    {"cat": "Aeonic",   "stage": "I",   "label": "50 rebirths on a single job (not combined)",
+     "check": _any_rebirth_50},
+    {"cat": "Aeonic",   "stage": "II",  "label": "100 Ascensions on a single job (not combined)",
+     "check": _any_ascension_100},
+    {"cat": "Aeonic",   "stage": "III", "label": "All Dungeons cleared + 10 wins against Maat's Echo",
+     "check": lambda cv, t: _cv(cv, "Dungeon_Unique_Clears") >= (t["dungeon_total"] or 10**9)
+                        and _cv(cv, "Maat_Kills") >= 10},
+    {"cat": "Prime",    "stage": "I",   "label": "Built a Relic, Mythic, Empyrean, or Aeonic final weapon",
+     "check": _any_forge_final},
+    {"cat": "Prime",    "stage": "II",  "label": "All 5 Prime Armory Trials + Apex Hunter in the Hunter's Guild",
+     "check": _all_trials_and_apex},
+]
+
 
 # One-time migration reward for Legendary community members transitioning to Relaunch.
 # Each option sets specific char_vars (never overwriting a higher existing value).
@@ -254,6 +349,19 @@ def compute_progress(charvars: dict, mjob: int) -> list:
             # rendered like a milestone (next round number).
             cur = sum(1 for k in charvars if k.startswith(p["prefix"]) and iv(k) > 0)
             tgt = ((cur // p["step"]) + 1) * p["step"]
+        elif t == "forge_gates":
+            # 11 binary Weapon Forge stage prerequisites -- count how many the
+            # character has satisfied. gates[] gives the per-row breakdown so
+            # the frontend can render each label + met/not-met marker.
+            met = 0
+            rows = []
+            for g in FORGE_GATES:
+                ok = bool(g["check"](charvars, FORGE_GATE_TARGETS))
+                if ok:
+                    met += 1
+                rows.append({"cat": g["cat"], "stage": g["stage"],
+                             "label": g["label"], "met": ok})
+            cur, tgt = met, len(FORGE_GATES)
         else:
             continue
 
@@ -270,6 +378,8 @@ def compute_progress(charvars: dict, mjob: int) -> list:
         if "extra" in p:
             item["extra"] = iv(p["extra"][0])
             item["extraLabel"] = p["extra"][1]
+        if t == "forge_gates":
+            item["gates"] = rows  # per-row met/not-met detail for the drill-down
         systems.append(item)
     return systems
 

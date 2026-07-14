@@ -168,7 +168,20 @@ function goalOf(s) {
   if (s.type === 'cap')    return { goal: `Rank ${s.cur} / ${s.target}`,  left: `${left} rank${left===1?'':'s'} to go` };
   if (s.type === 'trials') return { goal: `${s.cur} / ${s.target} trials`, left: `${left} trial${left===1?'':'s'} left` };
   if (s.type === 'perks')  return { goal: `${s.cur} / ${s.target} perks`,  left: `${left} perk${left===1?'':'s'} left` };
+  if (s.type === 'forge_gates') return { goal: `${s.cur} / ${s.target} gates met`, left: `${left} gate${left===1?'':'s'} to clear` };
   return { goal: `${s.cur.toLocaleString()} → ${s.target.toLocaleString()}`, left: `${left.toLocaleString()} to reach ${s.target.toLocaleString()}` };
+}
+
+// Per-row breakdown for the forge_gates card: renders every gate as a chip
+// with a met/not-met marker so a player scanning the card can see which
+// exact prereq is blocking them.
+function forgeGatesRows(s) {
+  if (!s || s.type !== 'forge_gates' || !Array.isArray(s.gates)) return '';
+  const chips = s.gates.map(g =>
+    `<span class="chip" style="background:${g.met ? 'rgba(87,201,138,.15)' : 'rgba(229,83,75,.10)'}; color:${g.met ? 'var(--ok)' : 'var(--mut)'}"
+           title="${esc(g.label)}">${g.met ? '✓' : '✗'} ${esc(g.cat)} ${esc(g.stage)}</span>`
+  ).join('');
+  return `<div class="chips" style="margin-top:8px">${chips}</div>`;
 }
 
 function render(box, data) {
@@ -204,6 +217,7 @@ function render(box, data) {
           </div>
           <div class="bar"><i style="width:${s.pct}%"></i></div>
           <div class="fhint"><strong style="color:var(--ink)">${g.left}.</strong> ${esc(s.hint)}</div>
+          ${forgeGatesRows(s)}
         </div>`;
     });
     h += `</div>`;
