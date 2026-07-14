@@ -2603,6 +2603,11 @@ end
 function CBaseEntity:sendReraise(raiseLevel)
 end
 
+---@param raiseLevel integer
+---@return boolean
+function CBaseEntity:forceRaise(raiseLevel)
+end
+
 ---@param xPos number
 ---@param yPos number
 ---@param zPos number

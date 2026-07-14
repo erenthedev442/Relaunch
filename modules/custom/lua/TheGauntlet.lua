@@ -524,6 +524,14 @@ endRun = function(player, reason)
         pcall(function() sess.nm:setHP(0) end)
     end
 
+    local recoverOnExit = reason == 'death'
+    if recoverOnExit and player:isDead() then
+        -- Preserve the normal death EXP loss while accepting a scripted raise.
+        -- The 2.5s exit delay below lets the death state finish before zoning.
+        player:setCharVar('expLost', 0)
+        player:forceRaise(3)
+    end
+
     local lvl = sess and sess.level or 0
     if reason == 'death' then
         player:printToPlayer(string.format(
@@ -537,6 +545,14 @@ endRun = function(player, reason)
     end
 
     player:timer(2500, function(p)
+        if recoverOnExit then
+            p:setHP(p:getMaxHP())
+            p:setMP(p:getMaxMP())
+            p:delStatusEffectSilent(xi.effect.WEAKNESS)
+            p:delStatusEffectSilent(xi.effect.DISEASE)
+            p:delStatusEffectSilent(xi.effect.PLAGUE)
+        end
+
         p:setPos(C.EXIT_POS.x, C.EXIT_POS.y, C.EXIT_POS.z, C.EXIT_POS.rot, C.EXIT_POS.zoneId)
     end)
 end

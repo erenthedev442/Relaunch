@@ -624,6 +624,7 @@ public:
     bool hasRaiseTractorMenu();
     void sendRaise(uint8 raiseLevel);
     void sendReraise(uint8 raiseLevel);
+    bool forceRaise(uint8 raiseLevel);
     void sendTractor(float xPos, float yPos, float zPos, uint8 rotation);
     void allowSendRaisePrompt();
 

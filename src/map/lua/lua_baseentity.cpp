@@ -12552,6 +12552,30 @@ void CLuaBaseEntity::sendReraise(uint8 raiseLevel)
 }
 
 /************************************************************************
+ *  Function: forceRaise()
+ *  Purpose : Immediately accepts a raise for scripted event recovery
+ ************************************************************************/
+
+bool CLuaBaseEntity::forceRaise(uint8 raiseLevel)
+{
+    if (m_PBaseEntity->objtype != TYPE_PC)
+    {
+        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
+        return false;
+    }
+
+    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+    if (raiseLevel == 0 || raiseLevel > 4 || !PChar->isDead() || !PChar->PAI->IsCurrentState<CDeathState>())
+    {
+        return false;
+    }
+
+    PChar->m_hasRaise = raiseLevel;
+    PChar->Raise();
+    return true;
+}
+
+/************************************************************************
  *  Function: sendTractor()
  *  Purpose : Sends a Tractor request to a PC
  *  Example : target:sendTractor(caster:getXPos(), caster:getYPos(), caster:getZPos()
@@ -20460,6 +20484,7 @@ void CLuaBaseEntity::Register()
 
     SOL_REGISTER("sendRaise", CLuaBaseEntity::sendRaise);
     SOL_REGISTER("sendReraise", CLuaBaseEntity::sendReraise);
+    SOL_REGISTER("forceRaise", CLuaBaseEntity::forceRaise);
     SOL_REGISTER("sendTractor", CLuaBaseEntity::sendTractor);
     SOL_REGISTER("allowSendRaisePrompt", CLuaBaseEntity::allowSendRaisePrompt);
 
