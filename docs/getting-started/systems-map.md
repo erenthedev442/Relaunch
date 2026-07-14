@@ -35,6 +35,9 @@ Every new character starts with **25 Hunt Marks**. Your first login each UTC day
 | `!buff` | Grants Refresh / Regen / Regain + the current zone's regional buff — the buff also hands you that zone's Mastery Sigil. |
 | Newcomer linkshell | Fresh characters are handed a pearl for the server linkshell automatically. |
 | Adventuring Fellow | Your persistent companion — levels from your kills from day one. `!fellow` |
+| Cross-Job Ability Trainer | Trainer at `!hub`. Pay a flat gil per ability (one-time, per character) to add a chosen job ability off-job. |
+| Cross-Job Trait Trainer | Trainer at `!hub`. Pay a flat gil per trait (one-time, per character) to add a chosen job trait off-job. |
+| Character Upgrader | One-shot first-login top-up — full wardrobes, wallet, and starter kit. Re-affirms whatever the char is missing. |
 
 Once you hit 99, type **`!hunt`** to warp to Escha - Zi'Tah. The Hunt: Seals and Hunt: Spawner NPCs are side by side where you land.
 
@@ -84,6 +87,7 @@ Killing these NMs earns **AF / Relic / Empy Marks** — the currency for the Ref
 | Abyssea NMs | AF / Relic / Empy Marks | Reforge Vendor (+1 / +2 / +3 armor) |
 | Unity Concord | Accolades | Unity shop (gear, reward items) |
 | HNM Kings / Sky Gods | AF / Relic / Empy Marks | Reforge Vendor |
+| **[Hunter's Guild](../progression/hunters-guild.md)** | Reputation ranks (multiple guilds) | Passive: each rank amplifies that guild's mark payout — up to +% per guild at Grandmaster; **Trinity Hunter** / **Apex Hunter** capstones stack on top |
 
 ### Affinity NMs → Augment Sage
 
@@ -132,6 +136,10 @@ Your Sage Mastery rank lifts the roll floor inside the unlocked band — see [Au
 | **[Endless Tower](../endgame/endless-tower.md)** | Infinite escalating floors. How high you climb is the score. |
 | **[Colosseum](../endgame/colosseum.md)** | Ladder arena at `!hub` — 10 Hunt Marks per win |
 | **[Maat's Challenge](../endgame/maats-challenge.md)** | `!maat` — the solo super-fight; first kill is an Augment Tier key |
+| **[Geas Fete](../endgame/geas-fete.md)** | ??? pop-a-NM across Escha - Zi'Tah, Escha - Ru'Aun, and Reisenjima. Pays **Escha Beads** (shared currency) and drops the Aeonic weapon crafting materials (Attestations + Riftborn Boulders). |
+| **[Voidspire](../endgame/voidspire.md)** | Endless escalating wave-gauntlet at the Warden in Escha - Ru'Aun. Trusts enabled; a wipe ends the run and records your deepest floor on the leaderboard. |
+| **[Omen](../endgame/omen.md)** | Reisenjima Henge gauntlet: five gates of trials, three Glassy sentinels, and the **Caturae** (Kin, Gin, Fu, Kyou, Kei) with the hidden Prime **Ou** beyond them. |
+| **REMA / Prime WS Enhancement** | Upgrade weapon-skill damage and mods on Relic / Empyrean / Mythic / Aeonic / Prime weapons — the WS tuning layer sitting on top of the endgame weapon ladder. |
 
 ---
 
@@ -176,6 +184,23 @@ The **Prime Armory** at `!hub` forges a Prime Weapon after **5 trials** — 16 n
 | --- | --- |
 | **[Spell & Skill Mastery](../progression/spell-mastery.md)** | Mastery Sage at `!hub`. Spend Mastery Sigils to empower weapon skills and spells beyond their normal caps. |
 | **[Job Mastery](../endgame/job-mastery.md)** | Earn Mastery Points by killing specific mob types. Permanent per-job-class bonuses. |
+
+### Side Activities & Events
+
+| System | What it does |
+| --- | --- |
+| **[Chocobo Derby](../endgame/chocobo-derby.md)** | Bet gil on chocobo races at the Race Caller in Purgonorgo Isle; raise a strong chocobo and enter it as a runner for a bigger payout. |
+| **[Casino — Lady Luck](../endgame/casino.md)** | Four-game gil-sink casino (slots, high-low, roulette, dice) run by Lady Luck at `!leaf`. Biggest wins shout server-wide. |
+| **[Tournament](../endgame/tournament.md)** | `!tournament join` during sign-ups. Warp in, fight 8 waves, last team standing takes the crown (Hunt Marks + Infamy for surviving members). |
+| **[Treasure Hunts](../endgame/treasure-hunts.md)** | Hunting League kills can drop treasure maps. Take one to its overworld zone and dig; hot/cold feedback guides you to a strongbox of marks, gil, and augment catalysts. |
+| **[Provisioners' League](../endgame/provisioners-league.md)** | Fish and turn in HQ crafts at the League Steward in **Escha - Zi'Tah** to earn League Points. Five ranks; each rank stacks a permanent mark bonus. |
+| **[Live Events](../endgame/live-events.md)** | Three standing bonuses on fixed clocks: daily **Happy Hour** EXP/CP boost, **Divergence City of the Day** (bonus medals on clear), **Unity weekly featured NM** (double accolades). Live-events board on the Player Portal counts each one down. |
+| **Sparks Exchange** | Trade retail Sparks-of-Eminence for Hunt Marks + seals + augment catalysts at the exchange NPC. |
+| **Cosmetic Boutique** | Gil-only cosmetic outlet — dyes, glamours, model swaps. Pure vanity, no stats. |
+
+### Achievements
+
+**Achievements** are personal milestones that award bonus Hunt Marks and occasionally an in-game title on first completion. Every eligible player can earn each achievement — not server-first exclusives.
 
 ---
 

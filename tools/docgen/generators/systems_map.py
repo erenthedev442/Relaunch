@@ -297,6 +297,18 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     if have("modules/custom/lua/fellow_companion.lua"):
         add(_row(["Adventuring Fellow", "Your persistent companion — levels from your "
                   "kills from day one. `!fellow`"]))
+    if have("modules/custom/lua/CrossJob_Trainer.lua"):
+        add(_row(["Cross-Job Ability Trainer",
+                  "Trainer at `!hub`. Pay a flat gil per ability (one-time, per "
+                  "character) to add a chosen job ability off-job."]))
+    if have("modules/custom/lua/CrossJob_TraitTrainer.lua"):
+        add(_row(["Cross-Job Trait Trainer",
+                  "Trainer at `!hub`. Pay a flat gil per trait (one-time, per "
+                  "character) to add a chosen job trait off-job."]))
+    if have("modules/custom/lua/Character_Upgrader.lua"):
+        add(_row(["Character Upgrader",
+                  "One-shot first-login top-up — full wardrobes, wallet, and "
+                  "starter kit. Re-affirms whatever the char is missing."]))
     add("")
     add(f"Once you hit 99, type **`!hunt`** to warp to {hub_zone}. The Hunt: Seals and "
         "Hunt: Spawner NPCs are side by side where you land.")
@@ -376,6 +388,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             add(_row(["Unity Concord", "Accolades", "Unity shop (gear, reward items)"]))
         if have("modules/custom/lua/custom_HNM_system.lua"):
             add(_row(["HNM Kings / Sky Gods", "AF / Relic / Empy Marks", "Reforge Vendor"]))
+        if have("modules/custom/lua/hunters_guild_catalog.lua"):
+            add(_row(["**[Hunter's Guild](../progression/hunters-guild.md)**",
+                      "Reputation ranks (multiple guilds)",
+                      "Passive: each rank amplifies that guild's mark payout — up to "
+                      "+% per guild at Grandmaster; **Trinity Hunter** / **Apex "
+                      "Hunter** capstones stack on top"]))
         add("")
     if aff:
         add("### Affinity NMs → Augment Sage")
@@ -480,6 +498,26 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     if have("modules/custom/lua/maat_infamy_fight.lua"):
         add(_row(["**[Maat's Challenge](../endgame/maats-challenge.md)**",
                   "`!maat` — the solo super-fight; first kill is an Augment Tier key"]))
+    if have("modules/custom/lua/Geas_Fete.lua"):
+        add(_row(["**[Geas Fete](../endgame/geas-fete.md)**",
+                  "??? pop-a-NM across Escha - Zi'Tah, Escha - Ru'Aun, and Reisenjima. "
+                  "Pays **Escha Beads** (shared currency) and drops the Aeonic weapon "
+                  "crafting materials (Attestations + Riftborn Boulders)."]))
+    if have("modules/custom/lua/Voidspire.lua"):
+        add(_row(["**[Voidspire](../endgame/voidspire.md)**",
+                  "Endless escalating wave-gauntlet at the Warden in Escha - Ru'Aun. "
+                  "Trusts enabled; a wipe ends the run and records your deepest floor "
+                  "on the leaderboard."]))
+    if have("modules/custom/lua/omen_instance.lua"):
+        add(_row(["**[Omen](../endgame/omen.md)**",
+                  "Reisenjima Henge gauntlet: five gates of trials, three Glassy "
+                  "sentinels, and the **Caturae** (Kin, Gin, Fu, Kyou, Kei) with the "
+                  "hidden Prime **Ou** beyond them."]))
+    if have("modules/custom/lua/REMAWeaponskillEnhancement.lua"):
+        add(_row(["**REMA / Prime WS Enhancement**",
+                  "Upgrade weapon-skill damage and mods on Relic / Empyrean / Mythic / "
+                  "Aeonic / Prime weapons — the WS tuning layer sitting on top of the "
+                  "endgame weapon ladder."]))
     add("")
     add("---")
     add("")
@@ -559,6 +597,65 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         add(_row(["System", "What it does"]))
         add(_row(["---", "---"]))
         L.extend(mastery_rows)
+        add("")
+
+    # ---- side activities ------------------------------------------------
+    activities: list[str] = []
+    if have("modules/custom/lua/ChocoboDerby.lua"):
+        activities.append(_row(["**[Chocobo Derby](../endgame/chocobo-derby.md)**",
+                                 "Bet gil on chocobo races at the Race Caller in "
+                                 "Purgonorgo Isle; raise a strong chocobo and enter "
+                                 "it as a runner for a bigger payout."]))
+    if have("modules/custom/lua/Casino.lua"):
+        activities.append(_row(["**[Casino — Lady Luck](../endgame/casino.md)**",
+                                 "Four-game gil-sink casino (slots, high-low, "
+                                 "roulette, dice) run by Lady Luck at `!leaf`. Biggest "
+                                 "wins shout server-wide."]))
+    if have("modules/custom/lua/Tournament.lua"):
+        activities.append(_row(["**[Tournament](../endgame/tournament.md)**",
+                                 "`!tournament join` during sign-ups. Warp in, fight "
+                                 "8 waves, last team standing takes the crown "
+                                 "(Hunt Marks + Infamy for surviving members)."]))
+    if have("modules/custom/lua/TreasureHunt.lua"):
+        activities.append(_row(["**[Treasure Hunts](../endgame/treasure-hunts.md)**",
+                                 "Hunting League kills can drop treasure maps. Take "
+                                 "one to its overworld zone and dig; hot/cold "
+                                 "feedback guides you to a strongbox of marks, gil, "
+                                 "and augment catalysts."]))
+    if have("modules/custom/lua/ProvisionersLeague.lua"):
+        activities.append(_row(["**[Provisioners' League](../endgame/provisioners-league.md)**",
+                                 "Fish and turn in HQ crafts at the League Steward "
+                                 "in **Escha - Zi'Tah** to earn League Points. Five "
+                                 "ranks; each rank stacks a permanent mark bonus."]))
+    if have("modules/custom/lua/happy_hour.lua") or have("modules/custom/lua/live_events_catalog.lua"):
+        activities.append(_row(["**[Live Events](../endgame/live-events.md)**",
+                                 "Three standing bonuses on fixed clocks: daily "
+                                 "**Happy Hour** EXP/CP boost, **Divergence City of "
+                                 "the Day** (bonus medals on clear), **Unity weekly "
+                                 "featured NM** (double accolades). Live-events "
+                                 "board on the Player Portal counts each one down."]))
+    if have("modules/custom/lua/SparksExchange.lua"):
+        activities.append(_row(["**Sparks Exchange**",
+                                 "Trade retail Sparks-of-Eminence for Hunt Marks + "
+                                 "seals + augment catalysts at the exchange NPC."]))
+    if have("modules/custom/lua/Cosmetic_Shop.lua"):
+        activities.append(_row(["**Cosmetic Boutique**",
+                                 "Gil-only cosmetic outlet — dyes, glamours, model "
+                                 "swaps. Pure vanity, no stats."]))
+    if activities:
+        add("### Side Activities & Events")
+        add("")
+        add(_row(["System", "What it does"]))
+        add(_row(["---", "---"]))
+        L.extend(activities)
+        add("")
+
+    if have("modules/custom/lua/achievements.lua"):
+        add("### Achievements")
+        add("")
+        add("**Achievements** are personal milestones that award bonus Hunt Marks "
+            "and occasionally an in-game title on first completion. Every eligible "
+            "player can earn each achievement — not server-first exclusives.")
         add("")
     add("---")
     add("")
