@@ -249,6 +249,15 @@ local function spawnVoidwalker(owner, tier, roster)
             sess.dead = true
             local resolved = GetPlayerByName(ownerName)
             if not resolved then sessions[ownerName] = nil; return end
+            -- Per-NM lifetime kill flag (2026-07-13). Read by the Weapon
+            -- Forge Mythic Stage II preflight ("All Voidwatch NMs killed").
+            -- Keyed on the session's NM name so a preflight iterates the
+            -- voidwatch_catalog strata roster and checks each flag.
+            pcall(function()
+                if sess.nmName then
+                    resolved:setCharVar('VW_NM_' .. sess.nmName, 1)
+                end
+            end)
             resolved:timer(10, function(p) onRiftCleared(p) end)   -- never re-entrant
         end,
 

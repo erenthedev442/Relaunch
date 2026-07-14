@@ -200,6 +200,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         player:printToPlayer(
             string.format('[Weapon Forge] The %s resonates with ancient power — behold the %s!',
                 fromItem.name, toItem.name), S)
+        -- Stage III (final Aeonic) completion flag. Read by the Prime Stage I
+        -- preflight ("Built a Relic, Mythic, Empyrean, or Aeonic final weapon").
+        -- Persists so trading/losing the weapon doesn't retract the milestone.
+        if fromStage == 2 then
+            player:setCharVar('WF_Aeonic_Final', 1)
+        end
         return true
     end
 
@@ -314,6 +320,13 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 '[Weapon Forge] The %s shimmers and transforms — behold the %s!',
                 fromItem.name, toItem.name),
             xi.msg.channel.SYSTEM_3)
+        -- Stage III (final Prime) completion flag. Doesn't gate anything today
+        -- (the Prime path IS the final ladder) but ships alongside the other
+        -- four so a preflight can enumerate "which final tier does this player
+        -- own" from CharVars alone -- no item-inventory scan required.
+        if fromStage == 2 then
+            player:setCharVar('WF_Prime_Final', 1)
+        end
         return true
     end
 
@@ -633,6 +646,13 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return
         end
         player:printToPlayer(string.format('[Weapon Forge] Your %s advances to %s!', chain.name, STAGE_LBL[k + 1]), S)
+        -- Stage III (final Empyrean / Mythic / Relic) completion flag. Read by
+        -- the Prime Stage I preflight; `def.key` is one of 'empyrean',
+        -- 'mythic', 'relic'. STAGE_LBL[4] = '119 III (complete)' so k+1 == 4
+        -- is the final stage.
+        if k + 1 == 4 and def and def.key then
+            player:setCharVar('WF_' .. def.key:sub(1,1):upper() .. def.key:sub(2) .. '_Final', 1)
+        end
     end
 
     local function printNewRecipe(player, def, chain)

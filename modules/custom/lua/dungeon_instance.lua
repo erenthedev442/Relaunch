@@ -371,6 +371,11 @@ runtime.create = function(dungeonKey)
                 string.format('[Dungeon] Every monster is down! This instance closes in %d seconds.',
                     catalog.completionDelay),
                 xi.msg.channel.SYSTEM_3)
+            -- Per-dungeon lifetime clear flag (2026-07-13). Read by the Weapon
+            -- Forge Aeonic Stage III preflight ("All Dungeons cleared"); a
+            -- preflight iterates catalog.dungeons and asserts every key's
+            -- flag == 1.
+            player:setCharVar('Dungeon_Clear_' .. dungeonKey, 1)
         end)
     end
 

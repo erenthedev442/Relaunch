@@ -205,36 +205,6 @@ const MALFORMED = {
 };
 
 const CATS = {
-  prime: {
-    label:'Prime', sub:'16 weapons · 4 stages',
-    accent:'#c8a030', dim:'#806820',
-    lore:'Weapons refined through the Prime Armory trials — the FJB-native five-trial legacy path. Earn the base weapon by clearing the Prime Trials, then upgrade it here.',
-    source:'The <strong>Prime</strong> path is the pinnacle of the server. Earn the base weapon by completing all <strong>five Prime Armory Trials</strong> at the Prime Armory NPC in {{npc:prime_armory}}, then forge it up through 119 / 119 II / 119 III. The final forge is the hardest step anywhere: it demands <strong>Legend rank</strong>, <strong>all five Trials</strong>, <strong>750,000,000 gil</strong>, 30,000 Reforge Marks, and the steepest medal cost on the board.',
-    s3lbl:'Stage III · Prime',
-    forge:[
-      {lbl:'Base → Stage I', mats:[['50×','Kindred\'s Seal'],['25×','High Kindred\'s Crest']], gate:'Built a Relic, Mythic, Empyrean, or Aeonic final weapon'},
-      {lbl:'Stage I → Stage II', mats:[['100×','High Kindred\'s Crest'],['50×','Demon\'s Medal'],['1,500','Reforge Marks']], gate:'All 5 Prime Armory Trials complete · Apex Hunter in the Hunter\'s Guild'},
-      {lbl:'Stage II → Stage III', mats:[['100×','Demon\'s Medal'],['5×','Ancient Beastcoin'],['5,000','Reforge Marks']], gate:'HL Rank V (Legend) · All five trials cleared'},
-    ],
-    weapons:[
-      {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Varga Purnikawa'},
-      {type:'Dagger',jobs:'THF · BRD · DNC',name:'Mpu Gandring'},
-      {type:'Sword',jobs:'RDM · PLD · BLU · RUN',name:'Caliburnus'},
-      {type:'Great Sword',jobs:'WAR · DRK',name:'Helheim'},
-      {type:'Axe',jobs:'WAR · BST',name:'Spalirisos'},
-      {type:'Great Axe',jobs:'WAR',name:'Laphria'},
-      {type:'Scythe',jobs:'DRK',name:'Foenaria'},
-      {type:'Polearm',jobs:'DRG',name:'Gae Buide'},
-      {type:'Katana',jobs:'NIN',name:'Dokoku'},
-      {type:'Great Katana',jobs:'SAM',name:'Kusanagi'},
-      {type:'Club',jobs:'WHM · GEO',name:'Lorg Mor'},
-      {type:'Staff',jobs:'BLM · SMN · SCH',name:'Opashoro'},
-      {type:'Archery',jobs:'RNG',name:'Pinaka'},
-      {type:'Marksmanship',jobs:'COR · RNG',name:'Earp'},
-      {type:'Shield',jobs:'PLD · RUN',name:'Duban',id:26495},
-      {type:'Instrument',jobs:'BRD',name:'Loughnashade',id:22307},
-    ],
-  },
   relic: {
     label:'Relic', sub:'14 weapons · 4 stages',
     accent:'#aa2828', dim:'#621515',
@@ -367,6 +337,36 @@ const CATS = {
     weapons:[
       {type:'Great Sword',jobs:'WAR · DRK',name:'Epeolatry',id:21685},
       {type:'Club',jobs:'GEO',name:'Idris',id:21080},
+    ],
+  },
+  prime: {
+    label:'Prime', sub:'16 weapons · 4 stages',
+    accent:'#c8a030', dim:'#806820',
+    lore:'Weapons refined through the Prime Armory trials — the FJB-native five-trial legacy path. Earn the base weapon by clearing the Prime Trials, then upgrade it here.',
+    source:'The <strong>Prime</strong> path is the pinnacle of the server. Earn the base weapon by completing all <strong>five Prime Armory Trials</strong> at the Prime Armory NPC in {{npc:prime_armory}}, then forge it up through 119 / 119 II / 119 III. The final forge is the hardest step anywhere: it demands <strong>Legend rank</strong>, <strong>all five Trials</strong>, <strong>750,000,000 gil</strong>, 30,000 Reforge Marks, and the steepest medal cost on the board.',
+    s3lbl:'Stage III · Prime',
+    forge:[
+      {lbl:'Base → Stage I', mats:[['50×','Kindred\'s Seal'],['25×','High Kindred\'s Crest']], gate:'Built a Relic, Mythic, Empyrean, or Aeonic final weapon'},
+      {lbl:'Stage I → Stage II', mats:[['100×','High Kindred\'s Crest'],['50×','Demon\'s Medal'],['1,500','Reforge Marks']], gate:'All 5 Prime Armory Trials complete · Apex Hunter in the Hunter\'s Guild'},
+      {lbl:'Stage II → Stage III', mats:[['100×','Demon\'s Medal'],['5×','Ancient Beastcoin'],['5,000','Reforge Marks']], gate:'HL Rank V (Legend) · All five trials cleared'},
+    ],
+    weapons:[
+      {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Varga Purnikawa'},
+      {type:'Dagger',jobs:'THF · BRD · DNC',name:'Mpu Gandring'},
+      {type:'Sword',jobs:'RDM · PLD · BLU · RUN',name:'Caliburnus'},
+      {type:'Great Sword',jobs:'WAR · DRK',name:'Helheim'},
+      {type:'Axe',jobs:'WAR · BST',name:'Spalirisos'},
+      {type:'Great Axe',jobs:'WAR',name:'Laphria'},
+      {type:'Scythe',jobs:'DRK',name:'Foenaria'},
+      {type:'Polearm',jobs:'DRG',name:'Gae Buide'},
+      {type:'Katana',jobs:'NIN',name:'Dokoku'},
+      {type:'Great Katana',jobs:'SAM',name:'Kusanagi'},
+      {type:'Club',jobs:'WHM · GEO',name:'Lorg Mor'},
+      {type:'Staff',jobs:'BLM · SMN · SCH',name:'Opashoro'},
+      {type:'Archery',jobs:'RNG',name:'Pinaka'},
+      {type:'Marksmanship',jobs:'COR · RNG',name:'Earp'},
+      {type:'Shield',jobs:'PLD · RUN',name:'Duban',id:26495},
+      {type:'Instrument',jobs:'BRD',name:'Loughnashade',id:22307},
     ],
   },
 };

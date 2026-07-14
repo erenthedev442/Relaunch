@@ -670,6 +670,11 @@ local function spawnNM(player, zone, zoneId, def)
             local clbl = CURRENCY_LABEL[zoneId] or 'pts'
             killer:printToPlayer(string.format('[Geas Fete] %s defeated! +%d %s',
                 defCapture.name, cur, clbl), S)
+            -- Per-NM lifetime kill flag (2026-07-13). Read by the Weapon Forge
+            -- Empyrean Stage I preflight ("All Geas Fete bosses killed at
+            -- least once"); one flag per (zone, gid) pair covers Zi'Tah,
+            -- Ru'Aun, and Reisenjima with a single check.
+            killer:setCharVar(string.format('GF_Kill_%d_%d', zoneId, defCapture.gid), 1)
         end,
     })
 

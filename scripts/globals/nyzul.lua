@@ -203,6 +203,11 @@ xi.nyzul.handleRunicKey = function(mob)
                     npcUtil.giveKeyItem(entity, xi.ki.RUNIC_KEY)
                 end
             end
+            -- Relaunch: persistent "cleared floor 100 at least once" flag.
+            -- Read by the Weapon Forge Mythic Stage I preflight. Runs for
+            -- EVERY entity in chars on a 100-win, not just the disk holder,
+            -- because the win credits the whole party for progression.
+            entity:setCharVar('Nyzul_F100_Cleared', 1)
         end
     end
 end
