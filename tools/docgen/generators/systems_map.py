@@ -439,18 +439,23 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     add(_row(["---", "---"]))
     if have("modules/custom/lua/htbf.lua"):
         add(_row(["**[High-Tier Battlefields](../endgame/high-tier-battlefields.md)**",
-                  "Retail HTBF fights via phantom gem entry, tiered difficulty, "
-                  "dedicated vendor"]))
+                  "Retail HTBF fights via phantom gem entry, tiered difficulty. "
+                  "Access gate: **master the entering job (2,100 JP)** + **register "
+                  "all 11 NM affinities** at the Augment Sage."]))
     if have("scripts/zones/Mhaura/npcs/Ambuscade_Tome.lua"):
         add(_row(["**[Ambuscade](../endgame/ambuscade.md)**",
                   "On-demand instanced boss fights in Mhaura (3 modes × 5 "
-                  "difficulties). Clears pay **Hallmarks** + **Gallantry** → job "
-                  "armor vouchers, weapon skins, and +1/+2 upgrades."]))
+                  "difficulties). Gate: **1 HNM King kill + 1 HTBF clear at each of "
+                  "T1/T2/T3**. Clears pay **Hallmarks** (200k monthly cap) + "
+                  "**Gallantry** for the 5-stage weapon upgrade chain "
+                  "(Tokko → Ajja → Eletta → Kaja → Final: Naegling, Karambit, "
+                  "Nandaka, Tauret, …)."]))
     if have("modules/custom/lua/Dynamis_Divergence.lua"):
         add(_row(["**[Dynamis – Divergence](../endgame/dynamis-divergence.md)**",
-                  "4 cities × wave battles. The **+3 → +4 Forge**: farm Rusted/Black ID "
-                  "Cards + a Mega-Boss Paragon Card, trade a reforged +3 AF/Relic piece → "
-                  "**+4** (AF & Relic only; Empy caps at +3)."]))
+                  "4 cities × wave battles. **Entry toll: 250 Reforge Marks (AF / "
+                  "Relic / Empyrean)**. The **+3 → +4 Forge**: farm Rusted/Black ID "
+                  "Cards + a Mega-Boss Paragon Card, trade a reforged +3 AF/Relic "
+                  "piece → **+4** (AF & Relic only; Empy caps at +3)."]))
     if have("modules/custom/lua/Voidwatch.lua"):
         add(_row(["**[Voidwatch](../endgame/voidwatch.md)**",
                   "Planar Rifts → Voidwalker NM → collect lights → Pyxis loot chest"]))

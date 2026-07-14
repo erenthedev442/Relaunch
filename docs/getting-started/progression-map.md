@@ -171,9 +171,11 @@ title: Progression Map
     <h3>The World-Content Band — feeds everything above</h3>
     <div class="who">Independent tracks with their own currencies and loot; several are augment-tier keys. A system only appears here while it exists in the live code.</div>
     <div class="wgrid">
-      <div class="wcell"><b>Dynamis — Divergence</b><span>Portals at the four city Dynamis entrances · wave battles · the +3 → +4 Forge (trade a reforged +3 AF/Relic piece + [D] materials → +4) · a city clear is an Augment Tier key</span></div>
+      <div class="wcell"><b>Dynamis — Divergence</b><span>Portals at the four city Dynamis entrances · entry toll <span class="chip c-paragon">250 Reforge Marks</span> (AF/Relic/Empy) · wave battles · the +3 → +4 Forge (trade a reforged +3 AF/Relic piece + [D] materials → +4) · a city clear is an Augment Tier key</span></div>
       <div class="wcell"><b>Voidwatch</b><span>Rift battles — pop a Planar Rift, burn the Voidwalker, stack lights for the Pyxis loot roll</span></div>
-      <div class="wcell"><b>High-Tier Battlefields</b><span>Retail HTBF fights via phantom gems, tiered difficulty, dedicated vendor</span></div>
+      <div class="wcell"><b>High-Tier Battlefields</b><span>Retail HTBF fights via phantom gems, tiered difficulty · gate: <b>master the entering job</b> + <b>all 11 NM affinities</b></span></div>
+      <div class="wcell"><b>Ambuscade</b><span>Monthly-rotating solo/party instance from the Ambuscade Tome in Mhaura · gate: <b>1 HNM King kill</b> + <b>1 HTBF clear at each of T1/T2/T3</b> · Hallmarks + Gallantry drive the 5-stage Tokko→Ajja→Eletta→Kaja→Final weapon-upgrade chain (Naegling, Karambit, Nandaka, …)</span></div>
+      <div class="wcell"><b>Geas Fete</b><span>??? pop-a-NM system across Escha - Zi'Tah, Escha - Ru'Aun, and Reisenjima · pays <span class="chip c-sigil">Escha Beads</span> and drops the Aeonic weapon crafting materials (Attestations + Riftborn Boulders)</span></div>
       <div class="wcell"><b>Nyzul Isle</b><span>The Sorrowful Sage in Mhaura opens retail Nyzul runs — floor-climb loot</span></div>
       <div class="wcell"><b>Spell &amp; Skill Mastery</b><span>Spend <span class="chip c-sigil">Mastery Sigils</span> at the Mastery Sage in <!--npc:spell_mastery-->Purgonorgo Isle<!--/npc--> to permanently empower weapon skills and spells</span></div>
       <div class="wcell"><b>Voidspire &amp; GM Waves</b><span>Weekly milestone dungeon + five wave difficulties — together an Augment Tier key</span></div>

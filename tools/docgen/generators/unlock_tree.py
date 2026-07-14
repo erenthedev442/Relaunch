@@ -709,6 +709,33 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
                if raid else
                "Weekly multi-phase raid boss at Escha - Ru'Aun; the big payout is once per week."),
          "modules/custom/lua/RaidBoss.lua"),
+        ("ambuscade", 960, 820, "Ambuscade", "content",
+         _desc("Ambuscade",
+               "Monthly-rotating solo/party instance from the Ambuscade Tome in Mhaura. "
+               "Access gate: **at least 1 HNM King kill** AND **at least 1 HTBF clear "
+               "at each of Tier 1, Tier 2, and Tier 3**. Pays **Hallmarks** (200k monthly "
+               "cap) and **Gallantry** for the Tokko → Ajja → Eletta → Kaja → Final "
+               "weapon-upgrade chain at the same tome."),
+         "modules/custom/lua/ambuscade_weapons_catalog.lua"),
+        ("geas", 960, 915, "Geas Fete", "content",
+         _desc("Geas Fete",
+               "??? pop-a-NM system across Escha - Zi'Tah, Escha - Ru'Aun, and Reisenjima. "
+               "Pays **Escha Beads** (the shared currency for both zones) and drops the "
+               "**Aeonic weapon crafting materials** (attestations + riftborn boulders)."),
+         "modules/custom/lua/Geas_Fete.lua"),
+        ("beads", 1140, 730, "Escha Beads", "curr",
+         _desc("Escha Beads",
+               "Produced by every Geas Fete NM (Zi'Tah, Ru'Aun, and Reisenjima all pay "
+               "into the same pool). Spent at the Warding Circles and at **Temprix** in "
+               "Reisenjima (Aeonic base weapons, 50,000 beads each)."),
+         "modules/custom/lua/Geas_Fete.lua"),
+        ("aeonic", 1300, 715, "Aeonic Weapons", "vert",
+         _desc("Aeonic Weapons",
+               "Trade a Malformed base weapon (bought from Temprix for 50,000 Escha Beads) "
+               "+ Attestations from Dynamis-classic NMs + Riftborn Boulders at the Weapon "
+               "Forge in Purgonorgo Isle. The tail of the endgame weapon ladder alongside "
+               "Prime."),
+         "modules/custom/lua/weapon_forge_catalog.lua"),
     ]
 
     present = {nid for nid, *_rest, need in NODES if need is None or n(need)}
@@ -790,6 +817,15 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
          f"+0–{int(round(hguild['max_amp'] * 100))}%" if hguild else "amplifies"),
         ("raid", "marks", f"{_fmt(raid['marks'])}/wk" if raid else ""),
         ("raid", "infamy", f"{raid['infamy']}/wk" if raid else ""),
+        # ---- Ambuscade (gate: HNM King + all three HTBF tiers) ---------------
+        ("hnm", "ambuscade", "1 King kill"),
+        ("htbf", "ambuscade", "T1/T2/T3 clears"),
+        # ---- Geas Fete → Escha Beads → Aeonic --------------------------------
+        # (Aeonic ALSO requires Attestations from Dynamis-classic NMs -- that
+        # source is content the tree doesn't yet enumerate as its own node.)
+        ("start", "geas", ""),
+        ("geas", "beads", "1/kill"),
+        ("beads", "aeonic", "50k -> Malformed"),
     ]
     edges_out = [
         {"f": f, "t": t, **({"lb": lb} if lb else {})}

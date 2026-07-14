@@ -197,11 +197,15 @@ def _world_cells(repo_root: Path) -> str:
     module exists in the live tree."""
     cells = [
         ("modules/custom/lua/Dynamis_Divergence.lua", "Dynamis — Divergence",
-         "Portals at the four city Dynamis entrances · wave battles · the +3 → +4 Forge (trade a reforged +3 AF/Relic piece + [D] materials → +4) · a city clear is an Augment Tier key"),
+         'Portals at the four city Dynamis entrances · entry toll <span class="chip c-paragon">250 Reforge Marks</span> (AF/Relic/Empy) · wave battles · the +3 → +4 Forge (trade a reforged +3 AF/Relic piece + [D] materials → +4) · a city clear is an Augment Tier key'),
         ("modules/custom/lua/Voidwatch.lua", "Voidwatch",
          "Rift battles — pop a Planar Rift, burn the Voidwalker, stack lights for the Pyxis loot roll"),
         ("modules/custom/lua/htbf.lua", "High-Tier Battlefields",
-         "Retail HTBF fights via phantom gems, tiered difficulty, dedicated vendor"),
+         "Retail HTBF fights via phantom gems, tiered difficulty · gate: <b>master the entering job</b> + <b>all 11 NM affinities</b>"),
+        ("modules/custom/lua/ambuscade_weapons_catalog.lua", "Ambuscade",
+         "Monthly-rotating solo/party instance from the Ambuscade Tome in Mhaura · gate: <b>1 HNM King kill</b> + <b>1 HTBF clear at each of T1/T2/T3</b> · Hallmarks + Gallantry drive the 5-stage Tokko→Ajja→Eletta→Kaja→Final weapon-upgrade chain (Naegling, Karambit, Nandaka, …)"),
+        ("modules/custom/lua/Geas_Fete.lua", "Geas Fete",
+         "??? pop-a-NM system across Escha - Zi'Tah, Escha - Ru'Aun, and Reisenjima · pays <span class=\"chip c-sigil\">Escha Beads</span> and drops the Aeonic weapon crafting materials (Attestations + Riftborn Boulders)"),
         ("scripts/zones/Mhaura/npcs/Sorrowful_Sage.lua", "Nyzul Isle",
          "The Sorrowful Sage in Mhaura opens retail Nyzul runs — floor-climb loot"),
         ("modules/custom/lua/SpellSkillMastery.lua", "Spell &amp; Skill Mastery",

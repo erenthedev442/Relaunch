@@ -122,9 +122,9 @@ Your Sage Mastery rank lifts the roll floor inside the unlocked band — see [Au
 
 | System | What you get |
 | --- | --- |
-| **[High-Tier Battlefields](../endgame/high-tier-battlefields.md)** | Retail HTBF fights via phantom gem entry, tiered difficulty, dedicated vendor |
-| **[Ambuscade](../endgame/ambuscade.md)** | On-demand instanced boss fights in Mhaura (3 modes × 5 difficulties). Clears pay **Hallmarks** + **Gallantry** → job armor vouchers, weapon skins, and +1/+2 upgrades. |
-| **[Dynamis – Divergence](../endgame/dynamis-divergence.md)** | 4 cities × wave battles. The **+3 → +4 Forge**: farm Rusted/Black ID Cards + a Mega-Boss Paragon Card, trade a reforged +3 AF/Relic piece → **+4** (AF & Relic only; Empy caps at +3). |
+| **[High-Tier Battlefields](../endgame/high-tier-battlefields.md)** | Retail HTBF fights via phantom gem entry, tiered difficulty. Access gate: **master the entering job (2,100 JP)** + **register all 11 NM affinities** at the Augment Sage. |
+| **[Ambuscade](../endgame/ambuscade.md)** | On-demand instanced boss fights in Mhaura (3 modes × 5 difficulties). Gate: **1 HNM King kill + 1 HTBF clear at each of T1/T2/T3**. Clears pay **Hallmarks** (200k monthly cap) + **Gallantry** for the 5-stage weapon upgrade chain (Tokko → Ajja → Eletta → Kaja → Final: Naegling, Karambit, Nandaka, Tauret, …). |
+| **[Dynamis – Divergence](../endgame/dynamis-divergence.md)** | 4 cities × wave battles. **Entry toll: 250 Reforge Marks (AF / Relic / Empyrean)**. The **+3 → +4 Forge**: farm Rusted/Black ID Cards + a Mega-Boss Paragon Card, trade a reforged +3 AF/Relic piece → **+4** (AF & Relic only; Empy caps at +3). |
 | **[Voidwatch](../endgame/voidwatch.md)** | Planar Rifts → Voidwalker NM → collect lights → Pyxis loot chest |
 | **[Domain Invasion](../endgame/domain-invasion.md)** | Server-wide co-op event across the two Escha zones (8×/day). Two waves + a named boss; pays **Escha Silt**, **Escha Beads**, and **Domain Points**. `!diwarp` |
 | **[Nyzul Isle](../endgame/nyzul-isle.md)** | Floor-climb dungeon runs with Nyzul armor rewards |
