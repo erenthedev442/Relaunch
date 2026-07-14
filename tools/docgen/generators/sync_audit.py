@@ -129,6 +129,79 @@ FACT_ALLOWLIST: dict[tuple[str, str], str] = {
 # needs a reason; prefer parsing the runtime file over allowlisting.
 MIRROR_ALLOWLIST: dict[tuple[str, str], str] = {}
 
+# Custom Lua modules that are legitimately NOT referenced by any docs file --
+# plumbing, internal libraries, dev tools, etc. Every entry needs a reason so
+# a reviewer can decide later whether the module actually became player-facing
+# (2026-07-13 owner escalation "make sure this always stays updated" -- 5-page
+# progression-sidebar audit turned up 17 player-facing modules with no doc row
+# each; the coverage check below fires ONE WARN per uncovered module so future
+# additions can't hide the same way).
+MODULE_COVERAGE_ALLOWLIST: dict[str, str] = {
+    # ---- engine plumbing / shared libraries -----------------------------
+    "module_utils.lua":              "engine plumbing (Module class + override glue)",
+    "mob_mechanics_library.lua":     "shared boss-mechanic library used by other modules; not a user-facing feature",
+    "auto_message_scaling.lua":      "internal message-scaling helper called from mob scripts",
+    "damage_scaling.lua":            "internal damage-scaling helper",
+    "npcutil_backport.lua":          "npcUtil retrofit for stock scripts; engine layer",
+    "spawn_scaling.lua":             "internal mob-scaling helper",
+    "regional_buff_helper.lua":      "helper wired by !buff; the command is documented, this file is not",
+    "affinity_ki_gate.lua":          "internal gate helper",
+    "mob_leash_helper.lua":          "leash tuning helper",
+    "prof_toggle_menu.lua":          "internal profiler toggle",
+    "persist_nm_time_of_deaths.lua": "internal NM ToD persistence helper",
+    "spawn_scaling.lua":             "internal mob-scaling helper (duplicate for safety)",
+    "dungeon_zone.lua":              "internal Dungeon Instances zone helper; system IS documented",
+    "hub_ambience.lua":              "internal hub-zone ambience (weather/day-night) helper",
+    "invasion_loot_pool.lua":        "internal Invasion loot table; system IS documented",
+    "legendary_ring_aura.lua":       "cosmetic aura on legendary rings; no player-facing menu",
+    "nomad_moogle.lua":              "internal moogle helper; existing NPC dressing",
+    "disable_dealer_moogle.lua":     "targeted stock-NPC override; internal",
+    "climactic_flourish_consumer.lua": "internal WS consumer helper wired from JA code",
+    "pet_magic_burst.lua":           "internal pet magic-burst behaviour helper",
+    "daily_xp_tracker.lua":          "internal EXP tracker; feeds the Player Portal analytics",
+    "new_char_trust_upgraded.lua":   "one-shot new-character trust upgrade; runs invisibly",
+    # ---- Trust helpers ---------------------------------------------------
+    "trust_meta.lua":                "trust metadata helper",
+    "trust_naming.lua":              "trust display-name helper",
+    "trust_stats_boost.lua":         "trust stat-boost helper wired from summoner code",
+    "trust_baseline_boost.lua":      "trust baseline stat helper",
+    "fellow_name.lua":               "fellow display-name helper; Fellow system IS documented",
+    "trust_meat_vendor.lua":         "internal trust-meat NPC helper; system IS documented",
+    # ---- System-internal data files whose parent system IS documented ---
+    "affinity_nm_autopop.lua":       "autopop dispatcher; the Affinity NM system IS documented",
+    "chocobo_raising_qol.lua":       "QoL helpers for stock chocobo raising -- no player-facing feature to name",
+    "custom_HNM_system.lua":         "HNM King dispatcher; the HNMs / Sky Gods system IS documented",
+    "world_first_announcements.lua": "server-wide announcement wiring; the Achievements system IS documented",
+    "capacity_farm_helpers.lua":     "internal helpers for the Capacity Farm; the farm IS documented",
+    "capacity_farm_common.lua":      "internal helpers for the Capacity Farm; the farm IS documented",
+    "capacity_farm_engine.lua":      "engine for Capacity Farm; system IS documented",
+    "capacity_farm_points.lua":      "points table for Capacity Farm; system IS documented",
+    "ranperre_farm_points.lua":      "points table for Ranperre capacity farm; system IS documented",
+    "omen_mechanics.lua":            "boss-mechanic wiring for Omen; system IS documented",
+    "hunters_guild_hunts.lua":       "hunts table consumed by hunters_guild_catalog; guild IS documented",
+    "unity_wanted_instance_runtime.lua": "Unity Wanted runtime; system IS documented",
+    "gauntlet_champion_data.lua":    "static champion metadata for The Gauntlet; system IS documented",
+    "prime_voucher_reward.lua":      "voucher-drop wiring for Prime Weapon Trial 1; system IS documented",
+    "hl_seal_currency.lua":          "Hunt-League seal currency plumbing; system IS documented",
+    # ---- Augment / Reforge internals ------------------------------------
+    "augment_affinity_migrate11.lua": "one-shot migration to 11-affinity model; done, kept for late arrivals",
+    "augment_catalyst_pools.lua":     "static catalyst pools consumed by Augment_Moogle; system IS documented",
+    "augment_item_names.lua":         "static item-name table for Augment_Moogle labels",
+    "reforge_mark_exchange_catalog.lua": "catalog consumed by ReforgeMarkExchange_NPC.lua (the NPC file IS the doc anchor)",
+    "reforge_plus4_map.lua":         "static +3->+4 pair table; the Divergence +4 Forge IS documented",
+    "abjuration_forge_catalog.lua":  "catalog consumed by AbjurationForge_NPC.lua (the NPC file IS the doc anchor)",
+    # ---- REMA / Prime WS enhancement ------------------------------------
+    "PrimeWeaponskillTuning.lua":    "engine for the REMA WS Enhancement system; the system IS documented",
+    "prime_ws_tuning_catalog.lua":   "catalog for REMA WS Enhancement; system IS documented",
+    "rema_ws_tier_catalog.lua":      "catalog for REMA WS Enhancement; system IS documented",
+    # ---- Open-World Scaling ---------------------------------------------
+    "OpenWorldScaling.lua":          "always-on scaling of open-world mobs to the relaunch curve",
+    "open_world_scaling_catalog.lua": "catalog for open-world scaling; internal",
+    # ---- Deferred: needs a doc row in a follow-up commit ----------------
+    # (leave AbjurationForge intentionally OFF the allowlist so a future
+    # session sees it flagged and adds it to the Gear Guide.)
+}
+
 # Module-level ALL_CAPS numeric assignment in a generator / `local` in Lua.
 _PY_CONST_RE  = re.compile(r"^([A-Z][A-Z0-9_]{2,})\s*=\s*(-?\d+(?:\.\d+)?)\s*(?:#.*)?$", re.M)
 _LUA_LOCAL_RE = re.compile(r"^local\s+([A-Z][A-Z0-9_]{2,})\s*=\s*(-?\d+(?:\.\d+)?)", re.M)
@@ -228,6 +301,53 @@ def _hand_prose(text: str) -> list[tuple[int, str]]:
     return out
 
 
+def _uncovered_modules(repo_root: Path, docs_dir: Path) -> list[str]:
+    """List custom Lua modules (modules/custom/lua/*.lua) whose filename is not
+    referenced by ANY docs file (published .md + generators .py) and not on the
+    allowlist. Fires ONCE PER MODULE with a WARN so a new custom system dropped
+    in without a doc row cannot silently ship.
+
+    Simple contract: the module's filename (bare, no path) must appear as text
+    somewhere under docs/**/*.md OR tools/docgen/generators/*.py -- a
+    presence-gate `have("modules/custom/lua/Foo.lua")` counts, a `.md` mention
+    counts, a `require('modules/custom/lua/foo_catalog')` in a generator counts
+    (via its bare stem).
+    """
+    lua_dir = repo_root / "modules" / "custom" / "lua"
+    if not lua_dir.is_dir():
+        return []
+
+    modules = [p.name for p in sorted(lua_dir.glob("*.lua"))]
+
+    haystacks: list[str] = []
+    # Every published/staged .md
+    for md in docs_dir.rglob("*.md"):
+        try:
+            haystacks.append(md.read_text(encoding="utf-8", errors="replace"))
+        except OSError:
+            pass
+    # Every generator source
+    gen_dir = Path(__file__).parent
+    for py in gen_dir.glob("*.py"):
+        try:
+            haystacks.append(py.read_text(encoding="utf-8", errors="replace"))
+        except OSError:
+            pass
+    corpus = "\n".join(haystacks)
+
+    uncovered = []
+    for mod in modules:
+        if mod in MODULE_COVERAGE_ALLOWLIST:
+            continue
+        # Look for the full filename OR the bare stem (catalog files are usually
+        # required by stem in generators, e.g. paragon_catalog).
+        stem = mod[:-4]  # strip .lua
+        if mod in corpus or stem in corpus:
+            continue
+        uncovered.append(mod)
+    return uncovered
+
+
 def generate(repo_root: Path, docs_dir: Path) -> None:  # noqa: ARG001
     unowned: list[str] = []
     naked: list[tuple[str, int, str, str]] = []
@@ -289,6 +409,16 @@ def generate(repo_root: Path, docs_dir: Path) -> None:  # noqa: ARG001
             drift = "" if val == lua_val else f"  <-- DRIFTED (runtime is {lua_val})"
             print(f"  - {gen}: {name} = {val}  (runtime: {lua_file}){drift}")
 
-    if not unowned and not naked and not mirrors:
+    uncovered = _uncovered_modules(repo_root, docs_dir)
+    if uncovered:
+        print(f"[sync_audit] UNCOVERED-MODULE — {len(uncovered)} custom Lua "
+              "module(s) not referenced by any generator or published doc "
+              "(add a row to systems_map.py / progression_map.py / unlock_tree.py "
+              "/ a hub page, or add to MODULE_COVERAGE_ALLOWLIST with a reason):")
+        for mod in uncovered:
+            print(f"  - modules/custom/lua/{mod}")
+
+    if not unowned and not naked and not mirrors and not uncovered:
         print("[sync_audit] OK — every published page is generator-owned, no "
-              "naked facts in hand prose, no mirrored runtime constants.")
+              "naked facts in hand prose, no mirrored runtime constants, every "
+              "custom module has doc coverage.")

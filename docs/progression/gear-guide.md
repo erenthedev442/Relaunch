@@ -136,6 +136,53 @@ Armor does not come from the Weapons Vendor — it comes from two other sources:
 
 ---
 
+## Endgame vendors & forges
+
+Once you leave the Bronze / Silver / Gold ladder, the endgame gear economy fans out across a dozen specialist NPCs. Every row below only renders if its module ships on the live server — a retired vendor falls off the page automatically on the next docgen run.
+
+| Vendor / Forge | What it sells | Currency |
+|---|---|---|
+| **[Prime Armory](prime-armory.md)** (Purgonorgo Isle) | 16 Stage-5 Prime weapons — best-in-slot with unique WS unlocks | 1 Prime Voucher + gil per forge (see the Prime page for gil amount) |
+| **Relic Forge** (Leafallia) | 16 Stage-5 Relic weapons — the retail relic endgame line | **100 Byne Bill × 75** (Dynamis currency) |
+| **[Weapon Forge](weapon-forge.md)** (Purgonorgo Isle) | Six weapon paths — ilvl 119 → 119II → 119III forge (Prime + Aeonic bases) | Medals + **Reforge Marks** + Attestations + Riftborn Boulders + Escha Silt + gil |
+| **Reisenjima Forge** (Reisenjima) | Odyssean / Valorous / Chironic / Merlinic / Herculean armor + NQ→+1 for Adhemar / Argosy / Carmine / Rao / Ryuo / Souveran | **Abjurations** from Reisenjima NMs + gil |
+| **[+3 → +4 Forge](../endgame/dynamis-divergence.md#the-3-4-forge)** (Dynamis-Divergence) | The +4 upgrade tier — turn a reforged +3 AF/Relic piece into +4 | Reforged **+3 piece** + **Paragon Card** (main-job) + **Rusted / Black ID Cards** (99 / 99, 6 body) |
+| **Temprix** (Reisenjima) | Malformed base weapons — the Aeonic starting blank | **50,000 Escha Beads** each |
+| **Domain Quartermaster** (Escha zones) | Domain / Zurim items — Hunt-Marks alternative to farming Zurim direct | Hunt Marks |
+| **Phantom Gem Vendor** (Purgonorgo Isle) | Phantom Gems — HTBF entry tokens (Tier I / II / III) | Gil |
+| **Crafting Exchange** (Purgonorgo Isle) | Turn HQ synth results into Hunt Marks — a Bronze-tier faucet for crafters | HQ craft results |
+| **Reforge Mark Exchange** (Reisenjima Henge) | Convert one family of Reforge Marks to another (2:1 AF→Relic, 2:1 Relic→Empy, 3:1 Empy→AF) | Reforge Marks (any of AF / Relic / Empyrean) |
+| **[Ambuscade Weapon Forge](../endgame/ambuscade.md)** (Ambuscade Tome, Mhaura) | The Tokko → Ajja → Eletta → Kaja → Final upgrade chain — **Naegling**, Karambit, Nandaka, Tauret, Dolichenus, … | Hallmarks + Gallantry + Abdhaljs materials (Nugget / Gem / Anima / Matter) + Pulse Cell + gil |
+
+### Currency & material vocabulary
+
+Endgame trades pull from a wide vocabulary of currencies and forge materials. The list below is a lookup key -- see each system's own page for exact amounts and drop sources.
+
+| Currency / Material | Sourced from | Spent on |
+|---|---|---|
+| **Hunt Marks** | Hunting League, boards, HTBF, Colosseum, achievements | Seals, ranks, most vendors |
+| **Beastmens / Kindreds / Demons Medals** | Trade Hunt Marks at the Seals NPC | Weapons / Armor / Accessories vendors |
+| **AF / Relic / Empyrean Reforge Marks** | Abyssea NMs (AF), Sky Gods / Land Kings (Relic), Voidwatch (Empy) | Reforge System (+1/+2/+3) + Dynamis-Divergence entry toll (250) + Weapon Forge 119III |
+| **Infamy** | Invasions, Apex Trials, The Gauntlet, Abyssea NMs, Star-Devourer | Infamy Vendor (accessories) |
+| **Escha Beads** | Every Geas Fete NM (Zi'Tah, Ru'Aun, Reisenjima all pay in) | Warding Circles + Temprix (50k → Malformed → Aeonic) |
+| **Escha Silt** | Domain Invasion + Eschan portal cost | Eschan portal travel + Weapon Forge 119II/III material |
+| **Hallmarks** | Ambuscade clears (200,000/month cap) | Ambuscade weapon chain + Ambuscade armor vouchers |
+| **Gallantry** | Ambuscade objective bonuses | Cosmetic + capacity boons |
+| **Accolades** | Unity Concord Wanted NM kills | Unity shop |
+| **Mastery Sigils** | Daily NM rotation (primary), any NM (small trickle) | Spell & Skill Mastery |
+| **Paragon Points** | Apex Trials, The Gauntlet | Paragon Board + Daily Might |
+| **Apex Points** | Apex Trials climb | Bank as Paragon Points |
+| **Attestations** | Dynamis-classic NMs | Aeonic weapon forge |
+| **Riftborn Boulders** | Geas Fete NMs (rare) | Aeonic weapon forge |
+| **Abdhaljs Nugget / Gem / Anima / Matter** | Ambuscade objective rewards | Ambuscade weapon upgrade chain |
+| **Pulse Cell** | Ambuscade objective rewards | Ambuscade weapon upgrade chain |
+| **Paragon Card** | Dynamis-Divergence Mega-Boss (main-job on kill) | +3 → +4 Forge |
+| **Rusted / Black ID Card** | Dynamis-Divergence trash / bosses | +3 → +4 Forge materials |
+| **100 Byne Bill / Ordelle's Bronzepiece / Tukuku Whiteshell** | Dynamis-classic zones | Relic Forge (Stage 5) |
+| **Cruor** | Abyssea NM kills | Abyssea buffs + retail Cruor buys |
+
+---
+
 ## Progression timeline
 
 Use this as a rough roadmap. Time estimates assume regular play (several sessions per week), not speed-running.

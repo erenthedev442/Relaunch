@@ -182,6 +182,7 @@ def _render(d: dict) -> str:
     sage       = d["sage"]
     crit       = d["crit"]
     aff_count  = d["aff_count"]
+    repo_root  = d["repo_root"]                    # for presence-gated vendor rows
 
     def medal(tier: str) -> str:
         return seals[tier]
@@ -454,6 +455,126 @@ def _render(d: dict) -> str:
     A("---")
     A("")
 
+    # ---- endgame vendors + forges (presence-gated so retirements auto-drop) ---
+    A("## Endgame vendors & forges")
+    A("")
+    A(
+        "Once you leave the Bronze / Silver / Gold ladder, the endgame gear economy "
+        "fans out across a dozen specialist NPCs. Every row below only renders if "
+        "its module ships on the live server — a retired vendor falls off the page "
+        "automatically on the next docgen run."
+    )
+    A("")
+    A("| Vendor / Forge | What it sells | Currency |")
+    A("|---|---|---|")
+
+    def vrow(rel: str, name_link: str, sells: str, currency_txt: str) -> None:
+        # Presence gate mirrors systems_map.py / progression_map.py -- if the
+        # module isn't in the live tree, the row is silently omitted.
+        if resolve_source(repo_root, rel, required=False) is not None:
+            A(f"| {name_link} | {sells} | {currency_txt} |")
+
+    vrow("modules/custom/lua/PrimeArmory_NPC.lua",
+         "**[Prime Armory](prime-armory.md)** (Purgonorgo Isle)",
+         "16 Stage-5 Prime weapons — best-in-slot with unique WS unlocks",
+         "1 Prime Voucher + gil per forge (see the Prime page for gil amount)")
+    vrow("modules/custom/lua/Relic_Forge.lua",
+         "**Relic Forge** (Leafallia)",
+         "16 Stage-5 Relic weapons — the retail relic endgame line",
+         "**100 Byne Bill × 75** (Dynamis currency)")
+    vrow("modules/custom/lua/WeaponForge_NPC.lua",
+         "**[Weapon Forge](weapon-forge.md)** (Purgonorgo Isle)",
+         "Six weapon paths — ilvl 119 → 119II → 119III forge (Prime + Aeonic bases)",
+         "Medals + **Reforge Marks** + Attestations + Riftborn Boulders + Escha Silt + gil")
+    vrow("modules/custom/lua/AbjurationForge_NPC.lua",
+         "**Reisenjima Forge** (Reisenjima)",
+         "Odyssean / Valorous / Chironic / Merlinic / Herculean armor + NQ→+1 for "
+         "Adhemar / Argosy / Carmine / Rao / Ryuo / Souveran",
+         "**Abjurations** from Reisenjima NMs + gil")
+    vrow("modules/custom/lua/Dynamis_Plus4_Forge.lua",
+         "**[+3 → +4 Forge](../endgame/dynamis-divergence.md#the-3-4-forge)** (Dynamis-Divergence)",
+         "The +4 upgrade tier — turn a reforged +3 AF/Relic piece into +4",
+         "Reforged **+3 piece** + **Paragon Card** (main-job) + "
+         "**Rusted / Black ID Cards** (99 / 99, 6 body)")
+    vrow("modules/custom/lua/Temprix_NPC.lua",
+         "**Temprix** (Reisenjima)",
+         "Malformed base weapons — the Aeonic starting blank",
+         "**50,000 Escha Beads** each")
+    vrow("modules/custom/lua/DomainSpoils_NPC.lua",
+         "**Domain Quartermaster** (Escha zones)",
+         "Domain / Zurim items — Hunt-Marks alternative to farming Zurim direct",
+         "Hunt Marks")
+    vrow("modules/custom/lua/HTBF_Vendor.lua",
+         "**Phantom Gem Vendor** (Purgonorgo Isle)",
+         "Phantom Gems — HTBF entry tokens (Tier I / II / III)",
+         "Gil")
+    vrow("modules/custom/lua/CraftingExchange_NPC.lua",
+         "**Crafting Exchange** (Purgonorgo Isle)",
+         "Turn HQ synth results into Hunt Marks — a Bronze-tier faucet for crafters",
+         "HQ craft results")
+    vrow("modules/custom/lua/ReforgeMarkExchange_NPC.lua",
+         "**Reforge Mark Exchange** (Reisenjima Henge)",
+         "Convert one family of Reforge Marks to another (2:1 AF→Relic, "
+         "2:1 Relic→Empy, 3:1 Empy→AF)",
+         "Reforge Marks (any of AF / Relic / Empyrean)")
+    vrow("modules/custom/lua/ambuscade_weapons_catalog.lua",
+         "**[Ambuscade Weapon Forge](../endgame/ambuscade.md)** (Ambuscade Tome, Mhaura)",
+         "The Tokko → Ajja → Eletta → Kaja → Final upgrade chain — "
+         "**Naegling**, Karambit, Nandaka, Tauret, Dolichenus, …",
+         "Hallmarks + Gallantry + Abdhaljs materials (Nugget / Gem / Anima / "
+         "Matter) + Pulse Cell + gil")
+    A("")
+
+    # ---- currency vocabulary (drift-proof reference list) -----------------
+    A("### Currency & material vocabulary")
+    A("")
+    A(
+        "Endgame trades pull from a wide vocabulary of currencies and forge "
+        "materials. The list below is a lookup key -- see each system's own page "
+        "for exact amounts and drop sources."
+    )
+    A("")
+    A("| Currency / Material | Sourced from | Spent on |")
+    A("|---|---|---|")
+    A("| **Hunt Marks** | Hunting League, boards, HTBF, Colosseum, achievements | "
+      "Seals, ranks, most vendors |")
+    A("| **Beastmens / Kindreds / Demons Medals** | Trade Hunt Marks at the "
+      "Seals NPC | Weapons / Armor / Accessories vendors |")
+    A("| **AF / Relic / Empyrean Reforge Marks** | Abyssea NMs (AF), Sky Gods / "
+      "Land Kings (Relic), Voidwatch (Empy) | Reforge System (+1/+2/+3) + "
+      "Dynamis-Divergence entry toll (250) + Weapon Forge 119III |")
+    A("| **Infamy** | Invasions, Apex Trials, The Gauntlet, Abyssea NMs, "
+      "Star-Devourer | Infamy Vendor (accessories) |")
+    A("| **Escha Beads** | Every Geas Fete NM (Zi'Tah, Ru'Aun, Reisenjima all "
+      "pay in) | Warding Circles + Temprix (50k → Malformed → Aeonic) |")
+    A("| **Escha Silt** | Domain Invasion + Eschan portal cost | Eschan portal "
+      "travel + Weapon Forge 119II/III material |")
+    A("| **Hallmarks** | Ambuscade clears (200,000/month cap) | Ambuscade weapon "
+      "chain + Ambuscade armor vouchers |")
+    A("| **Gallantry** | Ambuscade objective bonuses | Cosmetic + capacity boons |")
+    A("| **Accolades** | Unity Concord Wanted NM kills | Unity shop |")
+    A("| **Mastery Sigils** | Daily NM rotation (primary), any NM (small "
+      "trickle) | Spell & Skill Mastery |")
+    A("| **Paragon Points** | Apex Trials, The Gauntlet | Paragon Board + "
+      "Daily Might |")
+    A("| **Apex Points** | Apex Trials climb | Bank as Paragon Points |")
+    A("| **Attestations** | Dynamis-classic NMs | Aeonic weapon forge |")
+    A("| **Riftborn Boulders** | Geas Fete NMs (rare) | Aeonic weapon forge |")
+    A("| **Abdhaljs Nugget / Gem / Anima / Matter** | Ambuscade objective "
+      "rewards | Ambuscade weapon upgrade chain |")
+    A("| **Pulse Cell** | Ambuscade objective rewards | Ambuscade weapon "
+      "upgrade chain |")
+    A("| **Paragon Card** | Dynamis-Divergence Mega-Boss (main-job on kill) "
+      "| +3 → +4 Forge |")
+    A("| **Rusted / Black ID Card** | Dynamis-Divergence trash / bosses | "
+      "+3 → +4 Forge materials |")
+    A("| **100 Byne Bill / Ordelle's Bronzepiece / Tukuku Whiteshell** | "
+      "Dynamis-classic zones | Relic Forge (Stage 5) |")
+    A("| **Cruor** | Abyssea NM kills | Abyssea buffs + retail Cruor buys |")
+    A("")
+    A("---")
+    A("")
+
     # ---- timeline -------------------------------------------------------------
     A("## Progression timeline")
     A("")
@@ -648,6 +769,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             "sage":           sage,
             "crit":           crit,
             "aff_count":      aff_count,
+            "repo_root":      repo_root,
         }
     except (_Skip, RuntimeError, ValueError) as e:
         # RuntimeError/ValueError = a reused parser's own schema-regression
