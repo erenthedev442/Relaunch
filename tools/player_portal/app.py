@@ -205,24 +205,12 @@ LEGACY_REWARD_OPTIONS = [
         "description": "Display the exclusive “Legendary Founder” title — a permanent nod to being here from the start.",
         "vars": {"Legacy_Cosmetic_Title": 1},
     },
-    {
-        "id": "prestige_aura",
-        "label": "Veteran's Aura",
-        "description": "A subtle cosmetic aura that marks you as a Legendary veteran. Visual only — no combat effect.",
-        "vars": {"Legacy_Cosmetic_Aura": 1},
-    },
-    {
-        "id": "founder_cape",
-        "label": "Founder's Mantle",
-        "description": "A commemorative cosmetic cape (glamour only, no stats) worn over whatever back piece you equip.",
-        "vars": {"Legacy_Cosmetic_Glamour": 1},
-    },
-    {
-        "id": "legacy_fireworks",
-        "label": "Commemorative Fireworks",
-        "description": "A one-of-a-kind celebratory fireworks emote to show off your Legendary roots.",
-        "vars": {"Legacy_Cosmetic_Emote": 1},
-    },
+    # Removed 2026-07-13 (owner call): Veteran's Aura / Founder's Mantle /
+    # Commemorative Fireworks were listed but never had implementations on the
+    # server side (no aura VFX, no back-slot cosmetic override, no emote wired
+    # up). Anyone who already claimed one still has their Legacy_Cosmetic_Aura
+    # / _Glamour / _Emote charVar -- harmless to leave set -- but the reward
+    # picker no longer offers them to future migrators.
 ]
 _REWARD_BY_ID = {o["id"]: o for o in LEGACY_REWARD_OPTIONS}
 LEGACY_REWARD_CLAIMED_VAR = "Legacy_Reward_Claimed"
