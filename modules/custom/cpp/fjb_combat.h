@@ -15,8 +15,15 @@
 class CBattleEntity;
 
 // True when the damage source is player-controlled (PC, or a pet/trust/charmed
-// mob whose master is a PC). These bypass the damage cap.
+// mob whose master is a PC). These bypass the legacy packet damage ceiling,
+// but remain subject to the authoritative HP damage cap.
 bool IsPlayerControlled(CBattleEntity* PAttacker);
+
+// Resolve the authoritative per-event HP damage ceiling. The configured global
+// cap applies to every source except a PC executing an approved final-Prime
+// native weaponskill; that narrow synchronous window carries its own cap in an
+// entity local variable, bounded here to 1,999,999.
+int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap);
 
 // Whisper the true (over-cap) damage to the controlling player so it's readable
 // in chat. No-op for <=131071 or non-player-controlled sources.

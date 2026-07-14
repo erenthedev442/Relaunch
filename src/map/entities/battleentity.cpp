@@ -26,6 +26,8 @@
 #include "common/settings.h"
 #include "common/utils.h"
 
+#include "modules/custom/cpp/fjb_combat.h"
+
 #include "action/action.h"
 #include "action/interrupts.h"
 #include "ai/ai_container.h"
@@ -964,9 +966,10 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
     if (amount > 0 && !bypassGlobalHpDamageCap)
     {
         const int32 globalHpDamageCap = settings::get<int32>("map.GLOBAL_HP_DAMAGE_CAP");
-        if (globalHpDamageCap > 0)
+        const int32 effectiveDamageCap = ResolveOutgoingHpDamageCap(attacker, globalHpDamageCap);
+        if (effectiveDamageCap > 0)
         {
-            amount = std::min(amount, globalHpDamageCap);
+            amount = std::min(amount, effectiveDamageCap);
         }
     }
 

@@ -73,12 +73,31 @@ bool IsPlayerControlled(CBattleEntity* PAttacker)
             (PAttacker->PMaster != nullptr && PAttacker->PMaster->objtype == TYPE_PC));
 }
 
+int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
+{
+    constexpr int32 PRIME_ABSOLUTE_DAMAGE_CAP = 1999999;
+
+    if (globalCap <= 0 || PAttacker == nullptr || PAttacker->objtype != TYPE_PC)
+    {
+        return globalCap;
+    }
+
+    const auto primeCap = static_cast<int32>(PAttacker->GetLocalVar("PrimeWsDamageCap"));
+    if (primeCap <= globalCap)
+    {
+        return globalCap;
+    }
+
+    return std::min(primeCap, PRIME_ABSOLUTE_DAMAGE_CAP);
+}
+
 void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_view type)
 {
     const int32 globalHpDamageCap = settings::get<int32>("map.GLOBAL_HP_DAMAGE_CAP");
-    if (damage > 0 && globalHpDamageCap > 0)
+    const int32 effectiveDamageCap = ResolveOutgoingHpDamageCap(PAttacker, globalHpDamageCap);
+    if (damage > 0 && effectiveDamageCap > 0)
     {
-        damage = std::min(damage, globalHpDamageCap);
+        damage = std::min(damage, effectiveDamageCap);
     }
 
     if (damage <= 131071)

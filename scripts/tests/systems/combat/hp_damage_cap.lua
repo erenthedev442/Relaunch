@@ -5,8 +5,8 @@ describe('Global HP damage cap', function()
     ---@type CTestEntity
     local target
 
-    local damageCap = 9999999
-    local maxHP     = 30000000
+    local damageCap = 999999
+    local maxHP     = 10000000
 
     before_each(function()
         player = xi.test.world:spawnPlayer(
@@ -62,6 +62,28 @@ describe('Global HP damage cap', function()
             { wakeUp = true, breakBind = true, bypassGlobalHpDamageCap = true })
 
         assert(target:getHP() == 0, 'Expected forced-death bypass to apply the full lethal amount')
+    end)
+
+    it('allows only an active Prime WS window to use its higher job cap', function()
+        local primeCap = 1749999
+        player:setLocalVar('PrimeWsDamageCap', primeCap)
+
+        target:takeDamage(primeCap + 1, player, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
+
+        assert(target:getHP() == maxHP - primeCap,
+            string.format('Expected Prime damage cap %d, got %d damage',
+                primeCap, maxHP - target:getHP()))
+    end)
+
+    it('never permits a Prime WS cap above 1,999,999', function()
+        local primeAbsoluteCap = 1999999
+        player:setLocalVar('PrimeWsDamageCap', 9999999)
+
+        target:takeDamage(primeAbsoluteCap + 1, player, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
+
+        assert(target:getHP() == maxHP - primeAbsoluteCap,
+            string.format('Expected absolute Prime cap %d, got %d damage',
+                primeAbsoluteCap, maxHP - target:getHP()))
     end)
 
     it('preserves a lower target-specific received-damage cap', function()
