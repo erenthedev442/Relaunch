@@ -295,11 +295,19 @@ catalog.mythicCosts =
     { hlRank = 4, standing = 3000, silver = 25, beitetsu = 300 },         -- 119 I -> II
     { hlRank = 5, gold = 5, beitetsu = 10000, marks = 20000 },            -- 119 II -> III
 }
+-- Relic forge gates (2026-07-13 owner tuning):
+--   * hlRank 5 throughout
+--   * divergenceWins N = the player has cleared N *unique* Dynamis - Divergence
+--     city instances (counted from the DivergenceSlots bitmask that
+--     scripts/globals/dynamis_divergence.lua's onInstanceComplete already sets;
+--     multiple runs in the SAME city still count as 1). See
+--     `xi.divergence.uniqueWins(player)` in the shared engine file. The
+--     Weapon Forge NPC enforces the gate before consuming any materials.
 catalog.relicCosts =
 {
-    { hlRank = 5, byne = 100, silverpiece = 25 },                         -- base -> 119 I
-    { hlRank = 5, byne = 300, jadeshell = 50, pluton = 100 },             -- 119 I -> II
-    { hlRank = 5, pluton = 300, marks = 10000 },                          -- 119 II -> III (Gallimaufry omitted: absent on server)
+    { hlRank = 5, divergenceWins = 1, byne = 100, silverpiece = 25 },                         -- base -> 119 I
+    { hlRank = 5, divergenceWins = 2, byne = 300, jadeshell = 50, pluton = 100 },             -- 119 I -> II
+    { hlRank = 5, divergenceWins = 4, pluton = 300, marks = 10000 },                          -- 119 II -> III (Gallimaufry omitted: absent on server)
 }
 -- Base provision (forge issues the base; retail NM drops are WIP).
 catalog.empyreanBase = { hlRank = 3, cruor = 2000 }

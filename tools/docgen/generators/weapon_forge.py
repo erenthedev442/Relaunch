@@ -82,6 +82,27 @@ def _id_in(block: str, sub: str) -> int:
 
 # ---------------------------------------------------------------------------
 
+_RELIC_COSTS_RE = re.compile(r"catalog\.relicCosts\s*=\s*\{(.+?)\n\}", re.DOTALL)
+_STEP_RE = re.compile(r"\{[^}]*\}")
+
+
+def _parse_relic_gates(text: str) -> list[int]:
+    """Return divergenceWins per step from `catalog.relicCosts` (3 entries).
+
+    Reads live so the widget's Relic gate row can't drift from what the
+    Weapon Forge NPC actually enforces (WeaponForge_NPC.lua checks
+    step.divergenceWins via xi.divergence.uniqueWins).
+    """
+    m = _RELIC_COSTS_RE.search(text)
+    if not m:
+        return []
+    out: list[int] = []
+    for step_m in _STEP_RE.finditer(m.group(1)):
+        dw = re.search(r"divergenceWins\s*=\s*(\d+)", step_m.group(0))
+        out.append(int(dw.group(1)) if dw else 0)
+    return out
+
+
 def _parse(text: str) -> dict:
     # --- Prime costs (catalog.costs) ---
     costs_region = _slice(text, "catalog.costs", "catalog.markVars", "catalog.aeonicCosts")
@@ -136,7 +157,13 @@ def _parse(text: str) -> dict:
             "ae_s3_id":   _id_in(ae_block, "s3"),
         })
 
-    return {"prime_cost": prime_cost, "aeonic_cost": aeonic_cost, "chains": chains}
+    relic_wins = _parse_relic_gates(text)
+    return {
+        "prime_cost": prime_cost,
+        "aeonic_cost": aeonic_cost,
+        "chains": chains,
+        "relic_wins": relic_wins,
+    }
 
 
 def _build_real(c: dict) -> dict:
@@ -208,11 +235,14 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
     src = resolve_source(repo_root, "modules/custom/lua/weapon_forge_catalog.lua")
     real = {}
+    relic_wins: list[int] = []
     if src is not None:
         parsed = _parse(src.read_text(encoding="utf-8", errors="replace"))
         real = _build_real(parsed)
+        relic_wins = parsed.get("relic_wins", [])
         n_p, n_a = len(real["prime"]), len(real["aeonic"])
-        print(f"[weapon_forge] parsed catalog: {n_p} prime + {n_a} aeonic real chains")
+        print(f"[weapon_forge] parsed catalog: {n_p} prime + {n_a} aeonic real chains"
+              f" · relic gates: {relic_wins}")
         if not n_p:
             print("[weapon_forge] warning: no prime chains parsed — check catalog format")
     else:
@@ -223,6 +253,23 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         widget = widget.replace("/*__REAL_DATA__*/ {}", payload, 1)
     else:
         print("[weapon_forge] warning: REAL_DATA placeholder not found in template")
+
+    # Resolve the Relic step gate placeholders from the LIVE catalog. The
+    # widget's Relic section is hand-authored HTML (the runtime doesn't
+    # produce a `relicChains` shape the widget can consume), so we can't
+    # feed it via REAL_DATA -- but the gate STRINGS get rendered from the
+    # runtime divergenceWins values so they can't drift from what the
+    # forge NPC actually enforces (see WeaponForge_NPC.lua step.divergenceWins).
+    def _gate_str(wins: int) -> str:
+        if wins <= 0:
+            return "HL Rank V (Legend)"
+        noun = "win" if wins == 1 else "wins"
+        return (f"HL Rank V (Legend) · {wins} unique Dynamis - Divergence city "
+                f"{noun} (same city counts once)")
+    for i in range(3):
+        placeholder = f"__RELIC_GATE_S{i + 1}__"
+        wins = relic_wins[i] if i < len(relic_wins) else 0
+        widget = widget.replace(placeholder, _gate_str(wins))
 
     page = docs_dir / "progression" / "weapon-forge.md"
     ok = write_between_markers(page, "weapon-forge-widget", widget)

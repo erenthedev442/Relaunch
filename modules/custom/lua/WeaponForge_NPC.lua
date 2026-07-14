@@ -587,6 +587,20 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer(string.format('[Weapon Forge] Need Hunting League Rank %d (you are Rank %d).', step.hlRank, hl), S)
             return
         end
+        -- Dynamis - Divergence unique-city gate (Relic path 2026-07-13):
+        -- N unique city clears required, from xi.divergence.uniqueWins()
+        -- which pops the DivergenceSlots bitmask. Multiple runs of the
+        -- same city still count as 1.
+        if step.divergenceWins then
+            local have = 0
+            pcall(function() have = xi.divergence.uniqueWins(player) end)
+            if have < step.divergenceWins then
+                player:printToPlayer(string.format(
+                    '[Weapon Forge] Need %d unique Dynamis - Divergence city win(s) (you have %d). Multiple runs of the same city count once.',
+                    step.divergenceWins, have), S)
+                return
+            end
+        end
         local reqs, marks = stepReqs(chain, step)
         for _, req in ipairs(reqs) do
             if req.have(player) < req.qty then

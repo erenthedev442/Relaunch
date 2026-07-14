@@ -258,6 +258,27 @@ xi.divergence.featuredZoneToday = function()
     return 294 + (math.floor(os.time() / 86400) % 4)
 end
 
+-- Count of UNIQUE Divergence cities the player has cleared, 0..4.
+--
+-- onInstanceComplete already sets one bit per city into the
+-- DivergenceSlots charvar (feet=1 San d'Oria, hands=2 Bastok, head=4
+-- Windurst, legs=8 Jeuno). Multiple runs of the same city still leave
+-- one bit set, which is the "same city = 1 win" rule the Relic forge
+-- gate wants. Callers just need the popcount.
+--
+-- Consumed by modules/custom/lua/WeaponForge_NPC.lua at the Relic-step
+-- gate: relicCosts[i].divergenceWins is the threshold (1, 2, 4).
+xi.divergence.uniqueWins = function(player)
+    local slots = player:getCharVar('DivergenceSlots') or 0
+    local n = 0
+    for i = 0, 3 do                              -- 4 city bits
+        if bit.band(slots, bit.lshift(1, i)) ~= 0 then
+            n = n + 1
+        end
+    end
+    return n
+end
+
 xi.divergence.onInstanceComplete = function(instance, cfg)
     local slotBit  = xi.divergence.slotBit[cfg.entrySlot] or 0
     local featured = instance:getZone():getID() == xi.divergence.featuredZoneToday()

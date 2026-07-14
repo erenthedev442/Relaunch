@@ -247,9 +247,9 @@ const CATS = {
     source:'<strong>Relic weapons</strong> drop from the <strong>Mega-Boss</strong> (Wave 2) and <strong>Disjoined NM</strong> (Wave 3) in any of the four Divergence city runs — <strong>San d\'Oria [D]</strong>, <strong>Bastok [D]</strong>, <strong>Windurst [D]</strong>, and <strong>Jeuno [D]</strong>. Enter via the Divergence Portal in each city; no alliance required, solo and small groups welcome. Drop rates improve at Wave 3. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III Bring the materials to the <strong>Weapon Forge</strong> in <!--npc:weapon_forger-->Purgonorgo Isle<!--/npc-->: it issues the base weapon and forges each stage (gated by HL Rank V + Divergence progress)..',
     s3lbl:'Stage III · Relic',
     forge:[
-      {lbl:'Base → Stage I', mats:[['100×','Byne Bill'],['25×','M. Silverpiece']], gate:'HL Rank V (Legend) · Dynamis – Divergence Wave 1 cleared'},
-      {lbl:'Stage I → Stage II', mats:[['300×','Byne Bill'],['50×','L. Jadeshell'],['100×','[see weapon]']], gate:'HL Rank V (Legend) · Dynamis – Divergence Wave 2 cleared'},
-      {lbl:'Stage II → Stage III', mats:[['50×','Gallimaufry'],['300×','[see weapon]'],['10,000','Reforge Marks']], gate:'HL Rank V (Legend) · Dynamis – Divergence Wave 3 cleared'},
+      {lbl:'Base → Stage I', mats:[['100×','Byne Bill'],['25×','M. Silverpiece']], gate:'HL Rank V (Legend) · 1 unique Dynamis - Divergence city win (same city counts once)'},
+      {lbl:'Stage I → Stage II', mats:[['300×','Byne Bill'],['50×','L. Jadeshell'],['100×','[see weapon]']], gate:'HL Rank V (Legend) · 2 unique Dynamis - Divergence city wins (same city counts once)'},
+      {lbl:'Stage II → Stage III', mats:[['50×','Gallimaufry'],['300×','[see weapon]'],['10,000','Reforge Marks']], gate:'HL Rank V (Legend) · 4 unique Dynamis - Divergence city wins (same city counts once)'},
     ],
     weapons:[
       {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Spharai',id:20509},
@@ -660,6 +660,6 @@ selectCat('prime');
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7009bd38a630 -->
-_Last updated: 2026-07-13 11:11 PDT_
+<!-- content-hash: 3c36f6295fd2 -->
+_Last updated: 2026-07-13 22:00 PDT_
 <!-- DOCGEN:END id="last-updated" -->
