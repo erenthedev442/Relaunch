@@ -135,6 +135,59 @@ MIRROR_ALLOWLIST: dict[tuple[str, str], str] = {}
 # lua_const() over allowlisting.
 SHADOW_LITERAL_ALLOWLIST: dict[tuple[str, str], str] = {}
 
+# ---------------------------------------------------------------------------
+# STALE-MENTION CHECK
+# ---------------------------------------------------------------------------
+# Retired items / commands / NPCs / systems that should NEVER appear in
+# generator source or published prose. If a substring here shows up anywhere
+# under tools/docgen/generators/*.py or docs/**/*.md (outside changelog.md,
+# which is history), sync_audit fires a STALE-MENTION warning.
+#
+# This is the third-order drift guard the 2026-07-13 audit surfaced: NAKED-FACT
+# only scans hand prose OUTSIDE DOCGEN blocks, so PROSE HARDCODED INSIDE a
+# whole-page generator (like gear_guide_page.py's Progression timeline that
+# still name-checked the retired Sortie earrings on the Hunt Accessories NPC)
+# is EXEMPT from every other check. This list is the escape hatch: retire a
+# vendor / rename an NPC / delete a command -> add its name here so any
+# lingering mention rings a bell on the very next docgen run.
+#
+# Every entry is {phrase: reason}. Match is case-insensitive substring. Keep
+# phrases specific: "Sortie earrings" is fine, "Sortie" would false-positive
+# on the retail Sortie zone. Long common English words are a bad fit; use the
+# exact retired proper noun.
+STALE_MENTIONS: dict[str, str] = {
+    "Rupture Sage":
+        "NPC retired in a22038d3b5 (2026-06-25); Mastery Sage absorbed its role",
+    "!aoews":
+        "command deleted in f6e277fb60 (2026-07-13) with the Rupture Sage retirement",
+    "Splash (AoE) WS":
+        "Mastery Sage WS effect removed in f6e277fb60 (2026-07-13)",
+    "Hunt Accessories NPC":
+        "retired 2026-07-13; medal-paid Accessory NPC replaced it; Sortie earrings pulled",
+    "Sortie earrings":
+        "removed from every custom vendor 2026-07-13 (c7e9763a9b); no vendor sells them today",
+    "Divergence Smith":
+        "retired 2026-07-06; superseded by the Reforge System + Dynamis-D +4 Forge",
+    "One Byne Bill toll":
+        "Dynamis-Divergence toll switched to 250 Reforge Marks in 9ca99e7186",
+    "Infamy Vendor sells weapons":
+        "Infamy vendor is accessories-only since 2026-07-06",
+    # Note: `!gmhome` is intentionally NOT on this list. The command still
+    # exists (scripts/commands/gmhome.lua) and redirects to Purgonorgo Isle,
+    # so mentioning it isn't strictly wrong -- just non-canonical (`!leaf` is
+    # the preferred alias for the same warp). Delete the .lua and add the
+    # command name here if you truly retire it.
+}
+
+# Files exempt from the stale-mention scan.
+# changelog.md is history -- retired things MUST be named there. Same for
+# migration / release notes that summarise past changes.
+_STALE_EXEMPT_DOCS = {
+    "changelog.md",
+    "changes/index.md",
+    "changes/background-systems.md",
+}
+
 # Custom Lua modules that are legitimately NOT referenced by any docs file --
 # plumbing, internal libraries, dev tools, etc. Every entry needs a reason so
 # a reviewer can decide later whether the module actually became player-facing
@@ -457,6 +510,47 @@ def _hand_prose(text: str) -> list[tuple[int, str]]:
     return out
 
 
+def _stale_mentions(repo_root: Path, docs_dir: Path) -> list[tuple[str, str]]:
+    """Scan generator sources and published docs for phrases in STALE_MENTIONS.
+    Returns (file_rel, phrase) pairs, one per (file, phrase) hit.
+
+    Case-insensitive substring match. Files in _STALE_EXEMPT_DOCS are skipped
+    (changelog etc. legitimately name retired things). Every entry in the
+    dict has a written reason so a reviewer can decide whether the phrase is
+    OK to leave (add to _STALE_EXEMPT_DOCS or refine the phrase) or a
+    real drift to fix.
+    """
+    hits: list[tuple[str, str]] = []
+    phrases_lower = {p.lower(): p for p in STALE_MENTIONS}
+
+    # Generators
+    gen_dir = Path(__file__).parent
+    for py in sorted(gen_dir.glob("*.py")):
+        if py.name == Path(__file__).name:
+            continue  # sync_audit.py itself defines the list
+        try:
+            text = py.read_text(encoding="utf-8", errors="replace").lower()
+        except OSError:
+            continue
+        for lp, orig in phrases_lower.items():
+            if lp in text:
+                hits.append((f"tools/docgen/generators/{py.name}", orig))
+
+    # Published docs
+    for md in sorted(docs_dir.rglob("*.md")):
+        rel = md.relative_to(docs_dir).as_posix()
+        if rel in _STALE_EXEMPT_DOCS:
+            continue
+        try:
+            text = md.read_text(encoding="utf-8", errors="replace").lower()
+        except OSError:
+            continue
+        for lp, orig in phrases_lower.items():
+            if lp in text:
+                hits.append((f"docs/{rel}", orig))
+    return hits
+
+
 def _uncovered_modules(repo_root: Path, docs_dir: Path) -> list[str]:
     """List custom Lua modules (modules/custom/lua/*.lua) whose filename is not
     referenced by ANY docs file (published .md + generators .py) and not on the
@@ -592,7 +686,21 @@ def generate(repo_root: Path, docs_dir: Path) -> None:  # noqa: ARG001
         for mod in uncovered:
             print(f"  - modules/custom/lua/{mod}")
 
-    if not unowned and not naked and not mirrors and not shadows and not uncovered:
+    stale = _stale_mentions(repo_root, docs_dir)
+    if stale:
+        by_file: dict[str, list[str]] = {}
+        for f, p in stale:
+            by_file.setdefault(f, []).append(p)
+        print(f"[sync_audit] STALE-MENTION — {len(stale)} reference(s) to retired "
+              "content (see STALE_MENTIONS in sync_audit.py for the reason each "
+              "phrase was banned; delete the mention, or if this is history "
+              "prose add the doc to _STALE_EXEMPT_DOCS):")
+        for f in sorted(by_file):
+            phrases = ", ".join(f'"{p}"' for p in by_file[f])
+            print(f"  - {f}: {phrases}")
+
+    if not unowned and not naked and not mirrors and not shadows and not uncovered and not stale:
         print("[sync_audit] OK — every published page is generator-owned, no "
               "naked facts in hand prose, no mirrored runtime constants, no "
-              "shadow-literal drift, every custom module has doc coverage.")
+              "shadow-literal drift, every custom module has doc coverage, "
+              "no stale-mention drift.")

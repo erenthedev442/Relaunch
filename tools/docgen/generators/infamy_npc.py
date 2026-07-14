@@ -127,8 +127,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         lines.append("### Best-in-slot (auto-promoted)")
         lines.append("")
         lines.append(
-            f"_{len(auto)} top armor, weapons, and Sortie earrings, refreshed from "
-            f"the live gear rankings._"
+            f"_{len(auto)} top accessories, refreshed from the live gear rankings._"
         )
         lines.append("")
         lines.extend(_render_table(auto))

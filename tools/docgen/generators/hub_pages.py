@@ -156,8 +156,8 @@ _PAGES = [
             "Purgonorgo Isle is the relaunch's **one and only hub** — every custom "
             "service NPC, from getting-started tools to endgame progression, lives "
             "here on a single island plaza, spaced out so a crowd can shop at once. "
-            "Reach it any time with the `!hub` command (the old `!leaf`, `!lib`, and "
-            "`!gmhome` commands now land here too)."
+            "Reach it any time with the `!hub` command (the `!leaf` and `!lib` "
+            "aliases land here too)."
         ),
         "sections": [
             (_SEC_TRAVEL,     "Getting around & set-up"),
@@ -219,10 +219,9 @@ def _footer_lines(repo_root: Path, zone: str, zone_of) -> list[str]:
         # generator runs). Skip the whole note if the dummy can't be resolved.
         if zone_of("test_dummy") is None or zone_of("test_dummy") == zone:
             return []
-        note = "*The combat **Test Dummy** for DPS testing remains in {{npc:test_dummy}}"
-        if resolve_source(repo_root, "scripts/commands/gmhome.lua", required=False) is not None:
-            note += " (reach it with `!gmhome`)"
-        note += ".*"
+        # !gmhome was retired 2026-07-06 (01ffbd875e). The old Test Dummy warp
+        # went with it; no fallback string needed anymore.
+        note = "*The combat **Test Dummy** for DPS testing remains in {{npc:test_dummy}}.*"
         return ["---", "", note, ""]
     if zone == "Celennia_Memorial_Library":
         return [

@@ -236,8 +236,8 @@ def _render(
         "**{{npc:hunt_board}}** (`!hub`) — the economy row (Hunt Board, Gil Exchange, "
         "Sparks Exchange, Race Changer, Home Point) and the endgame row (Apex Trials, "
         "Prime Armory, Colosseum, Infamy Vendor, Augment Sage) side by side, plus the "
-        "Test Dummy for DPS testing. The old `!lib`, `!leaf`, and `!gmhome` commands "
-        "still work and land you there too."
+        "Test Dummy for DPS testing. `!leaf` and `!lib` are the two aliases that "
+        "land you there too."
     )
 
     # ---- Step 2: Hit level 99 -----------------------------------------

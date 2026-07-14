@@ -210,11 +210,12 @@ def _render_accessories(
 
     lines: list[str] = [
         (
-            "The **Hunt Accessories NPC** stands at " + pos_str +
-            " on the same row as the Armor and Weapons vendors. Unlike those"
-            " two, the Accessories vendor takes **" + currency + "** directly"
-            " — no seal exchange step. Marks are earned by killing NMs via the"
-            " [Hunting League](index.md) Spawner."
+            "The **Accessory NPC** stands at " + pos_str +
+            " on the same row as the Armor and Weapons vendors. It takes the "
+            "same **Bronze / Silver / Gold Medal** currency as the other two "
+            "medal vendors (the earlier Hunt-Marks direct-pay accessories "
+            "vendor was decommissioned 2026-07-10). Marks come from killing "
+            "NMs via the [Hunting League](index.md) Spawner."
         ),
         "",
         f"_{total_items} items across {len(categories)} categories. "

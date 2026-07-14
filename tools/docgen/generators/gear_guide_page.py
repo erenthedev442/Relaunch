@@ -601,24 +601,14 @@ def _render(d: dict) -> str:
     A("")
     A("- You have enough Hunting League experience to be earning marks consistently.")
     A("- Prioritize filling out your **Bronze weapon** (if not done) and a secondary slot.")
-    sortie_txt = ""
-    if sortie:
-        nq = sortie.get("NQ")
-        p1 = sortie.get("+1")
-        if nq and p1:
-            sortie_txt = f" (NQ {nq} / +1 {p1} each)"
-        elif nq:
-            sortie_txt = f" (NQ {nq} each)"
     A(
-        f"- Grab per-job **Sortie earrings** from the Hunt Accessories NPC — paid "
-        f"directly in {currency}{sortie_txt} — and start saving "
-        f"{_plural(medal('bronze'))} for accessories from the medal-paid "
-        f"Accessories Vendor. Earrings and a back piece are efficient early "
-        f"purchases."
+        f"- Start saving {_plural(medal('bronze'))} for accessories from the "
+        f"medal-paid Accessories Vendor. A back piece plus one or two neck/ring "
+        f"picks are efficient early purchases."
     )
     A(
-        "- Begin hunting Reforge NMs to accumulate AF Marks for your first base "
-        "Reforge armor pieces."
+        "- Begin hunting Reforge NMs (Abyssea, Sky Gods, Land Kings) to accumulate "
+        "**AF / Relic / Empy Reforge Marks** for your first base Reforge armor pieces."
     )
     A("")
     A("### Rank II–III (second to fourth week)")
@@ -664,21 +654,60 @@ def _render(d: dict) -> str:
         "Prestige and Rebirth milestones."
     )
     A("")
-    A("### Endgame")
+    A("### Endgame — the real ladder")
     A("")
-    A("- Full Gold-tier weapons across main and offhand.")
     A(
-        "- Reforge +3 armor in all five slots (head/body/hands/legs/feet) for "
-        "your main set."
+        "Once your Gold-tier weapons and Reforge +3 armor are in place, the gear "
+        "ladder fans out. Every rung below is real content the server ships today "
+        "(see the [Endgame vendors & forges](#endgame-vendors--forges) table above "
+        "for the vendor names + currencies)."
     )
-    A("- Infamy Vendor pieces in slots where they beat Reforge +3.")
+    A("")
     A(
-        f"- Augment Moogle with rank-5 **{sage_top}** mastery (max roll floor, "
-        f"{crit_hi} crit chance) and all {aff_count} NM affinities registered."
+        f"- Cap [Augment Moogle](augmenting-guide.md) with rank-5 **{sage_top}** "
+        f"mastery and all {aff_count} NM affinities registered — the deeper "
+        "mastery ranks unlock through Prestige and Rebirth milestones."
     )
     A(
-        "- Register for [Hunter's Guild](hunters-guild.md) rep on all four guilds "
-        "to maximize mark yield from future farming."
+        "- Register on the [Hunter's Guild](hunters-guild.md) at every guild you "
+        "hunt in — each rank passively amplifies that guild's mark payout, and "
+        "the Trinity / Apex Hunter capstones stack on top."
+    )
+    A(
+        "- **Master a job (2,100 JP) + register all 11 NM affinities** unlocks "
+        "[High-Tier Battlefields](../endgame/high-tier-battlefields.md). Each "
+        "clear pays Hunt Marks + tiered loot from the fight's retail table."
+    )
+    A(
+        "- **1 HNM King kill + 1 HTBF clear at each of T1/T2/T3** unlocks "
+        "[Ambuscade](../endgame/ambuscade.md). Ambuscade's weapon-upgrade chain "
+        "(Tokko → Ajja → Eletta → Kaja → Final) delivers **Naegling**, Karambit, "
+        "Nandaka, Tauret, Dolichenus, and the rest of that shortlist."
+    )
+    A(
+        "- Reforge Marks earned from Sky Gods / Land Kings / Abyssea NMs also "
+        "buy your ticket into [Dynamis-Divergence](../endgame/dynamis-divergence.md) "
+        "(**250 marks** per entry). Clearing a city drops the **Rusted / Black "
+        "ID Cards + Paragon Card** you need at the **+3 → +4 Forge** to push AF "
+        "or Relic armor from +3 to +4."
+    )
+    A(
+        "- [Geas Fete](../endgame/geas-fete.md) NMs pay **Escha Beads**. 50,000 "
+        "beads at **Temprix** buys a Malformed base weapon — trade it in with "
+        "Attestations (Dynamis-classic) + Riftborn Boulders (Geas Fete) at the "
+        "**Weapon Forge** to make an **Aeonic weapon**."
+    )
+    A(
+        "- **Prime Weapons** are the parallel top-tier weapon path: complete "
+        "the 5 Prime Trials (Job Mastery Guardian, Endless Tower Fl.50 or "
+        "Gauntlet full-clear, World Boss credits, and two more), then trade "
+        "**1 Prime Voucher + 750M gil** at the [Prime Armory](prime-armory.md) "
+        "for any of the 16 Prime weapon forms."
+    )
+    A(
+        "- Weekly floor: the [Star-Devourer](../endgame/star-devourer.md) raid "
+        "at Escha - Ru'Aun pays big Hunt Marks + Infamy on a weekly lockout — "
+        "the reliable single biggest weekly currency injection."
     )
     A("")
     A("---")

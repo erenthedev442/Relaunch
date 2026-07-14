@@ -70,7 +70,7 @@ _SECTIONS: list[tuple[str, list[tuple[str, str, str | None]]]] = [
             "wallet, and first login adds a **{starter_gil} gil** welcome gift and "
             "**{starter_marks} {hl_currency}** — enough for a "
             "first Bronze-tier weapon. The level cap is {{{{setting:INITIAL_LEVEL_CAP}}}} from "
-            "day one (no Limit Break quests); type `!gmhome` to visit the setup Moogles "
+            "day one (no Limit Break quests); type `!leaf` to visit the setup Moogles "
             "and start leveling at {{{{setting:map.EXP_RATE}}}}× EXP.",
             None,
         ),

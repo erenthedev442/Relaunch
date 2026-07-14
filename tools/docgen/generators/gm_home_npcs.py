@@ -274,8 +274,8 @@ def _render(resolved: list[dict]) -> str:
     # intentionally unused.
     return "\n".join([
         "Every custom service NPC now lives on a single island plaza — **Purgonorgo "
-        "Isle** — reachable any time with the **`!hub`** command (the old `!leaf`, "
-        "`!lib`, and `!gmhome` commands land there too).",
+        "Isle** — reachable any time with the **`!hub`** command (the `!leaf` and "
+        "`!lib` aliases land there too).",
         "",
         "- **[The Hub — Purgonorgo Isle](../progression/hub.md)** — everything in one "
         "place: home point, Warpman, the Gil / Sparks / Crafting exchanges, Title "

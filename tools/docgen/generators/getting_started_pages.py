@@ -145,14 +145,15 @@ def _facts(repo_root: Path) -> dict | None:
 
     f["hasUnstick"] = resolve_source(repo_root, "scripts/commands/unstick.lua", required=False) is not None
 
-    # Hub warp command: which of !hub/!gmhome/!leaf/!lib exists (first = canonical,
+    # Hub warp command: which of !hub/!leaf/!lib exists (first = canonical,
     # rest = legacy aliases), plus whether !hunt exists. hubZone (above) says where
-    # they land; these say what to type.
+    # they land; these say what to type. (!gmhome was retired in 01ffbd875e; if
+    # someone re-adds it as an alias it'll re-appear in the tuple below.)
     def _cmd_exists(name: str) -> bool:
         return (resolve_source(repo_root, f"scripts/commands/{name}.lua", required=False) is not None
                 or resolve_source(repo_root, f"modules/custom/commands/{name}.lua", required=False) is not None)
 
-    hub_present = [c for c in ("hub", "gmhome", "leaf", "lib") if _cmd_exists(c)]
+    hub_present = [c for c in ("hub", "leaf", "lib") if _cmd_exists(c)]
     f["hubCmd"] = hub_present[0] if hub_present else "hub"
     f["hubAliases"] = hub_present[1:]
     f["hasHunt"] = _cmd_exists("hunt")
@@ -316,7 +317,7 @@ Every custom NPC lives on a single island plaza — **{hub}**. Type **`!hub`** t
 - **Economy** — Gil Exchange, Sparks Exchange, Race Changer, Title Broker, Mystery Mog, Cosmetic Shop; the Casino; the Daily & Hunt boards; Unity and Chocobo Derby.
 - **Endgame** — Apex Trials, Prime Armory, Relic Forge, Colosseum, Endless Tower, the Gauntlet, Infamy / HTBF / Voidwatch vendors, Augment Moogle & Sage, the mastery trainers, Cross-Job Trainers, and the combat **Test Dummy** for DPS testing.
 
-The NPCs are spaced out across the plaza so a crowd can shop at once. The old `!leaf`, `!lib`, and `!gmhome` commands all still work — they now land you on {hub} too.
+The NPCs are spaced out across the plaza so a crowd can shop at once. `!leaf` and `!lib` are the two aliases that warp you to {hub}.
 
 ---
 

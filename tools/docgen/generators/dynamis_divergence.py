@@ -3,8 +3,9 @@
 Dynamis-Divergence is the **+3 -> +4 Forge**: the tail of the reforged-armor
 ladder. The base Reforge System (docs/progression/reforge.md) takes armor to +3
 with marks; Dynamis-D takes a reforged **+3** AF/Relic piece to **+4** using
-materials farmed inside the [D] zones. (The old "Divergence Smith" that made
-+1/+2/+3 for medals was retired — that overlapped the Reforge System.)
+materials farmed inside the [D] zones. (The old +1/+2/+3 medal-paid smith
+that formerly stood in this slot was retired -- it overlapped the Reforge
+System, so the Divergence Forge NPC now owns the +3 -> +4 step alone.)
 
 Committed sources that drive this page:
   modules/custom/lua/Dynamis_Divergence.lua   — the four city entry portals
@@ -195,9 +196,8 @@ def _render_forge(c: dict) -> str:
     lines = [
         "Dynamis-Divergence is the **+3 → +4 Forge**. The base [Reforge System]"
         "(../progression/reforge.md) takes armor to **+3** with marks; the "
-        "**Divergence Forge** (an NPC in **Southern San d'Oria**, where the old "
-        "Divergence Smith stood) takes a reforged **+3** piece the rest of the way "
-        "to **+4**." + coverage,
+        "**Divergence Forge** NPC in **Southern San d'Oria** takes a reforged "
+        "**+3** piece the rest of the way to **+4**." + coverage,
         "",
         "Trade a reforged **+3 AF or Relic** piece together with the materials below, "
         "and it comes back **+4**:",
