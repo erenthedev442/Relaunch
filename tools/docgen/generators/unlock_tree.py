@@ -166,7 +166,7 @@ def _parse_prime(text: str) -> tuple[int, int, int]:
 # hundreds of literal braces in the drawing code need no escaping.
 _RENDER_JS = r"""<script>
 (function(){
-const CW=1380,CH=910,NW=140,NH=26;
+const CW=__CW__,CH=__CH__,NW=140,NH=26;
 const cv=document.getElementById('utc');
 const wrap=document.getElementById('utree-wrap');
 if(!cv)return;
@@ -835,7 +835,28 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
     nodes_json = json.dumps(nodes_out, ensure_ascii=False)
     edges_json = json.dumps(edges_out, ensure_ascii=False)
-    script = _RENDER_JS.replace("__NODES__", nodes_json).replace("__EDGES__", edges_json)
+
+    # Auto-fit canvas to the actual node extent + legend + padding. Was hardcoded
+    # 1380x910 and cut off Geas Fete (y=915) after the 2026-07-10 content nodes
+    # landed. Recompute every generate() run so any future addition below/right
+    # of the current extent just works. Constants match the JS side:
+    # NW=140, NH=26; legend rows = 8 types * 19 + 18 header = 170.
+    _NW, _NH = 140, 26
+    _CANVAS_MIN_W, _CANVAS_MIN_H = 1380, 910
+    _CANVAS_PAD = 30
+    _LEGEND_HEIGHT = 8 * 19 + 18
+    max_x = max((n["x"] for n in nodes_out), default=_CANVAS_MIN_W)
+    max_y = max((n["y"] for n in nodes_out), default=_CANVAS_MIN_H)
+    cw = max(_CANVAS_MIN_W, max_x + _NW // 2 + _CANVAS_PAD)
+    ch = max(_CANVAS_MIN_H, max_y + _NH // 2 + _LEGEND_HEIGHT + _CANVAS_PAD)
+
+    script = (
+        _RENDER_JS
+        .replace("__NODES__", nodes_json)
+        .replace("__EDGES__", edges_json)
+        .replace("__CW__", str(cw))
+        .replace("__CH__", str(ch))
+    )
 
     # ---- assemble page body -------------------------------------------
     L: list[str] = []
@@ -849,7 +870,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     L.append('<div style="position:relative;margin:1.2rem 0">')
     L.append('<div id="utree-wrap" style="overflow:auto;border:1px solid #2a2d4a;'
              'border-radius:6px;background:#090B14">')
-    L.append('<canvas id="utc" width="1380" height="910" style="display:block;cursor:default">'
+    L.append(f'<canvas id="utc" width="{cw}" height="{ch}" style="display:block;cursor:default">'
              "</canvas>")
     L.append("</div>")
     L.append('<div id="utip" style="position:absolute;display:none;background:#1a1e38f0;'
