@@ -1090,7 +1090,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 11364,Hachiryu Sune-Ate,75,0,Feet,WAR/MNK/RNG/SAM/NIN,TANK,32,Drop: Tinnin,,yes,yes
 11365,Karasutengu Kogake,73,0,Feet,MNK/WHM/RDM/THF/PLD/BST/BRD/DRG/SMN/BLU/COR/PUP/DNC/GEO/RUN,TANK,26,,,yes,yes
 11366,Avocat Pigaches,72,0,Feet,WHM/BLM/RDM/BRD/SMN/SCH/GEO,CASTER,2,Drop: Iriz Ima,,yes,yes
-11367,Nobushi Kyahan,70,0,Feet,MNK/SAM/NIN,DPS,320,Drop: Lividroot Amooshah,,yes,yes
+11367,Nobushi Kyahan,70,0,Feet,MNK/SAM/NIN,DPS,75,Drop: Lividroot Amooshah,,yes,yes
 11368,Hakke Habaki,71,0,Feet,MNK/SAM/NIN,TANK,9,Drop: Lil Apkallu,,yes,yes
 11369,Numerist Pumps,70,0,Feet,MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN,TANK,14,Drop: Lil Apkallu,,yes,yes
 11370,Junkenshi Habaki,50,0,Feet,MNK,DPS,3,Craft,,yes,yes
@@ -1328,7 +1328,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 11604,Corvus Torque,79,0,Neck,THF/RNG/COR,,,Drop: Manananggal,,yes,yes
 11605,Ziel Charm,80,0,Neck,All Jobs,DPS,18,Drop: Quetzalli,,yes,yes
 11606,Arctiers Torque,80,0,Neck,WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN,DPS,12,Drop: Pantagruel,,yes,yes
-11607,Artemiss Medal,77,0,Neck,All Jobs,CASTER,95,Drop: Cannered Noz,,yes,yes
+11607,Artemiss Medal,77,0,Neck,All Jobs,CASTER,25,Drop: Cannered Noz,,yes,yes
 11608,Barcarolle Medal,78,0,Neck,BRD,HEAL,1,Drop: Poroggo Dom Juan,,yes,yes
 11609,Shifting Necklace,79,0,Neck,All Jobs,WS,6,,,yes,yes
 11610,Lacono Necklace,79,0,Neck,All Jobs,DPS,10,,,yes,yes
@@ -2856,7 +2856,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 13140,Grand Temple Knights Collar,65,0,Neck,All Jobs,DPS,9,,,yes,yes
 13141,Republican Gold Medal,65,0,Neck,All Jobs,CASTER,1,,Medal Vendor (Accessory),yes,yes
 13142,Windurstian Scarf,65,0,Neck,All Jobs,TANK,9,,,yes,yes
-13143,Opo-Opo Necklace,61,0,Neck,All Jobs,DPS,40,Quest: Wrath Of The Opo Opos,,yes,yes
+13143,Opo-Opo Necklace,61,0,Neck,All Jobs,DPS,14,Quest: Wrath Of The Opo Opos,,yes,yes
 13144,Wing Gorget,49,0,Neck,WAR/PLD/DRK,TANK,5,Craft,,yes,yes
 13145,Uggalepih Pendant,70,0,Neck,All Jobs,CASTER,13,,,yes,yes
 13146,Tern Necklace,76,0,Neck,All Jobs,DPS,10,,,yes,yes
@@ -3393,8 +3393,8 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 13677,Esoteric Mantle,50,0,Back,WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO,CASTER,0,"BCNM: Awful Autopsy, Eye Of The Tiger, Final Bout +1 more",,yes,yes
 13678,Snipers Mantle,50,0,Back,WAR/THF/RNG/SAM/NIN,DPS,4,"BCNM: Awful Autopsy, Eye Of The Tiger, Final Bout +1 more",,yes,yes
 13679,Templars Mantle,50,0,Back,PLD/DRK,TANK,5,"BCNM: Awful Autopsy, Eye Of The Tiger, Final Bout +1 more",,yes,yes
-13680,Variable Mantle,20,0,Back,WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN,TANK,6,,,yes,yes
-13681,Variable Cape,20,0,Back,WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO,CASTER,1,,,yes,yes
+13680,Variable Mantle,20,0,Back,WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN,TANK,4,,,yes,yes
+13681,Variable Cape,20,0,Back,WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO,CASTER,0,,,yes,yes
 13682,Ether Tank,1,0,Back,All Jobs,,,Craft,,yes,yes
 13683,Water Tank,1,0,Back,All Jobs,,,Craft,,yes,yes
 13684,Potion Tank,1,0,Back,All Jobs,,,Craft,,yes,yes
@@ -3406,7 +3406,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 13690,Foragers Mantle,71,0,Back,WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN,DPS,36,BCNM: Sheep In Antlions Clothing,,yes,yes
 13691,Knightly Mantle,60,0,Back,WAR/PLD,TANK,20,BCNM: Celery,,yes,yes
 13692,Skulkers Cape,50,0,Back,WHM/BLM/RDM/SMN/BLU/SCH/GEO,,,Drop: Boroka,,yes,yes
-13693,Aries Mantle,70,0,Back,All Jobs,HEAL,30,BCNM: Todays Horoscope,,yes,yes
+13693,Aries Mantle,70,0,Back,All Jobs,HEAL,15,BCNM: Todays Horoscope,,yes,yes
 13694,Psilos Mantle,69,0,Back,WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN,DPS,26,BCNM: Holy Cow,,yes,yes
 13695,Commanders Cape,73,0,Back,WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN,DPS,18,BCNM: Bionic Bug,,yes,yes
 13696,Wool Gambison +1,48,0,Body,MNK/WHM/RDM/THF/PLD/BST/BRD/DRG/SMN/BLU/COR/PUP/DNC/GEO/RUN,TANK,32,Craft,,yes,yes
@@ -3583,7 +3583,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 13867,War Beret +1,70,0,Head,THF/RNG/COR,DPS,14,Craft,,yes,yes
 13868,Myochin Kabuto,60,0,Head,SAM,,,Quest: Sam Af3 A Thief In Norg,Reforged Sub Item,yes,yes
 13869,Ninja Hatsuburi,56,0,Head,NIN,TANK,26,,Reforged Sub Item,yes,yes
-13870,Opo-Opo Crown,65,0,Head,All Jobs,TANK,27,,,yes,yes
+13870,Opo-Opo Crown,65,0,Head,All Jobs,TANK,14,,,yes,yes
 13871,Iron Visor,37,0,Head,WAR/RDM/PLD/DRK/BST/RNG/SAM/DRG/BLU/RUN,TANK,14,Craft | Guild Shop | Sparks,,yes,yes
 13872,Iron Visor +1,37,0,Head,WAR/RDM/PLD/DRK/BST/RNG/SAM/DRG/BLU/RUN,TANK,15,Craft,,yes,yes
 13873,Steel Visor,48,0,Head,WAR/RDM/PLD/DRK/BST/RNG/SAM/DRG/BLU/RUN,TANK,18,Craft | Guild Shop | Sparks,,yes,yes
@@ -3623,7 +3623,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 13907,Ogre Mask +1,70,0,Head,RDM/BST,DPS,24,Craft,,yes,yes
 13908,Crimson Mask,73,0,Head,RDM/PLD/DRK/RNG/DRG/BLU/COR/RUN,TANK,52,,,yes,yes
 13909,Blood Mask,73,0,Head,RDM/PLD/DRK/RNG/DRG/BLU/COR/RUN,TANK,54,,,yes,yes
-13910,Roshi Jinpachi,73,0,Head,All Jobs,DPS,380,Craft,,yes,yes
+13910,Roshi Jinpachi,73,0,Head,All Jobs,DPS,135,Craft,,yes,yes
 13911,Kaiser Schaller,73,0,Head,WAR/PLD,TANK,81,,,yes,yes
 13912,Shadow Mask,62,0,Head,WAR/RDM/PLD/DRK/BST/RNG/SAM/DRG/BLU/RUN,TANK,16,"Drop: Drexerion the Condemned, Phanduron the Condemned",,yes,yes
 13913,Mushroom Helm,62,0,Head,MNK/WHM/BLM/RDM/THF/DRK/BRD/RNG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN,TANK,26,Drop: Ellyllon,,yes,yes
@@ -3662,7 +3662,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 13946,Magnifying Spectacles,1,0,Head,All Jobs,TANK,1,,,yes,yes
 13947,Protective Spectacles,1,0,Head,All Jobs,TANK,1,,,yes,yes
 13948,Chefs Hat,1,0,Head,All Jobs,TANK,1,,,yes,yes
-13949,Roshi Jinpachi +1,73,0,Head,All Jobs,DPS,380,Craft,,yes,yes
+13949,Roshi Jinpachi +1,73,0,Head,All Jobs,DPS,135,Craft,,yes,yes
 13950,Elite Beret,74,0,Head,WHM/BLM/RDM/SMN/BLU/SCH/GEO,PET,8,Craft,,yes,yes
 13951,Elite Beret +1,74,0,Head,WHM/BLM/RDM/SMN/BLU/SCH/GEO,PET,10,Craft,,yes,yes
 13952,Ochiudos Kote,34,0,Hands,MNK/SAM/NIN,DPS,40,BCNM: Divine Punishers,,yes,yes
@@ -3685,7 +3685,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 13969,Beast Gloves,54,0,Hands,BST,DPS,6,,Reforged Sub Item,yes,yes
 13970,Choral Cuffs,60,0,Hands,BRD,HEAL,2,,Reforged Sub Item,yes,yes
 13971,Hunters Bracers,52,0,Hands,RNG,DPS,6,,Reforged Sub Item,yes,yes
-13972,Myochin Kote,56,0,Hands,SAM,DPS,322,,Reforged Sub Item,yes,yes
+13972,Myochin Kote,56,0,Hands,SAM,DPS,77,,Reforged Sub Item,yes,yes
 13973,Ninja Tekko,60,0,Hands,NIN,TANK,20,,Reforged Sub Item,yes,yes
 13974,Drachen Finger Gauntlets,56,0,Hands,DRG,DPS,6,,Reforged Sub Item,yes,yes
 13975,Evokers Bracers,54,0,Hands,SMN,CASTER,1,,Reforged Sub Item,yes,yes
@@ -4365,7 +4365,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 14649,Telluric Ring,50,0,Ring,All Jobs,,,,,yes,yes
 14650,Marksmans Ring,40,0,Ring,All Jobs,TANK,2,BCNM: Royal Jelly,,yes,yes
 14651,Mana Ring,40,0,Ring,All Jobs,CASTER,1,BCNM: Royal Jelly,,yes,yes
-14652,Protean Ring,20,0,Ring,All Jobs,DPS,9,,,yes,yes
+14652,Protean Ring,20,0,Ring,All Jobs,DPS,3,,,yes,yes
 14653,Variable Ring,20,0,Ring,All Jobs,CASTER,1,,,yes,yes
 14654,Poisona Ring,14,0,Ring,All Jobs,TANK,2,Craft,,yes,yes
 14655,Venerer Ring,34,0,Ring,All Jobs,DPS,4,Quest: Chasing Dreams,,yes,yes
@@ -4470,7 +4470,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 14754,Dragon Earring,50,0,Ear,All Jobs,,,,,yes,yes
 14755,Refresh Earring,51,0,Ear,All Jobs,HEAL,15,,,yes,yes
 14756,Accurate Earring,52,0,Ear,All Jobs,DPS,3,,,yes,yes
-14757,Mecurial Earring,20,0,Ear,All Jobs,TANK,3,,,yes,yes
+14757,Mecurial Earring,20,0,Ear,All Jobs,TANK,1,,,yes,yes
 14758,Knightly Earring,59,0,Ear,PLD,TANK,4,Drop: Imdugud,,yes,yes
 14759,Curaga Earring,42,0,Ear,WHM/PLD,,,Drop: Intulo,,yes,yes
 14760,Cunning Earring,29,0,Ear,All Jobs,CASTER,2,Quest: Signed In Blood,,yes,yes
@@ -4614,7 +4614,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 14898,Beast Gloves +1,74,0,Hands,BST,DPS,10,,Reforged Sub Item,yes,yes
 14899,Choral Cuffs +1,74,0,Hands,BRD,HEAL,4,,Reforged Sub Item,yes,yes
 14900,Hunters Bracers +1,74,0,Hands,RNG,DPS,24,,Reforged Sub Item,yes,yes
-14901,Myochin Kote +1,74,0,Hands,SAM,DPS,342,,Reforged Sub Item,yes,yes
+14901,Myochin Kote +1,74,0,Hands,SAM,DPS,97,,Reforged Sub Item,yes,yes
 14902,Ninja Tekko +1,74,0,Hands,NIN,TANK,24,,Reforged Sub Item,yes,yes
 14903,Drachen Finger Gauntlets +1,74,0,Hands,DRG,DPS,20,,Reforged Sub Item,yes,yes
 14904,Evokers Bracers +1,74,0,Hands,SMN,PET,2,,Reforged Sub Item,yes,yes
@@ -4899,7 +4899,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 15183,Dobson Bandana,39,0,Head,All Jobs,DPS,6,Drop: Carmine Dobsonfly,,yes,yes
 15184,Voyager Sallet,41,0,Head,All Jobs,DPS,14,Drop: Carmine Dobsonfly,,yes,yes
 15185,Walkure Mask,43,0,Head,WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN,TANK,18,"BCNM: Celery, Up In Arms, Wild Wild Whiskers",,yes,yes
-15186,Trump Crown,20,0,Head,All Jobs,TANK,17,BCNM: Royale Ramble,,yes,yes
+15186,Trump Crown,20,0,Head,All Jobs,TANK,14,BCNM: Royale Ramble,,yes,yes
 15187,Hachiman Jinpachi +1,70,0,Head,SAM,DPS,17,Craft,,yes,yes
 15188,Hachiman Jinpachi,70,0,Head,SAM,DPS,12,Craft,,yes,yes
 15189,Lords Armet,70,0,Head,PLD,TANK,36,Craft,,yes,yes
@@ -5256,9 +5256,9 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 15540,Orochi Nodowa +1,75,0,Neck,All Jobs,DPS,14,Craft,,yes,yes
 15541,Homing Ring,1,0,Ring,All Jobs,,,,,yes,yes
 15542,Return Ring,1,0,Ring,All Jobs,,,,,yes,yes
-15543,Rajas Ring,30,0,Ring,All Jobs,DPS,46,,,yes,yes
-15544,Sattva Ring,30,0,Ring,All Jobs,TANK,27,,,yes,yes
-15545,Tamas Ring,30,0,Ring,All Jobs,CASTER,12,,Medal Vendor (Accessory),yes,yes
+15543,Rajas Ring,30,0,Ring,All Jobs,DPS,42,,,yes,yes
+15544,Sattva Ring,30,0,Ring,All Jobs,TANK,22,,,yes,yes
+15545,Tamas Ring,30,0,Ring,All Jobs,CASTER,8,,Medal Vendor (Accessory),yes,yes
 15546,Fasting Ring,15,0,Ring,All Jobs,DPS,2,Drop: Yara Ma Yha Who,,yes,yes
 15547,Vilmas Ring,40,0,Ring,All Jobs,CASTER,3,"Drop: Rose Garden, Voluptuous Vilma",,yes,yes
 15548,Marss Ring,75,0,Ring,All Jobs,DPS,28,,,yes,yes
@@ -5663,7 +5663,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 15952,Toxon Belt +1,75,0,Waist,WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN,TANK,5,,,yes,yes
 15953,Marching Belt,75,0,Waist,BRD,,,Drop: Lord Ruthven,,yes,yes
 15954,Fierce Belt,75,0,Waist,WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN,DPS,30,Drop: Capricornus,,yes,yes
-15955,Fatality Belt,75,0,Waist,WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN,WS,47,Drop: Jyeshtha,,yes,yes
+15955,Fatality Belt,75,0,Waist,WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN,WS,17,Drop: Jyeshtha,,yes,yes
 15956,Temple Knights Quiver,60,0,Waist,All Jobs,,,,,yes,yes
 15957,Iron Musketeers Quiver,60,0,Waist,All Jobs,,,,,yes,yes
 15958,Combat Casters Quiver,60,0,Waist,All Jobs,,,,,yes,yes
@@ -5828,7 +5828,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 16119,Nomad Cap,1,0,Head,All Jobs,,,,,yes,yes
 16120,Redeyes,1,0,Head,All Jobs,,,,,yes,yes
 16121,Mamool Ja Helm,65,0,Head,All Jobs,TANK,21,Craft,,yes,yes
-16122,Troll Coif,65,0,Head,All Jobs,TANK,62,Craft,,yes,yes
+16122,Troll Coif,65,0,Head,All Jobs,TANK,36,Craft,,yes,yes
 16123,Lamia Garland,65,0,Head,All Jobs,TANK,21,Craft,,yes,yes
 16124,Qiqirn Hood,65,0,Head,All Jobs,TANK,22,Craft,,yes,yes
 16125,Breeder Mask,70,0,Head,BST/DRG/SMN/PUP,DPS,11,,,yes,yes
@@ -6127,8 +6127,8 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 16422,Tigerfangs,66,0,Main,WAR/MNK/BST/NIN/PUP,WS,9,Craft | Sparks,,yes,yes
 16423,Manoples,74,0,Main,WAR/MNK/BST/NIN/PUP,WS,10,Craft | Sparks,,yes,yes
 16425,Venom Claws +1,57,0,Main,THF/DRK/NIN,WS,6,Craft,,yes,yes
-16426,Avengers,69,0,Main,WAR/MNK/BST/NIN/PUP,WS,40,Drop: Bomb Queen,,yes,yes
-16427,Lunaris Claws,80,0,Main,MNK/PUP,DPS,74,,,yes,yes
+16426,Avengers,69,0,Main,WAR/MNK/BST/NIN/PUP,WS,26,Drop: Bomb Queen,,yes,yes
+16427,Lunaris Claws,80,0,Main,MNK/PUP,WS,42,,,yes,yes
 16428,Afflictors,77,0,Main,WAR/MNK/BST/NIN/PUP,WS,17,Drop: Carabosse,,yes,yes
 16429,Silence Baghnakhs,19,0,Main,THF/DRK/NIN,WS,2,Craft | Guild Shop,,yes,yes
 16430,Acid Claws,41,0,Main,THF/DRK/NIN,WS,4,Craft | Guild Shop,,yes,yes
@@ -7274,9 +7274,9 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 17587,Trick Staff Ii,2,0,Main,All Jobs,WS,1,,,yes,yes
 17588,Treat Staff Ii,2,0,Main,All Jobs,TANK,2,,,yes,yes
 17589,Thyrsusstab,73,0,Main,WAR/MNK/WHM/BLM/PLD/BRD/DRG/SMN/SCH/GEO,WS,26,"BCNM: Contaminated Colosseum, Seasons Greetings",,yes,yes
-17590,Primate Staff,73,0,Main,MNK/WHM/PLD/DRG,WS,59,Craft,,yes,yes
-17591,Primate Staff +1,73,0,Main,MNK/WHM/PLD/DRG,DPS,67,Craft,,yes,yes
-17592,Kinkobo,73,0,Main,MNK/WHM/PLD/DRG,WS,59,Craft,,yes,yes
+17590,Primate Staff,73,0,Main,MNK/WHM/PLD/DRG,WS,52,Craft,,yes,yes
+17591,Primate Staff +1,73,0,Main,MNK/WHM/PLD/DRG,DPS,58,Craft,,yes,yes
+17592,Kinkobo,73,0,Main,MNK/WHM/PLD/DRG,WS,52,Craft,,yes,yes
 17593,Martial Staff,72,0,Main,MNK/WHM/BLM/PLD/DRG/SMN/SCH/GEO,WS,48,BCNM: When Hell Freezes Over,,yes,yes
 17594,Gelong Staff,10,0,Main,All Jobs,WS,7,Drop: Swamfisk,,yes,yes
 17595,Hope Staff,73,0,Main,BRD/SMN/PUP,WS,30,Drop: Jailer of Hope,,yes,yes
@@ -7653,7 +7653,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 17967,Felling Axe,13,0,Main/Sub,WAR/DRK/BST/RNG/RUN,WS,6,Drop: Barbastelle,,yes,yes
 17968,Veldt Axe,42,0,Main/Sub,WAR/DRK/BST/RNG/RUN,WS,14,Craft,,yes,yes
 17969,Fendoir,69,0,Main/Sub,WAR/BST,WS,7,Drop: Killer Jonny,,yes,yes
-17970,Lyft Tabar,73,0,Main/Sub,WAR/DRK/BST/RUN,WS,35,Drop: Centipedal Centruroides,,yes,yes
+17970,Lyft Tabar,73,0,Main/Sub,WAR/DRK/BST/RUN,WS,28,Drop: Centipedal Centruroides,,yes,yes
 17971,Tartaglia,75,0,Main/Sub,RNG,WS,17,Drop: Gharial,,yes,yes
 17972,San Dorian Dagger,34,0,Main/Sub,WAR/BLM/RDM/THF/PLD/BRD/NIN/SCH/GEO,DPS,14,Craft,,yes,yes
 17973,Kingdom Dagger,34,0,Main/Sub,WAR/BLM/RDM/THF/PLD/BRD/NIN/SCH/GEO,DPS,16,Craft,,yes,yes
@@ -8104,7 +8104,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 18419,Kugui,74,0,Main/Sub,NIN,WS,24,Drop: Southern Piranu,,yes,yes
 18420,Hayabusa,71,0,Main/Sub,NIN,DPS,18,Craft | Sparks,,yes,yes
 18421,Hayabusa +1,71,0,Main/Sub,NIN,DPS,20,Craft,,yes,yes
-18422,Ryumon,70,0,Main/Sub,NIN,DPS,30,Drop: Hundredfaced Hapool Ja,,yes,yes
+18422,Ryumon,70,0,Main/Sub,NIN,DPS,23,Drop: Hundredfaced Hapool Ja,,yes,yes
 18423,Izayoi,73,0,Main/Sub,NIN,DPS,25,Craft,,yes,yes
 18424,Izayoi +1,73,0,Main/Sub,NIN,DPS,30,Craft,,yes,yes
 18425,Perdu Blade,73,0,Main/Sub,NIN,DPS,31,,,yes,yes
@@ -8189,7 +8189,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 18505,Erlkings Kheten,75,0,Main,WAR,WS,46,Craft,,yes,yes
 18506,Tewhatewha,45,0,Main,WAR,WS,34,Craft,,yes,yes
 18507,Kinship Axe,72,0,Main,WAR,WS,15,Drop: Autarch,,yes,yes
-18508,Lyft Voulge,73,0,Main,WAR/DRK/RUN,WS,58,Drop: Vasiliceratops,,yes,yes
+18508,Lyft Voulge,73,0,Main,WAR/DRK/RUN,WS,50,Drop: Vasiliceratops,,yes,yes
 18509,Tewhatewha +1,45,0,Main,WAR,WS,35,Craft,,yes,yes
 18510,Vermeil Bhuj,80,0,Main,WAR/DRK/RUN,WS,68,Drop: Minhocao,,yes,yes
 18511,Dolor Bhuj,77,0,Main,WAR/DRK/RUN,WS,54,Sparks,,yes,yes
@@ -8439,7 +8439,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 18768,Poppet Katars,58,0,Main,WAR/MNK/RDM/DRK/PUP,WS,18,Drop: Olgoi-Khorkhoi,,yes,yes
 18769,Severus Claws,64,0,Main,MNK/PUP,WS,12,Craft,,yes,yes
 18770,Pygme Sainti,73,0,Main,PUP,DPS,22,Drop: Magnotaur,,yes,yes
-18771,Lyft Sainti,73,0,Main,MNK/PUP,WS,12,Drop: Voirloup,,yes,yes
+18771,Lyft Sainti,73,0,Main,MNK/PUP,WS,10,Drop: Voirloup,,yes,yes
 18772,Tyro Katars +1,31,0,Main,WAR/MNK/RDM/DRK/PUP,WS,4,Craft,,yes,yes
 18773,Severus Claws +1,64,0,Main,MNK/PUP,WS,14,Craft,,yes,yes
 18774,Savate Fists,77,0,Main,WAR/MNK/BST/NIN/PUP,WS,17,,,yes,yes
@@ -8610,7 +8610,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 18955,Dweomer Scythe,75,0,Main,DRK,WS,46,Craft,,yes,yes
 18956,Serpette,12,0,Main,DRK,WS,16,Craft,,yes,yes
 18957,Smiting Scythe,54,0,Main,DRK,WS,40,Craft,,yes,yes
-18958,Lyft Scythe,73,0,Main,DRK,WS,53,,,yes,yes
+18958,Lyft Scythe,73,0,Main,DRK,WS,50,,,yes,yes
 18959,Serpette +1,12,0,Main,DRK,WS,16,Craft,,yes,yes
 18960,Smiting Scythe +1,54,0,Main,DRK,WS,41,Craft,,yes,yes
 18961,Plaga Scythe,76,0,Main,DRK,WS,53,Drop: Megamaw Mikey,,yes,yes
@@ -8772,12 +8772,12 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 19117,Ogre Jambiya,75,0,Main/Sub,DNC,DPS,13,Craft,,yes,yes
 19118,Machismo,75,0,Main/Sub,RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC,DPS,21,,,yes,yes
 19119,Ranging Knife,24,0,Main/Sub,WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC,DPS,4,Craft,,yes,yes
-19120,Avis,57,0,Main/Sub,WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC,DPS,27,Drop: Emela-ntouka,,yes,yes
+19120,Avis,57,0,Main/Sub,WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC,DPS,18,Drop: Emela-ntouka,,yes,yes
 19121,Sleight Kukri,62,0,Main/Sub,DNC,DPS,23,Drop: Hovering Hotpot,,yes,yes
 19122,Coursers Pugio,67,0,Main/Sub,RNG,DPS,20,Drop: Erle,,yes,yes
 19123,Cinquedea,71,0,Main/Sub,DNC,DPS,19,Drop: Aynu-Kaysey,,yes,yes
 19124,Creve-Coeur,73,0,Main/Sub,WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC,DPS,24,Drop: Judgmental Julika,,yes,yes
-19125,Lyft Jambiya,73,0,Main/Sub,WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC,DPS,24,Drop: Euryale,,yes,yes
+19125,Lyft Jambiya,73,0,Main/Sub,WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC,DPS,21,Drop: Euryale,,yes,yes
 19126,Papilio Kirpan,72,0,Main/Sub,COR/DNC,DPS,35,Drop: Scylla,,yes,yes
 19127,Ranging Knife +1,24,0,Main/Sub,WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC,DPS,5,Craft,,yes,yes
 19128,Edgeless Knife,75,0,Main/Sub,RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC,DPS,1,Drop: Ethniu,,yes,yes
@@ -8813,7 +8813,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 19158,Scheherazade,72,0,Main,DRK,WS,45,,,yes,yes
 19159,Galatyn,75,0,Main,WAR/PLD/DRK/RUN,WS,42,,,yes,yes
 19160,Estramacon,15,0,Main,WAR/PLD/DRK/RUN,WS,14,Drop: Ghillie Dhu,,yes,yes
-19161,Lyft Claymore,73,0,Main,WAR/PLD/DRK/RUN,WS,44,Drop: Prince Orobas,,yes,yes
+19161,Lyft Claymore,73,0,Main,WAR/PLD/DRK/RUN,WS,42,Drop: Prince Orobas,,yes,yes
 19162,Dull Claymore,75,0,Main,WAR/PLD/DRK/RUN,WS,0,Drop: Elatha,,yes,yes
 19163,Nightfall,75,0,Main,WAR/PLD/DRK/RUN,WS,42,,,yes,yes
 19164,Ferus Algol,80,0,Main,WAR/DRK/RUN,WS,47,,,yes,yes
@@ -8886,7 +8886,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 19231,Trackers Bow,45,0,Range,WAR/THF/DRK/RNG,WS,40,Craft,,yes,yes
 19232,Octant,71,0,Range,THF/RNG,DPS,45,Drop: Ignamoth,,yes,yes
 19233,Lyft Crossbow,73,0,Range,RNG,DPS,48,Drop: Cookieduster Lipiroon,,yes,yes
-19234,Lyft Hexagun,73,0,Range,COR,WS,54,Drop: Firedance Magmaal Ja,,yes,yes
+19234,Lyft Hexagun,73,0,Range,COR,WS,52,Drop: Firedance Magmaal Ja,,yes,yes
 19235,Veuglaire,74,0,Range,COR,WS,52,Drop: Mahishasura,,yes,yes
 19236,Hightail Bullet,75,0,Ammo,RNG,DPS,134,Drop: Zirnitra,,yes,yes
 19237,Slick Dart,53,0,Ammo,WAR/THF/DRK/NIN/RUN,DPS,2,Drop: Bayawak,,yes,yes
@@ -8931,7 +8931,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 19276,Midare,36,0,Main/Sub,NIN,DPS,11,Craft,,yes,yes
 19277,Tsugumi,50,0,Main/Sub,NIN,DPS,16,Drop: Ankabut,,yes,yes
 19278,Fuchingiri,71,0,Main/Sub,NIN,DPS,20,Drop: Calchas,,yes,yes
-19279,Musanto,73,0,Main/Sub,NIN,DPS,24,,,yes,yes
+19279,Musanto,73,0,Main/Sub,NIN,DPS,21,,,yes,yes
 19280,Narigitsune,74,0,Main/Sub,NIN,TANK,32,Drop: Oupire,,yes,yes
 19281,Midare +1,36,0,Main/Sub,NIN,DPS,11,Craft,,yes,yes
 19282,Hochomasamune,80,0,Main/Sub,NIN,DPS,44,Drop: Ruminator,,yes,yes
@@ -8958,7 +8958,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 19303,Fay Lance,75,0,Main,DRG,WS,45,Craft,,yes,yes
 19304,Sarissa,75,0,Main,DRG,WS,48,,,yes,yes
 19305,Pike,11,0,Main,DRG,WS,14,Drop: Numbing Norman,,yes,yes
-19306,Lyft Lance,73,0,Main,DRG,WS,57,Drop: Nommo,,yes,yes
+19306,Lyft Lance,73,0,Main,DRG,WS,50,Drop: Nommo,,yes,yes
 19307,Blunt Lance,75,0,Main,DRG,WS,0,Drop: Buarainech,,yes,yes
 19308,Rusty Spear,60,0,Main,WAR/PLD/SAM/DRG,WS,26,,,yes,yes
 19309,Gleaming Spear,80,0,Main,WAR/PLD/SAM/DRG,WS,36,,,yes,yes
@@ -14451,7 +14451,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 27723,Xaddi Headgear,99,119,Head,WAR/PLD/DRK/BST/SAM/DRG,TANK,209,,,yes,yes
 27724,Qaaxo Mask,99,119,Head,MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN,TANK,189,,Medal Vendor (Armor),yes,yes
 27725,Artsieq Hat,99,119,Head,WHM/BLM/RDM/BRD/SMN/SCH/GEO,DPS,99,,Medal Vendor (Armor),yes,yes
-27726,She-Slime Hat,1,0,Head,All Jobs,TANK,13,,,yes,yes
+27726,She-Slime Hat,1,0,Head,All Jobs,TANK,5,,,yes,yes
 27727,Metal Slime Hat,1,0,Head,All Jobs,TANK,2,,,yes,yes
 27728,Cizin Helm +1,99,119,Head,WAR/PLD/DRK/DRG,TANK,221,,HTBF,yes,yes
 27729,Otronif Mask +1,99,119,Head,MNK/SAM/NIN/PUP,TANK,195,,HTBF,yes,yes
@@ -15272,7 +15272,7 @@ item_id,name,level,ilvl,slot,jobs,score_class,score,retail_source,relaunch_sourc
 28564,Kuchekula Ring,99,0,Ring,All Jobs,CASTER,1,,,yes,yes
 28565,Zanhi Ring,99,0,Ring,All Jobs,,,,,yes,yes
 28566,Nguruve Ring,99,0,Ring,All Jobs,DPS,20,,,yes,yes
-28567,Nesanica Ring,75,0,Ring,All Jobs,DPS,15,,,yes,yes
+28567,Nesanica Ring,75,0,Ring,All Jobs,DPS,5,,,yes,yes
 28568,Resolution Ring,30,0,Ring,All Jobs,,,Craft,,yes,yes
 28569,Expertise Ring,99,0,Ring,All Jobs,,,,,yes,yes
 28570,Duck Ring,1,0,Ring,All Jobs,,,,,yes,yes

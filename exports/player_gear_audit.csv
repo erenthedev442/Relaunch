@@ -2,54 +2,11 @@ itemname,itemid,charname,charid,quantity,reason,sources
 Abyss Sollerets,15139,Duffaluffagus,13,1,no_source,
 Aisance Mantle,10966,Garvtest,21,1,no_source,
 Aisance Mantle +1,10967,Enko,15,1,no_source,
-Ajja Katana,21919,Souls,12,1,all_gated,sys:Weapon Forge
-Ajja Sword,21618,Souls,12,1,all_gated,sys:Weapon Forge
-Amini Bottillons,27431,Lanty,25,1,all_gated,sys:Reforge
-Amini Bottillons +3,23698,Burtgang,11,1,all_gated,sys:Reforge
-Amini Bottillons +3,23698,Lanty,25,1,all_gated,sys:Reforge
-Amini Bragues,27257,Burtgang,11,1,all_gated,sys:Reforge
-Amini Bragues,27257,Lanty,25,1,all_gated,sys:Reforge
-Amini Caban,26918,Lanty,25,1,all_gated,sys:Reforge
-Amini Caban +3,23497,Lanty,25,1,all_gated,sys:Reforge
-Amini Earring +2,25482,Lanty,25,2,all_gated,sys:Voidwatch
-Amini Gapette,26760,Lanty,25,1,all_gated,sys:Reforge
-Amini Gapette +3,23430,Lanty,25,1,all_gated,sys:Reforge
-Amini Glovelettes,27072,Lanty,25,1,all_gated,sys:Reforge
-Amini Glovelettes +3,23564,Burtgang,11,1,all_gated,sys:Reforge
-Anch. Gaiters,28224,Ropraz,18,1,all_gated,sys:Reforge
-Anch. Gaiters,28224,Thanos,20,1,all_gated,sys:Reforge
-Anchor. Gloves +2,23175,Ropraz,18,1,all_gated,sys:Reforge
-Anchorites Crown,27664,Ropraz,18,1,all_gated,sys:Reforge
-Anchorites Crown,27664,Thanos,20,1,all_gated,sys:Reforge
-Anchorites Cyclas,27808,Ropraz,18,1,all_gated,sys:Reforge
-Anchorites Cyclas,27808,Thanos,20,1,all_gated,sys:Reforge
-Anchorites Gloves,27944,Ropraz,18,1,all_gated,sys:Reforge
-Anchorites Gloves,27944,Thanos,20,1,all_gated,sys:Reforge
-Anchorites Hose,28091,Ropraz,18,1,all_gated,sys:Reforge
-Anchorites Hose,28091,Thanos,20,1,all_gated,sys:Reforge
-Apocalypse,21808,Spyro,19,1,all_gated,sys:Weapon Forge
-Arbatel Loafers,27449,Lanty,25,1,all_gated,sys:Reforge
-Arc. Braccae +3,23609,Burtgang,11,1,all_gated,sys:Reforge
-Arcadian Beret,26644,Lanty,25,1,all_gated,sys:Reforge
-Arcadian Beret +3,23408,Burtgang,11,1,all_gated,sys:Reforge
-Arcadian Beret +3,23408,Lanty,25,1,all_gated,sys:Reforge
-Arcadian Braccae,27172,Lanty,25,1,all_gated,sys:Reforge
-Arcadian Bracers,26996,Burtgang,11,1,all_gated,sys:Reforge
-Arcadian Bracers,26996,Lanty,25,1,all_gated,sys:Reforge
-Arcadian Jerkin,26820,Burtgang,11,1,all_gated,sys:Reforge
-Arcadian Jerkin,26820,Lanty,25,1,all_gated,sys:Reforge
-Arcadian Socks,27348,Burtgang,11,1,all_gated,sys:Reforge
-Arcadian Socks,27348,Lanty,25,1,all_gated,sys:Reforge
 Archer's Ring,13514,Garvtest,21,1,no_source,
 Argute Pants,16362,Duffaluffagus,13,1,no_source,
 Ashigaru Mantle,13670,Burtgang,11,1,no_source,
 Ashigaru Targe,12400,Burtgang,11,1,no_source,
 Assassin's Vest,15092,Duffaluffagus,13,1,no_source,
-Atrophy Boots,28227,Souls,12,1,all_gated,sys:Reforge
-Atrophy Chapeau,27667,Souls,12,1,all_gated,sys:Reforge
-Atrophy Gloves,27947,Souls,12,1,all_gated,sys:Reforge
-Atrophy Tabard,27811,Souls,12,1,all_gated,sys:Reforge
-Atrophy Tights,28094,Souls,12,1,all_gated,sys:Reforge
 Attila's Earring,14762,Garvtest,21,1,no_source,
 Aurore Beret,11504,Thanos,20,1,no_source,
 Aurore Gloves,12746,Thanos,20,1,no_source,
@@ -63,23 +20,8 @@ Bastokan Ring,13497,Burtgang,11,1,no_source,
 Bastokan Ring,13497,Corvinos,14,1,no_source,
 Bastokan Ring,13497,Nut,16,1,no_source,
 Beater's Aspis,12399,Burtgang,11,1,no_source,
-Beck. Pigaches,27439,Spyro,19,1,all_gated,sys:Reforge
-Beckoner's Spats,27265,Lanty,25,1,all_gated,sys:Reforge
 Beir Belt +1,11764,Garvtest,21,1,no_source,
 Beir Belt +1,11764,Thanos,20,1,no_source,
-Bhikku Crown,26742,Ropraz,18,1,all_gated,sys:Reforge
-Bhikku Crown,26742,Thanos,20,1,all_gated,sys:Reforge
-Bhikku Cyclas,26900,Thanos,20,1,all_gated,sys:Reforge
-Bhikku Cyclas +1,26901,Thanos,20,1,all_gated,sys:Reforge
-Bhikku Cyclas +2,23153,Ropraz,18,1,all_gated,sys:Reforge
-Bhikku Gaiters,27413,Thanos,20,1,all_gated,sys:Reforge
-Bhikku Gaiters +2,23354,Ropraz,18,1,all_gated,sys:Reforge
-Bhikku Gloves,27054,Ropraz,18,1,all_gated,sys:Reforge
-Bhikku Gloves,27054,Thanos,20,1,all_gated,sys:Reforge
-Bhikku Hose,27239,Ropraz,18,1,all_gated,sys:Reforge
-Bhikku Hose,27239,Thanos,20,1,all_gated,sys:Reforge
-Bhikku Hose +1,27240,Thanos,20,1,all_gated,sys:Reforge
-Bhikku Hose +2,23287,Ropraz,18,1,all_gated,sys:Reforge
 Bihu Cannions,27170,Nut,16,1,all_gated,sys:Reforge
 Bihu Cuffs,26994,Nut,16,1,all_gated,sys:Reforge
 Bihu Justaucorps,26818,Nut,16,1,all_gated,sys:Reforge
@@ -95,14 +37,13 @@ Brown Belt,13202,Thanos,20,1,no_source,
 Cache-nez,15180,Burtgang,11,1,no_source,
 Caliber Ring,26164,Duffaluffagus,13,1,no_source,
 Calmecac Trousers,11958,Thanos,20,1,no_source,
-Chasseurs Frac,26930,Lanty,25,1,all_gated,sys:Reforge
+Claymore Grip,19027,Spyro,19,1,no_source,
 Cmb.cst. Scimitar,16807,Souls,12,2,no_source,
 Cobra Tunica,14586,Burtgang,11,1,no_source,
 Comm. Bottes,11385,Duffaluffagus,13,1,no_source,
-Con. Pigaches,28237,Spyro,19,1,all_gated,sys:Reforge
-Convoker's Spats,28104,Spyro,19,1,all_gated,sys:Reforge
 Cornelia's Ring,26227,Burtgang,11,1,no_source,
 Cornelia's Ring,26227,Ropraz,18,1,no_source,
+Cornelia's Ring,26227,Spyro,19,1,no_source,
 Cross-counters,17472,Ropraz,18,1,no_source,
 Cross-counters,17472,Thanos,20,1,no_source,
 Curtana,16575,Lanty,25,1,no_source,
@@ -128,6 +69,7 @@ Enlivened Ring,28549,Duffaluffagus,13,1,no_source,
 Enlivened Ring,28549,Garvtest,21,1,no_source,
 Ephramad's Ring,26231,Burtgang,11,1,no_source,
 Ephramad's Ring,26231,Lanty,25,1,no_source,
+Ephramad's Ring,26231,Spyro,19,1,no_source,
 Espial Bracers,28030,Garvtest,21,1,no_source,
 Espial Bracers,28030,Ropraz,18,1,no_source,
 Espial Cap,27741,Garvtest,21,1,no_source,
@@ -143,7 +85,6 @@ Fickblix's Ring,26230,Herdofturtles,22,1,no_source,
 Fili Calot,26758,Nut,16,1,all_gated,sys:Reforge
 Fili Cothurnes,27429,Nut,16,1,all_gated,sys:Reforge
 Fili Hongreline,26916,Nut,16,1,all_gated,sys:Reforge
-Fili Manchettes,27070,Lanty,25,1,all_gated,sys:Reforge
 Fili Manchettes,27070,Nut,16,1,all_gated,sys:Reforge
 Fili Rhingrave,27255,Nut,16,1,all_gated,sys:Reforge
 Flamma Dirs +1,25874,Garvtest,21,1,all_gated,sys:Ambuscade
@@ -165,29 +106,6 @@ Galkan Surcoat,12637,Nut,16,1,no_source,
 Gleti's Boots,23784,Herdofturtles,22,1,no_source,
 Gleti's Breeches,23777,Herdofturtles,22,1,no_source,
 Gleti's Cuirass,23763,Herdofturtles,22,1,no_source,
-Glyphic Pigaches,27356,Spyro,19,1,all_gated,sys:Reforge
-Hachi. Chainmail,27819,Souls,12,1,all_gated,sys:Reforge
-Hachiya Hakama,28102,Souls,12,1,all_gated,sys:Reforge
-Hachiya Hatsuburi,27675,Souls,12,1,all_gated,sys:Reforge
-Hachiya Kyahan,28235,Souls,12,1,all_gated,sys:Reforge
-Hachiya Tekko,27955,Souls,12,1,all_gated,sys:Reforge
-Hattori Hakama,27261,Duffaluffagus,13,1,all_gated,sys:Reforge
-Hattori Hakama,27261,Souls,12,1,all_gated,sys:Reforge
-Hattori Kyahan,27435,Duffaluffagus,13,1,all_gated,sys:Reforge
-Hattori Kyahan,27435,Souls,12,1,all_gated,sys:Reforge
-Hattori Ningi,26922,Duffaluffagus,13,1,all_gated,sys:Reforge
-Hattori Ningi,26922,Souls,12,1,all_gated,sys:Reforge
-Hattori Tekko,27076,Duffaluffagus,13,1,all_gated,sys:Reforge
-Hattori Tekko,27076,Souls,12,1,all_gated,sys:Reforge
-Hattori Zukin,26764,Duffaluffagus,13,1,all_gated,sys:Reforge
-Hattori Zukin,26764,Souls,12,1,all_gated,sys:Reforge
-Hes. Crown +1,26627,Ropraz,18,1,all_gated,sys:Reforge
-Hes. Crown +2,23064,Ropraz,18,1,all_gated,sys:Reforge
-Hes. Crown +3,23399,Ropraz,18,1,all_gated,sys:Reforge
-Hes. Cyclas,26802,Ropraz,18,1,all_gated,sys:Reforge
-Hes. Gaiters,27330,Ropraz,18,1,all_gated,sys:Reforge
-Hes. Gloves,26978,Ropraz,18,1,all_gated,sys:Reforge
-Hes. Hose,27154,Ropraz,18,1,all_gated,sys:Reforge
 Hume F Boots,13010,Burtgang,11,1,no_source,
 Hume F Boots,13010,Spaz,17,1,no_source,
 Hume F Gloves,12760,Burtgang,11,1,no_source,
@@ -221,24 +139,11 @@ Ichimonji-yofusa,21044,Duffaluffagus,13,1,no_source,
 Ire Torque +1,11582,Thanos,20,1,no_source,
 Juogi +1,12622,Thanos,20,1,no_source,
 Justice Badge,13093,Burtgang,11,1,no_source,
-Karagoz Cappello,26774,Lanty,25,1,all_gated,sys:Reforge
-Kasuga Domaru,26920,Thanos,20,1,all_gated,sys:Reforge
-Kasuga Haidate,27259,Thanos,20,1,all_gated,sys:Reforge
-Kasuga Kabuto,26762,Thanos,20,1,all_gated,sys:Reforge
-Kasuga Kote,27074,Thanos,20,1,all_gated,sys:Reforge
-Kasuga Sune-ate,27433,Thanos,20,1,all_gated,sys:Reforge
 Killer Targe,12396,Burtgang,11,1,no_source,
 Kraken Club,17440,Souls,12,1,no_source,
 Leaping Boots,13014,Duffaluffagus,13,1,no_source,
-Leth. Earring +1,25445,Souls,12,1,all_gated,sys:Voidwatch
-Leth. Fuseau,27245,Souls,12,1,all_gated,sys:Reforge
-Leth. Gantherots,27060,Souls,12,1,all_gated,sys:Reforge
-Leth. Houseaux,27419,Souls,12,1,all_gated,sys:Reforge
-Lethargy Chappel,26748,Souls,12,1,all_gated,sys:Reforge
-Lethargy Sayon,26906,Souls,12,1,all_gated,sys:Reforge
 Life Belt,13231,Herdofturtles,22,1,no_source,
 Lufaise Fly,17005,Thanos,20,1,no_source,
-Mandau,20583,Souls,12,1,all_gated,sys:Weapon Forge
 Martial Knuckles,18356,Thanos,20,1,no_source,
 Melee Gaiters,15133,Duffaluffagus,13,1,no_source,
 Mercen. Mantle,13659,Burtgang,11,1,no_source,
@@ -253,14 +158,8 @@ Mithran Loincloth,12887,Enko,15,1,no_source,
 Mithran Loincloth,12887,Herdofturtles,22,1,no_source,
 Mithran Separates,12636,Enko,15,1,no_source,
 Mithran Separates,12636,Herdofturtles,22,1,no_source,
-Mochi. Chainmail,26824,Souls,12,1,all_gated,sys:Reforge
-Mochi. Hatsuburi,26648,Souls,12,1,all_gated,sys:Reforge
-Mochizuki Hakama,27176,Souls,12,1,all_gated,sys:Reforge
-Mochizuki Kyahan,27352,Souls,12,1,all_gated,sys:Reforge
-Mochizuki Tekko,27000,Souls,12,1,all_gated,sys:Reforge
 Monster Jackcoat,15095,Duffaluffagus,13,1,no_source,
 Mujin Band,11672,Enko,15,1,no_source,
-Nukumi Earring +2,25470,Herdofturtles,22,1,all_gated,sys:Voidwatch
 Nyame Gauntlets,23775,Herdofturtles,22,1,no_source,
 Nyame Helm,23761,Herdofturtles,22,1,no_source,
 Ochiudo's Kote,13952,Ropraz,18,1,no_source,
@@ -277,12 +176,6 @@ Onion Sword,16534,Rirint,4,1,no_source,
 Onion Sword,16534,Ririntwo,9,1,no_source,
 Onion Sword,16534,Souls,12,1,no_source,
 Onion Sword,16534,Testa,7,1,no_source,
-Orion Beret,27673,Lanty,25,1,all_gated,sys:Reforge
-Orion Beret +3,23385,Burtgang,11,1,all_gated,sys:Reforge
-Orion Braccae,28100,Lanty,25,1,all_gated,sys:Reforge
-Orion Bracers,27953,Lanty,25,1,all_gated,sys:Reforge
-Orion Jerkin,27817,Lanty,25,1,all_gated,sys:Reforge
-Orion Socks,28233,Lanty,25,1,all_gated,sys:Reforge
 Outrider Greaves,28306,Burtgang,11,1,no_source,
 Outrider Greaves,28306,Duffaluffagus,13,1,no_source,
 Outrider Greaves,28306,Garvtest,21,1,no_source,
@@ -308,15 +201,9 @@ Rager Ledelsens,11423,Thanos,20,1,no_source,
 Relic Blade,18278,Duffaluffagus,13,1,no_source,
 Relic Scythe,18302,Duffaluffagus,13,1,no_source,
 Safeguard Ring,14670,Burtgang,11,1,no_source,
-Sakonji Domaru,26822,Thanos,20,1,all_gated,sys:Reforge
-Sakonji Haidate,27174,Thanos,20,1,all_gated,sys:Reforge
-Sakonji Kabuto,26646,Thanos,20,1,all_gated,sys:Reforge
-Sakonji Kote,26998,Thanos,20,1,all_gated,sys:Reforge
-Sakonji Sune-ate,27350,Thanos,20,1,all_gated,sys:Reforge
 San Dorian Ring,13495,Ropraz,18,1,no_source,
 Saotome Kote,15113,Duffaluffagus,13,1,no_source,
 Savate Fists +1,18775,Thanos,20,1,no_source,
-Skulker's Vest +1,26909,Duffaluffagus,13,1,all_gated,sys:Reforge
 Sorcerer's Tonban,15120,Duffaluffagus,13,1,no_source,
 Summoner's Brcr.,15116,Duffaluffagus,13,1,no_source,
 Tartarus Platemail,26944,Burtgang,11,1,no_source,
@@ -331,23 +218,8 @@ Vehemence Ring,28550,Garvtest,21,1,no_source,
 Veisa Collar,10930,Garvtest,21,1,no_source,
 Veisa Collar,10930,Thanos,20,1,no_source,
 Vellaunus' Mantle,11565,Thanos,20,1,no_source,
-Vitiation Boots,27336,Souls,12,1,all_gated,sys:Reforge
-Vitiation Boots,27336,Spyro,19,1,all_gated,sys:Reforge
-Vitiation Chapeau,26632,Souls,12,1,all_gated,sys:Reforge
-Vitiation Chapeau,26632,Spyro,19,1,all_gated,sys:Reforge
-Vitiation Gloves,26984,Souls,12,1,all_gated,sys:Reforge
-Vitiation Gloves,26984,Spyro,19,1,all_gated,sys:Reforge
-Vitiation Tabard,26808,Souls,12,1,all_gated,sys:Reforge
-Vitiation Tabard,26808,Spyro,19,1,all_gated,sys:Reforge
-Vitiation Tights,27160,Souls,12,1,all_gated,sys:Reforge
-Vitiation Tights,27160,Spyro,19,1,all_gated,sys:Reforge
 Vulcan's Pearl,11022,Ropraz,18,1,no_source,
 Vulcan's Pearl,11022,Thanos,20,2,no_source,
-Wakido Domaru,27818,Thanos,20,1,all_gated,sys:Reforge
-Wakido Haidate,28101,Thanos,20,1,all_gated,sys:Reforge
-Wakido Kabuto,27674,Thanos,20,1,all_gated,sys:Reforge
-Wakido Kote,27954,Thanos,20,1,all_gated,sys:Reforge
-Wakido Sune-ate,28234,Thanos,20,1,all_gated,sys:Reforge
 Wayfarer Circlet,27742,Garvtest,21,1,no_source,
 Wayfarer Clogs,28308,Garvtest,21,1,no_source,
 Wayfarer Cuffs,28031,Garvtest,21,1,no_source,
