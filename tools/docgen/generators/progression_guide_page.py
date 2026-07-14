@@ -50,7 +50,11 @@ _FOOTER_STUB = (
 _CATALOG_GROUPS: list[tuple[str, list[tuple[str, str]]]] = [
     ("Weapons & Mastery", [
         ("progression/prime-armory.md",     "!leaf"),
-        ("progression/weapon-forge.md",     "!leaf"),
+        # weapon-forge chip is `!forgegates` (2026-07-14): the widget IS the
+        # docs page's utility, and the command relevant to what the page
+        # teaches is progress-check, not warp. `!leaf` still warps to the
+        # Purgonorgo hub where every Weapons-Mastery NPC lives.
+        ("progression/weapon-forge.md",     "!forgegates"),
         ("endgame/job-mastery.md",          "!leaf"),
         ("progression/spell-mastery.md",    "!leaf"),
         ("progression/cross-job-traits.md", "!leaf"),

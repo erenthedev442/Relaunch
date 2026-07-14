@@ -271,6 +271,47 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         wins = relic_wins[i] if i < len(relic_wins) else 0
         widget = widget.replace(placeholder, _gate_str(wins))
 
+    # Live iterated-gate target counts. Mirrors the runtime values exposed
+    # via xi.geasFete.uniqueNmCount / xi.voidwatch.uniqueNmCount /
+    # xi.dungeonInstances.uniqueDungeonCount and the Portal's parse. The
+    # widget's gate strings embed these so a player reading the docs sees
+    # "(N of N)" progress framing without needing to visit the Portal.
+    def _count(rel: str, pattern: str, block_re: str | None = None) -> int:
+        src = resolve_source(repo_root, rel, required=False)
+        if src is None:
+            return 0
+        text = src.read_text(encoding="utf-8", errors="replace")
+        if block_re:
+            m = re.search(block_re, text, re.DOTALL | re.MULTILINE)
+            if not m:
+                return 0
+            text = m.group(1)
+        return len(re.findall(pattern, text, re.MULTILINE))
+
+    gf_total = _count(
+        "modules/custom/lua/Geas_Fete.lua", r"gid\s*=\s*\d+",
+        block_re=r"^local NM_CATALOG = \{(.*?)\n\}\n",
+    )
+    vw_names: set[str] = set()
+    vw_src = resolve_source(repo_root, "modules/custom/lua/voidwatch_catalog.lua", required=False)
+    if vw_src is not None:
+        vw_text = vw_src.read_text(encoding="utf-8", errors="replace")
+        strata = re.search(r"C\.STRATA\s*=\s*\{(.*?)\n\}", vw_text, re.DOTALL)
+        if strata:
+            for r in re.findall(r"roster\s*=\s*\{(.*?)\}\s*\}", strata.group(1), re.DOTALL):
+                for n in re.findall(r"name\s*=\s*'([^']+)'", r):
+                    vw_names.add(n)
+    dungeon_total = _count(
+        "modules/custom/lua/dungeon_catalog.lua",
+        r"^\s+instanceId\s*=\s*\d",
+    )
+    for tok, val in (
+        ("__GF_TOTAL__", str(gf_total or "?")),
+        ("__VW_TOTAL__", str(len(vw_names) or "?")),
+        ("__DUNGEON_TOTAL__", str(dungeon_total or "?")),
+    ):
+        widget = widget.replace(tok, val)
+
     page = docs_dir / "progression" / "weapon-forge.md"
     ok = write_between_markers(page, "weapon-forge-widget", widget)
     print(f"[weapon_forge] {'widget written' if ok else 'marker not found — skipped'}")

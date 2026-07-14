@@ -250,6 +250,8 @@ MODULE_COVERAGE_ALLOWLIST: dict[str, str] = {
     "reforge_plus4_map.lua":         "static +3->+4 pair table; the Divergence +4 Forge IS documented",
     "abjuration_forge_catalog.lua":  "catalog consumed by AbjurationForge_NPC.lua (the NPC file IS the doc anchor)",
     "weapon_forge_gates.lua":        "shared STAGE_GATES table required by WeaponForge_NPC.lua + !forgegates command; the parent Weapon Forge system IS documented",
+    "huntnm_warp_table.lua":         "static NM->coord table consumed by !huntwarp; the Hunter's Guild system IS documented",
+    "hunt_nm_respawn_override.lua":  "internal respawn-time neutralizer for stock hunt-target mob files; the Hunter's Guild system IS documented",
     # ---- REMA / Prime WS enhancement ------------------------------------
     "PrimeWeaponskillTuning.lua":    "engine for the REMA WS Enhancement system; the system IS documented",
     "prime_ws_tuning_catalog.lua":   "catalog for REMA WS Enhancement; system IS documented",

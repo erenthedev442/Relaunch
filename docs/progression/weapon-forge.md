@@ -2,6 +2,9 @@
 
 Six legacy weapon paths. Earn the base weapon from its source content, then forge it through three stages to its final form. Click a category to explore its chain, costs, and weapons.
 
+!!! tip "Check your progress in-game with `!forgegates`"
+    Type **`!forgegates`** anywhere to see your met (`✓`) and not-met (`✗`) status for every stage prerequisite across all four gated paths (Empyrean · Mythic · Aeonic · Prime). Pass a category to focus one path — e.g. `!forgegates aeonic`. The same status shows in the Player Portal's dashboard under the **Weapon Forge Gates** card.
+
 <!-- DOCGEN:BEGIN id="weapon-forge-widget" -->
 <style>
 .wf-widget *, .wf-widget *::before, .wf-widget *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -245,7 +248,7 @@ const CATS = {
     source:'<strong>Empyrean weapons</strong> drop from <strong>Abyssea Marks NMs</strong> (high-tier ??? pops). Each weapon type has a corresponding NM that drops that weapon\'s specific material and the weapon itself. Drop rates are rare at Tier I; much higher at Tier III. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III. Bring the material to the <strong>Weapon Forge</strong> in {{npc:weapon_forger}}: it issues the base weapon and forges each stage (gated by HL Rank + Abyssea progress). <strong style="color:var(--cat)">Each empyrean weapon needs its OWN material — Twashtar wants Orthrus\'s Claw, Verethragna wants Glavoid Shell, and so on.</strong> The exact item is shown on each weapon\'s card below; bring THAT item, not a different empyrean drop.',
     s3lbl:'Stage III · Empyrean',
     forge:[
-      {lbl:'Base → Stage I', mats:[['2,000×','Cruor'],['50×','[see weapon]'],['10×','Ancient Beastcoin']], gate:'All Geas Fete bosses killed at least once'},
+      {lbl:'Base → Stage I', mats:[['2,000×','Cruor'],['50×','[see weapon]'],['10×','Ancient Beastcoin']], gate:'All Geas Fete bosses killed at least once (105 unique)'},
       {lbl:'Stage I → Stage II', mats:[['10,000×','Cruor'],['300×','Riftborn Boulder'],['30×','Ancient Beastcoin']], gate:'Voidspire Floor 100 reached'},
       {lbl:'Stage II → Stage III', mats:[['5,000×','Riftborn Boulder'],['50×','Ancient Beastcoin'],['15,000','Reforge Marks']], gate:'Fellow Mastery achieved'},
     ],
@@ -274,7 +277,7 @@ const CATS = {
     s3lbl:'Stage III · Mythic',
     forge:[
       {lbl:'Base → Stage I', mats:[['1,000×','Imperial Standing'],['10×','Imperial Bronze Piece']], gate:'Nyzul Isle Floor 100 cleared'},
-      {lbl:'Stage I → Stage II', mats:[['3,000×','Imperial Standing'],['25×','Imperial Silver Piece'],['300×','Beitetsu']], gate:'All Voidwatch NMs killed'},
+      {lbl:'Stage I → Stage II', mats:[['3,000×','Imperial Standing'],['25×','Imperial Silver Piece'],['300×','Beitetsu']], gate:'All Voidwatch NMs killed (19 unique)'},
       {lbl:'Stage II → Stage III', mats:[['5×','Imperial Gold Piece'],['10,000×','Beitetsu'],['20,000','Reforge Marks']], gate:'1 successful win of The Gauntlet'},
     ],
     weapons:[
@@ -309,7 +312,7 @@ const CATS = {
     forge:[
       {lbl:'Base → Stage I', mats:[['1×','Attestation (weapon-specific)'],['25×','Riftborn Boulder']], gate:'50 rebirths on a single job (not combined)'},
       {lbl:'Stage I → Stage II', mats:[['3×','Attestation (weapon-specific)'],['100×','Riftborn Boulder'],['10,000×','Escha Silt']], gate:'100 Ascensions on a single job (not combined)'},
-      {lbl:'Stage II → Stage III', mats:[['10×','Attestation (weapon-specific)'],['300×','Riftborn Boulder'],['50,000×','Escha Silt'],['20,000','Reforge Marks']], gate:'All Dungeons cleared · 10 wins against Maat\'s Echo'},
+      {lbl:'Stage II → Stage III', mats:[['10×','Attestation (weapon-specific)'],['300×','Riftborn Boulder'],['50,000×','Escha Silt'],['20,000','Reforge Marks']], gate:'All 10 Dungeons cleared · 10 wins against Maat\'s Echo'},
     ],
     weapons:[
       {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Godhands'},
