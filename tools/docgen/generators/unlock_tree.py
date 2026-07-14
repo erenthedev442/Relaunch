@@ -600,13 +600,16 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
          "modules/custom/lua/custom_HNM_system.lua"),
         ("htbf", 960, 250, "HTBF (Phantom Gem)", "content",
          _desc("HTBF",
-               f"3 tiers, Phantom Gem entry ({_fmt(htbf['min'])}–{_fmt(htbf['max'])} gil). "
-               "No rank gate — buy a gem, enter anytime." if htbf else
-               "Retail high-tier battlefields entered with Phantom Gems bought for gil."),
+               (f"3 tiers, Phantom Gem entry ({_fmt(htbf['min'])}–{_fmt(htbf['max'])} gil). "
+                "Access gate: **master the entering job (2,100 JP)** AND **register all 11 "
+                "NM affinities** at the Augment Sage. Gem is consumed on top.") if htbf else
+               ("Retail high-tier battlefields entered with Phantom Gems. Gated on "
+                "job mastery + all 11 NM affinities registered.")),
          "modules/custom/lua/htbf_catalog.lua"),
         ("dynamis", 960, 345, "Dynamis – Divergence", "content",
          _desc("Dynamis – Divergence",
-               "4 cities × wave battles. Drops the +4 Forge materials — Rusted/Black ID "
+               "4 cities × wave battles. Entry toll: **250 Reforge Marks** (any of AF, "
+               "Relic, or Empyrean). Drops the +4 Forge materials — Rusted/Black ID "
                "Cards, and a main-job Paragon Card off the Mega-Boss."),
          "modules/custom/lua/Dynamis_Divergence.lua"),
         ("nyzul", 960, 440, "Nyzul Isle", "content",
@@ -755,11 +758,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ("abyssea", "rfmarks", "AF/Rel/Emp"),
         ("hnm", "rfmarks", ""),
         ("rfmarks", "reforge", ""),
+        ("rfmarks", "dynamis", "250 marks"),
         ("dynamis", "plus4forge", "ID cards + P.Card"),
         ("reforge", "plus4forge", "+3 piece"),
         ("rank4", "hnm", ""),
-        ("rank4", "htbf", "gem/gil only"),
-        ("rank4", "dynamis", ""),
+        ("mastery", "htbf", "job mastered"),
+        ("affreg", "htbf", "all 11 affinities"),
         ("rank4", "nyzul", ""),
         ("rank4", "invasions", ""),
         ("abyssea", "infamy",

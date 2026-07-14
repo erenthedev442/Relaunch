@@ -87,8 +87,9 @@ def _item_link(name: str, wiki: str | None, item_id: int | None) -> str:
 def _parse_weapon_tiers(text: str, repo_root: Path) -> dict[str, dict[str, list[dict]]]:
     """Delegates to weapons_npc.parse_weapon_tiers so this guide and the generated
     gear-vendors tables always agree. bronze/silver/gold come from the flat catalog
-    (category derived from item skill); the auto-promoted 'infamy' tier is included."""
-    return weapons_npc.parse_weapon_tiers(text, repo_root, include_infamy=True)
+    (category derived from item skill). include_infamy=False since the 2026-07-06
+    Infamy Vendor rework: infamy is accessories-only; weapons/armor moved elsewhere."""
+    return weapons_npc.parse_weapon_tiers(text, repo_root, include_infamy=False)
 
 
 def _tier_cost(items_by_cat: dict[str, list[dict]]) -> tuple[int, int]:
@@ -224,7 +225,6 @@ def _render(d: dict) -> str:
         return covered & _ALL_JOBS
 
     n_cats_stocked = max(tier_stats(t)[1] for t in ("bronze", "silver", "gold"))
-    infamy_weapons = sum(len(rows) for rows in tiers.get("infamy", {}).values())
 
     rf_currs = " / ".join(rf["currencies"][:3]) if rf["currencies"] else "Reforge marks"
     up = rf["upgrade"]
@@ -443,11 +443,12 @@ def _render(d: dict) -> str:
     )
     A("")
     A(
-        f"**Infamy gear:** High-end armor and weapons are sold by the "
+        f"**Infamy accessories:** BiS neck / ear / ring / waist / back are sold by the "
         f"[Infamy Vendor](gear-vendors.md#infamy-vendor) for **{infamy}** earned "
-        f"from endgame content — including {infamy_weapons} weapons auto-promoted "
-        f"from the top of the scored catalogs and the per-job +4 Reforge Sets. "
-        f"These compete with or surpass Reforge +3 in some slots."
+        f"from endgame content. As of 2026-07-06 the vendor is **accessories-only** — "
+        f"weapons and armor moved to Voidwatch NM loot, and **+4 Reforge sets** are "
+        f"crafted at the [+3 → +4 Forge](../endgame/dynamis-divergence.md#the-3-4-forge) "
+        f"in Dynamis-Divergence (paid in Rusted / Black ID Cards + Paragon Cards)."
     )
     A("")
     A("---")

@@ -496,7 +496,10 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     if have("modules/custom/lua/Invasion.lua"):
         add(_row(["Scheduled Invasions",
                   "Wave events — server-wide announcement on start"]))
-    if have("modules/custom/lua/star_devourer.lua"):
+    # The Star-Devourer weekly raid lives in RaidBoss.lua (the file was renamed
+    # from the original star_devourer.lua that this gate used to look for -- the
+    # old path silently no-oped for months, dropping the row from the map).
+    if have("modules/custom/lua/RaidBoss.lua"):
         add(_row(["Star-Devourer Raid", "Weekly server-wide raid boss. Party recommended."]))
     if have("modules/custom/lua/ApexTrials.lua"):
         add(_row(["Apex Trials",

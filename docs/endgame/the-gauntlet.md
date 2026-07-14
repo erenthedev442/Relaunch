@@ -7,7 +7,7 @@
 
 ## Where to start
 
-Talk to **The Gauntlet** keeper (sword-and-shield icon) in <!--npc:gauntlet-->Riverne-Site A01<!--/npc--> — same row as the Apex Arbiter and Rupture Sage. Choose *Enter The Gauntlet* and you are warped straight into the arena.
+Talk to **The Gauntlet** keeper (sword-and-shield icon) in <!--npc:gauntlet-->Riverne-Site A01<!--/npc-->. Choose *Enter The Gauntlet* and you are warped straight into the arena.
 
 **Rules:**
 

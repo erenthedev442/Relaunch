@@ -147,6 +147,7 @@ Infamy accumulates from the sources below and is spent at the **Infamy Vendor** 
 | Source | Notes |
 | --- | --- |
 | Scheduled Invasions | Wave events — server-wide announcement on start |
+| Star-Devourer Raid | Weekly server-wide raid boss. Party recommended. |
 | Apex Trials | `!apex` — post-cap NMs. Infamy + Paragon Points per kill. See [Apex & Paragon](../endgame/apex-paragon.md). |
 | The Gauntlet | 500 Infamy per full clear |
 
