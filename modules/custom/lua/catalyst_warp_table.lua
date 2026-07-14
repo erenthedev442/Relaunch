@@ -113,12 +113,12 @@ return {
     [1623] = { item='Eft Skin', label='Quick Draw ability delay', cat=5, tier=0, zone=4, zoneName='Bibiki Bay', x=563.828, y=-19.840, z=774.826, mob='Eft', lvl=33, rate=100 },
     [1630] = { item='Pinch Of Cluster Ash', label='Gilfinder', cat=11, tier=0, zone=24, zoneName='Lufaise Meadows', x=2.481, y=-8.548, z=-242.321, mob='Cluster', lvl=38, rate=100 },
     [1638] = { item='Moblin Mask', label='Occ. inc. resist to stat ailments', cat=4, tier=0, zone=11, zoneName='Oldton Movalpolos', x=-283.413, y=-0.602, z=180.261, mob='Moblin Chapman', lvl=33, rate=100 },
-    [1663] = { item='Arnica Root', label='Ranged skill', cat=9, tier=0, zone=112, zoneName='Xarcabard', x=327.137, y=-8.639, z=36.454, mob='Blizzard Gigas', lvl=45, rate=100 },
+    -- 1663 Arnica Root 'Ranged skill' removed with the catalog row (automaton-only mod).
     [1667] = { item='Cluster Core', label='Song spellcasting time', cat=5, tier=0, zone=29, zoneName='Riverne-Site B01', x=191.367, y=-0.136, z=-678.141, mob='Nitro Cluster', lvl=55, rate=100 },
     [1690] = { item='Hippogryph Tailfeather', label='Subtle Blow', cat=2, tier=0, zone=29, zoneName='Riverne-Site B01', x=270.620, y=-0.071, z=-548.189, mob='Strato Hippogryph', lvl=54, rate=100 },
     [1875] = { item='Ancient Beastcoin', label='Phantom Roll effect', cat=8, tier=0, zone=20, zoneName='Promyvion-Mea', x=-196.817, y=-0.499, z=332.890, mob='Craver', lvl=29, rate=100 },
     [1888] = { item='Sack Of Silica', label='All songs', cat=11, tier=0, zone=2, zoneName='Carpenters Landing', x=-307.527, y=-2.518, z=632.049, mob='Land Pugil', lvl=17, rate=100 },
-    [1889] = { item='Sack Of White Sand', label='Magic skill', cat=9, tier=0, zone=176, zoneName='Sea Serpent Grotto', x=228.563, y=19.528, z=-40.938, mob='Bigclaw', lvl=43, rate=100 },
+    -- 1889 Sack Of White Sand 'Magic skill' removed with the catalog row (automaton-only mod).
     [2148] = { item='Puk Wing', label='Crit.hit rate', cat=2, tier=0, zone=51, zoneName='Wajaom Woodlands', x=-540.000, y=-11.000, z=-82.000, mob='Puk', lvl=68, rate=100 },
     [2149] = { item='Apkallu Feather', label='Crit. hit damage', cat=2, tier=0, zone=261, zoneName='Ceizak Battlegrounds', x=204.210, y=-0.500, z=-118.430, mob='Appetent Umbril', lvl=100, rate=100 },
     [2150] = { item='Colibri Feather', label='DEX', cat=1, tier=0, zone=114, zoneName='Eastern Altepa Desert', x=63.667, y=1.497, z=-54.497, mob='Antican Centurio', lvl=50, rate=100 },

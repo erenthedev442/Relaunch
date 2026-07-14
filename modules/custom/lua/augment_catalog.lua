@@ -175,14 +175,15 @@ return {
     [2748] = { augId = 341,  base = 1,   mult = 1,   disp = 1,    cat = 8, tier = 0, label = 'Repair potency' },
 
     -- ── cat 9: Skills ───────────────────────────────────────────────────────────
-    -- Do NOT re-add [1616] 'Melee skill' (augId 278): the SQL mod is 101
-    -- AUTO_MELEE_SKILL, which the LSB enum flags as automaton-only ("apply only
-    -- to master, does not work properly on pet mods"). It was a misleading
-    -- non-PUP-only catalog row -- a WAR/MNK etc. trading Antlion Jaw got no
-    -- effective boost. Same trap on augId 279 (Ranged skill) and 280 (Magic
-    -- skill) below; keeping them for now because owner only removed the melee row.
-    [1663] = { augId = 279,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Ranged skill' },
-    [1889] = { augId = 280,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Magic skill' },
+    -- Do NOT re-add the three "*.skill" auto-skill rows -- they map to PUP-
+    -- automaton-only mods (LSB enum: "apply only to master, does not work
+    -- properly on pet mods"), so a non-PUP player trading the catalyst got no
+    -- effective boost. Trap fully purged 2026-07-13:
+    --   [1616] Antlion Jaw          -> augId 278  mod 101 AUTO_MELEE_SKILL
+    --   [1663] Arnica Root          -> augId 279  mod 102 AUTO_RANGED_SKILL
+    --   [1889] Sack of White Sand   -> augId 280  mod 103 AUTO_MAGIC_SKILL
+    -- Shield skill (mod 109) and Parrying (mod 110) below ARE real combat
+    -- skills that work for anyone -- those stay.
     [1607] = { augId = 286,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Shield skill' },
     [1608] = { augId = 287,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Parrying Skill' },
     [863]  = { augId = 147,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Treasure Hunter', maxBoost = 0, tierValue = 1 },

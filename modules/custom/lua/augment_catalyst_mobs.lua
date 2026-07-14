@@ -71,9 +71,9 @@ return {
     ['Battrap'] = 2520,  -- Mag. Evasion (T1, Battrap L37)
     ['Battue_Bats'] = 834,  -- Recycle (T0, Battue Bats L5)
     ['Puk'] = 2148,  -- Crit.hit rate (T0, Puk L68)
-    ['Bigclaw'] = 1889,  -- Magic skill (T1, Bigclaw L48)
+    -- Bigclaw: was 1889 'Magic skill' -- removed (automaton-only mod).
     ['Hawkertrap'] = 1617,  -- Evasion (T0, Hawkertrap L38)
-    ['Blizzard_Gigas'] = 1663,  -- Ranged skill (T1, Blizzard Gigas L48)
+    -- Blizzard_Gigas: was 1663 'Ranged skill' -- removed (automaton-only mod).
     ['Blood_Soul'] = 954,  -- Mag. Acc. Mag.Atk.Bns (T2, Blood_Soul L50)
     ['Tunnel_Worm'] = 1470,  -- Resist Charm (T0, Tunnel Worm L1)
     ['Boribaba'] = 936,  -- Magic dmg. taken (T4, Boribaba L95)

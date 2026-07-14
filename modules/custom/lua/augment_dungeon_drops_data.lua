@@ -158,9 +158,8 @@ return {
             { id = 863, tier = 0, cat = 9, label = 'Treasure Hunter', item = 'coeurl_hide' },
             { id = 1607, tier = 0, cat = 9, label = 'Shield skill', item = 'remnant_of_a_bitter_memory' },
             { id = 1608, tier = 0, cat = 9, label = 'Parrying Skill', item = 'remnant_of_a_fleeting_memory' },
-            -- 1616 'Melee skill' removed with the catalog row (automaton-only mod).
-            { id = 1663, tier = 0, cat = 9, label = 'Ranged skill', item = 'arnica_root' },
-            { id = 1889, tier = 0, cat = 9, label = 'Magic skill', item = 'sack_of_white_sand' },
+            -- 1616 'Melee skill', 1663 'Ranged skill', 1889 'Magic skill'
+            -- removed with the catalog rows (all three are automaton-only mods).
             { id = 942, tier = 0, cat = 10, label = 'Cap. Point +33%', item = 'philosophers_stone' },
             { id = 2523, tier = 0, cat = 10, label = 'Exp. Point +33%', item = 'peiste_skin' },
         },
