@@ -217,7 +217,7 @@ const CATS = {
     label:'Relic', sub:'14 weapons · 4 stages',
     accent:'#aa2828', dim:'#621515',
     lore:'Ancient battle-relics recovered from Dynamis — the dreaming battlefield where history fights itself eternally. The oldest and most storied endgame path.',
-    source:'<strong>Relic weapons</strong> drop from the <strong>Mega-Boss</strong> (Wave 2) and <strong>Disjoined NM</strong> (Wave 3) in any of the four Divergence city runs — <strong>San d\'Oria [D]</strong>, <strong>Bastok [D]</strong>, <strong>Windurst [D]</strong>, and <strong>Jeuno [D]</strong>. Enter via the Divergence Portal in each city; no alliance required, solo and small groups welcome. Drop rates improve at Wave 3. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III Bring the materials to the <strong>Weapon Forge</strong> in {{npc:weapon_forger}}: it issues the base weapon and forges each stage (gated by HL Rank V + Divergence progress)..',
+    source:'<strong>Relic weapons</strong> drop from the <strong>Mega-Boss</strong> (Wave 2) and <strong>Disjoined NM</strong> (Wave 3) in any of the four Divergence city runs — <strong>San d\'Oria [D]</strong>, <strong>Bastok [D]</strong>, <strong>Windurst [D]</strong>, and <strong>Jeuno [D]</strong>. Enter via the Divergence Portal in each city; no alliance required, solo and small groups welcome. Drop rates improve at Wave 3. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III Bring the materials to the <strong>Weapon Forge</strong> in <!--npc:weapon_forger-->Purgonorgo Isle<!--/npc-->: it issues the base weapon and forges each stage (gated by HL Rank V + Divergence progress)..',
     s3lbl:'Stage III · Relic',
     forge:[
       {lbl:'Base → Stage I', mats:[['100×','Byne Bill'],['25×','M. Silverpiece']], gate:'HL Rank V (Legend) · 1 unique Dynamis - Divergence city win (same city counts once)'},
@@ -245,7 +245,7 @@ const CATS = {
     label:'Empyrean', sub:'14 weapons · 4 stages',
     accent:'#2060a0', dim:'#103860',
     lore:'Weapons shaped by the light of Abyssea — forged where the barriers between worlds grew thin and the strongest monsters walked unchecked.',
-    source:'<strong>Empyrean weapons</strong> drop from <strong>Abyssea Marks NMs</strong> (high-tier ??? pops). Each weapon type has a corresponding NM that drops that weapon\'s specific material and the weapon itself. Drop rates are rare at Tier I; much higher at Tier III. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III. Bring the material to the <strong>Weapon Forge</strong> in {{npc:weapon_forger}}: it issues the base weapon and forges each stage (gated by HL Rank + Abyssea progress). <strong style="color:var(--cat)">Each empyrean weapon needs its OWN material — Twashtar wants Orthrus\'s Claw, Verethragna wants Glavoid Shell, and so on.</strong> The exact item is shown on each weapon\'s card below; bring THAT item, not a different empyrean drop.',
+    source:'<strong>Empyrean weapons</strong> drop from <strong>Abyssea Marks NMs</strong> (high-tier ??? pops). Each weapon type has a corresponding NM that drops that weapon\'s specific material and the weapon itself. Drop rates are rare at Tier I; much higher at Tier III. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III. Bring the material to the <strong>Weapon Forge</strong> in <!--npc:weapon_forger-->Purgonorgo Isle<!--/npc-->: it issues the base weapon and forges each stage (gated by HL Rank + Abyssea progress). <strong style="color:var(--cat)">Each empyrean weapon needs its OWN material — Twashtar wants Orthrus\'s Claw, Verethragna wants Glavoid Shell, and so on.</strong> The exact item is shown on each weapon\'s card below; bring THAT item, not a different empyrean drop.',
     s3lbl:'Stage III · Empyrean',
     forge:[
       {lbl:'Base → Stage I', mats:[['2,000×','Cruor'],['50×','[see weapon]'],['10×','Ancient Beastcoin']], gate:'All Geas Fete bosses killed at least once (105 unique)'},
@@ -273,7 +273,7 @@ const CATS = {
     label:'Mythic', sub:'20 weapons · 4 stages',
     accent:'#6030a8', dim:'#3a1a68',
     lore:'Power extracted from Nyzul Isle\'s floors and the Assault campaigns — weapons older than the Crystal War. Multiple variants exist per weapon type, each aligned to a specific job.',
-    source:'<strong>Mythic weapons</strong> drop from <strong>Nyzul Isle floor bosses</strong> (Floor 60 and above). Each floor boss drops weapon-type-specific weapons. Floor 80 clears are required for 119 II; Floor 100 (all lamps lit) is required for 119 III. <strong>Imperial Standing</strong> is earned from all Assault missions Bring the materials to the <strong>Weapon Forge</strong> in {{npc:weapon_forger}}: it issues the base weapon and forges each stage (gated by HL Rank + Nyzul progress)..',
+    source:'<strong>Mythic weapons</strong> drop from <strong>Nyzul Isle floor bosses</strong> (Floor 60 and above). Each floor boss drops weapon-type-specific weapons. Floor 80 clears are required for 119 II; Floor 100 (all lamps lit) is required for 119 III. <strong>Imperial Standing</strong> is earned from all Assault missions Bring the materials to the <strong>Weapon Forge</strong> in <!--npc:weapon_forger-->Purgonorgo Isle<!--/npc-->: it issues the base weapon and forges each stage (gated by HL Rank + Nyzul progress)..',
     s3lbl:'Stage III · Mythic',
     forge:[
       {lbl:'Base → Stage I', mats:[['1,000×','Imperial Standing'],['10×','Imperial Bronze Piece']], gate:'Nyzul Isle Floor 100 cleared'},
@@ -351,7 +351,7 @@ const CATS = {
     label:'Prime', sub:'16 weapons · 4 stages',
     accent:'#c8a030', dim:'#806820',
     lore:'Weapons refined through the Prime Armory trials — the FJB-native five-trial legacy path. Earn the base weapon by clearing the Prime Trials, then upgrade it here.',
-    source:'The <strong>Prime</strong> path is the pinnacle of the server. Earn the base weapon by completing all <strong>five Prime Armory Trials</strong> at the Prime Armory NPC in {{npc:prime_armory}}, then forge it up through 119 / 119 II / 119 III. The final forge is the hardest step anywhere: it demands <strong>Legend rank</strong>, <strong>all five Trials</strong>, <strong>750,000,000 gil</strong>, 30,000 Reforge Marks, and the steepest medal cost on the board.',
+    source:'The <strong>Prime</strong> path is the pinnacle of the server. Earn the base weapon by completing all <strong>five Prime Armory Trials</strong> at the Prime Armory NPC in <!--npc:prime_armory-->Purgonorgo Isle<!--/npc-->, then forge it up through 119 / 119 II / 119 III. The final forge is the hardest step anywhere: it demands <strong>Legend rank</strong>, <strong>all five Trials</strong>, <strong>750,000,000 gil</strong>, 30,000 Reforge Marks, and the steepest medal cost on the board.',
     s3lbl:'Stage III · Prime',
     forge:[
       {lbl:'Base → Stage I', mats:[['50×','Kindred\'s Seal'],['25×','High Kindred\'s Crest']], gate:'Built a Relic, Mythic, Empyrean, or Aeonic final weapon'},
@@ -663,6 +663,6 @@ selectCat('prime');
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3c36f6295fd2 -->
-_Last updated: 2026-07-13 22:00 PDT_
+<!-- content-hash: 368136f5976c -->
+_Last updated: 2026-07-15 11:36 PDT_
 <!-- DOCGEN:END id="last-updated" -->

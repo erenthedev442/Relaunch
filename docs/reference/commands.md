@@ -2,13 +2,13 @@
 
 These chat commands are available to every player on this server (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 100
+**Total player-accessible commands:** 102
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
 
 !!! note "Custom commands"
-    72 of the commands below are **unique to this server** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
+    74 of the commands below are **unique to this server** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
 
 ## Quick reference
 
@@ -42,6 +42,7 @@ These chat commands are available to every player on this server (no GM rank req
 | `!fellowaudit` | — | Audit the summoned Fellow -- for each mod the build should add, shows EXPECTED (from your allocations + level) vs the LIVE getMod on the pet, flagging anything that didn't land. Answers "does boosting STR actually reach the Fellow?". Fellow must be summoned. | :material-puzzle: **custom** |
 | `!fellowname` | string | _(no description)_ | :material-puzzle: **custom** |
 | `!fellowstats` | — | Dumps live mod values straight off the spawned Fellow pet. Fellow must be summoned. Spend a point, re-run, watch the number move. | :material-puzzle: **custom** |
+| `!forgegates` | string | _(no description)_ | :material-puzzle: **custom** |
 | `!gauntlet` | string | _(no description)_ |  |
 | `!getstats` | string | prints stats of cursor target into chatlog, for debugging. |  |
 | `!gmhome` | — | Sends you to zone 210 (GM_HOME), if you are a GM |  |
@@ -58,6 +59,7 @@ These chat commands are available to every player on this server (no GM rank req
 | `!hunt4` | — | Warps you to the Tier 4 (Rank IV - Champion) hunt spawner in Escha - Zi'Tah. NMs: Nidhogg, King Behemoth, Kirin. |  |
 | `!hunt5` | — | Warps you to the Tier 5 (Rank V - Legend) hunt spawner in Escha - Zi'Tah. NMs: Absolute Virtue, Pandemonium Warden, Shinryu. |  |
 | `!huntrank` | string | Displays the player's Hunter's Guild status across all four guilds — current rank, rep, amplifier %, and progress to the next rank. Also shows Trinity / Apex capstone status, and the v2 Vana'diel hunt-target list per guild so the player knows what to go kill. |  |
+| `!huntwarp` | string | _(no description)_ | :material-puzzle: **custom** |
 | `!iwarp` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!leaf` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!lfg` | string | Broadcasts a Looking-For-Group announcement server-wide so other players know you're looking for someone to play with. | :material-puzzle: **custom** |
@@ -353,6 +355,12 @@ Dumps live mod values straight off the spawned Fellow pet. Fellow must be summon
 
 **Usage:** `fellowstats`
 
+### `!forgegates`  _(custom)_
+
+**Usage:** `forgegates`
+
+**Parameter types:** string
+
 ### `!gauntlet`
 
 **Usage:** `gauntlet`
@@ -422,6 +430,12 @@ Warps you to the Tier 5 (Rank V - Legend) hunt spawner in Escha - Zi'Tah. NMs: A
 Displays the player's Hunter's Guild status across all four guilds — current rank, rep, amplifier %, and progress to the next rank. Also shows Trinity / Apex capstone status, and the v2 Vana'diel hunt-target list per guild so the player knows what to go kill.
 
 **Usage:** `huntrank`
+
+**Parameter types:** string
+
+### `!huntwarp`  _(custom)_
+
+**Usage:** `huntwarp`
 
 **Parameter types:** string
 
@@ -732,6 +746,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 06d60b36ddfb -->
-_Last updated: 2026-07-13 21:48 PDT_
+<!-- content-hash: 47537f2b5e8b -->
+_Last updated: 2026-07-15 11:36 PDT_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1179,3 +1179,10 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **SCH** — Helix Detonation combo — same-element Tier V/VI nuke within 10s
     - **Difficulty** — Hunting League NMs +50% (everything, DEF gentler)
     - **Hunting League** — Migrate from Reisenjima Henge to Escha Zi'Tah
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 38f420a5d5ce -->
+_Last updated: 2026-07-15 11:36 PDT_
+<!-- DOCGEN:END id="last-updated" -->

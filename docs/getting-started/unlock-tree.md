@@ -11,14 +11,14 @@ Scroll the diagram left–right to see the full progression from Day 1 through V
 
 <div style="position:relative;margin:1.2rem 0">
 <div id="utree-wrap" style="overflow:auto;border:1px solid #2a2d4a;border-radius:6px;background:#090B14">
-<canvas id="utc" width="1380" height="910" style="display:block;cursor:default"></canvas>
+<canvas id="utc" width="1400" height="1128" style="display:block;cursor:default"></canvas>
 </div>
 <div id="utip" style="position:absolute;display:none;background:#1a1e38f0;border:1px solid #3a3e5a;border-radius:5px;padding:7px 11px;font-size:12px;color:#c8c8e8;pointer-events:none;max-width:230px;line-height:1.55;z-index:50;box-shadow:0 4px 16px #00000080"></div>
 </div>
 
 <script>
 (function(){
-const CW=1380,CH=910,NW=140,NH=26;
+const CW=1400,CH=1128,NW=140,NH=26;
 const cv=document.getElementById('utc');
 const wrap=document.getElementById('utree-wrap');
 if(!cv)return;
@@ -216,6 +216,6 @@ draw();
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9f0a97c74882 -->
-_Last updated: 2026-07-13 20:33 PDT_
+<!-- content-hash: 3ff5923e3d8c -->
+_Last updated: 2026-07-15 11:36 PDT_
 <!-- DOCGEN:END id="last-updated" -->

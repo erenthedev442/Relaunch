@@ -95,8 +95,6 @@ All 20 hunt targets respawn on a flat **30-minute timer**, and each NM awards re
 |---|---|---|---:|
 | ★ | Bune | Gustav Tunnel | 500 |
 | ★★ | Carmine Dobsonfly | Riverne-Site A01 | 750 |
-| ★★★ | Aspidochelone | Valley of Sorrows | 1,000 |
-| ★★★★ | Behemoth | Behemoths Dominion | 1,500 |
 | ★★★★★ | Jormungand | Uleguerand Range | 2,500 |
 
 </div>
@@ -113,6 +111,6 @@ Retroactive backfill is **off by default** on the Relaunch server. Under the cur
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e74840b4a08c -->
-_Last updated: 2026-07-12 08:02 PDT_
+<!-- content-hash: 59a826811066 -->
+_Last updated: 2026-07-15 11:36 PDT_
 <!-- DOCGEN:END id="last-updated" -->

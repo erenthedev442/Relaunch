@@ -198,8 +198,8 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 
 - You have enough Hunting League experience to be earning marks consistently.
 - Prioritize filling out your **Bronze weapon** (if not done) and a secondary slot.
-- Start saving Beastmens Medals for accessories from the medal-paid **Accessories Vendor**. Earrings and a back piece are efficient early purchases.
-- Begin hunting Reforge NMs to accumulate AF Marks for your first base Reforge armor pieces.
+- Start saving Beastmens Medals for accessories from the medal-paid Accessories Vendor. A back piece plus one or two neck/ring picks are efficient early purchases.
+- Begin hunting Reforge NMs (Abyssea, Sky Gods, Land Kings) to accumulate **AF / Relic / Empy Reforge Marks** for your first base Reforge armor pieces.
 
 ### Rank II–III (second to fourth week)
 
@@ -215,13 +215,18 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 - Earn **Infamy** from endgame content and spend it at the [Infamy Vendor](gear-vendors.md#infamy-vendor) — its pieces fill slots where Reforge lags, or upgrade over +3 in select slots.
 - Register [Augment Sage](augment-sage.md) NM affinities for your main augment categories; the deeper mastery ranks unlock later through Prestige and Rebirth milestones.
 
-### Endgame
+### Endgame — the real ladder
 
-- Full Gold-tier weapons across main and offhand.
-- Reforge +3 armor in all five slots (head/body/hands/legs/feet) for your main set.
-- Infamy Vendor pieces in slots where they beat Reforge +3.
-- Augment Moogle with rank-5 **Augment Archon** mastery (max roll floor, 30% crit chance) and all 11 NM affinities registered.
-- Register for [Hunter's Guild](hunters-guild.md) rep on all four guilds to maximize mark yield from future farming.
+Once your Gold-tier weapons and Reforge +3 armor are in place, the gear ladder fans out. Every rung below is real content the server ships today (see the [Endgame vendors & forges](#endgame-vendors--forges) table above for the vendor names + currencies).
+
+- Cap [Augment Moogle](augmenting-guide.md) with rank-5 **Augment Archon** mastery and all 11 NM affinities registered — the deeper mastery ranks unlock through Prestige and Rebirth milestones.
+- Register on the [Hunter's Guild](hunters-guild.md) at every guild you hunt in — each rank passively amplifies that guild's mark payout, and the Trinity / Apex Hunter capstones stack on top.
+- **Master a job (2,100 JP) + register all 11 NM affinities** unlocks [High-Tier Battlefields](../endgame/high-tier-battlefields.md). Each clear pays Hunt Marks + tiered loot from the fight's retail table.
+- **1 HNM King kill + 1 HTBF clear at each of T1/T2/T3** unlocks [Ambuscade](../endgame/ambuscade.md). Ambuscade's weapon-upgrade chain (Tokko → Ajja → Eletta → Kaja → Final) delivers **Naegling**, Karambit, Nandaka, Tauret, Dolichenus, and the rest of that shortlist.
+- Reforge Marks earned from Sky Gods / Land Kings / Abyssea NMs also buy your ticket into [Dynamis-Divergence](../endgame/dynamis-divergence.md) (**250 marks** per entry). Clearing a city drops the **Rusted / Black ID Cards + Paragon Card** you need at the **+3 → +4 Forge** to push AF or Relic armor from +3 to +4.
+- [Geas Fete](../endgame/geas-fete.md) NMs pay **Escha Beads**. 50,000 beads at **Temprix** buys a Malformed base weapon — trade it in with Attestations (Dynamis-classic) + Riftborn Boulders (Geas Fete) at the **Weapon Forge** to make an **Aeonic weapon**.
+- **Prime Weapons** are the parallel top-tier weapon path: complete the 5 Prime Trials (Job Mastery Guardian, Endless Tower Fl.50 or Gauntlet full-clear, World Boss credits, and two more), then trade **1 Prime Voucher + 750M gil** at the [Prime Armory](prime-armory.md) for any of the 16 Prime weapon forms.
+- Weekly floor: the [Star-Devourer](../endgame/star-devourer.md) raid at Escha - Ru'Aun pays big Hunt Marks + Infamy on a weekly lockout — the reliable single biggest weekly currency injection.
 
 ---
 
@@ -241,6 +246,6 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 43c18ff3cebb -->
-_Last updated: 2026-07-13 20:33 PDT_
+<!-- content-hash: c1e8253cafa1 -->
+_Last updated: 2026-07-15 11:36 PDT_
 <!-- DOCGEN:END id="last-updated" -->

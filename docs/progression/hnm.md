@@ -13,7 +13,6 @@ the Relaunch server runs a custom **HNM pop system** that keeps the classic King
 |---|---|---|---|---|
 | Dragon's Aery | **Fafnir** | **Nidhogg** | <a class="item-link" href="https://www.ffxiah.com/item/3340" data-img="https://static.ffxiah.com/images/icon/3340.png" target="_blank" rel="noopener">Cup of Sweet Tea</a> | 21–24 h |
 | Valley of Sorrows | **Adamantoise** | **Aspidochelone** | <a class="item-link" href="https://www.ffxiah.com/item/3344" data-img="https://static.ffxiah.com/images/icon/3344.png" target="_blank" rel="noopener">Clump of Red Pondweed</a> | 21–24 h |
-| Behemoth's Dominion | **Behemoth** | **King Behemoth** | <a class="item-link" href="https://www.ffxiah.com/item/3342" data-img="https://static.ffxiah.com/images/icon/3342.png" target="_blank" rel="noopener">Savory Shank</a> | 21–24 h |
 <!-- DOCGEN:END id="hnm-kings" -->
 
 !!! note "Nidhogg and King Behemoth in the Hunting League"
@@ -92,6 +91,6 @@ Notable drops by target:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 57259a29c678 -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: 4f76811e39f2 -->
+_Last updated: 2026-07-15 11:36 PDT_
 <!-- DOCGEN:END id="last-updated" -->

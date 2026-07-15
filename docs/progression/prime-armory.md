@@ -36,7 +36,7 @@ All **16 Prime weapons**, one per weapon type:
 | **Laphria** | Great Axe | Disaster |
 | **Foenaria** | Scythe | Origin |
 | **Gae Buide** | Polearm | Diarmuid |
-| **Dokoku** | Katana | (native katana WS) |
+| **Dokoku** | Katana | Zesho Meppo |
 | **Kusanagi** | Great Katana | Tachi: Mumei |
 | **Lorg Mor** | Club | Dagda |
 | **Opashoro** | Staff | Oshala |
@@ -57,6 +57,6 @@ Browsing is free — you can read every weapon's stats and weapon skill before d
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 801bca747774 -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: 269ae5f682ae -->
+_Last updated: 2026-07-15 11:36 PDT_
 <!-- DOCGEN:END id="last-updated" -->
