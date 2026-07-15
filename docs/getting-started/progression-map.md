@@ -88,7 +88,13 @@ title: Progression Map
       <div>Login streaks: 7d <b>+75</b> · 14d <b>+200</b> · 21d <b>+400</b> · 30d <b>+750</b></div>
       <div>All jobs ready — no leveling wall</div>
     </div>
-    <p class="dim">Open from day one, in parallel: HL Rank 1 camps · <b>Adventuring Fellow</b> · Hunter's Guild (rep amps your marks) · Affinity NM hunts · Casino · Chocobo Derby · Colosseum PvP · Daily Board. <b>The Augment Moogle refuses fresh characters</b> — slay your first 10 custom NMs (Hunting League, Wave Mode, Voidspire...) to open Augment Tier 1.</p>
+    <ul class="open">
+      <li><b>Reach 99</b> — every job is unlocked from login; no capacity wall, no key items required.</li>
+      <li><b>Buy your first 109 gear</b> — vendor sets at HL Rank 1 (see <a href="../progression/gear-vendors/">Gear Vendors</a>).</li>
+      <li><b>Start augmenting that gear</b> once Augment Tier 1 opens (see gate below).</li>
+      <li><b>Build multiple sets</b> — TP / WS / Magic / Idle — Reforge and Prestige swap between them freely.</li>
+    </ul>
+    <p class="dim">Open from day one, in parallel: HL Rank 1 camps · <b>Adventuring Fellow</b> · Hunter's Guild (rep amps your marks) · Affinity NM hunts · Casino · Chocobo Derby · Colosseum PvP · Daily Board. <b>The Augment Moogle refuses fresh characters</b> — reach level 99 on any job to open Augment Tier 1.</p>
   </div>
   <div class="node">
     <div class="stageno">Stage 1</div>
@@ -160,7 +166,7 @@ title: Progression Map
   <div class="lane">
     <h3>The Augment Ladder <span class="chip c-aug">Tiers 1–5</span></h3>
     <div class="who">Your roll band is gated by CONTENT; your Sage Mastery rank lifts the floor inside the band, and a crit = a perfect roll</div>
-    <div class="rung"><b>Tier 1 · 0–5</b><span>slay your first 10 custom NMs (Hunting League, Wave Mode, Voidspire...)</span></div>
+    <div class="rung"><b>Tier 1 · 0–5</b><span>reach level 99 on any job</span></div>
     <div class="rung"><b>Tier 2 · 6–11</b><span>reach Hunting League Rank 5</span></div>
     <div class="rung"><b>Tier 3 · 12–17</b><span>clear Voidspire floor 10 + every Game Master wave difficulty</span></div>
     <div class="rung"><b>Tier 4 · 18–24</b><span>clear a Dynamis - Divergence city</span></div>
@@ -177,7 +183,7 @@ title: Progression Map
       <div class="wcell"><b>Ambuscade</b><span>Monthly-rotating solo/party instance from the Ambuscade Tome in Mhaura · gate: <b>1 HNM King kill</b> + <b>1 HTBF clear at each of T1/T2/T3</b> · Hallmarks + Gallantry drive the 5-stage Tokko→Ajja→Eletta→Kaja→Final weapon-upgrade chain (Naegling, Karambit, Nandaka, …)</span></div>
       <div class="wcell"><b>Geas Fete</b><span>??? pop-a-NM system across Escha - Zi'Tah, Escha - Ru'Aun, and Reisenjima · pays <span class="chip c-sigil">Escha Beads</span> and drops the Aeonic weapon crafting materials (Attestations + Riftborn Boulders)</span></div>
       <div class="wcell"><b>Nyzul Isle</b><span>The Sorrowful Sage in Mhaura opens retail Nyzul runs — floor-climb loot</span></div>
-      <div class="wcell"><b>Spell &amp; Skill Mastery</b><span>Spend <span class="chip c-sigil">Mastery Sigils</span> at the Mastery Sage in <!--npc:spell_mastery-->Purgonorgo Isle<!--/npc--> to permanently empower weapon skills and spells</span></div>
+      <div class="wcell"><b>Spell &amp; Skill Mastery</b><span>Spend <span class="chip c-sigil">Mastery Sigils</span> at the Mastery Sage in {{npc:spell_mastery}} to permanently empower weapon skills and spells</span></div>
       <div class="wcell"><b>Voidspire &amp; GM Waves</b><span>Weekly milestone dungeon + five wave difficulties — together an Augment Tier key</span></div>
       <div class="wcell"><b>Affinity NM Hunts</b><span>Always-up affinity NMs · register Augment Sage affinities for better rolls in their category</span></div>
       <div class="wcell"><b>Maat's Echo</b><span><code>!maat</code> — the solo super-fight · first kill is an Augment Tier key</span></div>

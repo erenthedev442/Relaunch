@@ -108,8 +108,13 @@ local TIER_SLICES =
 
 local TIER_GATES =
 {
-    { tier = 1, unlock = 'slay your first 10 custom NMs (Hunting League, Wave Mode, Voidspire...)',
-      check = function(p) return (p:getCharVar('Custom_NM_Kills') or 0) >= 10 end },
+    { tier = 1, unlock = 'reach level 99 on any job',
+      check = function(p)
+          for jobId = 1, 22 do
+              if (p:getJobLevel(jobId) or 0) >= 99 then return true end
+          end
+          return false
+      end },
     { tier = 2, unlock = 'reach Hunting League Rank 5',
       check = function(p) return (p:getCharVar('HL_Tier') or 1) >= 5 end },
     -- T3 is a DOUBLE gate: Voidspire depth AND a full clear of every Game

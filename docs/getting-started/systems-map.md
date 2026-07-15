@@ -76,7 +76,7 @@ Payout multipliers: your first-ever kill of each NM pays **double**; the weekly 
 ## Phase 3 — Content Unlocks
 
 !!! abstract ""
-    **Gate:** the Augment Moogle's content tiers. Tier 1 opens after: *slay your first 10 custom NMs (Hunting League, Wave Mode, Voidspire...)*.
+    **Gate:** the Augment Moogle's content tiers. Tier 1 opens after: *reach level 99 on any job*.
 
 ### Boss content → Reforge marks
 
@@ -104,7 +104,7 @@ Full roster: [Affinity NMs](../endgame/affinity-nms.md)
 
 | Tier | Unlocked by |
 | --- | --- |
-| Augment Tier 1 | slay your first 10 custom NMs (Hunting League, Wave Mode, Voidspire...) |
+| Augment Tier 1 | reach level 99 on any job |
 | Augment Tier 2 | reach Hunting League Rank 5 |
 | Augment Tier 3 | clear Voidspire floor 10 + every Game Master wave difficulty |
 | Augment Tier 4 | clear a Dynamis - Divergence city |

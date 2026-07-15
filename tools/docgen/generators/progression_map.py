@@ -304,6 +304,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
       <div>Login streaks: {streak_txt}</div>
       <div>All jobs ready — no leveling wall</div>
     </div>
+    <ul class="open">
+      <li><b>Reach 99</b> — every job is unlocked from login; no capacity wall, no key items required.</li>
+      <li><b>Buy your first 109 gear</b> — vendor sets at HL Rank 1 (see <a href="../progression/gear-vendors/">Gear Vendors</a>).</li>
+      <li><b>Start augmenting that gear</b> once Augment Tier 1 opens (see gate below).</li>
+      <li><b>Build multiple sets</b> — TP / WS / Magic / Idle — Reforge and Prestige swap between them freely.</li>
+    </ul>
     <p class="dim">Open from day one, in parallel: HL Rank 1 camps · <b>Adventuring Fellow</b> · Hunter's Guild (rep amps your marks) · Affinity NM hunts · Casino · Chocobo Derby · Colosseum PvP · Daily Board. <b>The Augment Moogle refuses fresh characters</b> — {_esc(gates[0][1])} to open Augment Tier 1.</p>
   </div>
   <div class="node">

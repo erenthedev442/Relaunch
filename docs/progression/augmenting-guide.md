@@ -5,7 +5,7 @@
 New to augmenting and not sure where to begin? This is the plain-English guide. The two pages after it — [Augment Moogle](augments.md) and [Augment Sage](augment-sage.md) — are the full reference with every number; **this page is just how to start.**
 
 !!! tip "The one-sentence version"
-    Augmenting lets you **stamp custom stat bonuses onto any piece of gear** — up to 5 bonuses per piece — by trading a cheap "catalyst" item to the **Augment Moogle** in <!--npc:augment_moogle-->Purgonorgo Isle<!--/npc-->. It's the single biggest source of character power on the Relaunch server.
+    Augmenting lets you **stamp custom stat bonuses onto any piece of gear** — up to 5 bonuses per piece — by trading a cheap "catalyst" item to the **Augment Moogle** in {{npc:augment_moogle}}. It's the single biggest source of character power on the Relaunch server.
 
 ## What it is & what it does
 
@@ -19,7 +19,7 @@ Let's add some **Attack** to a piece of gear. (Any stat works the same way — t
 
 1. **Farm the catalysts.** Every catalyst **drops from one specific monster** (~10% per kill) — catalysts are **no longer bought for gil**. The "Attack" catalyst is **Black Tiger Hide**; its assigned mob is **Uleguerand Tiger** (a level ~60 mob) — kill it until you have **5×**. Every augment is available at every tier — see [Catalyst access](#catalyst-access) below.
 2. **Have 10,000 gil** in your inventory (the Augment Moogle's flat trade cost, no matter how many catalysts).
-3. **Go to <!--npc:augment_moogle-->Purgonorgo Isle<!--/npc-->** and find the **Augment Moogle** (it's in the row of moogles).
+3. **Go to {{npc:augment_moogle}}** and find the **Augment Moogle** (it's in the row of moogles).
 4. **Trade** the gear piece **+ your 5 catalysts** to the Moogle. It shows you what's about to be applied.
 5. **Confirm.** It takes the 10,000 gil and hands your gear back with **5 lines of Attack** stamped on it.
 
@@ -34,7 +34,7 @@ Every line the Moogle writes is **rolled** inside your **Augment Tier's band**. 
 
 | Augment Tier | Roll band (of 0–31) | How you unlock it |
 |---|---|---|
-| **T1** | 0–5 | slay your first 10 custom NMs ([Hunting League](index.md), Wave Mode, [Voidspire](../endgame/voidspire.md)...) |
+| **T1** | 0–5 | reach level 99 on any job |
 | **T2** | 6–11 | reach [Hunting League](index.md) Rank 5 |
 | **T3** | 12–17 | clear [Voidspire](../endgame/voidspire.md) floor 10 + every [Game Master](game-master.md) wave difficulty |
 | **T4** | 18–24 | clear a [Dynamis - Divergence](../endgame/dynamis-divergence.md) city |
@@ -72,7 +72,7 @@ The crystalize chance rises with your **Augment Sage rank** — from **5%** at r
 
 Once a piece already has the augment **types** you want, you don't have to re-farm five catalysts just to chase bigger numbers. The **`!reroll`** command re-gambles the *magnitudes* of the augments already on an **equipped** item — the same roll math as the Moogle (your tier band, mastery floor, affinity double-roll, and crits all apply), but it keeps your existing lines and costs **only Infamy** — no gil, no catalyst.
 
-| | Augment Moogle (trade in <!--npc:augment_moogle-->Purgonorgo Isle<!--/npc-->) | `!reroll <slot>` (equipped item) |
+| | Augment Moogle (trade in {{npc:augment_moogle}}) | `!reroll <slot>` (equipped item) |
 |---|---|---|
 | **Changes** | Overwrites lines with the catalyst **types** you trade | Keeps the types, re-rolls the **numbers** |
 | **Cost** | 10,000 gil flat + up to 5 catalysts | Per-tier **Infamy** (below) — no gil, no catalyst |
@@ -125,10 +125,3 @@ Every augment catalyst (143 total) is available at **every Augment Tier**. Your 
 ---
 
 **Ready for the details?** → [Augment Moogle](augments.md) (the full catalyst catalog & exact numbers) · [Augment Sage](augment-sage.md) (ranking up & affinities)
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fe3fee0ddae8 -->
-_Last updated: 2026-07-13 22:00 PDT_
-<!-- DOCGEN:END id="last-updated" -->

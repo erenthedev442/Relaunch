@@ -198,7 +198,7 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 
 - You have enough Hunting League experience to be earning marks consistently.
 - Prioritize filling out your **Bronze weapon** (if not done) and a secondary slot.
-- Grab per-job **Sortie earrings** from the Hunt Accessories NPC — paid directly in Hunt Marks — and start saving Beastmens Medals for accessories from the medal-paid Accessories Vendor. Earrings and a back piece are efficient early purchases.
+- Start saving Beastmens Medals for accessories from the medal-paid **Accessories Vendor**. Earrings and a back piece are efficient early purchases.
 - Begin hunting Reforge NMs to accumulate AF Marks for your first base Reforge armor pieces.
 
 ### Rank II–III (second to fourth week)

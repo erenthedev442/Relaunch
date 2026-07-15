@@ -172,6 +172,8 @@ STALE_MENTIONS: dict[str, str] = {
         "Dynamis-Divergence toll switched to 250 Reforge Marks in 9ca99e7186",
     "Infamy Vendor sells weapons":
         "Infamy vendor is accessories-only since 2026-07-06",
+    "slay your first 10 custom NMs":
+        "Augment Tier 1 gate switched from Custom_NM_Kills>=10 to any-job-lv-99 (2026-07-14, Augment_Moogle.lua)",
     # Note: `!gmhome` is intentionally NOT on this list. The command still
     # exists (scripts/commands/gmhome.lua) and redirects to Purgonorgo Isle,
     # so mentioning it isn't strictly wrong -- just non-canonical (`!leaf` is
