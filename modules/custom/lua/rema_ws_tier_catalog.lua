@@ -29,7 +29,7 @@ catalog.REMA_WS_TUNING =
 {
     -- Relic
     [xi.weaponskill.FINAL_HEAVEN]     = 12.10,
-    [xi.weaponskill.MERCY_STROKE]     = 7.80,
+    [xi.weaponskill.MERCY_STROKE]     = 15.00,
     [xi.weaponskill.KNIGHTS_OF_ROUND] = 7.90,
     [xi.weaponskill.SCOURGE]          = 10.50,
     [xi.weaponskill.ONSLAUGHT]        = 14.40,

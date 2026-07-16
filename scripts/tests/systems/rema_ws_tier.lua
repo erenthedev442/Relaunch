@@ -54,6 +54,7 @@ describe('Legendary REMA native-weaponskill enhancement', function()
 
     it('uses the configured family tiers and +200 percent benchmark', function()
         assert(catalog.PRIME_EQUIVALENT_BONUS == 2.00)
+        assert(catalog.getTuning(xi.weaponskill.MERCY_STROKE) == 15.00)
         assert(bonus(makePlayer({ [xi.slot.MAIN] = 20509 }), xi.weaponskill.FINAL_HEAVEN) == 100)
         assert(bonus(makePlayer({ [xi.slot.MAIN] = 20512 }), xi.weaponskill.VICTORY_SMITE) == 120)
         assert(bonus(makePlayer({ [xi.slot.MAIN] = 20510 }), xi.weaponskill.ASCETICS_FURY) == 140)

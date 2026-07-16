@@ -7992,8 +7992,8 @@ INSERT INTO `item_equipment` VALUES (18266,'relic_dagger',75,0,560,163,0,0,3,0,0
 INSERT INTO `item_equipment` VALUES (18267,'malefic_dagger',75,0,560,163,0,0,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (18268,'dynamis_dagger',75,0,560,163,0,0,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (18269,'batardeau',75,0,560,163,0,1,3,0,0,0);
-INSERT INTO `item_equipment` VALUES (18270,'mandau',75,0,560,334,0,1,3,0,0,0);
-INSERT INTO `item_equipment` VALUES (18271,'mandau',80,0,560,334,0,1,3,0,0,0);
+INSERT INTO `item_equipment` VALUES (18270,'mandau',75,0,262704,334,0,1,3,0,0,0);
+INSERT INTO `item_equipment` VALUES (18271,'mandau',80,0,262704,334,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (18272,'relic_sword',75,0,80,269,0,0,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (18273,'glyptic_sword',75,0,80,269,0,0,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (18274,'dynamis_sword',75,0,80,269,0,0,3,0,0,0);
@@ -8346,7 +8346,7 @@ INSERT INTO `item_equipment` VALUES (18633,'chatoyant_staff',51,0,4194303,601,0,
 INSERT INTO `item_equipment` VALUES (18634,'zamzummim_staff',99,0,1589788,604,0,0,1,0,0,0);
 INSERT INTO `item_equipment` VALUES (18635,'melisseus_staff',99,0,1589788,604,0,0,1,0,0,0);
 INSERT INTO `item_equipment` VALUES (18637,'spharai',85,0,2,511,0,1,1,0,0,0);
-INSERT INTO `item_equipment` VALUES (18638,'mandau',85,0,560,334,0,1,3,0,0,0);
+INSERT INTO `item_equipment` VALUES (18638,'mandau',85,0,262704,334,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (18639,'excalibur',85,0,80,320,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (18640,'ragnarok',85,0,193,319,0,1,1,0,0,0);
 INSERT INTO `item_equipment` VALUES (18641,'guttler',85,0,256,347,0,1,3,0,0,0);
@@ -8360,7 +8360,7 @@ INSERT INTO `item_equipment` VALUES (18648,'claustrum',85,0,16392,342,0,1,1,0,0,
 INSERT INTO `item_equipment` VALUES (18649,'annihilator',85,0,1024,85,0,1,4,0,0,0);
 INSERT INTO `item_equipment` VALUES (18650,'yoichinoyumi',85,0,3072,86,0,1,4,0,0,0);
 INSERT INTO `item_equipment` VALUES (18651,'spharai',90,0,2,511,0,1,1,0,0,0);
-INSERT INTO `item_equipment` VALUES (18652,'mandau',90,0,560,334,0,1,3,0,0,0);
+INSERT INTO `item_equipment` VALUES (18652,'mandau',90,0,262704,334,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (18653,'excalibur',90,0,80,320,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (18654,'ragnarok',90,0,193,319,0,1,1,0,0,0);
 INSERT INTO `item_equipment` VALUES (18655,'guttler',90,0,256,347,0,1,3,0,0,0);
@@ -8374,7 +8374,7 @@ INSERT INTO `item_equipment` VALUES (18662,'claustrum',90,0,16392,342,0,1,1,0,0,
 INSERT INTO `item_equipment` VALUES (18663,'annihilator',90,0,1024,85,0,1,4,0,0,0);
 INSERT INTO `item_equipment` VALUES (18664,'yoichinoyumi',90,0,3072,86,0,1,4,0,0,0);
 INSERT INTO `item_equipment` VALUES (18665,'spharai',95,0,2,511,0,1,1,0,0,0);
-INSERT INTO `item_equipment` VALUES (18666,'mandau',95,0,560,334,0,1,3,0,0,0);
+INSERT INTO `item_equipment` VALUES (18666,'mandau',95,0,262704,334,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (18667,'excalibur',95,0,80,320,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (18668,'ragnarok',95,0,193,319,0,1,1,0,0,0);
 INSERT INTO `item_equipment` VALUES (18669,'guttler',95,0,256,347,0,1,3,0,0,0);
@@ -9436,7 +9436,7 @@ INSERT INTO `item_equipment` VALUES (19742,'handgonne_+1',97,0,1056,60,0,0,4,0,0
 INSERT INTO `item_equipment` VALUES (19743,'opprimo',97,0,66560,58,0,0,4,0,0,0);
 INSERT INTO `item_equipment` VALUES (19744,'opprimo_+1',97,0,66560,58,0,0,4,0,0,0);
 INSERT INTO `item_equipment` VALUES (19746,'spharai',99,0,2,511,0,1,1,0,0,0);
-INSERT INTO `item_equipment` VALUES (19747,'mandau',99,0,560,334,0,1,3,0,0,0);
+INSERT INTO `item_equipment` VALUES (19747,'mandau',99,0,262704,334,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (19748,'excalibur',99,0,80,320,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (19749,'ragnarok',99,0,193,319,0,1,1,0,0,0);
 INSERT INTO `item_equipment` VALUES (19750,'guttler',99,0,256,347,0,1,3,0,0,0);
@@ -9528,7 +9528,7 @@ INSERT INTO `item_equipment` VALUES (19836,'kenkonken',99,0,131072,503,0,1,1,0,0
 INSERT INTO `item_equipment` VALUES (19837,'terpsichore',99,0,262144,428,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (19838,'tupsimati',99,0,524288,429,0,1,1,0,0,0);
 INSERT INTO `item_equipment` VALUES (19839,'spharai',99,0,2,497,0,1,1,0,0,0);
-INSERT INTO `item_equipment` VALUES (19840,'mandau',99,0,560,544,0,1,3,0,0,0);
+INSERT INTO `item_equipment` VALUES (19840,'mandau',99,0,262704,544,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (19841,'excalibur',99,0,80,545,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (19842,'ragnarok',99,0,193,546,0,1,1,0,0,0);
 INSERT INTO `item_equipment` VALUES (19843,'guttler',99,0,256,547,0,1,3,0,0,0);
@@ -9713,8 +9713,8 @@ INSERT INTO `item_equipment` VALUES (20551,'akua_sainti',99,100,131074,508,0,0,1
 INSERT INTO `item_equipment` VALUES (20552,'akua_sainti_+1',99,101,131074,508,0,0,1,0,0,0);
 INSERT INTO `item_equipment` VALUES (20553,'ninzas',99,105,131074,507,0,0,1,0,0,0);
 INSERT INTO `item_equipment` VALUES (20554,'tlalpoloani',99,106,131074,492,0,0,1,0,0,0);
-INSERT INTO `item_equipment` VALUES (20555,'mandau',99,119,560,334,0,1,3,0,0,0);
-INSERT INTO `item_equipment` VALUES (20556,'mandau',99,119,560,544,0,1,3,0,0,0);
+INSERT INTO `item_equipment` VALUES (20555,'mandau',99,119,262704,334,0,1,3,0,0,0);
+INSERT INTO `item_equipment` VALUES (20556,'mandau',99,119,262704,544,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (20557,'terpsichore',99,119,262144,428,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (20558,'terpsichore',99,119,262144,569,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (20559,'vajra',99,119,32,422,0,1,3,0,0,0);
@@ -9735,7 +9735,7 @@ INSERT INTO `item_equipment` VALUES (20578,'wind_knife',1,0,4194303,785,0,0,3,0,
 INSERT INTO `item_equipment` VALUES (20579,'skinflayer',99,119,262688,430,0,0,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (20580,'kustawi',99,119,474849,157,0,0,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (20581,'kustawi_+1',99,119,474849,157,0,0,3,0,0,0);
-INSERT INTO `item_equipment` VALUES (20583,'mandau',99,119,560,544,0,1,3,0,0,0);
+INSERT INTO `item_equipment` VALUES (20583,'mandau',99,119,262704,544,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (20584,'terpsichore',99,119,262144,569,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (20585,'vajra',99,119,32,559,0,1,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (20586,'carnwenhan',99,119,512,563,0,1,3,0,0,0);
