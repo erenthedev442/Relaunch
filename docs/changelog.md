@@ -10,6 +10,13 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
 ---
 
 !!! note "Week of July 13–19, 2026"
+    **Thursday, July 16**
+
+    - **Relaunch/Aftermath** — Restore REMA and Prime effect wiring
+    - **Relaunch/Prime** — Strengthen native Prime weapon skills
+    - **Relaunch/Mandau** — Strengthen Mercy Stroke and add Dancer access
+    - **Relaunch/Augments** — Augment Tier 1 gate = any-job-lv-99; enrich Stage 0 doc block
+
     **Wednesday, July 15**
 
     - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-15 11:21
@@ -1117,72 +1124,3 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **BRD** — Add missing scroll script for Aria of Passion
     - **Ranger** — Replace broken hover_shot JA with !hovershot command
     - **Prestige** — Idle-despawn trial boss after 20s of no damage
-    - **World Boss** — Move spawn zone from Hall of the Gods to West Ronfaure
-    - **Endless Tower** — Disallow Trusts in Walk of Echoes (zone 182)
-    - **Job Mastery** — Use owner-verified Mastery warp coords (-519,36,236)
-    - **Job Mastery** — Correct Weapon Mastery warp-in (was off-map)
-    - **Leaderboard** — Record pre-cap WS damage for peak hit tracker
-    - **Endless Tower** — Hard-cap trusts at 1 (was honor-system)
-    - **Endless Tower** — Allow trusts in Walk of Echoes (zone 182)
-    - **Hunting League** — Idempotent mob_groups in escha migration (zone 288)
-    - Deploy (No Rebuild) Mon 06/15/2026 23:59:36.23
-    - **Capacity Farm** — Use DE_ prefix in queryEntitiesByName so mobs respawn
-    - **Vendor** — Add Gold-tier axes to Hunting League gear vendor
-    - **Dungeons** — Scaled gil reward on clear (1M easiest -> 10M hardest)
-    - **Dungeons** — Theme all 8 dungeons to distinct mob families
-    - **Trusts** — Meat now forces mob target-switch on every hate-pin tick
-    - **Crash** — Guard treasure.lua timers against freed NPC entity
-    - **Dungeons** — Paginate the Dungeon Master menu (8 dungeons overflowed)
-    - **CMD** — Show (X,Y,Z) world coords in !mobs listing
-    - **NPC** — Add Unity Accolades exchange to Eminence Broker
-    - **HL** — Increase affinity trophy drop quantity from 1 to 5
-    - **HL** — Nidhogg also drops Fafnir's Scale (Augment Sage rank 4 trophy)
-    - **Shop** — Split augments ws into ws/ws2 to stay under client 80-item cap
-    - **Shop** — Sort !shop augments by sortname to match client display
-    - **Shop** — Sort !shop augments by actual item name from item_basic
-    - **Augments** — Rename HQ Scorpion Shell label to sort first in !shop augments ws
-    - **Shop** — Make !shop augments live-reload via module command override
-    - **Dungeons** — Switch Maxixi +4 drops to first (Hume F/Taru F) race variant
-    - **Shop** — Sort augment catalysts alphabetically by label
-    - **Shop** — Force-reload augment_catalog on shop hot-reload
-    - **Reallevel** — Auto-populate the leaderboard via a login hook
-    - **Augments** — Add 10 missing magic/instrument skill catalysts
-    - **Weapon Skills** — Boost Asuran Fists fTP to 1.5/1.75/2.0 per hit
-    - **Weapon Skills** — Add per-hit crit chance to Asuran Fists
-    - **Reallevel** — Store Real Level in a CharVar for the website leaderboard
-    - **HL** — Add Augment Sage affinity trophy drops to all 13 HL NMs
-    - **HL** — Guaranteed Khimaira Horn drop from Pandemonium Warden
-    - **Tracker** — WSMaxDmg charVar - record peak weapon skill damage per player
-    - **Augments** — Full weapon skill coverage in augment catalog
-    - **CMD** — GM Ascension Trial tools - spawntrialboss / killtrial / cleartrial
-    - **Prime Weapons** — Enable Great Sword (Fimbulvetr) + Axe (Blitz) Prime WS + aftermath
-    - **CMD** — !fixboss - GM teleport any mob to player position
-    - **Prime Weapons** — Wire Prime aftermath onto the Prime Dagger too
-    - **Prime Weapons** — Implement faithful Prime Weapon Aftermath
-    - **CMD** — !spawntrialboss - GM force-spawn Ascension Trial boss in Provenance
-    - **BRD** — Add Aria of Passion + Honor March songs
-    - **Dungeons** — Self-heal boss spawn when zone is genuinely clear
-    - **CMD** — !mobs - list live mobs in your zone (GM debug)
-    - **Augments** — Restore HQ Scorpion Shell -> Weapon skill damage catalyst
-    - **AH** — Raise universal buyback cap 200 -> 1000 per pass
-    - **Dungeons** — Correct voidwalker_arena bossPos Y from 7.263 to 12.000
-    - **BRD** — Implement Honor March (spell 417) as tier-3 BRD march
-    - **Hunting League** — Scope Escha migration mob_spawn_points delete by zone
-    - **RNG** — Correct hover_shot to retail abilityId 289, recastId 55
-
-    **Monday, June 15**
-
-    - **Dungeons** — Dismiss trusts before zone warp to prevent heap crash
-    - **Bullet Pouches** — Make the 4 Bullet Pouches equippable WAIST pieces
-    - **RNG** — Register Hover Shot ability (abilityId 971)
-    - **SCH** — Helix Detonation — all nuke tiers eligible, tiered flat bonus
-    - **SCH** — Helix Detonation combo — same-element Tier V/VI nuke within 10s
-    - **Difficulty** — Hunting League NMs +50% (everything, DEF gentler)
-    - **Hunting League** — Migrate from Reisenjima Henge to Escha Zi'Tah
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 38f420a5d5ce -->
-_Last updated: 2026-07-15 11:36 PDT_
-<!-- DOCGEN:END id="last-updated" -->
