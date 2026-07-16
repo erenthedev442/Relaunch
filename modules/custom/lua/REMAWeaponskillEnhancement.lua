@@ -33,8 +33,48 @@ end
 
 local activeCalculations = setmetatable({}, { __mode = 'k' })
 
-local function copyAndScaleFtp(wsParams, ftpScale)
-    if not wsParams or not wsParams.ftpMod or ftpScale == 1 then
+local function copyTable(values)
+    if not values then
+        return nil
+    end
+
+    local copy = {}
+    for index, value in ipairs(values) do
+        copy[index] = value
+    end
+
+    return copy
+end
+
+local function multiplyTables(nativeValues, tuningValues)
+    local combined = {}
+    for index, tuningValue in ipairs(tuningValues) do
+        combined[index] = (nativeValues and nativeValues[index] or 1) * tuningValue
+    end
+
+    return combined
+end
+
+local function addTables(nativeValues, tuningValues)
+    local combined = {}
+    for index, tuningValue in ipairs(tuningValues) do
+        combined[index] = (nativeValues and nativeValues[index] or 0) + tuningValue
+    end
+
+    return combined
+end
+
+local function maximumTables(nativeValues, tuningValues)
+    local combined = {}
+    for index, tuningValue in ipairs(tuningValues) do
+        combined[index] = math.max(nativeValues and nativeValues[index] or 0, tuningValue)
+    end
+
+    return combined
+end
+
+local function copyAndTuneParams(wsParams, wsFtpScale, familyTuning, tunePhysical)
+    if not wsParams then
         return wsParams
     end
 
@@ -43,9 +83,18 @@ local function copyAndScaleFtp(wsParams, ftpScale)
         tunedParams[key] = value
     end
 
-    tunedParams.ftpMod = {}
-    for index, value in ipairs(wsParams.ftpMod) do
-        tunedParams.ftpMod[index] = value * ftpScale
+    if wsParams.ftpMod then
+        tunedParams.ftpMod = copyTable(wsParams.ftpMod)
+        local combinedFtpScale = wsFtpScale * familyTuning.ftpScale
+        for index, value in ipairs(tunedParams.ftpMod) do
+            tunedParams.ftpMod[index] = value * combinedFtpScale
+        end
+    end
+
+    if tunePhysical then
+        tunedParams.atkVaries      = multiplyTables(wsParams.atkVaries, familyTuning.attackScale)
+        tunedParams.accVaries      = addTables(wsParams.accVaries, familyTuning.accuracyBonus)
+        tunedParams.ignoredDefense = maximumTables(wsParams.ignoredDefense, familyTuning.ignoredDefense)
     end
 
     return tunedParams
@@ -72,7 +121,7 @@ xi.remaWsTier.getBonusPercent = function(attacker, wsId, slot)
     return catalog.getBonusPercent(entry.itemId, wsId, slot)
 end
 
-xi.remaWsTier.getTunedParams = function(attacker, wsId, slot, wsParams)
+xi.remaWsTier.getTunedParams = function(attacker, wsId, slot, wsParams, tunePhysical)
     local entry = xi.remaWsTier.getEntry(attacker, wsId, slot)
     if not entry then
         return wsParams
@@ -83,19 +132,32 @@ xi.remaWsTier.getTunedParams = function(attacker, wsId, slot, wsParams)
         error(string.format('Missing REMA fTP tuning for enabled WS %d', wsId))
     end
 
-    return copyAndScaleFtp(wsParams, ftpScale)
+    local familyTuning = catalog.getFamilyTuning(entry.family)
+    if not familyTuning then
+        error(string.format('Missing REMA family tuning for %s', entry.family))
+    end
+
+    return copyAndTuneParams(wsParams, ftpScale, familyTuning, tunePhysical ~= false)
 end
 
 xi.remaWsTier.withTemporaryBonus = function(attacker, wsId, slot, callback)
-    local bonusPercent = xi.remaWsTier.getBonusPercent(attacker, wsId, slot)
-    if bonusPercent <= 0 or activeCalculations[attacker] then
+    local entry = xi.remaWsTier.getEntry(attacker, wsId, slot)
+    if not entry or activeCalculations[attacker] then
         return callback()
     end
 
-    local modId      = xi.mod.WEAPONSKILL_DAMAGE_BASE + wsId
-    local priorValue = attacker:getMod(modId)
+    local familyTuning = catalog.getFamilyTuning(entry.family)
+    local bonusPercent = catalog.getBonusPercent(entry.itemId, wsId, slot)
+    local magicAccBonus = entry.magic and familyTuning.magicAccBonus or 0
+    local modId         = xi.mod.WEAPONSKILL_DAMAGE_BASE + wsId
+    local priorValue    = attacker:getMod(modId)
+    local priorMagicAcc = magicAccBonus > 0 and attacker:getMod(xi.mod.MACC) or 0
 
     attacker:addMod(modId, bonusPercent)
+    if magicAccBonus > 0 then
+        attacker:addMod(xi.mod.MACC, magicAccBonus)
+    end
+
     activeCalculations[attacker] = true
 
     local results
@@ -111,6 +173,9 @@ xi.remaWsTier.withTemporaryBonus = function(attacker, wsId, slot, callback)
     -- zero or relying on subtractive cleanup.
     local cleanupOk, cleanupErr = pcall(function()
         attacker:setMod(modId, priorValue)
+        if magicAccBonus > 0 then
+            attacker:setMod(xi.mod.MACC, priorMagicAcc)
+        end
     end)
     activeCalculations[attacker] = nil
 
@@ -141,7 +206,7 @@ m:addOverride('xi.weaponskills.doPhysicalWeaponskill',
         -- to itself, so this call cannot recurse.
         local original    = super
         local tunedParams = xi.remaWsTier.getTunedParams(
-            attacker, wsId, xi.slot.MAIN, wsParams)
+            attacker, wsId, xi.slot.MAIN, wsParams, true)
 
         return xi.remaWsTier.callPreservedOriginal(
             attacker, wsId, xi.slot.MAIN, original,
@@ -152,7 +217,7 @@ m:addOverride('xi.weaponskills.doRangedWeaponskill',
     function(attacker, target, wsId, wsParams, tp, action, primaryMsg)
         local original    = super
         local tunedParams = xi.remaWsTier.getTunedParams(
-            attacker, wsId, xi.slot.RANGED, wsParams)
+            attacker, wsId, xi.slot.RANGED, wsParams, true)
 
         return xi.remaWsTier.callPreservedOriginal(
             attacker, wsId, xi.slot.RANGED, original,
@@ -171,7 +236,7 @@ m:addOverride('xi.weaponskills.doMagicWeaponskill',
         end
 
         local tunedParams = xi.remaWsTier.getTunedParams(
-            attacker, wsId, slot, wsParams)
+            attacker, wsId, slot, wsParams, false)
 
         return xi.remaWsTier.callPreservedOriginal(
             attacker, wsId, slot, original,

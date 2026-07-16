@@ -22,6 +22,57 @@ catalog.REMA_TIER_SCALE =
     AEONIC   = 0.80,
 }
 
+-- Family-wide progression applied after each native WS's individual fTP
+-- calibration below.  The ratios mirror the intended endgame bands on the
+-- Visions training target: Relic 200-300k, Empyrean/Mythic 300-500k and
+-- Aeonic 600-700k with an appropriately geared player.
+--
+-- fTP remains the primary tier multiplier so attributes, attack/MAB and
+-- player WS-damage augments continue to scale the complete result. Physical
+-- and ranged WSs also receive TP-scaled attack, accuracy and partial defense
+-- relief for consistency against endgame defensive profiles. Magical WSs use
+-- fTP, the existing family WS-damage bonus and a family magic-accuracy boost,
+-- preserving their native MAB, attributes, affinity and resistance path.
+catalog.REMA_FAMILY_TUNING =
+{
+    RELIC =
+    {
+        targetDamage   = { 200000, 300000 },
+        ftpScale       = 2.00,
+        attackScale    = { 1.10, 1.20, 1.30 },
+        accuracyBonus  = { 100, 150, 200 },
+        magicAccBonus  = 150,
+        ignoredDefense = { 0.25, 0.40, 0.50 },
+    },
+    EMPYREAN =
+    {
+        targetDamage   = { 300000, 500000 },
+        ftpScale       = 2.75,
+        attackScale    = { 1.20, 1.35, 1.50 },
+        accuracyBonus  = { 150, 200, 250 },
+        magicAccBonus  = 225,
+        ignoredDefense = { 0.35, 0.55, 0.70 },
+    },
+    MYTHIC =
+    {
+        targetDamage   = { 300000, 500000 },
+        ftpScale       = 2.75,
+        attackScale    = { 1.20, 1.35, 1.50 },
+        accuracyBonus  = { 150, 200, 250 },
+        magicAccBonus  = 225,
+        ignoredDefense = { 0.35, 0.55, 0.70 },
+    },
+    AEONIC =
+    {
+        targetDamage   = { 600000, 700000 },
+        ftpScale       = 4.00,
+        attackScale    = { 1.35, 1.55, 1.75 },
+        accuracyBonus  = { 200, 275, 350 },
+        magicAccBonus  = 300,
+        ignoredDefense = { 0.50, 0.70, 0.82 },
+    },
+}
+
 -- Beta fTP tuning.  Every enabled native WS has an explicit, independently
 -- adjustable scale.  The runtime applies this to a private copy of ftpMod,
 -- preserving the native hit count, damage path, crit rules and utility.
@@ -89,6 +140,8 @@ catalog.REMA_WS_TUNING =
     [xi.weaponskill.STARDIVER]     = 5.00,
     [xi.weaponskill.BLADE_SHUN]    = 3.50,
     [xi.weaponskill.TACHI_SHOHA]   = 9.30,
+    [xi.weaponskill.BLACK_HALO]     = 8.30,
+    [xi.weaponskill.SHATTERSOUL]    = 18.00,
     [xi.weaponskill.APEX_ARROW]    = 4.00,
     [xi.weaponskill.LAST_STAND]    = 2.05,
 }
@@ -105,6 +158,7 @@ local function weapon(itemId, name, family, wsId, slot, options)
         slot    = slot,
         enabled = options.enabled ~= false,
         reason  = options.reason,
+        magic   = options.magic == true,
     }
 end
 
@@ -131,7 +185,8 @@ catalog.WEAPONS =
     weapon(20587, 'Twashtar',     'EMPYREAN', xi.weaponskill.RUDRAS_STORM,     xi.slot.MAIN),
     weapon(20689, 'Almace',       'EMPYREAN', xi.weaponskill.CHANT_DU_CYGNE,   xi.slot.MAIN),
     weapon(21684, 'Caladbolg',    'EMPYREAN', xi.weaponskill.TORCLEAVER,       xi.slot.MAIN),
-    weapon(21752, 'Farsha',       'EMPYREAN', xi.weaponskill.CLOUDSPLITTER,    xi.slot.MAIN),
+    weapon(21752, 'Farsha',       'EMPYREAN', xi.weaponskill.CLOUDSPLITTER,    xi.slot.MAIN,
+        { magic = true }),
     weapon(21758, 'Ukonvasara',   'EMPYREAN', xi.weaponskill.UKKOS_FURY,       xi.slot.MAIN),
     weapon(21810, 'Redemption',   'EMPYREAN', xi.weaponskill.QUIETUS,          xi.slot.MAIN),
     weapon(21859, 'Rhongomiant',  'EMPYREAN', xi.weaponskill.CAMLANNS_TORMENT, xi.slot.MAIN),
@@ -142,7 +197,8 @@ catalog.WEAPONS =
     weapon(22064, 'Hvergelmir',   'EMPYREAN', xi.weaponskill.MYRKR,             xi.slot.MAIN,
         { enabled = false, reason = 'non-damage weaponskill' }),
     weapon(22130, 'Gandiva',      'EMPYREAN', xi.weaponskill.JISHNUS_RADIANCE,  xi.slot.RANGED),
-    weapon(22142, 'Armageddon',   'EMPYREAN', xi.weaponskill.WILDFIRE,           xi.slot.RANGED),
+    weapon(22142, 'Armageddon',   'EMPYREAN', xi.weaponskill.WILDFIRE,           xi.slot.RANGED,
+        { magic = true }),
 
     -- Mythic 119 III
     weapon(20510, 'Glanzfaust',    'MYTHIC', xi.weaponskill.ASCETICS_FURY,    xi.slot.MAIN),
@@ -155,17 +211,23 @@ catalog.WEAPONS =
         { enabled = false, reason = 'enmity-based damage is capped after WS damage modifiers' }),
     weapon(20688, 'Tizona',        'MYTHIC', xi.weaponskill.EXPIACION,         xi.slot.MAIN),
     weapon(21757, 'Conqueror',     'MYTHIC', xi.weaponskill.KINGS_JUSTICE,     xi.slot.MAIN),
-    weapon(21751, 'Aymur',         'MYTHIC', xi.weaponskill.PRIMAL_REND,       xi.slot.MAIN),
+    weapon(21751, 'Aymur',         'MYTHIC', xi.weaponskill.PRIMAL_REND,       xi.slot.MAIN,
+        { magic = true }),
     weapon(21809, 'Liberator',     'MYTHIC', xi.weaponskill.INSURGENCY,        xi.slot.MAIN),
     weapon(21858, 'Ryunohige',     'MYTHIC', xi.weaponskill.DRAKESBANE,        xi.slot.MAIN),
     weapon(21907, 'Nagi',          'MYTHIC', xi.weaponskill.BLADE_KAMU,        xi.slot.MAIN),
     weapon(21955, 'Kogarasumaru',  'MYTHIC', xi.weaponskill.TACHI_RANA,        xi.slot.MAIN),
     weapon(21078, 'Yagrush',       'MYTHIC', xi.weaponskill.MYSTIC_BOON,       xi.slot.MAIN),
-    weapon(22062, 'Laevateinn',    'MYTHIC', xi.weaponskill.VIDOHUNIR,         xi.slot.MAIN),
-    weapon(22063, 'Nirvana',       'MYTHIC', xi.weaponskill.GARLAND_OF_BLISS,  xi.slot.MAIN),
-    weapon(22061, 'Tupsimati',     'MYTHIC', xi.weaponskill.OMNISCIENCE,       xi.slot.MAIN),
-    weapon(22139, 'Gastraphetes',  'MYTHIC', xi.weaponskill.TRUEFLIGHT,        xi.slot.RANGED),
-    weapon(22141, 'Death Penalty', 'MYTHIC', xi.weaponskill.LEADEN_SALUTE,     xi.slot.RANGED),
+    weapon(22062, 'Laevateinn',    'MYTHIC', xi.weaponskill.VIDOHUNIR,         xi.slot.MAIN,
+        { magic = true }),
+    weapon(22063, 'Nirvana',       'MYTHIC', xi.weaponskill.GARLAND_OF_BLISS,  xi.slot.MAIN,
+        { magic = true }),
+    weapon(22061, 'Tupsimati',     'MYTHIC', xi.weaponskill.OMNISCIENCE,       xi.slot.MAIN,
+        { magic = true }),
+    weapon(22139, 'Gastraphetes',  'MYTHIC', xi.weaponskill.TRUEFLIGHT,        xi.slot.RANGED,
+        { magic = true }),
+    weapon(22141, 'Death Penalty', 'MYTHIC', xi.weaponskill.LEADEN_SALUTE,     xi.slot.RANGED,
+        { magic = true }),
 
     -- Aeonic final
     weapon(20515, 'Godhands',           'AEONIC', xi.weaponskill.SHIJIN_SPIRAL, xi.slot.MAIN),
@@ -178,16 +240,10 @@ catalog.WEAPONS =
     weapon(20935, 'Trishula',           'AEONIC', xi.weaponskill.STARDIVER,     xi.slot.MAIN),
     weapon(20977, 'Heishi Shorinken',   'AEONIC', xi.weaponskill.BLADE_SHUN,    xi.slot.MAIN),
     weapon(21025, 'Dojikiri Yasutsuna', 'AEONIC', xi.weaponskill.TACHI_SHOHA,   xi.slot.MAIN),
+    weapon(21082, 'Tishtrya',           'AEONIC', xi.weaponskill.BLACK_HALO,     xi.slot.MAIN),
+    weapon(21147, 'Khatvanga',          'AEONIC', xi.weaponskill.SHATTERSOUL,    xi.slot.MAIN),
     weapon(22117, 'Fail-not',           'AEONIC', xi.weaponskill.APEX_ARROW,    xi.slot.RANGED),
     weapon(21485, 'Fomalhaut',          'AEONIC', xi.weaponskill.LAST_STAND,    xi.slot.RANGED),
-}
-
--- These likely retail mappings are intentionally non-qualifying because this
--- repository does not clearly wire either final weapon to the stated WS.
-catalog.UNRESOLVED =
-{
-    { itemId = 21082, name = 'Tishtrya',  proposedWsId = xi.weaponskill.BLACK_HALO },
-    { itemId = 21147, name = 'Khatvanga', proposedWsId = xi.weaponskill.SHATTERSOUL },
 }
 
 catalog.BY_ITEM_ID = {}
@@ -198,6 +254,10 @@ end
 
 catalog.getTuning = function(wsId)
     return catalog.REMA_WS_TUNING[wsId]
+end
+
+catalog.getFamilyTuning = function(family)
+    return catalog.REMA_FAMILY_TUNING[family]
 end
 
 catalog.getEntry = function(itemId, wsId, slot)

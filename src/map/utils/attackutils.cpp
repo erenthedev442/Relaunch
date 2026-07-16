@@ -283,6 +283,7 @@ uint32 CheckForDamageMultiplier(CCharEntity* PChar, CItemWeapon* PWeapon, uint32
 
     float occ_extra_dmg        = battleutils::GetScaledItemModifier(PChar, PWeapon, Mod::OCC_DO_EXTRA_DMG) / 100.0f;
     int16 occ_extra_dmg_chance = battleutils::GetScaledItemModifier(PChar, PWeapon, Mod::EXTRA_DMG_CHANCE) / 10;
+    int16 aftermathRoll        = 1 + xirand::GetRandomNumber(100);
 
     if (allowProc)
     {
@@ -290,7 +291,7 @@ uint32 CheckForDamageMultiplier(CCharEntity* PChar, CItemWeapon* PWeapon, uint32
         {
             return (uint32)(damage * occ_extra_dmg);
         }
-        else if (occ_do_triple_dmg > 0 && (1 + xirand::GetRandomNumber(100)) <= occ_do_triple_dmg)
+        else if (occ_do_triple_dmg > 0 && aftermathRoll <= occ_do_triple_dmg)
         {
             return (uint32)(damage * 3.0f);
         }
@@ -298,7 +299,7 @@ uint32 CheckForDamageMultiplier(CCharEntity* PChar, CItemWeapon* PWeapon, uint32
         {
             return (uint32)(damage * occ_extra_dmg);
         }
-        else if (occ_do_double_dmg > 0 && (1 + xirand::GetRandomNumber(100)) <= occ_do_double_dmg)
+        else if (occ_do_double_dmg > 0 && aftermathRoll > occ_do_triple_dmg && aftermathRoll <= occ_do_triple_dmg + occ_do_double_dmg)
         {
             return (uint32)(damage * 2.0f);
         }

@@ -277,6 +277,7 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
     // Checking for Mythic Weapon Aftermath
     int16 occAttThriceRate = std::clamp<int16>(m_attacker->getMod(Mod::MYTHIC_OCC_ATT_THRICE), 0, 100);
     int16 occAttTwiceRate  = std::clamp<int16>(m_attacker->getMod(Mod::MYTHIC_OCC_ATT_TWICE), 0, 100);
+    uint8 mythicAftermathRoll = xirand::GetRandomNumber(100);
 
     // Checking for merit upgrades
     if (isPC)
@@ -341,11 +342,11 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
         multiHitOccurred = true;
     }
     // Mythic Weapons Aftermath, only main hand
-    else if (isMainHand && xirand::GetRandomNumber(100) < occAttThriceRate)
+    else if (isMainHand && mythicAftermathRoll < occAttThriceRate)
     {
         AddAttackSwing(PHYSICAL_ATTACK_TYPE::NORMAL, direction, 2);
     }
-    else if (isMainHand && xirand::GetRandomNumber(100) < occAttTwiceRate)
+    else if (isMainHand && mythicAftermathRoll < occAttThriceRate + occAttTwiceRate)
     {
         AddAttackSwing(PHYSICAL_ATTACK_TYPE::NORMAL, direction, 1);
     }

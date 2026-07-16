@@ -1700,20 +1700,66 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
 
                     if (PBattleTarget->health.hp > 0 && PWeaponSkill->getPrimarySkillchain() != 0)
                     {
+                        auto primarySkillchain   = PWeaponSkill->getPrimarySkillchain();
+                        auto secondarySkillchain = PWeaponSkill->getSecondarySkillchain();
+                        auto tertiarySkillchain  = PWeaponSkill->getTertiarySkillchain();
+
+                        // While Aeonic aftermath is active, the weapon's linked
+                        // WS gains its retail level-three Light/Darkness
+                        // property.  The established server-specific linked WS
+                        // choices (Dimidiation and Black Halo) are preserved.
+                        const auto* PAftermath = StatusEffectContainer->GetStatusEffect(EFFECT_AFTERMATH);
+                        if (PAftermath && (PAftermath->GetPower() == 49 || PAftermath->GetPower() == 50))
+                        {
+                            switch (PWeaponSkill->getID())
+                            {
+                                case 15:  // Shijin Spiral
+                                case 61:  // Dimidiation
+                                case 93:  // Upheaval
+                                case 141: // Blade: Shun
+                                case 157: // Tachi: Shoha
+                                case 169: // Black Halo
+                                case 203: // Apex Arrow
+                                case 221: // Last Stand
+                                case 224: // Exenterator
+                                    tertiarySkillchain = SC_LIGHT;
+                                    break;
+                                case 77:  // Ruinator
+                                case 109: // Entropy
+                                case 125: // Stardiver
+                                case 191: // Shattersoul
+                                case 226: // Requiescat
+                                    tertiarySkillchain = SC_DARKNESS;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
                         // NOTE: GetSkillChainEffect is INSIDE this if statement because it
                         //  ALTERS the state of the resonance, which misses and non-elemental skills should NOT do.
                         const auto effect = battleutils::GetSkillChainEffect(
                             PBattleTarget,
-                            PWeaponSkill->getPrimarySkillchain(),
-                            PWeaponSkill->getSecondarySkillchain(),
-                            PWeaponSkill->getTertiarySkillchain());
+                            primarySkillchain,
+                            secondarySkillchain,
+                            tertiarySkillchain,
+                            this);
                         if (effect != ActionProcSkillChain::None)
                         {
                             actionResult.recordSkillchain(effect, battleutils::TakeSkillchainDamage(this, PBattleTarget, damage, taChar));
 
+                            if (effect == ActionProcSkillChain::Radiance || effect == ActionProcSkillChain::Umbra)
+                            {
+                                StatusEffectContainer->DelStatusEffect(EFFECT_AFTERMATH);
+                            }
+
                             // Despite appearances, ws_points_skillchain is not a multiplier it is just an amount "per skillchain level"
                             const auto wsPointsSkillchain = settings::get<uint8>("map.WS_POINTS_SKILLCHAIN");
-                            if (effect >= ActionProcSkillChain::Compression && effect < ActionProcSkillChain::Radiance)
+                            if (effect == ActionProcSkillChain::Radiance || effect == ActionProcSkillChain::Umbra)
+                            {
+                                wspoints += (4 * wsPointsSkillchain); // Level 4
+                            }
+                            else if (effect >= ActionProcSkillChain::Compression && effect < ActionProcSkillChain::Radiance)
                             {
                                 wspoints += (1 * wsPointsSkillchain); // Level 1
                             }

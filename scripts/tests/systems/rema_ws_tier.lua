@@ -52,13 +52,31 @@ describe('Legendary REMA native-weaponskill enhancement', function()
         return xi.remaWsTier.getBonusPercent(player, wsId, slot or xi.slot.MAIN)
     end
 
-    it('uses the configured family tiers and +200 percent benchmark', function()
+    it('uses the configured family bonuses and progression tuning', function()
         assert(catalog.PRIME_EQUIVALENT_BONUS == 2.00)
         assert(catalog.getTuning(xi.weaponskill.MERCY_STROKE) == 15.00)
         assert(bonus(makePlayer({ [xi.slot.MAIN] = 20509 }), xi.weaponskill.FINAL_HEAVEN) == 100)
         assert(bonus(makePlayer({ [xi.slot.MAIN] = 20512 }), xi.weaponskill.VICTORY_SMITE) == 120)
         assert(bonus(makePlayer({ [xi.slot.MAIN] = 20510 }), xi.weaponskill.ASCETICS_FURY) == 140)
         assert(bonus(makePlayer({ [xi.slot.MAIN] = 20515 }), xi.weaponskill.SHIJIN_SPIRAL) == 160)
+
+        assert(catalog.getFamilyTuning('RELIC').ftpScale == 2.00)
+        assert(catalog.getFamilyTuning('EMPYREAN').ftpScale == 2.75)
+        assert(catalog.getFamilyTuning('MYTHIC').ftpScale == 2.75)
+        assert(catalog.getFamilyTuning('AEONIC').ftpScale == 4.00)
+
+        assert(catalog.getFamilyTuning('RELIC').targetDamage[1] == 200000)
+        assert(catalog.getFamilyTuning('RELIC').targetDamage[2] == 300000)
+        assert(catalog.getFamilyTuning('EMPYREAN').targetDamage[1] == 300000)
+        assert(catalog.getFamilyTuning('EMPYREAN').targetDamage[2] == 500000)
+        assert(catalog.getFamilyTuning('MYTHIC').targetDamage[1] == 300000)
+        assert(catalog.getFamilyTuning('MYTHIC').targetDamage[2] == 500000)
+        assert(catalog.getFamilyTuning('AEONIC').targetDamage[1] == 600000)
+        assert(catalog.getFamilyTuning('AEONIC').targetDamage[2] == 700000)
+        assert(catalog.getFamilyTuning('RELIC').magicAccBonus == 150)
+        assert(catalog.getFamilyTuning('EMPYREAN').magicAccBonus == 225)
+        assert(catalog.getFamilyTuning('MYTHIC').magicAccBonus == 225)
+        assert(catalog.getFamilyTuning('AEONIC').magicAccBonus == 300)
     end)
 
     it('requires the exact equipped final weapon and native WS', function()
@@ -137,7 +155,7 @@ describe('Legendary REMA native-weaponskill enhancement', function()
         assert(bonus(ranged, xi.weaponskill.LEADEN_SALUTE, xi.slot.RANGED) == 140)
     end)
 
-    it('applies per-WS fTP tuning without mutating native parameters', function()
+    it('applies per-WS and family physical tuning without mutating native parameters', function()
         local player = makePlayer({ [xi.slot.MAIN] = 20685 })
         local native = { numHits = 1, ftpMod = { 3, 3, 3 }, str_wsc = 0.4 }
         local tuned  = xi.remaWsTier.getTunedParams(
@@ -146,9 +164,15 @@ describe('Legendary REMA native-weaponskill enhancement', function()
         assert(tuned ~= native)
         assert(tuned.ftpMod ~= native.ftpMod)
         assert(tuned.numHits == 1 and tuned.str_wsc == 0.4)
-        assert(math.abs(tuned.ftpMod[1] - 23.7) < 0.0001)
-        assert(math.abs(tuned.ftpMod[3] - 23.7) < 0.0001)
+        assert(math.abs(tuned.ftpMod[1] - 47.4) < 0.0001)
+        assert(math.abs(tuned.ftpMod[3] - 47.4) < 0.0001)
+        assert(tuned.atkVaries[1] == 1.10 and tuned.atkVaries[3] == 1.30)
+        assert(tuned.accVaries[1] == 100 and tuned.accVaries[3] == 200)
+        assert(tuned.ignoredDefense[1] == 0.25 and tuned.ignoredDefense[3] == 0.50)
         assert(native.ftpMod[1] == 3 and native.ftpMod[3] == 3)
+        assert(native.atkVaries == nil)
+        assert(native.accVaries == nil)
+        assert(native.ignoredDefense == nil)
     end)
 
     it('accounts for the effective WoTG Death Blossom parameters', function()
@@ -158,9 +182,55 @@ describe('Legendary REMA native-weaponskill enhancement', function()
             player, xi.weaponskill.DEATH_BLOSSOM, xi.slot.MAIN, native)
 
         assert(tuned.numHits == 3)
-        assert(tuned.ftpMod[1] == 45)
-        assert(tuned.ftpMod[3] == 45)
+        assert(tuned.ftpMod[1] == 123.75)
+        assert(tuned.ftpMod[3] == 123.75)
         assert(native.ftpMod[1] == 1.125)
+    end)
+
+    it('adds family physical tuning to native attack, accuracy and defense rules', function()
+        local player = makePlayer({ [xi.slot.MAIN] = 21025 })
+        local native =
+        {
+            ftpMod         = { 1.375, 2.1875, 2.6875 },
+            atkVaries      = { 1.375, 1.375, 1.375 },
+            accVaries      = { 0, 30, 60 },
+            ignoredDefense = { 0.10, 0.50, 0.90 },
+        }
+        local tuned = xi.remaWsTier.getTunedParams(
+            player, xi.weaponskill.TACHI_SHOHA, xi.slot.MAIN, native, true)
+
+        assert(math.abs(tuned.ftpMod[3] - 99.975) < 0.0001)
+        assert(math.abs(tuned.atkVaries[1] - 1.85625) < 0.0001)
+        assert(math.abs(tuned.atkVaries[3] - 2.40625) < 0.0001)
+        assert(tuned.accVaries[1] == 200 and tuned.accVaries[3] == 410)
+        assert(tuned.ignoredDefense[1] == 0.50)
+        assert(tuned.ignoredDefense[2] == 0.70)
+        assert(tuned.ignoredDefense[3] == 0.90)
+
+        assert(native.ftpMod[3] == 2.6875)
+        assert(native.atkVaries[1] == 1.375)
+        assert(native.accVaries[3] == 60)
+        assert(native.ignoredDefense[1] == 0.10)
+    end)
+
+    it('keeps magical REMA tuning on the native stat and magic pipeline', function()
+        local player = makePlayer({ [xi.slot.RANGED] = 22141 })
+        local native =
+        {
+            ftpMod = { 4.00, 6.70, 10.00 },
+            agi_wsc = 1.00,
+            ele = xi.element.DARK,
+        }
+        local tuned = xi.remaWsTier.getTunedParams(
+            player, xi.weaponskill.LEADEN_SALUTE, xi.slot.RANGED, native, false)
+
+        assert(tuned.ftpMod[1] == 16.50)
+        assert(tuned.ftpMod[3] == 41.25)
+        assert(tuned.agi_wsc == 1.00 and tuned.ele == xi.element.DARK)
+        assert(tuned.atkVaries == nil)
+        assert(tuned.accVaries == nil)
+        assert(tuned.ignoredDefense == nil)
+        assert(native.ftpMod[1] == 4.00 and native.ftpMod[3] == 10.00)
     end)
 
     it('leaves fTP unchanged for non-qualifying weapons', function()
@@ -191,6 +261,25 @@ describe('Legendary REMA native-weaponskill enhancement', function()
 
         assert(first == 17 and second == 23)
         assert(player:getMod(modId) == 15)
+    end)
+
+    it('adds and restores family magic accuracy only for magical REMA WSs', function()
+        local player = makePlayer({ [xi.slot.RANGED] = 22141 })
+        local modId  = xi.mod.WEAPONSKILL_DAMAGE_BASE + xi.weaponskill.LEADEN_SALUTE
+        player:addMod(modId, 25)
+        player:addMod(xi.mod.MACC, 50)
+
+        xi.remaWsTier.withTemporaryBonus(
+            player,
+            xi.weaponskill.LEADEN_SALUTE,
+            xi.slot.RANGED,
+            function()
+                assert(player:getMod(modId) == 165)
+                assert(player:getMod(xi.mod.MACC) == 275)
+            end)
+
+        assert(player:getMod(modId) == 25)
+        assert(player:getMod(xi.mod.MACC) == 50)
     end)
 
     it('removes the temporary modifier before rethrowing a Lua error', function()
@@ -330,12 +419,14 @@ describe('Legendary REMA native-weaponskill enhancement', function()
         assert(bonus(makePlayer({ [xi.slot.MAIN] = 20687 }), xi.weaponskill.ATONEMENT) == 0)
     end)
 
-    it('keeps unresolved Tishtrya and Khatvanga mappings non-qualifying', function()
-        assert(bonus(makePlayer({ [xi.slot.MAIN] = 21082 }), xi.weaponskill.BLACK_HALO) == 0)
-        assert(bonus(makePlayer({ [xi.slot.MAIN] = 21147 }), xi.weaponskill.SHATTERSOUL) == 0)
+    it('covers the final Aeonic club and staff mappings', function()
+        assert(bonus(makePlayer({ [xi.slot.MAIN] = 21082 }), xi.weaponskill.BLACK_HALO) == 160)
+        assert(bonus(makePlayer({ [xi.slot.MAIN] = 21147 }), xi.weaponskill.SHATTERSOUL) == 160)
+        assert(catalog.getTuning(xi.weaponskill.BLACK_HALO) == 8.30)
+        assert(catalog.getTuning(xi.weaponskill.SHATTERSOUL) == 18.00)
     end)
 
-    it('has explicit fTP tuning and a family bonus for every enabled entry', function()
+    it('has complete WS and family tuning for every enabled entry', function()
         for _, entry in ipairs(catalog.WEAPONS) do
             local expected = entry.enabled and
                 math.floor(catalog.PRIME_EQUIVALENT_BONUS * catalog.REMA_TIER_SCALE[entry.family] * 100 + 0.5) or
@@ -344,6 +435,16 @@ describe('Legendary REMA native-weaponskill enhancement', function()
             if entry.enabled then
                 assert(catalog.getTuning(entry.wsId) ~= nil)
                 assert(catalog.getTuning(entry.wsId) > 0)
+
+                local familyTuning = catalog.getFamilyTuning(entry.family)
+                assert(familyTuning ~= nil)
+                assert(#familyTuning.targetDamage == 2)
+                assert(familyTuning.targetDamage[1] < familyTuning.targetDamage[2])
+                assert(familyTuning.ftpScale > 0)
+                assert(familyTuning.magicAccBonus > 0)
+                assert(#familyTuning.attackScale == 3)
+                assert(#familyTuning.accuracyBonus == 3)
+                assert(#familyTuning.ignoredDefense == 3)
             end
 
             assert(catalog.getBonusPercent(entry.itemId, entry.wsId, entry.slot) == expected)

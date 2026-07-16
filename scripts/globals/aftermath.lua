@@ -29,6 +29,39 @@ local getAftermathLevel = function(tp)
     return math.max(1, math.min(3, math.floor(tp / 1000)))
 end
 
+local getAeonicPotency = function(tp)
+    if tp < 1500 then
+        return 3
+    elseif tp < 2000 then
+        return 4
+    elseif tp < 3000 then
+        return math.min(9, 5 + math.floor((tp - 2000) / 200))
+    end
+
+    return 10
+end
+
+-- This server grants a few Aeonics custom linked WSs.  Keep those established
+-- links while applying retail's rule that only the weapon's linked WS
+-- activates aftermath; unrelated WSs merely benefit from an existing AM.
+local aeonicWeaponSkills =
+{
+    [20515] = xi.weaponskill.SHIJIN_SPIRAL,
+    [20594] = xi.weaponskill.EXENTERATOR,
+    [20695] = xi.weaponskill.REQUIESCAT,
+    [20843] = xi.weaponskill.UPHEAVAL,
+    [20890] = xi.weaponskill.ENTROPY,
+    [20935] = xi.weaponskill.STARDIVER,
+    [20977] = xi.weaponskill.BLADE_SHUN,
+    [21025] = xi.weaponskill.TACHI_SHOHA,
+    [21082] = xi.weaponskill.BLACK_HALO,
+    [21147] = xi.weaponskill.SHATTERSOUL,
+    [21694] = xi.weaponskill.DIMIDIATION,
+    [21753] = xi.weaponskill.RUINATOR,
+    [21485] = xi.weaponskill.LAST_STAND,
+    [22117] = xi.weaponskill.APEX_ARROW,
+}
+
 xi.aftermath.effects =
 {
     -----------------------------------
@@ -37,7 +70,7 @@ xi.aftermath.effects =
     [1]  = { mods = { xi.mod.SUBTLE_BLOW, 10 }, duration = getTier1RelicDuration }, -- Spharai
     [2]  = { mods = { xi.mod.CRITHITRATE, 5 }, duration = getTier1RelicDuration }, -- Mandau
     [3]  = { mods = { xi.mod.REGEN, 10 }, duration = getTier1RelicDuration }, -- Excalibur
-    [4]  = { mods = { xi.mod.CRITHITRATE, 25, xi.mod.CRIT_DMG_INCREASE, 25 }, duration = getTier1RelicDuration }, -- Ragnarok (Scourge) -- LEGENDARY buff (was +5 crit)
+    [4]  = { mods = { xi.mod.CRITHITRATE, 5 }, duration = getTier1RelicDuration }, -- Ragnarok
     [5]  = { mods = { xi.mod.ATTP, 10 }, duration = getTier1RelicDuration }, -- Guttler
     [6]  = { mods = { xi.mod.DMG, -2000 }, duration = getTier1RelicDuration }, -- Bravura
     [7]  = { mods = { xi.mod.HASTE_GEAR, 1000 }, duration = getTier1RelicDuration }, -- Apocalypse
@@ -55,11 +88,11 @@ xi.aftermath.effects =
     [15] = { mods = { xi.mod.SUBTLE_BLOW, 10, xi.mod.KICK_ATTACK_RATE, 15 }, duration = getTier2RelicDuration }, -- Spharai
     [16] = { mods = { xi.mod.CRITHITRATE, 5, xi.mod.CRIT_DMG_INCREASE, 5 }, duration = getTier2RelicDuration }, -- Mandau
     [17] = { mods = { xi.mod.REGEN, 30, xi.mod.REFRESH, 3 }, duration = getTier2RelicDuration }, -- Excalibur
-    [18] = { mods = { xi.mod.CRITHITRATE, 50, xi.mod.CRIT_DMG_INCREASE, 50, xi.mod.ACC, 30 }, duration = getTier2RelicDuration }, -- Ragnarok (Scourge) -- LEGENDARY buff (was +10 crit, +15 acc)
+    [18] = { mods = { xi.mod.CRITHITRATE, 10, xi.mod.ACC, 15 }, duration = getTier2RelicDuration }, -- Ragnarok
     [19] = { mods = { xi.mod.ATTP, 10 }, duration = getTier2RelicDuration, includePets = true }, -- Guttler
     [20] = { mods = { xi.mod.DMG, -2000, xi.mod.REGEN, 15 }, duration = getTier2RelicDuration }, -- Bravura
     [21] = { mods = { xi.mod.HASTE_ABILITY, 1000, xi.mod.ACC, 15 }, duration = getTier2RelicDuration }, -- Apocalypse
-    [22] = { mods = { xi.mod.SPIKES, xi.subEffect.SHOCK_SPIKES, xi.mod.SPIKES_DMG, 10, xi.mod.ATTP, 5, xi.mod.DOUBLE_ATTACK, 5 }, duration = getTier2RelicDuration }, -- Gungir
+    [22] = { mods = { xi.mod.SPIKES, xi.subEffect.SHOCK_SPIKES, xi.mod.SPIKES_DMG, 19, xi.mod.ATTP, 5, xi.mod.DOUBLE_ATTACK, 5 }, duration = getTier2RelicDuration }, -- Gungnir
     [23] = { mods = { xi.mod.SUBTLE_BLOW, 10, xi.mod.ATTP, 10 }, duration = getTier2RelicDuration }, -- Kikoku
     [24] = { mods = { xi.mod.STORETP, 10, xi.mod.ZANSHIN, 10 }, duration = getTier2RelicDuration }, -- Amanomurakumo
     [25] = { mods = { xi.mod.ACC, 20, xi.mod.MACC, 20, xi.mod.REFRESH, 5 }, duration = getTier2RelicDuration }, -- Mjollnir
@@ -207,7 +240,7 @@ xi.aftermath.effects =
             {
                 xi.mod.REM_OCC_DO_DOUBLE_DMG_RANGED,
                 function(tp)
-                    return 40
+                    return 400
                 end
             }
         },
@@ -355,7 +388,7 @@ xi.aftermath.effects =
             {
                 xi.mod.REM_OCC_DO_DOUBLE_DMG_RANGED,
                 function(tp)
-                    return 60
+                    return 600
                 end
             }
         },
@@ -523,12 +556,12 @@ xi.aftermath.effects =
             {
                 xi.mod.REM_OCC_DO_DOUBLE_DMG_RANGED,
                 function(tp)
-                    return 40
+                    return 400
                 end,
 
                 xi.mod.REM_OCC_DO_TRIPLE_DMG_RANGED,
                 function(tp)
-                    return 20
+                    return 200
                 end
             }
         },
@@ -543,7 +576,7 @@ xi.aftermath.effects =
     {
         mod       = xi.mod.REM_OCC_DO_DOUBLE_DMG,
         rangedMod = xi.mod.REM_OCC_DO_DOUBLE_DMG_RANGED, -- ranged Empyreans (Gandiva/Armageddon) proc on shots, not melee
-        power = { 30, 40, 50 },
+        power = { 300, 400, 500 },
         duration = { 30, 60, 90 },
     },
 
@@ -554,7 +587,7 @@ xi.aftermath.effects =
     {
         mod       = xi.mod.REM_OCC_DO_TRIPLE_DMG,
         rangedMod = xi.mod.REM_OCC_DO_TRIPLE_DMG_RANGED, -- ranged Empyreans (Gandiva/Armageddon) proc on shots, not melee
-        power = { 30, 40, 50 },
+        power = { 300, 400, 500 },
         duration = { 60, 120, 180 },
     },
 
@@ -595,35 +628,47 @@ xi.aftermath.effects =
     },
 
     -----------------------------------
-    -- Aeonic  (FJB custom -- retail-style Aeonic Aftermath: "Occasionally
-    --   deals double/triple damage", applied by ANY weapon skill while the
-    --   Aeonic weapon is equipped. Unlike Relic/Mythic/Empyrean/Prime it is
-    --   NOT gated to a signature WS -- it is hooked centrally in
-    --   scripts/globals/weaponskills.lua (do*Weaponskill). The effect is flat
-    --   (always Lv.3); only the DURATION scales with TP.
-    --   BALANCE LEVER: proc rate = value / 10 (see utils/attackutils.cpp), so
-    --   500 = 50% double, 250 = 25% triple. Tune the numbers here. The mods
-    --   boost auto-attack rounds (melee mainhand / ranged) while AM is up.
-    --   Restart-gated (aftermath.lua is a global). )
+    -- Aeonic: linked WS activation grants 3-10% skillchain and magic burst
+    -- damage based on the actual TP spent.  All tiers last 180 seconds.
+    -- Radiance/Umbra eligibility and consumption are handled in the core
+    -- skillchain path, using the TP retained in the effect's subPower.
     -----------------------------------
-    [49] = -- Aeonic melee (mainhand): the 12 melee Aeonics
+    [49] = -- Aeonic melee
     {
-        mods     = { { xi.mod.REM_OCC_DO_DOUBLE_DMG, 500 }, { xi.mod.REM_OCC_DO_TRIPLE_DMG, 250 } },
-        duration = { 90, 180, 270 },
+        duration = { 180, 180, 180 },
     },
 
-    [50] = -- Aeonic ranged: Fomalhaut (gun) + Fail-Not (bow)
+    [50] = -- Aeonic ranged
     {
-        mods     = { { xi.mod.REM_OCC_DO_DOUBLE_DMG_RANGED, 500 }, { xi.mod.REM_OCC_DO_TRIPLE_DMG_RANGED, 250 } },
-        duration = { 90, 180, 270 },
+        duration = { 180, 180, 180 },
     }
 }
+
+xi.aftermath.addAeonicStatusEffect = function(player, tp, weaponSlot, wsId)
+    if not player or player:getObjType() ~= xi.objType.PC then
+        return
+    end
+
+    local weapon = player:getStorageItem(0, 0, weaponSlot)
+    if
+        not weapon or
+        aeonicWeaponSkills[weapon:getID()] ~= wsId
+    then
+        return
+    end
+
+    xi.aftermath.addStatusEffect(player, tp, weaponSlot, xi.aftermath.type.AEONIC)
+end
 
 xi.aftermath.addStatusEffect = function(player, tp, weaponSlot, aftermathType)
     -- Players only!
     if player:getObjType() ~= xi.objType.PC then
         return
     end
+
+    -- TP Bonus does not affect aftermath, and TP-draining interactions must
+    -- not produce an invalid tier index.
+    tp = utils.clamp(tp, 1000, 3000)
 
     local weapon = player:getStorageItem(0, 0, weaponSlot)
     if not weapon then
@@ -680,6 +725,10 @@ xi.aftermath.addStatusEffect = function(player, tp, weaponSlot, aftermathType)
     {
         -- Relic
         [1] = function(x)
+            if id == 8 or id == 22 then
+                player:delStatusEffectsByType(xi.effectType.SPIKES)
+            end
+
             player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration(tp), origin = player, subType = weaponSlot, subPower = tp, tier = aftermathType })
         end,
 
@@ -704,12 +753,39 @@ xi.aftermath.addStatusEffect = function(player, tp, weaponSlot, aftermathType)
             player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration[tier], origin = player, icon = icon, subType = weaponSlot, subPower = tp, tier = aftermathType })
         end,
 
-        -- Aeonic (any WS applies it; flat Lv.3 effect, only duration scales with TP)
+        -- Aeonic
         [5] = function(x)
             local tier = getAftermathLevel(tp)
-            player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration[tier], origin = player, icon = xi.effect.AFTERMATH_LV3, subType = weaponSlot, subPower = tp, tier = aftermathType })
+            local icon = xi.effect['AFTERMATH_LV'..tier]
+            player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration[tier], origin = player, icon = icon, subType = weaponSlot, subPower = tp, tier = aftermathType })
         end
     }
+end
+
+xi.aftermath.applyRangedMythicDamageProc = function(player, damage)
+    if not player or damage <= 0 then
+        return damage
+    end
+
+    local effect = player:getStatusEffect(xi.effect.AFTERMATH)
+    if
+        not effect or
+        effect:getTier() ~= xi.aftermath.type.MYTHIC
+    then
+        return damage
+    end
+
+    local tripleRate = math.floor(player:getMod(xi.mod.REM_OCC_DO_TRIPLE_DMG_RANGED) / 10)
+    local doubleRate = math.floor(player:getMod(xi.mod.REM_OCC_DO_DOUBLE_DMG_RANGED) / 10)
+    local roll       = math.random(1, 100)
+
+    if roll <= tripleRate then
+        return damage * 3
+    elseif roll <= tripleRate + doubleRate then
+        return damage * 2
+    end
+
+    return damage
 end
 
 -----------------------------------
@@ -750,16 +826,11 @@ xi.aftermath.onEffectGain = function(target, effect)
                 pet:getStatusEffect(xi.effect.AFTERMATH):addEffectFlag(xi.effectFlag.NO_LOSS_MESSAGE)
             end
 
-            -- Mythic aftermath is TP-tiered: aftermath.mods groups are ordered by AM
-            -- level (group 1 = acc, group 2 = +atk, group 3 = +occ.attacks). Apply only
-            -- the first floor(tp/1000) groups so AM1 = acc, AM2 = acc+atk, AM3 = all.
-            -- (2026-07-10: was applying every group regardless of tier -> AM1 gave everything.)
-            local amLevel = getAftermathLevel(tp)
-            for g = 1, math.min(amLevel, #aftermath.mods) do
-                local modGroup = aftermath.mods[g]
-                for i = 1, #modGroup, 2 do
-                    effect:addMod(modGroup[i], modGroup[i + 1](tp))
-                end
+            -- Retail Mythic tiers are mutually exclusive: AM1 accuracy,
+            -- AM2 attack, AM3 occasionally attacks twice/thrice.
+            local mods = aftermath.mods[getAftermathLevel(tp)]
+            for i = 1, #mods, 2 do
+                effect:addMod(mods[i], mods[i + 1](tp))
             end
         end,
 
@@ -786,11 +857,11 @@ xi.aftermath.onEffectGain = function(target, effect)
             end
         end,
 
-        -- Aeonic (flat, always max): apply every mod at full power
+        -- Aeonic
         [5] = function(x)
-            for _, m in ipairs(aftermath.mods) do
-                effect:addMod(m[1], m[2])
-            end
+            local potency = getAeonicPotency(effect:getSubPower())
+            effect:addMod(xi.mod.SKILLCHAINBONUS, potency)
+            effect:addMod(xi.mod.MAGIC_BURST_BONUS_CAPPED, potency)
         end
     }
 end
@@ -807,13 +878,11 @@ xi.aftermath.canOverwrite = function(player, tp, aftermathId, aftermathType)
     end
 
     local canOverwrite = false
-    local aftermath = xi.aftermath.effects[aftermathId]
     switch (aftermathType) : caseof
     {
         -- Relic
         [1] = function(x)
-            local newDuration = aftermath.duration(tp) * 1000
-            canOverwrite = newDuration > effect:getTimeRemaining()
+            canOverwrite = true
         end,
 
         -- Mythic
@@ -837,11 +906,11 @@ xi.aftermath.canOverwrite = function(player, tp, aftermathId, aftermathType)
             canOverwrite = currentLevel == 1 or currentLevel < newLevel
         end,
 
-        -- Aeonic (flat effect; refresh/extend on same or higher TP tier)
+        -- Aeonic (same retail tier overwrite hierarchy as Mythic/Empyrean)
         [5] = function(x)
             local currentLevel = getAftermathLevel(effect:getSubPower())
             local newLevel = getAftermathLevel(tp)
-            canOverwrite = newLevel >= currentLevel
+            canOverwrite = currentLevel == 1 or currentLevel < newLevel
         end,
     }
 

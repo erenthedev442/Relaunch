@@ -3448,7 +3448,7 @@ SKILLCHAIN_ELEMENT FormSkillchain(const std::list<SKILLCHAIN_ELEMENT>& resonance
     return SC_NONE;
 }
 
-auto GetSkillChainEffect(const CBattleEntity* PDefender, uint8 primary, uint8 secondary, uint8 tertiary) -> ActionProcSkillChain
+auto GetSkillChainEffect(const CBattleEntity* PDefender, uint8 primary, uint8 secondary, uint8 tertiary, const CBattleEntity* PAttacker) -> ActionProcSkillChain
 {
     CStatusEffect*     PSCEffect           = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN, 0);
     CStatusEffect*     PCBEffect           = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_CHAINBOUND, 0);
@@ -3548,6 +3548,23 @@ auto GetSkillChainEffect(const CBattleEntity* PDefender, uint8 primary, uint8 se
         {
             const Mod resistanceRankMod = GetResistanceRankModFromElement(element);
             PSCEffect->setMod(resistanceRankMod, -1);
+        }
+
+        // Retail Aeonic aftermath upgrades a qualifying Light II/Darkness II
+        // closure to Radiance/Umbra once the tier's minimum chain length is
+        // met: four WSs for AM1, three for AM2, and two for AM3.
+        if (PAttacker && (skillchain == SC_LIGHT_II || skillchain == SC_DARKNESS_II))
+        {
+            const auto* PAftermath = PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_AFTERMATH);
+            if (PAftermath && (PAftermath->GetPower() == 49 || PAftermath->GetPower() == 50))
+            {
+                const auto aftermathLevel = std::clamp<int16>(PAftermath->GetSubPower() / 1000, 1, 3);
+                const auto requiredLinks  = 4 - aftermathLevel;
+                if (PSCEffect->GetSubPower() >= requiredLinks)
+                {
+                    return skillchain == SC_LIGHT_II ? ActionProcSkillChain::Radiance : ActionProcSkillChain::Umbra;
+                }
+            }
         }
 
         return GetSkillchainSubeffect(skillchain);
@@ -3807,7 +3824,7 @@ int32 TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, i
 
     const auto closingDamage      = static_cast<float>(abs(lastSkillDamage));
     const auto skillchainLevel    = g_SkillChainDamageModifiers[chainLevel][chainCount] / 1000.0f;
-    const auto skillchainBonus    = (100.0f + PAttacker->getMod(Mod::SKILLCHAINBONUS)) / 100.0f;
+    const auto skillchainBonus    = (100.0f + std::min<int16>(PAttacker->getMod(Mod::SKILLCHAINBONUS), 50)) / 100.0f;
     const auto skillchainDmgBonus = (10000.0f + PAttacker->getMod(Mod::SKILLCHAINDMG)) / 10000.0f;
     const auto dayWeatherBonus    = 1.0f; // TODO: Implement day/weather bonuses
     const auto staffAffinity      = 1.0f; // TODO: Implement staff affinity

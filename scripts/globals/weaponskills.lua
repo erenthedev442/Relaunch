@@ -81,10 +81,15 @@ local function getMultiAttacks(attacker, target, wsParams, firstHit, offHand)
         bonusHits = bonusHits + 2
     elseif math.random(1, 100) <= doubleRate then
         bonusHits = bonusHits + 1
-    elseif firstHit and math.random(1, 100) <= oaThriceRate then -- Can only proc on first hit
-        bonusHits = bonusHits + 2
-    elseif firstHit and math.random(1, 100) <= oaTwiceRate then  -- Can only proc on first hit
-        bonusHits = bonusHits + 1
+    elseif firstHit then
+        -- Mythic AM3 uses one distribution: 20% triple, 40% double,
+        -- 40% single.  Separate rolls incorrectly reduce the double rate.
+        local aftermathRoll = math.random(1, 100)
+        if aftermathRoll <= oaThriceRate then
+            bonusHits = bonusHits + 2
+        elseif aftermathRoll <= oaThriceRate + oaTwiceRate then
+            bonusHits = bonusHits + 1
+        end
     end
 
     attacker:delStatusEffect(xi.effect.ASSASSINS_CHARGE)
@@ -722,8 +727,8 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
     calcParams.finalDmg = finaldmg
     finaldmg            = xi.weaponskills.takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
 
-    -- Aeonic Aftermath: any melee WS applies it while an Aeonic mainhand is equipped (no-op otherwise)
-    xi.aftermath.addStatusEffect(attacker, tp, xi.slot.MAIN, xi.aftermath.type.AEONIC)
+    -- Aeonic Aftermath: only the equipped weapon's linked WS activates it.
+    xi.aftermath.addAeonicStatusEffect(attacker, tp, xi.slot.MAIN, wsID)
 
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end
@@ -801,6 +806,7 @@ xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams,
     end
 
     finaldmg            = finaldmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
+    finaldmg            = xi.aftermath.applyRangedMythicDamageProc(attacker, finaldmg)
     calcParams.finalDmg = finaldmg
 
     finaldmg = xi.weaponskills.takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
@@ -810,8 +816,8 @@ xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams,
         attacker:removeAmmo(calcParams.ammoUsed)
     end
 
-    -- Aeonic Aftermath: any ranged WS (e.g. Last Stand) applies it while an Aeonic gun/bow is equipped (no-op otherwise)
-    xi.aftermath.addStatusEffect(attacker, tp, xi.slot.RANGED, xi.aftermath.type.AEONIC)
+    -- Aeonic Aftermath: only the equipped weapon's linked WS activates it.
+    xi.aftermath.addAeonicStatusEffect(attacker, tp, xi.slot.RANGED, wsID)
 
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end
@@ -915,6 +921,10 @@ xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, 
         calcParams.shadowsAbsorbed = 1
     end
 
+    if attack.slot == xi.slot.RANGED then
+        dmg = xi.aftermath.applyRangedMythicDamageProc(attacker, dmg)
+    end
+
     calcParams.finalDmg = dmg
 
     if dmg > 0 then
@@ -923,8 +933,8 @@ xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, 
 
     dmg = xi.weaponskills.takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
 
-    -- Aeonic Aftermath: any magic WS applies it while an Aeonic mainhand is equipped (no-op otherwise)
-    xi.aftermath.addStatusEffect(attacker, tp, xi.slot.MAIN, xi.aftermath.type.AEONIC)
+    -- Aeonic Aftermath: only the equipped weapon's linked WS activates it.
+    xi.aftermath.addAeonicStatusEffect(attacker, tp, attack.slot, wsID)
 
     return dmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end

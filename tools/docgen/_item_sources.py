@@ -38,12 +38,18 @@ SELECT d.itemid, g.name AS mob, g.zoneid, z.name AS zone, MAX(d.itemRate) AS rat
 FROM mob_droplist d
 JOIN mob_groups g       ON g.dropid  = d.dropid
 LEFT JOIN zone_settings z ON z.zoneid = g.zoneid
+WHERE d.dropType IN (0, 1)
 GROUP BY d.itemid, g.name, g.zoneid, z.name
 """
 
 
 def _drops(repo_root: Path) -> dict[int, list[dict]] | None:
-    """itemId -> [{mob, zone, pct}], or None if the DB is unreachable."""
+    """Kill-drop itemId -> [{mob, zone, pct}], or None if DB is unreachable.
+
+    Steal and Despoil rows are harvesting associations, not kill drops. Their
+    itemRate is commonly zero, so exposing them here produced fake 0% farming
+    locations in the player-facing Drop Finder.
+    """
     conn = connect(repo_root)
     if conn is None:
         return None

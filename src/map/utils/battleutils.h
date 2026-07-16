@@ -132,7 +132,7 @@ void FreeWeaponSkillsList();
 void FreeMobSkillList();
 void FreePetSkillList();
 
-auto                 GetSkillChainEffect(const CBattleEntity* PDefender, uint8 primary, uint8 secondary, uint8 tertiary) -> ActionProcSkillChain;
+auto                 GetSkillChainEffect(const CBattleEntity* PDefender, uint8 primary, uint8 secondary, uint8 tertiary, const CBattleEntity* PAttacker = nullptr) -> ActionProcSkillChain;
 SKILLCHAIN_ELEMENT   FormSkillchain(const std::list<SKILLCHAIN_ELEMENT>& resonance, const std::list<SKILLCHAIN_ELEMENT>& skill);
 uint8                GetSkillchainTier(SKILLCHAIN_ELEMENT skillchain);
 auto                 GetSkillchainSubeffect(SKILLCHAIN_ELEMENT skillchain) -> ActionProcSkillChain;
