@@ -2,9 +2,10 @@
 -- Relaunch Prime weaponskill pinnacle tuning
 --
 -- Only approved final Prime weapon stages are listed. Prime-native WSs receive
--- both their private fTP scale and a +300% WS-damage layer, then use a job-tier
--- cap above the universal 999,999 ceiling. Ordinary uses of shared WSs (for
--- example Resolution) remain unchanged.
+-- their private fTP scale, TP-scaled defense bypass, and a WS-damage layer,
+-- then use a job-tier cap above the universal 999,999 ceiling. The tuning goal
+-- is for a final Prime weapon's native WS to remain the strongest damage option
+-- available to its jobs. Ordinary uses of shared WSs remain unchanged.
 -----------------------------------
 
 local catalog = {}
@@ -51,59 +52,73 @@ catalog.PRIME_WS_TUNING =
 {
     [xi.weaponskill.MARU_KALA] =
     {
-        name = 'Maru Kala', itemId = 21535, slot = xi.slot.MAIN, ftpScale = 5.54,
+        name = 'Maru Kala', itemId = 21535, slot = xi.slot.MAIN,
+        ftpScale = 7.50, wsDamageBonus = 425, ignoredDefense = { 0.55, 0.80, 0.95 },
     },
     [xi.weaponskill.RUTHLESS_STROKE] =
     {
-        name = 'Merciless Strike', itemId = 21590, slot = xi.slot.MAIN, ftpScale = 3.56,
+        name = 'Merciless Strike', itemId = 21590, slot = xi.slot.MAIN,
+        ftpScale = 5.25, wsDamageBonus = 425, ignoredDefense = { 0.55, 0.80, 0.95 },
     },
     [xi.weaponskill.IMPERATOR] =
     {
-        name = 'Imperator', itemId = 21646, slot = xi.slot.MAIN, ftpScale = 4.50,
+        name = 'Imperator', itemId = 21646, slot = xi.slot.MAIN,
+        ftpScale = 6.75, wsDamageBonus = 425, ignoredDefense = { 0.60, 0.85, 1.00 },
     },
     [xi.weaponskill.RESOLUTION] =
     {
-        name = 'Resolution', itemId = 21653, slot = xi.slot.MAIN, ftpScale = 5.70,
+        name = 'Resolution', itemId = 21653, slot = xi.slot.MAIN,
+        ftpScale = 7.50, wsDamageBonus = 425, ignoredDefense = { 0.45, 0.70, 0.90 },
     },
     [xi.weaponskill.BLITZ] =
     {
-        name = 'Blitz', itemId = 21730, slot = xi.slot.MAIN, ftpScale = 1.33,
+        name = 'Blitz', itemId = 21730, slot = xi.slot.MAIN,
+        ftpScale = 1.85, wsDamageBonus = 425, ignoredDefense = { 0.45, 0.70, 0.90 },
     },
     [xi.weaponskill.DISASTER] =
     {
-        name = 'Disaster', itemId = 21785, slot = xi.slot.MAIN, ftpScale = 4.99,
+        name = 'Disaster', itemId = 21785, slot = xi.slot.MAIN,
+        ftpScale = 7.25, wsDamageBonus = 450, ignoredDefense = { 0.60, 0.85, 1.00 },
     },
     [xi.weaponskill.ORIGIN] =
     {
-        name = 'Origin', itemId = 21837, slot = xi.slot.MAIN, ftpScale = 4.93,
+        name = 'Origin', itemId = 21837, slot = xi.slot.MAIN,
+        ftpScale = 7.15, wsDamageBonus = 450, ignoredDefense = { 0.60, 0.85, 1.00 },
     },
     [xi.weaponskill.DIARMUID] =
     {
-        name = 'Diarmuid', itemId = 21891, slot = xi.slot.MAIN, ftpScale = 2.80,
+        name = 'Diarmuid', itemId = 21891, slot = xi.slot.MAIN,
+        ftpScale = 3.75, wsDamageBonus = 425, ignoredDefense = { 0.45, 0.70, 0.90 },
     },
     [xi.weaponskill.ZESHO_MEPPO] =
     {
-        name = 'Zesho Meppo', itemId = 21932, slot = xi.slot.MAIN, ftpScale = 2.00,
+        name = 'Zesho Meppo', itemId = 21932, slot = xi.slot.MAIN,
+        ftpScale = 2.85, wsDamageBonus = 425, ignoredDefense = { 0.45, 0.70, 0.90 },
     },
     [xi.weaponskill.TACHI_MUMEI] =
     {
-        name = 'Tachi: Mumei', itemId = 21986, slot = xi.slot.MAIN, ftpScale = 3.51,
+        name = 'Tachi: Mumei', itemId = 21986, slot = xi.slot.MAIN,
+        ftpScale = 5.50, wsDamageBonus = 450, ignoredDefense = { 0.60, 0.85, 1.00 },
     },
     [xi.weaponskill.DAGDA] =
     {
-        name = 'Dagda', itemId = 22002, slot = xi.slot.MAIN, ftpScale = 2.55,
+        name = 'Dagda', itemId = 22002, slot = xi.slot.MAIN,
+        ftpScale = 3.50, wsDamageBonus = 400, ignoredDefense = { 0.45, 0.70, 0.90 },
     },
     [xi.weaponskill.OSHALA] =
     {
-        name = 'Oshala', itemId = 22106, slot = xi.slot.MAIN, ftpScale = 5.15,
+        name = 'Oshala', itemId = 22106, slot = xi.slot.MAIN,
+        ftpScale = 7.00, wsDamageBonus = 400, ignoredDefense = { 0.60, 0.85, 1.00 },
     },
     [xi.weaponskill.SARV] =
     {
-        name = 'Sarv', itemId = 22163, slot = xi.slot.RANGED, ftpScale = 6.20,
+        name = 'Sarv', itemId = 22163, slot = xi.slot.RANGED,
+        ftpScale = 8.50, wsDamageBonus = 475, ignoredDefense = { 0.55, 0.80, 0.95 },
     },
     [xi.weaponskill.TERMINUS] =
     {
-        name = 'Terminus', itemId = 22164, slot = xi.slot.RANGED, ftpScale = 11.85,
+        name = 'Terminus', itemId = 22164, slot = xi.slot.RANGED,
+        ftpScale = 15.50, wsDamageBonus = 450, ignoredDefense = { 0.55, 0.80, 0.95 },
     },
 }
 

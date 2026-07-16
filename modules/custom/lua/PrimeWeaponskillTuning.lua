@@ -21,8 +21,8 @@ end
 
 local activeCalculations = setmetatable({}, { __mode = 'k' })
 
-local function copyAndScaleFtp(wsParams, ftpScale)
-    if not wsParams or not wsParams.ftpMod or ftpScale == 1 then
+local function copyAndTuneParams(wsParams, tuning)
+    if not wsParams then
         return wsParams
     end
 
@@ -31,9 +31,18 @@ local function copyAndScaleFtp(wsParams, ftpScale)
         tunedParams[key] = value
     end
 
-    tunedParams.ftpMod = {}
-    for index, value in ipairs(wsParams.ftpMod) do
-        tunedParams.ftpMod[index] = value * ftpScale
+    if wsParams.ftpMod then
+        tunedParams.ftpMod = {}
+        for index, value in ipairs(wsParams.ftpMod) do
+            tunedParams.ftpMod[index] = value * tuning.ftpScale
+        end
+    end
+
+    if tuning.ignoredDefense then
+        tunedParams.ignoredDefense = {}
+        for index, value in ipairs(tuning.ignoredDefense) do
+            tunedParams.ignoredDefense[index] = value
+        end
     end
 
     return tunedParams
@@ -57,7 +66,7 @@ xi.primeWsTuning.getTunedParams = function(attacker, wsId, slot, wsParams)
         return wsParams
     end
 
-    return copyAndScaleFtp(wsParams, tuning.ftpScale)
+    return copyAndTuneParams(wsParams, tuning)
 end
 
 xi.primeWsTuning.withPrimeEffects = function(attacker, wsId, slot, callback)
@@ -72,7 +81,7 @@ xi.primeWsTuning.withPrimeEffects = function(attacker, wsId, slot, callback)
     local priorCap     = attacker:getLocalVar(capVar)
     local primeCap     = catalog.getDamageCap(attacker:getMainJob())
 
-    attacker:addMod(modId, catalog.WS_DAMAGE_BONUS)
+    attacker:addMod(modId, tuning.wsDamageBonus or catalog.WS_DAMAGE_BONUS)
     attacker:setLocalVar(capVar, primeCap)
     activeCalculations[attacker] = true
 

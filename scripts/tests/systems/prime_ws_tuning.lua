@@ -42,7 +42,7 @@ describe('Relaunch Prime weaponskill pinnacle tuning', function()
         return player
     end
 
-    it('has an independent positive tuning value for every damage-dealing Prime WS', function()
+    it('has complete pinnacle tuning for every damage-dealing Prime WS', function()
         assert(catalog.WS_DAMAGE_BONUS == 300)
 
         local count = 0
@@ -50,6 +50,12 @@ describe('Relaunch Prime weaponskill pinnacle tuning', function()
             count = count + 1
             assert(tuning.itemId > 0)
             assert(tuning.ftpScale > 0)
+            assert(tuning.wsDamageBonus > catalog.WS_DAMAGE_BONUS)
+            assert(#tuning.ignoredDefense == 3)
+            assert(tuning.ignoredDefense[1] >= 0 and tuning.ignoredDefense[1] <= 1)
+            assert(tuning.ignoredDefense[2] >= tuning.ignoredDefense[1])
+            assert(tuning.ignoredDefense[3] >= tuning.ignoredDefense[2] and
+                tuning.ignoredDefense[3] <= 1)
             assert(tuning.slot == xi.slot.MAIN or tuning.slot == xi.slot.RANGED)
         end
 
@@ -94,10 +100,15 @@ describe('Relaunch Prime weaponskill pinnacle tuning', function()
         assert(tuned.dex_wsc == native.dex_wsc and tuned.mnd_wsc == native.mnd_wsc)
         assert(tuned.critVaries == native.critVaries)
         assert(tuned.multiHitfTP == native.multiHitfTP)
-        assert(math.abs(tuned.ftpMod[1] - 29.7) < 0.0001)
-        assert(math.abs(tuned.ftpMod[2] - 60.075) < 0.0001)
-        assert(math.abs(tuned.ftpMod[3] - 90.45) < 0.0001)
+        assert(math.abs(tuned.ftpMod[1] - 44.55) < 0.0001)
+        assert(math.abs(tuned.ftpMod[2] - 90.1125) < 0.0001)
+        assert(math.abs(tuned.ftpMod[3] - 135.675) < 0.0001)
+        assert(tuned.ignoredDefense[1] == 0.60)
+        assert(tuned.ignoredDefense[2] == 0.85)
+        assert(tuned.ignoredDefense[3] == 1.00)
+        assert(tuned.ignoredDefense ~= catalog.PRIME_WS_TUNING[xi.weaponskill.IMPERATOR].ignoredDefense)
         assert(native.ftpMod[3] == 20.1)
+        assert(native.ignoredDefense == nil)
     end)
 
     it('does not tune intermediate, ordinary or mismatched weaponskills', function()
@@ -126,7 +137,7 @@ describe('Relaunch Prime weaponskill pinnacle tuning', function()
         assert(xi.primeWsTuning.getTunedParams(
             player, xi.weaponskill.SARV, xi.slot.MAIN, native) == native)
         assert(math.abs(xi.primeWsTuning.getTunedParams(
-            player, xi.weaponskill.SARV, xi.slot.RANGED, native).ftpMod[3] - 51.15) < 0.0001)
+            player, xi.weaponskill.SARV, xi.slot.RANGED, native).ftpMod[3] - 70.125) < 0.0001)
     end)
 
     it('assigns the approved support, hybrid, and damage job caps', function()
@@ -156,7 +167,8 @@ describe('Relaunch Prime weaponskill pinnacle tuning', function()
         local result = xi.primeWsTuning.withPrimeEffects(
             player, xi.weaponskill.IMPERATOR, xi.slot.MAIN,
             function()
-                assert(player:getMod(modId) == catalog.WS_DAMAGE_BONUS)
+                assert(player:getMod(modId) ==
+                    catalog.PRIME_WS_TUNING[xi.weaponskill.IMPERATOR].wsDamageBonus)
                 assert(player:getLocalVar(capVar) == 1749999)
                 return 'prime'
             end)
