@@ -1124,3 +1124,10 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **BRD** — Add missing scroll script for Aria of Passion
     - **Ranger** — Replace broken hover_shot JA with !hovershot command
     - **Prestige** — Idle-despawn trial boss after 20s of no damage
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: f38cdb798223 -->
+_Last updated: 2026-07-16 01:20 PDT_
+<!-- DOCGEN:END id="last-updated" -->
