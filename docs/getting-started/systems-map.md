@@ -226,6 +226,6 @@ The **Prime Armory** at `!hub` forges a Prime Weapon after **5 trials** — 16 n
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2ddf71081c4a -->
-_Last updated: 2026-07-13 20:33 PDT_
+<!-- content-hash: 37b4ef7ab3b4 -->
+_Last updated: 2026-07-16 01:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->
