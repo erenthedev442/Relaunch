@@ -302,6 +302,68 @@ local stock =
     },
 }
 
+-- Rare/Ex budget accessories. Native shop windows hold at most 16 items, so
+-- these are split into thematic `!shop armor <page>` sub-pages. Their item
+-- restrictions and 5,000-gil NPC resale value are applied by
+-- modules/custom/sql/zz_shop_armor_rare_ex.sql.
+local armorStock =
+{
+    rings =
+    {
+        { 27564, 10000 }, -- Ifrit Ring
+        { 27566, 10000 }, -- Leviathan Ring
+        { 27568, 10000 }, -- Ramuh Ring
+        { 27570, 10000 }, -- Titan Ring
+        { 27572, 10000 }, -- Garuda Ring
+        { 27574, 10000 }, -- Shiva Ring
+        { 27576, 10000 }, -- Carbuncle Ring
+        { 27578, 10000 }, -- Fenrir Ring
+        { 26179, 10000 }, -- Varar Ring
+    },
+
+    pearls =
+    {
+        { 11014, 10000 }, -- Flame Pearl
+        { 11015, 10000 }, -- Snow Pearl
+        { 11016, 10000 }, -- Breeze Pearl
+        { 11017, 10000 }, -- Soil Pearl
+        { 11018, 10000 }, -- Thunder Pearl
+        { 11019, 10000 }, -- Aqua Pearl
+        { 11020, 10000 }, -- Light Pearl
+        { 11021, 10000 }, -- Darkness Pearl
+    },
+
+    accessories =
+    {
+        { 10964, 10000 }, -- Eloquence Cape
+        { 10966, 10000 }, -- Aisance Mantle
+        { 10968, 10000 }, -- Vigilance Mantle
+        { 10831, 10000 }, -- Paewr Belt
+        { 10832, 10000 }, -- Carrier's Sash
+        { 10836, 10000 }, -- Phos Belt
+        { 10817, 10000 }, -- Moepapa Stone
+        { 10839, 10000 }, -- Othila Sash
+        { 10397, 10000 }, -- Ishtar's Collar
+        { 10939, 10000 }, -- Dualism Collar
+        { 10941, 10000 }, -- Tjukurrpa Medal
+        { 10942, 10000 }, -- Aife's Medal
+        { 10943, 10000 }, -- Moepapa Medal
+        { 10945, 10000 }, -- Waylayer's Scarf
+    },
+
+    combat =
+    {
+        { 19779, 10000 }, -- Potestas Bomblet
+        { 19777, 10000 }, -- Ombre Tathlum
+        { 19773, 10000 }, -- Hagneia Stone
+        { 19771, 10000 }, -- Strobilus
+        { 19767, 10000 }, -- Oneiros Pebble
+        { 18818, 10000 }, -- Dilettante's Grip
+        { 18816, 10000 }, -- Wizzan Grip
+        { 18825, 10000 }, -- Shamatha Grip
+    },
+}
+
 -----------------------------------
 -- Augment catalysts: the gil-purchase shop was REMOVED for relaunch (owner
 -- request 2026-06-24). Catalysts must now be FARMED FROM NMs and traded to the
@@ -378,6 +440,29 @@ commandObj.onTrigger = function(player, category, subcat)
     if cat == 'augments' then
         player:printToPlayer('Augment catalysts are no longer sold for gil -- farm them from NMs, then trade them to the Augment Moogle at GM Home to apply.', xi.msg.channel.SYSTEM_3)
         return
+    end
+
+    -- Budget Rare/Ex armor pages. With no sub-page, retain the original armor
+    -- stock and advertise the additional pages.
+    if cat == 'armor' then
+        local sub = subcat and subcat:lower() or ''
+        local page = armorStock[sub]
+        if page then
+            player:printToPlayer(string.format(
+                'Rare/Ex armor page: %s -- 10,000 gil each; NPC resale 5,000 gil.',
+                sub), xi.msg.channel.SYSTEM_3)
+            xi.shop.general(player, page)
+            return
+        elseif sub ~= '' then
+            player:printToPlayer(
+                'Unknown armor page. Use: !shop armor rings|pearls|accessories|combat',
+                xi.msg.channel.SYSTEM_3)
+            return
+        end
+
+        player:printToPlayer(
+            'Rare/Ex pages: !shop armor rings|pearls|accessories|combat',
+            xi.msg.channel.SYSTEM_3)
     end
 
     -- BST pets: curated jug broths, with a pet-food sub-page.

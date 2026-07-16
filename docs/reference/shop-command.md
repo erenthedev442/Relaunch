@@ -5,11 +5,17 @@ Type `!shop` in any zone to open an instant player shop — no NPC visit require
 ```
 !shop                            — browse General items
 !shop <category>                 — jump to a specific category
+!shop armor rings|pearls         — Rare/Ex rings and elemental pearls
+!shop armor accessories|combat   — Rare/Ex back/waist/neck or ammo/grips
 !shop pets jugs / !shop pets food — Beastmaster pet sub-pages
 !shop reforge af|relic|empy|all  — free reforged armor claim for your main job
 ```
 
 **Available categories:** general · weapons · armor · consumables · food · dice · ammo · ninja · pets · reforge
+
+The four Rare/Ex armor sub-pages cost **10,000 gil per item**. These pieces
+cannot be traded, delivered, or listed on the Auction House and resell to
+standard NPC vendors for **5,000 gil**.
 
 <!-- DOCGEN:BEGIN id="shop-catalog" -->
 <div class="st-wrap">

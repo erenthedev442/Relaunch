@@ -9,6 +9,9 @@ require('modules/module_utils')
 require('scripts/globals/abyssea')
 
 local m = Module:new('AbysseaMarks')
+local encounterCatalog = require('modules/custom/lua/abyssea_marks_catalog')
+local encounterRuntime = require('modules/custom/lua/abyssea_marks_mechanics')
+local encounterBalance = require('modules/custom/lua/abyssea_marks_balance')
 
 local MARKS_CV         = 'HL_Points'
 local INFAMY_CV        = 'Infamy'
@@ -17,8 +20,9 @@ local MARKS_INFAMY_LV  = '[MarksPopInfamy]'
 local MARKS_GIL_LV     = '[MarksPopGil]'
 local MARKS_CRUOR_LV   = '[MarksPopCruor]'
 
--- Per zone tier: mark cost + rewards, then the spawn stat block applied at pop.
---   level   drives the formula-based base-stat floor for that level
+-- Per zone tier: mark cost + rewards, then the common pacing block applied at
+-- pop.  Individual difficulty comes from abyssea_marks_catalog.lua.
+--   level   is applied with setMobLevel before the overlay
 --   maxHP   flat HP override (setMaxHP)
 --   att / def / matt           melee attack / defense / magic attack added
 --   acc / eva / macc / meva     accuracy / evasion / magic acc / magic eva added
@@ -26,29 +30,70 @@ local MARKS_CRUOR_LV   = '[MarksPopCruor]'
 --   haste   HASTE_GEAR (100 = 1% faster attack round)
 --   eleRes  added to ALL 8 elemental magic-evasion mods (Fire..Dark) -- an
 --           elemental-nuke resistance layered on top of meva
--- RELAUNCH Phase 2 retune (2026-06-24): cut to the relaunch power curve
--- (original design "Mob Retune Targets", Abyssea rows). att/def/maxHP land in
--- the design's per-tier ranges -- Visions(T1) def 900-1100 / att 4-5.5k / HP
--- 375-565k, Scars(T2) def 1.2-1.5k / att 5.5-7.5k / HP 780k-1.2M, Heroes(T3)
--- def 1.8-2.2k / att 7-9k / HP 1.55-2.3M -- and the secondary stats (matt/acc/
--- eva/macc/meva/da/haste/eleRes) are scaled to match so the mob stays coherent
--- (and hittable) at relaunch player power. Was the old Legendary band (att
--- 10-18k, HP 4-10M), which one-shot and out-tanked a relaunch party.
+-- Encounter rebuild (2026-07-16): all mobs fight at Lv99. EVA is deliberately
+-- low enough that accuracy is never the mechanic; DEF/MDEF and a soft pressure
+-- ceiling create the pre-Relic gate. HP is a duration budget for 200-300k Relic
+-- WS output, with catalog phase floors ensuring signature mechanics are seen.
 local zoneConfig =
 {
-    -- Visions of Abyssea  (Lv135 -- softest marks NMs)
-    [xi.zone.ABYSSEA_KONSCHTAT] = { cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 135, maxHP =  500000, att =  5000, def = 1000, matt = 1667, acc = 1300, eva = 1000, macc = 1000, meva = 1000, da =  5, haste =  50, eleRes =  75 },
-    [xi.zone.ABYSSEA_TAHRONGI]  = { cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 135, maxHP =  500000, att =  5000, def = 1000, matt = 1667, acc = 1300, eva = 1000, macc = 1000, meva = 1000, da =  5, haste =  50, eleRes =  75 },
-    [xi.zone.ABYSSEA_LA_THEINE] = { cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 135, maxHP =  500000, att =  5000, def = 1000, matt = 1667, acc = 1300, eva = 1000, macc = 1000, meva = 1000, da =  5, haste =  50, eleRes =  75 },
-    -- Scars of Abyssea  (Lv145)
-    [xi.zone.ABYSSEA_ATTOHWA]   = { cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 145, maxHP = 1000000, att =  6500, def = 1350, matt = 3000, acc = 1750, eva = 1667, macc = 1667, meva = 1667, da =  8, haste =  75, eleRes = 125 },
-    [xi.zone.ABYSSEA_MISAREAUX] = { cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 145, maxHP = 1000000, att =  6500, def = 1350, matt = 3000, acc = 1750, eva = 1667, macc = 1667, meva = 1667, da =  8, haste =  75, eleRes = 125 },
-    [xi.zone.ABYSSEA_VUNKERL]   = { cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 145, maxHP = 1000000, att =  6500, def = 1350, matt = 3000, acc = 1750, eva = 1667, macc = 1667, meva = 1667, da =  8, haste =  75, eleRes = 125 },
-    -- Heroes of Abyssea  (Lv155 -- top marks NMs; still below the Ascension gate)
-    [xi.zone.ABYSSEA_ALTEPA]    = { cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 155, maxHP = 1900000, att =  8000, def = 2000, matt = 4000, acc = 2500, eva = 2500, macc = 2500, meva = 2500, da = 10, haste = 100, eleRes = 175 },
-    [xi.zone.ABYSSEA_GRAUBERG]  = { cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 155, maxHP = 1900000, att =  8000, def = 2000, matt = 4000, acc = 2500, eva = 2500, macc = 2500, meva = 2500, da = 10, haste = 100, eleRes = 175 },
-    [xi.zone.ABYSSEA_ULEGUERAND]= { cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 155, maxHP = 1900000, att =  8000, def = 2000, matt = 4000, acc = 2500, eva = 2500, macc = 2500, meva = 2500, da = 10, haste = 100, eleRes = 175 },
+    -- Visions: Relic entry tier; 5-7 minute solo target after calibration.
+    [xi.zone.ABYSSEA_KONSCHTAT] = { tier = 1, cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 99, maxHP =  4000000, att = 3200, def =  850, matt = 1000, acc = 350, eva = 180, macc = 300, meva = 250, da = 10, haste = 300, eleRes =  50 },
+    [xi.zone.ABYSSEA_TAHRONGI]  = { tier = 1, cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 99, maxHP =  4000000, att = 3200, def =  850, matt = 1000, acc = 350, eva = 180, macc = 300, meva = 250, da = 10, haste = 300, eleRes =  50 },
+    [xi.zone.ABYSSEA_LA_THEINE] = { tier = 1, cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 99, maxHP =  4000000, att = 3200, def =  850, matt = 1000, acc = 350, eva = 180, macc = 300, meva = 250, da = 10, haste = 300, eleRes =  50 },
+    -- Scars: two-rule encounters, tuned around Relic + one Atma.
+    [xi.zone.ABYSSEA_ATTOHWA]   = { tier = 2, cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 99, maxHP =  8000000, att = 4500, def = 1200, matt = 1800, acc = 500, eva = 260, macc = 450, meva = 400, da = 12, haste = 500, eleRes =  75 },
+    [xi.zone.ABYSSEA_MISAREAUX] = { tier = 2, cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 99, maxHP =  8000000, att = 4500, def = 1200, matt = 1800, acc = 500, eva = 260, macc = 450, meva = 400, da = 12, haste = 500, eleRes =  75 },
+    [xi.zone.ABYSSEA_VUNKERL]   = { tier = 2, cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 99, maxHP =  8000000, att = 4500, def = 1200, matt = 1800, acc = 500, eva = 260, macc = 450, meva = 400, da = 12, haste = 500, eleRes =  75 },
+    -- Heroes: full set pieces, tuned around Relic + up to two Atma.
+    [xi.zone.ABYSSEA_ALTEPA]    = { tier = 3, cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 99, maxHP = 14000000, att = 6000, def = 1650, matt = 2600, acc = 650, eva = 340, macc = 600, meva = 550, da = 15, haste = 700, eleRes = 100 },
+    [xi.zone.ABYSSEA_GRAUBERG]  = { tier = 3, cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 99, maxHP = 14000000, att = 6000, def = 1650, matt = 2600, acc = 650, eva = 340, macc = 600, meva = 550, da = 15, haste = 700, eleRes = 100 },
+    [xi.zone.ABYSSEA_ULEGUERAND]= { tier = 3, cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 99, maxHP = 14000000, att = 6000, def = 1650, matt = 2600, acc = 650, eva = 340, macc = 600, meva = 550, da = 15, haste = 700, eleRes = 100 },
 }
+for zoneId, cfg in pairs(zoneConfig) do
+    assert(
+        cfg.maxHP == encounterBalance.tiers[cfg.tier].hp,
+        string.format('Abyssea HP contract drift in zone %d', zoneId))
+end
+
+local function realPlayerScale(player)
+    local count = 1
+    local ok, party = pcall(function() return player:getParty() end)
+    if ok and party then
+        local seen = {}
+        count = 0
+        for _, member in ipairs(party) do
+            local memberOk, isPc = pcall(function() return member:isPC() end)
+            if memberOk and isPc and member:getZoneID() == player:getZoneID() then
+                local id = member:getID()
+                if not seen[id] then
+                    seen[id] = true
+                    count = count + 1
+                end
+            end
+        end
+        count = math.max(1, count)
+    end
+
+    return encounterBalance.hpScale(count), count
+end
+
+local function logicalCopyIsSpawned(mobId, nmName)
+    local key = encounterCatalog.normalize(nmName)
+    -- Most flagship copies use *_OFFSET +0/+4/+8; Misareaux uses +0/+5/+10.
+    -- Looking across both layouts catches the copy selected at any of the QMs.
+    for _, offset in ipairs({ -10, -8, -5, -4, 0, 4, 5, 8, 10 }) do
+        local candidate = GetMobByID(mobId + offset)
+        if
+            candidate and
+            encounterCatalog.normalize(candidate:getName()) == key and
+            candidate:isSpawned()
+        then
+            return true
+        end
+    end
+
+    return false
+end
 
 local function spawnViaMark(p, mobId, cost, nmName, cfg)
     local cur = p:getCharVar(MARKS_CV) or 0
@@ -57,10 +102,18 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
         return
     end
     local mob = GetMobByID(mobId)
-    if not mob or mob:isSpawned() then
-        p:printToPlayer('[Abyssea] This NM is already present.', xi.msg.channel.SYSTEM_3)
+    if not mob or logicalCopyIsSpawned(mobId, nmName) then
+        p:printToPlayer('[Abyssea] This logical NM is already present.', xi.msg.channel.SYSTEM_3)
         return
     end
+    local encounter = encounterCatalog.get(nmName)
+    if not encounter then
+        p:printToPlayer(
+            string.format('[Abyssea] %s has no encounter definition. No marks were spent.', nmName),
+            xi.msg.channel.SYSTEM_3)
+        return
+    end
+
     p:setCharVar(MARKS_CV, cur - cost)
     -- Spawn 3 units behind the player so the mob lands in open ground
     -- rather than clipping into terrain features (trees, hills) at the ???.
@@ -73,10 +126,14 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     local dz = p:getZPos() + math.sin(2 * math.pi - rad) * dist
     mob:setSpawn(dx, dy, dz)
     local spawned = SpawnMob(mobId)
-    spawned:updateClaim(p)
-    spawned:updateEnmity(p)  -- immediately engage spawner; no delay before attacking
-    spawned:setMaxHP(cfg.maxHP)
-    spawned:setHP(cfg.maxHP)
+
+    -- Normalize level before applying the custom pacing block. setMobLevel
+    -- recalculates retail base stats, so it must precede HP and additive mods.
+    spawned:setMobLevel(cfg.level, false)
+    local hpScale, pcCount = realPlayerScale(p)
+    local scaledHP = math.floor(cfg.maxHP * hpScale)
+    spawned:setMaxHP(scaledHP)
+    spawned:setHP(scaledHP)
     spawned:addMod(xi.mod.ATT,  cfg.att)
     spawned:addMod(xi.mod.DEF,  cfg.def)
     spawned:addMod(xi.mod.MATT, cfg.matt)
@@ -98,8 +155,16 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     spawned:setLocalVar(MARKS_INFAMY_LV,  cfg.infamy)
     spawned:setLocalVar(MARKS_GIL_LV,    cfg.gil)
     spawned:setLocalVar(MARKS_CRUOR_LV,  cfg.cruor)
+    spawned:setLocalVar('[MarksTier]', cfg.tier)
+    spawned:setLocalVar('[MarksRealPCs]', pcCount)
+
+    encounterRuntime.attach(spawned, encounter, p)
+    spawned:updateClaim(p)
+    spawned:updateEnmity(p)  -- immediately engage after the full profile is armed
+
     p:printToPlayer(
-        string.format('[Abyssea] %d Hunt Marks spent. %s appears!', cost, nmName),
+        string.format('[Abyssea] %d Hunt Marks spent. %s appears! (%d real PC%s)',
+            cost, nmName, pcCount, pcCount == 1 and '' or 's'),
         xi.msg.channel.SYSTEM_3)
 end
 
@@ -137,6 +202,67 @@ end
 -- 2.0 / 1.5 in abyssea_nms.py — same drift pattern as elsewhere).
 local PARTY_MULT = 2.0    -- >=2 real PCs in party -> Gil/Infamy x this
 local TRUST_MULT = 1.5    -- 0 trusts in party    -> Gil/Infamy x this
+
+-- One complete zone roster opens the next Atma progression step. Attohwa has
+-- 17 logical marks NMs (the old plan/audit counted 16); the duplicate OFFSET
+-- QMs are alternate copies and do not increase these totals.
+local ZONE_ROSTER_SIZE =
+{
+    [xi.zone.ABYSSEA_KONSCHTAT] = 15,
+    [xi.zone.ABYSSEA_TAHRONGI]  = 15,
+    [xi.zone.ABYSSEA_LA_THEINE] = 15,
+    [xi.zone.ABYSSEA_ATTOHWA]   = 17,
+    [xi.zone.ABYSSEA_MISAREAUX] = 16,
+    [xi.zone.ABYSSEA_VUNKERL]   = 16,
+    [xi.zone.ABYSSEA_ALTEPA]    = 14,
+    [xi.zone.ABYSSEA_GRAUBERG]  = 14,
+    [xi.zone.ABYSSEA_ULEGUERAND]= 14,
+}
+
+local function recordRosterClear(player, mob, cfg)
+    local encounter = encounterCatalog.get(mob:getName())
+    if not encounter then return end
+
+    local stampVar = string.format('AbyNM_%03d', encounter.index)
+    if player:getCharVar(stampVar) ~= 0 then return end
+
+    player:setCharVar(stampVar, 1)
+    local zoneId = player:getZoneID()
+    local countVar = string.format('AbyZone_%d', zoneId)
+    local count = (player:getCharVar(countVar) or 0) + 1
+    player:setCharVar(countVar, count)
+
+    -- A first clear refunds half the tier's pop cost. This makes roster
+    -- exploration desirable without changing repeat-farm economics.
+    local firstBonus = math.floor(cfg.cost / 2)
+    player:setCharVar(MARKS_CV, (player:getCharVar(MARKS_CV) or 0) + firstBonus)
+    player:printToPlayer(
+        string.format('[Abyssea] FIRST CLEAR: %s (%d/%d in this zone). +%d Hunt Marks.',
+            encounter.label, count, ZONE_ROSTER_SIZE[zoneId] or count, firstBonus),
+        xi.msg.channel.SYSTEM_3)
+
+    local needed = ZONE_ROSTER_SIZE[zoneId]
+    if not needed or count < needed then return end
+
+    if cfg.tier == 1 and not player:hasKeyItem(xi.ki.LUNAR_ABYSSITE1) then
+        player:addKeyItem(xi.ki.LUNAR_ABYSSITE1)
+        player:printToPlayer(
+            '[Abyssea] VISIONS ROSTER COMPLETE! Lunar Abyssite unlocks your first Atma slot.',
+            xi.msg.channel.SYSTEM_1)
+    elseif cfg.tier == 2 and not player:hasKeyItem(xi.ki.LUNAR_ABYSSITE2) then
+        player:addKeyItem(xi.ki.LUNAR_ABYSSITE2)
+        player:printToPlayer(
+            '[Abyssea] SCARS ROSTER COMPLETE! A second Lunar Abyssite unlocks another Atma slot.',
+            xi.msg.channel.SYSTEM_1)
+    end
+end
+
+-- Retail weakness selection already runs through the zone mixin. Add the
+-- marks-fight combat payoff after the stock stagger/Atma bookkeeping.
+m:addOverride('xi.abyssea.procMonster', function(mob, player, triggerType)
+    super(mob, player, triggerType)
+    encounterRuntime.onProc(mob, player, triggerType)
+end)
 
 -- Returns (partyMult, trustMult).
 -- partyMult = 2.0 when 2+ real PCs are in party, else 1.0.
@@ -293,14 +419,19 @@ xi.mob.marksRewardHook = function(mob, player, isKiller, isWeaponSkillKill)
             msg = msg .. string.format('  (x%.1f: %s)', totalMult, table.concat(bonusParts, ' + '))
         end
         player:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
+
+        local cfg = zoneConfig[player:getZoneID()]
+        if cfg then
+            recordRosterClear(player, mob, cfg)
+        end
     end)
 
     -- Tier-gated augment catalyst (soft gating): Abyssea HEROES marks-NMs
-    -- (Lv155, the hardest Abyssea band) drop a Tier-4 catalyst -- a second T4
+    -- (tier 3, the hardest Abyssea band) drop a Tier-4 catalyst -- a second T4
     -- source alongside Shinryu. Fires per in-zone member, like the rewards above.
     pcall(function()
         local cfg = zoneConfig[player:getZoneID()]
-        if cfg and cfg.level >= 155 then
+        if cfg and cfg.tier == 3 then
             require('modules/custom/lua/augment_catalyst_pools').roll(player, 4)
         end
     end)

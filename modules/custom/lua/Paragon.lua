@@ -61,6 +61,28 @@ local function reopen(player)
     player:timer(30, function(p) openMenu(p) end)
 end
 
+local function runAction(player, label, action, after)
+    local ok, err = pcall(action, player)
+    if not ok then
+        print(string.format('[Paragon] %s error for %s: %s', label, player:getName(), tostring(err)))
+        player:printToPlayer(
+            '[Paragon] That action encountered an internal error. Check your current rank and points before trying again.',
+            SYS)
+    end
+
+    if after then
+        after(player)
+    end
+end
+
+local function menuCancelled(player, eventCancelled)
+    if eventCancelled then
+        player:printToPlayer(
+            '[Paragon] Menu interrupted by another event. Talk to the Sage or use !paragon to try again.',
+            SYS)
+    end
+end
+
 local function ascend(player)
     local lvl  = player:getCharVar('Paragon_Level') or 0
     local pp   = player:getCharVar('Paragon_Points') or 0
@@ -143,18 +165,33 @@ local openPerksMenu  -- forward decl
 openMenu = function(player)
     local lvl  = player:getCharVar('Paragon_Level') or 0
     local pp   = player:getCharVar('Paragon_Points') or 0
+    local dailyLabel = (player:getCharVar('Paragon_MightUnlock') or 0) == 1
+        and 'Claim Daily Might'
+        or string.format('Unlock Daily Might (%d PP)', C.DAILY_MIGHT_UNLOCK)
 
     player:printToPlayer(string.format(
         '[Paragon] Level %d (%s).  Paragon Points: %d.  Next Ascend: %d PP.',
         lvl, C.titleFor(lvl), pp, C.levelCost(lvl)), SYS)
 
     local options = {
-        { 'Ascend',      function(p) ascend(p);           reopen(p)          end },
-        { 'Perks...',    function(p) openPerksMenu(p)                        end },
-        { 'Daily Might', function(p) dailyMight(p);       reopen(p)          end },
-        { 'Close',       function(p) end },
+        { 'Ascend', function(p)
+            runAction(p, 'Ascend', ascend, reopen)
+        end },
+        { 'Perks...', function(p)
+            -- customMenu erases the current response context after this
+            -- callback returns. Defer the submenu so its new context survives.
+            p:timer(30, function(q) openPerksMenu(q) end)
+        end },
+        { dailyLabel, function(p)
+            runAction(p, 'Daily Might', dailyMight, reopen)
+        end },
+        { 'Close', function() end },
     }
-    player:customMenu({ title = 'Paragon', options = options })
+    player:customMenu({
+        title       = 'Paragon',
+        options     = options,
+        onCancelled = menuCancelled,
+    })
 end
 xi._paragon_openMenu = openMenu
 
@@ -170,10 +207,20 @@ openPerksMenu = function(player)
     local options = {}
     for _, perk in ipairs(C.PERKS) do
         local p = perk  -- capture per-iteration so the closure binds THIS row's perk
-        options[#options + 1] = { perk.label, function(pl) buyPerk(pl, p); pl:timer(30, function(q) openPerksMenu(q) end) end }
+        options[#options + 1] = { perk.label, function(pl)
+            runAction(pl, p.label, function(q)
+                buyPerk(q, p)
+            end, function(q)
+                q:timer(30, function(nextPlayer) openPerksMenu(nextPlayer) end)
+            end)
+        end }
     end
     options[#options + 1] = { 'Back', function(pl) reopen(pl) end }
-    player:customMenu({ title = 'Paragon Perks', options = options })
+    player:customMenu({
+        title       = 'Paragon Perks',
+        options     = options,
+        onCancelled = menuCancelled,
+    })
 end
 xi._paragon_openPerksMenu = openPerksMenu
 

@@ -4,6 +4,21 @@ GM Home was the server's original utility zone. Since the hub consolidation, eve
 
 ---
 
+## Welcome Moogle
+
+The festive **Welcome Moogle** is the first stop for a new character. The first
+time you speak to it at any level, it gives you a **Chocobo Shirt**, **Destrier
+Beret**, and **Echad Ring** for free. The gift is once per character; if your
+inventory is too full, make room and speak to it again.
+
+Return on a main job of **level 50 or higher** to browse its starter weapons,
+armor, and accessories. Every item costs **1,000 gil** and arrives with exactly
+two fixed, low-tier augments. Two selected accessories carry **EXP +15%** as a
+leveling teaser. Welcome Moogle wares are Rare/Ex and cannot be traded,
+auctioned, delivered, sent to another character, or sold back to an NPC.
+
+---
+
 ## Test Dummy
 
 The **Test Dummy** NPC spawns a stationary combat target that mirrors the **defense of our real endgame encounters** — so you can check your damage, accuracy, and resists against them without traveling to a live zone. The dummy hits back only at tickle strength, so you're never in danger.
@@ -25,9 +40,9 @@ Talk to the Test Dummy and pick an **Ascension Court** or an **Abyssea NM**:
 
 | NM tier | Level | HP |
 |---|---|---|
-| Visions | L135 | 30,000,000 (30M) |
-| Scars | L145 | 50,000,000 (50M) |
-| Heroes | L155 | 75,000,000 (75M) |
+| Visions | L99 | 4,000,000 (4M) |
+| Scars | L99 | 8,000,000 (8M) |
+| Heroes | L99 | 14,000,000 (14M) |
 <!-- DOCGEN:END id="gm-home-test-dummy" -->
 
 ---

@@ -36,7 +36,13 @@ _ENUM_RE = re.compile(r'^\s*(\w+)\s*=\s*(\d+)\s*,', re.MULTILINE)
 
 _CATS_MAIN = ("general", "consumables", "weapons", "armor", "food",
                "dice", "ammo", "ninja", "cards", "scrolls", "crystals", "keys")
-_CATS_PET  = {"jugs": "pets_jugs", "food": "pets_food"}
+_CATS_PET = {"jugs": "pets_jugs", "food": "pets_food"}
+_CATS_ARMOR = {
+    "rings": "armor_rings",
+    "pearls": "armor_pearls",
+    "accessories": "armor_accessories",
+    "combat": "armor_combat",
+}
 
 
 def _parse_enum(repo_root: Path) -> dict[str, int]:
@@ -161,7 +167,15 @@ _META = [
     ("weapons",     "Weapons",
      "Leveling and endgame weapons across all weapon types, including GEO handbells and PUP Animators."),
     ("armor",       "Armor",
-     "Earrings, belts, capes, and utility armor pieces."),
+     "Core earrings, armor and utility pieces. Rare/Ex budget gear is split across the four armor sub-pages."),
+    ("armor_rings", "Armor: Rings",
+     "Rare/Ex rings sold through !shop armor rings. Each costs 10,000 gil and resells to NPCs for 5,000 gil."),
+    ("armor_pearls", "Armor: Pearls",
+     "Rare/Ex elemental pearls sold through !shop armor pearls. Each costs 10,000 gil and resells to NPCs for 5,000 gil."),
+    ("armor_accessories", "Armor: Accessories",
+     "Rare/Ex back, waist and neck pieces sold through !shop armor accessories. Each costs 10,000 gil and resells to NPCs for 5,000 gil."),
+    ("armor_combat", "Armor: Ammo & Grips",
+     "Rare/Ex ammo and grips sold through !shop armor combat. Each costs 10,000 gil and resells to NPCs for 5,000 gil."),
     ("food",        "Food",
      "Best-in-slot endgame food for every role. All items are 2,000 gil."),
     ("dice",        "COR Dice",
@@ -337,6 +351,13 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         pet_text = text[pet_m.start():]
         for lua_key, cat_key in _CATS_PET.items():
             cats[cat_key] = _find_and_parse(pet_text, lua_key, enum)
+
+    # Armor sub-pages (native shop windows cap each page at 16 items)
+    armor_m = re.search(r'\blocal armorStock\s*=\s*\{', text)
+    if armor_m:
+        armor_text = text[armor_m.start():]
+        for lua_key, cat_key in _CATS_ARMOR.items():
+            cats[cat_key] = _find_and_parse(armor_text, lua_key, enum)
 
     # Reforge is dynamic — no static item list
     cats["reforge"] = []

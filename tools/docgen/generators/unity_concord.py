@@ -68,6 +68,7 @@ def _parse_junctions(repo_root) -> dict[str, str]:
 
 def _parse(text: str) -> dict:
     c: dict = {}
+    c["combatLevel"] = _int(r"combatLevel\s*=\s*(\d+)", text, 0)
 
     costs_blk = section(text, "costs")
     c["costs"] = _parse_kv_ints(costs_blk) if costs_blk else {1: 200, 2: 600, 3: 1500}
@@ -202,7 +203,10 @@ def _render_tiers(c: dict, junctions: dict) -> str:
         lines.append("| NM | Junction zone | Level | Notable Drops (5% each, base version) |")
         lines.append("|---|---|---:|---|")
         for nm in tier_nms:
-            lv = nm["minLv"] if nm["minLv"] == nm["maxLv"] else f"{nm['minLv']}–{nm['maxLv']}"
+            if c["combatLevel"]:
+                lv = c["combatLevel"]
+            else:
+                lv = nm["minLv"] if nm["minLv"] == nm["maxLv"] else f"{nm['minLv']}–{nm['maxLv']}"
             drops_str = ", ".join(
                 item_anchor(name, item_id=iid) for iid, name in nm["drops"]
             ) if nm["drops"] else "—"
@@ -261,7 +265,10 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     c = _parse(text)
     junctions = _parse_junctions(repo_root)
     global _LV_RANGES
-    _LV_RANGES = _load_lv_ranges(text)   # picks up header retunes automatically
+    if c["combatLevel"]:
+        _LV_RANGES = {tier: f"lv {c['combatLevel']}" for tier in c["costs"]}
+    else:
+        _LV_RANGES = _load_lv_ranges(text)
 
     page = docs_dir / "endgame" / "unity-concord.md"
     page.parent.mkdir(parents=True, exist_ok=True)

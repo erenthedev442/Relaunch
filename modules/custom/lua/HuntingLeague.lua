@@ -584,8 +584,8 @@ local function insertSpawnerNPC(zone)
                         -- REQUIRED: without these, GenerateDynamicEntity defaults the
                         -- mob to level 255 and players can't land hits on it. The
                         -- engine also logs an error per spawn ("No minLevel set").
-                        minLevel             = md.minLv,
-                        maxLevel             = md.maxLv,
+                        minLevel             = catalog.combatLevel or md.minLv,
+                        maxLevel             = catalog.combatLevel or md.maxLv,
                         -- Detection bitfield from xi.detects. Without this, the
                         -- engine logs "has no detection methods!" per spawn AND
                         -- the mob never auto-aggros. SIGHT_AND_HEARING (0x003)

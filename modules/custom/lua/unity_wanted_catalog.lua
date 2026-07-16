@@ -4,10 +4,10 @@
 -- All NMs spawn in zone 288 (Escha-Zi'tah) via
 -- groupId/groupZoneId so mob_pools provides model + base stats.
 --
--- Tiers:
---   1 = Lv 75-80   (200 accolade cost, 400 reward)
---   2 = Lv 99-119  (600 accolade cost, 1500 reward)
---   3 = Lv 120-145 (1500 accolade cost, 4000 reward)
+-- All tiers spawn at Lv99. Tier difficulty comes from the stat overlays:
+--   1 = Entry (200 accolade cost, 400 reward)
+--   2 = Mid   (600 accolade cost, 1500 reward)
+--   3 = High  (1500 accolade cost, 4000 reward)
 --
 -- Weekly double-reward bonus is handled in unity_wanted.lua.
 -- groupId + groupZoneId are the zone-288 mob_groups entries populated by
@@ -67,6 +67,7 @@ return {
     arena     = ARENA,
     warpPos   = WARP_POS,
     huntZoneId = ZONE_288,
+    combatLevel = 99, -- Tier difficulty comes from the overlays below.
 
     -- Accolade costs and rewards by tier
     costs    = { [1] = 200,  [2] = 600,  [3] = 1500 },
@@ -101,8 +102,9 @@ return {
         -- casters land 100% MB/nukes) and no HASTE_GEAR (mob swings at base
         -- delay). Added mdef/meva + hasteGear + str/dex so the fight is a
         -- rounded threat, not a one-dimensional physical exchange.
-        [1] = { hp =  500000, att = 1500, acc = 400, macc = 400, matt = 150, def = 350, eva = 200, regain = 180, da = 80, ta = 20, dmgMult = 175,
-                mdef = 200, meva = 200, str = 100, dex = 100, hasteGear = 150 },
+        -- Entry profile: fresh Lv99 in free ilvl-109 armor + budget accessories.
+        [1] = { hp = 250000, att = 800, acc = 270, macc = 270, matt = 100, def = 250, eva = 80, regain = 100, da = 12, ta = 0, dmgMult = 125,
+                mdef = 100, meva = 100, str = 75, dex = 75, hasteGear = 150 },
         [2] = { hp = 1500000, att = 2500, acc = 550, macc = 550, matt = 220, def = 500, eva = 260, regain = 300, da = 95, ta = 35, dmgMult = 200,
                 mdef = 400, meva = 300, str = 200, dex = 200, hasteGear = 250 },
         [3] = { hp = 1500000, att = 2500, acc = 550, macc = 550, matt = 220, def = 500, eva = 260, regain = 300, da = 95, ta = 35, dmgMult = 200,
@@ -152,7 +154,7 @@ return {
 
     nms = {
         -- =====================================================================
-        -- TIER 1  (Lv 75-80)
+        -- TIER 1 (Lv99 entry)
         -- These are the classic Unity Wanted low-tier NMs from outdoor Vana'diel
         -- =====================================================================
         { id=1,  name='Hugemaw_Harold',      label='Hugemaw Harold',      tier=1, minLv=78, maxLv=78, groupId=24 },
@@ -193,7 +195,7 @@ return {
           drops = { {id=28134, name='Assid. Pants', plus1=28135, plus1Name='Assid. Pants +1'} } },
 
         -- =====================================================================
-        -- TIER 2  (Lv 99-119)
+        -- TIER 2 (Lv99 mid)
         -- Post-Zilart / Chains of Promathia era NMs
         -- =====================================================================
         { id=22, name='Muut',                label='Muut',                tier=2, minLv=110, maxLv=110, groupId=29,
@@ -232,7 +234,7 @@ return {
           drops = { {id=20507, name='Comeuppances', plus1=20508, plus1Name='Comeuppances +1'}, {id=25732, name='Tatena. Harama.', plus1=25733, plus1Name='Tatena. Harama. +1'}, {id=22057, name='Contemplator', plus1=22058, plus1Name='Contemplator +1'} } },
 
         -- =====================================================================
-        -- TIER 3  (Lv 120-145)
+        -- TIER 3 (Lv99 high)
         -- High-tier endgame Unity NMs
         -- =====================================================================
         { id=39, name='Specter_Worm',              label='Specter Worm',           tier=3, minLv=128, maxLv=128, groupId=98,

@@ -471,8 +471,8 @@ buildSourceNMMenu = function(player, srcDef, station)
                     rotation             = mPos.rot,
                     -- REQUIRED: without these the engine defaults to lv255
                     -- and players can't land hits.
-                    minLevel             = md.minLv,
-                    maxLevel             = md.maxLv,
+                    minLevel             = catalog.combatLevel or md.minLv,
+                    maxLevel             = catalog.combatLevel or md.maxLv,
                     -- Detection bitfield from xi.detects. Without this, the
                     -- engine logs "has no detection methods!" per spawn AND
                     -- the NM never auto-aggros. Same field handling as HL
@@ -634,7 +634,7 @@ buildSourceNMMenu = function(player, srcDef, station)
     -- Title mirrors the spawner main menu's "<set> (<short>)" form (e.g.
     -- "Abyssea NMs (Em)"). Using currencyShort instead of the full
     -- currencyName ("Empy Marks") keeps the whole menu under the wire cap.
-    spawnerMenu.title   = string.format('%s (%s)', srcDef.label, srcDef.currencyShort)
+    spawnerMenu.title   = string.format('%s Lv99 (%s)', srcDef.label, srcDef.currencyShort)
     spawnerMenu.options = options
 
     -- Wire-safety guard. SetCustomMenuContext (luautils.cpp) serializes the

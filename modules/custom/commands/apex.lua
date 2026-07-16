@@ -40,7 +40,23 @@ commandObj.onTrigger = function(player, sub)
 
     if sub == 'enter' then
         if xi._apex_enter then
-            xi._apex_enter(player)
+            -- Cross-zone setPos must not run inside the chat-command packet
+            -- callback: doing so can desync the zoning handshake and leave the
+            -- client on a black screen. The NPC path is naturally deferred by
+            -- its menu, so defer the command path to match it.
+            player:timer(500, function(p)
+                if p:getStatus() == xi.status.DISAPPEAR then
+                    p:printToPlayer('[Apex] You are already changing areas. Try again after zoning.', SYS)
+                    return
+                end
+
+                local enter = xi._apex_enter
+                if enter then
+                    enter(p)
+                else
+                    p:printToPlayer('[Apex] Apex Trials are not loaded.', SYS)
+                end
+            end)
         else
             player:printToPlayer('[Apex] Apex Trials are not loaded.', SYS)
         end

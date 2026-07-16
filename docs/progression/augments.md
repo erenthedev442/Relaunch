@@ -4,6 +4,11 @@
 
 The **Augment Moogle** at <!--npc:augment_moogle-->Purgonorgo Isle<!--/npc--> lets you stamp custom augments onto any piece of equipment by trading a catalyst item that maps 1:1 to a specific augment.
 
+!!! gift "First level-99 catalyst reward"
+    The **Commemoration Moogle** beside the Arcane Augmenter offers every character a one-time selection of **48 free catalysts** after any job reaches level 99. You may claim them immediately or return later, but additional level-99 jobs do not grant another allowance.
+
+    You may select at most **3 of any one catalyst**. Every selection is final: catalysts cannot be refunded or exchanged, so review the catalog and choose carefully. All augment catalysts are **character-bound**: they cannot be traded, delivered, bazaar-sold, or listed on the Auction House.
+
 !!! tip "Summary"
     Talk to the **Augment Moogle** at <!--npc:augment_moogle-->Purgonorgo Isle<!--/npc--> (z = -15, in the row with the other moogles). Trade **1 gear piece + 1-5 catalyst items + <!--luaconst:Augment_Moogle.lua:GIL_COST:comma-->10,000<!--/luaconst--> gil**. Each catalyst writes one augment line onto the gear. Up to 5 augments per piece — the engine's 5 augment slots.
 

@@ -41,6 +41,7 @@ local catalog = {}
 --     zone 43's misc mask (restart-gated).
 catalog.huntZoneId   = xi.zone.DIORAMA_ABDHALJS_GHELSBA
 catalog.huntZonePath = 'xi.zones.Diorama_Abdhaljs-Ghelsba'
+catalog.combatLevel  = 99 -- Difficulty is controlled by the five stat templates.
 
 -- One shared Reforge Vendor + Mark Exchange sit at the hub entrance (origin).
 -- The vendor is menu-only (non-blocking), so a single one serves any number of
@@ -92,8 +93,8 @@ catalog.unengagedDespawnSecs = 180  -- 3 minutes
 
 -- ---------------------------------------------------------
 -- DIFFICULTY LADDER
--- Five steps from Lv150 -> Lv250 (25-level increments). Stat
--- profile + HP-boost multiplier scales with the level; marks
+-- All NMs spawn at Lv99. Five legacy-keyed power profiles (150 -> 250)
+-- control stats and HP independently of combat level; marks
 -- reward scales steeper than linear so the apex NM is worth ~6x
 -- the entry NM in the same set.
 --
@@ -104,57 +105,57 @@ catalog.unengagedDespawnSecs = 180  -- 3 minutes
 --   xi.mod.REGEN is HP per 3-second tick.
 --   xi.mod.DOUBLE_ATTACK / TRIPLE_ATTACK are % chance per swing.
 --
--- A single edit to a row here retunes every NM at that level
+-- A single edit to a row here retunes every NM at that power step
 -- across all three sets. Per-NM overrides are still possible by
 -- inlining `mods = { ... }` after `mods = statsFor(N)`.
 -- ---------------------------------------------------------
 local _LEVEL_TIERS =
 {
-    [150] = { hpBoost = 6,
+    [150] = { hpBoost = 5,
               mods = {
-                  [xi.mod.DEF] = 660,
-                  [xi.mod.ATT] = 3000,
-                  [xi.mod.ACC] = 1080,
-                  [xi.mod.EVASION] = 180,
-                  [xi.mod.MEVA] = 240,
-                  [xi.mod.MDEF] = 120,
-                  [xi.mod.STR]           = 100,
-                  [xi.mod.DEX]           = 100,
+                  [xi.mod.DEF] = 520,
+                  [xi.mod.ATT] = 2700,
+                  [xi.mod.ACC] = 270,
+                  [xi.mod.EVASION] = 140,
+                  [xi.mod.MEVA] = 150,
+                  [xi.mod.MDEF] = 100,
+                  [xi.mod.STR]           = 75,
+                  [xi.mod.DEX]           = 75,
                   [xi.mod.HASTE_GEAR]    = 150,
-                  [xi.mod.DOUBLE_ATTACK] = 10,
-                  [xi.mod.REGEN]         = 100,
+                  [xi.mod.DOUBLE_ATTACK] = 8,
+                  [xi.mod.REGEN]         = 12,
               },
     },
     [175] = { hpBoost = 10,
               mods = {
                   [xi.mod.DEF] = 990,
                   [xi.mod.ATT] = 4800,
-                  [xi.mod.ACC] = 1440,
-                  [xi.mod.EVASION] = 300,
-                  [xi.mod.MEVA] = 360,
+                  [xi.mod.ACC] = 600,
+                  [xi.mod.EVASION] = 250,
+                  [xi.mod.MEVA] = 300,
                   [xi.mod.MDEF] = 240,
                   [xi.mod.STR]           = 200,
                   [xi.mod.DEX]           = 200,
                   [xi.mod.HASTE_GEAR]    = 200,
                   [xi.mod.DOUBLE_ATTACK] = 15,
                   [xi.mod.TRIPLE_ATTACK] = 3,
-                  [xi.mod.REGEN]         = 200,
+                  [xi.mod.REGEN]         = 24,
               },
     },
     [200] = { hpBoost = 14,
               mods = {
                   [xi.mod.DEF] = 1430,
                   [xi.mod.ATT] = 7200,
-                  [xi.mod.ACC] = 1800,
-                  [xi.mod.EVASION] = 420,
-                  [xi.mod.MEVA] = 480,
+                  [xi.mod.ACC] = 700,
+                  [xi.mod.EVASION] = 350,
+                  [xi.mod.MEVA] = 400,
                   [xi.mod.MDEF] = 420,
                   [xi.mod.STR]           = 300,
                   [xi.mod.DEX]           = 300,
                   [xi.mod.HASTE_GEAR]    = 250,
                   [xi.mod.DOUBLE_ATTACK] = 20,
                   [xi.mod.TRIPLE_ATTACK] = 8,
-                  [xi.mod.REGEN]         = 400,
+                  [xi.mod.REGEN]         = 40,
               },
     },
     [225] = { hpBoost = 22,
@@ -225,11 +226,11 @@ catalog.sources =
             --
             -- Ladder: Genbu (entry) -> Kirin (apex). Mark/stat values
             -- come from the level template; see _LEVEL_TIERS above.
-            { name = 'Genbu',  label = 'Genbu  [Lv150]',  groupId = 11404, minLv = 150, maxLv = 150, marks =  60, _t = statsFor(150) },
-            { name = 'Suzaku', label = 'Suzaku [Lv175]',  groupId = 11403, minLv = 175, maxLv = 175, marks =  80, _t = statsFor(175) },
-            { name = 'Seiryu', label = 'Seiryu [Lv200]',  groupId = 11402, minLv = 200, maxLv = 200, marks = 100, _t = statsFor(200) },
-            { name = 'Byakko', label = 'Byakko [Lv225]',  groupId = 11401, minLv = 225, maxLv = 225, marks = 125, _t = statsFor(225) },
-            { name = 'Kirin',  label = 'Kirin  [Lv250]',  groupId = 11400, minLv = 250, maxLv = 250, marks = 150, _t = statsFor(250) },
+            { name = 'Genbu',  label = 'Genbu  [I]', groupId = 11404, minLv = 99, maxLv = 99, marks =  60, _t = statsFor(150) },
+            { name = 'Suzaku', label = 'Suzaku [II]', groupId = 11403, minLv = 99, maxLv = 99, marks =  80, _t = statsFor(175) },
+            { name = 'Seiryu', label = 'Seiryu [III]', groupId = 11402, minLv = 99, maxLv = 99, marks = 100, _t = statsFor(200) },
+            { name = 'Byakko', label = 'Byakko [IV]', groupId = 11401, minLv = 99, maxLv = 99, marks = 125, _t = statsFor(225) },
+            { name = 'Kirin',  label = 'Kirin  [V]', groupId = 11400, minLv = 99, maxLv = 99, marks = 150, _t = statsFor(250) },
         },
     },
 
@@ -244,11 +245,11 @@ catalog.sources =
         {
             -- Ladder: Bukhis (entry) -> Tinnin (apex). Tinnin retains
             -- apex status from the previous catalog (was 35 marks).
-            { name = 'Bukhis',  label = 'Bukhis  [Lv150]', groupId = 11408, minLv = 150, maxLv = 150, marks =  60, _t = statsFor(150) },
-            { name = 'Khun',    label = 'Khun    [Lv175]', groupId = 11406, minLv = 175, maxLv = 175, marks =  80, _t = statsFor(175) },
-            { name = 'Padfoot', label = 'Padfoot [Lv200]', groupId = 11405, minLv = 200, maxLv = 200, marks = 100, _t = statsFor(200) },
-            { name = 'Glavoid', label = 'Glavoid [Lv225]', groupId = 11407, minLv = 225, maxLv = 225, marks = 125, _t = statsFor(225) },
-            { name = 'Tinnin',  label = 'Tinnin  [Lv250]', groupId = 11409, minLv = 250, maxLv = 250, marks = 150, _t = statsFor(250) },
+            { name = 'Bukhis',  label = 'Bukhis  [I]', groupId = 11408, minLv = 99, maxLv = 99, marks =  60, _t = statsFor(150) },
+            { name = 'Khun',    label = 'Khun    [II]', groupId = 11406, minLv = 99, maxLv = 99, marks =  80, _t = statsFor(175) },
+            { name = 'Padfoot', label = 'Padfoot [III]', groupId = 11405, minLv = 99, maxLv = 99, marks = 100, _t = statsFor(200) },
+            { name = 'Glavoid', label = 'Glavoid [IV]', groupId = 11407, minLv = 99, maxLv = 99, marks = 125, _t = statsFor(225) },
+            { name = 'Tinnin',  label = 'Tinnin  [V]', groupId = 11409, minLv = 99, maxLv = 99, marks = 150, _t = statsFor(250) },
         },
     },
 
@@ -264,11 +265,11 @@ catalog.sources =
             -- Ladder: Aello (entry) -> Hadhayosh (apex). Hadhayosh
             -- (Bahamut Behemoth-type) sits at the top as the most
             -- iconic king-tier Abyssea NM.
-            { name = 'Aello',       label = 'Aello       [Lv150]', groupId = 11413, minLv = 150, maxLv = 150, marks =  60, _t = statsFor(150) },
-            { name = 'Iratham',     label = 'Iratham     [Lv175]', groupId = 11411, minLv = 175, maxLv = 175, marks =  80, _t = statsFor(175) },
-            { name = 'Briareus',    label = 'Briareus    [Lv200]', groupId = 11410, minLv = 200, maxLv = 200, marks = 100, _t = statsFor(200) },
-            { name = 'Itzpapalotl', label = 'Itzpapalotl [Lv225]', groupId = 11412, minLv = 225, maxLv = 225, marks = 125, _t = statsFor(225) },
-            { name = 'Hadhayosh',   label = 'Hadhayosh   [Lv250]', groupId = 11414, minLv = 250, maxLv = 250, marks = 150, _t = statsFor(250) },
+            { name = 'Aello',       label = 'Aello       [I]', groupId = 11413, minLv = 99, maxLv = 99, marks =  60, _t = statsFor(150) },
+            { name = 'Iratham',     label = 'Iratham     [II]', groupId = 11411, minLv = 99, maxLv = 99, marks =  80, _t = statsFor(175) },
+            { name = 'Briareus',    label = 'Briareus    [III]', groupId = 11410, minLv = 99, maxLv = 99, marks = 100, _t = statsFor(200) },
+            { name = 'Itzpapalotl', label = 'Itzpapalotl [IV]', groupId = 11412, minLv = 99, maxLv = 99, marks = 125, _t = statsFor(225) },
+            { name = 'Hadhayosh',   label = 'Hadhayosh   [V]', groupId = 11414, minLv = 99, maxLv = 99, marks = 150, _t = statsFor(250) },
         },
     },
 }
@@ -1004,12 +1005,12 @@ catalog.pieces[xi.job.RUN] =
 -- addGroupId must be a groupId already in this system (entry-tier NMs used
 -- as minion adds so their AI/stats are already defined in the mob_groups rows).
 --
--- Tier identities:
---   Lv150 (entry)   - AoE pressure + drain (teaches the mechanics)
---   Lv175 (mid-low) - stance dance + terror CC
---   Lv200 (mid)     - AoE + drain + nuke phase
---   Lv225 (hard)    - stance + CC + drain + fury phase + dispel phase + doom
---   Lv250 (apex)    - full suite: stance/AoE/CC/drain/doom/fury/nuke/dispel/enrage
+-- Power-step identities (all combat level 99):
+--   I   (entry)   - light anti-turtle drain
+--   II  (mid-low) - stance dance + terror CC
+--   III (mid)     - AoE + drain + nuke phase
+--   IV  (hard)    - stance + CC + drain + fury phase + dispel phase + doom
+--   V   (apex)    - full suite: stance/AoE/CC/drain/doom/fury/nuke/dispel/enrage
 --
 -- DMGPHYS/DMGMAGIC cap at -5000 per library rules (=-50% taken).
 -- =========================================================
@@ -1019,11 +1020,10 @@ catalog.mechCfgs = {}
 -- AF set (Sky Gods) groupIds: Genbu=11404, Suzaku=11403, Seiryu=11402, Byakko=11401, Kirin=11400
 -- -------------------------
 
--- Genbu [Lv150] - entry: tremor shockwaves + tortoise drain
+-- Genbu entry - light anti-turtle drain only
 catalog.mechCfgs[11404] = {
     name  = 'Genbu',
-    aoe   = { periodSec = 14, dmgPct = 18, msg = 'unleashes a Tidal Wave!' },
-    drain = { periodSec = 10, healPct = 2 },
+    drain = { periodSec = 10, healPct = 0.25 },
 }
 
 -- Suzaku [Lv175] - stance dance: fire phases, terror roar
@@ -1042,7 +1042,7 @@ catalog.mechCfgs[11403] = {
 catalog.mechCfgs[11402] = {
     name  = 'Seiryu',
     aoe   = { periodSec = 12, dmgPct = 22, msg = 'surges with draconic energy!' },
-    drain = { periodSec = 9,  healPct = 2 },
+    drain = { periodSec = 9,  healPct = 0.25 },
     phases = {
         { hp = 40, action = 'nuke',  dmgPct = 38, msg = 'channels Azure Dragon\'s final breath!' },
         { hp = 20, action = 'fury',  att = 3500, haste = 110, msg = 'enters Azure Dragon Fury!' },
@@ -1093,11 +1093,10 @@ catalog.mechCfgs[11400] = {
 -- Relic set (Unity NMs) groupIds: Bukhis=11408, Khun=11406, Padfoot=11405, Glavoid=11407, Tinnin=11409
 -- -------------------------
 
--- Bukhis [Lv150] - entry: gale shockwaves + wind drain
+-- Bukhis entry - light anti-turtle drain only
 catalog.mechCfgs[11408] = {
     name  = 'Bukhis',
-    aoe   = { periodSec = 14, dmgPct = 18, msg = 'beats its wings in a devastating Gale Blast!' },
-    drain = { periodSec = 10, healPct = 2 },
+    drain = { periodSec = 10, healPct = 0.25 },
 }
 
 -- Khun [Lv175] - stance dance: sonic phases + terror
@@ -1116,7 +1115,7 @@ catalog.mechCfgs[11406] = {
 catalog.mechCfgs[11405] = {
     name  = 'Padfoot',
     aoe   = { periodSec = 12, dmgPct = 22, msg = 'unleashes Spectral Howl across the area!' },
-    drain = { periodSec = 9,  healPct = 2 },
+    drain = { periodSec = 9,  healPct = 0.25 },
     phases = {
         { hp = 40, action = 'nuke',  dmgPct = 38, msg = 'channels Dark Maw!' },
         { hp = 20, action = 'fury',  att = 3500, haste = 110, msg = 'enters Spectral Fury!' },
@@ -1167,11 +1166,10 @@ catalog.mechCfgs[11409] = {
 -- Empy set (Abyssea NMs) groupIds: Aello=11413, Iratham=11411, Briareus=11410, Itzpapalotl=11412, Hadhayosh=11414
 -- -------------------------
 
--- Aello [Lv150] - entry: storm shockwaves + harpy drain
+-- Aello entry - light anti-turtle drain only
 catalog.mechCfgs[11413] = {
     name  = 'Aello',
-    aoe   = { periodSec = 14, dmgPct = 18, msg = 'summons a Storm Squall!' },
-    drain = { periodSec = 10, healPct = 2 },
+    drain = { periodSec = 10, healPct = 0.25 },
 }
 
 -- Iratham [Lv175] - stance dance: shadow phases + terror
@@ -1190,7 +1188,7 @@ catalog.mechCfgs[11411] = {
 catalog.mechCfgs[11410] = {
     name  = 'Briareus',
     aoe   = { periodSec = 12, dmgPct = 22, msg = 'swings a Hundred-Arm Cyclone!' },
-    drain = { periodSec = 9,  healPct = 2 },
+    drain = { periodSec = 9,  healPct = 0.25 },
     phases = {
         { hp = 40, action = 'nuke',  dmgPct = 38, msg = 'focuses all hundred fists into one Void Strike!' },
         { hp = 20, action = 'fury',  att = 3500, haste = 110, msg = 'enters Hecatoncheires Rage!' },

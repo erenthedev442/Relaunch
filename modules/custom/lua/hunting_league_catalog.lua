@@ -11,6 +11,7 @@ return
     -- =========================================================
     huntZoneId   = xi.zone.ESCHA_ZITAH,
     huntZonePath = 'xi.zones.Escha_ZiTah',
+    combatLevel  = 99, -- All ranks use stat overlays for difficulty, not level correction.
 
     -- Position of the Hunt Seals NPC (tier/rank + seal purchases). This is
     -- also the !hunt warp landing spot, so updates here should sync to
@@ -58,8 +59,8 @@ return
     -- 2026-07-14 damage-ceiling pass: flat REGEN was cut to 12/24/40/70/120
     -- (Shinryu 175), and percentage drain from 2% to 0.25%. This keeps
     -- anti-turtle pressure without erasing typical 200k-300k weaponskills.
-    -- hpBoost is UNCHANGED here:
-    -- HP targets need base mob HP from mob_groups (DB) - resolve in a follow-up.
+    -- 2026-07-16 entry pass: Rank I HP 6x->5x, DEF 600->520,
+    -- EVA 180->140, and MEVA 180->150 for fresh Lv99 players.
     --
     --   Every tier now has hpBoost (was T5-only) so fights actually
     --   last. HASTE_GEAR (1024ths of 1%), DOUBLE_ATTACK / TRIPLE_ATTACK
@@ -67,7 +68,7 @@ return
     --   hard, swing often, and self-heal - players have to commit.
     --   MDEF + MEVA prevent caster groups from one-shotting via nuke.
     --
-    --   T1 Initiate   3x HP, mild challenge for a fresh Lv99
+    --   T1 Initiate   5x HP, mild challenge for a fresh Lv99
     --   T2 Hunter     5x HP, real fight - needs tools/buffs
     --   T3 Elite      8x HP, sustained party fight
     --   T4 Champion  12x HP, brick wall for solo, group content
@@ -91,13 +92,13 @@ return
             {
                 { name = 'Leaping_Lizzy',    label = 'Leaping Lizzy',    points = 5,  groupId = 11355, minLv = 150, maxLv = 150,
                   spawnPos = { x =  -56.6, y =  0.11, z =  73.8, rot =   0 },  -- T1 cluster: W
-                  hpBoost = 6,
+                  hpBoost = 5,
                   mods = {
-                      [xi.mod.DEF] = 600,
+                      [xi.mod.DEF] = 520,
                       [xi.mod.ATT] = 2700,
                       [xi.mod.ACC] = 270,   -- T1 normalized target
-                      [xi.mod.EVASION] = 180,
-                      [xi.mod.MEVA] = 180,
+                      [xi.mod.EVASION] = 140,
+                      [xi.mod.MEVA] = 150,
                       [xi.mod.STR] = 75,    -- + damage on hit
                       [xi.mod.DEX] = 75,    -- DEX feeds ACC formula (~0.75 DEX = 1 ACC)
                       [xi.mod.HASTE_GEAR] = 150,   -- ~10%
@@ -108,13 +109,13 @@ return
                 { name = 'Valkurm_Emperor',  label = 'Valkurm Emperor',  points = 5,  groupId = 11356, minLv = 150, maxLv = 150,
                   spawnPos = { x =  -41.6, y =  0.11, z =  58.8, rot = 128 },  -- T1 cluster: S
                   drops = { { id = 8983, qty = 5 } },  -- Emperor Arthro's Shell (Augment Affinity: DEX/Accuracy)
-                  hpBoost = 6,
+                  hpBoost = 5,
                   mods = {
-                      [xi.mod.DEF] = 600,
+                      [xi.mod.DEF] = 520,
                       [xi.mod.ATT] = 2700,
                       [xi.mod.ACC] = 270,   -- T1 normalized target
-                      [xi.mod.EVASION] = 180,
-                      [xi.mod.MEVA] = 180,
+                      [xi.mod.EVASION] = 140,
+                      [xi.mod.MEVA] = 150,
                       [xi.mod.HASTE_GEAR] = 150,
                       [xi.mod.DOUBLE_ATTACK] = 8,
                       [xi.mod.REGEN] = 12,
@@ -122,13 +123,13 @@ return
                 },
                 { name = 'Tom_Tit_Tat',      label = 'Tom Tit Tat',      points = 5,  groupId = 11357, minLv = 150, maxLv = 150,
                   spawnPos = { x =  -26.6, y =  0.11, z =  73.8, rot = 192 },  -- T1 cluster: E
-                  hpBoost = 6,
+                  hpBoost = 5,
                   mods = {
-                      [xi.mod.DEF] = 600,
+                      [xi.mod.DEF] = 520,
                       [xi.mod.ATT] = 2700,
                       [xi.mod.ACC] = 270,   -- T1 normalized target
-                      [xi.mod.EVASION] = 180,
-                      [xi.mod.MEVA] = 180,
+                      [xi.mod.EVASION] = 140,
+                      [xi.mod.MEVA] = 150,
                       [xi.mod.HASTE_GEAR] = 150,
                       [xi.mod.DOUBLE_ATTACK] = 8,
                       [xi.mod.REGEN] = 12,

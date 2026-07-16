@@ -2,8 +2,8 @@
 
 !!! tip "Summary"
     Hunt **Wanted NMs** at their retail homes across Vana'diel to earn **Unity Accolades**, then
-    spend them in the board's shop. Three tiers of difficulty — lv 75 classic
-    NMs up to lv 145 endgame superbosses. One NM is **featured each week** for
+    spend them in the board's shop. All Wanted NMs spawn at **level 99**; three
+    custom stat tiers range from entry fights to endgame superbosses. One NM is **featured each week** for
     **double accolades**. Pledge to one of 11 Unity leaders to get started.
 
 ---
@@ -26,9 +26,9 @@ Every junction is **self-service**: touch it at any time — no registration nee
 <!-- DOCGEN:BEGIN id="unity-overview" -->
 | Tier | Level range | Spawn cost | Kill reward |
 |---:|---|---:|---:|
-| **1** | lv 75–80 | 200 accolades | 400 accolades |
-| **2** | lv 99–119 | 600 accolades | 1,500 accolades |
-| **3** | lv 120–145 | 1,500 accolades | 4,000 accolades |
+| **1** | lv 99 (entry) | 200 accolades | 400 accolades |
+| **2** | lv 99 (mid) | 600 accolades | 1,500 accolades |
+| **3** | lv 99 (high) | 1,500 accolades | 4,000 accolades |
 <!-- DOCGEN:END id="unity-overview" -->
 
 ---
@@ -45,11 +45,13 @@ The feature moves to the next NM on the roster every **Thursday at 00:00 UTC**. 
 
 ## Wanted NM roster
 
+The catalog retains each NM's original retail level for roster identity, but every fight uses the **Lv99** combat profile for its tier.
+
 <!-- DOCGEN:BEGIN id="unity-tiers" -->
-### Tier 1 — lv 75–80
+### Tier 1 — lv 99 entry
 *Spawn cost: 200 · Kill reward: 400 accolades*
 
-| NM | Junction zone | Level | Notable Drops (5% each, base version) |
+| NM | Junction zone | Source identity level | Notable Drops (5% each, base version) |
 |---|---|---:|---|
 | Hugemaw Harold | East Ronfaure | 78 | — |
 | Prickly Pitriv | East Sarutabaruta | 78 | — |
@@ -73,10 +75,10 @@ The feature moves to the next NM on the roster every **Thursday at 00:00 UTC**. 
 | Vermillion Fishfly | Lufaise Meadows | 78 | <a class="item-link" href="https://www.ffxiah.com/item/25601" data-img="https://www.bg-wiki.com/images/3/3f/Blistering_Sallet_description.png" target="_blank" rel="noopener">Blistering Sallet</a>, <a class="item-link" href="https://www.ffxiah.com/item/10770" data-img="https://www.bg-wiki.com/images/0/06/Cacoethic_Ring_description.png" target="_blank" rel="noopener">Cacoethic Ring</a> |
 | Intuila | Bibiki Bay | 75 | <a class="item-link" href="https://www.ffxiah.com/item/28134" data-img="https://www.bg-wiki.com/images/1/1c/Assiduity_Pants_description.png" target="_blank" rel="noopener">Assid. Pants</a> |
 
-### Tier 2 — lv 99–119
+### Tier 2 — lv 99 mid
 *Spawn cost: 600 · Kill reward: 1,500 accolades*
 
-| NM | Junction zone | Level | Notable Drops (5% each, base version) |
+| NM | Junction zone | Source identity level | Notable Drops (5% each, base version) |
 |---|---|---:|---|
 | Muut | Attohwa Chasm | 110 | <a class="item-link" href="https://www.ffxiah.com/item/20606" data-img="https://www.bg-wiki.com/images/4/47/Anathema_Harpe_description.png" target="_blank" rel="noopener">Anathema Harpe</a> |
 | Voso | Labyrinth of Onzozo | 119 | <a class="item-link" href="https://www.ffxiah.com/item/26942" data-img="https://www.bg-wiki.com/images/b/b1/Agony_Jerkin_description.png" target="_blank" rel="noopener">Agony Jerkin</a> |
@@ -96,10 +98,10 @@ The feature moves to the next NM on the roster every **Thursday at 00:00 UTC**. 
 | Thu'ban | Wajaom Woodlands | 115 | <a class="item-link" href="https://www.ffxiah.com/item/21748" data-img="https://www.bg-wiki.com/images/a/a4/Habilitator_description.png" target="_blank" rel="noopener">Habilitator</a>, <a class="item-link" href="https://www.ffxiah.com/item/25923" data-img="https://www.bg-wiki.com/images/4/45/Tatena._Sune._description.png" target="_blank" rel="noopener">Tatena. Sune.</a>, <a class="item-link" href="https://www.ffxiah.com/item/26021" data-img="https://www.bg-wiki.com/images/f/f7/Vim_Torque_description.png" target="_blank" rel="noopener">Vim Torque</a> |
 | Tumult Curator | Aydeewa Subterrane | 119 | <a class="item-link" href="https://www.ffxiah.com/item/20507" data-img="https://www.bg-wiki.com/images/5/56/Comeuppances_description.png" target="_blank" rel="noopener">Comeuppances</a>, <a class="item-link" href="https://www.ffxiah.com/item/25732" data-img="https://www.bg-wiki.com/images/c/c8/Tatena._Haramaki_description.png" target="_blank" rel="noopener">Tatena. Harama.</a>, <a class="item-link" href="https://www.ffxiah.com/item/22057" data-img="https://www.bg-wiki.com/images/5/5b/Contemplator_description.png" target="_blank" rel="noopener">Contemplator</a> |
 
-### Tier 3 — lv 120–145
+### Tier 3 — lv 99 high
 *Spawn cost: 1,500 · Kill reward: 4,000 accolades*
 
-| NM | Junction zone | Level | Notable Drops (5% each, base version) |
+| NM | Junction zone | Source identity level | Notable Drops (5% each, base version) |
 |---|---|---:|---|
 | Specter Worm | Kuftal Tunnel | 128 | <a class="item-link" href="https://www.ffxiah.com/item/21702" data-img="https://www.bg-wiki.com/images/1/13/Kladenets_description.png" target="_blank" rel="noopener">Kladenets</a>, <a class="item-link" href="https://www.ffxiah.com/item/21343" data-img="https://www.bg-wiki.com/images/8/89/Ghastly_Tathlum_description.png" target="_blank" rel="noopener">Ghastly Tathlum</a> |
 | Bakunawa | Sea Serpent Grotto | 128 | <a class="item-link" href="https://www.ffxiah.com/item/20708" data-img="https://www.bg-wiki.com/images/a/a1/Demersal_Degen_description.png" target="_blank" rel="noopener">Demers. Degen</a>, <a class="item-link" href="https://www.ffxiah.com/item/27517" data-img="https://www.bg-wiki.com/images/3/3d/Bathy_Choker_description.png" target="_blank" rel="noopener">Bathy Choker</a> |

@@ -31,6 +31,7 @@ _LABEL_RE = re.compile(r"\blabel\s*=\s*" + _QUOTED)
 _CURRENCY_NAME_RE = re.compile(r"\bcurrencyName\s*=\s*" + _QUOTED)
 _MARKS_RE = re.compile(r"\bmarks\s*=\s*(\d+)")
 _MINLV_RE = re.compile(r"\bminLv\s*=\s*(\d+)")
+_POWER_RE = re.compile(r"\bstatsFor\s*\(\s*(\d+)\s*\)")
 _NAME_FIELD_RE = re.compile(r"\bname\s*=\s*" + _QUOTED)
 
 # Upgrade costs:  af    = { plus1 = 100, plus2 = 300, plus3 = 1000 },
@@ -65,6 +66,7 @@ _SOURCE_LABEL = {
     "relic": "Relic (Unity NMs)",
     "empy":  "Empyrean (Abyssea NMs)",
 }
+_POWER_STEP = {150: "I", 175: "II", 200: "III", 225: "IV", 250: "V"}
 
 # Job display order — matches the catalog's catalog.jobs ordering.
 _JOB_ORDER = (
@@ -269,11 +271,13 @@ def _extract_sources(text: str) -> dict[str, dict]:
                     nm = _NAME_FIELD_RE.search(row)
                     marks = _MARKS_RE.search(row)
                     minlv = _MINLV_RE.search(row)
+                    power = _POWER_RE.search(row)
                     if nm and marks:
                         mobs.append({
                             "name":  _quoted_value(nm).replace("_", " "),
                             "marks": int(marks.group(1)),
                             "level": int(minlv.group(1)) if minlv else None,
+                            "power": int(power.group(1)) if power else None,
                         })
 
         out[key] = {
@@ -320,17 +324,18 @@ def _render_sources(sources: dict[str, dict]) -> str:
         lines.append("")
         lines.append(f"**Currency:** {s['currency']}")
         lines.append("")
-        # Sort entry → apex by level so the difficulty ladder reads naturally
-        # regardless of catalog iteration order. Levelless rows (pre-ladder
-        # catalogs) sort to the front via the `or 0` fallback.
-        mobs_sorted = sorted(s["mobs"], key=lambda m: m.get("level") or 0)
+        # Sort entry → apex by power profile. All current fights are Lv99, so
+        # combat level no longer distinguishes the five difficulty steps.
+        mobs_sorted = sorted(s["mobs"], key=lambda m: m.get("power") or m.get("level") or 0)
         has_levels = any(m.get("level") for m in mobs_sorted)
         if has_levels:
-            lines.append("| NM | Level | Marks per kill |")
+            lines.append("| NM | Level / power step | Marks per kill |")
             lines.append("|---|---:|---:|")
             for mob in mobs_sorted:
                 lvl = mob.get("level")
                 lvl_str = f"Lv{lvl}" if lvl else "—"
+                if mob.get("power"):
+                    lvl_str += f" / {_POWER_STEP.get(mob['power'], mob['power'])}"
                 lines.append(f"| {_escape_md(mob['name'])} | {lvl_str} | {mob['marks']} |")
         else:
             lines.append("| NM | Marks per kill |")

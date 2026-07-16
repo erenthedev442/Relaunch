@@ -27,6 +27,8 @@ Every NM kill awards:
 
 The Reforge Vendor sells progressive upgrades: trade in a base piece + marks for +1, trade +1 + marks for +2, trade +2 + marks for +3.
 
+All Reforge NMs are **level 99**. Their I–V power steps come from custom HP, stat, and mechanic profiles rather than level correction.
+
 !!! tip "Roughly how many kills for a full +3 set?"
     With the 50% main-job bias and the current mark/cost values, expect **~50-80 NM kills** to complete a 5-piece +3 set on one specific job. Marks accumulate alongside drops, so the bottleneck is rolling the right slots — the bias makes each kill ~11× more likely to land on a piece you want.
 
@@ -49,37 +51,37 @@ The Reforge hub lives in **Diorama Abdhaljs-Ghelsba** — warp straight there wi
 
 **Currency:** AF Marks
 
-| NM | Level | Marks per kill |
+| NM | Level / power step | Marks per kill |
 |---|---:|---:|
-| Genbu | Lv150 | 60 |
-| Suzaku | Lv175 | 80 |
-| Seiryu | Lv200 | 100 |
-| Byakko | Lv225 | 125 |
-| Kirin | Lv250 | 150 |
+| Genbu | Lv99 / I | 60 |
+| Suzaku | Lv99 / II | 80 |
+| Seiryu | Lv99 / III | 100 |
+| Byakko | Lv99 / IV | 125 |
+| Kirin | Lv99 / V | 150 |
 
 ### Relic (Unity NMs)
 
 **Currency:** Relic Marks
 
-| NM | Level | Marks per kill |
+| NM | Level / power step | Marks per kill |
 |---|---:|---:|
-| Bukhis | Lv150 | 60 |
-| Khun | Lv175 | 80 |
-| Padfoot | Lv200 | 100 |
-| Glavoid | Lv225 | 125 |
-| Tinnin | Lv250 | 150 |
+| Bukhis | Lv99 / I | 60 |
+| Khun | Lv99 / II | 80 |
+| Padfoot | Lv99 / III | 100 |
+| Glavoid | Lv99 / IV | 125 |
+| Tinnin | Lv99 / V | 150 |
 
 ### Empyrean (Abyssea NMs)
 
 **Currency:** Empy Marks
 
-| NM | Level | Marks per kill |
+| NM | Level / power step | Marks per kill |
 |---|---:|---:|
-| Aello | Lv150 | 60 |
-| Iratham | Lv175 | 80 |
-| Briareus | Lv200 | 100 |
-| Itzpapalotl | Lv225 | 125 |
-| Hadhayosh | Lv250 | 150 |
+| Aello | Lv99 / I | 60 |
+| Iratham | Lv99 / II | 80 |
+| Briareus | Lv99 / III | 100 |
+| Itzpapalotl | Lv99 / IV | 125 |
+| Hadhayosh | Lv99 / V | 150 |
 <!-- DOCGEN:END id="reforge-sources" -->
 
 ## Upgrade costs

@@ -126,25 +126,26 @@ catalog.tiers =
         mods = { [xi.mod.DEF] = 6875, [xi.mod.EVASION] = 2340, [xi.mod.MEVA] = 3240, [xi.mod.MDEF] = 3240 },  -- Provenance Watcher (11392)
     },
 
-    -- ===== ABYSSEA custom NMs -- per content tier =====
-    -- Mods mirror AbysseaMarks.lua zoneConfig: atkDef -> DEF, accEva -> EVA + MEVA.
+    -- ===== ABYSSEA marks encounters -- per content tier =====
+    -- Lv99 throughout: encounter mechanics and defensive pacing create the
+    -- ladder, not level correction or extreme evasion.
     aby_visions =
     {
         label = 'Visions', family = 'aby',
-        minLevel = 135, maxLevel = 135, hp = 30000000, groupId = 11355,
-        mods = { [xi.mod.DEF] = 3333, [xi.mod.EVA] = 2000, [xi.mod.MEVA] = 2000 },  -- Konschtat/Tahrongi/La Theine
+        minLevel = 99, maxLevel = 99, hp = 4000000, groupId = 11355,
+        mods = { [xi.mod.DEF] = 850, [xi.mod.EVA] = 180, [xi.mod.MEVA] = 250 },
     },
     aby_scars =
     {
         label = 'Scars', family = 'aby',
-        minLevel = 145, maxLevel = 145, hp = 50000000, groupId = 11355,
-        mods = { [xi.mod.DEF] = 6000, [xi.mod.EVA] = 3333, [xi.mod.MEVA] = 3333 },  -- Attohwa/Misareaux/Vunkerl
+        minLevel = 99, maxLevel = 99, hp = 8000000, groupId = 11355,
+        mods = { [xi.mod.DEF] = 1200, [xi.mod.EVA] = 260, [xi.mod.MEVA] = 400 },
     },
     aby_heroes =
     {
         label = 'Heroes', family = 'aby',
-        minLevel = 155, maxLevel = 155, hp = 75000000, groupId = 11355,
-        mods = { [xi.mod.DEF] = 8666, [xi.mod.EVA] = 5000, [xi.mod.MEVA] = 5000 },  -- Altepa/Grauberg
+        minLevel = 99, maxLevel = 99, hp = 14000000, groupId = 11355,
+        mods = { [xi.mod.DEF] = 1650, [xi.mod.EVA] = 340, [xi.mod.MEVA] = 550 },
     },
 }
 
