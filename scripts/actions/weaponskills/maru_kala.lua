@@ -12,8 +12,6 @@
 -- Relaunch ftpMod     3.8       8.4      13.0    (matches Legendary damage output)
 --
 -- fTP is single-hit only (no multiHitfTP): matches Legendary's damage model.
--- Aftermath status effect not applied here -- Relaunch's Prime aftermath is
--- wired via mod 256 on the equipment (prime_weapons_gear.sql), not the WS.
 -----------------------------------
 ---@type TWeaponSkill
 local weaponskillObject = {}
@@ -24,6 +22,8 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     params.ftpMod      = { 3.8, 8.4, 13.0 }
     params.str_wsc     = 0.4175
     params.dex_wsc     = 0.4175
+
+    xi.aftermath.addStatusEffect(player, tp, xi.slot.MAIN, xi.aftermath.type.PRIME)
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 

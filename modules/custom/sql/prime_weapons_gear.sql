@@ -161,10 +161,15 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
 INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
     (21834, 355, 110), (21835, 355, 110), (21836, 355, 110),                       -- Foenaria stages -> Origin WS
     (21833, 256, 46), (21834, 256, 46), (21835, 256, 46), (21836, 256, 46), (21837, 256, 46), -- Scythe / Foenaria
-    (21531, 256, 46),                                                              -- Prime Fists (Dragon Blow)
+    (21531, 256, 46), (21534, 256, 46), (21535, 256, 46),                         -- Fists / Varga Purnikawa
+    (21586, 256, 46), (21589, 256, 46), (21590, 256, 46),                         -- Dagger / Mpu Gandring
     (21642, 256, 46), (21646, 256, 46),                                            -- Prime Sword / Caliburnus (Imperator)
+    (21650, 256, 46), (21653, 256, 46),                                            -- Prime Blade / Helheim
+    (21726, 256, 46), (21730, 256, 46),                                            -- Prime Pickaxe / Spalirisos
     (21781, 256, 46), (21785, 256, 46),                                            -- Prime Great Axe / Laphria (Disaster)
     (21887, 256, 46), (21891, 256, 46),                                            -- Prime Lance / Gae Buide (Diarmuid)
+    (21932, 256, 46),                                                               -- Dokoku (Zesho Meppo)
+    (21986, 256, 46),                                                               -- Kusanagi (Tachi: Mumei)
     (22155, 256, 46), (22163, 256, 46),                                            -- Prime Bow / Pinaka (Sarv)
     (22159, 256, 46), (22164, 256, 46),                                            -- Prime Gun / Earp (Terminus)
     (21999, 256, 47), (22002, 256, 47),                                            -- Prime Maul / Lorg Mor (club)

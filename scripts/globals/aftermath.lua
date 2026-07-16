@@ -25,6 +25,10 @@ local getTier2RelicDuration = function(tp)
     return math.floor(tp * 0.06)
 end
 
+local getAftermathLevel = function(tp)
+    return math.max(1, math.min(3, math.floor(tp / 1000)))
+end
+
 xi.aftermath.effects =
 {
     -----------------------------------
@@ -676,34 +680,34 @@ xi.aftermath.addStatusEffect = function(player, tp, weaponSlot, aftermathType)
     {
         -- Relic
         [1] = function(x)
-            player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration(tp), origin = player, subPower = tp, tier = aftermathType })
+            player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration(tp), origin = player, subType = weaponSlot, subPower = tp, tier = aftermathType })
         end,
 
         -- Mythic
         [2] = function(x)
-            local tier = math.floor(tp / 1000)
+            local tier = getAftermathLevel(tp)
             local icon = xi.effect['AFTERMATH_LV'..tier]
-            player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration[tier], origin = player, icon = icon, subPower = tp, tier = aftermathType })
+            player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration[tier], origin = player, icon = icon, subType = weaponSlot, subPower = tp, tier = aftermathType })
         end,
 
         -- Empyrean
         [3] = function(x)
-            local tier = math.floor(tp / 1000)
+            local tier = getAftermathLevel(tp)
             local icon = xi.effect['AFTERMATH_LV'..tier]
-            player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration[tier], origin = player, icon = icon, subPower = tp, tier = aftermathType })
+            player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration[tier], origin = player, icon = icon, subType = weaponSlot, subPower = tp, tier = aftermathType })
         end,
 
         -- Prime (TP-tiered like Empyrean; the mods are applied in onEffectGain)
         [4] = function(x)
-            local tier = math.floor(tp / 1000)
+            local tier = getAftermathLevel(tp)
             local icon = xi.effect['AFTERMATH_LV'..tier]
-            player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration[tier], origin = player, icon = icon, subPower = tp, tier = aftermathType })
+            player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration[tier], origin = player, icon = icon, subType = weaponSlot, subPower = tp, tier = aftermathType })
         end,
 
         -- Aeonic (any WS applies it; flat Lv.3 effect, only duration scales with TP)
         [5] = function(x)
-            local tier = math.max(1, math.min(3, math.floor(tp / 1000)))
-            player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration[tier], origin = player, icon = xi.effect.AFTERMATH_LV3, subPower = tp, tier = aftermathType })
+            local tier = getAftermathLevel(tp)
+            player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration[tier], origin = player, icon = xi.effect.AFTERMATH_LV3, subType = weaponSlot, subPower = tp, tier = aftermathType })
         end
     }
 end
@@ -726,7 +730,7 @@ xi.aftermath.onEffectGain = function(target, effect)
             then
                 -- pets gain same mods as the player, so give them the effect without a loss message
                 pet:delStatusEffectSilent(xi.effect.AFTERMATH)
-                pet:addStatusEffect(xi.effect.AFTERMATH, { power = effect:getPower(), duration = effect:getDuration() / 1000, origin = target, subPower = effect:getSubPower(), tier = effect:getTier() })
+                pet:addStatusEffect(xi.effect.AFTERMATH, { power = effect:getPower(), duration = effect:getDuration() / 1000, origin = target, subType = effect:getSubType(), subPower = effect:getSubPower(), tier = effect:getTier() })
                 pet:getStatusEffect(xi.effect.AFTERMATH):addEffectFlag(xi.effectFlag.NO_LOSS_MESSAGE)
             end
 
@@ -742,7 +746,7 @@ xi.aftermath.onEffectGain = function(target, effect)
             if pet then
                 -- pets gain same mods as the player, so give them the effect without a loss message
                 pet:delStatusEffectSilent(xi.effect.AFTERMATH)
-                pet:addStatusEffect(xi.effect.AFTERMATH, { power = effect:getPower(), duration = effect:getDuration() / 1000, origin = target, subPower = effect:getSubPower(), tier = effect:getTier() })
+                pet:addStatusEffect(xi.effect.AFTERMATH, { power = effect:getPower(), duration = effect:getDuration() / 1000, origin = target, subType = effect:getSubType(), subPower = effect:getSubPower(), tier = effect:getTier() })
                 pet:getStatusEffect(xi.effect.AFTERMATH):addEffectFlag(xi.effectFlag.NO_LOSS_MESSAGE)
             end
 
@@ -750,7 +754,7 @@ xi.aftermath.onEffectGain = function(target, effect)
             -- level (group 1 = acc, group 2 = +atk, group 3 = +occ.attacks). Apply only
             -- the first floor(tp/1000) groups so AM1 = acc, AM2 = acc+atk, AM3 = all.
             -- (2026-07-10: was applying every group regardless of tier -> AM1 gave everything.)
-            local amLevel = math.max(1, math.min(3, math.floor(tp / 1000)))
+            local amLevel = getAftermathLevel(tp)
             for g = 1, math.min(amLevel, #aftermath.mods) do
                 local modGroup = aftermath.mods[g]
                 for i = 1, #modGroup, 2 do
@@ -762,24 +766,21 @@ xi.aftermath.onEffectGain = function(target, effect)
         -- Empyrean
         [3] = function(x)
             local mod = aftermath.mod
-            -- FJB fix: ranged Empyreans (Gandiva bow / Armageddon gun) must proc
-            -- their "occasionally double/triple damage" aftermath on RANGED hits.
-            -- attackutils.cpp reads the *_RANGED proc mods for ranged attacks and
-            -- the melee variants for melee, so the shared [44]/[45] entries (built
-            -- for the many MELEE Empyreans) leave a bow/gun user with a dead AM.
-            -- If the granting weapon is the equipped RANGED weapon, use rangedMod.
-            if aftermath.rangedMod then
-                local rangedWeapon = target:getStorageItem(0, 0, xi.slot.RANGED)
-                if rangedWeapon and rangedWeapon:getMod(xi.mod.AFTERMATH) == effect:getPower() then
-                    mod = aftermath.rangedMod
-                end
+            -- The source slot is stored on the status effect. Checking the
+            -- currently equipped ranged weapon is ambiguous when a player has
+            -- both melee and ranged Empyreans equipped (both use effect 44/45).
+            if
+                aftermath.rangedMod and
+                effect:getSubType() == xi.slot.RANGED
+            then
+                mod = aftermath.rangedMod
             end
-            effect:addMod(mod, aftermath.power[math.floor(effect:getSubPower() / 1000)])
+            effect:addMod(mod, aftermath.power[getAftermathLevel(effect:getSubPower())])
         end,
 
         -- Prime (multi-mod, TP-tiered): apply every mod at the current Lv tier
         [4] = function(x)
-            local tier = math.floor(effect:getSubPower() / 1000)
+            local tier = getAftermathLevel(effect:getSubPower())
             for _, m in ipairs(aftermath.mods) do
                 effect:addMod(m[1], m[2][tier])
             end
@@ -817,29 +818,29 @@ xi.aftermath.canOverwrite = function(player, tp, aftermathId, aftermathType)
 
         -- Mythic
         [2] = function(x)
-            local currentLevel = math.floor(effect:getSubPower() / 1000)
-            local newLevel = math.floor(tp / 1000)
+            local currentLevel = getAftermathLevel(effect:getSubPower())
+            local newLevel = getAftermathLevel(tp)
             canOverwrite = currentLevel == 1 or currentLevel < newLevel
         end,
 
         -- Empyrean
         [3] = function(x)
-            local currentLevel = math.floor(effect:getSubPower() / 1000)
-            local newLevel = math.floor(tp / 1000)
+            local currentLevel = getAftermathLevel(effect:getSubPower())
+            local newLevel = getAftermathLevel(tp)
             canOverwrite = currentLevel == 1 or currentLevel < newLevel
         end,
 
         -- Prime (same TP-level overwrite rule as Empyrean)
         [4] = function(x)
-            local currentLevel = math.floor(effect:getSubPower() / 1000)
-            local newLevel = math.floor(tp / 1000)
+            local currentLevel = getAftermathLevel(effect:getSubPower())
+            local newLevel = getAftermathLevel(tp)
             canOverwrite = currentLevel == 1 or currentLevel < newLevel
         end,
 
         -- Aeonic (flat effect; refresh/extend on same or higher TP tier)
         [5] = function(x)
-            local currentLevel = math.floor(effect:getSubPower() / 1000)
-            local newLevel = math.floor(tp / 1000)
+            local currentLevel = getAftermathLevel(effect:getSubPower())
+            local newLevel = getAftermathLevel(tp)
             canOverwrite = newLevel >= currentLevel
         end,
     }

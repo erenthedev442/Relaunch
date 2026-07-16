@@ -11,11 +11,9 @@
 -- applies nothing (verified live: foenaria 21837 had 355=110 but no 256).
 --
 -- This file's name sorts AFTER prime_weapons_gear.sql, so its mods land on TOP of
--- the gear re-insert and survive. Re-applies AFTERMATH (256) to all 9 Prime-WS
--- weapons whose WS script calls addStatusEffect(PRIME) -- the set listed in
--- prime_aftermath_mods.sql: imperator/disaster/origin/diarmuid/dragon_blow/
--- sarv/terminus (physical, aftermath 46), dagda (club, 47), oshala (staff, 48) --
--- across BOTH their base prime_* item and their Prime-Vendor "III" form. ALSO
+-- the gear re-insert and survive. Re-applies AFTERMATH (256) to every supported
+-- Prime damage weapon across its server-enabled base/intermediate and final
+-- forms: physical aftermath 46, club aftermath 47, and staff aftermath 48. ALSO
 -- grants Origin (355=110) to the foenaria upgrade stages 21834-21836, which the
 -- gear file never wired (only 21833 + 21837 had it).
 --
@@ -32,10 +30,15 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
     -- physical Prime Aftermath (46) on the base Prime Scythe + all 4 Foenaria
     (21833, 256, 46), (21834, 256, 46), (21835, 256, 46), (21836, 256, 46), (21837, 256, 46),
     -- ----- the other physical Prime-WS weapons (aftermath 46) --------------
-    (21531, 256, 46),                    -- Prime Fists      (Dragon Blow)
+    (21531, 256, 46), (21534, 256, 46), (21535, 256, 46), -- Fists / Varga Purnikawa
+    (21586, 256, 46), (21589, 256, 46), (21590, 256, 46), -- Dagger / Mpu Gandring
     (21642, 256, 46), (21646, 256, 46),  -- Prime Sword / Caliburnus (Imperator)
+    (21650, 256, 46), (21653, 256, 46),  -- Prime Blade / Helheim
+    (21726, 256, 46), (21730, 256, 46),  -- Prime Pickaxe / Spalirisos
     (21781, 256, 46), (21785, 256, 46),  -- Prime Great Axe / Laphria (Disaster)
     (21887, 256, 46), (21891, 256, 46),  -- Prime Lance / Gae Buide (Diarmuid)
+    (21932, 256, 46),                    -- Dokoku (Zesho Meppo)
+    (21986, 256, 46),                    -- Kusanagi (Tachi: Mumei)
     (22155, 256, 46), (22163, 256, 46),  -- Prime Bow / Pinaka (Sarv)
     (22159, 256, 46), (22164, 256, 46),  -- Prime Gun / Earp (Terminus)
     -- ----- Club (Dagda) -> aftermath 47 -----------------------------------
