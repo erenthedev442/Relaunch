@@ -44,12 +44,16 @@ void GP_CLI_COMMAND_CHARREQ::process(MapSession* PSession, CCharEntity* PChar) c
     CBaseEntity* PEntity = PChar->GetEntity(this->ActIndex, TYPE_NPC | TYPE_PC);
     if (!PEntity)
     {
+        // Demoted 2026-07-16: client polls stale/despawned entity IDs from its
+        // local cache (per-player Mog Garden NPCs that never spawned, entities
+        // that despawned since the client cached them, etc.). Server correctly
+        // refuses; client re-syncs on next zone. Pure noise, kept as Debug.
         const auto fullId = ((4096 + PChar->getZone()) << 12) + this->ActIndex;
-        ShowWarningFmt("Could not look up entity <{}, {}> in zone <{} ({})>",
-                       this->ActIndex,
-                       fullId,
-                       zoneutils::GetZone(PChar->getZone())->getName(),
-                       PChar->getZone());
+        ShowDebugFmt("Could not look up entity <{}, {}> in zone <{} ({})>",
+                     this->ActIndex,
+                     fullId,
+                     zoneutils::GetZone(PChar->getZone())->getName(),
+                     PChar->getZone());
         return;
     }
 

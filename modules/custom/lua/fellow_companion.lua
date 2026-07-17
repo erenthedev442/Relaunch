@@ -117,8 +117,8 @@ local CONFIG =
     -- is owned by each role's `survival` block (hpMult / pdt / mdt) below.
     perLevel = { { xi.mod.ATT, 80 }, { xi.mod.ACC, 40 }, { xi.mod.DEF, 15 } },
     -- HP = (hpBase + hpPerLevel*level) * role.survival.hpMult + VITpts*hpPerVitPt.
-    hpBase       = 5000,
-    hpPerLevel   = 1500,
+    hpBase       = 1000,
+    hpPerLevel   = 500,
     hpPerVitPt   = 120,
     -- pdt/mdt are ONLY fallbacks if a role omits survival.pdt/mdt. Every role below
     -- sets its own, so the durability of a Fellow is defined by its role: a Bulwark
@@ -154,48 +154,48 @@ local CONFIG =
         --               shared global tpMoves pool). Index stored in Fellow_TP_<role> charVar.
         vanguard  =
         {
-            name = 'Vanguard', blurb = 'Balanced melee damage dealer.', defaultWs = xi.mobSkill.DANCING_EDGE,
+            name = 'Vanguard', blurb = 'Balanced melee damage dealer.', defaultWs = xi.mobSkill.COMBO_1,
             mods     = { { xi.mod.ATTP, 30 }, { xi.mod.DOUBLE_ATTACK, 10 } },
             survival = { hpMult = 1.0, pdt = -1500, mdt = -1500 },  -- sturdy bruiser; the baseline
             moves =
             {
                 { name = 'Penta Thrust',     ws = xi.mobSkill.PENTA_THRUST       },  -- 5-hit barrage
                 { name = 'Vorpal Blade',     ws = xi.mobSkill.VORPAL_BLADE_1     },  -- fast slash
-                { name = 'Brain Crush',      ws = xi.mobSkill.BRAIN_CRUSH_1      },  -- heavy crush (Antican)
-                { name = 'Spinning Attack',  ws = xi.mobSkill.SPINNING_ATTACK_1  },  -- spinning multi-hit
-                { name = 'Sonic Blade',      ws = xi.mobSkill.SONIC_BLADE        },  -- sonic cutting wave
+                { name = 'Combo',      ws = xi.mobSkill.COMBO_1      },  -- heavy crush (Antican)
+                { name = 'Circle Blade',  ws = xi.mobSkill.CIRCLE_BLADE_1  },  -- spinning multi-hit
+                { name = 'Blade Rin',      ws = xi.mobSkill.BLADE_RIN        },  -- sonic cutting wave
             },
         },
         berserker =
         {
-            name = 'Berserker', blurb = 'All-out melee offense; hits like a truck but fragile.', defaultWs = xi.mobSkill.HEAVY_BLOW,
+            name = 'Berserker', blurb = 'All-out melee offense; hits like a truck but fragile.', defaultWs = xi.mobSkill.SAVAGE_BLADE_1,
             mods     = { { xi.mod.ATTP, 60 }, { xi.mod.DOUBLE_ATTACK, 20 }, { xi.mod.TRIPLE_ATTACK, 10 } },
-            survival = { hpMult = 0.7, pdt = 1000, mdt = -1000 },  -- glass cannon: LOW HP + takes +10% phys
+            survival = { hpMult = 0.2, pdt = 1000, mdt = -1000 },  -- glass cannon: LOW HP + takes +10% phys
             moves =
             {
-                { name = 'Auroral Uppercut', ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- massive single hit
-                { name = 'Amorphic Scythe',  ws = xi.mobSkill.AMORPHIC_SCYTHE   },  -- heavy scythe
-                { name = 'Nightmare Scythe', ws = xi.mobSkill.NIGHTMARE_SCYTHE   },  -- dark scythe
-                { name = 'Sickle Moon',      ws = xi.mobSkill.SICKLE_MOON_1      },  -- crescent slash
-                { name = 'Backhand Blow',    ws = xi.mobSkill.BACKHAND_BLOW_1    },  -- brutal backhand
+                { name = 'Raging Fists', ws = xi.mobSkill.RAGING_FISTS_1 },  -- massive single hit
+                { name = 'Evisceration',  ws = xi.mobSkill.EVISCERATION   },  -- heavy scythe
+                { name = 'Savage Blade', ws = xi.mobSkill.SAVAGE_BLADE_1   },  -- dark scythe
+                { name = 'Wheeling Thrust',      ws = xi.WHEELING_THRUST      },  -- crescent slash
+                { name = 'Tachi: Kasha',    ws = xi.mobSkill.TACHI_KASHA    },  -- brutal backhand
             },
         },
         bulwark   =
         {
-            name = 'Bulwark', blurb = 'Tank: huge HP, heavy mitigation, holds hate. The only real tank.', defaultWs = xi.mobSkill.EARTH_CRUSHER,
+            name = 'Bulwark', blurb = 'Tank: huge HP, heavy mitigation, holds hate. The only real tank.', defaultWs = xi.mobSkill.URIEL_BLADE_1,
             mods     = { { xi.mod.DEF, 300 }, { xi.mod.ENMITY, 50 } }, behavior = 'tank',
             survival = { hpMult = 1.6, pdt = -5000, mdt = -4000 },  -- wall: big HP + phys at the -50% cap
             moves =
             {
-                { name = 'Earth Pounder',    ws = xi.mobSkill.EARTH_POUNDER      },  -- ground slam
-                { name = 'Earthbreaker',     ws = xi.mobSkill.EARTHBREAKER_1     },  -- shockwave
-                { name = 'Maelstrom',        ws = xi.mobSkill.MAELSTROM_1        },  -- AoE hate pull
-                { name = 'Earth Shock',      ws = xi.mobSkill.EARTH_SHOCK        },  -- tremor
+                { name = 'Chains of Rage',    ws = xi.mobSkill.CHAINS_OF_RAGE      },  -- ground slam
+                { name = 'Light Blade',     ws = xi.mobSkill.LIGHT_BLADE_3     },  -- shockwave
+                { name = 'Silence Gas',        ws = xi.mobSkill.SILENCE_GAS_2        },  -- AoE hate pull
+                { name = 'Uriel Blade',      ws = xi.mobSkill.URIEL_BLADE_1        },  -- tremor
             },
         },
         oracle    =
         {
-            name = 'Oracle', blurb = 'Battle-healer: fights and mends your wounds when hurt.', defaultWs = xi.mobSkill.DIVINE_JUDGMENT,
+            name = 'Oracle', blurb = 'Battle-healer: fights and mends your wounds when hurt.', defaultWs = xi.mobSkill.BENEDICTION_1,
             mods     = { { xi.mod.MND, 150 }, { xi.mod.DEF, 150 }, { xi.mod.MDEF, 150 } }, behavior = 'heal',
             survival = { hpMult = 1.0, pdt = -2500, mdt = -2500 },  -- durable support, but well below a tank
             moves =
@@ -208,16 +208,15 @@ local CONFIG =
         },
         magus     =
         {
-            name = 'Magus', blurb = 'Battle-mage: elemental power, but glass -- keep it off the tank spot.', defaultWs = xi.mobSkill.FIRE_IV,
-            mods     = { { xi.mod.INT, 150 }, { xi.mod.MATT, 150 }, { xi.mod.MACC, 200 } }, behavior = 'nuke',  -- MATT 400->150 (2026-07-09; clamped)
-            survival = { hpMult = 0.45, pdt = 0, mdt = -1000 },  -- glass: lowest HP + takes FULL phys. Cannot tank.
+            name = 'Magus', blurb = 'Battle-mage: elemental power, but glass -- keep it off the tank spot.', defaultWs = xi.mobSkill.THUNDER_IV,
+            mods     = { { xi.mod.INT, 150 }, { xi.mod.MATT, 200 }, { xi.mod.MACC, 200 } }, behavior = 'nuke',  -- MATT 400->150 (2026-07-09; clamped)
+            survival = { hpMult = 0.1, pdt = 0, mdt = -1000 },  -- glass: lowest HP + takes FULL phys. Cannot tank.
             moves =
             {
-                { name = 'Blizzard IV',      ws = xi.mobSkill.BLIZZARD_IV        },
+                { name = 'Thunder IV',      ws = xi.mobSkill.THUNDER_IV        },
                 { name = 'Thunderstrike',    ws = xi.mobSkill.THUNDERSTRIKE      },  -- fTP 9, AoE stun
-                { name = 'Aero IV',          ws = xi.mobSkill.AERO_IV            },
-                { name = 'Stone IV',         ws = xi.mobSkill.STONE_IV           },
-                { name = 'Water IV',         ws = xi.mobSkill.WATER_IV           },
+                { name = 'Double Slap',          ws = xi.mobSkill.DOUBLE_SLAP            },
+                { name = 'Double Punch',         ws = xi.mobSkill.DOUBLE_PUNCH           },
             },
         },
         hunter    =
@@ -225,13 +224,17 @@ local CONFIG =
             name = 'Hunter', blurb = 'Ranger: high accuracy and evasion; survives by dodging, not soaking.', defaultWs = xi.mobSkill.EAGLE_EYE_SHOT_HUMANOID,
             mods     = { { xi.mod.AGI, 150 }, { xi.mod.ACC, 200 }, { xi.mod.EVA, 100 } }, behavior = 'ranged',
             survival = { hpMult = 0.55, pdt = -1000, mdt = -1000 },  -- fragile; leans on EVA to avoid hits
+            -- Owner-curated ranger pool 2026-07-16 (proven on Semih Lafihna / Qultada
+            -- / Lion trusts). Literal mob_skill_ids used because these are custom
+            -- ranged WSes not present in scripts/enum/mob_skill.lua. Autonomous AI
+            -- picks from skill_list_id 9805 (fellow_role_skill_lists.sql, same 5 IDs).
             moves =
             {
-                { name = 'Barbed Crescent',  ws = xi.mobSkill.BARBED_CRESCENT_1   },  -- crescent projectile
-                { name = 'Barrage',          ws = xi.mobSkill.BARRAGE             },  -- rapid volley
-                { name = 'Bomb Toss',        ws = xi.mobSkill.BOMB_TOSS_1         },  -- explosive throw
-                { name = 'Broadside Barrage',ws = xi.mobSkill.BROADSIDE_BARRAGE_1 },  -- wide volley
-                { name = 'Dark Shot',        ws = xi.mobSkill.DARK_SHOT           },  -- dark ranged
+                { name = 'Arching Arrow',  ws = 3488 },  -- fTP 3.5, crit scales w/TP, ignores parry/guard/block, 16y
+                { name = 'Lux Arrow',      ws = 3490 },  -- light-elemental arrow, 16y
+                { name = 'Stellar Arrow',  ws = 3489 },  -- AoE arrow burst around the target, 16y
+                { name = 'Sniper Shot',    ws =  210 },  -- single-target gun shot, 15y
+                { name = 'Grapeshot',      ws = 3491 },  -- short-range 7y pistol cone AoE
             },
         },
         -- MASTERED: the prestige capstone. UNLOCKS only once ALL 14 categories are
@@ -535,7 +538,18 @@ end
 -- master) so the loop has stopped -- and all master access is pcall-guarded.
 scheduleCombatLoop = function(master, pet)
     pet:timer(CONFIG.combatLoopMs, function(p)
-        if not p or not p:isAlive() then return end
+        -- TEARDOWN GUARD (2026-07-17 crash fix): both refs can be userdata
+        -- wrapping freed entities after a logout. pcall catches Lua-raised
+        -- errors; the nil-guarded getZone() catches the invalid-entity case
+        -- (engine warns + returns nil instead of dereferencing). Bail without
+        -- re-arming on any doubt -- the keeper respawns a fresh Fellow.
+        local okZ, zoned = pcall(function()
+            return p ~= nil and p:getZone() ~= nil
+               and master ~= nil and master:getZone() ~= nil
+        end)
+        if not okZ or not zoned then return end
+
+        if not p:isAlive() then return end
         pcall(function()
             if not (master and master:isAlive()) then return end
             local rdef = roleDef(master)
@@ -644,7 +658,16 @@ local function getFellowTrust(p)
     local ok, party = pcall(function() return p:getPartyWithTrusts() end)
     if not ok or not party then return nil end
     for _, member in pairs(party) do
-        if member and member:getObjType() == xi.objType.TRUST and entityIsFellow(member) then
+        -- Per-member pcall: a despawning trust can sit in the party snapshot
+        -- with an already-invalidated base pointer (the 03:20:41 getLocalVar
+        -- "dead/null entity" warn). Probe it inside a pcall and skip on any
+        -- error instead of letting one corpse abort the whole scan.
+        local okM, isFellow = pcall(function()
+            return member ~= nil
+                and member:getObjType() == xi.objType.TRUST
+                and entityIsFellow(member)
+        end)
+        if okM and isFellow then
             return member
         end
     end
@@ -672,6 +695,16 @@ local genByName = {}
 -- pet and pets are allowed here -- survives zoning/death, yields to real job pets.
 local function keeper(p, name, gen)
     if not p or genByName[name] ~= gen then return end
+
+    -- TEARDOWN GUARD (2026-07-17 crash fix): when the master logs out, queued
+    -- keeper timers still fire against the PChar mid-teardown. The guarded C++
+    -- bindings survive that (they warn and return nil) but spawnTrust into a
+    -- half-freed party ACCESS_VIOLATIONs (see dmp/xi_map.exe_17-7_3-20-41).
+    -- getZone() is nil-guarded engine-side, so nil == teardown: bail WITHOUT
+    -- re-arming. onGameIn re-arms the keeper on the next login/zone-in.
+    local okZ, zone = pcall(function() return p:getZone() end)
+    if not okZ or zone == nil then return end
+
     if getN(p, V.active) ~= 1 then return end
 
     -- (Re)spawn the Fellow-trust whenever it isn't currently out. A trust does

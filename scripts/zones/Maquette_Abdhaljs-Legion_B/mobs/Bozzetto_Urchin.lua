@@ -10,7 +10,10 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
-    mob:setMobMod(xi.mobMod.DRAW_IN, 0)
+    -- Removed 2026-07-16: xi.mobMod.DRAW_IN does not exist in scripts/enum/mob_mod.lua,
+    -- so setMobMod(nil, 0) threw "expected number, received nil" on every urchin spawn
+    -- (4 urchins per instance = 4 errors per pop; 75+ in the log window). Urchins have
+    -- no draw-in behavior by default anyway, so no replacement needed.
 end
 
 entity.onMobEngage = function(mob, target)

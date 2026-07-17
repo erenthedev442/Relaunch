@@ -13,7 +13,7 @@ Talk to **The Gauntlet** keeper (sword-and-shield icon) in <!--npc:gauntlet-->Ri
 
 - **Solo only** — Trusts are automatically dismissed on entry. Pets are allowed.
 - **No outside healing.** Players fighting a Gauntlet NM cannot receive healing from anyone outside the arena fight.
-- **One death ends the run.** You are expelled immediately, no exceptions.
+- **One death ends the run.** You are expelled immediately, no exceptions — but you leave **on your feet**: the arena revives you on the way out instead of dumping you at your homepoint weakened.
 - **Leaving the arena zone ends the run.** Use `!gauntlet abort` to exit cleanly.
 
 ---
@@ -156,6 +156,6 @@ The Hall updates after the next map restart following a clear.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 030b1bdd03c7 -->
-_Last updated: 2026-07-13 20:33 PDT_
+<!-- content-hash: 62e6444ba0d5 -->
+_Last updated: 2026-07-17 04:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

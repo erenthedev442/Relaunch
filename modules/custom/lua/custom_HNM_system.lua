@@ -88,10 +88,27 @@ hnmSystem:addOverride('xi.zones.Dragons_Aery.npcs.qm0.onTrade', function(player,
 end)
 
 -----------------------------------
+-- Affinity-owned sites retired (2026-07-17)
+-----------------------------------
+-- affinity_nm_spawns.sql (2026-07-06) deleted the RETAIL spawn rows for
+-- Behemoth / King Behemoth / Simurgh / Roc / Adamantoise / Aspidochelone so
+-- the affinity replicas are the SOLE spawns at those camps. Consequences for
+-- this module: GetFirstID('Behemoth'/'Aspidochelone') is nil (zone-init threw
+-- "expected number, received nil" at every boot), and the other king names now
+-- resolve to the AFFINITY mobs -- so the rotation/ToD logic here was fighting
+-- affinity_nm_autopop's own respawn control over the same entities, and the
+-- despawn id-guards matched the replicas they were written to exclude.
+-- The four affected sites below early-return. Dragon's Aery / Garlaige /
+-- Jugner / E. Sarutabaruta keep the classic rotation (retail spawns intact).
+local AFFINITY_OWNED = true  -- Behemoths Dominion, Valley of Sorrows, Roc, Simurgh
+
+-----------------------------------
 -- Valley of Sorrows: Adamantoise, Aspidochelone
 -----------------------------------
 hnmSystem:addOverride('xi.zones.Valley_of_Sorrows.Zone.onInitialize', function(zone)
     super(zone)
+
+    if AFFINITY_OWNED then return end
 
     local hnmPopTime  = GetServerVariable('[HNM]Adamantoise')   -- Time the NM will spawn at.
     local currentTime = GetSystemTime()
@@ -116,6 +133,8 @@ end)
 hnmSystem:addOverride('xi.zones.Valley_of_Sorrows.mobs.Adamantoise.onMobDespawn', function(mob)
     super(mob)
 
+    if AFFINITY_OWNED then return end
+
     -- Only the real HNM reschedules its own window. Affinity-NM replicas
     -- reuse this retail name/script (affinity_nm_autopop.lua); without this
     -- id check, killing a replica would stomp the real HNM's ToD/respawn.
@@ -134,6 +153,7 @@ hnmSystem:addOverride('xi.zones.Valley_of_Sorrows.mobs.Adamantoise.onMobDespawn'
 end)
 
 hnmSystem:addOverride('xi.zones.Valley_of_Sorrows.npcs.qm1.onTrade', function(player, npc, trade)
+    if AFFINITY_OWNED then return end
     if
         not GetMobByID(valleySorrowsID.mob.ADAMANTOISE):isSpawned() and
         not GetMobByID(valleySorrowsID.mob.ASPIDOCHELONE):isSpawned() and
@@ -149,6 +169,8 @@ end)
 -----------------------------------
 hnmSystem:addOverride('xi.zones.Behemoths_Dominion.Zone.onInitialize', function(zone)
     super(zone)
+
+    if AFFINITY_OWNED then return end
 
     local hnmPopTime  = GetServerVariable('[HNM]Behemoth')   -- Time the NM will spawn at.
     local currentTime = GetSystemTime()
@@ -180,6 +202,7 @@ end)
 -- pattern actually fires (same as affinity_nm_autopop.lua).
 
 hnmSystem:addOverride('xi.zones.Behemoths_Dominion.npcs.qm2.onTrade', function(player, npc, trade)
+    if AFFINITY_OWNED then return end
     if
         not GetMobByID(behemothDomID.mob.BEHEMOTH):isSpawned() and
         not GetMobByID(behemothDomID.mob.KING_BEHEMOTH):isSpawned() and
@@ -215,6 +238,8 @@ end)
 hnmSystem:addOverride('xi.zones.Sauromugue_Champaign.Zone.onInitialize', function(zone)
     super(zone)
 
+    if AFFINITY_OWNED then return end
+
     local hnmPopTime  = GetServerVariable('[HNM]Roc')
     local currentTime = GetSystemTime()
 
@@ -234,6 +259,8 @@ end)
 
 hnmSystem:addOverride('xi.zones.Sauromugue_Champaign.mobs.Roc.onMobDespawn', function(mob)
     super(mob)
+
+    if AFFINITY_OWNED then return end
 
     -- Only the real HNM reschedules its own window. Affinity-NM replicas
     -- reuse this retail name/script (affinity_nm_autopop.lua); without this
@@ -257,6 +284,8 @@ end)
 hnmSystem:addOverride('xi.zones.Rolanberry_Fields.Zone.onInitialize', function(zone)
     super(zone)
 
+    if AFFINITY_OWNED then return end
+
     local hnmPopTime  = GetServerVariable('[HNM]Simurgh')
     local currentTime = GetSystemTime()
 
@@ -276,6 +305,8 @@ end)
 
 hnmSystem:addOverride('xi.zones.Rolanberry_Fields.mobs.Simurgh.onMobDespawn', function(mob)
     super(mob)
+
+    if AFFINITY_OWNED then return end
 
     -- Only the real HNM reschedules its own window. Affinity-NM replicas
     -- reuse this retail name/script (affinity_nm_autopop.lua); without this

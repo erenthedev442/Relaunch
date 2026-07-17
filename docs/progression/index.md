@@ -158,6 +158,6 @@ The Hunting League is the main game now, but retail content still has a role:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5c11a3ad98b6 -->
-_Last updated: 2026-07-13 22:00 PDT_
+<!-- content-hash: 997207f39530 -->
+_Last updated: 2026-07-17 04:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

@@ -140,6 +140,8 @@ Your Sage Mastery rank lifts the roll floor inside the unlocked band — see [Au
 | **[Voidspire](../endgame/voidspire.md)** | Endless escalating wave-gauntlet at the Warden in Escha - Ru'Aun. Trusts enabled; a wipe ends the run and records your deepest floor on the leaderboard. |
 | **[Omen](../endgame/omen.md)** | Reisenjima Henge gauntlet: five gates of trials, three Glassy sentinels, and the **Caturae** (Kin, Gin, Fu, Kyou, Kei) with the hidden Prime **Ou** beyond them. |
 | **REMA / Prime WS Enhancement** | Upgrade weapon-skill damage and mods on Relic / Empyrean / Mythic / Aeonic / Prime weapons — the WS tuning layer sitting on top of the endgame weapon ladder. |
+| **[Open World Mob Scaling](../progression/server-features.md#open-world-mob-scaling)** | Always-on stat floors for ordinary mobs (level 91+) across the open-world progression zones — under-tuned field mobs are raised to the relaunch curve the moment they spawn. |
+| **Commemoration Moogle** | One-time reward the first time a character reaches level 99: pick a bundle of free augment catalysts to kick-start [augmenting](../progression/augmenting-guide.md). |
 
 ---
 
@@ -226,6 +228,6 @@ The **Prime Armory** at `!hub` forges a Prime Weapon after **5 trials** — 16 n
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 37b4ef7ab3b4 -->
-_Last updated: 2026-07-16 01:15 PDT_
+<!-- content-hash: fbfd1cd013c7 -->
+_Last updated: 2026-07-17 04:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

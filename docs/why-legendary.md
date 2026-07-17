@@ -37,7 +37,7 @@ The Relaunch fixes that. Everyone starts equal. The economy is fresh. The stat b
 
 - **[High-Tier Battlefields](endgame/high-tier-battlefields.md)** — Repeatable, tier-scaled versions of the classic mission boss battlefields. Buy a Phantom Gem with gil on Purgonorgo Isle, trade it at the battlefield entrance, pick a tier (I / II / III), and win for scaling gil + Hunt Mark rewards.
 
-- **[Unity Concord](endgame/unity-concord.md)** — Hunt Wanted NMs at their retail homes across Vana'diel to earn Unity Accolades, then spend them in the board's shop. Three tiers of difficulty — lv 75 classic NMs up to lv 145 endgame superbosses.
+- **[Unity Concord](endgame/unity-concord.md)** — Hunt Wanted NMs at their retail homes across Vana'diel to earn Unity Accolades, then spend them in the board's shop. All Wanted NMs spawn at level 99; three custom stat tiers range from entry fights to endgame superbosses.
 
 - **[Dungeons](endgame/dungeons.md)** — Classic Vana'diel zones become private expedition grounds.
 
@@ -94,6 +94,6 @@ Everything that made the original server worth playing:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a9c3b660cfbb -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: 33a168289e74 -->
+_Last updated: 2026-07-17 04:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

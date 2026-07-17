@@ -24,7 +24,11 @@ require('scripts/globals/interaction/interaction_global')
 local m = Module:new('legendary_ring_aura')
 
 local RING_ID     = 26169
-local AURA_EFFECT = xi.effect.AFTERGLOW  -- keep in sync with scripts/items/legendary_ring.lua
+-- AFTERGLOW (489) has no standalone client visual (aura only renders in the
+-- relic/mythic aftermath weapon context) -- wearers got an icon but no glow.
+-- MUMORS_RADIANCE (613) renders its body glow from the effect alone.
+local AURA_EFFECT     = xi.effect.MUMORS_RADIANCE -- keep in sync with scripts/items/legendary_ring.lua
+local OLD_AURA_EFFECT = xi.effect.AFTERGLOW       -- legacy; cleared so old wearers don't keep a dead icon
 local AURA_DUR    = 31536000             -- 1 year (re-applied every zone-in)
 
 local function isWearingRing(player)
@@ -40,6 +44,9 @@ m:addOverride('InteractionGlobal.onZoneIn', function(player, prevZone, fallbackF
     -- Delay so equipment + stats are settled after the zone-in (same 1500ms
     -- the auto-buff modules use). Guarded by hasStatusEffect so we never stack.
     player:timer(1500, function(p)
+        if p:hasStatusEffect(OLD_AURA_EFFECT) then
+            p:delStatusEffect(OLD_AURA_EFFECT)
+        end
         if isWearingRing(p) and not p:hasStatusEffect(AURA_EFFECT) then
             p:addStatusEffect(AURA_EFFECT, { power = 1, duration = AURA_DUR, origin = p })
         end

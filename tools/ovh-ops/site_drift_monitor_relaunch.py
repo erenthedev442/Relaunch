@@ -18,11 +18,21 @@ Four independent signals:
     are warn-loud in a log nobody reads without this.
   * player portal health (portal.ffxi-legendary.com) -> the portal app
     (uvicorn on 127.0.0.1:8090) and its cloudflared tunnel are SCHEDULED
-    TASKS, not services; a dead tunnel serves Cloudflare Error 1033 to every
-    player while the box looks healthy from inside (2026-07-12 outage: the
-    migrated tunnel task had only a boot trigger and had never run). If the
-    public URL fails but the app answers locally, the monitor SELF-HEALS by
-    kicking the FFXIPortalTunnel task and re-checking before it alerts.
+    TASKS, not services. TWO independent failure modes, each self-healed:
+      - app dead / tunnel up: from the box, Cloudflare's WAF answers the
+        public URL with 403 (< 500) whether or not the origin is alive, so
+        the public probe CANNOT see a dead backend (2026-07-17 outage: the
+        FFXIPortal task hit a 72h ExecutionTimeLimit and was terminated;
+        tunnel stayed up serving 502s for ~12h, and this monitor's old
+        public-URL-first check read the WAF 403 as healthy). Fix: probe the
+        LOCAL app first (authoritative, no WAF in path) and kick FFXIPortal
+        if it's down.
+      - tunnel dead: a dead tunnel serves Cloudflare Error 1033 (530) to
+        every player while the box looks healthy from inside (2026-07-12
+        outage: the migrated tunnel task had only a boot trigger). If the app
+        answers locally but the public URL is 5xx/no-response, kick the
+        FFXIPortalTunnel task.
+    Both paths re-check after the kick before deciding to alert.
 
 Alerts go to the Discord webhook in C:\\relaunch-ops\\.discord_webhook (one line).
 A cooldown stops it spamming during a sustained outage. stdlib only; never raises
@@ -122,14 +132,21 @@ for name, idx, log in SITES:
 
 # --- signal 4: player portal health -----------------------------------------
 PORTAL_URL = "https://portal.ffxi-legendary.com/"
-PORTAL_LOCAL = "http://127.0.0.1:8090/"
+# Probe a real app endpoint, not "/": a lightweight 200 that only the live
+# uvicorn app can produce, so a dead backend is unambiguous locally.
+PORTAL_LOCAL = "http://127.0.0.1:8090/api/status"
 
 
 def http_ok(url, timeout=15):
     """True if the URL's ORIGIN is reachable. Any status < 500 counts:
     Cloudflare's WAF answers python-urllib with 403 from this box, but a 403
     still proves the tunnel is alive -- a dead tunnel answers 530 (Error
-    1033), and a dead origin 52x. Only 5xx / no-response mean down."""
+    1033), and a dead origin 52x. Only 5xx / no-response mean down.
+
+    NB: because the box's request is intercepted by the WAF (403) BEFORE it
+    proxies to the origin, this is a TUNNEL-liveness signal only -- it cannot
+    tell a live backend from a dead one behind a live tunnel. Use the LOCAL
+    endpoint (no WAF in path) for authoritative app liveness."""
     req = urllib.request.Request(url, headers={"User-Agent": "relaunch-drift-monitor"})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as r:
@@ -140,29 +157,53 @@ def http_ok(url, timeout=15):
         return False
 
 
+def _kick(task):
+    """schtasks /run a portal task; return True if the launch command itself
+    succeeded (not whether the service recovered)."""
+    try:
+        subprocess.run(["schtasks", "/run", "/tn", task],
+                       capture_output=True, timeout=30)
+        return True
+    except Exception:
+        return False
+
+
 def portal_check():
-    """None = healthy; else a problem string. Self-heals a dead tunnel."""
+    """None = healthy; else a problem string. Self-heals BOTH a dead app
+    (kick FFXIPortal) and a dead tunnel (kick FFXIPortalTunnel).
+
+    App liveness is checked LOCALLY first -- it's authoritative (no WAF in the
+    path), unlike the public URL which reads 403-from-WAF as alive regardless
+    of backend state (the 2026-07-17 blind spot)."""
+    # 1) Authoritative app-liveness check on 127.0.0.1 (no Cloudflare in path).
+    if not http_ok(PORTAL_LOCAL, timeout=5):
+        # uvicorn is down. Root cause is usually the FFXIPortal task being
+        # stopped/terminated (a scheduler timeout-kill does NOT trip the
+        # task's RestartCount). Kick it (IgnoreNew makes this a no-op if it is
+        # somehow already running) and re-check before alerting.
+        launched = _kick("FFXIPortal")
+        time.sleep(20)
+        if http_ok(PORTAL_LOCAL, timeout=5):
+            print("[drift] portal app was down on 127.0.0.1:8090; FFXIPortal "
+                  "kicked -- answering again (self-healed)")
+            return None
+        if launched:
+            return "portal app down on 127.0.0.1:8090 (uvicorn) -- FFXIPortal restart attempted, still down"
+        return "portal app down on 127.0.0.1:8090 (uvicorn) -- FFXIPortal restart failed to launch"
+
+    # 2) App is alive locally. Now the public URL only tells us about the tunnel.
     if http_ok(PORTAL_URL):
         return None
-    app_ok = http_ok(PORTAL_LOCAL, timeout=5)
-    note = ""
-    if app_ok:
-        # App is fine locally -> the cloudflared tunnel is what died. Kick its
-        # task (MultipleInstances=IgnoreNew makes this a no-op if racing) and
-        # give it a moment before deciding to alert.
-        try:
-            subprocess.run(["schtasks", "/run", "/tn", "FFXIPortalTunnel"],
-                           capture_output=True, timeout=30)
-            time.sleep(20)
-            if http_ok(PORTAL_URL):
-                print("[drift] portal public URL was down; FFXIPortalTunnel "
-                      "kicked -- healthy again (self-healed)")
-                return None
-            note = " (tunnel restart attempted, still down)"
-        except Exception as e:
-            note = f" (tunnel restart failed to launch: {e})"
-        return "public URL down -- cloudflared tunnel dead" + note
-    return "portal app not answering on 127.0.0.1:8090 (uvicorn down)" + note
+    # Tunnel is down (5xx / no response). Kick it and re-check.
+    launched = _kick("FFXIPortalTunnel")
+    time.sleep(20)
+    if http_ok(PORTAL_URL):
+        print("[drift] portal public URL was down; FFXIPortalTunnel kicked -- "
+              "healthy again (self-healed)")
+        return None
+    if launched:
+        return "public URL down -- cloudflared tunnel dead (tunnel restart attempted, still down)"
+    return "public URL down -- cloudflared tunnel dead (tunnel restart failed to launch)"
 
 
 portal_reason = portal_check()

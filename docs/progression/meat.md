@@ -15,9 +15,11 @@
 
 Meat is the ultimate meat-shield:
 
-- **It cannot die.** Any lethal hit is floored to 1 HP — on top of ~100k HP, −50% damage taken, enormous DEF/MDEF, and **total status immunity** (it can't be slept, silenced, petrified, or doomed off the job).
-- **It always holds hate.** Maximum enmity generation plus the full Paladin/Warrior taunt kit — **Provoke, Flash** (supercharged by **Divine Emblem**), **Sentinel, Shield Bash,** and **Warcry** — keep enemies locked onto Meat. The enemy attacks whoever holds the most hate, so it focuses Meat and leaves your party alone.
-- **Minimal DPS by design.** Meat swings only enough to keep enmity flowing — it's a shield, not a sword.
+<!-- DOCGEN:BEGIN id="meat-stats" -->
+- **Built to not die.** +20% max HP on top of level-scaled HP/DEF/MDEF, **−25% damage taken**, a 35% shield-block rate, level-scaled status resistance, and an ailment ward that instantly cleanses Amnesia, Doom, Curse I, Curse II. Below 50% HP it cures itself like any good Paladin.
+- **It always holds hate.** +200 enmity plus the taunt rotation — **Provoke**, **Divine Emblem**, **Shield Bash**, **Sentinel**, **Majesty**, **Flash**, **Reprisal**, **Phalanx** — keeps enemies locked onto Meat. The enemy attacks whoever holds the most hate, so it focuses Meat and leaves your party alone.
+- **Minimal DPS by design.** Meat swings only enough to keep enmity flowing — it's a shield, not a sword. Its stats grow with the **TrustUpgraded** server-progression variable, so Meat scales up as your character clears content.
+<!-- DOCGEN:END id="meat-stats" -->
 
 !!! note "What it can't do"
     Holding hate redirects an enemy's *direct* attacks onto Meat. **Area-of-effect damage still hits the party** — no taunt in FFXI stops AoE.
@@ -29,6 +31,6 @@ Reach **Hunting League Rank 2** with the Hunt-Marks price shown above banked, th
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d2d0bd741b40 -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: 43b5512c345f -->
+_Last updated: 2026-07-17 04:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

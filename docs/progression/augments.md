@@ -291,6 +291,6 @@ _143 augments across 11 categories. **Every augment is available at every Augmen
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: efa9dcd3adb5 -->
-_Last updated: 2026-07-13 22:00 PDT_
+<!-- content-hash: afd11efa73e5 -->
+_Last updated: 2026-07-17 04:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

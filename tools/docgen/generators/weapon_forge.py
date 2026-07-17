@@ -359,3 +359,75 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     page = docs_dir / "progression" / "weapon-forge.md"
     ok = write_between_markers(page, "weapon-forge-widget", widget)
     print(f"[weapon_forge] {'widget written' if ok else 'marker not found — skipped'}")
+
+    ws_md = _ws_enhancement_md(repo_root)
+    if ws_md:
+        ok2 = write_between_markers(page, "weapon-forge-ws-enhancement", ws_md)
+        print(f"[weapon_forge] {'ws-enhancement written' if ok2 else 'ws-enhancement marker not found — skipped'}")
+
+
+# ---------------------------------------------------------------------------
+# Native weapon-skill enhancement (REMA tiers + Prime over-cap).
+# Sources: modules/custom/lua/rema_ws_tier_catalog.lua (tier scales, tuned-WS
+# roster; engine = REMAWeaponskillEnhancement.lua) and
+# modules/custom/lua/prime_ws_tuning_catalog.lua (job-tier caps, +WS% layer;
+# engine = PrimeWeaponskillTuning.lua). All values parsed live.
+
+def _ws_enhancement_md(repo_root: Path) -> str | None:
+    rema_src = resolve_source(repo_root, "modules/custom/lua/rema_ws_tier_catalog.lua", required=False)
+    prime_src = resolve_source(repo_root, "modules/custom/lua/prime_ws_tuning_catalog.lua", required=False)
+    if rema_src is None or prime_src is None:
+        return None
+    rema = rema_src.read_text(encoding="utf-8", errors="replace")
+    prime = prime_src.read_text(encoding="utf-8", errors="replace")
+
+    bench_m = re.search(r"PRIME_EQUIVALENT_BONUS\s*=\s*([\d.]+)", rema)
+    scales = dict(re.findall(r"(RELIC|EMPYREAN|MYTHIC|AEONIC)\s*=\s*([\d.]+)", rema))
+    tuning_block = rema.split("catalog.REMA_WS_TUNING", 1)[-1]
+    rema_ws_count = len(re.findall(r"\[xi\.weaponskill\.\w+\]\s*=\s*[\d.]+", tuning_block))
+
+    ws_bonus_m = re.search(r"catalog\.WS_DAMAGE_BONUS\s*=\s*(\d+)", prime)
+    caps = dict(re.findall(r"(SUPPORT|HYBRID|DAMAGE)\s*=\s*(\d+)", prime))
+    jobs_by_tier: dict[str, list[str]] = {"SUPPORT": [], "HYBRID": [], "DAMAGE": []}
+    for job, tier in re.findall(r"\[xi\.job\.(\w+)\]\s*=\s*catalog\.DAMAGE_CAPS\.(\w+)", prime):
+        jobs_by_tier.setdefault(tier, []).append(job)
+    prime_ws_count = len(re.findall(r"\bftpScale\s*=\s*[\d.]+", prime))
+
+    if not bench_m or len(scales) != 4 or not ws_bonus_m or len(caps) != 3:
+        print("[weapon_forge] WARN: ws-enhancement parse degraded — block not rewritten")
+        return None
+
+    cap_label = "universal damage cap"
+    settings = resolve_source(repo_root, "settings/default/map.lua", required=False)
+    if settings is not None:
+        cap_m = re.search(r"GLOBAL_HP_DAMAGE_CAP\s*=\s*(\d+)", settings.read_text(encoding="utf-8", errors="replace"))
+        if cap_m:
+            cap_label = f"universal {int(cap_m.group(1)):,} damage cap"
+
+    bench = float(bench_m.group(1))
+    bench_pct = int(round(bench * 100))
+    order = [("RELIC", "Relic"), ("EMPYREAN", "Empyrean"), ("MYTHIC", "Mythic"), ("AEONIC", "Aeonic")]
+    tier_rows = "\n".join(
+        f"| {label} | ×{float(scales[key]):.2f} | +{int(round(float(scales[key]) * bench * 100))}% |"
+        for key, label in order)
+    cap_rows = "\n".join(
+        f"| {label} | {int(caps[key]):,} | {', '.join(jobs_by_tier.get(key, []))} |"
+        for key, label in (("SUPPORT", "Support"), ("HYBRID", "Hybrid"), ("DAMAGE", "Damage")))
+
+    return f"""Finishing a weapon does more than raise its stats — **final REMA and Prime weapons supercharge their native weapon skill**.
+
+**Relic / Empyrean / Mythic / Aeonic (final stage only)** — the weapon's signature WS ({rema_ws_count} weapon skills tuned individually) gains a damage bonus benchmarked against Prime's +{bench_pct}%, scaled by family:
+
+| Family | Tier scale | Native WS bonus |
+|---|---|---|
+{tier_rows}
+
+The native hit count, damage path, crit rules, and utility effects are preserved — only the damage budget grows.
+
+**Prime (final stage)** — the {prime_ws_count} Prime-native weapon skills receive a **+{int(ws_bonus_m.group(1))}% weapon-skill damage layer** and are the only attacks allowed to break the [{cap_label}](server-features.md#universal-damage-cap), up to a ceiling set by your job's role:
+
+| Role tier | Per-WS damage ceiling | Jobs |
+|---|---|---|
+{cap_rows}
+
+Ordinary uses of shared weapon skills (a Resolution from a non-Prime greatsword, for example) are completely unchanged."""

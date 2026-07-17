@@ -147,10 +147,10 @@ struct PetInfo_t
     uint8             petID;        // ID as in wyvern(48) , carbuncle(8) ect..
     PET_TYPE          petType;      // Type of pet being transferred
     uint8             petLevel;     // Level the pet was spawned with
-    int16             petHP;
-    int16             petMP;
-    float             petTP;
-};
+    int32             petHP;  // Widened int16 -> int32 (2026-07-16): custom Fellow trusts hit 100k+ HP,
+    int32             petMP;  // overflowing int16 on zone/logout save. The char_stats columns are
+    float             petTP;  // int(10) unsigned / smallint(4); pet_hp already matches. pet_mp still
+};                            // clamps at 32767 -- widen the char_stats.pet_mp column if MP > 32k needed.
 
 struct AuctionHistory_t
 {

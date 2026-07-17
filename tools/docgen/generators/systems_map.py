@@ -518,6 +518,16 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
                   "Upgrade weapon-skill damage and mods on Relic / Empyrean / Mythic / "
                   "Aeonic / Prime weapons — the WS tuning layer sitting on top of the "
                   "endgame weapon ladder."]))
+    if have("modules/custom/lua/OpenWorldScaling.lua"):
+        add(_row(["**[Open World Mob Scaling](../progression/server-features.md#open-world-mob-scaling)**",
+                  "Always-on stat floors for ordinary mobs (level 91+) across the "
+                  "open-world progression zones — under-tuned field mobs are raised "
+                  "to the relaunch curve the moment they spawn."]))
+    if have("modules/custom/lua/Commemoration_Moogle.lua"):
+        add(_row(["**Commemoration Moogle**",
+                  "One-time reward the first time a character reaches level 99: "
+                  "pick a bundle of free augment catalysts to kick-start "
+                  "[augmenting](../progression/augmenting-guide.md)."]))
     add("")
     add("---")
     add("")

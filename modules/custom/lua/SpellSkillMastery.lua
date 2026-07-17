@@ -99,17 +99,22 @@ local function applyWSEffects(attacker, target, damage)
         not damage or
         damage <= 0 or
         attacker == nil or
-        target == nil or
-        target:isDead()
+        target == nil
     then
         return
     end
 
-    local damType = attacker:getWeaponDamageType(xi.slot.MAIN)
+    -- WEAPONSKILL_USE fires AFTER the hit lands; on a killing blow `target` is
+    -- already dead. `crit` (the only remaining effect) grants BONUS damage to
+    -- the primary target, which is pointless once it's dead -- so gate it on
+    -- targetAlive. The retired 'lifesteal' kind (2026-07-17) intentionally did
+    -- NOT gate on that; if you add a self-effect kind back, don't gate it.
+    local damType     = attacker:getWeaponDamageType(xi.slot.MAIN)
+    local targetAlive = not target:isDead()
     for _, fx in ipairs(C.wsEffects) do
         local tier = attacker:getCharVar(fx.var) or 0
         if tier > 0 then
-            if fx.kind == 'crit' then
+            if fx.kind == 'crit' and targetAlive then
                 if math.random(100) <= tier * fx.chancePerTier then
                     local bonus = math.floor(damage * fx.bonusPct / 100)
                     if bonus > 0 then
@@ -331,7 +336,8 @@ confirmTrait = function(p, track, t)
     })
 end
 
--- WS Effects menu (tiered procs; currently Empowered Strike only).
+-- WS Effects menu (tiered procs -- currently just Empowered Strike; Splash was
+-- retired 2026-07-13, Lifesteal was retired 2026-07-17).
 openEffects = function(p)
     local options = {}
     for _, fx in ipairs(C.wsEffects) do

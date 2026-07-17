@@ -237,8 +237,9 @@ return {
         } },
         [204] = { zoneName = 'FeiYin', points = {
             { id = 17613282, x = 44.25, y = -15.44, z = 150.36, rot = 0 },
-            { id = 17613283, x = 0.0, y = 0.0, z = 0.0, rot = 0 },
-            { id = 17613284, x = 0.0, y = 0.0, z = 0.0, rot = 0 },
+            -- 17613283/17613284 removed 2026-07-17: stock npc_list junction
+            -- ids that don't exist in this DB (GetNPCByID error every boot)
+            -- and carried (0,0,0) placeholder coords anyway.
         } },
         [205] = { zoneName = 'Ifrits_Cauldron', points = {
             { id = 17617281, x = 7.38, y = 3.95, z = 232.4, rot = 0 },

@@ -176,6 +176,31 @@
 #include "utils/trustutils.h"
 #include "utils/zoneutils.h"
 
+// ---------------------------------------------------------------------------
+// FJB: dangling-entity guard for CLuaBaseEntity methods.
+// Lua (commands/timers/closures) routinely holds an entity reference past the
+// entity's lifetime; calling any method then derefs freed memory -> SIGSEGV,
+// which Lua pcall CANNOT catch. The alive-entity registry (CBaseEntity
+// ctor/dtor, see baseentity.cpp) is the authoritative liveness check. These
+// turn a call on a freed/null entity into a logged no-op instead of a crash.
+//   FJB_REQUIRE_ALIVE(retval) -- value-returning methods
+//   FJB_REQUIRE_ALIVE_VOID()  -- void methods
+// (getZoneID/setHP/setLocalVar/getLocalVar use the explicit form of this check.)
+// ---------------------------------------------------------------------------
+#define FJB_REQUIRE_ALIVE(retval) \
+    if (!CBaseEntity::IsEntityAlive(m_PBaseEntity)) \
+    { \
+        ShowWarning("CLuaBaseEntity::%s on a dead/null entity - suppressed.", __func__); \
+        return retval; \
+    }
+#define FJB_REQUIRE_ALIVE_VOID() \
+    if (!CBaseEntity::IsEntityAlive(m_PBaseEntity)) \
+    { \
+        ShowWarning("CLuaBaseEntity::%s on a dead/null entity - suppressed.", __func__); \
+        return; \
+    }
+
+
 #include <magic_enum/magic_enum.hpp>
 
 //======================================================//
@@ -328,6 +353,8 @@ void CLuaBaseEntity::messageText(CLuaBaseEntity* PLuaBaseEntity, uint16 messageI
 
 void CLuaBaseEntity::printToPlayer(const std::string& message, const sol::object& messageTypeObj, const sol::object& nameObj)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowError("Function called on non-PC entity (%s)", m_PBaseEntity->name.c_str());
@@ -636,6 +663,8 @@ void CLuaBaseEntity::customMenu(const sol::object& obj)
 
 int32 CLuaBaseEntity::getCharVar(const std::string& varName)
 {
+    FJB_REQUIRE_ALIVE(0);
+
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
         return PChar->getCharVar(varName);
@@ -696,6 +725,8 @@ auto CLuaBaseEntity::getCharVarsWithSuffix(const std::string& suffix) -> sol::ta
 
 void CLuaBaseEntity::setCharVar(const std::string& varName, int32 value, const sol::object& expiry)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
         uint32 varTimestamp = expiry.is<uint32>() ? expiry.as<uint32>() : 0;
@@ -1027,29 +1058,6 @@ void CLuaBaseEntity::entityVisualPacket(const std::string& command, const sol::o
     static_cast<CCharEntity*>(m_PBaseEntity)->pushPacket<GP_SERV_COMMAND_MAPSCHEDULOR>(PNpc, command.c_str());
 }
 
-// ---------------------------------------------------------------------------
-// FJB: dangling-entity guard for CLuaBaseEntity methods.
-// Lua (commands/timers/closures) routinely holds an entity reference past the
-// entity's lifetime; calling any method then derefs freed memory -> SIGSEGV,
-// which Lua pcall CANNOT catch. The alive-entity registry (CBaseEntity
-// ctor/dtor, see baseentity.cpp) is the authoritative liveness check. These
-// turn a call on a freed/null entity into a logged no-op instead of a crash.
-//   FJB_REQUIRE_ALIVE(retval) -- value-returning methods
-//   FJB_REQUIRE_ALIVE_VOID()  -- void methods
-// (getZoneID/setHP/setLocalVar/getLocalVar use the explicit form of this check.)
-// ---------------------------------------------------------------------------
-#define FJB_REQUIRE_ALIVE(retval) \
-    if (!CBaseEntity::IsEntityAlive(m_PBaseEntity)) \
-    { \
-        ShowWarning("CLuaBaseEntity::%s on a dead/null entity - suppressed.", __func__); \
-        return retval; \
-    }
-#define FJB_REQUIRE_ALIVE_VOID() \
-    if (!CBaseEntity::IsEntityAlive(m_PBaseEntity)) \
-    { \
-        ShowWarning("CLuaBaseEntity::%s on a dead/null entity - suppressed.", __func__); \
-        return; \
-    }
 
 /************************************************************************
  *  Function: entityAnimationPacket()
@@ -1631,6 +1639,8 @@ auto CLuaBaseEntity::getCursorTarget() -> CBaseEntity*
 
 uint8 CLuaBaseEntity::getObjType() const
 {
+    FJB_REQUIRE_ALIVE(0);
+
     return m_PBaseEntity->objtype;
 }
 
@@ -2972,6 +2982,8 @@ auto CLuaBaseEntity::isToEntitysRight(const CLuaBaseEntity* target, const sol::o
 
 auto CLuaBaseEntity::getZone(const sol::object& arg0) -> CZone*
 {
+    FJB_REQUIRE_ALIVE(nullptr);
+
     if (m_PBaseEntity->loc.zone)
     {
         return m_PBaseEntity->loc.zone;
@@ -5869,6 +5881,8 @@ std::string CLuaBaseEntity::getPacketName()
 
 void CLuaBaseEntity::renameEntity(const std::string& newName, const sol::object& arg2)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (m_PBaseEntity->objtype == TYPE_PC)
     {
         ShowWarning("Renaming player character entities isn't supported.");
@@ -7084,6 +7098,8 @@ bool CLuaBaseEntity::hasJob(uint8 job)
 
 uint8 CLuaBaseEntity::getMainLvl()
 {
+    FJB_REQUIRE_ALIVE(0);
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
@@ -10146,6 +10162,8 @@ int32 CLuaBaseEntity::getBaseHP()
 
 int32 CLuaBaseEntity::addHP(int32 hpAdd)
 {
+    FJB_REQUIRE_ALIVE(0);
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
@@ -11511,6 +11529,8 @@ sol::table CLuaBaseEntity::getParty()
 
 sol::table CLuaBaseEntity::getPartyWithTrusts()
 {
+    FJB_REQUIRE_ALIVE(lua.create_table());
+
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
@@ -12465,6 +12485,8 @@ auto CLuaBaseEntity::hasEnteredBattlefield() const -> bool
 
 bool CLuaBaseEntity::isAlive()
 {
+    FJB_REQUIRE_ALIVE(false);
+
     if (auto* PBattle = dynamic_cast<CBattleEntity*>(m_PBaseEntity))
     {
         return PBattle->isAlive();
@@ -12870,6 +12892,8 @@ void CLuaBaseEntity::engage(uint16 requestedTarget)
 
 bool CLuaBaseEntity::isEngaged()
 {
+    FJB_REQUIRE_ALIVE(false);
+
     return m_PBaseEntity->PAI->IsEngaged();
 }
 
@@ -12902,6 +12926,8 @@ void CLuaBaseEntity::disengage()
 
 void CLuaBaseEntity::timer(int ms, sol::function func)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     m_PBaseEntity->PAI->QueueAction(queueAction_t(ms, false, std::move(func)));
 }
 
@@ -13025,6 +13051,8 @@ void CLuaBaseEntity::resetRecasts()
 
 void CLuaBaseEntity::addListener(const std::string& eventName, const std::string& identifier, const sol::function& func)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     m_PBaseEntity->PAI->EventHandler.addListener(eventName, func, identifier);
 }
 
@@ -13495,6 +13523,16 @@ void CLuaBaseEntity::addBaseEnmity(CLuaBaseEntity* PEntity)
 
 void CLuaBaseEntity::addEnmity(CLuaBaseEntity* PEntity, int32 CE, int32 VE)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
+    // FJB: the ARG can also wrap a freed entity (Fellow despawned mid-loop);
+    // objtype/enmity-container access on it derefs freed memory.
+    if (PEntity && !CBaseEntity::IsEntityAlive(PEntity->GetBaseEntity()))
+    {
+        ShowWarning("CLuaBaseEntity::addEnmity target arg is a dead/null entity - suppressed.");
+        return;
+    }
+
     auto* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
 
     if (m_PBaseEntity->objtype == TYPE_PC || m_PBaseEntity->objtype == TYPE_PET || (m_PBaseEntity->objtype == TYPE_MOB && PMob->isCharmed))
@@ -13522,13 +13560,15 @@ void CLuaBaseEntity::addEnmity(CLuaBaseEntity* PEntity, int32 CE, int32 VE)
 
 void CLuaBaseEntity::lowerEnmity(CLuaBaseEntity* PEntity, uint8 percent)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (m_PBaseEntity->objtype != TYPE_MOB)
     {
         ShowWarning("Attempting to lower enmity for invalid entity type (%s).", m_PBaseEntity->getName());
         return;
     }
 
-    if (PEntity != nullptr && PEntity->GetBaseEntity()->objtype != TYPE_NPC)
+    if (PEntity != nullptr && CBaseEntity::IsEntityAlive(PEntity->GetBaseEntity()) && PEntity->GetBaseEntity()->objtype != TYPE_NPC)
     {
         static_cast<CMobEntity*>(m_PBaseEntity)->PEnmityContainer->LowerEnmityByPercent(static_cast<CBattleEntity*>(PEntity->GetBaseEntity()), percent, nullptr);
     }
@@ -13736,6 +13776,8 @@ void CLuaBaseEntity::setEnmityActive(CLuaBaseEntity* PEntity, bool active)
 
 void CLuaBaseEntity::updateClaim(const sol::object& entity)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (m_PBaseEntity->objtype != TYPE_MOB)
     {
         return;
@@ -13749,6 +13791,12 @@ void CLuaBaseEntity::updateClaim(const sol::object& entity)
     }
 
     CLuaBaseEntity* PEntity = entity.as<CLuaBaseEntity*>();
+
+    if (PEntity != nullptr && !CBaseEntity::IsEntityAlive(PEntity->GetBaseEntity()))
+    {
+        ShowWarning("CLuaBaseEntity::updateClaim claimant arg is a dead/null entity - suppressed.");
+        return;
+    }
 
     if (PEntity != nullptr && PEntity->GetBaseEntity()->objtype != TYPE_NPC)
     {
@@ -13765,10 +13813,18 @@ void CLuaBaseEntity::updateClaim(const sol::object& entity)
 
 bool CLuaBaseEntity::hasClaim(CLuaBaseEntity* PTarget)
 {
+    FJB_REQUIRE_ALIVE(false);
+
     auto* PBattleEntity = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
     if (!PBattleEntity)
     {
         ShowWarning("Attempting to check claim for invalid entity type (%s).", m_PBaseEntity->getName());
+        return false;
+    }
+
+    if (PTarget == nullptr || !CBaseEntity::IsEntityAlive(PTarget->GetBaseEntity()))
+    {
+        ShowWarning("CLuaBaseEntity::hasClaim target arg is a dead/null entity - suppressed.");
         return false;
     }
 
@@ -14488,6 +14544,8 @@ uint16 CLuaBaseEntity::stealStatusEffect(CLuaBaseEntity* PTargetEntity, const so
 
 void CLuaBaseEntity::addMod(uint16 type, int16 amount)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
@@ -15962,6 +16020,8 @@ void CLuaBaseEntity::spawnPet(const sol::object& arg0)
 
 auto CLuaBaseEntity::spawnTrust(uint16 trustId) -> CBaseEntity*
 {
+    FJB_REQUIRE_ALIVE(nullptr);
+
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
@@ -15998,13 +16058,15 @@ void CLuaBaseEntity::clearTrusts()
 
 void CLuaBaseEntity::despawnTrust(CLuaBaseEntity* PLuaTrust)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (m_PBaseEntity->objtype != TYPE_PC || PLuaTrust == nullptr)
     {
         return;
     }
 
     CBaseEntity* PEntity = PLuaTrust->GetBaseEntity();
-    if (PEntity != nullptr && PEntity->objtype == TYPE_TRUST)
+    if (CBaseEntity::IsEntityAlive(PEntity) && PEntity->objtype == TYPE_TRUST)
     {
         static_cast<CCharEntity*>(m_PBaseEntity)->RemoveTrust(static_cast<CTrustEntity*>(PEntity));
     }
@@ -16240,6 +16302,8 @@ void CLuaBaseEntity::removeAllGambits()
 
 void CLuaBaseEntity::setTrustTPSkillSettings(uint16 trigger, uint16 select, const sol::object& value)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (m_PBaseEntity->objtype != TYPE_TRUST)
     {
         ShowWarning("Invalid Entity calling function (%s).", m_PBaseEntity->getName());
@@ -16357,6 +16421,8 @@ bool CLuaBaseEntity::hasJugPet()
 
 auto CLuaBaseEntity::getPet() -> CBaseEntity*
 {
+    FJB_REQUIRE_ALIVE(nullptr);
+
     auto* PBattle = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
     if (!PBattle)
     {
@@ -16538,6 +16604,8 @@ uint8 CLuaBaseEntity::getMinimumPetLevel()
 
 auto CLuaBaseEntity::getMaster() -> CBaseEntity*
 {
+    FJB_REQUIRE_ALIVE(nullptr);
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
@@ -16659,9 +16727,17 @@ void CLuaBaseEntity::registerChocobo(const ChocoboColor color, const sol::table&
 
 void CLuaBaseEntity::petAttack(CLuaBaseEntity* PEntity)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
+        return;
+    }
+
+    if (PEntity == nullptr || !CBaseEntity::IsEntityAlive(PEntity->GetBaseEntity()))
+    {
+        ShowWarning("CLuaBaseEntity::petAttack target arg is a dead/null entity - suppressed.");
         return;
     }
 
@@ -18082,11 +18158,14 @@ void CLuaBaseEntity::setDelay(uint16 delay)
 
 void CLuaBaseEntity::setDamage(uint16 damage)
 {
-    // Custom (FJB): allow TYPE_PET too, not just TYPE_MOB. CPetEntity extends
-    // CMobEntity, so the cast + m_Weapons access below are valid for pets. This
-    // lets the Adventuring Fellow (fellow_companion.lua) scale its weapon damage
-    // with level. Core-patch: re-verify after upstream pulls.
-    if (!(m_PBaseEntity->objtype & (TYPE_MOB | TYPE_PET)))
+    // Custom (relaunch): allow TYPE_PET AND TYPE_TRUST, not just TYPE_MOB.
+    // CPetEntity and CTrustEntity both extend CMobEntity, so the cast + m_Weapons
+    // access below are valid for pets and trusts. The Adventuring Fellow
+    // (fellow_companion.lua) spawns Naji as a raw TRUST (type 0x20 = 32) --
+    // without TYPE_TRUST in this whitelist, every applyFellow() logged "function
+    // call on invalid entity! (name: naji type: 32)" -- 201x in the last log
+    // window. Core-patch: re-verify after upstream pulls.
+    if (!(m_PBaseEntity->objtype & (TYPE_MOB | TYPE_PET | TYPE_TRUST)))
     {
         ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;
@@ -18486,6 +18565,8 @@ void CLuaBaseEntity::setRoamFlags(uint16 newRoamFlags)
 
 auto CLuaBaseEntity::getTarget() -> CBaseEntity*
 {
+    FJB_REQUIRE_ALIVE(nullptr);
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
@@ -18707,6 +18788,8 @@ void CLuaBaseEntity::useJobAbility(uint16 skillID, const sol::object& pet)
 
 void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (m_PBaseEntity->objtype != TYPE_TRUST && m_PBaseEntity->objtype != TYPE_MOB && m_PBaseEntity->objtype != TYPE_PET)
     {
         ShowWarning("Entity is not a Trust, Mob, or Pet (%s).", m_PBaseEntity->getName());

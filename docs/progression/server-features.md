@@ -18,6 +18,35 @@ There is no camping. There is no waiting on a lottery pop. Walk in, kill it, wal
 
 ---
 
+## Open World Mob Scaling
+
+<!-- DOCGEN:BEGIN id="server-features-open-world-scaling" -->
+Every ordinary mob of **level 91+** in **26 open-world progression zones** (Apex/Locus camps, Adoulin field zones, Escha and Reisenjima trash) is raised to relaunch-curve *minimum floors* the moment it spawns. Floors, not multipliers — a mob that already beats the floor keeps its stronger stats, while under-tuned database mobs get lifted into the intended band. NMs and dynamic pops are filtered out at runtime.
+
+| Mob level | Band | HP floor | Atk | Def | Acc | Eva |
+|---|---|---|---|---|---|---|
+| 91–99 | Entry post-75 | 60,000 | 600 | 500 | 450 | 400 |
+| 100–109 | Item level entry | 100,000 | 800 | 650 | 550 | 500 |
+| 110–119 | Mid-tier progression | 180,000 | 1,100 | 850 | 700 | 650 |
+| 120–129 | Strong open world | 320,000 | 1,500 | 1,100 | 850 | 800 |
+| 130–134 | Capacity Point farming | 450,000 | 1,800 | 1,300 | 950 | 900 |
+| 135+ | Elite open world | 600,000 | 2,100 | 1,500 | 1,050 | 1,000 |
+
+Mob magic accuracy is deliberately left to the engine's own above-99 scaling. Zone, species, pool, and single-mob overrides can patch any floor individually.
+<!-- DOCGEN:END id="server-features-open-world-scaling" -->
+
+---
+
+## Universal Damage Cap
+
+<!-- DOCGEN:BEGIN id="server-features-damage-cap" -->
+No single action — melee hit, weapon skill, magic burst, pet ability, anything — can remove more than **999,999 HP** from one target. The ceiling applies to every entity in combat, players and monsters alike.
+
+This is the tuning anchor for the endgame damage systems built on top of it: **REMA / Prime weapon-skill enhancement** tiers are budgeted against the cap, and **Gauntlet / Hunt NM** health pools and self-healing are sized assuming capped per-hit damage.
+<!-- DOCGEN:END id="server-features-damage-cap" -->
+
+---
+
 ## Character Upgrader (Automatic)
 
 There is no setup NPC to visit. Every new character is fully provisioned **automatically on first login** — no interaction required.
@@ -164,6 +193,6 @@ First Blood moments are real on the Relaunch server. If you're the first person 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3cef4877b214 -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: 036cfc57998d -->
+_Last updated: 2026-07-17 04:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->
