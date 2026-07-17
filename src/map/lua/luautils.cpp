@@ -1351,7 +1351,17 @@ CBaseEntity* GetMobByID(uint32 mobid, const sol::object& instanceObj)
 
     if (!PMob)
     {
-        ShowWarning("luautils::GetMobByID Mob doesn't exist (%d)", mobid);
+        // Custom (relaunch 2026-07-16): downgraded from ShowWarning to ShowDebug.
+        // "mob doesn't exist" is the EXPECTED return path for every safe Lua
+        // caller ("if mob then ..."), including instance mechanic tickers polling
+        // adds that may already be dead. Warning-level was flooding the log
+        // (377+ hits in the last window, mostly from Ambuscade urchin/housemaker
+        // ticks after their mobs cleaned up). Also skip logging for mobid=0
+        // (defensive callers passing an unset id).
+        if (mobid != 0)
+        {
+            ShowDebug("luautils::GetMobByID Mob doesn't exist (%d)", mobid);
+        }
         return nullptr;
     }
 

@@ -328,9 +328,14 @@ sol::table CLuaZone::queryEntitiesByName(const std::string& name)
         table.add(CLuaBaseEntity(entity));
     }
 
+    // Custom (relaunch 2026-07-16): downgraded from ShowWarning to ShowDebug.
+    // The Hunting League "duplicate-spawn guard" (HuntingLeague.lua:556) calls
+    // this every time a player pops a tier NM, and "no existing entity" is the
+    // NORMAL case the caller expects. Warning-level was flooding the log
+    // (6+ lines per HL Rank I pop) for a case that isn't an error.
     if (table.empty())
     {
-        ShowWarning("Query for entity name: %s in zone: %s returned no results", name, m_pLuaZone->getName());
+        ShowDebug("Query for entity name: %s in zone: %s returned no results", name, m_pLuaZone->getName());
     }
 
     return table;

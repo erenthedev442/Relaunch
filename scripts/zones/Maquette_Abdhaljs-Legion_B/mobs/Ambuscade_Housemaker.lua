@@ -14,9 +14,13 @@ local HM_EVA_BONUS  = 80   -- harder to hit while buffing
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    -- Disable melee retaliation completely so it acts as a structure.
-    mob:setMobMod(xi.mobMod.DRAW_IN, 0)
-    mob:setMobMod(xi.mobMod.NOAGGROTHRESHOLD, 1)
+    -- Structure mob: no aggro. Fixed 2026-07-16: xi.mobMod.DRAW_IN and
+    -- xi.mobMod.NOAGGROTHRESHOLD don't exist in scripts/enum/mob_mod.lua, so
+    -- both lines threw "expected number, received nil" on every housemaker init
+    -- (20 hits in the log window, once per Ambuscade instance created). The
+    -- correct anti-aggro mob mod is NO_AGGRO (id 67). DRAW_IN isn't a mob mod
+    -- at all -- it's a mob skill; dropped since housemaker has no draw-in gambit.
+    mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
 end
 
 entity.onMobSpawn = function(mob)

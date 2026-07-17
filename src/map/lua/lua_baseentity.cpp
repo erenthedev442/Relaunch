@@ -18063,11 +18063,14 @@ void CLuaBaseEntity::setDelay(uint16 delay)
 
 void CLuaBaseEntity::setDamage(uint16 damage)
 {
-    // Custom (FJB): allow TYPE_PET too, not just TYPE_MOB. CPetEntity extends
-    // CMobEntity, so the cast + m_Weapons access below are valid for pets. This
-    // lets the Adventuring Fellow (fellow_companion.lua) scale its weapon damage
-    // with level. Core-patch: re-verify after upstream pulls.
-    if (!(m_PBaseEntity->objtype & (TYPE_MOB | TYPE_PET)))
+    // Custom (relaunch): allow TYPE_PET AND TYPE_TRUST, not just TYPE_MOB.
+    // CPetEntity and CTrustEntity both extend CMobEntity, so the cast + m_Weapons
+    // access below are valid for pets and trusts. The Adventuring Fellow
+    // (fellow_companion.lua) spawns Naji as a raw TRUST (type 0x20 = 32) --
+    // without TYPE_TRUST in this whitelist, every applyFellow() logged "function
+    // call on invalid entity! (name: naji type: 32)" -- 201x in the last log
+    // window. Core-patch: re-verify after upstream pulls.
+    if (!(m_PBaseEntity->objtype & (TYPE_MOB | TYPE_PET | TYPE_TRUST)))
     {
         ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;

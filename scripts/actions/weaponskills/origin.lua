@@ -30,7 +30,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     -- HP absorb: skipped on Undead per BG-Wiki. MP absorb ~50% of damage per retail testing.
     if damage and damage > 0 then
-        if target:getSystem() ~= xi.ecosystem.UNDEAD then
+        if target:getEcosystem() ~= xi.ecosystem.UNDEAD then
             player:addHP(math.min(damage, targetHP))
         end
         local mpAbsorbed = math.min(targetMP, math.floor(damage / 2))
