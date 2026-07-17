@@ -662,6 +662,35 @@ selectCat('prime');
 
 ---
 
+## Native Weapon-Skill Enhancement
+
+<!-- DOCGEN:BEGIN id="weapon-forge-ws-enhancement" -->
+Finishing a weapon does more than raise its stats — **final REMA and Prime weapons supercharge their native weapon skill**.
+
+**Relic / Empyrean / Mythic / Aeonic (final stage only)** — the weapon's signature WS (57 weapon skills tuned individually) gains a damage bonus benchmarked against Prime's +200%, scaled by family:
+
+| Family | Tier scale | Native WS bonus |
+|---|---|---|
+| Relic | ×0.50 | +100% |
+| Empyrean | ×0.60 | +120% |
+| Mythic | ×0.70 | +140% |
+| Aeonic | ×0.80 | +160% |
+
+The native hit count, damage path, crit rules, and utility effects are preserved — only the damage budget grows.
+
+**Prime (final stage)** — the 14 Prime-native weapon skills receive a **+300% weapon-skill damage layer** and are the only attacks allowed to break the [universal 999,999 damage cap](server-features.md#universal-damage-cap), up to a ceiling set by your job's role:
+
+| Role tier | Per-WS damage ceiling | Jobs |
+|---|---|---|
+| Support | 1,499,999 | WHM, BLM, PLD, SMN, PUP, SCH, GEO |
+| Hybrid | 1,749,999 | RDM, BRD, BLU, COR, DNC, RUN |
+| Damage | 1,999,999 | WAR, MNK, THF, DRK, BST, RNG, SAM, NIN, DRG |
+
+Ordinary uses of shared weapon skills (a Resolution from a non-Prime greatsword, for example) are completely unchanged.
+<!-- DOCGEN:END id="weapon-forge-ws-enhancement" -->
+
+---
+
 <!-- DOCGEN:BEGIN id="last-updated" -->
 <!-- content-hash: 368136f5976c -->
 _Last updated: 2026-07-15 11:36 PDT_

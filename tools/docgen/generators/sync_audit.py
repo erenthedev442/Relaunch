@@ -254,13 +254,12 @@ MODULE_COVERAGE_ALLOWLIST: dict[str, str] = {
     "weapon_forge_gates.lua":        "shared STAGE_GATES table required by WeaponForge_NPC.lua + !forgegates command; the parent Weapon Forge system IS documented",
     "huntnm_warp_table.lua":         "static NM->coord table consumed by !huntwarp; the Hunter's Guild system IS documented",
     "hunt_nm_respawn_override.lua":  "internal respawn-time neutralizer for stock hunt-target mob files; the Hunter's Guild system IS documented",
-    # ---- REMA / Prime WS enhancement ------------------------------------
-    "PrimeWeaponskillTuning.lua":    "engine for the REMA WS Enhancement system; the system IS documented",
-    "prime_ws_tuning_catalog.lua":   "catalog for REMA WS Enhancement; system IS documented",
-    "rema_ws_tier_catalog.lua":      "catalog for REMA WS Enhancement; system IS documented",
-    # ---- Open-World Scaling ---------------------------------------------
-    "OpenWorldScaling.lua":          "always-on scaling of open-world mobs to the relaunch curve",
-    "open_world_scaling_catalog.lua": "catalog for open-world scaling; internal",
+    # NOTE (2026-07-14): PrimeWeaponskillTuning / prime_ws_tuning_catalog /
+    # rema_ws_tier_catalog / OpenWorldScaling / open_world_scaling_catalog were
+    # REMOVED from this allowlist -- they now have real generator coverage
+    # (weapon_forge.py ws-enhancement block + open_world_scaling.py). Don't
+    # re-add collaborator systems here with an "IS documented" claim; reference
+    # the file from a generator instead so the coverage check enforces itself.
     # ---- Deferred: needs a doc row in a follow-up commit ----------------
     # (leave AbjurationForge intentionally OFF the allowlist so a future
     # session sees it flagged and adds it to the Gear Guide.)

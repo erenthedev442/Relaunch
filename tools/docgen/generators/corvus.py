@@ -129,6 +129,74 @@ def _render_unlock(t: dict, c: dict) -> str:
     )
 
 
+def _parse_meat_stats(repo_root: Path) -> dict | None:
+    """Live tank numbers from scripts/actions/spells/trust/meat.lua.
+
+    The 2026-07-13 collaborator retune (HPP +20, explicit -25% DT, enmity 200)
+    made the old hand bullets stale — every figure here is re-parsed from the
+    trust file so the next retune flows to the page automatically.
+    """
+    src = resolve_source(repo_root, "scripts/actions/spells/trust/meat.lua", required=False)
+    if src is None:
+        return None
+    text = src.read_text(encoding="utf-8", errors="replace")
+
+    def _mod(name: str) -> int | None:
+        m = re.search(rf"addMod\(xi\.mod\.{name},\s*(-?\d+)\)", text)
+        return int(m.group(1)) if m else None
+
+    dmg = _mod("DMG")
+    s = {
+        "dt_pct":   (abs(dmg) // 100) if dmg is not None and dmg < 0 else None,
+        "hpp":      _mod("HPP"),
+        "enmity":   _mod("ENMITY"),
+        "block":    _mod("SHIELDBLOCKRATE"),
+        "kit":      [],
+        "cleanse":  [],
+        "cure_hpp": None,
+    }
+    for ja in re.findall(r"xi\.ja\.(\w+)", text):
+        label = ja.replace("_", " ").title()
+        if label not in s["kit"]:
+            s["kit"].append(label)
+    for sp in re.findall(r"xi\.magic\.spell\.(\w+)", text):
+        label = sp.replace("_", " ").title()
+        if label not in s["kit"]:
+            s["kit"].append(label)
+    ward = re.search(r"ipairs\(\{([^}]*)\}\)", text)
+    if ward:
+        for eff in re.findall(r"xi\.effect\.(\w+)", ward.group(1)):
+            label = eff.replace("_", " ").title()
+            label = re.sub(r"\b(Ii+|Iv|Vi*)\b", lambda m: m.group(0).upper(), label)
+            if label not in s["cleanse"]:
+                s["cleanse"].append(label)
+    cure = re.search(r"HPP_LT,\s*(\d+)\s*\},\s*\{[^}]*spellFamily\.CURE", text)
+    if cure:
+        s["cure_hpp"] = int(cure.group(1))
+
+    if s["dt_pct"] is None or s["enmity"] is None:
+        return None
+    return s
+
+
+def _render_meat_stats(s: dict) -> str:
+    kit = ", ".join(f"**{k}**" for k in s["kit"]) if s["kit"] else "the full Paladin taunt kit"
+    cleanse = ", ".join(s["cleanse"]) if s["cleanse"] else "the worst ailments"
+    lines = [
+        f"- **Built to not die.** +{s['hpp']}% max HP on top of level-scaled HP/DEF/MDEF, "
+        f"**−{s['dt_pct']}% damage taken**, a {s['block']}% shield-block rate, level-scaled "
+        f"status resistance, and an ailment ward that instantly cleanses {cleanse}."
+        + (f" Below {s['cure_hpp']}% HP it cures itself like any good Paladin." if s["cure_hpp"] else ""),
+        f"- **It always holds hate.** +{s['enmity']} enmity plus the taunt rotation — {kit} — "
+        f"keeps enemies locked onto Meat. The enemy attacks whoever holds the most hate, "
+        f"so it focuses Meat and leaves your party alone.",
+        "- **Minimal DPS by design.** Meat swings only enough to keep enmity flowing — "
+        "it's a shield, not a sword. Its stats grow with the **TrustUpgraded** server-progression "
+        "variable, so Meat scales up as your character clears content.",
+    ]
+    return "\n".join(lines)
+
+
 def generate(repo_root: Path, docs_dir: Path) -> None:
     src = resolve_source(repo_root, "modules/custom/lua/trust_skoll.lua")
     if src is None:
@@ -146,4 +214,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         if t["unlock"] and write_between_markers(page, t["unlock"], _render_unlock(t, c)):
             written += 1
         print(f"[trusts] {t['page']}: name={c['name']} client={c['client']} rank={c['rank']} marks={c['marks']}")
+
+    stats = _parse_meat_stats(repo_root)
+    if stats:
+        if write_between_markers(docs_dir / "progression" / "meat.md", "meat-stats", _render_meat_stats(stats)):
+            written += 1
+            print(f"[trusts] meat-stats: dt=-{stats['dt_pct']}% hpp=+{stats['hpp']}% enmity=+{stats['enmity']} kit={len(stats['kit'])} JAs/spells")
+    else:
+        print("[trusts] WARN: meat.lua stat parse failed — meat-stats block not rewritten")
     print(f"[trusts] {written} marker block(s) written across {len(_TRUSTS)} custom-trust page(s)")

@@ -13,7 +13,7 @@ Talk to **The Gauntlet** keeper (sword-and-shield icon) in <!--npc:gauntlet-->Ri
 
 - **Solo only** — Trusts are automatically dismissed on entry. Pets are allowed.
 - **No outside healing.** Players fighting a Gauntlet NM cannot receive healing from anyone outside the arena fight.
-- **One death ends the run.** You are expelled immediately, no exceptions.
+- **One death ends the run.** You are expelled immediately, no exceptions — but you leave **on your feet**: the arena revives you on the way out instead of dumping you at your homepoint weakened.
 - **Leaving the arena zone ends the run.** Use `!gauntlet abort` to exit cleanly.
 
 ---
