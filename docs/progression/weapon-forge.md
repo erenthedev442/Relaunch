@@ -667,7 +667,7 @@ selectCat('prime');
 <!-- DOCGEN:BEGIN id="weapon-forge-ws-enhancement" -->
 Finishing a weapon does more than raise its stats — **final REMA and Prime weapons supercharge their native weapon skill**.
 
-**Relic / Empyrean / Mythic / Aeonic (final stage only)** — the weapon's signature WS (57 weapon skills tuned individually) gains a damage bonus benchmarked against Prime's +200%, scaled by family:
+**Relic / Empyrean / Mythic / Aeonic (final stage only)** — the weapon's signature WS (59 weapon skills tuned individually) gains a damage bonus benchmarked against Prime's +200%, scaled by family:
 
 | Family | Tier scale | Native WS bonus |
 |---|---|---|
@@ -692,6 +692,6 @@ Ordinary uses of shared weapon skills (a Resolution from a non-Prime greatsword,
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 368136f5976c -->
-_Last updated: 2026-07-15 11:36 PDT_
+<!-- content-hash: ba58bcb5eb71 -->
+_Last updated: 2026-07-17 04:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

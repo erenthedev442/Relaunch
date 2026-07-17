@@ -1049,3 +1049,10 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Items** — Grant Geomancy/Handbell skill on all-magic-skills gear
     - **Augments** — Reduce individual WS DMG+ cap 800%→200%
     - **Augments** — Cap Gilfinder augment at +4/slot (20 total max)
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 7b0044e8b0be -->
+_Last updated: 2026-07-17 04:15 PDT_
+<!-- DOCGEN:END id="last-updated" -->
