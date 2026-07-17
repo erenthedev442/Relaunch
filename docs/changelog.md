@@ -12,6 +12,15 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
 !!! note "Week of July 13–19, 2026"
     **Thursday, July 16**
 
+    - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-16 22:50
+    - **Relaunch/Fellow** — Give the Hunter role its own ranged WS pool
+    - **Relaunch/Fellow** — Owner-edited defaultWses (live -> repo) + matching SQL
+    - **Relaunch/Fellow** — Per-role skill list -- stop firing Naji's chassis WSes
+    - **Relaunch/Fellow** — Double the per-point yield of stat allocations
+    - **Relaunch/Legendary Ring** — Swap aura to MUMORS_RADIANCE -- AFTERGLOW has no standalone visual
+    - **Relaunch/Legendary Ring** — SQL died mid-file on bad column name -- ring had NO mods live
+    - Expand custom progression and onboarding systems
+    - Fix combat progression and staging access
     - **Relaunch/Aftermath** — Restore REMA and Prime effect wiring
     - **Relaunch/Prime** — Strengthen native Prime weapon skills
     - **Relaunch/Mandau** — Strengthen Mercy Stroke and add Dancer access
@@ -1040,94 +1049,3 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Items** — Grant Geomancy/Handbell skill on all-magic-skills gear
     - **Augments** — Reduce individual WS DMG+ cap 800%→200%
     - **Augments** — Cap Gilfinder augment at +4/slot (20 total max)
-    - **Combat** — Uncap skillchain damage for PC attackers
-    - **Trusts** — Replace Hunter's Prelude with double madrigal on Gemma
-    - **Trusts** — Replace Gemma's Sentinel's Scherzo with Hunter's Prelude
-    - **Combat** — Exclude the 8 Abyssea marks-pop zones from level correction
-    - **Ascension** — Despawn trial NM on player KO
-    - **Items** — Add missing mods for Spaekonas Gloves +4 (23988)
-    - **Combat** — Use MESSAGE_SYSTEM_1 for over-cap damage notification
-    - **SMN** — Boost avatar BP damage and fix gear-swap stat refresh
-    - **Casino** — Close 30ms double-bet exploit at Lady Luck
-    - **Commands** — Show pet level + stats for all 4 pet jobs (was PUP-only)
-    - **Shop** — Add Eminent Sachet (21383) to !shop ammo
-
-    **Wednesday, June 17**
-
-    - **World NMs** — Drop Escha Ru'Aun from the auto-pop list (Reisenjima only)
-    - **Abyssea** — Make ??? marks-pop + kill-reward clobber-proof (hook pattern)
-    - **Blue Magic** — Disable Mortal Ray (spell 686) - cannot be cast
-    - **Subjobs** — Level-0 sub jobs permanently stuck (EXP_TO_NEXT[0] was nil)
-    - **Augments** — Refund staked items when the player cancels the augment menu
-    - **Skillchain** — Record SC damage as int32 (int16 capped hits at 32,767)
-    - **Sparks Exchange** — Shorten Eminence Broker main title (128-byte click cap)
-    - **Abyssea** — Add Cruor reward on marks-popped NM kill
-    - **Corsair** — Double-up always showed 0 because corsairActiveRoll was clobbered
-    - **Commands** — Add !delnegdmg - purge items whose applied DMG augment netted negative
-    - **Magic** — Uncap PC magic damage (remove base + MAB/MDB ratio ceilings)
-    - **Infamy** — Add Daurdabla (string relic) to Infamy Vendor at 800 Inf
-    - **Automerits** — Skip job-specific, Others, and Weaponskill merits
-    - **Vendors** — Add BRD instruments to hunting league + infamy gear vendors
-    - **Infamy Vendor** — Ryunohige -> i119 III final form (21858)
-    - **Augments** — Force re-apply of EXP-bonus augment fix (augId 73 -> mod 382)
-    - **Crash** — Comprehensive IsEntityAlive guard pass on CLuaBaseEntity
-    - **Crash** — Extend IsEntityAlive guard to setHP (boss-command UAF)
-
-    **Tuesday, June 16**
-
-    - **Augments** — Remove 6 Dmg (melee/ranged) augments from pool
-    - **Infamy** — Restore Infamy Vendor as standalone module
-    - **Augments** — Add Thunder Affinity augment (augId 2040)
-    - **Abyssea** — Grant permanent visitant on onZoneIn so !abyssea warps work
-    - **Magic** — Uncap magic damage for PC casters (mirrors WS uncap)
-    - **Abyssea** — !visitant no longer ejects the player from Abyssea
-    - **Abyssea** — Add !visitant command to grant permanent visitant status
-    - **Crash** — Extend IsEntityAlive guard to setLocalVar/getLocalVar(s)
-    - **Hunting League** — Make full Augment Sage rank chain obtainable in Escha
-    - **Crash** — Alive-entity registry + trust null-spell guard
-    - **Abyssea** — Wire ??? markers to AbysseaMarks gil/infamy pop menu
-    - **Vendors** — Consolidate Accessory NPC to Escha-ZiTah gear row
-    - **Crash** — Gate treasure re-show on trading player still in zone
-    - **Crash** — Guard invalid spell IDs in CastMagic packet + drop dungeon recap
-    - **Marks** — Add Infamy balance to !marks output
-    - **Gemma** — Increase MACC 600→6000 to land enfeebles on Abyssea NMs
-    - **Abyssea** — Correct onGameIn override path in AbysseaKICleanup
-    - **Abyssea** — Reduce NM atkDef/accEva by 1/3 across all tiers
-    - **Abyssea** — Suppress trade-to-pop ??? interaction silently
-    - **Dungeons** — Remove custom dungeon system entirely
-    - **Abyssea** — Reward all party members on marks-pop NM kill
-    - **Abyssea** — One-shot cleanup of retail pop key items
-    - **Abyssea** — Raise infamy rewards to match vendor costs
-    - **Abyssea** — Remove Empyreal Paradox from marks-pop system
-    - **Abyssea** — Reduce marks-pop NM HP by 1/3
-    - **Abyssea** — Raise Visions base infamy to 2 so multipliers show
-    - **Abyssea** — Increase marks-pop NM gil reward 5x
-    - **Abyssea** — Release player from ??? lock before customMenu
-    - **Subjobs** — Restore true 50%-of-main sub leveling (curve was 2-4x too steep)
-    - **Abyssea** — Boost marks-pop NM difficulty x30
-    - **Abyssea** — Zone-tiered difficulty — full-party NM stats
-    - **Abyssea** — Remove Abyssea from always_popped_nms
-    - **Abyssea** — Guard nil getCharVar + pcall-protect marks pop path
-    - **CMD** — Split !abyssea into two-tier menu (client 8-option cap)
-    - **CMD** — Add !abyssea warp command for all 10 Abyssea zones
-    - **Abyssea** — Add Gil reward + party/trust multipliers to marks pop
-    - **Abyssea** — Add Hunt Marks pop system + Infamy kill reward
-    - Dungeon double-warp fix, Outer Bastion WP fix, Sortie rings, item fixes
-    - **Capacity Farm** — Refresh campZone from deadMob to survive FileWatcher reloads
-    - **Shop** — Add Angon and Throwing Tomahawk to !shop ammo
-    - **Dungeons** — Fix !dungeon abort reaching live session table
-    - **CMD** — Add !dungeon abort command
-    - **Dungeons** — Clamp mob scatter positions to navmesh
-    - **CMD** — Add !henge warp command to Reisenjima Henge
-    - **Dungeons** — Guard getZone() nil deref in mob-count PAI loop
-    - **Prestige** — Guard idle-watcher against freed mob entity after zone exit
-    - **BRD** — Add missing scroll script for Aria of Passion
-    - **Ranger** — Replace broken hover_shot JA with !hovershot command
-    - **Prestige** — Idle-despawn trial boss after 20s of no damage
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f38cdb798223 -->
-_Last updated: 2026-07-16 01:20 PDT_
-<!-- DOCGEN:END id="last-updated" -->
