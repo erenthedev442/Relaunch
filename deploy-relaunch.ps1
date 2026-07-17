@@ -51,14 +51,18 @@ Say '  LIVE relaunch server: players briefly disconnect on the restart.' 'Cyan'
 Say '  (Legendary / ~server is a separate box and is NOT touched.)' 'Cyan'
 Say '============================================================' 'Cyan'
 
-# ---- PRE-FLIGHT: what THIS deploy will pull, flagging non-you authors ----
+# ---- PRE-FLIGHT: what THIS deploy will pull, detailed per collaborator ----
 # Read-only, non-gating, fail-open (never blocks the deploy). Fetches origin,
-# then lists the incoming commits git-sync will merge and, for anyone whose
-# author email is NOT in $MyEmails, prints the exact files going live from
-# that collaborator. $MyEmails = the identities YOU commit under; edit if you
-# gain another. It does not approve or hold anything -- just awareness before
-# you answer the prompt below.
-$MyEmails = @('rknutz@gmail.com','richardknutzjr@hotmail.com')
+# then for every incoming commit whose author email is NOT in $MyEmails prints
+# a review card: subject, the author's own commit-message body (their stated
+# intent), an impact line (C++ = live after THIS rebuild, SQL = applied this
+# deploy, Lua = live on restart, tests/docs), and the per-file diffstat.
+# The FULL line-by-line diff of every collaborator commit is also written to
+# $reviewFile -- open it in notepad while the Proceed prompt waits.
+# $MyEmails = the identities YOU commit under; edit if you gain another.
+# It does not approve or hold anything -- just understanding before you answer.
+$MyEmails   = @('rknutz@gmail.com','richardknutzjr@hotmail.com')
+$reviewFile = Join-Path $root 'deploy-collab-review.txt'
 try {
     git -C $root fetch origin relaunch --quiet 2>$null
     $US = [char]0x1f
@@ -70,29 +74,60 @@ try {
         $otherCount = $incoming.Count - $mineCount
         Say ('  Incoming this deploy: {0} commit(s) -- {1} yours, {2} from other collaborators.' -f $incoming.Count, $mineCount, $otherCount) 'Cyan'
         if ($otherCount -gt 0) {
-            $byAuthor = @{}
-            $curKey = $null
-            foreach ($ln in @(git -C $root log 'HEAD..origin/relaunch' --name-only --pretty=("format:@@%ae{0}%an" -f $US) 2>$null)) {
-                if ($ln -like '@@*') {
-                    $p = $ln.Substring(2).Split($US)
-                    if ($MyEmails -contains $p[0]) { $curKey = $null }
-                    else {
-                        $curKey = $p[0]
-                        if (-not $byAuthor.ContainsKey($curKey)) {
-                            $byAuthor[$curKey] = @{ Name = $p[1]; Files = New-Object System.Collections.Generic.HashSet[string] }
-                        }
-                    }
-                } elseif ($curKey -and $ln.Trim()) {
-                    [void]$byAuthor[$curKey].Files.Add($ln.Trim())
-                }
+            # Collaborator commits oldest-first so the story reads forward.
+            # --no-merges: PR merge commits carry no changes of their own.
+            # NB: precomputed format vars -- `--format=(expr)` makes PowerShell
+            # pass the parenthesized value as a SEPARATE argument and git dies
+            # with "ambiguous argument"; `--format=$var` stays one argument.
+            $fmtHash = "%h{0}%ae" -f $US
+            $fmtMeta = "%h{0}%an{0}%ad{0}%s" -f $US
+            $collabHashes = @()
+            foreach ($ln in @(git -C $root log 'HEAD..origin/relaunch' --reverse --no-merges --format=$fmtHash 2>$null)) {
+                $p = $ln.Split($US)
+                if ($p.Count -ge 2 -and -not ($MyEmails -contains $p[1])) { $collabHashes += $p[0] }
             }
-            Say '  ------ FILES GOING LIVE FROM OTHER COLLABORATORS ------' 'Yellow'
-            foreach ($email in $byAuthor.Keys) {
-                Say ('   {0} <{1}>  ({2} file(s))' -f $byAuthor[$email].Name, $email, $byAuthor[$email].Files.Count) 'Yellow'
-                foreach ($f in ($byAuthor[$email].Files | Sort-Object)) { Say ('     ' + $f) 'Gray' }
+            Say ''
+            Say '  ====== COLLABORATOR CHANGES GOING LIVE THIS DEPLOY ======' 'Yellow'
+            ("Collaborator review  {0}`r`nRange: HEAD..origin/relaunch  ({1} collaborator commit(s))`r`n" -f (Get-Date -Format 'yyyy-MM-dd HH:mm:ss'), $collabHashes.Count) |
+                Out-File $reviewFile -Encoding utf8
+            $ci = 0
+            foreach ($h in $collabHashes) {
+                $ci++
+                $meta = (git -C $root show -s --format=$fmtMeta --date=format:'%m/%d %H:%M' $h 2>$null) -split $US
+                Say ''
+                Say ('  [{0}/{1}]  {2}  --  {3}' -f $ci, $collabHashes.Count, $meta[1], $meta[3]) 'White'
+                Say ('          {0}  {1}' -f $meta[0], $meta[2]) 'DarkGray'
+                # The author's own explanation of what/why, from the commit body.
+                $body = @(git -C $root show -s --format=%b $h 2>$null) | Where-Object { $_.Trim() }
+                foreach ($b in ($body | Select-Object -First 10)) { Say ('          ' + $b.Trim()) 'Gray' }
+                if ($body.Count -gt 10) { Say ('          ... (+{0} more lines -- see review file)' -f ($body.Count - 10)) 'DarkGray' }
+                # Impact: what kind of change this is and when it takes effect.
+                $files = @(git -C $root show --name-only --format= $h 2>$null) | Where-Object { $_.Trim() }
+                $cpp = @($files | Where-Object { $_ -match '^(src/|modules/custom/cpp/)' }).Count
+                $sql = @($files | Where-Object { $_ -match '\.sql$' }).Count
+                $lua = @($files | Where-Object { $_ -match '\.lua$' -and $_ -notmatch '^scripts/(tests|specs)/' }).Count
+                $tst = @($files | Where-Object { $_ -match '^scripts/(tests|specs)/' }).Count
+                $doc = @($files | Where-Object { $_ -match '^(docs/|tools/docgen/|site/)' }).Count
+                $tags = @()
+                if ($cpp) { $tags += ('C++ x{0} (live after THIS rebuild)' -f $cpp) }
+                if ($sql) { $tags += ('SQL x{0} (applied this deploy)' -f $sql) }
+                if ($lua) { $tags += ('Lua x{0} (live on restart)' -f $lua) }
+                if ($tst) { $tags += ('tests x{0}' -f $tst) }
+                if ($doc) { $tags += ('docs/site x{0}' -f $doc) }
+                if ($tags.Count) { Say ('          impact: ' + ($tags -join '  |  ')) 'Cyan' }
+                # Per-file diffstat (capped; the full list is in the review file).
+                $stat = @(git -C $root show --stat=110 --format= $h 2>$null) | Where-Object { $_.Trim() }
+                foreach ($s in ($stat | Select-Object -First 12)) { Say ('          ' + $s.Trim()) 'DarkGray' }
+                if ($stat.Count -gt 12) { Say ('          ... (+{0} more files -- see review file)' -f ($stat.Count - 12)) 'DarkGray' }
+                # Full patch into the review file (binary files show as one line).
+                ('=' * 78) | Out-File $reviewFile -Append -Encoding utf8
+                git -C $root show --no-color $h 2>$null | Out-File $reviewFile -Append -Encoding utf8
             }
-            Say '  ------------------------------------------------------' 'Yellow'
-            Say '  (Awareness only -- these are NOT held; the deploy proceeds normally.)' 'Gray'
+            Say ''
+            Say ('  Full line-by-line diffs: {0}' -f $reviewFile) 'Yellow'
+            Say '  (open it in notepad now if you want -- the prompt below waits for you.)' 'Gray'
+            Say '  =========================================================' 'Yellow'
+            Say '  (Awareness only -- these are NOT held; answering Y deploys them.)' 'Gray'
         }
     }
 } catch { Say ('  (incoming-changes preflight skipped: {0})' -f $_.Exception.Message) 'Gray' }
