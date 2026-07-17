@@ -253,6 +253,9 @@ Pure-Lua (`SpellSkillMastery.lua`): potency/traits via `addMod` + onGameIn re-ap
 
 ## 6. Status flags & known gaps (for review)
 
+**⏳ Pending next rebuild (2026-07-17):**
+- **Dangling-entity guard sweep** (`0122f837d2`, `src/map/lua/lua_baseentity.cpp`) — after the 03:20 xi_map ACCESS_VIOLATION (Fellow keeper timers firing into logout teardown), all 26 unguarded `CLuaBaseEntity` bindings on the Fellow call surface got the `FJB_REQUIRE_ALIVE` registry check (incl. `spawnTrust`, `getPartyWithTrusts`, `getZone`, `isAlive`), plus argument-side aliveness checks in the six bindings that deref an entity argument (`addEnmity`, `lowerEnmity`, `updateClaim`, `despawnTrust`, `hasClaim`, `petAttack`). **INERT until the next vps-rebuild + restart**; the Lua-side `getZone()` teardown probes in `fellow_companion.lua` (`9142c940a8`, hot-loaded 03:30) hold the line meanwhile.
+
 **✅ Live confirmation (2026-06-25 ~16:51 UTC):**
 - All four `xi_*_relaunch` services confirmed **active** on the Azure box. Map-server startup clean: 300 zones, 118 Reisenjima NMs freshly spawned, 0 Lua errors, `The map-server is ready to work`.
 - `augment_catalyst_drops` module confirmed loaded (registered in startup log 16:51:31). `augment_catalyst_pools.M.roll` neutered. Mastery modules (`spell_skill_mastery`, `job_mastery`) loaded.
