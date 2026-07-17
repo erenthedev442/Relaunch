@@ -568,6 +568,19 @@ for zoneId, jz in pairs(jmap.junctions) do
             else
                 local npc = GetNPCByID(pt.id)
                 if npc then
+                    -- Stock SOA Ethereal Junction rows ship with status = 2
+                    -- (DISAPPEAR) in npc_list: GetNPCByID still finds them (so
+                    -- no "missing" warning fires) but the CLIENT never renders
+                    -- them, so players see no junction to click. 7 stock
+                    -- junctions across 5 zones were hidden this way -- incl.
+                    -- Jugner Forest, so Emperor Arthro had no reachable junction
+                    -- (reported 2026-07-17). Force NORMAL so the rift is visible
+                    -- and interactable. Same pattern as
+                    -- conquest_regional_npcs_always_up.lua; guarded on a real
+                    -- position so an origin placeholder is never surfaced.
+                    if pt.x ~= 0 or pt.z ~= 0 then
+                        npc:setStatus(xi.status.NORMAL)
+                    end
                     npc:addListener('ON_TRIGGER', 'UNITY_JUNCTION', function(player, trigNpc)
                         junctionMenu(player, capturedZoneId, trigNpc)
                     end)
