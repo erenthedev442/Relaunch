@@ -26,7 +26,13 @@
 --                       564 = Skeleton      368 = Ghost      290 = Cluster (bombs)
 --                       644 = Quadav        673 = Goblin    2308 = Moogle
 -----------------------------------
-local AURA_EFFECT     = xi.effect.AFTERGLOW  -- pure-visual "legendary" glow (keep in sync with legendary_ring_aura.lua)
+-- AFTERGLOW (489) turned out to have NO standalone client visual -- the retail
+-- aura only renders in the relic/mythic aftermath weapon context, so wearers
+-- got the icon but no glow (player report 2026-07-14). MUMORS_RADIANCE (613,
+-- the Sunbreeze festival radiance) renders its body glow from the status
+-- effect alone.
+local AURA_EFFECT     = xi.effect.MUMORS_RADIANCE -- pure-visual "legendary" glow (keep in sync with legendary_ring_aura.lua)
+local OLD_AURA_EFFECT = xi.effect.AFTERGLOW       -- legacy; cleared on sight so old wearers don't keep a dead icon
 local TRANSFORM_MODEL = 3581                 -- Gargantuan Moogle
 local AURA_DUR        = 31536000             -- 1 year; effectively permanent, re-applied on equip + zone-in
 local EFFECT_DUR      = 3600                 -- vanish/transform hold time; re-applied on each toggle
@@ -36,13 +42,16 @@ local MODE_VAR        = 'LegRingMode'        -- 0 = next use Vanishes, 1 = next 
 local itemObject = {}
 
 local function applyAura(target)
+    if target:hasStatusEffect(OLD_AURA_EFFECT) then
+        target:delStatusEffect(OLD_AURA_EFFECT)
+    end
     if not target:hasStatusEffect(AURA_EFFECT) then
         target:addStatusEffect(AURA_EFFECT, { power = 1, duration = AURA_DUR, origin = target })
     end
 end
 
 local function clearLook(target)
-    for _, e in ipairs({ AURA_EFFECT, xi.effect.COSTUME, xi.effect.SNEAK, xi.effect.INVISIBLE }) do
+    for _, e in ipairs({ AURA_EFFECT, OLD_AURA_EFFECT, xi.effect.COSTUME, xi.effect.SNEAK, xi.effect.INVISIBLE }) do
         if target:hasStatusEffect(e) then
             target:delStatusEffect(e)
         end
