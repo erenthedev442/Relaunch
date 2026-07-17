@@ -57,6 +57,20 @@ end
 function M.pickForTier(t)
     build()
     local pool = pools[t]
+    -- RELAUNCH all-tier-0 catalog: augment_catalog.lua deliberately tags EVERY
+    -- catalyst tier 0 ("every augment available at every content tier; power
+    -- scales via the player's Augment Tier roll band"), so pools[1..4] are
+    -- EMPTY. The open-world FALLBACK drop bands by MOB LEVEL into tiers 1-4 for
+    -- any mob level >= 29 -- which meant pickForTier returned nil and silently
+    -- awarded NOTHING on essentially all farming content, making the configured
+    -- 10% fallback effectively 0% (the "catalysts feel way rarer than 10%"
+    -- reports, diagnosed 2026-07-17). Fall back to the flat tier-0 pool (all
+    -- catalysts) when the requested tier is empty, so every non-mapped mob
+    -- honors FALLBACK_RATE regardless of level. Still prefers tiers 1-4 first
+    -- if they are ever repopulated.
+    if not pool or #pool == 0 then
+        pool = pools[0]
+    end
     if not pool or #pool == 0 then return nil end
     return pool[math.random(#pool)]
 end
