@@ -31,7 +31,7 @@ The Relaunch fixes that. Everyone starts equal. The economy is fresh. The stat b
 
 - **[Nyzul Isle](endgame/nyzul-isle.md)** — Nyzul Isle Investigation is an instanced floor-climbing dungeon lifted straight from retail, accessible on the Relaunch server without completing any Assault or ToAU prerequisites. The only custom piece is the entry NPC.
 
-- **[Dynamis — Divergence](endgame/dynamis-divergence.md)** — Four city Dynamis instances reached through entry portals for one Dynamis currency each.
+- **[Dynamis — Divergence](endgame/dynamis-divergence.md)** — Four city Dynamis instances reached through entry portals for one Dynamis currency each. Defeat the Mega-Boss, then finish the Disjoined NM to record the full city clear required by Augment Tier 4 alongside all 3 Rank 4 Hunt NMs.
 
 - **[Domain Invasion](endgame/domain-invasion.md)** — Two-wave events in the Escha zones (Zi'Tah / Ru'Aun alternating every 3 hours, eight times a day). Kill the vanguard, then kill the boss.
 
@@ -94,6 +94,6 @@ Everything that made the original server worth playing:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 33a168289e74 -->
-_Last updated: 2026-07-17 04:15 PDT_
+<!-- content-hash: 6cb6fb93a409 -->
+_Last updated: 2026-07-17 14:32 PDT_
 <!-- DOCGEN:END id="last-updated" -->

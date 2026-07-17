@@ -95,7 +95,7 @@ Holding an affinity gives augments **in that category** roll advantage: the Moog
 | 1 | Base stats | Behemoth | Behemoth Hide | 10 |
 | 2 | Melee | King_Behemoth | Behemoth Horn | 23 |
 | 3 | Magic | Ouryu | Dragon Talon | 17 |
-| 4 | Defense | Genbu | Seal of Genbu | 18 |
+| 4 | Defense | Genbu | Seal of Genbu | 17 |
 | 5 | Delays | Byakko | Seal of Byakko | 14 |
 | 6 | Duration | Aspidochelone | Spirit Turtle Shell | 4 |
 | 7 | Pets | King_Vinegarroon | Scorpion Stinger | 24 |
@@ -135,6 +135,6 @@ Only the **affinity registration** trophy (Track 2) is removed from inventory on
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 00672030091a -->
-_Last updated: 2026-07-16 01:15 PDT_
+<!-- content-hash: 650d3b25af4a -->
+_Last updated: 2026-07-17 14:32 PDT_
 <!-- DOCGEN:END id="last-updated" -->

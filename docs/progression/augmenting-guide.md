@@ -35,12 +35,12 @@ Every line the Moogle writes is **rolled** inside your **Augment Tier's band**. 
 | Augment Tier | Roll band (of 0–31) | How you unlock it |
 |---|---|---|
 | **T1** | 0–5 | reach level 99 on any job |
-| **T2** | 6–11 | defeat all 3 Rank 2 Hunt NMs (Roc, Bomb Queen, Aquarius), then promote to Hunting League Rank 3 |
-| **T3** | 12–17 | defeat all 3 Rank 3 Hunt NMs (Serket, Vrtra, Simurgh) + clear [Voidspire](../endgame/voidspire.md) floor 10 + every [Game Master](game-master.md) wave difficulty |
-| **T4** | 18–24 | defeat all 3 Rank 4 Hunt NMs (Nidhogg, King Behemoth, Kirin) + fully clear one [Dynamis - Divergence](../endgame/dynamis-divergence.md) city through the Disjoined |
+| **T2** | 6–11 | defeat all 3 Rank 2 Hunt NMs + promote to [Hunting League](index.md) Rank 3 |
+| **T3** | 12–17 | defeat all 3 Rank 3 Hunt NMs + clear [Voidspire](../endgame/voidspire.md) floor 10 + every [Game Master](game-master.md) wave difficulty |
+| **T4** | 18–24 | defeat all 3 Rank 4 Hunt NMs + fully clear one [Dynamis - Divergence](../endgame/dynamis-divergence.md) city |
 | **T5** | 25–31 | defeat [Maat's Echo](../endgame/maats-challenge.md) (Ru'Lude Gardens, !maat) |
 
-The ladder is **consecutive** — your tier is the highest step you've cleared in order, and a brand-new character is **Tier 0: the Moogle won't augment at all** until the first gate is cleared. Hunt boss completion uses permanent first-kill credit, so marks earned from boards or repeatedly farming one NM cannot bypass the required 3/3 Hunt roster.
+The ladder is **consecutive** — your tier is the highest step you've cleared in order, and a brand-new character is **Tier 0: the Moogle won't augment at all** until the first gate is cleared.
 
 (Trust summon counts climb a **separate** ladder — Unity Concord accolades, Voidwatch rift tiers, and your Adventuring Fellow's level. See the [Trusts page](trusts.md).) That +2/slot Attack roll at Tier 1 climbs all the way to **+64/slot** at a max Tier-5 roll (i.e. **+320 Attack** on a 5-slot piece). So:
 
@@ -105,7 +105,7 @@ Because every line re-rolls together, a **crit** (or a guaranteed one from a **M
 
 ## Catalyst access
 
-Every augment catalyst (143 total) is available at **every Augment Tier**. Your tier determines the **power** of the roll (via the roll band above), not which augments you can access — a Tier 1 player can trade the same catalysts as a Tier 5 player, just with weaker rolls. Browse the full [catalog](augments.md#catalyst--augment-catalog) to see every available stat.
+Every augment catalyst (142 total) is available at **every Augment Tier**. Your tier determines the **power** of the roll (via the roll band above), not which augments you can access — a Tier 1 player can trade the same catalysts as a Tier 5 player, just with weaker rolls. Browse the full [catalog](augments.md#catalyst--augment-catalog) to see every available stat.
 
 ## Good first moves
 
@@ -113,7 +113,7 @@ Every augment catalyst (143 total) is available at **every Augment Tier**. Your 
 - **Stack one stat for a big swing.** 5× the same catalyst on one piece concentrates the bonus where you want it.
 - **Start the Augment Sage early.** Mastery ranks unlock automatically as you hit Hunting League Rank / Prestige Level milestones — each rank lifts your worst rolls and raises crit chance. Don't wait.
 - **Re-augment after every tier-up.** Same gear, same catalysts, a strictly higher band — a tier-up re-roll is never a downgrade.
-- **Browse the full catalog** on the [Augment Moogle page](augments.md#catalyst--augment-catalog) — 143 catalysts across a wide range of stat families, each with its full per-trade stat values.
+- **Browse the full catalog** on the [Augment Moogle page](augments.md#catalyst--augment-catalog) — 142 catalysts across a wide range of stat families, each with its full per-trade stat values.
 
 ## A few rules to remember
 
@@ -129,6 +129,6 @@ Every augment catalyst (143 total) is available at **every Augment Tier**. Your 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 91f47f0d94b5 -->
-_Last updated: 2026-07-16 01:15 PDT_
+<!-- content-hash: 33c8400736a5 -->
+_Last updated: 2026-07-17 14:32 PDT_
 <!-- DOCGEN:END id="last-updated" -->

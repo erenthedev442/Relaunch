@@ -1087,3 +1087,10 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Abyssea** — Add Cruor reward on marks-popped NM kill
     - **Corsair** — Double-up always showed 0 because corsairActiveRoll was clobbered
     - **Commands** — Add !delnegdmg - purge items whose applied DMG augment netted negative
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 9ab8b623c5bf -->
+_Last updated: 2026-07-17 14:32 PDT_
+<!-- DOCGEN:END id="last-updated" -->

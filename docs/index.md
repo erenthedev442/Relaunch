@@ -46,7 +46,7 @@ Retail FFXI is a masterpiece buried under 20 years of time-gating. Most private 
 
 :crossed_swords: **Prime Armory** — Forge the server's top weapon tier. Clear the Prime Trials, then claim a Prime weapon built for your job — an apex chase for every DD, mage, and support.
 
-:gem: **Augment Moogle** — 144 augment options. Trade catalysts from NM kills to permanently customize your gear in ways retail never allowed, then push them further with the Augment Sage.
+:gem: **Augment Moogle** — 143 augment options. Trade catalysts from NM kills to permanently customize your gear in ways retail never allowed, then push them further with the Augment Sage.
 
 :trophy: **Wave Master** — An NPC arena in Escha - Ru'Aun that spawns themed NM waves for solo or group practice. Earn Hunt Marks. Flex on your friends.
 

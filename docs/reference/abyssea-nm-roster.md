@@ -76,3 +76,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\export_abyssea_nm_cs
 
 The exporter refuses to write unless it finds exactly 136 encounters with the
 expected 45 / 49 / 42 tier split, preventing a partial reference export.
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 48008f07a7d5 -->
+_Last updated: 2026-07-17 14:32 PDT_
+<!-- DOCGEN:END id="last-updated" -->

@@ -314,6 +314,6 @@ _Trash: **10%** · **×1** · to the treasure pool (anyone in the run can lot) �
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5b5ee1bf9165 -->
-_Last updated: 2026-07-13 22:00 PDT_
+<!-- content-hash: 521f87a4886a -->
+_Last updated: 2026-07-17 14:32 PDT_
 <!-- DOCGEN:END id="last-updated" -->

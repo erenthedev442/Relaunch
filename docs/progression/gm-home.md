@@ -9,7 +9,7 @@ GM Home was the server's original utility zone. Since the hub consolidation, eve
 <!-- DOCGEN:BEGIN id="gm-home-welcome-moogle" -->
 The festive **Welcome Moogle** is the first stop for a new character. The first time you speak to it — at any level — it hands over a free gift set: **<a class="item-link" href="https://www.ffxiah.com/item/10293" data-img="https://www.bg-wiki.com/images/8/80/Chocobo_Shirt_description.png" target="_blank" rel="noopener">Chocobo Shirt</a>**, **<a class="item-link" href="https://www.ffxiah.com/item/11811" data-img="https://www.bg-wiki.com/images/2/22/Destrier_Beret_description.png" target="_blank" rel="noopener">Destrier Beret</a>**, **<a class="item-link" href="https://www.ffxiah.com/item/27556" data-img="https://www.bg-wiki.com/images/d/d8/Echad_Ring_description.png" target="_blank" rel="noopener">Echad Ring</a>**. Once per character; if your inventory is full, make room and speak to it again.
 
-Return on a main job of **level 50 or higher** to browse its starter racks: **76 curated pieces**, every one **1,000 gil**, each with exactly **two fixed, low-tier augments**. Pick a category and section to open the standard buy/sell shop window; hover an item there to inspect its normal equipment stats. The shop only shows equipment that the character's current main job can use, so change jobs before speaking to the moogle to browse another job's set. 2 accessories carry **EXP +15%** as a leveling teaser. All wares are Rare/Ex — they cannot be traded, auctioned, delivered, sent to another character, or sold back to an NPC.
+Return on a main job of **level 50 or higher** to browse its starter racks: **46 curated pieces**, every one **1,000 gil**, each with exactly **two fixed, low-tier augments**. Pick a category and section to open the standard buy/sell shop window; hover an item there to inspect its normal equipment stats. The shop only shows equipment that the character's current main job can use, so change jobs before speaking to the moogle to browse another job's set. 0 accessories carry **EXP +15%** as a leveling teaser. All wares are Rare/Ex — they cannot be traded, auctioned, delivered, sent to another character, or sold back to an NPC.
 
 **Weapons — Melee**
 
@@ -49,24 +49,6 @@ Return on a main job of **level 50 or higher** to browse its starter racks: **76
 | <a class="item-link" href="https://www.ffxiah.com/item/17851" data-img="https://www.bg-wiki.com/images/5/5f/Storm_Fife_description.png" target="_blank" rel="noopener">Storm Fife</a> | CHR +5 · Fast Cast +2 |
 | <a class="item-link" href="https://www.ffxiah.com/item/16810" data-img="https://www.bg-wiki.com/images/8/86/Tct.Mag._Espadon_description.png" target="_blank" rel="noopener">Tactician Magician's Espadon</a> | VIT +5 · Mag. Acc. +6 |
 
-**Armor — Job Bodies**
-
-| Item | Fixed augments |
-|---|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/14412" data-img="https://www.bg-wiki.com/images/9/95/Parade_Cuirass_description.png" target="_blank" rel="noopener">Parade Cuirass</a> | VIT +5 · HP +20 |
-| <a class="item-link" href="https://www.ffxiah.com/item/14409" data-img="https://www.bg-wiki.com/images/1/15/Gloom_Breastplate_description.png" target="_blank" rel="noopener">Gloom Breastplate</a> | STR +5 · Attack +6 |
-| <a class="item-link" href="https://www.ffxiah.com/item/14411" data-img="https://www.bg-wiki.com/images/c/c8/Aikido_Gi_description.png" target="_blank" rel="noopener">Aikido Gi</a> | VIT +5 · Haste (T1) |
-| <a class="item-link" href="https://www.ffxiah.com/item/14403" data-img="https://www.bg-wiki.com/images/8/8e/Rapparee_Harness_description.png" target="_blank" rel="noopener">Rapparee Harness</a> | DEX +5 · Double Attack +3 |
-| <a class="item-link" href="https://www.ffxiah.com/item/14405" data-img="https://www.bg-wiki.com/images/d/dc/Wyvern_Mail_description.png" target="_blank" rel="noopener">Wyvern Mail</a> | STR +5 · HP +20 |
-| <a class="item-link" href="https://www.ffxiah.com/item/14407" data-img="https://www.bg-wiki.com/images/3/37/Cerise_Doublet_description.png" target="_blank" rel="noopener">Cerise Doublet</a> | INT +5 · Fast Cast +2 |
-| <a class="item-link" href="https://www.ffxiah.com/item/14410" data-img="https://www.bg-wiki.com/images/e/e9/Nimbus_Doublet_description.png" target="_blank" rel="noopener">Nimbus Doublet</a> | CHR +5 · MP +20 |
-| <a class="item-link" href="https://www.ffxiah.com/item/14408" data-img="https://www.bg-wiki.com/images/7/7e/Glamor_Jupon_description.png" target="_blank" rel="noopener">Glamor Jupon</a> | MND +5 · Cure potency +4 |
-| <a class="item-link" href="https://www.ffxiah.com/item/14406" data-img="https://www.bg-wiki.com/images/d/df/Shikaree_Aketon_description.png" target="_blank" rel="noopener">Shikaree Aketon</a> | AGI +5 · Rng. Acc. +6 |
-| <a class="item-link" href="https://www.ffxiah.com/item/14401" data-img="https://www.bg-wiki.com/images/8/83/Duende_Cotehardie_description.png" target="_blank" rel="noopener">Duende Cotehardie</a> | INT +5 · Mag. Atk. Bns. +4 |
-| <a class="item-link" href="https://www.ffxiah.com/item/14402" data-img="https://www.bg-wiki.com/images/f/f4/Nokizaru_Gi_description.png" target="_blank" rel="noopener">Nokizaru Gi</a> | DEX +5 · Subtle Blow +4 |
-| <a class="item-link" href="https://www.ffxiah.com/item/14404" data-img="https://www.bg-wiki.com/images/2/23/Shm._Hara-Ate_description.png" target="_blank" rel="noopener">Shinimusha Hara-ate</a> | STR +5 · Store TP +4 |
-| <a class="item-link" href="https://www.ffxiah.com/item/14413" data-img="https://www.bg-wiki.com/images/f/f8/Gaudy_Harness_description.png" target="_blank" rel="noopener">Gaudy Harness</a> | CHR +5 · HP +20 |
-
 **Armor — Other Pieces**
 
 | Item | Fixed augments |
@@ -80,27 +62,6 @@ Return on a main job of **level 50 or higher** to browse its starter racks: **76
 | <a class="item-link" href="https://www.ffxiah.com/item/14020" data-img="https://www.bg-wiki.com/images/7/78/Enkelados%27s_Brc._description.png" target="_blank" rel="noopener">Enkelados's Bracelets</a> | DEX +5 · Accuracy +6 |
 | <a class="item-link" href="https://www.ffxiah.com/item/12312" data-img="https://www.bg-wiki.com/images/4/4e/R.K._Army_Shield_description.png" target="_blank" rel="noopener">Royal Knight Army Shield</a> | VIT +5 · HP +20 |
 | <a class="item-link" href="https://www.ffxiah.com/item/12379" data-img="https://www.bg-wiki.com/images/9/90/Holy_Shield_description.png" target="_blank" rel="noopener">Holy Shield</a> | MND +5 · VIT +5 |
-
-**Accessories — Rings**
-
-| Item | Fixed augments |
-|---|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/13286" data-img="https://www.bg-wiki.com/images/f/f3/Soldier%27s_Ring_description.png" target="_blank" rel="noopener">Soldier's Ring</a> | STR +5 · Attack +6 |
-| <a class="item-link" href="https://www.ffxiah.com/item/13287" data-img="https://www.bg-wiki.com/images/1/15/Kampfer_Ring_description.png" target="_blank" rel="noopener">Kampfer Ring</a> | VIT +5 · Haste (T1) |
-| <a class="item-link" href="https://www.ffxiah.com/item/13288" data-img="https://www.bg-wiki.com/images/0/00/Medicine_Ring_description.png" target="_blank" rel="noopener">Medicine Ring</a> | MND +5 · Cure potency +4 |
-| <a class="item-link" href="https://www.ffxiah.com/item/13289" data-img="https://www.bg-wiki.com/images/c/cd/Sorcerer%27s_Ring_description.png" target="_blank" rel="noopener">Sorcerer's Ring</a> | INT +5 · Mag. Atk. Bns. +4 |
-| <a class="item-link" href="https://www.ffxiah.com/item/13290" data-img="https://www.bg-wiki.com/images/0/06/Fencer%27s_Ring_description.png" target="_blank" rel="noopener">Fencer's Ring</a> | INT +5 · Fast Cast +2 |
-| <a class="item-link" href="https://www.ffxiah.com/item/13291" data-img="https://www.bg-wiki.com/images/5/5b/Rogue%27s_Ring_description.png" target="_blank" rel="noopener">Rogue's Ring</a> | DEX +5 · Double Attack +3 |
-| <a class="item-link" href="https://www.ffxiah.com/item/13292" data-img="https://www.bg-wiki.com/images/d/d3/Guardian%27s_Ring_description.png" target="_blank" rel="noopener">Guardian's Ring</a> | VIT +5 · HP +20 |
-| <a class="item-link" href="https://www.ffxiah.com/item/13293" data-img="https://www.bg-wiki.com/images/0/0d/Slayer%27s_Ring_description.png" target="_blank" rel="noopener">Slayer's Ring</a> | STR +5 · Attack +6 |
-| <a class="item-link" href="https://www.ffxiah.com/item/13294" data-img="https://www.bg-wiki.com/images/3/37/Tamer%27s_Ring_description.png" target="_blank" rel="noopener">Tamer's Ring</a> | CHR +5 · HP +20 |
-| <a class="item-link" href="https://www.ffxiah.com/item/13295" data-img="https://www.bg-wiki.com/images/b/b7/Minstrel%27s_Ring_description.png" target="_blank" rel="noopener">Minstrel's Ring</a> | CHR +5 · Refresh (T1) |
-| <a class="item-link" href="https://www.ffxiah.com/item/13296" data-img="https://www.bg-wiki.com/images/2/2a/Tracker%27s_Ring_description.png" target="_blank" rel="noopener">Tracker's Ring</a> | AGI +5 · Rng. Acc. +6 |
-| <a class="item-link" href="https://www.ffxiah.com/item/13297" data-img="https://www.bg-wiki.com/images/e/ee/Ronin_Ring_description.png" target="_blank" rel="noopener">Ronin Ring</a> | STR +5 · Store TP +4 |
-| <a class="item-link" href="https://www.ffxiah.com/item/13298" data-img="https://www.bg-wiki.com/images/e/e5/Shinobi_Ring_description.png" target="_blank" rel="noopener">Shinobi Ring</a> | DEX +5 · Subtle Blow +4 |
-| <a class="item-link" href="https://www.ffxiah.com/item/13299" data-img="https://www.bg-wiki.com/images/e/ea/Drake_Ring_description.png" target="_blank" rel="noopener">Drake Ring</a> | STR +5 · HP +20 |
-| <a class="item-link" href="https://www.ffxiah.com/item/13300" data-img="https://www.bg-wiki.com/images/1/1a/Conjurer%27s_Ring_description.png" target="_blank" rel="noopener">Conjurer's Ring</a> | INT +5 · MP +20 |
-| <a class="item-link" href="https://www.ffxiah.com/item/14649" data-img="https://www.bg-wiki.com/images/7/79/Telluric_Ring_description.png" target="_blank" rel="noopener">Telluric Ring</a> | EXP +15% · Refresh (T1) |
 
 **Accessories — Earrings**
 
@@ -125,7 +86,6 @@ Return on a main job of **level 50 or higher** to browse its starter racks: **76
 | <a class="item-link" href="https://www.ffxiah.com/item/13676" data-img="https://www.bg-wiki.com/images/9/9f/Heavy_Mantle_description.png" target="_blank" rel="noopener">Heavy Mantle</a> | VIT +5 · HP +20 |
 | <a class="item-link" href="https://www.ffxiah.com/item/13678" data-img="https://www.bg-wiki.com/images/9/9e/Sniper%27s_Mantle_description.png" target="_blank" rel="noopener">Sniper's Mantle</a> | Rng. Atk. +6 · Rng. Acc. +6 |
 | <a class="item-link" href="https://www.ffxiah.com/item/13677" data-img="https://www.bg-wiki.com/images/f/f0/Esoteric_Mantle_description.png" target="_blank" rel="noopener">Esoteric Mantle</a> | Mag. Atk. Bns. +4 · INT +5 |
-| <a class="item-link" href="https://www.ffxiah.com/item/13692" data-img="https://www.bg-wiki.com/images/5/55/Skulker%27s_Cape_description.png" target="_blank" rel="noopener">Skulker's Cape</a> | EXP +15% · Haste (T1) |
 <!-- DOCGEN:END id="gm-home-welcome-moogle" -->
 
 ---
@@ -250,14 +210,14 @@ Talk to the Test Dummy and pick an **Ascension Court** or an **Abyssea NM**:
 
 | NM tier | Level | HP |
 |---|---|---|
-| Visions | L99 | 4,000,000 (4M) |
-| Scars | L99 | 8,000,000 (8M) |
-| Heroes | L99 | 14,000,000 (14M) |
+| Visions | L120 | 4,000,000 (4M) |
+| Scars | L130 | 8,000,000 (8M) |
+| Heroes | L150 | 14,000,000 (14M) |
 <!-- DOCGEN:END id="gm-home-test-dummy" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c9d41859b138 -->
-_Last updated: 2026-07-17 04:15 PDT_
+<!-- content-hash: 75f549be6013 -->
+_Last updated: 2026-07-17 14:32 PDT_
 <!-- DOCGEN:END id="last-updated" -->

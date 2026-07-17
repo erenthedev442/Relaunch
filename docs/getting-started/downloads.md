@@ -7,8 +7,8 @@ Every archive on this page is **packaged straight from the server repo on each s
 | Download | What it is | Size | SHA-256 (first 12) |
 |---|---|---:|---|
 | [`relaunch-custom-dats.zip`](../assets/downloads/relaunch-custom-dats.zip) | Cosmetic client DAT overrides (custom item names, tooltips, and textures) with a one-click installer | 5.2 MB | `f4959a3f5455` |
-| [`augment_browser.zip`](../assets/downloads/augment_browser.zip) | **AugmentBrowser** Windower addon (`//ab`) — browse the augment catalog, tiers, and your Sage rank in-game | 7 KB | `cf77df2006fc` |
-| [`augment_trade.zip`](../assets/downloads/augment_trade.zip) | **AugmentTrade** Windower addon (`//at`) — plan and stage catalyst trades for the Augment Moogle | 8 KB | `00ee3b319917` |
+| [`augment_browser.zip`](../assets/downloads/augment_browser.zip) | **AugmentBrowser** Windower addon (`//ab`) — browse the augment catalog, tiers, and your Sage rank in-game | 7 KB | `25ca8bb289ab` |
+| [`augment_trade.zip`](../assets/downloads/augment_trade.zip) | **AugmentTrade** Windower addon (`//at`) — plan and stage catalyst trades for the Augment Moogle | 8 KB | `a52e1d547c41` |
 
 !!! note "Looking for the loader?"
     `xiloader.exe` is pinned in the **Discord** getting-started channel — see [Install the Client](install.md#get-the-loader).
@@ -42,6 +42,6 @@ Commands: `//ab` toggles the browser (filter by tier, category, owned catalysts)
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ce3d9d60b3f2 -->
-_Last updated: 2026-07-15 11:36 PDT_
+<!-- content-hash: 50d090ac5f7a -->
+_Last updated: 2026-07-17 14:32 PDT_
 <!-- DOCGEN:END id="last-updated" -->

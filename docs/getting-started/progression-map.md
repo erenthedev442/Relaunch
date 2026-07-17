@@ -113,8 +113,8 @@ title: Progression Map
     <p>Rank 2–3 NMs are duo/small-group fights. Gear climbs through the vendor tiers as marks accumulate.</p>
     <ul class="open">
       <li>Opens: Rank 3 NMs (22 marks/kill) · <b>Sage Mastery rank 2</b> (Augment Adept)</li>
-      <li><b>Augment Tier 2</b> — defeat all 3 Rank 2 Hunt NMs, then promote to Rank 3</li>
-      <li>Start chipping the Tier 3 keys: all 3 Rank 3 Hunt NMs · Voidspire floor 10 · every Game Master wave difficulty</li>
+      <li><b>Augment Tier 2</b> — defeat all 3 Rank 2 Hunt NMs + promote to Hunting League Rank 3</li>
+      <li>Start chipping the Tier 3 keys: defeat all 3 Rank 3 Hunt NMs + clear Voidspire floor 10 + every Game Master wave difficulty</li>
     </ul>
   </div>
   <div class="node">
@@ -227,6 +227,6 @@ title: Progression Map
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4ae97fc6f3a1 -->
-_Last updated: 2026-07-16 01:15 PDT_
+<!-- content-hash: 7171ac29fe1e -->
+_Last updated: 2026-07-17 14:32 PDT_
 <!-- DOCGEN:END id="last-updated" -->
