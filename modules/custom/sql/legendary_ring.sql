@@ -45,7 +45,7 @@ UPDATE `item_basic`
 
 -- ----- equip rule: Lv.1, all jobs (4194303), ring slot (24576) ---------------
 UPDATE `item_equipment`
-   SET `name` = 'legendary_ring', `level` = 1, `ilvl` = 0, `jobs` = 4194303, `slot` = 24576
+   SET `name` = 'legendary_ring', `level` = 1, `ilevel` = 0, `jobs` = 4194303, `slot` = 24576
  WHERE `itemId` = 26169;
 
 -- ----- make the enchantment a quick, reusable toggle (retail Reraise Ring is a
