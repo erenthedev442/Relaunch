@@ -65,7 +65,6 @@ Per-player procs that fire automatically on every weapon skill once purchased. E
 | Effect | What it does |
 |---|---|
 | **Empowered Strike** | Per tier: +8% chance your weapon skill lands a critical burst (+60% damage). |
-| **Lifesteal** | Per tier: heal +4% of your weapon skill damage as HP. |
 
 Each effect tiers up to **Tier 5**. **Tier costs (Mastery Sigils):** 20 / 40 / 70 / 110 / 160.
 <!-- DOCGEN:END id="mastery-effects" -->
@@ -109,6 +108,6 @@ Shows your current Mastery Sigil balance, every potency tier you own, and all tr
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a894a816f976 -->
-_Last updated: 2026-07-13 21:48 PDT_
+<!-- content-hash: a4a6013671eb -->
+_Last updated: 2026-07-17 03:22 PDT_
 <!-- DOCGEN:END id="last-updated" -->

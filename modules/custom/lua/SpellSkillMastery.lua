@@ -96,11 +96,11 @@ end
 -----------------------------------
 local function applyWSEffects(attacker, target, damage)
     if not damage or damage <= 0 or attacker == nil or target == nil then return end
-    -- IMPORTANT: WEAPONSKILL_USE fires AFTER the hit lands, so on a killing blow
-    -- `target` is already dead. We must NOT bail on that -- lifesteal still owes
-    -- the player their effect (bailing here was why the effect felt "off and on"
-    -- / "none of it works": WS routinely one-shot the mob). Only the crit BONUS
-    -- (extra damage to the primary target) is pointless once it's dead.
+    -- WEAPONSKILL_USE fires AFTER the hit lands; on a killing blow `target` is
+    -- already dead. `crit` (the only remaining effect) grants BONUS damage to
+    -- the primary target, which is pointless once it's dead -- so gate it on
+    -- targetAlive. The retired 'lifesteal' kind (2026-07-17) intentionally did
+    -- NOT gate on that; if you add a self-effect kind back, don't gate it.
     local damType     = attacker:getWeaponDamageType(xi.slot.MAIN)
     local targetAlive = not target:isDead()
     for _, fx in ipairs(C.wsEffects) do
@@ -113,9 +113,6 @@ local function applyWSEffects(attacker, target, damage)
                         target:takeDamage(bonus, attacker, xi.attackType.PHYSICAL, damType)
                     end
                 end
-            elseif fx.kind == 'lifesteal' then
-                local heal = math.floor(damage * (tier * fx.pctPerTier) / 100)
-                if heal > 0 then attacker:addHP(heal) end
             end
         end
     end
@@ -331,7 +328,8 @@ confirmTrait = function(p, track, t)
     })
 end
 
--- WS Effects menu (tiered procs: Empowered Strike / Splash / Lifesteal).
+-- WS Effects menu (tiered procs -- currently just Empowered Strike; Splash was
+-- retired 2026-07-13, Lifesteal was retired 2026-07-17).
 openEffects = function(p)
     local options = {}
     for _, fx in ipairs(C.wsEffects) do

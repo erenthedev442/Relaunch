@@ -121,6 +121,10 @@ catalog.spellPotency =
 -- retired Rupture Sage / !aoews feature (a22038d3b5). Existing
 -- Mastery_WSFx_splash charvars go inert; players keep the sigils they had left
 -- but the ones spent on splash tiers are not refunded.
+--
+-- The 'lifesteal' effect was removed on 2026-07-17: same retirement pattern --
+-- existing Mastery_WSFx_drain charvars go inert; no sigil refund. The runtime
+-- handler for `kind='lifesteal'` was also stripped from SpellSkillMastery.lua.
 catalog.EFFECT_COST = { 20, 40, 70, 110, 160 }
 
 catalog.wsEffects =
@@ -128,9 +132,6 @@ catalog.wsEffects =
     { id = 'empstrike', var = 'Mastery_WSFx_crit',   name = 'Empowered Strike', max = 5,
       kind = 'crit',      chancePerTier = 8, bonusPct = 60,
       desc = 'Per tier: +8% chance your WS lands a critical burst (+60% damage).' },
-    { id = 'lifesteal', var = 'Mastery_WSFx_drain',  name = 'Lifesteal',        max = 5,
-      kind = 'lifesteal', pctPerTier = 4,
-      desc = 'Per tier: heal +4% of your WS damage as HP.' },
 }
 
 -- ── Trait riders (one-time unlocks; flat additive mods) ─────────────────────
