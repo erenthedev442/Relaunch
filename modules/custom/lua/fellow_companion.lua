@@ -477,12 +477,37 @@ local scheduleCombatLoop -- fwd
 
 -- Layer the Fellow's full stat block + chosen name onto a freshly-spawned pet.
 -- Guarded so it runs once per spawned entity.
+-- Per-role skill_list_id override. Every Fellow chassis is Naji whose stock
+-- list only contains three Sword WSes (burning_blade/red_lotus_blade/vorpal_
+-- blade), so the trust's autonomous AI picks those regardless of role. Point
+-- MOBMOD_SKILL_LIST at a role-specific list (see fellow_role_skill_lists.sql)
+-- so the AI picks role-appropriate WSes. Forced-at-TP-cap WSes (chosenWs +
+-- useMobAbility path) already fire the role's move; this closes the gap on
+-- autonomous WSes fired between TP caps.
+local ROLE_SKILL_LIST_IDS =
+{
+    vanguard  = 9800,
+    berserker = 9801,
+    bulwark   = 9802,
+    oracle    = 9803,
+    magus     = 9804,
+    hunter    = 9805,
+    mastered  = 9806,
+}
+
 local function applyFellow(p, pet)
     if not pet or pet:getLocalVar('fellowApplied') ~= 0 then return end
     pet:setLocalVar('fellowApplied', 1)
 
     local lvl  = getLevel(p)
     local role = roleDef(p)
+
+    -- Point the trust's autonomous AI at the role's own skill list.
+    local roleKey = getRole(p)
+    local sid     = ROLE_SKILL_LIST_IDS[roleKey]
+    if sid then
+        pcall(function() pet:setMobMod(xi.mobMod.SKILL_LIST, sid) end)
+    end
 
     for _, mv in ipairs(CONFIG.perLevel) do pet:addMod(mv[1], mv[2] * lvl) end
     for _, mv in ipairs(role.mods or {})  do pet:addMod(mv[1], mv[2]) end
