@@ -93,21 +93,30 @@ local CONFIG =
     statMods =
     {
         -- Attributes: each point adds the attribute + a derived combat stat.
-        STR = { { xi.mod.STR, 6 }, { xi.mod.ATT, 12 } },
-        DEX = { { xi.mod.DEX, 6 }, { xi.mod.ACC, 10 } },
-        VIT = { { xi.mod.VIT, 6 }, { xi.mod.DEF, 10 } },
-        AGI = { { xi.mod.AGI, 6 }, { xi.mod.EVA, 10 } },
-        INT = { { xi.mod.INT, 6 }, { xi.mod.MATT, 3 } },   -- MATT 10->3 (2026-07-09; clamped by CONFIG.mattCap)
-        MND = { { xi.mod.MND, 6 }, { xi.mod.MDEF, 10 } },
+        -- 2026-07-14 owner call ("stat points don't feel like they do anything"):
+        -- doubled the per-point yield across attributes AND the advanced categories
+        -- that were arithmetically small vs the Fellow's baseline. Verified against
+        -- battleentity.cpp: STR() and ATT() are both live-computed so the mod store
+        -- IS taking effect; it just wasn't landing hard enough to feel per point.
+        -- Now 10 STR points = +120 STR + +240 flat ATT + (0.5 * 120) STR-contribution
+        -- = +300 ATT total (was 150). Same 2x for DEX/VIT/AGI/INT/MND derived stats.
+        STR = { { xi.mod.STR, 12 }, { xi.mod.ATT, 24 } },
+        DEX = { { xi.mod.DEX, 12 }, { xi.mod.ACC, 20 } },
+        VIT = { { xi.mod.VIT, 12 }, { xi.mod.DEF, 20 } },
+        AGI = { { xi.mod.AGI, 12 }, { xi.mod.EVA, 20 } },
+        INT = { { xi.mod.INT, 12 }, { xi.mod.MATT, 6 } },   -- MATT still clamped by CONFIG.mattCap (kept sub-linear)
+        MND = { { xi.mod.MND, 12 }, { xi.mod.MDEF, 20 } },
         -- Advanced categories: focused combat mods that STACK on top of the attributes.
-        Ferocity  = { { xi.mod.ATTP, 1 } },                                -- +1% attack
-        Critical  = { { xi.mod.CRITHITRATE, 1 } },                         -- +1% critical hit rate
-        Frenzy    = { { xi.mod.DOUBLE_ATTACK, 1 } },                       -- +1% Double Attack
-        Onslaught = { { xi.mod.TRIPLE_ATTACK, 1 }, { xi.mod.STORETP, 3 } },-- +1% Triple Attack, +3 Store TP
-        Sorcery   = { { xi.mod.MATT, 4 }, { xi.mod.MACC, 6 } },            -- magic atk (12->4, 2026-07-09) + acc; MATT clamped by CONFIG.mattCap
-        Celerity  = { { xi.mod.HASTE_GEAR, 8 } },                          -- attack speed (engine-capped ~25%)
-        Warding   = { { xi.mod.DMGPHYS, -20 }, { xi.mod.DMGMAGIC, -20 } }, -- damage taken - (engine-capped -50%)
-        Vigor     = { { xi.mod.REGEN, 3 }, { xi.mod.REFRESH, 1 } },        -- HP + MP regen per tick
+        -- Doubled where the per-point yield was tiny; kept 1% on caps (crit/DA/TA)
+        -- so the ladder doesn't blow past cap-relevant thresholds in a handful of points.
+        Ferocity  = { { xi.mod.ATTP, 2 } },                                -- +2% attack (was 1)
+        Critical  = { { xi.mod.CRITHITRATE, 1 } },                         -- +1% crit (kept -- cap-adjacent)
+        Frenzy    = { { xi.mod.DOUBLE_ATTACK, 1 } },                       -- +1% DA (kept -- cap-adjacent)
+        Onslaught = { { xi.mod.TRIPLE_ATTACK, 1 }, { xi.mod.STORETP, 6 } },-- +1% TA (kept), +6 Store TP (was 3)
+        Sorcery   = { { xi.mod.MATT, 8 }, { xi.mod.MACC, 12 } },           -- magic atk 4->8, macc 6->12; MATT still clamped
+        Celerity  = { { xi.mod.HASTE_GEAR, 16 } },                         -- attack speed (was 8; still engine-capped)
+        Warding   = { { xi.mod.DMGPHYS, -40 }, { xi.mod.DMGMAGIC, -40 } }, -- damage taken (was -20; engine caps at -50%)
+        Vigor     = { { xi.mod.REGEN, 6 }, { xi.mod.REFRESH, 2 } },        -- HP+MP regen per tick (was 3/1)
     },
     statOrder = { 'STR', 'DEX', 'VIT', 'AGI', 'INT', 'MND',
                   'Ferocity', 'Critical', 'Frenzy', 'Onslaught', 'Sorcery', 'Celerity', 'Warding', 'Vigor' },
@@ -119,7 +128,7 @@ local CONFIG =
     -- HP = (hpBase + hpPerLevel*level) * role.survival.hpMult + VITpts*hpPerVitPt.
     hpBase       = 5000,
     hpPerLevel   = 1500,
-    hpPerVitPt   = 120,
+    hpPerVitPt   = 240,  -- 2026-07-14: doubled to match the statMods yield bump
     -- pdt/mdt are ONLY fallbacks if a role omits survival.pdt/mdt. Every role below
     -- sets its own, so the durability of a Fellow is defined by its role: a Bulwark
     -- is a wall, a Magus is glass. Values are % damage taken (100 = 1%; - reduces).
