@@ -1,8 +1,8 @@
 # Player gear audit -- items available but not yet unlocked
 
-- Non-GM characters scanned: **20**
-- Total locked-item rows: **32328**
-- Characters with at least one locked item: **19**
+- Non-GM characters scanned: **22**
+- Total locked-item rows: **36273**
+- Characters with at least one locked item: **20**
 
 Each row is an item that exists on the server with at least one
 progression-gated source, but the character hasn't met any of
@@ -11,7 +11,7 @@ at 40 rows per character.
 
 ## Locked items (Item x Character)
 
-Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.csv`.
+Showing first **500** of **36273** rows. Full list in `player_gear_audit.locked.csv`.
 
 | Item | Item ID | Character | Locked sources |
 |---|---:|---|---|
@@ -34,12 +34,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Abyssal Beads +1 | 25460 | Oopsiepoopsie | Crafting[gate not met] |
 | Abyssal Beads +2 | 25461 | Oopsiepoopsie | Crafting[gate not met] |
 | Abyssal Earring | 14741 | Oopsiepoopsie | HTBF[gate not met] \\| drop:HTBF: Divine Might(Battlefield)[gate not met] |
+| Acad. Bracers | 27963 | Bent | Reforge[gate not met] |
 | Acad. Bracers | 27963 | Corvinos | Reforge[gate not met] |
 | Acad. Bracers | 27963 | Eir | Reforge[gate not met] |
 | Acad. Bracers | 27963 | Enko | Reforge[gate not met] |
 | Acad. Bracers | 27963 | Garvtest | Reforge[gate not met] |
 | Acad. Bracers | 27963 | Herdofturtles | Reforge[gate not met] |
 | Acad. Bracers | 27963 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Bracers | 27963 | Midnightarsal | Reforge[gate not met] |
 | Acad. Bracers | 27963 | Molly | Reforge[gate not met] |
 | Acad. Bracers | 27963 | Nut | Reforge[gate not met] |
 | Acad. Bracers | 27963 | Oopsiepoopsie | Reforge[gate not met] |
@@ -47,12 +49,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Bracers | 27963 | Ririntwo | Reforge[gate not met] |
 | Acad. Bracers | 27963 | Spaz | Reforge[gate not met] |
 | Acad. Bracers | 27963 | Testa | Reforge[gate not met] |
+| Acad. Bracers +1 | 27984 | Bent | Reforge[gate not met] |
 | Acad. Bracers +1 | 27984 | Corvinos | Reforge[gate not met] |
 | Acad. Bracers +1 | 27984 | Eir | Reforge[gate not met] |
 | Acad. Bracers +1 | 27984 | Enko | Reforge[gate not met] |
 | Acad. Bracers +1 | 27984 | Garvtest | Reforge[gate not met] |
 | Acad. Bracers +1 | 27984 | Herdofturtles | Reforge[gate not met] |
 | Acad. Bracers +1 | 27984 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Bracers +1 | 27984 | Midnightarsal | Reforge[gate not met] |
 | Acad. Bracers +1 | 27984 | Molly | Reforge[gate not met] |
 | Acad. Bracers +1 | 27984 | Nut | Reforge[gate not met] |
 | Acad. Bracers +1 | 27984 | Oopsiepoopsie | Reforge[gate not met] |
@@ -60,12 +64,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Bracers +1 | 27984 | Ririntwo | Reforge[gate not met] |
 | Acad. Bracers +1 | 27984 | Spaz | Reforge[gate not met] |
 | Acad. Bracers +1 | 27984 | Testa | Reforge[gate not met] |
+| Acad. Bracers +2 | 23194 | Bent | Reforge[gate not met] |
 | Acad. Bracers +2 | 23194 | Corvinos | Reforge[gate not met] |
 | Acad. Bracers +2 | 23194 | Eir | Reforge[gate not met] |
 | Acad. Bracers +2 | 23194 | Enko | Reforge[gate not met] |
 | Acad. Bracers +2 | 23194 | Garvtest | Reforge[gate not met] |
 | Acad. Bracers +2 | 23194 | Herdofturtles | Reforge[gate not met] |
 | Acad. Bracers +2 | 23194 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Bracers +2 | 23194 | Midnightarsal | Reforge[gate not met] |
 | Acad. Bracers +2 | 23194 | Molly | Reforge[gate not met] |
 | Acad. Bracers +2 | 23194 | Nut | Reforge[gate not met] |
 | Acad. Bracers +2 | 23194 | Oopsiepoopsie | Reforge[gate not met] |
@@ -73,12 +79,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Bracers +2 | 23194 | Ririntwo | Reforge[gate not met] |
 | Acad. Bracers +2 | 23194 | Spaz | Reforge[gate not met] |
 | Acad. Bracers +2 | 23194 | Testa | Reforge[gate not met] |
+| Acad. Bracers +3 | 23529 | Bent | Reforge[gate not met] |
 | Acad. Bracers +3 | 23529 | Corvinos | Reforge[gate not met] |
 | Acad. Bracers +3 | 23529 | Eir | Reforge[gate not met] |
 | Acad. Bracers +3 | 23529 | Enko | Reforge[gate not met] |
 | Acad. Bracers +3 | 23529 | Garvtest | Reforge[gate not met] |
 | Acad. Bracers +3 | 23529 | Herdofturtles | Reforge[gate not met] |
 | Acad. Bracers +3 | 23529 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Bracers +3 | 23529 | Midnightarsal | Reforge[gate not met] |
 | Acad. Bracers +3 | 23529 | Molly | Reforge[gate not met] |
 | Acad. Bracers +3 | 23529 | Nut | Reforge[gate not met] |
 | Acad. Bracers +3 | 23529 | Oopsiepoopsie | Reforge[gate not met] |
@@ -86,12 +94,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Bracers +3 | 23529 | Ririntwo | Reforge[gate not met] |
 | Acad. Bracers +3 | 23529 | Spaz | Reforge[gate not met] |
 | Acad. Bracers +3 | 23529 | Testa | Reforge[gate not met] |
+| Acad. Gown +1 | 27848 | Bent | Reforge[gate not met] |
 | Acad. Gown +1 | 27848 | Corvinos | Reforge[gate not met] |
 | Acad. Gown +1 | 27848 | Eir | Reforge[gate not met] |
 | Acad. Gown +1 | 27848 | Enko | Reforge[gate not met] |
 | Acad. Gown +1 | 27848 | Garvtest | Reforge[gate not met] |
 | Acad. Gown +1 | 27848 | Herdofturtles | Reforge[gate not met] |
 | Acad. Gown +1 | 27848 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Gown +1 | 27848 | Midnightarsal | Reforge[gate not met] |
 | Acad. Gown +1 | 27848 | Molly | Reforge[gate not met] |
 | Acad. Gown +1 | 27848 | Nut | Reforge[gate not met] |
 | Acad. Gown +1 | 27848 | Oopsiepoopsie | Reforge[gate not met] |
@@ -99,12 +109,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Gown +1 | 27848 | Ririntwo | Reforge[gate not met] |
 | Acad. Gown +1 | 27848 | Spaz | Reforge[gate not met] |
 | Acad. Gown +1 | 27848 | Testa | Reforge[gate not met] |
+| Acad. Gown +2 | 23127 | Bent | Reforge[gate not met] |
 | Acad. Gown +2 | 23127 | Corvinos | Reforge[gate not met] |
 | Acad. Gown +2 | 23127 | Eir | Reforge[gate not met] |
 | Acad. Gown +2 | 23127 | Enko | Reforge[gate not met] |
 | Acad. Gown +2 | 23127 | Garvtest | Reforge[gate not met] |
 | Acad. Gown +2 | 23127 | Herdofturtles | Reforge[gate not met] |
 | Acad. Gown +2 | 23127 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Gown +2 | 23127 | Midnightarsal | Reforge[gate not met] |
 | Acad. Gown +2 | 23127 | Molly | Reforge[gate not met] |
 | Acad. Gown +2 | 23127 | Nut | Reforge[gate not met] |
 | Acad. Gown +2 | 23127 | Oopsiepoopsie | Reforge[gate not met] |
@@ -112,12 +124,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Gown +2 | 23127 | Ririntwo | Reforge[gate not met] |
 | Acad. Gown +2 | 23127 | Spaz | Reforge[gate not met] |
 | Acad. Gown +2 | 23127 | Testa | Reforge[gate not met] |
+| Acad. Gown +3 | 23462 | Bent | Reforge[gate not met] |
 | Acad. Gown +3 | 23462 | Corvinos | Reforge[gate not met] |
 | Acad. Gown +3 | 23462 | Eir | Reforge[gate not met] |
 | Acad. Gown +3 | 23462 | Enko | Reforge[gate not met] |
 | Acad. Gown +3 | 23462 | Garvtest | Reforge[gate not met] |
 | Acad. Gown +3 | 23462 | Herdofturtles | Reforge[gate not met] |
 | Acad. Gown +3 | 23462 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Gown +3 | 23462 | Midnightarsal | Reforge[gate not met] |
 | Acad. Gown +3 | 23462 | Molly | Reforge[gate not met] |
 | Acad. Gown +3 | 23462 | Nut | Reforge[gate not met] |
 | Acad. Gown +3 | 23462 | Oopsiepoopsie | Reforge[gate not met] |
@@ -125,12 +139,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Gown +3 | 23462 | Ririntwo | Reforge[gate not met] |
 | Acad. Gown +3 | 23462 | Spaz | Reforge[gate not met] |
 | Acad. Gown +3 | 23462 | Testa | Reforge[gate not met] |
+| Acad. Loafers | 28243 | Bent | Reforge[gate not met] |
 | Acad. Loafers | 28243 | Corvinos | Reforge[gate not met] |
 | Acad. Loafers | 28243 | Eir | Reforge[gate not met] |
 | Acad. Loafers | 28243 | Enko | Reforge[gate not met] |
 | Acad. Loafers | 28243 | Garvtest | Reforge[gate not met] |
 | Acad. Loafers | 28243 | Herdofturtles | Reforge[gate not met] |
 | Acad. Loafers | 28243 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Loafers | 28243 | Midnightarsal | Reforge[gate not met] |
 | Acad. Loafers | 28243 | Molly | Reforge[gate not met] |
 | Acad. Loafers | 28243 | Nut | Reforge[gate not met] |
 | Acad. Loafers | 28243 | Oopsiepoopsie | Reforge[gate not met] |
@@ -138,12 +154,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Loafers | 28243 | Ririntwo | Reforge[gate not met] |
 | Acad. Loafers | 28243 | Spaz | Reforge[gate not met] |
 | Acad. Loafers | 28243 | Testa | Reforge[gate not met] |
+| Acad. Loafers +1 | 28264 | Bent | Reforge[gate not met] |
 | Acad. Loafers +1 | 28264 | Corvinos | Reforge[gate not met] |
 | Acad. Loafers +1 | 28264 | Eir | Reforge[gate not met] |
 | Acad. Loafers +1 | 28264 | Enko | Reforge[gate not met] |
 | Acad. Loafers +1 | 28264 | Garvtest | Reforge[gate not met] |
 | Acad. Loafers +1 | 28264 | Herdofturtles | Reforge[gate not met] |
 | Acad. Loafers +1 | 28264 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Loafers +1 | 28264 | Midnightarsal | Reforge[gate not met] |
 | Acad. Loafers +1 | 28264 | Molly | Reforge[gate not met] |
 | Acad. Loafers +1 | 28264 | Nut | Reforge[gate not met] |
 | Acad. Loafers +1 | 28264 | Oopsiepoopsie | Reforge[gate not met] |
@@ -151,12 +169,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Loafers +1 | 28264 | Ririntwo | Reforge[gate not met] |
 | Acad. Loafers +1 | 28264 | Spaz | Reforge[gate not met] |
 | Acad. Loafers +1 | 28264 | Testa | Reforge[gate not met] |
+| Acad. Loafers +2 | 23328 | Bent | Reforge[gate not met] |
 | Acad. Loafers +2 | 23328 | Corvinos | Reforge[gate not met] |
 | Acad. Loafers +2 | 23328 | Eir | Reforge[gate not met] |
 | Acad. Loafers +2 | 23328 | Enko | Reforge[gate not met] |
 | Acad. Loafers +2 | 23328 | Garvtest | Reforge[gate not met] |
 | Acad. Loafers +2 | 23328 | Herdofturtles | Reforge[gate not met] |
 | Acad. Loafers +2 | 23328 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Loafers +2 | 23328 | Midnightarsal | Reforge[gate not met] |
 | Acad. Loafers +2 | 23328 | Molly | Reforge[gate not met] |
 | Acad. Loafers +2 | 23328 | Nut | Reforge[gate not met] |
 | Acad. Loafers +2 | 23328 | Oopsiepoopsie | Reforge[gate not met] |
@@ -164,12 +184,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Loafers +2 | 23328 | Ririntwo | Reforge[gate not met] |
 | Acad. Loafers +2 | 23328 | Spaz | Reforge[gate not met] |
 | Acad. Loafers +2 | 23328 | Testa | Reforge[gate not met] |
+| Acad. Loafers +3 | 23663 | Bent | Reforge[gate not met] |
 | Acad. Loafers +3 | 23663 | Corvinos | Reforge[gate not met] |
 | Acad. Loafers +3 | 23663 | Eir | Reforge[gate not met] |
 | Acad. Loafers +3 | 23663 | Enko | Reforge[gate not met] |
 | Acad. Loafers +3 | 23663 | Garvtest | Reforge[gate not met] |
 | Acad. Loafers +3 | 23663 | Herdofturtles | Reforge[gate not met] |
 | Acad. Loafers +3 | 23663 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Loafers +3 | 23663 | Midnightarsal | Reforge[gate not met] |
 | Acad. Loafers +3 | 23663 | Molly | Reforge[gate not met] |
 | Acad. Loafers +3 | 23663 | Nut | Reforge[gate not met] |
 | Acad. Loafers +3 | 23663 | Oopsiepoopsie | Reforge[gate not met] |
@@ -177,12 +199,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Loafers +3 | 23663 | Ririntwo | Reforge[gate not met] |
 | Acad. Loafers +3 | 23663 | Spaz | Reforge[gate not met] |
 | Acad. Loafers +3 | 23663 | Testa | Reforge[gate not met] |
+| Acad. Mortar. +1 | 27704 | Bent | Reforge[gate not met] |
 | Acad. Mortar. +1 | 27704 | Corvinos | Reforge[gate not met] |
 | Acad. Mortar. +1 | 27704 | Eir | Reforge[gate not met] |
 | Acad. Mortar. +1 | 27704 | Enko | Reforge[gate not met] |
 | Acad. Mortar. +1 | 27704 | Garvtest | Reforge[gate not met] |
 | Acad. Mortar. +1 | 27704 | Herdofturtles | Reforge[gate not met] |
 | Acad. Mortar. +1 | 27704 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Mortar. +1 | 27704 | Midnightarsal | Reforge[gate not met] |
 | Acad. Mortar. +1 | 27704 | Molly | Reforge[gate not met] |
 | Acad. Mortar. +1 | 27704 | Nut | Reforge[gate not met] |
 | Acad. Mortar. +1 | 27704 | Oopsiepoopsie | Reforge[gate not met] |
@@ -190,12 +214,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Mortar. +1 | 27704 | Ririntwo | Reforge[gate not met] |
 | Acad. Mortar. +1 | 27704 | Spaz | Reforge[gate not met] |
 | Acad. Mortar. +1 | 27704 | Testa | Reforge[gate not met] |
+| Acad. Mortar. +2 | 23060 | Bent | Reforge[gate not met] |
 | Acad. Mortar. +2 | 23060 | Corvinos | Reforge[gate not met] |
 | Acad. Mortar. +2 | 23060 | Eir | Reforge[gate not met] |
 | Acad. Mortar. +2 | 23060 | Enko | Reforge[gate not met] |
 | Acad. Mortar. +2 | 23060 | Garvtest | Reforge[gate not met] |
 | Acad. Mortar. +2 | 23060 | Herdofturtles | Reforge[gate not met] |
 | Acad. Mortar. +2 | 23060 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Mortar. +2 | 23060 | Midnightarsal | Reforge[gate not met] |
 | Acad. Mortar. +2 | 23060 | Molly | Reforge[gate not met] |
 | Acad. Mortar. +2 | 23060 | Nut | Reforge[gate not met] |
 | Acad. Mortar. +2 | 23060 | Oopsiepoopsie | Reforge[gate not met] |
@@ -203,12 +229,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Mortar. +2 | 23060 | Ririntwo | Reforge[gate not met] |
 | Acad. Mortar. +2 | 23060 | Spaz | Reforge[gate not met] |
 | Acad. Mortar. +2 | 23060 | Testa | Reforge[gate not met] |
+| Acad. Mortar. +3 | 23395 | Bent | Reforge[gate not met] |
 | Acad. Mortar. +3 | 23395 | Corvinos | Reforge[gate not met] |
 | Acad. Mortar. +3 | 23395 | Eir | Reforge[gate not met] |
 | Acad. Mortar. +3 | 23395 | Enko | Reforge[gate not met] |
 | Acad. Mortar. +3 | 23395 | Garvtest | Reforge[gate not met] |
 | Acad. Mortar. +3 | 23395 | Herdofturtles | Reforge[gate not met] |
 | Acad. Mortar. +3 | 23395 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Mortar. +3 | 23395 | Midnightarsal | Reforge[gate not met] |
 | Acad. Mortar. +3 | 23395 | Molly | Reforge[gate not met] |
 | Acad. Mortar. +3 | 23395 | Nut | Reforge[gate not met] |
 | Acad. Mortar. +3 | 23395 | Oopsiepoopsie | Reforge[gate not met] |
@@ -216,12 +244,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Mortar. +3 | 23395 | Ririntwo | Reforge[gate not met] |
 | Acad. Mortar. +3 | 23395 | Spaz | Reforge[gate not met] |
 | Acad. Mortar. +3 | 23395 | Testa | Reforge[gate not met] |
+| Acad. Mortarboard | 27683 | Bent | Reforge[gate not met] |
 | Acad. Mortarboard | 27683 | Corvinos | Reforge[gate not met] |
 | Acad. Mortarboard | 27683 | Eir | Reforge[gate not met] |
 | Acad. Mortarboard | 27683 | Enko | Reforge[gate not met] |
 | Acad. Mortarboard | 27683 | Garvtest | Reforge[gate not met] |
 | Acad. Mortarboard | 27683 | Herdofturtles | Reforge[gate not met] |
 | Acad. Mortarboard | 27683 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Mortarboard | 27683 | Midnightarsal | Reforge[gate not met] |
 | Acad. Mortarboard | 27683 | Molly | Reforge[gate not met] |
 | Acad. Mortarboard | 27683 | Nut | Reforge[gate not met] |
 | Acad. Mortarboard | 27683 | Oopsiepoopsie | Reforge[gate not met] |
@@ -229,12 +259,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Mortarboard | 27683 | Ririntwo | Reforge[gate not met] |
 | Acad. Mortarboard | 27683 | Spaz | Reforge[gate not met] |
 | Acad. Mortarboard | 27683 | Testa | Reforge[gate not met] |
+| Acad. Pants +1 | 28131 | Bent | Reforge[gate not met] |
 | Acad. Pants +1 | 28131 | Corvinos | Reforge[gate not met] |
 | Acad. Pants +1 | 28131 | Eir | Reforge[gate not met] |
 | Acad. Pants +1 | 28131 | Enko | Reforge[gate not met] |
 | Acad. Pants +1 | 28131 | Garvtest | Reforge[gate not met] |
 | Acad. Pants +1 | 28131 | Herdofturtles | Reforge[gate not met] |
 | Acad. Pants +1 | 28131 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Pants +1 | 28131 | Midnightarsal | Reforge[gate not met] |
 | Acad. Pants +1 | 28131 | Molly | Reforge[gate not met] |
 | Acad. Pants +1 | 28131 | Nut | Reforge[gate not met] |
 | Acad. Pants +1 | 28131 | Oopsiepoopsie | Reforge[gate not met] |
@@ -242,12 +274,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Pants +1 | 28131 | Ririntwo | Reforge[gate not met] |
 | Acad. Pants +1 | 28131 | Spaz | Reforge[gate not met] |
 | Acad. Pants +1 | 28131 | Testa | Reforge[gate not met] |
+| Acad. Pants +2 | 23261 | Bent | Reforge[gate not met] |
 | Acad. Pants +2 | 23261 | Corvinos | Reforge[gate not met] |
 | Acad. Pants +2 | 23261 | Eir | Reforge[gate not met] |
 | Acad. Pants +2 | 23261 | Enko | Reforge[gate not met] |
 | Acad. Pants +2 | 23261 | Garvtest | Reforge[gate not met] |
 | Acad. Pants +2 | 23261 | Herdofturtles | Reforge[gate not met] |
 | Acad. Pants +2 | 23261 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Pants +2 | 23261 | Midnightarsal | Reforge[gate not met] |
 | Acad. Pants +2 | 23261 | Molly | Reforge[gate not met] |
 | Acad. Pants +2 | 23261 | Nut | Reforge[gate not met] |
 | Acad. Pants +2 | 23261 | Oopsiepoopsie | Reforge[gate not met] |
@@ -255,12 +289,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Pants +2 | 23261 | Ririntwo | Reforge[gate not met] |
 | Acad. Pants +2 | 23261 | Spaz | Reforge[gate not met] |
 | Acad. Pants +2 | 23261 | Testa | Reforge[gate not met] |
+| Acad. Pants +3 | 23596 | Bent | Reforge[gate not met] |
 | Acad. Pants +3 | 23596 | Corvinos | Reforge[gate not met] |
 | Acad. Pants +3 | 23596 | Eir | Reforge[gate not met] |
 | Acad. Pants +3 | 23596 | Enko | Reforge[gate not met] |
 | Acad. Pants +3 | 23596 | Garvtest | Reforge[gate not met] |
 | Acad. Pants +3 | 23596 | Herdofturtles | Reforge[gate not met] |
 | Acad. Pants +3 | 23596 | Lantyisstuck | Reforge[gate not met] |
+| Acad. Pants +3 | 23596 | Midnightarsal | Reforge[gate not met] |
 | Acad. Pants +3 | 23596 | Molly | Reforge[gate not met] |
 | Acad. Pants +3 | 23596 | Nut | Reforge[gate not met] |
 | Acad. Pants +3 | 23596 | Oopsiepoopsie | Reforge[gate not met] |
@@ -269,12 +305,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acad. Pants +3 | 23596 | Spaz | Reforge[gate not met] |
 | Acad. Pants +3 | 23596 | Testa | Reforge[gate not met] |
 | Academics Bracers +4 | 24005 | Oopsiepoopsie | Divergence +4 Forge[gate not met] |
+| Academics Gown | 27827 | Bent | Reforge[gate not met] |
 | Academics Gown | 27827 | Corvinos | Reforge[gate not met] |
 | Academics Gown | 27827 | Eir | Reforge[gate not met] |
 | Academics Gown | 27827 | Enko | Reforge[gate not met] |
 | Academics Gown | 27827 | Garvtest | Reforge[gate not met] |
 | Academics Gown | 27827 | Herdofturtles | Reforge[gate not met] |
 | Academics Gown | 27827 | Lantyisstuck | Reforge[gate not met] |
+| Academics Gown | 27827 | Midnightarsal | Reforge[gate not met] |
 | Academics Gown | 27827 | Molly | Reforge[gate not met] |
 | Academics Gown | 27827 | Nut | Reforge[gate not met] |
 | Academics Gown | 27827 | Oopsiepoopsie | Reforge[gate not met] |
@@ -285,12 +323,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Academics Gown +4 | 23960 | Oopsiepoopsie | Divergence +4 Forge[gate not met] |
 | Academics Loafers +4 | 24095 | Oopsiepoopsie | Divergence +4 Forge[gate not met] |
 | Academics Mortarboard +4 | 23915 | Oopsiepoopsie | Divergence +4 Forge[gate not met] |
+| Academics Pants | 28110 | Bent | Reforge[gate not met] |
 | Academics Pants | 28110 | Corvinos | Reforge[gate not met] |
 | Academics Pants | 28110 | Eir | Reforge[gate not met] |
 | Academics Pants | 28110 | Enko | Reforge[gate not met] |
 | Academics Pants | 28110 | Garvtest | Reforge[gate not met] |
 | Academics Pants | 28110 | Herdofturtles | Reforge[gate not met] |
 | Academics Pants | 28110 | Lantyisstuck | Reforge[gate not met] |
+| Academics Pants | 28110 | Midnightarsal | Reforge[gate not met] |
 | Academics Pants | 28110 | Molly | Reforge[gate not met] |
 | Academics Pants | 28110 | Nut | Reforge[gate not met] |
 | Academics Pants | 28110 | Oopsiepoopsie | Reforge[gate not met] |
@@ -301,10 +341,12 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Academics Pants +4 | 24050 | Oopsiepoopsie | Divergence +4 Forge[gate not met] |
 | Acantha Shavers | 18761 | Oopsiepoopsie | drop:Falsespinner Bhudbrodd(La Vaule [S])[gate not met] |
 | Accolade Sword | 18894 | Oopsiepoopsie | drop:Ayravata(Abyssea-Vunkerl)[gate not met] |
+| Accord Hat +1 | 26697 | Bent | Gear Vendor[need HL_Tier>=3] |
 | Accord Hat +1 | 26697 | Corvinos | Gear Vendor[need HL_Tier>=3] |
 | Accord Hat +1 | 26697 | Eir | Gear Vendor[need HL_Tier>=3] |
 | Accord Hat +1 | 26697 | Garvtest | Gear Vendor[need HL_Tier>=3] |
 | Accord Hat +1 | 26697 | Lantyisstuck | Gear Vendor[need HL_Tier>=3] |
+| Accord Hat +1 | 26697 | Midnightarsal | Gear Vendor[need HL_Tier>=3] |
 | Accord Hat +1 | 26697 | Molly | Gear Vendor[need HL_Tier>=3] |
 | Accord Hat +1 | 26697 | Nut | Gear Vendor[need HL_Tier>=3] |
 | Accord Hat +1 | 26697 | Oopsiepoopsie | Gear Vendor[need HL_Tier>=3] |
@@ -319,9 +361,11 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Ace's Leggings | 11432 | Oopsiepoopsie | drop:Itzpapalotl(Abyssea-Attohwa)[gate not met] |
 | Ace's Locket | 15529 | Oopsiepoopsie | drop:Bloody Bones(Arrapago Reef)[gate not met] |
 | Ace's Mufflers | 11896 | Oopsiepoopsie | drop:Raja(Abyssea-Grauberg)[gate not met] |
+| Acerbic Sash +1 | 28435 | Bent | Gear Vendor[need HL_Tier>=1] |
 | Acerbic Sash +1 | 28435 | Corvinos | Gear Vendor[need HL_Tier>=1] |
 | Acerbic Sash +1 | 28435 | Eir | Gear Vendor[need HL_Tier>=1] |
 | Acerbic Sash +1 | 28435 | Lantyisstuck | Gear Vendor[need HL_Tier>=1] |
+| Acerbic Sash +1 | 28435 | Midnightarsal | Gear Vendor[need HL_Tier>=1] |
 | Acerbic Sash +1 | 28435 | Molly | Gear Vendor[need HL_Tier>=1] |
 | Acerbic Sash +1 | 28435 | Nut | Gear Vendor[need HL_Tier>=1] |
 | Acerbic Sash +1 | 28435 | Oopsiepoopsie | Gear Vendor[need HL_Tier>=1] |
@@ -343,9 +387,11 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Acid Knife | 16501 | Oopsiepoopsie | Crafting[gate not met] |
 | Acid Kukri | 16479 | Oopsiepoopsie | Crafting[gate not met] |
 | Acinaces | 19135 | Oopsiepoopsie | drop:Maere(Abyssea-Grauberg)[gate not met] |
+| Acipayam Belt | 28426 | Bent | Gear Vendor[need HL_Tier>=1] |
 | Acipayam Belt | 28426 | Corvinos | Gear Vendor[need HL_Tier>=1] |
 | Acipayam Belt | 28426 | Eir | Gear Vendor[need HL_Tier>=1] |
 | Acipayam Belt | 28426 | Lantyisstuck | Gear Vendor[need HL_Tier>=1] |
+| Acipayam Belt | 28426 | Midnightarsal | Gear Vendor[need HL_Tier>=1] |
 | Acipayam Belt | 28426 | Molly | Gear Vendor[need HL_Tier>=1] |
 | Acipayam Belt | 28426 | Nut | Gear Vendor[need HL_Tier>=1] |
 | Acipayam Belt | 28426 | Oopsiepoopsie | Gear Vendor[need HL_Tier>=1] |
@@ -374,10 +420,12 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Adaman Sabatons | 12932 | Oopsiepoopsie | Crafting[gate not met] |
 | Adaman Sainti | 18745 | Oopsiepoopsie | Crafting[gate not met] |
 | Adapa Shield | 26420 | Oopsiepoopsie | Omen[gate not met] |
+| Adapa's Slacks +1 | 28144 | Bent | Gear Vendor[need HL_Tier>=3] |
 | Adapa's Slacks +1 | 28144 | Corvinos | Gear Vendor[need HL_Tier>=3] |
 | Adapa's Slacks +1 | 28144 | Eir | Gear Vendor[need HL_Tier>=3] |
 | Adapa's Slacks +1 | 28144 | Garvtest | Gear Vendor[need HL_Tier>=3] |
 | Adapa's Slacks +1 | 28144 | Lantyisstuck | Gear Vendor[need HL_Tier>=3] |
+| Adapa's Slacks +1 | 28144 | Midnightarsal | Gear Vendor[need HL_Tier>=3] |
 | Adapa's Slacks +1 | 28144 | Molly | Gear Vendor[need HL_Tier>=3] |
 | Adapa's Slacks +1 | 28144 | Nut | Gear Vendor[need HL_Tier>=3] |
 | Adapa's Slacks +1 | 28144 | Oopsiepoopsie | Gear Vendor[need HL_Tier>=3] |
@@ -415,10 +463,12 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Aega's Doublet | 11338 | Oopsiepoopsie | drop:Koropokkur(Yuhtunga Jungle)[gate not met] |
 | Aegishjalmr | 13914 | Oopsiepoopsie | drop:Fafnir(Dragons Aery)[gate not met] |
 | Aeneas | 20594 | Oopsiepoopsie | Classic Dynamis[gate not met] |
+| Aenoth. Mantle +1 | 28591 | Bent | Gear Vendor[need HL_Tier>=3] |
 | Aenoth. Mantle +1 | 28591 | Corvinos | Gear Vendor[need HL_Tier>=3] |
 | Aenoth. Mantle +1 | 28591 | Eir | Gear Vendor[need HL_Tier>=3] |
 | Aenoth. Mantle +1 | 28591 | Garvtest | Gear Vendor[need HL_Tier>=3] |
 | Aenoth. Mantle +1 | 28591 | Lantyisstuck | Gear Vendor[need HL_Tier>=3] |
+| Aenoth. Mantle +1 | 28591 | Midnightarsal | Gear Vendor[need HL_Tier>=3] |
 | Aenoth. Mantle +1 | 28591 | Molly | Gear Vendor[need HL_Tier>=3] |
 | Aenoth. Mantle +1 | 28591 | Nut | Gear Vendor[need HL_Tier>=3] |
 | Aenoth. Mantle +1 | 28591 | Oopsiepoopsie | Gear Vendor[need HL_Tier>=3] |
@@ -443,12 +493,14 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Aganoshe | 21754 | Oopsiepoopsie | Geas Fete[gate not met] |
 | Agema Cape | 26244 | Oopsiepoopsie | Geas Fete[gate not met] |
 | Agitator's Collar | 28389 | Oopsiepoopsie | HTBF[gate not met] \\| drop:HTBF: Ark Angels 5(Battlefield)[gate not met] |
+| Agoge Calligae | 27328 | Bent | Reforge[gate not met] |
 | Agoge Calligae | 27328 | Corvinos | Reforge[gate not met] |
 | Agoge Calligae | 27328 | Eir | Reforge[gate not met] |
 | Agoge Calligae | 27328 | Enko | Reforge[gate not met] |
 | Agoge Calligae | 27328 | Garvtest | Reforge[gate not met] |
 | Agoge Calligae | 27328 | Herdofturtles | Reforge[gate not met] |
 | Agoge Calligae | 27328 | Lantyisstuck | Reforge[gate not met] |
+| Agoge Calligae | 27328 | Midnightarsal | Reforge[gate not met] |
 | Agoge Calligae | 27328 | Molly | Reforge[gate not met] |
 | Agoge Calligae | 27328 | Nut | Reforge[gate not met] |
 | Agoge Calligae | 27328 | Oopsiepoopsie | Reforge[gate not met] |
@@ -456,67 +508,62 @@ Showing first **500** of **32328** rows. Full list in `player_gear_audit.locked.
 | Agoge Calligae | 27328 | Ririntwo | Reforge[gate not met] |
 | Agoge Calligae | 27328 | Spaz | Reforge[gate not met] |
 | Agoge Calligae | 27328 | Testa | Reforge[gate not met] |
+| Agoge Calligae +1 | 27329 | Bent | Reforge[gate not met] |
 | Agoge Calligae +1 | 27329 | Corvinos | Reforge[gate not met] |
 | Agoge Calligae +1 | 27329 | Eir | Reforge[gate not met] |
 | Agoge Calligae +1 | 27329 | Enko | Reforge[gate not met] |
 | Agoge Calligae +1 | 27329 | Garvtest | Reforge[gate not met] |
 | Agoge Calligae +1 | 27329 | Herdofturtles | Reforge[gate not met] |
 | Agoge Calligae +1 | 27329 | Lantyisstuck | Reforge[gate not met] |
-| Agoge Calligae +1 | 27329 | Molly | Reforge[gate not met] |
-| Agoge Calligae +1 | 27329 | Nut | Reforge[gate not met] |
-| Agoge Calligae +1 | 27329 | Oopsiepoopsie | Reforge[gate not met] |
-| Agoge Calligae +1 | 27329 | Rirint | Reforge[gate not met] |
-| Agoge Calligae +1 | 27329 | Ririntwo | Reforge[gate not met] |
-| Agoge Calligae +1 | 27329 | Spaz | Reforge[gate not met] |
-| Agoge Calligae +1 | 27329 | Testa | Reforge[gate not met] |
-| Agoge Calligae +2 | 23331 | Corvinos | Reforge[gate not met] |
-| Agoge Calligae +2 | 23331 | Eir | Reforge[gate not met] |
-| Agoge Calligae +2 | 23331 | Enko | Reforge[gate not met] |
-| Agoge Calligae +2 | 23331 | Garvtest | Reforge[gate not met] |
-| Agoge Calligae +2 | 23331 | Herdofturtles | Reforge[gate not met] |
-| Agoge Calligae +2 | 23331 | Lantyisstuck | Reforge[gate not met] |
-| Agoge Calligae +2 | 23331 | Molly | Reforge[gate not met] |
-| Agoge Calligae +2 | 23331 | Nut | Reforge[gate not met] |
-| Agoge Calligae +2 | 23331 | Oopsiepoopsie | Reforge[gate not met] |
-| Agoge Calligae +2 | 23331 | Rirint | Reforge[gate not met] |
-| Agoge Calligae +2 | 23331 | Ririntwo | Reforge[gate not met] |
-| Agoge Calligae +2 | 23331 | Spaz | Reforge[gate not met] |
-| Agoge Calligae +2 | 23331 | Testa | Reforge[gate not met] |
-| Agoge Calligae +3 | 23666 | Corvinos | Reforge[gate not met] |
-| Agoge Calligae +3 | 23666 | Eir | Reforge[gate not met] |
-| Agoge Calligae +3 | 23666 | Enko | Reforge[gate not met] |
-| Agoge Calligae +3 | 23666 | Garvtest | Reforge[gate not met] |
-| Agoge Calligae +3 | 23666 | Herdofturtles | Reforge[gate not met] |
-| Agoge Calligae +3 | 23666 | Lantyisstuck | Reforge[gate not met] |
-| Agoge Calligae +3 | 23666 | Molly | Reforge[gate not met] |
-| Agoge Calligae +3 | 23666 | Nut | Reforge[gate not met] |
-| Agoge Calligae +3 | 23666 | Oopsiepoopsie | Reforge[gate not met] |
-| Agoge Calligae +3 | 23666 | Rirint | Reforge[gate not met] |
-| Agoge Calligae +3 | 23666 | Ririntwo | Reforge[gate not met] |
-| Agoge Calligae +3 | 23666 | Spaz | Reforge[gate not met] |
-| Agoge Calligae +3 | 23666 | Testa | Reforge[gate not met] |
-| Agoge Calligae +4 | 24098 | Oopsiepoopsie | Divergence +4 Forge[gate not met] |
-| Agoge Chopper | 21773 | Oopsiepoopsie | Crafting[gate not met] |
-| Agoge Cuisses | 27152 | Corvinos | Reforge[gate not met] |
-| Agoge Cuisses | 27152 | Eir | Reforge[gate not met] |
-| Agoge Cuisses | 27152 | Enko | Reforge[gate not met] |
-| Agoge Cuisses | 27152 | Garvtest | Reforge[gate not met] |
-| Agoge Cuisses | 27152 | Herdofturtles | Reforge[gate not met] |
-| Agoge Cuisses | 27152 | Lantyisstuck | Reforge[gate not met] |
-| Agoge Cuisses | 27152 | Molly | Reforge[gate not met] |
-| Agoge Cuisses | 27152 | Nut | Reforge[gate not met] |
-| Agoge Cuisses | 27152 | Oopsiepoopsie | Reforge[gate not met] |
-| Agoge Cuisses | 27152 | Rirint | Reforge[gate not met] |
-| Agoge Cuisses | 27152 | Ririntwo | Reforge[gate not met] |
-| Agoge Cuisses | 27152 | Spaz | Reforge[gate not met] |
-| Agoge Cuisses | 27152 | Testa | Reforge[gate not met] |
-| Agoge Cuisses +1 | 27153 | Corvinos | Reforge[gate not met] |
-| Agoge Cuisses +1 | 27153 | Eir | Reforge[gate not met] |
-| Agoge Cuisses +1 | 27153 | Enko | Reforge[gate not met] |
-| Agoge Cuisses +1 | 27153 | Garvtest | Reforge[gate not met] |
-| Agoge Cuisses +1 | 27153 | Herdofturtles | Reforge[gate not met] |
 
 ## By character
+
+### Bent (1991 locked)
+
+| Item | Item ID | Locked sources |
+|---|---:|---|
+| Acad. Bracers | 27963 | Reforge[gate not met] |
+| Acad. Bracers +1 | 27984 | Reforge[gate not met] |
+| Acad. Bracers +2 | 23194 | Reforge[gate not met] |
+| Acad. Bracers +3 | 23529 | Reforge[gate not met] |
+| Acad. Gown +1 | 27848 | Reforge[gate not met] |
+| Acad. Gown +2 | 23127 | Reforge[gate not met] |
+| Acad. Gown +3 | 23462 | Reforge[gate not met] |
+| Acad. Loafers | 28243 | Reforge[gate not met] |
+| Acad. Loafers +1 | 28264 | Reforge[gate not met] |
+| Acad. Loafers +2 | 23328 | Reforge[gate not met] |
+| Acad. Loafers +3 | 23663 | Reforge[gate not met] |
+| Acad. Mortar. +1 | 27704 | Reforge[gate not met] |
+| Acad. Mortar. +2 | 23060 | Reforge[gate not met] |
+| Acad. Mortar. +3 | 23395 | Reforge[gate not met] |
+| Acad. Mortarboard | 27683 | Reforge[gate not met] |
+| Acad. Pants +1 | 28131 | Reforge[gate not met] |
+| Acad. Pants +2 | 23261 | Reforge[gate not met] |
+| Acad. Pants +3 | 23596 | Reforge[gate not met] |
+| Academics Gown | 27827 | Reforge[gate not met] |
+| Academics Pants | 28110 | Reforge[gate not met] |
+| Accord Hat +1 | 26697 | Gear Vendor[need HL_Tier>=3] |
+| Acerbic Sash +1 | 28435 | Gear Vendor[need HL_Tier>=1] |
+| Acipayam Belt | 28426 | Gear Vendor[need HL_Tier>=1] |
+| Adapa's Slacks +1 | 28144 | Gear Vendor[need HL_Tier>=3] |
+| Aenoth. Mantle +1 | 28591 | Gear Vendor[need HL_Tier>=3] |
+| Agoge Calligae | 27328 | Reforge[gate not met] |
+| Agoge Calligae +1 | 27329 | Reforge[gate not met] |
+| Agoge Calligae +2 | 23331 | Reforge[gate not met] |
+| Agoge Calligae +3 | 23666 | Reforge[gate not met] |
+| Agoge Cuisses | 27152 | Reforge[gate not met] |
+| Agoge Cuisses +1 | 27153 | Reforge[gate not met] |
+| Agoge Cuisses +2 | 23264 | Reforge[gate not met] |
+| Agoge Cuisses +3 | 23599 | Reforge[gate not met] |
+| Agoge Lorica | 26800 | Reforge[gate not met] |
+| Agoge Lorica +1 | 26801 | Reforge[gate not met] |
+| Agoge Lorica +2 | 23130 | Reforge[gate not met] |
+| Agoge Lorica +3 | 23465 | Reforge[gate not met] |
+| Agoge Mask | 26624 | Reforge[gate not met] |
+| Agoge Mask +1 | 26625 | Reforge[gate not met] |
+| Agoge Mask +2 | 23063 | Reforge[gate not met] |
+
+_...1951 more in `player_gear_audit.locked.csv`._
 
 ### Corvinos (1991 locked)
 
@@ -800,54 +847,54 @@ _...1634 more in `player_gear_audit.locked.csv`._
 
 _...1550 more in `player_gear_audit.locked.csv`._
 
-### Lanty (41 locked)
+### Lantyisstuck (1991 locked)
 
 | Item | Item ID | Locked sources |
 |---|---:|---|
-| Alaunuss Cape | 26248 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Andartia's Mantle | 26258 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Ankou's Mantle | 26253 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Artio's Mantle | 26254 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Belenuss Cape | 26256 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Brigantia's Mantle | 26259 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Campestress Cape | 26260 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Camuluss Mantle | 26262 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Intarabuss Cape | 26255 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Lugh's Cape | 26265 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Nantosuelta's Cape | 26266 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Ogma's Cape | 26267 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Rosmerta's Cape | 26261 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Rudianoss Mantle | 26252 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Segomo's Mantle | 26247 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Senuna's Mantle | 26264 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Smertrioss Mantle | 26257 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Sucelloss Cape | 26250 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Taranuss Cape | 26249 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Toutatiss Cape | 26251 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Visuciuss Mantle | 26263 | Gear Vendor[need Infamy_Lifetime>=4000] |
-| Volte Beret | 23710 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Boots | 23729 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Bracers | 23721 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Brais | 23722 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Brayettes | 23724 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Cap | 23713 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Doublet | 23714 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Gaiters | 23726 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Gloves | 23718 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Harness | 23715 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Haubert | 23716 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Hose | 23725 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Jupon | 23717 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Mittens | 23719 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Moufles | 23720 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Salade | 23712 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Sollerets | 23728 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Spats | 23727 | Gear Vendor[need Infamy_Lifetime>=5000] |
-| Volte Tiara | 23711 | Gear Vendor[need Infamy_Lifetime>=5000] |
+| Acad. Bracers | 27963 | Reforge[gate not met] |
+| Acad. Bracers +1 | 27984 | Reforge[gate not met] |
+| Acad. Bracers +2 | 23194 | Reforge[gate not met] |
+| Acad. Bracers +3 | 23529 | Reforge[gate not met] |
+| Acad. Gown +1 | 27848 | Reforge[gate not met] |
+| Acad. Gown +2 | 23127 | Reforge[gate not met] |
+| Acad. Gown +3 | 23462 | Reforge[gate not met] |
+| Acad. Loafers | 28243 | Reforge[gate not met] |
+| Acad. Loafers +1 | 28264 | Reforge[gate not met] |
+| Acad. Loafers +2 | 23328 | Reforge[gate not met] |
+| Acad. Loafers +3 | 23663 | Reforge[gate not met] |
+| Acad. Mortar. +1 | 27704 | Reforge[gate not met] |
+| Acad. Mortar. +2 | 23060 | Reforge[gate not met] |
+| Acad. Mortar. +3 | 23395 | Reforge[gate not met] |
+| Acad. Mortarboard | 27683 | Reforge[gate not met] |
+| Acad. Pants +1 | 28131 | Reforge[gate not met] |
+| Acad. Pants +2 | 23261 | Reforge[gate not met] |
+| Acad. Pants +3 | 23596 | Reforge[gate not met] |
+| Academics Gown | 27827 | Reforge[gate not met] |
+| Academics Pants | 28110 | Reforge[gate not met] |
+| Accord Hat +1 | 26697 | Gear Vendor[need HL_Tier>=3] |
+| Acerbic Sash +1 | 28435 | Gear Vendor[need HL_Tier>=1] |
+| Acipayam Belt | 28426 | Gear Vendor[need HL_Tier>=1] |
+| Adapa's Slacks +1 | 28144 | Gear Vendor[need HL_Tier>=3] |
+| Aenoth. Mantle +1 | 28591 | Gear Vendor[need HL_Tier>=3] |
+| Agoge Calligae | 27328 | Reforge[gate not met] |
+| Agoge Calligae +1 | 27329 | Reforge[gate not met] |
+| Agoge Calligae +2 | 23331 | Reforge[gate not met] |
+| Agoge Calligae +3 | 23666 | Reforge[gate not met] |
+| Agoge Cuisses | 27152 | Reforge[gate not met] |
+| Agoge Cuisses +1 | 27153 | Reforge[gate not met] |
+| Agoge Cuisses +2 | 23264 | Reforge[gate not met] |
+| Agoge Cuisses +3 | 23599 | Reforge[gate not met] |
+| Agoge Lorica | 26800 | Reforge[gate not met] |
+| Agoge Lorica +1 | 26801 | Reforge[gate not met] |
+| Agoge Lorica +2 | 23130 | Reforge[gate not met] |
+| Agoge Lorica +3 | 23465 | Reforge[gate not met] |
+| Agoge Mask | 26624 | Reforge[gate not met] |
+| Agoge Mask +1 | 26625 | Reforge[gate not met] |
+| Agoge Mask +2 | 23063 | Reforge[gate not met] |
 
-_...1 more in `player_gear_audit.locked.csv`._
+_...1951 more in `player_gear_audit.locked.csv`._
 
-### Lantyisstuck (1991 locked)
+### Midnightarsal (1991 locked)
 
 | Item | Item ID | Locked sources |
 |---|---:|---|
@@ -988,7 +1035,7 @@ _...1951 more in `player_gear_audit.locked.csv`._
 
 _...1951 more in `player_gear_audit.locked.csv`._
 
-### Oopsiepoopsie (8873 locked)
+### Oopsiepoopsie (8877 locked)
 
 | Item | Item ID | Locked sources |
 |---|---:|---|
@@ -1033,7 +1080,7 @@ _...1951 more in `player_gear_audit.locked.csv`._
 | Academics Gown | 27827 | Reforge[gate not met] |
 | Academics Gown +4 | 23960 | Divergence +4 Forge[gate not met] |
 
-_...8833 more in `player_gear_audit.locked.csv`._
+_...8837 more in `player_gear_audit.locked.csv`._
 
 ### Rirint (1991 locked)
 

@@ -524,15 +524,6 @@
   {
     "charid": 12,
     "charname": "Souls",
-    "itemid": 16807,
-    "itemname": "Cmb.cst. Scimitar",
-    "quantity": 2,
-    "reason": "no_source",
-    "sources": []
-  },
-  {
-    "charid": 12,
-    "charname": "Souls",
     "itemid": 17440,
     "itemname": "Kraken Club",
     "quantity": 1,
@@ -1426,7 +1417,7 @@
     "charname": "Spyro",
     "itemid": 16482,
     "itemname": "Onion Dagger",
-    "quantity": 2,
+    "quantity": 1,
     "reason": "no_source",
     "sources": []
   },
@@ -1559,6 +1550,15 @@
   {
     "charid": 20,
     "charname": "Thanos",
+    "itemid": 12942,
+    "itemname": "Ryl.kgt. Sollerets",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
     "itemid": 13184,
     "itemname": "White Belt",
     "quantity": 1,
@@ -1570,6 +1570,24 @@
     "charname": "Thanos",
     "itemid": 13202,
     "itemname": "Brown Belt",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 13952,
+    "itemname": "Ochiudo's Kote",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 20,
+    "charname": "Thanos",
+    "itemid": 14581,
+    "itemname": "I.r. Chainmail",
     "quantity": 1,
     "reason": "no_source",
     "sources": []
@@ -2094,15 +2112,6 @@
   {
     "charid": 25,
     "charname": "Lanty",
-    "itemid": 16575,
-    "itemname": "Curtana",
-    "quantity": 1,
-    "reason": "no_source",
-    "sources": []
-  },
-  {
-    "charid": 25,
-    "charname": "Lanty",
     "itemid": 26231,
     "itemname": "Ephramad's Ring",
     "quantity": 1,
@@ -2112,6 +2121,333 @@
   {
     "charid": 26,
     "charname": "Lantyisstuck",
+    "itemid": 16483,
+    "itemname": "Onion Knife",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 12637,
+    "itemname": "Galkan Surcoat",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 12758,
+    "itemname": "Galkan Bracers",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 12888,
+    "itemname": "Galkan Braguette",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 13009,
+    "itemname": "Galkan Sandals",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 13054,
+    "itemname": "Fuma Kyahan",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 13189,
+    "itemname": "Speed Belt",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 13952,
+    "itemname": "Ochiudo's Kote",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 15543,
+    "itemname": "Rajas Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 16534,
+    "itemname": "Onion Sword",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 16963,
+    "itemname": "Taimakuniyuki",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 19025,
+    "itemname": "Pole Grip",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 19791,
+    "itemname": "Draca Couse",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 26646,
+    "itemname": "Sakonji Kabuto",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 26762,
+    "itemname": "Kasuga Kabuto",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 26822,
+    "itemname": "Sakonji Domaru",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 26920,
+    "itemname": "Kasuga Domaru",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 26998,
+    "itemname": "Sakonji Kote",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 27074,
+    "itemname": "Kasuga Kote",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 27174,
+    "itemname": "Sakonji Haidate",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 27259,
+    "itemname": "Kasuga Haidate",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 27350,
+    "itemname": "Sakonji Sune-ate",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 27433,
+    "itemname": "Kasuga Sune-ate",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 27674,
+    "itemname": "Wakido Kabuto",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 27818,
+    "itemname": "Wakido Domaru",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 27954,
+    "itemname": "Wakido Kote",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 28101,
+    "itemname": "Wakido Haidate",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 29,
+    "charname": "Bent",
+    "itemid": 28234,
+    "itemname": "Wakido Sune-ate",
+    "quantity": 1,
+    "reason": "all_gated",
+    "sources": [
+      "sys:Reforge"
+    ]
+  },
+  {
+    "charid": 32,
+    "charname": "Midnightarsal",
+    "itemid": 12631,
+    "itemname": "Hume Tunic",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 32,
+    "charname": "Midnightarsal",
+    "itemid": 12754,
+    "itemname": "Hume M Gloves",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 32,
+    "charname": "Midnightarsal",
+    "itemid": 12883,
+    "itemname": "Hume Slacks",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 32,
+    "charname": "Midnightarsal",
+    "itemid": 13005,
+    "itemname": "Hume M Boots",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 32,
+    "charname": "Midnightarsal",
+    "itemid": 13497,
+    "itemname": "Bastokan Ring",
+    "quantity": 1,
+    "reason": "no_source",
+    "sources": []
+  },
+  {
+    "charid": 32,
+    "charname": "Midnightarsal",
     "itemid": 16483,
     "itemname": "Onion Knife",
     "quantity": 1,
