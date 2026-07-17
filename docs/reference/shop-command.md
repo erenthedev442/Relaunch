@@ -13,9 +13,9 @@ Type `!shop` in any zone to open an instant player shop — no NPC visit require
 
 **Available categories:** general · weapons · armor · consumables · food · dice · ammo · ninja · pets · reforge
 
-The four Rare/Ex armor sub-pages cost **10,000 gil per item**. These pieces
-cannot be traded, delivered, or listed on the Auction House and resell to
-standard NPC vendors for **5,000 gil**.
+The four Rare/Ex armor sub-pages are flat-priced (each category note below
+lists the live buy and NPC-resale prices). These pieces cannot be traded,
+delivered, or listed on the Auction House.
 
 <!-- DOCGEN:BEGIN id="shop-catalog" -->
 <div class="st-wrap">

@@ -651,7 +651,11 @@ CATALOG_SOURCES = [
                      'modules/custom/lua/gear_progression_catalog.lua']),
     ('Infamy Vendor', ['modules/custom/lua/infamy_vendor_catalog.lua']),
     ('Weapon Forge', ['modules/custom/lua/weapon_forge_catalog.lua',
-                      'modules/custom/lua/Relic_Forge.lua']),
+                      'modules/custom/lua/Relic_Forge.lua',
+                      # 2026-07: Relic Forge final forms were extracted from
+                      # Relic_Forge.lua into this catalog -- scan it too or the
+                      # relic final-form items read as unobtainable.
+                      'modules/custom/lua/relic_forge_catalog.lua']),
     ('Affinity NMs', ['modules/custom/lua/augment_affinity_catalog.lua']),
 ]
 

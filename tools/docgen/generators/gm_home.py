@@ -21,6 +21,7 @@ from pathlib import Path
 
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
+from tools.docgen._bgwiki import urls_for_item
 
 # ---------------------------------------------------------------------------
 # Lua helpers (duplicated per the established pattern)
@@ -474,11 +475,117 @@ def _render_exp_camps(camps: list[dict]) -> str:
 # Entry point
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Welcome Moogle (modules/custom/lua/welcome_moogle_catalog.lua +
+# modules/custom/lua/Welcome_Moogle.lua). Full linked stock listing: the free
+# starter-gift set, then every level-gated ware with its two fixed augments.
+# ---------------------------------------------------------------------------
+
+_WM_AUG_RE = re.compile(
+    r"(\w+)\s*=\s*function\(\)\s*return\s*\{\s*id\s*=\s*\d+,\s*value\s*=\s*\d+,\s*label\s*=\s*'([^']+)'\s*\}")
+_WM_ITEM_RE = re.compile(
+    r"item\(\s*(\d+)\s*,\s*(?:'([^']+)'|\"([^\"]+)\")\s*,\s*'(\w+)'\s*,\s*'(\w+)'\s*\)")
+_WM_GIFT_RE = re.compile(
+    r"\{\s*id\s*=\s*(\d+),\s*name\s*=\s*(?:'([^']+)'|\"([^\"]+)\")\s*\}")
+_WM_CAT_RE = re.compile(r"^( {8})(\w+) =\s*$")
+_WM_SUB_RE = re.compile(r"^( {12})(?:(\w+)|\['([^']+)'\]) =\s*$")
+
+
+def _parse_welcome_moogle(cat_text: str, npc_text: str) -> dict | None:
+    augs = dict(_WM_AUG_RE.findall(cat_text))
+    price_m = re.search(r"price\s*=\s*(\d+)", cat_text)
+    lvl_m = re.search(r"MIN_LEVEL\s*=\s*(\d+)", npc_text)
+    if not augs or not price_m or not lvl_m:
+        return None
+
+    gifts_block = cat_text.split("starterGifts", 1)[-1].split("categoryOrder", 1)[0]
+    gifts = [(int(g[0]), g[1] or g[2]) for g in _WM_GIFT_RE.findall(gifts_block)]
+
+    # Walk the wares table line-by-line, tracking the current category (8-space
+    # indent) and subcategory (12-space indent) headers above each item() row.
+    wares_block = cat_text.split("wares =", 1)[-1]
+    sections: list[tuple[str, str, list]] = []   # (category, subcategory, items)
+    cat = sub = None
+    for line in wares_block.splitlines():
+        cm = _WM_CAT_RE.match(line)
+        if cm:
+            cat = cm.group(2)
+            continue
+        sm = _WM_SUB_RE.match(line)
+        if sm:
+            sub = sm.group(2) or sm.group(3)
+            sections.append((cat, sub, []))
+            continue
+        im = _WM_ITEM_RE.search(line)
+        if im and sections:
+            item_id = int(im.group(1))
+            name = im.group(2) or im.group(3)
+            a1, a2 = augs.get(im.group(4)), augs.get(im.group(5))
+            if a1 is None or a2 is None:
+                return None      # unknown augment key -> fail closed
+            sections[-1][2].append((item_id, name, a1, a2))
+
+    total = sum(len(s[2]) for s in sections)
+    if len(gifts) < 3 or total < 20:
+        return None
+    return {
+        "gifts": gifts, "sections": sections, "total": total,
+        "price": int(price_m.group(1)), "min_level": int(lvl_m.group(1)),
+        "exp_count": sum(1 for s in sections for it in s[2] if "EXP" in it[2] or "EXP" in it[3]),
+    }
+
+
+def _wm_link(item_id: int, name: str) -> str:
+    page_url, image_url = urls_for_item(name, None, item_id=item_id)
+    return (f'<a class="item-link" href="{page_url}" data-img="{image_url}" '
+            f'target="_blank" rel="noopener">{name.replace("|", "&#124;")}</a>')
+
+
+def _render_welcome_moogle(d: dict) -> str:
+    gift_links = ", ".join(f"**{_wm_link(i, n)}**" for i, n in d["gifts"])
+    out = [
+        f"The festive **Welcome Moogle** is the first stop for a new character. The "
+        f"first time you speak to it — at any level — it hands over a free gift set: "
+        f"{gift_links}. Once per character; if your inventory is full, make room and "
+        f"speak to it again.",
+        "",
+        f"Return on a main job of **level {d['min_level']} or higher** and it opens "
+        f"its starter racks: **{d['total']} curated pieces**, every one "
+        f"**{d['price']:,} gil**, each with exactly **two fixed, low-tier augments**. "
+        f"{d['exp_count']} accessories carry **EXP +15%** as a leveling teaser. All "
+        f"wares are Rare/Ex — they cannot be traded, auctioned, delivered, sent to "
+        f"another character, or sold back to an NPC.",
+    ]
+    for cat, sub, items in d["sections"]:
+        if not items:
+            continue
+        out += ["", f"**{cat} — {sub}**", "", "| Item | Fixed augments |", "|---|---|"]
+        for item_id, name, a1, a2 in items:
+            out.append(f"| {_wm_link(item_id, name)} | {a1} · {a2} |")
+    return "\n".join(out)
+
+
 def generate(repo_root: Path, docs_dir: Path) -> None:
     page = docs_dir / "progression" / "gm-home.md"
     if not page.exists():
         print(f"[gm_home] skip: target page {page} not found")
         return
+
+    # --- Welcome Moogle ---
+    wm_cat = resolve_source(repo_root, "modules/custom/lua/welcome_moogle_catalog.lua", required=False)
+    wm_npc = resolve_source(repo_root, "modules/custom/lua/Welcome_Moogle.lua", required=False)
+    if wm_cat is None or wm_npc is None:
+        print("[gm_home] skip welcome-moogle: catalog or NPC lua not found")
+    else:
+        wm = _parse_welcome_moogle(
+            wm_cat.read_text(encoding="utf-8", errors="replace"),
+            wm_npc.read_text(encoding="utf-8", errors="replace"))
+        if wm is None:
+            print("[gm_home] WARN welcome-moogle: parse failed or degraded — block not rewritten")
+        elif write_between_markers(page, "gm-home-welcome-moogle", _render_welcome_moogle(wm)):
+            print(f"[gm_home] welcome-moogle: {len(wm['gifts'])} gifts + {wm['total']} wares written into marker")
+        else:
+            print(f"[gm_home] welcome-moogle: marker 'gm-home-welcome-moogle' not found in {page.name}")
 
     # --- Test Dummy ---
     dummy_src = resolve_source(repo_root, "modules/custom/lua/test_dummy_catalog.lua", required=False)
