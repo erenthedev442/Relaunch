@@ -1089,3 +1089,10 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Augments** — Force re-apply of EXP-bonus augment fix (augId 73 -> mod 382)
     - **Crash** — Comprehensive IsEntityAlive guard pass on CLuaBaseEntity
     - **Crash** — Extend IsEntityAlive guard to setHP (boss-command UAF)
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: de7b50b1f8d7 -->
+_Last updated: 2026-07-17 04:37 PDT_
+<!-- DOCGEN:END id="last-updated" -->
