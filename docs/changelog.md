@@ -10,6 +10,14 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
 ---
 
 !!! note "Week of July 13–19, 2026"
+    **Friday, July 17**
+
+    - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-17 04:08
+    - **Relaunch/Engine** — Close the dangling-entity crash class on the Fellow binding surface
+    - **Relaunch/Fellow** — Stop keeper/combat-loop timers crashing xi_map on logout teardown
+    - **Relaunch/Mastery** — Retire Lifesteal WS effect
+    - **Relaunch/Engine+Lua** — 6 real bugs surfaced by the ximap log audit
+
     **Thursday, July 16**
 
     - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-16 22:50
@@ -1049,10 +1057,35 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Items** — Grant Geomancy/Handbell skill on all-magic-skills gear
     - **Augments** — Reduce individual WS DMG+ cap 800%→200%
     - **Augments** — Cap Gilfinder augment at +4/slot (20 total max)
+    - **Combat** — Uncap skillchain damage for PC attackers
+    - **Trusts** — Replace Hunter's Prelude with double madrigal on Gemma
+    - **Trusts** — Replace Gemma's Sentinel's Scherzo with Hunter's Prelude
+    - **Combat** — Exclude the 8 Abyssea marks-pop zones from level correction
+    - **Ascension** — Despawn trial NM on player KO
+    - **Items** — Add missing mods for Spaekonas Gloves +4 (23988)
+    - **Combat** — Use MESSAGE_SYSTEM_1 for over-cap damage notification
+    - **SMN** — Boost avatar BP damage and fix gear-swap stat refresh
+    - **Casino** — Close 30ms double-bet exploit at Lady Luck
+    - **Commands** — Show pet level + stats for all 4 pet jobs (was PUP-only)
+    - **Shop** — Add Eminent Sachet (21383) to !shop ammo
 
----
+    **Wednesday, June 17**
 
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7b0044e8b0be -->
-_Last updated: 2026-07-17 04:15 PDT_
-<!-- DOCGEN:END id="last-updated" -->
+    - **World NMs** — Drop Escha Ru'Aun from the auto-pop list (Reisenjima only)
+    - **Abyssea** — Make ??? marks-pop + kill-reward clobber-proof (hook pattern)
+    - **Blue Magic** — Disable Mortal Ray (spell 686) - cannot be cast
+    - **Subjobs** — Level-0 sub jobs permanently stuck (EXP_TO_NEXT[0] was nil)
+    - **Augments** — Refund staked items when the player cancels the augment menu
+    - **Skillchain** — Record SC damage as int32 (int16 capped hits at 32,767)
+    - **Sparks Exchange** — Shorten Eminence Broker main title (128-byte click cap)
+    - **Abyssea** — Add Cruor reward on marks-popped NM kill
+    - **Corsair** — Double-up always showed 0 because corsairActiveRoll was clobbered
+    - **Commands** — Add !delnegdmg - purge items whose applied DMG augment netted negative
+    - **Magic** — Uncap PC magic damage (remove base + MAB/MDB ratio ceilings)
+    - **Infamy** — Add Daurdabla (string relic) to Infamy Vendor at 800 Inf
+    - **Automerits** — Skip job-specific, Others, and Weaponskill merits
+    - **Vendors** — Add BRD instruments to hunting league + infamy gear vendors
+    - **Infamy Vendor** — Ryunohige -> i119 III final form (21858)
+    - **Augments** — Force re-apply of EXP-bonus augment fix (augId 73 -> mod 382)
+    - **Crash** — Comprehensive IsEntityAlive guard pass on CLuaBaseEntity
+    - **Crash** — Extend IsEntityAlive guard to setHP (boss-command UAF)
