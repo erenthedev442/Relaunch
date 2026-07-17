@@ -538,7 +538,18 @@ end
 -- master) so the loop has stopped -- and all master access is pcall-guarded.
 scheduleCombatLoop = function(master, pet)
     pet:timer(CONFIG.combatLoopMs, function(p)
-        if not p or not p:isAlive() then return end
+        -- TEARDOWN GUARD (2026-07-17 crash fix): both refs can be userdata
+        -- wrapping freed entities after a logout. pcall catches Lua-raised
+        -- errors; the nil-guarded getZone() catches the invalid-entity case
+        -- (engine warns + returns nil instead of dereferencing). Bail without
+        -- re-arming on any doubt -- the keeper respawns a fresh Fellow.
+        local okZ, zoned = pcall(function()
+            return p ~= nil and p:getZone() ~= nil
+               and master ~= nil and master:getZone() ~= nil
+        end)
+        if not okZ or not zoned then return end
+
+        if not p:isAlive() then return end
         pcall(function()
             if not (master and master:isAlive()) then return end
             local rdef = roleDef(master)
@@ -647,7 +658,16 @@ local function getFellowTrust(p)
     local ok, party = pcall(function() return p:getPartyWithTrusts() end)
     if not ok or not party then return nil end
     for _, member in pairs(party) do
-        if member and member:getObjType() == xi.objType.TRUST and entityIsFellow(member) then
+        -- Per-member pcall: a despawning trust can sit in the party snapshot
+        -- with an already-invalidated base pointer (the 03:20:41 getLocalVar
+        -- "dead/null entity" warn). Probe it inside a pcall and skip on any
+        -- error instead of letting one corpse abort the whole scan.
+        local okM, isFellow = pcall(function()
+            return member ~= nil
+                and member:getObjType() == xi.objType.TRUST
+                and entityIsFellow(member)
+        end)
+        if okM and isFellow then
             return member
         end
     end
@@ -675,6 +695,16 @@ local genByName = {}
 -- pet and pets are allowed here -- survives zoning/death, yields to real job pets.
 local function keeper(p, name, gen)
     if not p or genByName[name] ~= gen then return end
+
+    -- TEARDOWN GUARD (2026-07-17 crash fix): when the master logs out, queued
+    -- keeper timers still fire against the PChar mid-teardown. The guarded C++
+    -- bindings survive that (they warn and return nil) but spawnTrust into a
+    -- half-freed party ACCESS_VIOLATIONs (see dmp/xi_map.exe_17-7_3-20-41).
+    -- getZone() is nil-guarded engine-side, so nil == teardown: bail WITHOUT
+    -- re-arming. onGameIn re-arms the keeper on the next login/zone-in.
+    local okZ, zone = pcall(function() return p:getZone() end)
+    if not okZ or zone == nil then return end
+
     if getN(p, V.active) ~= 1 then return end
 
     -- (Re)spawn the Fellow-trust whenever it isn't currently out. A trust does
