@@ -224,13 +224,17 @@ local CONFIG =
             name = 'Hunter', blurb = 'Ranger: high accuracy and evasion; survives by dodging, not soaking.', defaultWs = xi.mobSkill.EAGLE_EYE_SHOT_HUMANOID,
             mods     = { { xi.mod.AGI, 150 }, { xi.mod.ACC, 200 }, { xi.mod.EVA, 100 } }, behavior = 'ranged',
             survival = { hpMult = 0.55, pdt = -1000, mdt = -1000 },  -- fragile; leans on EVA to avoid hits
+            -- Owner-curated ranger pool 2026-07-16 (proven on Semih Lafihna / Qultada
+            -- / Lion trusts). Literal mob_skill_ids used because these are custom
+            -- ranged WSes not present in scripts/enum/mob_skill.lua. Autonomous AI
+            -- picks from skill_list_id 9805 (fellow_role_skill_lists.sql, same 5 IDs).
             moves =
             {
-                { name = 'Barbed Crescent',  ws = xi.mobSkill.BARBED_CRESCENT_1   },  -- crescent projectile
-                { name = 'Barrage',          ws = xi.mobSkill.BARRAGE             },  -- rapid volley
-                { name = 'Bomb Toss',        ws = xi.mobSkill.BOMB_TOSS_1         },  -- explosive throw
-                { name = 'Broadside Barrage',ws = xi.mobSkill.BROADSIDE_BARRAGE_1 },  -- wide volley
-                { name = 'Dark Shot',        ws = xi.mobSkill.DARK_SHOT           },  -- dark ranged
+                { name = 'Arching Arrow',  ws = 3488 },  -- fTP 3.5, crit scales w/TP, ignores parry/guard/block, 16y
+                { name = 'Lux Arrow',      ws = 3490 },  -- light-elemental arrow, 16y
+                { name = 'Stellar Arrow',  ws = 3489 },  -- AoE arrow burst around the target, 16y
+                { name = 'Sniper Shot',    ws =  210 },  -- single-target gun shot, 15y
+                { name = 'Grapeshot',      ws = 3491 },  -- short-range 7y pistol cone AoE
             },
         },
         -- MASTERED: the prestige capstone. UNLOCKS only once ALL 14 categories are

@@ -29,5 +29,12 @@ REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Berserker', 9801,  42);  -- SAVAG
 REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Bulwark',   9802, 238);  -- URIEL_BLADE_1
 REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Oracle',    9803, 689);  -- BENEDICTION_1
 REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Magus',     9804, 890);  -- THUNDER_IV
-REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Hunter',    9805, 413);  -- EAGLE_EYE_SHOT_HUMANOID
+-- Owner-curated ranger pool 2026-07-16: 5 WSes for autonomous variety.
+-- Proven on Semih Lafihna / Qultada / Lion trusts. defaultWs in Lua still
+-- EAGLE_EYE_SHOT_HUMANOID (fires at TP cap); autonomous AI shuffles these 5.
+REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Hunter',    9805, 3488);  -- Arching Arrow (fTP 3.5, crit-scales, ignores parry/guard/block)
+REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Hunter',    9805, 3490);  -- Lux Arrow (light-elemental)
+REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Hunter',    9805, 3489);  -- Stellar Arrow (AoE burst)
+REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Hunter',    9805,  210);  -- Sniper Shot (single-target gun)
+REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Hunter',    9805, 3491);  -- Grapeshot (short-range pistol AoE)
 REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Mastered',  9806,  23);  -- DANCING_EDGE
