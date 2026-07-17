@@ -32,5 +32,9 @@ auto GP_CLI_COMMAND_CHARREQ2::validate(MapSession* PSession, const CCharEntity* 
 
 void GP_CLI_COMMAND_CHARREQ2::process(MapSession* PSession, CCharEntity* PChar) const
 {
-    ShowWarning("GP_CLI_COMMAND_CHARREQ2: Incorrect NPC(%u,%u) type(%u)", this->ActIndex, this->UniqueNo2, this->Flg);
+    // Demoted 2026-07-16: client polls Voidwatch/mission NPCs with non-standard
+    // type codes the engine doesn't map to a TYPE_ enum (e.g. Pursuivant with
+    // Flg=27). Server ignores the mismatch and returns the NPC anyway, so this
+    // is client/engine noise, not a data bug. Kept as Debug for diagnostics.
+    ShowDebug("GP_CLI_COMMAND_CHARREQ2: Incorrect NPC(%u,%u) type(%u)", this->ActIndex, this->UniqueNo2, this->Flg);
 }
