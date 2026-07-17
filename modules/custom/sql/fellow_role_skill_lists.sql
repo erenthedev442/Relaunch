@@ -21,10 +21,13 @@
 -- path goes through useMobAbility which reads global mob_skills directly).
 -- ============================================================================
 
-REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Vanguard',  9800,   23);  -- DANCING_EDGE
-REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Berserker', 9801,  357);  -- HEAVY_BLOW
-REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Bulwark',   9802,  178);  -- EARTH_CRUSHER
-REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Oracle',    9803, 2147);  -- DIVINE_JUDGMENT
-REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Magus',     9804,  845);  -- FIRE_IV
-REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Hunter',    9805,  413);  -- EAGLE_EYE_SHOT_HUMANOID
-REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Mastered',  9806,   23);  -- DANCING_EDGE (same as Vanguard for now)
+-- Owner override 2026-07-16 (edited fellow_companion.lua on live via RDP):
+-- each role's defaultWs was retargeted -- lists updated to match.
+DELETE FROM `mob_skill_lists` WHERE skill_list_id BETWEEN 9800 AND 9806;
+REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Vanguard',  9800,   1);  -- COMBO_1
+REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Berserker', 9801,  42);  -- SAVAGE_BLADE_1
+REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Bulwark',   9802, 238);  -- URIEL_BLADE_1
+REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Oracle',    9803, 689);  -- BENEDICTION_1
+REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Magus',     9804, 890);  -- THUNDER_IV
+REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Hunter',    9805, 413);  -- EAGLE_EYE_SHOT_HUMANOID
+REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Mastered',  9806,  23);  -- DANCING_EDGE

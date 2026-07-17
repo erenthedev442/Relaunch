@@ -93,30 +93,21 @@ local CONFIG =
     statMods =
     {
         -- Attributes: each point adds the attribute + a derived combat stat.
-        -- 2026-07-14 owner call ("stat points don't feel like they do anything"):
-        -- doubled the per-point yield across attributes AND the advanced categories
-        -- that were arithmetically small vs the Fellow's baseline. Verified against
-        -- battleentity.cpp: STR() and ATT() are both live-computed so the mod store
-        -- IS taking effect; it just wasn't landing hard enough to feel per point.
-        -- Now 10 STR points = +120 STR + +240 flat ATT + (0.5 * 120) STR-contribution
-        -- = +300 ATT total (was 150). Same 2x for DEX/VIT/AGI/INT/MND derived stats.
-        STR = { { xi.mod.STR, 12 }, { xi.mod.ATT, 24 } },
-        DEX = { { xi.mod.DEX, 12 }, { xi.mod.ACC, 20 } },
-        VIT = { { xi.mod.VIT, 12 }, { xi.mod.DEF, 20 } },
-        AGI = { { xi.mod.AGI, 12 }, { xi.mod.EVA, 20 } },
-        INT = { { xi.mod.INT, 12 }, { xi.mod.MATT, 6 } },   -- MATT still clamped by CONFIG.mattCap (kept sub-linear)
-        MND = { { xi.mod.MND, 12 }, { xi.mod.MDEF, 20 } },
+        STR = { { xi.mod.STR, 6 }, { xi.mod.ATT, 12 } },
+        DEX = { { xi.mod.DEX, 6 }, { xi.mod.ACC, 10 } },
+        VIT = { { xi.mod.VIT, 6 }, { xi.mod.DEF, 10 } },
+        AGI = { { xi.mod.AGI, 6 }, { xi.mod.EVA, 10 } },
+        INT = { { xi.mod.INT, 6 }, { xi.mod.MATT, 3 } },   -- MATT 10->3 (2026-07-09; clamped by CONFIG.mattCap)
+        MND = { { xi.mod.MND, 6 }, { xi.mod.MDEF, 10 } },
         -- Advanced categories: focused combat mods that STACK on top of the attributes.
-        -- Doubled where the per-point yield was tiny; kept 1% on caps (crit/DA/TA)
-        -- so the ladder doesn't blow past cap-relevant thresholds in a handful of points.
-        Ferocity  = { { xi.mod.ATTP, 2 } },                                -- +2% attack (was 1)
-        Critical  = { { xi.mod.CRITHITRATE, 1 } },                         -- +1% crit (kept -- cap-adjacent)
-        Frenzy    = { { xi.mod.DOUBLE_ATTACK, 1 } },                       -- +1% DA (kept -- cap-adjacent)
-        Onslaught = { { xi.mod.TRIPLE_ATTACK, 1 }, { xi.mod.STORETP, 6 } },-- +1% TA (kept), +6 Store TP (was 3)
-        Sorcery   = { { xi.mod.MATT, 8 }, { xi.mod.MACC, 12 } },           -- magic atk 4->8, macc 6->12; MATT still clamped
-        Celerity  = { { xi.mod.HASTE_GEAR, 16 } },                         -- attack speed (was 8; still engine-capped)
-        Warding   = { { xi.mod.DMGPHYS, -40 }, { xi.mod.DMGMAGIC, -40 } }, -- damage taken (was -20; engine caps at -50%)
-        Vigor     = { { xi.mod.REGEN, 6 }, { xi.mod.REFRESH, 2 } },        -- HP+MP regen per tick (was 3/1)
+        Ferocity  = { { xi.mod.ATTP, 1 } },                                -- +1% attack
+        Critical  = { { xi.mod.CRITHITRATE, 1 } },                         -- +1% critical hit rate
+        Frenzy    = { { xi.mod.DOUBLE_ATTACK, 1 } },                       -- +1% Double Attack
+        Onslaught = { { xi.mod.TRIPLE_ATTACK, 1 }, { xi.mod.STORETP, 3 } },-- +1% Triple Attack, +3 Store TP
+        Sorcery   = { { xi.mod.MATT, 4 }, { xi.mod.MACC, 6 } },            -- magic atk (12->4, 2026-07-09) + acc; MATT clamped by CONFIG.mattCap
+        Celerity  = { { xi.mod.HASTE_GEAR, 8 } },                          -- attack speed (engine-capped ~25%)
+        Warding   = { { xi.mod.DMGPHYS, -20 }, { xi.mod.DMGMAGIC, -20 } }, -- damage taken - (engine-capped -50%)
+        Vigor     = { { xi.mod.REGEN, 3 }, { xi.mod.REFRESH, 1 } },        -- HP + MP regen per tick
     },
     statOrder = { 'STR', 'DEX', 'VIT', 'AGI', 'INT', 'MND',
                   'Ferocity', 'Critical', 'Frenzy', 'Onslaught', 'Sorcery', 'Celerity', 'Warding', 'Vigor' },
@@ -126,9 +117,9 @@ local CONFIG =
     -- is owned by each role's `survival` block (hpMult / pdt / mdt) below.
     perLevel = { { xi.mod.ATT, 80 }, { xi.mod.ACC, 40 }, { xi.mod.DEF, 15 } },
     -- HP = (hpBase + hpPerLevel*level) * role.survival.hpMult + VITpts*hpPerVitPt.
-    hpBase       = 5000,
-    hpPerLevel   = 1500,
-    hpPerVitPt   = 240,  -- 2026-07-14: doubled to match the statMods yield bump
+    hpBase       = 1000,
+    hpPerLevel   = 500,
+    hpPerVitPt   = 120,
     -- pdt/mdt are ONLY fallbacks if a role omits survival.pdt/mdt. Every role below
     -- sets its own, so the durability of a Fellow is defined by its role: a Bulwark
     -- is a wall, a Magus is glass. Values are % damage taken (100 = 1%; - reduces).
@@ -163,48 +154,48 @@ local CONFIG =
         --               shared global tpMoves pool). Index stored in Fellow_TP_<role> charVar.
         vanguard  =
         {
-            name = 'Vanguard', blurb = 'Balanced melee damage dealer.', defaultWs = xi.mobSkill.DANCING_EDGE,
+            name = 'Vanguard', blurb = 'Balanced melee damage dealer.', defaultWs = xi.mobSkill.COMBO_1,
             mods     = { { xi.mod.ATTP, 30 }, { xi.mod.DOUBLE_ATTACK, 10 } },
             survival = { hpMult = 1.0, pdt = -1500, mdt = -1500 },  -- sturdy bruiser; the baseline
             moves =
             {
                 { name = 'Penta Thrust',     ws = xi.mobSkill.PENTA_THRUST       },  -- 5-hit barrage
                 { name = 'Vorpal Blade',     ws = xi.mobSkill.VORPAL_BLADE_1     },  -- fast slash
-                { name = 'Brain Crush',      ws = xi.mobSkill.BRAIN_CRUSH_1      },  -- heavy crush (Antican)
-                { name = 'Spinning Attack',  ws = xi.mobSkill.SPINNING_ATTACK_1  },  -- spinning multi-hit
-                { name = 'Sonic Blade',      ws = xi.mobSkill.SONIC_BLADE        },  -- sonic cutting wave
+                { name = 'Combo',      ws = xi.mobSkill.COMBO_1      },  -- heavy crush (Antican)
+                { name = 'Circle Blade',  ws = xi.mobSkill.CIRCLE_BLADE_1  },  -- spinning multi-hit
+                { name = 'Blade Rin',      ws = xi.mobSkill.BLADE_RIN        },  -- sonic cutting wave
             },
         },
         berserker =
         {
-            name = 'Berserker', blurb = 'All-out melee offense; hits like a truck but fragile.', defaultWs = xi.mobSkill.HEAVY_BLOW,
+            name = 'Berserker', blurb = 'All-out melee offense; hits like a truck but fragile.', defaultWs = xi.mobSkill.SAVAGE_BLADE_1,
             mods     = { { xi.mod.ATTP, 60 }, { xi.mod.DOUBLE_ATTACK, 20 }, { xi.mod.TRIPLE_ATTACK, 10 } },
-            survival = { hpMult = 0.7, pdt = 1000, mdt = -1000 },  -- glass cannon: LOW HP + takes +10% phys
+            survival = { hpMult = 0.2, pdt = 1000, mdt = -1000 },  -- glass cannon: LOW HP + takes +10% phys
             moves =
             {
-                { name = 'Auroral Uppercut', ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- massive single hit
-                { name = 'Amorphic Scythe',  ws = xi.mobSkill.AMORPHIC_SCYTHE   },  -- heavy scythe
-                { name = 'Nightmare Scythe', ws = xi.mobSkill.NIGHTMARE_SCYTHE   },  -- dark scythe
-                { name = 'Sickle Moon',      ws = xi.mobSkill.SICKLE_MOON_1      },  -- crescent slash
-                { name = 'Backhand Blow',    ws = xi.mobSkill.BACKHAND_BLOW_1    },  -- brutal backhand
+                { name = 'Raging Fists', ws = xi.mobSkill.RAGING_FISTS_1 },  -- massive single hit
+                { name = 'Evisceration',  ws = xi.mobSkill.EVISCERATION   },  -- heavy scythe
+                { name = 'Savage Blade', ws = xi.mobSkill.SAVAGE_BLADE_1   },  -- dark scythe
+                { name = 'Wheeling Thrust',      ws = xi.WHEELING_THRUST      },  -- crescent slash
+                { name = 'Tachi: Kasha',    ws = xi.mobSkill.TACHI_KASHA    },  -- brutal backhand
             },
         },
         bulwark   =
         {
-            name = 'Bulwark', blurb = 'Tank: huge HP, heavy mitigation, holds hate. The only real tank.', defaultWs = xi.mobSkill.EARTH_CRUSHER,
+            name = 'Bulwark', blurb = 'Tank: huge HP, heavy mitigation, holds hate. The only real tank.', defaultWs = xi.mobSkill.URIEL_BLADE_1,
             mods     = { { xi.mod.DEF, 300 }, { xi.mod.ENMITY, 50 } }, behavior = 'tank',
             survival = { hpMult = 1.6, pdt = -5000, mdt = -4000 },  -- wall: big HP + phys at the -50% cap
             moves =
             {
-                { name = 'Earth Pounder',    ws = xi.mobSkill.EARTH_POUNDER      },  -- ground slam
-                { name = 'Earthbreaker',     ws = xi.mobSkill.EARTHBREAKER_1     },  -- shockwave
-                { name = 'Maelstrom',        ws = xi.mobSkill.MAELSTROM_1        },  -- AoE hate pull
-                { name = 'Earth Shock',      ws = xi.mobSkill.EARTH_SHOCK        },  -- tremor
+                { name = 'Chains of Rage',    ws = xi.mobSkill.CHAINS_OF_RAGE      },  -- ground slam
+                { name = 'Light Blade',     ws = xi.mobSkill.LIGHT_BLADE_3     },  -- shockwave
+                { name = 'Silence Gas',        ws = xi.mobSkill.SILENCE_GAS_2        },  -- AoE hate pull
+                { name = 'Uriel Blade',      ws = xi.mobSkill.URIEL_BLADE_1        },  -- tremor
             },
         },
         oracle    =
         {
-            name = 'Oracle', blurb = 'Battle-healer: fights and mends your wounds when hurt.', defaultWs = xi.mobSkill.DIVINE_JUDGMENT,
+            name = 'Oracle', blurb = 'Battle-healer: fights and mends your wounds when hurt.', defaultWs = xi.mobSkill.BENEDICTION_1,
             mods     = { { xi.mod.MND, 150 }, { xi.mod.DEF, 150 }, { xi.mod.MDEF, 150 } }, behavior = 'heal',
             survival = { hpMult = 1.0, pdt = -2500, mdt = -2500 },  -- durable support, but well below a tank
             moves =
@@ -217,16 +208,15 @@ local CONFIG =
         },
         magus     =
         {
-            name = 'Magus', blurb = 'Battle-mage: elemental power, but glass -- keep it off the tank spot.', defaultWs = xi.mobSkill.FIRE_IV,
-            mods     = { { xi.mod.INT, 150 }, { xi.mod.MATT, 150 }, { xi.mod.MACC, 200 } }, behavior = 'nuke',  -- MATT 400->150 (2026-07-09; clamped)
-            survival = { hpMult = 0.45, pdt = 0, mdt = -1000 },  -- glass: lowest HP + takes FULL phys. Cannot tank.
+            name = 'Magus', blurb = 'Battle-mage: elemental power, but glass -- keep it off the tank spot.', defaultWs = xi.mobSkill.THUNDER_IV,
+            mods     = { { xi.mod.INT, 150 }, { xi.mod.MATT, 200 }, { xi.mod.MACC, 200 } }, behavior = 'nuke',  -- MATT 400->150 (2026-07-09; clamped)
+            survival = { hpMult = 0.1, pdt = 0, mdt = -1000 },  -- glass: lowest HP + takes FULL phys. Cannot tank.
             moves =
             {
-                { name = 'Blizzard IV',      ws = xi.mobSkill.BLIZZARD_IV        },
+                { name = 'Thunder IV',      ws = xi.mobSkill.THUNDER_IV        },
                 { name = 'Thunderstrike',    ws = xi.mobSkill.THUNDERSTRIKE      },  -- fTP 9, AoE stun
-                { name = 'Aero IV',          ws = xi.mobSkill.AERO_IV            },
-                { name = 'Stone IV',         ws = xi.mobSkill.STONE_IV           },
-                { name = 'Water IV',         ws = xi.mobSkill.WATER_IV           },
+                { name = 'Double Slap',          ws = xi.mobSkill.DOUBLE_SLAP            },
+                { name = 'Double Punch',         ws = xi.mobSkill.DOUBLE_PUNCH           },
             },
         },
         hunter    =
@@ -477,37 +467,12 @@ local scheduleCombatLoop -- fwd
 
 -- Layer the Fellow's full stat block + chosen name onto a freshly-spawned pet.
 -- Guarded so it runs once per spawned entity.
--- Per-role skill_list_id override. Every Fellow chassis is Naji whose stock
--- list only contains three Sword WSes (burning_blade/red_lotus_blade/vorpal_
--- blade), so the trust's autonomous AI picks those regardless of role. Point
--- MOBMOD_SKILL_LIST at a role-specific list (see fellow_role_skill_lists.sql)
--- so the AI picks role-appropriate WSes. Forced-at-TP-cap WSes (chosenWs +
--- useMobAbility path) already fire the role's move; this closes the gap on
--- autonomous WSes fired between TP caps.
-local ROLE_SKILL_LIST_IDS =
-{
-    vanguard  = 9800,
-    berserker = 9801,
-    bulwark   = 9802,
-    oracle    = 9803,
-    magus     = 9804,
-    hunter    = 9805,
-    mastered  = 9806,
-}
-
 local function applyFellow(p, pet)
     if not pet or pet:getLocalVar('fellowApplied') ~= 0 then return end
     pet:setLocalVar('fellowApplied', 1)
 
     local lvl  = getLevel(p)
     local role = roleDef(p)
-
-    -- Point the trust's autonomous AI at the role's own skill list.
-    local roleKey = getRole(p)
-    local sid     = ROLE_SKILL_LIST_IDS[roleKey]
-    if sid then
-        pcall(function() pet:setMobMod(xi.mobMod.SKILL_LIST, sid) end)
-    end
 
     for _, mv in ipairs(CONFIG.perLevel) do pet:addMod(mv[1], mv[2] * lvl) end
     for _, mv in ipairs(role.mods or {})  do pet:addMod(mv[1], mv[2]) end
