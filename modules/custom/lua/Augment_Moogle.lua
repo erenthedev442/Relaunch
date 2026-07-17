@@ -106,6 +106,26 @@ local TIER_SLICES =
     { min = 25, max = 31 },   -- T5
 }
 
+-- Hunting League boss completion uses the permanent first-kill stamps written
+-- by HuntingLeague.lua. Requiring every boss prevents marks earned elsewhere
+-- (boards, events, or repeatedly farming one target) from skipping Hunt content.
+local HL_TIER_NMS =
+{
+    [2] = { 11358, 11359, 11360 }, -- Roc, Bomb Queen, Aquarius
+    [3] = { 11361, 11362, 11363 }, -- Serket, Vrtra, Simurgh
+    [4] = { 11364, 11365, 11366 }, -- Nidhogg, King Behemoth, Kirin
+}
+
+local function clearedHuntTier(player, tier)
+    for _, groupId in ipairs(HL_TIER_NMS[tier] or {}) do
+        if (player:getCharVar('NMKilled_' .. groupId) or 0) < 1 then
+            return false
+        end
+    end
+
+    return true
+end
+
 local TIER_GATES =
 {
     { tier = 1, unlock = 'reach level 99 on any job',
@@ -115,17 +135,26 @@ local TIER_GATES =
           end
           return false
       end },
-    { tier = 2, unlock = 'reach Hunting League Rank 5',
-      check = function(p) return (p:getCharVar('HL_Tier') or 1) >= 5 end },
-    -- T3 is a DOUBLE gate: Voidspire depth AND a full clear of every Game
-    -- Master wave difficulty (GM_Wave_Clears bitfield, Easy..Nightmare = 31).
-    { tier = 3, unlock = 'clear Voidspire floor 10 + every Game Master wave difficulty',
+    { tier = 2, unlock = 'defeat all 3 Rank 2 Hunt NMs + promote to Hunting League Rank 3',
       check = function(p)
-          return (p:getCharVar('Voidspire_Best_Floor') or 0) >= 10
+          return (p:getCharVar('HL_Tier') or 1) >= 3
+              and clearedHuntTier(p, 2)
+      end },
+    -- T3 combines the complete Rank-3 Hunt roster with Voidspire depth and a
+    -- full clear of every Game Master wave difficulty (Easy..Nightmare = 31).
+    { tier = 3, unlock = 'defeat all 3 Rank 3 Hunt NMs + clear Voidspire floor 10 + every Game Master wave difficulty',
+      check = function(p)
+          return clearedHuntTier(p, 3)
+              and (p:getCharVar('Voidspire_Best_Floor') or 0) >= 10
               and bit.band(p:getCharVar('GM_Wave_Clears') or 0, 31) == 31
       end },
-    { tier = 4, unlock = 'clear a Dynamis - Divergence city',
-      check = function(p) return (p:getCharVar('DivergenceSlots') or 0) >= 1 end },
+    { tier = 4, unlock = 'defeat all 3 Rank 4 Hunt NMs + fully clear one Dynamis - Divergence city',
+      check = function(p)
+          -- DivergenceSlots is stamped only after the Disjoined capstone dies
+          -- and the city instance completes; Mega-Boss credit alone is not enough.
+          return clearedHuntTier(p, 4)
+              and (p:getCharVar('DivergenceSlots') or 0) >= 1
+      end },
     { tier = 5, unlock = "defeat Maat's Echo (Ru'Lude Gardens, !maat)",
       check = function(p) return (p:getCharVar('Maat_Kills') or 0) >= 1 end },
 }

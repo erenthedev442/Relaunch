@@ -13,9 +13,19 @@ describe('Welcome Moogle starter catalog', function()
         return rows
     end
 
+    local function wareById(itemId)
+        for _, entry in ipairs(allWares()) do
+            if entry.id == itemId then
+                return entry
+            end
+        end
+
+        return nil
+    end
+
     it('offers the complete fixed-price level-50 selection', function()
         local wares = allWares()
-        assert(#wares == 76)
+        assert(#wares == 83)
 
         local seen = {}
         for _, entry in ipairs(wares) do
@@ -50,11 +60,30 @@ describe('Welcome Moogle starter catalog', function()
             for _, augment in ipairs(entry.augments) do
                 if augment.id == 72 then
                     assert(augment.value == 14)
+                    assert(entry.jobs == 'All Jobs')
                     expCount = expCount + 1
                 end
             end
         end
         assert(expCount == 2)
+        assert(wareById(11531))
+        assert(not wareById(13692))
+    end)
+
+    it('labels every job body for clear filtered menus', function()
+        for _, entry in ipairs(catalog.wares.Armor['Job Bodies']) do
+            assert(entry.jobs and entry.jobs ~= '')
+        end
+    end)
+
+    it('adds universal catch-up gear and a level-50 corsair gun', function()
+        for _, itemId in ipairs({ 14936, 14937, 15691, 15692, 15773, 15777 }) do
+            local entry = wareById(itemId)
+            assert(entry)
+            assert(entry.jobs == 'All Jobs')
+        end
+
+        assert(wareById(18711).jobs == 'THF/RNG/NIN/COR')
     end)
 
     it('reserves exactly the three approved first-click gifts', function()

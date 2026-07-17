@@ -10,7 +10,7 @@
 --                 login). WS -> ALL_WSDMG_ALL_HITS; Spell -> MATT/MAGIC_DAMAGE/CURE.
 --   * TRAITS   -- one-time passive riders (also additive mods).
 --   * WS EFFECTS -- per-player weapon-skill procs driven by a WEAPONSKILL_USE
---                 listener (crit burst, AoE splash, lifesteal). Read live from
+--                 listener (currently Empowered Strike only). Read live from
 --                 charVars each WS, so they need NO re-apply.
 --
 -- Sigils are earned mainly from a ROTATION of target NMs (kill the active ones
@@ -113,14 +113,16 @@ catalog.spellPotency =
 
 -- ── WS Effects (per-player WEAPONSKILL_USE procs; read live, no re-apply) ────
 -- Tiered like potency (cost = EFFECT_COST[tier]). `kind` selects the handler in
--- SpellSkillMastery.lua: 'crit' (chance for bonus dmg), 'lifesteal' (heal % of
--- the hit). Add a new effect = add a row (+ a kind handler if it is a new kind).
+-- SpellSkillMastery.lua. Add a new effect = add a row (+ a kind handler if it
+-- is a new kind).
 --
 -- The old 'splash' (AoE) effect was removed on 2026-07-13: single-target WS
 -- was never meant to become AoE on this server, and it duplicated the earlier
 -- retired Rupture Sage / !aoews feature (a22038d3b5). Existing
 -- Mastery_WSFx_splash charvars go inert; players keep the sigils they had left
 -- but the ones spent on splash tiers are not refunded.
+-- Universal Lifesteal was removed on 2026-07-17 because healing from every
+-- weapon skill bypassed encounter sustain and HP-management mechanics.
 catalog.EFFECT_COST = { 20, 40, 70, 110, 160 }
 
 catalog.wsEffects =
@@ -128,9 +130,6 @@ catalog.wsEffects =
     { id = 'empstrike', var = 'Mastery_WSFx_crit',   name = 'Empowered Strike', max = 5,
       kind = 'crit',      chancePerTier = 8, bonusPct = 60,
       desc = 'Per tier: +8% chance your WS lands a critical burst (+60% damage).' },
-    { id = 'lifesteal', var = 'Mastery_WSFx_drain',  name = 'Lifesteal',        max = 5,
-      kind = 'lifesteal', pctPerTier = 4,
-      desc = 'Per tier: heal +4% of your WS damage as HP.' },
 }
 
 -- ── Trait riders (one-time unlocks; flat additive mods) ─────────────────────

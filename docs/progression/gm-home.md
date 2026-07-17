@@ -13,9 +13,13 @@ inventory is too full, make room and speak to it again.
 
 Return on a main job of **level 50 or higher** to browse its starter weapons,
 armor, and accessories. Every item costs **1,000 gil** and arrives with exactly
-two fixed, low-tier augments. Two selected accessories carry **EXP +15%** as a
-leveling teaser. Welcome Moogle wares are Rare/Ex and cannot be traded,
-auctioned, delivered, sent to another character, or sold back to an NPC.
+two fixed, low-tier augments. Pick a category and section to open the standard
+buy/sell shop window; hover an item there to inspect its normal equipment stats.
+The shop only shows equipment that the character's current main job can use;
+change jobs before speaking to the moogle to browse another job's set. The
+all-jobs **Telluric Ring** and **Fidelity Mantle** each carry **EXP +15%** as a
+leveling teaser. Welcome Moogle wares are Rare/Ex and cannot be traded, auctioned,
+delivered, sent to another character, or sold back to an NPC.
 
 ---
 

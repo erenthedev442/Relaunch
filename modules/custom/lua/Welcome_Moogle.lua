@@ -4,6 +4,8 @@
 --   * one free starter kit per character, claimable at any level
 --   * fixed-augment level-50 wares after the current main job reaches 50
 --   * all wares cost 1,000 gil
+--   * category navigation feeds the native buy/sell shop, so the client can
+--     preview each item's normal equipment stats before purchase
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
@@ -15,7 +17,7 @@ local SAY     = xi.msg.channel.NS_SAY
 
 local GIFT_VAR        = 'WelcomeMoogle_Gift'
 local MIN_LEVEL       = 50
-local ITEM_PAGE_SIZE  = 4
+local SHOP_PAGE_SIZE  = 16
 local BONANZA_LOOK    = '0x0000D50300000000000000000000000000000000'
 
 local function sendMenu(player, title, options)
@@ -27,6 +29,28 @@ end
 
 local function hasStarterGift(player)
     return (player:getCharVar(GIFT_VAR) or 0) ~= 0
+end
+
+local function getMainJobName(player)
+    local job = player:getMainJob()
+    for name, jobId in pairs(xi.job) do
+        if jobId == job then
+            return name
+        end
+    end
+
+    return tostring(job)
+end
+
+local function getEquippableItems(player, items)
+    local result = {}
+    for _, entry in ipairs(items or {}) do
+        if player:canEquipItem(entry.id, false) then
+            table.insert(result, entry)
+        end
+    end
+
+    return result
 end
 
 local function grantStarterGift(player)
@@ -76,140 +100,56 @@ end
 local showMain
 local showSubcategories
 local showItems
-local showConfirmation
-
-local function grantWare(player, entry, categoryName, subcategoryName, page)
-    -- Revalidate every condition at purchase time so stale menu callbacks cannot
-    -- bypass the level, inventory, ownership, or gil requirements.
-    if player:getMainLvl() < MIN_LEVEL then
-        player:printToPlayer(
-            "You're not quite ready yet, kupo... Come back at level 50 and I'll open my wares for you!",
-            SAY)
-        return
-    end
-
-    if player:hasItem(entry.id) then
-        player:printToPlayer(
-            string.format("You already have %s, kupo! One is enough for now.", entry.name), S)
-        showItems(player, categoryName, subcategoryName, page)
-        return
-    end
-
-    if player:getGil() < entry.price then
-        player:printToPlayer(
-            string.format("You'll need %d gil for that, kupo!", entry.price), S)
-        showItems(player, categoryName, subcategoryName, page)
-        return
-    end
-
-    if player:getFreeSlotsCount() < 1 then
-        player:printToPlayer(
-            'Your bags are stuffed, kupo! Make some room and try again.', S)
-        showItems(player, categoryName, subcategoryName, page)
-        return
-    end
-
-    local augments = {}
-    for _, augment in ipairs(entry.augments) do
-        table.insert(augments, { id = augment.id, value = augment.value })
-    end
-
-    local added = player:addItem({
-        id = entry.id,
-        exdata =
-        {
-            augmentKind    = xi.augment.kind.HAS_AUGMENTS,
-            augmentSubKind = xi.augment.subKind.STANDARD,
-            augments       = augments,
-        },
-    })
-
-    if not added then
-        player:printToPlayer(
-            'My wrapping magic failed, kupo! No gil was charged; check your inventory and try again.', S)
-        showItems(player, categoryName, subcategoryName, page)
-        return
-    end
-
-    player:delGil(entry.price)
-    player:printToPlayer(
-        string.format('Pleasure doing business, kupo! %s is yours, with two starter augments!', entry.name), S)
-    showItems(player, categoryName, subcategoryName, page)
-end
-
-showConfirmation = function(player, entry, categoryName, subcategoryName, page)
-    local capturedEntry = entry
-    sendMenu(player, string.format('%s - %d gil?', entry.name, entry.price),
-    {
-        {
-            'Yes, please!',
-            function(p)
-                grantWare(p, capturedEntry, categoryName, subcategoryName, page)
-            end,
-        },
-        {
-            'No - go back',
-            function(p)
-                showItems(p, categoryName, subcategoryName, page)
-            end,
-        },
-    })
-end
 
 showItems = function(player, categoryName, subcategoryName, page)
-    local items = catalog.wares[categoryName] and catalog.wares[categoryName][subcategoryName]
-    if not items then
+    local stock = catalog.wares[categoryName] and catalog.wares[categoryName][subcategoryName]
+    if not stock then
         showMain(player)
         return
     end
 
+    local items = getEquippableItems(player, stock)
+    if #items == 0 then
+        player:printToPlayer(
+            string.format(
+                "I don't have anything in %s for %s, kupo! Try another section or change jobs.",
+                subcategoryName,
+                getMainJobName(player)),
+            S)
+        showSubcategories(player, categoryName)
+        return
+    end
+
     page = page or 1
-    local pages = math.max(1, math.ceil(#items / ITEM_PAGE_SIZE))
+    local pages = math.max(1, math.ceil(#items / SHOP_PAGE_SIZE))
     page = math.max(1, math.min(page, pages))
-    local first = (page - 1) * ITEM_PAGE_SIZE + 1
-    local last  = math.min(first + ITEM_PAGE_SIZE - 1, #items)
-    local options = {}
+    local first = (page - 1) * SHOP_PAGE_SIZE + 1
+    local last  = math.min(first + SHOP_PAGE_SIZE - 1, #items)
+    local count = last - first + 1
 
-    for index = first, last do
-        local entry = items[index]
-        local capturedEntry = entry
-        table.insert(options,
-        {
-            entry.name,
-            function(p)
-                p:printToPlayer(string.format(
-                    '%s -- %s / %s. Price: 1,000 gil.',
-                    capturedEntry.name,
-                    capturedEntry.augments[1].label,
-                    capturedEntry.augments[2].label), S)
-                showConfirmation(p, capturedEntry, categoryName, subcategoryName, page)
-            end,
-        })
-    end
+    player:printToPlayer(string.format(
+        'Browsing %s%s. Hover an item to inspect its native stats; every purchase includes its two fixed starter augments.',
+        subcategoryName,
+        pages > 1 and string.format(' (page %d/%d)', page, pages) or ''), S)
 
-    if page > 1 then
-        table.insert(options,
-        {
-            string.format('<< Page %d/%d', page - 1, pages),
-            function(p) showItems(p, categoryName, subcategoryName, page - 1) end,
-        })
-    end
+    player:timer(50, function(p)
+        p:createShop(count)
+        for index = first, last do
+            local entry = items[index]
+            local augments = {}
+            for _, augment in ipairs(entry.augments) do
+                table.insert(augments, { id = augment.id, value = augment.value })
+            end
 
-    if page < pages then
-        table.insert(options,
-        {
-            string.format('Page %d/%d >>', page + 1, pages),
-            function(p) showItems(p, categoryName, subcategoryName, page + 1) end,
-        })
-    end
-
-    table.insert(options,
-    {
-        '<< Back',
-        function(p) showSubcategories(p, categoryName) end,
-    })
-
-    sendMenu(player, string.format('%s %d/%d', subcategoryName, page, pages), options)
+            p:addShopItem(entry.id, entry.price,
+            {
+                augmentKind    = xi.augment.kind.HAS_AUGMENTS,
+                augmentSubKind = xi.augment.subKind.STANDARD,
+                augments       = augments,
+            })
+        end
+        p:sendMenu(xi.menuType.SHOP)
+    end)
 end
 
 showSubcategories = function(player, categoryName)
@@ -318,6 +258,11 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 'Everything is 1,000 gil -- bound to you, no trading, delivery, resale, or Auction House, kupo!', S)
             player:printToPlayer(
                 'Each piece has two gentle starter augments -- a taste of the Arcane Augmenter waiting later!', S)
+            player:printToPlayer(
+                string.format(
+                    'Showing only gear your current main job (%s) can equip. Change jobs to browse another set, kupo!',
+                    getMainJobName(player)),
+                S)
             showMain(player)
         end,
     })

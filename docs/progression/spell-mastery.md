@@ -65,9 +65,8 @@ Per-player procs that fire automatically on every weapon skill once purchased. E
 | Effect | What it does |
 |---|---|
 | **Empowered Strike** | Per tier: +8% chance your weapon skill lands a critical burst (+60% damage). |
-| **Lifesteal** | Per tier: heal +4% of your weapon skill damage as HP. |
 
-Each effect tiers up to **Tier 5**. **Tier costs (Mastery Sigils):** 20 / 40 / 70 / 110 / 160.
+The effect tiers up to **Tier 5**. **Tier costs (Mastery Sigils):** 20 / 40 / 70 / 110 / 160.
 <!-- DOCGEN:END id="mastery-effects" -->
 
 ### Trait Riders

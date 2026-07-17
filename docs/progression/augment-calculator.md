@@ -113,11 +113,11 @@ const AUGMENTS=window._augCalcData||[];
 // ever missing.
 const _T=window._augCalcTiers||{};
 const TIER_SLICES=_T.slices||[[0,5],[6,11],[12,17],[18,24],[25,31]];
-const TIER_UNLOCKS=_T.unlocks||[
+const TIER_UNLOCKS=(_T.unlocks&&!_T.unlocks.includes('reach Hunting League Rank 5'))?_T.unlocks:[
   'reach level 99 on any job',
-  'Hunting League Rank 5',
-  'Voidspire floor 10 + all Game Master waves',
-  'Dynamis - Divergence city clear',
+  'all 3 Rank 2 Hunt NMs + promotion to Hunt Rank 3',
+  'all 3 Rank 3 Hunt NMs + Voidspire floor 10 + all Game Master waves',
+  'all 3 Rank 4 Hunt NMs + one full Dynamis - Divergence city clear',
   "Maat's Echo (!maat)"
 ];
 const CRIT_CHANCE=_T.crit||[0.05,0.10,0.15,0.20,0.25,0.30];

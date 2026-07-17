@@ -2,12 +2,11 @@
 -- Dynamis - Divergence (relaunch) -- CORRIDOR POPULATION PASS (owner 2026-07-12)
 -- ----------------------------------------------------------------------------
 -- Instanced 3-wave content built on the LSB instance framework. Each of the 4
--- city [D] zones runs a ~120-mob corridor: 48 wave-1 trash spread from the
--- instance entry to the mid-boss (validated 20-55% of the entry->far corridor),
--- 10 time-extension statues spread along the whole path, 48 wave-2 trash spread
--- from mid-boss to mega-boss (55-95%), and 3 named bosses (mid at midpoint,
--- mega + disjoined at the far corner). Player experience: fight the whole
--- distance to reach the boss room.
+-- city [D] zones keeps a 48+48 SQL spawn reserve across the full corridor.
+-- Runtime instance configs activate an evenly-spaced T3 solo/trust subset:
+-- 20 wave-1 trash, 6 time-extension statues, 20 wave-2 trash, and 3 named
+-- bosses (mid at midpoint, mega + disjoined at the far corner). Keeping the
+-- reserve coordinates makes future density tuning a Lua-only operation.
 --
 -- COORD PROVENANCE: every mob spawn coord below comes verbatim from a stock
 -- retail Dynamis mob_spawn_points row for the donor zone (185/186/187/188).
@@ -288,7 +287,7 @@ REPLACE INTO `instance_entities` VALUES (29400, 17982112);
 REPLACE INTO `instance_entities` VALUES (29400, 17982238);
 
 -- ── instance_list (unchanged) ──
-REPLACE INTO `instance_list` VALUES (29400, 'dynamis_san_doria_d', 294, 230, 60, 161.838, -2.000, 161.673, 93, NULL, NULL, NULL, NULL);
+REPLACE INTO `instance_list` VALUES (29400, 'dynamis_san_doria_d', 294, 230, 90, 161.838, -2.000, 161.673, 93, NULL, NULL, NULL, NULL);
 
 -- ── mob_droplist (unchanged) ──
 DELETE FROM `mob_droplist` WHERE `dropId` IN (29401, 29402, 29403, 29404);
@@ -552,7 +551,7 @@ REPLACE INTO `instance_entities` VALUES (29500, 17985895);
 REPLACE INTO `instance_entities` VALUES (29500, 17986326);
 
 -- ── instance_list (unchanged) ──
-REPLACE INTO `instance_list` VALUES (29500, 'dynamis_bastok_d', 295, 234, 60, 116.482, 0.994, -72.121, 128, NULL, NULL, NULL, NULL);
+REPLACE INTO `instance_list` VALUES (29500, 'dynamis_bastok_d', 295, 234, 90, 116.482, 0.994, -72.121, 128, NULL, NULL, NULL, NULL);
 
 -- ── mob_droplist (unchanged) ──
 DELETE FROM `mob_droplist` WHERE `dropId` IN (29501, 29502, 29503, 29504);
@@ -812,7 +811,7 @@ REPLACE INTO `instance_entities` VALUES (29600, 17989981);
 REPLACE INTO `instance_entities` VALUES (29600, 17990425);
 
 -- ── instance_list (unchanged) ──
-REPLACE INTO `instance_list` VALUES (29600, 'dynamis_windurst_d', 296, 239, 60, -221.988, 1.000, -120.184, 0, NULL, NULL, NULL, NULL);
+REPLACE INTO `instance_list` VALUES (29600, 'dynamis_windurst_d', 296, 239, 90, -221.988, 1.000, -120.184, 0, NULL, NULL, NULL, NULL);
 
 -- ── mob_droplist (unchanged) ──
 DELETE FROM `mob_droplist` WHERE `dropId` IN (29601, 29602, 29603, 29604);
@@ -1076,7 +1075,7 @@ REPLACE INTO `instance_entities` VALUES (29700, 17994068);
 REPLACE INTO `instance_entities` VALUES (29700, 17994487);
 
 -- ── instance_list (unchanged) ──
-REPLACE INTO `instance_list` VALUES (29700, 'dynamis_jeuno_d', 297, 243, 60, 48.930, 10.002, -71.032, 195, NULL, NULL, NULL, NULL);
+REPLACE INTO `instance_list` VALUES (29700, 'dynamis_jeuno_d', 297, 243, 90, 48.930, 10.002, -71.032, 195, NULL, NULL, NULL, NULL);
 
 -- ── mob_droplist (unchanged) ──
 DELETE FROM `mob_droplist` WHERE `dropId` IN (29701, 29702, 29703, 29704);

@@ -9,24 +9,26 @@ Abyssea is home to some of the most powerful Notorious Monsters on the server. R
 
 ## Zones & Difficulty Tiers
 
-Abyssea is divided into three Relic-led difficulty tiers. Every NM is level 99
-so level correction and evasion are not the puzzle; higher tiers combine more
-telegraphed mechanics and give less room for repeated mistakes.
+Abyssea is divided into three Relic-led difficulty tiers. NM levels rise from
+120 in Visions to 130 in Scars and 150 in Heroes; higher tiers also combine
+more telegraphed mechanics and give less room for repeated mistakes.
 
 <!-- DOCGEN:BEGIN id="abyssea-tiers" -->
 | Tier | Zones | Mark Cost | Level | HP |
 |---|---|---|---|---|
-| **Visions** | Konschtat, Tahrongi, La Theine | 200 marks | 99 | 4,000,000 |
-| **Scars** | Attohwa, Misareaux, Vunkerl | 350 marks | 99 | 8,000,000 |
-| **Heroes** | Altepa, Grauberg, Uleguerand | 500 marks | 99 | 14,000,000 |
+| **Visions** | Konschtat, Tahrongi, La Theine | 200 marks | 120 | 4,000,000 |
+| **Scars** | Attohwa, Misareaux, Vunkerl | 350 marks | 130 | 8,000,000 |
+| **Heroes** | Altepa, Grauberg, Uleguerand | 500 marks | 150 | 14,000,000 |
 <!-- DOCGEN:END id="abyssea-tiers" -->
 
 !!! warning "Relic progression content"
     Visions is the first Relic check. It is intentionally too slow for a
     typical pre-Relic solo build, but a properly enhanced Relic can clear it
-    without accuracy frustration. Scars assumes one Atma slot; Heroes assumes
-    up to two. One player with Trusts can clear every encounter, while a
-    prepared duo or trio gains speed and recovery.
+    without an evasion wall. Incoming threat is calibrated against the
+    pre-Abyssea baseline of roughly 1,000 EVA, 3,400 DEF, 35% damage reduction,
+    and 700 Regen. Scars assumes one Atma slot; Heroes assumes up to two. One
+    player with Trusts can clear every encounter, while a prepared duo or trio
+    gains speed and recovery.
 
 HP scales from the number of real PCs present when the fight starts: **1.0× /
 1.55× / 2.1×** for one / two / three-or-more PCs. Defense and evasion never
@@ -51,7 +53,9 @@ Each warning has:
 Trust attacks do not fail hold-fire mechanics. Mechanics that demand a player
 decision select the real player who started the fight, never a Trust. If a
 fight runs beyond its tier's pressure ceiling, its attack and casting pressure
-begins rising in visible steps; it does not gain passive drain or regeneration.
+begins rising in visible steps. Pressure starts after 4 / 6 / 8 minutes in
+Visions / Scars / Heroes, inside each tier's expected clear-time band; it does
+not gain passive drain or regeneration.
 
 ### Abyssea weaknesses matter again
 

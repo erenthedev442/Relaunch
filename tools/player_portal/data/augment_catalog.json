@@ -976,21 +976,6 @@
 "max": 32
 },
 {
-"itemId": 1449,
-"augId": 368,
-"label": "Phalanx Received",
-"cat": 4,
-"catName": "Defense",
-"base": 1,
-"mult": 1,
-"disp": 1,
-"maxBoost": 9,
-"item": "T. Whiteshell",
-"img": "https://www.bg-wiki.com/images/1/19/T._Whiteshell_description.png",
-"min": 1,
-"max": 10
-},
-{
 "itemId": 858,
 "augId": 54,
 "label": "Phys. dmg. taken",

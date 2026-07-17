@@ -65,7 +65,6 @@ return {
     [  936] = { cat =  4, tier = 0, label = 'Magic dmg. taken' },
     [ 1638] = { cat =  4, tier = 0, label = 'Occ. inc. resist to stat ailments' },
     [ 2505] = { cat =  4, tier = 0, label = 'Parrying rate' },
-    [ 1449] = { cat =  4, tier = 0, label = 'Phalanx Received' },
     [  858] = { cat =  4, tier = 0, label = 'Phys. dmg. taken' },
     [ 2151] = { cat =  4, tier = 0, label = 'Physical Damage Taken' },
     [ 1470] = { cat =  4, tier = 0, label = 'Resist Charm' },

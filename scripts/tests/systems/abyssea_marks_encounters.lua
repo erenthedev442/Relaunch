@@ -18,6 +18,7 @@ describe('Abyssea marks bespoke encounter catalog', function()
     end)
 
     it('gives every NM a complete signature and two phase floors', function()
+        local pressureByTier = { 240, 360, 480 }
         local validKinds =
         {
             turn = true, face = true, rear = true, near = true, far = true,
@@ -40,7 +41,8 @@ describe('Abyssea marks bespoke encounter catalog', function()
                 assert(entry.phases[2].kind ~= entry.signature.kind)
             end
             assert(entry.repeatSec > 0)
-            assert(entry.pressureSec >= 720)
+            assert(entry.pressureSec == pressureByTier[entry.tier])
+            assert(entry.phases[2].failure.damagePct >= 25)
             assert(entry.drain == nil and entry.aoe == nil and entry.regen == nil)
         end
     end)

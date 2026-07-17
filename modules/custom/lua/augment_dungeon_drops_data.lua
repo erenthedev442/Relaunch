@@ -83,11 +83,10 @@ return {
             [5] = { id = 936, tier = 0, cat = 4, label = 'Magic dmg. taken', item = 'chunk_of_rock_salt' },
             [6] = { id = 1123, tier = 0, cat = 4, label = 'Damage Taken', item = 'manticore_fang' },
             [7] = { id = 1193, tier = 0, cat = 4, label = 'Breath dmg. taken', item = 'high-quality_crab_shell' },
-            [8] = { id = 1449, tier = 0, cat = 4, label = 'Phalanx Received', item = 'tukuku_whiteshell' },
-            [9] = { id = 1470, tier = 0, cat = 4, label = 'Resist Charm', item = 'sparkling_stone' },
-            [10] = { id = 1617, tier = 0, cat = 4, label = 'Evasion', item = 'flytrap_leaf' },
-            [11] = { id = 1638, tier = 0, cat = 4, label = 'Occ. inc. resist to stat ailments', item = 'moblin_mask' },
-            [12] = { id = 2151, tier = 0, cat = 4, label = 'Physical Damage Taken', item = 'marid_hide' },
+            [8] = { id = 1470, tier = 0, cat = 4, label = 'Resist Charm', item = 'sparkling_stone' },
+            [9] = { id = 1617, tier = 0, cat = 4, label = 'Evasion', item = 'flytrap_leaf' },
+            [10] = { id = 1638, tier = 0, cat = 4, label = 'Occ. inc. resist to stat ailments', item = 'moblin_mask' },
+            [11] = { id = 2151, tier = 0, cat = 4, label = 'Physical Damage Taken', item = 'marid_hide' },
         },
         boss =
         {

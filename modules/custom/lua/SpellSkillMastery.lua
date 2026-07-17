@@ -5,7 +5,7 @@
 -- currency) to permanently empower their weapon skills and magic:
 --   * POTENCY  -- tiered % power-ups (additive mods, re-applied on login).
 --   * TRAITS   -- one-time passive riders (additive mods, re-applied on login).
---   * WS EFFECTS -- per-player weapon-skill procs (crit burst / lifesteal) run
+--   * WS EFFECTS -- per-player weapon-skill procs (Empowered Strike) run
 --                 from a WEAPONSKILL_USE listener; read live from charVars
 --                 each WS, so they need NO login re-apply.
 --
@@ -19,7 +19,7 @@
 --   Mastery_WSPot      (int) weapon-skill potency tier   (0..MAX_TIER)
 --   Mastery_SpellPot   (int) spell potency tier          (0..MAX_TIER)
 --   Mastery_T_<id>     (1)   owned trait rider
---   Mastery_WSFx_<x>   (int) WS effect tier (crit/splash/drain)
+--   Mastery_WSFx_crit  (int) Empowered Strike effect tier
 --   Mastery_RotPeriod  (int) last rotation period the player's mask is valid for
 --   Mastery_RotMask    (int) bitmask of rotation targets claimed this period
 --
@@ -95,27 +95,27 @@ end
 -- weapon skill's own `damage`. All numeric values come from the catalog.
 -----------------------------------
 local function applyWSEffects(attacker, target, damage)
-    if not damage or damage <= 0 or attacker == nil or target == nil then return end
-    -- IMPORTANT: WEAPONSKILL_USE fires AFTER the hit lands, so on a killing blow
-    -- `target` is already dead. We must NOT bail on that -- lifesteal still owes
-    -- the player their effect (bailing here was why the effect felt "off and on"
-    -- / "none of it works": WS routinely one-shot the mob). Only the crit BONUS
-    -- (extra damage to the primary target) is pointless once it's dead.
-    local damType     = attacker:getWeaponDamageType(xi.slot.MAIN)
-    local targetAlive = not target:isDead()
+    if
+        not damage or
+        damage <= 0 or
+        attacker == nil or
+        target == nil or
+        target:isDead()
+    then
+        return
+    end
+
+    local damType = attacker:getWeaponDamageType(xi.slot.MAIN)
     for _, fx in ipairs(C.wsEffects) do
         local tier = attacker:getCharVar(fx.var) or 0
         if tier > 0 then
             if fx.kind == 'crit' then
-                if targetAlive and math.random(100) <= tier * fx.chancePerTier then
+                if math.random(100) <= tier * fx.chancePerTier then
                     local bonus = math.floor(damage * fx.bonusPct / 100)
                     if bonus > 0 then
                         target:takeDamage(bonus, attacker, xi.attackType.PHYSICAL, damType)
                     end
                 end
-            elseif fx.kind == 'lifesteal' then
-                local heal = math.floor(damage * (tier * fx.pctPerTier) / 100)
-                if heal > 0 then attacker:addHP(heal) end
             end
         end
     end
@@ -331,7 +331,7 @@ confirmTrait = function(p, track, t)
     })
 end
 
--- WS Effects menu (tiered procs: Empowered Strike / Splash / Lifesteal).
+-- WS Effects menu (tiered procs; currently Empowered Strike only).
 openEffects = function(p)
     local options = {}
     for _, fx in ipairs(C.wsEffects) do

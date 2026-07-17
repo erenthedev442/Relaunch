@@ -5,6 +5,21 @@ describe('Abyssea marks Relic-led balance contract', function()
         return value >= band[1] and value <= band[2]
     end
 
+    it('records the pre-Abyssea defensive calibration sheet', function()
+        local target = balance.targetPlayer
+        assert(target.accuracy == 3000)
+        assert(target.evasion == 1000)
+        assert(target.defense == 3400)
+        assert(target.damageTakenPct == -35)
+        assert(target.regen == 700)
+    end)
+
+    it('starts soft pressure inside each expected clear-time band', function()
+        assert(balance.tiers[1].pressureMinutes == 4)
+        assert(balance.tiers[2].pressureMinutes == 6)
+        assert(balance.tiers[3].pressureMinutes == 8)
+    end)
+
     it('puts T1 Relic throughput in the 5-7 minute band', function()
         local cfg = balance.tiers[1]
         assert(within(balance.expectedMinutes(1, 1, cfg.relicDpsPerMinute[1]), cfg.targetSoloMinutes))

@@ -35,12 +35,12 @@ Every line the Moogle writes is **rolled** inside your **Augment Tier's band**. 
 | Augment Tier | Roll band (of 0–31) | How you unlock it |
 |---|---|---|
 | **T1** | 0–5 | reach level 99 on any job |
-| **T2** | 6–11 | reach [Hunting League](index.md) Rank 5 |
-| **T3** | 12–17 | clear [Voidspire](../endgame/voidspire.md) floor 10 + every [Game Master](game-master.md) wave difficulty |
-| **T4** | 18–24 | clear a [Dynamis - Divergence](../endgame/dynamis-divergence.md) city |
+| **T2** | 6–11 | defeat all 3 Rank 2 Hunt NMs (Roc, Bomb Queen, Aquarius), then promote to Hunting League Rank 3 |
+| **T3** | 12–17 | defeat all 3 Rank 3 Hunt NMs (Serket, Vrtra, Simurgh) + clear [Voidspire](../endgame/voidspire.md) floor 10 + every [Game Master](game-master.md) wave difficulty |
+| **T4** | 18–24 | defeat all 3 Rank 4 Hunt NMs (Nidhogg, King Behemoth, Kirin) + fully clear one [Dynamis - Divergence](../endgame/dynamis-divergence.md) city through the Disjoined |
 | **T5** | 25–31 | defeat [Maat's Echo](../endgame/maats-challenge.md) (Ru'Lude Gardens, !maat) |
 
-The ladder is **consecutive** — your tier is the highest step you've cleared in order, and a brand-new character is **Tier 0: the Moogle won't augment at all** until the first gate is cleared.
+The ladder is **consecutive** — your tier is the highest step you've cleared in order, and a brand-new character is **Tier 0: the Moogle won't augment at all** until the first gate is cleared. Hunt boss completion uses permanent first-kill credit, so marks earned from boards or repeatedly farming one NM cannot bypass the required 3/3 Hunt roster.
 
 (Trust summon counts climb a **separate** ladder — Unity Concord accolades, Voidwatch rift tiers, and your Adventuring Fellow's level. See the [Trusts page](trusts.md).) That +2/slot Attack roll at Tier 1 climbs all the way to **+64/slot** at a max Tier-5 roll (i.e. **+320 Attack** on a 5-slot piece). So:
 

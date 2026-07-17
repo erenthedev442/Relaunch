@@ -8,6 +8,18 @@
 
 local B = {}
 
+-- Representative sheet available before Abyssea progression. Encounter
+-- offense is calibrated against this defensive baseline; Aeonic ownership is
+-- intentionally irrelevant here because it does not change incoming damage.
+B.targetPlayer =
+{
+    accuracy       = 3000,
+    evasion        = 1000,
+    defense        = 3400,
+    damageTakenPct = -35,
+    regen          = 700,
+}
+
 B.tiers =
 {
     [1] =
@@ -16,14 +28,14 @@ B.tiers =
         targetSoloMinutes = { 5, 7 },
         relicDpsPerMinute = { 600000, 800000 },
         preRelicDpsPerMinute = 300000,
-        pressureMinutes = 12,
+        pressureMinutes = 4,
     },
     [2] =
     {
         hp = 8000000,
         targetSoloMinutes = { 7, 10 },
         relicDpsPerMinute = { 800000, 1142857 },
-        pressureMinutes = 14,
+        pressureMinutes = 6,
     },
     [3] =
     {
@@ -31,7 +43,7 @@ B.tiers =
         targetSoloMinutes = { 10, 14 },
         relicDpsPerMinute = { 1000000, 1400000 },
         targetGroupMinutes = { 6, 9 },
-        pressureMinutes = 16,
+        pressureMinutes = 8,
     },
 }
 

@@ -37,7 +37,6 @@ return {
     ['Monarch_Ogrefly'] = 846,  -- Accuracy (T0, Monarch Ogrefly L65)
     ['Amber_Quadav'] = 955,  -- Enhances (T0, Amber Quadav L8)
     ['Ameretat'] = 1521,  -- Weapon Skill Acc (T2, Ameretat L68)
-    ['Amethyst_Quadav'] = 1449,  -- Phalanx Received (T2, Amethyst Quadav L63)
     ['Qiqirn_Mireguide'] = 2153,  -- Pet Phy. Dmg. Taken (T0, Qiqirn Mireguide L67)
     ['Ancient_Bomb'] = 2543,  -- Pet Store TP (T1, Ancient Bomb L40)
     ['Wild_Rabbit'] = 856,  -- Pet TP Bonus (T0, Wild Rabbit L1)

@@ -28,6 +28,7 @@ local mechanics = require('modules/custom/lua/mob_mechanics_library')
 local TIME_CAP_MIN  = 120
 local STATUE_EXTEND = 1
 local BOSS_EXTEND   = 30
+local MEGA_EXTEND   = 15
 local EXIT_DELAY_MS = 8000
 
 -- Superior Lv5 (Dynamis Divergence) weapons -- their retail home. On EVERY
@@ -141,6 +142,26 @@ local function dropSu5(instance, cfg)
     end
 end
 
+-- Preserve per-city Mega-Boss credit as a distinct progress marker. Augment
+-- Tier 4 now requires a full city clear (DivergenceSlots), but this stamp remains
+-- useful for migration, diagnostics, and any future Mega-specific rewards.
+local function creditMegaBoss(instance, cfg)
+    local slotBit = xi.divergence.slotBit[cfg.entrySlot] or 0
+    if slotBit == 0 then
+        return
+    end
+
+    for _, p in pairs(instance:getChars()) do
+        local slots = p:getCharVar('DivergenceMegaSlots') or 0
+        if bit.band(slots, slotBit) == 0 then
+            p:setCharVar('DivergenceMegaSlots', bit.bor(slots, slotBit))
+            p:printToPlayer(
+                '[Divergence] Mega-Boss defeated -- finish the Disjoined to record the full city clear!',
+                xi.msg.channel.SYSTEM_3)
+        end
+    end
+end
+
 -- Extend the timer (capped) and refresh the on-screen countdown for everyone.
 local function extendTime(instance, addMin, elapsed)
     local cur = instance:getTimeLimit()            -- minutes
@@ -222,15 +243,18 @@ xi.divergence.onInstanceTimeUpdate = function(instance, elapsed, cfg)
     elseif wave == 2 then
         if isDead(instance, cfg.megaBoss) then
             dropSu5(instance, cfg)
+            creditMegaBoss(instance, cfg)
+            extendTime(instance, MEGA_EXTEND, elapsed)
             if cfg.disjoined then
-                -- Wave 3: the Disjoined NM at the elemental circle. No time extension.
+                -- Wave 3: the Disjoined NM at the elemental circle. Mega victory
+                -- grants a final buffer so solo/trust teams can attempt the capstone.
                 instance:setLocalVar('divWave', 3)
                 for _, mobId in ipairs(cfg.wave3Mobs or {}) do
                     SpawnMob(mobId, instance)
                 end
                 SpawnMob(cfg.disjoined, instance)
                 attachBoss(instance, cfg.disjoined)
-                tell(instance, '[Divergence] The Mega-Boss falls! The Disjoined manifests at the elemental circle -- no more time can be gained!')
+                tell(instance, '[Divergence] The Mega-Boss falls! The Disjoined manifests -- defeat it to secure the full city clear and Augment progress! (+15 min)')
             else
                 instance:setLocalVar('divWave', 4)
                 instance:complete()
@@ -318,9 +342,9 @@ end
 
 -----------------------------------
 -- Boss mechanics + stat baselines (owner 2026-07-12 audit + 2026-07-13
--- rival-HL-T5 rebalance: every cfg carries a `stats` block so the 12
--- Dynamis-Divergence bosses hit like their target tier -- Mega + Disjoined
--- now rival Hunting League T5 NM caliber). Attached at the SpawnMob call
+-- T3 progression rebalance: every cfg carries a `stats` block so the 12
+-- Dynamis-Divergence bosses form a solo-with-trusts ladder for players wearing
+-- non-REMA gear with T3 augments. Attached at the SpawnMob call
 -- sites above via attachBoss() (applies stats -> then mechanics); ticked
 -- every second via tickBoss().
 --
@@ -331,13 +355,9 @@ end
 -- and every cfg is added ON TOP of the retail Dynamis skill_list + spell_list
 -- inherited from the donor pool -- these mechs COMPLEMENT that kit, not
 -- duplicate it. Tuning tiers, from lightest to heaviest:
---   * Mid-Bosses (statue/idol/golem family): 500k HP, half-T5 mods, 1-2
---     mechanics + a phase transition (uniform across the four cities).
---   * Mega-Bosses (Fomor NMs, retail Dynamis boss caliber): 2.5M HP, full
---     HL T5 mods (ATT 7776, HASTE_GEAR 450, DA 20, REGEN 300, etc.), 3-4
---     mechanics + stance dance + phases -- rivals HL T5 AV/PW.
---   * Disjoined (wave-3 endgame race NMs): 5M HP, T5+12% ATT (8700), full
---     kit + doom -- top-of-Dynamis-D ceiling.
+--   * Mid-Bosses: 200k HP and GM-Normal offense; a short warm-up.
+--   * Mega-Bosses: 900k HP and HL-T3+ offense; the main run checkpoint.
+--   * Disjoined: 1.4M HP and HL-T4 offense; the full-clear/T4 capstone.
 -- Per-boss timing flavor (stance cycle sec, aoe %, enrage window) stays
 -- UNIQUE so each city still feels distinct; the shared stat baseline just
 -- pins the raw stat wall so no boss is an outlier.
@@ -348,66 +368,76 @@ end
 -- mob_groups). Mods use setMod (override) so the pool-derived stats are
 -- fully replaced -- same pattern as HuntingLeague.lua.
 --
--- Baseline mirrors HL Rank V - Legend (AV/PW) at hunting_league_catalog.lua
--- line 340+: DEF 1375, ATT 7776, ACC 3240, EVASION 900, MEVA/MDEF 1080,
--- HASTE_GEAR 450 (over the ~25% engine cap; deliberately headroom for
--- stacking), DA 20 / TA 8, REGEN 300, STR/DEX 750.
+-- Baselines intentionally bracket the existing GM Normal / HL T3 / HL T4
+-- progression points.  Endurance is kept low enough that trusts can sustain
+-- the run; danger comes from readable mechanics rather than T5 stat walls.
 local STATS_MID =
 {
-    hp = 500000,
+    hp = 200000,
     mods =
     {
-        [xi.mod.DEF]           =  700,
-        [xi.mod.ATT]           = 4000,
-        [xi.mod.ACC]           = 1600,
-        [xi.mod.EVASION]       =  500,
-        [xi.mod.MEVA]          =  550,
-        [xi.mod.MDEF]          =  550,
-        [xi.mod.STR]           =  400,
-        [xi.mod.DEX]           =  400,
+        [xi.mod.DEF]           =  550,
+        [xi.mod.ATT]           = 3500,
+        [xi.mod.ACC]           = 1200,
+        [xi.mod.EVASION]       =  400,
+        [xi.mod.MEVA]          =  450,
+        [xi.mod.MDEF]          =  450,
+        [xi.mod.STR]           =  250,
+        [xi.mod.DEX]           =  250,
         [xi.mod.HASTE_GEAR]    =  225,   -- ~22%
-        [xi.mod.DOUBLE_ATTACK] =   10,
-        [xi.mod.TRIPLE_ATTACK] =    3,
-        [xi.mod.REGEN]         =  150,
+        [xi.mod.DOUBLE_ATTACK] =    8,
+        [xi.mod.TRIPLE_ATTACK] =    0,
+        [xi.mod.REGEN]         =   80,
     },
 }
 local STATS_MEGA =
 {
-    hp = 2500000,
+    hp = 900000,
     mods =
     {
-        [xi.mod.DEF]           = 1375,
-        [xi.mod.ATT]           = 7776,
-        [xi.mod.ACC]           = 3240,
-        [xi.mod.EVASION]       =  900,
-        [xi.mod.MEVA]          = 1080,
-        [xi.mod.MDEF]          = 1080,
-        [xi.mod.STR]           =  750,
-        [xi.mod.DEX]           =  750,
-        [xi.mod.HASTE_GEAR]    =  450,   -- ~44% (engine caps at ~25% -- headroom)
-        [xi.mod.DOUBLE_ATTACK] =   20,
-        [xi.mod.TRIPLE_ATTACK] =    8,
-        [xi.mod.REGEN]         =  300,
+        [xi.mod.DEF]           =  950,
+        [xi.mod.ATT]           = 5200,
+        [xi.mod.ACC]           = 1500,
+        [xi.mod.EVASION]       =  550,
+        [xi.mod.MEVA]          =  650,
+        [xi.mod.MDEF]          =  600,
+        [xi.mod.STR]           =  350,
+        [xi.mod.DEX]           =  350,
+        [xi.mod.HASTE_GEAR]    =  300,
+        [xi.mod.DOUBLE_ATTACK] =   12,
+        [xi.mod.TRIPLE_ATTACK] =    2,
+        [xi.mod.REGEN]         =  100,
     },
 }
 local STATS_DISJOINED =
 {
-    hp = 5000000,
+    hp = 1400000,
     mods =
     {
-        [xi.mod.DEF]           = 1375,
-        [xi.mod.ATT]           = 8700,   -- +12% over T5 baseline (owner call)
-        [xi.mod.ACC]           = 3240,
-        [xi.mod.EVASION]       =  900,
-        [xi.mod.MEVA]          = 1080,
-        [xi.mod.MDEF]          = 1080,
-        [xi.mod.STR]           =  750,
-        [xi.mod.DEX]           =  750,
-        [xi.mod.HASTE_GEAR]    =  450,
-        [xi.mod.DOUBLE_ATTACK] =   20,
-        [xi.mod.TRIPLE_ATTACK] =    8,
-        [xi.mod.REGEN]         =  300,
+        [xi.mod.DEF]           = 1100,
+        [xi.mod.ATT]           = 6000,
+        [xi.mod.ACC]           = 1700,
+        [xi.mod.EVASION]       =  600,
+        [xi.mod.MEVA]          =  750,
+        [xi.mod.MDEF]          =  700,
+        [xi.mod.STR]           =  450,
+        [xi.mod.DEX]           =  450,
+        [xi.mod.HASTE_GEAR]    =  330,
+        [xi.mod.DOUBLE_ATTACK] =   14,
+        [xi.mod.TRIPLE_ATTACK] =    3,
+        [xi.mod.REGEN]         =  120,
     },
+}
+
+-- Public, immutable-by-convention contract used by focused regression tests.
+xi.divergence.balance =
+{
+    activeWaveTrash = 20,
+    activeStatues   = 6,
+    megaExtendMin   = MEGA_EXTEND,
+    mid             = STATS_MID,
+    mega            = STATS_MEGA,
+    disjoined       = STATS_DISJOINED,
 }
 xi.divergence.bossMechCfgs =
 {
@@ -418,11 +448,11 @@ xi.divergence.bossMechCfgs =
         name            = "Overseer's Tombstone",
         targetPartyOnly = true,
         stats  = STATS_MID,
-        drain  = { periodSec = 10, healPct = 3 },
-        enrage = { sec = 300, att = 3500, haste = 100, msg = "Overseer's Tombstone hums with unbroken vigil!" },
+        drain  = { periodSec = 12, healPct = 0.5 },
+        enrage = { sec = 420, att = 2500, haste = 80, msg = "Overseer's Tombstone hums with unbroken vigil!" },
         phases =
         {
-            { hp = 50, action = 'fury', att = 2500, haste = 100, msg = "Overseer's Tombstone splits along old fault lines -- it comes on faster!" },
+            { hp = 50, action = 'fury', att = 1500, haste = 80, msg = "Overseer's Tombstone splits along old fault lines -- it comes on faster!" },
         },
     },
     -- Halphas -- Fomor PLD mega-boss. Stance dance + banishga AoE + drain + dispel/fury.
@@ -432,38 +462,37 @@ xi.divergence.bossMechCfgs =
         targetPartyOnly = true,
         stats  = STATS_MEGA,
         stance = { startHpp = 85, periodSec = 16, stances = {
-            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Halphas raises his shield -- steel breaks against it!' },
-            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Halphas invokes divine ward -- magic dissolves!' },
+            { mods = { [xi.mod.DMGPHYS] = -3000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Halphas raises his shield -- steel breaks against it!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -3000 }, msg = 'Halphas invokes divine ward -- magic dissolves!' },
         } },
-        aoe    = { periodSec = 13, dmgPct = 20, msg = 'Halphas unleashes a Banishga -- holy light burns outward!' },
-        drain  = { periodSec = 8,  healPct = 2 },
-        enrage = { sec = 280, att = 4500, haste = 130, msg = 'Halphas draws deep on Fomor rage -- his blade quickens!' },
+        aoe    = { periodSec = 17, dmgPct = 14, msg = 'Halphas unleashes a Banishga -- holy light burns outward!' },
+        drain  = { periodSec = 10, healPct = 0.25 },
+        enrage = { sec = 390, att = 2750, haste = 100, msg = 'Halphas draws deep on Fomor rage -- his blade quickens!' },
         phases =
         {
-            { hp = 60, action = 'dispel', count = 3,             msg = 'Halphas roars a Fomor war-cry -- your enhancements shatter!' },
-            { hp = 30, action = 'fury',   att = 3000, haste = 110, msg = 'Halphas enters his last stand -- the assault peaks!' },
+            { hp = 60, action = 'dispel', count = 2,              msg = 'Halphas roars a Fomor war-cry -- your enhancements shatter!' },
+            { hp = 30, action = 'fury',   att = 2200, haste = 90, msg = 'Halphas enters his last stand -- the assault peaks!' },
         },
     },
-    -- Disjoined Elvaan -- Wave 3 endgame Fomor Elvaan. Full-kit + doom.
+    -- Disjoined Elvaan -- Wave 3 Fomor capstone with stance and control pressure.
     [17982238] =
     {
         name            = 'Disjoined Elvaan',
         targetPartyOnly = true,
         stats  = STATS_DISJOINED,
         stance = { startHpp = 80, periodSec = 14, stances = {
-            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Disjoined Elvaan\'s guard hardens -- steel is turned!' },
-            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Disjoined Elvaan wards the arcane -- magic scatters!' },
+            { mods = { [xi.mod.DMGPHYS] = -3000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Disjoined Elvaan\'s guard hardens -- steel is turned!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -3000 }, msg = 'Disjoined Elvaan wards the arcane -- magic scatters!' },
         } },
-        aoe    = { periodSec = 13, dmgPct = 22, msg = 'Disjoined Elvaan sweeps a holy blade -- the arc singes all!' },
-        cc     = { periodSec = 22, effect = xi.effect.PARALYZE, power = 60, dur = 6, msg = 'Disjoined Elvaan\'s consecrated strike freezes your nerves!' },
-        drain  = { periodSec = 8,  healPct = 2 },
-        enrage = { sec = 300, att = 5000, haste = 130, msg = 'Disjoined Elvaan burns with severed-godhood fury!' },
+        aoe    = { periodSec = 17, dmgPct = 15, msg = 'Disjoined Elvaan sweeps a holy blade -- the arc singes all!' },
+        cc     = { periodSec = 24, effect = xi.effect.PARALYZE, power = 50, dur = 4, msg = 'Disjoined Elvaan\'s consecrated strike freezes your nerves!' },
+        drain  = { periodSec = 10, healPct = 0.25 },
+        enrage = { sec = 420, att = 3000, haste = 100, msg = 'Disjoined Elvaan burns with severed-godhood fury!' },
         phases =
         {
-            { hp = 60, action = 'dispel', count = 3,             msg = 'Disjoined Elvaan calls his patron -- your blessings are recalled!' },
-            { hp = 30, action = 'fury',   att = 3500, haste = 130, msg = 'Disjoined Elvaan draws his final oath -- he ascends!' },
+            { hp = 60, action = 'dispel', count = 2,              msg = 'Disjoined Elvaan calls his patron -- your blessings are recalled!' },
+            { hp = 30, action = 'fury',   att = 2500, haste = 100, msg = 'Disjoined Elvaan draws his final oath -- he ascends!' },
         },
-        doom   = { startHpp = 15, dur = 25, msg = 'Disjoined Elvaan marks you in fallen sacrament!' },
     },
 
     -- ── Bastok [D] (zone 295) ───────────────────────────────────────────────
@@ -474,12 +503,12 @@ xi.divergence.bossMechCfgs =
         name            = "Mu'Sha Effigy",
         targetPartyOnly = true,
         stats  = STATS_MID,
-        drain  = { periodSec = 10, healPct = 3 },
-        cc     = { periodSec = 25, effect = xi.effect.SILENCE, power = 1, dur = 5, msg = "Mu'Sha Effigy resonates -- the echo dampens all sound!" },
-        enrage = { sec = 300, att = 3500, haste = 100, msg = "Mu'Sha Effigy rings with the wrath of the twin moons!" },
+        drain  = { periodSec = 12, healPct = 0.5 },
+        cc     = { periodSec = 28, effect = xi.effect.SILENCE, power = 1, dur = 4, msg = "Mu'Sha Effigy resonates -- the echo dampens all sound!" },
+        enrage = { sec = 420, att = 2500, haste = 80, msg = "Mu'Sha Effigy rings with the wrath of the twin moons!" },
         phases =
         {
-            { hp = 50, action = 'fury', att = 2500, haste = 100, msg = "Mu'Sha Effigy resonates in furious echo -- assault peaks!" },
+            { hp = 50, action = 'fury', att = 1500, haste = 80, msg = "Mu'Sha Effigy resonates in furious echo -- assault peaks!" },
         },
     },
     -- Ka'Rho Fearsinger -- Fomor bard/mage mega-boss. Silence + fear + dispel + finale.
@@ -488,17 +517,17 @@ xi.divergence.bossMechCfgs =
         name            = "Ka'Rho Fearsinger",
         targetPartyOnly = true,
         stats  = STATS_MEGA,
-        cc     = { periodSec = 22, effect = xi.effect.SILENCE, power = 1, dur = 6, msg = "Ka'Rho Fearsinger begins a dread lay -- your voice is stolen!" },
-        aoe    = { periodSec = 12, dmgPct = 20, msg = "Ka'Rho Fearsinger unleashes a Fearscream -- the walls tremble!" },
-        drain  = { periodSec = 8,  healPct = 2 },
-        enrage = { sec = 280, att = 4500, haste = 130, msg = "Ka'Rho Fearsinger's aria reaches its darkest verse!" },
+        cc     = { periodSec = 24, effect = xi.effect.SILENCE, power = 1, dur = 4, msg = "Ka'Rho Fearsinger begins a dread lay -- your voice is stolen!" },
+        aoe    = { periodSec = 17, dmgPct = 14, msg = "Ka'Rho Fearsinger unleashes a Fearscream -- the walls tremble!" },
+        drain  = { periodSec = 10, healPct = 0.25 },
+        enrage = { sec = 390, att = 2750, haste = 100, msg = "Ka'Rho Fearsinger's aria reaches its darkest verse!" },
         phases =
         {
-            { hp = 60, action = 'dispel', count = 3,   msg = "Ka'Rho Fearsinger sings the silencing verse -- your buffs are unmade!" },
-            { hp = 30, action = 'nuke',   dmgPct = 35, msg = "Ka'Rho Fearsinger unleashes the climactic finale!" },
+            { hp = 60, action = 'dispel', count = 2,   msg = "Ka'Rho Fearsinger sings the silencing verse -- your buffs are unmade!" },
+            { hp = 30, action = 'nuke',   dmgPct = 24, msg = "Ka'Rho Fearsinger unleashes the climactic finale!" },
         },
     },
-    -- Disjoined Galka -- Wave 3 endgame Fomor Galka. Slow, heavy brute + roar + doom.
+    -- Disjoined Galka -- Wave 3 Fomor capstone. Slow, heavy brute + roar.
     -- CC TERROR added 2026-07-13 (consistency pass: every other Disjoined boss
     -- carries some cc; the war-bellow was thematic but toothless without a lock).
     [17986326] =
@@ -507,19 +536,18 @@ xi.divergence.bossMechCfgs =
         targetPartyOnly = true,
         stats  = STATS_DISJOINED,
         stance = { startHpp = 80, periodSec = 16, stances = {
-            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Disjoined Galka bunches his shoulders -- weapons rebound!' },
-            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Disjoined Galka wards the arcane -- spells ripple off!' },
+            { mods = { [xi.mod.DMGPHYS] = -3000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Disjoined Galka bunches his shoulders -- weapons rebound!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -3000 }, msg = 'Disjoined Galka wards the arcane -- spells ripple off!' },
         } },
-        aoe    = { periodSec = 12, dmgPct = 25, msg = 'Disjoined Galka slams the ground -- a giant shockwave rolls out!' },
-        cc     = { periodSec = 26, effect = xi.effect.TERROR, power = 1, dur = 4, msg = "Disjoined Galka's war-bellow shakes your bones -- you cannot move!" },
-        drain  = { periodSec = 8,  healPct = 3 },
-        enrage = { sec = 300, att = 5500, haste = 120, msg = 'Disjoined Galka lets loose a war-bellow -- Fomor blood erupts!' },
+        aoe    = { periodSec = 17, dmgPct = 15, msg = 'Disjoined Galka slams the ground -- a giant shockwave rolls out!' },
+        cc     = { periodSec = 28, effect = xi.effect.TERROR, power = 1, dur = 3, msg = "Disjoined Galka's war-bellow shakes your bones -- you cannot move!" },
+        drain  = { periodSec = 10, healPct = 0.25 },
+        enrage = { sec = 420, att = 3000, haste = 100, msg = 'Disjoined Galka lets loose a war-bellow -- Fomor blood erupts!' },
         phases =
         {
-            { hp = 60, action = 'fury', att = 3000, haste = 100, msg = 'Disjoined Galka enters a killing pace!' },
-            { hp = 30, action = 'nuke', dmgPct = 40,              msg = 'Disjoined Galka roars his forebears\' names -- a killing blow lands!' },
+            { hp = 60, action = 'fury', att = 2300, haste = 90, msg = 'Disjoined Galka enters a killing pace!' },
+            { hp = 30, action = 'nuke', dmgPct = 28,             msg = 'Disjoined Galka roars his forebears\' names -- a killing blow lands!' },
         },
-        doom   = { startHpp = 12, dur = 25, msg = 'Disjoined Galka marks you with a broken oath!' },
     },
 
     -- ── Windurst [D] (zone 296) ─────────────────────────────────────────────
@@ -529,11 +557,11 @@ xi.divergence.bossMechCfgs =
         name            = 'Evincing Idol',
         targetPartyOnly = true,
         stats  = STATS_MID,
-        drain  = { periodSec = 10, healPct = 3 },
-        enrage = { sec = 300, att = 3500, haste = 100, msg = 'Evincing Idol\'s runes blaze crimson -- it channels forbidden aid!' },
+        drain  = { periodSec = 12, healPct = 0.5 },
+        enrage = { sec = 420, att = 2500, haste = 80, msg = 'Evincing Idol\'s runes blaze crimson -- it channels forbidden aid!' },
         phases =
         {
-            { hp = 50, action = 'dispel', count = 3, msg = 'Evincing Idol pulses -- your blessings are banished!' },
+            { hp = 50, action = 'dispel', count = 2, msg = 'Evincing Idol pulses -- your blessings are banished!' },
         },
     },
     -- Fii Pexu the Eternal -- Fomor immortal mega-boss. Stance + terror + drain + phases.
@@ -543,16 +571,16 @@ xi.divergence.bossMechCfgs =
         targetPartyOnly = true,
         stats  = STATS_MEGA,
         stance = { startHpp = 85, periodSec = 16, stances = {
-            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Fii Pexu\'s form reforges as steel -- weapons cannot bite!' },
-            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Fii Pexu shifts to sorcerous flesh -- magic is undone!' },
+            { mods = { [xi.mod.DMGPHYS] = -3000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Fii Pexu\'s form reforges as steel -- weapons cannot bite!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -3000 }, msg = 'Fii Pexu shifts to sorcerous flesh -- magic is undone!' },
         } },
-        drain  = { periodSec = 7,  healPct = 3 },
-        cc     = { periodSec = 25, effect = xi.effect.TERROR, power = 1, dur = 4, msg = 'Fii Pexu\'s eternal gaze pins you in dread!' },
-        enrage = { sec = 300, att = 4500, haste = 120, msg = 'Fii Pexu the Eternal draws on the endless well of Fomor rage!' },
+        drain  = { periodSec = 10, healPct = 0.25 },
+        cc     = { periodSec = 28, effect = xi.effect.TERROR, power = 1, dur = 3, msg = 'Fii Pexu\'s eternal gaze pins you in dread!' },
+        enrage = { sec = 390, att = 2750, haste = 100, msg = 'Fii Pexu the Eternal draws on the endless well of Fomor rage!' },
         phases =
         {
-            { hp = 60, action = 'fury',   att = 3000, haste = 110, msg = 'Fii Pexu shrugs off the wound and comes on faster!' },
-            { hp = 30, action = 'dispel', count = 3,             msg = 'Fii Pexu resurrects its own buffs -- yours are torn away!' },
+            { hp = 60, action = 'fury',   att = 2200, haste = 90, msg = 'Fii Pexu shrugs off the wound and comes on faster!' },
+            { hp = 30, action = 'dispel', count = 2,              msg = 'Fii Pexu resurrects its own buffs -- yours are torn away!' },
         },
     },
     -- Disjoined Tarutaru -- Wave 3 endgame Fomor Tarutaru. Mage archetype.
@@ -561,16 +589,15 @@ xi.divergence.bossMechCfgs =
         name            = 'Disjoined Tarutaru',
         targetPartyOnly = true,
         stats  = STATS_DISJOINED,
-        drain  = { periodSec = 8,  healPct = 3 },
-        aoe    = { periodSec = 11, dmgPct = 22, msg = 'Disjoined Tarutaru unleashes a spell-burst -- arcane shards fly!' },
-        cc     = { periodSec = 20, effect = xi.effect.SILENCE, power = 1, dur = 7, msg = 'Disjoined Tarutaru weaves a silence trap -- your voice is snuffed!' },
-        enrage = { sec = 260, att = 4000, haste = 140, msg = 'Disjoined Tarutaru overchannels -- raw magic bleeds from him!' },
+        drain  = { periodSec = 10, healPct = 0.25 },
+        aoe    = { periodSec = 17, dmgPct = 15, msg = 'Disjoined Tarutaru unleashes a spell-burst -- arcane shards fly!' },
+        cc     = { periodSec = 24, effect = xi.effect.SILENCE, power = 1, dur = 4, msg = 'Disjoined Tarutaru weaves a silence trap -- your voice is snuffed!' },
+        enrage = { sec = 420, att = 3000, haste = 100, msg = 'Disjoined Tarutaru overchannels -- raw magic bleeds from him!' },
         phases =
         {
-            { hp = 60, action = 'dispel', count = 4,   msg = "Disjoined Tarutaru enters mage's fury -- all buffs are torn!" },
-            { hp = 30, action = 'nuke',   dmgPct = 45, msg = 'Disjoined Tarutaru completes a mega-spell -- shockwave!' },
+            { hp = 60, action = 'dispel', count = 2,   msg = "Disjoined Tarutaru enters mage's fury -- all buffs are torn!" },
+            { hp = 30, action = 'nuke',   dmgPct = 28, msg = 'Disjoined Tarutaru completes a mega-spell -- shockwave!' },
         },
-        doom   = { startHpp = 12, dur = 25, msg = 'Disjoined Tarutaru inscribes your name in unbinding!' },
     },
 
     -- ── Jeuno [D] (zone 297) ────────────────────────────────────────────────
@@ -580,15 +607,15 @@ xi.divergence.bossMechCfgs =
         name            = 'Impish Golem',
         targetPartyOnly = true,
         stats  = STATS_MID,
-        drain  = { periodSec = 10, healPct = 3 },
+        drain  = { periodSec = 12, healPct = 0.5 },
         stance = { startHpp = 60, periodSec = 18, stances = {
-            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Impish Golem plate-rotates -- weapons glance off!' },
-            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Impish Golem rune-shifts -- magic is deflected!' },
+            { mods = { [xi.mod.DMGPHYS] = -3000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Impish Golem plate-rotates -- weapons glance off!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -3000 }, msg = 'Impish Golem rune-shifts -- magic is deflected!' },
         } },
-        enrage = { sec = 300, att = 3500, haste = 100, msg = 'Impish Golem awakens its hidden gears -- pace quickens!' },
+        enrage = { sec = 420, att = 2500, haste = 80, msg = 'Impish Golem awakens its hidden gears -- pace quickens!' },
         phases =
         {
-            { hp = 50, action = 'fury', att = 2500, haste = 100, msg = 'Impish Golem overclocks its cores -- assault escalates!' },
+            { hp = 50, action = 'fury', att = 1500, haste = 80, msg = 'Impish Golem overclocks its cores -- assault escalates!' },
         },
     },
     -- Obstatrix -- Ahriman mega-boss. Fast eye stance + gaze AoE + silence.
@@ -598,38 +625,37 @@ xi.divergence.bossMechCfgs =
         targetPartyOnly = true,
         stats  = STATS_MEGA,
         stance = { startHpp = 85, periodSec = 14, stances = {
-            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Obstatrix blinks -- weapons find no purchase!' },
-            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Obstatrix\'s pupils widen -- spells scatter!' },
+            { mods = { [xi.mod.DMGPHYS] = -3000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Obstatrix blinks -- weapons find no purchase!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -3000 }, msg = 'Obstatrix\'s pupils widen -- spells scatter!' },
         } },
-        aoe    = { periodSec = 12, dmgPct = 22, msg = 'Obstatrix opens a petrifying gaze -- the room shakes!' },
-        cc     = { periodSec = 20, effect = xi.effect.SILENCE, power = 1, dur = 6, msg = 'Obstatrix opens a Chaotic Eye -- your voice fails!' },
-        enrage = { sec = 260, att = 5000, haste = 140, msg = 'Obstatrix\'s eyes bulge -- every pupil ignites!' },
+        aoe    = { periodSec = 17, dmgPct = 14, msg = 'Obstatrix opens a petrifying gaze -- the room shakes!' },
+        cc     = { periodSec = 24, effect = xi.effect.SILENCE, power = 1, dur = 4, msg = 'Obstatrix opens a Chaotic Eye -- your voice fails!' },
+        enrage = { sec = 390, att = 2750, haste = 100, msg = 'Obstatrix\'s eyes bulge -- every pupil ignites!' },
         phases =
         {
-            { hp = 60, action = 'dispel', count = 4,             msg = 'Obstatrix opens every eye -- your blessings vanish!' },
-            { hp = 30, action = 'fury',   att = 3000, haste = 120, msg = 'Obstatrix roars -- pupils flare crimson!' },
+            { hp = 60, action = 'dispel', count = 2,              msg = 'Obstatrix opens every eye -- your blessings vanish!' },
+            { hp = 30, action = 'fury',   att = 2200, haste = 90, msg = 'Obstatrix roars -- pupils flare crimson!' },
         },
     },
-    -- Disjoined Mithra -- Wave 3 endgame Fomor Mithra. Fast trickster + doom.
+    -- Disjoined Mithra -- Wave 3 Fomor capstone. Fast trickster pressure.
     [17994487] =
     {
         name            = 'Disjoined Mithra',
         targetPartyOnly = true,
         stats  = STATS_DISJOINED,
         stance = { startHpp = 80, periodSec = 12, stances = {
-            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Disjoined Mithra shifts stance -- steel bites nothing!' },
-            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Disjoined Mithra wards magic -- spells fizzle!' },
+            { mods = { [xi.mod.DMGPHYS] = -3000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Disjoined Mithra shifts stance -- steel bites nothing!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -3000 }, msg = 'Disjoined Mithra wards magic -- spells fizzle!' },
         } },
-        aoe    = { periodSec = 11, dmgPct = 20, msg = 'Disjoined Mithra whirls -- a spiral of steel opens outward!' },
-        cc     = { periodSec = 20, effect = xi.effect.PARALYZE, power = 50, dur = 6, msg = 'Disjoined Mithra\'s poisoned blade grazes you -- paralysed!' },
-        drain  = { periodSec = 8,  healPct = 3 },
-        enrage = { sec = 240, att = 5500, haste = 150, msg = 'Disjoined Mithra flickers between strikes -- an assassin unbound!' },
+        aoe    = { periodSec = 17, dmgPct = 15, msg = 'Disjoined Mithra whirls -- a spiral of steel opens outward!' },
+        cc     = { periodSec = 24, effect = xi.effect.PARALYZE, power = 45, dur = 4, msg = 'Disjoined Mithra\'s poisoned blade grazes you -- paralysed!' },
+        drain  = { periodSec = 10, healPct = 0.25 },
+        enrage = { sec = 420, att = 3000, haste = 100, msg = 'Disjoined Mithra flickers between strikes -- an assassin unbound!' },
         phases =
         {
-            { hp = 60, action = 'fury', att = 3500, haste = 140, msg = 'Disjoined Mithra breaks into a killing dance!' },
-            { hp = 30, action = 'fury', att = 4000, haste = 160, msg = 'Disjoined Mithra becomes a blur -- every strike lands twice!' },
+            { hp = 60, action = 'fury', att = 2400, haste = 100, msg = 'Disjoined Mithra breaks into a killing dance!' },
+            { hp = 30, action = 'fury', att = 2800, haste = 110, msg = 'Disjoined Mithra becomes a blur -- every strike lands twice!' },
         },
-        doom   = { startHpp = 12, dur = 25, msg = 'Disjoined Mithra marks you in blood-oath!' },
     },
 }
 

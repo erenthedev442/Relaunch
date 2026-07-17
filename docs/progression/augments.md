@@ -30,6 +30,11 @@ Cancel at any time during the confirm menu to get everything (gear + catalysts) 
 - **Re-augmenting keeps crystalized slots.** The moogle rebuilds the piece's *non-crystalized* augments from the catalysts you trade — any slot that has **crystalized** (locked) is preserved and doesn't need its catalyst again. Every other augment already on the piece is replaced, so bring a catalyst for each line you still want.
 - **Perfect rolls can crystalize (lock).** When a fresh line rolls its **maximum** value (a crit guarantees this), it gets a second roll — by **Augment Sage rank**, 5% → 50% — to **crystalize**, locking it so neither re-augmenting nor `!reroll` can change or remove it. **Scour** (trade the gear *alone*, <!--luaconst:Augment_Moogle.lua:SCOUR_GIL_COST:comma-->25,000<!--/luaconst--> gil) strips every augment, crystalized included, to start anew. Full details: [Crystalize: lock in your best rolls](augmenting-guide.md#crystalize-lock-in-your-best-rolls).
 
+!!! note "Phalanx Received retired"
+    Phalanx Received is no longer available from the custom augment system.
+    Existing lines remain on test-server equipment until scoured or wiped, but
+    their combined contribution is capped at **+15 per character**.
+
 ## Known display limitation
 
 !!! warning "Item examine window shows garbled values for boosted augments"

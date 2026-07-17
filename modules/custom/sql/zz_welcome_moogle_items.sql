@@ -15,11 +15,19 @@
 -- Idempotent. Item data is cached, so restart xi_map after applying.
 -- ============================================================================
 
+-- Skulker's Cape used to be a Welcome Moogle ware. Restore its upstream retail
+-- state on existing installations before applying restrictions to current stock.
+UPDATE `item_basic`
+SET
+    `flags`    = 2052, -- MYSTERY_BOX | CANEQUIP
+    `aH`       = 26,   -- Back
+    `BaseSell` = 700
+WHERE `itemId` = 13692;
+
 UPDATE `item_basic`
 SET
     `flags`    = (`flags` | 61504) & ~1041,
     `aH`       = 0,
-    `NoSale`   = 1,
     `BaseSell` = 0
 WHERE `itemId` IN
 (
@@ -44,6 +52,7 @@ WHERE `itemId` IN
     17182, -- Kaman +1
     17253, -- Musketeer Gun
     16757, -- Corsair's Knife
+    18711, -- Seadog Gun +1
     17072, -- Lilith's Rod
     17082, -- Tactician Magician's Wand
     16694, -- Tactician Magician's Hooks
@@ -75,6 +84,10 @@ WHERE `itemId` IN
     14020, -- Enkelados's Bracelets
     12312, -- Royal Knight Army Shield
     12379, -- Holy Shield
+    14936, -- Storm Manopolas
+    14937, -- Storm Gages
+    15691, -- Storm Gambieras
+    15692, -- Storm Crackows
 
     -- Accessories: rings
     13286, -- Soldier's Ring
@@ -92,6 +105,8 @@ WHERE `itemId` IN
     13298, -- Shinobi Ring
     13299, -- Drake Ring
     13300, -- Conjurer's Ring
+    15773, -- Imperial Ring
+    15777, -- Hale Ring
     14649, -- Telluric Ring
 
     -- Accessories: earrings
@@ -111,5 +126,5 @@ WHERE `itemId` IN
     13676, -- Heavy Mantle
     13678, -- Sniper's Mantle
     13677, -- Esoteric Mantle
-    13692  -- Skulker's Cape
+    11531  -- Fidelity Mantle
 );

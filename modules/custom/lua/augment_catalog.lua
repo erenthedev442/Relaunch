@@ -102,7 +102,6 @@ return {
     [2151] = { augId = 1155, base = 3,   mult = 30,  disp = 100,  cat = 4,  tier = 0, label = 'Physical Damage Taken', maxBoost = 14 },
     [2747] = { augId = 1156, base = 3,   mult = 30,  disp = 100,  cat = 4,  tier = 0, label = 'Magic Damage Taken' },
     [889]  = { augId = 363,  base = 1,   mult = 1,   disp = 1,    cat = 4,  tier = 0, label = 'Chance of successful block', maxBoost = 9 },
-    [1449]  = { augId = 368,  base = 1,   mult = 1,   disp = 1,    cat = 4,  tier = 0, label = 'Phalanx Received', maxBoost = 9 },
     [2505]  = { augId = 1472, base = 1,   mult = 1,   disp = 1,    cat = 4,  tier = 0, label = 'Parrying rate' },
     [3504] = { augId = 42,   base = 1,   mult = 1,   disp = 1,    cat = 4,  tier = 0, label = 'Enemy crit. hit rate' },
     [1617] = { augId = 1153, base = 3,   mult = 1,   disp = 1,    cat = 4,  tier = 0, label = 'Evasion' },

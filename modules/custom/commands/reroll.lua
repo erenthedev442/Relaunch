@@ -32,6 +32,13 @@ local sage     = require('modules/custom/lua/augment_sage_catalog')
 local CHANNEL          = xi.msg.channel.SYSTEM_3
 local EXDATA_VALUE_MAX = 31
 
+-- Retired custom augments remain on grandfathered equipment until the next
+-- wipe/scour, but must never be rerolled through the uncatalogued fallback.
+local RETIRED_AUGMENTS =
+{
+    [368] = 'Phalanx Received',
+}
+
 -- Tier bands (mirror Augment_Moogle.lua TIER_SLICES). Kept local so the
 -- command works even before the Moogle module has published xi.augmentTiers.
 local TIER_SLICES =
@@ -142,9 +149,18 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
     for augSlot = 0, 4 do
         local a = item:getAugment(augSlot)
         if a[1] ~= 0 then
-            local locked = bit.band(lockMask, bit.lshift(1, augSlot)) ~= 0
-            lines[#lines + 1] = { augSlot = augSlot, augId = a[1], oldVal = a[2], def = byAug[a[1]], locked = locked }
-            if not locked then rerollable = rerollable + 1 end
+            local locked  = bit.band(lockMask, bit.lshift(1, augSlot)) ~= 0
+            local retired = RETIRED_AUGMENTS[a[1]] ~= nil
+            lines[#lines + 1] =
+            {
+                augSlot = augSlot,
+                augId   = a[1],
+                oldVal  = a[2],
+                def     = byAug[a[1]],
+                locked  = locked,
+                retired = retired,
+            }
+            if not locked and not retired then rerollable = rerollable + 1 end
         end
     end
     if #lines == 0 then
@@ -152,7 +168,7 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
         return
     end
     if rerollable == 0 then
-        player:printToPlayer('[Reroll] Every augment on this item is crystalized (locked). Scour it at the Augment Moogle to change them.', CHANNEL)
+        player:printToPlayer('[Reroll] This item has no rerollable augments. Retired and crystalized lines are preserved.', CHANNEL)
         return
     end
 
@@ -173,9 +189,11 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
         player:printToPlayer(string.format('[Reroll] %s  (Tier %d band %d-%d, floor %d, crit %d%%)',
             item:getName(), tier, slice.min, slice.max, rollFloor, math.floor(critChance(rank) * 100)), CHANNEL)
         for _, ln in ipairs(lines) do
-            local lbl = ln.def and ln.def.label or ('#' .. tostring(ln.augId))
+            local lbl = RETIRED_AUGMENTS[ln.augId] or (ln.def and ln.def.label) or ('#' .. tostring(ln.augId))
             if ln.locked then
                 player:printToPlayer(string.format('  %s : %d  ->  CRYSTALIZED (locked, kept)', lbl, ln.oldVal), CHANNEL)
+            elseif ln.retired then
+                player:printToPlayer(string.format('  %s : %d  ->  RETIRED (kept, cannot reroll)', lbl, ln.oldVal), CHANNEL)
             elseif ln.def and ln.def.tierValue then
                 player:printToPlayer(string.format('  %s : %d  ->  tier-fixed at +%d (Augment Tier %d)', lbl, ln.oldVal, ln.def.tierValue * tier, tier), CHANNEL)
             else
@@ -206,8 +224,9 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
     local crystalNews = {}
     local newMask     = lockMask
     for _, ln in ipairs(lines) do
-        if ln.locked then
-            summary[#summary + 1] = { lbl = (ln.def and ln.def.label) or ('#' .. tostring(ln.augId)), old = ln.oldVal, new = ln.oldVal, locked = true }
+        if ln.locked or ln.retired then
+            local label = RETIRED_AUGMENTS[ln.augId] or (ln.def and ln.def.label) or ('#' .. tostring(ln.augId))
+            summary[#summary + 1] = { lbl = label, old = ln.oldVal, new = ln.oldVal, locked = ln.locked, retired = ln.retired }
         else
             local hasAff  = (ln.def and ln.def.cat and affinity.hasAffinity(player, ln.def.cat)) or false
             local cap     = (ln.def and ln.def.maxBoost) and math.min(EXDATA_VALUE_MAX, ln.def.maxBoost) or EXDATA_VALUE_MAX
@@ -271,7 +290,9 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
     player:printToPlayer(string.format('[Reroll]%s %s reforged for %d Infamy:',
         isCrit and ' *CRITICAL!*' or '', item:getName(), infamyCost), CHANNEL)
     for _, s in ipairs(summary) do
-        if s.locked then
+        if s.retired then
+            player:printToPlayer(string.format('  %s : %d   (retired, kept)', s.lbl, s.old), CHANNEL)
+        elseif s.locked then
             player:printToPlayer(string.format('  %s : %d   (crystalized, kept)', s.lbl, s.old), CHANNEL)
         else
             local arrow = (s.new > s.old) and '^ up' or ((s.new < s.old) and 'v down' or '= same')

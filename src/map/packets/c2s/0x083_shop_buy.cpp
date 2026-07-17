@@ -21,12 +21,45 @@
 
 #include "0x083_shop_buy.h"
 
+#include <algorithm>
+#include <iterator>
+
 #include "entities/charentity.h"
 #include "packets/s2c/0x01d_item_same.h"
 #include "packets/s2c/0x03f_shop_buy.h"
 #include "trade_container.h"
 #include "utils/charutils.h"
 #include "utils/itemutils.h"
+
+namespace
+{
+bool addPurchasedItem(CCharEntity* PChar, uint8 shopSlot, uint16 itemId, uint32 quantity)
+{
+    if (!PChar->Container->hasShopItemExdata(shopSlot))
+    {
+        return charutils::AddItem(PChar, LOC_INVENTORY, itemId, quantity) != ERROR_SLOTID;
+    }
+
+    // Preset exdata is intended for non-stackable equipment. Clone the item
+    // template and carry the advertised augments into the purchased copy.
+    if (quantity != 1)
+    {
+        return false;
+    }
+
+    auto PItem = xi::items::spawn(itemId);
+    if (!PItem)
+    {
+        return false;
+    }
+
+    const auto& exdata = PChar->Container->getShopItemExdata(shopSlot);
+    std::copy(exdata.begin(), exdata.end(), std::begin(PItem->m_extra));
+    PItem->setQuantity(1);
+
+    return charutils::AddItem(PChar, LOC_INVENTORY, std::move(PItem)) != ERROR_SLOTID;
+}
+} // namespace
 
 auto GP_CLI_COMMAND_SHOP_BUY::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
@@ -73,7 +106,7 @@ void GP_CLI_COMMAND_SHOP_BUY::process(MapSession* PSession, CCharEntity* PChar) 
         const int32  balance   = charutils::GetPoints(PChar, currencyName.c_str());
         if (balance >= 0 && static_cast<uint32>(balance) >= totalCost)
         {
-            if (charutils::AddItem(PChar, LOC_INVENTORY, itemId, quantity) != ERROR_SLOTID)
+            if (addPurchasedItem(PChar, this->ShopItemIndex, itemId, quantity))
             {
                 charutils::AddPoints(PChar, currencyName.c_str(), -static_cast<int32>(totalCost));
                 ShowInfo("User '%s' bought %u of item %u [VENDOR, currency %s]", PChar->getName(), quantity, itemId, currencyName.c_str());
@@ -95,7 +128,7 @@ void GP_CLI_COMMAND_SHOP_BUY::process(MapSession* PSession, CCharEntity* PChar) 
         const int32  balance   = PChar->getCharVar(currencyVar);
         if (balance >= 0 && static_cast<uint32>(balance) >= totalCost)
         {
-            if (charutils::AddItem(PChar, LOC_INVENTORY, itemId, quantity) != ERROR_SLOTID)
+            if (addPurchasedItem(PChar, this->ShopItemIndex, itemId, quantity))
             {
                 PChar->setCharVar(currencyVar, balance - static_cast<int32>(totalCost));
                 ShowInfo("User '%s' bought %u of item %u [VENDOR, charvar %s]", PChar->getName(), quantity, itemId, currencyVar.c_str());
@@ -115,7 +148,7 @@ void GP_CLI_COMMAND_SHOP_BUY::process(MapSession* PSession, CCharEntity* PChar) 
         const uint32 totalCost = price * quantity;
         if (charutils::getItemCount(PChar, currencyItem) >= totalCost)
         {
-            if (charutils::AddItem(PChar, LOC_INVENTORY, itemId, quantity) != ERROR_SLOTID)
+            if (addPurchasedItem(PChar, this->ShopItemIndex, itemId, quantity))
             {
                 // Charge the currency across EVERY stack and container that the
                 // getItemCount check above counts. The old code debited only the
@@ -173,7 +206,7 @@ void GP_CLI_COMMAND_SHOP_BUY::process(MapSession* PSession, CCharEntity* PChar) 
 
     if (gil->getQuantity() >= (price * quantity))
     {
-        if (charutils::AddItem(PChar, LOC_INVENTORY, itemId, quantity) != ERROR_SLOTID)
+        if (addPurchasedItem(PChar, this->ShopItemIndex, itemId, quantity))
         {
             charutils::UpdateItem(PChar, LOC_INVENTORY, 0, -static_cast<int32>(price * quantity));
             ShowInfo("User '%s' purchased %u of item of ID %u [from VENDOR] ", PChar->getName(), quantity, itemId);

@@ -113,7 +113,8 @@ title: Progression Map
     <p>Rank 2–3 NMs are duo/small-group fights. Gear climbs through the vendor tiers as marks accumulate.</p>
     <ul class="open">
       <li>Opens: Rank 3 NMs (22 marks/kill) · <b>Sage Mastery rank 2</b> (Augment Adept)</li>
-      <li>Start chipping the later augment-tier keys: clear Voidspire floor 10 + every Game Master wave difficulty</li>
+      <li><b>Augment Tier 2</b> — defeat all 3 Rank 2 Hunt NMs, then promote to Rank 3</li>
+      <li>Start chipping the Tier 3 keys: all 3 Rank 3 Hunt NMs · Voidspire floor 10 · every Game Master wave difficulty</li>
     </ul>
   </div>
   <div class="node">
@@ -128,7 +129,6 @@ title: Progression Map
     <div class="gate">3,000 lifetime marks — everything past this point fans out from here</div>
     <ul class="open">
       <li><b>Prestige entry</b> — the Ascension Altar accepts you; Nightmare Court trials begin</li>
-      <li><b>Augment Tier 2</b> — rolls move up to the 6–11 band (reach Hunting League Rank 5)</li>
       <li>Deeper Sage Mastery ranks come into reach as Prestige and Rebirth progress</li>
     </ul>
   </div>
@@ -140,10 +140,11 @@ title: Progression Map
 <div class="lanes">
   <div class="lane">
     <h3>Prestige &amp; Rebirth <span class="chip c-ap">Ascension AP</span></h3>
-    <div class="who">Nightmare Court boss trials at the Ascension Altar · AP per kill scales with depth</div>
-    <div class="rung"><b>P.Lv 1–50</b><span>10 AP per Court kill</span></div>
-    <div class="rung"><b>P.Lv 51–80</b><span>15 AP per Court kill</span></div>
-    <div class="rung"><b>P.Lv 81+</b><span>20 AP per Court kill</span></div>
+    <div class="who">Court boss trials at the Ascension Altar · AP per completed ascension scales with depth</div>
+    <div class="rung"><b>P.Lv 1–50</b><span>10 AP per completed ascension</span></div>
+    <div class="rung"><b>P.Lv 51–80</b><span>15 AP per completed ascension</span></div>
+    <div class="rung"><b>P.Lv 81+</b><span>20 AP per completed ascension</span></div>
+    <div class="rung"><b>P.Lv 80–100</b><span>Empowered Celestial Wardens · full BiS, gear swaps, and the strongest pre-gate weapon are the intended P100 benchmark</span></div>
     <div class="rung"><b>Rebirth</b><span>Any job with <b>2,100 spent Job Points</b> can rebirth — permanent stacking category boosts; rebirth counts also gate the deeper Sage Mastery ranks</span></div>
   </div>
   <div class="lane">
@@ -167,9 +168,9 @@ title: Progression Map
     <h3>The Augment Ladder <span class="chip c-aug">Tiers 1–5</span></h3>
     <div class="who">Your roll band is gated by CONTENT; your Sage Mastery rank lifts the floor inside the band, and a crit = a perfect roll</div>
     <div class="rung"><b>Tier 1 · 0–5</b><span>reach level 99 on any job</span></div>
-    <div class="rung"><b>Tier 2 · 6–11</b><span>reach Hunting League Rank 5</span></div>
-    <div class="rung"><b>Tier 3 · 12–17</b><span>clear Voidspire floor 10 + every Game Master wave difficulty</span></div>
-    <div class="rung"><b>Tier 4 · 18–24</b><span>clear a Dynamis - Divergence city</span></div>
+    <div class="rung"><b>Tier 2 · 6–11</b><span>defeat all 3 Rank 2 Hunt NMs + promote to Hunting League Rank 3</span></div>
+    <div class="rung"><b>Tier 3 · 12–17</b><span>defeat all 3 Rank 3 Hunt NMs + clear Voidspire floor 10 + every Game Master wave difficulty</span></div>
+    <div class="rung"><b>Tier 4 · 18–24</b><span>defeat all 3 Rank 4 Hunt NMs + fully clear one Dynamis - Divergence city</span></div>
     <div class="rung"><b>Tier 5 · 25–31</b><span>defeat Maat's Echo (Ru'Lude Gardens, !maat)</span></div>
     <div class="rung"><b>Mastery</b><span>Initiate@HL R2 · Adept@HL R3 · Magus@HL R5+P5+1 rebirth · Sage@P15+10 rebirths · Archon@P30+20 rebirths+Gauntlet clear</span></div>
   </div>
@@ -177,7 +178,7 @@ title: Progression Map
     <h3>The World-Content Band — feeds everything above</h3>
     <div class="who">Independent tracks with their own currencies and loot; several are augment-tier keys. A system only appears here while it exists in the live code.</div>
     <div class="wgrid">
-      <div class="wcell"><b>Dynamis — Divergence</b><span>Portals at the four city Dynamis entrances · entry toll <span class="chip c-paragon">250 Reforge Marks</span> (AF/Relic/Empy) · wave battles · the +3 → +4 Forge (trade a reforged +3 AF/Relic piece + [D] materials → +4) · a city clear is an Augment Tier key</span></div>
+      <div class="wcell"><b>Dynamis — Divergence</b><span>Portals at the four city Dynamis entrances · entry toll <span class="chip c-paragon">250 Reforge Marks</span> (AF/Relic/Empy) · wave battles · the +3 → +4 Forge (trade a reforged +3 AF/Relic piece + [D] materials → +4) · a Mega-Boss victory is an Augment Tier key</span></div>
       <div class="wcell"><b>Voidwatch</b><span>Rift battles — pop a Planar Rift, burn the Voidwalker, stack lights for the Pyxis loot roll</span></div>
       <div class="wcell"><b>High-Tier Battlefields</b><span>Retail HTBF fights via phantom gems, tiered difficulty · gate: <b>master the entering job</b> + <b>all 11 NM affinities</b></span></div>
       <div class="wcell"><b>Ambuscade</b><span>Monthly-rotating solo/party instance from the Ambuscade Tome in Mhaura · gate: <b>1 HNM King kill</b> + <b>1 HTBF clear at each of T1/T2/T3</b> · Hallmarks + Gallantry drive the 5-stage Tokko→Ajja→Eletta→Kaja→Final weapon-upgrade chain (Naegling, Karambit, Nandaka, …)</span></div>
@@ -209,7 +210,7 @@ title: Progression Map
     <div class="tablewrap"><table>
       <tr><th>Currency</th><th>Source</th><th>Buys</th></tr>
       <tr><td><span class="chip c-marks">Hunt Marks</span></td><td>HL NM kills, daily/streak/boards</td><td>Gear tiers, rank gates, augment trades</td></tr>
-      <tr><td><span class="chip c-ap">Ascension AP</span></td><td>Nightmare Court kills</td><td>Prestige board perks</td></tr>
+      <tr><td><span class="chip c-ap">Ascension AP</span></td><td>Completed Court cycles and ascensions</td><td>Prestige board perks</td></tr>
       <tr><td><span class="chip c-paragon">Paragon Pts</span></td><td>Apex Trials</td><td>Paragon board (capped stats + Daily Might)</td></tr>
       <tr><td><span class="chip c-sigil">Mastery Sigils</span></td><td>Mastery content</td><td>Permanent WS/spell empowerment</td></tr>
       <tr><td><span class="chip c-div">Divergence materials</span></td><td>Dynamis — Divergence waves (Rusted/Black ID Cards + Mega-Boss Paragon Card)</td><td>The +3 → +4 Forge — upgrade a reforged +3 AF/Relic piece to +4</td></tr>

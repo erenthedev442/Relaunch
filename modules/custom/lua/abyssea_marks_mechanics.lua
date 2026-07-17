@@ -19,6 +19,14 @@ local LISTENERS =
     'ABY_MARKS_DEATH',
 }
 
+local function escalationAttack(tier)
+    return 500 * tier
+end
+
+local function escalationMagicAttack(tier)
+    return 200 * tier
+end
+
 local function now()
     return os.time()
 end
@@ -126,8 +134,8 @@ local function removeEscalation(mob, state)
     local tier = state.cfg.tier or 1
     state.escalation = state.escalation - 1
     pcall(function()
-        mob:addMod(xi.mod.ATT,  -(125 * tier))
-        mob:addMod(xi.mod.MATT, -(40  * tier))
+        mob:addMod(xi.mod.ATT,  -escalationAttack(tier))
+        mob:addMod(xi.mod.MATT, -escalationMagicAttack(tier))
     end)
 end
 
@@ -135,8 +143,8 @@ local function addEscalation(mob, state)
     local tier = state.cfg.tier or 1
     state.escalation = (state.escalation or 0) + 1
     pcall(function()
-        mob:addMod(xi.mod.ATT, 125 * tier)
-        mob:addMod(xi.mod.MATT, 40 * tier)
+        mob:addMod(xi.mod.ATT,  escalationAttack(tier))
+        mob:addMod(xi.mod.MATT, escalationMagicAttack(tier))
     end)
 end
 
@@ -144,7 +152,10 @@ local function punishPlayer(mob, player, signature, tier)
     if not player then return end
 
     local fail = signature.failure or {}
-    local damagePct = fail.damagePct or (8 + tier * 3)
+    -- A failed mechanic must remain consequential against the pre-Abyssea
+    -- baseline's heavy Regen and DT. Regular failures scale 20/25/30% by tier;
+    -- final phase failures are overridden by the catalog to 25/30/35%.
+    local damagePct = fail.damagePct or (15 + tier * 5)
     if damagePct > 0 then
         local damage = math.max(1, math.floor(player:getMaxHP() * damagePct / 100))
         pcall(function()
@@ -515,8 +526,8 @@ function M.cleanup(mob)
         local escalation = state.escalation or 0
         if escalation > 0 then
             pcall(function()
-                mob:addMod(xi.mod.ATT,  -(125 * tier * escalation))
-                mob:addMod(xi.mod.MATT, -(40  * tier * escalation))
+                mob:addMod(xi.mod.ATT,  -(escalationAttack(tier) * escalation))
+                mob:addMod(xi.mod.MATT, -(escalationMagicAttack(tier) * escalation))
             end)
         end
         local pressure = state.pressureStacks or 0

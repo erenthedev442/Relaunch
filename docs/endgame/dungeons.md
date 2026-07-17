@@ -154,11 +154,10 @@ _Trash: **10%** · **×1** · to the treasure pool (anyone in the run can lot) �
 | Gusgen Skeleton 05 | <a class="item-link" href="https://www.ffxiah.com/item/936" data-img="https://static.ffxiah.com/images/icon/936.png" target="_blank" rel="noopener">Chunk Of Rock Salt</a> | Magic dmg. taken |
 | Gusgen Skeleton 06 | <a class="item-link" href="https://www.ffxiah.com/item/1123" data-img="https://www.bg-wiki.com/images/e/ec/Manticore_Fang_description.png" target="_blank" rel="noopener">Manticore Fang</a> | Damage Taken |
 | Gusgen Hound 01 | <a class="item-link" href="https://www.ffxiah.com/item/1193" data-img="https://www.bg-wiki.com/images/2/29/H.Q._Crab_Shell_description.png" target="_blank" rel="noopener">High-Quality Crab Shell</a> | Breath dmg. taken |
-| Gusgen Hound 02 | <a class="item-link" href="https://www.ffxiah.com/item/1449" data-img="https://www.bg-wiki.com/images/1/19/T._Whiteshell_description.png" target="_blank" rel="noopener">Tukuku Whiteshell</a> | Phalanx Received |
-| Gusgen Hound 03 | <a class="item-link" href="https://www.ffxiah.com/item/1470" data-img="https://www.bg-wiki.com/images/3/3f/Sparkling_Stone_description.png" target="_blank" rel="noopener">Sparkling Stone</a> | Resist Charm |
-| Gusgen Hound 04 | <a class="item-link" href="https://www.ffxiah.com/item/1617" data-img="https://www.bg-wiki.com/images/b/bd/Flytrap_Leaf_description.png" target="_blank" rel="noopener">Flytrap Leaf</a> | Evasion |
-| Gusgen Hound 05 | <a class="item-link" href="https://www.ffxiah.com/item/1638" data-img="https://www.bg-wiki.com/images/7/73/Moblin_Mask_description.png" target="_blank" rel="noopener">Moblin Mask</a> | Occ. inc. resist to stat ailments |
-| Gusgen Hound 06 | <a class="item-link" href="https://www.ffxiah.com/item/2151" data-img="https://www.bg-wiki.com/images/d/d3/Marid_Hide_description.png" target="_blank" rel="noopener">Marid Hide</a> | Physical Damage Taken |
+| Gusgen Hound 02 | <a class="item-link" href="https://www.ffxiah.com/item/1470" data-img="https://www.bg-wiki.com/images/3/3f/Sparkling_Stone_description.png" target="_blank" rel="noopener">Sparkling Stone</a> | Resist Charm |
+| Gusgen Hound 03 | <a class="item-link" href="https://www.ffxiah.com/item/1617" data-img="https://www.bg-wiki.com/images/b/bd/Flytrap_Leaf_description.png" target="_blank" rel="noopener">Flytrap Leaf</a> | Evasion |
+| Gusgen Hound 04 | <a class="item-link" href="https://www.ffxiah.com/item/1638" data-img="https://www.bg-wiki.com/images/7/73/Moblin_Mask_description.png" target="_blank" rel="noopener">Moblin Mask</a> | Occ. inc. resist to stat ailments |
+| Gusgen Hound 05 | <a class="item-link" href="https://www.ffxiah.com/item/2151" data-img="https://www.bg-wiki.com/images/d/d3/Marid_Hide_description.png" target="_blank" rel="noopener">Marid Hide</a> | Physical Damage Taken |
 
 #### Gustav Tunnel — Pet Mastery
 

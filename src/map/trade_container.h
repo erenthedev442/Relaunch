@@ -23,6 +23,7 @@
 #define _CTRADECONTAINER_H
 
 #include "common/cbasetypes.h"
+#include <array>
 #include <string>
 #include <vector>
 
@@ -63,6 +64,9 @@ public:
     void setItem(uint8 slotId, uint16 itemId, uint8 invSlotId, uint32 quantity, CItem* item = nullptr);
     void setSize(uint8 size);
     void setExSize(uint8 size); // Set "extra" size information; purpose changes depending on container's goal
+    void setShopItemExdata(uint8 slotID, const std::array<uint8, 24>& exdata);
+    bool hasShopItemExdata(uint8 slotID) const;
+    const std::array<uint8, 24>& getShopItemExdata(uint8 slotID) const;
     void unreserveUnconfirmed();
 
     // FJB: custom-currency shops. When non-zero, the shop charges this inventory
@@ -101,6 +105,8 @@ private:
     std::vector<uint32> m_confirmed;
     std::vector<uint8>  m_guildID;
     std::vector<uint16> m_guildRank;
+    std::vector<std::array<uint8, 24>> m_shopItemExdata;
+    std::vector<bool> m_hasShopItemExdata;
 };
 
 #endif

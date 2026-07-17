@@ -33,7 +33,7 @@
 --     (the wall of that Court). All are level 150 (the AV/PW baseline).
 --   ABYSSEA NMs -- our custom marks-pop NMs. Each dummy mirrors the
 --     per-content-tier profile in AbysseaMarks.lua zoneConfig
---     (atkDef -> DEF, accEva -> EVA + MEVA) at its level (135/145/155).
+--     (atkDef -> DEF, accEva -> EVA + MEVA) at its level (120/130/150).
 --
 -- KEEP-IN-SYNC: the mod numbers below are COPIED from prestige_catalog.lua
 -- (trialScaling apex bosses) and AbysseaMarks.lua (zoneConfig). If you
@@ -127,25 +127,24 @@ catalog.tiers =
     },
 
     -- ===== ABYSSEA marks encounters -- per content tier =====
-    -- Lv99 throughout: encounter mechanics and defensive pacing create the
-    -- ladder, not level correction or extreme evasion.
+    -- Levels mirror the live Visions / Scars / Heroes tier ladder.
     aby_visions =
     {
         label = 'Visions', family = 'aby',
-        minLevel = 99, maxLevel = 99, hp = 4000000, groupId = 11355,
-        mods = { [xi.mod.DEF] = 850, [xi.mod.EVA] = 180, [xi.mod.MEVA] = 250 },
+        minLevel = 120, maxLevel = 120, hp = 4000000, groupId = 11355,
+        mods = { [xi.mod.DEF] = 850, [xi.mod.EVA] = 800, [xi.mod.MEVA] = 250 },
     },
     aby_scars =
     {
         label = 'Scars', family = 'aby',
-        minLevel = 99, maxLevel = 99, hp = 8000000, groupId = 11355,
-        mods = { [xi.mod.DEF] = 1200, [xi.mod.EVA] = 260, [xi.mod.MEVA] = 400 },
+        minLevel = 130, maxLevel = 130, hp = 8000000, groupId = 11355,
+        mods = { [xi.mod.DEF] = 1200, [xi.mod.EVA] = 1100, [xi.mod.MEVA] = 400 },
     },
     aby_heroes =
     {
         label = 'Heroes', family = 'aby',
-        minLevel = 99, maxLevel = 99, hp = 14000000, groupId = 11355,
-        mods = { [xi.mod.DEF] = 1650, [xi.mod.EVA] = 340, [xi.mod.MEVA] = 550 },
+        minLevel = 150, maxLevel = 150, hp = 14000000, groupId = 11355,
+        mods = { [xi.mod.DEF] = 1650, [xi.mod.EVA] = 1400, [xi.mod.MEVA] = 550 },
     },
 }
 

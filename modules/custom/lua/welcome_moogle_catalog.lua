@@ -35,8 +35,15 @@ local A =
     exp15   = function() return { id = 72,  value = 14, label = 'EXP +15%' } end,
 }
 
-local function item(id, name, left, right)
-    return { id = id, name = name, price = 1000, augments = { A[left](), A[right]() } }
+local function item(id, name, left, right, jobs)
+    return
+    {
+        id       = id,
+        name     = name,
+        price    = 1000,
+        jobs     = jobs,
+        augments = { A[left](), A[right]() },
+    }
 end
 
 local M =
@@ -92,6 +99,7 @@ local M =
                 item(17182, 'Kaman +1',                     'agi',    'racc'),
                 item(17253, 'Musketeer Gun',                'racc',   'stp'),
                 item(16757, "Corsair's Knife",              'dex',    'racc'),
+                item(18711, 'Seadog Gun +1',                'racc',   'stp', 'THF/RNG/NIN/COR'),
             },
             Magic =
             {
@@ -107,19 +115,19 @@ local M =
         {
             ['Job Bodies'] =
             {
-                item(14412, 'Parade Cuirass',               'vit',    'hp'),
-                item(14409, 'Gloom Breastplate',            'str',    'attack'),
-                item(14411, 'Aikido Gi',                    'vit',    'haste'),
-                item(14403, 'Rapparee Harness',             'dex',    'da'),
-                item(14405, 'Wyvern Mail',                  'str',    'hp'),
-                item(14407, 'Cerise Doublet',               'int',    'fc'),
-                item(14410, 'Nimbus Doublet',               'chr',    'mp'),
-                item(14408, 'Glamor Jupon',                 'mnd',    'cure'),
-                item(14406, 'Shikaree Aketon',              'agi',    'racc'),
-                item(14401, 'Duende Cotehardie',            'int',    'mab'),
-                item(14402, 'Nokizaru Gi',                  'dex',    'subtle'),
-                item(14404, 'Shinimusha Hara-ate',          'str',    'stp'),
-                item(14413, 'Gaudy Harness',                'chr',    'hp'),
+                item(14412, 'Parade Cuirass',               'vit',    'hp',     'WAR/PLD'),
+                item(14409, 'Gloom Breastplate',            'str',    'attack', 'DRK'),
+                item(14411, 'Aikido Gi',                    'vit',    'haste',  'MNK'),
+                item(14403, 'Rapparee Harness',             'dex',    'da',     'THF/DNC'),
+                item(14405, 'Wyvern Mail',                  'str',    'hp',     'DRG'),
+                item(14407, 'Cerise Doublet',               'int',    'fc',     'RDM/BRD/BLU/PUP/RUN'),
+                item(14410, 'Nimbus Doublet',               'chr',    'mp',     'WHM/SMN'),
+                item(14408, 'Glamor Jupon',                 'mnd',    'cure',   'RDM/SCH'),
+                item(14406, 'Shikaree Aketon',              'agi',    'racc',   'RNG/COR'),
+                item(14401, 'Duende Cotehardie',            'int',    'mab',    'BLM/SMN/GEO'),
+                item(14402, 'Nokizaru Gi',                  'dex',    'subtle', 'NIN'),
+                item(14404, 'Shinimusha Hara-ate',          'str',    'stp',    'SAM'),
+                item(14413, 'Gaudy Harness',                'chr',    'hp',     'BST/BRD'),
             },
             ['Other Pieces'] =
             {
@@ -132,6 +140,10 @@ local M =
                 item(14020, "Enkelados's Bracelets",       'dex',    'acc'),
                 item(12312, 'Royal Knight Army Shield',     'vit',    'hp'),
                 item(12379, 'Holy Shield',                  'mnd',    'vit'),
+                item(14936, 'Storm Manopolas',              'acc',    'attack', 'All Jobs'),
+                item(14937, 'Storm Gages',                  'macc',   'fc',     'All Jobs'),
+                item(15691, 'Storm Gambieras',              'haste',  'hp',     'All Jobs'),
+                item(15692, 'Storm Crackows',               'fc',     'mp',     'All Jobs'),
             },
         },
 
@@ -139,22 +151,24 @@ local M =
         {
             Rings =
             {
-                item(13286, "Soldier's Ring",               'str',    'attack'),
-                item(13287, 'Kampfer Ring',                  'vit',    'haste'),
-                item(13288, 'Medicine Ring',                 'mnd',    'cure'),
-                item(13289, "Sorcerer's Ring",              'int',    'mab'),
-                item(13290, "Fencer's Ring",                'int',    'fc'),
-                item(13291, "Rogue's Ring",                 'dex',    'da'),
-                item(13292, "Guardian's Ring",              'vit',    'hp'),
-                item(13293, "Slayer's Ring",                'str',    'attack'),
-                item(13294, "Tamer's Ring",                 'chr',    'hp'),
-                item(13295, "Minstrel's Ring",              'chr',    'refresh'),
-                item(13296, "Tracker's Ring",               'agi',    'racc'),
-                item(13297, 'Ronin Ring',                    'str',    'stp'),
-                item(13298, 'Shinobi Ring',                  'dex',    'subtle'),
-                item(13299, 'Drake Ring',                    'str',    'hp'),
-                item(13300, "Conjurer's Ring",              'int',    'mp'),
-                item(14649, 'Telluric Ring',                 'exp15',  'refresh'),
+                item(13286, "Soldier's Ring",               'str',    'attack',  'WAR'),
+                item(13287, 'Kampfer Ring',                  'vit',    'haste',   'MNK'),
+                item(13288, 'Medicine Ring',                 'mnd',    'cure',    'WHM'),
+                item(13289, "Sorcerer's Ring",              'int',    'mab',     'BLM'),
+                item(13290, "Fencer's Ring",                'int',    'fc',      'RDM'),
+                item(13291, "Rogue's Ring",                 'dex',    'da',      'THF'),
+                item(13292, "Guardian's Ring",              'vit',    'hp',      'PLD'),
+                item(13293, "Slayer's Ring",                'str',    'attack',  'DRK'),
+                item(13294, "Tamer's Ring",                 'chr',    'hp',      'BST'),
+                item(13295, "Minstrel's Ring",              'chr',    'refresh', 'BRD'),
+                item(13296, "Tracker's Ring",               'agi',    'racc',    'RNG'),
+                item(13297, 'Ronin Ring',                    'str',    'stp',     'SAM'),
+                item(13298, 'Shinobi Ring',                  'dex',    'subtle',  'NIN'),
+                item(13299, 'Drake Ring',                    'str',    'hp',      'DRG'),
+                item(13300, "Conjurer's Ring",              'int',    'mp',      'SMN'),
+                item(15773, 'Imperial Ring',                 'str',    'stp',     'All Jobs'),
+                item(15777, 'Hale Ring',                     'mnd',    'macc',    'All Jobs'),
+                item(14649, 'Telluric Ring',                 'exp15',  'refresh', 'All Jobs'),
             },
             Earrings =
             {
@@ -175,7 +189,7 @@ local M =
                 item(13676, 'Heavy Mantle',                  'vit',    'hp'),
                 item(13678, "Sniper's Mantle",              'ratt',   'racc'),
                 item(13677, 'Esoteric Mantle',               'mab',    'int'),
-                item(13692, "Skulker's Cape",               'exp15',  'haste'),
+                item(11531, 'Fidelity Mantle',               'exp15',  'haste', 'All Jobs'),
             },
         },
     },

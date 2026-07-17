@@ -213,6 +213,8 @@ void CTradeContainer::setSize(uint8 size)
     m_confirmed.resize(size, 0);
     m_guildID.resize(size, 0);
     m_guildRank.resize(size, 0);
+    m_shopItemExdata.resize(size);
+    m_hasShopItemExdata.resize(size, false);
 }
 
 uint8 CTradeContainer::getExSize() const
@@ -223,6 +225,25 @@ uint8 CTradeContainer::getExSize() const
 void CTradeContainer::setExSize(uint8 size)
 {
     m_exSize = size;
+}
+
+void CTradeContainer::setShopItemExdata(uint8 slotID, const std::array<uint8, 24>& exdata)
+{
+    if (slotID < m_shopItemExdata.size())
+    {
+        m_shopItemExdata[slotID]    = exdata;
+        m_hasShopItemExdata[slotID] = true;
+    }
+}
+
+bool CTradeContainer::hasShopItemExdata(uint8 slotID) const
+{
+    return slotID < m_hasShopItemExdata.size() && m_hasShopItemExdata[slotID];
+}
+
+const std::array<uint8, 24>& CTradeContainer::getShopItemExdata(uint8 slotID) const
+{
+    return m_shopItemExdata.at(slotID);
 }
 
 uint8 CTradeContainer::getItemsCount() const
@@ -289,4 +310,8 @@ void CTradeContainer::Clean()
     m_guildID.resize(CONTAINER_SIZE, 0);
     m_guildRank.clear();
     m_guildRank.resize(CONTAINER_SIZE, 0);
+    m_shopItemExdata.clear();
+    m_shopItemExdata.resize(CONTAINER_SIZE);
+    m_hasShopItemExdata.clear();
+    m_hasShopItemExdata.resize(CONTAINER_SIZE, false);
 }

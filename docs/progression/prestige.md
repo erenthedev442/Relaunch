@@ -66,20 +66,24 @@ A summoned boss you leave **unengaged** for 20 seconds retreats into the void an
 
 ## The Court Grows With You
 
-The Nightmare Court is **not** a fixed wall — the bosses themselves **change** as you climb in Prestige level **on the job you're ascending**, so you never grind the same three forever and the fight never trivializes as you bank AP. Every **10 ascensions** summons an entirely new Court, each authored stronger than the last:
+The Nightmare Court is **not** a fixed wall — the bosses change as you climb in Prestige level **on the job you're ascending**. Early Courts rise gently through the P5, P15, and P30 Sage milestones. The final Celestial Wardens then gain measured empowerment at P80 and P90, making the approach to P100 a full-BiS challenge rather than an early progression wall:
 
 <!-- DOCGEN:BEGIN id="prestige-scaling" -->
-| Ascensions (that job) | Court | Bosses you face |
-|---|---|---|
-| **0–9** | The Nightmare Court | Diabolos, the Dream Devourer &bull; Medusa, the Gorgon Queen &bull; Odin, the Doombringer _(the top-level Nightmare Court)_ |
-| **10–19** | The Voidwalkers | Sarameya, the Abyssal Hound &bull; Kaggen, the Devouring Swarm &bull; Qilin, the Tempest Beast |
-| **20–29** | The Jailers | Jailer of Justice &bull; Jailer of Fortitude &bull; Jailer of Temperance |
-| **30–39** | The Voidwalker Lords | Kreutzet, the Skydark &bull; Raja, the Voidfang &bull; Maere, the Living Nightmare |
-| **40–59** | The World's End | Omega, the Final Engine &bull; Ultima, the First Weapon &bull; The Provenance Watcher |
-| **60+** | The Celestial Wardens | Tiamat, the Planar Destroyer &bull; Kirin, the Celestial Sovereign &bull; Absolute Virtue, the Eternal Judge |
+| Ascensions (that job) | Court | Bosses you face | Stat scaling |
+|---|---|---|---:|
+| **0–9** | The Nightmare Court | Diabolos, the Dream Devourer &bull; Medusa, the Gorgon Queen &bull; Odin, the Doombringer _(the top-level Nightmare Court)_ | ×1 |
+| **10–19** | The Voidwalkers | Sarameya, the Abyssal Hound &bull; Kaggen, the Devouring Swarm &bull; Qilin, the Tempest Beast | ×1 |
+| **20–29** | The Jailers | Jailer of Justice &bull; Jailer of Fortitude &bull; Jailer of Temperance | ×1 |
+| **30–39** | The Voidwalker Lords | Kreutzet, the Skydark &bull; Raja, the Voidfang &bull; Maere, the Living Nightmare | ×1 |
+| **40–59** | The World's End | Omega, the Final Engine &bull; Ultima, the First Weapon &bull; The Provenance Watcher | ×1 |
+| **60–79** | The Celestial Wardens | Tiamat, the Planar Destroyer &bull; Kirin, the Celestial Sovereign &bull; Absolute Virtue, the Eternal Judge | ×1 |
+| **80–89** | The Celestial Wardens (Empowered) | Tiamat, the Planar Destroyer &bull; Kirin, the Celestial Sovereign &bull; Absolute Virtue, the Eternal Judge | ×1.12 |
+| **90+** | The Celestial Wardens (Ascendant) | Tiamat, the Planar Destroyer &bull; Kirin, the Celestial Sovereign &bull; Absolute Virtue, the Eternal Judge | ×1.25 |
 <!-- DOCGEN:END id="prestige-scaling" -->
 
-Each new Court is built at full strength and escalates toward an apex roster by the top tier, so the difficulty curve holds as your AP grows. The Altar **announces** the Court you face, and its Status menu always shows your current tier. The top tier (**The Celestial Wardens**) is the ceiling — it is tuned to stay beatable by a fully-invested character, so the Trial never soft-locks further ascension.
+The Altar **announces** the Court you face, and its Status menu shows your current tier. P0–P30 is tuned for ordinary post-Legend progression; P40–P79 expects increasingly complete endgame sets. The P80–P100 Wardens are the final test: full BiS, deliberate gear swaps, and the strongest weapon available before the P100 gate are the intended benchmark.
+
+Reaching **P100 on one job** gates **Aeonic Stage I → Stage II** at the Weapon Forge. It is not one of the five Prime Armory trials; Prime progression later accepts a completed final Aeonic (or another final REMA) as one of its entry routes.
 
 ---
 

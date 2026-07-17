@@ -202,7 +202,7 @@ A WS/spell empowerment system at the **Mastery Sage** NPC in **Leafallia** (x �
 
 - **Earning sigils** (`spell_skill_mastery_catalog.lua`): the primary source is a **daily NM rotation** — 3 of a 20-NM overworld pool (Jaggedy-Eared Jack, King Arthro, Kraken, Nue, Guivre…) are "live" each 24 h, derived from the clock (no DB); killing a live target = **50 sigils**, once per target per period, **party-wide** (every same-zone party member). The pool is deliberately distinct from the HL / Reforge / Hunters'-Guild NM sets. A small **trickle** (2 + 0.03×mob level, cap 10) drops on any NM so you're never fully dry between rotation targets.
 - **Potency** (5 tiers, cost 15/30/55/90/140 sigils; additive mods re-applied on login): **WS Potency** +8% all-WS damage per tier; **Spell Potency** +6 M.Atk / +8 magic dmg / +5% cure potency per tier.
-- **WS Effects** (5 tiers, cost 20/40/70/110/160; live `WEAPONSKILL_USE` procs, read from charVars so no re-apply): **Empowered Strike** (+8% crit-burst chance, +60% damage, per tier), **Lifesteal** (heal +4% of WS damage per tier). The old **Splash (AoE)** effect was removed on 2026-07-13 — WS stays single-target on relaunch. (The even-earlier Rupture Sage `!aoews` was already retired in `a22038d3b5`; its command file was deleted in the same cleanup.)
+- **WS Effects** (5 tiers, cost 20/40/70/110/160; live `WEAPONSKILL_USE` procs, read from charVars so no re-apply): **Empowered Strike** (+8% crit-burst chance, +60% damage, per tier). Universal **Lifesteal** was retired on 2026-07-17 because healing from every WS bypassed encounter sustain mechanics. The old **Splash (AoE)** effect was removed on 2026-07-13 — WS stays single-target on relaunch. (The even-earlier Rupture Sage `!aoews` was already retired in `a22038d3b5`; its command file was deleted in the same cleanup.)
 - **Trait riders** (one-time, 40 sigils each): WS — Store TP +10, WS Acc +20, Crit Rate +6%, Crit Dmg +10%, TP Saver (20% chance no TP cost), Double Atk +5%; Spell — Fast Cast +10%, Conserve MP +20, Magic Acc +20, Regain, Enh. Duration +20%, Focus (−20% interrupt rate).
 
 Pure-Lua (`SpellSkillMastery.lua`): potency/traits via `addMod` + onGameIn re-apply; WS Effects read charVars live each weapon skill. All balance values are PLACEHOLDER pending playtest. LIVE on relaunch.
@@ -535,7 +535,6 @@ Pure-Lua (`SpellSkillMastery.lua`): potency/traits via `addMod` + onGameIn re-ap
 | briareuss sash (2498) | Magic Damage | T2 | Ahtu | 52 |
 | wivre hide (2428) | Occult Acumen | T2 | Amemet | 66 |
 | square of linen cloth (826) | Pet Haste | T2 | Antican Hoplomachus | 58 |
-| green rock (772) | Phalanx Received | T2 | Amethyst Quadav | 63 |
 | coral fragment (887) | Potency of Cure received | T2 | Ancilla Beetle | 65 |
 | square of sheep leather (850) | Regen Potency | T2 | Adamantoise | 70 |
 | manticore hide (1116) | Rng.Acc. Rng.Atk | T2 | Anderss Guard | 64 |

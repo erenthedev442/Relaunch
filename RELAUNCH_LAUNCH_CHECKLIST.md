@@ -75,7 +75,7 @@ Run through, watching `~/relaunch/log/map-server.log` for errors the whole time:
 - [ ] **GEO has MP** (the `restore_geo_retail` check) — make a GEO, confirm MP > 0. If 0, the SQL didn't apply or the build's `grades.cpp` isn't stock.
 - [ ] **Hunting League** — `!hunt` → hub loads, spawn a Rank-I NM, kill it, confirm marks awarded + tier-unlock menu works.
 - [ ] **Economy** — buy a Beastmens Medal with marks, buy a Bronze armor piece with the medal.
-- [ ] **Commands** — `!buff`, `!shop`, `!apex`, `!tower`, and the new **`!aoews <name>`** (unlock at the Rupture Sage first, then bind a WS — confirm the splash fires).
+- [ ] **Commands** — confirm `!buff`, `!shop`, `!apex`, and `!tower` work; confirm retired `!aoews` is unavailable.
 - [ ] **Tournament** (optional, GM) — run a quick `!tournament` and confirm the **champion reward** (2,500 marks + 500 Infamy) pays out.
 - [ ] **No crashes / no Lua errors** in the map log across all of the above.
 

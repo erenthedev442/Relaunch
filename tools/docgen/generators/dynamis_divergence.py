@@ -118,9 +118,16 @@ def _parse_engine(text: str) -> dict:
     cap = re.search(r"TIME_CAP_MIN\s*=\s*(\d+)", text)
     statue = re.search(r"STATUE_EXTEND\s*=\s*(\d+)", text)
     boss = re.search(r"BOSS_EXTEND\s*=\s*(\d+)", text)
+    mega = re.search(r"MEGA_EXTEND\s*=\s*(\d+)", text)
+    trash = re.search(r"activeWaveTrash\s*=\s*(\d+)", text)
+    active_statues = re.search(r"activeStatues\s*=\s*(\d+)", text)
     c["time_cap"] = int(cap.group(1)) if cap else 120
+    c["start_time"] = 90
     c["statue_extend"] = int(statue.group(1)) if statue else 1
     c["boss_extend"] = int(boss.group(1)) if boss else 30
+    c["mega_extend"] = int(mega.group(1)) if mega else 15
+    c["active_trash"] = int(trash.group(1)) if trash else 20
+    c["active_statues"] = int(active_statues.group(1)) if active_statues else 6
     return c
 
 
@@ -135,7 +142,7 @@ def _render_access(c: dict) -> str:
     portals = " · ".join(f"**{label}**" for label in c["portals"]) if c["portals"] else "the four city instances"
     lines = [
         "A **Divergence Portal** stands at each city's Dynamis entrance. Pay the "
-        f"toll from the portal's menu — solo is fine — and you're warped into "
+        f"toll from the portal's menu — solo with trusts is supported — and you're warped into "
         "that city's alternate-timeline instance:",
         "",
         portals + ".",
@@ -151,20 +158,26 @@ def _render_access(c: dict) -> str:
 
 def _render_waves(c: dict) -> str:
     cap = c["time_cap"]
+    start = c["start_time"]
     statue = c["statue_extend"]
     boss = c["boss_extend"]
+    mega = c["mega_extend"]
+    trash = c["active_trash"]
+    active_statues = c["active_statues"]
     return "\n".join([
-        "Each run is a timed push through escalating waves. The clock can be "
-        "extended by clearing optional targets, up to a hard cap of "
-        f"**{cap} minutes**:",
+        f"Each run starts with **{start} minutes** and can be extended by clearing "
+        f"optional targets, up to a hard cap of **{cap} minutes**. The active route "
+        f"contains {trash} trash enemies in each of the first two waves:",
         "",
-        "1. **Wave 1 — Squadron.** Trash mobs, optional **time-extension statues** "
+        f"1. **Wave 1 — Squadron.** {trash} trash mobs, {active_statues} optional "
+        "**time-extension statues** "
         f"(each one felled adds **+{statue} min**), and the **Mid-Boss**.",
         f"2. **Wave 2 — Regiment.** Felling the Mid-Boss advances the wave (**+{boss} "
-        "min**): fresh trash plus the **Mega-Boss**.",
-        "3. **Wave 3 — The Disjoined.** In zones that have one, the **Disjoined NM** "
-        "manifests at the elemental circle after the Mega-Boss falls. No more time "
-        "can be gained here — finish it to win.",
+        f"min**): {trash} fresh trash mobs plus the **Mega-Boss**.",
+        f"3. **Wave 3 — The Disjoined.** Defeating the Mega-Boss adds **+{mega} min** "
+        "and summons the **Disjoined NM** at the elemental circle. Defeat it to record "
+        "the full city clear required by **Augment Tier 4** (alongside all 3 Rank 4 "
+        "Hunt NMs) and receive the full-clear rewards.",
         "",
         "The mobs inside drop the **+4 Forge materials**: **Rusted ID Cards** off wave "
         "trash and **Black ID Cards** off the bosses. Felling the **Mega-Boss** also "
@@ -433,6 +446,13 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     cities = []
     if loot_src is not None:
         sql_text = loot_src.read_text(encoding="utf-8", errors="replace")
+        start_time = re.search(
+            r"REPLACE INTO `instance_list` VALUES "
+            r"\(29400,\s*'dynamis_san_doria_d',\s*294,\s*230,\s*(\d+),",
+            sql_text,
+        )
+        if start_time:
+            c["start_time"] = int(start_time.group(1))
         if mats_src is not None:
             sql_text += "\n" + mats_src.read_text(encoding="utf-8", errors="replace")
         item_basic_text = (item_basic_src.read_text(encoding="utf-8", errors="replace")

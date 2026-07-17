@@ -241,6 +241,7 @@ def _parse_scaling_tiers(text: str, court0_bosses: list[str]) -> list[dict]:
         return []
 
     tiers: list[dict] = []
+    inherited_bosses = list(court0_bosses)
     # Walk each top-level entry inside the tiers array (skip the outer braces).
     for entry_start, entry_end in _balanced_blocks(tiers_block[1:-1]):
         entry = tiers_block[1:-1][entry_start:entry_end]
@@ -280,8 +281,13 @@ def _parse_scaling_tiers(text: str, court0_bosses: list[str]) -> list[dict]:
                         break
             bosses = [labels_by_id[i] for i in order if i in labels_by_id] or list(labels_by_id.values())
         else:
-            bosses = list(court0_bosses)
-            uses_top_court = True
+            # Runtime keeps the highest prior roster when an empowerment-only
+            # tier omits `roster` (P80/P90 Wardens). Mirror that inheritance
+            # instead of incorrectly falling back to the Nightmare Court.
+            bosses = list(inherited_bosses)
+            uses_top_court = min_level == 0
+
+        inherited_bosses = list(bosses)
 
         tiers.append({
             "minLevel": min_level,

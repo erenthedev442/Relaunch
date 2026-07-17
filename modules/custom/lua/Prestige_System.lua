@@ -865,12 +865,22 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             mob:setHP(newMax)
         end
 
-        -- Attach this Court's hardcore mechanics (keyed by tier minLevel). `tier`
-        -- is nil at the baseline -> the Nightmare Court set ([0]). The library
-        -- no-ops on a nil config, so an untuned tier simply fights vanilla.
+        -- Attach the highest mechanics package at or below the current level.
+        -- Empowerment-only tiers (P80/P90) inherit the P60 Wardens mechanics
+        -- just as they inherit that roster, rather than silently becoming vanilla.
         local tierMech = ts and ts.tierMechanics
         if tierMech then
-            mechanics.attach(mob, tierMech[(tier and tier.minLevel) or 0])
+            local level = getLevel(player)
+            local mechMinLevel = -1
+            local mechCfg
+            for minLevel, candidate in pairs(tierMech) do
+                if type(minLevel) == 'number' and minLevel <= level and minLevel > mechMinLevel then
+                    mechMinLevel = minLevel
+                    mechCfg = candidate
+                end
+            end
+
+            mechanics.attach(mob, mechCfg)
         end
 
         summonedTrial[pid] = { alive = true, label = boss.label, gid = gid }

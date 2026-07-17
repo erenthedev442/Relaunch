@@ -45,9 +45,9 @@ until the first gate is cleared:
 | Tier | Roll band | Unlock |
 |---:|---|---|
 | 1 | 0–5 | reach level 99 on any job |
-| 2 | 6–11 | reach Hunting League Rank 5 |
-| 3 | 12–17 | clear Voidspire floor 10 + every Game Master wave difficulty |
-| 4 | 18–24 | clear a Dynamis - Divergence city |
+| 2 | 6–11 | defeat all 3 Rank 2 Hunt NMs + promote to Hunting League Rank 3 |
+| 3 | 12–17 | defeat all 3 Rank 3 Hunt NMs + clear Voidspire floor 10 + every Game Master wave difficulty |
+| 4 | 18–24 | defeat all 3 Rank 4 Hunt NMs + fully clear one Dynamis - Divergence city |
 | 5 | 25–31 | defeat Maat's Echo (Ru'Lude Gardens, !maat) |
 
 **Floor** (T1, rank 0): a roll can land 0 — `base × multiplier`, the

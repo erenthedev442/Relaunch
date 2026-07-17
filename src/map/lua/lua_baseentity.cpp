@@ -21,6 +21,10 @@
 
 #include "lua_baseentity.h"
 
+#include <algorithm>
+#include <array>
+#include <iterator>
+
 #include "lua_battlefield.h"
 #include "lua_instance.h"
 #include "lua_item.h"
@@ -4903,8 +4907,9 @@ void CLuaBaseEntity::createShop(uint8 size, const sol::object& arg1)
  *  Function: addShopItem()
  *  Purpose : Adds an item and established price to an existing shop
  *          : Optionally accepts a GuildID + Guild Rank requirement
- *  Example : addShopItem(512, 8000)                                                   --Regular item
- *          : addShopItem(512, 8000, xi.skill.CLOTHCRAFT, xi.craftRank.JOURNEYMAN)   --Guild-rank locked item
+ *  Example : addShopItem(512, 8000)                                                   -- Regular item
+ *          : addShopItem(512, 8000, xi.skill.CLOTHCRAFT, xi.craftRank.JOURNEYMAN)    -- Guild-rank locked item
+ *          : addShopItem(512, 8000, { augmentKind = 2, ... })                         -- Preset exdata on purchase
  *  Notes   : Use with createShop() - 16 Max Items in Shop
  ************************************************************************/
 
@@ -4933,6 +4938,20 @@ void CLuaBaseEntity::addShopItem(uint16 itemID, double rawPrice, const sol::obje
 
         static_cast<CCharEntity*>(m_PBaseEntity)->Container->setGuildID(slotID, guildID);
         static_cast<CCharEntity*>(m_PBaseEntity)->Container->setGuildRank(slotID, guildRank);
+    }
+    else if (arg2.get_type() == sol::type::table)
+    {
+        auto PItem = xi::items::spawn(itemID);
+        if (PItem && Exdata::fromTable(PItem.get(), arg2.as<sol::table>()))
+        {
+            std::array<uint8, CItem::extra_size> exdata{};
+            std::copy(std::begin(PItem->m_extra), std::end(PItem->m_extra), exdata.begin());
+            PChar->Container->setShopItemExdata(slotID, exdata);
+        }
+        else
+        {
+            ShowWarning("Failed to set preset shop exdata for item %u", itemID);
+        }
     }
 }
 

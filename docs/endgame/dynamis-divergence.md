@@ -1,14 +1,14 @@
 # Dynamis — Divergence
 
-A custom take on Dynamis built for the relaunch. Each of the four nations has a **Divergence Portal** at its old Dynamis entrance that tears open an alternate-timeline instance. Pay a single Dynamis currency, step through — solo is fine — and fight through escalating waves of Beastmen to fell the zone's Mega-Boss. Dynamis-Divergence is the **+3 → +4 Forge**: the tail of the reforged-armor ladder. The base [Reforge System](../progression/reforge.md) takes AF/Relic/Empyrean armor to **+3** with marks; the materials you farm here take a reforged **+3 AF or Relic** piece the rest of the way to **+4** at the **Divergence Forge**. (Empyrean caps at +3 — only AF and Relic reach +4.)
+A custom take on Dynamis built for the relaunch. Each of the four nations has a **Divergence Portal** at its old Dynamis entrance that tears open an alternate-timeline instance. Pay a single Dynamis currency, step through — solo with trusts is supported — and fight through escalating waves of Beastmen. The Mega-Boss is balanced for non-REMA equipment with Tier 3 augments; defeating the Disjoined after it records the **full city clear** used by Augment Tier 4. Dynamis-Divergence is also the **+3 → +4 Forge**: the tail of the reforged-armor ladder.
 
 !!! tip "Summary"
-    Four city Dynamis instances reached through entry portals for one Dynamis currency each. Clear the waves to farm the +4 materials (Rusted/Black ID Cards + a Mega-Boss Paragon Card), then trade a reforged **+3** AF/Relic piece at the **Divergence Forge** in San d'Oria to make it **+4**. Empyrean has no +4. One city is **featured each day** — clear it for bonus medals (see [Live Events](live-events.md)).
+    Four city Dynamis instances reached through entry portals for one Dynamis currency each. Defeat the Mega-Boss, then finish the Disjoined NM to record the full city clear required by **Augment Tier 4** alongside all 3 Rank 4 Hunt NMs. Farm the +4 materials (Rusted/Black ID Cards + a Mega-Boss Paragon Card), then trade a reforged **+3** AF/Relic piece at the **Divergence Forge** in San d'Oria to make it **+4**. Empyrean has no +4. One city is **featured each day** — fully clear it for bonus medals (see [Live Events](live-events.md)).
 
 ## Getting in
 
 <!-- DOCGEN:BEGIN id="divergence-access" -->
-A **Divergence Portal** stands at each city's Dynamis entrance. Pay the toll from the portal's menu — solo is fine — and you're warped into that city's alternate-timeline instance:
+A **Divergence Portal** stands at each city's Dynamis entrance. Pay the toll from the portal's menu — solo with trusts is supported — and you're warped into that city's alternate-timeline instance:
 
 **San d'Oria [D]** · **Bastok [D]** · **Windurst [D]** · **Jeuno [D]**.
 
@@ -30,11 +30,11 @@ Today's featured city, with a countdown to the next flip, is on the [Live Events
 ## How a run plays out
 
 <!-- DOCGEN:BEGIN id="divergence-waves" -->
-Each run is a timed push through escalating waves. The clock can be extended by clearing optional targets, up to a hard cap of **120 minutes**:
+Each run starts with **90 minutes** and can be extended by clearing optional targets, up to a hard cap of **120 minutes**. The active route contains 20 trash enemies in each of the first two waves:
 
-1. **Wave 1 — Squadron.** Trash mobs, optional **time-extension statues** (each one felled adds **+1 min**), and the **Mid-Boss**.
-2. **Wave 2 — Regiment.** Felling the Mid-Boss advances the wave (**+30 min**): fresh trash plus the **Mega-Boss**.
-3. **Wave 3 — The Disjoined.** In zones that have one, the **Disjoined NM** manifests at the elemental circle after the Mega-Boss falls. No more time can be gained here — finish it to win.
+1. **Wave 1 — Squadron.** 20 trash mobs, 6 optional **time-extension statues** (each one felled adds **+1 min**), and the **Mid-Boss**.
+2. **Wave 2 — Regiment.** Felling the Mid-Boss advances the wave (**+30 min**): 20 fresh trash mobs plus the **Mega-Boss**.
+3. **Wave 3 — The Disjoined.** Defeating the Mega-Boss adds **+15 min** and summons the **Disjoined NM** at the elemental circle. Defeat it to record the full city clear required by **Augment Tier 4** (alongside all 3 Rank 4 Hunt NMs) and receive the full-clear rewards.
 
 The mobs inside drop the **+4 Forge materials**: **Rusted ID Cards** off wave trash and **Black ID Cards** off the bosses. Felling the **Mega-Boss** also hands the killer their **main-job Paragon Card** — the job-matched key the forge needs. (The Beastmen's / Kindred's / Demon's Medals that also drop are the Gear-Vendor Seals, not a Divergence currency.)
 <!-- DOCGEN:END id="divergence-waves" -->

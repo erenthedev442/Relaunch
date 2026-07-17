@@ -90,7 +90,6 @@ return {
     [1196] = { item='Qiqirn Cape', label='Waltz potency', cat=8, tier=0, zone=24, zoneName='Lufaise Meadows', x=362.852, y=-7.777, z=140.648, mob='Abraxas', lvl=85, rate=100 },
     [1199] = { item='Northern Fur', label='Barrage', cat=11, tier=0, zone=184, zoneName='Lower Delkfutts Tower', x=447.954, y=0.075, z=45.067, mob='Giant Lobber', lvl=28, rate=100 },
     [1269] = { item='Mana Barrel', label='Ninja tool expertise', cat=11, tier=0, zone=106, zoneName='North Gustaberg', x=277.886, y=-0.645, z=236.391, mob='River Crab', lvl=1, rate=100 },
-    [1449] = { item='Tukuku Whiteshell', label='Phalanx Received', cat=4, tier=0, zone=106, zoneName='North Gustaberg', x=-49.000, y=-0.010, z=479.000, mob='Amethyst Quadav', lvl=3, rate=100 },
     [1452] = { item='Ordelle Bronzepiece', label='Avatar Blood Pact Dmg', cat=7, tier=0, zone=196, zoneName='Gusgen Mines', x=7.620, y=-60.100, z=-21.739, mob='Spunkie', lvl=28, rate=100 },
     [1470] = { item='Sparkling Stone', label='Resist Charm', cat=4, tier=0, zone=100, zoneName='West Ronfaure', x=-294.916, y=-48.807, z=224.711, mob='Tunnel Worm', lvl=1, rate=100 },
     [1473] = { item='High-Quality Scorpion Shell', label='Weapon skill damage', cat=2, tier=0, zone=89, zoneName='Grauberg [S]', x=-134.292, y=-86.456, z=-14.754, mob='Ajattara', lvl=79, rate=100 },

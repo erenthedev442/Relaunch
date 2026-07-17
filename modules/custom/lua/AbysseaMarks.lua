@@ -26,28 +26,29 @@ local MARKS_CRUOR_LV   = '[MarksPopCruor]'
 --   maxHP   flat HP override (setMaxHP)
 --   att / def / matt           melee attack / defense / magic attack added
 --   acc / eva / macc / meva     accuracy / evasion / magic acc / magic eva added
+--   weaponDmg  flat main-hand damage added to melee and physical TP moves
 --   da      Double Attack % (extra swings)
 --   haste   HASTE_GEAR (100 = 1% faster attack round)
 --   eleRes  added to ALL 8 elemental magic-evasion mods (Fire..Dark) -- an
 --           elemental-nuke resistance layered on top of meva
--- Encounter rebuild (2026-07-16): all mobs fight at Lv99. EVA is deliberately
--- low enough that accuracy is never the mechanic; DEF/MDEF and a soft pressure
--- ceiling create the pre-Relic gate. HP is a duration budget for 200-300k Relic
--- WS output, with catalog phase floors ensuring signature mechanics are seen.
+-- Threat is calibrated against the pre-Abyssea player baseline: roughly 3,000
+-- ACC, 1,000 EVA, 3,400 DEF, and 35% DT.  Defense and HP preserve the proven
+-- Relic clear-time budget; offense, weapon damage, and tempo make survival and
+-- mechanics matter throughout that budget.
 local zoneConfig =
 {
-    -- Visions: Relic entry tier; 5-7 minute solo target after calibration.
-    [xi.zone.ABYSSEA_KONSCHTAT] = { tier = 1, cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 99, maxHP =  4000000, att = 3200, def =  850, matt = 1000, acc = 350, eva = 180, macc = 300, meva = 250, da = 10, haste = 300, eleRes =  50 },
-    [xi.zone.ABYSSEA_TAHRONGI]  = { tier = 1, cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 99, maxHP =  4000000, att = 3200, def =  850, matt = 1000, acc = 350, eva = 180, macc = 300, meva = 250, da = 10, haste = 300, eleRes =  50 },
-    [xi.zone.ABYSSEA_LA_THEINE] = { tier = 1, cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 99, maxHP =  4000000, att = 3200, def =  850, matt = 1000, acc = 350, eva = 180, macc = 300, meva = 250, da = 10, haste = 300, eleRes =  50 },
+    -- Visions: Relic entry tier; 5-7 minute solo target.
+    [xi.zone.ABYSSEA_KONSCHTAT] = { tier = 1, cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 120, maxHP =  4000000, att = 6500, def =  850, matt = 2000, acc =  700, eva =  800, macc =  700, meva = 250, weaponDmg = 300, da = 20, haste = 1000, eleRes =  50 },
+    [xi.zone.ABYSSEA_TAHRONGI]  = { tier = 1, cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 120, maxHP =  4000000, att = 6500, def =  850, matt = 2000, acc =  700, eva =  800, macc =  700, meva = 250, weaponDmg = 300, da = 20, haste = 1000, eleRes =  50 },
+    [xi.zone.ABYSSEA_LA_THEINE] = { tier = 1, cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 120, maxHP =  4000000, att = 6500, def =  850, matt = 2000, acc =  700, eva =  800, macc =  700, meva = 250, weaponDmg = 300, da = 20, haste = 1000, eleRes =  50 },
     -- Scars: two-rule encounters, tuned around Relic + one Atma.
-    [xi.zone.ABYSSEA_ATTOHWA]   = { tier = 2, cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 99, maxHP =  8000000, att = 4500, def = 1200, matt = 1800, acc = 500, eva = 260, macc = 450, meva = 400, da = 12, haste = 500, eleRes =  75 },
-    [xi.zone.ABYSSEA_MISAREAUX] = { tier = 2, cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 99, maxHP =  8000000, att = 4500, def = 1200, matt = 1800, acc = 500, eva = 260, macc = 450, meva = 400, da = 12, haste = 500, eleRes =  75 },
-    [xi.zone.ABYSSEA_VUNKERL]   = { tier = 2, cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 99, maxHP =  8000000, att = 4500, def = 1200, matt = 1800, acc = 500, eva = 260, macc = 450, meva = 400, da = 12, haste = 500, eleRes =  75 },
+    [xi.zone.ABYSSEA_ATTOHWA]   = { tier = 2, cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 130, maxHP =  8000000, att = 8000, def = 1200, matt = 3200, acc =  900, eva = 1100, macc =  900, meva = 400, weaponDmg = 350, da = 25, haste = 1500, eleRes =  75 },
+    [xi.zone.ABYSSEA_MISAREAUX] = { tier = 2, cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 130, maxHP =  8000000, att = 8000, def = 1200, matt = 3200, acc =  900, eva = 1100, macc =  900, meva = 400, weaponDmg = 350, da = 25, haste = 1500, eleRes =  75 },
+    [xi.zone.ABYSSEA_VUNKERL]   = { tier = 2, cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 130, maxHP =  8000000, att = 8000, def = 1200, matt = 3200, acc =  900, eva = 1100, macc =  900, meva = 400, weaponDmg = 350, da = 25, haste = 1500, eleRes =  75 },
     -- Heroes: full set pieces, tuned around Relic + up to two Atma.
-    [xi.zone.ABYSSEA_ALTEPA]    = { tier = 3, cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 99, maxHP = 14000000, att = 6000, def = 1650, matt = 2600, acc = 650, eva = 340, macc = 600, meva = 550, da = 15, haste = 700, eleRes = 100 },
-    [xi.zone.ABYSSEA_GRAUBERG]  = { tier = 3, cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 99, maxHP = 14000000, att = 6000, def = 1650, matt = 2600, acc = 650, eva = 340, macc = 600, meva = 550, da = 15, haste = 700, eleRes = 100 },
-    [xi.zone.ABYSSEA_ULEGUERAND]= { tier = 3, cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 99, maxHP = 14000000, att = 6000, def = 1650, matt = 2600, acc = 650, eva = 340, macc = 600, meva = 550, da = 15, haste = 700, eleRes = 100 },
+    [xi.zone.ABYSSEA_ALTEPA]    = { tier = 3, cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 150, maxHP = 14000000, att = 9500, def = 1650, matt = 4500, acc = 1100, eva = 1400, macc = 1100, meva = 550, weaponDmg = 400, da = 30, haste = 2000, eleRes = 100 },
+    [xi.zone.ABYSSEA_GRAUBERG]  = { tier = 3, cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 150, maxHP = 14000000, att = 9500, def = 1650, matt = 4500, acc = 1100, eva = 1400, macc = 1100, meva = 550, weaponDmg = 400, da = 30, haste = 2000, eleRes = 100 },
+    [xi.zone.ABYSSEA_ULEGUERAND]= { tier = 3, cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 150, maxHP = 14000000, att = 9500, def = 1650, matt = 4500, acc = 1100, eva = 1400, macc = 1100, meva = 550, weaponDmg = 400, da = 30, haste = 2000, eleRes = 100 },
 }
 for zoneId, cfg in pairs(zoneConfig) do
     assert(
@@ -141,6 +142,9 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     spawned:addMod(xi.mod.EVA,  cfg.eva)
     spawned:addMod(xi.mod.MACC, cfg.macc)
     spawned:addMod(xi.mod.MEVA, cfg.meva)
+    -- MAIN_DMG_RATING feeds getWeaponDmg(), so it strengthens both ordinary
+    -- swings and physical TP moves such as Dead Dive and Grand Slam.
+    spawned:addMod(xi.mod.MAIN_DMG_RATING, cfg.weaponDmg)
     spawned:addMod(xi.mod.DOUBLE_ATTACK, cfg.da)     -- extra swings -> a real melee threat
     spawned:addMod(xi.mod.HASTE_GEAR,    cfg.haste)  -- faster attack round (100 = 1%)
     -- Elemental-nuke resistance: raise magic evasion vs all 8 elements so

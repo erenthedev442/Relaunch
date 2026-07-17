@@ -13,9 +13,11 @@ local ordered = {}
 
 local tierDefaults =
 {
-    [1] = { repeatSec = 52, firstSignatureSec = 24, pressureSec = 720, pressureStepSec = 30 },
-    [2] = { repeatSec = 44, firstSignatureSec = 20, pressureSec = 840, pressureStepSec = 25 },
-    [3] = { repeatSec = 36, firstSignatureSec = 16, pressureSec = 960, pressureStepSec = 20 },
+    -- Pressure starts inside the expected clear-time band instead of after it.
+    -- It remains a soft ramp: mechanics and normal combat are the primary test.
+    [1] = { repeatSec = 52, firstSignatureSec = 24, pressureSec = 240, pressureStepSec = 30 },
+    [2] = { repeatSec = 44, firstSignatureSec = 20, pressureSec = 360, pressureStepSec = 25 },
+    [3] = { repeatSec = 36, firstSignatureSec = 16, pressureSec = 480, pressureStepSec = 20 },
 }
 
 local effectCycle =
@@ -130,7 +132,7 @@ local function add(name, tier, sig, climax, options)
     end
     final.tell = string.format('Final test at 30%%: %s', final.tell)
     final.delaySec = math.max(3, (final.delaySec or 5) - 1)
-    final.failure.damagePct = final.failure.damagePct or (10 + tier * 4)
+    final.failure.damagePct = final.failure.damagePct or (20 + tier * 5)
     final.reward.sec = final.reward.sec or (10 + tier * 2)
 
     local entry =

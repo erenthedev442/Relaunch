@@ -105,9 +105,9 @@ Full roster: [Affinity NMs](../endgame/affinity-nms.md)
 | Tier | Unlocked by |
 | --- | --- |
 | Augment Tier 1 | reach level 99 on any job |
-| Augment Tier 2 | reach Hunting League Rank 5 |
-| Augment Tier 3 | clear Voidspire floor 10 + every Game Master wave difficulty |
-| Augment Tier 4 | clear a Dynamis - Divergence city |
+| Augment Tier 2 | defeat all 3 Rank 2 Hunt NMs + promote to Hunting League Rank 3 |
+| Augment Tier 3 | defeat all 3 Rank 3 Hunt NMs + clear Voidspire floor 10 + every Game Master wave difficulty |
+| Augment Tier 4 | defeat all 3 Rank 4 Hunt NMs + fully clear one Dynamis - Divergence city |
 | Augment Tier 5 | defeat Maat's Echo (Ru'Lude Gardens, !maat) |
 
 Your Sage Mastery rank lifts the roll floor inside the unlocked band — see [Augments](../progression/augments.md).
