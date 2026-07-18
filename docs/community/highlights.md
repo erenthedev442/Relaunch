@@ -22,7 +22,7 @@ Rows marked with a player name are pulled live from the server's world-first rec
 | First NM slain in Vana'diel | [Rirint](players/rirint.md) | 2026-05-25 | Megamaw Mikey |
 | First player to fall in battle | — | — | The server's first KO — wear it proudly |
 | First Prestige Ascension | [Ropraz](players/ropraz.md) | 2026-07-09 | The *First Ascension* achievement |
-| First Star-Devourer raid kill | — | — | The *Star-Slayer* achievement |
+| First Star-Devourer raid kill | [Midnightarsal](players/midnightarsal.md) | 2026-07-18 | The *Star-Slayer* achievement |
 
 ---
 
@@ -48,6 +48,6 @@ Community milestones — total kills, total marks earned, total Infamy banked �
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f72918b9604f -->
-_Last updated: 2026-07-18 05:15 PDT_
+<!-- content-hash: a34072e02d16 -->
+_Last updated: 2026-07-18 07:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->
