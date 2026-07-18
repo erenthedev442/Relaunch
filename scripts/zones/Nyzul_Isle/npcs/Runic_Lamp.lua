@@ -19,6 +19,33 @@ entity.onTrigger = function(player, npc)
     local lampOrder     = npc:getLocalVar('[Lamp]order')
     local wait          = npc:getLocalVar('[Lamp]Wait') - GetSystemTime()
 
+    -- Relaunch solo lamp floor: each of the five scattered lamps only needs one
+    -- click. Progress is shared by the instance, so helpers may split up without
+    -- simultaneous activation or per-player registration requirements.
+    if lampObjective == xi.nyzul.lampsObjective.SCAVENGER then
+        if npc:getLocalVar('[Lamp]Lit') == 1 then
+            player:messageSpecial(ID.text.LAMP_ACTIVE)
+            return
+        end
+
+        npc:setLocalVar('[Lamp]Lit', 1)
+        npc:setAnimationSub(1)
+
+        local lit    = instance:getLocalVar('[Lamps]Lit') + 1
+        local target = instance:getLocalVar('[Lamps]Target')
+        instance:setLocalVar('[Lamps]Lit', lit)
+        player:printToPlayer(
+            string.format('[Nyzul] Runic lamp activated (%d/%d).', lit, target),
+            xi.msg.channel.SYSTEM_3)
+
+        if lit >= target then
+            instance:setLocalVar('[Lamps]Complete', 1)
+            instance:setProgress(15)
+        end
+
+        return
+    end
+
     -- Type 1 in Nyzul.lua global
     if lampObjective == xi.nyzul.lampsObjective.REGISTER then -- 1 lamp spawns and everyone must touch
         if player:getLocalVar('Register') == 0 then

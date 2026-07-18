@@ -168,7 +168,8 @@ uint16 CJobPoints::GetJobPointsByJob(uint8 jobID) const
 void CJobPoints::SetJobPoints(int16 amount)
 {
     const auto currentJob = static_cast<uint8>(m_PChar->GetMJob());
-    amount                = std::clamp<int16>(amount, 0, 500);
+    const auto maxJobPoints = settings::get<uint16>("map.MAX_JOB_POINTS");
+    amount = static_cast<int16>(std::clamp<int32>(amount, 0, maxJobPoints));
 
     db::preparedStmt("INSERT INTO char_job_points "
                      "SET charid=?, jobid=?, job_points=? "
@@ -189,7 +190,14 @@ void CJobPoints::AddJobPoints(uint8 jobID, uint16 amount)
         return;
     }
 
-    amount = std::clamp<int16>(amount, 0, 500);
+    const uint16 currentJobPoints = GetJobPointsByJob(jobID);
+    const uint16 maxJobPoints     = settings::get<uint16>("map.MAX_JOB_POINTS");
+    if (currentJobPoints >= maxJobPoints)
+    {
+        return;
+    }
+
+    amount = std::min<uint16>(amount, maxJobPoints - currentJobPoints);
     db::preparedStmt("INSERT INTO char_job_points "
                      "SET charid=?, jobid=?, job_points=? "
                      "ON DUPLICATE KEY UPDATE job_points=job_points +?",
@@ -229,28 +237,30 @@ JobPoints_t* CJobPoints::GetAllJobPoints()
     return m_jobPoints;
 }
 
-bool CJobPoints::AddCapacityPoints(uint16 amount)
+bool CJobPoints::AddCapacityPoints(uint32 amount)
 {
     // Read the held-JP cap from settings (was hardcoded 500). The hard ceiling
     // is 65535 because both the storage (JobPoints_t::currentJp) and the
     // client packet field (0x063 JobPointData::currentJp) are uint16_t.
     const uint16 maxJobPoints = settings::get<uint16>("map.MAX_JOB_POINTS");
 
-    uint32 adjustedCapacity = m_jobPoints[m_PChar->GetMJob()].capacityPoints + amount * settings::get<float>("map.CAPACITY_RATE");
+    uint32 adjustedCapacity = m_jobPoints[m_PChar->GetMJob()].capacityPoints + amount;
     uint16 currentJobPoints = this->GetJobPoints();
 
-    if (adjustedCapacity >= 30000)
+    if (adjustedCapacity >= JOBPOINTS_CAPACITY_MAX)
     {
         // check if player has reached cap
         if (currentJobPoints >= maxJobPoints)
         {
-            this->SetCapacityPoints(30000 - 1);
+            this->SetCapacityPoints(JOBPOINTS_CAPACITY_MAX - 1);
             return false;
         }
 
-        uint16 jobPoints = std::min((int)(currentJobPoints + adjustedCapacity / 30000), (int)maxJobPoints);
+        uint16 jobPoints = std::min(
+            static_cast<uint32>(currentJobPoints + adjustedCapacity / JOBPOINTS_CAPACITY_MAX),
+            static_cast<uint32>(maxJobPoints));
 
-        this->SetCapacityPoints(adjustedCapacity % 30000);
+        this->SetCapacityPoints(adjustedCapacity % JOBPOINTS_CAPACITY_MAX);
 
         if (currentJobPoints != jobPoints)
         {
@@ -274,7 +284,7 @@ uint32 CJobPoints::GetCapacityPoints()
 void CJobPoints::SetCapacityPoints(uint16 amount)
 {
     auto currentJob                        = static_cast<uint8>(m_PChar->GetMJob());
-    amount                                 = std::clamp<int16>(amount, 0, 30000);
+    amount                                 = std::min<uint16>(amount, JOBPOINTS_CAPACITY_MAX - 1);
     m_jobPoints[currentJob].capacityPoints = amount;
 
     db::preparedStmt("INSERT INTO char_job_points "

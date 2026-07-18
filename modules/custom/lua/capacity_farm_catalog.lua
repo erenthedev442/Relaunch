@@ -3,7 +3,7 @@
 -- Config for the shared Capacity Point farm camp in Bibiki Bay.
 -- Edit this file only; CapacityFarm.lua reads it.
 --
--- DESIGN: a small always-up pool of Lv150-160 mobs that instantly respawn
+-- DESIGN: a small always-up pool of Lv150-160 mobs that automatically respawn
 -- as they're killed, so there's always a target and the capacity chain stays
 -- hot. Shared/NonExclusive claim (everyone present can tag + the killer's
 -- alliance gets the CP), no loot/gil (CP only). These mobs DELIBERATELY do
@@ -56,19 +56,15 @@ catalog.templates =
 catalog.mobName  = 'Capacity Phantom'  -- display name; also used to count/top-up the pool
 
 -- POPULATION vs the engine's HARD cap. A zone holds at most 511 *dynamic*
--- entities at once (dynamic targid range [0x700,0x900) in zone_entities.cpp),
--- and a killed mob's targid is parked for 60s before it can be reused
--- (EraseStaleDynamicTargIDs). That same 511-slot pool is ALSO shared with every
--- player's trusts and pets. 357 left almost no room: while farming, the
--- 60s-held dead targids + trusts push past 511 and every spawn after that gets
--- a broken targid (>=0x900 -> "update packets ignored") so the mob is INVISIBLE
--- to clients -- which looks exactly like "not respawning". 100 is a dense
--- always-up camp that stays well clear of the cap for realistic Bibiki Bay load
--- (solo/duo). Pushing it much higher reintroduces the overflow under groups.
+-- entities (including trusts and pets). Farm mobs now retain and reuse their
+-- targids through native respawn instead of allocating a new dynamic entity on
+-- every kill, so this pool consumes a stable 100 slots. Raising it substantially
+-- would still crowd out player trusts/pets under group load.
 catalog.mobCount = 100
 catalog.minLv    = 150                  -- engine rolls each spawn in [minLv, maxLv]
 catalog.maxLv    = 160
 catalog.maxHP    = 45000                -- low HP = quick kills (-25% from 60000)
+catalog.respawnSeconds = 5              -- delay after the death/despawn sequence
 catalog.cpBonus  = 2000                 -- flat bonus Capacity Points to the killer per kill, ON TOP of
                                         -- the engine's level-based award (both x map EXP_RATE). 0 = off.
 

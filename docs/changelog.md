@@ -10,6 +10,10 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
 ---
 
 !!! note "Week of July 13–19, 2026"
+    **Saturday, July 18**
+
+    - **Relaunch/Reforge** — Restore offensive accuracy, native NM combat hooks, and validated TP lists across all 15 arena fights
+
     **Friday, July 17**
 
     - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-17 04:08
@@ -105,7 +109,7 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Relaunch/Nyzul** — Enemy-leader objective could not complete (missing mob script)
     - **Relaunch/Gm** — Add !phantomfarm to diagnose + force-refill capacity farms
     - **Relaunch/Paragon** — Add Arcana (magic) + Dominion (pet) perks to the Paragon board
-    - **Relaunch/Nyzul** — Drop the un-soloable "Activate all lamps" objective
+    - **Relaunch/Nyzul** — Replace party-only lamp puzzles with five-lamp solo scavenger floors
     - **Relaunch/Dungeons** — Rebuild 6 rosters from retail stock coords + Gusgen entry Y + per-dungeon leash
     - **Relaunch/Ops** — Runtime-consumer drift validator (the !affinitynm blind spot)
     - **Relaunch/Ambuscade** — Instant auto-exit to Mhaura on completion / failure

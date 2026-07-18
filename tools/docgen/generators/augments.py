@@ -357,6 +357,10 @@ _CAP_VALUE_RES = [
         lambda m: m.group(1)),
     (re.compile(r"clamped\s*to\s*\[(-?\d+),\s*\+?(-?\d+)\]", re.I),
         lambda m: f"[{m.group(1)}, +{m.group(2)}]"),
+    (re.compile(r"gear\s+ceiling\s+is\s+\+?(\d+%?)", re.I),
+        lambda m: f"+{m.group(1)}"),
+    (re.compile(r"hard\s+ceiling\s+is\s+\+?(\d+)", re.I),
+        lambda m: f"+{m.group(1)}"),
 ]
 
 

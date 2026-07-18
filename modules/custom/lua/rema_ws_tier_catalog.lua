@@ -42,7 +42,7 @@ catalog.REMA_FAMILY_TUNING =
         attackScale    = { 1.10, 1.20, 1.30 },
         accuracyBonus  = { 100, 150, 200 },
         magicAccBonus  = 150,
-        ignoredDefense = { 0.25, 0.40, 0.50 },
+        ignoredDefense = { 0.15, 0.15, 0.15 },
     },
     EMPYREAN =
     {
@@ -51,7 +51,7 @@ catalog.REMA_FAMILY_TUNING =
         attackScale    = { 1.20, 1.35, 1.50 },
         accuracyBonus  = { 150, 200, 250 },
         magicAccBonus  = 225,
-        ignoredDefense = { 0.35, 0.55, 0.70 },
+        ignoredDefense = { 0.25, 0.25, 0.25 },
     },
     MYTHIC =
     {
@@ -60,7 +60,7 @@ catalog.REMA_FAMILY_TUNING =
         attackScale    = { 1.20, 1.35, 1.50 },
         accuracyBonus  = { 150, 200, 250 },
         magicAccBonus  = 225,
-        ignoredDefense = { 0.35, 0.55, 0.70 },
+        ignoredDefense = { 0.25, 0.25, 0.25 },
     },
     AEONIC =
     {
@@ -69,7 +69,7 @@ catalog.REMA_FAMILY_TUNING =
         attackScale    = { 1.35, 1.55, 1.75 },
         accuracyBonus  = { 200, 275, 350 },
         magicAccBonus  = 300,
-        ignoredDefense = { 0.50, 0.70, 0.82 },
+        ignoredDefense = { 0.35, 0.35, 0.35 },
     },
 }
 

@@ -1,8 +1,7 @@
 """Sync docs/progression/capacity-farm.md with the Capacity Point farm catalogs.
 
 There are TWO permanent, always-up Capacity Point camps, each a fixed pool of
-high-level phantoms that instant-respawn as they die so the capacity chain never
-lapses:
+high-level phantoms that automatically respawn after a short delay:
   * Bibiki Bay            (!capacity) — capacity_farm_catalog.lua
   * King Ranperre's Tomb  (!ranperre) — ranperre_farm_catalog.lua
 Both catalogs share the same shape, so everything on the page — each warp, the
@@ -50,6 +49,7 @@ def _parse(text: str, command: str) -> dict:
     c["mobCount"] = int(float(_first(r"catalog\.mobCount\s*=\s*(\d+)", text, "100")))
     c["minLv"] = int(float(_first(r"catalog\.minLv\s*=\s*(\d+)", text, "150")))
     c["maxLv"] = int(float(_first(r"catalog\.maxLv\s*=\s*(\d+)", text, "160")))
+    c["respawnSeconds"] = int(float(_first(r"catalog\.respawnSeconds\s*=\s*(\d+)", text, "5")))
     c["cpBonus"] = int(float(_first(r"catalog\.cpBonus\s*=\s*(\d+)", text, "0")))
 
     # NO_DROPS is set on every camp mob (CapacityFarm.lua) — the "CP only, no
@@ -78,11 +78,11 @@ def _render_access(camps: list) -> str:
 
 def _render_mobs(camps: list) -> str:
     lines = []
-    lines.append("Each camp keeps a standing pool of always-up **"
-                 f"{camps[0]['mobName']}** monsters that **instantly respawn the "
-                 "moment they die** — kill one and a fresh phantom takes its place "
-                 "on the spot, so there is always a target and your capacity chain "
-                 "never lapses waiting on a pop.")
+    lines.append("Each camp keeps a persistent pool of **"
+                 f"{camps[0]['mobName']}** monsters. A defeated phantom automatically "
+                 f"returns **{camps[0]['respawnSeconds']} seconds after its death/despawn "
+                 "sequence**, reusing the same entity slot so repeated farming cannot "
+                 "exhaust the zone's dynamic IDs.")
     lines.append("")
     lines.append("| Camp | Warp | Pool | Levels |")
     lines.append("|---|---|---|---|")
@@ -101,8 +101,8 @@ def _render_mobs(camps: list) -> str:
 
 def _render_rewards(camps: list) -> str:
     lines = []
-    lines.append("Every phantom is a full Capacity Point kill. Because they die "
-                 "fast and respawn instantly, you can keep the engine's capacity "
+    lines.append("Every phantom is a full Capacity Point kill. Because the pool is "
+                 "large and the mobs automatically respawn, you can keep the engine's capacity "
                  "chain hot the whole time — back-to-back kills inside the chain "
                  "window stack the usual chain bonus on top of each award.")
     bonuses = {c["cpBonus"] for c in camps if c["cpBonus"] > 0}
@@ -121,6 +121,10 @@ def _render_rewards(camps: list) -> str:
         for c in camps:
             if c["cpBonus"] > 0:
                 lines.append(f"- **{c['zone']}** — +{commafy(c['cpBonus'])} CP per kill.")
+    lines.append("")
+    lines.append("After every modifier and server rate, a single mob can award at most "
+                 "**60,000 Capacity Points** to one player. Since 30,000 CP still converts "
+                 "to one Job Point, a sufficiently boosted kill can award **two Job Points**.")
     return "\n".join(lines)
 
 
@@ -132,8 +136,9 @@ def _render_notes(camps: list) -> str:
     lines.append("- **Capacity Points only.** The level range is well above the "
                  "Lv100 floor that makes a mob CP-eligible, so every kill counts "
                  "toward your Job Points once you've earned Job Points access.")
-    lines.append("- **Always on.** Each camp is seeded when its zone wakes and "
-                 "tops itself back up on every kill and every zone-in, so both are "
+    lines.append("- **Always on.** Each camp is seeded when its zone wakes; its persistent "
+                 "phantoms then respawn through the engine and zone-in/hourly checks replace "
+                 "any genuinely missing entities, so both are "
                  "ready around the clock with no GM intervention.")
     return "\n".join(lines)
 
@@ -144,13 +149,12 @@ _PAGE = """# Capacity Point Farms
 
 Job Points are a long grind, and Vana'diel's wild capacity mobs are scattered
 and slow to respawn. The **Capacity Point Farms** fix that: two permanent,
-always-up camps of high-level phantoms that die fast and pop back instantly, so
-your capacity chain never goes cold.
+always-up camps of high-level phantoms that die fast and automatically return.
 
 !!! tip "Summary"
     Type `!capacity` (Bibiki Bay) or `!ranperre` (King Ranperre's Tomb) to warp
     to an always-up Capacity Point camp — a pool of {mobCount} {mobName}
-    (Lv{minLv}-{maxLv}) that instant-respawn on death. Shared claim, no loot or
+    (Lv{minLv}-{maxLv}) that automatically respawn. Shared claim, no loot or
     gil, just Capacity Points.
 
 ## Getting there

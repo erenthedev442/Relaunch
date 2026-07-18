@@ -273,10 +273,10 @@ const CATS = {
     label:'Mythic', sub:'20 weapons · 4 stages',
     accent:'#6030a8', dim:'#3a1a68',
     lore:'Power extracted from Nyzul Isle\'s floors and the Assault campaigns — weapons older than the Crystal War. Multiple variants exist per weapon type, each aligned to a specific job.',
-    source:'<strong>Mythic weapons</strong> drop from <strong>Nyzul Isle floor bosses</strong> (Floor 60 and above). Each floor boss drops weapon-type-specific weapons. Floor 80 clears are required for 119 II; Floor 100 (all lamps lit) is required for 119 III. <strong>Imperial Standing</strong> is earned from all Assault missions Bring the materials to the <strong>Weapon Forge</strong> in <!--npc:weapon_forger-->Purgonorgo Isle<!--/npc-->: it issues the base weapon and forges each stage (gated by HL Rank + Nyzul progress)..',
+    source:'<strong>Mythic weapons</strong> begin with personal Nyzul Isle progression. The player must select the climb with <strong>their own Runic Disc</strong> and record a Floor 100 clear; helping another player does not complete this trial. Bring the listed materials to the <strong>Weapon Forge</strong> in <!--npc:weapon_forger-->Purgonorgo Isle<!--/npc-->.',
     s3lbl:'Stage III · Mythic',
     forge:[
-      {lbl:'Base → Stage I', mats:[['1,000×','Imperial Standing'],['10×','Imperial Bronze Piece']], gate:'Nyzul Isle Floor 100 cleared'},
+      {lbl:'Base → Stage I', mats:[['1,000×','Imperial Standing'],['10×','Imperial Bronze Piece']], gate:'Floor 100 recorded on your Runic Disc'},
       {lbl:'Stage I → Stage II', mats:[['3,000×','Imperial Standing'],['25×','Imperial Silver Piece'],['300×','Beitetsu']], gate:'All Voidwatch NMs killed (19 unique)'},
       {lbl:'Stage II → Stage III', mats:[['5×','Imperial Gold Piece'],['10,000×','Beitetsu'],['20,000','Reforge Marks']], gate:'1 successful win of The Gauntlet'},
     ],
@@ -340,7 +340,7 @@ const CATS = {
     forge:[
       {lbl:'Base → Stage I', mats:[['200×','Ghastly Stone'],['500×','High-Purity Bayld']], gate:'HL Rank IV (Champion) · Delve I Megaboss cleared'},
       {lbl:'Stage I → Stage II', mats:[['200×','Verdigris Stone'],['2,500×','High-Purity Bayld'],['1×','Pristine Yggrete Shard']], gate:'HL Rank V (Legend) · Delve II Megaboss cleared · Paragon Tier 3 cleared'},
-      {lbl:'Stage II → Stage III', mats:[['200×','Wailing Stone'],['9,999×','High-Purity Bayld'],['10,000×','Beitetsu'],['28,000','Reforge Marks']], gate:'HL Rank V · Paragon Tier 5 cleared · Apex Floor 100 · All Coalition ranks at Legend'},
+      {lbl:'Stage II → Stage III', mats:[['200×','Wailing Stone'],['9,999×','High-Purity Bayld'],['10,000×','Beitetsu'],['28,000','Reforge Marks']], gate:'HL Rank V · Paragon Tier 5 cleared · All Coalition ranks at Legend'},
     ],
     weapons:[
       {type:'Great Sword',jobs:'WAR · DRK',name:'Epeolatry',id:21685},

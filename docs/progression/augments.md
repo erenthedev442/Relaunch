@@ -35,6 +35,9 @@ Cancel at any time during the confirm menu to get everything (gear + catalysts) 
     Existing lines remain on test-server equipment until scoured or wiped, but
     their combined contribution is capped at **+15 per character**.
 
+!!! info "Aggregate equipment ceilings"
+    Augments can be placed on many pieces, but their effective equipment totals are capped per character: **All Songs +50**, **Gilfinder +300**, **Barrage +320**, **Treasure Hunter +15**, **Phantom Roll Effect +150**, **Regen +600**, **Beast Affinity +900**, **Pet Regen +1,280**, **Meditate Duration +320**, **Evasion +850**, **Parrying Rate 50%**, **successful block 50%**, **Magic Defense Bonus +480**, **Defense +3,200**, **Spell Interruption Rate Down 80%**, and **Magic Critical Hit Rate 100%**. Extra points remain on the equipment but provide no additional effect until another piece is removed; traits, merits, status effects, and progression bonuses remain separate.
+
 ## Known display limitation
 
 !!! warning "Item examine window shows garbled values for boosted augments"

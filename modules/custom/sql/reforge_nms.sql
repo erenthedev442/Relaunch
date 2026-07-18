@@ -19,6 +19,27 @@
 -- Safe to re-apply (DELETE then INSERT).
 -- ============================================================================
 
+-- Reforge-only TP lists exclude upstream list rows whose mob_skills records are
+-- commented out (Bukhis: 2389/2533/2640; Hadhayosh: 2391/2586). Leaving those
+-- IDs selectable can produce dead TP turns. The remaining moves all have live
+-- mob_skills rows and action scripts.
+DELETE FROM `mob_skill_lists` WHERE `skill_list_id` IN (3000, 3001);
+INSERT INTO `mob_skill_lists` VALUES ('Reforge_Bukhis',    3000, 1360); -- Apocalyptic Ray
+INSERT INTO `mob_skill_lists` VALUES ('Reforge_Hadhayosh', 3001,  628); -- Wild Horn
+INSERT INTO `mob_skill_lists` VALUES ('Reforge_Hadhayosh', 3001,  629); -- Thunderbolt
+INSERT INTO `mob_skill_lists` VALUES ('Reforge_Hadhayosh', 3001,  632); -- Flame Armor
+INSERT INTO `mob_skill_lists` VALUES ('Reforge_Hadhayosh', 3001,  633); -- Howl
+
+-- Complete targeting metadata for newly implemented Harpeia/Glavoid handlers.
+-- mob_skill_aoe=4 is conal; knockback is the displacement strength consumed by
+-- the core after the Lua handler resolves.
+UPDATE `mob_skills` SET `knockback` = 3
+WHERE `mob_skill_id` = 2725; -- Rending Talons
+UPDATE `mob_skills` SET `knockback` = 5
+WHERE `mob_skill_id` = 2726; -- Shrieking Gale
+UPDATE `mob_skills` SET `mob_skill_aoe` = 4, `knockback` = 7
+WHERE `mob_skill_id` = 2191; -- Desiccation
+
 -- Clean up the OLD zone-278 rows left behind by the move (orphaned now that no
 -- Reforge NPCs live in Gwora). Zone-scoped so it can't touch the zone-289
 -- Game Master / Voidspire pool that shares these groupids.

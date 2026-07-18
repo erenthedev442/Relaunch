@@ -115,7 +115,10 @@ local _LEVEL_TIERS =
               mods = {
                   [xi.mod.DEF] = 520,
                   [xi.mod.ATT] = 2700,
-                  [xi.mod.ACC] = 270,
+                  -- Reforge is fought at level 99 against augment-era gear.
+                  -- The old Hunting League T1 value (270) left entry NMs at
+                  -- the 20% hit-rate floor against ordinary geared players.
+                  [xi.mod.ACC] = 900,
                   [xi.mod.EVASION] = 140,
                   [xi.mod.MEVA] = 150,
                   [xi.mod.MDEF] = 100,
@@ -130,7 +133,7 @@ local _LEVEL_TIERS =
               mods = {
                   [xi.mod.DEF] = 990,
                   [xi.mod.ATT] = 4800,
-                  [xi.mod.ACC] = 600,
+                  [xi.mod.ACC] = 1200,
                   [xi.mod.EVASION] = 250,
                   [xi.mod.MEVA] = 300,
                   [xi.mod.MDEF] = 240,
@@ -146,7 +149,7 @@ local _LEVEL_TIERS =
               mods = {
                   [xi.mod.DEF] = 1430,
                   [xi.mod.ATT] = 7200,
-                  [xi.mod.ACC] = 700,
+                  [xi.mod.ACC] = 1500,
                   [xi.mod.EVASION] = 350,
                   [xi.mod.MEVA] = 400,
                   [xi.mod.MDEF] = 420,
@@ -171,7 +174,9 @@ local _LEVEL_TIERS =
                   [xi.mod.HASTE_GEAR]    = 280,
                   [xi.mod.DOUBLE_ATTACK] = 23,
                   [xi.mod.TRIPLE_ATTACK] = 10,
-                  [xi.mod.REGEN]         = 700,
+                  -- Match Hunting League IV sustain. The mechanics already
+                  -- provide the difficulty; legacy 700/tick made this a wall.
+                  [xi.mod.REGEN]         = 70,
               },
     },
     [250] = { hpBoost = 30,
@@ -187,7 +192,9 @@ local _LEVEL_TIERS =
                   [xi.mod.HASTE_GEAR]    = 300,
                   [xi.mod.DOUBLE_ATTACK] = 27,
                   [xi.mod.TRIPLE_ATTACK] = 13,
-                  [xi.mod.REGEN]         = 1200,
+                  -- Transitional sustain below Apex: enough to discourage
+                  -- turtling without demanding Apex-level damage output.
+                  [xi.mod.REGEN]         = 100,
               },
     },
 }
@@ -226,11 +233,11 @@ catalog.sources =
             --
             -- Ladder: Genbu (entry) -> Kirin (apex). Mark/stat values
             -- come from the level template; see _LEVEL_TIERS above.
-            { name = 'Genbu',  label = 'Genbu  [I]', groupId = 11404, minLv = 99, maxLv = 99, marks =  60, _t = statsFor(150) },
-            { name = 'Suzaku', label = 'Suzaku [II]', groupId = 11403, minLv = 99, maxLv = 99, marks =  80, _t = statsFor(175) },
-            { name = 'Seiryu', label = 'Seiryu [III]', groupId = 11402, minLv = 99, maxLv = 99, marks = 100, _t = statsFor(200) },
-            { name = 'Byakko', label = 'Byakko [IV]', groupId = 11401, minLv = 99, maxLv = 99, marks = 125, _t = statsFor(225) },
-            { name = 'Kirin',  label = 'Kirin  [V]', groupId = 11400, minLv = 99, maxLv = 99, marks = 150, _t = statsFor(250) },
+            { name = 'Genbu',  label = 'Genbu  [I]', groupId = 11404, skillList = 277, minLv = 99, maxLv = 99, marks =  60, _t = statsFor(150) },
+            { name = 'Suzaku', label = 'Suzaku [II]', groupId = 11403, skillList = 280, minLv = 99, maxLv = 99, marks =  80, _t = statsFor(175) },
+            { name = 'Seiryu', label = 'Seiryu [III]', groupId = 11402, skillList = 278, minLv = 99, maxLv = 99, marks = 100, _t = statsFor(200) },
+            { name = 'Byakko', label = 'Byakko [IV]', groupId = 11401, skillList = 279, minLv = 99, maxLv = 99, marks = 125, _t = statsFor(225) },
+            { name = 'Kirin',  label = 'Kirin  [V]', groupId = 11400, skillList = 281, minLv = 99, maxLv = 99, marks = 150, _t = statsFor(250) },
         },
     },
 
@@ -245,11 +252,11 @@ catalog.sources =
         {
             -- Ladder: Bukhis (entry) -> Tinnin (apex). Tinnin retains
             -- apex status from the previous catalog (was 35 marks).
-            { name = 'Bukhis',  label = 'Bukhis  [I]', groupId = 11408, minLv = 99, maxLv = 99, marks =  60, _t = statsFor(150) },
-            { name = 'Khun',    label = 'Khun    [II]', groupId = 11406, minLv = 99, maxLv = 99, marks =  80, _t = statsFor(175) },
-            { name = 'Padfoot', label = 'Padfoot [III]', groupId = 11405, minLv = 99, maxLv = 99, marks = 100, _t = statsFor(200) },
-            { name = 'Glavoid', label = 'Glavoid [IV]', groupId = 11407, minLv = 99, maxLv = 99, marks = 125, _t = statsFor(225) },
-            { name = 'Tinnin',  label = 'Tinnin  [V]', groupId = 11409, minLv = 99, maxLv = 99, marks = 150, _t = statsFor(250) },
+            { name = 'Bukhis',  label = 'Bukhis  [I]', groupId = 11408, skillList = 3000, minLv = 99, maxLv = 99, marks =  60, _t = statsFor(150) },
+            { name = 'Khun',    label = 'Khun    [II]', groupId = 11406, skillList = 450, minLv = 99, maxLv = 99, marks =  80, _t = statsFor(175) },
+            { name = 'Padfoot', label = 'Padfoot [III]', groupId = 11405, skillList = 226, minLv = 99, maxLv = 99, marks = 100, _t = statsFor(200) },
+            { name = 'Glavoid', label = 'Glavoid [IV]', groupId = 11407, skillList = 839, minLv = 99, maxLv = 99, marks = 125, _t = statsFor(225) },
+            { name = 'Tinnin',  label = 'Tinnin  [V]', groupId = 11409, skillList = 313, minLv = 99, maxLv = 99, marks = 150, _t = statsFor(250) },
         },
     },
 
@@ -265,11 +272,11 @@ catalog.sources =
             -- Ladder: Aello (entry) -> Hadhayosh (apex). Hadhayosh
             -- (Bahamut Behemoth-type) sits at the top as the most
             -- iconic king-tier Abyssea NM.
-            { name = 'Aello',       label = 'Aello       [I]', groupId = 11413, minLv = 99, maxLv = 99, marks =  60, _t = statsFor(150) },
-            { name = 'Iratham',     label = 'Iratham     [II]', groupId = 11411, minLv = 99, maxLv = 99, marks =  80, _t = statsFor(175) },
-            { name = 'Briareus',    label = 'Briareus    [III]', groupId = 11410, minLv = 99, maxLv = 99, marks = 100, _t = statsFor(200) },
-            { name = 'Itzpapalotl', label = 'Itzpapalotl [IV]', groupId = 11412, minLv = 99, maxLv = 99, marks = 125, _t = statsFor(225) },
-            { name = 'Hadhayosh',   label = 'Hadhayosh   [V]', groupId = 11414, minLv = 99, maxLv = 99, marks = 150, _t = statsFor(250) },
+            { name = 'Aello',       label = 'Aello       [I]', groupId = 11413, skillList = 471, minLv = 99, maxLv = 99, marks =  60, _t = statsFor(150) },
+            { name = 'Iratham',     label = 'Iratham     [II]', groupId = 11411, skillList = 841, minLv = 99, maxLv = 99, marks =  80, _t = statsFor(175) },
+            { name = 'Briareus',    label = 'Briareus    [III]', groupId = 11410, skillList = 811, minLv = 99, maxLv = 99, marks = 100, _t = statsFor(200) },
+            { name = 'Itzpapalotl', label = 'Itzpapalotl [IV]', groupId = 11412, skillList = 864, minLv = 99, maxLv = 99, marks = 125, _t = statsFor(225) },
+            { name = 'Hadhayosh',   label = 'Hadhayosh   [V]', groupId = 11414, skillList = 3001, minLv = 99, maxLv = 99, marks = 150, _t = statsFor(250) },
         },
     },
 }
@@ -1009,8 +1016,8 @@ catalog.pieces[xi.job.RUN] =
 --   I   (entry)   - light anti-turtle drain
 --   II  (mid-low) - stance dance + terror CC
 --   III (mid)     - AoE + drain + nuke phase
---   IV  (hard)    - stance + CC + drain + fury phase + dispel phase + doom
---   V   (apex)    - full suite: stance/AoE/CC/drain/doom/fury/nuke/dispel/enrage
+--   IV  (hard)    - stance + CC + light drain + fury/dispel phases + doom
+--   V   (bridge)  - full suite, but gentler sustain than Apex progression
 --
 -- DMGPHYS/DMGMAGIC cap at -5000 per library rules (=-50% taken).
 -- =========================================================
@@ -1059,7 +1066,7 @@ catalog.mechCfgs[11401] = {
         }
     },
     cc    = { periodSec = 20, effect = xi.effect.TERROR, dur = 6, msg = 'unleashes a blinding White Roar!' },
-    drain = { periodSec = 8,  healPct = 3 },
+    drain = { periodSec = 10, healPct = 0.5 },
     phases = {
         { hp = 40, action = 'fury',   att = 4000, haste = 130, msg = 'enters White Tiger Fury!' },
         { hp = 25, action = 'dispel', count = 4, msg = 'strips your enhancements with Byakko\'s Rage!' },
@@ -1067,10 +1074,10 @@ catalog.mechCfgs[11401] = {
     doom = { startHpp = 18, dur = 28, msg = 'marks you with the Tiger\'s Curse!' },
 }
 
--- Kirin [Lv250] - apex: full suite, tight enrage
+-- Kirin [Lv250] - pre-Apex bridge: full suite, forgiving sustain/clock
 catalog.mechCfgs[11400] = {
     name   = 'Kirin',
-    enrage = { sec = 180, att = 5000, haste = 200, msg = 'Kirin\'s patience shatters -- ENRAGE!' },
+    enrage = { sec = 240, att = 5000, haste = 200, msg = 'Kirin\'s patience shatters -- ENRAGE!' },
     stance = { startHpp = 100, periodSec = 15,
         stances = {
             { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0    }, msg = 'is hardened against weapons -- switch to magic!' },
@@ -1079,7 +1086,7 @@ catalog.mechCfgs[11400] = {
     },
     aoe   = { periodSec = 11, dmgPct = 24, msg = 'unleashes Heaven\'s Wrath across the battlefield!' },
     cc    = { periodSec = 19, effect = xi.effect.TERROR, dur = 7, msg = 'emanates a divine aura of terror!' },
-    drain = { periodSec = 7,  healPct = 3 },
+    drain = { periodSec = 10, healPct = 0.75 },
     phases = {
         { hp = 60, action = 'fury',   att = 3500, haste = 120, msg = 'channels divine fury!' },
         { hp = 25, action = 'nuke',   dmgPct = 42, msg = 'unleashes Heavenly Judgment!' },
@@ -1132,7 +1139,7 @@ catalog.mechCfgs[11407] = {
         }
     },
     cc    = { periodSec = 20, effect = xi.effect.TERROR, dur = 6, msg = 'erupts from below with a terrifying shriek!' },
-    drain = { periodSec = 8,  healPct = 3 },
+    drain = { periodSec = 10, healPct = 0.5 },
     phases = {
         { hp = 40, action = 'fury',   att = 4000, haste = 130, msg = 'enters Acidic Frenzy!' },
         { hp = 25, action = 'dispel', count = 4, msg = 'vomits Null Acid -- enhancements stripped!' },
@@ -1140,19 +1147,16 @@ catalog.mechCfgs[11407] = {
     doom = { startHpp = 18, dur = 28, msg = 'marks you with Glavoid\'s Doom Slime!' },
 }
 
--- Tinnin [Lv250] - apex: full suite, tight enrage
+-- Tinnin [Lv250] - pre-Apex bridge: full suite, forgiving sustain/clock
 catalog.mechCfgs[11409] = {
     name   = 'Tinnin',
-    enrage = { sec = 180, att = 5000, haste = 200, msg = 'Tinnin\'s fury spirals out of control -- ENRAGE!' },
-    stance = { startHpp = 100, periodSec = 15,
-        stances = {
-            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0    }, msg = 'encases itself in Dragon Scales -- weapons useless! Use magic!' },
-            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'absorbs magic into Dragon Essence -- use steel!' },
-        }
-    },
+    enrage = { sec = 240, att = 5000, haste = 200, msg = 'Tinnin\'s fury spirals out of control -- ENRAGE!' },
+    -- Tinnin keeps its native Pyric/Polar Bulwark shields instead of the
+    -- generic stance dance; stacking both could leave no intended damage
+    -- counterplay during a shield window.
     aoe   = { periodSec = 11, dmgPct = 24, msg = 'releases a Crimson Breath nova!' },
     cc    = { periodSec = 19, effect = xi.effect.TERROR, dur = 7, msg = 'unleashes a Dragon\'s Roar of pure dominion!' },
-    drain = { periodSec = 7,  healPct = 3 },
+    drain = { periodSec = 10, healPct = 0.75 },
     phases = {
         { hp = 60, action = 'fury',   att = 3500, haste = 120, msg = 'enters Dragon Phase!' },
         { hp = 25, action = 'nuke',   dmgPct = 42, msg = 'channels Tinnin\'s Final Darkness!' },
@@ -1205,7 +1209,7 @@ catalog.mechCfgs[11412] = {
         }
     },
     cc    = { periodSec = 20, effect = xi.effect.TERROR, dur = 6, msg = 'shrieks with a Celestial Moth Scream!' },
-    drain = { periodSec = 8,  healPct = 3 },
+    drain = { periodSec = 10, healPct = 0.5 },
     phases = {
         { hp = 40, action = 'fury',   att = 4000, haste = 130, msg = 'enters Obsidian Butterfly Fury!' },
         { hp = 25, action = 'dispel', count = 4, msg = 'purges enhancements with Void Scatter!' },
@@ -1213,10 +1217,10 @@ catalog.mechCfgs[11412] = {
     doom = { startHpp = 18, dur = 28, msg = 'brands you with the Clipped Wing Curse!' },
 }
 
--- Hadhayosh [Lv250] - apex: full suite, tight enrage
+-- Hadhayosh [Lv250] - pre-Apex bridge: full suite, forgiving sustain/clock
 catalog.mechCfgs[11414] = {
     name   = 'Hadhayosh',
-    enrage = { sec = 180, att = 5000, haste = 200, msg = 'Hadhayosh loses all restraint -- ENRAGE!' },
+    enrage = { sec = 240, att = 5000, haste = 200, msg = 'Hadhayosh loses all restraint -- ENRAGE!' },
     stance = { startHpp = 100, periodSec = 15,
         stances = {
             { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0    }, msg = 'bristles with Abyssal Hide -- blades cannot bite! Use magic!' },
@@ -1225,7 +1229,7 @@ catalog.mechCfgs[11414] = {
     },
     aoe   = { periodSec = 11, dmgPct = 25, msg = 'pulses with a Void Shockwave across the earth!' },
     cc    = { periodSec = 18, effect = xi.effect.TERROR, dur = 7, msg = 'bellows a world-shaking Behemoth\'s Roar!' },
-    drain = { periodSec = 7,  healPct = 4 },
+    drain = { periodSec = 10, healPct = 0.75 },
     phases = {
         { hp = 65, action = 'fury',   att = 3500, haste = 120, msg = 'enters Abyssal Phase -- attacks accelerate!' },
         { hp = 30, action = 'nuke',   dmgPct = 44, msg = 'converges the Abyss into one Final Erasure!' },

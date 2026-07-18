@@ -331,7 +331,8 @@ enum JOBPOINT_TYPE : uint16
 #define JOBPOINTS_JPTYPE_COUNT        220
 #define JOBPOINTS_JPTYPE_PER_CATEGORY 10
 #define JOBPOINTS_MAX                 500
-#define JOBPOINTS_CAPACITY_MAX        30000
+#define JOBPOINTS_CAPACITY_MAX        30000 // Conversion threshold and maximum stored remainder.
+#define JOBPOINTS_CAPACITY_AWARD_MAX  60000 // Maximum final award from one mob to one player.
 #define JOBPOINTS_SQL_COLUMN_OFFSET   5
 
 #define JobPointsCategoryByJobId(jobid)         (JOBPOINTS_CATEGORY_START * jobid)
@@ -398,7 +399,7 @@ public:
 
     uint16 GetJobPointsSpent() const;
 
-    bool   AddCapacityPoints(uint16 amount); // Add Capacity Points for current job, and increase JP as needed
+    bool   AddCapacityPoints(uint32 amount); // Add Capacity Points for current job, and increase JP as needed
     uint32 GetCapacityPoints();              // Get Capacity Points for Character's Current Job
     void   SetCapacityPoints(uint16 amount); // Set Capacity Points for Character's Current Job, does not handle JP increase!
 

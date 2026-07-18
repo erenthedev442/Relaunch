@@ -1,7 +1,7 @@
 -----------------------------------
 -- !diwarp
--- Warps the player to the active Domain Invasion zone (Escha - Zi'Tah or
--- Escha - Ru'Aun). If no invasion is active, warps to Zi'Tah by default.
+-- Explicitly opts the player into the active/mustering Domain Invasion and
+-- warps them to that zone's isolated rally point.
 -- Available to all players (permission 0).
 -----------------------------------
 ---@type TCommand
@@ -15,17 +15,23 @@ commandObj.cmdprops =
 
 commandObj.onTrigger = function(player)
     local api = xi._domain_invasion_api
-    local activeZoneId = api and api.activeZoneId and api.activeZoneId()
-
-    if activeZoneId then
-        -- Warp to the center of whichever Escha zone is under assault.
-        player:setPos(0, 0, 0, 0, activeZoneId)
-    else
-        -- No invasion active -- send them to Zi'Tah as the default.
-        player:printToPlayer('[Domain Invasion] No active invasion. Warping to Escha - Zi\'Tah.',
+    if not api or not api.volunteer then
+        player:printToPlayer('[Domain Invasion] The event service is unavailable.',
             xi.msg.channel.SYSTEM_3)
-        player:setPos(0, 0, 0, 0, 288)  -- Escha - Zi'Tah
+        return
     end
+
+    local ok, zoneId, rally, label = api.volunteer(player)
+    if not ok then
+        player:printToPlayer('[Domain Invasion] ' .. tostring(zoneId),
+            xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    player:printToPlayer(
+        string.format('[Domain Invasion] You have opted in to defend %s.', label),
+        xi.msg.channel.SYSTEM_3)
+    player:setPos(rally.x, rally.y, rally.z, rally.rot or 0, zoneId)
 end
 
 return commandObj

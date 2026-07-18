@@ -749,8 +749,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             -- player trades for one of these augIds, we surface the cap
             -- once so they can see whether their stack will be partly
             -- wasted against existing gear that already approaches the
-            -- limit. The cap is per-character TOTAL across all gear, not
-            -- per-augment, so the warning is purely informational.
+            -- limit. The cap is the per-character equipment total, not
+            -- per-augment; traits, merits, effects, and progression bonuses
+            -- remain separate, so the warning is purely informational.
             local CAPPED_MOD_AUGS =
             {
                 -- HASTE_GEAR (mod 384) clamped to ±25% (2500/10000)
@@ -816,6 +817,26 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 -- COUNTER (mod 291) - 80% cap (with merits) in
                 -- src/map/attack.cpp:482.
                 [640] = 'Counter caps at 80% per swing (with merits).',
+                -- Relaunch aggregate augment ceilings. Raw equipment totals
+                -- remain intact so removing over-cap gear reveals the correct
+                -- remainder; CBattleEntity::getMod applies these effective
+                -- limits to PCs (and the separate Pet Regen limit to pets).
+                [  67] = 'All Songs gear ceiling is +50.',
+                [ 148] = 'Gilfinder gear ceiling is +300.',
+                [ 338] = 'Barrage gear ceiling is +320.',
+                [ 147] = 'Treasure Hunter gear ceiling is +15.',
+                [2046] = 'Phantom Roll Effect gear ceiling is +150.',
+                [ 137] = 'Regen gear ceiling is +600 HP per tick.',
+                [2100] = 'Beast Affinity gear ceiling is +900.',
+                [ 110] = 'Pet Regen gear ceiling is +1280 HP per tick.',
+                [1264] = 'Meditate Duration gear ceiling is +320 seconds.',
+                [1153] = 'Evasion gear ceiling is +850.',
+                [1472] = 'Parrying Rate gear ceiling is +50%.',
+                [ 363] = 'Chance of Successful Block gear ceiling is +50%.',
+                [ 134] = 'Magic Defense Bonus gear ceiling is +480.',
+                [1152] = 'Defense gear ceiling is +3200.',
+                [1157] = 'Spell Interruption Rate Down gear ceiling is +80%.',
+                [  57] = 'Magic Critical Hit Rate gear ceiling is +100%.',
             }
 
             for _, itemId in ipairs(catalystOrder) do

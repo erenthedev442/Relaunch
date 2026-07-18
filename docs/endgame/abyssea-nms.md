@@ -52,7 +52,10 @@ Each warning has:
 
 Trust attacks do not fail hold-fire mechanics. Mechanics that demand a player
 decision select the real player who started the fight, never a Trust. If a
-fight runs beyond its tier's pressure ceiling, its attack and casting pressure
+warning asks you to reposition, the NM remains in place for the response window;
+rear-facing warnings also lock its facing so enmity cannot make it turn with
+you. Combat and enmity otherwise continue normally. If a fight runs beyond its
+tier's pressure ceiling, its attack and casting pressure
 begins rising in visible steps. Pressure starts after 4 / 6 / 8 minutes in
 Visions / Scars / Heroes, inside each tier's expected clear-time band; it does
 not gain passive drain or regeneration.

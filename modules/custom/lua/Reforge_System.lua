@@ -22,6 +22,7 @@ local wh         = require('modules/custom/lua/weekly_hunts')
 -- Hardcore NM mechanics engine (stance dance / AoE / adds / drain / doom /
 -- enrage / phases). Shared library; per-NM configs live in catalog.mechCfgs.
 local mechanics  = require('modules/custom/lua/mob_mechanics_library')
+local native     = require('modules/custom/lua/reforge_native_mechanics')
 
 local huntZoneName = catalog.huntZonePath:match('xi%.zones%.(.+)')
 require(string.format('scripts/zones/%s/Zone', huntZoneName))
@@ -464,7 +465,11 @@ buildSourceNMMenu = function(player, srcDef, station)
                     objtype              = xi.objType.MOB,
                     groupId              = md.groupId,
                     groupZoneId          = catalog.huntZoneId,
-                    name                 = md.name,
+                    -- Dynamic callback tables are keyed by internal entity name.
+                    -- A station suffix prevents simultaneous copies of the same
+                    -- NM from overwriting one another's station/death closures.
+                    name                 = string.format('%s_S%d', md.name, station.id),
+                    packetName           = md.name,
                     x                    = mPos.x,
                     y                    = mPos.y,
                     z                    = mPos.z,
@@ -473,6 +478,12 @@ buildSourceNMMenu = function(player, srcDef, station)
                     -- and players can't land hits.
                     minLevel             = catalog.combatLevel or md.minLv,
                     maxLevel             = catalog.combatLevel or md.maxLv,
+                    -- Pin the intended native TP list explicitly. Dynamic mobs
+                    -- normally inherit this from mob_pools, but keeping it in
+                    -- the Reforge catalog makes every encounter auditable and
+                    -- prevents a future pool edit from silently changing it.
+                    skillList            = md.skillList,
+                    mixins               = native.mixinsFor(md.groupId),
                     -- Detection bitfield from xi.detects. Without this, the
                     -- engine logs "has no detection methods!" per spawn AND
                     -- the NM never auto-aggros. Same field handling as HL
@@ -503,6 +514,7 @@ buildSourceNMMenu = function(player, srcDef, station)
                     end,
 
                     onMobRoam = function(roamMob)
+                        native.roam(roamMob, md.groupId)
                         local deadline = roamMob:getLocalVar('RF_DespawnAt')
                         if deadline > 0 and os.time() >= deadline then
                             -- Idle despawn: free mechanics state before removing
@@ -516,6 +528,23 @@ buildSourceNMMenu = function(player, srcDef, station)
 
                     onMobFight = function(mfMob, mfTarget)
                         mechanics.tick(mfMob, mfTarget)
+                        native.tick(mfMob, mfTarget, md.groupId)
+                    end,
+
+                    onMobMobskillChoose = function(skillMob, skillTarget, chosenSkillId)
+                        return native.chooseMobSkill(skillMob, md.groupId, skillTarget, chosenSkillId)
+                    end,
+
+                    onMobWeaponSkill = function(skillMob, skillTarget, skill)
+                        native.onWeaponSkill(skillMob, skillTarget, skill, md.groupId)
+                    end,
+
+                    onCriticalHit = function(critMob)
+                        native.onCriticalHit(critMob, md.groupId)
+                    end,
+
+                    onAdditionalEffect = function(effectMob, effectTarget, damage)
+                        return native.onAdditionalEffect(effectMob, effectTarget, damage, md.groupId)
                     end,
 
                     onMobDeath = function(deadMob, killer)
@@ -609,6 +638,7 @@ buildSourceNMMenu = function(player, srcDef, station)
                     mechCfg.targetPartyOnly = true
                 end
                 mechanics.attach(mob, mechCfg)
+                native.attach(mob, md.groupId)
 
                 -- Claim to the spawner immediately (same pattern as the
                 -- HuntingLeague / AbysseaMarks pops): claim + enmity, AFTER

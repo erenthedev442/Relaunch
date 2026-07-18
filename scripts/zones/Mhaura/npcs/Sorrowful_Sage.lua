@@ -46,8 +46,8 @@ entity.onTrigger = function(player, npc)
             { 'Begin assault',     function(pp) beginAssault(pp) end },
             { 'How does it work?', function(pp)
                 pp:printToPlayer('[Nyzul Isle] 100 floors, 30-min limit. Clear each floor objective, ride the Rune of Transfer upward.', SYS)
-                pp:printToPlayer('[Nyzul Isle] Bosses every 20 floors drop vigil weapons (Mythic path) + Askar/Denali/Goliard gear. Floor 100 grants the Runic Key.', SYS)
-                pp:printToPlayer('[Nyzul Isle] Earn Nyzul tokens to resume from saved floors and buy supplies. Exit any time before the timer to bank your progress.', SYS)
+                pp:printToPlayer('[Nyzul Isle] Bosses every 20 floors drop vigil weapons (Mythic path) + Askar/Denali/Goliard gear. Floor 100 grants the Runic Key to the Runic Disc holder.', SYS)
+                pp:printToPlayer('[Nyzul Isle] Only the player who selects the climb records floor progress. Exit before timeout to bank that progress and earned tokens.', SYS)
             end },
             { 'Leave',             function(pp) end },
         },

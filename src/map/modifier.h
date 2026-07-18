@@ -1147,6 +1147,9 @@ enum class Mod
 
     KNOCKBACK_REDUCTION = 1172, // Reduces distance knocked +? gear. See Knockback enum.
 
+    // Relaunch custom augment modifiers.
+    PET_BEAST_AFF = 1200, // Scales custom BST jug-pet flat stat bonuses (100 = +100%).
+
     // IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN scripts/enum/mod.lua ASWELL!
 
     // The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.

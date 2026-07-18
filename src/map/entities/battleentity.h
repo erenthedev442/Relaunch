@@ -405,6 +405,7 @@ public:
                              bool bypassGlobalHpDamageCap = false);
 
     int16 getMod(Mod modID);
+    int32 getSumGearMod(Mod modID);
     int16 getMaxGearMod(Mod modID);
 
     bool CanRest();        // checks if able to heal

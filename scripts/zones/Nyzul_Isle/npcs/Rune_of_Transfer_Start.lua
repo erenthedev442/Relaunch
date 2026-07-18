@@ -55,6 +55,7 @@ entity.onEventFinish = function(player, csid, option, npc)
             instance:setLocalVar('Nyzul_Isle_StartingFloor', floorCost.level)
             instance:setLocalVar('Nyzul_Current_Floor', floorCost.level)
             instance:setLocalVar('diskHolder', player:getID())
+            instance:setLocalVar('assaultInitiator', player:getID())
 
             local playerCount = 0
 

@@ -5,7 +5,7 @@
 --
 -- Architecture mirrors Invasion.lua (Al Zahbi). Key differences:
 --   * Two independent battlefields (states keyed by zoneId).
---   * Two-wave structure: trash wave -> boss wave with adds.
+--   * Five-wave structure: escalating trash -> boss wave with adds.
 --   * Rewards via addCurrency (Escha Silt, Escha Beads, Domain Points).
 --   * Domain Points have a daily cap of 80 per player (charvar-tracked).
 --
@@ -89,6 +89,11 @@ local m = Module:new('domain_invasion')
 -- Each state = { wave, mobsAlive, participants, startedAt, endsAt }
 -----------------------------------
 local states = {}
+-- Explicit !diwarp opt-ins, keyed by zoneId then player name. Values are
+-- expiry timestamps so an abandoned pre-window registration cannot leak into
+-- a later invasion. Merely being in an Escha zone never makes a player a
+-- defender.
+local volunteers = {}
 
 local function svWarn(idx) return '[DI]Warn_' .. idx end
 local function svDone(idx) return '[DI]Done_' .. idx end
@@ -112,12 +117,17 @@ local function broadcast(viaPlayer, msg)
     end)
 end
 
-local function defendersInZone(zone)
+local function defendersInZone(zone, zoneId)
     local out = {}
     local ok, players = pcall(function() return zone:getPlayers() end)
     if not ok or not players then return out end
+    local zoneVolunteers = volunteers[zoneId] or {}
+    local now = os.time()
     for _, p in pairs(players) do
-        if p and p:getHP() > 0 then out[#out + 1] = p end
+        local expiry = p and zoneVolunteers[p:getName()]
+        if expiry and expiry >= now and p:getHP() > 0 then
+            out[#out + 1] = p
+        end
     end
     return out
 end
@@ -160,19 +170,34 @@ end
 local nextWave, endDomainInvasion, beginAssault
 
 -----------------------------------
--- Spawn one mob near a defender anchor, entirely stat-overridden in Lua.
+-- Spawn one mob at the zone's curated invasion battlefield, entirely
+-- stat-overridden in Lua. The defender remains the enmity target, but is not
+-- used as the spawn origin; this prevents waves appearing in !hunt arenas.
 -- zone and zoneId are captured in the onMobDeath closure so wave
 -- progression uses the REAL Escha zone, not the groupZoneId (210).
 -----------------------------------
 local function spawnMob(zone, zoneCfg, zoneId, anchor, def, level, mods, hpMult, opts)
     opts = opts or {}
-    local px    = anchor:getXPos()
-    local py    = anchor:getYPos()
-    local pz    = anchor:getZPos()
-    local angle = math.random() * math.pi * 2
-    local dist  = catalog.spawnRingMin
-              + math.random() * (catalog.spawnRingMax - catalog.spawnRingMin)
-    local mx, mz = px + math.cos(angle) * dist, pz + math.sin(angle) * dist
+    local points = zoneCfg.spawnPoints or {}
+    local origin = points[math.random(math.max(1, #points))] or zoneCfg.rallyPos
+    if not origin then return nil end
+
+    local px, py, pz = origin.x, origin.y, origin.z
+    local mx, mz
+    for _ = 1, catalog.spawnTries or 8 do
+        local angle = math.random() * math.pi * 2
+        local dist  = catalog.spawnRingMin
+                  + math.random() * (catalog.spawnRingMax - catalog.spawnRingMin)
+        local cx, cz = px + math.cos(angle) * dist, pz + math.sin(angle) * dist
+        if zone:isNavigablePoint({ x = cx, y = py, z = cz }) then
+            mx, mz = cx, cz
+            break
+        end
+    end
+    -- Never fall back to the origin: it is also the volunteer rally point.
+    -- Failing this spawn is safer than materialising an invader on players;
+    -- the empty-wave guard below terminates the event if every spawn fails.
+    if not mx or not mz then return nil end
 
     local mob = zone:insertDynamicEntity({
         objtype              = xi.objType.MOB,
@@ -268,7 +293,7 @@ nextWave = function(zone, zoneCfg, zoneId)
         return
     end
 
-    local defenders = defendersInZone(zone)
+    local defenders = defendersInZone(zone, zoneId)
     if #defenders == 0 then
         endDomainInvasion(zone, zoneCfg, zoneId, 'abandoned')
         return
@@ -335,6 +360,7 @@ endDomainInvasion = function(zone, zoneCfg, zoneId, reason)
     local mobsToDespawn = st.mobsAlive
     local participants  = st.participants
     states[zoneId] = nil   -- clear first
+    volunteers[zoneId] = nil
 
     for _, mob in pairs(mobsToDespawn or {}) do
         if type(mob) == 'userdata' then
@@ -400,14 +426,14 @@ beginAssault = function(zone, zoneCfg, zoneId)
     local st = states[zoneId]
     if not st then return end
     local muster = catalog.musterDelaySec or 0
-    local anchor = playersInZone(zone)[1]
+    local anchor = defendersInZone(zone, zoneId)[1]
     if muster <= 0 or not anchor then
         nextWave(zone, zoneCfg, zoneId)   -- no warm-up configured / nobody to time it: start now
         return
     end
     local token = st.startedAt
     broadcast(anchor, string.format(
-        '[Domain Invasion] %s is under assault! The first wave descends in %d seconds — type !diwarp to rally!',
+        '[Domain Invasion] %s is under assault! First wave in %d seconds. !diwarp opts in; other Escha players remain outside the defense.',
         zoneCfg.label, muster))
     anchor:timer(muster * 1000, function(pp)
         local cst = states[zoneId]
@@ -456,7 +482,7 @@ local function checkClock(player)
             SetServerVariable(svWarn(idx), today)
             local zc = catalog.zones[w.zoneIdx]
             broadcast(player, string.format(
-                '[Domain Invasion] Escha beasts mass in %s — Domain Invasion in ~%d minutes! Type !diwarp to defend!',
+                '[Domain Invasion] Escha beasts mass in %s — attack in ~%d minutes! Type !diwarp to opt in. Hunting League players are not defenders.',
                 zc.label, catalog.warnMinutes))
         end
 
@@ -466,7 +492,7 @@ local function checkClock(player)
             local zc = catalog.zones[w.zoneIdx]
             if zoneId == zc.zoneId then
                 local zone      = player:getZone()
-                local defenders = defendersInZone(zone)
+                local defenders = defendersInZone(zone, zc.zoneId)
                 if #defenders > 0 then
                     SetServerVariable(svDone(idx), today)
                     states[zc.zoneId] = {
@@ -477,7 +503,7 @@ local function checkClock(player)
                         endsAt       = os.time() + (catalog.musterDelaySec or 0) + catalog.timeLimitSec,
                     }
                     broadcast(player, string.format(
-                        '[Domain Invasion] THE ESCHA ATTACK! %s is under assault — type !diwarp to join the defense!',
+                        '[Domain Invasion] THE ESCHA ATTACK! %s is under assault — type !diwarp to opt in and join!',
                         zc.label))
                     beginAssault(zone, zc, zc.zoneId)
                 end
@@ -506,6 +532,32 @@ for _, zoneName in ipairs(TICK_ZONES) do
     end)
 end
 
+-- Resolve the warning/grace window in which !diwarp may register before an
+-- event exists. Handles the five-minute warning before the midnight window.
+local function upcomingVolunteerZone()
+    local now = nowSecOfDay()
+    local today = currentUtcDay()
+
+    for idx, w in ipairs(catalog.windows) do
+        local target = windowSecOfDay(w)
+        local warnAt = target - catalog.warnMinutes * 60
+        local warnWraps = warnAt < 0
+        if warnWraps then warnAt = warnAt + 86400 end
+
+        local inWarn = warnWraps
+            and (now >= warnAt or now < target)
+            or  (now >= warnAt and now < target)
+        local inGrace = now >= target and now < target + catalog.graceMinutes * 60
+        local alreadyDone = inGrace and (GetServerVariable(svDone(idx)) or 0) == today
+
+        if (inWarn or inGrace) and not alreadyDone then
+            return catalog.zones[w.zoneIdx]
+        end
+    end
+
+    return nil
+end
+
 -----------------------------------
 -- Public API (for !di GM command and !diwarp).
 -----------------------------------
@@ -521,6 +573,38 @@ xi._domain_invasion_api =
     activeZoneId = function()
         for zid in pairs(states) do return zid end
         return nil
+    end,
+
+    -- !diwarp is the explicit opt-in boundary. Register before/during the
+    -- muster or while an assault is active, then return the curated rally
+    -- position for the command to use.
+    volunteer = function(player)
+        local zc
+        for zid in pairs(states) do
+            for _, candidate in ipairs(catalog.zones) do
+                if candidate.zoneId == zid then
+                    zc = candidate
+                    break
+                end
+            end
+            if zc then break end
+        end
+        zc = zc or upcomingVolunteerZone()
+
+        if not zc or not zc.rallyPos then
+            return false, 'No Domain Invasion is active or mustering right now.'
+        end
+
+        volunteers[zc.zoneId] = volunteers[zc.zoneId] or {}
+        local st = states[zc.zoneId]
+        local expiry = st and (st.endsAt + 60)
+            or (os.time() + (catalog.warnMinutes + catalog.graceMinutes + 2) * 60)
+        volunteers[zc.zoneId][player:getName()] = expiry
+        if st then
+            st.participants[player:getName()] = true
+        end
+
+        return true, zc.zoneId, zc.rallyPos, zc.label
     end,
 
     info = function(zoneId)
@@ -544,6 +628,13 @@ xi._domain_invasion_api =
         if states[zid] then return false, 'Domain Invasion already in progress here.' end
         for _, zc in ipairs(catalog.zones) do
             if zc.zoneId == zid then
+                volunteers[zid] = {}
+                local expiry = os.time() + (catalog.musterDelaySec or 0) + catalog.timeLimitSec + 60
+                for _, player in pairs(zone:getPlayers()) do
+                    if player and player:getHP() > 0 then
+                        volunteers[zid][player:getName()] = expiry
+                    end
+                end
                 states[zid] = {
                     wave         = 0,
                     mobsAlive    = {},
@@ -566,6 +657,7 @@ xi._domain_invasion_api =
         if not st then return false, 'No active Domain Invasion in that zone.' end
         local mobs = st.mobsAlive
         states[zoneId] = nil
+        volunteers[zoneId] = nil
         for _, mob in pairs(mobs or {}) do
             if type(mob) == 'userdata' then
                 pcall(function()

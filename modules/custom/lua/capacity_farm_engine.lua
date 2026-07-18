@@ -50,7 +50,6 @@ local function makeFarm(catalog)
 
     local campZone
     local ensurePopulation  -- forward decl
-    local pendingRespawns = 0  -- timers in-flight; keeps ensurePopulation from double-spawning
 
     local function spawnOne()
         if not campZone then return end
@@ -104,12 +103,11 @@ local function makeFarm(catalog)
             maxLevel    = catalog.maxLv,
             detection   = xi.detects.SIGHT_AND_HEARING,
             isAggroable = true,
-
-            -- REQUIRED: a dead dynamic mob must free its targid (held ~60s,
-            -- then reusable). Every respawn here is a NEW insertDynamicEntity;
-            -- without this each kill permanently leaks one of the zone's 511
-            -- dynamic slots and spawning stops dead after a few hundred kills.
-            releaseIdOnDisappear = true,
+            -- Keep the same dynamic entity and targid for every life. Setting a
+            -- respawn enables SpawnHandler; releaseIdOnDisappear must stay false
+            -- or the zone deletes the entity before TrySpawn can reuse it.
+            respawn              = catalog.respawnSeconds or 5,
+            releaseIdOnDisappear = false,
 
             -- CMobEntity::Spawn() calls CalculateMobStats() which recalculates HP
             -- from pool data, overwriting our custom maxHP.  onMobSpawn fires AFTER
@@ -119,31 +117,13 @@ local function makeFarm(catalog)
             onMobSpawn = function(m)
                 m:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)
                 m:setMobMod(xi.mobMod.NO_DROPS, 1)
+                -- C++ folds this killer-only flat bonus into the normal mob CP
+                -- award before applying the strict 60k per-player/per-kill cap.
+                m:setLocalVar('CapacityFarmBonus', catalog.cpBonus or 0)
                 if catalog.maxHP and catalog.maxHP > 0 then
                     m:setMaxHP(catalog.maxHP)
                     m:setHP(catalog.maxHP)
                 end
-            end,
-
-            onMobDeath = function(deadMob, killer)
-                if killer and catalog.cpBonus and catalog.cpBonus > 0 then
-                    pcall(function() killer:addCapacityPoints(catalog.cpBonus) end)
-                end
-                -- C++ auto-respawn never fires for dynamic entities (they are
-                -- deleted on despawn before TrySpawn can run), so drive repop
-                -- from Lua. NOTE: the timer must live on the ENTITY -- CLuaZone
-                -- has no :timer binding. The dying mob's AI keeps ticking
-                -- through its ~12s death state, so a 5s timer reliably fires.
-                -- The callback refills via ensurePopulation() (not a blind
-                -- spawnOne) so the camp converges on mobCount even if timers
-                -- and top-ups race; pendingRespawns stops ensurePopulation
-                -- from double-counting a kill whose corpse already left the
-                -- entity list.
-                pendingRespawns = pendingRespawns + 1
-                deadMob:timer(5000, function()
-                    pendingRespawns = math.max(0, pendingRespawns - 1)
-                    ensurePopulation()
-                end)
             end,
         })
         if not mob then
@@ -160,12 +140,12 @@ local function makeFarm(catalog)
 
     ensurePopulation = function()
         if not campZone then return end
-        -- Count ALL existing entities (alive + dead-but-not-yet-gc'd).
-        -- Dead dynamic mobs hold their targid for ~60s; pendingRespawns
-        -- accounts for in-flight timers so we don't over-spawn.
+        -- Persistent farm entities remain in this list while dead and respawn
+        -- through SpawnHandler. Count all of them so zone-in/hourly top-ups only
+        -- replace genuinely missing entities, never ordinary corpses.
         local existing = campZone:queryEntitiesByName('DE_' .. catalog.mobName)
         local count    = existing and #existing or 0
-        local toSpawn  = math.max(0, catalog.mobCount - count - pendingRespawns)
+        local toSpawn  = math.max(0, catalog.mobCount - count)
         for _ = 1, toSpawn do
             spawnOne()
         end
@@ -188,14 +168,11 @@ local function makeFarm(catalog)
         return cs
     end)
 
-    -- Periodic safety net: verify the pool every Vana'diel hour (~2 real min).
-    -- Also resets pendingRespawns: any legit in-flight timer is <=5s old, so a
-    -- nonzero count here means a timer was lost (mob cleaned up early) and
-    -- would otherwise under-fill the camp forever.
+    -- Periodic safety net: verify the persistent pool every Vana'diel hour
+    -- (~2 real min) in case an entity was removed by an admin/script.
     m:addOverride(catalog.zonePath .. '.Zone.onGameHour', function(zone)
         super(zone)
         if campZone then
-            pendingRespawns = 0
             ensurePopulation()
         end
     end)

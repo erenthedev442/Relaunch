@@ -1130,6 +1130,59 @@ local pTableFloorRandomEntities =
 -- Local functions
 -----------------------------------
 
+local function startScavengerLampTimer(instance)
+    local attempt      = instance:getLocalVar('[Lamps]Attempt') + 1
+    local currentFloor = instance:getLocalVar('Nyzul_Current_Floor')
+    local timerLamp    = GetNPCByID(ID.npc.RUNIC_LAMP_OFFSET, instance)
+
+    instance:setLocalVar('[Lamps]Attempt', attempt)
+
+    if not timerLamp then
+        print(string.format('[Nyzul] Lamp timer could not start on floor %d: first lamp is missing', currentFloor))
+        return
+    end
+
+    timerLamp:timer(xi.nyzul.scavengerLampTimeMs, function(lamp)
+        local currentInstance = lamp:getInstance()
+        if
+            not currentInstance or
+            currentInstance:getStage() ~= xi.nyzul.objective.ACTIVATE_ALL_LAMPS or
+            currentInstance:getLocalVar('Nyzul_Current_Floor') ~= currentFloor or
+            currentInstance:getLocalVar('[Lamps]Attempt') ~= attempt or
+            currentInstance:getLocalVar('[Lamps]Complete') == 1
+        then
+            return
+        end
+
+        local penaltyMinutes = xi.nyzul.scavengerLampPenaltyMin
+        local timeLimit      = currentInstance:getTimeLimit() * 60
+        currentInstance:setTimeLimit(math.max(0, timeLimit - penaltyMinutes * 60))
+        currentInstance:setLocalVar('[Lamps]Lit', 0)
+        -- The next authoritative instance-time tick recalculates remaining time
+        -- from elapsed milliseconds and refreshes every player's visible bar.
+        currentInstance:setLocalVar('Nyzul_RefreshCountdown', 1)
+
+        for i = 0, xi.nyzul.scavengerLampCount - 1 do
+            local runicLamp = GetNPCByID(ID.npc.RUNIC_LAMP_OFFSET + i, currentInstance)
+            if runicLamp then
+                runicLamp:setAnimationSub(0)
+                runicLamp:setLocalVar('[Lamp]Lit', 0)
+            end
+        end
+
+        for _, player in pairs(currentInstance:getChars()) do
+            player:messageSpecial(ID.text.MALFUNCTION)
+            player:messageSpecial(ID.text.TIME_LOSS, penaltyMinutes)
+            player:printToPlayer(
+                string.format('[Nyzul] Lamps reset. Find and light all %d within 2 minutes.',
+                    xi.nyzul.scavengerLampCount),
+                xi.msg.channel.SYSTEM_3)
+        end
+
+        startScavengerLampTimer(currentInstance)
+    end)
+end
+
 local function lampsActivate(instance)
     local floorLayout      = instance:getLocalVar('Nyzul_Isle_FloorLayout')
     local lampsObjective   = instance:getLocalVar('[Lamps]Objective')
@@ -1140,8 +1193,31 @@ local function lampsActivate(instance)
         table.insert(dTableLampPoints, i, lampSpawnPoints[floorLayout][i])
     end
 
+    -- Relaunch solo objective: find and light five persistent lamps. No
+    -- simultaneous activation, party registration, or hidden order.
+    if lampsObjective == xi.nyzul.lampsObjective.SCAVENGER then
+        instance:setLocalVar('[Lamps]Target', xi.nyzul.scavengerLampCount)
+        instance:setLocalVar('[Lamps]Lit', 0)
+        instance:setLocalVar('[Lamps]Complete', 0)
+
+        for i = 0, xi.nyzul.scavengerLampCount - 1 do
+            local spawnPoint = math.random(1, #dTableLampPoints)
+            local runicLamp  = GetNPCByID(ID.npc.RUNIC_LAMP_OFFSET + i, instance)
+
+            if runicLamp then
+                runicLamp:setPos(dTableLampPoints[spawnPoint])
+                runicLamp:setAnimationSub(0)
+                runicLamp:setLocalVar('[Lamp]Lit', 0)
+                runicLamp:setStatus(xi.status.NORMAL)
+            end
+
+            table.remove(dTableLampPoints, spawnPoint)
+        end
+
+        startScavengerLampTimer(instance)
+
     -- Lamp Objective: Register
-    if lampsObjective == xi.nyzul.lampsObjective.REGISTER then
+    elseif lampsObjective == xi.nyzul.lampsObjective.REGISTER then
         local spawnPoint = math.random(1, #dTableLampPoints)
         local runicLamp1 = GetNPCByID(ID.npc.RUNIC_LAMP_OFFSET, instance)
 
@@ -1335,10 +1411,30 @@ xi.nyzul.prepareMobs = function(instance)
 
             -- Activate Lamps Objective
             [xi.nyzul.objective.ACTIVATE_ALL_LAMPS] = function()
-                instance:setLocalVar('[Lamps]Objective', math.random(xi.nyzul.lampsObjective.REGISTER, xi.nyzul.lampsObjective.ORDER))
+                instance:setLocalVar('[Lamps]Objective', xi.nyzul.lampsObjective.SCAVENGER)
                 lampsActivate(instance)
+
+                -- Light ambient pressure only: lamp discovery remains the
+                -- objective, rather than a full combat floor in disguise.
+                if math.random(1, 100) <= 50 then
+                    spawnPointIndex = math.random(1, #dTableSpawnPoint)
+                    spawnPoint      = dTableSpawnPoint[spawnPointIndex]
+                    safeSpawn(
+                        ID.mob.ARCHAIC_RAMPART_OFFSET,
+                        spawnPoint.x,
+                        spawnPoint.y,
+                        spawnPoint.z,
+                        math.random(0, 255),
+                        'lamp-floor Archaic Rampart')
+                end
             end,
         }
+
+        -- Scavenger floors contain only their five lamps and the optional
+        -- rampart above. Skip normal fodder, NMs, and gear restrictions.
+        if instance:getStage() == xi.nyzul.objective.ACTIVATE_ALL_LAMPS then
+            return
+        end
 
         -- Spawn Rampart-Type mobs.
         if math.random(1, 100) <= 90 then
@@ -1442,7 +1538,10 @@ xi.nyzul.prepareMobs = function(instance)
 
         -- Spawn fodder regular mobs.
         local mobFamily     = math.random(1, 16)
-        local enemyAmount   = math.random(6, 12)
+        -- Compact layouts can have as few as 23 points. Objective mobs, gears,
+        -- ramparts, and NMs consume from the same table first, so cap fodder at
+        -- the points that remain instead of calling math.random on an empty list.
+        local enemyAmount   = math.min(math.random(6, 12), #dTableSpawnPoint)
         local dTableEnemies = {}
 
         for i = pTableFloorRandomEntities[mobFamily][1], pTableFloorRandomEntities[mobFamily][2] do
@@ -1471,6 +1570,12 @@ xi.nyzul.prepareMobs = function(instance)
                 instance:getLocalVar('Nyzul_Specified_Enemy') == 0
             then
                 instance:setLocalVar('Nyzul_Specified_Enemy', mobID)
+                -- Make the designated target read "Impossible to gauge" on
+                -- /check so a solo player can identify it without guesswork.
+                local specifiedMob = GetMobByID(mobID, instance)
+                if specifiedMob then
+                    specifiedMob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
+                end
             end
 
             enemyAmount = enemyAmount - 1

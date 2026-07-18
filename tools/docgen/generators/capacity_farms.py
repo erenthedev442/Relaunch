@@ -2,7 +2,7 @@
 
 Relaunch runs two shared Capacity Point farm camps — Bibiki Bay and King
 Ranperre's Tomb — each an always-up pool of Lv150-160 "Capacity Phantoms" that
-instantly respawn. Reads the zone + mob name straight from each catalog so the
+automatically respawn. Reads the zone + mob name straight from each catalog so the
 page reconciles.
 
 Marker IDs: cp-overview, cp-camps
@@ -41,7 +41,7 @@ def _overview() -> str:
     return (
         "Grinding **Capacity Points** for Job Points? Relaunch keeps two dedicated **CP farm camps** "
         "running around the clock. Each is a pool of **always-up Lv150-160 mobs** with low HP that "
-        "**respawn instantly**, use **shared claim** (anyone can help, everyone gets credit), and drop "
+        "**automatically respawn**, use **shared claim** (anyone can help, everyone gets credit), and drop "
         "**no loot** — pure, uninterrupted Capacity Point farming. Warp in with the command, pull, "
         "repeat. (CP is boosted server-wide, so a session here fills Job Points fast.)"
     )
