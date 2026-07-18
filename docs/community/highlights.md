@@ -13,7 +13,7 @@ Rows marked with a player name are pulled live from the server's world-first rec
 
 | Achievement | Player | Date | Notes |
 |---|---|---|---|
-| First Rank V (Legend) in Hunting League | — | — | First Tier V NM kill — the *Apex Hunter* achievement |
+| First Rank V (Legend) in Hunting League | [Spyro](players/spyro.md) | 2026-07-18 | First Tier V NM kill — the *Apex Hunter* achievement |
 | First Reforge +3 piece | — | — |  |
 | First Wave Master Insane clear | — | — |  |
 | First Weekly Hunt Board sweep (all 5 completed) | — | — |  |
@@ -48,6 +48,6 @@ Community milestones — total kills, total marks earned, total Infamy banked �
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 82cafc25ef81 -->
-_Last updated: 2026-07-12 21:15 PDT_
+<!-- content-hash: f72918b9604f -->
+_Last updated: 2026-07-18 05:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->
