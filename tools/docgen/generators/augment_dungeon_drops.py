@@ -2,7 +2,9 @@
 
 The seven "Augmentation Dungeons" each own a stat family of augment
 catalysts (strategy owner-approved 2026-07-03): every trash mob carries one
-fixed catalyst (30%-ish roll to the treasure pool), and the boss pays each
+fixed catalyst (10% roll to the treasure pool -- flat across all catalyst
+sources per the 2026-07-11 owner rule; TRASH_RATE in augment_dungeon_drops.lua),
+and the boss pays each
 party member random picks from the dungeon's boss pool. All player-facing
 tables AND the rate/quantity knobs derive from the same files the runtime
 uses, so docs cannot drift from what actually drops:

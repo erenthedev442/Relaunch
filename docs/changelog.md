@@ -16,6 +16,12 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
 
     **Friday, July 17**
 
+    - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-17 14:21
+    - **Relaunch/Augments** — Flat 10% on the hand-added catalyst kill-drops (was 50/30/20)
+    - Rebalance endgame progression and improve onboarding
+    - **Relaunch/Augments** — Restore the 10% open-world catalyst fallback (was 0% for Lv29+ mobs)
+    - **Ops/Drift Monitor** — Probe portal app locally first, self-heal a dead backend
+    - **Relaunch/Hnm** — Retire affinity-owned king sites from custom_HNM_system; clean boot errors
     - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-17 04:08
     - **Relaunch/Engine** — Close the dangling-entity crash class on the Fellow binding surface
     - **Relaunch/Fellow** — Stop keeper/combat-loop timers crashing xi_map on logout teardown
@@ -1085,11 +1091,3 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Abyssea** — Add Cruor reward on marks-popped NM kill
     - **Corsair** — Double-up always showed 0 because corsairActiveRoll was clobbered
     - **Commands** — Add !delnegdmg - purge items whose applied DMG augment netted negative
-    - **Magic** — Uncap PC magic damage (remove base + MAB/MDB ratio ceilings)
-    - **Infamy** — Add Daurdabla (string relic) to Infamy Vendor at 800 Inf
-    - **Automerits** — Skip job-specific, Others, and Weaponskill merits
-    - **Vendors** — Add BRD instruments to hunting league + infamy gear vendors
-    - **Infamy Vendor** — Ryunohige -> i119 III final form (21858)
-    - **Augments** — Force re-apply of EXP-bonus augment fix (augId 73 -> mod 382)
-    - **Crash** — Comprehensive IsEntityAlive guard pass on CLuaBaseEntity
-    - **Crash** — Extend IsEntityAlive guard to setHP (boss-command UAF)
