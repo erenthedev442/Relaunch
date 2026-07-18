@@ -16,11 +16,16 @@ local function isExcluded(exclusions, key, value)
 end
 
 local function isDynamicEntity(mob)
-    -- Dynamic entities occupy targids 0x700-0x8FF. Use the entity's actual
-    -- targid: the low bits of a static database mob ID are not guaranteed to
-    -- match its targid (for example, the Inner Ra'Kaznar 5x spawn rows).
-    local targid = mob:getTargID()
-    return targid >= 0x700 and targid < 0x900
+    -- Static database entities may legitimately have targids in the dynamic
+    -- allocator's 0x700-0x8FF range (notably Inner Ra'Kaznar's 5x spawns).
+    -- Dynamic entities encode targid + 0x100 in the low 12 bits of their long
+    -- ID, whereas static entities encode the actual targid unchanged.
+    local targid          = mob:getTargID()
+    local encodedTargId   = mob:getID() % 0x1000
+    local inDynamicRange  = targid >= 0x700 and targid < 0x900
+    local dynamicallyMade = encodedTargId ~= targid
+
+    return inDynamicRange and dynamicallyMade
 end
 
 local function isReiveEntity(mob)

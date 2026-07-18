@@ -188,7 +188,8 @@ describe('Legendary open world scaling', function()
             makeMob({ battlefield = {} }),
             makeMob({ master = {} }),
             makeMob({ inDynamis = true }),
-            makeMob({ targId = 0x700 }),
+            -- Dynamic targid 0x700 is encoded as 0x800 in the long ID.
+            makeMob({ mobId = 0x800, targId = 0x700 }),
         }
 
         for _, mob in ipairs(cases) do
@@ -197,18 +198,34 @@ describe('Legendary open world scaling', function()
         end
     end)
 
-    it('does not mistake static database IDs for dynamic targids', function()
-        local mob = makeMob({
-            mobId = 17909614, -- Low 12 bits fall inside the dynamic targid range.
-            targId = 0x76,
-            level = 137,
-        })
+    it('scales static Apex Poxhounds whose targids overlap the dynamic range', function()
+        local affectedMobIds =
+        {
+            17909615,
+            17909616,
+            17909620,
+            17909621,
+            17909626,
+            17909628,
+            17909630,
+        }
 
-        local eligible, reason = xi.openWorldScaling.checkEligibility(mob)
-        assert(eligible, string.format('Expected static Apex Poxhound to be eligible, got %s', reason))
+        for _, mobId in ipairs(affectedMobIds) do
+            local staticTargId = mobId % 0x1000
+            local mob = makeMob({
+                mobId = mobId,
+                targId = staticTargId,
+                level = 137,
+            })
 
-        xi.openWorldScaling.apply(mob)
-        assert(mob:getMaxHP() == 600000)
+            local eligible, reason = xi.openWorldScaling.checkEligibility(mob)
+            assert(eligible,
+                string.format('Expected static Apex Poxhound %d to be eligible, got %s', mobId, reason))
+
+            xi.openWorldScaling.apply(mob)
+            assert(mob:getMaxHP() == 600000,
+                string.format('Expected static Apex Poxhound %d HP floor 600000', mobId))
+        end
     end)
 
     it('honors runtime exclusion markers used by custom content', function()
