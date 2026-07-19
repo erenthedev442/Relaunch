@@ -10,9 +10,11 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
 ---
 
 !!! note "Week of July 13–19, 2026"
-    **Saturday, July 18**
+    **Sunday, July 19**
 
-    - **Relaunch/Reforge** — Restore offensive accuracy, native NM combat hooks, and validated TP lists across all 15 arena fights
+    - Expand endgame progression and combat systems
+    - **Open World** — Scale static mobs in dynamic targid range
+    - **Relaunch/Unity** — Un-hide stock Ethereal Junctions (Emperor Arthro + 4 more had no reachable junction)
 
     **Friday, July 17**
 
@@ -115,7 +117,7 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Relaunch/Nyzul** — Enemy-leader objective could not complete (missing mob script)
     - **Relaunch/Gm** — Add !phantomfarm to diagnose + force-refill capacity farms
     - **Relaunch/Paragon** — Add Arcana (magic) + Dominion (pet) perks to the Paragon board
-    - **Relaunch/Nyzul** — Replace party-only lamp puzzles with five-lamp solo scavenger floors
+    - **Relaunch/Nyzul** — Drop the un-soloable "Activate all lamps" objective
     - **Relaunch/Dungeons** — Rebuild 6 rosters from retail stock coords + Gusgen entry Y + per-dungeon leash
     - **Relaunch/Ops** — Runtime-consumer drift validator (the !affinitynm blind spot)
     - **Relaunch/Ambuscade** — Instant auto-exit to Mhaura on completion / failure
@@ -1036,65 +1038,3 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Crash** — Guard CNotorietyContainer::hasEnmity against dangling-entity UAF
     - **Damage** — Remove 99,999 hidden cap from handlePhalanx / handleOneForAll
     - **WARP** — Update Bastok Markets warp destination coordinates
-    - **Test Dummy** — Replace generic tiers with Ascension Courts + Abyssea NMs
-    - **Crash** — Guard CanAttack against dangling target ptr (mob enmity SIGQUIT)
-    - **Augments** — Cap All songs augment at 75% of prior max
-    - **Crash** — Make alive-entity registry thread-safe (real fix for NPC-load crash/hang)
-    - **DB** — Evict broken PreparedStatement on CR_OUT_OF_MEMORY to prevent heap corruption
-    - **DMG** — Break melee/ranged damage cap for PC attackers
-    - **Rebirth** — Make NPC player-accessible, remove GM gate
-    - **Tournament** — Add team support
-    - **Rebirth** — Move NPC to RuLude Gardens underground + !rebirth warp cmd
-    - **Tournament** — Add last-person-standing wave tournament system
-    - **Rebirth** — Move Rebirth NPC underground, GM-only gate
-    - **Rebirth** — Scale Rebirth Points per rebirth level (10→20 cap)
-    - **SMN** — Whisper the true number when a Blood Pact exceeds the 131,071 display cap
-    - **SMN** — Boost avatar Blood Pact damage x10 -> ~260x (BP_DAMAGE 2500->25900, owner request)
-    - **Augments** — Activate INT+ augment via Ahriman Tears (item 921)
-    - **Naegling** — Restore retail stats and correct WS to Savage Blade
-    - **Job Rebirth** — Rebirth a maxed job for power, reusing Ascension categories
-    - **Hunting League** — Rank IV unlock button was unclickable for long-named players (menu click round-trip exceeded Mes[128])
-    - **Augments** — Remove DEX/AGI + MND/CHR pairs and the 6 flat weapon-Dmg augments (owner request)
-    - **Augments** — Remove the six 2-stat STR augments + ban their catalysts (owner request)
-    - **Augments** — Show EXP/Cap Point at base=33 to match the live engine value
-    - **Hunting League** — NMs spawn aggroed onto the player who popped them
-    - **Equip** — Disable /equipset macros server-wide
-
-    **Thursday, June 18**
-
-    - **PUP** — Automaton survives master death (retail behavior)
-    - **Augments** — Apply the 5th augment slot on inventory load
-    - **Items** — Grant Geomancy/Handbell skill on all-magic-skills gear
-    - **Augments** — Reduce individual WS DMG+ cap 800%→200%
-    - **Augments** — Cap Gilfinder augment at +4/slot (20 total max)
-    - **Combat** — Uncap skillchain damage for PC attackers
-    - **Trusts** — Replace Hunter's Prelude with double madrigal on Gemma
-    - **Trusts** — Replace Gemma's Sentinel's Scherzo with Hunter's Prelude
-    - **Combat** — Exclude the 8 Abyssea marks-pop zones from level correction
-    - **Ascension** — Despawn trial NM on player KO
-    - **Items** — Add missing mods for Spaekonas Gloves +4 (23988)
-    - **Combat** — Use MESSAGE_SYSTEM_1 for over-cap damage notification
-    - **SMN** — Boost avatar BP damage and fix gear-swap stat refresh
-    - **Casino** — Close 30ms double-bet exploit at Lady Luck
-    - **Commands** — Show pet level + stats for all 4 pet jobs (was PUP-only)
-    - **Shop** — Add Eminent Sachet (21383) to !shop ammo
-
-    **Wednesday, June 17**
-
-    - **World NMs** — Drop Escha Ru'Aun from the auto-pop list (Reisenjima only)
-    - **Abyssea** — Make ??? marks-pop + kill-reward clobber-proof (hook pattern)
-    - **Blue Magic** — Disable Mortal Ray (spell 686) - cannot be cast
-    - **Subjobs** — Level-0 sub jobs permanently stuck (EXP_TO_NEXT[0] was nil)
-    - **Augments** — Refund staked items when the player cancels the augment menu
-    - **Skillchain** — Record SC damage as int32 (int16 capped hits at 32,767)
-    - **Sparks Exchange** — Shorten Eminence Broker main title (128-byte click cap)
-    - **Abyssea** — Add Cruor reward on marks-popped NM kill
-    - **Corsair** — Double-up always showed 0 because corsairActiveRoll was clobbered
-    - **Commands** — Add !delnegdmg - purge items whose applied DMG augment netted negative
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1bafc5d4df2e -->
-_Last updated: 2026-07-19 08:15 PDT_
-<!-- DOCGEN:END id="last-updated" -->
