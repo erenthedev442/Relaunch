@@ -199,6 +199,6 @@ A full party clearing **Heroes** NMs without trusts earns **180 Infamy per kill*
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2628b78c6245 -->
-_Last updated: 2026-07-17 14:32 PDT_
+<!-- content-hash: b30723789732 -->
+_Last updated: 2026-07-19 08:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

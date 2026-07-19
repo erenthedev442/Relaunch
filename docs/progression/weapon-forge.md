@@ -692,6 +692,6 @@ Ordinary uses of shared weapon skills (a Resolution from a non-Prime greatsword,
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ba58bcb5eb71 -->
-_Last updated: 2026-07-17 04:15 PDT_
+<!-- content-hash: 41392a951daa -->
+_Last updated: 2026-07-19 08:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

@@ -29,11 +29,11 @@ The Relaunch fixes that. Everyone starts equal. The economy is fresh. The stat b
 
 - **[Ambuscade](endgame/ambuscade.md)** — Talk to the Ambuscade Tome in Mhaura to enter a private instance (three modes × five difficulties). Clears pay Hallmarks (monthly-capped) and Gallantry.
 
-- **[Nyzul Isle](endgame/nyzul-isle.md)** — Nyzul Isle Investigation is an instanced floor-climbing dungeon lifted straight from retail, accessible on the Relaunch server without completing any Assault or ToAU prerequisites. The only custom piece is the entry NPC.
+- **[Nyzul Isle](endgame/nyzul-isle.md)** — Nyzul Isle Investigation is an instanced floor-climbing dungeon lifted from retail, accessible on the Relaunch server without completing any Assault or ToAU prerequisites. Entry, exits, and lamp floors are adapted for a solo server.
 
 - **[Dynamis — Divergence](endgame/dynamis-divergence.md)** — Four city Dynamis instances reached through entry portals for one Dynamis currency each. Defeat the Mega-Boss, then finish the Disjoined NM to record the full city clear required by Augment Tier 4 alongside all 3 Rank 4 Hunt NMs.
 
-- **[Domain Invasion](endgame/domain-invasion.md)** — Opt-in five-wave events in isolated battlefields within the Escha zones (Zi'Tah / Ru'Aun alternating every 3 hours, eight times a day).
+- **[Domain Invasion](endgame/domain-invasion.md)** — Five-wave events in the Escha zones (Zi'Tah / Ru'Aun alternating every 3 hours, eight times a day). Type !diwarp during the warning, muster, or active assault to opt in and rally.
 
 - **[High-Tier Battlefields](endgame/high-tier-battlefields.md)** — Repeatable, tier-scaled versions of the classic mission boss battlefields. Buy a Phantom Gem with gil on Purgonorgo Isle, trade it at the battlefield entrance, pick a tier (I / II / III), and win for scaling gil + Hunt Mark rewards.
 
@@ -94,6 +94,6 @@ Everything that made the original server worth playing:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6cb6fb93a409 -->
-_Last updated: 2026-07-17 14:32 PDT_
+<!-- content-hash: a0c2e9a7b2bc -->
+_Last updated: 2026-07-19 08:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

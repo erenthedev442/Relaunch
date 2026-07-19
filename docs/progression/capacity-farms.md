@@ -22,6 +22,6 @@ Grinding **Capacity Points** for Job Points? Relaunch keeps two dedicated **CP f
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 89b608e3205d -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 6066e493d672 -->
+_Last updated: 2026-07-19 08:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

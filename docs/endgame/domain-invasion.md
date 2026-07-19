@@ -180,6 +180,6 @@ Pricing follows one rule: **Hunt Marks cost = Zurim's Domain-Point cost × 2.5**
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fb8d53715c4d -->
-_Last updated: 2026-07-12 23:42 PDT_
+<!-- content-hash: 96dae7af4960 -->
+_Last updated: 2026-07-19 08:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

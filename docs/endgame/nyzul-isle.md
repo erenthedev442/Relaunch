@@ -1,6 +1,6 @@
 # Nyzul Isle
 
-**Nyzul Isle Investigation** is an instanced floor-climbing dungeon from retail, accessible on the Relaunch server without completing any Assault or ToAU prerequisites. Entry, exits, and lamp floors are adapted for a solo server.
+**Nyzul Isle Investigation** is an instanced floor-climbing dungeon lifted from retail, accessible on the Relaunch server without completing any Assault or ToAU prerequisites. Entry, exits, and lamp floors are adapted for a solo server.
 
 ---
 
@@ -174,6 +174,6 @@ Each floor NM drops one Unappraised chest; take it to the in-instance appraiser 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6421b4a8e302 -->
-_Last updated: 2026-07-12 07:48 PDT_
+<!-- content-hash: 8a651567a1d5 -->
+_Last updated: 2026-07-19 08:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->
