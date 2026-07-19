@@ -15,7 +15,7 @@
 #         -> push local commit(s) to origin after a good build
 #   [A2] CHANGELOG -> deploy marker + regen (this script)
 #         "Relaunch Deploy <stamp>" empty commit (the changelog generator's
-#         live-marker) -> regen_changelog.py -> commit/push docs/changelog.md.
+#         live-marker). Docs (incl. changelog) build + publish in [B]
 #         Skipped when the build failed.
 #   [B] WEBSITE -> Relaunch-DocsRefresh task (refresh_site_relaunch.ps1)
 #         docgen (live C:\server tree + xi_relaunch) -> mkdocs -> Cloudflare
@@ -178,19 +178,13 @@ if ($goodBuild -and $onOrigin) {
     $stamp = Get-Date -Format 'ddd MM/dd/yyyy HH:mm:ss'
     git commit --allow-empty -m ("Relaunch Deploy " + $stamp) | Out-Null
     Say ("  marker committed: Relaunch Deploy " + $stamp)
-    $env:LEGENDARY_LIVE_ROOT = $root   # changelog.py reads git history from here (default is the dev box path)
-    & $Py (Join-Path $root 'tools\regen_changelog.py') 2>&1 | ForEach-Object { Say ("    | " + $_) }
-    git add docs/changelog.md 2>$null
-    git diff --cached --quiet -- docs/changelog.md
-    if ($LASTEXITCODE -ne 0) {
-        git commit -m ("docs(changelog): regenerate for deploy " + $stamp) | Out-Null
-        Say '  changelog regenerated + committed.'
-    } else {
-        Say '  changelog unchanged.'
-    }
+    # DOCS-REPO SPLIT (2026-07): docs/changelog.md now lives in richardknutzjr/
+    # Relaunch-Docs, not this server repo. The [B] docs refresh regenerates the
+    # changelog (docgen reads THIS repo's history via LEGENDARY_LIVE_ROOT) and
+    # writes it back to Relaunch-Docs. The deploy pushes ONLY the marker above.
     git push origin relaunch 2>&1 | Out-Null
-    if ($LASTEXITCODE -eq 0) { Say '  pushed - docs task in [B] will publish the fresh changelog.' 'Green' }
-    else { Say '  WARNING: push failed - the site keeps the previous changelog until the next successful push.' 'Yellow' }
+    if ($LASTEXITCODE -eq 0) { Say '  marker pushed - [B] regenerates + publishes the changelog into Relaunch-Docs.' 'Green' }
+    else { Say '  WARNING: marker push failed - the changelog catches up on the next successful deploy.' 'Yellow' }
 } elseif (-not $goodBuild) {
     Say '  SKIP marker: vps-rebuild did not report a good build (previous binaries running) - changelog catches up on the next good deploy.' 'Yellow'
 } else {
