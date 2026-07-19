@@ -25,6 +25,12 @@ entity.onTrigger = function(player, npc)
         end
     elseif npc:getAnimationSub() == 0 then
         npc:messageText(npc, ID.text.OBJECTIVE_TEXT_OFFSET + instance:getStage(), false)
+        player:printToPlayer(
+            string.format(
+                '[Nyzul] Floor %d objective: %s',
+                instance:getLocalVar('Nyzul_Current_Floor'),
+                xi.nyzul.getObjectiveText(instance)),
+            xi.msg.channel.SYSTEM_3)
     end
 end
 

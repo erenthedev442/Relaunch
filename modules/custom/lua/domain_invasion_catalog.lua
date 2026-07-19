@@ -21,8 +21,12 @@ local catalog = {}
 -- models from there but the mobs spawn in the actual Escha zone.
 catalog.groupZoneId = 210
 
-catalog.spawnRingMin      = 8.0
-catalog.spawnRingMax      = 12.0
+-- Invasion mobs spawn around a curated battlefield origin, never around an
+-- arbitrary player. This keeps scheduled waves away from Hunting League
+-- arenas while still letting the mobs charge the opted-in defenders.
+catalog.spawnRingMin      = 18.0
+catalog.spawnRingMax      = 28.0
+catalog.spawnTries        = 8
 catalog.warnMinutes       = 5
 catalog.graceMinutes      = 10
 catalog.tickSeconds       = 30
@@ -44,6 +48,13 @@ catalog.zones =
         zone   = 'Escha_ZiTah',
         zoneId = 288,
         label  = "Escha - Zi'Tah",
+        -- Portal #2 is remote from the Hunting League hub and all five tier
+        -- clusters. !diwarp rallies defenders here; waves enter around it.
+        rallyPos   = { x = -303.0, y = -0.028, z = 309.0, rot = 128 },
+        spawnPoints =
+        {
+            { x = -303.0, y = -0.028, z = 309.0 },
+        },
 
         waves =
         {
@@ -99,6 +110,12 @@ catalog.zones =
         zone   = 'Escha_RuAun',
         zoneId = 289,
         label  = "Escha - Ru'Aun",
+        -- Portal #8 provides a stable, isolated Ru'Aun battlefield.
+        rallyPos   = { x = 0.0, y = -40.5, z = 465.5, rot = 128 },
+        spawnPoints =
+        {
+            { x = 0.0, y = -40.5, z = 465.5 },
+        },
 
         waves =
         {

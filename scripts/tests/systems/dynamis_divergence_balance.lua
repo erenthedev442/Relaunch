@@ -43,7 +43,48 @@ describe('Dynamis Divergence T3 solo balance', function()
             assert(#instance.config.wave1Mobs == balance.activeWaveTrash)
             assert(#instance.config.wave2Mobs == balance.activeWaveTrash)
             assert(#instance.config.statues == balance.activeStatues)
+            assert(xi.divergence.bossMechCfgs[instance.config.midBoss] ~= nil)
+            assert(xi.divergence.bossMechCfgs[instance.config.megaBoss] ~= nil)
+            assert(xi.divergence.bossMechCfgs[instance.config.disjoined] ~= nil)
         end
+    end)
+
+    it('never treats a preloaded but unspawned boss as defeated', function()
+        local originalGetMobByID = GetMobByID
+        local vars = {}
+        local alive = false
+        local mob =
+        {
+            isAlive = function() return alive end,
+        }
+        local instance =
+        {
+            getLocalVar = function(_, key) return vars[key] or 0 end,
+            setLocalVar = function(_, key, value) vars[key] = value end,
+        }
+
+        local ok, err = xpcall(function()
+            GetMobByID = function() return mob end
+
+            assert(xi.divergence.isBossDefeated(instance, 1234, 'Mega') == false)
+
+            alive = true
+            assert(xi.divergence.isBossDefeated(instance, 1234, 'Mega') == false)
+            assert(vars.divBossSeenMega == 1)
+
+            alive = false
+            assert(xi.divergence.isBossDefeated(instance, 1234, 'Mega') == false)
+
+            vars.divBossKilledMega = 1
+            GetMobByID = function() return nil end
+            assert(xi.divergence.isBossDefeated(instance, 1234, 'Mega') == true)
+
+            vars.divBossSeenMega = 0
+            assert(xi.divergence.isBossDefeated(instance, 1234, 'Mega') == false)
+        end, debug.traceback)
+
+        GetMobByID = originalGetMobByID
+        assert(ok, err)
     end)
 
     it('requires Hunt Rank 4 completion and a full city clear for T4', function()

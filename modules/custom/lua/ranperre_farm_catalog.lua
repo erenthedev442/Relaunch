@@ -45,14 +45,15 @@ catalog.templates =
 
 catalog.mobName  = 'Capacity Phantom'
 
--- 100 mobs: same cap reasoning as Bibiki Bay (511 dynamic-entity limit;
--- dead mobs hold their targid for 60s; trusts/pets share the pool).
+-- 100 persistent mobs: same 511 dynamic-entity limit as Bibiki Bay; each mob
+-- reuses its targid while player trusts and pets share the remaining pool.
 catalog.mobCount = 100
 catalog.minLv    = 150
 catalog.maxLv    = 160
 -- 9000 HP matches Locus Colibri -- quick kills so the capacity chain
 -- stays hot. The native Locus Dire Bat has ~300k HP; this camp fixes that.
 catalog.maxHP    = 9000
+catalog.respawnSeconds = 5
 catalog.cpBonus  = 2000
 
 catalog.debug    = true

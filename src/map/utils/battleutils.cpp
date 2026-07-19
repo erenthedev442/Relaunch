@@ -4413,7 +4413,7 @@ int32 getOverWhelmDamageBonus(CBattleEntity* PAttacker, CBattleEntity* PDefender
     return damage;
 }
 
-uint8 getBarrageShotCount(CBattleEntity* PBattleEntity)
+uint16 getBarrageShotCount(CBattleEntity* PBattleEntity)
 {
     /*
     Ranger level 30, four shots.
@@ -4425,7 +4425,7 @@ uint8 getBarrageShotCount(CBattleEntity* PBattleEntity)
 
     // TODO: verify all RNG trusts that use Barrage have RNG main job
     uint16 lvl       = PBattleEntity->GetMJob() == JOB_RNG ? PBattleEntity->GetMLevel() : PBattleEntity->GetSLevel();
-    uint8  shotCount = 0;
+    uint16 shotCount = 0;
 
     if (lvl < 30)
     {

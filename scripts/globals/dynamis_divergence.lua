@@ -74,12 +74,34 @@ local function tell(instance, msg)
     end
 end
 
--- A pre-loaded instance entity reads as "not alive" before it is spawned, so only
--- call this on mobs the current wave has already spawned.
+-- A pre-loaded instance entity reads as "not alive" before it is spawned.
+-- This helper is therefore only for the statues, which are all spawned during
+-- instance creation. Boss progression uses the armed/seen-alive guard below.
 local function isDead(instance, mobid)
     local mob = GetMobByID(mobid, instance)
     return mob ~= nil and not mob:isAlive()
 end
+
+local function bossStateKey(role, state)
+    return string.format('divBoss%s%s', state, role)
+end
+
+-- A boss can only count as defeated after this run has observed it alive.
+-- Instance entities exist before SpawnMob() and report not-alive in that state;
+-- accepting that as a kill caused deferred Mega/Disjoined slots to auto-clear.
+local function isBossDefeated(instance, mobid, role)
+    local mob = GetMobByID(mobid, instance)
+    if mob and mob:isAlive() then
+        instance:setLocalVar(bossStateKey(role, 'Seen'), 1)
+    end
+
+    return
+        instance:getLocalVar(bossStateKey(role, 'Seen')) == 1 and
+        instance:getLocalVar(bossStateKey(role, 'Killed')) == 1
+end
+
+-- Public for focused regression tests and instance diagnostics.
+xi.divergence.isBossDefeated = isBossDefeated
 
 -- Apply a boss's stat baseline (absolute HP + mods override). Mirrors the
 -- Hunting-League NM pattern (HuntingLeague.lua ~890): setMod overrides the
@@ -110,6 +132,39 @@ local function attachBoss(instance, mobId)
         applyStats(mob, cfg.stats)
         mechanics.attach(mob, cfg)
     end
+end
+
+local function spawnBoss(instance, mobId, role)
+    instance:setLocalVar(bossStateKey(role, 'Seen'), 0)
+    instance:setLocalVar(bossStateKey(role, 'Killed'), 0)
+
+    local mob = SpawnMob(mobId, instance)
+    if not mob then
+        tell(instance, string.format(
+            '[Divergence] ERROR: %s boss slot %d could not be loaded. The run will end without clear rewards.',
+            role,
+            mobId))
+        instance:fail()
+        return nil
+    end
+
+    attachBoss(instance, mobId)
+    if not mob:isSpawned() or not mob:isAlive() then
+        tell(instance, string.format(
+            '[Divergence] ERROR: %s boss %d failed to spawn alive. The run will end without clear rewards.',
+            role,
+            mobId))
+        instance:fail()
+        return nil
+    end
+
+    instance:setLocalVar(bossStateKey(role, 'Seen'), 1)
+    local listenerId = string.format('DIVERGENCE_%s_DEATH', role:upper())
+    pcall(function() mob:removeListener(listenerId) end)
+    mob:addListener('DEATH', listenerId, function()
+        instance:setLocalVar(bossStateKey(role, 'Killed'), 1)
+    end)
+    return mob
 end
 
 -- Per-second tick for a boss slot. Safe no-op if the boss isn't spawned yet,
@@ -187,8 +242,7 @@ xi.divergence.onInstanceCreated = function(instance, cfg)
     for _, mobId in ipairs(cfg.statues) do
         SpawnMob(mobId, instance)
     end
-    SpawnMob(cfg.midBoss, instance)
-    attachBoss(instance, cfg.midBoss)
+    spawnBoss(instance, cfg.midBoss, 'Mid')
 end
 
 xi.divergence.placePlayer = function(player, instance, cfg)
@@ -230,30 +284,32 @@ xi.divergence.onInstanceTimeUpdate = function(instance, elapsed, cfg)
 
     local wave = instance:getLocalVar('divWave')
     if wave == 1 then
-        if isDead(instance, cfg.midBoss) then
+        if isBossDefeated(instance, cfg.midBoss, 'Mid') then
             instance:setLocalVar('divWave', 2)
             extendTime(instance, BOSS_EXTEND, elapsed)
             for _, mobId in ipairs(cfg.wave2Mobs) do
                 SpawnMob(mobId, instance)
             end
-            SpawnMob(cfg.megaBoss, instance)
-            attachBoss(instance, cfg.megaBoss)
+            if not spawnBoss(instance, cfg.megaBoss, 'Mega') then
+                return
+            end
             tell(instance, '[Divergence] The Mid-Boss falls! The Regiment and its Mega-Boss advance! (+30 min)')
         end
     elseif wave == 2 then
-        if isDead(instance, cfg.megaBoss) then
+        if isBossDefeated(instance, cfg.megaBoss, 'Mega') then
             dropSu5(instance, cfg)
             creditMegaBoss(instance, cfg)
             extendTime(instance, MEGA_EXTEND, elapsed)
             if cfg.disjoined then
                 -- Wave 3: the Disjoined NM at the elemental circle. Mega victory
                 -- grants a final buffer so solo/trust teams can attempt the capstone.
-                instance:setLocalVar('divWave', 3)
                 for _, mobId in ipairs(cfg.wave3Mobs or {}) do
                     SpawnMob(mobId, instance)
                 end
-                SpawnMob(cfg.disjoined, instance)
-                attachBoss(instance, cfg.disjoined)
+                if not spawnBoss(instance, cfg.disjoined, 'Disjoined') then
+                    return
+                end
+                instance:setLocalVar('divWave', 3)
                 tell(instance, '[Divergence] The Mega-Boss falls! The Disjoined manifests -- defeat it to secure the full city clear and Augment progress! (+15 min)')
             else
                 instance:setLocalVar('divWave', 4)
@@ -261,7 +317,7 @@ xi.divergence.onInstanceTimeUpdate = function(instance, elapsed, cfg)
             end
         end
     elseif wave == 3 then
-        if isDead(instance, cfg.disjoined) then
+        if isBossDefeated(instance, cfg.disjoined, 'Disjoined') then
             instance:setLocalVar('divWave', 4)
             instance:complete()
         end

@@ -1,6 +1,6 @@
 # Nyzul Isle
 
-**Nyzul Isle Investigation** is an instanced floor-climbing dungeon lifted straight from retail, accessible on the Relaunch server without completing any Assault or ToAU prerequisites. The only custom piece is the entry NPC.
+**Nyzul Isle Investigation** is an instanced floor-climbing dungeon from retail, accessible on the Relaunch server without completing any Assault or ToAU prerequisites. Entry, exits, and lamp floors are adapted for a solo server.
 
 ---
 
@@ -21,20 +21,22 @@ No Assault rank, no Imperial Standing, no prior quest chain — just talk and en
 
 A 100-floor dungeon you climb within a **30-minute timer**. Each run starts from floor 1 (or a floor you've unlocked — see below), and every floor holds a **Rune of Transfer** — the crystal that carries you up to the next floor once the floor's objective is complete.
 
+A visible countdown runs throughout the assault. System-channel reminders are also sent at **25, 20, 15, 10, 5, and 1 minute remaining**, then again at **30 seconds**, so chat filters cannot hide the only warning.
+
 ### Floor objectives
 
-Each floor presents one of these mission types before the Rune of Transfer will move you on:
+Each floor presents one of these mission types before the Rune of Transfer will move you on. The objective is repeated in the system channel on floor entry and whenever you check the inactive Rune:
 
 | Objective | What to do |
 |---|---|
 | **Eliminate enemy leader** | Hunt down and kill the floor's leader — also the fixed objective on every boss floor |
 | **Eliminate specified enemies** | Several specific targets are called out — kill all of them |
-| **Activate all lamps** | Locate and light the runic lamps scattered on the floor |
-| **Eliminate specified enemy** | One specific target is called out — kill that mob |
+| **Activate all lamps** | Find and light five scattered lamps within two minutes |
+| **Eliminate specified enemy** | Find the target that checks as Impossible to Gauge and kill it |
 | **Eliminate all enemies** | Kill every mob on the floor |
 | **Free floor** | A rare lucky floor with no objective — proceed straight to the Rune of Transfer |
 
-**Lamps** come in 3 variants: register every party member on a lamp; light all lamps at the same time; light the lamps in the correct order.
+**Lamp floors are solo-friendly scavenger rounds:** five lamps are placed around the layout and remain lit when clicked. Activate all five within **two minutes**. If time expires, the lamps reset and the assault timer loses **one minute**, then a fresh two-minute attempt begins.
 
 Some floors also carry a bonus discipline on top of the main objective — **Avoid agro** (don't be detected), **Do not destroy** (spare the flagged mobs) — breaking it costs you time or tokens.
 
@@ -50,7 +52,8 @@ Your first visit to the staging-room Rune of Transfer hands you the **Runic Disc
 
 - Progress is banked in **5-floor blocks** — climbing unlocks starting floors 1, 6, 11, ... up to 96.
 - Starting above floor 1 costs **tokens** earned on previous runs (500–1900 per entry, rising with the floor).
-- Use the Rune of Transfer to **leave before the timer expires** and your progress (and tokens) are banked for next time.
+- Only the player whose **Runic Disc selected the starting floor** records floor progress. Helpers earn rewards but do not advance their own discs.
+- Use the Rune of Transfer to **leave before the timer expires** and the disc holder's progress (plus earned tokens) is banked for next time.
 
 ---
 
@@ -59,7 +62,7 @@ Your first visit to the staging-room Rune of Transfer hands you the **Runic Disc
 - **Vigil weapons** — every NM on the climb has a 20% chance to drop one, and floor-100 bosses **guarantee** a random vigil weapon plus one for the disc-holder's job.
 - **Nyzul armor** — the Askar, Denali, and Goliard lines from floor NMs and bosses.
 - **Nyzul tokens** — earned per cleared floor; spend them to resume from saved floors and buy supplies from the in-run Vending Box.
-- **Runic Key** — clearing floor 100 grants the key item.
+- **Runic Key / Mythic trial** — a floor-100 clear is recorded only for the player whose Runic Disc selected the climb. Party helpers do not receive simultaneous floor-100 credit.
 
 ### Floor-100 Vigil Weapons
 
@@ -165,8 +168,8 @@ Each floor NM drops one Unappraised chest; take it to the in-instance appraiser 
 
 ??? quote "The Sage's own briefing (in-game text)"
     - 100 floors, 30-min limit. Clear each floor objective, ride the Rune of Transfer upward.
-    - Bosses every 20 floors drop vigil weapons (Mythic path) + Askar/Denali/Goliard gear. Floor 100 grants the Runic Key.
-    - Earn Nyzul tokens to resume from saved floors and buy supplies. Exit any time before the timer to bank your progress.
+    - Bosses every 20 floors drop vigil weapons (Mythic path) + Askar/Denali/Goliard gear. Floor 100 grants the Runic Key to the Runic Disc holder.
+    - Only the player who selects the climb records floor progress. Exit before timeout to bank that progress and earned tokens.
 
 ---
 

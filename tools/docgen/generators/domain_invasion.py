@@ -1,8 +1,8 @@
 """Sync docs/endgame/domain-invasion.md with domain_invasion_catalog.lua.
 
 Domain Invasion fires eight times a day in Escha - Zi'Tah (Dahaks + Azi Dahaka)
-and Escha - Ru'Aun (Lamiae + Naga Raja) on alternating 3-hour windows. Two-wave
-structure: a trash vanguard then a boss wave with adds. Rewards: Escha Silt,
+and Escha - Ru'Aun (Lamiae + Naga Raja) on alternating 3-hour windows. Five
+escalating waves culminate in a boss wave with adds. Rewards: Escha Silt,
 Escha Beads, Domain Points (daily cap).
 
 Markers written:
@@ -109,9 +109,10 @@ def _render_schedule(c: dict) -> str:
     lines += [
         "",
         f"A server-wide warning broadcasts **{c['warn']} minutes** before each window. "
-        f"The event only fires if at least one player is in the zone when the window "
-        f"opens — it waits up to **{c['grace']} minutes** for a defender. "
-        f"Type `!diwarp` to teleport straight to the active zone.",
+        f"The event only fires after at least one player explicitly opts in with "
+        f"`!diwarp`; merely doing Hunting League content in the zone does not count. "
+        f"It waits up to **{c['grace']} minutes** for a volunteer. `!diwarp` moves "
+        f"volunteers to the isolated invasion rally point.",
     ]
     return "\n".join(lines)
 
@@ -136,10 +137,10 @@ def _render_zones(c: dict) -> str:
 
     time_str = _mins(c["time_limit"])
     blocks.append(
-        f"Each assault is two waves: a vanguard of trash mobs followed by a boss "
-        f"wave that brings adds alongside the named NM. Wave count scales with "
+        f"Each assault is **five escalating waves**, ending in a boss wave that "
+        f"brings adds alongside the named NM. Wave count scales with "
         f"attendance — more defenders means more enemies per wave. "
-        f"Clear both waves within **{time_str}** to claim victory."
+        f"Clear all five waves within **{time_str}** to claim victory."
     )
     return "\n\n".join(blocks)
 

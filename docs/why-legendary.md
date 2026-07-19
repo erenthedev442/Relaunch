@@ -33,7 +33,7 @@ The Relaunch fixes that. Everyone starts equal. The economy is fresh. The stat b
 
 - **[Dynamis — Divergence](endgame/dynamis-divergence.md)** — Four city Dynamis instances reached through entry portals for one Dynamis currency each. Defeat the Mega-Boss, then finish the Disjoined NM to record the full city clear required by Augment Tier 4 alongside all 3 Rank 4 Hunt NMs.
 
-- **[Domain Invasion](endgame/domain-invasion.md)** — Two-wave events in the Escha zones (Zi'Tah / Ru'Aun alternating every 3 hours, eight times a day). Kill the vanguard, then kill the boss.
+- **[Domain Invasion](endgame/domain-invasion.md)** — Opt-in five-wave events in isolated battlefields within the Escha zones (Zi'Tah / Ru'Aun alternating every 3 hours, eight times a day).
 
 - **[High-Tier Battlefields](endgame/high-tier-battlefields.md)** — Repeatable, tier-scaled versions of the classic mission boss battlefields. Buy a Phantom Gem with gil on Purgonorgo Isle, trade it at the battlefield entrance, pick a tier (I / II / III), and win for scaling gil + Hunt Mark rewards.
 

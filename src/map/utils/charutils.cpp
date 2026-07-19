@@ -5400,7 +5400,7 @@ void DistributeCapacityPoints(CCharEntity* PChar, CMobEntity* PMob)
     uint8  mobLevel = PMob->GetMLevel();
 
     PChar->ForAlliance(
-        [&PMob, &zone, &mobLevel](CBattleEntity* PPartyMember)
+        [&PChar, &PMob, &zone, &mobLevel](CBattleEntity* PPartyMember)
         {
             CCharEntity* PMember = dynamic_cast<CCharEntity*>(PPartyMember);
 
@@ -5451,6 +5451,13 @@ void DistributeCapacityPoints(CCharEntity* PChar, CMobEntity* PMob)
                 }
 
                 capacityPoints = AddCapacityBonus(PMember, capacityPoints);
+                // Capacity camps used to award this as a second Lua call. Fold
+                // it into the killer's normal mob award so the final 60k cap is
+                // applied once to the complete payout.
+                if (PMember == PChar)
+                {
+                    capacityPoints += PMob->GetLocalVar("CapacityFarmBonus");
+                }
                 AddCapacityPoints(PMember, PMob, capacityPoints, levelDiff, chainActive);
             }
         });
@@ -5538,7 +5545,18 @@ void AddCapacityPoints(CCharEntity* PChar, CBaseEntity* PMob, uint32 capacityPoi
         return;
     }
 
-    capacityPoints = (uint32)(capacityPoints * settings::get<float>("map.EXP_RATE"));
+    // Apply both map rates before enforcing the final per-mob ceiling. Keeping
+    // rate multiplication here makes the battle message, RoE accounting, and
+    // JP conversion all observe the same award.
+    capacityPoints = static_cast<uint32>(
+        capacityPoints *
+        settings::get<float>("map.EXP_RATE") *
+        settings::get<float>("map.CAPACITY_RATE"));
+
+    if (PMob && PMob->objtype == TYPE_MOB)
+    {
+        capacityPoints = std::min<uint32>(capacityPoints, JOBPOINTS_CAPACITY_AWARD_MAX);
+    }
 
     if (capacityPoints > 0)
     {

@@ -17,6 +17,17 @@ local LISTENERS =
     'ABY_MARKS_DAMAGE',
     'ABY_MARKS_WS',
     'ABY_MARKS_DEATH',
+    'ABY_MARKS_DESPAWN',
+}
+
+local POSITIONAL_KINDS =
+{
+    turn = true,
+    face = true,
+    rear = true,
+    near = true,
+    far  = true,
+    move = true,
 }
 
 local function escalationAttack(tier)
@@ -174,6 +185,43 @@ local function releaseFloor(mob, state)
     state.floorHpp = nil
 end
 
+local function anchorMob(mob, challenge)
+    if not POSITIONAL_KINDS[challenge.signature.kind] then return end
+
+    local anchor =
+    {
+        noMove     = mob:getMobMod(xi.mobMod.NO_MOVE),
+        lockFacing = challenge.signature.kind == 'rear',
+    }
+
+    if anchor.lockFacing then
+        local behavior = mob:getBehavior()
+        anchor.hadNoTurn = bit.band(behavior, xi.behavior.NO_TURN) ~= 0
+        mob:setBehavior(bit.bor(behavior, xi.behavior.NO_TURN))
+    end
+
+    mob:setMobMod(xi.mobMod.NO_MOVE, 1)
+    challenge.anchor = anchor
+end
+
+local function releaseAnchor(mob, challenge)
+    local anchor = challenge and challenge.anchor
+    if not anchor then return end
+
+    pcall(function()
+        mob:setMobMod(xi.mobMod.NO_MOVE, anchor.noMove)
+        if anchor.lockFacing then
+            local behavior = mob:getBehavior()
+            if anchor.hadNoTurn then
+                mob:setBehavior(bit.bor(behavior, xi.behavior.NO_TURN))
+            else
+                mob:setBehavior(bit.band(behavior, bit.bnot(xi.behavior.NO_TURN)))
+            end
+        end
+    end)
+    challenge.anchor = nil
+end
+
 local function counterSucceeded(mob, state, challenge)
     local signature = challenge.signature
     local player = ownerFor(state)
@@ -231,6 +279,7 @@ local function finishChallenge(mob, state)
         end
     end
     local success = counterSucceeded(mob, state, challenge)
+    releaseAnchor(mob, challenge)
     if success then
         announce(mob, state, signature.success or 'The opening is seized!')
         openVulnerability(mob, state, signature.reward)
@@ -277,6 +326,7 @@ local function beginChallenge(mob, state, signature, floorHpp)
         startZ         = owner:getZPos(),
     }
 
+    anchorMob(mob, state.challenge)
     announce(mob, state, signature.tell)
     pcall(function() mob:weaknessTrigger(signature.telegraphTrigger or 1) end)
 end
@@ -469,6 +519,9 @@ function M.attach(mob, cfg, owner)
         end
         M.cleanup(mobArg)
     end)
+    mob:addListener('DESPAWN', LISTENERS[5], function(mobArg)
+        M.cleanup(mobArg)
+    end)
 end
 
 function M.onProc(mob, player, triggerType)
@@ -521,6 +574,7 @@ function M.cleanup(mob)
     local id = mob:getID()
     local state = states[id]
     if state then
+        releaseAnchor(mob, state.challenge)
         restoreVulnerability(mob, state)
         local tier = state.cfg.tier or 1
         local escalation = state.escalation or 0

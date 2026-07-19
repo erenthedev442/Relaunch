@@ -3,7 +3,7 @@
 Domain Invasion is a server-wide cooperative event that fires eight times a day across two Escha zones. Dahaks flood Escha - Zi'Tah, Lamiae flood Escha - Ru'Aun — and each assault ends with a powerful named NM that has to go down before the clock runs out.
 
 !!! tip "Summary"
-    Two-wave events in the Escha zones (Zi'Tah / Ru'Aun alternating every 3 hours, eight times a day). Kill the vanguard, then kill the boss. Rewards: Escha Silt, Escha Beads, and Domain Points (daily cap 80). Type `!diwarp` to warp to the active zone.
+    Five-wave events in the Escha zones (Zi'Tah / Ru'Aun alternating every 3 hours, eight times a day). Type `!diwarp` during the warning, muster, or active assault to opt in and rally. Rewards: Escha Silt, Escha Beads, and Domain Points (daily cap 80).
 
 ## Schedule
 
@@ -21,12 +21,12 @@ Domain Invasion fires **8 times per day** (every 3 hours), alternating between t
 | 18:00 UTC | **Escha - Zi'Tah** |
 | 21:00 UTC | **Escha - Ru'Aun** |
 
-A server-wide warning broadcasts **5 minutes** before each window. The event only fires if at least one player is in the zone when the window opens — it waits up to **10 minutes** for a defender. Type `!diwarp` to teleport straight to the active zone.
+A server-wide warning broadcasts **5 minutes** before each window. The event only fires after at least one player explicitly opts in with `!diwarp`; merely doing Hunting League content in the zone does not count. It waits up to **10 minutes** for a volunteer. `!diwarp` moves volunteers to the isolated invasion rally point.
 <!-- DOCGEN:END id="di-schedule" -->
 
 ## The Assault
 
-Two waves hit each zone in sequence. The first is a vanguard of trash mobs; the second brings a smaller group of adds alongside the zone's named boss. The bosses use the hardcore mechanics library — expect stance shifts, AoE attacks, HP-phase mechanics, and a berserk timer.
+Five escalating waves hit each zone in sequence, culminating in a smaller group of adds alongside the zone's named boss. Waves spawn around a dedicated battlefield rather than around arbitrary players, keeping Hunting League hubs and arenas clear. The bosses use the hardcore mechanics library — expect stance shifts, AoE attacks, HP-phase mechanics, and a berserk timer.
 
 <!-- DOCGEN:BEGIN id="di-zones" -->
 ### Escha - Zi'Tah
@@ -51,7 +51,7 @@ Two waves hit each zone in sequence. The first is a vanguard of trash mobs; the 
 | **Naga Raja** | 140 |
 | **Naga Raja** (boss) | 150 |
 
-Each assault is two waves: a vanguard of trash mobs followed by a boss wave that brings adds alongside the named NM. Wave count scales with attendance — more defenders means more enemies per wave. Clear both waves within **15 minutes** to claim victory.
+Each assault is **five escalating waves**, ending in a boss wave that brings adds alongside the named NM. Wave count scales with attendance — more defenders means more enemies per wave. Clear all five waves within **15 minutes** to claim victory.
 <!-- DOCGEN:END id="di-zones" -->
 
 ## Rewards

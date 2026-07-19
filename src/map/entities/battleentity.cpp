@@ -1559,7 +1559,7 @@ uint16 CBattleEntity::DEF()
         }
     }
 
-    DEF += m_modStat[Mod::DEF];
+    DEF += getMod(Mod::DEF);
 
     // TODO: support old style counterstance
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE, 0))
@@ -1592,7 +1592,7 @@ uint16 CBattleEntity::EVA()
 
     evasion += AGI() / 2;
 
-    return std::max(1, evasion + (this->objtype == TYPE_MOB || this->objtype == TYPE_PET ? 0 : m_modStat[Mod::EVA])); // The mod for a pet or mob is already calclated in the above so return 0
+    return std::max(1, evasion + (this->objtype == TYPE_MOB || this->objtype == TYPE_PET ? 0 : getMod(Mod::EVA))); // The mod for a pet or mob is already calclated in the above so return 0
 }
 
 JOBTYPE CBattleEntity::GetMJob() const
@@ -2007,6 +2007,40 @@ void CBattleEntity::delEquipModifiers(std::vector<CModifier>* modList, uint8 ite
 
 /************************************************************************
  *                                                                      *
+ *  Get the summed value of a modifier across all equipped gear         *
+ *                                                                      *
+ ************************************************************************/
+
+int32 CBattleEntity::getSumGearMod(Mod modID)
+{
+    TracyZoneScoped;
+
+    if (modID == Mod::NONE)
+    {
+        return 0;
+    }
+
+    auto* PChar = dynamic_cast<CCharEntity*>(this);
+    if (!PChar)
+    {
+        return 0;
+    }
+
+    int32 sum = 0;
+    for (uint8 i = 0; i <= SLOT_BACK; ++i)
+    {
+        auto* PItem = PChar->getEquip((SLOTTYPE)i);
+        if (PItem && (PItem->isType(ITEM_EQUIPMENT) || PItem->isType(ITEM_WEAPON)))
+        {
+            sum += PItem->getModifier(modID);
+        }
+    }
+
+    return sum;
+}
+
+/************************************************************************
+ *                                                                      *
  *  Get the current value of the specified modifier                     *
  *                                                                      *
  ************************************************************************/
@@ -2020,7 +2054,85 @@ int16 CBattleEntity::getMod(Mod modID)
         return 0;
     }
 
-    return m_modStat[modID];
+    const int16 value = m_modStat[modID];
+
+    // Relaunch augment ceilings apply only to equipped gear. Traits, merits,
+    // status effects, and progression systems remain additive above the gear
+    // ceiling. Keeping the raw total also means removing one over-cap item
+    // correctly reveals any remaining overflow.
+    if (objtype == TYPE_PC)
+    {
+        const int32 gearValue = getSumGearMod(modID);
+        const auto  capGear   = [value, gearValue](int32 cap)
+        {
+            const int32 nonGearValue = static_cast<int32>(value) - gearValue;
+            return static_cast<int16>(nonGearValue + std::min(gearValue, cap));
+        };
+
+        switch (modID)
+        {
+            case Mod::ALL_SONGS_EFFECT:
+                return capGear(50);
+            case Mod::GILFINDER:
+                return capGear(300);
+            case Mod::BARRAGE_COUNT:
+                return capGear(320);
+            case Mod::TREASURE_HUNTER:
+                return capGear(15);
+            case Mod::PHANTOM_ROLL:
+                return capGear(150);
+            case Mod::REGEN:
+                return capGear(600);
+            case Mod::PET_BEAST_AFF:
+                return capGear(900);
+            case Mod::MEDITATE_DURATION:
+                return capGear(320);
+            case Mod::EVA:
+                return capGear(850);
+            case Mod::INQUARTATA:
+                return capGear(50);
+            case Mod::SHIELDBLOCKRATE:
+                return capGear(50);
+            case Mod::MDEF:
+                return capGear(480);
+            case Mod::DEF:
+                return capGear(3200);
+            case Mod::SPELLINTERRUPT:
+                return capGear(80);
+            case Mod::MAGIC_CRITHITRATE:
+                return capGear(100);
+            default:
+                break;
+        }
+    }
+    else if (objtype == TYPE_PET && modID == Mod::REGEN)
+    {
+        int32 gearValue = 0;
+        if (auto* PChar = dynamic_cast<CCharEntity*>(PMaster); PChar)
+        {
+            for (uint8 i = 0; i <= SLOT_BACK; ++i)
+            {
+                auto* PItem = PChar->getEquip((SLOTTYPE)i);
+                if (!PItem || (!PItem->isType(ITEM_EQUIPMENT) && !PItem->isType(ITEM_WEAPON)))
+                {
+                    continue;
+                }
+
+                for (auto& petMod : PItem->petModList)
+                {
+                    if (petMod.getModID() == Mod::REGEN && petutils::CheckPetModType(this, petMod.getPetModType()))
+                    {
+                        gearValue += petMod.getModAmount();
+                    }
+                }
+            }
+        }
+
+        const int32 nonGearValue = static_cast<int32>(value) - gearValue;
+        return static_cast<int16>(nonGearValue + std::min<int32>(gearValue, 1280));
+    }
+
+    return value;
 }
 
 /************************************************************************
@@ -3138,10 +3250,10 @@ void CBattleEntity::OnRangedAttack(CRangeState& state, action_t& action)
         }
     }
 
-    uint8 shadowsTaken = 0;
-    uint8 hitCount     = 1; // 1 hit by default
-    uint8 realHits     = 0; // Used to store the real number of hits for tp multiplier
-    auto  ammoConsumed = 0;
+    uint8  shadowsTaken = 0;
+    uint16 hitCount     = 1; // 1 hit by default; widened for Relaunch Barrage+ (cap +320)
+    uint16 realHits     = 0; // Used to store the real number of hits for tp multiplier
+    auto   ammoConsumed = 0;
     bool  hitOccured   = false; // Track if there was a successful hit
     bool  wasCritical  = false; // Track if the hit was critical
     bool  isBarrage    = StatusEffectContainer->HasStatusEffect(EFFECT_BARRAGE, 0);
@@ -3178,7 +3290,7 @@ void CBattleEntity::OnRangedAttack(CRangeState& state, action_t& action)
     }
 
     // Loop for barrage hits. Once there is a miss the loop ends
-    for (uint8 i = 1; i <= hitCount; ++i)
+    for (uint16 i = 1; i <= hitCount; ++i)
     {
         // TODO: add Barrage mod racc bonus
         if (xirand::GetRandomNumber(100) < battleutils::GetRangedHitRate(this, PTarget, isBarrage, 0) && !state.IsOutOfRange())

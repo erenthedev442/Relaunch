@@ -10,30 +10,32 @@
 
 Each **tier** pits you against a single scaled Apex boss (Apex Devourer, Paragon Sentinel, Ascendant Tyrant…). Clear it and you **bank Paragon Points** and raise your **record**, then the next tier spawns automatically — a little tougher. Keep climbing until you die or leave; **the run ends, but every Paragon Point you banked on the way up is kept.** Your next run resumes one tier above your record.
 
-The first boss is around **level 165** — a step above the toughest Hunting League NMs — and it only goes up from there. Walk of Echoes rules apply: **solo (no Trusts), but your pets work.**
+The climb begins at **level 135** and reaches its permanent **level 150 cap** at tier 100. Difficulty after that comes from HP, safe stat growth, affixes, and mechanics rather than unviable mob levels. Walk of Echoes rules apply: **solo (no Trusts), but your pets work.**
 <!-- DOCGEN:END id="apex-overview" -->
 
 ### How the climb scales
 
 <!-- DOCGEN:BEGIN id="apex-scaling" -->
-A taste of the curve (difficulty climbs forever — level is capped at **230**, after which HP and stats carry it):
+The climb has three bands: **Relic + T5 augments through tier 50**, prepared **Prime/final REMA builds through tier 100**, then a diminishing elite curve. Boss level never exceeds **150**:
 
-| Tier | Boss level | Boss HP | Paragon Points (first clear) |
-|---:|---:|---:|---:|
-| 1 | 165 | 1,100,000 | 10 |
-| 5 | 181 | 1,793,520 | 30 |
-| 10 | 201 | 3,304,446 | 55 |
-| 20 | 230 | 11,217,165 | 105 |
-| 30 | 230 | 38,077,422 | 155 |
-| 50 | 230 | 438,769,484 | 255 |
+| Tier | Boss level | Base HP | Attack | Defense | Accuracy | Paragon Points |
+|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 135 | 1,500,000 | 4,500 | 1,500 | 2,200 | 10 |
+| 25 | 140 | 3,307,827 | 7,194 | 3,214 | 3,767 | 130 |
+| 50 | 145 | 7,538,845 | 10,000 | 5,000 | 5,400 | 255 |
+| 75 | 148 | 12,368,274 | 14,000 | 6,500 | 7,200 | 380 |
+| 100 | 150 | 20,291,465 | 18,000 | 8,000 | 9,000 | 505 |
+| 200 | 150 | 40,522,386 | 20,584 | 9,378 | 10,378 | 1,005 |
+| 300 | 150 | 52,356,715 | 22,096 | 10,184 | 11,184 | 1,505 |
+| 500 | 150 | 67,266,208 | 24,000 | 11,200 | 12,200 | 2,505 |
 
-HP multiplies by **×1.13** per tier, and the boss also gains roughly **+450 Attack / +380 Defense / +70 Accuracy / +50 Evasion** per tier on top.
+HP grows by **3.35% per tier** through 50, **2% per tier** through 100, then logarithmically. Displayed combat stats are the guaranteed base modifiers before affixes and mechanics.
 <!-- DOCGEN:END id="apex-scaling" -->
 
 ### Affixes & Paragon Points
 
 <!-- DOCGEN:BEGIN id="apex-affixes" -->
-From tier 5 on, each boss rolls an extra **affix** every 5 tiers (up to **6** stacked at once), drawn from: **Fortified**, **Frenzied**, **Regenerating**, **Empowered**, **Vampiric**, **Furious**. Affixes also intensify the deeper you go.
+Bosses gain an additional affix at tiers **25, 50, 75, 100, 200, 300** (up to **6** stacked), drawn from: **Fortified**, **Frenzied**, **Regenerating**, **Empowered**, **Vampiric**, **Furious**. Affix strength is capped so combinations remain below engine modifier limits and never replace the tier curve.
 
 **Paragon Points** banked for a new tier = **10 + 5 × (tier − 1)** — and each tier only ever pays out once (your record only goes up), so it's pure push-your-record, never a farm.
 <!-- DOCGEN:END id="apex-affixes" -->

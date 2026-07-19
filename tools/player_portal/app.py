@@ -247,7 +247,7 @@ FORGE_GATES: list[dict] = [
      "check": lambda cv, _: _cv(cv, "Voidspire_Best_Floor") >= 100},
     {"cat": "Empyrean", "stage": "III", "label": "Fellow Mastery achieved",
      "check": lambda cv, _: _cv(cv, "Fellow_Mastered") == 1},
-    {"cat": "Mythic",   "stage": "I",   "label": "Nyzul Isle Floor 100 cleared",
+    {"cat": "Mythic",   "stage": "I",   "label": "Floor 100 recorded on your Runic Disc",
      "check": lambda cv, _: _cv(cv, "Nyzul_F100_Cleared") == 1},
     {"cat": "Mythic",   "stage": "II",  "label": "All Voidwatch NMs killed",
      "check": lambda cv, t: _cv(cv, "VW_Unique_Kills") >= (t["vw_total"] or 10**9)},

@@ -85,7 +85,7 @@ M.STAGE_GATES =
     {
         [0] =
         {
-            label = 'Nyzul Isle Floor 100 cleared',
+            label = 'Floor 100 recorded on your Runic Disc',
             check = function(p) return (p:getCharVar('Nyzul_F100_Cleared') or 0) == 1 end,
         },
         [1] =

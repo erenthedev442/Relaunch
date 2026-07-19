@@ -204,6 +204,9 @@ commandObj.onTrigger = function(player)
         '  [!] For reduction stats (Delay, PDT, MDT) the number is the reduction magnitude.',
         xi.msg.channel.SYSTEM_3)
     player:printToPlayer(
+        '  [!] Values shown are raw augment totals; points above an aggregate stat ceiling have no additional effect.',
+        xi.msg.channel.SYSTEM_3)
+    player:printToPlayer(
         '  [*] = crystalized (locked at max). Re-rolls keep it; only a full Scour removes it.',
         xi.msg.channel.SYSTEM_3)
 end

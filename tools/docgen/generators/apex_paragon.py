@@ -16,6 +16,7 @@ Markers written:
 """
 from __future__ import annotations
 
+import math
 import re
 from pathlib import Path
 
@@ -57,22 +58,60 @@ def _num(text: str, name: str, default, cast=int):
     return cast(m.group(1)) if m else default
 
 
+def _table_num(text: str, table: str, name: str, default, cast=int):
+    block = section(text, f"C.{table}")
+    m = re.search(rf"\b{re.escape(name)}\s*=\s*([\d.]+)", block)
+    return cast(m.group(1)) if m else default
+
+
 def _parse_apex(text: str) -> dict:
     a = {
-        "base_level": _num(text, "BASE_LEVEL", 165),
-        "level_step": _num(text, "LEVEL_STEP", 4),
-        "level_cap":  _num(text, "LEVEL_CAP", 230),
-        "base_hp":    _num(text, "BASE_HP", 9000000),
-        "hp_growth":  _num(text, "HP_GROWTH", 1.13, float),
-        "att":        _num(text, "ATT_PER_TIER", 450),
-        "deff":       _num(text, "DEF_PER_TIER", 380),
-        "acc":        _num(text, "ACC_PER_TIER", 70),
-        "eva":        _num(text, "EVA_PER_TIER", 50),
-        "pp_base":    _num(text, "PP_BASE", 10),
-        "pp_step":    _num(text, "PP_PER_TIER", 5),
+        "level_t1":    _num(text, "LEVEL_T1", 135),
+        "level_t50":   _num(text, "LEVEL_T50", 145),
+        "level_t100":  _num(text, "LEVEL_T100", 150),
+        "level_cap":   _num(text, "LEVEL_CAP", 150),
+        "base_hp":     _num(text, "BASE_HP", 1500000),
+        "hp_growth_1": _num(text, "HP_T1_GROWTH", 1.0335, float),
+        "hp_growth_2": _num(text, "HP_T51_GROWTH", 1.02, float),
+        "hp_tail":     _num(text, "POST_100_HP_GAIN", 2.315, float),
+        "mod_t1": {
+            "att": _table_num(text, "MOD_T1", "att", 4500),
+            "def": _table_num(text, "MOD_T1", "def", 1500),
+            "acc": _table_num(text, "MOD_T1", "acc", 2200),
+            "eva": _table_num(text, "MOD_T1", "eva", 800),
+        },
+        "mod_t50": {
+            "att": _table_num(text, "MOD_T50", "att", 10000),
+            "def": _table_num(text, "MOD_T50", "def", 5000),
+            "acc": _table_num(text, "MOD_T50", "acc", 5400),
+            "eva": _table_num(text, "MOD_T50", "eva", 2500),
+        },
+        "mod_t100": {
+            "att": _table_num(text, "MOD_T100", "att", 18000),
+            "def": _table_num(text, "MOD_T100", "def", 8000),
+            "acc": _table_num(text, "MOD_T100", "acc", 9000),
+            "eva": _table_num(text, "MOD_T100", "eva", 4000),
+        },
+        "mod_t500": {
+            "att": _table_num(text, "MOD_T500", "att", 24000),
+            "def": _table_num(text, "MOD_T500", "def", 11200),
+            "acc": _table_num(text, "MOD_T500", "acc", 12200),
+            "eva": _table_num(text, "MOD_T500", "eva", 5600),
+        },
+        "mod_caps": {
+            "att": _table_num(text, "MOD_CAPS", "att", 25000),
+            "def": _table_num(text, "MOD_CAPS", "def", 14000),
+            "acc": _table_num(text, "MOD_CAPS", "acc", 14000),
+            "eva": _table_num(text, "MOD_CAPS", "eva", 8000),
+        },
+        "pp_base": _num(text, "PP_BASE", 10),
+        "pp_step": _num(text, "PP_PER_TIER", 5),
     }
     a["bosses"] = re.findall(r"'([^']+)'", section(text, "C.BOSS_NAMES"))
     a["affixes"] = re.findall(r"key\s*=\s*'([^']+)'", section(text, "C.AFFIX_DEFS"))
+    a["affix_milestones"] = [
+        int(v) for v in re.findall(r"\d+", section(text, "C.AFFIX_MILESTONES"))
+    ]
     return a
 
 
@@ -118,41 +157,79 @@ def _render_apex_overview(a: dict) -> str:
         "next tier spawns automatically — a little tougher. Keep climbing until you die or leave; "
         "**the run ends, but every Paragon Point you banked on the way up is kept.** Your next run "
         "resumes one tier above your record.\n\n"
-        f"The first boss is around **level {a['base_level']}** — a step above the toughest Hunting "
-        "League NMs — and it only goes up from there. Walk of Echoes rules apply: **solo (no "
-        "Trusts), but your pets work.**"
+        f"The climb begins at **level {a['level_t1']}** and reaches its permanent **level "
+        f"{a['level_cap']} cap** at tier 100. Difficulty after that comes from HP, safe stat "
+        "growth, affixes, and mechanics rather than unviable mob levels. Walk of Echoes rules "
+        "apply: **solo (no Trusts), but your pets work.**"
     )
 
 
 def _render_apex_scaling(a: dict) -> str:
-    def lvl(t):  return min(a["level_cap"], a["base_level"] + (t - 1) * a["level_step"])
-    def hp(t):   return int(a["base_hp"] * (a["hp_growth"] ** (t - 1)))
-    def pp(t):   return a["pp_base"] + (t - 1) * a["pp_step"]
+    def lerp(start, finish, position, span):
+        return int(math.floor(start + (finish - start) * position / span + 0.5))
+
+    def progress(t):
+        return math.log(1 + (t - 100) / 100) / math.log(5) if t > 100 else 0
+
+    def lvl(t):
+        if t <= 50:
+            return lerp(a["level_t1"], a["level_t50"], t - 1, 49)
+        if t <= 100:
+            return lerp(a["level_t50"], a["level_t100"], t - 50, 50)
+        return a["level_cap"]
+
+    hp50 = a["base_hp"] * (a["hp_growth_1"] ** 49)
+    hp100 = hp50 * (a["hp_growth_2"] ** 50)
+
+    def hp(t):
+        if t <= 50:
+            return int(a["base_hp"] * (a["hp_growth_1"] ** (t - 1)))
+        if t <= 100:
+            return int(hp50 * (a["hp_growth_2"] ** (t - 50)))
+        return int(hp100 * (1 + a["hp_tail"] * progress(t)))
+
+    def mod(t, key):
+        if t <= 50:
+            return lerp(a["mod_t1"][key], a["mod_t50"][key], t - 1, 49)
+        if t <= 100:
+            return lerp(a["mod_t50"][key], a["mod_t100"][key], t - 50, 50)
+        value = a["mod_t100"][key] + (
+            a["mod_t500"][key] - a["mod_t100"][key]
+        ) * progress(t)
+        return min(a["mod_caps"][key], int(math.floor(value + 0.5)))
+
+    def pp(t):
+        return a["pp_base"] + (t - 1) * a["pp_step"]
 
     lines = [
-        "A taste of the curve (difficulty climbs forever — level is capped at "
-        f"**{a['level_cap']}**, after which HP and stats carry it):",
+        "The climb has three bands: **Relic + T5 augments through tier 50**, prepared "
+        "**Prime/final REMA builds through tier 100**, then a diminishing elite curve. "
+        f"Boss level never exceeds **{a['level_cap']}**:",
         "",
-        "| Tier | Boss level | Boss HP | Paragon Points (first clear) |",
-        "|---:|---:|---:|---:|",
+        "| Tier | Boss level | Base HP | Attack | Defense | Accuracy | Paragon Points |",
+        "|---:|---:|---:|---:|---:|---:|---:|",
     ]
-    for t in (1, 5, 10, 20, 30, 50):
-        lines.append(f"| {t} | {lvl(t)} | {commafy(hp(t))} | {commafy(pp(t))} |")
+    for t in (1, 25, 50, 75, 100, 200, 300, 500):
+        lines.append(
+            f"| {t} | {lvl(t)} | {commafy(hp(t))} | {commafy(mod(t, 'att'))} | "
+            f"{commafy(mod(t, 'def'))} | {commafy(mod(t, 'acc'))} | {commafy(pp(t))} |"
+        )
     lines += [
         "",
-        f"HP multiplies by **×{a['hp_growth']}** per tier, and the boss also gains roughly "
-        f"**+{a['att']} Attack / +{a['deff']} Defense / +{a['acc']} Accuracy / +{a['eva']} Evasion** "
-        "per tier on top.",
+        f"HP grows by **{(a['hp_growth_1'] - 1) * 100:.2f}% per tier** through 50, "
+        f"**{(a['hp_growth_2'] - 1) * 100:.0f}% per tier** through 100, then logarithmically. "
+        "Displayed combat stats are the guaranteed base modifiers before affixes and mechanics.",
     ]
     return "\n".join(lines)
 
 
 def _render_apex_affixes(a: dict) -> str:
     affix_str = ", ".join(f"**{x}**" for x in a["affixes"])
+    milestones = ", ".join(str(x) for x in a["affix_milestones"])
     return (
-        f"From tier 5 on, each boss rolls an extra **affix** every 5 tiers (up to "
-        f"**{len(a['affixes'])}** stacked at once), drawn from: {affix_str}. Affixes also "
-        "intensify the deeper you go.\n\n"
+        f"Bosses gain an additional affix at tiers **{milestones}** (up to "
+        f"**{len(a['affixes'])}** stacked), drawn from: {affix_str}. Affix strength is capped "
+        "so combinations remain below engine modifier limits and never replace the tier curve.\n\n"
         f"**Paragon Points** banked for a new tier = **{a['pp_base']} + {a['pp_step']} × (tier − 1)** "
         "— and each tier only ever pays out once (your record only goes up), so it's pure "
         "push-your-record, never a farm."

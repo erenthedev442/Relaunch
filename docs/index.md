@@ -119,7 +119,7 @@ Every new character starts with:
 - **[Casino — Lady Luck](endgame/casino.md)** — A four-game gil-sink casino — slots, high-low, roulette, and dice — run by Lady Luck in Purgonorgo Isle.
 - **[Chocobo Derby](endgame/chocobo-derby.md)** — Bet gil on chocobo races at the Race Caller on Purgonorgo Isle (!hub); raise a strong enough chocobo of your own and you can enter it as a runner for a bigger…
 - **[Colosseum — Ranked Arena](endgame/colosseum.md)** — A ranked arena in Purgonorgo Isle where you duel AI replicas of other champions to climb an Elo ladder, earning Hunt Marks for every win.
-- **[Domain Invasion](endgame/domain-invasion.md)** — Two-wave events in the Escha zones (Zi'Tah / Ru'Aun alternating every 3 hours, eight times a day).
+- **[Domain Invasion](endgame/domain-invasion.md)** — Opt-in five-wave events in isolated battlefields within the Escha zones (Zi'Tah / Ru'Aun alternating every 3 hours, eight times a day).
 - **[Dungeons](endgame/dungeons.md)** — Classic Vana'diel zones become private expedition grounds.
 - **[Dynamis (Classic)](endgame/dynamis-classic.md)** — The original ten Dynamis zones — the four cities, Beaucedine, Xarcabard, and
 - **[Dynamis — Divergence](endgame/dynamis-divergence.md)** — Four city Dynamis instances reached through entry portals for one Dynamis currency each.

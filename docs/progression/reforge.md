@@ -84,6 +84,26 @@ The Reforge hub lives in **Diorama Abdhaljs-Ghelsba** — warp straight there wi
 | Hadhayosh | Lv99 / V | 150 |
 <!-- DOCGEN:END id="reforge-sources" -->
 
+## Combat behavior
+
+Reforge NMs combine their native monster-family TP list with a custom I–V
+mechanics profile. Entry and mid-tier accuracy is tuned for level-99 augmented
+gear rather than the older Hunting League baseline, so monsters continue to
+apply offensive pressure instead of sitting at the 20% hit-rate floor.
+
+Portable native combat behaviors also run in the Reforge arena: the Sky Gods
+retain elemental additional damage and key TP/regain behavior, Genbu gains
+attack as its HP falls, Iratham changes spell lists by phase, Briareus follows
+its Mercurial Strike cues, and Tinnin retains head loss/regrowth plus chained
+breaths. Zone-specific doors, titles, fixed-ID adds, and retail loot logic are
+intentionally excluded from the shared arena.
+
+Padfoot, Khun, and Aello use their canonical family lists (Sheep, Caturae, and
+Harpeia respectively); the previously missing Harpeia and Glavoid skill
+handlers are implemented. Reforge-only Bukhis and Hadhayosh lists exclude
+upstream skill IDs that have no active mob-skill definition, preventing dead TP
+turns.
+
 ## Upgrade costs
 
 <!-- DOCGEN:BEGIN id="reforge-costs" -->

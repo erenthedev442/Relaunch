@@ -200,7 +200,7 @@ local function spawnApexBoss(owner, tier)
             labels[#labels + 1] = affix.key
             hp = math.floor(hp * affix.hpMult)
             for modId, val in pairs(C.affixMods(affix.key, tier)) do
-                if val ~= 0 then mob:addMod(modId, val) end
+                if val ~= 0 then mechanics.safeAddMod(mob, modId, val) end
             end
         end
     end

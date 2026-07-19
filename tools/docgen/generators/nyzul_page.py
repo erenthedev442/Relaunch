@@ -60,9 +60,9 @@ _OBJECTIVE_LABELS: dict[str, tuple[str, str]] = {
     "ELIMINATE_SPECIFIED_ENEMIES": ("Eliminate specified enemies",
                                     "Several specific targets are called out — kill all of them"),
     "ACTIVATE_ALL_LAMPS":          ("Activate all lamps",
-                                    "Locate and light the runic lamps scattered on the floor"),
+                                    "Find and light five scattered lamps within two minutes"),
     "ELIMINATE_SPECIFIED_ENEMY":   ("Eliminate specified enemy",
-                                    "One specific target is called out — kill that mob"),
+                                    "Find the target that checks as Impossible to Gauge and kill it"),
     "ELIMINATE_ALL_ENEMIES":       ("Eliminate all enemies",
                                     "Kill every mob on the floor"),
     "FREE_FLOOR":                  ("Free floor",
@@ -73,6 +73,7 @@ _LAMP_LABELS: dict[str, str] = {
     "REGISTER":     "register every party member on a lamp",
     "ACTIVATE_ALL": "light all lamps at the same time",
     "ORDER":        "light the lamps in the correct order",
+    "SCAVENGER":    "find and light five lamps within two minutes",
 }
 
 _GEAR_LABELS: dict[str, str] = {
@@ -209,8 +210,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         "# Nyzul Isle",
         "",
         "**Nyzul Isle Investigation** is an instanced floor-climbing dungeon lifted "
-        "straight from retail, accessible on the Relaunch server without completing "
-        "any Assault or ToAU prerequisites. The only custom piece is the entry NPC.",
+        "from retail, accessible on the Relaunch server without completing any Assault "
+        "or ToAU prerequisites. Entry, exits, and lamp floors are adapted for a solo server.",
         "",
         "---",
         "",
@@ -259,10 +260,15 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         "**Rune of Transfer** — the crystal that carries you up to the next floor once "
         "the floor's objective is complete.",
         "",
+        "A visible countdown runs throughout the assault. System-channel reminders are "
+        "also sent at **25, 20, 15, 10, 5, and 1 minute remaining**, then again at "
+        "**30 seconds**, so chat filters cannot hide the only warning.",
+        "",
         "### Floor objectives",
         "",
         "Each floor presents one of these mission types before the Rune of Transfer "
-        "will move you on:",
+        "will move you on. The objective is repeated in the system channel on floor "
+        "entry and whenever you check the inactive Rune:",
         "",
         "| Objective | What to do |",
         "|---|---|",
@@ -274,10 +280,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         lines.append(f"| **{label}** | {desc} |")
     lines.append("")
 
-    if lamp_modes:
-        variants = "; ".join(_LAMP_LABELS.get(mode, _pretty_enum(mode).lower()) for mode in lamp_modes)
+    if "SCAVENGER" in lamp_modes:
         lines += [
-            f"**Lamps** come in {len(lamp_modes)} variants: {variants}.",
+            "**Lamp floors are solo-friendly scavenger rounds:** five lamps are placed "
+            "around the layout and remain lit when clicked. Activate all five within "
+            "**two minutes**. If time expires, the lamps reset and the assault timer "
+            "loses **one minute**, then a fresh two-minute attempt begins.",
             "",
         ]
     if gear_modes:
@@ -328,8 +336,10 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             f"floors {start_floors[0]}, {start_floors[0] + step}, {start_floors[0] + 2 * step}, "
             f"... up to {start_floors[-1]}.",
             token_line,
-            "- Use the Rune of Transfer to **leave before the timer expires** and your "
-            "progress (and tokens) are banked for next time.",
+            "- Only the player whose **Runic Disc selected the starting floor** records "
+            "floor progress. Helpers earn rewards but do not advance their own discs.",
+            "- Use the Rune of Transfer to **leave before the timer expires** and the "
+            "disc holder's progress (plus earned tokens) is banked for next time.",
         ]
     else:
         lines += [
@@ -360,7 +370,9 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     reward_bits += [
         "- **Nyzul tokens** — earned per cleared floor; spend them to resume from saved "
         "floors and buy supplies from the in-run Vending Box.",
-        "- **Runic Key** — clearing floor 100 grants the key item.",
+        "- **Runic Key / Mythic trial** — a floor-100 clear is recorded only for the "
+        "player whose Runic Disc selected the climb. Party helpers do not receive "
+        "simultaneous floor-100 credit.",
     ]
     lines += reward_bits
     # The two drop tables below are filled by the sibling `nyzul_isle` generator

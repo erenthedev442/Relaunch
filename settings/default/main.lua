@@ -296,7 +296,7 @@ xi.settings.main =
     MAX_FAKE_ENTRIES     = 15,
 
     -- NYZUL
-    RUNIC_DISK_SAVE      = true, -- Allow anyone participating in Nyzul to save progress. Set to false so only initiator can save progress.
+    RUNIC_DISK_SAVE      = false, -- Relaunch: only the Runic Disc holder records floors/clears; helpers do not receive shared Mythic progress.
     ENABLE_NYZUL_CASKETS = true, -- Enable Treasure casket pops from NMs.
     ENABLE_VIGIL_DROPS   = true, -- Enable Vigil Weapon drops from NMs.
     ACTIVATE_LAMP_TIME   = 6000, -- Time in miliseconds for lamps to stay lit. TODO: Get retail confirmation.

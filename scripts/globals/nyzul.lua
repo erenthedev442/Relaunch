@@ -45,7 +45,12 @@ xi.nyzul.lampsObjective =
     REGISTER     = 1,
     ACTIVATE_ALL = 2,
     ORDER        = 3,
+    SCAVENGER    = 4, -- Relaunch: find and light every lamp before the floor timer expires.
 }
+
+xi.nyzul.scavengerLampCount      = 5
+xi.nyzul.scavengerLampTimeMs     = 120000
+xi.nyzul.scavengerLampPenaltyMin = 1
 
 xi.nyzul.gearObjective =
 {
@@ -59,6 +64,26 @@ xi.nyzul.penalty =
     TOKENS = 2,
     PATHOS = 3,
 }
+
+local objectiveText =
+{
+    [xi.nyzul.objective.ELIMINATE_ENEMY_LEADER]      = 'Find and eliminate the enemy leader.',
+    [xi.nyzul.objective.ELIMINATE_SPECIFIED_ENEMIES] = 'Eliminate all specified enemies.',
+    [xi.nyzul.objective.ELIMINATE_SPECIFIED_ENEMY]   = 'Eliminate the target that checks as Impossible to Gauge.',
+    [xi.nyzul.objective.ELIMINATE_ALL_ENEMIES]       = 'Eliminate every enemy on the floor.',
+    [xi.nyzul.objective.FREE_FLOOR]                  = 'Free floor. Proceed to the Rune of Transfer.',
+}
+
+xi.nyzul.getObjectiveText = function(instance)
+    if instance:getStage() == xi.nyzul.objective.ACTIVATE_ALL_LAMPS then
+        return string.format(
+            'Find and light all %d runic lamps within %d minutes.',
+            xi.nyzul.scavengerLampCount,
+            xi.nyzul.scavengerLampTimeMs / 60000)
+    end
+
+    return objectiveText[instance:getStage()] or 'Complete the displayed floor objective.'
+end
 
 xi.nyzul.FloorLayout =
 {
@@ -181,33 +206,24 @@ xi.nyzul.handleRunicKey = function(mob)
     local instance = mob:getInstance()
 
     if instance:getLocalVar('Nyzul_Current_Floor') == 100 then
-        local chars      = instance:getChars()
+        local diskHolder = GetPlayerByID(instance:getLocalVar('diskHolder'))
         local startFloor = instance:getLocalVar('Nyzul_Isle_StartingFloor')
 
-        for _, entity in pairs(chars) do
-            -- Does players Runic Disk have data saved to a floor of entering or higher
-            if
-                entity:getVar('NyzulFloorProgress') + 1 >= startFloor and
-                not entity:hasKeyItem(xi.ki.RUNIC_KEY)
-            then
-                -- On early version only initiator of floor got progress saves and key credit
-                if not xi.settings.main.RUNIC_DISK_SAVE then
-                    if entity:getID() == instance:getLocalVar('diskHolder') then
-                        if npcUtil.giveKeyItem(entity, xi.ki.RUNIC_KEY) then
-                            entity:setVar('NyzulFloorProgress', 0)
-                        end
-                    end
+        -- Relaunch Mythic progression is personal. Only the player whose Runic
+        -- Disc selected this climb records floor 100; party members may help,
+        -- but cannot receive five simultaneous trial completions on one clear.
+        if
+            diskHolder and
+            diskHolder:getInstance() == instance and
+            diskHolder:hasKeyItem(xi.ki.RUNIC_DISC) and
+            diskHolder:getCharVar('NyzulFloorProgress') + 1 >= startFloor
+        then
+            diskHolder:setCharVar('NyzulFloorProgress', 100)
+            diskHolder:setCharVar('Nyzul_F100_Cleared', 1)
 
-                -- Anyone can get a key on 100 win if disk passed check
-                else
-                    npcUtil.giveKeyItem(entity, xi.ki.RUNIC_KEY)
-                end
+            if not diskHolder:hasKeyItem(xi.ki.RUNIC_KEY) then
+                npcUtil.giveKeyItem(diskHolder, xi.ki.RUNIC_KEY)
             end
-            -- Relaunch: persistent "cleared floor 100 at least once" flag.
-            -- Read by the Weapon Forge Mythic Stage I preflight. Runs for
-            -- EVERY entity in chars on a 100-win, not just the disk holder,
-            -- because the win credits the whole party for progression.
-            entity:setCharVar('Nyzul_F100_Cleared', 1)
         end
     end
 end
@@ -235,6 +251,11 @@ xi.nyzul.handleProgress = function(instance, progress)
 
         for _, players in ipairs(chars) do
             players:messageSpecial(ID.text.OBJECTIVE_COMPLETE, currentFloor)
+            players:printToPlayer(
+                string.format(
+                    '[Nyzul] Floor %d objective complete. Rune of Transfer activated.',
+                    currentFloor),
+                xi.msg.channel.SYSTEM_3)
         end
 
         isComplete = true

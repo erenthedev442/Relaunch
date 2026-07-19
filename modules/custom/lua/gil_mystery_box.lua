@@ -173,7 +173,7 @@ local function checkPrereqs(player, cost)
     end
     if player:getFreeSlotsCount() < 1 then
         player:printToPlayer(
-            '[Mystery Mog] Inventory full! Free a slot before pulling, kupo.',
+            '[Mystery Mog] Come back after sorting your inventory, kupo!',
             xi.msg.channel.SYSTEM_3)
         return false
     end
@@ -181,16 +181,17 @@ local function checkPrereqs(player, cost)
 end
 
 local function singlePull(player, pool, cost)
-    if not checkPrereqs(player, cost) then return end
+    if not checkPrereqs(player, cost) then return false end
     player:delGil(cost)
     local prize = doSingleRoll(player, pool)
     player:printToPlayer(
         string.format('[Mystery Mog] You won: %s!', prize.label),
         xi.msg.channel.SYSTEM_3)
+    return true
 end
 
 local function multiPull(player, pool, cost, count, guaranteeUncommon)
-    if not checkPrereqs(player, cost) then return end
+    if not checkPrereqs(player, cost) then return false end
     player:delGil(cost)
 
     local results     = {}
@@ -223,6 +224,7 @@ local function multiPull(player, pool, cost, count, guaranteeUncommon)
             string.format('  [%02d] %s', i, prize.label),
             xi.msg.channel.SYSTEM_3)
     end
+    return true
 end
 
 -- =====================================================
@@ -286,53 +288,67 @@ end
 m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
-    local menu = { title = '', options = {} }
+    local buildMenu
 
-    local function buildMenu(player)
+    local function reopenMenu(player)
+        -- customMenu responses are one-shot: the engine clears their callback
+        -- context after every selection. Reopen only after that cleanup.
+        player:timer(100, function(p) buildMenu(p) end)
+    end
+
+    buildMenu = function(player)
         local pity    = getPity(player)
-        local pityStr = pity > 0
-            and string.format(' | Pity: %d/%d', pity, catalog.pityThreshold)
-            or  ''
-
-        menu.title = string.format(
-            'Mystery Mog  (Gil: %s%s)',
-            fmtGil(player:getGil()), pityStr)
-
-        menu.options =
+        local menu =
         {
+            -- Keep the complete title + option payload comfortably below the
+            -- customMenu packet limit. The old long labels let early options
+            -- work while Premium silently no-op'd once the pity suffix appeared.
+            title = string.format(
+                'Mystery Mog G:%s P:%d/%d',
+                fmtGil(player:getGil()), pity, catalog.pityThreshold),
+            options =
             {
-                string.format('Roll the dice  (-%s)', fmtGil(catalog.pullCost)),
-                function(p) singlePull(p, catalog.pool, catalog.pullCost) end,
-            },
-            {
-                string.format('Triple Pull x3  (-%s)', fmtGil(catalog.tripleCost)),
-                function(p) multiPull(p, catalog.pool, catalog.tripleCost, 3, false) end,
-            },
-            {
-                string.format('Deca Pull x10  (-%s, 1+ uncommon)', fmtGil(catalog.decaCost)),
-                function(p) multiPull(p, catalog.pool, catalog.decaCost, 10, true) end,
-            },
-            {
-                -- Keep this label short: the menu round-trips title+option through a
-                -- 128-byte buffer, and the client matches the full string on click. A
-                -- longer label gets truncated and the selection silently no-ops.
-                string.format('Premium Roll  (-%s, no commons)', fmtGil(catalog.premiumCost)),
-                function(p) singlePull(p, catalog.premiumPool, catalog.premiumCost) end,
-            },
-            {
-                'What can I win?  (view tier odds)',
-                function(p) showAllManifests(p) end,
-            },
-            {
-                'Walk away',
-                function(p)
-                    p:printToPlayer('Maybe next time, kupo!', xi.msg.channel.SYSTEM_3)
-                end,
+                {
+                    string.format('Single %s', fmtGil(catalog.pullCost)),
+                    function(p)
+                        if singlePull(p, catalog.pool, catalog.pullCost) then reopenMenu(p) end
+                    end,
+                },
+                {
+                    string.format('Triple %s', fmtGil(catalog.tripleCost)),
+                    function(p)
+                        if multiPull(p, catalog.pool, catalog.tripleCost, 3, false) then reopenMenu(p) end
+                    end,
+                },
+                {
+                    string.format('Deca %s', fmtGil(catalog.decaCost)),
+                    function(p)
+                        if multiPull(p, catalog.pool, catalog.decaCost, 10, true) then reopenMenu(p) end
+                    end,
+                },
+                {
+                    string.format('Premium %s', fmtGil(catalog.premiumCost)),
+                    function(p)
+                        if singlePull(p, catalog.premiumPool, catalog.premiumCost) then reopenMenu(p) end
+                    end,
+                },
+                {
+                    'Show odds',
+                    function(p)
+                        showAllManifests(p)
+                        reopenMenu(p)
+                    end,
+                },
+                {
+                    'Leave',
+                    function(p)
+                        p:printToPlayer('Maybe next time, kupo!', xi.msg.channel.SYSTEM_3)
+                    end,
+                },
             },
         }
 
-        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
-        player:timer(30, function(p) p:customMenu(snapshot) end)
+        player:timer(30, function(p) p:customMenu(menu) end)
     end
 
     local MysteryMog = zone:insertDynamicEntity({

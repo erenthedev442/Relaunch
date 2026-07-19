@@ -2,11 +2,9 @@
 -- !phantomfarm [bibiki|ranperre] [refill]
 --   [GM] Report the Capacity Phantom pool for one of the two farms, and
 --   optionally force-refill it back to the catalog's target count (100).
---   Force-refill bypasses the engine's death->timer chain by directly
+--   Force-refill bypasses the engine's population closure by directly
 --   inserting fresh dynamic entities via the same shape the engine uses
---   -- so it also works when the engine's onMobDeath closure has broken
---   (typical after a Lua hot-reload of capacity_farm_engine.lua, since
---   already-spawned mobs still hold the OLD closure reference).
+--   -- useful after a hot-reload leaves old one-shot entities in the zone.
 --
 -- USAGE
 --   !phantomfarm bibiki                -- report Bibiki pool (alive/dead/target)
@@ -15,11 +13,10 @@
 --
 -- WHEN
 --   Players report "phantoms aren't respawning" -- this command distinguishes:
---     * pool at target (100 alive)     -> respawn IS working; players just
---                                         killed in bursts and missed the 5s
---     * pool has holes (< 100 alive)   -> engine's death->timer chain broke.
---                                         `refill` restores the count. A map
---                                         restart re-wires the chain for good.
+--     * pool at target (alive + dead)  -> persistent entities are registered;
+--                                         dead entries are awaiting respawn
+--     * pool has holes (< 100 total)   -> entities were removed unexpectedly.
+--                                         `refill` restores the count.
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
@@ -83,25 +80,16 @@ local function spawnOnePhantom(zone, catalog)
         maxLevel             = catalog.maxLv,
         detection            = xi.detects.SIGHT_AND_HEARING,
         isAggroable          = true,
-        releaseIdOnDisappear = true,
+        respawn              = catalog.respawnSeconds or 5,
+        releaseIdOnDisappear = false,
 
         onMobSpawn = function(m)
             m:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)
             m:setMobMod(xi.mobMod.NO_DROPS, 1)
+            m:setLocalVar('CapacityFarmBonus', catalog.cpBonus or 0)
             if catalog.maxHP and catalog.maxHP > 0 then
                 m:setMaxHP(catalog.maxHP)
                 m:setHP(catalog.maxHP)
-            end
-        end,
-
-        -- Award CP but NO respawn timer on this refill-spawned mob: it's a
-        -- one-shot patch, and re-implementing the engine's pendingRespawns
-        -- state here would fork the state across two closures. When the map
-        -- restarts (rewiring the engine cleanly), the engine's onMobDeath
-        -- takes over for future spawns.
-        onMobDeath = function(deadMob, killer)
-            if killer and catalog.cpBonus and catalog.cpBonus > 0 then
-                pcall(function() killer:addCapacityPoints(catalog.cpBonus) end)
             end
         end,
     })

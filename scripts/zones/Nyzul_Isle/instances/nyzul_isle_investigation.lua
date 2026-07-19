@@ -5,12 +5,72 @@ local ID = zones[xi.zone.NYZUL_ISLE]
 -----------------------------------
 local instanceObject = {}
 
+local timeWarningMilestones =
+{
+    25 * 60,
+    20 * 60,
+    15 * 60,
+    10 * 60,
+     5 * 60,
+     1 * 60,
+    30,
+}
+
+local function sendSystemTimeWarnings(instance, elapsed)
+    local remaining = math.max(0, math.floor(instance:getTimeLimit() * 60 - elapsed / 1000))
+    local previous  = instance:getLocalVar('Nyzul_PreviousRemainingSeconds')
+    instance:setLocalVar('Nyzul_RemainingSeconds', remaining)
+
+    if instance:getLocalVar('Nyzul_RefreshCountdown') == 1 then
+        for _, player in pairs(instance:getChars()) do
+            player:countdown(remaining)
+        end
+
+        instance:setLocalVar('Nyzul_RefreshCountdown', 0)
+    end
+
+    -- Detect threshold crossings rather than backfilling every milestone below
+    -- the current time. If a penalty or lag crosses more than one at once, mark
+    -- all crossed thresholds consumed and announce only the most urgent one.
+    local warning
+    if previous > 0 then
+        for _, seconds in ipairs(timeWarningMilestones) do
+            local warningVar = string.format('Nyzul_TimeWarning_%d', seconds)
+            if
+                previous > seconds and
+                remaining <= seconds and
+                instance:getLocalVar(warningVar) == 0
+            then
+                instance:setLocalVar(warningVar, 1)
+                warning = seconds
+            end
+        end
+    end
+
+    if warning then
+        local message
+        if warning == 60 then
+            message = '[Nyzul] Time remaining: 1 minute.'
+        elseif warning > 60 then
+            message = string.format('[Nyzul] Time remaining: %d minutes.', warning / 60)
+        else
+            message = string.format('[Nyzul] Time remaining: %d seconds.', warning)
+        end
+
+        for _, player in pairs(instance:getChars()) do
+            player:printToPlayer(message, xi.msg.channel.SYSTEM_3)
+        end
+    end
+
+    instance:setLocalVar('Nyzul_PreviousRemainingSeconds', remaining)
+end
+
 local function pickSetPoint(instance)
     local chars        = instance:getChars()
     local currentFloor = instance:getLocalVar('Nyzul_Current_Floor')
 
     -- Random the floor layout
-    instance:setLocalVar('Nyzul_Isle_FloorLayout', math.random(1, (#xi.nyzul.FloorLayout - 1)))
+    instance:setLocalVar('Nyzul_Isle_FloorLayout', math.random(1, #xi.nyzul.FloorLayout))
     instance:setLocalVar('gearObjective', 0)
 
     -- Condition for floors
@@ -29,21 +89,16 @@ local function pickSetPoint(instance)
             currentInstance:setProgress(15)
         end) -- Completes objective for free floor
     else
-        -- Build the valid objectives list. ACTIVATE_ALL_LAMPS is EXCLUDED
-        -- (relaunch, owner/Bro report 2026-07-13): the lamp objectives need
-        -- several lamps lit at once and are impossible for a solo/small party,
-        -- so Nyzul only assigns the soloable objectives.
+        -- All retail objective categories remain available. Relaunch replaces
+        -- the party-only lamp variants with a solo-friendly scavenger floor.
         local objective = {}
 
         for i = xi.nyzul.objective.ELIMINATE_ENEMY_LEADER, xi.nyzul.objective.ELIMINATE_ALL_ENEMIES do
-            if i ~= xi.nyzul.objective.ACTIVATE_ALL_LAMPS then
-                table.insert(objective, i)
-            end
+            table.insert(objective, i)
         end
 
         -- Don't repeat the previous floor's objective (skip in the staging room
-        -- or right after a free floor). Remove by VALUE -- the pool is no longer
-        -- 1:1 with its indices now that lamps is excluded.
+        -- or right after a free floor).
         local prevStage = instance:getStage()
         if prevStage ~= 0 and prevStage ~= xi.nyzul.objective.FREE_FLOOR then
             for idx, obj in ipairs(objective) do
@@ -57,7 +112,10 @@ local function pickSetPoint(instance)
         -- Randomly pick the objective from the generated list
         instance:setStage(utils.randomEntry(objective))
 
-        if math.random(1, 30) <= 5 then
+        if
+            instance:getStage() ~= xi.nyzul.objective.ACTIVATE_ALL_LAMPS and
+            math.random(1, 30) <= 5
+        then
             instance:setLocalVar('gearObjective', math.random(xi.nyzul.gearObjective.AVOID_AGRO, xi.nyzul.gearObjective.DO_NOT_DESTROY))
         end
     end
@@ -86,13 +144,26 @@ local function pickSetPoint(instance)
     for _, players in pairs(chars) do
         players:setPos(posX, posY, posZ)
         players:messageName(ID.text.WELCOME_TO_FLOOR, players, currentFloor, currentFloor)
+        players:printToPlayer(
+            string.format(
+                '[Nyzul] Floor %d objective: %s',
+                currentFloor,
+                xi.nyzul.getObjectiveText(instance)),
+            xi.msg.channel.SYSTEM_3)
 
         if instance:getStage() ~= xi.nyzul.objective.FREE_FLOOR then
             players:messageName(ID.text.OBJECTIVE_TEXT_OFFSET + instance:getStage(), players)
+
             local gearObjective = instance:getLocalVar('gearObjective')
 
             if gearObjective > 0 then
                 players:messageSpecial(ID.text.ELIMINATE_ALL_ENEMIES + gearObjective)
+                local restriction = gearObjective == xi.nyzul.gearObjective.AVOID_AGRO
+                    and 'Avoid discovery by archaic gears.'
+                    or  'Do not destroy archaic gears.'
+                players:printToPlayer(
+                    '[Nyzul] Additional restriction: ' .. restriction,
+                    xi.msg.channel.SYSTEM_3)
             end
         end
     end
@@ -133,15 +204,28 @@ instanceObject.afterInstanceRegister = function(player)
 
     player:messageName(ID.text.COMMENCE, player, 51)
     player:messageName(ID.text.TIME_TO_COMPLETE, player, instance:getTimeLimit())
+    local remaining = instance:getLocalVar('Nyzul_RemainingSeconds')
+    if remaining <= 0 then
+        remaining = instance:getTimeLimit() * 60
+        instance:setLocalVar('Nyzul_RefreshCountdown', 1)
+    end
+
+    player:countdown(remaining)
+    player:printToPlayer(
+        string.format('[Nyzul] Visible countdown started: %d seconds remaining.', remaining),
+        xi.msg.channel.SYSTEM_3)
 
     player:addTempItem(xi.item.UNDERSEA_RUINS_FIREFLIES)
     player:setCharVar('assaultEntered', 1)
-    player:delKeyItem(xi.ki.NYZUL_ISLE_ASSAULT_ORDERS)
-    player:messageSpecial(ID.text.KEYITEM_LOST, xi.ki.NYZUL_ISLE_ASSAULT_ORDERS)
+    if player:hasKeyItem(xi.ki.NYZUL_ISLE_ASSAULT_ORDERS) then
+        player:delKeyItem(xi.ki.NYZUL_ISLE_ASSAULT_ORDERS)
+        player:messageSpecial(ID.text.KEYITEM_LOST, xi.ki.NYZUL_ISLE_ASSAULT_ORDERS)
+    end
 end
 
 -- Instance 'tick'
 instanceObject.onInstanceTimeUpdate = function(instance, elapsed)
+    sendSystemTimeWarnings(instance, elapsed)
     xi.instance.updateInstanceTime(instance, elapsed, ID.text)
 end
 
