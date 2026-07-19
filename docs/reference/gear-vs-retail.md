@@ -1772,17 +1772,17 @@ Stats the server adds that don't exist on the retail item.
 | prime_fists | Attack | +60 |
 | prime_great_axe | Accuracy | +60 |
 | prime_great_axe | Attack | +60 |
-| prime_gun | Ranged Accuracy | +60 |
 | prime_gun | Ranged Attack | +60 |
-| prime_lance | Accuracy | +60 |
+| prime_gun | Ranged Accuracy | +60 |
 | prime_lance | Attack | +60 |
-| prime_maul | Accuracy | +60 |
+| prime_lance | Accuracy | +60 |
 | prime_maul | Attack | +60 |
+| prime_maul | Accuracy | +60 |
 | prime_scythe | Accuracy | +60 |
 | prime_scythe | Attack | +60 |
 | prime_staff | Magic Accuracy | +60 |
-| prime_sword | Attack | +60 |
 | prime_sword | Accuracy | +60 |
+| prime_sword | Attack | +60 |
 | spalirisos | Attack | +60 |
 | varga_purnikawa | Attack | +60 |
 | varga_purnikawa | Attack | +60 |
@@ -1999,17 +1999,17 @@ Stats the server adds that don't exist on the retail item.
 | onca_suit | Magic Accuracy | +40 |
 | opashoro | Magic Attack Bonus | +40 |
 | prime_bow | AGI | +40 |
-| prime_fists | STR | +40 |
 | prime_fists | DEX | +40 |
+| prime_fists | STR | +40 |
 | prime_great_axe | STR | +40 |
 | prime_gun | AGI | +40 |
 | prime_lance | STR | +40 |
 | prime_maul | MND | +40 |
 | prime_maul | STR | +40 |
 | prime_scythe | STR | +40 |
-| prime_staff | MND | +40 |
-| prime_staff | INT | +40 |
 | prime_staff | Magic Attack Bonus | +40 |
+| prime_staff | INT | +40 |
+| prime_staff | MND | +40 |
 | prime_sword | STR | +40 |
 | prime_sword | DEX | +40 |
 | tupsimati_119 | Magic Attack Bonus | +40 |
@@ -2131,8 +2131,8 @@ Stats the server adds that don't exist on the retail item.
 | hashishin_basmak_+1 | Magic Attack Bonus | +27 |
 | ignominy_sollerets_+3 | Magic Attack Bonus | +27 |
 | jhakri_slops | Magic Attack Bonus | +27 |
-| tokko_bow | Ranged Attack | +27 |
 | tokko_bow | Ranged Accuracy | +27 |
+| tokko_bow | Ranged Attack | +27 |
 | tokko_knuckles | Attack | +27 |
 | tokko_knuckles | Accuracy | +27 |
 | tokko_scythe | Attack | +27 |
@@ -2422,8 +2422,8 @@ Stats the server adds that don't exist on the retail item.
 | chevaliers_armet_+2 | Damage taken | -10% |
 | cohort_cloak_+1 | Magic Accuracy | +10 |
 | dokoku | Double Attack | +10% |
-| earp | Rapid Shot | +10% |
 | earp | Store TP | +10 |
+| earp | Rapid Shot | +10% |
 | eletta_axe | Magic Attack Bonus | +10 |
 | eletta_claymore | Magic Attack Bonus | +10 |
 | eletta_katana | Magic Attack Bonus | +10 |
@@ -2432,8 +2432,8 @@ Stats the server adds that don't exist on the retail item.
 | eletta_scythe | Magic Attack Bonus | +10 |
 | emet_harness | Accuracy | +10 |
 | emet_harness_+1 | Accuracy | +10 |
-| foenaria | Double Attack | +10% |
 | foenaria | Store TP | +10 |
+| foenaria | Double Attack | +10% |
 | gae_buide | Store TP | +10 |
 | gastraphetes_119 | Snapshot | +10% |
 | gastraphetes_119_ii | Snapshot | +10% |
@@ -2451,6 +2451,6 @@ Stats the server adds that don't exist on the retail item.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2f521b8102f9 -->
-_Last updated: 2026-07-17 14:32 PDT_
+<!-- content-hash: a7a8071d6369 -->
+_Last updated: 2026-07-19 15:10 PDT_
 <!-- DOCGEN:END id="last-updated" -->
