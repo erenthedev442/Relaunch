@@ -76,18 +76,18 @@ if ($curBranch -ne $branch) {
       Say ("   $ahead local commit(s) ahead of origin - will push after a good build") 'Green'
     } else {
       Say ("   diverged ($ahead local / $behind origin) - rebasing local work onto origin...") 'Yellow'
-      # Auto-reconcile: rebase local onto origin, auto-resolving conflicts in
-      # GENERATED files (docs/*.md + docs/assets/*.json) -- docgen regenerates
-      # them, so taking origin's copy is harmless. A real conflict in code
-      # (.py/.lua/.sql/.html/etc.) still aborts + warns for a human. Empty
-      # commits (changes already upstream) are skipped, not left hanging.
+      # Auto-reconcile: rebase local onto origin, auto-resolving conflicts ONLY in
+      # generated artifacts that still live in THIS repo post docs-split
+      # (exports/*.csv + exports/*.json) -- they are regenerated, so taking
+      # origin's copy is harmless. A real conflict in code / SQL / Lua still aborts
+      # + warns for a human. Empty commits (already upstream) are skipped.
       git rebase "origin/$branch" 2>$null | Out-Null
       $guard = 0
       while ((Test-Path .git/rebase-merge) -or (Test-Path .git/rebase-apply)) {
         if ((++$guard) -gt 60) { git rebase --abort 2>$null | Out-Null; $rebaseConflict = $true; break }
         $conf = @(git ls-files -u | ForEach-Object { ($_ -split "`t")[-1] } | Sort-Object -Unique)
         if ($conf.Count -gt 0) {
-          $bad = @($conf | Where-Object { $_ -notmatch '\.md$' -and $_ -notmatch '^docs/assets/.*\.json$' })
+          $bad = @($conf | Where-Object { $_ -notmatch '^exports/.*\.(csv|json)$' })
           if ($bad.Count -gt 0) { git rebase --abort 2>$null | Out-Null; $rebaseConflict = $true; break }
           foreach ($f in $conf) { git checkout --theirs -- $f 2>$null | Out-Null; git add -- $f 2>$null | Out-Null }
         }
@@ -113,6 +113,40 @@ foreach($e in $exes){ Get-Process ($e -replace '\.exe$','') -EA SilentlyContinue
 Start-Sleep 3
 foreach($e in $exes){ if(Test-Path "$root\$e"){ Copy-Item "$root\$e" "$root\$e.bak" -Force -EA SilentlyContinue } }
 
+# ---- [2b] DB SAFETY SNAPSHOT (before any SQL touches xi_relaunch) ----
+# Binaries get *.bak; the DB got nothing, so a bad / non-idempotent SQL apply had
+# no rollback point. Take a timestamped mysqldump BEFORE [3] and keep the last 8.
+# Fail-open: a dump failure warns loudly but never blocks the deploy. db-backups/
+# is gitignored so [1]'s auto-commit never captures the dumps.
+Say '[2b] DB safety snapshot (mysqldump xi_relaunch)...' 'Cyan'
+$mysqldump = 'C:\Program Files\MariaDB 10.6\bin\mysqldump.exe'
+$dumpDir   = Join-Path $root 'db-backups'
+$null = New-Item -ItemType Directory -Force -Path $dumpDir
+if (Test-Path $mysqldump) {
+  $dumpFile = Join-Path $dumpDir ('xi_relaunch-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '.sql')
+  $dErr = "$env:TEMP\dumperr.txt"
+  # --single-transaction = consistent InnoDB snapshot without locking players out.
+  Start-Process -FilePath $mysqldump -ArgumentList @('-u','root','--password=richard','--single-transaction','--quick','--routines','--events','xi_relaunch') -RedirectStandardOutput $dumpFile -RedirectStandardError $dErr -Wait -NoNewWindow
+  $dumpLen = (Get-Item $dumpFile -EA SilentlyContinue).Length
+  if ($dumpLen -gt 4096) {
+    Say ("   snapshot OK: {0} ({1:N1} MB)" -f (Split-Path $dumpFile -Leaf), ($dumpLen/1MB)) 'Green'
+    Get-ChildItem $dumpDir -Filter 'xi_relaunch-*.sql' | Sort-Object LastWriteTime -Descending | Select-Object -Skip 8 | Remove-Item -Force -EA SilentlyContinue
+  } else {
+    Say '   WARNING: DB snapshot looks empty/failed - continuing WITHOUT a rollback point.' 'Yellow'
+    if (Test-Path $dErr) { @(Get-Content $dErr) | Where-Object { $_ -notmatch 'Using a password on the command line' } | Select-Object -First 3 | ForEach-Object { Say ("     " + $_) 'Yellow' } }
+  }
+} else { Say '   WARNING: mysqldump not found - no DB snapshot taken this deploy.' 'Yellow' }
+
+# my.ini config drift: a game deploy never cycles MariaDB, so if my.ini was edited
+# after mysqld started, staged DB-config changes are NOT live (need a service restart).
+try {
+  $myIni   = 'C:\Program Files\MariaDB 10.6\data\my.ini'
+  $mysqldP = Get-Process mysqld -EA SilentlyContinue | Select-Object -First 1
+  if ((Test-Path $myIni) -and $mysqldP -and ((Get-Item $myIni).LastWriteTime -gt $mysqldP.StartTime)) {
+    Say '   NOTE: my.ini edited after mysqld start - DB config staged but NOT active; restart the MariaDB service to apply (this deploy does not).' 'Yellow'
+  }
+} catch {}
+
 # ---- [3] apply custom SQL ----
 # [3a] the sql\zz*.sql OVERLAY layer (item mods / latents / carryforward).
 # Owner escalation 2026-07-12: this layer previously only landed via a manual
@@ -128,15 +162,36 @@ $env:XI_MYSQL_BIN = $mysql
 if ($LASTEXITCODE -ne 0) { Say '   WARNING: zz overlay apply FAILED - item-stat overlays may be stale (run apply-custom-sql.bat by hand).' 'Yellow' }
 
 # [3b] modules\custom\sql (custom systems + config overrides - final word).
-Say '   Applying modules\custom\sql\*.sql to xi_relaunch...' 'Cyan'
-$sqls = Get-ChildItem "$root\modules\custom\sql\*.sql" -EA SilentlyContinue
+# RECURSE: subfolders (e.g. sql\trusts\) were silently skipped by the old
+# top-level-only glob, so custom-trust SQL never reached the live DB via a deploy.
+# Order = top-level first, then subfolders, alphabetical within each (stable).
+# Every file must be idempotent (re-applied every deploy).
+Say '   Applying modules\custom\sql (recursive, incl. subfolders) to xi_relaunch...' 'Cyan'
+$sqlRoot = "$root\modules\custom\sql"
+$sqls = Get-ChildItem $sqlRoot -Recurse -Filter '*.sql' -EA SilentlyContinue |
+        Sort-Object -Property @{ Expression = { (Split-Path $_.FullName -Parent).Length } }, FullName
 if ($sqls) {
+  $sqlFail = 0
   foreach($f in $sqls){
     $o = "$env:TEMP\sqlout.txt"
+    if (Test-Path $o) { Remove-Item $o -Force -EA SilentlyContinue }
+    $rel = $f.FullName.Substring($sqlRoot.Length).TrimStart('\')
     Start-Process -FilePath $mysql -ArgumentList @('-u','root','--password=richard','xi_relaunch') -RedirectStandardInput $f.FullName -RedirectStandardError $o -Wait -NoNewWindow
-    Say ("   applied " + $f.Name)
+    # The mysql client writes errors to stderr ($o). The old script redirected it
+    # and never read it, so a broken/failed SQL file applied SILENTLY. Now we check
+    # (filtering the benign command-line-password warning).
+    $errLines = @()
+    if (Test-Path $o) { $errLines = @(Get-Content $o | Where-Object { $_.Trim() -and $_ -notmatch 'Using a password on the command line' }) }
+    if ($errLines.Count -gt 0) {
+      $sqlFail++
+      Say ("   FAILED  " + $rel + " :") 'Red'
+      foreach ($ln in ($errLines | Select-Object -First 4)) { Say ("      " + $ln.Trim()) 'Red' }
+    } else {
+      Say ("   applied " + $rel)
+    }
   }
-} else { Say '   (no modules\custom\sql\*.sql files - skipped)' }
+  if ($sqlFail -gt 0) { Say ("   WARNING: {0} custom SQL file(s) reported errors above - the DB may be inconsistent. Review before relying on this deploy." -f $sqlFail) 'Yellow' }
+} else { Say '   (no modules\custom\sql\**\*.sql files - skipped)' }
 
 # ---- [4] C++ rebuild (MSVC/Ninja) ----
 Say '[4/5] C++ rebuild (vcvars64 + cmake, Ninja/MSVC Release)...' 'Cyan'
@@ -170,10 +225,39 @@ Say '   navmeshes/ ensured (mob pathfinding cache)' 'DarkGray'
 
 # ---- [5] restart + health check ----
 Say '[5/5] Restarting servers via FFXIRelaunch task...' 'Cyan'
+$mapLog  = Join-Path $root 'log\map-server.log'
+$mapLen0 = 0; if (Test-Path $mapLog) { $mapLen0 = (Get-Item $mapLog).Length }
 schtasks /run /tn 'FFXIRelaunch' 2>$null | Out-Null
 Start-Sleep 8
 $up = @(Get-Process | Where-Object { $_.ProcessName -like 'xi_*' } | Select-Object -ExpandProperty ProcessName -Unique)
 foreach($e in $exes){ $n = $e -replace '\.exe$',''; if($up -contains $n){ Say ("   " + $n + " : active") 'Green' } else { Say ("   " + $n + " : NOT UP") 'Yellow' } }
+
+# Process-up != booted-OK. Wait for xi_map to log the readiness marker
+# ('The map-server is ready to work...') from THIS restart, then scan the new tail
+# for fatal boot errors. Bounded ~2 min; read shared so the live writer is not locked.
+Say '   verifying map-server readiness (loads all zones)...' 'DarkGray'
+$mapReady = $false; $newLog = ''; $w = 0
+do {
+  Start-Sleep 6; $w++
+  if (Test-Path $mapLog) {
+    try {
+      $fs = New-Object System.IO.FileStream($mapLog, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::ReadWrite)
+      $fs.Seek($mapLen0, [System.IO.SeekOrigin]::Begin) | Out-Null
+      $sr = New-Object System.IO.StreamReader($fs); $newLog = $sr.ReadToEnd(); $sr.Close(); $fs.Close()
+    } catch {}
+    if ($newLog -match 'map-server is ready to work') { $mapReady = $true }
+  }
+} while (-not $mapReady -and $w -lt 20)
+if ($mapReady) {
+  Say '   map-server: READY (all zones loaded).' 'Green'
+  $bootErr = @($newLog -split "`r?`n" | Where-Object { $_ -match '\[error\]|\[critical\]|CacheLuaObjectFromFile' } | Select-Object -First 8)
+  if ($bootErr.Count -gt 0) {
+    Say ("   NOTE: {0} error/critical line(s) during boot - review map-server.log:" -f $bootErr.Count) 'Yellow'
+    foreach ($b in $bootErr) { Say ("      " + $b.Trim()) 'Yellow' }
+  } else { Say '   boot clean - no error/critical lines.' 'Green' }
+} else {
+  Say '   WARNING: no readiness marker within ~2 min - CHECK map-server.log (still loading, or a boot fault).' 'Yellow'
+}
 
 # ---- [+] back up local commit(s) to origin - ONLY after a good build and a
 #      clean git state (never push a broken build or an unresolved divergence) ----

@@ -165,6 +165,9 @@ navmeshes/
 losmeshes/
 ximeshes/*.ximesh
 tags
+
+# deploy [2b] DB safety snapshots (mysqldump) - runtime output, never committed
+db-backups/
 log/**
 !log/.gitkeep
 

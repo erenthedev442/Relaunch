@@ -224,16 +224,53 @@ if ($siteOk)      { Say '  website: PUBLISHED (refresh_site_relaunch DONE). Live
 elseif ($taskOk)  { Say ("  website: task exited 0 but no DONE marker - CHECK $docsLog") 'Yellow' }
 else              { Say ("  website: CHECK - task result=" + $info.LastTaskResult + " state=" + $st + " (see $docsLog)") 'Yellow' }
 
+# ---- [B2] surface sync_audit / coverage findings from THIS docs run ----
+# These flag live-but-undocumented or inconsistent content. Previously they went
+# only to the log + the (dead) Discord webhook, so they passed silently. Visibility
+# only - never gates the deploy; fix findings in the Relaunch-Docs repo.
+if (Test-Path $docsLog) {
+    $auditTail = @(Get-Content $docsLog -Tail 160)
+    $findings  = @($auditTail | Where-Object { $_ -match '\[sync_audit\]|UNCOVERED-MODULE|STALE-MENTION|UNOWNED-PAGE|NAKED-FACT|SHADOW-LITERAL|MIRROR-CONST' -or $_ -match '\[runtime-consumers\]\s+[1-9]' })
+    if ($findings.Count -gt 0) {
+        Say ''
+        Say '  ---- docs accuracy findings (sync_audit) ----' 'Yellow'
+        foreach ($fnd in ($findings | Select-Object -Last 12)) { Say ('    ' + ($fnd.Trim())) 'Yellow' }
+        Say '  (fix in Relaunch-Docs: add a generator / DOCGEN block / {{setting}} token, or allowlist with a reason.)' 'Gray'
+    } else { Say '  docs accuracy: sync_audit clean (no coverage findings this run).' 'Green' }
+}
+
+# ---- [C] PLAYER PORTAL: refresh so its data tracks current catalogs ----
+# A game deploy updated the game + the docs site but left the portal
+# (C:\ffxi-portal-relaunch) stale. Delegate to the proven box-native runner
+# (deploy-portal.ps1: wip-backup -> reset to origin -> pip sync -> restart ->
+# health). Verified non-interactive; fail-open so a portal hiccup never affects
+# the game or the site.
+Say ''
+Say '########## [C] REFRESH PLAYER PORTAL ##########' 'Cyan'
+$portalRunner = 'C:\ffxi-portal-ops\deploy-portal.ps1'
+$portalOk = $false
+if (Test-Path $portalRunner) {
+    try {
+        & powershell -NoProfile -ExecutionPolicy Bypass -File $portalRunner *>&1 | Select-Object -Last 4 | ForEach-Object { Say ("    | " + $_) }
+        $portalOk = ($LASTEXITCODE -eq 0)
+    } catch { Say ('  portal refresh error (non-fatal): ' + $_.Exception.Message) 'Yellow' }
+    if ($portalOk) { Say '  portal: refreshed + restarted (deploy-portal.ps1 OK).' 'Green' }
+    else           { Say '  portal: CHECK - deploy-portal.ps1 non-zero exit (see C:\ffxi-portal-ops\logs\deploy-portal.log).' 'Yellow' }
+} else { Say ('  portal: runner not found (' + $portalRunner + ') - SKIPPED.') 'Yellow' }
+
 # ---- summary ----
 $srvMsg = if ($upCount -eq 4) { 'OK (4/4 up)' } else { "CHECK ($upCount/4)" }
 $srvCol = if ($upCount -eq 4) { 'Green' }       else { 'Yellow' }
 $webMsg = if ($siteOk)        { 'published' }   else { 'CHECK - see log' }
 $webCol = if ($siteOk)        { 'Green' }       else { 'Yellow' }
+$plMsg  = if ($portalOk)      { 'refreshed' }   else { 'CHECK - see portal log' }
+$plCol  = if ($portalOk)      { 'Green' }       else { 'Yellow' }
 Say ''
 Say '============================================================' 'Cyan'
 Say '  DEPLOY FINISHED' 'Cyan'
 Say ("  Server : " + $srvMsg) $srvCol
 Say ("  Website: " + $webMsg) $webCol
-Say  '  Logs   : deploy-relaunch.log | vps-rebuild.log | relaunch-ops\logs\refresh_site_relaunch.log'
+Say ("  Portal : " + $plMsg) $plCol
+Say  '  Logs   : deploy-relaunch.log | vps-rebuild.log | refresh_site_relaunch.log | ffxi-portal-ops\logs\deploy-portal.log'
 Say '============================================================' 'Cyan'
 Read-Host '  Press Enter to close'
