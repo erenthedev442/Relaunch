@@ -144,7 +144,7 @@ PROGRESSION = [
     {"key": "rebirth", "name": "Rebirths (main job)", "type": "milestone", "varfmt": "Rebirth_Count_{mjob}", "step": 5,
      "hint": "Rebirth your job for permanent bonuses (a re-grind penalty applies)."},
     {"key": "apex", "name": "Apex Climb", "type": "milestone", "var": "Apex_HighestTier", "step": 25,
-     "hint": "Climb the Apex arena (!apex) — every tier is harder than the last."},
+     "hint": "Climb through the Apex Arbiter NPC — every tier is harder than the last."},
     {"key": "paragon", "name": "Paragon Board", "type": "perks",
      "perks": ["might", "vigor", "precision", "warding", "arcana", "dominion"], "each": 10,
      "extra": ("Paragon_Level", "board level"), "hint": "Spend Paragon points across the 6-perk board."},

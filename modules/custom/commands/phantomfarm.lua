@@ -7,14 +7,15 @@
 --   -- useful after a hot-reload leaves old one-shot entities in the zone.
 --
 -- USAGE
---   !phantomfarm bibiki                -- report Bibiki pool (alive/dead/target)
+--   !phantomfarm bibiki                -- report alive/dying/disappeared/target
 --   !phantomfarm ranperre              -- report Ranperre pool
 --   !phantomfarm bibiki refill         -- top up Bibiki to 100 (no despawn)
 --
 -- WHEN
 --   Players report "phantoms aren't respawning" -- this command distinguishes:
---     * pool at target (alive + dead)  -> persistent entities are registered;
---                                         dead entries are awaiting respawn
+--     * alive                         -> currently usable targets
+--     * dying                         -> visible death/despawn sequence
+--     * disappeared                   -> awaiting native respawn (or stale)
 --     * pool has holes (< 100 total)   -> entities were removed unexpectedly.
 --                                         `refill` restores the count.
 -----------------------------------
@@ -84,12 +85,19 @@ local function spawnOnePhantom(zone, catalog)
         releaseIdOnDisappear = false,
 
         onMobSpawn = function(m)
+            m:setLocalVar('CapacityFarmDiedAt', 0)
             m:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)
             m:setMobMod(xi.mobMod.NO_DROPS, 1)
             m:setLocalVar('CapacityFarmBonus', catalog.cpBonus or 0)
             if catalog.maxHP and catalog.maxHP > 0 then
                 m:setMaxHP(catalog.maxHP)
                 m:setHP(catalog.maxHP)
+            end
+        end,
+
+        onMobDeath = function(deadMob)
+            if deadMob:getLocalVar('CapacityFarmDiedAt') == 0 then
+                deadMob:setLocalVar('CapacityFarmDiedAt', GetSystemTime())
             end
         end,
     })
@@ -119,18 +127,24 @@ commandObj.onTrigger = function(player, farmArg, actionArg)
     local entityName = 'DE_' .. catalog.mobName
     local existing   = zone:queryEntitiesByName(entityName) or {}
 
-    local alive, dead = 0, 0
+    local alive, dying, disappeared = 0, 0, 0
     for _, m in ipairs(existing) do
         pcall(function()
-            if m:isAlive() then alive = alive + 1 else dead = dead + 1 end
+            if m:isAlive() then
+                alive = alive + 1
+            elseif m:isSpawned() then
+                dying = dying + 1
+            else
+                disappeared = disappeared + 1
+            end
         end)
     end
-    local total  = alive + dead
+    local total  = alive + dying + disappeared
     local target = catalog.mobCount
 
     player:printToPlayer(string.format(
-        '[phantomfarm] %s: %d alive + %d dead-not-GC = %d total (target %d).',
-        farm.label, alive, dead, total, target), S)
+        '[phantomfarm] %s: %d alive + %d dying + %d disappeared = %d total (target %d).',
+        farm.label, alive, dying, disappeared, total, target), S)
 
     local action = actionArg and string.lower(actionArg) or nil
     if action ~= 'refill' then
@@ -138,8 +152,15 @@ commandObj.onTrigger = function(player, farmArg, actionArg)
             player:printToPlayer(string.format(
                 '  => pool has holes (%d < %d). Run !phantomfarm %s refill to top up.',
                 total, target, key), S)
+        elseif disappeared > 0 then
+            player:printToPlayer(string.format(
+                '  => %d mob(s) await native respawn; persistent counts alone are not considered healthy.',
+                disappeared), S)
+        elseif dying > 0 then
+            player:printToPlayer(string.format(
+                '  => %d mob(s) are completing their death/despawn sequence.', dying), S)
         else
-            player:printToPlayer('  => pool at target. Respawn chain is healthy.', S)
+            player:printToPlayer('  => all target slots are alive.', S)
         end
         return
     end

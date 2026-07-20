@@ -68,10 +68,8 @@ catalog.respawnSeconds = 5              -- delay after the death/despawn sequenc
 catalog.cpBonus  = 2000                 -- flat bonus Capacity Points to the killer per kill, ON TOP of
                                         -- the engine's level-based award (both x map EXP_RATE). 0 = off.
 
--- Diagnostic logging. true -> CapacityFarm.lua prints one '[capacity_farm]
--- refill: ...' line to the map log each time a death actually drives a respawn,
--- so you can confirm in journalctl that the farm is cycling. Set false once
--- you've verified kills are coming back.
+-- Diagnostic logging. Reports missing entities, mobs still awaiting native
+-- respawn, and stale entities recovered by the Lua watchdog.
 catalog.debug    = true
 
 return catalog

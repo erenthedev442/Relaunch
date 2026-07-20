@@ -382,7 +382,7 @@ xi._apex_cleanupOrphans = function()
 end
 
 -----------------------------------
--- Enter the trial (called by the NPC and !apex enter)
+-- Enter the trial (called only by the Apex Arbiter NPC)
 -----------------------------------
 local function enterApex(player)
     cleanupStaleSessions()

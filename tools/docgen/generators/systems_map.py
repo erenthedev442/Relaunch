@@ -556,7 +556,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         add(_row(["Star-Devourer Raid", "Weekly server-wide raid boss. Party recommended."]))
     if have("modules/custom/lua/ApexTrials.lua"):
         add(_row(["Apex Trials",
-                  "`!apex` — post-cap NMs. Infamy + Paragon Points per kill. See "
+                  "Apex Arbiter NPC (`!apex` is status/abort only) — post-cap NMs. Infamy + Paragon Points per kill. See "
                   "[Apex & Paragon](../endgame/apex-paragon.md)."]))
     if gaunt:
         add(_row(["The Gauntlet", f"{gaunt[2]} Infamy per full clear"]))

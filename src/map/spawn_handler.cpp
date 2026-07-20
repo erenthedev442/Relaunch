@@ -143,8 +143,11 @@ void SpawnHandler::Tick(const timer::time_point now)
                 return false;
             }
 
-            const uint16 targid = static_cast<uint16>(pair.first & 0x0FFF);
-            auto*        PMob   = static_cast<CMobEntity*>(zone_->GetEntity(targid, TYPE_MOB));
+            // Dynamic entities encode targid + 0x100 in the low 12 bits of
+            // their long ID. zoneutils::GetEntity decodes both static and
+            // dynamic IDs; masking here looked up the wrong dynamic targid and
+            // silently discarded its pending respawn.
+            auto* PMob = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(pair.first, TYPE_MOB));
 
             if (!PMob)
             {

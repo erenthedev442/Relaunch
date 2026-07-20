@@ -151,7 +151,7 @@ def _render_apex_overview(a: dict) -> str:
     return (
         "**Apex Trials** is an **infinite, scaling solo climb** — the one chase on the server "
         f"with no summit. Talk to the **Apex Arbiter** in {_APEX_LOC} (`!hub`, endgame row, beside the "
-        "Prime Armory) or type `!apex` to begin.\n\n"
+        "Prime Armory) to begin. The chat command only reports progress or ends an active climb.\n\n"
         "Each **tier** pits you against a single scaled Apex boss "
         f"({names}). Clear it and you **bank Paragon Points** and raise your **record**, then the "
         "next tier spawns automatically — a little tougher. Keep climbing until you die or leave; "

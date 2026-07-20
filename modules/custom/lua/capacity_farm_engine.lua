@@ -50,6 +50,10 @@ local function makeFarm(catalog)
 
     local campZone
     local ensurePopulation  -- forward decl
+    -- Native respawn normally completes well inside this window (15s death
+    -- state, 3s fade, then the 30s SpawnHandler wave). Anything still
+    -- disappeared after this is stale and is recovered in-place.
+    local staleRespawnSeconds = math.max(60, (catalog.respawnSeconds or 5) + 45)
 
     local function spawnOne()
         if not campZone then return end
@@ -115,6 +119,7 @@ local function makeFarm(catalog)
             -- our settings here.  Same for mob mods: restoreModifiers() on respawn
             -- reverts to the pool baseline, so re-apply after it runs.
             onMobSpawn = function(m)
+                m:setLocalVar('CapacityFarmDiedAt', 0)
                 m:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)
                 m:setMobMod(xi.mobMod.NO_DROPS, 1)
                 -- C++ folds this killer-only flat bonus into the normal mob CP
@@ -123,6 +128,16 @@ local function makeFarm(catalog)
                 if catalog.maxHP and catalog.maxHP > 0 then
                     m:setMaxHP(catalog.maxHP)
                     m:setHP(catalog.maxHP)
+                end
+            end,
+
+            onMobDeath = function(deadMob)
+                -- onMobDeath can run once per eligible alliance member. Keep
+                -- the first timestamp, and refresh this module instance's zone
+                -- reference so FileWatcher reloads cannot strand the pool.
+                campZone = deadMob:getZone()
+                if deadMob:getLocalVar('CapacityFarmDiedAt') == 0 then
+                    deadMob:setLocalVar('CapacityFarmDiedAt', GetSystemTime())
                 end
             end,
         })
@@ -140,18 +155,52 @@ local function makeFarm(catalog)
 
     ensurePopulation = function()
         if not campZone then return end
-        -- Persistent farm entities remain in this list while dead and respawn
-        -- through SpawnHandler. Count all of them so zone-in/hourly top-ups only
-        -- replace genuinely missing entities, never ordinary corpses.
+
         local existing = campZone:queryEntitiesByName('DE_' .. catalog.mobName)
-        local count    = existing and #existing or 0
-        local toSpawn  = math.max(0, catalog.mobCount - count)
+        local total     = existing and #existing or 0
+        local alive     = 0
+        local waiting   = 0
+        local recovered = 0
+        local now       = GetSystemTime()
+
+        -- Keep persistent entities (and their targids), but do not mistake a
+        -- permanently disappeared entity for healthy population. Native
+        -- respawn is primary; this watchdog only intervenes after a full
+        -- death/despawn/spawn-wave window has elapsed.
+        for _, mob in ipairs(existing or {}) do
+            if mob:isAlive() then
+                alive = alive + 1
+            else
+                local diedAt = mob:getLocalVar('CapacityFarmDiedAt')
+                local stale  = not mob:isSpawned() and
+                    (diedAt == 0 or now - diedAt >= staleRespawnSeconds)
+
+                if stale then
+                    -- Cancel any orphaned pending registration before forcing
+                    -- this same entity back up, then restore automatic respawn.
+                    mob:setRespawnTime(0)
+                    mob:spawn()
+                    mob:setRespawnTime(catalog.respawnSeconds or 5)
+                    if mob:isAlive() then
+                        alive     = alive + 1
+                        recovered = recovered + 1
+                    end
+                else
+                    waiting = waiting + 1
+                end
+            end
+        end
+
+        -- Only genuinely missing entities allocate new dynamic targids.
+        local toSpawn = math.max(0, catalog.mobCount - total)
         for _ = 1, toSpawn do
             spawnOne()
         end
-        if catalog.debug and toSpawn > 0 then
-            print(string.format('[%s] ensurePopulation: %d existing -> +%d spawned (target %d)',
-                logTag, count, toSpawn, catalog.mobCount))
+
+        if catalog.debug and (toSpawn > 0 or recovered > 0 or waiting > 0) then
+            print(string.format(
+                '[%s] ensurePopulation: %d alive, %d awaiting respawn, %d stale recovered, +%d missing spawned (target %d)',
+                logTag, alive, waiting, recovered, toSpawn, catalog.mobCount))
         end
     end
 
@@ -168,8 +217,9 @@ local function makeFarm(catalog)
         return cs
     end)
 
-    -- Periodic safety net: verify the persistent pool every Vana'diel hour
-    -- (~2 real min) in case an entity was removed by an admin/script.
+    -- Periodic safety net: replace missing entities and recover any persistent
+    -- entity that native respawn left disappeared for longer than one complete
+    -- respawn cycle.
     m:addOverride(catalog.zonePath .. '.Zone.onGameHour', function(zone)
         super(zone)
         if campZone then

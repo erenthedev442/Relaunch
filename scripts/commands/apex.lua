@@ -1,5 +1,4 @@
 -----------------------------------
--- !apex enter              -- enter or re-enter the Apex Trials climb
 -- !apex abort              -- cancel your own active run (points kept)
 -- !apex abort <name>       -- GM (perm 1): cancel another player's run
 -- !apex status             -- GM (perm 1): list all active sessions
@@ -15,14 +14,9 @@ cmdObj.onTrigger = function(player, args)
 
     local sessions = xi._apex_sessions
     local endRun   = xi._apex_endRun
-    local enter    = xi._apex_enter
 
     if sub == 'enter' then
-        if not enter then
-            player:printToPlayer('[apex] ApexTrials module not loaded.', SYS)
-            return
-        end
-        enter(player)
+        player:printToPlayer('[apex] Begin climbs through the Apex Arbiter NPC in Purgonorgo Isle.', SYS)
 
     elseif sub == 'abort' then
         local target
@@ -72,7 +66,7 @@ cmdObj.onTrigger = function(player, args)
         end
 
     else
-        player:printToPlayer('[apex] Usage: !apex enter  |  !apex abort  |  !apex abort <name> (GM)  |  !apex status (GM)', SYS)
+        player:printToPlayer('[apex] Usage: !apex abort  |  !apex abort <name> (GM)  |  !apex status (GM)', SYS)
     end
 end
 

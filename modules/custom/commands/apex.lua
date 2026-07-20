@@ -1,11 +1,10 @@
 -----------------------------------
 -- func: apex
--- desc: Apex Trials helper -- check your record / Paragon Points, start a
---       climb, or bail out of one.
+-- desc: Apex Trials helper -- check your record / Paragon Points or bail out
+--       of a climb. New climbs begin through the Apex Arbiter NPC.
 --
 -- Usage:
 --   !apex          -- show your Apex record + unspent Paragon Points
---   !apex enter    -- begin a climb (same as the Apex Arbiter NPC)
 --   !apex abort    -- end your current climb (banked points are kept)
 --   !apex cleanup  -- GM: remove orphaned Apex bosses from the arena
 --
@@ -39,27 +38,7 @@ commandObj.onTrigger = function(player, sub)
     end
 
     if sub == 'enter' then
-        if xi._apex_enter then
-            -- Cross-zone setPos must not run inside the chat-command packet
-            -- callback: doing so can desync the zoning handshake and leave the
-            -- client on a black screen. The NPC path is naturally deferred by
-            -- its menu, so defer the command path to match it.
-            player:timer(500, function(p)
-                if p:getStatus() == xi.status.DISAPPEAR then
-                    p:printToPlayer('[Apex] You are already changing areas. Try again after zoning.', SYS)
-                    return
-                end
-
-                local enter = xi._apex_enter
-                if enter then
-                    enter(p)
-                else
-                    p:printToPlayer('[Apex] Apex Trials are not loaded.', SYS)
-                end
-            end)
-        else
-            player:printToPlayer('[Apex] Apex Trials are not loaded.', SYS)
-        end
+        player:printToPlayer('[Apex] Begin climbs through the Apex Arbiter NPC in Purgonorgo Isle.', SYS)
         return
     end
 
@@ -84,7 +63,7 @@ commandObj.onTrigger = function(player, sub)
     player:printToPlayer(string.format(
         '[Apex] Record: Tier %d.  Unspent Paragon Points: %d.  %s',
         record, pp, inRun and '(climbing now -- !apex abort to stop)' or ('Next push: Tier ' .. (record + 1))), SYS)
-    player:printToPlayer('[Apex] !apex enter to climb, or talk to the Apex Arbiter in GM Home.', SYS)
+    player:printToPlayer('[Apex] Talk to the Apex Arbiter in Purgonorgo Isle to begin a climb.', SYS)
 end
 
 return commandObj
