@@ -93,7 +93,7 @@ xi.settings.map =
     FAME_MULTIPLIER = 1.00,
 
     -- Percentage of experience normally lost to keep upon death. 0 means full loss, where 1 means no loss.
-    EXP_RETAIN = 0,
+    EXP_RETAIN = 1,
 
     -- Minimum level at which experience points can be lost
     EXP_LOSS_LEVEL = 31,
@@ -189,7 +189,7 @@ xi.settings.map =
     -- Adjust max HP pool for NMs, regular mobs, players, and trusts/fellows. Acts as a multiplier, so default is 1. Valid range: 0.1 to 2.0
     NM_HP_MULTIPLIER        = 1.0,
     MOB_HP_MULTIPLIER       = 1.0,
-    ALTER_EGO_HP_MULTIPLIER = 1.0,
+    ALTER_EGO_HP_MULTIPLIER = 2.0,
 
     -- 8x HP for post-75 formula-HP mobs (mob_groups.HP = 0); explicit DB HP
     -- overrides are never scaled. Owner request 2026-07-11. Inert until the
@@ -199,7 +199,7 @@ xi.settings.map =
     -- Adjust max MP pool for NMs, regular mobs, players, and trusts/fellows. Acts as a multiplier, so default is 1. Valid range: 0.1 to 2.0
     NM_MP_MULTIPLIER        = 1.0,
     MOB_MP_MULTIPLIER       = 1.0,
-    ALTER_EGO_MP_MULTIPLIER = 1.0,
+    ALTER_EGO_MP_MULTIPLIER = 2.0,
 
     -- Sets the fraction of MP a subjob provides to the main job. Retail is half and this acts as a divisor so default is 2
     SJ_MP_DIVISOR = 2.0,
@@ -217,10 +217,15 @@ xi.settings.map =
     -- Adjust base stats (str/vit/etc.) for NMs, regular mobs, players, and trusts/fellows. Acts as a multiplier, so default is 1.0. Valid range: 0.1 to 2.0
     NM_STAT_MULTIPLIER        = 1.0,
     MOB_STAT_MULTIPLIER       = 1.0,
-    ALTER_EGO_STAT_MULTIPLIER = 1.0,
+    ALTER_EGO_STAT_MULTIPLIER = 1.5,
 
     -- Adjust skill caps for trusts/fellows. Acts as a multiplier, so default is 1.
     ALTER_EGO_SKILL_MULTIPLIER = 1.0,
+
+    -- Trusts/fellows take 15% of AoE-spell damage when not the primary target
+    -- (DMG_AOE mod, 1/100 of a %; -8500 = -85%). Damage spells only. See
+    -- settings/default/map.lua for the full explanation.
+    ALTER_EGO_AOE_DMG_TAKEN = -8500,
 
     -- Adjust the recast time for abilities. Acts as a multiplier, so default is 1
     ABILITY_RECAST_MULTIPLIER = 1.0,

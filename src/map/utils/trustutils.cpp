@@ -729,6 +729,14 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
     // Natural magic evasion
     PTrust->addModifier(Mod::MEVA, mobutils::GetMagicEvasion(PTrust));
 
+    // [Relaunch custom] Alter egos take reduced damage from AoE actions they
+    // are NOT the primary target of (e.g. a -ga spell aimed at the player).
+    // DMG_AOE is applied by xi.spells.damage.calculateAreaOfEffectResistance:
+    // multiplier = clamp(1 + DMG_AOE/10000, 0, 2). Default -8500 -> 0.15 (15%
+    // damage taken). Tunable via map.ALTER_EGO_AOE_DMG_TAKEN without a rebuild.
+    // NOTE: only damage *spells* honor this mod; mob TP-move / breath AoE do not.
+    PTrust->addModifier(Mod::DMG_AOE, static_cast<int16>(settings::get<float>("map.ALTER_EGO_AOE_DMG_TAKEN")));
+
     // Add traits for sub and main
     battleutils::AddTraits(PTrust, traits::GetTraits(mJob), mLvl);
     battleutils::AddTraits(PTrust, traits::GetTraits(sJob), sLvl);
