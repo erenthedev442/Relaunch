@@ -9,16 +9,6 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local windurstFirstTrust = caster:getCharVar('WindurstFirstTrust')
-    local zone = caster:getZoneID()
-
-    if
-        windurstFirstTrust == 1 and
-        (zone == xi.zone.EAST_SARUTABARUTA or zone == xi.zone.WEST_SARUTABARUTA)
-    then
-        caster:setCharVar('WindurstFirstTrust', 2)
-    end
-
     return xi.trust.spawn(caster, spell)
 end
 
@@ -27,6 +17,22 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.SHANTOTTO] = xi.trust.messageOffset.TEAMWORK_1,
         [xi.magic.spell.STAR_SIBYL] = xi.trust.messageOffset.TEAMWORK_2,
     })
+	-- Base level trust (power = mLevel).
+	local master = mob:getMaster()
+	local power = math.floor(mob:getMainLvl() * 1)
+	local zpower = math.floor(mob:getMainLvl() / 5)
+	-- StatMods--
+	mob:addMod(xi.mod.HP, power * 2)
+	mob:addMod(xi.mod.MP, power * 4)
+	mob:addMod(xi.mod.MND, power)
+	mob:addMod(xi.mod.INT, power)
+	mob:addMod(xi.mod.CHR, power)
+	mob:addMod(xi.mod.EVA, power)
+	mob:addMod(xi.mod.CURE_POTENCY, zpower)
+	mob:addMod(xi.mod.HASTE_MAGIC, zpower)
+	mob:addMod(xi.mod.FASTCAST, zpower)
+	mob:addMod(xi.mod.REFRESH, zpower)	
+	
 
     mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 25 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
 
@@ -49,10 +55,8 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.SELF, { ai.c.STATUS_FLAG, xi.effectFlag.ERASABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
     mob:addGambit(ai.t.PARTY, { ai.c.STATUS_FLAG, xi.effectFlag.ERASABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
 
-    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.PARALYSIS }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.PARALYZE }, 60)
-    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.SLOW }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.SLOW }, 60)
-
-    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.FLASH }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.FLASH }, 60)
+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.SLOW }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.SLOW }, 10)
+	mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.PARALYSIS }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.PARALYZE }, 10)
 
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
 end
