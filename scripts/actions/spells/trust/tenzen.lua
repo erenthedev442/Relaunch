@@ -36,6 +36,7 @@ spellObject.onMobSpawn = function(mob)
 	mob:addMod(xi.mod.STORETP, zpower)
 	mob:addMod(xi.mod.SAVETP, 400)
 	mob:addMod(xi.mod.DOUBLE_ATTACK, 10)
+    mob:addMod(xi.mod.HASTE_GEAR, 1500)
     mob:addMod(xi.mod.HP, power * 2)
 	mob:addMod(xi.mod.MP, power * 2)
 
