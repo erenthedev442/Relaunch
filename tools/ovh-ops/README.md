@@ -14,6 +14,13 @@ so deploys can't clobber them). These are version-controlled backups.
 | `Relaunch-AHBot` | :30 hourly | `run_ah_market_maker.ps1` → `C:\server\tools\ah_market_maker.py --commit` | market-make the live AH |
 | `Relaunch-DriftMonitor` | :20 / :50 | `run_site_drift_monitor.ps1` → `site_drift_monitor_relaunch.py` | dead-man switch for `fjb-relaunch`; alerts Discord |
 
+Also here (manual, not a scheduled task): `gen-discord-changelog.ps1` — turns
+recent `C:\server` commits into a player-friendly Discord changelog (desktop
+shortcut on the box). Classifies conventional `type(scope):` subjects AND
+plain collaborator subjects via a leading-verb fallback. Not in the
+OPS-SELFSYNC whitelist — update `C:\relaunch-ops\` copy AND this repo copy
+together when editing.
+
 ## Box-only files (NOT committed — secrets / box paths)
 - `C:\relaunch-ops\.cloudflare_env` — `CLOUDFLARE_API_TOKEN=...` (wrangler auth)
 - `C:\relaunch-ops\.discord_webhook` — Discord webhook URL for drift alerts
