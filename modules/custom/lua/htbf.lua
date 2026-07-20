@@ -86,18 +86,22 @@ end
 -- ---------------------------------------------------------------------------
 if xi.trust and xi.trust.checkBattlefieldTrustCount and not xi.trust._htbfTrustPatched then
     xi.trust._htbfTrustPatched = true
-    local HTBF_TRUST_CAP = 5   -- max Trusts a party may field inside an HTBF fight
     local _origCheck = xi.trust.checkBattlefieldTrustCount
     xi.trust.checkBattlefieldTrustCount = function(caster)
         local bf = caster:getBattlefield()
         if bf and bf:getLocalVar('HTBF') == 1 then
+            local cap = catalog.trustCap[bf:getLocalVar('HTBFTier')] or catalog.trustCap[1]
             local numTrusts = 0
             for _, entity in ipairs(bf:getPlayersAndTrusts()) do
-                if entity:getObjType() == xi.objType.TRUST then
+                -- The custom Adventuring Fellow is implemented as a specially
+                -- flagged trust, but is a free extra and never consumes a slot.
+                if entity:getObjType() == xi.objType.TRUST
+                    and entity:getLocalVar('fellowApplied') ~= 1
+                then
                     numTrusts = numTrusts + 1
                 end
             end
-            return numTrusts < HTBF_TRUST_CAP
+            return numTrusts < cap
         end
         return _origCheck(caster)
     end
@@ -188,8 +192,8 @@ end
 
 function htbf.register(fightKey, tier)
     local f     = catalog.fights[fightKey]
-    local scale = catalog.tierScale[tier]
-    local rew   = catalog.tierReward[tier]
+    local scale = f and catalog.tierScale[f.difficulty or 'standard'][tier]
+    local rew   = f and catalog.tierReward[f.rewardClass or 'standard'][tier]
     if not f or not scale then
         print(string.format('[HTBF] register: bad args (%s, %s)', tostring(fightKey), tostring(tier)))
         return nil
@@ -236,6 +240,7 @@ function htbf.register(fightKey, tier)
             for _, hook in ipairs({
                 'onBattlefieldTick', 'sections', 'onExitTrigger', 'onEventFinishExit',
                 'onEventUpdate', 'onBattlefieldLoss', 'onBattlefieldRegister', 'paths',
+                'onBattlefieldEnter',
                 -- onEventFinishBattlefield drives the PHASE-2 spawn on multi-phase
                 -- fights (Dawn spawns Promathia P2 here; Shadow Lord and Celestial
                 -- Nexus likewise). Without it those reuse fights play the P1-death
@@ -273,6 +278,7 @@ function htbf.register(fightKey, tier)
         -- Tag as an HTBF battlefield so the trust-count patch above lets players
         -- summon Trusts here (the engine's default cap would reject them).
         battlefield:setLocalVar('HTBF', 1)
+        battlefield:setLocalVar('HTBFTier', tier)
         -- Run the base fight's own setup first (spawns/positions/etc.), then scale.
         if baseSetup then pcall(function() baseSetup(self, battlefield) end) end
         for _, mob in ipairs(battlefield:getMobs(true, true)) do
@@ -289,6 +295,7 @@ function htbf.register(fightKey, tier)
                 if scale.def  and scale.def  > 0 then mob:addMod(xi.mod.DEF,  scale.def)  end
                 if scale.macc and scale.macc > 0 then mob:addMod(xi.mod.MACC, scale.macc) end
                 if scale.meva and scale.meva > 0 then mob:addMod(xi.mod.MEVA, scale.meva) end
+                if scale.eva  and scale.eva  > 0 then mob:addMod(xi.mod.EVA,  scale.eva)  end
             end)
         end
     end
@@ -318,16 +325,25 @@ function htbf.register(fightKey, tier)
             end
             bf:setLocalVar(latch, 1)
         end
-        if rew.gil and rew.gil > 0 then
-            pcall(function() player:addGil(rew.gil) end)
+        local firstClearCv = 'HTBF_FC_' .. (f.baseBattlefieldId + (tier - 1))
+        local firstClear   = (player:getCharVar(firstClearCv) or 0) == 0
+        local multiplier   = firstClear and catalog.firstClearMultiplier or 1
+        local gilReward    = (rew.gil or 0) * multiplier
+        local markReward   = (rew.marks or 0) * multiplier
+
+        if gilReward > 0 then
+            pcall(function() player:addGil(gilReward) end)
         end
-        if rew.marks and rew.marks > 0 then
+        if markReward > 0 then
             pcall(function()
                 player:setCharVar('HL_Points',
-                    (player:getCharVar('HL_Points') or 0) + rew.marks)
+                    (player:getCharVar('HL_Points') or 0) + markReward)
                 player:setCharVar('HL_Points_Lifetime',
-                    (player:getCharVar('HL_Points_Lifetime') or 0) + rew.marks)
+                    (player:getCharVar('HL_Points_Lifetime') or 0) + markReward)
             end)
+        end
+        if firstClear then
+            player:setCharVar(firstClearCv, 1)
         end
         -- Per-tier clear flag: used as an entry gate for Ambuscade (must have
         -- cleared at least one HTBF at each of T1/T2/T3). tier is the register()
@@ -362,8 +378,9 @@ function htbf.register(fightKey, tier)
         end
         pcall(function()
             player:printToPlayer(string.format(
-                'High-Tier Battlefield cleared! Reward: %d gil and %d Hunt Marks%s.',
-                rew.gil or 0, rew.marks or 0,
+                'High-Tier Battlefield cleared! Reward: %d gil and %d Hunt Marks%s%s.',
+                gilReward, markReward,
+                firstClear and ' (first clear x2)' or '',
                 looted > 0 and (' + ' .. looted .. ' item(s)') or ''), xi.msg.channel.SYSTEM_3)
         end)
     end
@@ -385,15 +402,21 @@ function htbf.register(fightKey, tier)
     -- the DAT, so the client receives no warp packet and the player is left at
     -- the entry NPC (shimmering circle) with the countdown ticking -- the exact
     -- symptom reported for Ark Angels + Divine Might. When the fight defines
-    -- f.entryPos, do the warp ourselves right after the player is inserted.
+    -- f.entryPosByArea, do the warp ourselves right after the player is inserted.
     -- Chain any base onBattlefieldEnter so multi-phase fights keep their setup.
-    if f.entryPos then
+    if f.entryPosByArea then
         local baseEnter = rawget(content, 'onBattlefieldEnter')
         function content:onBattlefieldEnter(player, battlefield)
             if baseEnter then pcall(function() baseEnter(self, player, battlefield) end) end
-            pcall(function()
-                player:setPos(f.entryPos[1], f.entryPos[2], f.entryPos[3], f.entryPos[4] or 0)
-            end)
+            local entryPos = f.entryPosByArea[battlefield:getArea()]
+            if entryPos then
+                pcall(function()
+                    player:setPos(entryPos[1], entryPos[2], entryPos[3], entryPos[4] or 0)
+                end)
+            else
+                print(string.format('[HTBF] %s tier %d: no staging position for area %d',
+                    tostring(fightKey), tier, battlefield:getArea()))
+            end
         end
     end
 

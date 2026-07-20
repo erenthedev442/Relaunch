@@ -23,13 +23,14 @@
 -- reused; releaseIdOnDisappear so IDs self-reclaim; timer-based tier advance
 -- (never re-entrant from the mob callback).
 --
--- Arena: Walk of Echoes [P2] (zone 279) -- same geometry as Walk of Echoes
--- but a dedicated, otherwise-unused zone so Apex never shares with the Tower.
+-- Arena: Walk of Echoes (zone 182). The former [P2] zone 279 destination
+-- strands clients at "Downloading data", including on reconnect.
 -- Trusts off (solo), pets on (zone misc 0x80=MISC_PET).
 --
 -- NPC: Apex Arbiter in Leafallia (Abdhaljs_Isle-Purgonorgo), the endgame hub.
 -----------------------------------
 require('modules/module_utils')
+require('scripts/zones/Walk_of_Echoes/Zone')
 require('scripts/zones/Walk_of_Echoes_[P2]/Zone')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local C         = require('modules/custom/lua/apex_catalog')
@@ -47,6 +48,19 @@ xi._apex_sessions = sessions
 local function getSession(player)   return sessions[player:getName()] end
 local function clearSession(player) sessions[player:getName()] = nil end
 
+local function activeTowerClimber()
+    for name in pairs(xi._et_sessions or {}) do
+        local climber = GetPlayerByName(name)
+        if climber and climber:getZoneID() == C.ARENA_ZONE then
+            return name
+        end
+
+        xi._et_sessions[name] = nil
+    end
+
+    return nil
+end
+
 -- forward declarations
 local startTier, endRun, endRunByName, onTierCleared
 
@@ -56,13 +70,14 @@ for _, name in ipairs(C.BOSS_NAMES) do
 end
 
 local function dismissTrusts(player)
-    pcall(function() player:clearTrusts() end)
-
     local ok, party = pcall(function() return player:getPartyWithTrusts() end)
     if not ok or not party then return end
     for _, member in ipairs(party) do
         pcall(function()
-            if member:isTrust() then member:setHP(0) end
+            if member:isTrust() and member:getLocalVar('fellowApplied') ~= 1 then
+                local owner = member:getMaster()
+                if owner then owner:despawnTrust(member) end
+            end
         end)
     end
 end
@@ -386,6 +401,14 @@ end
 -----------------------------------
 local function enterApex(player)
     cleanupStaleSessions()
+    local towerClimber = activeTowerClimber()
+    if towerClimber then
+        player:printToPlayer(
+            string.format('[Apex] The shared arena is occupied by %s in the Endless Tower. Try again when that run ends.', towerClimber),
+            SYS)
+        return
+    end
+
     if getSession(player) then
         player:printToPlayer('[Apex] You are already climbing! Use !apex abort to reset.', SYS)
         return
@@ -406,7 +429,7 @@ xi._apex_enter = enterApex
 -----------------------------------
 -- Overrides: arena zone-in starts the climb
 -----------------------------------
-m:addOverride('xi.zones.Walk_of_Echoes_[P2].Zone.onZoneIn', function(player, prevZone)
+m:addOverride('xi.zones.Walk_of_Echoes.Zone.onZoneIn', function(player, prevZone)
     local cs = super(player, prevZone)
 
     local sess = getSession(player)
@@ -414,7 +437,7 @@ m:addOverride('xi.zones.Walk_of_Echoes_[P2].Zone.onZoneIn', function(player, pre
         dismissTrusts(player)
         -- Arrived from the entry warp (tier still one below the first). Begin.
         -- capturedTier guards against double-fire: if onZoneIn somehow fires
-        -- twice (Walk_of_Echoes_[P2] re-enters this hook under some conditions),
+        -- twice (the arena re-enters this hook under some conditions),
         -- the first 2500ms timer increments sess.tier; the second sees
         -- s.tier != capturedTier and exits cleanly -- no floor skip.
         local capturedTier = sess.tier
@@ -440,11 +463,24 @@ m:addOverride('xi.trust.canCast', function(caster, spell, notAllowedTrustIds)
 end)
 
 -- Zone-out ends the run and removes the player's active boss.
-m:addOverride('xi.zones.Walk_of_Echoes_[P2].Zone.onZoneOut', function(player, ...)
+m:addOverride('xi.zones.Walk_of_Echoes.Zone.onZoneOut', function(player, ...)
     pcall(super, player, ...)
     if getSession(player) then
         endRun(player, 'left')
     end
+end)
+
+-- Rescue any character whose old Apex destination (zone 279) manages to finish
+-- loading. This does not replace the GM rescue needed by clients that cannot
+-- load 279 at all, but prevents a successfully reconnected character from
+-- remaining trapped there.
+m:addOverride('xi.zones.Walk_of_Echoes_[P2].Zone.onZoneIn', function(player, prevZone)
+    local cs = super(player, prevZone)
+    sessions[player:getName()] = nil
+    player:timer(1000, function(p)
+        p:setPos(C.EXIT_WARP.x, C.EXIT_WARP.y, C.EXIT_WARP.z, C.EXIT_WARP.rot, C.EXIT_WARP.zoneId)
+    end)
+    return cs
 end)
 
 -- Death ends the run.

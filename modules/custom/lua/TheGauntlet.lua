@@ -72,15 +72,14 @@ local function playerOwner(entity)
 end
 
 local function dismissTrusts(player)
-    pcall(function() player:clearTrusts() end)
-
-    -- clearTrusts() handles normal cases; this extra pass mirrors Tournament and
-    -- catches any trust entity still present in the player's party list.
     local ok, party = pcall(function() return player:getPartyWithTrusts() end)
     if not ok or not party then return end
     for _, member in ipairs(party) do
         pcall(function()
-            if member:isTrust() then member:setHP(0) end
+            if member:isTrust() and member:getLocalVar('fellowApplied') ~= 1 then
+                local owner = member:getMaster()
+                if owner then owner:despawnTrust(member) end
+            end
         end)
     end
 end

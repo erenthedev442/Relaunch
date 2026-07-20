@@ -6,12 +6,12 @@
 --   Stage 1 (119I)   From AMBUSCADE: redeem a base Tokko for Hallmarks (2026-07-10;
 --                    was Bronze medal vendor, pulled since Tokko is Ambuscade content).
 --   Stage 2 (119II)  Forge output of 119I; or upgrade Tokko->Ajja in Ambuscade.
---   Stage 3 (119III) Stage-5 Relic. Also via Relic Forge NPC (Dynamis).
+--   Stage 3 (119III) Stage-5 Prime.
 --
 --   Costs:
---     119I → 119II : 25× Kindreds Medal (9541)  +  HL Rank III gate
---     119II → 119III: 50× Demons Medal  (9543)  +  2000 Reforge Marks (any pool)
---                                               +  HL Rank V gate
+--     119I → 119II : 50× Kindreds Medal (9541) + HL Rank V gate
+--     119II → 119III: 100× Demons Medal (9543) + 30,000 Reforge Marks
+--                                                + 750M gil + HL Rank V gate
 --
 -- PATH 2 — AEONIC (Malformed → 119I → 119II → Aeonic 119III)
 --   Base (Malformed)  Bought from Temprix in Reisenjima (50,000 Escha Beads).

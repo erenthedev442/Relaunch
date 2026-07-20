@@ -15,10 +15,11 @@
 local C = {}
 
 -- ── Arena / placement ───────────────────────────────────────────────────────
--- Uses Walk of Echoes [P2] (279) -- same geometry as Walk of Echoes but
--- completely unused, giving Apex Trials its own dedicated zone separate from
--- the Endless Tower (zone 182). GM Home mob groups (zone 210) spawn here.
-C.ARENA_ZONE = 279          -- xi.zone.WALK_OF_ECHOES_P2
+-- Use the proven Walk of Echoes arena (182). Walk of Echoes [P2] (279)
+-- repeatedly strands clients at "Downloading data" and persists that broken
+-- destination across reconnects. Dynamic mobs and owner-scoped sessions keep
+-- Apex isolated from other arena content.
+C.ARENA_ZONE = 182          -- xi.zone.WALK_OF_ECHOES
 C.GROUP_ZONE = 210          -- GM Home (where the boss mob_groups live)
 C.WARP_IN    = { x = -420, y = 14, z = -49, rot = 192 }
 C.EXIT_WARP  = { zoneId = 44, x = 571.471, y = -3.360, z = 512.586, rot = 65 }

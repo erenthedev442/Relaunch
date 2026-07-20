@@ -1288,7 +1288,7 @@ xi.nyzul.prepareMobs = function(instance)
     -- logged, so the spawn executes -- this logs exactly what it spawns and guards
     -- every objective-mob spawn so a mob id that ISN'T found in the instance logs
     -- a precise line instead of silently aborting the rest of the floor's spawns.
-    local function safeSpawn(mobId, x, y, z, rot, what)
+    local function safeSpawn(mobId, x, y, z, rot, what, objectiveRole)
         local m = GetMobByID(mobId, instance)
         if not m then
             print(string.format('[Nyzul] MISSING objective mob id=%d (%s) on floor %d -- not in instance; spawn skipped',
@@ -1297,6 +1297,12 @@ xi.nyzul.prepareMobs = function(instance)
         end
         m:setSpawn(x, y, z, rot or math.random(0, 255))
         SpawnMob(mobId, instance)
+        if not m:isSpawned() then
+            print(string.format('[Nyzul] FAILED to spawn mob id=%d (%s) on floor %d',
+                mobId, what or '?', currentFloor))
+            return false
+        end
+        m:setLocalVar('NyzulObjectiveRole', objectiveRole or 0)
         return true
     end
 
@@ -1317,7 +1323,18 @@ xi.nyzul.prepareMobs = function(instance)
         end
 
         safeSpawn(ID.mob.ARCHAIC_RAMPART_OFFSET, -36, 0, -362, 0, 'Archaic Rampart (boss floor)')
-        safeSpawn(floorBoss, -55.000, 1, -380.000, 250, 'floor-20 boss')
+
+        -- Retry the remaining bosses if the random selection cannot spawn.
+        -- A boss floor must never be left with only its ambient rampart.
+        local bossFirst = floorBoss
+        local bossRange = currentFloor <= 40 and pTableEnemyLeaders[40] or pTableEnemyLeaders[100]
+        for offset = 0, bossRange[2] - bossRange[1] do
+            local candidate = bossRange[1] + ((bossFirst - bossRange[1] + offset) % (bossRange[2] - bossRange[1] + 1))
+            if safeSpawn(candidate, -55.000, 1, -380.000, 250, 'floor-20 boss', 1) then
+                floorBoss = candidate
+                break
+            end
+        end
 
     -- All other floors except free.
     elseif instance:getStage() ~= xi.nyzul.objective.FREE_FLOOR then
@@ -1348,7 +1365,7 @@ xi.nyzul.prepareMobs = function(instance)
                 -- Spawn Mob.
                 print(string.format('[Nyzul] enemy-leader spawn: id=%d at (%.1f, %.1f, %.1f)',
                     floorBoss, spawnPoint.x, spawnPoint.y, spawnPoint.z))
-                safeSpawn(floorBoss, spawnPoint.x, spawnPoint.y, spawnPoint.z, math.random(0, 255), 'enemy leader')
+                safeSpawn(floorBoss, spawnPoint.x, spawnPoint.y, spawnPoint.z, math.random(0, 255), 'enemy leader', 1)
 
                 -- Remove table entry.
                 table.remove(dTableSpawnPoint, spawnPointIndex)
@@ -1370,13 +1387,20 @@ xi.nyzul.prepareMobs = function(instance)
                     spawnPointIndex = math.random(1, #dTableSpawnPoint)
                     spawnPoint      = dTableSpawnPoint[spawnPointIndex]
 
-                    -- Spawn Mob.
-                    GetMobByID(enemy, instance):setSpawn(spawnPoint.x, spawnPoint.y, spawnPoint.z, math.random(0, 255))
-                    SpawnMob(enemy, instance)
+                    -- Spawn and count only entities actually present in the
+                    -- instance; missing rows can no longer create an
+                    -- impossible Eliminate target.
+                    local spawned = safeSpawn(
+                        enemy,
+                        spawnPoint.x,
+                        spawnPoint.y,
+                        spawnPoint.z,
+                        math.random(0, 255),
+                        'specified-group enemy',
+                        2)
 
-                    -- Set mobs of the specified group to CHECK_AS_NM
                     local groupMob = GetMobByID(enemy, instance)
-                    if groupMob then
+                    if spawned and groupMob then
                         groupMob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
                     end
 
@@ -1385,7 +1409,9 @@ xi.nyzul.prepareMobs = function(instance)
                     table.remove(dTableSpecificEnemies, randomEnemy)
 
                     -- Update floor objective.
-                    instance:setLocalVar('Eliminate', instance:getLocalVar('Eliminate') + 1)
+                    if spawned then
+                        instance:setLocalVar('Eliminate', instance:getLocalVar('Eliminate') + 1)
+                    end
 
                     groupAmount = groupAmount - 1
                 end
@@ -1397,15 +1423,22 @@ xi.nyzul.prepareMobs = function(instance)
                     spawnPointIndex = math.random(1, #dTableSpawnPoint)
                     spawnPoint      = dTableSpawnPoint[spawnPointIndex]
 
-                    -- Spawn Mob.
-                    GetMobByID(ID.mob.DAHAK, instance):setSpawn(spawnPoint.x, spawnPoint.y, spawnPoint.z, math.random(0, 255))
-                    SpawnMob(ID.mob.DAHAK, instance)
+                    local spawned = safeSpawn(
+                        ID.mob.DAHAK,
+                        spawnPoint.x,
+                        spawnPoint.y,
+                        spawnPoint.z,
+                        math.random(0, 255),
+                        'Dahak',
+                        4)
 
                     -- Remove table entry.
                     table.remove(dTableSpawnPoint, spawnPointIndex)
 
                     -- Update floor objective.
-                    instance:setLocalVar('Eliminate', instance:getLocalVar('Eliminate') + 1)
+                    if spawned then
+                        instance:setLocalVar('Eliminate', instance:getLocalVar('Eliminate') + 1)
+                    end
                 end
             end,
 
@@ -1441,15 +1474,21 @@ xi.nyzul.prepareMobs = function(instance)
             spawnPointIndex = math.random(1, #dTableSpawnPoint)
             spawnPoint      = dTableSpawnPoint[spawnPointIndex]
 
-            -- Spawn Mob.
-            GetMobByID(ID.mob.ARCHAIC_RAMPART_OFFSET, instance):setSpawn(spawnPoint.x, spawnPoint.y, spawnPoint.z, math.random(0, 255))
-            SpawnMob(ID.mob.ARCHAIC_RAMPART_OFFSET, instance)
+            local objectiveRole = instance:getStage() == xi.nyzul.objective.ELIMINATE_ALL_ENEMIES and 4 or nil
+            local spawned = safeSpawn(
+                ID.mob.ARCHAIC_RAMPART_OFFSET,
+                spawnPoint.x,
+                spawnPoint.y,
+                spawnPoint.z,
+                math.random(0, 255),
+                'Archaic Rampart',
+                objectiveRole)
 
             -- Remove table entry.
             table.remove(dTableSpawnPoint, spawnPointIndex)
 
             -- Update floor objective.
-            if instance:getStage() == xi.nyzul.objective.ELIMINATE_ALL_ENEMIES then
+            if objectiveRole and spawned then
                 instance:setLocalVar('Eliminate', instance:getLocalVar('Eliminate') + 1)
             end
         end
@@ -1458,15 +1497,21 @@ xi.nyzul.prepareMobs = function(instance)
             spawnPointIndex = math.random(1, #dTableSpawnPoint)
             spawnPoint      = dTableSpawnPoint[spawnPointIndex]
 
-            -- Spawn Mob.
-            GetMobByID(ID.mob.ARCHAIC_RAMPART_OFFSET + 1, instance):setSpawn(spawnPoint.x, spawnPoint.y, spawnPoint.z, math.random(0, 255))
-            SpawnMob(ID.mob.ARCHAIC_RAMPART_OFFSET + 1, instance)
+            local objectiveRole = instance:getStage() == xi.nyzul.objective.ELIMINATE_ALL_ENEMIES and 4 or nil
+            local spawned = safeSpawn(
+                ID.mob.ARCHAIC_RAMPART_OFFSET + 1,
+                spawnPoint.x,
+                spawnPoint.y,
+                spawnPoint.z,
+                math.random(0, 255),
+                'Archaic Rampart',
+                objectiveRole)
 
             -- Remove table entry.
             table.remove(dTableSpawnPoint, spawnPointIndex)
 
             -- Update floor objective.
-            if instance:getStage() == xi.nyzul.objective.ELIMINATE_ALL_ENEMIES then
+            if objectiveRole and spawned then
                 instance:setLocalVar('Eliminate', instance:getLocalVar('Eliminate') + 1)
             end
         end
@@ -1519,16 +1564,22 @@ xi.nyzul.prepareMobs = function(instance)
                 spawnPointIndex = math.random(1, #dTableSpawnPoint)
                 spawnPoint      = dTableSpawnPoint[spawnPointIndex]
 
-                -- Spawn Mob.
-                GetMobByID(dTableFloorNMs[index], instance):setSpawn(spawnPoint.x, spawnPoint.y, spawnPoint.z, math.random(0, 255))
-                SpawnMob(dTableFloorNMs[index], instance)
+                local objectiveRole = instance:getStage() == xi.nyzul.objective.ELIMINATE_ALL_ENEMIES and 4 or nil
+                local spawned = safeSpawn(
+                    dTableFloorNMs[index],
+                    spawnPoint.x,
+                    spawnPoint.y,
+                    spawnPoint.z,
+                    math.random(0, 255),
+                    'floor NM',
+                    objectiveRole)
 
                 -- Remove table entry.
                 table.remove(dTableFloorNMs, index)
                 table.remove(dTableSpawnPoint, spawnPointIndex)
 
                 -- Update floor objective.
-                if instance:getStage() == xi.nyzul.objective.ELIMINATE_ALL_ENEMIES then
+                if objectiveRole and spawned then
                     instance:setLocalVar('Eliminate', instance:getLocalVar('Eliminate') + 1)
                 end
 
@@ -1554,19 +1605,27 @@ xi.nyzul.prepareMobs = function(instance)
             spawnPointIndex   = math.random(1, #dTableSpawnPoint)
             spawnPoint        = dTableSpawnPoint[spawnPointIndex]
 
-            -- Spawn Mob.
-            GetMobByID(mobID, instance):setSpawn(spawnPoint.x, spawnPoint.y, spawnPoint.z, math.random(0, 255))
-            SpawnMob(mobID, instance)
+            local stage = instance:getStage()
+            local objectiveRole = stage == xi.nyzul.objective.ELIMINATE_ALL_ENEMIES and 4 or nil
+            local spawned = safeSpawn(
+                mobID,
+                spawnPoint.x,
+                spawnPoint.y,
+                spawnPoint.z,
+                math.random(0, 255),
+                'fodder',
+                objectiveRole)
 
             -- Remove table entry.
             table.remove(dTableEnemies, randomEnemy)
             table.remove(dTableSpawnPoint, spawnPointIndex)
 
             -- Update floor objective.
-            if instance:getStage() == xi.nyzul.objective.ELIMINATE_ALL_ENEMIES then
+            if objectiveRole and spawned then
                 instance:setLocalVar('Eliminate', instance:getLocalVar('Eliminate') + 1)
             elseif
-                instance:getStage() == xi.nyzul.objective.ELIMINATE_SPECIFIED_ENEMY and
+                spawned and
+                stage == xi.nyzul.objective.ELIMINATE_SPECIFIED_ENEMY and
                 instance:getLocalVar('Nyzul_Specified_Enemy') == 0
             then
                 instance:setLocalVar('Nyzul_Specified_Enemy', mobID)
@@ -1574,6 +1633,7 @@ xi.nyzul.prepareMobs = function(instance)
                 -- /check so a solo player can identify it without guesswork.
                 local specifiedMob = GetMobByID(mobID, instance)
                 if specifiedMob then
+                    specifiedMob:setLocalVar('NyzulObjectiveRole', 3)
                     specifiedMob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
                 end
             end

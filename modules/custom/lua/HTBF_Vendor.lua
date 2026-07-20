@@ -86,6 +86,7 @@ end
 -- keep the menu under the byte cap; the full name + exact price show on buy.
 showCategory = function(p, cat)
     local options = {}
+    p:printToPlayer('[HTBF] * means that gem is already in your key-item inventory.', SYS)
     for _, id in ipairs(cat.gems) do
         local g     = gemOf(id)
         local owned = p:hasKeyItem(id)
@@ -104,8 +105,10 @@ showBuy = function(p, g)
         showMenu(p)
         return
     end
-    p:printToPlayer(string.format('[HTBF] %s -- %s gil. Trade it at the battlefield entrance and pick a tier (I/II/III).',
+    p:printToPlayer(string.format(
+        '[HTBF] %s -- %s gil. Entry requires 2,100 spent JP on your current job and all NM affinities.',
         g.name, commafy(g.price)), SYS)
+    p:printToPlayer('[HTBF] Trade it at the battlefield entrance and pick Tier I, II, or III.', SYS)
     p:timer(30, function(pp)
         pp:customMenu({
             title   = string.format('Buy %s?', g.name),

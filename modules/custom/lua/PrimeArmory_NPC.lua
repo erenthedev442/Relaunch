@@ -354,7 +354,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer('[Prime Armory] The forging failed - your gil has been returned. Kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
-        if weapon.ws then
+        player:setCharVar('WF_Prime_Final', 1)
+        if weapon.ws and weapon.ws:sub(1, 1) ~= '(' then
             player:printToPlayer(string.format(
                 '[Prime Armory] %s has been forged! Equip it to unlock the weapon skill %s. Kupo!',
                 weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
@@ -368,10 +369,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -- Per-weapon detail + confirm menu.
     -----------------------------------
     local function showWeapon(player, weapon, page)
-        if weapon.ws then
+        if weapon.ws and weapon.ws:sub(1, 1) ~= '(' then
             player:printToPlayer(string.format('[Prime Armory] %s - Weapon Skill: %s', weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
         else
-            player:printToPlayer(string.format('[Prime Armory] %s (Stage-5 Relic)', weapon.name), xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('[Prime Armory] %s (Prime support equipment; no weapon skill)', weapon.name), xi.msg.channel.SYSTEM_3)
         end
         player:printToPlayer('  ' .. weapon.info, xi.msg.channel.SYSTEM_3)
         local claimed = player:getCharVar('PW_WeaponClaimed') or 0

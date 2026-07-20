@@ -37,6 +37,7 @@
 -- addOverride -> ONE map restart to load; catalog/menu tweaks hot-reload after.
 -----------------------------------
 require('modules/module_utils')
+require('scripts/globals/voidwalker')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local C         = require('modules/custom/lua/voidwatch_catalog')
@@ -153,29 +154,30 @@ local function initLights(sess)
     sess.blitz, sess.lastWeakTs = 0, 0
 end
 
-local function announceLight(player, color, label, n)
+local function announceLight(player, color, label, n, cap)
     player:printToPlayer(string.format(
         '[Voidwatch] Weakness struck by %s -- %s Light!  (%s %d/%d  ->  %s)',
-        label, C.LIGHTS.names[color], C.LIGHTS.names[color], n, lightCap(player), C.LIGHTS.boon[color]), SYS)
+        label, C.LIGHTS.names[color], C.LIGHTS.names[color], n, cap, C.LIGHTS.boon[color]), SYS)
 end
 
 -- Called by the player listeners: trigKey is 'elem:N' / 'ws' / 'ranged'.
-local function tryTrigger(player, target, trigKey)
-    local sess = sessions[player:getName()]
+local function tryTrigger(player, target, trigKey, ownerName)
+    local sess = sessions[ownerName or player:getName()]
     if not sess or not sess.mobId or not sess.trigMap then return end
     if not target then return end
     local okId, tid = pcall(function() return target:getID() end)
     if not okId or tid ~= sess.mobId then return end
     local entry = sess.trigMap[trigKey]
     if not entry then return end                              -- not a weakness of this NM
-    local color, cap = entry.color, lightCap(player)
+    local owner = GetPlayerByName(sess.ownerName) or player
+    local color, cap = entry.color, lightCap(owner)
     if (sess.lights[color] or 0) >= cap then return end
     local now = nowTs()
-    local cd  = math.max(1, C.WEAKNESS_COOLDOWN - getAtm(player, 'ATTUNEMENT') * C.ATM.ATTUNE_CD)
+    local cd  = math.max(1, C.WEAKNESS_COOLDOWN - getAtm(owner, 'ATTUNEMENT') * C.ATM.ATTUNE_CD)
     if (now - (sess.lastTrig[color] or 0)) < cd then return end
     sess.lastTrig[color] = now
     sess.lights[color]   = (sess.lights[color] or 0) + 1
-    announceLight(player, color, entry.label, sess.lights[color])
+    announceLight(player, color, entry.label, sess.lights[color], cap)
 
     -- Synchronic Blitz: chaining weaknesses quickly grants bonus Lights.
     sess.blitz = ((now - (sess.lastWeakTs or 0)) <= C.BLITZ_WINDOW) and ((sess.blitz or 0) + 1) or 1
@@ -188,25 +190,56 @@ local function tryTrigger(player, target, trigKey)
     end
 end
 
-local function registerListeners(player)
-    pcall(function() player:removeListener('VOIDWATCH_MAGIC') end)
-    pcall(function() player:removeListener('VOIDWATCH_WS') end)
-    pcall(function() player:removeListener('VOIDWATCH_RANGED') end)
-    player:addListener('MAGIC_USE', 'VOIDWATCH_MAGIC', function(caster, target, spell, action)
-        pcall(function() tryTrigger(caster, target, 'elem:' .. tostring(spell:getElement())) end)
+local function registerListeners(player, ownerName)
+    local magicId = 'VOIDWATCH_MAGIC_' .. ownerName
+    local wsId = 'VOIDWATCH_WS_' .. ownerName
+    local rangedId = 'VOIDWATCH_RANGED_' .. ownerName
+    pcall(function() player:removeListener(magicId) end)
+    pcall(function() player:removeListener(wsId) end)
+    pcall(function() player:removeListener(rangedId) end)
+    player:addListener('MAGIC_USE', magicId, function(caster, target, spell, action)
+        pcall(function() tryTrigger(caster, target, 'elem:' .. tostring(spell:getElement()), ownerName) end)
     end)
-    player:addListener('WEAPONSKILL_USE', 'VOIDWATCH_WS', function(attacker, target, skill, tp, action, damage)
-        pcall(function() tryTrigger(attacker, target, 'ws') end)
+    player:addListener('WEAPONSKILL_USE', wsId, function(attacker, target, skill, tp, action, damage)
+        pcall(function() tryTrigger(attacker, target, 'ws', ownerName) end)
     end)
-    player:addListener('RANGE_STATE_EXIT', 'VOIDWATCH_RANGED', function(attacker, target, action)
-        pcall(function() tryTrigger(attacker, target, 'ranged') end)
+    player:addListener('RANGE_STATE_EXIT', rangedId, function(attacker, target, action)
+        pcall(function() tryTrigger(attacker, target, 'ranged', ownerName) end)
     end)
 end
 
-local function removeListeners(player)
-    pcall(function() player:removeListener('VOIDWATCH_MAGIC') end)
-    pcall(function() player:removeListener('VOIDWATCH_WS') end)
-    pcall(function() player:removeListener('VOIDWATCH_RANGED') end)
+local function removeListeners(player, ownerName)
+    pcall(function() player:removeListener('VOIDWATCH_MAGIC_' .. ownerName) end)
+    pcall(function() player:removeListener('VOIDWATCH_WS_' .. ownerName) end)
+    pcall(function() player:removeListener('VOIDWATCH_RANGED_' .. ownerName) end)
+end
+
+local function registerPartyListeners(owner, sess)
+    sess.listenerPlayers = {}
+    local seen = {}
+    local members = { owner }
+    local ok, party = pcall(function() return owner:getParty() end)
+    if ok and party then
+        for _, member in ipairs(party) do members[#members + 1] = member end
+    end
+
+    for _, member in ipairs(members) do
+        local isPlayer = false
+        pcall(function() isPlayer = member:isPC() end)
+        local name
+        pcall(function() name = member:getName() end)
+        if isPlayer and name and not seen[name] then
+            seen[name] = true
+            registerListeners(member, sess.ownerName)
+            sess.listenerPlayers[#sess.listenerPlayers + 1] = member
+        end
+    end
+end
+
+local function removeSessionListeners(sess)
+    for _, player in ipairs((sess and sess.listenerPlayers) or {}) do
+        removeListeners(player, sess.ownerName)
+    end
 end
 
 -- ── Loot ────────────────────────────────────────────────────────────────────
@@ -270,6 +303,7 @@ local function spawnVoidwalker(owner, tier, roster)
 
         onMobFight = function(mfMob, mfTarget)
             mechanics.tick(mfMob, mfTarget)
+            xi.voidwalker.applyCombatBehavior(mfMob)
         end,
     })
 
@@ -283,8 +317,9 @@ local function spawnVoidwalker(owner, tier, roster)
     local hp = C.nmHp(tier)
     mob:setMaxHP(hp)
     mob:setHP(hp)
+    xi.voidwalker.applySpawnBehavior(mob)
     pcall(function() mob:addEnmity(owner, 30000, 30000) end)
-    pcall(function() mechanics.attach(mob, C.mechCfg(tier), ownerName) end)  -- AFTER stats/HP
+    pcall(function() mechanics.attach(mob, C.mechCfg(tier)) end)  -- AFTER stats/HP; target party takes mechanics
     return mob, entry.name, level
 end
 
@@ -374,10 +409,13 @@ end
 onRiftCleared = function(player)
     local sess = getSession(player)
     if not sess then return end
-    removeListeners(player)
+    removeSessionListeners(sess)
     clearSession(player)
     local tier = sess.tier
     local skey = sess.stratumKey or 'CRIMSON'
+    if tier > getTier(player) then
+        player:setCharVar(C.V.tier, tier)
+    end
     addStratClear(player, skey)
 
     local L      = sess.lights or {}
@@ -433,7 +471,7 @@ end
 failRift = function(player, reason)
     local sess = getSession(player)
     if not sess then return end
-    removeListeners(player)
+    removeSessionListeners(sess)
     clearSession(player)
     if sess.mob then
         pcall(function() mechanics.cleanup(sess.mob) end)
@@ -470,7 +508,11 @@ openRift = function(player, stratumKey)
 
     local stratum = C.STRATUM_BY_KEY[stratumKey] or C.STRATA[1]
     local tier    = stratum.base + getStratClears(player, stratum.key) + 1
-    local sess = { tier = tier, stratumKey = stratum.key, dead = false, zoneId = player:getZoneID() }
+    local sess =
+    {
+        tier = tier, stratumKey = stratum.key, dead = false,
+        zoneId = player:getZoneID(), ownerName = player:getName(),
+    }
     sessions[player:getName()] = sess
 
     local mob, name, level = spawnVoidwalker(player, tier, stratum.roster)
@@ -485,7 +527,7 @@ openRift = function(player, stratumKey)
     sess.nmName = name                                 -- for per-NM loot at reward time
     sess.trigMap, sess.weakList = nmWeaknesses(name)   -- this NM's specific weakness set
     initLights(sess)
-    registerListeners(player)
+    registerPartyListeners(player, sess)
 
     player:printToPlayer(string.format(
         '[Voidwatch] A Planar Rift tears open!  %s, Tier %d  --  %s (Lv.%d) claws its way out of the void!',
@@ -617,10 +659,24 @@ end)
 m:addOverride('xi.player.onGameIn', function(player, gameLogin, zoning)
     super(player, gameLogin, zoning)
     pcall(function()
+        local name = player:getName()
+        local pend = pendingPyxis[name]
+        if pend then
+            -- A disconnect or zone change can destroy the dynamic chest before
+            -- it is examined. Recover the already-rolled reward after login
+            -- initialization instead of leaving an unclaimable ghost Pyxis.
+            pendingPyxis[name] = nil
+            despawnPyxis(pend.mob)
+            player:timer(2500, function(p)
+                deliverPyxis(p, pend.reward)
+                p:printToPlayer('[Voidwatch] Your unclaimed Pyxis reward was recovered after zoning.', SYS)
+            end)
+        end
+
         local sess = getSession(player)
         if not sess then return end
         if gameLogin then
-            removeListeners(player)     -- stale session from a mid-rift logout; clear quietly
+            removeSessionListeners(sess) -- stale session from a mid-rift logout; clear quietly
             clearSession(player)
         elseif player:getZoneID() ~= sess.zoneId then
             failRift(player, 'left')

@@ -504,6 +504,21 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 return
             end
 
+            -- Apex Trials now uses this proven arena because zone 279 traps
+            -- clients during loading. Keep the two dynamic encounters mutually
+            -- exclusive so Tower mobs cannot engage an Apex climber.
+            for name in pairs(xi._apex_sessions or {}) do
+                local climber = GetPlayerByName(name)
+                if not climber or climber:getZoneID() ~= TOWER_ZONE_ID then
+                    xi._apex_sessions[name] = nil
+                else
+                    player:printToPlayer(
+                        string.format('[Tower] The shared arena is occupied by %s in Apex Trials. Try again when that run ends.', name),
+                        xi.msg.channel.SYSTEM_3)
+                    return
+                end
+            end
+
             -- One climber at a time -- but lazily RELEASE a stale lock first. A session
             -- sticks if a run ended abnormally (logout, warp/escape, or a server hiccup
             -- that bumped the climber out without endTower firing). Without this, one
@@ -543,6 +558,14 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 {
                     'Enter the Tower',
                     function(p)
+                        local apexClimber = next(xi._apex_sessions or {})
+                        if apexClimber then
+                            p:printToPlayer(
+                                string.format('[Tower] %s entered Apex Trials while your menu was open. Try again shortly.', apexClimber),
+                                xi.msg.channel.SYSTEM_3)
+                            return
+                        end
+
                         -- Re-check: another player may have entered between menu-open and click.
                         local occupant = next(sessions)
                         if occupant then

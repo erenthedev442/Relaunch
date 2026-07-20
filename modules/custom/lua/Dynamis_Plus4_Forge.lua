@@ -25,6 +25,7 @@ require('modules/module_utils')
 require('scripts/zones/Southern_San_dOria/Zone')
 
 local plus4map = require('modules/custom/lua/reforge_plus4_map')
+local reforgeCatalog = require('modules/custom/lua/reforge_catalog')
 
 local m = Module:new('dynamis_plus4_forge')
 
@@ -61,6 +62,19 @@ local MEGABOSSES =
 }
 
 local SYS = xi.msg.channel.SYSTEM_3
+
+-- Empyrean +3 pieces are valid reforge pieces, but retail has no matching +4
+-- item rows. Detect them explicitly so players are not told that a valid Boii
+-- (etc.) +3 is merely the wrong tier.
+local unsupportedEmpyreanPlus3 = {}
+for _, jobPieces in pairs(reforgeCatalog.pieces or {}) do
+    for _, tiers in pairs(jobPieces.empy or {}) do
+        local plus3 = tiers[4]
+        if plus3 and plus3 > 0 and not plus4map[plus3] then
+            unsupportedEmpyreanPlus3[plus3] = true
+        end
+    end
+end
 
 -- Consume qty of item id; refund the partial removal and fail if the player
 -- did not actually hold a full single stack (mirrors Divergence_Reforger).
@@ -190,6 +204,16 @@ m:addOverride('xi.zones.Southern_San_dOria.Zone.onInitialize', function(zone)
                     return
                 end
             end
+
+            for tradedId in pairs(unsupportedEmpyreanPlus3) do
+                if npcUtil.tradeHas(trade, { tradedId }) then
+                    player:printToPlayer(
+                        '[+4 Forge] That is an Empyrean +3 piece. Empyrean armor has no +4 item; only Artifact and Relic +3 can be forged here, kupo!',
+                        SYS)
+                    return
+                end
+            end
+
             player:printToPlayer('[+4 Forge] Trade me a reforged +3 AF/Relic piece to upgrade it to +4, kupo!', SYS)
         end,
 

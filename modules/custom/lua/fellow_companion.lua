@@ -36,7 +36,7 @@
 --   kill-XP -> levels, keeper + onGameIn persistence. Roles: Vanguard / Bulwark.
 -- PHASE 2+: ability/trait tree, Oracle/Magus/Hunter behaviours, humanoid
 --   appearance, a physical Hall NPC.
---   * Respec DONE (2026-07-07): !fellow -> Allocate Points -> Reset Points.
+--   * Respec: Fellow Officer -> Allocate Points -> Reset Points.
 --     Refunds the allocated pool minus a RESET_PENALTY_PCT (10%) loss.
 --
 -- ALL balance + name/model lists live in CONFIG -> tuning is a hot-reload.
@@ -67,15 +67,13 @@ local CONFIG =
     startingPoints = 6,        -- granted once, when the Fellow is first created
     pointsPerLevel = 3,        -- stat points granted per level-up
     -- Post-cap progression: once the Fellow hits maxLevel you can BUY stat points
-    -- with gil (!fellow -> Allocate Points -> Buy Points) and keep dumping them.
+    -- with gil at the Fellow Officer and keep progressing toward Mastery.
     buyPointsCost  = 50000,    -- gil per purchased point (tunable)
-    -- Overflow guard: a pet's mods are int16 and WRAP NEGATIVE past 32767. The
-    -- binding constraint is MATT, which is fed by TWO categories at once -- INT
-    -- (+10/pt) and Sorcery (+12/pt) -- PLUS the Magus role (+400). Worst case at
-    -- cap: 1400*(10+12) + 400 = 31200, safely under the wrap. (STR->ATT is looser:
-    -- 1400*12 + 9600 from levels = 26.4k.) Do NOT raise this past ~1436 or a
-    -- fully-invested Magus wraps MATT negative and does pathetic magic damage.
-    statCap        = 1400,
+    -- Every track is deliberately bounded so no mod approaches the engine's
+    -- signed-int16 storage limit.
+    -- v2 progression: 100 ranks in each of 14 tracks.  A fully levelled Fellow
+    -- earns 363 naturally; the remaining 1,037 cost 51.85m gil at the rate above.
+    statCap        = 100,
     -- Bulk allocation: amounts offered in the per-stat quantity picker (plus a
     -- "Max" option that fills to the cap or spends all remaining points). Lets
     -- players dump many points at once instead of one click per point.
@@ -93,33 +91,29 @@ local CONFIG =
     statMods =
     {
         -- Attributes: each point adds the attribute + a derived combat stat.
-        STR = { { xi.mod.STR, 6 }, { xi.mod.ATT, 12 } },
-        DEX = { { xi.mod.DEX, 6 }, { xi.mod.ACC, 10 } },
-        VIT = { { xi.mod.VIT, 6 }, { xi.mod.DEF, 10 } },
-        AGI = { { xi.mod.AGI, 6 }, { xi.mod.EVA, 10 } },
-        INT = { { xi.mod.INT, 6 }, { xi.mod.MATT, 3 } },   -- MATT 10->3 (2026-07-09; clamped by CONFIG.mattCap)
-        MND = { { xi.mod.MND, 6 }, { xi.mod.MDEF, 10 } },
+        STR = { { xi.mod.STR, 1 }, { xi.mod.ATT, 3 } },
+        DEX = { { xi.mod.DEX, 1 }, { xi.mod.ACC, 3 } },
+        VIT = { { xi.mod.VIT, 1 }, { xi.mod.DEF, 3 } },
+        AGI = { { xi.mod.AGI, 1 }, { xi.mod.EVA, 3 } },
+        INT = { { xi.mod.INT, 1 }, { xi.mod.MATT, 3 } },
+        MND = { { xi.mod.MND, 1 }, { xi.mod.MDEF, 3 } },
         -- Advanced categories: focused combat mods that STACK on top of the attributes.
-        Ferocity  = { { xi.mod.ATTP, 1 } },                                -- +1% attack
-        Critical  = { { xi.mod.CRITHITRATE, 1 } },                         -- +1% critical hit rate
-        Frenzy    = { { xi.mod.DOUBLE_ATTACK, 1 } },                       -- +1% Double Attack
-        Onslaught = { { xi.mod.TRIPLE_ATTACK, 1 }, { xi.mod.STORETP, 3 } },-- +1% Triple Attack, +3 Store TP
-        Sorcery   = { { xi.mod.MATT, 4 }, { xi.mod.MACC, 6 } },            -- magic atk (12->4, 2026-07-09) + acc; MATT clamped by CONFIG.mattCap
-        Celerity  = { { xi.mod.HASTE_GEAR, 8 } },                          -- attack speed (engine-capped ~25%)
-        Warding   = { { xi.mod.DMGPHYS, -20 }, { xi.mod.DMGMAGIC, -20 } }, -- damage taken - (engine-capped -50%)
-        Vigor     = { { xi.mod.REGEN, 3 }, { xi.mod.REFRESH, 1 } },        -- HP + MP regen per tick
+        Ferocity  = { { xi.mod.ATTP, 0.25 } },                              -- +25% at rank 100
+        Critical  = { { xi.mod.CRITHITRATE, 0.15 } },                       -- +15% at rank 100
+        Frenzy    = { { xi.mod.DOUBLE_ATTACK, 0.15 } },                     -- +15% at rank 100
+        Onslaught = { { xi.mod.TRIPLE_ATTACK, 0.08 }, { xi.mod.STORETP, 0.4 } },
+        Sorcery   = { { xi.mod.MATT, 3 }, { xi.mod.MACC, 3 } },
+        Celerity  = { { xi.mod.HASTE_GEAR, 25 } },                          -- 2500 = 25%
+        Warding   = { { xi.mod.DMGPHYS, -15 }, { xi.mod.DMGMAGIC, -15 } },  -- -15% at rank 100
+        Vigor     = { { xi.mod.REGEN, 1 } },
     },
     statOrder = { 'STR', 'DEX', 'VIT', 'AGI', 'INT', 'MND',
                   'Ferocity', 'Critical', 'Frenzy', 'Onslaught', 'Sorcery', 'Celerity', 'Warding', 'Vigor' },
 
     -- Flat base that scales with Fellow level (×level). ATT/ACC are shared (all
     -- roles melee); DEF is a small shared floor. Survivability is NOT shared -- it
-    -- is owned by each role's `survival` block (hpMult / pdt / mdt) below.
-    perLevel = { { xi.mod.ATT, 80 }, { xi.mod.ACC, 40 }, { xi.mod.DEF, 15 } },
-    -- HP = (hpBase + hpPerLevel*level) * role.survival.hpMult + VITpts*hpPerVitPt.
-    hpBase       = 1000,
-    hpPerLevel   = 500,
-    hpPerVitPt   = 120,
+    -- is owned by each role's explicit hpMin/hpMax and PDT/MDT block below.
+    perLevel = { { xi.mod.ATT, 4 }, { xi.mod.ACC, 3 }, { xi.mod.DEF, 2 } },
     -- pdt/mdt are ONLY fallbacks if a role omits survival.pdt/mdt. Every role below
     -- sets its own, so the durability of a Fellow is defined by its role: a Bulwark
     -- is a wall, a Magus is glass. Values are % damage taken (100 = 1%; - reduces).
@@ -132,19 +126,23 @@ local CONFIG =
     -- fix a small base. setDamage() gives the Fellow a REAL weapon that scales with
     -- LEVEL, so physical output tracks the Fellow's level, and STR investment
     -- (-> ATT -> pDIF) then scales it further. Both knobs are playtest-tunable.
-    dmgBase      = 24,    -- weapon DMG at level 1
-    dmgPerLevel  = 2.0,   -- + per Fellow level  (level 120 => ~264 base DMG)
+    -- Autos start around an ordinary trust and rise moderately. Signature moves
+    -- temporarily use each role's wsDamage range below, keeping autos sane while
+    -- letting the visible TP move reach the approved 5-8k -> 30-40k target.
+    dmgBase           = 20,
+    dmgPerMasterLevel = 1.25,
+    dmgPerLevel       = 0.8,
 
     -- MAGIC CEILING (2026-07-09 rebalance). Magic mob skills (Magus Fire IV, Oracle
     -- Divine Judgment) multiply off MATT, which used to reach ~30,800 (INT 10/pt +
     -- Sorcery 12/pt x 1400 cap) and produced 280k-800k hits. MATT is now clamped
     -- AFTER all mods so magic still grows with INT/Sorcery investment but tops out
     -- in the same band as physical. Raise this to make magic builds stronger.
-    mattCap      = 1200,
+    mattCap      = 5000,
 
     -- Each role owns:
     --   mods     = flat OFFENSE/utility mods applied on spawn (identity of the role).
-    --   survival = { hpMult, pdt, mdt } -> its DURABILITY (see HP formula above).
+    --   survival = { hpMin, hpMax, pdt, mdt } -> explicit durability targets.
     --   behavior = optional per-tick ('heal'/'tank'/...) in scheduleCombatLoop.
     -- Every role still melee-assists + uses its signature TP move.
     roles =
@@ -155,8 +153,9 @@ local CONFIG =
         vanguard  =
         {
             name = 'Vanguard', blurb = 'Balanced melee damage dealer.', defaultWs = xi.mobSkill.COMBO_1,
-            mods     = { { xi.mod.ATTP, 30 }, { xi.mod.DOUBLE_ATTACK, 10 } },
-            survival = { hpMult = 1.0, pdt = -1500, mdt = -1500 },  -- sturdy bruiser; the baseline
+            mods     = { { xi.mod.ATTP, 20 }, { xi.mod.DOUBLE_ATTACK, 10 } },
+            survival = { hpMin = 2700, hpMax = 5000, pdt = -1500, mdt = -1500 },
+            wsDamage = { 700, 4300 },
             moves =
             {
                 { name = 'Penta Thrust',     ws = xi.mobSkill.PENTA_THRUST       },  -- 5-hit barrage
@@ -169,22 +168,24 @@ local CONFIG =
         berserker =
         {
             name = 'Berserker', blurb = 'All-out melee offense; hits like a truck but fragile.', defaultWs = xi.mobSkill.SAVAGE_BLADE_1,
-            mods     = { { xi.mod.ATTP, 60 }, { xi.mod.DOUBLE_ATTACK, 20 }, { xi.mod.TRIPLE_ATTACK, 10 } },
-            survival = { hpMult = 0.2, pdt = 1000, mdt = -1000 },  -- glass cannon: LOW HP + takes +10% phys
+            mods     = { { xi.mod.ATTP, 35 }, { xi.mod.DOUBLE_ATTACK, 20 }, { xi.mod.TRIPLE_ATTACK, 8 } },
+            survival = { hpMin = 2300, hpMax = 4500, pdt = -500, mdt = -1000 },
+            wsDamage = { 1000, 6000 },
             moves =
             {
                 { name = 'Raging Fists', ws = xi.mobSkill.RAGING_FISTS_1 },  -- massive single hit
                 { name = 'Evisceration',  ws = xi.mobSkill.EVISCERATION   },  -- heavy scythe
                 { name = 'Savage Blade', ws = xi.mobSkill.SAVAGE_BLADE_1   },  -- dark scythe
-                { name = 'Wheeling Thrust',      ws = xi.WHEELING_THRUST      },  -- crescent slash
+                { name = 'Wheeling Thrust', ws = xi.mobSkill.WHEELING_THRUST },
                 { name = 'Tachi: Kasha',    ws = xi.mobSkill.TACHI_KASHA    },  -- brutal backhand
             },
         },
         bulwark   =
         {
             name = 'Bulwark', blurb = 'Tank: huge HP, heavy mitigation, holds hate. The only real tank.', defaultWs = xi.mobSkill.URIEL_BLADE_1,
-            mods     = { { xi.mod.DEF, 300 }, { xi.mod.ENMITY, 50 } }, behavior = 'tank',
-            survival = { hpMult = 1.6, pdt = -5000, mdt = -4000 },  -- wall: big HP + phys at the -50% cap
+            mods     = { { xi.mod.DEF, 300 }, { xi.mod.ENMITY, 25 } }, behavior = 'tank',
+            survival = { hpMin = 3200, hpMax = 6000, pdt = -2500, mdt = -2000 },
+            wsDamage = { 800, 5000 },
             moves =
             {
                 { name = 'Chains of Rage',    ws = xi.mobSkill.CHAINS_OF_RAGE      },  -- ground slam
@@ -196,8 +197,10 @@ local CONFIG =
         oracle    =
         {
             name = 'Oracle', blurb = 'Battle-healer: fights and mends your wounds when hurt.', defaultWs = xi.mobSkill.BENEDICTION_1,
-            mods     = { { xi.mod.MND, 150 }, { xi.mod.DEF, 150 }, { xi.mod.MDEF, 150 } }, behavior = 'heal',
-            survival = { hpMult = 1.0, pdt = -2500, mdt = -2500 },  -- durable support, but well below a tank
+            mods     = { { xi.mod.MND, 100 }, { xi.mod.DEF, 100 }, { xi.mod.MDEF, 100 } }, behavior = 'heal',
+            survival = { hpMin = 2500, hpMax = 4000, pdt = -1000, mdt = -1500 },
+            magicPower = { 600, 3300 },
+            wsDamage = { 700, 4500 },
             moves =
             {
                 { name = 'Benediction',      ws = xi.mobSkill.BENEDICTION_1      },  -- major heal burst
@@ -209,8 +212,9 @@ local CONFIG =
         magus     =
         {
             name = 'Magus', blurb = 'Battle-mage: elemental power, but glass -- keep it off the tank spot.', defaultWs = xi.mobSkill.THUNDER_IV,
-            mods     = { { xi.mod.INT, 150 }, { xi.mod.MATT, 200 }, { xi.mod.MACC, 200 } }, behavior = 'nuke',  -- MATT 400->150 (2026-07-09; clamped)
-            survival = { hpMult = 0.1, pdt = 0, mdt = -1000 },  -- glass: lowest HP + takes FULL phys. Cannot tank.
+            mods     = { { xi.mod.INT, 100 }, { xi.mod.MACC, 200 } }, behavior = 'nuke',
+            survival = { hpMin = 2200, hpMax = 3800, pdt = -500, mdt = -1000 },
+            magicPower = { 700, 4200 },
             moves =
             {
                 { name = 'Thunder IV',      ws = xi.mobSkill.THUNDER_IV        },
@@ -222,8 +226,9 @@ local CONFIG =
         hunter    =
         {
             name = 'Hunter', blurb = 'Ranger: high accuracy and evasion; survives by dodging, not soaking.', defaultWs = xi.mobSkill.EAGLE_EYE_SHOT_HUMANOID,
-            mods     = { { xi.mod.AGI, 150 }, { xi.mod.ACC, 200 }, { xi.mod.EVA, 100 } }, behavior = 'ranged',
-            survival = { hpMult = 0.55, pdt = -1000, mdt = -1000 },  -- fragile; leans on EVA to avoid hits
+            mods     = { { xi.mod.AGI, 100 }, { xi.mod.ACC, 200 }, { xi.mod.EVA, 100 } }, behavior = 'ranged',
+            survival = { hpMin = 2600, hpMax = 4400, pdt = -1000, mdt = -1000 },
+            wsDamage = { 900, 5500 },
             -- Owner-curated ranger pool 2026-07-16 (proven on Semih Lafihna / Qultada
             -- / Lion trusts). Literal mob_skill_ids used because these are custom
             -- ranged WSes not present in scripts/enum/mob_skill.lua. Autonomous AI
@@ -238,18 +243,13 @@ local CONFIG =
             },
         },
         -- MASTERED: the prestige capstone. UNLOCKS only once ALL 14 categories are
-        -- capped at statCap (~962M gil of bought points -- see isMastered). It is a
+        -- capped at statCap (51.85m gil beyond natural level points). It is a
         -- flex / show-off form, NOT an endgame power spike: the fully-capped allocation
         -- already supplies the raw stats, so these role mods are a modest "best of every
         -- role" garnish on top. behaviours combine Oracle's self-heal + Bulwark's hate-hold.
         --
-        -- INT16 SAFETY (do not loosen): a Mastered Fellow ALWAYS has Warding at cap
-        -- (DMGPHYS/DMGMAGIC -28000 each) and INT+Sorcery at cap (MATT 30800). So:
-        --   * survival.pdt/mdt are kept SMALL (-3000) -> DMGPHYS = -28000-3000 = -31000,
-        --     still above the int16 floor (-32768). A tank-sized -5000 here would WRAP.
-        --   * the MATT garnish is only +200 -> 30800+200 = 31000, under the +32767 wrap.
-        -- (Both are already past the engine's -50% / effective caps, so small values here
-        -- cost no real durability/power -- they only keep the mods from overflowing.)
+        -- Mastered combines reduced versions of support behaviours; it does not
+        -- inherit Oracle or Bulwark at full strength.
         mastered  =
         {
             name = 'Mastered', blurb = 'PRESTIGE: the effects of every role combined. A flex, not an endgame weapon.',
@@ -262,8 +262,10 @@ local CONFIG =
                 { xi.mod.ACC, 100 }, { xi.mod.EVA, 80 },                                         -- Hunter
                 { xi.mod.REGEN, 2 }, { xi.mod.REFRESH, 1 },                                      -- Oracle / Vigor
             },
-            behaviors = { heal = true, tank = true },  -- self-heals the master + holds hate (see combat loop)
-            survival  = { hpMult = 1.4, pdt = -3000, mdt = -3000 },  -- sturdy capstone; pdt/mdt SMALL for int16 safety (note above)
+            behaviors = { heal = true, tank = true },
+            survival  = { hpMin = 4000, hpMax = 5200, pdt = -1500, mdt = -1500 },
+            magicPower = { 2500, 3500 },
+            wsDamage = { 1000, 5500 },
             moves =
             {
                 { name = 'Penta Thrust',     ws = xi.mobSkill.PENTA_THRUST       },  -- Vanguard
@@ -348,23 +350,43 @@ local CONFIG =
     },
 
     autoReadyTP         = 1000,
-    combatLoopMs        = 2000,   -- auto-assist + auto-Ready + role-behaviour tick cadence
+    combatLoopMs        = 2000,
+    wsCooldownSec       = 8,
+    nukeCooldownSec     = 10,
+    activityWindowSec   = 30,
+    summonCooldownSec   = 300,
 
-    -- Role behaviours, applied per combat-loop tick (placeholders -- tune in playtest):
-    healHpp        = 70,    -- Oracle heals the master while their HP% is at/below this
-    healBase       = 300,   -- Oracle: + healPerLevel*FellowLevel HP restored per tick while hurt
-    healPerLevel   = 60,
-    nukeBase       = 1500,  -- Magus: magic damage to the target per tick while engaged
-    nukePerLevel   = 300,
-    rangedBase     = 1500,  -- Hunter: ranged damage to the target per tick while engaged
-    rangedPerLevel = 300,
-    tauntCE        = 4000,  -- Bulwark: cumulative enmity spiked onto the mob per tick (toward the Fellow)
-    tauntVE        = 8000,  -- Bulwark: volatile enmity spiked onto the mob per tick (toward the Fellow)
-    tauntDrain     = 20,    -- Bulwark: % of player's enmity bled off the mob per tick (keeps WS spikes in check)
+    healHpp             = 55,
+    healMin             = 300,
+    healMax             = 1500,
+    healCooldownSec     = 8,
+    tauntMinCE          = 400,
+    tauntMaxCE          = 800,
+    tauntMinVE          = 800,
+    tauntMaxVE          = 1600,
+    tauntCooldownSec    = 6,
 
     keeperMs            = 10000,
     firstMs             = 4000,
     namesPerPage        = 6,   -- customMenu caps: keep page + nav <= 8 options / 150 bytes
+}
+
+local ROLE_SKILL_LIST =
+{
+    vanguard = 9800, berserker = 9801, bulwark = 9802, oracle = 9803,
+    magus = 9804, hunter = 9805, mastered = 9806,
+}
+
+local GRADES =
+{
+    { name = 'Initiate',  level =   1, points =    0, damage = '5-8k' },
+    { name = 'Bonded',    level =  30, points =   75, damage = '8-12k' },
+    { name = 'Veteran',   level =  60, points =  175, damage = '12-18k' },
+    { name = 'Elite',     level =  90, points =  275, damage = '16-23k' },
+    { name = 'Ascendant', level = 120, points =  350, damage = '20-28k' },
+    { name = 'Empowered', level = 120, points =  700, damage = '24-32k' },
+    { name = 'Exalted',   level = 120, points = 1050, damage = '28-36k' },
+    { name = 'Mastered',  level = 120, points = 1400, damage = '30-40k' },
 }
 
 -- charVar keys (per-character; ALL INTEGER).
@@ -380,6 +402,8 @@ local V =
     modelPet = 'Fellow_ModelPet', -- index into CONFIG.models (each carries a petId)
     outfit   = 'Fellow_Outfit',  -- 0 = none (use Appearance); N = CONFIG.outfits[N]
     mastered = 'Fellow_Mastered', -- 1 once the "all 14 capped" unlock message has fired (one-time)
+    schema   = 'Fellow_StatSchema',
+    summonedAt = 'Fellow_LastSummon',
 }
 local function statVar(stat) return 'Fellow_' .. stat end
 
@@ -390,9 +414,31 @@ local function setN(p, k, n)  p:setCharVar(k, math.max(0, math.floor(n))) end
 local function getLevel(p)  return math.max(1, getN(p, V.level)) end
 local function getPoints(p) return getN(p, V.points) end
 local function getStatPts(p, stat) return getN(p, statVar(stat)) end
+local function allocatedTotal(p)
+    local total = 0
+    for _, stat in ipairs(CONFIG.statOrder) do total = total + getStatPts(p, stat) end
+    return total
+end
+
+local function migrateProgression(p)
+    if getN(p, V.schema) >= 2 then return end
+    local lvl = getLevel(p)
+    local converted = 0
+    for _, stat in ipairs(CONFIG.statOrder) do
+        local old = getStatPts(p, stat)
+        local new = math.min(CONFIG.statCap, math.ceil(old / 14))
+        setN(p, statVar(stat), new)
+        converted = converted + new
+    end
+    local pool = math.ceil(getPoints(p) / 14)
+    local natural = CONFIG.startingPoints + math.max(0, lvl - 1) * CONFIG.pointsPerLevel
+    pool = math.max(pool, natural - converted)
+    setN(p, V.points, pool)
+    setN(p, V.schema, 2)
+end
 
 -- Mastery gate: TRUE only when every allocatable category is at the cap. This is
--- the ~962M-gil "cap everything" milestone that unlocks the Mastered role. Cheap
+-- the 1,400-point "cap everything" milestone that unlocks the Mastered role. Cheap
 -- (14 in-memory charVar reads); safe to call from the combat loop / menus.
 local function isMastered(p)
     for _, stat in ipairs(CONFIG.statOrder) do
@@ -450,15 +496,52 @@ end
 -- fall back to a generic default until the player sets a custom name.
 local DEFAULT_FELLOW_NAME = 'Fellow'
 local function chosenName(p)
-    return FN.read(p) or DEFAULT_FELLOW_NAME
+    return FN.read(p) or CONFIG.names[getN(p, V.nameIdx)] or DEFAULT_FELLOW_NAME
 end
 
 local function xpToNext(level) return CONFIG.xpBase * level end
 
+local function levelProgress(p)
+    return math.max(0, math.min(1, (getLevel(p) - 1) / (CONFIG.maxLevel - 1)))
+end
+
+local function investmentProgress(p)
+    return math.max(0, math.min(1, allocatedTotal(p) / (CONFIG.statCap * #CONFIG.statOrder)))
+end
+
+local function combatProgress(p)
+    return 0.45 * levelProgress(p) + 0.55 * investmentProgress(p)
+end
+
+local function lerp(a, b, t)
+    return math.floor(a + (b - a) * math.max(0, math.min(1, t)))
+end
+
+local function normalWeaponDamage(p)
+    local masterLvl = math.max(1, p:getMainLvl() or 1)
+    return math.floor(
+        CONFIG.dmgBase +
+        CONFIG.dmgPerMasterLevel * math.min(99, masterLvl) +
+        CONFIG.dmgPerLevel * math.max(0, getLevel(p) - 1))
+end
+
+local function currentGrade(p)
+    local lvl, points = getLevel(p), allocatedTotal(p)
+    local grade = GRADES[1]
+    for _, candidate in ipairs(GRADES) do
+        if lvl >= candidate.level and points >= candidate.points then grade = candidate end
+    end
+    return grade
+end
+
 -- Create-on-first-use: grant starting points + sensible defaults exactly once.
 local function ensureBorn(p)
-    if getN(p, V.born) == 1 then return end
+    if getN(p, V.born) == 1 then
+        migrateProgression(p)
+        return
+    end
     p:setCharVar(V.born, 1)
+    setN(p, V.schema, 2)
     setN(p, V.level, 1)
     setN(p, V.points, CONFIG.startingPoints)
     setN(p, V.role, 1)      -- defaultRole
@@ -484,8 +567,12 @@ local function applyFellow(p, pet)
     for stat, mods in pairs(CONFIG.statMods) do
         local pts = getStatPts(p, stat)
         if pts > 0 then
-            for _, mv in ipairs(mods) do pet:addMod(mv[1], mv[2] * pts) end
+            for _, mv in ipairs(mods) do pet:addMod(mv[1], math.floor(mv[2] * pts)) end
         end
+    end
+
+    if role.magicPower then
+        pet:addMod(xi.mod.MATT, lerp(role.magicPower[1], role.magicPower[2], combatProgress(p)))
     end
 
     -- PHYSICAL: give the Fellow a real, level-scaling weapon so autos + physical WS
@@ -493,7 +580,7 @@ local function applyFellow(p, pet)
     -- scales it further. pcall-guarded: a pet always has a weapon, but never let a
     -- nil weapon abort the whole apply.
     pcall(function()
-        pet:setDamage(math.floor(CONFIG.dmgBase + CONFIG.dmgPerLevel * lvl))
+        pet:setDamage(normalWeaponDamage(p))
     end)
 
     -- MAGIC: clamp MATT AFTER every mod source (attributes + role + advanced
@@ -503,18 +590,19 @@ local function applyFellow(p, pet)
         pet:setMod(xi.mod.MATT, CONFIG.mattCap)
     end
 
-    -- Durability is ROLE-OWNED: each role's `survival` sets its damage-taken and an
-    -- HP multiplier. This is what stops a Magus from tanking -- it takes full phys
-    -- and gets ~45% of the HP a Bulwark gets. Falls back to CONFIG defaults if a
-    -- role omits survival. VIT points add flat HP on top for every role.
+    -- HP is an explicit role target, not an additive bonus on Naji's chassis.
+    -- This guarantees the approved hard ceilings (Oracle 4k, Bulwark 6k).
     local surv   = role.survival or {}
-    local hpMult = surv.hpMult or 1.0
     pet:addMod(xi.mod.DMGPHYS,  surv.pdt or CONFIG.pdt)
     pet:addMod(xi.mod.DMGMAGIC, surv.mdt or CONFIG.mdt)
 
-    local bonusHP = math.floor((CONFIG.hpBase + CONFIG.hpPerLevel * lvl) * hpMult) + getStatPts(p, 'VIT') * CONFIG.hpPerVitPt
-    pet:setMaxHP(pet:getMaxHP() + bonusHP)
-    pet:addHP(bonusHP)
+    local targetHP = lerp(surv.hpMin or 2500, surv.hpMax or 5000, combatProgress(p))
+    pet:setMaxHP(targetHP)
+    pet:setHP(targetHP)
+
+    local roleKey = getRole(p)
+    local skillList = ROLE_SKILL_LIST[roleKey]
+    if skillList then pet:setMobMod(xi.mobMod.SKILL_LIST, skillList) end
 
     -- Live display name (arbitrary string; silent=true to avoid console spam).
     local nm = chosenName(p)
@@ -557,24 +645,48 @@ scheduleCombatLoop = function(master, pet)
             local behs = rdef.behaviors               -- optional set { name = true } for multi-role forms (Mastered)
             local function hasBeh(name) return beh == name or (behs and behs[name]) end
             local lvl  = getLevel(master)
+            local now  = os.time()
+            local active = now - (master:getLocalVar('fellowActivityAt') or 0) <= CONFIG.activityWindowSec
 
-            -- Oracle (and Mastered): mend the master whenever their HP is low (in or out of combat).
-            if hasBeh('heal') then
-                local maxhp = math.max(1, master:getMaxHP())
-                if (master:getHP() * 100 / maxhp) <= CONFIG.healHpp then
-                    master:addHP(CONFIG.healBase + CONFIG.healPerLevel * lvl)
+            -- Deliberate WS/JA/spell use refreshes activity. Auto-attacking alone
+            -- does not. An inactive Fellow is follow-only and cannot sneak attacks
+            -- between loop ticks.
+            p:setAutoAttackEnabled(active)
+            if not active then
+                if p:isEngaged() then p:disengage() end
+                return
+            end
+            if master:isEngaged() and not p:isEngaged() then
+                local activeTarget = master:getTarget()
+                if activeTarget and not activeTarget:isDead() then
+                    p:engage(activeTarget:getTargID())
                 end
             end
 
-            -- Bulwark: spike hate toward the Fellow + bleed the player's enmity every tick.
-            -- addEnmity(pet, CE, VE) raises the mob's hate toward the Fellow.
-            -- lowerEnmity(master, %) drains the player's enmity so WS spikes don't pull hate permanently.
-            if hasBeh('tank') and master:isEngaged() then
+            -- Oracle heals only during active combat, with a real cooldown.
+            if hasBeh('heal') and master:isEngaged()
+               and now - (p:getLocalVar('fellowHealAt') or 0) >= CONFIG.healCooldownSec then
+                local maxhp = math.max(1, master:getMaxHP())
+                if (master:getHP() * 100 / maxhp) <= CONFIG.healHpp then
+                    local amount = lerp(CONFIG.healMin, CONFIG.healMax, combatProgress(master))
+                    if getRole(master) == 'mastered' then amount = math.floor(amount * 0.7) end
+                    master:addHP(amount)
+                    p:setLocalVar('fellowHealAt', now)
+                end
+            end
+
+            -- Bulwark adds steady hate but never drains the player's enmity, so
+            -- sufficiently active/high-damage players can still pull hate.
+            if hasBeh('tank') and master:isEngaged()
+               and now - (p:getLocalVar('fellowTauntAt') or 0) >= CONFIG.tauntCooldownSec then
                 local tgt = master:getTarget()
                 if tgt and not tgt:isDead() and p:isEngaged() then
                     pcall(function()
-                        tgt:addEnmity(p, CONFIG.tauntCE, CONFIG.tauntVE)
-                        tgt:lowerEnmity(master, CONFIG.tauntDrain)
+                        local ce = lerp(CONFIG.tauntMinCE, CONFIG.tauntMaxCE, combatProgress(master))
+                        local ve = lerp(CONFIG.tauntMinVE, CONFIG.tauntMaxVE, combatProgress(master))
+                        if getRole(master) == 'mastered' then ce = math.floor(ce * 0.6); ve = math.floor(ve * 0.6) end
+                        tgt:addEnmity(p, ce, ve)
+                        p:setLocalVar('fellowTauntAt', now)
                     end)
                 end
             end
@@ -613,15 +725,37 @@ scheduleCombatLoop = function(master, pet)
             if ptgt and ptgt ~= mtgt then forceClaim(ptgt) end
             if master:isEngaged() then
                 local tgt = mtgt
+                -- Magus uses a visible magical mob skill on its own cadence rather
+                -- than invisible takeDamage. This exercises the normal action,
+                -- resistance, message and magic-burst systems.
+                if hasBeh('nuke') and p:isEngaged() and tgt and not tgt:isDead()
+                   and now - (p:getLocalVar('fellowNukeAt') or 0) >= CONFIG.nukeCooldownSec then
+                    local spellMove = chosenWs(master)
+                    if spellMove and spellMove > 0 then
+                        p:useMobAbility(spellMove, tgt)
+                        p:setLocalVar('fellowNukeAt', now)
+                        p:setTP(0)
+                    end
+                end
+
                 -- As a TRUST the Fellow follows the master and engages the
                 -- master's target on its own AI (no petAttack needed -- that was
                 -- a BST/pet order). We just force its signature role TP move when
                 -- it's engaged with capped TP.
-                if p:isEngaged() and p:getTP() >= CONFIG.autoReadyTP then
+                if not hasBeh('nuke') and p:isEngaged() and p:getTP() >= CONFIG.autoReadyTP
+                   and now - (p:getLocalVar('fellowWsAt') or 0) >= CONFIG.wsCooldownSec then
                     local ws = chosenWs(master)
                     if ws and ws > 0 and tgt and not tgt:isDead() then
+                        if rdef.wsDamage then
+                            local normalDmg = normalWeaponDamage(master)
+                            p:setDamage(lerp(rdef.wsDamage[1], rdef.wsDamage[2], combatProgress(master)))
+                            p:timer(2500, function(pp)
+                                if pp and pp:isAlive() then pp:setDamage(normalDmg) end
+                            end)
+                        end
                         p:useMobAbility(ws, tgt)  -- the chosen FORM's signature TP move (forced)
                         p:setTP(0)                -- forced skills don't consume TP; reset for a cap-and-build cadence
+                        p:setLocalVar('fellowWsAt', now)
                     else
                         p:useMobAbility()         -- fallback: chassis picks a Ready move (consumes TP itself)
                     end
@@ -643,14 +777,9 @@ scheduleCombatLoop = function(master, pet)
     end)
 end
 
--- Live-add N allocated points' worth of mods to an out Fellow (n defaults to 1).
--- Scaling by n in a single addMod keeps a bulk allocation cheap (one call per
--- mod, not one per point) and matches applyFellow's mv[2]*pts on summon.
-
 -- The Fellow runs as a TRUST (party ally), NOT a pet, so it coexists with a real
 -- job pet. entityIsFellow flags the live trust; getFellowTrust finds it among the
--- player's party-with-trusts (nil if none out). Defined here -- ahead of the
--- first user (liveAddStat) -- so the local is in scope for every call site.
+-- player's party-with-trusts (nil if none out).
 local function entityIsFellow(e)
     return e ~= nil and e:getLocalVar('fellowApplied') == 1
 end
@@ -675,21 +804,35 @@ local function getFellowTrust(p)
 end
 local function hasFellowOut(p) return getFellowTrust(p) ~= nil end
 
-local function liveAddStat(p, stat, n)
-    n = n or 1
-    if n <= 0 then return end
-    local pet = getFellowTrust(p)
-    if pet then
-        for _, mv in ipairs(CONFIG.statMods[stat]) do pet:addMod(mv[1], mv[2] * n) end
-        if stat == 'VIT' then
-            pet:setMaxHP(pet:getMaxHP() + CONFIG.hpPerVitPt * n)
-            pet:addHP(CONFIG.hpPerVitPt * n)
-        end
-    end
-end
-
 -- ════════════════════════════ Summon / keeper ═══════════════════════════════
 local genByName = {}
+
+local function markActivity(player)
+    if player then player:setLocalVar('fellowActivityAt', os.time()) end
+end
+
+local function attachActivityListeners(player)
+    player:addListener('WEAPONSKILL_USE', 'FELLOW_ACTIVITY_WS', function(actor)
+        markActivity(actor)
+    end)
+    player:addListener('MAGIC_USE', 'FELLOW_ACTIVITY_MAGIC', function(actor)
+        markActivity(actor)
+    end)
+    player:addListener('ABILITY_USE', 'FELLOW_ACTIVITY_ABILITY', function(actor)
+        markActivity(actor)
+    end)
+    player:addListener('ITEM_USE', 'FELLOW_ACTIVITY_ITEM', function(actor)
+        markActivity(actor)
+    end)
+end
+
+local function canChangeFellow(player)
+    if player:isEngaged() or player:hasEnmity() then
+        player:printToPlayer('[Fellow] You cannot summon or change modes while engaged or carrying enmity.', SYS)
+        return false
+    end
+    return true
+end
 
 -- Keeper: while active, (re)spawn the chosen chassis whenever the player has NO
 -- pet and pets are allowed here -- survives zoning/death, yields to real job pets.
@@ -711,10 +854,18 @@ local function keeper(p, name, gen)
     -- not use the pet slot, so this never conflicts with a job pet. spawnTrust
     -- is a raw spawn; applyFellow overlays the model/name/stats.
     if not hasFellowOut(p) then
-        pcall(function()
-            local trust = p:spawnTrust(CONFIG.baseTrustId)
-            if trust then applyFellow(p, trust) end
-        end)
+        local pending = p:getLocalVar('fellowSummonPending') == 1
+        local ready = os.time() - getN(p, V.summonedAt) >= CONFIG.summonCooldownSec
+        if pending or ready then
+            pcall(function()
+                local trust = p:spawnTrust(CONFIG.baseTrustId)
+                if trust then
+                    p:setLocalVar('fellowSummonPending', 0)
+                    setN(p, V.summonedAt, os.time())
+                    applyFellow(p, trust)
+                end
+            end)
+        end
     end
 
     p:timer(CONFIG.keeperMs, function(pp) keeper(pp, name, gen) end)
@@ -729,7 +880,20 @@ end
 
 local function summon(p)
     ensureBorn(p)
+    if hasFellowOut(p) or getN(p, V.active) == 1 then
+        p:printToPlayer('[Fellow] Your Fellow is already active.', SYS)
+        return
+    end
+    if not canChangeFellow(p) then return end
+    local remaining = CONFIG.summonCooldownSec - (os.time() - getN(p, V.summonedAt))
+    if remaining > 0 then
+        p:printToPlayer(string.format('[Fellow] Your Fellow needs %d more second(s) before another summon.', remaining), SYS)
+        return
+    end
     setN(p, V.active, 1)
+    setN(p, V.summonedAt, os.time())
+    p:setLocalVar('fellowSummonPending', 1)
+    markActivity(p)
     -- No "dismiss your pet first" -- the Fellow is a trust now and coexists
     -- with any job pet.
     armKeeper(p, 30)
@@ -738,6 +902,7 @@ end
 
 local function dismiss(p)
     setN(p, V.active, 0)
+    p:setLocalVar('fellowSummonPending', 0)
     genByName[p:getName()] = (genByName[p:getName()] or 0) + 1
     local trust = getFellowTrust(p)
     if trust then
@@ -753,6 +918,7 @@ local function respawnIfOut(p)
     if trust then
         pcall(function() p:despawnTrust(trust) end)
     end
+    p:setLocalVar('fellowSummonPending', 1)
     armKeeper(p, 700)  -- keeper re-spawns the new chassis shortly
 end
 
@@ -854,6 +1020,9 @@ local function statusReport(p)
     local lookName    = (outfitEntry and outfitEntry.name) or (mdl and mdl.name) or 'Moogle'
     p:printToPlayer(string.format('=== %s ===  Lv.%d %s  (%s)',
         nm, lvl, role.name, lookName), SYS)
+    local grade = currentGrade(p)
+    p:printToPlayer(string.format('  Grade: %s   |   Upgrade target: %s TP move/spell',
+        grade.name, grade.damage), SYS)
     if lvl < CONFIG.maxLevel then
         p:printToPlayer(string.format('  XP: %d / %d to next level   |   Unspent points: %d',
             getN(p, V.xp), xpToNext(lvl), getPoints(p)), SYS)
@@ -936,8 +1105,9 @@ local function checkMasteredUnlock(p)
 end
 
 -- ════════════════════════════════ Menus ═════════════════════════════════════
-local openMain, openAllocate, openAllocateStat, openRole, openName, openModel, openOutfit, openTpMove, openBuyPoints
+local openMain, openCommandMain, openProgress, openAllocate, openAllocateStat, openRole, openName, openModel, openOutfit, openTpMove, openBuyPoints
 local openResetMenu, openResetConfirm, openResetCategory
+local roleMenuContext = {}
 
 local function show(p, title, options)
     local snapshot = { title = title, options = options }
@@ -947,12 +1117,11 @@ end
 openMain = function(p)
     ensureBorn(p)
     local lvl = getLevel(p)
-    local out = (getN(p, V.active) == 1)
+    roleMenuContext[p:getName()] = 'upgrade'
     local options =
     {
-        { out and 'Dismiss Fellow' or 'Summon Fellow',
-          function(pp) if getN(pp, V.active) == 1 then dismiss(pp) else summon(pp) end end },
         { string.format('Allocate Points (%d)', getPoints(p)), function(pp) openAllocate(pp) end },
+        { 'Upgrade Path', function(pp) openProgress(pp) end },
         { 'Choose Role',  function(pp) openRole(pp) end },
         { 'Name',         function(pp) openName(pp) end },
         { 'Appearance',   function(pp) openModel(pp, 0) end },
@@ -960,7 +1129,46 @@ openMain = function(p)
         { 'View Status',  function(pp) statusReport(pp); openMain(pp) end },
         { 'Close',        function(pp) end },
     }
-    show(p, string.format('Fellow  Lv.%d', lvl), options)
+    show(p, string.format('Fellow Officer  Lv.%d', lvl), options)
+end
+
+openCommandMain = function(p)
+    ensureBorn(p)
+    roleMenuContext[p:getName()] = 'command'
+    local out = getN(p, V.active) == 1
+    show(p, string.format('Fellow  Lv.%d', getLevel(p)),
+    {
+        { out and 'Dismiss Fellow' or 'Summon Fellow',
+          function(pp) if getN(pp, V.active) == 1 then dismiss(pp) else summon(pp) end end },
+        { 'Choose Mode', function(pp) openRole(pp) end },
+        { 'Close', function(pp) end },
+    })
+end
+
+openProgress = function(p)
+    ensureBorn(p)
+    local grade = currentGrade(p)
+    local nextGrade
+    for _, candidate in ipairs(GRADES) do
+        if getLevel(p) < candidate.level or allocatedTotal(p) < candidate.points then
+            nextGrade = candidate
+            break
+        end
+    end
+    p:printToPlayer(string.format('[Fellow] Grade: %s | Lv%d | %d/1400 allocated | target %s.',
+        grade.name, getLevel(p), allocatedTotal(p), grade.damage), SYS)
+    if nextGrade then
+        p:printToPlayer(string.format('[Fellow] Next: %s -- Lv%d and %d allocated points (target %s).',
+            nextGrade.name, nextGrade.level, nextGrade.points, nextGrade.damage), SYS)
+    else
+        p:printToPlayer('[Fellow] Maximum grade achieved. Every stat track is capped.', SYS)
+    end
+    show(p, 'Upgrade Path',
+    {
+        { 'Allocate Points', function(pp) openAllocate(pp, 0) end },
+        { 'View Status', function(pp) statusReport(pp); openProgress(pp) end },
+        { 'Back', function(pp) openMain(pp) end },
+    })
 end
 
 openAllocate = function(p, page)
@@ -1025,7 +1233,7 @@ openAllocateStat = function(p, stat, backPage)
         end
         setN(pp, V.points, getPoints(pp) - n)
         setN(pp, statVar(stat), getStatPts(pp, stat) + n)
-        liveAddStat(pp, stat, n)
+        respawnIfOut(pp)
         pp:printToPlayer(string.format('[Fellow] %s +%d -> %d. (%d points left)',
             stat, n, getStatPts(pp, stat), getPoints(pp)), SYS)
         checkMasteredUnlock(pp)  -- fires the one-time Mastery unlock if this filled the last cap
@@ -1056,12 +1264,13 @@ end
 -- Post-cap gil -> points exchange. Only reachable from openAllocate at max level.
 openBuyPoints = function(p)
     local cost    = CONFIG.buyPointsCost
-    local bundles = { 1, 10, 50 }
+    local bundles = { 1, 10, 50, 100 }
     local options = {}
+    local headroom = CONFIG.statCap * #CONFIG.statOrder - totalAllocated(p) - getPoints(p)
     for _, n in ipairs(bundles) do
-        local qty   = n
+        local qty   = math.min(n, math.max(0, headroom))
         local price = cost * qty
-        options[#options + 1] =
+        if qty > 0 then options[#options + 1] =
         {
             string.format('Buy %d (%dg)', qty, price),
             function(pp)
@@ -1075,7 +1284,7 @@ openBuyPoints = function(p)
                     qty, price, getPoints(pp)), SYS)
                 openBuyPoints(pp)
             end,
-        }
+        } end
     end
     options[#options + 1] = { 'Spend Points', function(pp) openAllocate(pp, 0) end }
     options[#options + 1] = { 'Back',         function(pp) openMain(pp) end }
@@ -1207,8 +1416,13 @@ openRole = function(p, page)
         {
             label,
             function(pp)
+                if not canChangeFellow(pp) then
+                    openRole(pp, page)
+                    return
+                end
                 setN(pp, V.role, e.idx)
-                pp:printToPlayer(string.format('[Fellow] Role set: %s -- %s Re-summon to apply.',
+                respawnIfOut(pp)
+                pp:printToPlayer(string.format('[Fellow] Mode set: %s -- %s',
                     r.name, r.blurb), SYS)
                 openRole(pp, page)
             end,
@@ -1219,26 +1433,52 @@ openRole = function(p, page)
     end
     -- TP move is configured PER ROLE; edit the current role's move here.
     options[#options + 1] = { 'Set TP Move', function(pp) openTpMove(pp, 0) end }
-    options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
+    options[#options + 1] =
+    {
+        'Back',
+        function(pp)
+            if roleMenuContext[pp:getName()] == 'command' then openCommandMain(pp) else openMain(pp) end
+        end,
+    }
     show(p, 'Choose Role', options)
 end
 
--- Free-text naming replaced the old preset picker: names are set with the
--- !fellowname command (there is no client dialog to type into from a menu).
--- This screen shows the current name and how to change it.
-openName = function(p)
-    local cur = FN.read(p) or ('(' .. DEFAULT_FELLOW_NAME .. ')')
-    show(p, string.format('Fellow Name: %s', cur),
-    {
+-- Preset names are available directly at the Officer; free-text remains
+-- available through !fellowname because the client menu has no text input.
+openName = function(p, page)
+    page = page or 0
+    local per = 5
+    local pages = math.max(1, math.ceil(#CONFIG.names / per))
+    page = page % pages
+    local custom = FN.read(p)
+    local selected = getN(p, V.nameIdx)
+    local options = {}
+    for i = page * per + 1, math.min((page + 1) * per, #CONFIG.names) do
+        local idx, name = i, CONFIG.names[i]
+        options[#options + 1] =
         {
-            'How to rename -> !fellowname',
+            (not custom and selected == idx) and (name .. ' *') or name,
             function(pp)
-                pp:printToPlayer('[Fellow] Type  !fellowname <name>  to set a custom name (letters and spaces, max 15 chars).', SYS)
-                openMain(pp)
+                FN.clear(pp)
+                setN(pp, V.nameIdx, idx)
+                local fellow = getFellowTrust(pp)
+                if fellow then pcall(function() fellow:renameEntity(name, true) end) end
+                pp:printToPlayer(string.format('[Fellow] Name set to "%s".', name), SYS)
+                openName(pp, page)
             end,
-        },
-        { 'Back', function(pp) openMain(pp) end },
-    })
+        }
+    end
+    if pages > 1 then options[#options + 1] = { 'More >>', function(pp) openName(pp, page + 1) end } end
+    options[#options + 1] =
+    {
+        'Custom name help',
+        function(pp)
+            pp:printToPlayer('[Fellow] Type !fellowname <name> (letters/spaces, max 15 characters).', SYS)
+            openName(pp, page)
+        end,
+    }
+    options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
+    show(p, string.format('Name: %s', chosenName(p)), options)
 end
 
 -- Paginated appearance picker -> swaps the spawn chassis (petId); re-summon to apply.
@@ -1342,6 +1582,10 @@ openTpMove = function(p, page)
         {
             label,
             function(pp)
+                if not canChangeFellow(pp) then
+                    openTpMove(pp, page)
+                    return
+                end
                 setN(pp, tpVar(roleKey), realIdx)
                 if realIdx == 0 then
                     pp:printToPlayer(string.format('[Fellow] %s TP move: Default.', roleName), SYS)
@@ -1409,6 +1653,8 @@ end)
 m:addOverride('xi.player.onGameIn', function(player, gameLogin, zoning)
     super(player, gameLogin, zoning)
     pcall(function()
+        if getN(player, V.born) == 1 then migrateProgression(player) end
+        attachActivityListeners(player)
         if getN(player, V.active) == 1 then
             armKeeper(player, CONFIG.firstMs)
         end
@@ -1421,10 +1667,12 @@ end)
 
 -- ════════════════════════════════ Public API ════════════════════════════════
 xi.fellow = xi.fellow or {}
-xi.fellow.openMenu    = function(p) openMain(p) end
+xi.fellow.openMenu    = function(p) openCommandMain(p) end
+xi.fellow.openUpgradeMenu = function(p) openMain(p) end
 xi.fellow.summon      = function(p) summon(p) end
 xi.fellow.dismiss     = function(p) dismiss(p) end
 xi.fellow.status      = function(p) statusReport(p) end
+xi.fellow.getTrust    = function(p) return getFellowTrust(p) end
 xi.fellow.addXp       = function(p, n) addXp(p, n) end
 xi.fellow.grantPoints = function(p, n) ensureBorn(p); setN(p, V.points, getPoints(p) + math.max(0, n)) end
 
@@ -1487,7 +1735,7 @@ xi.fellow.audit = function(p)
     for stat, mods in pairs(CONFIG.statMods) do
         local pts = getStatPts(p, stat)
         if pts > 0 then
-            for _, mv in ipairs(mods) do add(mv[1], mv[2] * pts, stat .. 'x' .. pts) end
+            for _, mv in ipairs(mods) do add(mv[1], math.floor(mv[2] * pts), stat .. 'x' .. pts) end
         end
     end
 
@@ -1501,7 +1749,7 @@ xi.fellow.audit = function(p)
     for _, mod in ipairs(rows) do
         local exp = expected[mod]
         local act = pet:getMod(mod)
-        local ok  = act >= exp                 -- live >= expected (base stats may add MORE, never less)
+        local ok  = (exp >= 0 and act >= exp) or (exp < 0 and act <= exp)
         if not ok then lowCount = lowCount + 1 end
         p:printToPlayer(string.format('  %-14s %6d %6d   %s   (%s)',
             MODNAME[mod] or ('mod' .. mod), exp, act, ok and 'OK' or '**LOW**', source[mod]), SYS)

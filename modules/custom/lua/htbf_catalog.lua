@@ -18,6 +18,11 @@
 -----------------------------------
 local catalog = {}
 
+-- Real trusts per tier. The Adventuring Fellow is a free extra and is excluded
+-- from this count by htbf.lua.
+catalog.trustCap = { [1] = 2, [2] = 3, [3] = 4 }
+catalog.firstClearMultiplier = 2
+
 -- Gil price per PHANTOM GEM (flat -- retail: one gem enters, tier is chosen at the
 -- entrance menu, one gem consumed per attempt regardless of tier). Keyed by the
 -- gem key-item id. The HTBF vendor (HTBF_Vendor.lua) sells these for gil.
@@ -124,31 +129,63 @@ catalog.warpDestinations =
         } },
 }
 
--- Per-tier scaling applied to the reused base boss(es) (silent difficulty -- no
--- player-visible multiplier). lvl/hp are multipliers; att/def/macc/meva are flat
--- mod adds layered on top. Tier I ~ a slightly-buffed base; III is the wall.
--- Keep mob mods < 31k (int16); HP is int32 so the big lever is hp.
+-- Difficulty profiles preserve each retail fight's mobs, TP moves, phase logic,
+-- and scripts. Only ordinary combat stats are adjusted; no drain, regen, or
+-- artificial time-extension mechanics are added.
 catalog.tierScale =
 {
-    -- Big-bump tuning 2026-07-06 (owner: cloister fights "pretty easy"). HP is the
-    -- primary lever (int32, safe to go large -> longer DPS checks); lvl scaling
-    -- lifts the mob's whole stat/accuracy curve; the flat ATT/DEF/MACC/MEVA adds
-    -- stay well under the int16 mob-mod cap (~31k) even after stacking on base.
-    -- Aimed at organized endgame groups; re-tune here freely (restart-gated).
-    [1] = { name = 'I',   lvl = 1.25, hp = 3.0,  att = 2000,  def = 1200, macc = 400,  meva = 400  },
-    [2] = { name = 'II',  lvl = 1.50, hp = 9.0,  att = 5000,  def = 3000, macc = 1000, meva = 1000 },
-    [3] = { name = 'III', lvl = 1.75, hp = 22.0, att = 9000,  def = 5000, macc = 2000, meva = 2000 },
+    avatar =
+    {
+        -- Avatars trade the old 22x-HP wall for a healthier spread of level,
+        -- defense, evasion, and magic evasion. They remain retail-style fights.
+        [1] = { name = 'I',   lvl = 1.35, hp = 3.5,  att = 1800, def = 1800, macc = 450,  meva = 700,  eva = 500  },
+        [2] = { name = 'II',  lvl = 1.65, hp = 8.0,  att = 4000, def = 4200, macc = 1000, meva = 1500, eva = 1100 },
+        [3] = { name = 'III', lvl = 2.00, hp = 16.0, att = 7000, def = 7500, macc = 1800, meva = 2600, eva = 1900 },
+    },
+    standard =
+    {
+        [1] = { name = 'I',   lvl = 1.25, hp = 3.0,  att = 1800, def = 1500, macc = 400,  meva = 500,  eva = 350  },
+        [2] = { name = 'II',  lvl = 1.50, hp = 7.0,  att = 4000, def = 3300, macc = 900,  meva = 1100, eva = 800  },
+        [3] = { name = 'III', lvl = 1.75, hp = 15.0, att = 7000, def = 5800, macc = 1700, meva = 2000, eva = 1400 },
+    },
+    mechanics =
+    {
+        -- Multi-enemy and event-driven fights get pressure from offense and
+        -- defense while their retail mechanics, rather than oversized HP, lead.
+        [1] = { name = 'I',   lvl = 1.25, hp = 2.5,  att = 2000, def = 1400, macc = 450,  meva = 450,  eva = 300  },
+        [2] = { name = 'II',  lvl = 1.50, hp = 6.0,  att = 4500, def = 3000, macc = 1000, meva = 1000, eva = 700  },
+        [3] = { name = 'III', lvl = 1.75, hp = 12.0, att = 8000, def = 5200, macc = 1900, meva = 1800, eva = 1200 },
+    },
+    epic =
+    {
+        [1] = { name = 'I',   lvl = 1.25, hp = 3.0,  att = 2200, def = 1700, macc = 500,  meva = 550,  eva = 400  },
+        [2] = { name = 'II',  lvl = 1.50, hp = 7.0,  att = 5000, def = 3800, macc = 1100, meva = 1200, eva = 900  },
+        [3] = { name = 'III', lvl = 1.75, hp = 14.0, att = 9000, def = 6500, macc = 2100, meva = 2200, eva = 1600 },
+    },
 }
 
--- Reward: gil + Hunt Marks per tier on a win (placeholder economy hook; the real
--- retail per-fight LOOT tables get added to each fight's `loot` field as they are
--- sourced from bg-wiki). selectFromLootGroups armoury-crate loot can also be set
--- per fight via entry.loot[tier].
+-- Guaranteed completion rewards. First completion of each individual
+-- fight+tier pays 2x gil and marks; item loot is still rolled once.
 catalog.tierReward =
 {
-    [1] = { gil = 30000,  marks = 50 },
-    [2] = { gil = 120000, marks = 200 },
-    [3] = { gil = 400000, marks = 600 },
+    simple =
+    {
+        [1] = { gil = 10000, marks = 10 },
+        [2] = { gil = 30000, marks = 25 },
+        [3] = { gil = 75000, marks = 60 },
+    },
+    standard =
+    {
+        [1] = { gil = 15000,  marks = 20 },
+        [2] = { gil = 50000,  marks = 50 },
+        [3] = { gil = 100000, marks = 100 },
+    },
+    epic =
+    {
+        [1] = { gil = 20000,  marks = 30 },
+        [2] = { gil = 75000,  marks = 75 },
+        [3] = { gil = 150000, marks = 150 },
+    },
 }
 
 -- Default armoury-crate loot (the chest that spawns on a win). Override per fight
@@ -192,6 +229,16 @@ catalog.tierLoot =
 -- its own file (one table per fight) -- tune individual fights there.
 catalog.fightLoot = require('modules/custom/lua/htbf_loot')
 
+-- Server-side staging positions for custom battlefield IDs. Each point is
+-- roughly 30 yalms from the first enemy so players can buff before engaging.
+-- Coordinates are keyed by battlefield area; they are not entrance-NPC warps.
+local avatarEntryPos =
+{
+    [1] = {  503.0,  41.0, -397.0, 0 },
+    [2] = {   23.0, -19.0,    3.0, 0 },
+    [3] = { -377.0, -79.0,  483.0, 0 },
+}
+
 -- ── Fights ──────────────────────────────────────────────────────────────────
 -- key              -> used by the tier files + vendor
 -- zone/entryNpc/exitNpc -> the existing burning-circle entrance (battlefield base)
@@ -223,36 +270,42 @@ catalog.fights =
         zone = xi.zone.CLOISTER_OF_FLAMES,  entryNpc = 'FP_Entrance', exitNpc = 'Fire_Protocrystal',
         gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4000,
         mobs = { 'Ifrit_Prime_TBF' }, label = 'Trial by Fire',
+        difficulty = 'avatar', rewardClass = 'simple', entryPosByArea = avatarEntryPos,
     },
     trial_by_ice =
     {
         zone = xi.zone.CLOISTER_OF_FROST,   entryNpc = 'IP_Entrance', exitNpc = 'Ice_Protocrystal',
         gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4010,
         mobs = { 'Shiva_Prime_TBI' }, label = 'Trial by Ice',
+        difficulty = 'avatar', rewardClass = 'simple', entryPosByArea = avatarEntryPos,
     },
     trial_by_wind =
     {
         zone = xi.zone.CLOISTER_OF_GALES,   entryNpc = 'WP_Entrance', exitNpc = 'Wind_Protocrystal',
         gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4020,
         mobs = { 'Garuda_Prime_TBW' }, label = 'Trial by Wind',
+        difficulty = 'avatar', rewardClass = 'simple', entryPosByArea = avatarEntryPos,
     },
     trial_by_earth =
     {
         zone = xi.zone.CLOISTER_OF_TREMORS, entryNpc = 'EP_Entrance', exitNpc = 'Earth_Protocrystal',
         gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4030,
         mobs = { 'Titan_Prime_TBE' }, label = 'Trial by Earth',
+        difficulty = 'avatar', rewardClass = 'simple', entryPosByArea = avatarEntryPos,
     },
     trial_by_lightning =
     {
         zone = xi.zone.CLOISTER_OF_STORMS,  entryNpc = 'LP_Entrance', exitNpc = 'Lightning_Protocrystal',
         gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4040,
         mobs = { 'Ramuh_Prime_TBL' }, label = 'Trial by Lightning',
+        difficulty = 'avatar', rewardClass = 'simple', entryPosByArea = avatarEntryPos,
     },
     trial_by_water =
     {
         zone = xi.zone.CLOISTER_OF_TIDES,   entryNpc = 'WP_Entrance', exitNpc = 'Water_Protocrystal',
         gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4050,
         mobs = { 'Leviathan_Prime_TBW' }, label = 'Trial by Water',
+        difficulty = 'avatar', rewardClass = 'simple', entryPosByArea = avatarEntryPos,
     },
 
     -- ── CoP boss battlefields ───────────────────────────────────────────────
@@ -265,12 +318,26 @@ catalog.fights =
         exitNpcs = { 'SD_BCNM_Exit_1', 'SD_BCNM_Exit_2', 'SD_BCNM_Exit_3' },
         gem = xi.ki.SAVAGES_PHANTOM_GEM, baseIndex = 7, baseBattlefieldId = 4060,
         reuseBaseId = xi.battlefield.id.SAVAGE, label = 'The Savage',
+        difficulty = 'standard', rewardClass = 'standard',
+        entryPosByArea =
+        {
+            [1] = { -605.0, 81.7, -29.0, 0 },
+            [2] = {   -1.4,  1.5, -29.4, 0 },
+            [3] = {  595.8, -78.3, -28.6, 0 },
+        },
     },
     warriors_path =
     {
         zone = xi.zone.SEALIONS_DEN, entryNpc = '_0w0', exitNpc = 'Airship_Door',
         gem = xi.ki.WARRIORS_PATH_PHANTOM_GEM, baseIndex = 2, baseBattlefieldId = 4070,
         reuseBaseId = xi.battlefield.id.WARRIORS_PATH, label = "The Warrior's Path",
+        difficulty = 'standard', rewardClass = 'standard',
+        entryPosByArea =
+        {
+            [1] = { -640.0, -231.3, 495.0, 0 },
+            [2] = {    0.0, -151.3, 135.0, 0 },
+            [3] = {  640.0,  -71.3, -225.0, 0 },
+        },
     },
     -- One to be Feared shares Sealion's Den entrance _0w0 (base 0/1, Warrior's
     -- Path HTBF 2/3/4) -> this goes at 5/6/7. Event-driven Omega/Ultima phases
@@ -280,7 +347,13 @@ catalog.fights =
         zone = xi.zone.SEALIONS_DEN, entryNpc = '_0w0', exitNpc = 'Airship_Door',
         gem = xi.ki.FEARED_ONE_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4080,
         reuseBaseId = xi.battlefield.id.ONE_TO_BE_FEARED, timeLimit = 2700,
-        label = 'One to be Feared',
+        label = 'One to be Feared', difficulty = 'mechanics', rewardClass = 'epic',
+        entryPosByArea =
+        {
+            [1] = { -640.0, -231.3, 480.0, 0 },
+            [2] = {    0.0, -151.3, 120.0, 0 },
+            [3] = {  640.0,  -71.3, -240.0, 0 },
+        },
     },
     head_wind =
     {
@@ -288,6 +361,13 @@ catalog.fights =
         exitNpcs = { '_082', '_084', '_086' },
         gem = xi.ki.HEAD_WIND_PHANTOM_GEM, baseIndex = 7, baseBattlefieldId = 4090,
         reuseBaseId = xi.battlefield.id.HEAD_WIND, label = 'Head Wind',
+        difficulty = 'mechanics', rewardClass = 'standard',
+        entryPosByArea =
+        {
+            [1] = { -570.0, 2.4, -461.0, 0 },
+            [2] = {   -7.0, 2.8,  101.0, 0 },
+            [3] = {  472.0, 3.0,  583.0, 0 },
+        },
     },
     -- Dawn (the final CoP fight vs Promathia). Empyreal Paradox entrance
     -- TR_Entrance already carries the base Dawn (index 0) + Apocalypse Nigh
@@ -300,6 +380,13 @@ catalog.fights =
         zone = xi.zone.EMPYREAL_PARADOX, entryNpc = 'TR_Entrance', exitNpc = 'Transcendental_Radiance',
         gem = xi.ki.DAWN_PHANTOM_GEM, baseIndex = 2, baseBattlefieldId = 4210,
         reuseBaseId = xi.battlefield.id.DAWN, label = 'Dawn',
+        difficulty = 'epic', rewardClass = 'epic',
+        entryPosByArea =
+        {
+            [1] = { -520.0, -120.0,  493.8, 190 },
+            [2] = {  520.0,    0.0,  493.8, 190 },
+            [3] = { -520.0,  120.0, -545.5, 190 },
+        },
     },
 
     -- ── ToAU boss battlefields ──────────────────────────────────────────────
@@ -310,16 +397,21 @@ catalog.fights =
         zone = xi.zone.JADE_SEPULCHER, entryNpc = '_1v0',
         exitNpcs = { '_1v1', '_1v2', '_1v3' },
         gem = xi.ki.PUPPET_IN_PERIL_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4100,
-        reuseBaseId = xi.battlefield.id.PUPPET_IN_PERIL, allowedAreas = { [2] = true, [3] = true },
-        label = 'Puppet in Peril',
+        -- The base group's area-2/3 entities have placeholder 0,0,0 spawns.
+        -- Keep HTBF on the one complete arena rather than entering a void.
+        reuseBaseId = xi.battlefield.id.PUPPET_IN_PERIL, allowedAreas = { [1] = true },
+        label = 'Puppet in Peril', difficulty = 'standard', rewardClass = 'standard',
+        entryPosByArea = { [1] = { 239.0, -32.0, 207.0, 0 } },
     },
     legacy_of_the_lost =
     {
         zone = xi.zone.TALACCA_COVE, entryNpc = '_1l0',
         exitNpcs = { '_1l1', '_1l2', '_1l3' },
         gem = xi.ki.LEGACY_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4110,
-        reuseBaseId = xi.battlefield.id.LEGACY_OF_THE_LOST, allowedAreas = { [2] = true, [3] = true },
-        label = 'Legacy of the Lost',
+        -- As above, only area 1 has real Gessho spawn coordinates.
+        reuseBaseId = xi.battlefield.id.LEGACY_OF_THE_LOST, allowedAreas = { [1] = true },
+        label = 'Legacy of the Lost', difficulty = 'standard', rewardClass = 'standard',
+        entryPosByArea = { [1] = { -180.0, 39.1, 147.0, 0 } },
     },
 
     -- ── Rise of the Zilart boss battlefields ────────────────────────────────
@@ -329,6 +421,13 @@ catalog.fights =
         exitNpcs = { '_4l2', '_4l3', '_4l4' },
         gem = xi.ki.SHADOW_LORD_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4120,
         reuseBaseId = xi.battlefield.id.SHADOW_LORD_BATTLE, label = 'Shadow Lord',
+        difficulty = 'standard', rewardClass = 'standard',
+        entryPosByArea =
+        {
+            [1] = {  -464.5, -167.2, -273.0, 0 },
+            [2] = {  -784.8, -407.2, -513.0, 0 },
+            [3] = { -1104.6, -647.2, -753.0, 0 },
+        },
     },
     stellar_fulcrum =
     {
@@ -336,6 +435,13 @@ catalog.fights =
         exitNpcs = { '_4z1', '_4z2', '_4z3' },
         gem = xi.ki.STELLAR_FULCRUM_PHANTOM_GEM, baseIndex = 1, baseBattlefieldId = 4130,
         reuseBaseId = xi.battlefield.id.RETURN_TO_DELKFUTTS_TOWER, label = "Return to Delkfutt's Tower",
+        difficulty = 'standard', rewardClass = 'standard',
+        entryPosByArea =
+        {
+            [1] = { 0.0,  202.5, -393.0, 0 },
+            [2] = { 0.0,    2.5,    7.0, 0 },
+            [3] = { 0.0, -197.5,  407.5, 0 },
+        },
     },
     celestial_nexus =
     {
@@ -343,63 +449,105 @@ catalog.fights =
         exitNpcs = { '_514', '_515' },
         gem = xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM, baseIndex = 1, baseBattlefieldId = 4140,
         reuseBaseId = xi.battlefield.id.CELESTIAL_NEXUS, label = 'The Celestial Nexus',
+        difficulty = 'epic', rewardClass = 'epic',
+        entryPosByArea =
+        {
+            [1] = { -32.0, -18.0,  -58.0, 0 },
+            [2] = { 456.3, -21.1,  636.5, 0 },
+            [3] = { 505.6,  -4.1, -723.2, 0 },
+        },
     },
     -- Divine Might: 18-player, multi-entrance (qm1_1..qm1_5). Base uses index 5
     -- across them; HTBF at 13/14/15 (kept above the Ark Angel HTBF range 10-12).
-    -- entryPos (2026-07-13 bug fix): the base fight's arena-warp is driven by the
+    -- entryPosByArea: the base fight's arena-warp is driven by the
     -- client DAT keyed on battlefieldId; our custom HTBF ids (4150+) aren't in
     -- the DAT, so the client never warps and the player is left at the entry NPC
     -- (shimmering circle) with the countdown ticking. htbf.register() reads this
-    -- and setPos'es the player itself after enterBattlefield(). Coord derived
-    -- from Ark_Angel_HM arena-1 mob spawn (-14, -18, 14) offset +6z so the party
-    -- lands facing the mob.
+    -- and setPos'es the player itself after enterBattlefield(). Each staging
+    -- point is about 30 yalms from the corresponding arena's first enemy.
     divine_might =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpcs = { 'qm1_1', 'qm1_2', 'qm1_3', 'qm1_4', 'qm1_5' },
         exitNpc = 'qm2',
         gem = xi.ki.DIVINE_PHANTOM_GEM, baseIndex = 13, baseBattlefieldId = 4150,
         reuseBaseId = xi.battlefield.id.DIVINE_MIGHT, maxPlayers = 18, label = 'Divine Might',
-        entryPos = { -14.0, -18.5, 20.0, 128 },
+        difficulty = 'epic', rewardClass = 'epic',
+        entryPosByArea =
+        {
+            [1] = {  -14.0,  -18.7, -16.0, 0 },
+            [2] = { -562.5, -242.7,  26.0, 0 },
+            [3] = {  477.4, -317.7,  49.0, 0 },
+        },
     },
 
     -- Ark Angels: 5 separate fights, each on its own La'Loff entrance (qm1_1..
     -- qm1_5) with its own gem. Base uses idx 0-4 per entrance (+ Divine Might at
     -- idx 5 / its HTBF at 13-15), so Ark Angel HTBF tiers sit at 10/11/12.
-    -- entryPos: same DAT-warp workaround as Divine Might above.
+    -- entryPosByArea: same DAT-warp workaround as Divine Might above.
     ark_angels_1 =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_1', exitNpc = 'qm2',
         gem = xi.ki.PHANTOM_GEM_OF_APATHY, baseIndex = 10, baseBattlefieldId = 4160,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_1, label = 'Ark Angels I',
-        entryPos = { -14.0, -18.5, 20.0, 128 },
+        difficulty = 'epic', rewardClass = 'epic',
+        entryPosByArea =
+        {
+            [1] = {  -14.0,  -18.7, -16.0, 0 },
+            [2] = { -562.5, -242.7,  26.0, 0 },
+            [3] = {  477.4, -317.7,  49.0, 0 },
+        },
     },
     ark_angels_2 =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_2', exitNpc = 'qm2',
         gem = xi.ki.PHANTOM_GEM_OF_COWARDICE, baseIndex = 10, baseBattlefieldId = 4170,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_2, label = 'Ark Angels II',
-        entryPos = { -14.0, -18.5, 20.0, 128 },
+        difficulty = 'epic', rewardClass = 'epic',
+        entryPosByArea =
+        {
+            [1] = {  -14.0,  -18.7, -16.0, 0 },
+            [2] = { -562.5, -242.7,  26.0, 0 },
+            [3] = {  477.4, -317.7,  49.0, 0 },
+        },
     },
     ark_angels_3 =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_3', exitNpc = 'qm2',
         gem = xi.ki.PHANTOM_GEM_OF_ENVY, baseIndex = 10, baseBattlefieldId = 4180,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_3, label = 'Ark Angels III',
-        entryPos = { -14.0, -18.5, 20.0, 128 },
+        difficulty = 'epic', rewardClass = 'epic',
+        entryPosByArea =
+        {
+            [1] = {  -14.0,  -18.7, -16.0, 0 },
+            [2] = { -562.5, -242.7,  26.0, 0 },
+            [3] = {  477.4, -317.7,  49.0, 0 },
+        },
     },
     ark_angels_4 =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_4', exitNpc = 'qm2',
         gem = xi.ki.PHANTOM_GEM_OF_ARROGANCE, baseIndex = 10, baseBattlefieldId = 4190,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_4, label = 'Ark Angels IV',
-        entryPos = { -14.0, -18.5, 20.0, 128 },
+        difficulty = 'epic', rewardClass = 'epic',
+        entryPosByArea =
+        {
+            [1] = {  -14.0,  -18.7, -16.0, 0 },
+            [2] = { -562.5, -242.7,  26.0, 0 },
+            [3] = {  477.4, -317.7,  49.0, 0 },
+        },
     },
     ark_angels_5 =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_5', exitNpc = 'qm2',
         gem = xi.ki.PHANTOM_GEM_OF_RAGE, baseIndex = 10, baseBattlefieldId = 4200,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_5, label = 'Ark Angels V',
-        entryPos = { -14.0, -18.5, 20.0, 128 },
+        difficulty = 'epic', rewardClass = 'epic',
+        entryPosByArea =
+        {
+            [1] = {  -14.0,  -18.7, -16.0, 0 },
+            [2] = { -562.5, -242.7,  26.0, 0 },
+            [3] = {  477.4, -317.7,  49.0, 0 },
+        },
     },
 }
 

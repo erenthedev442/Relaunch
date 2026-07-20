@@ -23,27 +23,36 @@ commandObj.cmdprops =
 -- Mirror of fellow_companion CONFIG.statMods + CONFIG.perLevel (allocatable only).
 local STATMODS =
 {
-    STR       = { { xi.mod.STR, 6 }, { xi.mod.ATT, 12 } },
-    DEX       = { { xi.mod.DEX, 6 }, { xi.mod.ACC, 10 } },
-    VIT       = { { xi.mod.VIT, 6 }, { xi.mod.DEF, 10 } },
-    AGI       = { { xi.mod.AGI, 6 }, { xi.mod.EVA, 10 } },
-    INT       = { { xi.mod.INT, 6 }, { xi.mod.MATT, 10 } },
-    MND       = { { xi.mod.MND, 6 }, { xi.mod.MDEF, 10 } },
-    Ferocity  = { { xi.mod.ATTP, 1 } },
-    Frenzy    = { { xi.mod.DOUBLE_ATTACK, 1 } },
-    Onslaught = { { xi.mod.TRIPLE_ATTACK, 1 }, { xi.mod.STORETP, 3 } },
-    Sorcery   = { { xi.mod.MATT, 12 }, { xi.mod.MACC, 6 } },
-    Warding   = { { xi.mod.DMGPHYS, -20 }, { xi.mod.DMGMAGIC, -20 } },
+    STR       = { { xi.mod.STR, 1 }, { xi.mod.ATT, 3 } },
+    DEX       = { { xi.mod.DEX, 1 }, { xi.mod.ACC, 3 } },
+    VIT       = { { xi.mod.VIT, 1 }, { xi.mod.DEF, 3 } },
+    AGI       = { { xi.mod.AGI, 1 }, { xi.mod.EVA, 3 } },
+    INT       = { { xi.mod.INT, 1 }, { xi.mod.MATT, 3 } },
+    MND       = { { xi.mod.MND, 1 }, { xi.mod.MDEF, 3 } },
+    Ferocity  = { { xi.mod.ATTP, 0.25 } },
+    Critical  = { { xi.mod.CRITHITRATE, 0.15 } },
+    Frenzy    = { { xi.mod.DOUBLE_ATTACK, 0.15 } },
+    Onslaught = { { xi.mod.TRIPLE_ATTACK, 0.08 }, { xi.mod.STORETP, 0.4 } },
+    Sorcery   = { { xi.mod.MATT, 3 }, { xi.mod.MACC, 3 } },
+    Celerity  = { { xi.mod.HASTE_GEAR, 25 } },
+    Warding   = { { xi.mod.DMGPHYS, -15 }, { xi.mod.DMGMAGIC, -15 } },
+    Vigor     = { { xi.mod.REGEN, 1 } },
 }
-local PERLEVEL = { { xi.mod.ATT, 80 }, { xi.mod.ACC, 40 }, { xi.mod.DEF, 15 } }
+local PERLEVEL = { { xi.mod.ATT, 4 }, { xi.mod.ACC, 3 }, { xi.mod.DEF, 2 } }
 
 local function embeddedAudit(player)
     local SYS = xi.msg.channel.SYSTEM_3
-    if not player:hasPet() then
+    local pet
+    for _, member in pairs(player:getPartyWithTrusts()) do
+        if member:getObjType() == xi.objType.TRUST and member:getLocalVar('fellowApplied') == 1 then
+            pet = member
+            break
+        end
+    end
+    if not pet then
         player:printToPlayer('[Fellow] Summon your Fellow first -- the audit reads mods off the live pet.', SYS)
         return
     end
-    local pet = player:getPet()
     local lvl = math.max(1, player:getCharVar('Fellow_Level') or 0)
 
     local MODNAME = {}
@@ -59,7 +68,7 @@ local function embeddedAudit(player)
     for stat, mods in pairs(STATMODS) do
         local pts = player:getCharVar('Fellow_' .. stat) or 0
         if pts > 0 then
-            for _, mv in ipairs(mods) do add(mv[1], mv[2] * pts, stat .. 'x' .. pts) end
+            for _, mv in ipairs(mods) do add(mv[1], math.floor(mv[2] * pts), stat .. 'x' .. pts) end
         end
     end
 

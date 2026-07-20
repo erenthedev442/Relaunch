@@ -5,7 +5,7 @@
 -- The C++ battlefield loader (CBattlefieldHandler::LoadBattlefield) does
 --   SELECT ... FROM bcnm_records WHERE bcnmId = <battlefieldId>
 -- and returns REQS_NOT_MET ('access denied') if the row is missing. HTBF
--- fights use custom ids 4000-4202 (see modules/custom/lua/htbf_catalog.lua:
+-- fights use custom ids 4000-4212 (see modules/custom/lua/htbf_catalog.lua:
 -- baseBattlefieldId + tier 0/1/2), which retail bcnm_info.sql never seeds.
 --
 -- *** LOCATION MATTERS ON RELAUNCH ***  The OVH deploy (vps-rebuild.ps1 step 3)
@@ -102,3 +102,7 @@ INSERT INTO `bcnm_records` (`bcnmId`,`zoneId`,`name`,`fastestName`,`fastestParty
 INSERT INTO `bcnm_records` (`bcnmId`,`zoneId`,`name`,`fastestName`,`fastestPartySize`,`fastestTime`) VALUES (4200,180,'htbf_ark_angels_5_1','Not Set!',0,1800) ON DUPLICATE KEY UPDATE `zoneId`=VALUES(`zoneId`),`name`=VALUES(`name`);
 INSERT INTO `bcnm_records` (`bcnmId`,`zoneId`,`name`,`fastestName`,`fastestPartySize`,`fastestTime`) VALUES (4201,180,'htbf_ark_angels_5_2','Not Set!',0,1800) ON DUPLICATE KEY UPDATE `zoneId`=VALUES(`zoneId`),`name`=VALUES(`name`);
 INSERT INTO `bcnm_records` (`bcnmId`,`zoneId`,`name`,`fastestName`,`fastestPartySize`,`fastestTime`) VALUES (4202,180,'htbf_ark_angels_5_3','Not Set!',0,1800) ON DUPLICATE KEY UPDATE `zoneId`=VALUES(`zoneId`),`name`=VALUES(`name`);
+
+INSERT INTO `bcnm_records` (`bcnmId`,`zoneId`,`name`,`fastestName`,`fastestPartySize`,`fastestTime`) VALUES (4210,36,'htbf_dawn_1','Not Set!',0,1800) ON DUPLICATE KEY UPDATE `zoneId`=VALUES(`zoneId`),`name`=VALUES(`name`);
+INSERT INTO `bcnm_records` (`bcnmId`,`zoneId`,`name`,`fastestName`,`fastestPartySize`,`fastestTime`) VALUES (4211,36,'htbf_dawn_2','Not Set!',0,1800) ON DUPLICATE KEY UPDATE `zoneId`=VALUES(`zoneId`),`name`=VALUES(`name`);
+INSERT INTO `bcnm_records` (`bcnmId`,`zoneId`,`name`,`fastestName`,`fastestPartySize`,`fastestTime`) VALUES (4212,36,'htbf_dawn_3','Not Set!',0,1800) ON DUPLICATE KEY UPDATE `zoneId`=VALUES(`zoneId`),`name`=VALUES(`name`);

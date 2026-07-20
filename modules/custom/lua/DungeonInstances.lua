@@ -20,8 +20,9 @@ local function dismissTrusts(player)
     end
 
     for _, member in ipairs(party) do
-        if member:isTrust() then
-            member:setHP(0)
+        if member:isTrust() and member:getLocalVar('fellowApplied') ~= 1 then
+            local owner = member:getMaster()
+            if owner then owner:despawnTrust(member) end
         end
     end
 end

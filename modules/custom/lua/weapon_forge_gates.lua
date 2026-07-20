@@ -17,6 +17,7 @@
 --   fromStage 2 = "Stage II -> Stage III" (about to enter Stage III)
 -----------------------------------
 local M = {}
+local abysseaProgress = require('modules/custom/lua/abyssea_marks_progress')
 
 -- ── Reusable check closures (per-job scans, all-trials, any-forge-final) ────
 
@@ -77,8 +78,8 @@ M.STAGE_GATES =
         },
         [2] =
         {
-            label = 'Fellow Mastery achieved',
-            check = function(p) return (p:getCharVar('Fellow_Mastered') or 0) == 1 end,
+            label = 'All 136 Abyssea Marks NMs cleared (first Empyrean only; track with !empyaby)',
+            check = function(p) return abysseaProgress.firstEmpyreanGatePassed(p) end,
         },
     },
     mythic =

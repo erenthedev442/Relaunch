@@ -2963,17 +2963,24 @@ void AddItemToRecycleBin(CCharEntity* PChar, uint32 container, uint8 slotID, uin
         return;
     }
 
+    const uint16 itemID   = PSrcItem->getID();
+    const auto   itemName = PSrcItem->getName();
+
     if (PSrcItem->isBusy())
     {
         ShowWarningFmt("AddItemToRecycleBin: refusing to move busy item {} (state={}, char={})",
                        PSrcItem->getID(),
                        magic_enum::enum_name(PSrcItem->state()),
                        PChar->getName());
+
+        // Never leave the client believing a refused drop freed an inventory
+        // slot. Re-send the authoritative source item immediately; otherwise
+        // repeated drops can create phantom space until the next zone reload.
+        PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PSrcItem, static_cast<CONTAINER_ID>(container), slotID);
+        PChar->pushPacket<GP_SERV_COMMAND_MESSAGE>(nullptr, itemID, quantity, MsgStd::UnableToThrowAway);
+        PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
         return;
     }
-
-    const uint16 itemID   = PSrcItem->getID();
-    const auto   itemName = PSrcItem->getName();
 
     if (RecycleBin->GetFreeSlotsCount() > 0)
     {

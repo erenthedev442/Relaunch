@@ -117,11 +117,10 @@ function FN.apply(player, raw)
         return false, 'That name was rejected by the language filter, kupo.'
     end
     FN.pack(player, name)
-    -- Instant feedback: rename the currently-summoned Fellow (petIsFellow check
-    -- mirrors fellow_companion: the Fellow pet carries localVar fellowApplied=1).
-    local pet = player:getPet()
-    if pet and pet:getLocalVar('fellowApplied') == 1 then
-        pcall(function() pet:renameEntity(name, true) end)
+    -- The Fellow is a flagged trust, not player:getPet().
+    local fellow = xi.fellow and xi.fellow.getTrust and xi.fellow.getTrust(player)
+    if fellow then
+        pcall(function() fellow:renameEntity(name, true) end)
     end
     return true, name
 end

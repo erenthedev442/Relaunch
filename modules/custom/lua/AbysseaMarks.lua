@@ -12,6 +12,7 @@ local m = Module:new('AbysseaMarks')
 local encounterCatalog = require('modules/custom/lua/abyssea_marks_catalog')
 local encounterRuntime = require('modules/custom/lua/abyssea_marks_mechanics')
 local encounterBalance = require('modules/custom/lua/abyssea_marks_balance')
+local rosterProgress = require('modules/custom/lua/abyssea_marks_progress')
 
 local MARKS_CV         = 'HL_Points'
 local INFAMY_CV        = 'Infamy'
@@ -19,6 +20,9 @@ local INFAMY_LIFE_CV   = 'Infamy_Lifetime'
 local MARKS_INFAMY_LV  = '[MarksPopInfamy]'
 local MARKS_GIL_LV     = '[MarksPopGil]'
 local MARKS_CRUOR_LV   = '[MarksPopCruor]'
+local RIFTBORN_BOULDER = 4061
+local BOULDER_CASE     = 6182
+local BOULDER_CASE_RATE = 0.025
 
 -- Per zone tier: mark cost + rewards, then the common pacing block applied at
 -- pop.  Individual difficulty comes from abyssea_marks_catalog.lua.
@@ -207,33 +211,18 @@ end
 local PARTY_MULT = 2.0    -- >=2 real PCs in party -> Gil/Infamy x this
 local TRUST_MULT = 1.5    -- 0 trusts in party    -> Gil/Infamy x this
 
--- One complete zone roster opens the next Atma progression step. Attohwa has
--- 17 logical marks NMs (the old plan/audit counted 16); the duplicate OFFSET
--- QMs are alternate copies and do not increase these totals.
--- 2026-07-19: the HP audit added 16 previously-uncatalogued NMs to
--- abyssea_marks_catalog (Konschtat +5, Tahrongi +1, La Theine +1, Attohwa +2,
--- Misareaux +2, Vunkerl +4, Uleguerand +1). These thresholds are DELIBERATELY
--- unchanged: rosters now complete with any N clears of the larger set, so no
--- mid-progression player's Atma target moves. Bump these to the new totals
--- only if the owner wants "complete = every NM" semantics back.
-local ZONE_ROSTER_SIZE =
-{
-    [xi.zone.ABYSSEA_KONSCHTAT] = 15,
-    [xi.zone.ABYSSEA_TAHRONGI]  = 15,
-    [xi.zone.ABYSSEA_LA_THEINE] = 15,
-    [xi.zone.ABYSSEA_ATTOHWA]   = 17,
-    [xi.zone.ABYSSEA_MISAREAUX] = 16,
-    [xi.zone.ABYSSEA_VUNKERL]   = 16,
-    [xi.zone.ABYSSEA_ALTEPA]    = 14,
-    [xi.zone.ABYSSEA_GRAUBERG]  = 14,
-    [xi.zone.ABYSSEA_ULEGUERAND]= 14,
-}
+-- One complete zone roster opens the next Atma progression step. The shared
+-- progress module also uses the original 136-NM totals for the first-Empyrean
+-- tracker. Upstream added 16 previously uncatalogued NMs, but these thresholds
+-- deliberately remain unchanged so existing Atma and Empyrean targets do not
+-- move mid-progression.
+local ZONE_ROSTER_SIZE = rosterProgress.zoneTotals
 
 local function recordRosterClear(player, mob, cfg)
     local encounter = encounterCatalog.get(mob:getName())
     if not encounter then return end
 
-    local stampVar = string.format('AbyNM_%03d', encounter.index)
+    local stampVar = rosterProgress.stampVar(encounter.index)
     if player:getCharVar(stampVar) ~= 0 then return end
 
     player:setCharVar(stampVar, 1)
@@ -264,6 +253,33 @@ local function recordRosterClear(player, mob, cfg)
         player:printToPlayer(
             '[Abyssea] SCARS ROSTER COMPLETE! A second Lunar Abyssite unlocks another Atma slot.',
             xi.msg.channel.SYSTEM_1)
+    end
+end
+
+local function awardBoulderSpoils(player)
+    local boulders = math.random(1, 3)
+    if player:addItem({ id = RIFTBORN_BOULDER, quantity = boulders }) then
+        player:printToPlayer(
+            string.format('[Abyssea] Spoils: %d Riftborn Boulder%s.',
+                boulders, boulders == 1 and '' or 's'),
+            xi.msg.channel.SYSTEM_3)
+    else
+        player:printToPlayer(
+            string.format('[Abyssea] %d Riftborn Boulder%s lost -- make bag room!',
+                boulders, boulders == 1 and ' was' or 's were'),
+            xi.msg.channel.SYSTEM_3)
+    end
+
+    if math.random() < BOULDER_CASE_RATE then
+        if player:addItem({ id = BOULDER_CASE, quantity = 1 }) then
+            player:printToPlayer(
+                '[Abyssea] RARE SPOILS: A Boulder Case falls from the fiend!',
+                xi.msg.channel.SYSTEM_1)
+        else
+            player:printToPlayer(
+                '[Abyssea] A Boulder Case was lost -- make bag room!',
+                xi.msg.channel.SYSTEM_1)
+        end
     end
 end
 
@@ -299,9 +315,9 @@ local function calcMultipliers(player)
         local trustCount = 0
         local all = player:getPartyWithTrusts() or {}
         for _, mem in ipairs(all) do
-            if mem:isTrust() then
+            if mem:isTrust() and mem:getLocalVar('fellowApplied') ~= 1 then
                 trustCount = trustCount + 1
-            else
+            elseif not mem:isTrust() then
                 pcCount = pcCount + 1
             end
         end
@@ -433,6 +449,7 @@ xi.mob.marksRewardHook = function(mob, player, isKiller, isWeaponSkillKill)
         local cfg = zoneConfig[player:getZoneID()]
         if cfg then
             recordRosterClear(player, mob, cfg)
+            awardBoulderSpoils(player)
         end
     end)
 

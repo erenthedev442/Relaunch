@@ -240,13 +240,19 @@ def _any_forge_final(cv, _):
     return any(_cv(cv, k) == 1 for k in
                ("WF_Relic_Final", "WF_Mythic_Final", "WF_Empyrean_Final", "WF_Aeonic_Final"))
 
+def _first_empy_roster(cv, _):
+    return _cv(cv, "WF_Empyrean_Final") == 1 or all(
+        _cv(cv, f"AbyNM_{i:03d}") != 0 for i in range(1, 137)
+    )
+
 FORGE_GATES: list[dict] = [
     {"cat": "Empyrean", "stage": "I",   "label": "All Geas Fete bosses killed at least once",
      "check": lambda cv, t: _cv(cv, "GF_Unique_Kills") >= (t["gf_total"] or 10**9)},
     {"cat": "Empyrean", "stage": "II",  "label": "Voidspire Floor 100 reached",
      "check": lambda cv, _: _cv(cv, "Voidspire_Best_Floor") >= 100},
-    {"cat": "Empyrean", "stage": "III", "label": "Fellow Mastery achieved",
-     "check": lambda cv, _: _cv(cv, "Fellow_Mastered") == 1},
+    {"cat": "Empyrean", "stage": "III",
+     "label": "All 136 Abyssea Marks NMs cleared (first Empyrean only)",
+     "check": _first_empy_roster},
     {"cat": "Mythic",   "stage": "I",   "label": "Floor 100 recorded on your Runic Disc",
      "check": lambda cv, _: _cv(cv, "Nyzul_F100_Cleared") == 1},
     {"cat": "Mythic",   "stage": "II",  "label": "All Voidwatch NMs killed",
@@ -1076,8 +1082,12 @@ def progress(charid: int, request: Request):
                 "SELECT varname, value FROM char_vars WHERE charid = %s AND ("
                 "  varname IN ('HL_Tier','HL_Points','Prestige_Ascensions_Total','Apex_HighestTier',"
                 "  'Augment_Mastery','Tower_Best_Floor','Voidspire_Best_Floor','Custom_NM_Kills','Paragon_Level',"
-                "  'Unity_NMs_Conquered','Fellow_Level','MasterySigils','Col_Best_Rating','Inv_Kills','DI_Kills') "
+                "  'Unity_NMs_Conquered','Fellow_Level','MasterySigils','Col_Best_Rating','Inv_Kills','DI_Kills',"
+                "  'GF_Unique_Kills','VW_Unique_Kills','Dungeon_Unique_Clears','Maat_Kills','Gauntlet_Clears',"
+                "  'Nyzul_F100_Cleared','Title_Apex_Hunter','WF_Relic_Final','WF_Mythic_Final',"
+                "  'WF_Empyrean_Final','WF_Aeonic_Final') "
                 "  OR varname LIKE 'PW_Trial%%' OR varname LIKE 'Paragon_Perk_%%' OR varname LIKE 'Rebirth_Count_%%'"
+                "  OR varname LIKE 'Prestige_Level_%%' OR varname LIKE 'AbyNM_%%'"
                 "  OR varname LIKE 'ReforgeClaimed_%%')",
                 (charid,),
             )

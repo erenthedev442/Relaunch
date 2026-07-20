@@ -31,6 +31,56 @@ local effectCycle =
     xi.effect.AMNESIA,
 }
 
+-- Every failed challenge forces one active, non-lethal TP move that fits the
+-- NM's family or retail skill list. Moves deal damage where the family supports
+-- it; status-only families use their strongest visible enfeeble. Keeping this
+-- separate from the signature prose covers all 136 encounters while avoiding
+-- random selection of heals, buffs, Doom, or unimplemented skills.
+local punishmentSkills =
+{
+    -- Visions
+    arimaspi = 549, bloodguzzler = 415, clingyclare = 319, hexenpilz = 311,
+    bombadeel = 584, ashtaerhthegallvexed = 1963, alkonost = 1330,
+    keratyrannos = 2104, feargorta = 1340, siranpakamuy = 549, lentor = 2185,
+    sarcophilus = 519, kukulkan = 2153, eccentriceve = 726,
+    bloodeyevileberry = 788, lachrymater = 1228, hedetet = 353, muscaliet = 800,
+    cannerednoz = 437, ophanim = 437, tefenet = 483, gancanagh = 305, abas = 519,
+    vetehinen = 2564, alectryon = 406, halimede = 2562, treblenoctules = 395,
+    glavoid = 2189, lacovie = 806, chloris = 305, latheineliege = 658,
+    poroggodomjuan = 1959, lugarhoo = 2170, dozingdorian = 262,
+    topplingtuber = 308, grandgousier = 1636, adamastor = 665, nguruvilu = 1723,
+    pantagruel = 663, babayaga = 2193, megantereon = 273,
+    trudgingthomas = 266, carabosse = 2193, briareus = 2578, hadhayosh = 628,
+
+    -- Scars
+    svarbhanu = 646, maahes = 483, mielikki = 331, gaizkin = 492,
+    pallidpercy = 427, berstuk = 2185, wherwetrice = 406, drekavac = 472,
+    kharon = 485, kampe = 353, nightshade = 305, blazingeruca = 1791,
+    graniteborer = 1818, smok = 1279, ulhuadshi = 2189, titlacauan = 1326,
+    itzpapalotl = 1951, minaxbugard = 383, sirrush = 367, funerealapkallu = 1717,
+    manohra = 1580, cepkamuy = 1696, ironcladobserver = 665, nehebkau = 378,
+    avalerion = 2178, karkatakam = 444, nonno = 300, tuskertrap = 719,
+    npfundlwa = 258, amhuluk = 2433, cireincroin = 1693, sobek = 383,
+    ironcladpulverizer = 665, khalkotaur = 500, quasimodo = 2426, ikuturso = 462,
+    kadraeththehatespawn = 1963, dvalinn = 2118, rakshas = 271, seps = 1723,
+    xan = 2178, chhirbatti = 591, pascerpot = 345, gnawtoothgary = 259,
+    armillaria = 311, sedna = 2437, durinn = 2118, bukhis = 500,
+    karkadann = 2335,
+
+    -- Heroes
+    sharabha = 799, chickcharney = 406, emperadordealtepa = 1625, waugyl = 1723,
+    shaula = 353, tablilla = 539, vadleany = 2181, amarok = 1787, bugulnoz = 305,
+    ironcladsmiter = 665, orthrus = 1787, dragua = 1301, bennu = 401,
+    rani = 2566, bomblixflamefinger = 591, ikaroa = 452, minaruja = 814,
+    lorelei = 2194, xibalba = 485, teugghia = 2193, ningishzida = 1835,
+    burstroxpowderpate = 591, teekesselchen = 521, ironcladsunderer = 665,
+    alfard = 1835, azdaja = 1311, raja = 2567, amphitrite = 507,
+    ironcladtriturator = 665, dhormekhimaira = 2023, blanga = 2426,
+    yaguarogui = 273, koghatu = 3975, upaskamuy = 1645, veriselen = 814,
+    chillwinghwitti = 2003, anemicaloysius = 425, audumbla = 494,
+    pantokrator = 1527, isgebind = 1289, apademak = 2023, resheph = 365,
+}
+
 local function normalize(name)
     return (name or ''):lower():gsub('[^a-z0-9]', '')
 end
@@ -56,21 +106,24 @@ local function signature(title, kind, tell, success, fail, options)
         tell      = string.format('%s — %s', title, tell),
         success   = success,
         fail      = fail,
-        delaySec  = options.delaySec or 5,
+        delaySec  = options.delaySec or 10,
         distance  = options.distance,
         angle     = options.angle,
         damagePct = options.damagePct,
         hpp       = options.hpp,
         failure   =
         {
-            damagePct = options.failDamagePct,
-            effect    = options.effect,
-            duration  = options.effectDuration,
-            power     = options.effectPower,
+            skill      = options.punishSkill,
+            tp         = options.punishTp,
+            castTimeMs = options.punishCastTimeMs,
+            effect     = options.effect,
+            duration   = options.effectDuration,
+            power      = options.effectPower,
+            tick       = options.effectTick,
         },
         reward =
         {
-            sec  = options.rewardSec,
+            sec  = 15,
             def  = options.rewardDef,
             eva  = options.rewardEva,
             mdef = options.rewardMdef,
@@ -114,6 +167,13 @@ local function add(name, tier, sig, climax, options)
     options = options or {}
     local key = normalize(name)
     assert(entries[key] == nil, string.format('Duplicate Abyssea encounter: %s', name))
+    local punishmentSkill = punishmentSkills[key]
+    if punishmentSkill then
+        sig.failure.skill = sig.failure.skill or punishmentSkill
+        if climax then
+            climax.failure.skill = climax.failure.skill or punishmentSkill
+        end
+    end
 
     local defaults = tierDefaults[tier]
     local phaseOne = clone(sig)
@@ -131,9 +191,8 @@ local function add(name, tier, sig, climax, options)
         final = clone(sig)
     end
     final.tell = string.format('Final test at 30%%: %s', final.tell)
-    final.delaySec = math.max(3, (final.delaySec or 5) - 1)
-    final.failure.damagePct = final.failure.damagePct or (20 + tier * 5)
-    final.reward.sec = final.reward.sec or (10 + tier * 2)
+    final.delaySec = final.delaySec or 10
+    final.reward.sec = 15
 
     local entry =
     {
@@ -324,7 +383,7 @@ add('Sharabha', 3, signature('Sand-Caked Ambush', 'move', 'the dunes mark your f
 add('Chickcharney', 3, signature('Cockatrice Mirror', 'turn', 'its scales mirror your gaze; look away!', 'The mirror cracks.', 'Your own gaze petrifies you.', { effect = xi.effect.PETRIFICATION, effectDuration = 5 }))
 add('Emperador de Altepa', 3, signature('Oasis Dominion', 'far', 'the oasis surges outward; retreat 14 yalms!', 'The false oasis evaporates.', 'The oasis drowns your strength.', { distance = 14, effect = e(97) }))
 add('Waugyl', 3, signature('Puppet-Blood Feint', 'hold', 'it feigns collapse; cease attacks!', 'The puppet string goes slack.', 'The hidden string returns your attack.', { effect = e(98) }))
-add('Shaula', 3, signature('Scorpion Meridian', 'rear', 'the claws and tail cover the front; take the rear!', 'Shaula knots its own tail.', 'The meridian strike finds you.', { effect = e(99) }))
+add('Shaula', 3, signature('Scorpion Meridian', 'rear', 'the claws and tail cover the front; take the rear!', 'Shaula knots its own tail.', 'The meridian strike finds you.', { effect = e(99), effectTick = 3, punishSkill = 353 }))
 add('Tablilla', 3, signature('Mercury Lattice', 'move', 'liquid metal fixes your position; move 10 yalms!', 'The lattice hardens empty.', 'Mercury cages you.', { distance = 10, effect = e(100) }))
 add('Vadleany', 3, signature('Ladybird Vortex', 'near', 'the vortex widens; close within 5 yalms!', 'You stand in its calm eye.', 'The vortex strips your footing.', { distance = 5, effect = e(101) }))
 add('Amarok', 3, signature('Three-Hide Trial', 'weaponskill', 'three hides overlap; split them with a weapon skill!', 'The layered hides part.', 'The hides fuse into armor.', { effect = e(102) }))

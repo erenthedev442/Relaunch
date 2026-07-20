@@ -69,6 +69,11 @@ local function pickSetPoint(instance)
     local chars        = instance:getChars()
     local currentFloor = instance:getLocalVar('Nyzul_Current_Floor')
 
+    -- Floor objective counters must never leak into the next floor. A stale
+    -- Eliminate total makes an otherwise-cleared floor impossible to finish.
+    instance:setProgress(0)
+    instance:setLocalVar('Eliminate', 0)
+
     -- Random the floor layout
     instance:setLocalVar('Nyzul_Isle_FloorLayout', math.random(1, #xi.nyzul.FloorLayout))
     instance:setLocalVar('gearObjective', 0)
@@ -89,28 +94,32 @@ local function pickSetPoint(instance)
             currentInstance:setProgress(15)
         end) -- Completes objective for free floor
     else
-        -- All retail objective categories remain available. Relaunch replaces
-        -- the party-only lamp variants with a solo-friendly scavenger floor.
-        local objective = {}
-
-        for i = xi.nyzul.objective.ELIMINATE_ENEMY_LEADER, xi.nyzul.objective.ELIMINATE_ALL_ENEMIES do
-            table.insert(objective, i)
-        end
-
-        -- Don't repeat the previous floor's objective (skip in the staging room
-        -- or right after a free floor).
+        -- Lamps are an explicit one-in-five roll. Previously all five
+        -- objectives were sampled after removing the previous objective,
+        -- making lamps one-in-four on most floors.
         local prevStage = instance:getStage()
+        local nonLampObjectives =
+        {
+            xi.nyzul.objective.ELIMINATE_ENEMY_LEADER,
+            xi.nyzul.objective.ELIMINATE_SPECIFIED_ENEMIES,
+            xi.nyzul.objective.ELIMINATE_SPECIFIED_ENEMY,
+            xi.nyzul.objective.ELIMINATE_ALL_ENEMIES,
+        }
+
         if prevStage ~= 0 and prevStage ~= xi.nyzul.objective.FREE_FLOOR then
-            for idx, obj in ipairs(objective) do
-                if obj == prevStage then
-                    table.remove(objective, idx)
+            for idx, objective in ipairs(nonLampObjectives) do
+                if objective == prevStage then
+                    table.remove(nonLampObjectives, idx)
                     break
                 end
             end
         end
 
-        -- Randomly pick the objective from the generated list
-        instance:setStage(utils.randomEntry(objective))
+        if math.random(1, 5) == 1 then
+            instance:setStage(xi.nyzul.objective.ACTIVATE_ALL_LAMPS)
+        else
+            instance:setStage(utils.randomEntry(nonLampObjectives))
+        end
 
         if
             instance:getStage() ~= xi.nyzul.objective.ACTIVATE_ALL_LAMPS and

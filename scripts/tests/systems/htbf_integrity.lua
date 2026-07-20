@@ -1,0 +1,100 @@
+local catalog = require('modules/custom/lua/htbf_catalog')
+
+local function entrancesFor(fight)
+    if fight.entryNpcs then
+        return fight.entryNpcs
+    end
+
+    return { fight.entryNpc }
+end
+
+describe('HTBF catalog integrity and balance', function()
+    it('allows two, three, and four trusts plus the free Fellow', function()
+        assert(catalog.trustCap[1] == 2)
+        assert(catalog.trustCap[2] == 3)
+        assert(catalog.trustCap[3] == 4)
+        assert(catalog.firstClearMultiplier == 2)
+    end)
+
+    it('gives every fight three valid tiers and safe staging positions', function()
+        local fightCount = 0
+
+        for key, fight in pairs(catalog.fights) do
+            fightCount = fightCount + 1
+
+            assert(catalog.tierScale[fight.difficulty] ~= nil, key .. ' has no difficulty profile')
+            assert(catalog.tierReward[fight.rewardClass] ~= nil, key .. ' has no reward class')
+            assert(fight.entryPosByArea ~= nil, key .. ' has no staging positions')
+
+            for tier = 1, 3 do
+                assert(catalog.tierScale[fight.difficulty][tier] ~= nil)
+                assert(catalog.tierReward[fight.rewardClass][tier] ~= nil)
+            end
+
+            if fight.allowedAreas then
+                for area in pairs(fight.allowedAreas) do
+                    assert(fight.entryPosByArea[area] ~= nil,
+                        string.format('%s has no staging position for area %d', key, area))
+                end
+            else
+                for area = 1, 3 do
+                    assert(fight.entryPosByArea[area] ~= nil,
+                        string.format('%s has no staging position for area %d', key, area))
+                end
+            end
+        end
+
+        assert(fightCount == 22)
+    end)
+
+    it('uses unique battlefield IDs and menu indices per entrance', function()
+        local ids = {}
+        local menuSlots = {}
+
+        for key, fight in pairs(catalog.fights) do
+            for tier = 1, 3 do
+                local battlefieldId = fight.baseBattlefieldId + tier - 1
+                assert(not ids[battlefieldId], string.format(
+                    'battlefield ID %d is shared by %s and %s', battlefieldId, ids[battlefieldId] or '?', key))
+                ids[battlefieldId] = key
+
+                for _, entrance in ipairs(entrancesFor(fight)) do
+                    local slotKey = string.format('%d:%s:%d', fight.zone, entrance, fight.baseIndex + tier - 1)
+                    assert(not menuSlots[slotKey], string.format(
+                        'menu slot %s is shared by %s and %s', slotKey, menuSlots[slotKey] or '?', key))
+                    menuSlots[slotKey] = key
+                end
+            end
+        end
+    end)
+
+    it('keeps repeat rewards below Hunting League weekly-objective payouts', function()
+        assert(catalog.tierReward.simple[3].marks == 60)
+        assert(catalog.tierReward.standard[3].marks == 100)
+        assert(catalog.tierReward.epic[3].marks == 150)
+
+        for _, rewards in pairs(catalog.tierReward) do
+            for tier = 1, 3 do
+                assert(rewards[tier].marks <= 150)
+                assert(rewards[tier].gil <= 150000)
+            end
+        end
+    end)
+
+    it('keeps avatar durability distributed across stats rather than HP alone', function()
+        local avatar = catalog.tierScale.avatar
+
+        assert(avatar[3].hp == 16.0)
+        assert(avatar[3].hp < 22.0)
+        assert(avatar[3].def == 7500)
+        assert(avatar[3].meva == 2600)
+        assert(avatar[3].eva == 1900)
+    end)
+
+    it('keeps incomplete ToAU arena placeholders disabled', function()
+        assert(catalog.fights.puppet_in_peril.allowedAreas[1])
+        assert(not catalog.fights.puppet_in_peril.allowedAreas[2])
+        assert(catalog.fights.legacy_of_the_lost.allowedAreas[1])
+        assert(not catalog.fights.legacy_of_the_lost.allowedAreas[2])
+    end)
+end)

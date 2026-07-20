@@ -18807,6 +18807,7 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
             }
         }));
         // clang-format on
+        m_PBaseEntity->PAI->checkQueueImmediately();
         return;
     }
 
@@ -18885,6 +18886,7 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
         }
     }));
     // clang-format on
+    m_PBaseEntity->PAI->checkQueueImmediately();
 }
 
 /************************************************************************

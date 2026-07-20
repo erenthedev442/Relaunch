@@ -264,12 +264,38 @@ xi.nyzul.handleProgress = function(instance, progress)
     return isComplete
 end
 
+-- onMobDeath is dispatched once per eligible participant. Claim objective
+-- credit once per mob per floor, regardless of whether the killing blow came
+-- from a player, Trust, Fellow, pet, or another party-controlled entity.
+xi.nyzul.claimDeathCredit = function(mob)
+    local instance = mob and mob:getInstance()
+    if not instance then
+        return false
+    end
+
+    local currentFloor = instance:getLocalVar('Nyzul_Current_Floor')
+    if mob:getLocalVar('NyzulDeathCreditFloor') == currentFloor then
+        return false
+    end
+
+    mob:setLocalVar('NyzulDeathCreditFloor', currentFloor)
+    return true
+end
+
 xi.nyzul.enemyLeaderKill = function(mob)
+    if not xi.nyzul.claimDeathCredit(mob) then
+        return
+    end
+
     local instance = mob:getInstance()
     instance:setProgress(15)
 end
 
 xi.nyzul.specifiedGroupKill = function(mob)
+    if not xi.nyzul.claimDeathCredit(mob) then
+        return
+    end
+
     local instance = mob:getInstance()
 
     if instance:getStage() == xi.nyzul.objective.ELIMINATE_SPECIFIED_ENEMIES then
@@ -288,6 +314,10 @@ xi.nyzul.specifiedEnemySet = function(mob)
 end
 
 xi.nyzul.specifiedEnemyKill = function(mob)
+    if not xi.nyzul.claimDeathCredit(mob) then
+        return
+    end
+
     local instance = mob:getInstance()
     local stage    = instance:getStage()
 
@@ -305,6 +335,10 @@ xi.nyzul.specifiedEnemyKill = function(mob)
 end
 
 xi.nyzul.eliminateAllKill = function(mob)
+    if not xi.nyzul.claimDeathCredit(mob) then
+        return
+    end
+
     local instance = mob:getInstance()
 
     if instance:getStage() == xi.nyzul.objective.ELIMINATE_ALL_ENEMIES then

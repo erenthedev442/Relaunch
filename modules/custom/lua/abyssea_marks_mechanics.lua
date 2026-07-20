@@ -30,14 +30,6 @@ local POSITIONAL_KINDS =
     move = true,
 }
 
-local function escalationAttack(tier)
-    return 500 * tier
-end
-
-local function escalationMagicAttack(tier)
-    return 200 * tier
-end
-
 local function now()
     return os.time()
 end
@@ -139,46 +131,51 @@ local function openVulnerability(mob, state, reward)
     state.vulnerability = vuln
 end
 
-local function removeEscalation(mob, state)
-    if not state or (state.escalation or 0) <= 0 then return end
+local function staggerMob(mob, state, reward)
+    local owner = ownerFor(state)
+    if not owner then return end
 
-    local tier = state.cfg.tier or 1
-    state.escalation = state.escalation - 1
+    local staggerReward = {}
+    for key, value in pairs(reward or {}) do
+        staggerReward[key] = value
+    end
+    staggerReward.sec = 15
+
+    openVulnerability(mob, state, staggerReward)
     pcall(function()
-        mob:addMod(xi.mod.ATT,  -escalationAttack(tier))
-        mob:addMod(xi.mod.MATT, -escalationMagicAttack(tier))
+        mob:addStatusEffect(xi.effect.TERROR, {
+            duration = 15,
+            origin   = owner,
+        })
     end)
 end
 
-local function addEscalation(mob, state)
-    local tier = state.cfg.tier or 1
-    state.escalation = (state.escalation or 0) + 1
-    pcall(function()
-        mob:addMod(xi.mod.ATT,  escalationAttack(tier))
-        mob:addMod(xi.mod.MATT, escalationMagicAttack(tier))
-    end)
-end
-
-local function punishPlayer(mob, player, signature, tier)
+local function punishPlayer(mob, state, player, signature)
     if not player then return end
 
     local fail = signature.failure or {}
-    -- A failed mechanic must remain consequential against the pre-Abyssea
-    -- baseline's heavy Regen and DT. Regular failures scale 20/25/30% by tier;
-    -- final phase failures are overridden by the catalog to 25/30/35%.
-    local damagePct = fail.damagePct or (15 + tier * 5)
-    if damagePct > 0 then
-        local damage = math.max(1, math.floor(player:getMaxHP() * damagePct / 100))
+    if fail.effect then
         pcall(function()
-            player:takeDamage(damage, mob, xi.attackType.SPECIAL, xi.damageType.ELEMENTAL)
+            player:addStatusEffect(fail.effect, {
+                power    = fail.power or 1,
+                duration = fail.duration or 10,
+                origin   = mob,
+                tick     = fail.tick or (fail.effect == xi.effect.POISON and 3 or 0),
+            })
         end)
     end
 
-    if fail.effect then
-        pcall(function()
-            player:addStatusEffect(fail.effect, fail.power or 1, 0, fail.duration or (4 + tier * 2))
-        end)
-    end
+    -- Failure damage comes only from a visible native TP move. At 3000 TP the
+    -- move uses its strongest normal variation; there is no hidden HP pulse or
+    -- stat escalation layered on top. The catalog validates one active,
+    -- non-lethal native move for every marks encounter.
+    if not fail.skill then return end
+
+    state.punishmentUntil = now() + 5
+    pcall(function()
+        mob:setTP(fail.tp or 3000)
+        mob:useMobAbility(fail.skill, player, fail.castTimeMs, true)
+    end)
 end
 
 local function releaseFloor(mob, state)
@@ -282,13 +279,11 @@ local function finishChallenge(mob, state)
     releaseAnchor(mob, challenge)
     if success then
         announce(mob, state, signature.success or 'The opening is seized!')
-        openVulnerability(mob, state, signature.reward)
-        removeEscalation(mob, state)
+        staggerMob(mob, state, signature.reward)
     else
         announce(mob, state, signature.fail or 'The warning goes unanswered!')
         local player = ownerFor(state)
-        punishPlayer(mob, player, signature, state.cfg.tier or 1)
-        addEscalation(mob, state)
+        punishPlayer(mob, state, player, signature)
         if player then
             local tier = state.cfg.tier or 1
             local failVar = string.format('AbyFailT%d', tier)
@@ -332,7 +327,13 @@ local function beginChallenge(mob, state, signature, floorHpp)
 end
 
 local function triggerNextPhase(mob, state)
-    if state.challenge then return end
+    if
+        state.challenge or
+        state.vulnerability or
+        (state.punishmentUntil and now() < state.punishmentUntil)
+    then
+        return
+    end
 
     local phases = state.cfg.phases or {}
     local phase = phases[state.nextPhase or 1]
@@ -399,6 +400,8 @@ local function combatTick(mob)
 
     if
         not state.challenge and
+        not state.vulnerability and
+        (not state.punishmentUntil or stamp >= state.punishmentUntil) and
         state.cfg.signature and
         state.nextSignatureAt and
         stamp >= state.nextSignatureAt
@@ -416,18 +419,14 @@ local function damageTaken(mob, amount, attacker, attackType)
     if not state then return end
 
     local challenge = state.challenge
+    local ownerAttack = false
     if challenge and amount and amount > 0 then
         challenge.damageTaken = challenge.damageTaken + amount
         local attackerIsPc = false
         pcall(function() attackerIsPc = attacker:isPC() end)
         if attackerIsPc and attacker:getID() == state.ownerId then
+            ownerAttack = true
             challenge.ownerDamage = challenge.ownerDamage + amount
-            -- Hold-fire signatures are true absorption windows, not merely a
-            -- delayed pass/fail quiz. Trust and pet auto-attacks are ignored so
-            -- a solo player can execute the mechanic without dismissing them.
-            if challenge.signature.kind == 'hold' then
-                pcall(function() mob:addHP(amount) end)
-            end
         end
         if attackType == xi.attackType.PHYSICAL or attackType == xi.attackType.RANGED then
             challenge.physicalDamage = challenge.physicalDamage + amount
@@ -447,6 +446,40 @@ local function damageTaken(mob, amount, attacker, attackType)
 
     enforceFloor(mob, state)
     triggerNextPhase(mob, state)
+
+    local needsDeferred = challenge ~= nil
+    if not needsDeferred and amount and amount > 0 then
+        local nextPhase = (state.cfg.phases or {})[state.nextPhase or 1]
+        if nextPhase then
+            local thresholdHp = math.max(1, math.floor(mob:getMaxHP() * nextPhase.hp / 100))
+            needsDeferred = mob:getHP() - amount <= thresholdHp
+        end
+    end
+
+    -- TAKE_DAMAGE listeners run before the engine deducts HP. Recheck one
+    -- millisecond later so phase floors use authoritative post-hit HP. Hold
+    -- windows absorb only the owner's damage; Trust and pet attacks are ignored
+    -- so a solo player can execute the mechanic without dismissing them.
+    if needsDeferred then
+        pcall(function()
+            mob:timer(1, function(mobArg)
+                local deferredState = states[mobArg:getID()]
+                if not deferredState then return end
+
+                if
+                    challenge and
+                    deferredState.challenge == challenge and
+                    challenge.signature.kind == 'hold' and
+                    ownerAttack
+                then
+                    mobArg:addHP(amount)
+                end
+
+                triggerNextPhase(mobArg, deferredState)
+                enforceFloor(mobArg, deferredState)
+            end)
+        end)
+    end
 end
 
 local function weaponskillTaken(user, mob)
@@ -478,7 +511,6 @@ function M.attach(mob, cfg, owner)
         nextSignatureAt = stamp + (cfg.firstSignatureSec or 20),
         pressureAt      = stamp + (cfg.pressureSec or 720),
         pressureStacks  = 0,
-        escalation      = 0,
         procs            = {},
     }
     local state = states[mob:getID()]
@@ -539,20 +571,29 @@ function M.onProc(mob, player, triggerType)
     local message
     if triggerType == xi.abyssea.triggerType.RED then
         reward = { def = 450, eva = 150, mdef = 45, sec = 15, trigger = 2 }
-        message = 'Ruby weakness shatters its escalation!'
+        message = 'Ruby weakness tears open its defenses!'
     elseif triggerType == xi.abyssea.triggerType.YELLOW then
         reward = { def = 150, eva = 75, mdef = 80, sec = 12, trigger = 1 }
         message = 'Amber weakness suppresses its sorcery!'
-        pcall(function() mob:addStatusEffect(xi.effect.SILENCE, 1, 0, 12) end)
+        pcall(function()
+            mob:addStatusEffect(xi.effect.SILENCE, {
+                duration = 12,
+                origin   = player,
+            })
+        end)
     else
         reward = { def = 550, eva = 175, mdef = 20, sec = 12, trigger = 0 }
         message = 'Azure weakness suppresses its technique!'
-        pcall(function() mob:addStatusEffect(xi.effect.AMNESIA, 1, 0, 12) end)
+        pcall(function()
+            mob:addStatusEffect(xi.effect.AMNESIA, {
+                duration = 12,
+                origin   = player,
+            })
+        end)
     end
 
     announce(mob, state, message)
     openVulnerability(mob, state, reward)
-    removeEscalation(mob, state)
 
     local telemetryPlayer = ownerEntity(state)
     if telemetryPlayer then
@@ -577,13 +618,6 @@ function M.cleanup(mob)
         releaseAnchor(mob, state.challenge)
         restoreVulnerability(mob, state)
         local tier = state.cfg.tier or 1
-        local escalation = state.escalation or 0
-        if escalation > 0 then
-            pcall(function()
-                mob:addMod(xi.mod.ATT,  -(escalationAttack(tier) * escalation))
-                mob:addMod(xi.mod.MATT, -(escalationMagicAttack(tier) * escalation))
-            end)
-        end
         local pressure = state.pressureStacks or 0
         if pressure > 0 then
             pcall(function()

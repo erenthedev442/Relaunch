@@ -14,12 +14,12 @@
 --
 -- CHAINS (see weapon_forge_catalog.lua for full list):
 --   119I  (Bronze vendor)  →  119II (forge-exclusive or Silver vendor shortcut)
---   119II                  →  119III (Stage-5 Relic; also via Dynamis/Relic Forge)
+--   119II                  →  119III (Stage-5 Prime)
 --
 -- GATE CHECKS (applied before any item transfer)
---   119I → II : HL Rank ≥ 3 (Elite)  +  25× Kindreds Medal
---   119II → III: HL Rank ≥ 5 (Legend) +  50× Demons Medal
---                                     +  2000 Reforge Marks (any pool, drained)
+--   119I → II : HL Rank 5 (Legend) + 50× Kindreds Medal
+--   119II → III: HL Rank 5 (Legend) + 100× Demons Medal
+--                                    + 30,000 Reforge Marks + 750M gil
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
@@ -249,10 +249,15 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -- does NOT remove any items until all checks pass.
     local function doUpgrade(player, chain, fromStage)
         -- Owner spec 2026-07-13 gate check. doUpgrade only ever gets
-        -- fromStage 1 or 2 (Prime base is issued by Prime Armory NPC, not
-        -- Weapon Forge). STAGE_GATES.prime[2] is nil so fromStage=2 short-
+        -- fromStage 1 or 2 (Prime Armory issues final weapons directly, while
+        -- this forge upgrades Ambuscade-derived Ajja weapons). Stage gate 0 is
+        -- checked explicitly so both Prime routes share the prior-final gate.
+        -- STAGE_GATES.prime[2] is nil so fromStage=2 short-
         -- circuits with true and falls through to the existing HL_Tier +
         -- all-trials + gil checks below.
+        -- Both Prime routes share the prerequisite that the player has already
+        -- completed a Relic, Mythic, Empyrean, or Aeonic final weapon.
+        if not checkGate(player, 'prime', 0) then return false end
         if not checkGate(player, 'prime', fromStage) then return false end
         local fromItem = fromStage == 1 and chain.s1 or chain.s2
         local toItem   = fromStage == 1 and chain.s2 or chain.s3
@@ -453,8 +458,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         if path == 'aeonic' then
             local ae = chain.aeonic
             player:printToPlayer(
-                string.format('[Aeonic] %s > %s > %s > %s > %s',
-                    ae.base.name, chain.s1.name, chain.s2.name, ae.s3.name, ae.s3.name),
+                string.format('[Aeonic] %s > %s > %s > %s',
+                    ae.base.name, chain.s1.name, chain.s2.name, ae.s3.name),
                 xi.msg.channel.SYSTEM_3)
             player:printToPlayer('Cost: ' .. aeonicCostLine(chain, fromStage), xi.msg.channel.SYSTEM_3)
             local gl = gateLine(player, 'aeonic', fromStage)
@@ -516,7 +521,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         if #upgradeable == 0 then
             player:printToPlayer(
                 '[Weapon Forge] I see no upgradeable weapons in your inventory. '
-                .. 'Begin a Prime chain with a 119I weapon from the gear vendors in Escha - Zi\'Tah, '
+                .. 'Begin a Prime chain with an Ajja weapon from Ambuscade, '
                 .. 'or buy a Malformed weapon from Temprix in Reisenjima for the Aeonic path.',
                 xi.msg.channel.SYSTEM_3)
             return

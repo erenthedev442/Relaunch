@@ -41,7 +41,6 @@ function C.nmMods(tier)
         [xi.mod.MACC]    = 220 + tier * 60,
         [xi.mod.MDEF]    = 120 + tier * 30,
         [xi.mod.DMGPHYS] = -800,             -- slightly tanky (engine caps at -50%)
-        [xi.mod.REGEN]   = 50 + tier * 30,
     }
 end
 
@@ -49,27 +48,11 @@ end
 function C.cruorReward(tier) return 800 + tier * 350 end
 function C.expReward(tier)   return 1500 + tier * 600 end
 
--- ── NM roster: real Voidwalker NM templates {name, group, zone}. The dynamic
--- entity borrows the group's pool (the void-creature model/family); it spawns at
--- the player's location regardless of the template zone. Pulled from xi_relaunch
--- mob_groups; add more for variety.
-C.ROSTER =
-{
-    { name = 'Erebus',       group = 35, zone = 136 },
-    { name = 'Gorehound',    group = 37, zone = 136 },
-    { name = 'Gjenganger',   group = 36, zone = 136 },
-    { name = 'Feuerunke',    group = 34, zone = 136 },
-    { name = 'Lord_Ruthven', group = 33, zone = 136 },
-    { name = 'Yilbegan',     group = 32, zone = 136 },
-    { name = 'Capricornus',  group = 48, zone = 101 },
-    { name = 'Aglaophotis',  group = 39, zone = 288 },
-}
-
 -- ── charVars ───────────────────────────────────────────────────────────────
 C.V =
 {
     born    = 'Voidwatch_Born',
-    tier    = 'Voidwatch_Tier',     -- highest tier cleared (your abyssite rank); next rift = tier+1
+    tier    = 'Voidwatch_Tier',     -- highest effective tier cleared across all strata
     stones  = 'Voidwatch_Stones',
     stoneTs = 'Voidwatch_StoneTs',  -- unix ts the stone count was last reconciled (regen anchor)
     cruor    = 'Voidwatch_Cruor',
@@ -245,7 +228,6 @@ function C.mechCfg(tier)
     {
         name            = 'Voidwalker',
         targetPartyOnly = true,
-        drain           = { periodSec = 12, healPct = 2 },   -- mild anti-turtle
     }
     if tier >= 2 then
         cfg.stance =

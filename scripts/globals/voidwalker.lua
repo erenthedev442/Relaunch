@@ -288,20 +288,14 @@ end
 local function doMobSkillEveryHPP(mob, every, start, mobskill, condition)
     local mobhpp = mob:getHPP()
 
-    if
-        mobhpp <= start and
-        condition
-    then
-        local mobHppModulo   = mobhpp % every
-        local startHppModulo = start % every
-        local isSame         = startHppModulo == mobHppModulo
-
-        if
-            isSame and
-            mob:getLocalVar('MOB_SKILL_' .. mobhpp) == 0
-        then
-            mob:useMobAbility(mobskill)
-            mob:setLocalVar('MOB_SKILL_' .. mobhpp, 1)
+    if mobhpp <= start and condition then
+        for threshold = start, every, -every do
+            local key = string.format('MOB_SKILL_%d_%d', mobskill, threshold)
+            if mobhpp <= threshold and mob:getLocalVar(key) == 0 then
+                mob:setLocalVar(key, 1)
+                mob:useMobAbility(mobskill)
+                return
+            end
         end
     end
 end
@@ -388,7 +382,7 @@ local mixinByMobName =
     end,
 
     ['Jyeshtha'] = function(mob)
-        randomly(mob, 30, 60, xi.mobSkill.MIGHTY_STRIKES_1, xi.mobSkill.MIGHTY_STRIKES_1)
+        randomly(mob, 30, 60, xi.effect.MIGHTY_STRIKES, xi.mobSkill.MIGHTY_STRIKES_1)
         if
             mob:getLocalVar('MOBSKILL_USE') == 1 and
             not mob:hasStatusEffect(xi.effect.MIGHTY_STRIKES)
@@ -434,26 +428,44 @@ local mixinByMobName =
 xi.voidwalker.onMobInitialize = function(mob)
 end
 
-xi.voidwalker.onMobSpawn = function(mob)
-    local mobName = mob:getName()
-    mob:setStatus(xi.status.INVISIBLE)
-    mob:hideHP(true)
-    mob:hideName(true)
-    mob:setUntargetable(true)
-    local mods = modByMobName[mobName]
+-- Apply only a Voidwalker's named spawn traits. Dynamic custom systems use
+-- this without the hidden/untargetable state required by retail /heal pops.
+xi.voidwalker.applySpawnBehavior = function(mob)
+    local mods = modByMobName[mob:getName()]
 
     if mods then
         mods(mob)
     end
 end
 
-xi.voidwalker.onMobFight = function(mob, target)
-    local mobName = mob:getName()
-    local mixin   = mixinByMobName[mobName]
+-- Apply only a Voidwalker's named combat script. Dynamic custom systems use
+-- this without retail's two-hour/distance despawn lifecycle below.
+xi.voidwalker.applyCombatBehavior = function(mob)
+    local mixin = mixinByMobName[mob:getName()]
 
     if mixin then
         mixin(mob)
     end
+end
+
+xi.voidwalker.hasSpawnBehavior = function(name)
+    return modByMobName[name] ~= nil
+end
+
+xi.voidwalker.hasCombatBehavior = function(name)
+    return mixinByMobName[name] ~= nil
+end
+
+xi.voidwalker.onMobSpawn = function(mob)
+    mob:setStatus(xi.status.INVISIBLE)
+    mob:hideHP(true)
+    mob:hideName(true)
+    mob:setUntargetable(true)
+    xi.voidwalker.applySpawnBehavior(mob)
+end
+
+xi.voidwalker.onMobFight = function(mob, target)
+    xi.voidwalker.applyCombatBehavior(mob)
 
     local poptime = mob:getLocalVar('[VoidWalker]PopedAt')
     local now     = GetSystemTime()
