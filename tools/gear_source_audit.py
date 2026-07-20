@@ -262,6 +262,22 @@ if _spark.exists():
         if iid in gear:
             item_sparks.add(iid)
 
+# Character-creation "Starting / Racial gear" -- granted at char creation in C++
+# (race/nation based, computed ids), never via a droplist/quest table, so it would
+# otherwise read as unobtainable even though EVERY character spawns with it.
+# Recognized by the known starter families' raw-name prefixes.
+_STARTER_PREFIXES = (
+    "onion_",                                                  # Onion Sword/Dagger/Knife/Rod/Staff/Axe...
+    "hume_", "elvaan_", "galkan_", "galka_", "tarutaru_",
+    "mithran_", "mithra_",                                     # racial armor sets
+    "san_d'orian_ring", "san_dorian_ring", "bastokan_ring", "windurstian_ring",
+)
+
+def _is_starter_gear(iid: int) -> bool:
+    nm = raw_names.get(iid, "")
+    return any(nm.startswith(p) for p in _STARTER_PREFIXES)
+
+
 def retail_source(iid: int) -> str:
     parts = []
     mobs = item_drop_mobs.get(iid)
@@ -279,6 +295,8 @@ def retail_source(iid: int) -> str:
         parts.append(f"Quest: {_capped(item_quest[iid])}")
     if iid in item_mission:
         parts.append(f"Mission: {_capped(item_mission[iid])}")
+    if _is_starter_gear(iid):
+        parts.append("Starting Gear")
     return " | ".join(parts)
 
 # ---------------------------------------------------------------------------
@@ -333,6 +351,12 @@ def _label_for(fname: str) -> str:
 _ID_RE   = re.compile(r"(?:\bid|\bitemId)\s*=\s*(\d{3,5})\b")
 # invasion_loot_pool.lua is a flat list of bare 5-digit item ids
 _BARE_RE = re.compile(r"\b(\d{5})\b")
+# Some catalogs store ids in ARRAYS (nq/p1/p2/stages = { 1,2,3 }) or as a
+# { <id>, 'Label', cost } shop row -- the plain _ID_RE misses both, which made
+# Ambuscade armor/weapons read as "unobtainable". Scrape those shapes too.
+_ARRAY_RE   = re.compile(r"\b(?:nq|p1|p2|p3|stages)\s*=\s*\{([^{}]*)\}")
+_SHOPROW_RE = re.compile(r"\{\s*(\d{3,5})\s*,\s*['\"]")
+_NUM_RE     = re.compile(r"\b(\d{3,5})\b")
 
 item_custom: dict[int, set] = {}
 invasion_pool: set = set()   # the catch-all "everything drops" pool, tracked separately
@@ -355,6 +379,23 @@ for p in sorted(CUSTOM.glob("lua/*.lua")):
     label = _label_for(p.name)
     for m in _ID_RE.finditer(text):
         _add_custom(int(m.group(1)), label)
+    for m in _ARRAY_RE.finditer(text):        # nq/p1/p2/stages = { ids }  (e.g. ambuscade_weapons_catalog)
+        for n in _NUM_RE.findall(m.group(1)):
+            _add_custom(int(n), label)
+    for m in _SHOPROW_RE.finditer(text):      # { <id>, 'Label', cost } shop rows
+        _add_custom(int(m.group(1)), label)
+
+# Ambuscade rewards live in a STOCK global (scripts/globals/ambuscade.lua), not a
+# custom module, so the loop above never sees them. Scrape its armor-set arrays
+# (nq/p1/p2) and ring/voucher shop rows -> "Ambuscade".
+_amb = ROOT / "scripts" / "globals" / "ambuscade.lua"
+if _amb.exists():
+    _atext = _amb.read_text(encoding="utf-8", errors="replace")
+    for m in _ARRAY_RE.finditer(_atext):
+        for n in _NUM_RE.findall(m.group(1)):
+            _add_custom(int(n), "Ambuscade")
+    for m in _SHOPROW_RE.finditer(_atext):
+        _add_custom(int(m.group(1)), "Ambuscade")
 
 # --- UPGRADE paths -----------------------------------------------------------
 # Many systems have an item that is the +1/+2/+3/+4 (or forge stage) of a base:
@@ -384,6 +425,13 @@ for m in re.finditer(r"\{\s*id\s*=\s*(\d+)[^}]*?plus1\s*=\s*(\d+)",
                      _read_custom("unity_wanted_catalog.lua")):
     _mk_base(int(m.group(1)), "Unity")
     _mk_up(int(m.group(2)), "Unity upgrade")
+
+# 1b. Abjuration forge: [base] = { id = <+1> }. The base is the obtainable NQ
+#     (abjuration turn-in) and the id is the forged +1 (e.g. Carmine, Argosy).
+for m in re.finditer(r"\[(\d{3,5})\]\s*=\s*\{\s*id\s*=\s*(\d{3,5})",
+                     _read_custom("abjuration_forge_catalog.lua")):
+    _mk_base(int(m.group(1)), "Abjuration")
+    _mk_up(int(m.group(2)), "Abjuration upgrade")
 
 # 2. Reforge (AF/Relic/Empy): slot arrays { base, +1, +2, +3 }. Bare 4-id
 #    arrays only appear as piece rows (cost tables use `plusN = <num>`).
