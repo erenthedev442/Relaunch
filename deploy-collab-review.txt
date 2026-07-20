@@ -1,409 +1,82 @@
-﻿Collaborator review  2026-07-19 18:14:00
-Range: HEAD..origin/relaunch  (1 collaborator commit(s))
+﻿Collaborator review  2026-07-20 05:11:16
+Range: HEAD..origin/relaunch  (4 collaborator commit(s))
 
 ==============================================================================
-commit 939140ee06085c19ef6967def86d19915b8662ef
-Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Mon Jul 20 02:00:54 2026 +0100
+commit c3c83a234caebd0a0b87459104f255a54fea3781
+Author: shigukahz <60148067+shigukahz@users.noreply.github.com>
+Date:   Mon Jul 20 03:50:11 2026 +0100
 
-    fix capacity respawns and disable unsafe Apex entry
-    
-    Decode dynamic entity IDs during native respawn and add a stale-mob recovery safety net. Route Apex trial entry exclusively through the NPC to avoid command-triggered black screens.
-    
-    Co-authored-by: Cursor <cursoragent@cursor.com>
+    Change HASTE_MAGIC modifier value to 1000
 
-diff --git a/RELAUNCH_AS_BUILT.md b/RELAUNCH_AS_BUILT.md
-index c3f43c9d3a..20c2e28a2d 100644
---- a/RELAUNCH_AS_BUILT.md
-+++ b/RELAUNCH_AS_BUILT.md
-@@ -95,7 +95,7 @@ Ascension **no longer carries any EXP penalty** ΓÇö relaunch removed it (the eng
+diff --git a/scripts/actions/spells/trust/kupipi.lua b/scripts/actions/spells/trust/kupipi.lua
+index 2802ecfa10..e842f5af50 100644
+--- a/scripts/actions/spells/trust/kupipi.lua
++++ b/scripts/actions/spells/trust/kupipi.lua
+@@ -29,7 +29,7 @@ spellObject.onMobSpawn = function(mob)
+ 	mob:addMod(xi.mod.CHR, power)
+ 	mob:addMod(xi.mod.EVA, power)
+ 	mob:addMod(xi.mod.CURE_POTENCY, zpower)
+-	mob:addMod(xi.mod.HASTE_MAGIC, zpower)
++	mob:addMod(xi.mod.HASTE_MAGIC, 1000)
+ 	mob:addMod(xi.mod.FASTCAST, zpower)
+ 	mob:addMod(xi.mod.REFRESH, zpower)	
+ 	
+==============================================================================
+commit 4c226a031f3ba466c09581006d8ef623e862856c
+Author: shigukahz <60148067+shigukahz@users.noreply.github.com>
+Date:   Mon Jul 20 03:52:13 2026 +0100
+
+    Add HASTE_GEAR mod to Tenzan spell
+
+diff --git a/scripts/actions/spells/trust/tenzen.lua b/scripts/actions/spells/trust/tenzen.lua
+index 87497abdab..8b08363323 100644
+--- a/scripts/actions/spells/trust/tenzen.lua
++++ b/scripts/actions/spells/trust/tenzen.lua
+@@ -36,6 +36,7 @@ spellObject.onMobSpawn = function(mob)
+ 	mob:addMod(xi.mod.STORETP, zpower)
+ 	mob:addMod(xi.mod.SAVETP, 400)
+ 	mob:addMod(xi.mod.DOUBLE_ATTACK, 10)
++    mob:addMod(xi.mod.HASTE_GEAR, 1500)
+     mob:addMod(xi.mod.HP, power * 2)
+ 	mob:addMod(xi.mod.MP, power * 2)
  
- ### 2.4 Infinite & repeatable endgame
- 
--- **Apex Trials** (`!apex` / Apex Arbiter, arena = Walk of Echoes [P2] z279). Greater-Rift-style infinite solo climb; one boss per tier. The three-band curve targets Relic + T5 through T50, prepared Prime/final REMA through T100, then logarithmic elite scaling: level 135ΓåÆ145ΓåÆ150, HP 1.5MΓåÆ7.54MΓåÆ20.29MΓåÆabout 67.27M at T500, with int16-safe stat anchors and affixes at T25/50/75/100/200/300. Mechanics reach the Prime kit at T100 and the full Absolute kit at T200. Reward: **Paragon Points = 10 + 5├ù(tier-1)** per first clear; raises your `Apex_HighestTier`. Bosses spawn 22-30y from the owner, remain non-aggroable to other climbers, and engage their owner after 4 seconds.
-+- **Apex Trials** (Apex Arbiter NPC; arena = Walk of Echoes [P2] z279; `!apex` is status/abort only). Greater-Rift-style infinite solo climb; one boss per tier. The three-band curve targets Relic + T5 through T50, prepared Prime/final REMA through T100, then logarithmic elite scaling: level 135ΓåÆ145ΓåÆ150, HP 1.5MΓåÆ7.54MΓåÆ20.29MΓåÆabout 67.27M at T500, with int16-safe stat anchors and affixes at T25/50/75/100/200/300. Mechanics reach the Prime kit at T100 and the full Absolute kit at T200. Reward: **Paragon Points = 10 + 5├ù(tier-1)** per first clear; raises your `Apex_HighestTier`. Bosses spawn 22-30y from the owner, remain non-aggroable to other climbers, and engage their owner after 4 seconds.
- - **Paragon board** (`Paragon.lua` / Paragon Sage). Spends Paragon Points: **Ascend** (infinite `Paragon_Level`, cost `25+5├ùcur`) + four capped perks (Vigor +HP cap 5000, Might +ATT/RATT cap 1000, Precision +ACC/RACC cap 1000, Warding +DEF cap 2000) + a once-per-day **Daily Might** 2 h buff (unlock 80 PP). Perks re-apply every login.
- - **Endless Tower** (`!tower` / Tower Arbiter, Walk of Echoes z182). 50-floor solo climb, single-occupant server-wide. Bosses every 10th floor; floor-50 clear sets **Prime Weapon Trial 2**. Rewards Allied Notes per trash kill. ΓÜá **Bug: the floor-50 boss is set to level 275, which wraps past uint8 255 ΓåÆ its base stats are accidentally low** (7M HP still makes it a wall, but its accuracy/TP-move damage are far under intent).
- - **Job Mastery** (`!mastery` / Weapon Mastery Sage, Walk of Echoes z182). 12 weapon-Guardian solo fights (Lv160/170, 50-55M HP, brutal affixes). Any one kill sets **Prime Weapon Trial 4**.
-diff --git a/modules/custom/commands/apex.lua b/modules/custom/commands/apex.lua
-index 662f67d2ee..18095b62fa 100644
---- a/modules/custom/commands/apex.lua
-+++ b/modules/custom/commands/apex.lua
-@@ -1,11 +1,10 @@
- -----------------------------------
- -- func: apex
---- desc: Apex Trials helper -- check your record / Paragon Points, start a
----       climb, or bail out of one.
-+-- desc: Apex Trials helper -- check your record / Paragon Points or bail out
-+--       of a climb. New climbs begin through the Apex Arbiter NPC.
- --
- -- Usage:
- --   !apex          -- show your Apex record + unspent Paragon Points
----   !apex enter    -- begin a climb (same as the Apex Arbiter NPC)
- --   !apex abort    -- end your current climb (banked points are kept)
- --   !apex cleanup  -- GM: remove orphaned Apex bosses from the arena
- --
-@@ -39,27 +38,7 @@ commandObj.onTrigger = function(player, sub)
-     end
- 
-     if sub == 'enter' then
--        if xi._apex_enter then
--            -- Cross-zone setPos must not run inside the chat-command packet
--            -- callback: doing so can desync the zoning handshake and leave the
--            -- client on a black screen. The NPC path is naturally deferred by
--            -- its menu, so defer the command path to match it.
--            player:timer(500, function(p)
--                if p:getStatus() == xi.status.DISAPPEAR then
--                    p:printToPlayer('[Apex] You are already changing areas. Try again after zoning.', SYS)
--                    return
--                end
--
--                local enter = xi._apex_enter
--                if enter then
--                    enter(p)
--                else
--                    p:printToPlayer('[Apex] Apex Trials are not loaded.', SYS)
--                end
--            end)
--        else
--            player:printToPlayer('[Apex] Apex Trials are not loaded.', SYS)
--        end
-+        player:printToPlayer('[Apex] Begin climbs through the Apex Arbiter NPC in Purgonorgo Isle.', SYS)
-         return
-     end
- 
-@@ -84,7 +63,7 @@ commandObj.onTrigger = function(player, sub)
-     player:printToPlayer(string.format(
-         '[Apex] Record: Tier %d.  Unspent Paragon Points: %d.  %s',
-         record, pp, inRun and '(climbing now -- !apex abort to stop)' or ('Next push: Tier ' .. (record + 1))), SYS)
--    player:printToPlayer('[Apex] !apex enter to climb, or talk to the Apex Arbiter in GM Home.', SYS)
-+    player:printToPlayer('[Apex] Talk to the Apex Arbiter in Purgonorgo Isle to begin a climb.', SYS)
- end
- 
- return commandObj
-diff --git a/modules/custom/commands/phantomfarm.lua b/modules/custom/commands/phantomfarm.lua
-index ce7830823e..91adaf28cb 100644
---- a/modules/custom/commands/phantomfarm.lua
-+++ b/modules/custom/commands/phantomfarm.lua
-@@ -7,14 +7,15 @@
- --   -- useful after a hot-reload leaves old one-shot entities in the zone.
- --
- -- USAGE
----   !phantomfarm bibiki                -- report Bibiki pool (alive/dead/target)
-+--   !phantomfarm bibiki                -- report alive/dying/disappeared/target
- --   !phantomfarm ranperre              -- report Ranperre pool
- --   !phantomfarm bibiki refill         -- top up Bibiki to 100 (no despawn)
- --
- -- WHEN
- --   Players report "phantoms aren't respawning" -- this command distinguishes:
----     * pool at target (alive + dead)  -> persistent entities are registered;
----                                         dead entries are awaiting respawn
-+--     * alive                         -> currently usable targets
-+--     * dying                         -> visible death/despawn sequence
-+--     * disappeared                   -> awaiting native respawn (or stale)
- --     * pool has holes (< 100 total)   -> entities were removed unexpectedly.
- --                                         `refill` restores the count.
- -----------------------------------
-@@ -84,6 +85,7 @@ local function spawnOnePhantom(zone, catalog)
-         releaseIdOnDisappear = false,
- 
-         onMobSpawn = function(m)
-+            m:setLocalVar('CapacityFarmDiedAt', 0)
-             m:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)
-             m:setMobMod(xi.mobMod.NO_DROPS, 1)
-             m:setLocalVar('CapacityFarmBonus', catalog.cpBonus or 0)
-@@ -92,6 +94,12 @@ local function spawnOnePhantom(zone, catalog)
-                 m:setHP(catalog.maxHP)
-             end
-         end,
-+
-+        onMobDeath = function(deadMob)
-+            if deadMob:getLocalVar('CapacityFarmDiedAt') == 0 then
-+                deadMob:setLocalVar('CapacityFarmDiedAt', GetSystemTime())
-+            end
-+        end,
-     })
-     if not mob then return false end
-     mob:setSpawn(x, y, z, 0)
-@@ -119,18 +127,24 @@ commandObj.onTrigger = function(player, farmArg, actionArg)
-     local entityName = 'DE_' .. catalog.mobName
-     local existing   = zone:queryEntitiesByName(entityName) or {}
- 
--    local alive, dead = 0, 0
-+    local alive, dying, disappeared = 0, 0, 0
-     for _, m in ipairs(existing) do
-         pcall(function()
--            if m:isAlive() then alive = alive + 1 else dead = dead + 1 end
-+            if m:isAlive() then
-+                alive = alive + 1
-+            elseif m:isSpawned() then
-+                dying = dying + 1
-+            else
-+                disappeared = disappeared + 1
-+            end
-         end)
-     end
--    local total  = alive + dead
-+    local total  = alive + dying + disappeared
-     local target = catalog.mobCount
- 
-     player:printToPlayer(string.format(
--        '[phantomfarm] %s: %d alive + %d dead-not-GC = %d total (target %d).',
--        farm.label, alive, dead, total, target), S)
-+        '[phantomfarm] %s: %d alive + %d dying + %d disappeared = %d total (target %d).',
-+        farm.label, alive, dying, disappeared, total, target), S)
- 
-     local action = actionArg and string.lower(actionArg) or nil
-     if action ~= 'refill' then
-@@ -138,8 +152,15 @@ commandObj.onTrigger = function(player, farmArg, actionArg)
-             player:printToPlayer(string.format(
-                 '  => pool has holes (%d < %d). Run !phantomfarm %s refill to top up.',
-                 total, target, key), S)
-+        elseif disappeared > 0 then
-+            player:printToPlayer(string.format(
-+                '  => %d mob(s) await native respawn; persistent counts alone are not considered healthy.',
-+                disappeared), S)
-+        elseif dying > 0 then
-+            player:printToPlayer(string.format(
-+                '  => %d mob(s) are completing their death/despawn sequence.', dying), S)
-         else
--            player:printToPlayer('  => pool at target. Respawn chain is healthy.', S)
-+            player:printToPlayer('  => all target slots are alive.', S)
-         end
-         return
-     end
-diff --git a/modules/custom/lua/ApexTrials.lua b/modules/custom/lua/ApexTrials.lua
-index cc3ad27722..c6bade8d8f 100644
---- a/modules/custom/lua/ApexTrials.lua
-+++ b/modules/custom/lua/ApexTrials.lua
-@@ -382,7 +382,7 @@ xi._apex_cleanupOrphans = function()
- end
- 
- -----------------------------------
---- Enter the trial (called by the NPC and !apex enter)
-+-- Enter the trial (called only by the Apex Arbiter NPC)
- -----------------------------------
- local function enterApex(player)
-     cleanupStaleSessions()
-diff --git a/modules/custom/lua/capacity_farm_catalog.lua b/modules/custom/lua/capacity_farm_catalog.lua
-index 13c5f8fde2..aef7152a7c 100644
---- a/modules/custom/lua/capacity_farm_catalog.lua
-+++ b/modules/custom/lua/capacity_farm_catalog.lua
-@@ -68,10 +68,8 @@ catalog.respawnSeconds = 5              -- delay after the death/despawn sequenc
- catalog.cpBonus  = 2000                 -- flat bonus Capacity Points to the killer per kill, ON TOP of
-                                         -- the engine's level-based award (both x map EXP_RATE). 0 = off.
- 
---- Diagnostic logging. true -> CapacityFarm.lua prints one '[capacity_farm]
---- refill: ...' line to the map log each time a death actually drives a respawn,
---- so you can confirm in journalctl that the farm is cycling. Set false once
---- you've verified kills are coming back.
-+-- Diagnostic logging. Reports missing entities, mobs still awaiting native
-+-- respawn, and stale entities recovered by the Lua watchdog.
- catalog.debug    = true
- 
- return catalog
-diff --git a/modules/custom/lua/capacity_farm_engine.lua b/modules/custom/lua/capacity_farm_engine.lua
-index fdec2f4058..12f36eef61 100644
---- a/modules/custom/lua/capacity_farm_engine.lua
-+++ b/modules/custom/lua/capacity_farm_engine.lua
-@@ -50,6 +50,10 @@ local function makeFarm(catalog)
- 
-     local campZone
-     local ensurePopulation  -- forward decl
-+    -- Native respawn normally completes well inside this window (15s death
-+    -- state, 3s fade, then the 30s SpawnHandler wave). Anything still
-+    -- disappeared after this is stale and is recovered in-place.
-+    local staleRespawnSeconds = math.max(60, (catalog.respawnSeconds or 5) + 45)
- 
-     local function spawnOne()
-         if not campZone then return end
-@@ -115,6 +119,7 @@ local function makeFarm(catalog)
-             -- our settings here.  Same for mob mods: restoreModifiers() on respawn
-             -- reverts to the pool baseline, so re-apply after it runs.
-             onMobSpawn = function(m)
-+                m:setLocalVar('CapacityFarmDiedAt', 0)
-                 m:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)
-                 m:setMobMod(xi.mobMod.NO_DROPS, 1)
-                 -- C++ folds this killer-only flat bonus into the normal mob CP
-@@ -125,6 +130,16 @@ local function makeFarm(catalog)
-                     m:setHP(catalog.maxHP)
-                 end
-             end,
-+
-+            onMobDeath = function(deadMob)
-+                -- onMobDeath can run once per eligible alliance member. Keep
-+                -- the first timestamp, and refresh this module instance's zone
-+                -- reference so FileWatcher reloads cannot strand the pool.
-+                campZone = deadMob:getZone()
-+                if deadMob:getLocalVar('CapacityFarmDiedAt') == 0 then
-+                    deadMob:setLocalVar('CapacityFarmDiedAt', GetSystemTime())
-+                end
-+            end,
-         })
-         if not mob then
-             print(string.format('[%s] insertDynamicEntity returned nil (groupId %d, groupZoneId %d)',
-@@ -140,18 +155,52 @@ local function makeFarm(catalog)
- 
-     ensurePopulation = function()
-         if not campZone then return end
--        -- Persistent farm entities remain in this list while dead and respawn
--        -- through SpawnHandler. Count all of them so zone-in/hourly top-ups only
--        -- replace genuinely missing entities, never ordinary corpses.
-+
-         local existing = campZone:queryEntitiesByName('DE_' .. catalog.mobName)
--        local count    = existing and #existing or 0
--        local toSpawn  = math.max(0, catalog.mobCount - count)
-+        local total     = existing and #existing or 0
-+        local alive     = 0
-+        local waiting   = 0
-+        local recovered = 0
-+        local now       = GetSystemTime()
-+
-+        -- Keep persistent entities (and their targids), but do not mistake a
-+        -- permanently disappeared entity for healthy population. Native
-+        -- respawn is primary; this watchdog only intervenes after a full
-+        -- death/despawn/spawn-wave window has elapsed.
-+        for _, mob in ipairs(existing or {}) do
-+            if mob:isAlive() then
-+                alive = alive + 1
-+            else
-+                local diedAt = mob:getLocalVar('CapacityFarmDiedAt')
-+                local stale  = not mob:isSpawned() and
-+                    (diedAt == 0 or now - diedAt >= staleRespawnSeconds)
-+
-+                if stale then
-+                    -- Cancel any orphaned pending registration before forcing
-+                    -- this same entity back up, then restore automatic respawn.
-+                    mob:setRespawnTime(0)
-+                    mob:spawn()
-+                    mob:setRespawnTime(catalog.respawnSeconds or 5)
-+                    if mob:isAlive() then
-+                        alive     = alive + 1
-+                        recovered = recovered + 1
-+                    end
-+                else
-+                    waiting = waiting + 1
-+                end
-+            end
-+        end
-+
-+        -- Only genuinely missing entities allocate new dynamic targids.
-+        local toSpawn = math.max(0, catalog.mobCount - total)
-         for _ = 1, toSpawn do
-             spawnOne()
-         end
--        if catalog.debug and toSpawn > 0 then
--            print(string.format('[%s] ensurePopulation: %d existing -> +%d spawned (target %d)',
--                logTag, count, toSpawn, catalog.mobCount))
-+
-+        if catalog.debug and (toSpawn > 0 or recovered > 0 or waiting > 0) then
-+            print(string.format(
-+                '[%s] ensurePopulation: %d alive, %d awaiting respawn, %d stale recovered, +%d missing spawned (target %d)',
-+                logTag, alive, waiting, recovered, toSpawn, catalog.mobCount))
-         end
-     end
- 
-@@ -168,8 +217,9 @@ local function makeFarm(catalog)
-         return cs
-     end)
- 
--    -- Periodic safety net: verify the persistent pool every Vana'diel hour
--    -- (~2 real min) in case an entity was removed by an admin/script.
-+    -- Periodic safety net: replace missing entities and recover any persistent
-+    -- entity that native respawn left disappeared for longer than one complete
-+    -- respawn cycle.
-     m:addOverride(catalog.zonePath .. '.Zone.onGameHour', function(zone)
-         super(zone)
-         if campZone then
-diff --git a/scripts/commands/apex.lua b/scripts/commands/apex.lua
-index b0cdd1b06f..d1759400a1 100644
---- a/scripts/commands/apex.lua
-+++ b/scripts/commands/apex.lua
-@@ -1,5 +1,4 @@
- -----------------------------------
---- !apex enter              -- enter or re-enter the Apex Trials climb
- -- !apex abort              -- cancel your own active run (points kept)
- -- !apex abort <name>       -- GM (perm 1): cancel another player's run
- -- !apex status             -- GM (perm 1): list all active sessions
-@@ -15,14 +14,9 @@ cmdObj.onTrigger = function(player, args)
- 
-     local sessions = xi._apex_sessions
-     local endRun   = xi._apex_endRun
--    local enter    = xi._apex_enter
- 
-     if sub == 'enter' then
--        if not enter then
--            player:printToPlayer('[apex] ApexTrials module not loaded.', SYS)
--            return
--        end
--        enter(player)
-+        player:printToPlayer('[apex] Begin climbs through the Apex Arbiter NPC in Purgonorgo Isle.', SYS)
- 
-     elseif sub == 'abort' then
-         local target
-@@ -72,7 +66,7 @@ cmdObj.onTrigger = function(player, args)
-         end
- 
-     else
--        player:printToPlayer('[apex] Usage: !apex enter  |  !apex abort  |  !apex abort <name> (GM)  |  !apex status (GM)', SYS)
-+        player:printToPlayer('[apex] Usage: !apex abort  |  !apex abort <name> (GM)  |  !apex status (GM)', SYS)
-     end
- end
- 
-diff --git a/src/map/spawn_handler.cpp b/src/map/spawn_handler.cpp
-index 83f8b0a7d8..eb1807d8d1 100644
---- a/src/map/spawn_handler.cpp
-+++ b/src/map/spawn_handler.cpp
-@@ -143,8 +143,11 @@ void SpawnHandler::Tick(const timer::time_point now)
-                 return false;
-             }
- 
--            const uint16 targid = static_cast<uint16>(pair.first & 0x0FFF);
--            auto*        PMob   = static_cast<CMobEntity*>(zone_->GetEntity(targid, TYPE_MOB));
-+            // Dynamic entities encode targid + 0x100 in the low 12 bits of
-+            // their long ID. zoneutils::GetEntity decodes both static and
-+            // dynamic IDs; masking here looked up the wrong dynamic targid and
-+            // silently discarded its pending respawn.
-+            auto* PMob = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(pair.first, TYPE_MOB));
- 
-             if (!PMob)
-             {
-diff --git a/tools/docgen/generators/apex_paragon.py b/tools/docgen/generators/apex_paragon.py
-index 3cb1dd394c..95099a5348 100644
---- a/tools/docgen/generators/apex_paragon.py
-+++ b/tools/docgen/generators/apex_paragon.py
-@@ -151,7 +151,7 @@ def _render_apex_overview(a: dict) -> str:
-     return (
-         "**Apex Trials** is an **infinite, scaling solo climb** ΓÇö the one chase on the server "
-         f"with no summit. Talk to the **Apex Arbiter** in {_APEX_LOC} (`!hub`, endgame row, beside the "
--        "Prime Armory) or type `!apex` to begin.\n\n"
-+        "Prime Armory) to begin. The chat command only reports progress or ends an active climb.\n\n"
-         "Each **tier** pits you against a single scaled Apex boss "
-         f"({names}). Clear it and you **bank Paragon Points** and raise your **record**, then the "
-         "next tier spawns automatically ΓÇö a little tougher. Keep climbing until you die or leave; "
-diff --git a/tools/docgen/generators/systems_map.py b/tools/docgen/generators/systems_map.py
-index 431de92581..93e6826fd9 100644
---- a/tools/docgen/generators/systems_map.py
-+++ b/tools/docgen/generators/systems_map.py
-@@ -556,7 +556,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
-         add(_row(["Star-Devourer Raid", "Weekly server-wide raid boss. Party recommended."]))
-     if have("modules/custom/lua/ApexTrials.lua"):
-         add(_row(["Apex Trials",
--                  "`!apex` ΓÇö post-cap NMs. Infamy + Paragon Points per kill. See "
-+                  "Apex Arbiter NPC (`!apex` is status/abort only) ΓÇö post-cap NMs. Infamy + Paragon Points per kill. See "
-                   "[Apex & Paragon](../endgame/apex-paragon.md)."]))
-     if gaunt:
-         add(_row(["The Gauntlet", f"{gaunt[2]} Infamy per full clear"]))
-diff --git a/tools/player_portal/app.py b/tools/player_portal/app.py
-index 9d9e19e7f2..2c0ed74c12 100644
---- a/tools/player_portal/app.py
-+++ b/tools/player_portal/app.py
-@@ -144,7 +144,7 @@ PROGRESSION = [
-     {"key": "rebirth", "name": "Rebirths (main job)", "type": "milestone", "varfmt": "Rebirth_Count_{mjob}", "step": 5,
-      "hint": "Rebirth your job for permanent bonuses (a re-grind penalty applies)."},
-     {"key": "apex", "name": "Apex Climb", "type": "milestone", "var": "Apex_HighestTier", "step": 25,
--     "hint": "Climb the Apex arena (!apex) ΓÇö every tier is harder than the last."},
-+     "hint": "Climb through the Apex Arbiter NPC ΓÇö every tier is harder than the last."},
-     {"key": "paragon", "name": "Paragon Board", "type": "perks",
-      "perks": ["might", "vigor", "precision", "warding", "arcana", "dominion"], "each": 10,
-      "extra": ("Paragon_Level", "board level"), "hint": "Spend Paragon points across the 6-perk board."},
+==============================================================================
+commit b82b3e85162831ece70377fd165db3b4d9feeee5
+Author: shigukahz <60148067+shigukahz@users.noreply.github.com>
+Date:   Mon Jul 20 03:52:34 2026 +0100
+
+    Change HASTE_MAGIC to HASTE_GEAR in shantotto.lua
+
+diff --git a/scripts/actions/spells/trust/shantotto.lua b/scripts/actions/spells/trust/shantotto.lua
+index d97f53b4f1..fd6768e989 100644
+--- a/scripts/actions/spells/trust/shantotto.lua
++++ b/scripts/actions/spells/trust/shantotto.lua
+@@ -35,7 +35,7 @@ spellObject.onMobSpawn = function(mob)
+ 	mob:addMod(xi.mod.INT, power)
+ 	mob:addMod(xi.mod.CHR, power)
+ 	mob:addMod(xi.mod.EVA, power)
+-	mob:addMod(xi.mod.HASTE_MAGIC, zpower)
++	mob:addMod(xi.mod.HASTE_GEAR, 1500)
+ 	mob:addMod(xi.mod.FASTCAST, zpower)
+ 	mob:addMod(xi.mod.REFRESH, zpower)
+     mob:addMod(xi.mod.MATT, power)
+==============================================================================
+commit ccd1b7b84da5368d93b332170d122f14be1a0bd4
+Author: shigukahz <60148067+shigukahz@users.noreply.github.com>
+Date:   Mon Jul 20 03:52:50 2026 +0100
+
+    Change HASTE_MAGIC to HASTE_GEAR in kupipi.lua
+
+diff --git a/scripts/actions/spells/trust/kupipi.lua b/scripts/actions/spells/trust/kupipi.lua
+index e842f5af50..cdbac661e7 100644
+--- a/scripts/actions/spells/trust/kupipi.lua
++++ b/scripts/actions/spells/trust/kupipi.lua
+@@ -29,7 +29,7 @@ spellObject.onMobSpawn = function(mob)
+ 	mob:addMod(xi.mod.CHR, power)
+ 	mob:addMod(xi.mod.EVA, power)
+ 	mob:addMod(xi.mod.CURE_POTENCY, zpower)
+-	mob:addMod(xi.mod.HASTE_MAGIC, 1000)
++	mob:addMod(xi.mod.HASTE_GEAR, 1000)
+ 	mob:addMod(xi.mod.FASTCAST, zpower)
+ 	mob:addMod(xi.mod.REFRESH, zpower)	
+ 	
