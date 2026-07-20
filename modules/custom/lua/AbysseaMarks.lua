@@ -210,6 +210,12 @@ local TRUST_MULT = 1.5    -- 0 trusts in party    -> Gil/Infamy x this
 -- One complete zone roster opens the next Atma progression step. Attohwa has
 -- 17 logical marks NMs (the old plan/audit counted 16); the duplicate OFFSET
 -- QMs are alternate copies and do not increase these totals.
+-- 2026-07-19: the HP audit added 16 previously-uncatalogued NMs to
+-- abyssea_marks_catalog (Konschtat +5, Tahrongi +1, La Theine +1, Attohwa +2,
+-- Misareaux +2, Vunkerl +4, Uleguerand +1). These thresholds are DELIBERATELY
+-- unchanged: rosters now complete with any N clears of the larger set, so no
+-- mid-progression player's Atma target moves. Bump these to the new totals
+-- only if the owner wants "complete = every NM" semantics back.
 local ZONE_ROSTER_SIZE =
 {
     [xi.zone.ABYSSEA_KONSCHTAT] = 15,

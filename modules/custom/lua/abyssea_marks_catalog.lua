@@ -391,6 +391,46 @@ add('Resheph', 3,
     signature('Meikyo Chain', 'far', 'a three-move chain begins; retreat 15 yalms!', 'The chain spends itself at range.', 'The chained techniques tear through you.', { distance = 15, effect = xi.effect.AMNESIA }),
     signature('Tarsal Slam', 'highhp', 'the Slam will leave you at death’s edge; recover above 75% HP!', 'You endure the slam and its follow-up falters.', 'The follow-up finds you broken.', { hpp = 75, effect = xi.effect.TERROR, effectDuration = 5, rewardSec = 18 }))
 
+-- ========================================================================
+-- 2026-07-19 HP-audit additions (16): these logical NMs have marks-zone ???s
+-- but were never catalogued, so spawnViaMark errored on the nil encounter and
+-- the pcall fallback silently routed them to the STOCK free pop at DB HP
+-- (4.8k-9.7k -- one weapon skill). Catalogue them so the marks pop applies
+-- the real tier profile like their peers.
+-- APPEND ONLY: entry order defines encounter.index, which keys the AbyNM_%03d
+-- first-clear stamps -- inserting above this line would corrupt player records.
+-- ========================================================================
+
+-- Konschtat (T1)
+add('Meanderer', 1, signature('Vagrant Ooze', 'move', 'the ooze pools beneath you; move at least 8 yalms!', 'The pool congeals on empty ground.', 'The ooze swallows your footing.', { distance = 8, effect = e(137) }))
+add('Pavan', 1, signature('Restless Gale', 'far', 'the winds spiral inward; retreat beyond 12 yalms!', 'The gale collapses on itself.', 'The vortex flays you.', { distance = 12, effect = e(138) }))
+add('Hadal Satiator', 1, signature('Abyssal Appetite', 'highhp', 'it hungers for the weak; recover above 70% HP!', 'Your vigor spoils its meal.', 'The satiator feeds well.', { hpp = 70, effect = e(139) }))
+add('Hadal Mirror', 1, signature('Mirrored Skin', 'hold', 'its skin turns reflective; cease attacks!', 'The mirror clouds over.', 'Your own blow returns twofold.', { effect = e(140) }))
+add('Lesser Arimaspi', 1, signature('Lesser Lens', 'turn', 'its eye clouds over; turn away!', 'The lens fractures.', 'The lens sears your sight.', { effect = e(141) }))
+
+-- Tahrongi (T1)
+add('Hungerer', 1, signature('Devouring Maw', 'near', 'the maw inhales; close inside 6 yalms to dodge the pull!', 'You slip beneath the intake.', 'The maw drags you in.', { distance = 6, effect = e(142) }))
+
+-- La Theine (T1)
+add('Brooder', 1, signature('Hatching Swarm', 'burst', 'the brood stirs; deal 3% of its HP before it hatches!', 'The clutch dies unhatched.', 'The swarm erupts across you.', { damagePct = 3, effect = e(143) }))
+
+-- Attohwa (T2)
+add('Tunga', 2, signature('Sporomycosis', 'far', 'the cap swells with spores; retreat beyond 12 yalms!', 'The cloud settles on barren ground.', 'You breathe the blooming rot.', { distance = 12, effect = e(144) }))
+add('Amun', 2, signature('Petrifying Gaze', 'face', 'its gaze hardens; face it and hold fast!', 'You outstare the cockatrice.', 'Your limbs begin to stone.', { effect = e(145) }))
+
+-- Misareaux (T2)
+add('Heqet', 2, signature('Toxic Croak', 'hold', 'the croak feeds on violence; cease attacks!', 'The croak dies in its throat.', 'The croak crescendos through you.', { effect = e(146) }))
+add('Abyssic Cluster', 2, signature('Triple Detonation', 'far', 'all three bombs ignite; retreat beyond 13 yalms!', 'The blast spends itself on nothing.', 'The detonation engulfs you.', { distance = 13, effect = e(147) }))
+
+-- Vunkerl (T2)
+add('Fulmotondro', 2, signature('Ground Current', 'move', 'lightning grounds where you stand; move at least 9 yalms!', 'The current dies in the dirt.', 'The current climbs your spine.', { distance = 9, effect = e(148) }))
+add('Ketea', 2, signature('Tail Breach', 'rear', 'it rears to breach; take the rear!', 'The breach crashes down ahead of you.', 'The tail hammers you flat.', { effect = e(149) }))
+add('Lord Varney', 2, signature('Sanguine Invitation', 'weaponskill', 'the invitation beckons; refuse it with a weapon skill!', 'Steel answers the invitation.', 'You drift toward the outstretched hand.', { effect = e(150) }))
+add('Hanuman', 2, signature('Mocking Caper', 'turn', 'it mimics your stance; turn away!', 'The mimicry finds no model.', 'Your own form is turned against you.', { effect = e(151) }))
+
+-- Uleguerand (T3)
+add('Ogopogo', 3, signature('Abyssal Undertow', 'far', 'the water coils to drag you under; retreat 15 yalms!', 'The undertow breaks on the shallows.', 'The deep claims you.', { distance = 15, effect = e(152) }))
+
 C.entries = entries
 C.ordered = ordered
 C.normalize = normalize
@@ -412,9 +452,11 @@ end
 -- Fail module load loudly if a roster edit accidentally drops a logical NM.
 -- The original planning audit reported 135 (45/48/42), but the live QM files
 -- contain a seventeenth Attohwa NM, Pallid Percy: 136 (45/49/42).
-assert(C.count(1) == 45, string.format('Visions encounter count drifted: %d', C.count(1)))
-assert(C.count(2) == 49, string.format('Scars encounter count drifted: %d', C.count(2)))
-assert(C.count(3) == 42, string.format('Heroes encounter count drifted: %d', C.count(3)))
-assert(C.count() == 136, string.format('Abyssea encounter count drifted: %d', C.count()))
+-- 2026-07-19 HP audit added the 16 uncatalogued marks-zone NMs (7/8/1):
+-- 152 (52/57/43).
+assert(C.count(1) == 52, string.format('Visions encounter count drifted: %d', C.count(1)))
+assert(C.count(2) == 57, string.format('Scars encounter count drifted: %d', C.count(2)))
+assert(C.count(3) == 43, string.format('Heroes encounter count drifted: %d', C.count(3)))
+assert(C.count() == 152, string.format('Abyssea encounter count drifted: %d', C.count()))
 
 return C
