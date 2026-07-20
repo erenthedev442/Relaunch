@@ -230,7 +230,7 @@ else              { Say ("  website: CHECK - task result=" + $info.LastTaskResul
 # only - never gates the deploy; fix findings in the Relaunch-Docs repo.
 if (Test-Path $docsLog) {
     $auditTail = @(Get-Content $docsLog -Tail 160)
-    $findings  = @($auditTail | Where-Object { $_ -match '\[sync_audit\]|UNCOVERED-MODULE|STALE-MENTION|UNOWNED-PAGE|NAKED-FACT|SHADOW-LITERAL|MIRROR-CONST' -or $_ -match '\[runtime-consumers\]\s+[1-9]' })
+    $findings  = @($auditTail | Where-Object { $_ -match '\[sync_audit\]|UNCOVERED-MODULE|STALE-MENTION|UNOWNED-PAGE|NAKED-FACT|SHADOW-LITERAL|MIRROR-CONST|\]\s+FAIL:|\]\s+DRIFT:' -or $_ -match '\[runtime-consumers\]\s+[1-9]' })
     if ($findings.Count -gt 0) {
         Say ''
         Say '  ---- docs accuracy findings (sync_audit) ----' 'Yellow'
