@@ -664,6 +664,87 @@ else:
         return "", 0.0
 
 # ---------------------------------------------------------------------------
+# Stats formatting + BGWiki URLs (added for the enhanced CSV columns).
+# `item_mods` is only populated when SCORING is on (see the block above); when
+# it's off, the stats column stays blank and only bgwiki_url / bgwiki_img
+# survive. That's the honest fallback rather than a synthetic stat string.
+
+# Short labels for the ~40 most-used mods. Fallback for anything else is
+# "mod<id>" so exotic stats are still visible (not silently dropped).
+_MOD_LABELS = {
+    1: 'DEF', 2: 'HP', 3: 'HP%', 5: 'MP', 6: 'MP%',
+    8: 'STR', 9: 'DEX', 10: 'VIT', 11: 'AGI', 12: 'INT', 13: 'MND', 14: 'CHR',
+    23: 'Attack', 24: 'R.Attack', 25: 'Accuracy', 26: 'R.Accuracy',
+    27: 'Enmity', 28: 'Magic Atk', 29: 'M.Def', 30: 'Magic Acc', 31: 'Magic Eva',
+    62: 'Attack%', 63: 'DEF%', 68: 'Evasion', 73: 'Store TP',
+    160: 'DT (all)', 161: 'PDT', 162: 'BDT', 163: 'MDT', 164: 'RDT',
+    165: 'Crit Hit%', 169: 'Move Speed', 170: 'Fast Cast',
+    259: 'Dual Wield', 288: 'Double Attack', 289: 'Subtle Blow',
+    296: 'Conserve MP', 301: 'Phalanx', 302: 'Triple Attack',
+    311: 'Magic Dmg', 345: 'TP Bonus', 359: 'Rapid Shot', 365: 'Snapshot',
+    368: 'Regain', 369: 'Refresh', 374: 'Cure Potency',
+    384: 'Haste', 387: 'PDT (uncapped)', 389: 'MDT (uncapped)', 421: 'Crit Dmg',
+    570: 'WS Dmg (1 WS)', 840: 'WS Dmg', 841: 'WS Dmg (1st)', 973: 'Subtle Blow II',
+    1081: 'PDL',
+}
+# Mods whose DB values are stored ×100 and display as percentages
+# (e.g. Haste 600 -> "+6%", DT -600 -> "-6%").
+_PCT_MODS_100 = {160, 161, 162, 163, 164, 384, 387, 389}
+# Mods whose DB values are raw integers but display with a % suffix
+# (e.g. Crit Hit% 5 -> "+5%").
+_PCT_MODS_1 = {3, 6, 62, 63, 165, 170, 288, 302, 359, 365, 570, 840, 841, 1081}
+
+def _fmt_val(mid: int, val: int) -> str:
+    if mid in _PCT_MODS_100:
+        v = val / 100.0
+        return f"{v:+g}%"
+    if mid in _PCT_MODS_1:
+        return f"{val:+d}%"
+    return f"{val:+d}"
+
+def format_stats(iid: int) -> str:
+    """Formatted stat string like 'STR+15 DEX+10 Haste+3%' for the CSV column."""
+    if not SCORING:
+        return ""
+    mods = item_mods.get(iid) or []
+    if not mods:
+        return ""
+    # Stable ordering: known labels in _MOD_LABELS order first, then unknowns
+    # by mod id. Skip zero values (mod defined but no effect).
+    known_order = list(_MOD_LABELS)
+    known_rank = {mid: i for i, mid in enumerate(known_order)}
+    def _rank(pair):
+        mid, _ = pair
+        return (0, known_rank[mid]) if mid in known_rank else (1, mid)
+    parts = []
+    for mid, val in sorted(mods, key=_rank):
+        if val == 0:
+            continue
+        label = _MOD_LABELS.get(mid, f"mod{mid}")
+        parts.append(f"{label}{_fmt_val(mid, val)}")
+    return " ".join(parts)
+
+# BGWiki: page URL constructed from item name; thumbnail from the cached map.
+_BGWIKI_IMAGES: dict[str, str] = {}
+try:
+    import json as _json
+    _bg_path = ROOT / "tools" / "docgen" / "bgwiki_images.json"
+    if _bg_path.exists():
+        _BGWIKI_IMAGES = {k: v for k, v in _json.loads(_bg_path.read_text(encoding="utf-8")).items() if v}
+except Exception as exc:
+    print(f"[warn] bgwiki_images.json unreadable ({exc}); bgwiki_img column blank")
+
+def bgwiki_url(name: str) -> str:
+    """Wiki page URL from the item's display name."""
+    if not name or name.startswith("item_"):
+        return ""
+    # BGWiki page names use underscore-for-space; leave apostrophes / punctuation as-is.
+    return "https://www.bg-wiki.com/ffxi/" + name.replace(" ", "_")
+
+def bgwiki_img(iid: int) -> str:
+    return _BGWIKI_IMAGES.get(str(iid), "")
+
+# ---------------------------------------------------------------------------
 # Emit CSV
 
 out_path = Path(sys.argv[1]) if len(sys.argv) > 1 else (ROOT / "exports" / "gear_source_audit.csv")
@@ -671,7 +752,8 @@ out_path.parent.mkdir(parents=True, exist_ok=True)
 
 GEN_COLS = ["item_id", "name", "level", "ilvl", "slot", "jobs",
             "score_class", "score",
-            "retail_source", "relaunch_source", "invasion_pool", "obtainable"]
+            "retail_source", "relaunch_source", "invasion_pool", "obtainable",
+            "stats", "bgwiki_url", "bgwiki_img"]
 
 # Preserve ANY user-added columns (e.g. "notes") from a prior run of this CSV.
 # We only generate GEN_COLS; every other column in the existing file is kept,
@@ -710,13 +792,15 @@ with _fh as fh:
         inv = iid in invasion_pool
         role, sc = best_score(iid)
         kept = preserved.get(str(iid), {})
+        nm = names.get(iid, f"item_{iid}")
         w.writerow([
-            iid, names.get(iid, f"item_{iid}"), g["level"], g["ilvl"],
+            iid, nm, g["level"], g["ilvl"],
             g["slot"], g["jobs"],
             role, round(sc) if role else "",
             rt, rl,
             "yes" if inv else "",
             "yes" if (rt or rl or inv) else "NO",
+            format_stats(iid), bgwiki_url(nm), bgwiki_img(iid),
         ] + [kept.get(c, "") for c in extra_cols])
         rows += 1
 
