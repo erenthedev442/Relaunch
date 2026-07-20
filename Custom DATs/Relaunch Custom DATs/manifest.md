@@ -59,3 +59,33 @@ The server-side behavior lives in:
 
 The DAT pack is visual only. If DAT text disagrees with the server, the server
 wins.
+
+## Windower Resource Addon
+
+The DAT pack fixes what the FFXI client DISPLAYS. It does NOT fix what
+Windower / GearSwap SEE by name — those read `res\items.lua` inside
+Windower4, a static file baked from RETAIL DATs. Without an override,
+`left_ring = "Legendary Ring"` in a GearSwap set fails to resolve
+(Windower still thinks item 26169 is "Reraise Ring"), and the four
+Track Suit pieces (23875–78) don't exist in Windower's table at all.
+
+The bundled addon `Windower/addons/relaunch/relaunch.lua` fixes both:
+
+| Addon action | Item id | Result in Windower / GearSwap |
+|---|--:|---|
+| Rename       | `26169` | `res.items[26169].en = "Legendary Ring"` |
+| Insert       | `23875` | Cloned from Arrogance Jacket → "Track Jacket" |
+| Insert       | `23876` | Cloned from Arrogance Brais  → "Track Pants"  |
+| Insert       | `23877` | Cloned from Emerald Crackows → "Track Shoes"  |
+| Insert       | `23878` | Cloned from Arrogance Jacket → "Legend Sweater" |
+
+Install auto-detects Windower4 and copies the addon into `addons\relaunch\`;
+if it finds `Windower4\scripts\init.txt` it offers to append `lua load relaunch`
+so the overrides apply every session. Uninstall reverses both.
+
+Verify inside the game:
+
+```text
+//relaunch check Legendary Ring   -- should print: id 26169 (Legendary Ring)
+//relaunch show 23875              -- should print: id 23875: en="Track Jacket" ...
+```

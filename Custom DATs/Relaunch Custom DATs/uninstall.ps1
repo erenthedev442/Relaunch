@@ -54,6 +54,29 @@ try {
     Say "Restored $restored original DAT(s) at:" Green
     Say "  $target" Green
     Say 'Restart the game client.' Green
+
+    # ---- Windower addon cleanup ----------------------------------------
+    Say ''
+    foreach ($c in @(
+        'C:\Program Files (x86)\Windower4',
+        'C:\Program Files\Windower4',
+        'C:\Windower4',
+        'D:\Windower4')) {
+        $addonDir = Join-Path $c 'addons\relaunch'
+        if (Test-Path $addonDir) {
+            Remove-Item $addonDir -Recurse -Force
+            Say "Removed Windower addon: $addonDir" Green
+        }
+        $init = Join-Path $c 'scripts\init.txt'
+        if (Test-Path $init) {
+            $txt = Get-Content $init -Raw
+            $new = $txt -replace '(?im)^\s*lua\s+load\s+relaunch\s*\r?\n?', ''
+            if ($new -ne $txt) {
+                Set-Content $init $new -NoNewline
+                Say "Removed auto-load line from: $init" Green
+            }
+        }
+    }
 }
 catch {
     Say ''

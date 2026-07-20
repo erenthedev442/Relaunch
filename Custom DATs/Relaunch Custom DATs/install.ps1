@@ -89,6 +89,78 @@ try {
     Say ''
     Say "  Done! installed/updated: $installed, already current: $already, skipped: $skipped" Green
     Say '  (Restart the game client if it is open.)' Green
+
+    # ---- Windower addon (relaunch resource overrides) -------------------
+    # The DATs handle what the FFXI client displays; this addon handles what
+    # Windower / GearSwap SEE by name. Without it, GearSwap can't equip
+    # "Legendary Ring" or the Track Suit pieces (res.items is baked from
+    # RETAIL DATs, not client DATs).
+    $addonSrc = Join-Path $pack 'Windower\addons\relaunch'
+    if (Test-Path $addonSrc) {
+        Say ''
+        Say '  Windower addon (GearSwap / autoexec name lookups)' Cyan
+        Say '  -------------------------------------------------' Cyan
+
+        # Find Windower4 install. Common paths + registry.
+        $wCands = New-Object System.Collections.Generic.List[string]
+        try { $r = Get-ItemProperty 'HKCU:\Software\Windower' -ErrorAction Stop
+              if ($r.InstallPath -and (Test-Path (Join-Path $r.InstallPath 'addons'))) { $wCands.Add($r.InstallPath) } } catch {}
+        foreach ($c in @(
+            'C:\Program Files (x86)\Windower4',
+            'C:\Program Files\Windower4',
+            'C:\Windower4',
+            'D:\Windower4')) {
+            if (Test-Path (Join-Path $c 'addons')) { $wCands.Add($c) }
+        }
+        $wCands = @($wCands | ForEach-Object { $_.TrimEnd('\') } | Select-Object -Unique)
+
+        $wTarget = $null
+        if ($wCands.Count -eq 1) {
+            $wTarget = $wCands[0]
+            Say "  Found Windower: $wTarget" Green
+        } elseif ($wCands.Count -gt 1) {
+            Say '  Multiple Windower installs:' Yellow
+            for ($i=0; $i -lt $wCands.Count; $i++) { Say "    [$($i+1)] $($wCands[$i])" }
+            do { $sel = Read-Host "  Which one to install the addon into (1-$($wCands.Count), or 0 to skip)" } while (-not ($sel -match '^\d+$' -and [int]$sel -ge 0 -and [int]$sel -le $wCands.Count))
+            if ([int]$sel -gt 0) { $wTarget = $wCands[[int]$sel-1] }
+        } else {
+            Say '  No Windower install detected.' Yellow
+            $manual = Read-Host '  Paste path to Windower4 (or Enter to skip)'
+            if (-not [string]::IsNullOrWhiteSpace($manual) -and (Test-Path (Join-Path $manual 'addons'))) {
+                $wTarget = $manual.TrimEnd('\')
+            }
+        }
+
+        if ($wTarget) {
+            $addonDst = Join-Path $wTarget 'addons\relaunch'
+            if (-not (Test-Path $addonDst)) { New-Item -ItemType Directory -Path $addonDst -Force | Out-Null }
+            Copy-Item (Join-Path $addonSrc '*') $addonDst -Recurse -Force
+            Say "  Copied addon -> $addonDst" Green
+
+            # Offer to append `lua load relaunch` to init.txt so it auto-loads.
+            $init = Join-Path $wTarget 'scripts\init.txt'
+            if (Test-Path $init) {
+                $initTxt = Get-Content $init -Raw -ErrorAction SilentlyContinue
+                if ($initTxt -notmatch '(?im)^\s*lua\s+load\s+relaunch\s*$') {
+                    $yn = Read-Host '  Add `lua load relaunch` to Windower init.txt so it auto-loads? (Y/n)'
+                    if ($yn -notmatch '^(n|no)$') {
+                        Add-Content $init "`r`nlua load relaunch"
+                        Say "  Added auto-load line to $init" Green
+                    } else {
+                        Say '  Skipped auto-load. Type `//lua l relaunch` once per session to enable.' Yellow
+                    }
+                } else {
+                    Say '  init.txt already contains `lua load relaunch`.' Green
+                }
+            } else {
+                Say "  init.txt not found -- type '//lua l relaunch' once per session, or create $init with a 'lua load relaunch' line." Yellow
+            }
+        } else {
+            Say '  Skipped Windower addon install (no target).' Yellow
+        }
+    }
+
+    Say ''
     Say '  To undo everything, run the Uninstall .bat.' Gray
 }
 catch {
