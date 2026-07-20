@@ -83,10 +83,13 @@ _DISP_RE = re.compile(r"\bdisp\s*=\s*(-?\d+(?:\.\d+)?)")
 # Per-entry boost ceiling (0-31). When set, the Max column uses this instead of
 # 31 so nerfed augments (e.g. All songs maxBoost=1) show their true max.
 _MAXBOOST_RE = re.compile(r"\bmaxBoost\s*=\s*(\d+)")
-# Tier-fixed augments (Treasure Hunter, All songs): a single catalyst whose
-# value is STEP × the player's Augment Tier -- the band cell shows step × tier,
-# no ×5 stack. `true` (legacy) is read as step 1.
+# Tier-fixed augments (All songs, ...): a single catalyst whose value is
+# STEP × the player's Augment Tier -- the band cell shows step × tier, no
+# ×5 stack. `true` (legacy) is read as step 1.
 _TIERVALUE_RE = re.compile(r"\btierValue\s*=\s*(\d+|true)")
+# Flat-value augments (Treasure Hunter): single catalyst, DOES NOT scale
+# with player tier -- the band cell shows the constant every tier.
+_FLATVALUE_RE = re.compile(r"\bflatValue\s*=\s*(\d+)")
 # Tier gate (0-4 = Augment Sage rank required; 0 = free / no gate).
 _TIER_RE = re.compile(r"\btier\s*=\s*(\d+)")
 
@@ -204,10 +207,12 @@ def _parse_catalog(text: str) -> list[tuple[str, list[tuple[int, int, str, int, 
         tier = int(tt.group(1)) if tt else 0
         tv_m = _TIERVALUE_RE.search(line)
         tier_value = (1 if tv_m.group(1) == "true" else int(tv_m.group(1))) if tv_m else 0
+        fv_m = _FLATVALUE_RE.search(line)
+        flat_value = int(fv_m.group(1)) if fv_m else 0
         if current not in bucket:
             bucket[current] = []
             order.append(current)
-        bucket[current].append((item_id, aug_id, label, base, mult, disp, max_boost, tier, tier_value))
+        bucket[current].append((item_id, aug_id, label, base, mult, disp, max_boost, tier, tier_value, flat_value))
 
     for cat in order:
         groups.append((cat, bucket[cat]))
@@ -235,6 +240,7 @@ def _groups_from_json(json_path: Path) -> list[tuple[str, list[tuple[int, int, s
                 int(mb) if mb is not None else 31,
                 int(e.get("tier", 0)),
                 int(e.get("tierValue", 0) or 0),
+                int(e.get("flatValue", 0) or 0),
             ))
         groups.append((str(g.get("category", "Other")), rows))
     return groups
@@ -568,17 +574,21 @@ _TIER_BANDS = [(0, 5), (6, 11), (12, 17), (18, 24), (25, 31)]
 
 
 def _band_cell(base: int, mult, disp, max_boost: int, band_idx: int, cat_tier: int,
-               tier_value: int = 0) -> str:
+               tier_value: int = 0, flat_value: int = 0) -> str:
     """One 'T{n} ×5' table cell: the FULL 5-CATALYST STACK's value range when
     rolled at that Augment Tier. Mirrors the Moogle math per slot --
     floor((base + scale(roll)) * mult / disp + 0.5) -- times 5 slots, where
     scale(roll) = floor(roll * maxBoost / 31 + 0.5) spreads the ceiling across
     all five tiers (Augment_Moogle.lua scaleRoll) so each tier is a distinct step.
     A band below the catalyst's own tier can never be rolled -> em-dash.
-    tier_value rows (Treasure Hunter, All songs) are single-catalyst with
-    value = tier_value × the Augment Tier: cell = step × tier, no ×5 stack."""
+    tier_value rows (All songs) are single-catalyst with value = tier_value ×
+    the Augment Tier: cell = step × tier, no ×5 stack.
+    flat_value rows (Treasure Hunter) are single-catalyst with a CONSTANT
+    value that ignores the Augment Tier -- every band shows the same number."""
     if (band_idx + 1) < max(cat_tier, 1):
         return "—"
+    if flat_value:
+        return str(flat_value)
     if tier_value:
         return str(tier_value * (band_idx + 1))
     lo_roll, hi_roll = _TIER_BANDS[band_idx]
@@ -649,7 +659,7 @@ def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] |
             "| T1 ×5 | T2 ×5 | T3 ×5 | T4 ×5 | T5 ×5 | Cap |"
         )
         lines.append("|---|---|---|--:|--:|--:|--:|--:|:--:|")
-        for item_id, aug_id, label, base, mult, disp, max_boost, tier, tier_value in rows:
+        for item_id, aug_id, label, base, mult, disp, max_boost, tier, tier_value, flat_value in rows:
             name = item_names.get(item_id, f"item_{item_id}")
             readable = _format_item_name(name)
             if name.startswith("item_") and name == f"item_{item_id}":
@@ -664,7 +674,7 @@ def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] |
             else:
                 drop_src = "—"
             band_cells = " | ".join(
-                _band_cell(base, mult, disp, max_boost, band_idx, 0, tier_value)
+                _band_cell(base, mult, disp, max_boost, band_idx, 0, tier_value, flat_value)
                 for band_idx in range(5)
             )
             lines.append(

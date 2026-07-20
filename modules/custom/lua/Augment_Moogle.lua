@@ -669,14 +669,20 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                         xi.msg.channel.SYSTEM_3)
                     return
                 end
-                -- Tier-fixed augments (Treasure Hunter): the line's value IS your
-                -- Augment Tier, so extra catalysts add nothing but stacked slots
-                -- would multiply it. One catalyst per trade, one line per item.
-                if def2 and def2.tierValue then
+                -- Tier-fixed augments (Treasure Hunter, All songs, ...): the line's
+                -- value is either your Augment Tier (tierValue) or a hard flat
+                -- number (flatValue). Extra catalysts add nothing but stacked
+                -- slots would multiply it -> one catalyst per trade, one line
+                -- per item. flatValue augments (currently just Treasure Hunter)
+                -- deliberately do NOT scale with player tier: they cap out at
+                -- their written value on every gear piece.
+                if def2 and (def2.tierValue or def2.flatValue) then
                     if (catalystCounts[itemId] or 0) > 1 then
+                        local shownVal = def2.flatValue or (def2.tierValue * playerTier)
+                        local suffix   = def2.flatValue and '' or ' at your Augment Tier'
                         player:printToPlayer(string.format(
-                            '[%s] is tier-fixed (+%d at your Augment Tier) -- trade a SINGLE catalyst, kupo!',
-                            def2.label, def2.tierValue * playerTier),
+                            '[%s] is single-line (+%d%s) -- trade a SINGLE catalyst, kupo!',
+                            def2.label, shownVal, suffix),
                             xi.msg.channel.SYSTEM_3)
                         return
                     end
@@ -871,15 +877,22 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 end
                 local slotMax   = scaleRoll(slice.max)   -- the achievable "perfect" (crystalize) value this tier
                 local rolls     = {}
-                if def.tierValue then
-                    -- Tier-fixed (Treasure Hunter, All songs): the written boost
-                    -- is tierValue*tier - base, so the engine's (base + boost)
-                    -- renders exactly tierValue x playerTier (needs mult 1).
-                    -- Deterministic -- no roll, affinity, or crit. Only a T5
-                    -- line counts as "max" (crystalize-eligible).
-                    slotMax = def.tierValue * #TIER_SLICES - base
+                if def.tierValue or def.flatValue then
+                    -- Single-line augments (Treasure Hunter, All songs, ...):
+                    --   tierValue -> value = tierValue * playerTier
+                    --                (Treasure Hunter used this pre-2026-07-19;
+                    --                 All songs still does; grows with tier)
+                    --   flatValue -> value = flatValue (constant across tiers)
+                    -- Both encode the written boost as (target - base) so the
+                    -- engine's (base + boost) renders exactly `target`.
+                    -- Deterministic: no roll, affinity, or crit. Both are
+                    -- always crystalize-eligible (a flatValue line is
+                    -- already at its cap; a tierValue line becomes eligible
+                    -- when it matches its final T5 form).
+                    local target = def.flatValue or (def.tierValue * playerTier)
+                    slotMax = (def.flatValue or (def.tierValue * #TIER_SLICES)) - base
                     for _ = 1, count do
-                        table.insert(rolls, def.tierValue * playerTier - base)
+                        table.insert(rolls, target - base)
                     end
                 else
                     for _ = 1, count do

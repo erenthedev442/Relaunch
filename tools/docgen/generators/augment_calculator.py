@@ -22,6 +22,7 @@ _DISP_RE  = re.compile(r"\bdisp\s*=\s*(\d+)")
 _MB_RE    = re.compile(r"\bmaxBoost\s*=\s*(\d+)")
 _TIER_RE  = re.compile(r"\btier\s*=\s*(\d+)")
 _TV_RE    = re.compile(r"\btierValue\s*=\s*(\d+|true)")
+_FV_RE    = re.compile(r"\bflatValue\s*=\s*(\d+)")
 _LABEL_RE = re.compile(r"label\s*=\s*'([^']*)'")
 
 _CATALOG_PATH = "modules/custom/lua/augment_catalog.lua"
@@ -63,11 +64,21 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
                 entry["d"] = int(dm.group(1))
             if xb and int(xb.group(1)) < 31:
                 entry["mb"] = int(xb.group(1))
-            # Tier-fixed augments (Treasure Hunter, All songs): single catalyst,
-            # value = tv × the player's Augment Tier. The page JS reads `tv`.
+            # Tier-fixed augments (All songs, ...): single catalyst, value =
+            # tv × the player's Augment Tier. Flat-value augments (Treasure
+            # Hunter) use `fv`: same "single catalyst / one line per item"
+            # guard, but value is CONSTANT (does not scale with player tier).
+            # For flatValue rows the standard perSlotVal(base,mb,mult,disp)
+            # path already renders the correct constant (base=fv, mb=0 -> 0
+            # scaled roll -> perSlot = base * mult / disp), so `fv` is emitted
+            # mostly as an authoring signal (and for a future JS that wants
+            # to skip the tier buttons entirely for flat augments).
             tv = _TV_RE.search(line)
             if tv:
                 entry["tv"] = 1 if tv.group(1) == "true" else int(tv.group(1))
+            fv = _FV_RE.search(line)
+            if fv:
+                entry["fv"] = int(fv.group(1))
             entries.append(entry)
 
     entries.sort(key=lambda x: x["label"])

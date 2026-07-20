@@ -185,7 +185,17 @@ return {
     -- skills that work for anyone -- those stay.
     [1607] = { augId = 286,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Shield skill' },
     [1608] = { augId = 287,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Parrying Skill' },
-    [863]  = { augId = 147,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Treasure Hunter', maxBoost = 0, tierValue = 1 },
+    -- Treasure Hunter uses `flatValue` (not tierValue) so it grants a
+    -- STRICT +1 TH per augmented gear piece regardless of the player's
+    -- Augment Sage tier. Reason: TH scales the endgame drop table hard
+    -- (each stack tier compounds vs low-% loot), and letting a single
+    -- augment climb to +5 at T5 (then multiply across 8 gear slots =
+    -- TH+40) was pushing rare drops to near-guaranteed. flatValue keeps
+    -- the augment desirable (players still want TH+1 in every slot they
+    -- can spare) without collapsing the drop economy. The `flatValue`
+    -- branch in Augment_Moogle.lua inherits the tier-fixed guards
+    -- (1 catalyst per trade, 1 line per item).
+    [863]  = { augId = 147,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Treasure Hunter', maxBoost = 0, flatValue = 1 },
 
     -- ── cat 10: Exp/Cap Points ──────────────────────────────────────────────────
     -- maxBoost=0: owner target is 1..32%/slot, but the +33 base lives in the
