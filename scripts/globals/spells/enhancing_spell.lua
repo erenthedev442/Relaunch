@@ -69,7 +69,10 @@ local pTable =
     [xi.magic.spell.BARVIRA      ] = { 2, xi.effect.BARVIRUS,       1,   20,  480, true,  true,  0 },
 
     -- Blink
-    [xi.magic.spell.BLINK        ] = { 1, xi.effect.BLINK,          1,    2,  300, true,  false, 0 },
+    -- RELAUNCH (2026-07-19): Base_Power reads main.BLINK_SHADOWS (10; retail 2).
+    -- The setting existed and the site advertised it, but nothing consumed it --
+    -- players were getting retail 2-shadow Blink. Upstream in-place edit.
+    [xi.magic.spell.BLINK        ] = { 1, xi.effect.BLINK,          1, xi.settings.main.BLINK_SHADOWS,  300, true,  false, 0 },
 
     -- Boost-Stat
     [xi.magic.spell.BOOST_STR    ] = { 1, xi.effect.STR_BOOST,      1,    5,  300, true,  false, 0 },
