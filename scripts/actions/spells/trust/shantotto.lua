@@ -22,12 +22,24 @@ spellObject.onMobSpawn = function(mob)
 
     mob:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
 
-    mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 60)
+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 25)
 
-    local power = mob:getMainLvl() / 10
+	-- Base level trust (power = mLevel).
+	local master = mob:getMaster()
+	local power = math.floor(mob:getMainLvl() * 1)
+	local zpower = math.floor(mob:getMainLvl() / 5)
+	-- StatMods--
+	mob:addMod(xi.mod.HP, power * 2)
+	mob:addMod(xi.mod.MP, power * 4)
+	mob:addMod(xi.mod.MND, power)
+	mob:addMod(xi.mod.INT, power)
+	mob:addMod(xi.mod.CHR, power)
+	mob:addMod(xi.mod.EVA, power)
+	mob:addMod(xi.mod.HASTE_MAGIC, zpower)
+	mob:addMod(xi.mod.FASTCAST, zpower)
+	mob:addMod(xi.mod.REFRESH, zpower)
     mob:addMod(xi.mod.MATT, power)
     mob:addMod(xi.mod.MACC, power)
-    mob:addMod(xi.mod.HASTE_MAGIC, 1000) -- 10% Haste (Magic)
 
     mob:setAutoAttackEnabled(false)
 

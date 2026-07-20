@@ -76,7 +76,8 @@ spellObject.onMobSpawn = function(mob)
     mob:setMod(xi.mod.SHIELDBLOCKRATE, 35)
     mob:addMod(xi.mod.UFASTCAST, 50)
     mob:addMod(xi.mod.DMG, -1000) -- Damage Taken -10%
-    mob:addMod(xi.mod.ENMITY, 25)
+    mob:addMod(xi.mod.ENMITY, 200)
+	mob:addMod(xi.mod.ENMITY_LOSS_REDUCTION, 100)
     mob:addMod(xi.mod.HPP, 10)
 
     -- Founders gear mods: August gets all effects from founders gear
@@ -131,11 +132,11 @@ spellObject.onMobSpawn = function(mob)
         mob:addGambit(ai.t.SELF, { { ai.c.SUB_ANIMATION, 5 }, { ai.c.NOT_STATUS, xi.effect.DIVINE_EMBLEM }, }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.DIVINE_EMBLEM })
     end
 
-    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.FLASH    }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.FLASH      })
-    mob:addGambit(ai.t.SELF,   { ai.c.HPP_LT,     75                 }, { ai.r.MA, ai.s.HIGHEST,  xi.magic.spellFamily.CURE })
-    mob:addGambit(ai.t.SELF,   { ai.c.NOT_STATUS, xi.effect.REPRISAL }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.REPRISAL   })
-    mob:addGambit(ai.t.PARTY,  { ai.c.HPP_LT,     50                 }, { ai.r.MA, ai.s.HIGHEST,  xi.magic.spellFamily.CURE })
-    mob:addGambit(ai.t.PARTY,  { ai.c.STATUS,     xi.effect.SLEEP_I  }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURE       })
+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.FLASH }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.FLASH })
+    mob:addGambit(ai.t.SELF, { ai.c.HPP_LT, 75 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.REPRISAL }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.REPRISAL })
+    mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 50 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
+    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_I }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURE })
 
     mob:addGambit(ai.t.TRIGGER_SELF_ACTION_TARGET, {
         { ai.c.SUB_ANIMATION, 5 },

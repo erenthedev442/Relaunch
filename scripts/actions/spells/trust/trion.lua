@@ -23,6 +23,8 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.RAHAL] = xi.trust.messageOffset.TEAMWORK_2,
         [xi.magic.spell.HALVER] = xi.trust.messageOffset.TEAMWORK_3,
     })
+	
+	
 
     mob:setMobMod(xi.mobMod.CAN_SHIELD_BLOCK, 1)
     mob:setMobMod(xi.mobMod.CAN_PARRY, 3)
@@ -39,15 +41,30 @@ spellObject.onMobSpawn = function(mob)
     elseif lvl >= 25 then
         shieldMasteryPower = 10
     end
-
+	
+	-- Base level trust (power = mLevel).
+	local master = mob:getMaster()
+	local power = math.floor(mob:getMainLvl() * 1)
+	local zpower = math.floor(mob:getMainLvl() / 5)
+	-- Stats Mods --
     mob:setMod(xi.mod.SHIELD_MASTERY_TP, shieldMasteryPower)
-    mob:setMod(xi.mod.SHIELDBLOCKRATE, 35)
-    mob:addMod(xi.mod.SPELLINTERRUPT, 30)
-    mob:addMod(xi.mod.FASTCAST, 30)
-    mob:addMod(xi.mod.ENMITY, 15)
+    mob:setMod(xi.mod.SHIELDBLOCKRATE, zpower)
+    mob:addMod(xi.mod.SPELLINTERRUPT, zpower)
+    mob:addMod(xi.mod.FASTCAST, zpower)
+    mob:addMod(xi.mod.ENMITY, 85)
+	mob:addMod(xi.mod.ATT, power)
+	mod:addMod(xi.mod.ACC, power)
+	mob:addMod(xi.mod.STR, power)
+	mob:addMod(xi.mod.VIT, power)
+	mob:addMod(xi.mod.DEX, power)
+	mob:addMod(xi.mod.EVA, power)
+	mob:addMod(xi.mod.MEVA, power)
     mob:addMod(xi.mod.DMG, -500) -- Damage Taken -5%
-    mob:addMod(xi.mod.HPP, 10)
+    mob:addMod(xi.mod.HP, power * 2)
+	mob:addMod(xi.mod.MP, power * 2)
+	mob:addMod(xi.mod.HPP, 10)
     mob:addMod(xi.mod.MPP, 10)
+	mob:addMod(xi.mod.STATUSRES, math.floor(zpower/2))
 
     if lvl >= 5 then
         mob:addGambit(ai.t.SELF, { ai.c.ALWAYS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.PROVOKE })
@@ -55,7 +72,6 @@ spellObject.onMobSpawn = function(mob)
 
     if lvl >= 15 then
         mob:addGambit(ai.t.TARGET, { ai.l.OR(
-            { ai.c.CASTING_MA, 0 },
             { ai.c.READYING_JA, 0 },
             { ai.c.READYING_MS, 0 },
             { ai.c.READYING_WS, 0 }) }, { ai.r.MS, ai.s.SPECIFIC, xi.mobSkill.ROYAL_BASH_TRUST }, 60)
@@ -65,8 +81,8 @@ spellObject.onMobSpawn = function(mob)
         mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.SENTINEL }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.SENTINEL })
     end
 
-    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.FLASH }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.FLASH      })
-    mob:addGambit(ai.t.PARTY,  { ai.c.HPP_LT,     75              }, { ai.r.MA, ai.s.HIGHEST,  xi.magic.spellFamily.CURE })
+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.FLASH }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.FLASH })
+    mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 75 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
 
     mob:setTrustTPSkillSettings(ai.tp.RANDOM, ai.s.RANDOM, 1500)
 
