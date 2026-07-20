@@ -30,6 +30,7 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.DUAL_WIELD, 10)
     mob:addMod(xi.mod.DMG, -500) -- Damage Taken -5%
     mob:addMod(xi.mod.HPP, 20)
+    xi.trust.enableTankEnmity(mob, { tickCE = 8000, tickVE = 16000, actionCE = 4000, actionVE = 8000, tickSeconds = 2, drainMaster = 15, includeParty = true, listenerName = 'AAHM_TANK_ENMITY' })
 
     local lvl = mob:getMainLvl()
     local lastSynergyBonus = 0

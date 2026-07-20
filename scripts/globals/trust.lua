@@ -433,6 +433,170 @@ xi.trust.modGrowthValMax = function(mob, maxVal)
     return math.floor(maxVal * exponentGrowth)
 end
 
+xi.trust.tankEnmityProfile =
+{
+    steady =
+    {
+        tickCE        = 1500,
+        tickVE        = 3000,
+        actionCE      = 1000,
+        actionVE      = 2000,
+        tickSeconds   = 3,
+        drainMaster   = 0,
+        forceRetarget = true,
+        includeParty  = false,
+    },
+
+    strong =
+    {
+        tickCE        = 5000,
+        tickVE        = 10000,
+        actionCE      = 2500,
+        actionVE      = 5000,
+        tickSeconds   = 2,
+        drainMaster   = 10,
+        forceRetarget = true,
+        includeParty  = true,
+    },
+
+    pin =
+    {
+        tickCE        = 30000,
+        tickVE        = 30000,
+        actionCE      = 5000,
+        actionVE      = 10000,
+        tickSeconds   = 2,
+        drainMaster   = 20,
+        forceRetarget = true,
+        includeParty  = true,
+    },
+}
+
+xi.trust.enableTankEnmity = function(mob, options)
+    options = options or {}
+
+    local profile = xi.trust.tankEnmityProfile[options.profile or 'strong'] or xi.trust.tankEnmityProfile.strong
+    local function opt(name)
+        if options[name] ~= nil then
+            return options[name]
+        end
+
+        return profile[name]
+    end
+
+    local tickCE        = opt('tickCE')
+    local tickVE        = opt('tickVE')
+    local actionCE      = opt('actionCE')
+    local actionVE      = opt('actionVE')
+    local tickSeconds   = opt('tickSeconds')
+    local drainMaster   = opt('drainMaster')
+    local forceRetarget = opt('forceRetarget')
+    local includeParty  = opt('includeParty')
+    local listenerName  = options.listenerName or ('TRUST_TANK_ENMITY_' .. tostring(mob:getID()))
+
+    local function spikeTarget(tank, target, ce, ve)
+        if not target or target:isDead() or target:getID() == tank:getID() then
+            return
+        end
+
+        if target:getZoneID() ~= tank:getZoneID() then
+            return
+        end
+
+        pcall(function()
+            target:addEnmity(tank, ce, ve)
+
+            local master = tank:getMaster()
+            if master and drainMaster and drainMaster > 0 then
+                target:lowerEnmity(master, drainMaster)
+            end
+
+            if forceRetarget then
+                target:updateEnmity(tank)
+            end
+        end)
+    end
+
+    local function resolveActionTarget(tank, target)
+        if target and target:getObjType() == xi.objType.MOB then
+            return target
+        end
+
+        return tank:getTarget()
+    end
+
+    mob:addListener('ABILITY_USE', listenerName .. '_ABILITY', function(tank, target)
+        spikeTarget(tank, resolveActionTarget(tank, target), actionCE, actionVE)
+    end)
+
+    mob:addListener('MAGIC_USE', listenerName .. '_MAGIC', function(tank, target)
+        spikeTarget(tank, resolveActionTarget(tank, target), actionCE, actionVE)
+    end)
+
+    mob:addListener('WEAPONSKILL_USE', listenerName .. '_WS', function(tank, target)
+        spikeTarget(tank, resolveActionTarget(tank, target), actionCE, actionVE)
+    end)
+
+    mob:addListener('COMBAT_TICK', listenerName .. '_TICK', function(tank)
+        local now     = GetSystemTime()
+        local nextUse = tank:getLocalVar(listenerName .. '_NEXT')
+
+        if nextUse > 0 and now < nextUse then
+            return
+        end
+
+        tank:setLocalVar(listenerName .. '_NEXT', now + tickSeconds)
+
+        local seen = {}
+        local function addTarget(target)
+            if not target then
+                return
+            end
+
+            local id = target:getID()
+            if seen[id] then
+                return
+            end
+
+            seen[id] = true
+            spikeTarget(tank, target, tickCE, tickVE)
+        end
+
+        local function addNotorietyList(entity)
+            if not entity then
+                return
+            end
+
+            local list = entity:getNotorietyList()
+            if list then
+                for _, target in ipairs(list) do
+                    addTarget(target)
+                end
+            end
+        end
+
+        local master = tank:getMaster()
+        addTarget(tank:getTarget())
+
+        if master then
+            addTarget(master:getTarget())
+
+            if includeParty then
+                local party = master:getParty()
+                if party and #party > 0 then
+                    for _, member in ipairs(party) do
+                        addNotorietyList(member)
+                    end
+                else
+                    addNotorietyList(master)
+                end
+            end
+        end
+
+        addNotorietyList(tank)
+    end)
+end
+
 -- pageOffset is: (summon_message_id - 1) / 100
 -- Example: Shantotto II summon message ID: 11201
 -- pageOffset: (11201 - 1) / 100 = 112

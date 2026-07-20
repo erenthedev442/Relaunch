@@ -47,6 +47,7 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.DMG, -1000) -- Damage Taken -10%
     mob:addMod(xi.mod.HPP, 20)
     mob:addMod(xi.mod.ABSORB_PHYSDMG_TO_MP, 5)
+    xi.trust.enableTankEnmity(mob, { tickCE = 7000, tickVE = 14000, actionCE = 3500, actionVE = 7000, tickSeconds = 2, drainMaster = 15, includeParty = true, listenerName = 'AAEV_TANK_ENMITY' })
 
     -- Dynamic modifier that checks party member list on tick to apply
     mob:addListener('COMBAT_TICK', 'AAEV_CTICK', function(mobArg)

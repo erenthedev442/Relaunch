@@ -37,6 +37,7 @@ spellObject.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.CAN_SHIELD_BLOCK, 1)
     mob:addMod(xi.mod.DMG, -2500) -- Damage Taken -25%
     mob:addMod(xi.mod.ENMITY, 200)
+    xi.trust.enableTankEnmity(mob, { profile = 'pin', listenerName = 'MEAT_TANK_ENMITY' })
     mob:addMod(xi.mod.FASTCAST, 10)
     mob:addMod(xi.mod.SPELLINTERRUPT, 30)
     mob:addMod(xi.mod.MP, power)

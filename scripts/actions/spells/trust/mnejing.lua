@@ -23,6 +23,7 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.ENMITY, 15)
     mob:addMod(xi.mod.DMG, -375) -- Passive -37.5% Damage Taken Reduction.
     mob:addMod(xi.mod.HPP, 20)
+    xi.trust.enableTankEnmity(mob, { tickCE = 3500, tickVE = 7000, actionCE = 1750, actionVE = 3500, tickSeconds = 3, drainMaster = 5, includeParty = true, listenerName = 'MNEJING_TANK_ENMITY' })
 
     local lastSynergyBonus = 0
 

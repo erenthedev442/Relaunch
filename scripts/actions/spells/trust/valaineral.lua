@@ -46,6 +46,7 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.DMG, -800) -- Damage Taken -8%
     mob:addMod(xi.mod.HPP, 10)
     mob:addMod(xi.mod.MPP, 20)
+    xi.trust.enableTankEnmity(mob, { tickCE = 2500, tickVE = 5000, actionCE = 1200, actionVE = 2500, tickSeconds = 3, drainMaster = 0, includeParty = false, listenerName = 'VALAINERAL_TANK_ENMITY' })
 
     if lvl >= 1 then
         mob:addGambit(ai.t.TARGET, { ai.c.VAL_URIEL_CHECK, 0 }, { ai.r.MS, ai.s.SPECIFIC, xi.mobSkill.URIEL_BLADE_1 })

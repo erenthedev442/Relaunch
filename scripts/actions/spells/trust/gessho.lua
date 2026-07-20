@@ -29,6 +29,7 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.EVA, xi.trust.modGrowthValMax(mob, 125))
     mob:addMod(xi.mod.FASTCAST, 30)
     mob:addMod(xi.mod.ENMITY, 10)
+    xi.trust.enableTankEnmity(mob, { tickCE = 4000, tickVE = 8000, actionCE = 2000, actionVE = 4000, tickSeconds = 2, drainMaster = 5, includeParty = true, listenerName = 'GESSHO_TANK_ENMITY' })
 
     local lvl = mob:getMainLvl()
 
