@@ -29,7 +29,7 @@ spellObject.onMobSpawn = function(mob)
 	mob:addMod(xi.mod.CHR, power)
 	mob:addMod(xi.mod.EVA, power)
 	mob:addMod(xi.mod.CURE_POTENCY, zpower)
-	mob:addMod(xi.mod.HASTE_MAGIC, 1000)
+	mob:addMod(xi.mod.HASTE_GEAR, 1000)
 	mob:addMod(xi.mod.FASTCAST, zpower)
 	mob:addMod(xi.mod.REFRESH, zpower)	
 	
