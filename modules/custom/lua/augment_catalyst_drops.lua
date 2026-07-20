@@ -12,7 +12,9 @@
 -- drops here. Catalysts can still also appear via their original base droplist.
 --
 -- Deploy: new override module -> needs a map RESTART to register (no hot-reload).
--- Pure Lua, no SQL. DROP_RATE is the one balance knob.
+-- Pure Lua, no SQL. DROP_RATE is the base balance knob; Treasure Hunter scales it
+-- on top via xi.combat.treasureHunter.getDropRate (see passesRoll) so TH boosts
+-- catalyst drops the same way it boosts normal mob drops (2026-07-20, owner).
 -----------------------------------
 require('modules/module_utils')
 
@@ -113,6 +115,24 @@ local function award(player, itemId)
     return true
 end
 
+-- TH-adjusted pass/fail for a catalyst roll. Treasure Hunter boosts catalyst
+-- drops the SAME way it boosts normal mob drops: the base percent is converted
+-- to the engine's per-10000 scale and run through xi.combat.treasureHunter.getDropRate
+-- with the mob's ACCUMULATED TH level (mob:getTHlevel(), the same value the engine
+-- feeds its own droplist rolls). Degrades to the flat rate if TH is 0 or the helper
+-- is unavailable. Returns (passed, thLvl, rate_out_of_10000).
+local function passesRoll(mob, basePct)
+    local base  = basePct * 100  -- percent -> per-10000 (engine drop scale)
+    local rate  = base
+    local thLvl = 0
+    pcall(function() thLvl = mob:getTHlevel() or 0 end)
+    if thLvl > 0 and xi.combat and xi.combat.treasureHunter and xi.combat.treasureHunter.getDropRate then
+        local ok, adj = pcall(xi.combat.treasureHunter.getDropRate, thLvl, base)
+        if ok and type(adj) == 'number' then rate = adj end
+    end
+    return (1 + math.random(10000)) <= rate, thLvl, rate
+end
+
 m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSkillKill)
     super(mob, player, isKiller, isWeaponSkillKill)
     -- onMobDeathEx fires once per alliance member; isKiller marks the killing blow,
@@ -144,8 +164,10 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
     if not itemId then
         -- FALLBACK: non-mapped mob -> chance at a RANDOM level-appropriate catalyst,
         -- so any farming yields catalysts (not just the 186 assigned mobs).
-        if math.random(100) > FALLBACK_RATE then
-            dbg(mname .. ' -> skip: not mapped, fallback roll missed')
+        local fbPass, fbTH, fbRate = passesRoll(mob, FALLBACK_RATE)
+        if not fbPass then
+            dbg(string.format('%s -> skip: fallback TH-adj roll missed (base %d%%, TH %d, rate %d/10000)',
+                mname, FALLBACK_RATE, fbTH, fbRate))
             return
         end
         local lvl = 0
@@ -158,10 +180,13 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
         return
     end
 
-    -- Mapped mob: its ONE assigned catalyst at the (higher) targeted rate.
-    local roll = math.random(100)
-    if roll > DROP_RATE then
-        dbg(string.format('%s -> skip: roll %d > DROP_RATE %d', mname, roll, DROP_RATE))
+    -- Mapped mob: its ONE assigned catalyst. Treasure Hunter boosts the rate the
+    -- same way it boosts normal mob drops (xi.combat.treasureHunter.getDropRate),
+    -- keyed on the mob's accumulated TH level.
+    local pass, thLvl, rate = passesRoll(mob, DROP_RATE)
+    if not pass then
+        dbg(string.format('%s -> skip: TH-adj roll missed (base %d%%, TH %d, rate %d/10000)',
+            mname, DROP_RATE, thLvl, rate))
         return
     end
 
