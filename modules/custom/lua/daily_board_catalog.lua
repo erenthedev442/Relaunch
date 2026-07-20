@@ -125,7 +125,7 @@ catalog.objectivePool =
         description = 'Grind 4,000 combat XP today (defeat monsters).',
         target      = 4000,
         metric      = 'xp',
-        reward      = { currency = 'hl', amount = 900 },
+        reward      = { currency = 'hl', amount = 750 },  -- clamped to DAILY_HL_CAP (was 900; overflow was silently lost)
     },
     {
         id          = 'xp_6000',
@@ -167,7 +167,7 @@ catalog.objectivePool =
         description = 'Kill 10 custom NMs today (any system).',
         target      = 10,
         metric      = 'kills',
-        reward      = { currency = 'hl', amount = 1000 },
+        reward      = { currency = 'hl', amount = 750 },  -- clamped to DAILY_HL_CAP (was 1000; overflow was silently lost)
     },
     {
         id          = 'kill_20',
@@ -193,7 +193,7 @@ catalog.objectivePool =
         description = 'Earn 100 Infamy today.',
         target      = 100,
         metric      = 'infamy',
-        reward      = { currency = 'hl', amount = 900 },
+        reward      = { currency = 'hl', amount = 750 },  -- clamped to DAILY_HL_CAP (was 900; overflow was silently lost)
     },
     {
         id          = 'infamy_250',
