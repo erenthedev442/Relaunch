@@ -78,6 +78,7 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.DMG, -1000) -- Damage Taken -10%
     mob:addMod(xi.mod.ENMITY, 200)
 	mob:addMod(xi.mod.ENMITY_LOSS_REDUCTION, 100)
+    xi.trust.enableTankEnmity(mob, { profile = 'strong', listenerName = 'AUGUST_TANK_ENMITY' })
     mob:addMod(xi.mod.HPP, 10)
 
     -- Founders gear mods: August gets all effects from founders gear

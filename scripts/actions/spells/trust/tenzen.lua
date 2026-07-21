@@ -28,7 +28,7 @@ spellObject.onMobSpawn = function(mob)
 	local zpower = math.floor(mob:getMainLvl() / 5)
 	-- Stats Mods --
 	mob:addMod(xi.mod.ATT, power)
-	mod:addMod(xi.mod.ACC, power)
+	mob:addMod(xi.mod.ACC, power)
 	mob:addMod(xi.mod.STR, power)
 	mob:addMod(xi.mod.DEX, power)
 	mob:addMod(xi.mod.EVA, power)
