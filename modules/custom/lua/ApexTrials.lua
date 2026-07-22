@@ -39,6 +39,10 @@ local mechanics = require('modules/custom/lua/mob_mechanics_library')
 local m = Module:new('apex_trials')
 
 local SYS = xi.msg.channel.SYSTEM_3
+local CONFLUX_FIRST_ID = 17523238
+local CONFLUX_LAST_ID  = 17523250
+local SPAWN_RETRY_MAX  = 3
+local SPAWN_RETRY_MS   = 1500
 
 -----------------------------------
 -- Sessions (per player, keyed by name)
@@ -189,82 +193,93 @@ local function spawnApexBoss(owner, tier)
         end,
     }) end)
 
-    if not insertOk or not mob then return nil end
-
-    mob:setSpawn(mx, py, mz, 0)
-    mob:spawn()
-    mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
-    mob:setModelSize(3)
-
-    -- Base tier stat mods.
-    for modId, val in pairs(C.bossMods(tier)) do
-        if val ~= 0 then mob:setMod(modId, val) end
+    local labels    = {}
+    if not insertOk or not mob then
+        local insertErr = not insertOk and tostring(mob) or 'insertDynamicEntity returned no mob'
+        return nil, nil, nil, nil, insertErr
     end
 
-    -- HP + affixes (stack more at higher tiers).
-    local hp        = C.bossHp(tier)
-    local affixN    = C.affixCount(tier)
-    local labels    = {}
-    if affixN > 0 then
-        local pool = {}
-        for i = 1, #C.AFFIX_DEFS do pool[i] = C.AFFIX_DEFS[i] end
-        for _ = 1, affixN do
-            if #pool == 0 then break end
-            local idx   = math.random(#pool)
-            local affix = table.remove(pool, idx)
-            labels[#labels + 1] = affix.key
-            hp = math.floor(hp * affix.hpMult)
-            for modId, val in pairs(C.affixMods(affix.key, tier)) do
-                if val ~= 0 then mechanics.safeAddMod(mob, modId, val) end
+    -- Protect the complete setup path, not only entity insertion. A failure in
+    -- setSpawn/stat/mechanics setup previously escaped the floor timer and left
+    -- the session alive with no boss.
+    local setupOk, setupErr = pcall(function()
+        mob:setSpawn(mx, py, mz, 0)
+        mob:spawn()
+        mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
+        mob:setModelSize(3)
+
+        -- Base tier stat mods.
+        for modId, val in pairs(C.bossMods(tier)) do
+            if val ~= 0 then mob:setMod(modId, val) end
+        end
+
+        -- HP + affixes (stack more at higher tiers).
+        local hp     = C.bossHp(tier)
+        local affixN = C.affixCount(tier)
+        if affixN > 0 then
+            local pool = {}
+            for i = 1, #C.AFFIX_DEFS do pool[i] = C.AFFIX_DEFS[i] end
+            for _ = 1, affixN do
+                if #pool == 0 then break end
+                local idx   = math.random(#pool)
+                local affix = table.remove(pool, idx)
+                labels[#labels + 1] = affix.key
+                hp = math.floor(hp * affix.hpMult)
+                for modId, val in pairs(C.affixMods(affix.key, tier)) do
+                    if val ~= 0 then mechanics.safeAddMod(mob, modId, val) end
+                end
             end
         end
-    end
 
-    -- FJB: clamp HP below the int32 ceiling (2,147,483,647). If future tuning or
-    -- stacked affix HP multipliers push a tier over int32, setMaxHP would wrap
-    -- negative and the boss could spawn already dead. 2.0B is still a huge wall;
-    -- deeper difficulty continues via stat mods, affixes, and mechanics.
-    hp = math.min(hp, 2000000000)
-    mob:setMaxHP(hp)
-    mob:setHP(hp)
+        -- Clamp HP below the int32 ceiling (2,147,483,647).
+        hp = math.min(hp, 2000000000)
+        mob:setMaxHP(hp)
+        mob:setHP(hp)
 
-    -- Engage after a short delay. 4s lets the owner move off the warp-in point;
-    -- the 60s value was too long -- at high tiers fast-clearing players killed the
-    -- boss before it ever engaged (reported as "mobs don't aggro you").
-    owner:timer(4000, function(p)
-        local s = sessions[p:getName()]
-        if not s then return end
-        pcall(function()
-            if s.mobsAlive[mob:getID()] then
-                mob:addEnmity(p, 30000, 30000)
-            end
+        -- Engage after a short delay so the owner can move off warp-in.
+        owner:timer(4000, function(p)
+            local s = sessions[p:getName()]
+            if not s then return end
+            pcall(function()
+                if s.mobsAlive[mob:getID()] then
+                    mob:addEnmity(p, 30000, 30000)
+                end
+            end)
         end)
+
+        -- Apex opts into explicit damage messages while global boss chatter
+        -- remains disabled for every other custom encounter.
+        local mechCfg = C.mechCfg(tier)
+        mechCfg.damageMessages = true
+        mechanics.attach(mob, mechCfg, ownerName)
+
+        -- If the owner disconnects/crashes or is moved out of the arena before
+        -- zone-out cleanup runs, this mob-side watchdog tears the run down.
+        local function armOwnerWatchdog(watchedMob)
+            watchedMob:timer(10000, function(mobNow)
+                local s = sessions[ownerName]
+                if not s or s.tier ~= tier then return end
+
+                local ownerNow = GetPlayerByName(ownerName)
+                if not ownerNow or ownerNow:getZoneID() ~= C.ARENA_ZONE then
+                    endRunByName(ownerName, ownerNow and 'left' or 'logout')
+                    return
+                end
+
+                local alive = false
+                pcall(function() alive = mobNow:getHP() > 0 end)
+                if alive then
+                    armOwnerWatchdog(mobNow)
+                end
+            end)
+        end
+        armOwnerWatchdog(mob)
     end)
 
-    -- Attach tier-appropriate hardcore mechanics AFTER all stats/HP are set.
-    mechanics.attach(mob, C.mechCfg(tier), ownerName)
-
-    -- If the owner disconnects/crashes or is moved out of the arena before Lua
-    -- zone-out cleanup runs, this mob-side watchdog tears the run down anyway.
-    local function armOwnerWatchdog(watchedMob)
-        watchedMob:timer(10000, function(mobNow)
-            local s = sessions[ownerName]
-            if not s or s.tier ~= tier then return end
-
-            local ownerNow = GetPlayerByName(ownerName)
-            if not ownerNow or ownerNow:getZoneID() ~= C.ARENA_ZONE then
-                endRunByName(ownerName, ownerNow and 'left' or 'logout')
-                return
-            end
-
-            local alive = false
-            pcall(function() alive = mobNow:getHP() > 0 end)
-            if alive then
-                armOwnerWatchdog(mobNow)
-            end
-        end)
+    if not setupOk then
+        killApexMob(mob)
+        return nil, nil, nil, nil, tostring(setupErr)
     end
-    armOwnerWatchdog(mob)
 
     return mob, bossName, level, labels
 end
@@ -301,7 +316,7 @@ end
 -----------------------------------
 -- Start (or advance to) the next tier
 -----------------------------------
-startTier = function(player)
+startTier = function(player, retryTier, attempt)
     local sess = getSession(player)
     if not sess then return end
     if player:getZoneID() ~= C.ARENA_ZONE then
@@ -309,17 +324,46 @@ startTier = function(player)
         return
     end
 
-    sess.tier      = sess.tier + 1
-    sess.mobsAlive = {}
-    local tier     = sess.tier
+    local tier = retryTier or (sess.tier + 1)
+    attempt = attempt or 1
 
-    local mob, bossName, level, labels = spawnApexBoss(player, tier)
+    -- A retry is valid only while the same transition is pending. This token
+    -- prevents delayed callbacks from creating duplicate bosses.
+    if retryTier and sess.pendingTier ~= tier then return end
+    sess.pendingTier = tier
+
+    local callOk, mob, bossName, level, labels, spawnErr =
+        pcall(spawnApexBoss, player, tier)
+    if not callOk then
+        spawnErr = mob
+        mob = nil
+    end
+
     if not mob then
-        player:printToPlayer('[Apex] ERROR: boss spawn failed. Ending run.', SYS)
+        print(string.format(
+            '[Apex] Tier %d spawn attempt %d/%d failed for %s: %s',
+            tier, attempt, SPAWN_RETRY_MAX, player:getName(), tostring(spawnErr)))
+
+        if attempt < SPAWN_RETRY_MAX then
+            player:printToPlayer(
+                string.format('[Apex] Tier %d rift was unstable. Retrying...', tier),
+                SYS)
+            player:timer(SPAWN_RETRY_MS, function(p)
+                startTier(p, tier, attempt + 1)
+            end)
+            return
+        end
+
+        sess.pendingTier = nil
+        player:printToPlayer('[Apex] ERROR: boss spawn failed after retries. Ending run safely.', SYS)
         endRun(player, 'error')
         return
     end
 
+    -- Commit progression only after a fully initialized boss exists.
+    sess.tier        = tier
+    sess.pendingTier = nil
+    sess.mobsAlive   = {}
     sess.mobsAlive[mob:getID()] = mob
 
     local affixStr = (#labels > 0) and ('  [' .. table.concat(labels, ', ') .. ']') or ''
@@ -425,6 +469,19 @@ local function enterApex(player)
     player:setPos(C.WARP_IN.x, C.WARP_IN.y, C.WARP_IN.z, C.WARP_IN.rot, C.ARENA_ZONE)
 end
 xi._apex_enter = enterApex
+
+-- Walk of Echoes is used as a private custom arena by Apex and Endless Tower.
+-- Hide the thirteen retail navigation Confluxes so they cannot clutter the
+-- battlefield or offer unrelated exits during a climb.
+m:addOverride('xi.zones.Walk_of_Echoes.Zone.onInitialize', function(zone)
+    super(zone)
+    for npcId = CONFLUX_FIRST_ID, CONFLUX_LAST_ID do
+        local npc = GetNPCByID(npcId)
+        if npc then
+            npc:setStatus(xi.status.DISAPPEAR)
+        end
+    end
+end)
 
 -----------------------------------
 -- Overrides: arena zone-in starts the climb

@@ -134,6 +134,22 @@ function C.ppReward(tier)
     return C.PP_BASE + (tier - 1) * C.PP_PER_TIER
 end
 
+-- Scripted pulse damage grows smoothly with the climb instead of front-loading
+-- an 18% max-HP hit on a brand-new runner.
+--   Tier 1   = 5%
+--   Tier 99  = 20%
+--   Tier 200 = 30% (capped thereafter)
+function C.pulseDamagePct(tier)
+    tier = math.max(1, math.floor(tier or 1))
+    if tier <= 99 then
+        return interpolate(5, 20, tier - 1, 98)
+    elseif tier <= 200 then
+        return interpolate(20, 30, tier - 99, 101)
+    end
+
+    return 30
+end
+
 C.AFFIX_MILESTONES = { 25, 50, 75, 100, 200, 300 }
 
 -- Affixes arrive at progression milestones rather than filling the entire pool
@@ -190,7 +206,7 @@ function C.mechCfg(tier)
                 { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'turns impervious to steel -- magic only!' },
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'wards every spell aside -- use steel!' },
             } },
-            aoe    = { periodSec = 10, dmgPct = 30, msg = 'detonates the arena -- shockwave outward!' },
+            aoe    = { periodSec = 10, dmgPct = C.pulseDamagePct(tier), msg = 'detonates the arena -- shockwave outward!' },
             cc     = { periodSec = 18, effect = xi.effect.SILENCE, dur = 8, msg = 'silences the unworthy!' },
             drain  = { periodSec = 7, healPct = 3 },
             phases = {
@@ -210,7 +226,7 @@ function C.mechCfg(tier)
                 { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'hardens against all physical -- switch to magic!' },
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'negates all magic -- cut it down!' },
             } },
-            aoe    = { periodSec = 12, dmgPct = 26, msg = 'erupts with void energy!' },
+            aoe    = { periodSec = 12, dmgPct = C.pulseDamagePct(tier), msg = 'erupts with void energy!' },
             cc     = { periodSec = 22, effect = xi.effect.TERROR, dur = 6, msg = 'projects overwhelming dread!' },
             drain  = { periodSec = 8, healPct = 2 },
             phases = {
@@ -229,7 +245,7 @@ function C.mechCfg(tier)
                 { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'locks body against weapons -- use magic!' },
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'wards against all magic -- use steel!' },
             } },
-            aoe    = { periodSec = 12, dmgPct = 24, msg = 'pulses with destructive energy!' },
+            aoe    = { periodSec = 12, dmgPct = C.pulseDamagePct(tier), msg = 'pulses with destructive energy!' },
             cc     = { periodSec = 24, effect = xi.effect.TERROR, dur = 5, msg = 'unleashes a wave of terror!' },
             drain  = { periodSec = 9, healPct = 2 },
             phases = {
@@ -247,7 +263,7 @@ function C.mechCfg(tier)
                 { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'resists all steel -- switch to magic!' },
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'deflects all magic -- hit with weapons!' },
             } },
-            aoe    = { periodSec = 13, dmgPct = 22, msg = 'shakes the arena with a shockwave!' },
+            aoe    = { periodSec = 13, dmgPct = C.pulseDamagePct(tier), msg = 'shakes the arena with a shockwave!' },
             drain  = { periodSec = 10, healPct = 2 },
             phases = {
                 { hp = 15, action = 'fury',    att = 3500, haste = 100, msg = 'fights with renewed fury!' },
@@ -262,7 +278,7 @@ function C.mechCfg(tier)
                 { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'armors itself against physical -- use magic!' },
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'warps all spells aside -- use weapons!' },
             } },
-            aoe    = { periodSec = 14, dmgPct = 20, msg = 'fires a shockwave in all directions!' },
+            aoe    = { periodSec = 14, dmgPct = C.pulseDamagePct(tier), msg = 'fires a shockwave in all directions!' },
             phases = {
                 { hp = 50, action = 'dispel', count = 3, msg = 'rips your buffs away!' },
                 { hp = 20, action = 'fury',   att = 3000, haste = 100, msg = 'enters a fury state!' },
@@ -273,7 +289,7 @@ function C.mechCfg(tier)
         return {
             name   = 'Apex Challenger',
             enrage = { sec = 240, att = 4000, haste = 120, msg = 'grows restless -- pressing harder!' },
-            aoe    = { periodSec = 16, dmgPct = 18, msg = 'releases a burst of void energy!' },
+            aoe    = { periodSec = 16, dmgPct = C.pulseDamagePct(tier), msg = 'releases a burst of void energy!' },
             phases = {
                 { hp = 35, action = 'fury', att = 2500, haste = 80, msg = 'surges with sudden power!' },
             },

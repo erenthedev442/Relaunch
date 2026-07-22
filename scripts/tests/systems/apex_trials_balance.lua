@@ -88,4 +88,25 @@ describe('Apex Trials progression curve', function()
         assert(catalog.mechCfg(100).name == 'Apex Imperator')
         assert(catalog.mechCfg(200).name == 'Apex Absolute')
     end)
+
+    it('ramps scripted pulse damage from entry to elite tiers', function()
+        assert(catalog.pulseDamagePct(1) == 5)
+        assert(catalog.pulseDamagePct(25) >= 8)
+        assert(catalog.pulseDamagePct(50) >= 12)
+        assert(catalog.pulseDamagePct(75) >= 16)
+        assert(catalog.pulseDamagePct(99) == 20)
+        assert(catalog.pulseDamagePct(100) == 20)
+        assert(catalog.pulseDamagePct(150) == 25)
+        assert(catalog.pulseDamagePct(200) == 30)
+        assert(catalog.pulseDamagePct(10000) == 30)
+
+        local previous = 0
+        for tier = 1, 500 do
+            local damage = catalog.pulseDamagePct(tier)
+            assert(damage >= previous)
+            assert(damage >= 5 and damage <= 30)
+            assert(catalog.mechCfg(tier).aoe.dmgPct == damage)
+            previous = damage
+        end
+    end)
 end)

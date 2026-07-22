@@ -29,6 +29,7 @@
 --                  { mods={[xi.mod.DMGPHYS]=-10000,[xi.mod.DMGMAGIC]=0},     msg='hardens against weapons!' },
 --                  { mods={[xi.mod.DMGPHYS]=0,[xi.mod.DMGMAGIC]=-10000},     msg='warps magic aside!' } } },
 --     targetPartyOnly = true,                                             -- hostile pulses hit hate target's party only
+--     damageMessages = true,                                              -- print direct scripted damage to each victim
 --     aoe    = { periodSec=12, dmgPct=22, msg='unleashes a shockwave!' }, -- % of victim max HP
 --     cc     = { periodSec=24, effect=xi.effect.TERROR, power=1, dur=5, msg='lets out a paralysing roar!' },
 --     drain  = { periodSec=10, healPct=3 },                              -- self-heal % max HP (anti-turtle)
@@ -255,6 +256,12 @@ local function aoePulse(mob, aoeCfg, st, target)
             local dmg = math.floor(p:getMaxHP() * (aoeCfg.dmgPct or 20) / 100)
             if dmg > 0 then
                 p:takeDamage(dmg, mob, xi.attackType.SPECIAL, xi.damageType.ELEMENTAL)
+                if st and st.damageMessages then
+                    p:printToPlayer(
+                        string.format('[%s] Scripted shockwave hits you for %d damage.',
+                            st.name or 'NM', dmg),
+                        xi.msg.channel.SYSTEM_1)
+                end
             end
         end)
     end
@@ -632,6 +639,7 @@ function M.attach(mob, cfg, ownerName)
         name         = cfg.name,
         ownerName       = ownerName or nil,  -- when set, AoE/CC/shout only targets this player
         targetPartyOnly = cfg.targetPartyOnly == true,
+        damageMessages  = cfg.damageMessages == true,
         startedAt       = now,
         firedPhases     = {},
         addsAlive       = {},
