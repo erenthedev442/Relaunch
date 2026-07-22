@@ -1,4 +1,4 @@
--- gauntlet_champion_data.lua
--- Auto-maintained by TheGauntlet.lua when a player clears level 10.
--- Read via loadfile (not require) so updates appear without restart.
-return {}
+-- gauntlet_champion_data.lua (auto-updated by TheGauntlet.lua)
+return {
+    { charname = "Jamesta", charid = 23, latest = "2026-07-21", times = 1 },
+}
