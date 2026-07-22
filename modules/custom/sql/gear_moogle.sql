@@ -5,4 +5,4 @@ INSERT IGNORE INTO `npc_list`
 VALUES
     (17720035, 'Gear_Moogle', 'Gear_Moogle', 0, -1.2, -9.4, 2.0,
      14, 40, 40, 0, 1, 0,
-     27, 0, (SELECT look FROM npc_list WHERE npcid = 17719415), 32, NULL, 1);
+     27, 0, (SELECT look FROM (SELECT look FROM npc_list WHERE npcid = 17719415) AS _src), 32, NULL, 1);
