@@ -3,8 +3,8 @@
 -- A "Game Master" NPC that spawns themed enemy waves around the player.
 --
 -- Player flow:
---   1. Talk to the Game Master at GM Home.
---   2. Pick a difficulty (Easy / Normal / Hard / Insane).
+--   1. Talk to a Game Master in Escha - Ru'Aun.
+--   2. Pick a difficulty (Easy through Ragnarok, plus Terror).
 --   3. Confirm Start. After a short grace period, mobs spawn in a ring
 --      around the player. Kill them all to trigger the next wave.
 --   4. Survive all waves to earn the completion bonus (HL_Points +
@@ -17,12 +17,13 @@
 --   - Talking to the Game Master mid-session aborts cleanly.
 --
 -- Mob data comes from modules/custom/lua/game_master_catalog.lua.
--- The mob groupIds reuse the Hunting League mob pool registered by
--- modules/custom/sql/hunting_league_gm_home_mobs.sql, so this module
--- doesn't need its own SQL.
+-- The dynamic mob groups are registered by
+-- modules/custom/sql/gm_master_extra_mobs.sql.
 -----------------------------------
 require('modules/module_utils')
 local catalog = require('modules/custom/lua/game_master_catalog')
+local progress = require('modules/custom/lua/game_master_progress')
+local mechanics = require('modules/custom/lua/mob_mechanics_library')
 local wh      = require('modules/custom/lua/weekly_hunts')
 require(string.format('scripts/zones/%s/Zone', catalog.npcPos.zone))
 -----------------------------------
@@ -48,6 +49,7 @@ local m = Module:new('game_master')
 --     markBonus    = per-kill HL_Points awarded
 --   }
 local sessions = {}
+local PARTICIPATION_RANGE = 50
 
 local function getSession(player)
     return sessions[player:getName()]
@@ -55,6 +57,51 @@ end
 
 local function clearSession(player)
     sessions[player:getName()] = nil
+end
+
+local function eligibleRecipients(owner)
+    local recipients = {}
+    local seen = {}
+
+    local function add(player, always)
+        if not player then return end
+        local id = player:getID()
+        if seen[id] then return end
+
+        local eligible = always
+        if not eligible then
+            local ok, distance = pcall(function() return player:checkDistance(owner) end)
+            eligible = player:getZoneID() == owner:getZoneID() and
+                ok and distance <= PARTICIPATION_RANGE
+        end
+
+        if eligible then
+            seen[id] = true
+            recipients[#recipients + 1] = player
+        end
+    end
+
+    add(owner, true)
+    for _, member in ipairs(owner:getParty() or {}) do
+        add(member, false)
+    end
+
+    return recipients
+end
+
+local function discardOrphanedSession(ownerName)
+    local sess = sessions[ownerName]
+    if not sess then return end
+
+    sessions[ownerName] = nil
+    for _, mob in pairs(sess.mobsAlive or {}) do
+        mechanics.cleanup(mob)
+        if type(mob) == 'userdata' then
+            pcall(function()
+                if mob:getHP() > 0 then mob:setHP(0) end
+            end)
+        end
+    end
 end
 
 
@@ -126,6 +173,7 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
         releaseIdOnDisappear = true,
 
         onMobDeath = function(deadMob, killer)
+            mechanics.cleanup(deadMob)
             -- Look up the OWNER's session, not the killer's. If a
             -- friend nukes the mob the owner's wave still advances.
             local sess = sessions[ownerName]
@@ -134,22 +182,21 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
             sess.mobsAlive[deadMob:getID()] = nil
             sess.kills = sess.kills + 1
 
-            -- Per-kill points go to the actual killer (might be the
-            -- owner, might be a friend helping out). Custom_NM_Kills
-            -- bumps for whoever got the killing blow.
-            -- Guard against non-PC killers (trusts, pets, DoT ticks):
-            -- setCharVar/printToPlayer are PC-only; calling them on a
-            -- trust entity throws a Lua error that silently skips the
-            -- wave-clear check below → session freezes permanently.
-            if killer and killer:getObjType() == xi.objType.PC then
-                killer:setCharVar('HL_Points',
-                    (killer:getCharVar('HL_Points') or 0) + sess.markBonus)
-                killer:setCharVar('Custom_NM_Kills',
-                    (killer:getCharVar('Custom_NM_Kills') or 0) + 1)
-                killer:printToPlayer(
-                    string.format('[Game Master] %s down! +%d points.',
-                        mobDef.name, sess.markBonus),
-                    xi.msg.channel.SYSTEM_3)
+            -- Award every physically-present participant. This is independent
+            -- of who landed the final blow, so Trust/pet/DoT kills cannot eat
+            -- rewards and support players are not excluded.
+            local resolvedOwner = GetPlayerByName(ownerName)
+            if resolvedOwner then
+                for _, recipient in ipairs(eligibleRecipients(resolvedOwner)) do
+                    recipient:setCharVar('HL_Points',
+                        (recipient:getCharVar('HL_Points') or 0) + sess.markBonus)
+                    recipient:setCharVar('Custom_NM_Kills',
+                        (recipient:getCharVar('Custom_NM_Kills') or 0) + 1)
+                    recipient:printToPlayer(
+                        string.format('[Game Master] %s down! +%d points.',
+                            mobDef.name, sess.markBonus),
+                        xi.msg.channel.SYSTEM_3)
+                end
             end
 
             -- Wave cleared?
@@ -169,8 +216,8 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
                 -- may be stale if they zoned + came back.
                 local resolved = GetPlayerByName(ownerName)
                 if not resolved then
-                    -- Owner offline; abandon session quietly.
-                    sessions[ownerName] = nil
+                    -- Owner offline; abandon and remove the surviving wave.
+                    discardOrphanedSession(ownerName)
                     return
                 end
                 if sess.waveIndex >= sess.wavesTotal then
@@ -184,6 +231,10 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
                         function(p) startWave(p) end)
                 end
             end
+        end,
+
+        onMobFight = function(mfMob, mfTarget)
+            mechanics.tick(mfMob, mfTarget)
         end,
     })
 
@@ -215,13 +266,18 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
             end
         end
 
-        -- Slight HP boost per difficulty (1.5x Easy -> 3x Insane).
-        -- Wave fights are meant to be tempo events, not endurance -
-        -- big HP would just drag them out without raising threat.
+        -- HP is the durable progression dial; level is held near the server's
+        -- confirmed-hittable range while mechanics supply the tactical threat.
         if diffDef.hpBoost then
             local newMax = mob:getMaxHP() * diffDef.hpBoost
             mob:setMaxHP(newMax)
             mob:setHP(newMax)
+        end
+
+        local mechCfg = diffDef.mechanics
+        if mechCfg then
+            mechCfg.targetPartyOnly = true
+            mechanics.attach(mob, mechCfg)
         end
 
         -- Lock the mob to the session owner. Two-step:
@@ -284,10 +340,13 @@ startWave = function(player)
 
         if delay == 0 then
             -- First mob spawns immediately.
-            local mobEntity = spawnWaveMob(player, mobDef, catalog.spawnRing, diffDef)
-            if mobEntity then
-                sess.mobsAlive[mobEntity:getID()] = mobEntity
+            local ok, mobEntity = pcall(spawnWaveMob, player, mobDef, catalog.spawnRing, diffDef)
+            if not ok or not mobEntity then
+                player:printToPlayer('[Game Master] A wave enemy failed to spawn. Session aborted safely.', xi.msg.channel.SYSTEM_3)
+                endSession(player, false)
+                return
             end
+            sess.mobsAlive[mobEntity:getID()] = mobEntity
             sess.pendingSpawns = sess.pendingSpawns - 1
         else
             -- Subsequent mobs arrive after a stagger delay.
@@ -306,10 +365,13 @@ startWave = function(player)
                     string.format('[Game Master] New threat incoming! (%s)', capturedMobDef.name),
                     xi.msg.channel.SYSTEM_3)
 
-                local mobEntity = spawnWaveMob(p, capturedMobDef, catalog.spawnRing, diffDef)
-                if mobEntity then
-                    s.mobsAlive[mobEntity:getID()] = mobEntity
+                local ok, mobEntity = pcall(spawnWaveMob, p, capturedMobDef, catalog.spawnRing, diffDef)
+                if not ok or not mobEntity then
+                    p:printToPlayer('[Game Master] A wave enemy failed to spawn. Session aborted safely.', xi.msg.channel.SYSTEM_3)
+                    endSession(p, false)
+                    return
                 end
+                s.mobsAlive[mobEntity:getID()] = mobEntity
                 s.pendingSpawns = (s.pendingSpawns or 1) - 1
 
                 -- Edge case: all previously-spawned mobs were already dead
@@ -318,7 +380,10 @@ startWave = function(player)
                 for _ in pairs(s.mobsAlive) do stillAlive = true; break end
                 if not stillAlive and s.pendingSpawns == 0 then
                     local resolved = GetPlayerByName(p:getName())
-                    if not resolved then sessions[p:getName()] = nil; return end
+                    if not resolved then
+                        discardOrphanedSession(p:getName())
+                        return
+                    end
                     if s.waveIndex >= s.wavesTotal then
                         endSession(resolved, true)
                     else
@@ -358,40 +423,14 @@ endSession = function(player, completed)
         local bonus   = diffDef.completionBonus
         local ach     = require('modules/custom/lua/achievements')
 
-        -- Build recipient list: session owner first, then any party members
-        -- who are in the same zone. getParty() includes the caller, so skip
-        -- the owner in the party loop to avoid a double-award.
-        local recipients = { player }
-        local party = player:getParty()
-        if party then
-            for _, member in ipairs(party) do
-                if member and member:getID() ~= player:getID() then
-                    recipients[#recipients + 1] = member
-                end
-            end
-        end
-
-        -- Per-difficulty FULL-CLEAR bit (Easy=1, Normal=2, Hard=4, Insane=8,
-        -- Nightmare=16; all five = 31). Stored in the GM_Wave_Clears charvar,
-        -- read by the Augment Moogle's tier gates. Derived from difficultyOrder
-        -- so a new difficulty automatically gets the next bit.
-        local diffBit = 0
-        for di, dname in ipairs(catalog.difficultyOrder) do
-            if dname == sess.difficulty then
-                diffBit = bit.lshift(1, di - 1)
-            end
-        end
+        -- Only the owner and party members still present near the arena earn
+        -- completion rewards and progression credit.
+        local recipients = eligibleRecipients(player)
 
         for i, recipient in ipairs(recipients) do
             recipient:setCharVar('HL_Points',
                 (recipient:getCharVar('HL_Points') or 0) + bonus)
-
-            if diffBit ~= 0 then
-                local clears = recipient:getCharVar('GM_Wave_Clears') or 0
-                if bit.band(clears, diffBit) == 0 then
-                    recipient:setCharVar('GM_Wave_Clears', bit.bor(clears, diffBit))
-                end
-            end
+            progress.markClear(recipient, sess.difficulty)
 
             if i == 1 then
                 -- Session owner gets the full kill-count summary.
@@ -432,8 +471,11 @@ endSession = function(player, completed)
             -- type() guard is paranoia in case anything ever drops
             -- a non-userdata value in here. getHP() > 0 ensures we
             -- don't double-kill a mob that died on the same tick.
-            if type(mobEntity) == 'userdata' and mobEntity:getHP() > 0 then
-                pcall(function() mobEntity:setHP(0) end)
+            if type(mobEntity) == 'userdata' then
+                mechanics.cleanup(mobEntity)
+                pcall(function()
+                    if mobEntity:getHP() > 0 then mobEntity:setHP(0) end
+                end)
             end
         end
     end
@@ -570,10 +612,20 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
                 player:printToPlayer(
                     '[ Game Master ] Choose your difficulty. Mobs will spawn around you, kupo!',
                     xi.msg.channel.SYSTEM_3)
+                player:printToPlayer('[Wave Progress] ' .. progress.summary(player, 1, 5), xi.msg.channel.SYSTEM_3)
+                player:printToPlayer('[Wave Progress] ' .. progress.summary(player, 6, #progress.order), xi.msg.channel.SYSTEM_3)
                 showStartMenu(player)
             end,
         })
         utils.unused(GameMaster)
+    end
+end)
+
+-- Leaving Escha - Ru'Aun ends the owner's run and removes the live wave.
+m:addOverride(string.format('xi.zones.%s.Zone.onZoneOut', catalog.npcPos.zone), function(player, ...)
+    pcall(super, player, ...)
+    if getSession(player) then
+        endSession(player, false)
     end
 end)
 

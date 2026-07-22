@@ -21,6 +21,7 @@ require('modules/module_utils')
 
 local sage     = require('modules/custom/lua/augment_sage_catalog')
 local affinity = require('modules/custom/lua/augment_affinity_catalog')
+local waveProgress = require('modules/custom/lua/game_master_progress')
 
 local _zoneName = sage.zonePath:match('xi%.zones%.(.+)')
 require(string.format('scripts/zones/%s/Zone', _zoneName))
@@ -358,6 +359,9 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
                     '  Augment Tier: 0/5 — augmenting locked | unlock: %s',
                     nxt or '???'), xi.msg.channel.SYSTEM_3)
             end
+            player:printToPlayer(
+                '  Wave Master: ' .. waveProgress.summary(player, 1, 4),
+                xi.msg.channel.SYSTEM_3)
         end
         player:printToPlayer(string.format(
             '  Roll floor: +%d within your tier band | Crit chance: %.0f%%',

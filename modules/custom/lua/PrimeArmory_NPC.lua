@@ -23,6 +23,7 @@
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
+local waveProgress = require('modules/custom/lua/game_master_progress')
 
 local m = Module:new('prime_armory')
 
@@ -310,18 +311,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer('[Prime Armory] You have already forged a Prime Weapon. Kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
-        -- Owner spec 2026-07-13. Prime Base gate: player must have built the
-        -- final tier of a Relic, Mythic, Empyrean, or Aeonic weapon first.
-        -- Any of the four WF_<Category>_Final flags satisfies. Checked BEFORE
-        -- the gil charge so a locked player doesn't have to reload their
-        -- wallet to see the actual blocker.
-        if (player:getCharVar('WF_Relic_Final')    or 0) ~= 1
-           and (player:getCharVar('WF_Mythic_Final')   or 0) ~= 1
-           and (player:getCharVar('WF_Empyrean_Final') or 0) ~= 1
-           and (player:getCharVar('WF_Aeonic_Final')   or 0) ~= 1
-        then
+        -- Prime follows Aeonic in the Relaunch weapon ladder. Check BEFORE the
+        -- gil charge so a locked player sees the real blocker safely.
+        if (player:getCharVar('WF_Aeonic_Final') or 0) ~= 1 then
             player:printToPlayer(
-                '[Prime Armory] Gate not met: Built a Relic, Mythic, Empyrean, or Aeonic final weapon. Kupo!',
+                '[Prime Armory] Gate not met: Build a final Aeonic weapon first. Kupo!',
+                xi.msg.channel.SYSTEM_3)
+            return
+        end
+        if not waveProgress.has(player, 'Ragnarok') then
+            player:printToPlayer(
+                '[Prime Armory] Gate not met: Clear Wave Master Ragnarok first. Kupo!',
                 xi.msg.channel.SYSTEM_3)
             return
         end

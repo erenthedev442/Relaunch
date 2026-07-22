@@ -38,6 +38,7 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local catalog  = require('modules/custom/lua/augment_catalog')
 local sage     = require('modules/custom/lua/augment_sage_catalog')
 local affinity = require('modules/custom/lua/augment_affinity_catalog')
+local waveProgress = require('modules/custom/lua/game_master_progress')
 local wh       = require('modules/custom/lua/weekly_hunts')
 -----------------------------------
 local m = Module:new('augment_moogle')
@@ -92,8 +93,7 @@ local SCOUR_ITEM_ID = nil
 -- AUGMENT TIER (content progression). Your tier picks the roll band; EVERY
 -- tier -- including T1 -- is a piece of custom content. LADDERED: tier =
 -- highest N with every gate 1..N passed (so you can't skip ahead). A fresh
--- character is TIER 0: the Moogle refuses to augment at all until the first
--- gate (slay a custom NM) is cleared.
+-- character is TIER 0: the Moogle refuses to augment until one job reaches 99.
 -- The catalog's per-catalyst `tier` field is the minimum Augment Tier needed
 -- to TRADE that catalyst.
 -----------------------------------
@@ -140,20 +140,21 @@ local TIER_GATES =
           return (p:getCharVar('HL_Tier') or 1) >= 3
               and clearedHuntTier(p, 2)
       end },
-    -- T3 combines the complete Rank-3 Hunt roster with Voidspire depth and a
-    -- full clear of every Game Master wave difficulty (Easy..Nightmare = 31).
-    { tier = 3, unlock = 'defeat all 3 Rank 3 Hunt NMs + clear Voidspire floor 10 + every Game Master wave difficulty',
+    -- T3 is the first three Wave Master stages; later stages remain relevant
+    -- through T4 and the weapon progression ladder.
+    { tier = 3, unlock = 'defeat all 3 Rank 3 Hunt NMs + clear Voidspire floor 10 + Wave Master Easy/Normal/Hard',
       check = function(p)
           return clearedHuntTier(p, 3)
               and (p:getCharVar('Voidspire_Best_Floor') or 0) >= 10
-              and bit.band(p:getCharVar('GM_Wave_Clears') or 0, 31) == 31
+              and waveProgress.hasThrough(p, 3)
       end },
-    { tier = 4, unlock = 'defeat all 3 Rank 4 Hunt NMs + fully clear one Dynamis - Divergence city',
+    { tier = 4, unlock = 'defeat all 3 Rank 4 Hunt NMs + one full Dynamis - Divergence city + Wave Master Insane',
       check = function(p)
           -- DivergenceSlots is stamped only after the Disjoined capstone dies
           -- and the city instance completes; Mega-Boss credit alone is not enough.
           return clearedHuntTier(p, 4)
               and (p:getCharVar('DivergenceSlots') or 0) >= 1
+              and waveProgress.hasThrough(p, 4)
       end },
     { tier = 5, unlock = "defeat Maat's Echo (Ru'Lude Gardens, !maat)",
       check = function(p) return (p:getCharVar('Maat_Kills') or 0) >= 1 end },
@@ -168,7 +169,28 @@ local function augmentTier(player)
             break
         end
     end
-    return tier
+    -- The 2026-07 Wave Master realignment added Insane to T4. Preserve the
+    -- strength previously earned by T4/T5 players; this does not fabricate
+    -- Wave Master clears and therefore cannot satisfy weapon gates.
+    return math.max(tier, player:getCharVar('Augment_Tier_Grandfather') or 0)
+end
+
+-- Evaluate the pre-realignment ladder once, before the new Insane requirement
+-- can lower an established character's live roll band.
+local function legacyAugmentTier(player)
+    if not TIER_GATES[1].check(player) then return 0 end
+    if not TIER_GATES[2].check(player) then return 1 end
+
+    local oldT3 = clearedHuntTier(player, 3)
+        and (player:getCharVar('Voidspire_Best_Floor') or 0) >= 10
+        and waveProgress.hasThrough(player, 5)
+    if not oldT3 then return 2 end
+
+    local oldT4 = clearedHuntTier(player, 4)
+        and (player:getCharVar('DivergenceSlots') or 0) >= 1
+    if not oldT4 then return 3 end
+    if (player:getCharVar('Maat_Kills') or 0) < 1 then return 4 end
+    return 5
 end
 
 -- What unlocks the player's NEXT tier (nil at T5). For gate messages + !augstats.
@@ -190,6 +212,17 @@ xi.augmentTiers =
     nextUnlock = nextUnlock,
     crystalChance = CRYSTAL_CHANCE,
 }
+
+m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
+    super(player, firstLogin, zoning)
+    if player:getCharVar('Augment_Tier_Migrated') ~= 0 then return end
+
+    local oldTier = legacyAugmentTier(player)
+    if oldTier >= 4 then
+        player:setCharVar('Augment_Tier_Grandfather', oldTier)
+    end
+    player:setCharVar('Augment_Tier_Migrated', 1)
+end)
 
 -----------------------------------
 -- Crystalize helpers

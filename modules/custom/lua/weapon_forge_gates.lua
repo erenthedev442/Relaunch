@@ -1,7 +1,7 @@
 -----------------------------------
 -- weapon_forge_gates.lua
 --
--- SINGLE SOURCE OF TRUTH for the 11 stage gates the Weapon Forge enforces.
+-- SINGLE SOURCE OF TRUTH for the stage gates the Weapon Forge enforces.
 -- WeaponForge_NPC.lua (in-forge preflight + recipe preview) and the
 -- !forgegates player command both `require` this file so their gate labels,
 -- check functions, and target counts can never drift apart.
@@ -11,15 +11,16 @@
 -- pre-existing HL_Tier / divergenceWins / etc. checks in WeaponForge_NPC.lua
 -- still apply).
 --
--- Widget stage indexing (matches docs/progression/weapon-forge/):
+-- Player-facing stage indexing:
 --   fromStage 0 = "Base -> Stage I"      (about to enter Stage I)
 --   fromStage 1 = "Stage I -> Stage II"  (about to enter Stage II)
 --   fromStage 2 = "Stage II -> Stage III" (about to enter Stage III)
 -----------------------------------
 local M = {}
 local abysseaProgress = require('modules/custom/lua/abyssea_marks_progress')
+local waveProgress = require('modules/custom/lua/game_master_progress')
 
--- ── Reusable check closures (per-job scans, all-trials, any-forge-final) ────
+-- ── Reusable check closures (per-job scans and all-trials) ─────────────────
 
 local function anyRebirthCap50()
     return function(p)
@@ -48,19 +49,18 @@ local function allPrimeTrialsAndApexHunter()
     end
 end
 
-local function anyForgeFinal()
-    return function(p)
-        return (p:getCharVar('WF_Relic_Final')    or 0) == 1
-            or (p:getCharVar('WF_Mythic_Final')   or 0) == 1
-            or (p:getCharVar('WF_Empyrean_Final') or 0) == 1
-            or (p:getCharVar('WF_Aeonic_Final')   or 0) == 1
-    end
-end
-
 -- ── STAGE_GATES table ──────────────────────────────────────────────────────
 
 M.STAGE_GATES =
 {
+    relic =
+    {
+        [2] =
+        {
+            label = 'Wave Master Nightmare cleared',
+            check = function(p) return waveProgress.has(p, 'Nightmare') end,
+        },
+    },
     empyrean =
     {
         [0] =
@@ -78,8 +78,11 @@ M.STAGE_GATES =
         },
         [2] =
         {
-            label = 'All 136 Abyssea Marks NMs cleared (first Empyrean only; track with !empyaby)',
-            check = function(p) return abysseaProgress.firstEmpyreanGatePassed(p) end,
+            label = 'First-Empyrean Abyssea roster complete + Wave Master Apocalypse cleared',
+            check = function(p)
+                return abysseaProgress.firstEmpyreanGatePassed(p)
+                    and waveProgress.has(p, 'Apocalypse')
+            end,
         },
     },
     mythic =
@@ -99,8 +102,11 @@ M.STAGE_GATES =
         },
         [2] =
         {
-            label = '1 successful win of The Gauntlet',
-            check = function(p) return (p:getCharVar('Gauntlet_Clears') or 0) >= 1 end,
+            label = '1 Gauntlet win + Wave Master Apocalypse cleared',
+            check = function(p)
+                return (p:getCharVar('Gauntlet_Clears') or 0) >= 1
+                    and waveProgress.has(p, 'Apocalypse')
+            end,
         },
     },
     aeonic =
@@ -117,11 +123,12 @@ M.STAGE_GATES =
         },
         [2] =
         {
-            label = "All Dungeons cleared + 10 wins against Maat's Echo",
+            label = "All Dungeons + 10 Maat's Echo wins + Wave Master Oblivion cleared",
             check = function(p)
                 local need = (xi.dungeonInstances and xi.dungeonInstances.uniqueDungeonCount) or math.huge
                 return (p:getCharVar('Dungeon_Unique_Clears') or 0) >= need
                    and (p:getCharVar('Maat_Kills') or 0) >= 10
+                   and waveProgress.has(p, 'Oblivion')
             end,
         },
     },
@@ -129,18 +136,21 @@ M.STAGE_GATES =
     {
         [0] =
         {
-            label = 'Built a Relic, Mythic, Empyrean, or Aeonic final weapon',
-            check = anyForgeFinal(),
+            label = 'Built a final Aeonic weapon',
+            check = function(p) return (p:getCharVar('WF_Aeonic_Final') or 0) == 1 end,
         },
         [1] =
         {
             label = "All 5 Prime Armory Trials complete + Apex Hunter in the Hunter's Guild",
             check = allPrimeTrialsAndApexHunter(),
         },
-        -- Stage III intentionally unset -- existing HL_Tier + all-trials + gil
-        -- checks in doUpgrade cover it. Fill in here to add a new Stage III gate.
+        [2] =
+        {
+            label = 'Wave Master Ragnarok cleared',
+            check = function(p) return waveProgress.has(p, 'Ragnarok') end,
+        },
     },
-    -- Relic and Ergon: existing checks in WeaponForge_NPC.lua stay authoritative.
+    -- Ergon follows the Mythic path; existing material checks remain authoritative.
 }
 
 -- ── Display order (Relic -> Empyrean -> Mythic -> Aeonic -> Prime) ─────────

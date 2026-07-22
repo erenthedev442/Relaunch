@@ -232,8 +232,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         player:printToPlayer(
             string.format('[Weapon Forge] The %s resonates with ancient power — behold the %s!',
                 fromItem.name, toItem.name), S)
-        -- Stage III (final Aeonic) completion flag. Read by the Prime Stage I
-        -- preflight ("Built a Relic, Mythic, Empyrean, or Aeonic final weapon").
+        -- Stage III (final Aeonic) completion flag. Prime progression requires
+        -- this permanent milestone.
         -- Persists so trading/losing the weapon doesn't retract the milestone.
         if fromStage == 2 then
             player:setCharVar('WF_Aeonic_Final', 1)
@@ -251,12 +251,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         -- Owner spec 2026-07-13 gate check. doUpgrade only ever gets
         -- fromStage 1 or 2 (Prime Armory issues final weapons directly, while
         -- this forge upgrades Ambuscade-derived Ajja weapons). Stage gate 0 is
-        -- checked explicitly so both Prime routes share the prior-final gate.
-        -- STAGE_GATES.prime[2] is nil so fromStage=2 short-
-        -- circuits with true and falls through to the existing HL_Tier +
-        -- all-trials + gil checks below.
-        -- Both Prime routes share the prerequisite that the player has already
-        -- completed a Relic, Mythic, Empyrean, or Aeonic final weapon.
+        -- checked explicitly so this route always enforces Aeonic completion.
+        -- STAGE_GATES.prime[2] additionally enforces Ragnarok before the final
+        -- upgrade, then the existing HL_Tier + all-trials + gil checks run.
         if not checkGate(player, 'prime', 0) then return false end
         if not checkGate(player, 'prime', fromStage) then return false end
         local fromItem = fromStage == 1 and chain.s1 or chain.s2
@@ -632,8 +629,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         --   k=2 -> 119I -> 119II  == widget "Stage I -> Stage II"  -> STAGE_GATES[1]
         --   k=3 -> 119II -> 119III == widget "Stage II -> Stage III" -> STAGE_GATES[2]
         -- The (k-1) offset lines the code's held-stage counter up with the
-        -- widget's forge[i] index so the label the player sees matches the
-        -- string in the docs verbatim.
+        -- player-facing stage index used by the shared gate table.
         if k >= 1 and not checkGate(player, def.key, k - 1) then return end
         local fromId, toId, step
         if k == 0 then

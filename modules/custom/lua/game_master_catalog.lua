@@ -80,6 +80,7 @@ catalog.difficulties =
     {
         wavesTotal      = 3,
         mobsPerWave     = 1,
+        spawnStagger    = 0,
         graceDelay      = 5,
         waveDelay       = 20,
         minLevel        = 125,
@@ -87,6 +88,11 @@ catalog.difficulties =
         completionBonus = 50,
         markBonus       = 20,
         hpBoost         = 4.0,   -- bumped from 1.5 (2026-05-30) -- Easy fights were ending in seconds.
+        mechanics =
+        {
+            name   = 'Arena Challenger',
+            enrage = { sec = 300, att = 1500, haste = 60, msg = 'grows impatient and presses the attack!' },
+        },
         mods =
         {
             [xi.mod.ATT]           = 2000,
@@ -115,13 +121,20 @@ catalog.difficulties =
     {
         wavesTotal      = 5,
         mobsPerWave     = 1,
+        spawnStagger    = 0,
         graceDelay      = 5,
         waveDelay       = 10,   -- 25 -> 10 (2026-07-10): faster wave tempo
         minLevel        = 150,
         maxLevel        = 150,
         completionBonus = 100,
         markBonus       = 20,
-        hpBoost         = 6.0,   -- bumped from 2.0 (2026-05-30) -- mid-tier should feel meaningful, not paper.
+        hpBoost         = 5.0,
+        mechanics =
+        {
+            name   = 'Arena Veteran',
+            drain  = { periodSec = 15, healPct = 1 },
+            enrage = { sec = 270, att = 2000, haste = 70, msg = 'feeds on the battle and quickens!' },
+        },
         mods =
         {
             [xi.mod.ATT]           = 4000,
@@ -151,13 +164,20 @@ catalog.difficulties =
     {
         wavesTotal      = 5,
         mobsPerWave     = 2,
+        spawnStagger    = 3,
         graceDelay      = 5,
         waveDelay       = 10,   -- 25 -> 10 (2026-07-10): faster wave tempo
         minLevel        = 175,
         maxLevel        = 175,
         completionBonus = 200,
         markBonus       = 20,
-        hpBoost         = 8.0,   -- bumped from 2.5 (2026-05-30) -- Hard tier deserves a real endurance check.
+        hpBoost         = 6.0,
+        mechanics =
+        {
+            name   = 'Arena HNM',
+            aoe    = { periodSec = 20, dmgPct = 8, msg = 'unleashes a crushing shockwave!' },
+            enrage = { sec = 240, att = 3000, haste = 90, msg = 'enters a killing frenzy!' },
+        },
         mods =
         {
             [xi.mod.ATT]           = 6500,
@@ -185,31 +205,34 @@ catalog.difficulties =
 
     Insane =
     {
-        -- Insane fights endgame gods (Kirin / AV / PW / Shinryu) in
-        -- pile-on waves. Previous tuning (3 waves x 1 mob) was actually
-        -- LESS work than Hard (5 x 2 = 10 kills) - geared L99 groups
-        -- dropped the lone gods faster than the announcement cleared
-        -- chat. New tuning is 5 waves of 3 simultaneous gods at level
-        -- 200, with a tight 15s waveDelay so there's no breather
-        -- between pile-ons. 15 endgame kills total.
+        -- Augment-T4 challenge: five waves of three Heavenly Kings. A short
+        -- stagger keeps the pile-on readable without the old 30-60s dead air.
         --
-        -- Why not bump beyond L200: these gods have fixed HP overrides
-        -- in modules/custom/sql/hunting_league_gm_home_mobs.sql
-        -- (Kirin 60k, AV 66k, PW 147k, Shinryu pool-default), so level
-        -- only affects damage / acc / eva. L200 is the highest stat
+        -- Why not bump beyond L200: level affects damage / acc / eva, and L200
+        -- is the highest stat
         -- profile that's confirmed-hittable on this server; going
         -- higher risks accuracy/evasion outrunning L99 gear. If you
         -- want more pain later, bump min/maxLevel to 215-225 in 5-pt
         -- steps and check whether the group can still land melee.
         wavesTotal      = 5,
         mobsPerWave     = 3,
+        spawnStagger    = 3,
         graceDelay      = 10,
         waveDelay       = 15,
         minLevel        = 200,
         maxLevel        = 200,
         completionBonus = 400,
         markBonus       = 20,
-        hpBoost         = 12.0,  -- bumped from 3.0 (2026-05-30) -- gods should feel like gods, not paper waves.
+        hpBoost         = 8.0,
+        mechanics =
+        {
+            name   = 'Heavenly King',
+            aoe    = { periodSec = 18, dmgPct = 7, msg = 'shakes the arena with divine force!' },
+            enrage = { sec = 220, att = 4000, haste = 110, msg = 'casts restraint aside!' },
+            phases = {
+                { hp = 35, action = 'fury', att = 2000, haste = 70, msg = 'calls on its final reserve of power!' },
+            },
+        },
         mods =
         {
             -- At L200 + 3-mob pile-ons with 15s breathers, the mods
@@ -237,22 +260,26 @@ catalog.difficulties =
 
     Nightmare =
     {
-        -- Beyond Insane: 7 waves of 4 simultaneous supreme gods at level 225.
-        -- Designed for full geared parties with deep Prestige investment.
-        -- 28 total kills. waveDelay is 10s -- barely enough to breathe.
-        -- spawnStagger=5: 4 gods arrive at t+0/5/10/15s. The global 30s
-        -- stagger stacks 90s of dead air while players wait for gods 2-4;
-        -- 5s lets all four pile on within 15s for a true chaos wave.
-        wavesTotal      = 7,
+        -- Relic-path capstone: five waves of four elder wyrms at level 225.
+        -- Twenty kills make this a coordinated challenge without the previous
+        -- fourfold workload jump from Insane.
+        wavesTotal      = 5,
         mobsPerWave     = 4,
         graceDelay      = 10,
         waveDelay       = 10,
-        spawnStagger    = 5,
+        spawnStagger    = 3,
         minLevel        = 225,
         maxLevel        = 225,
         completionBonus = 800,
         markBonus       = 20,
-        hpBoost         = 20.0,
+        hpBoost         = 10.0,
+        mechanics =
+        {
+            name   = 'Elder Wyrm',
+            aoe    = { periodSec = 17, dmgPct = 6, msg = 'sweeps the field with elder wrath!' },
+            cc     = { periodSec = 32, effect = xi.effect.PARALYSIS, power = 20, dur = 6, msg = 'binds the challengers in draconic dread!' },
+            enrage = { sec = 210, att = 5000, haste = 120, msg = 'erupts in ancient fury!' },
+        },
         mods =
         {
             [xi.mod.ATT]           = 15000,
@@ -276,21 +303,30 @@ catalog.difficulties =
 
     Apocalypse =
     {
-        -- Beyond Nightmare. The step up is carried by HP (x30) + a heavier
-        -- offensive package + one more wave, NOT by level: Nightmare already sits
+        -- Empyrean/Mythic-path capstone. The step up is carried by HP,
+        -- mechanics, and one more wave, NOT by level: Nightmare already sits
         -- at L225, past the L200 "confirmed-hittable" mark, so pushing level higher
         -- risks mob EVASION outrunning geared L99 melee (players whiff = un-fun,
-        -- not hard). 8 waves x 4 gods = 32 kills, 10s tempo, 5s stagger.
-        wavesTotal      = 8,
+        -- not hard). Six waves x four titans = 24 kills.
+        wavesTotal      = 6,
         mobsPerWave     = 4,
         graceDelay      = 10,
         waveDelay       = 10,
-        spawnStagger    = 5,
+        spawnStagger    = 3,
         minLevel        = 225,
         maxLevel        = 225,
         completionBonus = 1200,
         markBonus       = 20,
-        hpBoost         = 30.0,
+        hpBoost         = 14.0,
+        mechanics =
+        {
+            name   = 'Primeval Titan',
+            aoe    = { periodSec = 16, dmgPct = 7, msg = 'splits the arena with primeval force!' },
+            enrage = { sec = 200, att = 6000, haste = 130, msg = 'becomes an unstoppable catastrophe!' },
+            phases = {
+                { hp = 40, action = 'nuke', dmgPct = 7, msg = 'detonates the ancient power within!' },
+            },
+        },
         mods =
         {
             [xi.mod.ATT]           = 20000,
@@ -314,22 +350,29 @@ catalog.difficulties =
 
     Oblivion =
     {
-        -- The current ceiling: 10 waves of 5 gods = 50 kills, an 8s waveDelay +
-        -- 4s stagger so five gods pile on almost at once. HP x45; the mods sit
+        -- Aeonic-path capstone: seven waves of five sovereigns = 35 kills.
+        -- A short stagger brings the formation in quickly. The mods sit
         -- just under the int16 mob-mod cap (~31k -- ATT 26000 is the headroom
         -- limit). Level nudged one cautious step to 230 (re-check that melee still
         -- lands before going higher). Only the deepest Prestige-geared full parties
         -- should clear this. Push future pain via HP / mods / counts, not level.
-        wavesTotal      = 10,
+        wavesTotal      = 7,
         mobsPerWave     = 5,
         graceDelay      = 10,
         waveDelay       = 8,
-        spawnStagger    = 4,
+        spawnStagger    = 2,
         minLevel        = 230,
         maxLevel        = 230,
         completionBonus = 2000,
         markBonus       = 20,
-        hpBoost         = 45.0,
+        hpBoost         = 18.0,
+        mechanics =
+        {
+            name   = 'Void Sovereign',
+            aoe    = { periodSec = 15, dmgPct = 5, msg = 'tears open a wave of void energy!' },
+            drain  = { periodSec = 18, healPct = 1 },
+            enrage = { sec = 190, att = 7000, haste = 150, msg = 'unseals its sovereign power!' },
+        },
         mods =
         {
             [xi.mod.ATT]           = 26000,
@@ -354,25 +397,35 @@ catalog.difficulties =
 
     Ragnarok =
     {
-        -- The absolute ceiling: 12 waves of 5 gods = 60 kills. hp x70 makes each
-        -- god a genuine endurance wall; an 8s waveDelay + 4s stagger gives almost
-        -- no breathing room. ATT 28000 sits just under the int16 mob-mod cap
+        -- Prime-path capstone: eight waves of five gods = 40 kills. HP and
+        -- mechanics make each wave an endurance check with little breathing
+        -- room. ATT 28000 sits just under the int16 mob-mod cap
         -- (~31k) with clamp headroom over the mob's innate attack. Level held at
         -- 235 (same reason as the tiers above: higher = mob EVASION outruns L99
         -- melee, un-fun not hard). This is the top flat-menu tier -- an 8th
         -- difficulty fills the customMenu's ~8-visible-option ceiling, so a 9th
         -- would need the difficulty menu paginated. Push future pain via HP /
-        -- mods / counts. UNPLAYTESTED.
-        wavesTotal      = 12,
+        -- mods / counts.
+        wavesTotal      = 8,
         mobsPerWave     = 5,
         graceDelay      = 10,
         waveDelay       = 8,
-        spawnStagger    = 4,
+        spawnStagger    = 2,
         minLevel        = 235,
         maxLevel        = 235,
         completionBonus = 2800,
         markBonus       = 20,
-        hpBoost         = 70.0,
+        hpBoost         = 24.0,
+        mechanics =
+        {
+            name   = 'The Unmade',
+            aoe    = { periodSec = 14, dmgPct = 6, msg = 'unmakes the ground beneath the challengers!' },
+            cc     = { periodSec = 28, effect = xi.effect.TERROR, power = 1, dur = 4, msg = 'reveals the end of all things!' },
+            enrage = { sec = 180, att = 8500, haste = 180, msg = 'begins the final unmaking!' },
+            phases = {
+                { hp = 30, action = 'fury', att = 3500, haste = 100, msg = 'refuses its own destruction!' },
+            },
+        },
         mods =
         {
             [xi.mod.ATT]           = 28000,
@@ -418,7 +471,7 @@ catalog.difficulties =
         maxLevel        = 225,
         completionBonus = 1600,
         markBonus       = 20,
-        hpBoost         = 28.0,
+        hpBoost         = 12.0,
         mods =
         {
             [xi.mod.ATT]           = 20000,
@@ -446,9 +499,9 @@ catalog.difficulties =
 -- Order the difficulties appear in the menu (Lua tables aren't ordered).
 -- NOTE: order also assigns the GM_Wave_Clears full-clear BIT (index-1): Easy=1,
 -- Normal=2, Hard=4, Insane=8, Nightmare=16, Apocalypse=32, Oblivion=64,
--- Ragnarok=128, Terror=256. The Augment Moogle gate masks `& 31`, so tiers past
--- Nightmare don't disturb it. Only ever APPEND here -- reordering would rewrite
--- everyone's earned bits. (9 tiers now exceed the flat 8-option menu, so
+-- Ragnarok=128, Terror=256. Augment and weapon gates consume these through
+-- game_master_progress.lua. Only ever APPEND here -- reordering would rewrite
+-- everyone's earned bits. (Nine tiers exceed the flat eight-option menu, so
 -- showStartMenu paginates -- see GameMaster.lua.)
 catalog.difficultyOrder = { 'Easy', 'Normal', 'Hard', 'Insane', 'Nightmare', 'Apocalypse', 'Oblivion', 'Ragnarok', 'Terror' }
 
@@ -462,8 +515,8 @@ catalog.spawnRing =
 
 -- Seconds between each mob spawn within a single wave.
 -- 0 = all mobs spawn simultaneously (original behaviour).
--- 30 = first mob spawns immediately, second at t+30s, third at t+60s, etc.
--- Players get a chat notification when each new mob arrives.
-catalog.spawnStagger = 30
+-- Every live tier sets this explicitly; three seconds is the safe fallback for
+-- future additions so a missing field cannot create minutes of dead air.
+catalog.spawnStagger = 3
 
 return catalog

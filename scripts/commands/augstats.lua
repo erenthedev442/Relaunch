@@ -29,6 +29,7 @@
 --   !augstats
 -----------------------------------
 local catalog = require('modules/custom/lua/augment_catalog')
+local waveProgress = require('modules/custom/lua/game_master_progress')
 
 ---@type TCommand
 local commandObj = {}
@@ -88,6 +89,9 @@ commandObj.onTrigger = function(player)
                 nxt or '???'),
                 xi.msg.channel.SYSTEM_3)
         end
+        player:printToPlayer(
+            '  Wave Master: ' .. waveProgress.summary(player, 1, 4),
+            xi.msg.channel.SYSTEM_3)
     end
 
     local anyFound = false

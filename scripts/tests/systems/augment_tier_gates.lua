@@ -46,17 +46,17 @@ describe('Augment Tier content gates', function()
         assert(xi.augmentTiers.tierOf(player) == 2)
     end)
 
-    it('requires the Rank 3 roster, Voidspire, and every GM wave for T3', function()
+    it('requires the Rank 3 roster, Voidspire, and Easy through Hard for T3', function()
         local vars = { HL_Tier = 3 }
         stampTier(vars, 2)
         stampTier(vars, 3)
         local player = makePlayer(vars, 99)
 
         vars.Voidspire_Best_Floor = 10
-        vars.GM_Wave_Clears = 30
+        vars.GM_Wave_Clears = 6
         assert(xi.augmentTiers.tierOf(player) == 2)
 
-        vars.GM_Wave_Clears = 31
+        vars.GM_Wave_Clears = 7
         vars.NMKilled_11363 = 0
         assert(xi.augmentTiers.tierOf(player) == 2)
 
@@ -64,12 +64,12 @@ describe('Augment Tier content gates', function()
         assert(xi.augmentTiers.tierOf(player) == 3)
     end)
 
-    it('requires the Rank 4 roster and a Disjoined full clear for T4', function()
+    it('requires the Rank 4 roster, a Disjoined full clear, and Insane for T4', function()
         local vars =
         {
             HL_Tier = 4,
             Voidspire_Best_Floor = 10,
-            GM_Wave_Clears = 31,
+            GM_Wave_Clears = 7,
             DivergenceMegaSlots = 1,
         }
         stampTier(vars, 2)
@@ -80,6 +80,9 @@ describe('Augment Tier content gates', function()
         assert(xi.augmentTiers.tierOf(player) == 3)
 
         vars.DivergenceSlots = 1
+        assert(xi.augmentTiers.tierOf(player) == 3)
+
+        vars.GM_Wave_Clears = 15
         assert(xi.augmentTiers.tierOf(player) == 4)
     end)
 
@@ -88,7 +91,7 @@ describe('Augment Tier content gates', function()
         {
             HL_Tier = 4,
             Voidspire_Best_Floor = 10,
-            GM_Wave_Clears = 31,
+            GM_Wave_Clears = 15,
             DivergenceSlots = 1,
             Maat_Kills = 1,
         }
@@ -97,5 +100,13 @@ describe('Augment Tier content gates', function()
         stampTier(vars, 4)
 
         assert(xi.augmentTiers.tierOf(makePlayer(vars, 99)) == 5)
+    end)
+
+    it('preserves an established T4/T5 roll band without fabricating wave clears', function()
+        local vars = { Augment_Tier_Grandfather = 4 }
+        local player = makePlayer(vars, 1)
+
+        assert(xi.augmentTiers.tierOf(player) == 4)
+        assert((player:getCharVar('GM_Wave_Clears') or 0) == 0)
     end)
 end)

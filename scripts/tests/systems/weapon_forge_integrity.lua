@@ -29,7 +29,7 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(catalog.costs.toStage3.gil == 750000000)
     end)
 
-    it('requires a prior final weapon before entering the Prime path', function()
+    it('requires a final Aeonic before entering the Prime path', function()
         local vars = {}
         local player = {}
         function player:getCharVar(name) return vars[name] or 0 end
@@ -38,12 +38,16 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(not ok)
         assert(gate ~= nil)
 
+        vars.WF_Relic_Final = 1
+        ok = gates.checkGate(player, 'prime', 0)
+        assert(not ok)
+
         vars.WF_Aeonic_Final = 1
         ok = gates.checkGate(player, 'prime', 0)
         assert(ok)
     end)
 
-    it('requires the Abyssea roster only for the first completed Empyrean', function()
+    it('requires the first-Empyrean roster and Apocalypse at the final stage', function()
         local vars = {}
         local player = {}
         function player:getCharVar(name) return vars[name] or 0 end
@@ -56,10 +60,33 @@ describe('Weapon Forge catalog and gate integrity', function()
             vars[string.format('AbyNM_%03d', index)] = 1
         end
         ok = gates.checkGate(player, 'empyrean', 2)
-        assert(ok)
+        assert(not ok)
 
-        vars = { WF_Empyrean_Final = 1 }
+        vars.GM_Wave_Clears = 63
         ok = gates.checkGate(player, 'empyrean', 2)
         assert(ok)
+
+        vars = { WF_Empyrean_Final = 1, GM_Wave_Clears = 63 }
+        ok = gates.checkGate(player, 'empyrean', 2)
+        assert(ok)
+    end)
+
+    it('places the linear Wave Master clears on the weapon ladder', function()
+        local vars = {}
+        local player = {}
+        function player:getCharVar(name) return vars[name] or 0 end
+
+        assert(not gates.checkGate(player, 'relic', 2))
+        vars.GM_Wave_Clears = 31
+        assert(gates.checkGate(player, 'relic', 2))
+
+        vars.Gauntlet_Clears = 1
+        assert(not gates.checkGate(player, 'mythic', 2))
+        vars.GM_Wave_Clears = 63
+        assert(gates.checkGate(player, 'mythic', 2))
+
+        assert(not gates.checkGate(player, 'prime', 2))
+        vars.GM_Wave_Clears = 255
+        assert(gates.checkGate(player, 'prime', 2))
     end)
 end)

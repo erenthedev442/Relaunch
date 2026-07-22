@@ -236,40 +236,43 @@ def _all_trials_and_apex(cv, _):
     return all(_cv(cv, f"PW_Trial{i}_Done") == 1 for i in range(1, 6)) \
         and _cv(cv, "Title_Apex_Hunter") == 1
 
-def _any_forge_final(cv, _):
-    return any(_cv(cv, k) == 1 for k in
-               ("WF_Relic_Final", "WF_Mythic_Final", "WF_Empyrean_Final", "WF_Aeonic_Final"))
-
 def _first_empy_roster(cv, _):
     return _cv(cv, "WF_Empyrean_Final") == 1 or all(
         _cv(cv, f"AbyNM_{i:03d}") != 0 for i in range(1, 137)
     )
 
 FORGE_GATES: list[dict] = [
+    {"cat": "Relic",     "stage": "III", "label": "Wave Master Nightmare cleared",
+     "check": lambda cv, _: (_cv(cv, "GM_Wave_Clears") & 16) != 0},
     {"cat": "Empyrean", "stage": "I",   "label": "All Geas Fete bosses killed at least once",
      "check": lambda cv, t: _cv(cv, "GF_Unique_Kills") >= (t["gf_total"] or 10**9)},
     {"cat": "Empyrean", "stage": "II",  "label": "Voidspire Floor 100 reached",
      "check": lambda cv, _: _cv(cv, "Voidspire_Best_Floor") >= 100},
     {"cat": "Empyrean", "stage": "III",
-     "label": "All 136 Abyssea Marks NMs cleared (first Empyrean only)",
-     "check": _first_empy_roster},
+     "label": "First-Empyrean Abyssea roster + Wave Master Apocalypse",
+     "check": lambda cv, t: _first_empy_roster(cv, t)
+                            and (_cv(cv, "GM_Wave_Clears") & 32) != 0},
     {"cat": "Mythic",   "stage": "I",   "label": "Floor 100 recorded on your Runic Disc",
      "check": lambda cv, _: _cv(cv, "Nyzul_F100_Cleared") == 1},
     {"cat": "Mythic",   "stage": "II",  "label": "All Voidwatch NMs killed",
      "check": lambda cv, t: _cv(cv, "VW_Unique_Kills") >= (t["vw_total"] or 10**9)},
-    {"cat": "Mythic",   "stage": "III", "label": "1 successful win of The Gauntlet",
-     "check": lambda cv, _: _cv(cv, "Gauntlet_Clears") >= 1},
+    {"cat": "Mythic",   "stage": "III", "label": "1 Gauntlet win + Wave Master Apocalypse",
+     "check": lambda cv, _: _cv(cv, "Gauntlet_Clears") >= 1
+                        and (_cv(cv, "GM_Wave_Clears") & 32) != 0},
     {"cat": "Aeonic",   "stage": "I",   "label": "50 rebirths on a single job (not combined)",
      "check": _any_rebirth_50},
     {"cat": "Aeonic",   "stage": "II",  "label": "100 Ascensions on a single job (not combined)",
      "check": _any_ascension_100},
-    {"cat": "Aeonic",   "stage": "III", "label": "All Dungeons cleared + 10 wins against Maat's Echo",
+    {"cat": "Aeonic",   "stage": "III", "label": "All Dungeons + 10 Maat's Echo wins + Wave Master Oblivion",
      "check": lambda cv, t: _cv(cv, "Dungeon_Unique_Clears") >= (t["dungeon_total"] or 10**9)
-                        and _cv(cv, "Maat_Kills") >= 10},
-    {"cat": "Prime",    "stage": "I",   "label": "Built a Relic, Mythic, Empyrean, or Aeonic final weapon",
-     "check": _any_forge_final},
+                        and _cv(cv, "Maat_Kills") >= 10
+                        and (_cv(cv, "GM_Wave_Clears") & 64) != 0},
+    {"cat": "Prime",    "stage": "I",   "label": "Built a final Aeonic weapon",
+     "check": lambda cv, _: _cv(cv, "WF_Aeonic_Final") == 1},
     {"cat": "Prime",    "stage": "II",  "label": "All 5 Prime Armory Trials + Apex Hunter in the Hunter's Guild",
      "check": _all_trials_and_apex},
+    {"cat": "Prime",    "stage": "III", "label": "Wave Master Ragnarok cleared",
+     "check": lambda cv, _: (_cv(cv, "GM_Wave_Clears") & 128) != 0},
 ]
 
 

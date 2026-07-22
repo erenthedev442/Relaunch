@@ -100,7 +100,7 @@ describe('Dynamis Divergence T3 solo balance', function()
             NMKilled_11365 = 1,
             NMKilled_11366 = 1,
             Voidspire_Best_Floor = 10,
-            GM_Wave_Clears = 31,
+            GM_Wave_Clears = 15,
             DivergenceMegaSlots = 1,
         }
         local player =
