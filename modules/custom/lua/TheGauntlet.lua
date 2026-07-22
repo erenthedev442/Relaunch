@@ -271,7 +271,9 @@ local function chooseGauntletMobSkill(level, mob, target, skillId)
 
         local selected = randomChoice(skills)
         if selected == 957 then
-            mob:setLocalVar('Gauntlet_NidhoggTerrorReady', os.time() + 45)
+            mob:setLocalVar(
+                'Gauntlet_NidhoggTerrorReady',
+                os.time() + C.bossOverrides.absoluteTerror.recastSec)
         end
 
         return selected
@@ -288,12 +290,28 @@ local function chooseGauntletMobSkill(level, mob, target, skillId)
 
         return selected
     elseif level == 6 then -- Vrtra
-        local skills = { 1309, 1311, 1315, 1316 }
+        local skills = { 1309, 1311, 1316 }
+        local terror = C.bossOverrides.vrtraTerror
+
+        -- Absolute Terror is controlled separately so Vrtra cannot select it
+        -- repeatedly on consecutive TP moves.
+        if
+            not holdFireLocked(mob) and
+            os.time() >= (mob:getLocalVar('Gauntlet_VrtraTerrorReady') or 0)
+        then
+            table.insert(skills, 1315)
+        end
+
         if mob:getAnimationSub() ~= 1 and target and not target:isInfront(mob, 128) then
             table.insert(skills, 1310)
         end
 
-        return randomChoice(skills)
+        local selected = randomChoice(skills)
+        if selected == 1315 then
+            mob:setLocalVar('Gauntlet_VrtraTerrorReady', os.time() + terror.recastSec)
+        end
+
+        return selected
     elseif level == 10 then -- Shinryu: skip basic attack placeholders and use real TP moves.
         local skills = { 2664, 2665, 2666, 2667, 2708, 2709 }
         local hpp = mob:getHPP()
@@ -969,8 +987,12 @@ m:addOverride('xi.actions.mobskills.spike_flail.onMobWeaponSkill', function(mob,
 end)
 
 m:addOverride('xi.actions.mobskills.absolute_terror.onMobWeaponSkill', function(mob, target, skill, action)
-    local ov = C.bossOverrides.absoluteTerror
-    if not isGauntletLevelTarget(mob, target, ov.level) then
+    local ov
+    if isGauntletLevelTarget(mob, target, C.bossOverrides.absoluteTerror.level) then
+        ov = C.bossOverrides.absoluteTerror
+    elseif isGauntletLevelTarget(mob, target, C.bossOverrides.vrtraTerror.level) then
+        ov = C.bossOverrides.vrtraTerror
+    else
         return super(mob, target, skill, action)
     end
 
@@ -1035,7 +1057,7 @@ m:addOverride('xi.actions.mobskills.meteor.onMobSkillFinalize', function(mob, sk
 end)
 
 -- Kirin's spell damage caps: Stonega IV (AoE), Stone V (single), and Quake (single)
--- all deal too much raw damage given Kirin's INT/MATT stat block. Cap each at 5000
+-- all deal too much raw damage given Kirin's INT/MATT stat block. Cap each at 4500
 -- so they stay threatening without one-shotting well-geared players. Magic spells
 -- bypass Utsusemi by design (shadow absorption is physical-only) -- the cap is the
 -- intended mitigation, not shadows.
@@ -1046,9 +1068,14 @@ local function kirinSpellCap(caster, target, spell)
     end
 
     local previousCap = target:getMod(xi.mod.RECEIVED_DAMAGE_CAP)
-    target:setMod(xi.mod.RECEIVED_DAMAGE_CAP, ov.damageCap)
-    local damage = super(caster, target, spell)
+    local temporaryCap = previousCap > 0 and math.min(previousCap, ov.damageCap) or ov.damageCap
+    target:setMod(xi.mod.RECEIVED_DAMAGE_CAP, temporaryCap)
+    local ok, damage = pcall(super, caster, target, spell)
     target:setMod(xi.mod.RECEIVED_DAMAGE_CAP, previousCap)
+
+    if not ok then
+        error(damage)
+    end
 
     return damage
 end

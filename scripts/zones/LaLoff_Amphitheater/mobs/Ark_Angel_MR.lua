@@ -69,7 +69,15 @@ end
 
 entity.onMobFight = function(mob, target)
     if mob:getLocalVar('Charm') == 0 and mob:getHPP() < 50 then
-        mob:useMobAbility(xi.mobSkill.CHARM)
+        local battlefield = mob:getBattlefield()
+
+        -- Charming a player inside a custom-ID HTBF can disconnect the client,
+        -- especially when trusts or an alliance are present. Keep retail/base
+        -- Divine Might unchanged and suppress only the custom HTBF use.
+        if not battlefield or battlefield:getLocalVar('HTBF') ~= 1 then
+            mob:useMobAbility(xi.mobSkill.CHARM)
+        end
+
         mob:setLocalVar('Charm', 1)
     end
 

@@ -97,4 +97,25 @@ describe('HTBF catalog integrity and balance', function()
         assert(catalog.fights.legacy_of_the_lost.allowedAreas[1])
         assert(not catalog.fights.legacy_of_the_lost.allowedAreas[2])
     end)
+
+    it('uses safe staging layers for the reported mission battlefields', function()
+        local warriors = catalog.fights.warriors_path.entryPosByArea
+        local feared   = catalog.fights.one_to_be_feared.entryPosByArea
+        local nexus    = catalog.fights.celestial_nexus.entryPosByArea
+
+        for area = 1, 3 do
+            assert(warriors[area][1] == feared[area][1])
+            assert(warriors[area][2] == feared[area][2])
+            assert(warriors[area][3] == feared[area][3])
+            assert(warriors[area][4] == 193)
+        end
+
+        assert(warriors[1][1] == -780.010 and warriors[1][2] == -103.348)
+        assert(warriors[2][1] == -140.029 and warriors[2][2] == -23.348)
+        assert(warriors[3][1] == 499.969 and warriors[3][2] == 56.652)
+
+        assert(nexus[1][3] == -35.0)
+        assert(nexus[2][3] == 659.5)
+        assert(nexus[3][3] == -680.2)
+    end)
 end)

@@ -332,11 +332,14 @@ catalog.fights =
         gem = xi.ki.WARRIORS_PATH_PHANTOM_GEM, baseIndex = 2, baseBattlefieldId = 4070,
         reuseBaseId = xi.battlefield.id.WARRIORS_PATH, label = "The Warrior's Path",
         difficulty = 'standard', rewardClass = 'standard',
+        -- Sealion's Den starts these encounters inside the airship. The battle
+        -- deck mob coordinates are a different map layer and eject players who
+        -- are placed there directly by a custom battlefield ID.
         entryPosByArea =
         {
-            [1] = { -640.0, -231.3, 495.0, 0 },
-            [2] = {    0.0, -151.3, 135.0, 0 },
-            [3] = {  640.0,  -71.3, -225.0, 0 },
+            [1] = { -780.010, -103.348,  -86.327, 193 },
+            [2] = { -140.029,  -23.348, -446.376, 193 },
+            [3] = {  499.969,   56.652, -806.132, 193 },
         },
     },
     -- One to be Feared shares Sealion's Den entrance _0w0 (base 0/1, Warrior's
@@ -350,9 +353,9 @@ catalog.fights =
         label = 'One to be Feared', difficulty = 'mechanics', rewardClass = 'epic',
         entryPosByArea =
         {
-            [1] = { -640.0, -231.3, 480.0, 0 },
-            [2] = {    0.0, -151.3, 120.0, 0 },
-            [3] = {  640.0,  -71.3, -240.0, 0 },
+            [1] = { -780.010, -103.348,  -86.327, 193 },
+            [2] = { -140.029,  -23.348, -446.376, 193 },
+            [3] = {  499.969,   56.652, -806.132, 193 },
         },
     },
     head_wind =
@@ -452,9 +455,9 @@ catalog.fights =
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea =
         {
-            [1] = { -32.0, -18.0,  -58.0, 0 },
-            [2] = { 456.3, -21.1,  636.5, 0 },
-            [3] = { 505.6,  -4.1, -723.2, 0 },
+            [1] = { -32.0, -18.0,  -35.0, 128 },
+            [2] = { 456.3, -21.1,  659.5, 128 },
+            [3] = { 505.6,  -4.1, -680.2, 128 },
         },
     },
     -- Divine Might: 18-player, multi-entrance (qm1_1..qm1_5). Base uses index 5

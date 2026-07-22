@@ -144,7 +144,12 @@ function htbf.printEntranceLegend(player, npc)
                 end
             end
             if match then
-                rows[#rows + 1] = { idx = f.baseIndex, label = f.label }
+                rows[#rows + 1] =
+                {
+                    idx   = f.baseIndex,
+                    label = f.label,
+                    gem   = catalog.gemName[f.gem] or 'Phantom Gem',
+                }
             end
         end
     end
@@ -168,9 +173,15 @@ function htbf.printEntranceLegend(player, npc)
     table.sort(rows, function(a, b) return a.idx < b.idx end)
 
     player:printToPlayer('[HTBF] Some entries below show no name (client limit). High-Tier Battlefields:', xi.msg.channel.SYSTEM_3)
-    for _, r in ipairs(rows) do
+    if #rows > 1 then
+        player:printToPlayer(
+            '[HTBF] You hold gems for multiple fights at this entrance. Choose the correct three-row group.',
+            xi.msg.channel.SYSTEM_3)
+    end
+
+    for group, r in ipairs(rows) do
         player:printToPlayer(string.format(
-            '[HTBF]   %s -- three consecutive rows = Tier I, II, III (easy -> hardest).', r.label),
+            '[HTBF]   Group %d: %s (%s) -- Tier I, II, III.', group, r.label, r.gem),
             xi.msg.channel.SYSTEM_3)
     end
 end

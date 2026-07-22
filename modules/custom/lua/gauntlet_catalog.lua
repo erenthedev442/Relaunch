@@ -218,12 +218,15 @@ C.bossOverrides =
 {
     earthbreaker   = { level = 2, damageCap = 4500, stunSec = 10 },
     spikeFlail     = { levels = { 4, 6 }, damageFloor = 12000 },
-    absoluteTerror = { level = 4, terrorMinSec = 10, terrorMaxSec = 15 },
+    absoluteTerror = { level = 4, terrorMinSec = 10, terrorMaxSec = 15, recastSec = 45 },
+    vrtraTerror    = { level = 6, terrorMinSec = 6,  terrorMaxSec = 8,  recastSec = 60 },
     meteor         = { level = 5, damage = 6500, recastSec = 60 },
     sableBreath    = { level = 6, hpPct = 0.20, damageCap = 7000 },
-    kirinSpellCap  = { level = 7, damageCap = 5000 },
+    kirinSpellCap  = { level = 7, damageCap = 4500 },
     medusaJavelin  = { level = 8, bindSec = 8 },
 }
+
+C.WEAK_WINDOW_EXTRA_DOWN = 1000
 
 function C.weakWindowMods(level)
     local t = level - 1
@@ -244,10 +247,10 @@ function C.weakWindowMods(level)
     end
 
     return {
-        defDown  = math.floor(math.max(0, math.floor(C.BASE_DEF + t * C.DEF_PER_LEVEL + 0.5) - currentDef) * mult + 0.5),
-        mdefDown = math.floor(math.max(0, math.floor(C.BASE_MDEF + t * C.MDEF_PER_LEVEL + 0.5) - currentMdef) * mult + 0.5),
-        evaDown  = math.floor(math.max(0, math.floor(C.BASE_EVA + t * C.EVA_PER_LEVEL + 0.5) - currentEva) * mult + 0.5),
-        mevaDown = math.floor(math.max(0, math.floor(C.BASE_MEVA + t * C.MEVA_PER_LEVEL + 0.5) - currentMeva) * mult + 0.5),
+        defDown  = math.floor(math.max(0, math.floor(C.BASE_DEF + t * C.DEF_PER_LEVEL + 0.5) - currentDef) * mult + 0.5) + C.WEAK_WINDOW_EXTRA_DOWN,
+        mdefDown = math.floor(math.max(0, math.floor(C.BASE_MDEF + t * C.MDEF_PER_LEVEL + 0.5) - currentMdef) * mult + 0.5) + C.WEAK_WINDOW_EXTRA_DOWN,
+        evaDown  = math.floor(math.max(0, math.floor(C.BASE_EVA + t * C.EVA_PER_LEVEL + 0.5) - currentEva) * mult + 0.5) + C.WEAK_WINDOW_EXTRA_DOWN,
+        mevaDown = math.floor(math.max(0, math.floor(C.BASE_MEVA + t * C.MEVA_PER_LEVEL + 0.5) - currentMeva) * mult + 0.5) + C.WEAK_WINDOW_EXTRA_DOWN,
     }
 end
 
@@ -417,7 +420,9 @@ function C.mechCfg(level)
                 { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'hide turns iron-hard -- try magic!' },
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'shrugs off magic -- use steel!' },
             } },
-            cc     = { periodSec = 26, effect = xi.effect.TERROR, dur = 3, msg = 'looses a petrifying roar!' },
+            -- Vrtra already has Absolute Terror in its native TP list. Giving it
+            -- this scripted pulse as well caused near-continuous Terror chains.
+            cc     = (level == 5) and { periodSec = 26, effect = xi.effect.TERROR, dur = 3, msg = 'looses a petrifying roar!' } or nil,
             drain  = { periodSec = 15, heal = level * 1000 },
             holdFire = C.holdFireCfg(level),
             phases = {
@@ -433,7 +438,8 @@ function C.mechCfg(level)
                 { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'scales over -- magic only!' },
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'wards itself -- steel only!' },
             } },
-            cc     = { periodSec = (level == 4) and 35 or 20, effect = xi.effect.TERROR, dur = 5, msg = 'shrieks -- you freeze in fear!' },
+            -- Nidhogg also carries Absolute Terror as a native TP move.
+            cc     = (level == 3) and { periodSec = 20, effect = xi.effect.TERROR, dur = 5, msg = 'shrieks -- you freeze in fear!' } or nil,
             drain  = { periodSec = 15, heal = level * 1000 },
             holdFire = C.holdFireCfg(level),
             phases = {
