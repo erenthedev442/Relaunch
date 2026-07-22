@@ -16,12 +16,12 @@
 --   suit. A Legacy keepsake --
 --   cosmetic only.
 -- ------------------------------------------------------------
-INSERT INTO item_basic (itemid, subid, name, sortname, stackSize, flags, ah, NoSale, BaseSell) VALUES
-  (23875, 0, 'Legendary Jacket', 'legendary_jacket', 1, 64596, 0, 0, 0)
+INSERT INTO item_basic (itemid, subid, name, sortname, name_jp, type, stackSize, flags, aH, BaseSell) VALUES
+  (23875, 0, 'Legendary Jacket', 'legendary_jacket', 'Legendary Jacket', 6, 1, 64596, 0, 0)
 ON DUPLICATE KEY UPDATE name=VALUES(name), sortname=VALUES(sortname), stackSize=VALUES(stackSize), flags=VALUES(flags);
-INSERT INTO item_equipment (itemid, name, level, ilvl, jobs, MId, shieldSize, scriptType, slot, rslot, su_level) VALUES
+INSERT INTO item_equipment (itemid, name, level, ilevel, jobs, MId, shieldSize, scriptType, slot, rslot, su_level) VALUES
   (23875, 'Legendary Jacket', 1, 0, 8388606, 0, 0, 0, 32, 0, 0)
-ON DUPLICATE KEY UPDATE level=VALUES(level), ilvl=VALUES(ilvl), jobs=VALUES(jobs), slot=VALUES(slot), shieldSize=VALUES(shieldSize);
+ON DUPLICATE KEY UPDATE level=VALUES(level), ilevel=VALUES(ilevel), jobs=VALUES(jobs), slot=VALUES(slot), shieldSize=VALUES(shieldSize);
 DELETE FROM item_mods WHERE itemid = 23875;
 -- no item_mods rows parsed for Legendary Jacket
 -- TODO (needs Lua): The top of the Legendary track
@@ -33,12 +33,12 @@ DELETE FROM item_mods WHERE itemid = 23875;
 --   Legendary track suit pants.
 --   A Legacy keepsake -- cosmetic only.
 -- ------------------------------------------------------------
-INSERT INTO item_basic (itemid, subid, name, sortname, stackSize, flags, ah, NoSale, BaseSell) VALUES
-  (23876, 0, 'Legendary Pants', 'legendary_pants', 1, 64596, 0, 0, 0)
+INSERT INTO item_basic (itemid, subid, name, sortname, name_jp, type, stackSize, flags, aH, BaseSell) VALUES
+  (23876, 0, 'Legendary Pants', 'legendary_pants', 'Legendary Pants', 6, 1, 64596, 0, 0)
 ON DUPLICATE KEY UPDATE name=VALUES(name), sortname=VALUES(sortname), stackSize=VALUES(stackSize), flags=VALUES(flags);
-INSERT INTO item_equipment (itemid, name, level, ilvl, jobs, MId, shieldSize, scriptType, slot, rslot, su_level) VALUES
+INSERT INTO item_equipment (itemid, name, level, ilevel, jobs, MId, shieldSize, scriptType, slot, rslot, su_level) VALUES
   (23876, 'Legendary Pants', 1, 0, 8388606, 0, 0, 0, 128, 0, 0)
-ON DUPLICATE KEY UPDATE level=VALUES(level), ilvl=VALUES(ilvl), jobs=VALUES(jobs), slot=VALUES(slot), shieldSize=VALUES(shieldSize);
+ON DUPLICATE KEY UPDATE level=VALUES(level), ilevel=VALUES(ilevel), jobs=VALUES(jobs), slot=VALUES(slot), shieldSize=VALUES(shieldSize);
 DELETE FROM item_mods WHERE itemid = 23876;
 -- no item_mods rows parsed for Legendary Pants
 -- TODO (needs Lua): Legendary track suit pants.
@@ -49,12 +49,12 @@ DELETE FROM item_mods WHERE itemid = 23876;
 --   Legendary track suit shoes.
 --   A Legacy keepsake -- cosmetic only.
 -- ------------------------------------------------------------
-INSERT INTO item_basic (itemid, subid, name, sortname, stackSize, flags, ah, NoSale, BaseSell) VALUES
-  (23877, 0, 'Legendary Shoes', 'legendary_shoes', 1, 64596, 0, 0, 0)
+INSERT INTO item_basic (itemid, subid, name, sortname, name_jp, type, stackSize, flags, aH, BaseSell) VALUES
+  (23877, 0, 'Legendary Shoes', 'legendary_shoes', 'Legendary Shoes', 6, 1, 64596, 0, 0)
 ON DUPLICATE KEY UPDATE name=VALUES(name), sortname=VALUES(sortname), stackSize=VALUES(stackSize), flags=VALUES(flags);
-INSERT INTO item_equipment (itemid, name, level, ilvl, jobs, MId, shieldSize, scriptType, slot, rslot, su_level) VALUES
+INSERT INTO item_equipment (itemid, name, level, ilevel, jobs, MId, shieldSize, scriptType, slot, rslot, su_level) VALUES
   (23877, 'Legendary Shoes', 1, 0, 8388606, 0, 0, 0, 256, 0, 0)
-ON DUPLICATE KEY UPDATE level=VALUES(level), ilvl=VALUES(ilvl), jobs=VALUES(jobs), slot=VALUES(slot), shieldSize=VALUES(shieldSize);
+ON DUPLICATE KEY UPDATE level=VALUES(level), ilevel=VALUES(ilevel), jobs=VALUES(jobs), slot=VALUES(slot), shieldSize=VALUES(shieldSize);
 DELETE FROM item_mods WHERE itemid = 23877;
 -- no item_mods rows parsed for Legendary Shoes
 -- TODO (needs Lua): Legendary track suit shoes.

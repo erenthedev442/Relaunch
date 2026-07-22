@@ -18,9 +18,8 @@
 
 UPDATE `item_basic`
 SET
-    `flags`    = (`flags` | 57408) & ~4096,
+    `flags`    = (`flags` | 57408) & ~4096,   -- set Rare/Ex/NoDelivery/NoAuction, clear NoSale (0x1000)
     `aH`       = 0,
-    `NoSale`   = 0,
     `BaseSell` = 5000
 WHERE `itemId` IN
 (
