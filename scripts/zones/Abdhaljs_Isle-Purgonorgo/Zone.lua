@@ -28,7 +28,7 @@ end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 	if triggerArea:getTriggerAreaID() == 1 then
-        layer:setPos(517.57, -3.4, 475.83, 226)
+        player:setPos(517.57, -3.4, 475.83, 226)
         player:printToPlayer('This area is off limits.')
 	elseif triggerArea:getTriggerAreaID() == 2 then
         player:setPos(609.7, -2.5, 470.0, 158)
