@@ -49,6 +49,12 @@ describe('Dynamis Divergence T3 solo balance', function()
         end
     end)
 
+    it('keeps the Windurst mega-boss in its registered custom entity range', function()
+        local windurst = instances[3].config
+        assert(windurst.megaBoss == 17990606)
+        assert(xi.divergence.bossMechCfgs[windurst.megaBoss] ~= nil)
+    end)
+
     it('never treats a preloaded but unspawned boss as defeated', function()
         local originalGetMobByID = GetMobByID
         local vars = {}

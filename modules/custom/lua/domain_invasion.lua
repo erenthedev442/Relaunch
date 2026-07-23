@@ -178,6 +178,11 @@ local nextWave, endDomainInvasion, beginAssault
 -----------------------------------
 local function spawnMob(zone, zoneCfg, zoneId, anchor, def, level, mods, hpMult, opts)
     opts = opts or {}
+    local anchorOk, anchorValid = pcall(function()
+        return anchor and anchor:getZoneID() == zoneId and anchor:getHP() > 0
+    end)
+    if not anchorOk or not anchorValid then return nil end
+
     local points = zoneCfg.spawnPoints or {}
     local origin = points[math.random(math.max(1, #points))] or zoneCfg.rallyPos
     if not origin then return nil end
@@ -189,7 +194,10 @@ local function spawnMob(zone, zoneCfg, zoneId, anchor, def, level, mods, hpMult,
         local dist  = catalog.spawnRingMin
                   + math.random() * (catalog.spawnRingMax - catalog.spawnRingMin)
         local cx, cz = px + math.cos(angle) * dist, pz + math.sin(angle) * dist
-        if zone:isNavigablePoint({ x = cx, y = py, z = cz }) then
+        local navOk, navigable = pcall(function()
+            return zone:isNavigablePoint({ x = cx, y = py, z = cz })
+        end)
+        if navOk and navigable then
             mx, mz = cx, cz
             break
         end
@@ -199,7 +207,7 @@ local function spawnMob(zone, zoneCfg, zoneId, anchor, def, level, mods, hpMult,
     -- the empty-wave guard below terminates the event if every spawn fails.
     if not mx or not mz then return nil end
 
-    local mob = zone:insertDynamicEntity({
+    local inserted, mob = pcall(function() return zone:insertDynamicEntity({
         objtype              = xi.objType.MOB,
         groupId              = def.groupId,
         groupZoneId          = catalog.groupZoneId,
@@ -257,9 +265,11 @@ local function spawnMob(zone, zoneCfg, zoneId, anchor, def, level, mods, hpMult,
         onMobFight = function(mfMob, mfTarget)
             mechanics.tick(mfMob, mfTarget)
         end,
-    })
+    }) end)
 
-    if mob then
+    if not inserted or not mob then return nil end
+
+    local configured = pcall(function()
         mob:setSpawn(mx, py, mz, 0)
         mob:spawn()
         mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
@@ -271,10 +281,15 @@ local function spawnMob(zone, zoneCfg, zoneId, anchor, def, level, mods, hpMult,
             mob:setHP(newMax)
         end
         if opts.modelSize then
-            pcall(function() mob:setModelSize(opts.modelSize) end)
+            mob:setModelSize(opts.modelSize)
         end
         mob:addEnmity(anchor, 1, 1)
+    end)
+    if not configured then
+        pcall(function() mob:despawn() end)
+        return nil
     end
+
     return mob
 end
 
@@ -512,12 +527,22 @@ local function checkClock(player)
     end
 end
 
+local CLOCK_ARMED_VAR = 'DI_ClockArmed'
+local TICK_ZONE_IDS = { [288] = true, [289] = true }
+
 local function armClock(player)
     player:timer(catalog.tickSeconds * 1000, function(p)
-        if p then
-            pcall(function() checkClock(p) end)
-            armClock(p)
+        if not p then return end
+
+        local inTickZone = false
+        pcall(function() inTickZone = TICK_ZONE_IDS[p:getZoneID()] == true end)
+        if not inTickZone then
+            pcall(function() p:setLocalVar(CLOCK_ARMED_VAR, 0) end)
+            return
         end
+
+        pcall(function() checkClock(p) end)
+        armClock(p)
     end)
 end
 
@@ -527,7 +552,12 @@ for _, zoneName in ipairs(TICK_ZONES) do
     require(string.format('scripts/zones/%s/Zone', zoneName))
     m:addOverride(string.format('xi.zones.%s.Zone.onZoneIn', zoneName), function(player, prevZone)
         local result = super(player, prevZone)
-        player:timer(3000, function(p) armClock(p) end)
+        if player:getLocalVar(CLOCK_ARMED_VAR) == 0 then
+            player:setLocalVar(CLOCK_ARMED_VAR, 1)
+            player:timer(3000, function(p)
+                if p then armClock(p) end
+            end)
+        end
         return result
     end)
 end

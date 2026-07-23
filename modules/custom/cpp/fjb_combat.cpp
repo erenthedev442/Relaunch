@@ -77,18 +77,35 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
 {
     constexpr int32 PRIME_ABSOLUTE_DAMAGE_CAP = 1999999;
 
-    if (globalCap <= 0 || PAttacker == nullptr || PAttacker->objtype != TYPE_PC)
+    if (PAttacker == nullptr || PAttacker->objtype != TYPE_PC)
     {
         return globalCap;
     }
+
+    int32 effectiveCap = globalCap;
 
     const auto primeCap = static_cast<int32>(PAttacker->GetLocalVar("PrimeWsDamageCap"));
-    if (primeCap <= globalCap)
+    if (effectiveCap > 0 && primeCap > effectiveCap)
     {
-        return globalCap;
+        effectiveCap = std::min(primeCap, PRIME_ABSOLUTE_DAMAGE_CAP);
     }
 
-    return std::min(primeCap, PRIME_ABSOLUTE_DAMAGE_CAP);
+    // These synchronous WS windows are restrictive ceilings. Apply them after
+    // Prime's optional raised ceiling so a capped AoE/Final-Ambuscade WS can
+    // never inherit a higher cap.
+    const auto aoeWsCap = static_cast<int32>(PAttacker->GetLocalVar("AoEWsDamageCap"));
+    if (aoeWsCap > 0 && (effectiveCap <= 0 || aoeWsCap < effectiveCap))
+    {
+        effectiveCap = aoeWsCap;
+    }
+
+    const auto ambuscadeWsCap = static_cast<int32>(PAttacker->GetLocalVar("AmbuscadeWsDamageCap"));
+    if (ambuscadeWsCap > 0 && (effectiveCap <= 0 || ambuscadeWsCap < effectiveCap))
+    {
+        effectiveCap = ambuscadeWsCap;
+    }
+
+    return effectiveCap;
 }
 
 void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_view type)

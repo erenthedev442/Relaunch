@@ -239,6 +239,24 @@ local avatarEntryPos =
     [3] = { -377.0, -79.0,  483.0, 0 },
 }
 
+-- One-time bridge from Tier II into the real Tier III roster. Final Proving
+-- reuses Garuda Prime but applies roughly half of the Avatar Tier III scaling.
+-- Clearing it sets both completionVar (unlocks every real T3) and tierClearVar
+-- (satisfies Ambuscade's existing T3-clear requirement).
+catalog.finalTest =
+{
+    fightKey       = 'trial_by_wind',
+    label          = 'Final Proving',
+    battlefieldId  = 4220,
+    index          = 11,
+    completionVar  = 'HTBF_FinalTest_Done',
+    tierClearVar   = 'HTBF_Cleared_T3',
+    scale          = { name = 'Final', lvl = 1.50, hp = 8.0, att = 3500, def = 3750, macc = 900, meva = 1300, eva = 950 },
+    reward         = { gil = 75000, marks = 60 },
+    entryPosByArea = avatarEntryPos,
+    warp            = { zone = 201, x = -359.05, y = -0.13, z = -379.98, rot = 0 },
+}
+
 -- ── Fights ──────────────────────────────────────────────────────────────────
 -- key              -> used by the tier files + vendor
 -- zone/entryNpc/exitNpc -> the existing burning-circle entrance (battlefield base)

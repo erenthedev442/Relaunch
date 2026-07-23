@@ -32,7 +32,7 @@ local CONFIG =
         17990583, 17990585, 17990588, 17990590, 17990593,
         17990595, 17990598, 17990600, 17990603, 17990605,
     },
-    megaBoss  = 17989981,                                   -- Fii Pexu the Eternal (relocated: far corner)
+    megaBoss  = 17990606,                                   -- Fii Pexu the Eternal (fresh registered slot, far corner)
     disjoined = 17990425,                                   -- Disjoined Tarutaru (wave 3, at far corner)
 }
 instanceObject.config = CONFIG

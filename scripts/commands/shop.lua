@@ -1,8 +1,7 @@
 -----------------------------------
--- func: shop (category) (subcategory)
--- desc: Opens an NPC-style item shop menu for players.
---       Categories: general, weapons, armor, consumables, food
---       Usage: !shop  OR  !shop weapons
+-- func: shop
+-- desc: Opens a browsable shop menu, then the selected native buy/sell window.
+--       Usage: !shop
 --       (Augment catalysts are NO LONGER sold for gil -- they drop from NMs.
 --        Farm them, then trade to the Augment Moogle at GM Home to apply.)
 -----------------------------------
@@ -12,7 +11,7 @@ local commandObj = {}
 commandObj.cmdprops =
 {
     permission = 0,
-    parameters = 'ss',
+    parameters = '',
 }
 
 -----------------------------------
@@ -26,20 +25,8 @@ local stock =
 {
     general =
     {
-        { xi.item.ANTIDOTE,                  50 },
         { 27556,                          100000 },  -- Echad Ring
-        { xi.item.FLASK_OF_ECHO_DROPS,       100 },
-        { xi.item.ETHER,                     300 },
-        { xi.item.FLASK_OF_EYE_DROPS,        50 },
-        { xi.item.HI_ETHER,                 1000 },
-        { xi.item.HI_POTION,                 400 },
-        { xi.item.FLASK_OF_HOLY_WATER,       100 },
-        { xi.item.STRIP_OF_MEAT_JERKY,       50 },
-        { xi.item.FLASK_OF_SLEEPING_POTION,  200 },
         { 27557,                          100000 },  -- Trizek Ring
-        { xi.item.TRUMP_CARD,                 50 },  -- Trump Card
-        { xi.item.TRUMP_CARD_CASE,            50 },  -- Trump Card Case
-        { xi.item.X_POTION,                 1000 },
         { 27604,                          300000 },  -- Aptitude Mantle +1
     },
 
@@ -120,7 +107,7 @@ local stock =
     -- Corsair dice: each die TEACHES its Phantom Roll when used by a COR of the
     -- required level (e.g. Monk Die -> Monk's Roll). Rolls are item-taught on
     -- this server, so a cheap dice shop lets COR players assemble their full kit
-    -- without AH hunting. 1 gil each.  (!shop dice)
+    -- without AH hunting. 1 gil each. (Shop > Job Supplies > Corsair Dice)
     dice =
     {
         { 5502, 1 },  -- Allies' Die       -> Allies' Roll
@@ -233,7 +220,7 @@ local stock =
     },
 
     -- Corsair Quick Draw cards (ammo slot, consumed on Quick Draw). Cheap --
-    -- a COR burns through these fast, so keep a stack handy.  (!shop cards)
+    -- a COR burns through these fast, so keep a stack handy. (Shop > Job Supplies > Corsair Cards)
     cards =
     {
         { 2176, 50 },  -- Fire Card
@@ -247,7 +234,7 @@ local stock =
         { 2974, 50 },  -- Trump Card
     },
 
-    -- QoL "Instant" scrolls: self-warp, reraise, and instant buffs.  (!shop scrolls)
+    -- QoL "Instant" scrolls: self-warp, reraise, and instant buffs.
     scrolls =
     {
         { 4181, 500 },  -- Instant Warp
@@ -258,7 +245,7 @@ local stock =
         { 5990, 300 },  -- Instant Stoneskin
     },
 
-    -- Crafting crystals + clusters, one of each element.  (!shop crystals)
+    -- Crafting crystals + clusters, one of each element.
     crystals =
     {
         { 4096, 100 },   -- Fire Crystal
@@ -280,7 +267,7 @@ local stock =
     },
 
     -- Dungeon coffer keys -- open the ??? coffers for gear/mats/gil. Niche,
-    -- for treasure-hunters (16-slot window cap, so this is the coffer set).  (!shop keys)
+    -- for treasure-hunters (16-slot window cap, so this is the coffer set).
     keys =
     {
         { 1042, 5000 },  -- Davoi Coffer Key
@@ -302,8 +289,8 @@ local stock =
     },
 }
 
--- Rare/Ex budget accessories. Native shop windows hold at most 16 items, so
--- these are split into thematic `!shop armor <page>` sub-pages. Their item
+-- Bound budget accessories. Native shop windows hold at most 16 items, so
+-- these are split into thematic Equipment submenu pages. Their item
 -- restrictions and 5,000-gil NPC resale value are applied by
 -- modules/custom/sql/zz_shop_armor_rare_ex.sql.
 local armorStock =
@@ -368,15 +355,14 @@ local armorStock =
 -- Augment catalysts: the gil-purchase shop was REMOVED for relaunch (owner
 -- request 2026-06-24). Catalysts must now be FARMED FROM NMs and traded to the
 -- Augment Moogle at GM Home -- there is no longer a gil shortcut. The whole
--- "!shop augments" category (catalog pull, 13 thematic groups, the EXP/Capacity
--- 'points' group, and the Maat's Cap prepend) is gone; see validCategories and
--- the onTrigger handler below.
+-- old augment category (catalog pull, 13 thematic groups, the EXP/Capacity
+-- 'points' group, and the Maat's Cap prepend) is gone.
 
 -----------------------------------
 -- BST pets: jug broths (summon a pet) + pet food (heal/feed it).
 -- Split into two sub-pages because a FFXI shop window holds only 16 items:
---   !shop pets        -> curated best/most-used jug pets
---   !shop pets food   -> pet food biscuits
+--   Jug Pets -> curated best/most-used jug pets
+--   Pet Food -> pet food biscuits
 -- Buy a broth, then use Call Beast / Bestial Loyalty to summon it.
 -- NOTE: the broth->pet link is data/C++-driven, so the pet labels below are
 -- best-effort -- players buy by the broth's in-game name. Prices easily tuned.
@@ -430,142 +416,163 @@ do
     end
 end
 
-local validCategories = 'general, weapons, armor, consumables, food, dice, ammo, ninja, cards, scrolls, crystals, keys, pets, reforge'
+local showMainMenu
+local showEquipmentMenu
+local showSuppliesMenu
+local showJobSuppliesMenu
+local showTravelCraftMenu
+local showPetMenu
+local showReforgeMenu
 
-commandObj.onTrigger = function(player, category, subcat)
-    local cat = category and category:lower() or 'general'
+local function openMenu(player, title, options)
+    player:timer(30, function(p)
+        p:customMenu({ title = title, options = options })
+    end)
+end
 
-    -- Augment catalysts are no longer sold for gil (removed for relaunch) --
-    -- they now drop from NMs. Point players at the farm path.
-    if cat == 'augments' then
-        player:printToPlayer('Augment catalysts are no longer sold for gil -- farm them from NMs, then trade them to the Augment Moogle at GM Home to apply.', xi.msg.channel.SYSTEM_3)
+local function openStock(player, items)
+    player:timer(30, function(p)
+        xi.shop.general(p, items)
+    end)
+end
+
+local function claimReforgeSet(player, setKey)
+    local H = xi.msg.channel.SYSTEM_3
+    if not reforgeCatalog then
+        player:printToPlayer('The reforge claim is unavailable (catalog failed to load).', H)
         return
     end
 
-    -- Budget Rare/Ex armor pages. With no sub-page, retain the original armor
-    -- stock and advertise the additional pages.
-    if cat == 'armor' then
-        local sub = subcat and subcat:lower() or ''
-        local page = armorStock[sub]
-        if page then
-            player:printToPlayer(string.format(
-                'Rare/Ex armor page: %s -- 10,000 gil each; NPC resale 5,000 gil.',
-                sub), xi.msg.channel.SYSTEM_3)
-            xi.shop.general(player, page)
-            return
-        elseif sub ~= '' then
-            player:printToPlayer(
-                'Unknown armor page. Use: !shop armor rings|pearls|accessories|combat',
-                xi.msg.channel.SYSTEM_3)
-            return
-        end
-
-        player:printToPlayer(
-            'Rare/Ex pages: !shop armor rings|pearls|accessories|combat',
-            xi.msg.channel.SYSTEM_3)
+    local job = player:getMainJob()
+    if not reforgeCatalog.pieces[job] then
+        player:printToPlayer('Your current main job has no reforged set configured yet.', H)
+        return
     end
 
-    -- BST pets: curated jug broths, with a pet-food sub-page.
-    if cat == 'pets' then
-        local sub = subcat and subcat:lower() or ''
-        if sub == 'food' or sub == 'pots' or sub == 'biscuits' then
-            player:printToPlayer('BST pet food -- feed/heal your jug pet.', xi.msg.channel.SYSTEM_3)
-            xi.shop.general(player, petStock.food)
+    local setLabels  = { af = 'Artifact (AF)', relic = 'Relic', empy = 'Empyrean' }
+    local setBits    = { af = 1, relic = 2, empy = 4 }
+    local claimedVar = 'ReforgeClaimed_' .. tostring(job)
+    local claimed    = player:getCharVar(claimedVar)
+    local toGrant    = setKey == 'all' and { 'af', 'relic', 'empy' } or { setKey }
+    local granted, owned, already, failed = 0, 0, 0, 0
+    local newBits = 0
+
+    for _, key in ipairs(toGrant) do
+        local setBit = setBits[key]
+        if bit.band(claimed, setBit) ~= 0 then
+            already = already + 1
         else
-            player:printToPlayer('BST jug pets -- buy a broth, then Call Beast / Bestial Loyalty to summon it.', xi.msg.channel.SYSTEM_3)
-            player:printToPlayer('Pet food page: !shop pets food', xi.msg.channel.SYSTEM_3)
-            xi.shop.general(player, petStock.jugs)
-        end
-        return
-    end
-
-    -- Reforged armor: claim your CURRENT MAIN JOB's ilvl-109 AF/Relic/Empy set(s),
-    -- FREE. Reads the live reforge_catalog so it always matches the Reforge system.
-    if cat == 'reforge' then
-        local H = xi.msg.channel.SYSTEM_3
-        if not reforgeCatalog then
-            player:printToPlayer('The reforge claim is unavailable (catalog failed to load).', H)
-            return
-        end
-
-        local job       = player:getMainJob()
-        local jobPieces = reforgeCatalog.pieces[job]
-        if not jobPieces then
-            player:printToPlayer('Your current main job has no reforged set configured yet.', H)
-            return
-        end
-
-        local setLabels = { af = 'Artifact (AF)', relic = 'Relic', empy = 'Empyrean' }
-        local sub       = subcat and subcat:lower() or ''
-
-        -- No / invalid set name: show the claim menu.
-        if sub ~= 'af' and sub ~= 'relic' and sub ~= 'empy' and sub ~= 'all' then
-            player:printToPlayer('Reforged armor -- claim your main-job ilvl-109 set, FREE:', H)
-            player:printToPlayer('  !shop reforge af     - Artifact set (5 pieces)', H)
-            player:printToPlayer('  !shop reforge relic  - Relic set (5 pieces)', H)
-            player:printToPlayer('  !shop reforge empy   - Empyrean set (5 pieces)', H)
-            player:printToPlayer('  !shop reforge all    - all three sets (15 pieces)', H)
-            player:printToPlayer('  Grants pieces for the job you are CURRENTLY on; switch jobs for another.', H)
-            return
-        end
-
-        -- ONCE per character per job per set. The granted pieces are tradable
-        -- (NOAUCTION, not RARE/EX), so without a guard a player could claim, trade
-        -- to an alt, and re-claim forever = an unlimited free-gear faucet. Track
-        -- claimed sets in a per-job bitmask charvar.
-        local SETBIT     = { af = 1, relic = 2, empy = 4 }
-        local claimedVar = 'ReforgeClaimed_' .. tostring(job)
-        local claimed    = player:getCharVar(claimedVar)
-
-        local toGrant = (sub == 'all') and { 'af', 'relic', 'empy' } or { sub }
-        local granted, owned, already, failed = 0, 0, 0, 0
-        local newBits = 0
-        for _, setKey in ipairs(toGrant) do
-            local b = SETBIT[setKey]
-            if bit.band(claimed, b) ~= 0 then
-                already = already + 1
-            else
-                local setFailed = false
-                for _, itemId in ipairs(reforgeCatalog.buildJobLootPool(job, setKey)) do
-                    if player:hasItem(itemId) then
-                        owned = owned + 1
-                    elseif player:addItem(itemId) then
-                        granted = granted + 1
-                    else
-                        failed = failed + 1
-                        setFailed = true
-                    end
-                end
-                -- Only lock the set once every piece landed; a full-inventory partial
-                -- can be freed up and re-run.
-                if not setFailed then
-                    newBits = bit.bor(newBits, b)
+            local setFailed = false
+            for _, itemId in ipairs(reforgeCatalog.buildJobLootPool(job, key)) do
+                if player:hasItem(itemId) then
+                    owned = owned + 1
+                elseif player:addItem(itemId) then
+                    granted = granted + 1
+                else
+                    failed = failed + 1
+                    setFailed = true
                 end
             end
-        end
-        if newBits ~= 0 then
-            player:setCharVar(claimedVar, bit.bor(claimed, newBits))
-        end
 
-        local label = (sub == 'all') and 'All reforged sets' or (setLabels[sub] .. ' set')
-        player:printToPlayer(string.format('[Reforge] %s -- %d granted, %d already owned%s.', label, granted, owned,
-            already > 0 and string.format(', %d set(s) already claimed', already) or ''), H)
-        if failed > 0 then
-            player:printToPlayer(string.format('  %d piece(s) could not be added -- free inventory space and re-run.', failed), H)
+            if not setFailed then
+                newBits = bit.bor(newBits, setBit)
+            end
         end
-        return
     end
 
-    local shopStock = stock[cat]
+    if newBits ~= 0 then
+        player:setCharVar(claimedVar, bit.bor(claimed, newBits))
+    end
 
-    if not shopStock then
-        player:printToPlayer(string.format('Unknown shop category "%s". Valid categories: %s', cat, validCategories))
-        return
-    end 
-  
-    player:printToPlayer(string.format('Available shop categories: %s', validCategories), xi.msg.channel.SYSTEM_3)
-    player:printToPlayer(string.format('Usage: !shop <category>  (currently browsing: %s)', cat), xi.msg.channel.SYSTEM_3)
-    xi.shop.general(player, shopStock)
+    local label = setKey == 'all' and 'All reforged sets' or (setLabels[setKey] .. ' set')
+    player:printToPlayer(string.format(
+        '[Reforge] %s -- %d granted, %d already owned%s.',
+        label, granted, owned, already > 0 and string.format(', %d set(s) already claimed', already) or ''), H)
+    if failed > 0 then
+        player:printToPlayer(string.format(
+            '  %d piece(s) could not be added -- free inventory space and try again.', failed), H)
+    end
+end
+
+showEquipmentMenu = function(player)
+    openMenu(player, 'Shop: Equipment',
+    {
+        { 'Weapons',           function(p) openStock(p, stock.weapons) end },
+        { 'Standard Armor',    function(p) openStock(p, stock.armor) end },
+        { 'Rings',             function(p) openStock(p, armorStock.rings) end },
+        { 'Earrings / Pearls', function(p) openStock(p, armorStock.pearls) end },
+        { 'Accessories',       function(p) openStock(p, armorStock.accessories) end },
+        { 'Combat Gear',       function(p) openStock(p, armorStock.combat) end },
+        { 'Back',              function(p) showMainMenu(p) end },
+    })
+end
+
+showSuppliesMenu = function(player)
+    openMenu(player, 'Shop: Supplies',
+    {
+        { 'Consumables', function(p) openStock(p, stock.consumables) end },
+        { 'Food',        function(p) openStock(p, stock.food) end },
+        { 'Ammunition',  function(p) openStock(p, stock.ammo) end },
+        { 'Back',        function(p) showMainMenu(p) end },
+    })
+end
+
+showJobSuppliesMenu = function(player)
+    openMenu(player, 'Shop: Job Supplies',
+    {
+        { 'Corsair Dice',  function(p) openStock(p, stock.dice) end },
+        { 'Corsair Cards', function(p) openStock(p, stock.cards) end },
+        { 'Ninja Tools',   function(p) openStock(p, stock.ninja) end },
+        { 'Back',          function(p) showMainMenu(p) end },
+    })
+end
+
+showTravelCraftMenu = function(player)
+    openMenu(player, 'Shop: Travel / Craft',
+    {
+        { 'Instant Scrolls', function(p) openStock(p, stock.scrolls) end },
+        { 'Crystals',        function(p) openStock(p, stock.crystals) end },
+        { 'Coffer Keys',     function(p) openStock(p, stock.keys) end },
+        { 'Back',            function(p) showMainMenu(p) end },
+    })
+end
+
+showPetMenu = function(player)
+    openMenu(player, 'Shop: Beastmaster',
+    {
+        { 'Jug Pets', function(p) openStock(p, petStock.jugs) end },
+        { 'Pet Food', function(p) openStock(p, petStock.food) end },
+        { 'Back',     function(p) showMainMenu(p) end },
+    })
+end
+
+showReforgeMenu = function(player)
+    openMenu(player, 'Free i109 Reforged Sets',
+    {
+        { 'Artifact (AF)', function(p) claimReforgeSet(p, 'af') end },
+        { 'Relic',         function(p) claimReforgeSet(p, 'relic') end },
+        { 'Empyrean',      function(p) claimReforgeSet(p, 'empy') end },
+        { 'All Three',     function(p) claimReforgeSet(p, 'all') end },
+        { 'Back',          function(p) showMainMenu(p) end },
+    })
+end
+
+showMainMenu = function(player)
+    openMenu(player, 'Relaunch Shop',
+    {
+        { 'General',        function(p) openStock(p, stock.general) end },
+        { 'Equipment',      function(p) showEquipmentMenu(p) end },
+        { 'Supplies',       function(p) showSuppliesMenu(p) end },
+        { 'Job Supplies',   function(p) showJobSuppliesMenu(p) end },
+        { 'Travel / Craft', function(p) showTravelCraftMenu(p) end },
+        { 'Beastmaster',    function(p) showPetMenu(p) end },
+        { 'Reforged Gear',  function(p) showReforgeMenu(p) end },
+        { 'Close',          function(_) end },
+    })
+end
+
+commandObj.onTrigger = function(player)
+    showMainMenu(player)
 end
 
 return commandObj

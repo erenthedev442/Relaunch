@@ -287,7 +287,7 @@ catalog.empyreanCosts =
 {
     { hlRank = 3, cruor =  2000, mat = 50, beastcoin = 10 },              -- base -> 119 I
     { hlRank = 4, cruor = 10000, boulder = 300, beastcoin = 30 },         -- 119 I -> II
-    { hlRank = 5, boulder = 5000, beastcoin = 50, marks = 15000 },        -- 119 II -> III
+    { hlRank = 5, boulder = 3000, beastcoin = 50, marks = 15000 },        -- 119 II -> III
 }
 catalog.mythicCosts =
 {

@@ -28,11 +28,26 @@ local function makeFarm(catalog)
     if catalog.spawnPoints and warp then
         local wx, wy, wz = warp.x, warp.y, warp.z
         local r2 = aggroBuffer * aggroBuffer
+        local center      = catalog.campCenter
+        local spawnRadius = catalog.spawnRadius
+        local spawnR2     = spawnRadius and spawnRadius * spawnRadius or nil
         safePoints = {}
         local dropped = 0
         for _, p in ipairs(catalog.spawnPoints) do
             local dx, dy, dz = p.x - wx, p.y - wy, p.z - wz
-            if (dx*dx + dy*dy + dz*dz) > r2 then
+            local inCamp = true
+            if center and spawnR2 then
+                local cdx, cdz = p.x - center.x, p.z - center.z
+                inCamp = cdx*cdx + cdz*cdz <= spawnR2
+            end
+
+            if catalog.spawnMinY and p.y < catalog.spawnMinY then
+                inCamp = false
+            elseif catalog.spawnMaxY and p.y > catalog.spawnMaxY then
+                inCamp = false
+            end
+
+            if inCamp and (dx*dx + dy*dy + dz*dz) > r2 then
                 safePoints[#safePoints + 1] = p
             else
                 dropped = dropped + 1
@@ -122,6 +137,7 @@ local function makeFarm(catalog)
                 m:setLocalVar('CapacityFarmDiedAt', 0)
                 m:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)
                 m:setMobMod(xi.mobMod.NO_DROPS, 1)
+                m:setMobMod(xi.mobMod.EXP_BONUS, -100)
                 -- C++ folds this killer-only flat bonus into the normal mob CP
                 -- award before applying the strict 60k per-player/per-kill cap.
                 m:setLocalVar('CapacityFarmBonus', catalog.cpBonus or 0)

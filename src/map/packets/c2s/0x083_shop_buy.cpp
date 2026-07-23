@@ -25,6 +25,8 @@
 #include <iterator>
 
 #include "entities/charentity.h"
+#include "items/exdata/augment_standard.h"
+#include "items/item_equipment.h"
 #include "packets/s2c/0x01d_item_same.h"
 #include "packets/s2c/0x03f_shop_buy.h"
 #include "trade_container.h"
@@ -56,6 +58,21 @@ bool addPurchasedItem(CCharEntity* PChar, uint8 shopSlot, uint16 itemId, uint32 
     const auto& exdata = PChar->Container->getShopItemExdata(shopSlot);
     std::copy(exdata.begin(), exdata.end(), std::begin(PItem->m_extra));
     PItem->setQuantity(1);
+
+    // The shop exdata copy bypasses Exdata::fromTable(), which normally builds
+    // an equipment item's modifier list. Apply preset augments now so a newly
+    // purchased item works immediately instead of only after a zone/relog.
+    if (auto* PEquip = dynamic_cast<CItemEquipment*>(PItem.get()))
+    {
+        auto& augmentData = PEquip->exdata<Exdata::AugmentStandard>();
+        for (uint8 slot = 0; slot < std::size(augmentData.Augments); ++slot)
+        {
+            if (augmentData.Augments[slot].Id != 0)
+            {
+                PEquip->ApplyAugment(slot);
+            }
+        }
+    }
 
     return charutils::AddItem(PChar, LOC_INVENTORY, std::move(PItem)) != ERROR_SLOTID;
 }

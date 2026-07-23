@@ -18,6 +18,7 @@
 -----------------------------------
 local M = {}
 local abysseaProgress = require('modules/custom/lua/abyssea_marks_progress')
+local unityProgress = require('modules/custom/lua/unity_wanted_progress')
 local waveProgress = require('modules/custom/lua/game_master_progress')
 
 -- ── Reusable check closures (per-job scans and all-trials) ─────────────────
@@ -55,6 +56,16 @@ M.STAGE_GATES =
 {
     relic =
     {
+        [0] =
+        {
+            label = 'All Tier 2 Unity Wanted NMs conquered',
+            check = function(p) return unityProgress.tierComplete(p, 2) end,
+        },
+        [1] =
+        {
+            label = 'All Tier 3 Unity Wanted NMs conquered',
+            check = function(p) return unityProgress.tierComplete(p, 3) end,
+        },
         [2] =
         {
             label = 'Wave Master Nightmare cleared',

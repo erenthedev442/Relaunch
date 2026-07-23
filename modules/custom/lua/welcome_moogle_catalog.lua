@@ -15,13 +15,16 @@ local A =
     int     = function() return { id = 516, value = 4,  label = 'INT +5' } end,
     mnd     = function() return { id = 517, value = 4,  label = 'MND +5' } end,
     chr     = function() return { id = 518, value = 4,  label = 'CHR +5' } end,
-    hp      = function() return { id = 4,   value = 4,  label = 'HP +20' } end,
-    mp      = function() return { id = 12,  value = 4,  label = 'MP +20' } end,
-    attack  = function() return { id = 65,  value = 2,  label = 'Attack +6' } end,
-    ratt    = function() return { id = 66,  value = 2,  label = 'Rng. Atk. +6' } end,
-    acc     = function() return { id = 62,  value = 2,  label = 'Accuracy +6' } end,
-    racc    = function() return { id = 63,  value = 2,  label = 'Rng. Acc. +6' } end,
-    macc    = function() return { id = 64,  value = 2,  label = 'Mag. Acc. +6' } end,
+    -- Use each stat's +1 augment tier. The old HP/MP +97 and combat-stat +33
+    -- tiers made the tooltip labels understate the live modifiers by 29-81
+    -- points once the augments were applied.
+    hp      = function() return { id = 1,   value = 19, label = 'HP +20' } end,
+    mp      = function() return { id = 9,   value = 19, label = 'MP +20' } end,
+    attack  = function() return { id = 25,  value = 5,  label = 'Attack +6' } end,
+    ratt    = function() return { id = 29,  value = 5,  label = 'Rng. Atk. +6' } end,
+    acc     = function() return { id = 23,  value = 5,  label = 'Accuracy +6' } end,
+    racc    = function() return { id = 27,  value = 5,  label = 'Rng. Acc. +6' } end,
+    macc    = function() return { id = 35,  value = 5,  label = 'Mag. Acc. +6' } end,
     da      = function() return { id = 143, value = 2,  label = 'Double Attack +3' } end,
     stp     = function() return { id = 142, value = 3,  label = 'Store TP +4' } end,
     subtle  = function() return { id = 195, value = 3,  label = 'Subtle Blow +4' } end,
@@ -91,6 +94,7 @@ local M =
                 item(16851, 'Royal Knight Army Lance',      'str',    'stp'),
                 item(19150, 'Cobra Unit Claymore',          'str',    'attack'),
                 item(19277, 'Tsugumi',                      'dex',    'acc'),
+                item(17082, "Tactician Magician's Wand",    'acc',    'attack', 'WHM'),
             },
             Ranged =
             {
@@ -104,7 +108,6 @@ local M =
             Magic =
             {
                 item(17072, "Lilith's Rod",                 'mab',    'int'),
-                item(17082, "Tactician Magician's Wand",   'mnd',    'cure'),
                 item(16694, "Tactician Magician's Hooks",  'fc',     'macc'),
                 item(17851, 'Storm Fife',                   'chr',    'fc'),
                 item(16810, "Tactician Magician's Espadon",'vit',    'macc'),

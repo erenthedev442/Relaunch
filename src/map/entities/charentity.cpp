@@ -1668,9 +1668,24 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
             int32          damage          = 0;
             CBattleEntity* taChar          = battleutils::getAvailableTrickAttackChar(this, PTarget);
 
-            actionResult.resolution                         = ActionResolution::Hit;
-            actionResult.animation                          = PWeaponSkill->getAnimationId();
+            actionResult.resolution = ActionResolution::Hit;
+            actionResult.animation  = PWeaponSkill->getAnimationId();
+
+            // Scope the lower damage ceiling to the synchronous Lua calculation:
+            // direct WS damage is applied inside OnUseWeaponSkill. Restore it
+            // before skillchain damage is calculated below.
+            const auto priorAoEWsCap = GetLocalVar("AoEWsDamageCap");
+            if (PWeaponSkill->isAoE())
+            {
+                SetLocalVar("AoEWsDamageCap", 99999);
+            }
+
             std::tie(damage, tpHitsLanded, extraHitsLanded) = luautils::OnUseWeaponSkill(this, PTarget, PWeaponSkill, tp, primary, action, taChar);
+
+            if (PWeaponSkill->isAoE())
+            {
+                SetLocalVar("AoEWsDamageCap", priorAoEWsCap);
+            }
 
             if (!battleutils::isValidSelfTargetWeaponskill(PWeaponSkill->getID()))
             {

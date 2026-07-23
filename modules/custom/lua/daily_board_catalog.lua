@@ -35,8 +35,10 @@ catalog.slotsPerDay = 3
 catalog.allClearedReward =
 {
     rewards  = {
-        { currency = 'hl', amount = 500 },
-        { currency = 'af', amount = 100 },
+        { currency = 'hl',    amount = 150 },
+        { currency = 'af',    amount = 50 },
+        { currency = 'relic', amount = 50 },
+        { currency = 'empy',  amount = 50 },
     },
     titleCv  = 'DB_AllCleared_Lifetime',
 }
@@ -109,7 +111,7 @@ catalog.objectivePool =
         description = 'Grind 1,500 combat XP today (defeat monsters).',
         target      = 1500,
         metric      = 'xp',
-        reward      = { currency = 'hl', amount = 400 },
+        reward      = { currency = 'hl', amount = 150 },
     },
     {
         id          = 'xp_2500',
@@ -117,7 +119,7 @@ catalog.objectivePool =
         description = 'Grind 2,500 combat XP today (defeat monsters).',
         target      = 2500,
         metric      = 'xp',
-        reward      = { currency = 'hl', amount = 600 },
+        reward      = { currency = 'hl', amount = 250 },
     },
     {
         id          = 'xp_4000',
@@ -125,7 +127,7 @@ catalog.objectivePool =
         description = 'Grind 4,000 combat XP today (defeat monsters).',
         target      = 4000,
         metric      = 'xp',
-        reward      = { currency = 'hl', amount = 750 },  -- clamped to DAILY_HL_CAP (was 900; overflow was silently lost)
+        reward      = { currency = 'hl', amount = 350 },
     },
     {
         id          = 'xp_6000',
@@ -133,7 +135,7 @@ catalog.objectivePool =
         description = 'Grind 6,000 combat XP today (defeat monsters).',
         target      = 6000,
         metric      = 'xp',
-        reward      = { currency = 'relic', amount = 1000 },
+        reward      = { currency = 'af', amount = 150 },
     },
     {
         id          = 'xp_9000',
@@ -141,7 +143,7 @@ catalog.objectivePool =
         description = 'Grind 9,000 combat XP today (defeat monsters).',
         target      = 9000,
         metric      = 'xp',
-        reward      = { currency = 'relic', amount = 1400 },
+        reward      = { currency = 'relic', amount = 200 },
     },
     {
         id          = 'xp_12000',
@@ -149,7 +151,7 @@ catalog.objectivePool =
         description = 'Grind 12,000 combat XP today (defeat monsters).',
         target      = 12000,
         metric      = 'xp',
-        reward      = { currency = 'empy', amount = 1600 },
+        reward      = { currency = 'empy', amount = 250 },
     },
 
     -- --- KILLS ------------------------------------------------

@@ -29,6 +29,10 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(catalog.costs.toStage3.gil == 750000000)
     end)
 
+    it('uses 3,000 boulders for the final Empyrean stage', function()
+        assert(catalog.empyreanCosts[3].boulder == 3000)
+    end)
+
     it('requires a final Aeonic before entering the Prime path', function()
         local vars = {}
         local player = {}

@@ -63,7 +63,7 @@ catalog.mobName  = 'Capacity Phantom'  -- display name; also used to count/top-u
 catalog.mobCount = 100
 catalog.minLv    = 150                  -- engine rolls each spawn in [minLv, maxLv]
 catalog.maxLv    = 160
-catalog.maxHP    = 45000                -- low HP = quick kills (-25% from 60000)
+catalog.maxHP    = 120000
 catalog.respawnSeconds = 5              -- delay after the death/despawn sequence
 catalog.cpBonus  = 2000                 -- flat bonus Capacity Points to the killer per kill, ON TOP of
                                         -- the engine's level-based award (both x map EXP_RATE). 0 = off.

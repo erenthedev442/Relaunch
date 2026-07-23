@@ -66,6 +66,14 @@ describe('HTBF catalog integrity and balance', function()
                 end
             end
         end
+
+        local final = catalog.finalTest
+        local finalFight = catalog.fights[final.fightKey]
+        assert(not ids[final.battlefieldId], 'Final Proving battlefield ID collides with a real HTBF')
+        for _, entrance in ipairs(entrancesFor(finalFight)) do
+            local slotKey = string.format('%d:%s:%d', finalFight.zone, entrance, final.index)
+            assert(not menuSlots[slotKey], 'Final Proving menu slot collides with a real HTBF')
+        end
     end)
 
     it('keeps repeat rewards below Hunting League weekly-objective payouts', function()
@@ -89,6 +97,23 @@ describe('HTBF catalog integrity and balance', function()
         assert(avatar[3].def == 7500)
         assert(avatar[3].meva == 2600)
         assert(avatar[3].eva == 1900)
+    end)
+
+    it('uses a one-time half-strength Garuda test to unlock Tier III', function()
+        local final = catalog.finalTest
+        local t3    = catalog.tierScale.avatar[3]
+
+        assert(final.fightKey == 'trial_by_wind')
+        assert(final.battlefieldId == 4220)
+        assert(final.index == catalog.fights.trial_by_wind.baseIndex + 3)
+        assert(final.completionVar == 'HTBF_FinalTest_Done')
+        assert(final.tierClearVar == 'HTBF_Cleared_T3')
+        assert(final.scale.hp == t3.hp / 2)
+        assert(final.scale.att == t3.att / 2)
+        assert(final.scale.def == t3.def / 2)
+        assert(final.scale.macc == t3.macc / 2)
+        assert(final.scale.meva == t3.meva / 2)
+        assert(final.scale.eva == t3.eva / 2)
     end)
 
     it('keeps incomplete ToAU arena placeholders disabled', function()

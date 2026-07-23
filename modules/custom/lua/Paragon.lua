@@ -33,21 +33,45 @@ local C = require('modules/custom/lua/paragon_catalog')
 
 local m = Module:new('paragon')
 local SYS = xi.msg.channel.SYSTEM_3
+local MASTER_JP = 2100
+local APPLIED_VAR_PREFIX = 'Paragon_Applied_'
+do
+    local ok, rebirth = pcall(require, 'modules/custom/lua/job_rebirth_catalog')
+    if ok and rebirth and rebirth.jpRequired then
+        MASTER_JP = rebirth.jpRequired
+    end
+end
 
 -----------------------------------
--- Apply all owned perk mods (full totals). Safe to call on every game-in:
--- zoning/relog wipe these addMods, so re-adding the full total re-establishes
--- them without doubling.
+-- Permanent perks are character-wide purchases, but their active strength is
+-- earned independently by the current main job:
+--   below 99 = 0%, level 99 = 50%, mastered (2100 spent JP) = 100%.
+-- Track this system's live contribution so job/level changes can reconcile
+-- only the delta without doubling or stripping unrelated sources of a mod.
 -----------------------------------
-local function applyPerks(player)
+local function perkPercent(player)
+    if player:getMainLvl() < 99 then return 0 end
+    return (player:getSpentJobPoints() or 0) >= MASTER_JP and 100 or 50
+end
+
+local function applyPerks(player, resetApplied)
+    local percent = perkPercent(player)
     for _, perk in ipairs(C.PERKS) do
         local rank = player:getCharVar('Paragon_Perk_' .. perk.id) or 0
-        if rank > 0 then
-            local total = rank * perk.perRank
+        local appliedVar = APPLIED_VAR_PREFIX .. perk.id
+        local applied = resetApplied and 0 or (player:getLocalVar(appliedVar) or 0)
+        local target = math.floor(rank * perk.perRank * percent / 100)
+        local delta = target - applied
+        if delta ~= 0 then
             for _, modId in ipairs(C.modIds(perk)) do
-                player:addMod(modId, total)
+                if delta > 0 then
+                    player:addMod(modId, delta)
+                else
+                    player:delMod(modId, -delta)
+                end
             end
         end
+        player:setLocalVar(appliedVar, target)
     end
 end
 xi._paragon_applyPerks = applyPerks
@@ -112,10 +136,7 @@ local function buyPerk(player, perk)
     end
     player:setCharVar('Paragon_Points', pp - cost)
     player:setCharVar('Paragon_Perk_' .. perk.id, rank + 1)
-    -- Live-apply this rank's delta (full set is re-applied on the next game-in).
-    for _, modId in ipairs(C.modIds(perk)) do
-        player:addMod(modId, perk.perRank)
-    end
+    applyPerks(player)
     player:printToPlayer(string.format('[Paragon] %s -> rank %d/%d  (total +%d each stat).',
         perk.label, rank + 1, perk.maxRank, (rank + 1) * perk.perRank), SYS)
 end
@@ -163,6 +184,9 @@ end
 local openPerksMenu  -- forward decl
 
 openMenu = function(player)
+    -- Also catches a newly mastered job immediately after leaving the JP menu.
+    applyPerks(player)
+
     local lvl  = player:getCharVar('Paragon_Level') or 0
     local pp   = player:getCharVar('Paragon_Points') or 0
     local dailyLabel = (player:getCharVar('Paragon_MightUnlock') or 0) == 1
@@ -229,7 +253,24 @@ xi._paragon_openPerksMenu = openPerksMenu
 -----------------------------------
 m:addOverride('xi.player.onGameIn', function(player, ...)
     super(player, ...)
-    player:timer(2000, function(p) applyPerks(p) end)
+    player:timer(2000, function(p)
+        if p then applyPerks(p, true) end
+    end)
+end)
+
+m:addOverride('xi.player.onJobChange', function(player)
+    super(player)
+    applyPerks(player)
+end)
+
+m:addOverride('xi.player.onPlayerLevelUp', function(player)
+    super(player)
+    applyPerks(player)
+end)
+
+m:addOverride('xi.player.onPlayerLevelDown', function(player)
+    super(player)
+    applyPerks(player)
 end)
 
 -----------------------------------

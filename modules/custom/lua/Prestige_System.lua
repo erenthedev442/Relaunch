@@ -1135,21 +1135,16 @@ end)
 
 -----------------------------------
 -- PERSISTENT MOD RE-APPLICATION (zone-in)
--- A zone-in wipes the entity's in-memory mods AND we cannot trust the
--- LocalVar to have survived, so we force "nothing applied" (PrestigeModJob=0)
--- BEFORE super runs. super -> player.lua -> checkForGearSet -> refreshJobMods
--- then applies the current job's mods exactly once; the trailing refresh is a
--- no-op safety net if that chain ever changes.
+-- Suppress the synchronous gear-set hook while onGameIn is still finalizing
+-- stats, then apply exactly once after that work settles. Previously the gear
+-- hook applied once synchronously and this timer reset PrestigeModJob to zero
+-- and applied a second time, doubling every purchased Ascension modifier.
 -----------------------------------
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
+    player:setLocalVar('PrestigeApplyPending', 1)
     super(player, firstLogin, zoning)
-    -- DEFER the re-apply ~3s -- applying addMods at the bare onGameIn moment is
-    -- clobbered by the engine's post-login stat finalization (same reason
-    -- RealLevel_Tracker / auto_buff_henge defer; matches the JobRebirth fix).
-    -- Synchronous apply silently lost Ascension boosts after a zone (enspell etc.
-    -- dropping to ~gear-only). Login/zone wiped the old mods, so this clean
-    -- force-reapply is correct, never a double.
     player:timer(3000, function(p)
+        p:setLocalVar('PrestigeApplyPending', 0)
         p:setLocalVar('PrestigeModJob', 0)
         refreshJobMods(p)
     end)
@@ -1165,7 +1160,9 @@ end)
 -----------------------------------
 m:addOverride('xi.gear_sets.checkForGearSet', function(player)
     super(player)
-    refreshJobMods(player)
+    if player:getLocalVar('PrestigeApplyPending') ~= 1 then
+        refreshJobMods(player)
+    end
 end)
 
 return m

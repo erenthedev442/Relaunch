@@ -72,6 +72,20 @@ function htbf.accessCheck(player)
     return #missing == 0, missing
 end
 
+local function tier3Unlocked(player)
+    local final = catalog.finalTest
+    return
+        (player:getCharVar(final.completionVar) or 0) >= 1 or
+        (player:getCharVar(final.tierClearVar) or 0) >= 1
+end
+
+local function finalTestReady(player)
+    return
+        (player:getCharVar('HTBF_Cleared_T1') or 0) >= 1 and
+        (player:getCharVar('HTBF_Cleared_T2') or 0) >= 1 and
+        not tier3Unlocked(player)
+end
+
 -- ---------------------------------------------------------------------------
 -- Let players field Trusts inside HTBF battlefields.
 -- The engine gates battlefield trust summons on
@@ -175,13 +189,33 @@ function htbf.printEntranceLegend(player, npc)
     player:printToPlayer('[HTBF] Some entries below show no name (client limit). High-Tier Battlefields:', xi.msg.channel.SYSTEM_3)
     if #rows > 1 then
         player:printToPlayer(
-            '[HTBF] You hold gems for multiple fights at this entrance. Choose the correct three-row group.',
+            '[HTBF] You hold gems for multiple fights at this entrance. Choose the correct tier group.',
             xi.msg.channel.SYSTEM_3)
     end
 
+    local hasTier3 = tier3Unlocked(player)
     for group, r in ipairs(rows) do
         player:printToPlayer(string.format(
-            '[HTBF]   Group %d: %s (%s) -- Tier I, II, III.', group, r.label, r.gem),
+            '[HTBF]   Group %d: %s (%s) -- %s.',
+            group,
+            r.label,
+            r.gem,
+            hasTier3 and 'Tier I, II, III' or 'Tier I, II (Tier III locked)'),
+            xi.msg.channel.SYSTEM_3)
+    end
+
+    local final = catalog.finalTest
+    local finalFight = catalog.fights[final.fightKey]
+    local finalEntrance =
+        finalFight.zone == zoneId and
+        finalFight.entryNpc == npcName
+    if finalEntrance and finalTestReady(player) then
+        player:printToPlayer(
+            '[HTBF]   Final row: Final Proving -- one-time Garuda test; unlocks all Tier III fights and Ambuscade T3 credit.',
+            xi.msg.channel.SYSTEM_3)
+    elseif not hasTier3 then
+        player:printToPlayer(
+            '[HTBF] Clear Tier I and Tier II, then take Final Proving from the Phantom Gems NPC.',
             xi.msg.channel.SYSTEM_3)
     end
 end
@@ -201,19 +235,26 @@ if xi.battlefield and xi.battlefield.getBattlefieldOptions and not xi.battlefiel
     end
 end
 
-function htbf.register(fightKey, tier)
-    local f     = catalog.fights[fightKey]
-    local scale = f and catalog.tierScale[f.difficulty or 'standard'][tier]
-    local rew   = f and catalog.tierReward[f.rewardClass or 'standard'][tier]
+function htbf.register(fightKey, tier, variant)
+    local f           = catalog.fights[fightKey]
+    local isFinalTest = variant == 'finalTest'
+    local final       = catalog.finalTest
+    local scale       = isFinalTest and final.scale or
+        (f and catalog.tierScale[f.difficulty or 'standard'][tier])
+    local rew         = isFinalTest and final.reward or
+        (f and catalog.tierReward[f.rewardClass or 'standard'][tier])
     if not f or not scale then
         print(string.format('[HTBF] register: bad args (%s, %s)', tostring(fightKey), tostring(tier)))
         return nil
     end
 
+    local battlefieldId = isFinalTest and final.battlefieldId or (f.baseBattlefieldId + (tier - 1))
+    local menuIndex      = isFinalTest and final.index or (f.baseIndex + (tier - 1))
+
     local content = Battlefield:new({
         zoneId           = f.zone,
-        battlefieldId    = f.baseBattlefieldId + (tier - 1),
-        index            = f.baseIndex + (tier - 1),
+        battlefieldId    = battlefieldId,
+        index            = menuIndex,
         entryNpc         = f.entryNpc,
         entryNpcs        = f.entryNpcs,
         exitNpc          = f.exitNpc,
@@ -231,7 +272,23 @@ function htbf.register(fightKey, tier)
     -- falls short; printEntranceLegend prints the specific reason. Parens force
     -- the single bool return (the missing-list is dropped).
     function content:entryRequirement(player, npc, isRegistrant, trade)
-        return (htbf.accessCheck(player))
+        local canEnter = htbf.accessCheck(player)
+        if not canEnter then
+            return false
+        end
+
+        if isFinalTest then
+            return finalTestReady(player)
+        end
+
+        -- Real Tier III rows stay hidden until Final Proving is complete.
+        -- HTBF_Cleared_T3 is accepted as a legacy unlock so veterans who had
+        -- already cleared a T3 before this gate was introduced are not relocked.
+        if tier == 3 then
+            return tier3Unlocked(player)
+        end
+
+        return true
     end
 
     -- Groups. Simple single-boss fights name the boss (f.mobs). Complex fights
@@ -336,7 +393,7 @@ function htbf.register(fightKey, tier)
             end
             bf:setLocalVar(latch, 1)
         end
-        local firstClearCv = 'HTBF_FC_' .. (f.baseBattlefieldId + (tier - 1))
+        local firstClearCv = 'HTBF_FC_' .. battlefieldId
         local firstClear   = (player:getCharVar(firstClearCv) or 0) == 0
         local multiplier   = firstClear and catalog.firstClearMultiplier or 1
         local gilReward    = (rew.gil or 0) * multiplier
@@ -355,6 +412,10 @@ function htbf.register(fightKey, tier)
         end
         if firstClear then
             player:setCharVar(firstClearCv, 1)
+        end
+        if isFinalTest then
+            player:setCharVar(final.completionVar, 1)
+            player:setCharVar(final.tierClearVar, 1)
         end
         -- Per-tier clear flag: used as an entry gate for Ambuscade (must have
         -- cleared at least one HTBF at each of T1/T2/T3). tier is the register()
@@ -388,11 +449,17 @@ function htbf.register(fightKey, tier)
             end)
         end
         pcall(function()
+            if isFinalTest then
+                player:printToPlayer(
+                    'Final Proving complete! All Tier III HTBFs are now unlocked, and your Ambuscade T3 requirement is satisfied.',
+                    xi.msg.channel.SYSTEM_3)
+            end
             player:printToPlayer(string.format(
-                'High-Tier Battlefield cleared! Reward: %d gil and %d Hunt Marks%s%s.',
-                gilReward, markReward,
-                firstClear and ' (first clear x2)' or '',
-                looted > 0 and (' + ' .. looted .. ' item(s)') or ''), xi.msg.channel.SYSTEM_3)
+                    'High-Tier Battlefield cleared! Reward: %d gil and %d Hunt Marks%s%s.',
+                    gilReward, markReward,
+                    firstClear and ' (first clear x2)' or '',
+                    looted > 0 and (' + ' .. looted .. ' item(s)') or ''),
+                xi.msg.channel.SYSTEM_3)
         end)
     end
 
@@ -400,9 +467,14 @@ function htbf.register(fightKey, tier)
     -- then its flat retail pool (catalog.fightLoot[fightKey], same pool across
     -- tiers -- retail loot is per-fight, the tiers differ in difficulty + marks),
     -- then the modest tier-scaled default so every fight always drops a crate.
-    local loot = (f.loot and f.loot[tier])
-        or (catalog.fightLoot and catalog.fightLoot[fightKey])
-        or catalog.tierLoot[tier]
+    local loot
+    if isFinalTest then
+        loot = catalog.tierLoot[3]
+    else
+        loot = (f.loot and f.loot[tier])
+            or (catalog.fightLoot and catalog.fightLoot[fightKey])
+            or catalog.tierLoot[tier]
+    end
     if loot then
         content.loot = loot
     end
@@ -432,6 +504,10 @@ function htbf.register(fightKey, tier)
     end
 
     return content:register()
+end
+
+function htbf.registerFinalTest()
+    return htbf.register(catalog.finalTest.fightKey, 3, 'finalTest')
 end
 
 return htbf

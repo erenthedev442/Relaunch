@@ -29,12 +29,9 @@ local FARMS =
     {
         keys    = { 'ranperre', 'r', 'tomb', 'kt', 'krt' },
         zone    = xi.zone.KING_RANPERRES_TOMB,
-        -- Moved 2026-07-13 from (-26, 7, 21) which spawned the player on top of
-        -- a Nachzehrer (0.0 yalms) with 5 more aggressive mobs within 12 yalms.
-        -- (-26, 7, -15) is 35 yalms from the nearest aggro (well outside the
-        -- ~20-yalm sight/sound range) and a short jog north to the farm cluster.
-        -- Keep in sync with warpPos in ranperre_farm_catalog.lua.
-        pos     = { -26.0, 7.0, -15.0, 0 },
+        -- Confirmed native main-floor point. Keep in sync with warpPos in
+        -- ranperre_farm_catalog.lua.
+        pos     = { -54.55, 7.21, 82.03, 0 },
         label   = "King Ranperre's Tomb",
     },
 }
@@ -46,6 +43,13 @@ commandObj.onTrigger = function(player, dest)
     for _, farm in ipairs(FARMS) do
         for _, k in ipairs(farm.keys) do
             if key == k then
+                if player:getMainLvl() < 99 then
+                    player:printToPlayer(
+                        'Capacity Point farms require a level 99 main job.',
+                        xi.msg.channel.SYSTEM_3)
+                    return
+                end
+
                 local p = farm.pos
                 player:setPos(p[1], p[2], p[3], p[4], farm.zone)
                 player:printToPlayer(string.format(
@@ -58,8 +62,8 @@ commandObj.onTrigger = function(player, dest)
 
     -- Unknown destination -- list the options.
     player:printToPlayer('Usage: !capacity [destination]', xi.msg.channel.SYSTEM_3)
-    player:printToPlayer('  (no arg) / bibiki   - Bibiki Bay (45k HP)', xi.msg.channel.SYSTEM_3)
-    player:printToPlayer("  ranperre            - King Ranperre's Tomb (9k HP)", xi.msg.channel.SYSTEM_3)
+    player:printToPlayer('  (no arg) / bibiki   - Bibiki Bay (120k HP)', xi.msg.channel.SYSTEM_3)
+    player:printToPlayer("  ranperre            - King Ranperre's Tomb (120k HP)", xi.msg.channel.SYSTEM_3)
 end
 
 return commandObj

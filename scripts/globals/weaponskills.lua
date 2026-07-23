@@ -943,6 +943,11 @@ end
 -- handles displaying the appropriate action/message, delivering the damage to the mob, and any enmity from it
 xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, primaryMsg, attack, wsResults, action)
     local finaldmg = wsResults.finalDmg
+    local ambuscadeMultiplier = attacker:getLocalVar('AmbuscadeWsDamageMultiplier')
+    if finaldmg > 0 and ambuscadeMultiplier > 0 then
+        finaldmg          = math.floor(finaldmg * ambuscadeMultiplier / 100)
+        wsResults.finalDmg = finaldmg
+    end
 
     if wsResults.hitsLanded > 0 then
         if finaldmg >= 0 then
@@ -1041,12 +1046,21 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
         -- in OnMobDeath in luautils.  Max WSID is 255.
         -- The C++ return is packet-safe (131,071), so track the pre-packet value,
         -- but never report theoretical damage above the amount HP can actually
-        -- lose. Final-Prime native WSs synchronously expose their job cap through
-        -- PrimeWsDamageCap; every other WS uses the universal cap.
+        -- lose. Synchronous WS windows expose Prime's raised cap or the lower
+        -- AoE/final-Ambuscade caps through entity local variables.
         local preCap       = wsResults.finalDmg or 0
         local globalCap    = xi.settings.map.GLOBAL_HP_DAMAGE_CAP or 0
         local primeCap     = attacker:getLocalVar('PrimeWsDamageCap')
-        local effectiveCap = (primeCap and primeCap > globalCap) and primeCap or globalCap
+        local boundedPrime = primeCap and math.min(primeCap, 1999999) or 0
+        local effectiveCap = boundedPrime > globalCap and boundedPrime or globalCap
+        local aoeCap       = attacker:getLocalVar('AoEWsDamageCap')
+        local ambuscadeCap = attacker:getLocalVar('AmbuscadeWsDamageCap')
+        if aoeCap and aoeCap > 0 and (effectiveCap <= 0 or aoeCap < effectiveCap) then
+            effectiveCap = aoeCap
+        end
+        if ambuscadeCap and ambuscadeCap > 0 and (effectiveCap <= 0 or ambuscadeCap < effectiveCap) then
+            effectiveCap = ambuscadeCap
+        end
         local trackDmg     = (preCap > finaldmg) and preCap or finaldmg
         if effectiveCap > 0 then
             trackDmg = math.min(trackDmg, effectiveCap)

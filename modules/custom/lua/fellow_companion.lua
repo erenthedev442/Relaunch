@@ -155,7 +155,7 @@ local CONFIG =
             name = 'Vanguard', blurb = 'Balanced melee damage dealer.', defaultWs = xi.mobSkill.COMBO_1,
             mods     = { { xi.mod.ATTP, 20 }, { xi.mod.DOUBLE_ATTACK, 10 } },
             survival = { hpMin = 2700, hpMax = 5000, pdt = -1500, mdt = -1500 },
-            wsDamage = { 700, 4300 },
+            wsDamage = { 1800, 9000 },
             moves =
             {
                 { name = 'Penta Thrust',     ws = xi.mobSkill.PENTA_THRUST       },  -- 5-hit barrage
@@ -170,7 +170,7 @@ local CONFIG =
             name = 'Berserker', blurb = 'All-out melee offense; hits like a truck but fragile.', defaultWs = xi.mobSkill.SAVAGE_BLADE_1,
             mods     = { { xi.mod.ATTP, 35 }, { xi.mod.DOUBLE_ATTACK, 20 }, { xi.mod.TRIPLE_ATTACK, 8 } },
             survival = { hpMin = 2300, hpMax = 4500, pdt = -500, mdt = -1000 },
-            wsDamage = { 1000, 6000 },
+            wsDamage = { 2200, 8000 },
             moves =
             {
                 { name = 'Raging Fists', ws = xi.mobSkill.RAGING_FISTS_1 },  -- massive single hit
@@ -188,22 +188,31 @@ local CONFIG =
             wsDamage = { 800, 5000 },
             moves =
             {
-                { name = 'Chains of Rage',    ws = xi.mobSkill.CHAINS_OF_RAGE      },  -- ground slam
-                { name = 'Light Blade',     ws = xi.mobSkill.LIGHT_BLADE_3     },  -- shockwave
+                { name = 'Earth Pounder',      ws = xi.mobSkill.EARTH_POUNDER        },  -- reliable ground slam
+                { name = 'Dominion Slash',     ws = xi.mobSkill.DOMINION_SLASH_TRUST },  -- reliable tank shockwave
                 { name = 'Silence Gas',        ws = xi.mobSkill.SILENCE_GAS_2        },  -- AoE hate pull
                 { name = 'Uriel Blade',      ws = xi.mobSkill.URIEL_BLADE_1        },  -- tremor
             },
         },
         oracle    =
         {
-            name = 'Oracle', blurb = 'Battle-healer: fights and mends your wounds when hurt.', defaultWs = xi.mobSkill.BENEDICTION_1,
-            mods     = { { xi.mod.MND, 100 }, { xi.mod.DEF, 100 }, { xi.mod.MDEF, 100 } }, behavior = 'heal',
+            name = 'Oracle', blurb = 'Primary healer: cures and cleanses first, then contributes light offense.', defaultWs = xi.mobSkill.DIVINE_SPEAR,
+            mods     = { { xi.mod.MND, 150 }, { xi.mod.DEF, 100 }, { xi.mod.MDEF, 100 }, { xi.mod.REFRESH, 20 } }, behavior = 'heal',
             survival = { hpMin = 2500, hpMax = 4000, pdt = -1000, mdt = -1500 },
-            magicPower = { 600, 3300 },
+            magicPower = { 1200, 3800 },
+            -- Mob-skill fTP varies wildly, so tune offensive magic per move
+            -- instead of applying one MAGIC_DAMAGE value to all three.
+            magicDamageByMove =
+            {
+                [xi.mobSkill.DIVINE_SPEAR]      = 100,
+                [xi.mobSkill.EMPTY_SALVATION_1] = 900,
+                [xi.mobSkill.CURSED_SPHERE_1]   = 900,
+            },
+            mpPool = { 2500, 8000 },
+            healPower = { 1500, 5000 },
             wsDamage = { 700, 4500 },
             moves =
             {
-                { name = 'Benediction',      ws = xi.mobSkill.BENEDICTION_1      },  -- major heal burst
                 { name = 'Divine Spear',     ws = xi.mobSkill.DIVINE_SPEAR       },  -- holy lance
                 { name = 'Empty Salvation',  ws = xi.mobSkill.EMPTY_SALVATION_1  },  -- light nova
                 { name = 'Cursed Sphere',    ws = xi.mobSkill.CURSED_SPHERE_1    },  -- dark burst
@@ -214,7 +223,12 @@ local CONFIG =
             name = 'Magus', blurb = 'Battle-mage: elemental power, but glass -- keep it off the tank spot.', defaultWs = xi.mobSkill.THUNDER_IV,
             mods     = { { xi.mod.INT, 100 }, { xi.mod.MACC, 200 } }, behavior = 'nuke',
             survival = { hpMin = 2200, hpMax = 3800, pdt = -500, mdt = -1000 },
-            magicPower = { 700, 4200 },
+            magicPower = { 1800, 5000 },
+            -- MAGIC_DAMAGE is multiplied by each spell/mob-skill's fTP. Around
+            -- 1,000 here puts capped Magus nukes near the intended 30k band
+            -- without creating six-figure Thunder IV hits.
+            magicDamage = { 500, 1000 },
+            mpPool = { 3000, 9000 },
             moves =
             {
                 { name = 'Thunder IV',      ws = xi.mobSkill.THUNDER_IV        },
@@ -228,7 +242,7 @@ local CONFIG =
             name = 'Hunter', blurb = 'Ranger: high accuracy and evasion; survives by dodging, not soaking.', defaultWs = xi.mobSkill.EAGLE_EYE_SHOT_HUMANOID,
             mods     = { { xi.mod.AGI, 100 }, { xi.mod.ACC, 200 }, { xi.mod.EVA, 100 } }, behavior = 'ranged',
             survival = { hpMin = 2600, hpMax = 4400, pdt = -1000, mdt = -1000 },
-            wsDamage = { 900, 5500 },
+            wsDamage = { 2500, 11000 },
             -- Owner-curated ranger pool 2026-07-16 (proven on Semih Lafihna / Qultada
             -- / Lion trusts). Literal mob_skill_ids used because these are custom
             -- ranged WSes not present in scripts/enum/mob_skill.lua. Autonomous AI
@@ -265,7 +279,8 @@ local CONFIG =
             behaviors = { heal = true, tank = true },
             survival  = { hpMin = 4000, hpMax = 5200, pdt = -1500, mdt = -1500 },
             magicPower = { 2500, 3500 },
-            wsDamage = { 1000, 5500 },
+            magicDamage = { 500, 1000 },
+            wsDamage = { 2200, 8500 },
             moves =
             {
                 { name = 'Penta Thrust',     ws = xi.mobSkill.PENTA_THRUST       },  -- Vanguard
@@ -273,11 +288,10 @@ local CONFIG =
                 { name = 'Auroral Uppercut', ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- Berserker
                 { name = 'Earth Pounder',    ws = xi.mobSkill.EARTH_POUNDER      },  -- Bulwark
                 { name = 'Maelstrom',        ws = xi.mobSkill.MAELSTROM_1        },
-                { name = 'Benediction',      ws = xi.mobSkill.BENEDICTION_1      },  -- Oracle heal-burst
                 { name = 'Blizzard IV',      ws = xi.mobSkill.BLIZZARD_IV        },  -- Magus
                 { name = 'Aero IV',          ws = xi.mobSkill.AERO_IV            },
-                { name = 'Barrage',          ws = xi.mobSkill.BARRAGE            },  -- Hunter
-                { name = 'Dark Shot',        ws = xi.mobSkill.DARK_SHOT          },
+                { name = 'Stellar Arrow',    ws = 3489                           },  -- functional Hunter finisher
+                { name = 'Arching Arrow',    ws = 3488                           },
                 { name = 'Dancing Edge',     ws = xi.mobSkill.DANCING_EDGE       },  -- signature default
             },
         },
@@ -356,10 +370,12 @@ local CONFIG =
     activityWindowSec   = 30,
     summonCooldownSec   = 300,
 
-    healHpp             = 55,
+    healHpp             = 70,
     healMin             = 300,
     healMax             = 1500,
-    healCooldownSec     = 8,
+    healCooldownSec     = 5,
+    cleanseCooldownSec  = 6,
+    benedictionHpp      = 18,
     tauntMinCE          = 400,
     tauntMaxCE          = 800,
     tauntMinVE          = 800,
@@ -574,6 +590,14 @@ local function applyFellow(p, pet)
     if role.magicPower then
         pet:addMod(xi.mod.MATT, lerp(role.magicPower[1], role.magicPower[2], combatProgress(p)))
     end
+    if role.magicDamage then
+        pet:addMod(xi.mod.MAGIC_DAMAGE, lerp(role.magicDamage[1], role.magicDamage[2], combatProgress(p)))
+    end
+    if role.mpPool then
+        local targetMP = lerp(role.mpPool[1], role.mpPool[2], combatProgress(p))
+        pet:setMaxMP(targetMP)
+        pet:setMP(targetMP)
+    end
 
     -- PHYSICAL: give the Fellow a real, level-scaling weapon so autos + physical WS
     -- track level (see CONFIG.dmgBase/dmgPerLevel). STR investment (-> ATT -> pDIF)
@@ -603,6 +627,71 @@ local function applyFellow(p, pet)
     local roleKey = getRole(p)
     local skillList = ROLE_SKILL_LIST[roleKey]
     if skillList then pet:setMobMod(xi.mobMod.SKILL_LIST, skillList) end
+
+    -- Give the two specialist roles real trust-controller behavior instead of
+    -- making Naji's melee chassis pretend to cast or shoot.
+    if roleKey == 'oracle' then
+        -- Kupipi's full healer list gives Oracle visible Cure and -na/Erase
+        -- casts. The Lua emergency heal below remains a safety net so healing
+        -- always wins over offense when the trust controller is busy.
+        pet:setSpellList(310)
+        pet:addMod(xi.mod.CURE_POTENCY, 50)
+        pet:addMod(xi.mod.FASTCAST, 50)
+        pet:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 25 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
+        pet:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 70 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
+        pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.POISON }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.POISONA })
+        pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.PARALYSIS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.PARALYNA })
+        pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.BLINDNESS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.BLINDNA })
+        pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SILENCE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.SILENA })
+        pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.PETRIFICATION }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STONA })
+        pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.DISEASE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.VIRUNA })
+        pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.CURSE_I }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURSNA })
+        pet:addGambit(ai.t.PARTY, { ai.c.STATUS_FLAG, xi.effectFlag.ERASABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
+        pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
+    elseif roleKey == 'magus' then
+        -- Shantotto II's spell list and gambits: burst an available skillchain
+        -- first, otherwise cast periodically. The Fellow's own magic mods above
+        -- scale those casts into the Magus damage band.
+        pet:setSpellList(428)
+        pet:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
+        pet:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 45)
+        pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
+    elseif roleKey == 'hunter' then
+        pet:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 })
+        pet:addMod(xi.mod.STORETP, 86)
+        pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
+    elseif roleKey == 'bulwark' then
+        -- Use the same sustained-enmity system as the server's real trust tanks.
+        -- Naji's native Provoke remains available, while this profile supplies
+        -- the CE/VE pressure and retargeting needed to hold against players and
+        -- other trusts instead of merely flashing Provoke.
+        xi.trust.enableTankEnmity(pet,
+        {
+            profile = 'strong',
+            drainMaster = 15,
+            includeParty = true,
+            listenerName = 'FELLOW_BULWARK_TANK_ENMITY',
+        })
+
+        -- Silence Gas is globally capped at 800 and randomly lasts 15-60s.
+        -- Normalize only the Fellow version: modest 2.5k total damage and a
+        -- predictable 30-second Silence without changing every funguar.
+        pet:addListener('WEAPONSKILL_USE', 'FELLOW_BULWARK_SILENCE_GAS', function(tank, target, skill, tp, action, damage)
+            if skill:getID() ~= xi.mobSkill.SILENCE_GAS_2 or not target or target:isDead() then
+                return
+            end
+
+            local bonus = math.max(0, 2500 - (damage or 0))
+            if bonus > 0 then
+                target:takeDamage(bonus, tank, xi.attackType.BREATH, xi.damageType.DARK)
+            end
+
+            local silence = target:getStatusEffect(xi.effect.SILENCE)
+            if silence then
+                silence:setDuration(30000)
+            end
+        end)
+    end
 
     -- Live display name (arbitrary string; silent=true to avoid console spam).
     local nm = chosenName(p)
@@ -646,12 +735,18 @@ scheduleCombatLoop = function(master, pet)
             local function hasBeh(name) return beh == name or (behs and behs[name]) end
             local lvl  = getLevel(master)
             local now  = os.time()
-            local active = now - (master:getLocalVar('fellowActivityAt') or 0) <= CONFIG.activityWindowSec
+            local active = master:isEngaged()
+                or now - (master:getLocalVar('fellowActivityAt') or 0) <= CONFIG.activityWindowSec
 
-            -- Deliberate WS/JA/spell use refreshes activity. Auto-attacking alone
-            -- does not. An inactive Fellow is follow-only and cannot sneak attacks
-            -- between loop ticks.
-            p:setAutoAttackEnabled(active)
+            -- Reset fight-scoped emergency abilities as soon as combat ends,
+            -- even if the general activity window has already expired.
+            if not master:isEngaged() then
+                p:setLocalVar('fellowBenedictionUsed', 0)
+            end
+
+            -- Remaining engaged is itself combat activity. Hunter uses ranged
+            -- attacks, so its melee auto-attack must remain disabled.
+            p:setAutoAttackEnabled(active and not hasBeh('ranged'))
             if not active then
                 if p:isEngaged() then p:disengage() end
                 return
@@ -663,15 +758,63 @@ scheduleCombatLoop = function(master, pet)
                 end
             end
 
-            -- Oracle heals only during active combat, with a real cooldown.
+            -- Oracle is a healer first: emergency Benediction is once per fight,
+            -- routine cures select the most injured party member, and common
+            -- removable ailments are cleansed on their own cadence.
             if hasBeh('heal') and master:isEngaged()
                and now - (p:getLocalVar('fellowHealAt') or 0) >= CONFIG.healCooldownSec then
-                local maxhp = math.max(1, master:getMaxHP())
-                if (master:getHP() * 100 / maxhp) <= CONFIG.healHpp then
-                    local amount = lerp(CONFIG.healMin, CONFIG.healMax, combatProgress(master))
-                    if getRole(master) == 'mastered' then amount = math.floor(amount * 0.7) end
-                    master:addHP(amount)
+                local healTarget = master
+                local lowestHpp = master:getHP() * 100 / math.max(1, master:getMaxHP())
+                local okParty, party = pcall(function() return master:getPartyWithTrusts() end)
+                if okParty and party then
+                    for _, member in pairs(party) do
+                        if member and member:isAlive() and member:getZoneID() == master:getZoneID() then
+                            local hpp = member:getHP() * 100 / math.max(1, member:getMaxHP())
+                            if hpp < lowestHpp then healTarget = member; lowestHpp = hpp end
+                        end
+                    end
+                end
+
+                if lowestHpp <= CONFIG.benedictionHpp
+                   and p:getLocalVar('fellowBenedictionUsed') == 0 then
+                    p:useMobAbility(xi.mobSkill.BENEDICTION_1, healTarget)
+                    p:setLocalVar('fellowBenedictionUsed', 1)
                     p:setLocalVar('fellowHealAt', now)
+                elseif lowestHpp <= CONFIG.healHpp then
+                    local range = rdef.healPower or { CONFIG.healMin, CONFIG.healMax }
+                    local amount = lerp(range[1], range[2], combatProgress(master))
+                    if getRole(master) == 'mastered' then amount = math.floor(amount * 0.7) end
+                    healTarget:addHP(amount)
+                    p:setLocalVar('fellowHealAt', now)
+                end
+            end
+
+            if hasBeh('heal') and master:isEngaged()
+               and now - (p:getLocalVar('fellowCleanseAt') or 0) >= CONFIG.cleanseCooldownSec then
+                local removable =
+                {
+                    xi.effect.POISON, xi.effect.PARALYSIS, xi.effect.BLINDNESS,
+                    xi.effect.SILENCE, xi.effect.CURSE_I, xi.effect.DISEASE,
+                    xi.effect.PLAGUE,
+                }
+
+                local cleanseTargets = { master }
+                local okParty, party = pcall(function() return master:getPartyWithTrusts() end)
+                if okParty and party then cleanseTargets = party end
+
+                local removed = false
+                for _, member in pairs(cleanseTargets) do
+                    if member and member:isAlive() and member:getZoneID() == master:getZoneID() then
+                        for _, effect in ipairs(removable) do
+                            if member:hasStatusEffect(effect) then
+                                member:delStatusEffect(effect)
+                                p:setLocalVar('fellowCleanseAt', now)
+                                removed = true
+                                break
+                            end
+                        end
+                    end
+                    if removed then break end
                 end
             end
 
@@ -751,6 +894,15 @@ scheduleCombatLoop = function(master, pet)
                             p:setDamage(lerp(rdef.wsDamage[1], rdef.wsDamage[2], combatProgress(master)))
                             p:timer(2500, function(pp)
                                 if pp and pp:isAlive() then pp:setDamage(normalDmg) end
+                            end)
+                        end
+                        if rdef.magicDamageByMove and rdef.magicDamageByMove[ws] then
+                            local normalMagicDamage = p:getMod(xi.mod.MAGIC_DAMAGE)
+                            p:setMod(xi.mod.MAGIC_DAMAGE, rdef.magicDamageByMove[ws])
+                            p:timer(2500, function(pp)
+                                if pp and pp:isAlive() then
+                                    pp:setMod(xi.mod.MAGIC_DAMAGE, normalMagicDamage)
+                                end
                             end)
                         end
                         p:useMobAbility(ws, tgt)  -- the chosen FORM's signature TP move (forced)
@@ -850,6 +1002,15 @@ local function keeper(p, name, gen)
 
     if getN(p, V.active) ~= 1 then return end
 
+    -- Raw spawnTrust bypasses xi.trust.canCast(), so enforce the same zone rule
+    -- here as normal trusts. Never let the keeper smuggle a Fellow into
+    -- solo/no-trust content.
+    if not p:canUseMisc(xi.zoneMisc.TRUST) then
+        setN(p, V.active, 0)
+        p:setLocalVar('fellowSummonPending', 0)
+        return
+    end
+
     -- (Re)spawn the Fellow-trust whenever it isn't currently out. A trust does
     -- not use the pet slot, so this never conflicts with a job pet. spawnTrust
     -- is a raw spawn; applyFellow overlays the model/name/stats.
@@ -885,6 +1046,10 @@ local function summon(p)
         return
     end
     if not canChangeFellow(p) then return end
+    if not p:canUseMisc(xi.zoneMisc.TRUST) then
+        p:printToPlayer('[Fellow] Adventuring Fellows cannot be called in areas where trusts are restricted.', SYS)
+        return
+    end
     local remaining = CONFIG.summonCooldownSec - (os.time() - getN(p, V.summonedAt))
     if remaining > 0 then
         p:printToPlayer(string.format('[Fellow] Your Fellow needs %d more second(s) before another summon.', remaining), SYS)
@@ -1655,7 +1820,12 @@ m:addOverride('xi.player.onGameIn', function(player, gameLogin, zoning)
     pcall(function()
         if getN(player, V.born) == 1 then migrateProgression(player) end
         attachActivityListeners(player)
-        if getN(player, V.active) == 1 then
+        -- Trusts are dismissed by the engine at a zone line. Mirror that
+        -- behavior instead of having the keeper silently recreate the Fellow.
+        if zoning then
+            setN(player, V.active, 0)
+            player:setLocalVar('fellowSummonPending', 0)
+        elseif getN(player, V.active) == 1 then
             armKeeper(player, CONFIG.firstMs)
         end
     end)

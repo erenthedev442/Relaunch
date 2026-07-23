@@ -27,7 +27,10 @@ DELETE FROM `mob_skill_lists` WHERE skill_list_id BETWEEN 9800 AND 9806;
 REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Vanguard',  9800,   1);  -- COMBO_1
 REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Berserker', 9801,  42);  -- SAVAGE_BLADE_1
 REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Bulwark',   9802, 238);  -- URIEL_BLADE_1
-REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Oracle',    9803, 689);  -- BENEDICTION_1
+-- Oracle's autonomous offensive move must not be Benediction: mob AI targets
+-- its enemy with list skills, which healed the enemy. Emergency Benediction is
+-- now handled once per fight by fellow_companion.lua against the lowest-HP ally.
+REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Oracle',    9803, 2144); -- DIVINE_SPEAR
 REPLACE INTO `mob_skill_lists` VALUES ('FELLOW_Magus',     9804, 890);  -- THUNDER_IV
 -- Owner-curated ranger pool 2026-07-16: 5 WSes for autonomous variety.
 -- Proven on Semih Lafihna / Qultada / Lion trusts. defaultWs in Lua still

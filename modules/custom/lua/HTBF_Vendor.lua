@@ -2,9 +2,9 @@
 -- HTBF_Vendor.lua  -- "Phantom Gems" vendor (relaunch, Leafallia hub)
 --
 -- Sells the High-Tier Mission Battlefield entry Phantom Gems (key items) for
--- gil. The player buys a gem here, travels to the battlefield's zone, trades the
--- gem at the entrance, and picks a difficulty tier (I/II/III). See htbf_catalog
--- + htbf.lua for the battlefield side.
+-- gil. The player buys a gem here, travels to the battlefield's zone, interacts
+-- with the entrance while holding it, and picks a tier. Tier III is hidden until
+-- one-time Final Proving is complete. See htbf_catalog + htbf.lua.
 --
 -- Gems are key items (binary: one at a time), so the menu blocks a re-buy while
 -- you already hold one. Needs a map restart to load (addOverride NPC).
@@ -36,13 +36,27 @@ local function gemOf(id)
     return { id = id, price = catalog.gemPrice[id], name = catalog.gemName[id] or ('Phantom Gem ' .. id) }
 end
 
-local showMenu, showCategory, showBuy, showWarpMenu, showWarpCategory
+local showMenu, showCategory, showBuy, showWarpMenu, showWarpCategory, showFinalTest
+
+local function warpToFinalTest(p)
+    local dest = catalog.finalTest.warp
+    p:printToPlayer(
+        '[HTBF] Warping to Final Proving. Use the entrance while holding the Avatar Phantom Gem, then choose the final blank row.',
+        SYS)
+    p:setPos(dest.x, dest.y, dest.z, dest.rot, dest.zone)
+end
 
 -- Top level: one button per expansion category, plus a warp shortcut. A flat
 -- 16-gem list would exceed both client caps (8 options / 150 bytes) and hide
 -- gems, so we drill down.
 showMenu = function(p)
-    local options = {}
+    local finalDone = (p:getCharVar(catalog.finalTest.completionVar) or 0) >= 1
+        or (p:getCharVar(catalog.finalTest.tierClearVar) or 0) >= 1
+    local finalLabel = finalDone and 'Final Test [Done]' or 'Final Test'
+    local options =
+    {
+        { finalLabel, function(pp) showFinalTest(pp) end },
+    }
     for _, cat in ipairs(catalog.gemCategories) do
         local cc = cat
         options[#options + 1] = { cc.label, function(pp) showCategory(pp, cc) end }
@@ -50,6 +64,80 @@ showMenu = function(p)
     options[#options + 1] = { 'Warp to a Battlefield', function(pp) showWarpMenu(pp) end }
     options[#options + 1] = { 'Close', function(pp) end }
     p:timer(30, function(pp) pp:customMenu({ title = 'Phantom Gems', options = options }) end)
+end
+
+-- One-time progression bridge: after T1 and T2, buy/use the normal Avatar
+-- Phantom Gem against a half-strength T3 Garuda. Its completion unlocks every
+-- real T3 and supplies the T3 clear flag Ambuscade already checks.
+showFinalTest = function(p)
+    local final      = catalog.finalTest
+    local finalDone  = (p:getCharVar(final.completionVar) or 0) >= 1
+        or (p:getCharVar(final.tierClearVar) or 0) >= 1
+    local clearedT1 = (p:getCharVar('HTBF_Cleared_T1') or 0) >= 1
+    local clearedT2 = (p:getCharVar('HTBF_Cleared_T2') or 0) >= 1
+
+    if finalDone then
+        p:printToPlayer(
+            '[HTBF] Final Proving is complete. All real Tier III battlefields are unlocked.',
+            SYS)
+        p:timer(30, function(pp)
+            pp:customMenu({
+                title = 'Final Proving: complete',
+                options =
+                {
+                    { 'Warp to Garuda HTBF', function(q) warpToFinalTest(q) end },
+                    { 'Back', function(q) showMenu(q) end },
+                },
+            })
+        end)
+        return
+    end
+
+    if not clearedT1 or not clearedT2 then
+        local missing = {}
+        if not clearedT1 then missing[#missing + 1] = 'Tier I' end
+        if not clearedT2 then missing[#missing + 1] = 'Tier II' end
+        p:printToPlayer(
+            string.format('[HTBF] Final Proving is locked. Clear any HTBF at %s first.', table.concat(missing, ' and ')),
+            SYS)
+        p:timer(30, function(pp)
+            pp:customMenu({
+                title = 'Final Proving: locked',
+                options = { { 'Back', function(q) showMenu(q) end } },
+            })
+        end)
+        return
+    end
+
+    local gem = gemOf(xi.ki.AVATAR_PHANTOM_GEM)
+    p:printToPlayer(
+        '[HTBF] Final Proving is a one-time, half-strength Tier III Garuda test. Winning unlocks all real T3 fights and Ambuscade T3 credit.',
+        SYS)
+
+    local options = {}
+    if p:hasKeyItem(gem.id) then
+        options[#options + 1] = { 'Warp to Final Proving', function(pp) warpToFinalTest(pp) end }
+    else
+        options[#options + 1] =
+        {
+            string.format('Buy Gem + Warp (%s)', kPrice(gem.price)),
+            function(pp)
+                if pp:getGil() < gem.price then
+                    pp:printToPlayer(string.format('[HTBF] You need %s gil.', commafy(gem.price)), SYS)
+                    showFinalTest(pp)
+                    return
+                end
+                pp:delGil(gem.price)
+                npcUtil.giveKeyItem(pp, gem.id)
+                pp:printToPlayer(string.format('[HTBF] Purchased the %s.', gem.name), SYS)
+                warpToFinalTest(pp)
+            end,
+        }
+    end
+    options[#options + 1] = { 'Back', function(pp) showMenu(pp) end }
+    p:timer(30, function(pp)
+        pp:customMenu({ title = 'Final Proving: Garuda', options = options })
+    end)
 end
 
 -- Warp: same expansion grouping as the gems. Free QoL teleport straight to a
@@ -108,7 +196,13 @@ showBuy = function(p, g)
     p:printToPlayer(string.format(
         '[HTBF] %s -- %s gil. Entry requires 2,100 spent JP on your current job and all NM affinities.',
         g.name, commafy(g.price)), SYS)
-    p:printToPlayer('[HTBF] Trade it at the battlefield entrance and pick Tier I, II, or III.', SYS)
+    local tier3Open = (p:getCharVar(catalog.finalTest.completionVar) or 0) >= 1
+        or (p:getCharVar(catalog.finalTest.tierClearVar) or 0) >= 1
+    p:printToPlayer(
+        tier3Open and
+            '[HTBF] Use the battlefield entrance while holding it, then pick Tier I, II, or III.' or
+            '[HTBF] Use the battlefield entrance while holding it, then pick Tier I or II. Final Proving unlocks Tier III.',
+        SYS)
     p:timer(30, function(pp)
         pp:customMenu({
             title   = string.format('Buy %s?', g.name),
@@ -148,7 +242,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         rotation   = NPCPOS.rot,
         widescan   = 1,
         onTrigger  = function(player, npc)
-            player:printToPlayer('[HTBF] Phantom Gems for High-Tier Mission Battlefields -- buy with gil, trade at the battlefield entrance.', SYS)
+            player:printToPlayer('[HTBF] Phantom Gems for High-Tier Mission Battlefields -- buy with gil, then use the battlefield entrance while holding one.', SYS)
             showMenu(player)
         end,
     })

@@ -67,7 +67,7 @@ return {
     arena     = ARENA,
     warpPos   = WARP_POS,
     huntZoneId = ZONE_288,
-    combatLevel = 99, -- Tier difficulty comes from the overlays below.
+    combatLevel = 99, -- All tiers are Lv99; tier overlays and mechanics set challenge.
 
     -- Accolade costs and rewards by tier
     costs    = { [1] = 200,  [2] = 600,  [3] = 1500 },
@@ -89,10 +89,8 @@ return {
     -- regain for constant TP moves, DA/TA for spike damage, macc/matt so
     -- casters bite. Tripled the previous multipliers.
     difficulty = {
-        -- 2026-07-13 rebalance #2 (player report: 'T1 and T2 still too easy').
-        -- Ladder compressed: T1 now uses the old T2 numbers; T2 the old T3
-        -- numbers; T3 unchanged. T2 and T3 are intentionally identical -- the
-        -- ladder is now cost/reward + weekly-bonus rotation, not raw stats.
+        -- Progression: T1 is fresh-99 entry, T2 bridges into Relic Stage I,
+        -- and T3 is the mechanics-heavy gate into Relic Stage II.
         -- ANTI-SPONGE PASS 2026-07-13 (audit finding: T2/T3 was 2.4M HP @ 1800 ATT =
         -- HP:ATT ratio 1333 -- heavy sponge). Trimmed HP ~40% and pushed ATT/ACC/MATT
         -- so fights end sooner AND hit harder. Target ~500-700 HP/ATT (aggressive
@@ -105,10 +103,10 @@ return {
         -- Entry profile: fresh Lv99 in free ilvl-109 armor + budget accessories.
         [1] = { hp = 250000, att = 800, acc = 270, macc = 270, matt = 100, def = 250, eva = 80, regain = 100, da = 12, ta = 0, dmgMult = 125,
                 mdef = 100, meva = 100, str = 75, dex = 75, hasteGear = 150 },
-        [2] = { hp = 1500000, att = 2500, acc = 550, macc = 550, matt = 220, def = 500, eva = 260, regain = 300, da = 95, ta = 35, dmgMult = 200,
+        [2] = { hp = 1500000, att = 2500, acc = 550, macc = 550, matt = 220, def = 500, eva = 260, regain = 300, da = 60, ta = 20, dmgMult = 200,
                 mdef = 400, meva = 300, str = 200, dex = 200, hasteGear = 250 },
-        [3] = { hp = 1500000, att = 2500, acc = 550, macc = 550, matt = 220, def = 500, eva = 260, regain = 300, da = 95, ta = 35, dmgMult = 200,
-                mdef = 400, meva = 300, str = 200, dex = 200, hasteGear = 250 },
+        [3] = { hp = 3000000, att = 3500, acc = 700, macc = 700, matt = 350, def = 650, eva = 350, regain = 450, da = 80, ta = 30, dmgMult = 250,
+                mdef = 500, meva = 400, str = 300, dex = 300, hasteGear = 350 },
     },
 
     -- Grace period (seconds) after spawn during which the mob is untargetable
@@ -230,8 +228,6 @@ return {
           drops = { {id=20799, name='Mdomo Axe', plus1=20800, plus1Name='Mdomo Axe +1'}, {id=27532, name='Zwazo Earring', plus1=27533, plus1Name='Zwazo Earring +1'} } },
         { id=37, name='Thuban',              label="Thu'ban",             tier=2, minLv=115, maxLv=115, groupId=96,
           drops = { {id=21748, name='Habilitator', plus1=21749, plus1Name='Habilitator +1'}, {id=25923, name='Tatena. Sune.', plus1=25924, plus1Name='Tatena. Sune. +1'}, {id=26021, name='Vim Torque', plus1=26022, plus1Name='Vim Torque +1'} } },
-        { id=38, name='Tumult_Curator',      label='Tumult Curator',      tier=2, minLv=119, maxLv=119, groupId=97,
-          drops = { {id=20507, name='Comeuppances', plus1=20508, plus1Name='Comeuppances +1'}, {id=25732, name='Tatena. Harama.', plus1=25733, plus1Name='Tatena. Harama. +1'}, {id=22057, name='Contemplator', plus1=22058, plus1Name='Contemplator +1'} } },
 
         -- =====================================================================
         -- TIER 3 (Lv99 high)
@@ -247,6 +243,10 @@ return {
           drops = { {id=20980, name='Raicho', plus1=20981, plus1Name='Raicho +1'}, {id=27609, name='Fi Follet Cape', plus1=27610, plus1Name='Fi Follet Cape +1'} } },
         { id=43, name='Shedu',                     label='Shedu',                  tier=3, minLv=135, maxLv=135, groupId=102,
           drops = { {id=20681, name='Flyssa', plus1=20682, plus1Name='Flyssa +1'}, {id=21075, name='Septoptic', plus1=21076, plus1Name='Septoptic +1'}, {id=27148, name='Tatena. Gote', plus1=27149, plus1Name='Tatena. Gote +1'} } },
+        -- Retail capstone: unlocked after Thu'ban, Shedu, and Sarama.
+        { id=38, name='Tumult_Curator',             label='Tumult Curator',         tier=3, minLv=145, maxLv=145, groupId=97,
+          prerequisites = { 37, 43, 52 },
+          drops = { {id=20507, name='Comeuppances', plus1=20508, plus1Name='Comeuppances +1'}, {id=25732, name='Tatena. Harama.', plus1=25733, plus1Name='Tatena. Harama. +1'}, {id=22057, name='Contemplator', plus1=22058, plus1Name='Contemplator +1'} } },
         { id=44, name='Azure-toothed_Clawberry',   label='Azure-toothed Clawberry',tier=3, minLv=135, maxLv=135, groupId=103,
           drops = { {id=27106, name='Asteria Mitts', plus1=27107, plus1Name='Asteria Mitts +1'}, {id=27108, name='Lamassu Mitts', plus1=27109, plus1Name='Lamassu Mitts +1'} } },
         { id=45, name='Centurio_XX-I',             label='Centurio XX-I',          tier=3, minLv=135, maxLv=135, groupId=104,

@@ -621,7 +621,7 @@ xi.divergence.bossMechCfgs =
         },
     },
     -- Fii Pexu the Eternal -- Fomor immortal mega-boss. Stance + terror + drain + phases.
-    [17989981] =
+    [17990606] =
     {
         name            = 'Fii Pexu the Eternal',
         targetPartyOnly = true,

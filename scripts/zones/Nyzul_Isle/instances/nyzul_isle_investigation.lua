@@ -94,7 +94,7 @@ local function pickSetPoint(instance)
             currentInstance:setProgress(15)
         end) -- Completes objective for free floor
     else
-        -- Lamps are an explicit one-in-five roll. Previously all five
+        -- Lamps are an explicit one-in-seven roll. Previously all five
         -- objectives were sampled after removing the previous objective,
         -- making lamps one-in-four on most floors.
         local prevStage = instance:getStage()
@@ -115,7 +115,7 @@ local function pickSetPoint(instance)
             end
         end
 
-        if math.random(1, 5) == 1 then
+        if math.random(1, 7) == 1 then
             instance:setStage(xi.nyzul.objective.ACTIVATE_ALL_LAMPS)
         else
             instance:setStage(utils.randomEntry(nonLampObjectives))

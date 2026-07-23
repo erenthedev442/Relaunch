@@ -35,13 +35,16 @@ return
     -- Formula: floor(rpMin + rpScale * (count^rpPower - 1)) + milestone bonus
     --   rpMin   = RP at R1 (curve always starts here)
     --   rpPower = exponent > 1 accelerates; = 1 is linear; < 1 is diminishing
-    -- Approx values: R1=10, R5=19, R10=34, R15=59, R20=73, R30=114
+    -- Tuned so R1-R50 grants 2,497 RP in total: enough to finish the 2,495-RP
+    -- mapped stat tree at R50, while R36 has only 1,361 RP. This keeps the final
+    -- fourteen rebirths meaningful instead of completing every stat around R36.
+    -- Approx values: R1=10, R5=15, R10=42, R20=58, R30=75, R40=92, R50=110.
     -- Milestones (R10, R20, R30, ...): add rpMilestoneBonus on top of the curve.
     rpMin            = 10,   -- RP at first rebirth
-    rpScale          = 1.3,  -- acceleration coefficient
-    rpPower          = 1.3,  -- curve exponent (>1 = accelerating)
+    rpScale          = 1.1,  -- acceleration coefficient
+    rpPower          = 1.1,  -- reward-curve exponent (>1 = accelerating)
     rpMilestoneEvery = 10,   -- milestone bonus every N rebirths
-    rpMilestoneBonus = 30,   -- extra RP at each milestone (R10: 64, R20: 103, R30: 144)
+    rpMilestoneBonus = 20,   -- extra RP at each milestone
 
     -- ===== Rebirth EXP penalty (MULTIPLICATIVE -- a true % cut, augment-proof) =====
     -- Applied by the ENGINE (charutils.cpp AddExpBonus) AFTER all additive EXP_BONUS
@@ -50,17 +53,19 @@ return
     -- the stated % is always taken off the top.
     --
     -- Accelerating curve (mirrors the RP award curve):
-    --   cut(N) = min(floor(expPenaltyMin + expPenaltyScale*(N^rpPower - 1)) + milestone, expPenaltyHardCap)
-    -- rpPower and rpMilestoneEvery are SHARED with the RP curve -- both accelerate in
-    -- lock-step, so tuning the curve shape keeps penalty and reward correlated.
+    --   cut(N) = min(floor(expPenaltyMin + expPenaltyScale*(N^expPenaltyPower - 1)) + milestone, expPenaltyHardCap)
+    -- The penalty keeps its original 1.3 exponent even though the reward curve
+    -- was stretched to R50; progression tuning must not silently weaken the
+    -- established EXP challenge.
     -- Milestone extra fires at the same rebirths as the RP bonus (R10, R20, R30, ...).
     --   R1=-4%, R5=-11%, R10=-32% (milestone), R20=-64% (milestone), R30+→-90% (cap)
     -- The engine floors EXP at 5% of base, so a job can never be truly soft-locked.
     expPenaltyMin            =  4,   -- penalty % at R1 (curve always starts here)
     expPenaltyScale          =  1.1, -- acceleration coefficient (mirrors rpScale shape)
+    expPenaltyPower          =  1.3, -- original penalty exponent, independent of RP rewards
     expPenaltyMilestoneExtra =  8,   -- extra penalty % at each milestone (same trigger as RP bonus)
     expPenaltyHardCap        = 90,   -- absolute ceiling
 
-    -- Hard cap on rebirths per job. nil = uncapped.
-    maxRebirths = nil,
+    -- The mapped stat progression now deliberately completes at this cap.
+    maxRebirths = 50,
 }

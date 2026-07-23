@@ -1915,6 +1915,7 @@ auto InstantiateAlly(uint32 groupid, uint16 zoneID, CInstance* instance) -> CMob
 auto InstantiateDynamicMob(uint32 groupid, uint16 groupZoneId, uint16 targetZoneId) -> CMobEntity*
 {
     auto* PMob = new CMobEntity();
+    bool  found = false;
 
     const auto rset = db::preparedStmt("SELECT zoneid, mob_groups.name, packet_name, respawntime, "
                                        "spawntype, dropid, mob_groups.HP, mob_groups.MP, "
@@ -1943,6 +1944,7 @@ auto InstantiateDynamicMob(uint32 groupid, uint16 groupZoneId, uint16 targetZone
                                        groupZoneId);
     FOR_DB_SINGLE_RESULT(rset)
     {
+        found = true;
         PMob->name.insert(0, rset->get<std::string>("name"));
         PMob->packetName.insert(0, rset->get<std::string>("packet_name"));
 
@@ -2039,6 +2041,17 @@ auto InstantiateDynamicMob(uint32 groupid, uint16 groupZoneId, uint16 targetZone
 
         mobutils::InitializeMob(PMob);
         mobutils::AddSqlModifiers(PMob);
+    }
+
+    // A missing mob_groups row leaves the entity without pool/family data.
+    // Returning that partial mob lets GenerateDynamicEntity insert it into a
+    // zone, where spawning or AI initialization can dereference invalid state.
+    if (!found)
+    {
+        ShowError("mobutils::InstantiateDynamicMob: Missing mob group %u in source zone %u (target zone %u).",
+                  groupid, groupZoneId, targetZoneId);
+        delete PMob;
+        return nullptr;
     }
 
     return PMob;

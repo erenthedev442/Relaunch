@@ -9,9 +9,9 @@
 --     stumbling on a junction in the wild works too.
 --   * The hub Board is a taxi + info service: pick an NM and it warps you to
 --     the right junction (plus shop / pledge / +1 upgrades as before).
---   * Stock junction NPCs get ON_TRIGGER listeners; 15 zones whose retail
---     junctions never made it into stock npc_list get a custom junction
---     spawned at a verified-safe anchor (unity_junction_map.lua).
+--   * Stock junction NPCs get ON_TRIGGER listeners; missing or stock-hidden
+--     junctions use a custom NPC at a verified-safe anchor
+--     (unity_junction_map.lua).
 --   * onMobDeath awards accolades and clears state (unchanged).
 --   * NM stats/groups still live in zone 288 mob_groups; the engine's
 --     InstantiateDynamicMob(group, groupZone, targetZone) spawns them
@@ -23,11 +23,13 @@ require('scripts/zones/Escha_ZiTah/Zone')
 
 local m = Module:new('unity_wanted')
 
-local catalog = require('modules/custom/lua/unity_wanted_catalog')
-local jmap    = require('modules/custom/lua/unity_junction_map')
-local S       = xi.msg.channel.SYSTEM_3
-local ICON    = xi.icon and xi.icon.STAR_LARGE or ''
-local PAGE    = 5  -- NMs per menu page (stay ≤ 7 to respect customMenu 150-byte limit)
+local catalog  = require('modules/custom/lua/unity_wanted_catalog')
+local jmap     = require('modules/custom/lua/unity_junction_map')
+local mechanics = require('modules/custom/lua/unity_wanted_mechanics')
+local progress = require('modules/custom/lua/unity_wanted_progress')
+local S        = xi.msg.channel.SYSTEM_3
+local ICON     = xi.icon and xi.icon.STAR_LARGE or ''
+local PAGE     = 5  -- NMs per menu page (stay ≤ 7 to respect customMenu 150-byte limit)
 
 
 -- Lookup tables
@@ -75,6 +77,13 @@ end
 -- Spawn logic
 -----------------------------------
 local function spawnWantedNm(player, nm, pos)
+    if not progress.isNmUnlocked(player, nm) then
+        player:printToPlayer(string.format(
+            '[Unity] This contract is sealed. First %s.',
+            progress.nmUnlockRequirement(player, nm)), S)
+        return 'refund'
+    end
+
     -- Spawns in the PLAYER'S zone (at the junction); the mob group still
     -- belongs to zone 288 -- InstantiateDynamicMob supports the cross-zone
     -- group reference.
@@ -153,11 +162,11 @@ local function spawnWantedNm(player, nm, pos)
             end
             owner:addCurrency('unity_accolades', reward)
             -- Lifetime EARNED accolades (never reduced by shop spending).
-            -- Read by trust_progression_cap.lua's 3rd-trust-slot gate.
+            -- Read by trust_progression_cap.lua's Unity progression display.
             owner:setCharVar('Unity_Accolades_Lifetime',
                 (owner:getCharVar('Unity_Accolades_Lifetime') or 0) + reward)
             -- Distinct-NM conquest tally (read by trust_progression_cap.lua's
-            -- 3rd-trust-slot gate). The per-NM flag dedupes so re-kills don't count.
+            -- 4th-trust-slot gate). The per-NM flag dedupes so re-kills don't count.
             local conqFlag = 'UW_Conq_' .. nm.id
             if (owner:getCharVar(conqFlag) or 0) == 0 then
                 owner:setCharVar(conqFlag, 1)
@@ -179,30 +188,10 @@ local function spawnWantedNm(player, nm, pos)
     mob:setSpawn(spawnPos.x, spawnPos.y, spawnPos.z, spawnPos.rot)
     mob:spawn()
 
-    -- Difficulty scaling: base mob HP is far too low (killable with auto-attacks),
-    -- so set an absolute HP floor + offensive mods per tier. Applied AFTER spawn()
-    -- since spawn() can reset mob state. Values live in catalog.difficulty.
-    local d = catalog.difficulty and catalog.difficulty[nm.tier]
-    if d then
-        if d.hp      then mob:setMaxHP(d.hp); mob:setHP(d.hp) end
-        if d.att     then mob:addMod(xi.mod.ATT,           d.att)  end
-        if d.acc     then mob:addMod(xi.mod.ACC,           d.acc)  end
-        if d.macc    then mob:addMod(xi.mod.MACC,          d.macc) end
-        if d.matt    then mob:addMod(xi.mod.MATT,          d.matt) end
-        if d.def     then mob:addMod(xi.mod.DEF,           d.def)  end
-        if d.eva     then mob:addMod(xi.mod.EVA,           d.eva)  end
-        if d.regain  then mob:addMod(xi.mod.REGAIN,        d.regain) end
-        if d.da      then mob:addMod(xi.mod.DOUBLE_ATTACK, d.da)  end
-        if d.ta and d.ta > 0 then mob:addMod(xi.mod.TRIPLE_ATTACK, d.ta) end
-        if d.dmgMult then mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, d.dmgMult) end
-        -- Anti-sponge pass #2 (defensive/tempo axis): each optional so a shorter
-        -- difficulty row still applies cleanly.
-        if d.mdef      then mob:addMod(xi.mod.MDEF,       d.mdef)      end
-        if d.meva      then mob:addMod(xi.mod.MEVA,       d.meva)      end
-        if d.str       then mob:addMod(xi.mod.STR,        d.str)       end
-        if d.dex       then mob:addMod(xi.mod.DEX,        d.dex)       end
-        if d.hasteGear then mob:addMod(xi.mod.HASTE_GEAR, d.hasteGear) end
-    end
+    -- Dynamic entities do not load retail per-NM scripts. Apply the shared
+    -- tier profile and the mark's telegraphed encounter mechanics explicitly.
+    mechanics.applyDifficulty(mob, nm, catalog.difficulty)
+    mechanics.attach(mob, nm, player)
 
     -- Grace period: spawn pre-claimed to the paying player with the NM's
     -- AGGRO SUPPRESSED for N seconds -- the player can prepare in peace, but
@@ -328,11 +317,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         local zoneId = jmap.byNm[nm.name]
         local jz     = zoneId and jmap.junctions[zoneId]
 
-        menu.title = string.format('[%s] Lv %d', nm.label, nm.minLv)
+        menu.title = string.format('[%s] Lv %d', nm.label, catalog.combatLevel or nm.minLv)
         menu.options = {
             {
                 string.format('Travel to its junction [pop: %d acc -> +%d]', cost, reward * bonus),
                 function(p)
+                    if not progress.isNmUnlocked(p, nm) then
+                        p:printToPlayer(string.format(
+                            '[Unity] This contract is sealed. First %s.',
+                            progress.nmUnlockRequirement(p, nm)), S)
+                        return
+                    end
                     if not jz then
                         p:printToPlayer('[Unity] No junction is mapped for that mark, kupo!', S)
                         return
@@ -515,6 +510,12 @@ local function junctionMenu(player, zoneId, npc)
         table.insert(opts, {
             string.format('%s%s [%d acc -> +%d]', nmRef.label, star, cost, reward * bonus),
             function(p)
+                if not progress.isNmUnlocked(p, nmRef) then
+                    p:printToPlayer(string.format(
+                        '[Unity] This contract is sealed. First %s.',
+                        progress.nmUnlockRequirement(p, nmRef)), S)
+                    return
+                end
                 if p:getCurrency('unity_accolades') < cost then
                     p:printToPlayer(string.format('[Unity] Need %d accolades (have %d), kupo.',
                         cost, p:getCurrency('unity_accolades')), S)

@@ -30,8 +30,10 @@ require(string.format('scripts/zones/%s/Zone', catalog.npcPos.zone))
 
 local m = Module:new('daily_board')
 
-local DAILY_HL_CAP  = 750        -- max Hunt Marks the board pays per UTC day
-local CV_HL_TODAY   = 'DB_HL_Today'   -- CharVar: HL earned from board today
+local DAILY_HL_CAP = 750 -- max Hunt Marks the board pays per UTC day
+local DAILY_RF_CAP = 750 -- max combined AF/Relic/Empy Marks per UTC day
+local CV_HL_TODAY  = 'DB_HL_Today'
+local CV_RF_TODAY  = 'DB_RF_Today'
 
 -----------------------------------
 -- Day helpers
@@ -158,6 +160,7 @@ local function resetDay(player)
 
     -- Reset daily HL cap counter
     player:setCharVar(CV_HL_TODAY, 0)
+    player:setCharVar(CV_RF_TODAY, 0)
 
     -- Assign today's 3 objectives by pool index
     local objs = todaysObjectives()
@@ -193,6 +196,17 @@ local function payCurrency(player, reward)
         end
         amount = math.min(amount, remaining)
         player:setCharVar(CV_HL_TODAY, earned + amount)
+    elseif reward.currency == 'af' or reward.currency == 'relic' or reward.currency == 'empy' then
+        local earned = player:getCharVar(CV_RF_TODAY) or 0
+        local remaining = math.max(0, DAILY_RF_CAP - earned)
+        if remaining <= 0 then
+            player:printToPlayer(
+                string.format('[Daily Board] Daily limit reached (%d Reforge Marks). Come back tomorrow!', DAILY_RF_CAP),
+                xi.msg.channel.SYSTEM_3)
+            return
+        end
+        amount = math.min(amount, remaining)
+        player:setCharVar(CV_RF_TODAY, earned + amount)
     end
     local current = player:getCharVar(curr.cv) or 0
     player:setCharVar(curr.cv, current + amount)

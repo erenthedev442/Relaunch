@@ -1,8 +1,8 @@
 -- unity_wanted_mobs.sql
 -- Adds zone 288 (Escha-Zi'tah) mob_groups rows for Unity Wanted NMs.
 -- poolid is copied from each NM's natural-zone entry; stats come from mob_pools.
--- NMs with poolid=0 lack a mob_pools entry in LSB - will spawn without proper
--- model/stats until a mob_pools row is added (functional for system testing).
+-- NMs without dedicated LSB pools use the closest retail family/NM pool so
+-- dynamic entities always have a valid model, skill list, and spell list.
 -- respawntime=0 -> manual spawn only (insertDynamicEntity from unity_wanted.lua).
 -- spawntype=0 required for insertDynamicEntity; LSB baseline uses spawntype=128
 -- for the Unity NMs in zone 288, which prevents dynamic spawning.
@@ -24,27 +24,27 @@ VALUES
 (35, 4857, 288, 'Beist',               0, 0, 0, 0, 0, 0)
 ON DUPLICATE KEY UPDATE spawntype = 0;
 
--- Remaining Unity NMs inserted into zone 288 with their poolids.
--- INSERT IGNORE is safe here because these groupids don't exist in LSB baseline.
-INSERT IGNORE INTO mob_groups (groupid, poolid, zoneid, name, respawntime, spawntype, dropid, HP, MP, allegiance)
+-- Remaining Unity NMs inserted into zone 288 with their poolids. Update poolid
+-- on existing installs so legacy zero-pool rows are repaired during migration.
+INSERT INTO mob_groups (groupid, poolid, zoneid, name, respawntime, spawntype, dropid, HP, MP, allegiance)
 VALUES
 -- Tier 1 (lv 75-80) --
 (70, 6809, 288, 'Orcfeltrap',            0, 0, 0, 0, 0, 0),
 (71, 6826, 288, 'Ironhorn_Baldurno',     0, 0, 0, 0, 0, 0),
-(72, 0,    288, 'Sleepy_Mabel',          0, 0, 0, 0, 0, 0),
-(73, 0,    288, 'Sybaritic_Samantha',    0, 0, 0, 0, 0, 0),
+(72, 2473, 288, 'Sleepy_Mabel',          0, 0, 0, 0, 0, 0),
+(73, 4253, 288, 'Sybaritic_Samantha',    0, 0, 0, 0, 0, 0),
 (74, 6830, 288, 'Bounding_Belinda',      0, 0, 0, 0, 0, 0),
-(75, 0,    288, 'Valkurm_Imperator',     0, 0, 0, 0, 0, 0),
+(75, 4124, 288, 'Valkurm_Imperator',     0, 0, 0, 0, 0, 0),
 (76, 6832, 288, 'Joyous_Green',          0, 0, 0, 0, 0, 0),
 (77, 6839, 288, 'Warblade_Beak',         0, 0, 0, 0, 0, 0),
 (78, 6838, 288, 'Cactrot_Veloz',         0, 0, 0, 0, 0, 0),
-(79, 0,    288, 'Woodland_Mender',       0, 0, 0, 0, 0, 0),
+(79, 4361, 288, 'Woodland_Mender',       0, 0, 0, 0, 0, 0),
 (80, 6828, 288, 'Emperor_Arthro',        0, 0, 0, 0, 0, 0),
 (81, 6741, 288, 'Tiyanak',               0, 0, 0, 0, 0, 0),
 (82, 6738, 288, 'Vermillion_Fishfly',    0, 0, 0, 0, 0, 0),
 (83, 6810, 288, 'Intuila',               0, 0, 0, 0, 0, 0),
 -- Tier 2 (lv 99-119) --
-(84, 0,    288, 'Lumber_Jill',           0, 0, 0, 0, 0, 0),
+(84, 2450, 288, 'Lumber_Jill',           0, 0, 0, 0, 0, 0),
 (85, 6834, 288, 'Largantua',             0, 0, 0, 0, 0, 0),
 (86, 6723, 288, 'Garbage_Gel',           0, 0, 0, 0, 0, 0),
 (87, 6853, 288, 'King_Uropygid',         0, 0, 0, 0, 0, 0),
@@ -57,8 +57,8 @@ VALUES
 (94, 6843, 288, 'Douma_Weapon',          0, 0, 0, 0, 0, 0),
 (95, 6744, 288, 'Kubool_Jas_Mhuufya',    0, 0, 0, 0, 0, 0),
 (96, 6746, 288, 'Thuban',                0, 0, 0, 0, 0, 0),
-(97, 0,    288, 'Tumult_Curator',        0, 0, 0, 0, 0, 0),
 -- Tier 3 (lv 120-145) --
+(97, 3090, 288, 'Tumult_Curator',        0, 0, 0, 0, 0, 0),
 (98, 6884, 288, 'Specter_Worm',          0, 0, 0, 0, 0, 0),
 (99, 6887, 288, 'Bakunawa',              0, 0, 0, 0, 0, 0),
 (100,6891, 288, 'Mephitas',              0, 0, 0, 0, 0, 0),
@@ -76,4 +76,5 @@ VALUES
 (112,6882, 288, 'Azrael',                0, 0, 0, 0, 0, 0),
 (113,6896, 288, 'Carousing_Celine',      0, 0, 0, 0, 0, 0),
 (114,6813, 288, 'Camahueto',             0, 0, 0, 0, 0, 0),
-(115,6893, 288, 'Borealis_Shadow',       0, 0, 0, 0, 0, 0);
+(115,6893, 288, 'Borealis_Shadow',       0, 0, 0, 0, 0, 0)
+ON DUPLICATE KEY UPDATE poolid = VALUES(poolid), spawntype = 0;

@@ -86,6 +86,29 @@ describe('Global HP damage cap', function()
                 primeAbsoluteCap, maxHP - target:getHP()))
     end)
 
+    it('uses the lower AoE WS cap even during a Prime window', function()
+        local wsCap = 99999
+        player:setLocalVar('PrimeWsDamageCap', 1999999)
+        player:setLocalVar('AoEWsDamageCap', wsCap)
+
+        target:takeDamage(damageCap, player, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
+
+        assert(target:getHP() == maxHP - wsCap,
+            string.format('Expected AoE WS cap %d, got %d damage',
+                wsCap, maxHP - target:getHP()))
+    end)
+
+    it('uses the lower final-Ambuscade WS cap', function()
+        local wsCap = 99999
+        player:setLocalVar('AmbuscadeWsDamageCap', wsCap)
+
+        target:takeDamage(damageCap, player, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
+
+        assert(target:getHP() == maxHP - wsCap,
+            string.format('Expected Ambuscade WS cap %d, got %d damage',
+                wsCap, maxHP - target:getHP()))
+    end)
+
     it('preserves a lower target-specific received-damage cap', function()
         local targetCap = 1234
         target:setMod(xi.mod.RECEIVED_DAMAGE_CAP, targetCap)

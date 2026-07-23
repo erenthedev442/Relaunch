@@ -7,6 +7,7 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local m = Module:new('unity_wanted_instances')
 
 local catalog = require('modules/custom/lua/unity_wanted_catalog')
+local progress = require('modules/custom/lua/unity_wanted_progress')
 local runtime = require('modules/custom/lua/unity_wanted_instance_runtime')
 local S       = xi.msg.channel.SYSTEM_3
 local ICON    = xi.icon and xi.icon.STAR_LARGE or ''
@@ -52,6 +53,9 @@ local function validateParty(player, nm)
             return nil, string.format('%s is too far from the board.', member:getName())
         elseif member:getInstance() then
             return nil, string.format('%s is already inside an instance.', member:getName())
+        elseif not progress.isNmUnlocked(member, nm) then
+            return nil, string.format(
+                '%s must %s.', member:getName(), progress.nmUnlockRequirement(member, nm))
         end
 
         runtime.recoverAtBoard(member)
@@ -126,9 +130,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 string.format('Weekly: %s (2x)', featured and featured.label or '?'),
                 function(p) if featured then confirmScreen(p, featured) end end,
             },
-            { 'Tier 1  Lv 75-80',  function(p) tierScreen(p, 1, 1) end },
-            { 'Tier 2  Lv 99-119', function(p) tierScreen(p, 2, 1) end },
-            { 'Tier 3  Lv 120+',   function(p) tierScreen(p, 3, 1) end },
+            { 'Tier 1  Lv99 Entry', function(p) tierScreen(p, 1, 1) end },
+            { 'Tier 2  Lv99 Mid',   function(p) tierScreen(p, 2, 1) end },
+            { 'Tier 3  Lv99 High',  function(p) tierScreen(p, 3, 1) end },
             {
                 'Party rules',
                 function(p)
@@ -183,7 +187,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             reward = reward * 2
         end
 
-        menu.title = string.format('%s | Lv %d', nm.label, nm.minLv)
+        menu.title = string.format('%s | Lv %d', nm.label, catalog.combatLevel or nm.minLv)
         menu.options =
         {
             {

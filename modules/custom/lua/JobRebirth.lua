@@ -59,7 +59,8 @@ local function getCatLv(player, jobId, id) return player:getCharVar(catKey(jobId
 -- EXP at 5% of base regardless, so 90% cap still lets the player level).
 local function expPenalty(count)
     if count <= 0 then return 0 end
-    local base  = math.floor(cfg.expPenaltyMin + cfg.expPenaltyScale * (count ^ cfg.rpPower - 1))
+    local power = cfg.expPenaltyPower or cfg.rpPower
+    local base  = math.floor(cfg.expPenaltyMin + cfg.expPenaltyScale * (count ^ power - 1))
     local bonus = (count % cfg.rpMilestoneEvery == 0) and cfg.expPenaltyMilestoneExtra or 0
     return math.min(base + bonus, cfg.expPenaltyHardCap)
 end
@@ -70,6 +71,42 @@ local function rpForCount(count)
     local base  = math.floor(cfg.rpMin + cfg.rpScale * (count ^ cfg.rpPower - 1))
     local bonus = (count % cfg.rpMilestoneEvery == 0) and cfg.rpMilestoneBonus or 0
     return base + bonus
+end
+
+local function cumulativeRP(count)
+    local total = 0
+    local cappedCount = cfg.maxRebirths and math.min(count, cfg.maxRebirths) or count
+    for rebirth = 1, cappedCount do
+        total = total + rpForCount(rebirth)
+    end
+    return total
+end
+
+-- Reward-curve v2 migration: the old accelerating curve granted enough RP to
+-- finish the entire stat map around R36. Reset allocations once and refund the
+-- correctly retuned lifetime total for each job so existing players can respec
+-- fairly across the deliberate R1-R50 progression.
+local function migrateRewardCurveV2(player)
+    if (player:getCharVar('Rebirth_RewardCurveV2') or 0) == 1 then
+        return false
+    end
+
+    local hadProgress = false
+    for jobId = 1, 22 do
+        local count = getCount(player, jobId)
+        if count > 0 or getRP(player, jobId) > 0 then
+            hadProgress = true
+        end
+
+        for _, cat in ipairs(categories) do
+            player:setCharVar(catKey(jobId, cat.id), 0)
+        end
+
+        player:setCharVar(rpKey(jobId), cumulativeRP(count))
+    end
+
+    player:setCharVar('Rebirth_RewardCurveV2', 1)
+    return hadProgress
 end
 
 local function isMilestone(count)
@@ -215,6 +252,9 @@ local function doRebirth(player)
     applyJobMods(player, job)
     player:setLocalVar('RebirthModJob', job)
     player:recalculateStats()
+    if xi._paragon_applyPerks then
+        xi._paragon_applyPerks(player)
+    end
 
     player:printToPlayer(string.format('%s has been REBORN -- level 1, Job Points wiped.', jobName(job)), S)
     player:printToPlayer(string.format('  +%d Rebirth Points earned (spend them here). Rebirths: %d.', rpEarned, count), S)
@@ -405,19 +445,22 @@ m:addOverride('xi.zones.RuLude_Gardens.Zone.onInitialize', function(zone)
 end)
 
 -----------------------------------
--- Re-apply the per-job mods. onGameIn fires on every zone-in (which wipes
--- in-memory mods); forcing RebirthModJob=0 makes refreshJobMods re-add for the
--- current job. checkForGearSet fires on job change (and gear change).
+-- Re-apply the per-job mods once after zone-in stat finalization. Suppress the
+-- synchronous gear-set hook while the deferred apply is pending; otherwise the
+-- hook applies once and the timer's forced refresh applies every Rebirth stat a
+-- second time.
 -----------------------------------
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
+    local migrated = migrateRewardCurveV2(player)
+    player:setLocalVar('RebirthApplyPending', 1)
     super(player, firstLogin, zoning)
-    -- DEFER the re-apply ~3s. Applying addMods at the bare onGameIn moment gets
-    -- clobbered by the engine's post-login stat finalization (the same reason
-    -- RealLevel_Tracker and auto_buff_henge defer). Symptom when synchronous:
-    -- Ascension/Rebirth boosts silently vanish after a zone (e.g. enspell goes
-    -- to ~gear-only). The login/zone already wiped the old mods, so a clean
-    -- force-reapply here is correct -- never a double (the bug was MISSING mods).
+    if migrated then
+        player:printToPlayer(
+            '[ Job Rebirth ] Stat allocations were reset and refunded for the new R1-R50 progression curve.',
+            S)
+    end
     player:timer(3000, function(p)
+        p:setLocalVar('RebirthApplyPending', 0)
         p:setLocalVar('RebirthModJob', 0)
         refreshJobMods(p)
     end)
@@ -425,7 +468,9 @@ end)
 
 m:addOverride('xi.gear_sets.checkForGearSet', function(player)
     super(player)
-    refreshJobMods(player)
+    if player:getLocalVar('RebirthApplyPending') ~= 1 then
+        refreshJobMods(player)
+    end
 end)
 
 return m

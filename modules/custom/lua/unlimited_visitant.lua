@@ -3,12 +3,12 @@
 --
 -- Gives every player effectively-permanent Abyssea Visitant status on entry,
 -- so nobody is ejected for running out of time -- INCLUDING when entering via
--- the !abyssea warp command (a raw setPos).
+-- the hub Cavernous Maw (a raw setPos).
 --
 -- 2026-06-17 FIX -- why we hook onZoneIn now:
 --   The retail visitant grant for normal players lives ONLY in
 --   xi.abyssea.afterZoneIn (abyssea.lua:1176). That deferred hook does NOT
---   reliably fire on a plain setPos warp (how !abyssea enters Abyssea), so
+--   reliably fire on a plain setPos warp (how the hub Maw enters Abyssea), so
 --   players were landing with NO visitant at all and had to use !visitant.
 --   xi.abyssea.onZoneIn DOES fire on every entry -- it's where the retail GM
 --   grant lives (abyssea.lua:1156) -- so we hook BOTH and grant in each.

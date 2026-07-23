@@ -1,5 +1,5 @@
 -- ============================================================================
--- Rare/Ex budget accessories sold through `!shop armor <page>`.
+-- Bound budget accessories sold through the browsable `!shop` menu.
 --
 -- These are the original retail item IDs so their client names, icons and
 -- equipment data remain unchanged. The restrictions therefore apply to every
@@ -10,6 +10,9 @@
 --   NODELIVERY (8192)  -- cannot be sent through delivery
 --   EXCLUSIVE  (16384) -- cannot be traded to another player; displays Ex
 --   RARE       (32768) -- one copy per character; displays Rare
+--
+-- Rings and earrings/pearls have RARE cleared after the main update so players
+-- may buy two or more. They remain Ex, no-delivery, and no-auction.
 --
 -- NOSALE (4096) is explicitly cleared so any standard NPC vendor can buy the
 -- item for BaseSell = 5,000 gil. Apply SQL, then restart xi_map (items cache at
@@ -69,4 +72,13 @@ WHERE `itemId` IN
     18818, -- Dilettante's Grip
     18816, -- Wizzan Grip
     18825  -- Shamatha Grip
+);
+
+-- Repeatable ring/earring purchases: retain every restriction except RARE.
+UPDATE `item_basic`
+SET `flags` = `flags` & ~32768
+WHERE `itemId` IN
+(
+    27564, 27566, 27568, 27570, 27572, 27574, 27576, 27578, 26179,
+    11014, 11015, 11016, 11017, 11018, 11019, 11020, 11021
 );

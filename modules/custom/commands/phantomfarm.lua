@@ -43,9 +43,37 @@ local FARMS =
 -- mob shape (new mods / callback wiring), update this to match. Included in
 -- the command so `refill` works even when the engine closure is broken.
 local function spawnOnePhantom(zone, catalog)
-    local pts = catalog.spawnPoints
+    local pts = {}
+    local warpRadius = catalog.noSpawnRadius or 25
+    for _, p in ipairs(catalog.spawnPoints or {}) do
+        local allowed = true
+
+        if catalog.spawnRadius and catalog.campCenter then
+            local dx = p.x - catalog.campCenter.x
+            local dz = p.z - catalog.campCenter.z
+            allowed = dx * dx + dz * dz <= catalog.spawnRadius * catalog.spawnRadius
+        end
+
+        if catalog.spawnMinY and p.y < catalog.spawnMinY then
+            allowed = false
+        elseif catalog.spawnMaxY and p.y > catalog.spawnMaxY then
+            allowed = false
+        end
+
+        if allowed and catalog.warpPos then
+            local dx = p.x - catalog.warpPos.x
+            local dy = p.y - catalog.warpPos.y
+            local dz = p.z - catalog.warpPos.z
+            allowed = dx * dx + dy * dy + dz * dz > warpRadius * warpRadius
+        end
+
+        if allowed then
+            pts[#pts + 1] = p
+        end
+    end
+
     local x, y, z
-    if pts and #pts > 0 then
+    if #pts > 0 then
         local p = pts[math.random(#pts)]
         -- Points use named keys (capacity_farm_points.lua: { x = ..., y = ...,
         -- z = ... }), not numeric indices -- p[1] would be nil and setSpawn
@@ -88,6 +116,7 @@ local function spawnOnePhantom(zone, catalog)
             m:setLocalVar('CapacityFarmDiedAt', 0)
             m:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)
             m:setMobMod(xi.mobMod.NO_DROPS, 1)
+            m:setMobMod(xi.mobMod.EXP_BONUS, -100)
             m:setLocalVar('CapacityFarmBonus', catalog.cpBonus or 0)
             if catalog.maxHP and catalog.maxHP > 0 then
                 m:setMaxHP(catalog.maxHP)

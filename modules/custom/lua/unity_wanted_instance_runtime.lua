@@ -6,6 +6,7 @@
 -- Ghelsba Outpost instance and UWI_* state.
 -----------------------------------
 local catalog = require('modules/custom/lua/unity_wanted_catalog')
+local mechanics = require('modules/custom/lua/unity_wanted_mechanics')
 
 local runtime = {}
 
@@ -248,8 +249,8 @@ instanceObject.onInstanceCreated = function(instance)
         y                    = pos.y,
         z                    = pos.z,
         rotation             = pos.rot,
-        minLevel             = nm.minLv,
-        maxLevel             = nm.maxLv,
+        minLevel             = catalog.combatLevel or nm.minLv,
+        maxLevel             = catalog.combatLevel or nm.maxLv,
         detection            = xi.detects.SIGHT_AND_HEARING,
         isAggroable          = true,
         releaseIdOnDisappear = true,
@@ -278,6 +279,13 @@ instanceObject.onInstanceCreated = function(instance)
 
     mob:setSpawn(pos.x, pos.y, pos.z, pos.rot)
     mob:spawn()
+    mechanics.applyDifficulty(mob, nm, catalog.difficulty)
+
+    local mechanicOwner
+    forEachPlayer(instance, function(player)
+        mechanicOwner = mechanicOwner or player
+    end)
+    mechanics.attach(mob, nm, mechanicOwner)
     mob:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)
 end
 

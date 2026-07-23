@@ -54,6 +54,35 @@ describe('Welcome Moogle starter catalog', function()
         end
     end)
 
+    it('encodes advertised flat bonuses from their plus-one augment tiers', function()
+        local expected =
+        {
+            ['HP +20']       = { id = 1,  value = 19 },
+            ['MP +20']       = { id = 9,  value = 19 },
+            ['Attack +6']    = { id = 25, value = 5 },
+            ['Rng. Atk. +6'] = { id = 29, value = 5 },
+            ['Accuracy +6']  = { id = 23, value = 5 },
+            ['Rng. Acc. +6'] = { id = 27, value = 5 },
+            ['Mag. Acc. +6'] = { id = 35, value = 5 },
+        }
+
+        local checked = {}
+        for _, entry in ipairs(allWares()) do
+            for _, augment in ipairs(entry.augments) do
+                local encoding = expected[augment.label]
+                if encoding then
+                    assert(augment.id == encoding.id)
+                    assert(augment.value == encoding.value)
+                    checked[augment.label] = true
+                end
+            end
+        end
+
+        for label in pairs(expected) do
+            assert(checked[label], string.format('catalog no longer exercises %s', label))
+        end
+    end)
+
     it('puts EXP plus fifteen on exactly two accessories', function()
         local expCount = 0
         for _, entry in ipairs(allWares()) do
@@ -84,6 +113,20 @@ describe('Welcome Moogle starter catalog', function()
         end
 
         assert(wareById(18711).jobs == 'THF/RNG/NIN/COR')
+    end)
+
+    it('offers WHM a melee-focused level-50 club', function()
+        local found = false
+        for _, entry in ipairs(catalog.wares.Weapons.Melee) do
+            if entry.id == 17082 then
+                assert(entry.jobs == 'WHM')
+                assert(entry.augments[1].label == 'Accuracy +6')
+                assert(entry.augments[2].label == 'Attack +6')
+                found = true
+            end
+        end
+
+        assert(found)
     end)
 
     it('reserves exactly the three approved first-click gifts', function()

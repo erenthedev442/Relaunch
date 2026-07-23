@@ -18,6 +18,7 @@ commandObj.cmdprops =
 
 local S       = xi.msg.channel.SYSTEM_3
 local catalog = require('modules/custom/lua/unity_wanted_catalog')
+local progress = require('modules/custom/lua/unity_wanted_progress')
 
 -- Weekly-featured NM id: match unity_wanted.lua's rotation exactly so the
 -- Board's "Weekly" line and !unity's "*" marker never disagree.
@@ -59,7 +60,8 @@ commandObj.onTrigger = function(player, mode)
         local total_tier = #b.fought + #b.remaining
         if total_tier > 0 then
             player:printToPlayer(' ', S)
-            line(player, 'Tier %d: %d/%d conquered', tier, #b.fought, total_tier)
+            local lock = progress.isTierUnlocked(player, tier) and 'unlocked' or 'locked'
+            line(player, 'Tier %d: %d/%d conquered [%s]', tier, #b.fought, total_tier, lock)
             local show = wantRemaining and b.remaining or b.fought
             local label = wantRemaining and 'Remaining' or 'Conquered'
             if #show == 0 then

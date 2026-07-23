@@ -21,6 +21,7 @@ local SYS = xi.msg.channel.SYSTEM_3
 -- init: this is a cross-tree require of a modules/custom data file, and deferring
 -- it means a missing/broken catalog can never fail the whole ambuscade.lua load.
 local AMBU_WPN
+local AMBU_COSMETICS
 
 -- ─── Difficulty tables ────────────────────────────────────────────────────────
 local DIFF_NAME =
@@ -702,6 +703,55 @@ local MHAURA_EXIT_Z   =  50.279  -- ~2y behind the Tome (on the dock, walkable)
 local MHAURA_EXIT_ROT =  121     -- facing the Tome
 local MHAURA_ZONE_ID  = 249
 local AMBUSCADE_ZONE_ID = xi.zone.MAQUETTE_ABDHALJS_LEGION_B
+local PLUTON_CASE_DROP_CHANCE = 5
+
+-- Intense VD has one independent 33% cosmetic roll per player. Selection is
+-- direct script RNG followed by addItem, deliberately outside mob treasure
+-- pools and xi.combat.treasureHunter so Treasure Hunter cannot affect it.
+local function tryAwardIntenseVDCosmetic(player)
+    if not AMBU_COSMETICS then
+        local ok, catalog = pcall(require, 'modules/custom/lua/ambuscade_cosmetic_pool')
+        if not ok or type(catalog) ~= 'table' or type(catalog.items) ~= 'table' or #catalog.items == 0 then
+            player:printToPlayer('[Ambuscade] The cosmetic reward pool is temporarily unavailable.', SYS)
+            return
+        end
+
+        AMBU_COSMETICS = catalog
+    end
+
+    if math.random(1, 100) > AMBU_COSMETICS.dropChance then
+        return
+    end
+
+    local reward = AMBU_COSMETICS.items[math.random(1, #AMBU_COSMETICS.items)]
+    if player:getFreeSlotsCount() < 1 then
+        player:printToPlayer('[Ambuscade] Your cosmetic roll succeeded, but your inventory is full.', SYS)
+    elseif player:addItem(reward.id, 1) then
+        player:printToPlayer(string.format(
+            '[Ambuscade] Intense VD cosmetic: %s!', reward.name), SYS)
+    else
+        player:printToPlayer(string.format(
+            '[Ambuscade] Cosmetic roll selected %s, but it could not be added (you may already own this Rare item).',
+            reward.name), SYS)
+    end
+end
+
+-- Normal, Difficult, and Very Difficult each have a fixed 5% Pluton Case roll.
+-- This direct completion reward deliberately bypasses treasure pools and TH.
+local function tryAwardPlutonCase(player, difficulty)
+    local difficultyWithinCategory = (difficulty - 1) % 5
+    if difficultyWithinCategory > 2 or math.random(1, 100) > PLUTON_CASE_DROP_CHANCE then
+        return
+    end
+
+    if player:getFreeSlotsCount() < 1 then
+        player:printToPlayer('[Ambuscade] Your Pluton Case roll succeeded, but your inventory is full.', SYS)
+    elseif player:addItem(xi.item.PLUTON_CASE, 1) then
+        player:printToPlayer('[Ambuscade] You receive a Pluton Case!', SYS)
+    else
+        player:printToPlayer('[Ambuscade] Your Pluton Case could not be added.', SYS)
+    end
+end
 
 -- Grace period before the auto-warp fires, so the player has time to see the
 -- Victory / Time-limit message, look around, and (in case completion mis-fires
@@ -783,6 +833,11 @@ xi.ambuscade.onInstanceComplete = function(instance)
                 '[Ambuscade] Victory! +%d HM%s. Total: %d HM. +%d Gallantry%s.',
                 actualHM, bonusStr, player:getCurrency('current_hallmarks'), pGal, sealStr), SYS)
         end
+
+        if difficulty == 1 then
+            tryAwardIntenseVDCosmetic(player)
+        end
+        tryAwardPlutonCase(player, difficulty)
 
         -- Delayed auto-exit (2026-07-13). Was an INSTANT warpToMhaura since
         -- 2bb9ceade8, but Jamesta reported being warped out mid-fight without

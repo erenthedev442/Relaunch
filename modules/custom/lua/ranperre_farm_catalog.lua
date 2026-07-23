@@ -10,21 +10,21 @@ catalog.zoneId   = xi.zone.KING_RANPERRES_TOMB  -- 190
 catalog.zonePath = 'xi.zones.King_Ranperres_Tomb'
 catalog.logTag   = 'ranperre_farm'
 
--- Where !ranperre warps the player. Moved 2026-07-13: (-26, 7, 21) was a
--- Nachzehrer's own spawn point (0.0 yalms), instantly aggroing 5 mobs at
--- once. New spot is 36 yalms south of the same X -- still on the main
--- floor, mob-free at ~20-yalm sight/sound range, short jog to the cluster.
+-- Confirmed native main-floor point, kept outside the farm's aggro buffer.
 -- Keep in sync with the !capacity ranperre pos in commands/capacity.lua.
-catalog.warpPos    = { x = -26.0, y = 7.0, z = -15.0, rot = 0 }
+catalog.warpPos    = { x = -54.55, y = 7.21, z = 82.03, rot = 0 }
 
 -- Fallback camp-center patch (used when spawnPoints is nil/empty).
 catalog.campCenter = { x = -26.0, y = 7.0, z = 21.0 }
 catalog.spreadX    = 30
 catalog.spreadZ    = 30
 
--- Zone-wide spawn pool: all 495 native walkable points in King Ranperre's
--- Tomb from mob_spawn_points. (0,0,0) and (1,1,1) dummy rows filtered.
+-- Native walkable points from mob_spawn_points. The shared engine restricts
+-- these to the main-floor camp around campCenter so mobs remain nearby.
 catalog.spawnPoints = require('modules/custom/lua/ranperre_farm_points')
+catalog.spawnRadius = 85
+catalog.spawnMinY   = 5
+catalog.spawnMaxY   = 9
 
 -- Mixed template pool: native undead for tomb flavor + capacity-built HL NM
 -- models (zone 210 / GM_Home) for the bulk of the camp.
@@ -50,9 +50,7 @@ catalog.mobName  = 'Capacity Phantom'
 catalog.mobCount = 100
 catalog.minLv    = 150
 catalog.maxLv    = 160
--- 9000 HP matches Locus Colibri -- quick kills so the capacity chain
--- stays hot. The native Locus Dire Bat has ~300k HP; this camp fixes that.
-catalog.maxHP    = 9000
+catalog.maxHP    = 120000
 catalog.respawnSeconds = 5
 catalog.cpBonus  = 2000
 

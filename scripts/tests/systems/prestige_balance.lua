@@ -1,4 +1,5 @@
 local catalog = require('modules/custom/lua/prestige_catalog')
+local rebirth = require('modules/custom/lua/job_rebirth_catalog')
 
 local function rosterAttackRange(roster)
     local low, high
@@ -53,5 +54,41 @@ describe('Ascension Court progression curve', function()
         local wardens = catalog.trialScaling.tiers[6].roster
         local _, high = rosterAttackRange(wardens)
         assert(high * ascendant.mult == 31250)
+    end)
+end)
+
+describe('Job Rebirth R1-R50 reward curve', function()
+    local function rewardAt(count)
+        local base = math.floor(rebirth.rpMin + rebirth.rpScale * (count ^ rebirth.rpPower - 1))
+        local milestone = count % rebirth.rpMilestoneEvery == 0 and rebirth.rpMilestoneBonus or 0
+        return base + milestone
+    end
+
+    local function earnedThrough(count)
+        local total = 0
+        for rebirthLevel = 1, count do
+            total = total + rewardAt(rebirthLevel)
+        end
+        return total
+    end
+
+    it('keeps mapped stats incomplete at R36 and completes them at R50', function()
+        local mappedCost = 0
+        for _, category in ipairs(catalog.categories) do
+            mappedCost = mappedCost + category.cap * category.apCost
+        end
+
+        assert(mappedCost == 2495)
+        assert(earnedThrough(36) == 1361)
+        assert(earnedThrough(36) < mappedCost)
+        assert(earnedThrough(49) < mappedCost)
+        assert(earnedThrough(50) == 2497)
+        assert(earnedThrough(50) >= mappedCost)
+        assert(rebirth.maxRebirths == 50)
+    end)
+
+    it('retunes rewards without weakening the established EXP penalty curve', function()
+        assert(rebirth.rpPower == 1.1)
+        assert(rebirth.expPenaltyPower == 1.3)
     end)
 end)

@@ -22,10 +22,12 @@
 -- Zone: GM Home (zone 210).
 -----------------------------------
 require('modules/module_utils')
+require('scripts/globals/player')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local waveProgress = require('modules/custom/lua/game_master_progress')
 
 local m = Module:new('prime_armory')
+local LOUGHNASHADE_ID = 22307
 
 local TRIALS =
 {
@@ -94,6 +96,20 @@ local T5_ITEMS =
     { id = 1453, name = 'Montiont Silverpiece'  },
     { id = 1456, name = '100 Byne Bill'         },
 }
+
+m:addOverride('xi.player.onPlayerLogin', function(player)
+    super(player)
+
+    -- Loughnashade grants Aria of Passion. Keep the server's existing
+    -- permanent-learn behavior while repairing characters forged before the
+    -- spell was wired.
+    if
+        player:hasItem(LOUGHNASHADE_ID) and
+        not player:hasSpell(xi.magic.spell.ARIA_OF_PASSION)
+    then
+        player:addSpell(xi.magic.spell.ARIA_OF_PASSION, { silentLog = true })
+    end
+end)
 
 m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
@@ -355,6 +371,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return
         end
         player:setCharVar('WF_Prime_Final', 1)
+        if weapon.id == LOUGHNASHADE_ID then
+            player:addSpell(xi.magic.spell.ARIA_OF_PASSION, { silentLog = true })
+        end
+
         if weapon.ws and weapon.ws:sub(1, 1) ~= '(' then
             player:printToPlayer(string.format(
                 '[Prime Armory] %s has been forged! Equip it to unlock the weapon skill %s. Kupo!',

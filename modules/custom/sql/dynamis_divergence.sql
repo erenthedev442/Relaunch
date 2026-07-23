@@ -169,7 +169,7 @@ REPLACE INTO `mob_spawn_points` VALUES (17982403, 0, 'SandoriaD_Regiment_A', 'Re
 REPLACE INTO `mob_spawn_points` VALUES (17982404, 0, 'SandoriaD_Regiment_B', 'Regiment\'s Wyvern', 7, 97, 99, -195.864, -1.500, 46.667, 143);
 REPLACE INTO `mob_spawn_points` VALUES (17982405, 0, 'SandoriaD_Regiment_C', 'Regiment Evoker', 8, 97, 99, -253.318, -4.099, 113.539, 12);
 
--- ── Bosses (existing mobids, RELOCATED to corridor midpoint / far end) ──
+-- ── Bosses (registered slots at corridor midpoint / far end) ──
 REPLACE INTO `mob_spawn_points` VALUES (17981770, 0, 'Overseers_Tombstone', 'Overseer\'s Tombstone', 1, 99, 99, 78.825, 1.954, -42.778, 176);
 REPLACE INTO `mob_spawn_points` VALUES (17982112, 0, 'Halphas', 'Halphas', 9, 99, 99, -270.042, -6.655, 98.578, 24);
 REPLACE INTO `mob_spawn_points` VALUES (17982238, 0, 'Disjoined_Elvaan_D', 'Disjoined Elvaan', 10, 99, 99, -277.958, -6.741, 97.422, 24);
@@ -695,7 +695,7 @@ REPLACE INTO `mob_spawn_points` VALUES (17990605, 0, 'WindyD_Regiment_C', 'Regim
 
 -- ── Bosses (existing mobids, RELOCATED to corridor midpoint / far end) ──
 REPLACE INTO `mob_spawn_points` VALUES (17989634, 0, 'EvincingIdol_WindyD', 'Evincing Idol', 1, 99, 99, -14.488, -7.533, -2.019, 190);
-REPLACE INTO `mob_spawn_points` VALUES (17989981, 0, 'FiiPexuTheEternal', 'Fii Pexu the Eternal', 9, 99, 99, 108.944, -8.059, 218.604, 2);
+REPLACE INTO `mob_spawn_points` VALUES (17990606, 0, 'FiiPexuTheEternal', 'Fii Pexu the Eternal', 9, 99, 99, 108.944, -8.059, 218.604, 2);
 REPLACE INTO `mob_spawn_points` VALUES (17990425, 0, 'Disjoined_Tarutaru_D', 'Disjoined Tarutaru', 10, 99, 99, 114.534, -8.211, 224.326, 2);
 
 -- ── instance_entities: register all 109 mobs ──
@@ -807,7 +807,7 @@ REPLACE INTO `instance_entities` VALUES (29600, 17990603);
 REPLACE INTO `instance_entities` VALUES (29600, 17990604);
 REPLACE INTO `instance_entities` VALUES (29600, 17990605);
 REPLACE INTO `instance_entities` VALUES (29600, 17989634);
-REPLACE INTO `instance_entities` VALUES (29600, 17989981);
+REPLACE INTO `instance_entities` VALUES (29600, 17990606);
 REPLACE INTO `instance_entities` VALUES (29600, 17990425);
 
 -- ── instance_list (unchanged) ──

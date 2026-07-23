@@ -74,7 +74,7 @@ return {
             { id = 16785788, x = 77.98, y = -6.0, z = -603.0, rot = 0 },
         } },
         [4] = { zoneName = 'Bibiki_Bay', points = {
-            { id = 16794044, x = 582.55, y = -20.54, z = 847.86, rot = 0 },
+            { id = 0, x = 582.55, y = -20.54, z = 847.86, rot = 0, custom = true },
             { id = 16794045, x = 198.67, y = -28.0, z = 562.66, rot = 0 },
             { id = 16794046, x = 361.16, y = -20.0, z = 319.81, rot = 0 },
         } },
@@ -99,9 +99,11 @@ return {
             { id = 16879999, x = 297.84, y = 24.64, z = -342.37, rot = 0 },
         } },
         [51] = { zoneName = 'Wajaom_Woodlands', points = {
-            { id = 16986835, x = 0.0, y = 0.0, z = 0.0, rot = 0 },
-            { id = 16986836, x = 0.0, y = 0.0, z = 0.0, rot = 0 },
-            { id = 16986837, x = 0.0, y = 0.0, z = 0.0, rot = 0 },
+            -- Stock rows are uncaptured (0,0,0). These safe anchors correspond
+            -- to the three retail Wajaom battle areas at K-9, I-9, and I-8.
+            { id = 0, x = 358.827, y = -16.241, z = -52.142, rot = 128, custom = true },
+            { id = 0, x = 184.674, y = -20.0, z = -94.958, rot = 128, custom = true },
+            { id = 0, x = 104.620, y = -20.750, z = 47.619, rot = 128, custom = true },
         } },
         [61] = { zoneName = 'Mount_Zhayolm', points = {
             { id = 0, x = 404.5, y = -27.513, z = 123.5, rot = 128, custom = true },
@@ -127,7 +129,7 @@ return {
             { id = 17199761, x = 718.63, y = 0.0, z = -83.62, rot = 0 },
         } },
         [104] = { zoneName = 'Jugner_Forest', points = {
-            { id = 17203896, x = 84.97, y = 0.33, z = -201.37, rot = 0 },
+            { id = 0, x = 84.97, y = 0.33, z = -201.37, rot = 0, custom = true },
         } },
         [105] = { zoneName = 'Batallia_Downs', points = {
             { id = 0, x = -65.0, y = -2.0, z = 451.0, rot = 192, custom = true },
@@ -153,9 +155,9 @@ return {
             { id = 17236359, x = 343.8, y = -8.28, z = 110.78, rot = 0 },
         } },
         [113] = { zoneName = 'Cape_Teriggan', points = {
-            { id = 17240524, x = 162.949, y = 8.0, z = 156.08, rot = 0 },
-            { id = 17240525, x = -314.69, y = -0.349, z = 79.87, rot = 0 },
-            { id = 17240526, x = 195.529, y = 7.949, z = -3.789, rot = 0 },
+            { id = 0, x = 162.949, y = 8.0, z = 156.08, rot = 0, custom = true },
+            { id = 0, x = -314.69, y = -0.349, z = 79.87, rot = 0, custom = true },
+            { id = 0, x = 195.529, y = 7.949, z = -3.789, rot = 0, custom = true },
         } },
         [114] = { zoneName = 'Eastern_Altepa_Desert', points = {
             { id = 0, x = -258.0, y = 8.5, z = -263.0, rot = 128, custom = true },
@@ -213,7 +215,7 @@ return {
             { id = 17404425, x = 50.86, y = -18.21, z = -154.58, rot = 0 },
         } },
         [159] = { zoneName = 'Temple_of_Uggalepih', points = {
-            { id = 17429036, x = 225.75, y = 0.039, z = -25.0, rot = 0 },
+            { id = 0, x = 225.75, y = 0.039, z = -25.0, rot = 0, custom = true },
             { id = 17429037, x = -97.17, y = -0.1, z = -59.7, rot = 0 },
         } },
         [160] = { zoneName = 'Den_of_Rancor', points = {
@@ -232,7 +234,7 @@ return {
         } },
         [200] = { zoneName = 'Garlaige_Citadel', points = {
             { id = 17596876, x = -167.89, y = 19.25, z = 321.51, rot = 0 },
-            { id = 17596877, x = -361.3, y = 19.0, z = 283.13, rot = 0 },
+            { id = 0, x = -361.3, y = 19.0, z = 283.13, rot = 0, custom = true },
             { id = 17596878, x = -260.17, y = 19.35, z = 233.9, rot = 0 },
         } },
         [204] = { zoneName = 'FeiYin', points = {
