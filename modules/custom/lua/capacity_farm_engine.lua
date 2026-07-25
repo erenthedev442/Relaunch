@@ -137,7 +137,9 @@ local function makeFarm(catalog)
                 m:setLocalVar('CapacityFarmDiedAt', 0)
                 m:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)
                 m:setMobMod(xi.mobMod.NO_DROPS, 1)
-                m:setMobMod(xi.mobMod.EXP_BONUS, -100)
+                -- Preserve the normal kill reward for merits while preventing
+                -- these dedicated Lv99 camps from adding normal job EXP.
+                m:setLocalVar('CapacityFarmLimitOnly', 1)
                 -- C++ folds this killer-only flat bonus into the normal mob CP
                 -- award before applying the strict 60k per-player/per-kill cap.
                 m:setLocalVar('CapacityFarmBonus', catalog.cpBonus or 0)

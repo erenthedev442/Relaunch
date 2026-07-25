@@ -399,6 +399,25 @@ def _voidwatch_drops(repo_root: Path) -> dict[int, list[dict]]:
                 "zone": "Voidwatch",
                 "pct": max(pct, 0.1),
             })
+
+    # Sortie earrings are an independent roll and no longer dilute signature
+    # rares. Resolve each row's named earring table from the same live catalog.
+    earring_chance = _catalog_number(text, "EARRING_ROLL_CHANCE", 20)
+    earring_tables: dict[str, list[int]] = {}
+    for m in re.finditer(
+            r"local\s+(SORTIE_\w+_EARRINGS)\s*=\s*\{([^}]*)\}", text, re.DOTALL):
+        earring_tables[m.group(1)] = nums(m.group(2))
+    for m in re.finditer(
+            r"(\w+)\s*=\s*\{[^\n]*earrings\s*=\s*(SORTIE_\w+_EARRINGS)", text):
+        nm, table_name = m.group(1), m.group(2)
+        ids = earring_tables.get(table_name, [])
+        pct = round(earring_chance / max(len(ids), 1), 2)
+        for iid in ids:
+            out.setdefault(iid, []).append({
+                "mob": f"{nm.replace('_', ' ')} (Voidwatch earring roll)",
+                "zone": "Voidwatch",
+                "pct": max(pct, 0.01),
+            })
     return out
 
 

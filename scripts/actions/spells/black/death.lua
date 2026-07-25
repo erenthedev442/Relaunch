@@ -46,7 +46,13 @@ spellObject.onSpellCast = function(caster, target, spell)
 
     -- Not-player spell.
     else
-        if math.random(1, 100) <= target:getMod(xi.mod.DEATHRES) then
+        -- Marks-popped Abyssea encounters are solo progression fights with a
+        -- 6,000 outgoing-damage ceiling. Native Death writes HP directly and
+        -- would otherwise bypass that contract.
+        if
+            caster:getLocalVar('[MarksTier]') > 0 or
+            math.random(1, 100) <= target:getMod(xi.mod.DEATHRES)
+        then
             spell:setModifier(xi.msg.actionModifier.RESIST) -- Resist!
             spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
         else

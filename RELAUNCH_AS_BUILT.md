@@ -218,6 +218,7 @@ Pure-Lua (`SpellSkillMastery.lua`): potency/traits via `addMod` + onGameIn re-ap
 | **Invasion** (Al Zahbi defense) | `!iwarp`, every 3 h | group, 5 waves | 20 marks/wave, **+100 marks +100 Infamy** on win, guaranteed silver/gold medals, 15% per-kill loot | LIVE |
 | **Colosseum** (async PvP vs AI replicas of other players) | Arena Herald | solo, Elo-ranked | win **10 marks** (+underdog), loss 25 consolation, daily win cap 15 | LIVE |
 | **Voidspire** (endless descent) | Voidspire Warden (Escha-RuAun **south/entry plaza**, ×3 copies) | solo | `5+2×floor` marks; depth milestones (floor 10/25/50/75/100 = **50/150/350/600/1000** marks), each **once/week** | LIVE |
+| **Voidwatch** (Planar Rifts) | 29 field rifts + Voidwatch Officer (zone-44 hub) | party | bounded Entry→Mythic strata; signature VNM loot, independent Sortie-earring roll, cruor/atmacite, Hunt Marks; 19-NM roster gates Mythic Stage II | LIVE |
 | **Star-Devourer Raid** | Voidgate Sentinel (Escha-RuAun **north area**, ×3 copies) | group | weekly 2,500 marks + 500 Infamy (250 on repeat) | LIVE (the old load bug does **not** apply on relaunch) |
 | **Custom HNM rotation** | vanilla zones, timed | group | vanilla drops | LIVE |
 | **Hunters' Guild** (rep amplifier) | passive | — | +0-100% mark amplifier per guild; Trinity/Apex Hunter capstones | LIVE |

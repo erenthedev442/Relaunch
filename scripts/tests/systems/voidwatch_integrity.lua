@@ -26,21 +26,42 @@ describe('Voidwatch combat and catalog integrity', function()
     end)
 
     it('uses pressure mechanics instead of passive regen or periodic healing', function()
-        assert(catalog.nmMods(1)[xi.mod.REGEN] == nil)
-        assert(catalog.nmMods(19)[xi.mod.REGEN] == nil)
+        assert(catalog.nmMods(1)[xi.mod.REGEN] == 0)
+        assert(catalog.nmMods(19)[xi.mod.REGEN] == 0)
         assert(catalog.mechCfg(1).drain == nil)
         assert(catalog.mechCfg(19).drain == nil)
-        assert(catalog.mechCfg(5).enrage ~= nil)
-        assert(catalog.mechCfg(6).doom ~= nil)
+        assert(catalog.mechCfg(12).enrage == nil)
+        assert(catalog.mechCfg(13).enrage ~= nil)
+        assert(catalog.mechCfg(16).doom ~= nil)
     end)
 
-    it('exposes named spawn and combat behavior for dynamic rift NMs', function()
-        assert(xi.voidwalker.hasSpawnBehavior('Krabkatoa'))
-        assert(xi.voidwalker.hasSpawnBehavior('Erebus'))
-        assert(xi.voidwalker.hasCombatBehavior('Capricornus'))
-        assert(xi.voidwalker.hasCombatBehavior('Blobdingnag'))
-        assert(xi.voidwalker.hasCombatBehavior('Dawon'))
-        assert(not xi.voidwalker.hasCombatBehavior('Lord_Ruthven'))
+    it('caps levels and repeat scaling at server-safe values', function()
+        assert(catalog.nmLevel(1) == 99)
+        assert(catalog.nmLevel(24) == 150)
+        assert(catalog.nmLevel(999) == 150)
+        assert(catalog.nmHp(19) == 10000000)
+        assert(catalog.nmHp(999) == 14000000)
+        assert(catalog.effectiveTier(catalog.STRATUM_BY_KEY.AMBER, 999) == 24)
+    end)
+
+    it('gives every dynamic rift NM named spawn or combat behavior', function()
+        for name in pairs(catalog.UNIQUE_NMS) do
+            assert(
+                xi.voidwalker.hasSpawnBehavior(name) or
+                xi.voidwalker.hasCombatBehavior(name),
+                string.format('%s has no named Voidwalker behavior', name))
+        end
+        assert(xi.voidwalker.hasCombatBehavior('Lord_Ruthven'))
+        assert(xi.voidwalker.hasCombatBehavior('Yilbegan'))
+        assert(xi.voidwalker.hasCombatBehavior('Aglaophotis'))
+        assert(xi.voidwalker.hasCombatBehavior('Gorehound'))
+    end)
+
+    it('keeps Sortie earrings separate from signature rare pools', function()
+        local ruthven = catalog.nmLoot('Lord_Ruthven')
+        assert(#ruthven.rare == 2)
+        assert(#ruthven.earrings == 22)
+        assert(catalog.EARRING_ROLL_CHANCE == 20)
     end)
 
     it('fires crossed HP thresholds once even when damage skips the exact percentage', function()

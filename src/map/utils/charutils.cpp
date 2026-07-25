@@ -5764,6 +5764,15 @@ void AddExperiencePoints(bool expFromRaise, bool awardRegionPoints, bool fromScr
         onLimitMode = true;
     }
 
+    // Relaunch capacity farms award merits alongside Capacity Points, but never
+    // normal job EXP. Their shared Lua engine marks every Bibiki/Ranperre farm
+    // mob after spawn so the normal EXP calculation, bonuses, and messages are
+    // retained while the final award is always routed to limit points.
+    if (PMob && PMob->GetLocalVar("CapacityFarmLimitOnly") > 0)
+    {
+        onLimitMode = true;
+    }
+
     // exp added from raise shouldn't display a message. Don't need a message for zero exp either
     if (!expFromRaise && exp > 0)
     {

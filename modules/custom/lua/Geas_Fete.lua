@@ -13,22 +13,23 @@
 -- real retail camps in the stock spawn data got their retail ???; NMs whose
 -- stock spawns are placeholder clusters were spread across the remaining
 -- ???s so every point hosts 1-5 NMs.
--- The Warding Circle NPCs remain as the Escha Beads material EXCHANGE only
--- (one per zone; Reisenjima's replaces the old redirect signpost).
+-- A Geas Fete Warden in each zone handles progress, camp warps, pop triggers,
+-- and the Escha Beads material exchange.
 --
 -- Currency (UNIFIED 2026-07-09 -- REAL char_points currency, Currencies II tab):
 --   ALL Escha kills (Zi'Tah AND Ru'Aun) → escha_beads.
---   One pool funds BOTH Warding Circle exchanges, the Temprix Aeonic vendor, and
+--   One pool funds all Warden exchanges, the Temprix Aeonic vendor, and
 --   the WeaponForge Aeonic steps. Dead legacy charVars (Escha_Beads/Escha_Silt)
 --   are folded into escha_beads on first access. The real escha_silt CURRENCY is
 --   left alone -- it's the Eschan portal travel cost + Domain Invasion fuel.
--- Exchange at the Warding Circle for Beitetsu / Riftcinder / Riftborn Boulder.
+-- Exchange at the Geas Fete Warden for Beitetsu / Riftcinder / Riftborn Boulder.
 --
 -- Drop materials from kills (Lua-only, no mob_droplist rows needed):
---   T1: 1-2 Beitetsu, rare Riftcinder
---   T2: 2-3 Beitetsu, 1-2 Riftcinder, chance Riftborn Boulder
---   T3: 3-5 Beitetsu, 2-3 Riftcinder, 1-2 Riftborn Boulder
---   Boss: 5-8 Beitetsu, 3-5 Riftcinder, 2-4 Riftborn Boulder, Eschalixir+2
+--   Every NM: 1 guaranteed Beitetsu, then independent 80/70/50/30/20/10/5%
+--   rolls for pieces 2-8. Treasure Hunter raises each non-guaranteed roll
+--   through the same helper used by normal droplists.
+--   T2+: Riftcinder; T2+: Riftborn Boulder; T4: Eschalixir+2 + Attestations.
+--   Every kill also grants tier-scaled Escha Silt: 40 / 120 / 400 / 1,000.
 --
 -- All NMs spawn via insertDynamicEntity (no mob_spawn_points rows needed).
 -- restart-gated (addOverride).
@@ -40,6 +41,8 @@ require('scripts/zones/Reisenjima/Zone')  -- for the redirect signpost override
 
 local m = Module:new('geas_fete')
 local S = xi.msg.channel.SYSTEM_3
+local mechanics = require('modules/custom/lua/mob_mechanics_library')
+local abysseaBalance = require('modules/custom/lua/abyssea_marks_balance')
 
 -- Public namespace for cross-module reads. Populated below with the unique-NM
 -- roster size so the Weapon Forge's Empyrean Stage I preflight can compare
@@ -145,11 +148,12 @@ local ABJURATIONS = {
 -- chain-popping the same NM even with stacked KIs.
 --   short is the compact label used in the ??? menu (byte-cap safe).
 local POP_KI = {
-    [1] = { ki = xi.ki.ESCHAN_URN,    name = 'Eschan Urn',    short = 'Urn'    },
-    [2] = { ki = xi.ki.ESCHAN_CELLAR, name = 'Eschan Cellar', short = 'Cellar' },
-    [3] = { ki = xi.ki.ESCHAN_NEF,    name = 'Eschan Nef',    short = 'Nef'    },
-    [4] = { ki = xi.ki.ESCHAN_NEF,    name = 'Eschan Nef',    short = 'Nef'    },
+    [1] = { ki = xi.ki.ESCHAN_URN,    name = 'Eschan Urn',    short = 'Urn',    cost = 200,  tier = 'T1'    },
+    [2] = { ki = xi.ki.ESCHAN_CELLAR, name = 'Eschan Cellar', short = 'Cellar', cost = 500,  tier = 'T2'    },
+    [3] = { ki = xi.ki.ESCHAN_NEF,    name = 'Eschan Nef',    short = 'Nef',    cost = 1000, tier = 'T3/T4' },
+    [4] = { ki = xi.ki.ESCHAN_NEF,    name = 'Eschan Nef',    short = 'Nef',    cost = 1000, tier = 'T3/T4' },
 }
+local KI_SHOP = { POP_KI[1], POP_KI[2], POP_KI[3] }
 
 -- ===================================================================
 -- NM CATALOG
@@ -157,13 +161,20 @@ local POP_KI = {
 --   name     : display name (spaces OK, gets underscore-replaced for entity name)
 --   gid      : mob_groups.groupid scoped to this zone
 --   tier     : 1 / 2 / 3 / 4 (boss)
---   hp       : max HP (0 = server default from mob_pools stats)
+--   hp       : legacy source-pool metadata; runtime HP comes from TIER_TUNING
 --   currency : Escha Beads or Silt awarded on kill
 --   cooldown : seconds before the NM can be re-popped per player
 -- ===================================================================
 local ZITAH  = xi.zone.ESCHA_ZITAH  -- 288
 local RUAUN  = xi.zone.ESCHA_RUAUN  -- 289
 local REISEN = xi.zone.REISENJIMA   -- 291
+local ZONE_ORDER = { ZITAH, RUAUN, REISEN }
+local ZONE_LABELS =
+{
+    [ZITAH]  = "Escha - Zi'Tah",
+    [RUAUN]  = "Escha - Ru'Aun",
+    [REISEN] = 'Reisenjima',
+}
 
 local NM_CATALOG = {
     -- Full retail Geas Fete roster (BG-wiki, 2026-07-12) + the relaunch
@@ -393,17 +404,131 @@ local QM_POINTS = {
     },
 }
 
+-- Fail module load with an actionable error if a catalog edit leaves an NM
+-- unreachable, assigns it to multiple camps, or references an unknown gid.
+do
+    for zoneId, defs in pairs(NM_CATALOG) do
+        local catalog = {}
+        local assigned = {}
+        for _, def in ipairs(defs) do
+            assert(not catalog[def.gid], string.format(
+                'Geas Fete duplicate catalog gid %d in zone %d', def.gid, zoneId))
+            catalog[def.gid] = def
+        end
+
+        for npcId, gids in pairs(QM_POINTS[zoneId] or {}) do
+            for _, gid in ipairs(gids) do
+                assert(catalog[gid], string.format(
+                    'Geas Fete camp %d references missing gid %d in zone %d',
+                    npcId, gid, zoneId))
+                assigned[gid] = (assigned[gid] or 0) + 1
+            end
+        end
+
+        for _, def in ipairs(defs) do
+            assert(assigned[def.gid] == 1, string.format(
+                'Geas Fete %s (gid %d, zone %d) has %d camp assignments',
+                def.name, def.gid, zoneId, assigned[def.gid] or 0))
+        end
+    end
+end
+
+-- Shared progression/navigation API used by the Warden menus and !geas.
+-- Positions come from the live stock ??? entities, keeping this table aligned
+-- if a camp is moved in npc_list later.
+local function campPosition(npcId)
+    local npc = GetNPCByID(npcId)
+    if not npc then return nil end
+
+    local ok, x, y, z = pcall(function()
+        return npc:getXPos(), npc:getYPos(), npc:getZPos()
+    end)
+    if not ok then return nil end
+    return { x = x, y = y, z = z }
+end
+
+local function sortedCamps(zoneId)
+    local camps = {}
+    for npcId, gids in pairs(QM_POINTS[zoneId] or {}) do
+        camps[#camps + 1] = { npcId = npcId, gids = gids }
+    end
+    table.sort(camps, function(a, b) return a.npcId < b.npcId end)
+    return camps
+end
+
+local function killKey(zoneId, gid)
+    return string.format('GF_Kill_%d_%d', zoneId, gid)
+end
+
+function xi.geasFete.progress(player, zoneId)
+    local cleared, total = 0, 0
+    for _, def in ipairs(NM_CATALOG[zoneId] or {}) do
+        total = total + 1
+        if (player:getCharVar(killKey(zoneId, def.gid)) or 0) == 1 then
+            cleared = cleared + 1
+        end
+    end
+    return cleared, total
+end
+
+function xi.geasFete.totalProgress(player)
+    local cleared, total = 0, 0
+    for _, zoneId in ipairs(ZONE_ORDER) do
+        local zoneCleared, zoneTotal = xi.geasFete.progress(player, zoneId)
+        cleared = cleared + zoneCleared
+        total = total + zoneTotal
+    end
+    return cleared, total
+end
+
+function xi.geasFete.missing(player, zoneFilter)
+    local out = {}
+    for _, zoneId in ipairs(ZONE_ORDER) do
+        if not zoneFilter or zoneFilter == zoneId then
+            local campByGid = {}
+            for _, camp in ipairs(sortedCamps(zoneId)) do
+                for _, gid in ipairs(camp.gids) do
+                    campByGid[gid] = camp.npcId
+                end
+            end
+
+            for _, def in ipairs(NM_CATALOG[zoneId] or {}) do
+                if (player:getCharVar(killKey(zoneId, def.gid)) or 0) ~= 1 then
+                    local npcId = campByGid[def.gid]
+                    out[#out + 1] =
+                    {
+                        name      = def.label or def.name,
+                        fullName  = def.name,
+                        tier      = def.tier,
+                        zoneId    = zoneId,
+                        zoneName  = ZONE_LABELS[zoneId],
+                        npcId     = npcId,
+                        position  = npcId and campPosition(npcId) or nil,
+                    }
+                end
+            end
+        end
+    end
+    return out
+end
+
+function xi.geasFete.positionText(entry)
+    local pos = entry and entry.position
+    if not pos then return 'position unavailable' end
+    return string.format('%.1f, %.1f, %.1f', pos.x, pos.y, pos.z)
+end
+
 -- ===================================================================
 -- CURRENCY HELPERS
 -- ===================================================================
--- UNIFIED (2026-07-09): every Escha kill (Zi'Tah AND Ru'Aun) awards ONE currency
--- -- the real 'escha_beads' (char_points, Currencies II tab) -- so a single pool
--- funds BOTH Warding Circle exchanges, the Temprix Aeonic vendor, and the Aeonic
--- WeaponForge. escha_beads is a REAL currency (visible/spendable anywhere), NOT a
--- charVar. Both zones map to it.
+-- Every Geas Fete kill awards Escha Beads for triggers/exchanges and
+-- tier-scaled Escha Silt for Aeonic forging.
 local BEADS          = 'escha_beads'
-local CURRENCY_KEY   = { [ZITAH] = BEADS, [RUAUN] = BEADS }
-local CURRENCY_LABEL = { [ZITAH] = 'Escha Beads', [RUAUN] = 'Escha Beads' }
+local CURRENCY_KEY   = { [ZITAH] = BEADS, [RUAUN] = BEADS, [REISEN] = BEADS }
+local CURRENCY_LABEL = { [ZITAH] = 'Escha Beads', [RUAUN] = 'Escha Beads', [REISEN] = 'Escha Beads' }
+local SILT_BY_TIER   = { [1] = 40, [2] = 120, [3] = 400, [4] = 1000 }
+local STARTER_BEADS = 1000
+local STARTER_BEADS_VAR = 'GF_Starter_Beads'
 
 -- Fold the DEAD legacy charVars (Escha_Beads / Escha_Silt, from before the
 -- real-currency refactor) into the unified escha_beads currency on access, so
@@ -421,6 +546,16 @@ local function migrateLegacy(player)
     end
 end
 
+local function grantStarterBeads(player)
+    if (player:getCharVar(STARTER_BEADS_VAR) or 0) == 1 then return false end
+    player:addCurrency(BEADS, STARTER_BEADS)
+    player:setCharVar(STARTER_BEADS_VAR, 1)
+    player:printToPlayer(string.format(
+        '[Geas Fete] The Warden grants you %d starter Escha Beads (one time).',
+        STARTER_BEADS), S)
+    return true
+end
+
 local function getCurrency(player, zoneId)
     migrateLegacy(player)
     return player:getCurrency(CURRENCY_KEY[zoneId]) or 0
@@ -436,6 +571,46 @@ local function takeCurrency(player, zoneId, amount)
     local k = CURRENCY_KEY[zoneId]
     if (player:getCurrency(k) or 0) < amount then return false end
     player:delCurrency(k, amount)
+    return true
+end
+
+function xi.geasFete.buyTrigger(player, requestedTier)
+    local key = tostring(requestedTier or ''):lower()
+    local tier = tonumber(key:match('%d+'))
+    if key == 'urn' then tier = 1 end
+    if key == 'cellar' then tier = 2 end
+    if key == 'nef' then tier = 3 end
+
+    local spec = POP_KI[tier or 0]
+    if not spec then
+        player:printToPlayer('[Geas Fete] Usage: !geaski <1|2|3|4|urn|cellar|nef>', S)
+        return false
+    end
+    if player:hasKeyItem(spec.ki) then
+        player:printToPlayer(string.format(
+            '[Geas Fete] You already hold a %s (only one at a time).',
+            spec.name), S)
+        return false
+    end
+
+    local balance = getCurrency(player, ZITAH)
+    if balance < spec.cost then
+        player:printToPlayer(string.format(
+            '[Geas Fete] Need %d Escha Beads for a %s; you have %d.',
+            spec.cost, spec.name, balance), S)
+        return false
+    end
+
+    -- Grant first and charge only after the key-item API confirms success.
+    if not npcUtil.giveKeyItem(player, spec.ki) then
+        player:printToPlayer('[Geas Fete] The trigger could not be issued; no beads were spent.', S)
+        return false
+    end
+
+    takeCurrency(player, ZITAH, spec.cost)
+    player:printToPlayer(string.format(
+        '[Geas Fete] Received %s for %d Escha Beads.',
+        spec.name, spec.cost), S)
     return true
 end
 
@@ -463,12 +638,60 @@ local function fmtCD(secs)
 end
 
 -- ===================================================================
--- DROP HELPER (awarded to killer on mob death)
+-- DROP HELPERS (awarded to each credited player on mob death)
 -- ===================================================================
-local function awardDrops(player, zoneId, def)
+local BEITETSU_CHANCES = { 100, 80, 70, 50, 30, 20, 10, 5 }
+
+local function passesTreasureHunterRoll(mob, basePct)
+    if basePct >= 100 then return true end
+
+    local rate = basePct * 100 -- percent -> engine per-10,000 scale
+    local thLevel = 0
+    pcall(function() thLevel = mob:getTHlevel() or 0 end)
+    if
+        thLevel > 0 and
+        xi.combat and
+        xi.combat.treasureHunter and
+        xi.combat.treasureHunter.getDropRate
+    then
+        local ok, adjusted = pcall(xi.combat.treasureHunter.getDropRate, thLevel, rate)
+        if ok and type(adjusted) == 'number' then
+            -- Retail TH brackets are coarser than these custom high-chance
+            -- rolls (for example, an 80% base maps to the 24% bracket).
+            -- TH may improve a roll, but must never reduce its stated base.
+            rate = math.max(rate, adjusted)
+        end
+    end
+
+    return math.random(1, 10000) <= math.max(0, math.min(10000, rate))
+end
+
+local function awardBeitetsu(player, mob)
+    local quantity = 0
+    for _, chance in ipairs(BEITETSU_CHANCES) do
+        if passesTreasureHunterRoll(mob, chance) then
+            quantity = quantity + 1
+        end
+    end
+
+    if not player:addItem({ id = BEITETSU, quantity = quantity }) then
+        player:printToPlayer(string.format(
+            '[Geas Fete] Beitetsu x%d was lost -- make inventory room before your next kill!',
+            quantity), S)
+        return
+    end
+
+    local thLevel = 0
+    pcall(function() thLevel = mob:getTHlevel() or 0 end)
+    player:printToPlayer(string.format(
+        '[Geas Fete] Spoils: Beitetsu x%d (Treasure Hunter %d).',
+        quantity, thLevel), S)
+end
+
+local function awardDrops(player, mob, def)
     local t = def.tier
-    -- Beitetsu
-    local bei = math.random(t, t * 2)
+    awardBeitetsu(player, mob)
+
     -- Riftcinder: T2+ only
     local rc = (t >= 2) and math.random(1, t) or 0
     -- Riftborn Boulder: T3+ guaranteed, T2 30% chance
@@ -483,7 +706,6 @@ local function awardDrops(player, zoneId, def)
     -- Eschalixir +2: boss only, always
     local lix = (t == 4) and 1 or 0
 
-    if bei > 0 then player:addItem({ id = BEITETSU,         quantity = bei }) end
     if rc  > 0 then player:addItem({ id = RIFTCINDER,       quantity = rc  }) end
     if rb  > 0 then player:addItem({ id = RIFTBORN_BOULDER, quantity = rb  }) end
     if lix > 0 then player:addItem({ id = ESCHALIXIR_2,     quantity = lix }) end
@@ -561,10 +783,9 @@ end
 -- DIFFICULTY LAYER (owner request 2026-07-12: 'all these geas fetes need
 -- to be significantly harder'). Stock pools at level 149 were sponges --
 -- formula stats, slow swings, little TP pressure -- so every spawned NM
--- now gets a tier-scaled OFFENSE profile on top of its pool. Defense is
--- deliberately untouched (harder should mean 'kills you', not 'unhittable').
--- Retune here, not in the catalog. Reference points: Absolute Virtue runs
--- REGAIN 200, Nepionic Soulflayer 50.
+-- now gets one tier-scaled combat profile on top of its pool. Retune here,
+-- not in the catalog. Reference points: Absolute Virtue runs REGAIN 200,
+-- Nepionic Soulflayer 50.
 --   attP     : +% physical attack        acc/macc : flat accuracy boosts
 --   matt     : flat magic attack bonus   regain   : passive TP/tick (more TP moves)
 --   da / ta  : double / triple attack %
@@ -582,32 +803,92 @@ end
 -- retail bosses of these HP tiers (HP:ATT 600-1500 = "hits hard, but you have
 -- time to react"). ACC + MATT boosted proportionally so mobs don't just miss.
 --
--- ANTI-SPONGE PASS #2 2026-07-13: audit found the tuning covered ATT/ACC/MATT
--- but NOTHING on the defensive or tempo axis. Casters could nuke unopposed
--- (no MEVA/MDEF), physical DDs could stack ACC and hit forever (no EVA),
--- and mobs swung at base delay (no HASTE_GEAR) -- so the "sponge" feel was
--- reinforced by combats where the mob didn't threaten and the player poured
--- damage into a wall. Now every tier gets a full defensive block matched to
--- the Hunting League tier tunings (which players agree feel "right").
---   * DEF/EVA           -- physical durability + evasion so ACC matters
---   * MDEF/MEVA         -- magic durability + evasion so MACC matters
---   * STR/DEX           -- feed the ACC/damage formulas
---   * HASTE_GEAR        -- swing tempo; 150 = ~10%, 450 = ~30% engine cap
+-- Relaunch progression contract: Geas Fete begins at the same sustained
+-- Relic-era combat budget as Abyssea Visions, then rises on a compressed
+-- 4m/8m/10m/14m ladder. HP scales by real PCs exactly as Abyssea does so
+-- grouping helps without trivialising the roster.
 local TIER_TUNING = {
-    [1] = { attP = 120, att =  400, acc = 350, macc = 350, matt = 100, regain =  90, da =  45, ta = 0,
-            def =  600, eva = 180, mdef = 200, meva = 180, str =  75, dex =  75, hasteGear = 150 },
-    [2] = { attP = 180, att =  800, acc = 500, macc = 500, matt = 180, regain = 180, da =  75, ta = 15,
-            def =  900, eva = 240, mdef = 300, meva = 240, str = 150, dex = 150, hasteGear = 225 },
-    [3] = { attP = 260, att = 1200, acc = 650, macc = 650, matt = 260, regain = 300, da =  90, ta = 30,
-            def = 1200, eva = 300, mdef = 400, meva = 300, str = 250, dex = 250, hasteGear = 300 },
-    [4] = { attP = 350, att = 1800, acc = 800, macc = 800, matt = 360, regain = 450, da = 110, ta = 45,
-            def = 1500, eva = 400, mdef = 500, meva = 400, str = 350, dex = 350, hasteGear = 400 },
+    [1] = { level = 120, hp = 4000000, att = 6500, acc = 700, macc = 700, matt = 2000,
+            regain = 120, da = 20, ta = 0, def = 850, eva = 800, mdef = 250, meva = 250,
+            str = 150, dex = 150, hasteGear = 1000, weaponDmg = 300, eleRes = 50 },
+    [2] = { level = 130, hp = 8000000, att = 8000, acc = 900, macc = 900, matt = 3200,
+            regain = 220, da = 25, ta = 10, def = 1200, eva = 1100, mdef = 350, meva = 400,
+            str = 225, dex = 225, hasteGear = 1500, weaponDmg = 350, eleRes = 75 },
+    [3] = { level = 145, hp = 10000000, att = 9000, acc = 1050, macc = 1050, matt = 4000,
+            regain = 280, da = 28, ta = 12, def = 1500, eva = 1300, mdef = 425, meva = 500,
+            str = 275, dex = 275, hasteGear = 1800, weaponDmg = 375, eleRes = 90 },
+    [4] = { level = 150, hp = 14000000, att = 10000, acc = 1150, macc = 1150, matt = 4700,
+            regain = 360, da = 32, ta = 16, def = 1800, eva = 1450, mdef = 500, meva = 600,
+            str = 325, dex = 325, hasteGear = 2150, weaponDmg = 415, eleRes = 110 },
 }
 
-local function applyDifficulty(mob, def)
+local MECHANIC_TUNING =
+{
+    [1] = {
+        targetPartyOnly = true,
+        phases = {
+            { hp = 50, action = 'fury', att = 500, haste = 100 },
+        },
+        enrage = { sec = 420, att = 1500, haste = 150 },
+    },
+    [2] = {
+        targetPartyOnly = true,
+        phases = {
+            { hp = 35, action = 'fury', att = 750, haste = 125 },
+        },
+        enrage = { sec = 600, att = 2000, haste = 175 },
+    },
+    [3] = {
+        targetPartyOnly = true,
+        phases = {
+            { hp = 45, action = 'fury', att = 1000, haste = 150 },
+        },
+        enrage = { sec = 840, att = 2500, haste = 200 },
+    },
+    [4] = {
+        targetPartyOnly = true,
+        phases = {
+            { hp = 55, action = 'fury', att = 1250, haste = 175 },
+            { hp = 25, action = 'enrage', att = 2500, haste = 225 },
+        },
+        enrage = { sec = 900, att = 3500, haste = 250 },
+    },
+}
+
+local function realPlayerScale(player)
+    local count = 1
+    local ok, party = pcall(function() return player:getParty() end)
+    if ok and party then
+        local seen = {}
+        count = 0
+        for _, member in ipairs(party) do
+            local memberOk, isPc = pcall(function() return member:isPC() end)
+            if memberOk and isPc and member:getZoneID() == player:getZoneID() then
+                local id = member:getID()
+                if not seen[id] then
+                    seen[id] = true
+                    count = count + 1
+                end
+            end
+        end
+        count = math.max(1, count)
+    end
+    return abysseaBalance.hpScale(count), count
+end
+
+local function applyDifficulty(mob, def, player)
     local t = TIER_TUNING[def.tier] or TIER_TUNING[1]
-    mob:addMod(xi.mod.ATTP,          t.attP)
-    if t.att then mob:addMod(xi.mod.ATT, t.att) end  -- flat ATT floor (anti-sponge pass)
+    mob:setMobLevel(t.level, false)
+    local hpScale, pcCount = realPlayerScale(player)
+    local hp = math.floor(t.hp * hpScale)
+    mob:setMaxHP(hp)
+    mob:setHP(hp)
+    -- Solo roster fights must make forward progress. Stock pool modifiers can
+    -- include passive regeneration, so explicitly remove it after level setup.
+    mob:setMod(xi.mod.REGEN, 0)
+    mob:setLocalVar('GeasFeteMobSkillDamageCap', 6000)
+    mob:setLocalVar('GeasFeteOwnerId', player:getID())
+    if t.att then mob:addMod(xi.mod.ATT, t.att) end
     mob:addMod(xi.mod.ACC,           t.acc)
     mob:addMod(xi.mod.MACC,          t.macc)
     mob:addMod(xi.mod.MATT,          t.matt)
@@ -625,6 +906,13 @@ local function applyDifficulty(mob, def)
     if t.str       then mob:addMod(xi.mod.STR,        t.str)       end
     if t.dex       then mob:addMod(xi.mod.DEX,        t.dex)       end
     if t.hasteGear then mob:addMod(xi.mod.HASTE_GEAR, t.hasteGear) end
+    if t.weaponDmg then mob:addMod(xi.mod.MAIN_DMG_RATING, t.weaponDmg) end
+    for _, modId in ipairs({
+        xi.mod.FIRE_MEVA, xi.mod.ICE_MEVA, xi.mod.WIND_MEVA, xi.mod.EARTH_MEVA,
+        xi.mod.THUNDER_MEVA, xi.mod.WATER_MEVA, xi.mod.LIGHT_MEVA, xi.mod.DARK_MEVA,
+    }) do
+        mob:addMod(modId, t.eleRes or 0)
+    end
 
     if def.delay then
         mob:setDelay(def.delay)
@@ -641,88 +929,135 @@ local function applyDifficulty(mob, def)
             mob:addMod(modId, v)
         end
     end
+    return pcCount
+end
+
+local SOLO_FAIL_EFFECTS =
+{
+    xi.effect.PETRIFICATION,
+    xi.effect.GRADUAL_PETRIFICATION,
+    xi.effect.TERROR,
+    xi.effect.DOOM,
+}
+
+local function clearSoloFailEffects(mob)
+    local owner
+    pcall(function() owner = GetPlayerByID(mob:getLocalVar('GeasFeteOwnerId')) end)
+    if not owner then return end
+
+    local members = { owner }
+    pcall(function()
+        for _, member in ipairs(owner:getPartyWithTrusts() or {}) do
+            if member ~= owner then
+                table.insert(members, member)
+            end
+        end
+    end)
+    for _, member in ipairs(members) do
+        if member and member:getZoneID() == mob:getZoneID() then
+            for _, effectId in ipairs(SOLO_FAIL_EFFECTS) do
+                pcall(function() member:delStatusEffectSilent(effectId) end)
+            end
+        end
+    end
 end
 
 -- ===================================================================
 -- NM SPAWN
 -- ===================================================================
-local function spawnNM(player, zone, zoneId, def)
-    local px, py, pz = player:getXPos(), player:getYPos(), player:getZPos()
+local function spawnNM(player, zone, zoneId, def, campNpc)
+    local px, py, pz = campNpc:getXPos(), campNpc:getYPos(), campNpc:getZPos()
     local angle = math.random() * math.pi * 2
-    local dist  = 12 + math.random(0, 8)
+    local dist  = 5 + math.random(0, 2)
     local mx    = px + math.cos(angle) * dist
     local mz    = pz + math.sin(angle) * dist
 
     local rot        = math.random(0, 255)
     local defCapture = def
 
-    local mob = zone:insertDynamicEntity({
-        objtype              = xi.objType.MOB,
-        name                 = defCapture.name:gsub(' ', '_'),
-        groupId              = defCapture.gid,
-        groupZoneId          = zoneId,
-        x                    = mx,
-        y                    = py,
-        z                    = mz,
-        rotation             = rot,
-        minLevel             = 149,
-        maxLevel             = 149,
-        detection            = xi.detects.SIGHT_AND_HEARING,
-        isAggroable          = true,
-        releaseIdOnDisappear = true,
+    local insertOk, mob = pcall(function()
+        return zone:insertDynamicEntity({
+            objtype              = xi.objType.MOB,
+            name                 = defCapture.name:gsub(' ', '_'),
+            groupId              = defCapture.gid,
+            groupZoneId          = zoneId,
+            x                    = mx,
+            y                    = py,
+            z                    = mz,
+            rotation             = rot,
+            minLevel             = 149,
+            maxLevel             = 149,
+            detection            = xi.detects.SIGHT_AND_HEARING,
+            isAggroable          = true,
+            releaseIdOnDisappear = true,
 
-        -- LSB new signature: onMobDeath(mob, player, optParams). The 3rd arg is
-        -- a table (optParams), NOT a bool -- the old `if not isKiller` guard was
-        -- dead code. Reward every credited alliance member (this fires once per
-        -- member); guard only against a nil player.
-        onMobDeath = function(mob, killer, optParams)
-            if killer == nil then return end
-            local cur = defCapture.currency or 0
-            if cur > 0 then
-                addCurrency(killer, zoneId, cur)
-            end
-            awardDrops(killer, zoneId, defCapture)
-            local clbl = CURRENCY_LABEL[zoneId] or 'pts'
-            killer:printToPlayer(string.format('[Geas Fete] %s defeated! +%d %s',
-                defCapture.name, cur, clbl), S)
-            -- Per-NM lifetime kill flag (2026-07-13). Read by the Weapon Forge
-            -- Empyrean Stage I preflight ("All Geas Fete bosses killed at
-            -- least once"); one flag per (zone, gid) pair covers Zi'Tah,
-            -- Ru'Aun, and Reisenjima with a single check. Bumps the companion
-            -- GF_Unique_Kills counter on the FIRST kill only so the gate can
-            -- compare against xi.geasFete.uniqueNmCount in O(1) instead of
-            -- iterating every (zone, gid) pair.
-            local key = string.format('GF_Kill_%d_%d', zoneId, defCapture.gid)
-            if (killer:getCharVar(key) or 0) == 0 then
-                killer:setCharVar(key, 1)
-                killer:setCharVar('GF_Unique_Kills',
-                    (killer:getCharVar('GF_Unique_Kills') or 0) + 1)
-            end
-        end,
-    })
+            -- LSB new signature: onMobDeath(mob, player, optParams). Reward
+            -- every credited alliance member; guard only against nil players.
+            onMobDeath = function(mob, killer, optParams)
+                if killer == nil then return end
+                mechanics.cleanup(mob)
+                local cur = defCapture.currency or 0
+                local silt = SILT_BY_TIER[defCapture.tier] or 0
+                if cur > 0 then
+                    addCurrency(killer, zoneId, cur)
+                end
+                if silt > 0 then
+                    killer:addCurrency('escha_silt', silt)
+                end
+                awardDrops(killer, mob, defCapture)
+                local clbl = CURRENCY_LABEL[zoneId] or 'pts'
+                killer:printToPlayer(string.format(
+                    '[Geas Fete] %s defeated! +%d %s, +%d Escha Silt',
+                    defCapture.name, cur, clbl, silt), S)
+                local key = killKey(zoneId, defCapture.gid)
+                if (killer:getCharVar(key) or 0) == 0 then
+                    killer:setCharVar(key, 1)
+                    killer:setCharVar('GF_Unique_Kills',
+                        (killer:getCharVar('GF_Unique_Kills') or 0) + 1)
+                end
+            end,
+
+            onMobFight = function(fightMob, target)
+                clearSoloFailEffects(fightMob)
+                mechanics.tick(fightMob, target)
+            end,
+        })
+    end)
+    if not insertOk then return nil end
 
     if mob then
         -- A dynamically-inserted MOB is created but INACTIVE until spawned.
         -- Without setSpawn()+spawn() the entity exists (so the caller's
         -- "emerges from the darkness!" message fires) but never appears in the
         -- world -- which is exactly the "it said it spawned but didn't" bug.
-        mob:setSpawn(mx, py, mz, rot)
-        mob:spawn()
-        -- Some Escha Warder pools ship with FLAG_UNTARGETABLE (0x800) baked into
-        -- mob_pools.entityFlags -- retail spawns them sealed/untargetable and the
-        -- Geas Fete encounter unseals them. Warder of Hope (pool 5659) and Warder
-        -- of Love (pool 5661) are entityFlags=2183 (=0x887, has 0x800); the other
-        -- four Warders are 135 and work. Since this is a pop-on-demand system where
-        -- every NM should be immediately fightable, clear the flag unconditionally
-        -- after spawn (no-op for pools that never had it). Without this the mob is
-        -- visible but can't be attacked/shot/cast on -- the reported bug.
-        mob:setUntargetable(false)
-        if def.hp and def.hp > 0 then
-            mob:setMaxHP(def.hp)
-            mob:setHP(def.hp)
+        local setupOk, spawned, pcCount = pcall(function()
+            mob:setSpawn(mx, py, mz, rot)
+            mob:spawn()
+            if not mob:isSpawned() then
+                return false, 0
+            end
+
+            -- Some Escha Warder pools ship with FLAG_UNTARGETABLE (0x800) baked
+            -- into mob_pools.entityFlags. A direct Geas pop must unseal them.
+            mob:setUntargetable(false)
+            local scaledFor = applyDifficulty(mob, def, player)
+            local mechBase = MECHANIC_TUNING[def.tier] or MECHANIC_TUNING[1]
+            local mechCfg = {}
+            for key, value in pairs(mechBase) do mechCfg[key] = value end
+            mechCfg.name = 'Geas Fete: ' .. (def.label or def.name)
+            mechanics.attach(mob, mechCfg)
+            mob:updateClaim(player)
+            return mob:isSpawned(), scaledFor
+        end)
+
+        if not setupOk or not spawned then
+            pcall(function() mob:despawn() end)
+            return nil
         end
-        applyDifficulty(mob, def)
-        mob:updateClaim(player)
+
+        player:printToPlayer(string.format(
+            '[Geas Fete] Tier %d encounter scaled for %d real PC%s.',
+            def.tier, pcCount, pcCount == 1 and '' or 's'), S)
     end
     return mob
 end
@@ -789,11 +1124,11 @@ local function qmPopMenu(player, npc, zoneId, gids, page)
             local ki2 = POP_KI[d.tier]
             if ki2 and not p:hasKeyItem(ki2.ki) then
                 p:printToPlayer(string.format(
-                    '[Geas Fete] %s requires a %s -- buy one at the Warding Circle "Pop Triggers" menu.',
+                    '[Geas Fete] %s requires a %s -- buy one from the Geas Fete Warden.',
                     d.name, ki2.name), S)
                 return
             end
-            local spawned = spawnNM(p, zone, zoneId, d)
+            local spawned = spawnNM(p, zone, zoneId, d, npc)
             if spawned then
                 if ki2 then p:delKeyItem(ki2.ki) end
                 setCooldown(p, zoneId, d.gid, d.cooldown)
@@ -810,7 +1145,10 @@ local function qmPopMenu(player, npc, zoneId, gids, page)
     end
     opts[#opts + 1] = { 'Leave', function(p) end }
 
-    local menu = { title = 'Planar Rift', options = opts }
+    local menu = {
+        title = string.format('Geas Fete: %s Camp', ZONE_LABELS[zoneId]),
+        options = opts,
+    }
     player:timer(30, function(p) p:customMenu(menu) end)
 end
 
@@ -908,11 +1246,6 @@ end
 -- 3 rows ~26b + Back ~4b = ~120b, comfortably under the ~150b menu cap.
 local function buildKIShop(player, zone, zoneId, mainFn, menu)
     local clbl = CURRENCY_LABEL[zoneId] or 'pts'
-    local KI_SHOP = {
-        { label = 'Eschan Urn',    ki = xi.ki.ESCHAN_URN,    cost = 200,  tier = 'T1'    },
-        { label = 'Eschan Cellar', ki = xi.ki.ESCHAN_CELLAR, cost = 500,  tier = 'T2'    },
-        { label = 'Eschan Nef',    ki = xi.ki.ESCHAN_NEF,    cost = 1000, tier = 'T3/T4' },
-    }
     local kiShopFn
     kiShopFn = function(p)
         local cur    = getCurrency(p, zoneId)
@@ -922,21 +1255,9 @@ local function buildKIShop(player, zone, zoneId, mainFn, menu)
             local it  = item
             local has = p:hasKeyItem(it.ki) and ' [have]' or ''
             menu.options[#menu.options + 1] = {
-                string.format('%s %s%s (%d)', it.tier, it.label, has, it.cost),
+                string.format('%s %s%s (%d)', it.tier, it.name, has, it.cost),
                 function(pp)
-                    if pp:hasKeyItem(it.ki) then
-                        pp:printToPlayer(string.format('[Geas Fete] You already hold a %s (only one at a time).', it.label), S)
-                    elseif getCurrency(pp, zoneId) < it.cost then
-                        pp:printToPlayer(string.format('[Geas Fete] Need %d %s to buy a %s.', it.cost, clbl, it.label), S)
-                    else
-                        -- Grant first, charge only if grant succeeded (mirror the
-                        -- material shop's grant-then-charge pattern; a bag-full
-                        -- can't happen for KIs but keep the fail-safe symmetry).
-                        if npcUtil.giveKeyItem(pp, it.ki) then
-                            takeCurrency(pp, zoneId, it.cost)
-                            pp:printToPlayer(string.format('[Geas Fete] Received %s for %d %s.', it.label, it.cost, clbl), S)
-                        end
-                    end
+                    xi.geasFete.buyTrigger(pp, it.tier)
                     pp:timer(30, function(p2) kiShopFn(p2) end)
                 end,
             }
@@ -947,12 +1268,139 @@ local function buildKIShop(player, zone, zoneId, mainFn, menu)
     return kiShopFn
 end
 
--- Main Warding Circle menu for one zone. EXCHANGE + Pop-trigger KI shop since
+-- Four rows leaves room for long NM names plus navigation under customMenu's
+-- compact packet byte limit.
+local MENU_PAGE_SIZE = 4
+
+local function warpToCamp(player, zoneId, npcId, label)
+    local pos = campPosition(npcId)
+    if not pos then
+        player:printToPlayer('[Geas Fete] That camp is unavailable. Please report the missing ???.', S)
+        return
+    end
+
+    player:printToPlayer(string.format(
+        '[Geas Fete] Warping to %s near %.1f, %.1f, %.1f in %s.',
+        label, pos.x, pos.y, pos.z, ZONE_LABELS[zoneId]), S)
+    player:setPos(pos.x + 2.5, pos.y, pos.z + 2.5, 0, zoneId)
+end
+
+local function showCampPage(player, zoneId, page, backFn)
+    local camps = sortedCamps(zoneId)
+    local pages = math.max(1, math.ceil(#camps / MENU_PAGE_SIZE))
+    page = math.max(1, math.min(page or 1, pages))
+    local first = (page - 1) * MENU_PAGE_SIZE + 1
+    local options = {}
+
+    for index = first, math.min(#camps, first + MENU_PAGE_SIZE - 1) do
+        local camp = camps[index]
+        local firstDef = DEF_BY_GID[zoneId] and DEF_BY_GID[zoneId][camp.gids[1]]
+        local campLabel = firstDef and (firstDef.label or firstDef.name) or ('Camp ' .. index)
+        if #camp.gids > 1 then campLabel = campLabel .. ' +' .. (#camp.gids - 1) end
+        local zoneCapture, npcCapture, labelCapture = zoneId, camp.npcId, campLabel
+        options[#options + 1] = {
+            string.format('%02d: %s', index, campLabel),
+            function(p) warpToCamp(p, zoneCapture, npcCapture, labelCapture) end,
+        }
+    end
+
+    if page < pages then
+        options[#options + 1] = { 'Next >>', function(p) showCampPage(p, zoneId, page + 1, backFn) end }
+    end
+    if page > 1 then
+        options[#options + 1] = { '<< Previous', function(p) showCampPage(p, zoneId, page - 1, backFn) end }
+    end
+    options[#options + 1] = { 'Back', backFn }
+
+    player:timer(30, function(p)
+        p:customMenu({
+            title = string.format('Geas Fete Camps: %s [%d/%d]', ZONE_LABELS[zoneId], page, pages),
+            options = options,
+        })
+    end)
+end
+
+local function showWarpZones(player, backFn)
+    local options = {}
+    for _, zoneId in ipairs(ZONE_ORDER) do
+        local zoneCapture = zoneId
+        options[#options + 1] = {
+            string.format('%s (%d camps)', ZONE_LABELS[zoneId], #sortedCamps(zoneId)),
+            function(p) showCampPage(p, zoneCapture, 1, function(p2) showWarpZones(p2, backFn) end) end,
+        }
+    end
+    options[#options + 1] = { 'Back', backFn }
+    player:timer(30, function(p)
+        p:customMenu({ title = 'Geas Fete: Warp to NM Camps', options = options })
+    end)
+end
+
+local function showMissingPage(player, zoneId, page, backFn)
+    local missing = xi.geasFete.missing(player, zoneId)
+    local pages = math.max(1, math.ceil(#missing / MENU_PAGE_SIZE))
+    page = math.max(1, math.min(page or 1, pages))
+    local first = (page - 1) * MENU_PAGE_SIZE + 1
+    local options = {}
+
+    if #missing == 0 then
+        options[#options + 1] = { 'All NMs cleared!', backFn }
+    else
+        for index = first, math.min(#missing, first + MENU_PAGE_SIZE - 1) do
+            local entry = missing[index]
+            local entryCapture = entry
+            options[#options + 1] = {
+                string.format('T%d %s', entry.tier, entry.name),
+                function(p)
+                    p:printToPlayer(string.format('[Geas Fete] %s - Pos %s - %s.',
+                        entryCapture.fullName, xi.geasFete.positionText(entryCapture), entryCapture.zoneName), S)
+                    if entryCapture.npcId then
+                        warpToCamp(p, entryCapture.zoneId, entryCapture.npcId, entryCapture.fullName)
+                    end
+                end,
+            }
+        end
+    end
+
+    if page < pages then
+        options[#options + 1] = { 'Next >>', function(p) showMissingPage(p, zoneId, page + 1, backFn) end }
+    end
+    if page > 1 then
+        options[#options + 1] = { '<< Previous', function(p) showMissingPage(p, zoneId, page - 1, backFn) end }
+    end
+    options[#options + 1] = { 'Back', backFn }
+
+    player:timer(30, function(p)
+        p:customMenu({
+            title = string.format('Missing: %s (%d) [%d/%d]',
+                ZONE_LABELS[zoneId], #missing, page, pages),
+            options = options,
+        })
+    end)
+end
+
+local function showProgressZones(player, backFn)
+    local options = {}
+    for _, zoneId in ipairs(ZONE_ORDER) do
+        local zoneCapture = zoneId
+        local cleared, total = xi.geasFete.progress(player, zoneId)
+        options[#options + 1] = {
+            string.format('%s: %d/%d', ZONE_LABELS[zoneId], cleared, total),
+            function(p)
+                showMissingPage(p, zoneCapture, 1, function(p2) showProgressZones(p2, backFn) end)
+            end,
+        }
+    end
+    options[#options + 1] = { 'Back', backFn }
+    player:timer(30, function(p)
+        p:customMenu({ title = 'Geas Fete Kill Progress', options = options })
+    end)
+end
+
+-- Main Geas Fete Warden menu for one zone.
 -- the retail-??? rework (2026-07-12) + KI-gate (2026-07-13). NMs still pop at
 -- the ??? points; this NPC hands out the KIs and the materials.
 local function wardingCircleMenu(player, zone, zoneId)
-    local clbl  = CURRENCY_LABEL[zoneId] or 'pts'
-    local menu  = { title = '', options = {} }
+    local menu = { title = '', options = {} }
     local mainFn, shopFn, kiShopFn
 
     local function show(p)
@@ -964,12 +1412,18 @@ local function wardingCircleMenu(player, zone, zoneId)
 
     mainFn = function(p)
         local cur = getCurrency(p, zoneId)
-        menu.title   = string.format('Warding Circle [%s: %d]', clbl, cur)
+        local cleared = xi.geasFete.totalProgress(p)
+        menu.title   = string.format('Geas Warden [%d/%d B:%d]',
+            cleared, xi.geasFete.uniqueNmCount, cur)
         menu.options = {
-            { string.format('Exchange %s', clbl), function(pp) shopFn(pp) end },
-            { 'Pop Triggers',                     function(pp) kiShopFn(pp) end },
-            { 'Where are the NMs?', function(pp)
-                pp:printToPlayer('[Geas Fete] The NMs answer at the ??? points scattered across Escha - Zi\'Tah, Escha - Ru\'Aun, and Reisenjima -- inspect one to pop the NMs camped there. Each pop consumes an Eschan Urn / Cellar / Nef (tier-matched) -- buy them from this NPC. Check the website\'s Geas Fete page for every camp.', S)
+            { string.format('Progress %d/%d', cleared, xi.geasFete.uniqueNmCount),
+                function(pp) showProgressZones(pp, function(p2) mainFn(p2) end) end },
+            { 'Warp Camps',
+                function(pp) showWarpZones(pp, function(p2) mainFn(p2) end) end },
+            { 'Exchange', function(pp) shopFn(pp) end },
+            { 'Pop Triggers', function(pp) kiShopFn(pp) end },
+            { 'Guide', function(pp)
+                pp:printToPlayer('[Geas Fete] Buy a tier trigger here (or use !geaski <tier>), warp to an NM camp, then inspect the ???. The trigger is consumed only after a successful spawn. Every NM has its own 30-minute cooldown and first-kill record. Use !geas for your missing roster with positions.', S)
             end },
             { 'Leave', function(pp) end },
         }
@@ -987,8 +1441,8 @@ local function spawnWardingCircle(zone, zoneId, x, y, z, rot)
     local capturedZoneId = zoneId
     local wc = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
-        name       = string.format('GF_WardingCircle_%d', zoneId),
-        packetName = string.format('%sWarding Circle', xi.icon.STAR_LARGE),
+        name       = string.format('Geas_Fete_Warden_%d', zoneId),
+        packetName = string.format('%sGeas Fete Warden', xi.icon.STAR_LARGE),
         look       = 171,
         x          = x,
         y          = y,
@@ -997,6 +1451,12 @@ local function spawnWardingCircle(zone, zoneId, x, y, z, rot)
         widescan   = 1,
 
         onTrigger = function(player, npc)
+            migrateLegacy(player)
+            grantStarterBeads(player)
+            local cleared = xi.geasFete.totalProgress(player)
+            if (player:getCharVar('GF_Unique_Kills') or 0) ~= cleared then
+                player:setCharVar('GF_Unique_Kills', cleared)
+            end
             wardingCircleMenu(player, capturedZone, capturedZoneId)
         end,
     })
@@ -1041,8 +1501,8 @@ m:addOverride('xi.zones.Escha_RuAun.Zone.onInitialize', function(zone)
 end)
 
 -- Reisenjima (291)
--- The old redirect signpost at the zone-in point is now a full Warding Circle
--- (exchange) -- Reisenjima hosts its own retail Geas Fete roster at 23 ???
+-- The old redirect signpost at the zone-in point is now a full Geas Fete Warden.
+-- Reisenjima hosts its own retail Geas Fete roster at 23 ???
 -- points since the 2026-07-12 rework. Temprix (Aeonic vendor) is unchanged.
 m:addOverride('xi.zones.Reisenjima.Zone.onInitialize', function(zone)
     super(zone)

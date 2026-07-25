@@ -122,7 +122,9 @@ local function spawnDummy(player, tierName)
     local mob = zone:insertDynamicEntity({
         objtype              = xi.objType.MOB,
         groupId              = tier.groupId,
-        groupZoneId          = catalog.npcPos.zoneId,
+        -- The reusable Leaping Lizzy mob_groups row is registered in GM Home
+        -- (zone 210), not in this NPC's current hub zone (44).
+        groupZoneId          = 210,
         name                 = string.format('Test_Dummy_%s', tierName),
         x                    = px,
         y                    = sp.y,

@@ -490,6 +490,7 @@ function htbf.register(fightKey, tier, variant)
     if f.entryPosByArea then
         local baseEnter = rawget(content, 'onBattlefieldEnter')
         function content:onBattlefieldEnter(player, battlefield)
+            Battlefield.onBattlefieldEnter(self, player, battlefield)
             if baseEnter then pcall(function() baseEnter(self, player, battlefield) end) end
             local entryPos = f.entryPosByArea[battlefield:getArea()]
             if entryPos then

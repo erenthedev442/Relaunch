@@ -7,10 +7,10 @@
 --     Refiner, Riftworn Pyxis, Veridical Conflux, Owain, Gushing Spring,
 --     Hildegard, Kieran, ...), mostly in the cities.
 --
--- Voidwatch is flagged "(Not Implemented)" in settings/main.lua, so all of
--- this is non-functional clutter. The content tag can't suppress it cleanly
--- (IsContentEnabled only blocks tagged content when RESTRICT_CONTENT = 1, and
--- that's 0 here / global), so we remove the rows directly by content_tag.
+-- Relaunch replaces the incomplete retail NPC network with dynamic Planar
+-- Rifts and a custom Officer. The content tag can't suppress the retail rows
+-- cleanly (IsContentEnabled only blocks tagged content when RESTRICT_CONTENT
+-- = 1), so remove those rows directly by content_tag.
 --
 -- zz_ prefix + sql/ location: loads AFTER sql/npc_list.sql (which DROPs and
 -- recreates the table), so the NPCs get added then removed. Idempotent.

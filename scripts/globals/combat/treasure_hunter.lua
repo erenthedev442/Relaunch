@@ -41,9 +41,8 @@ xi.combat.treasureHunter.getDropRate = function(thLevel, dropRate)
     local thTier     = utils.defaultIfNil(thLevel, 0)
     local thDropRate = utils.defaultIfNil(dropRate, 0)
 
-    -- RELAUNCH: TH is UNCAPPED. Keep the lower bound but drop the upper clamp; TH past
-    -- the table (14) is extrapolated below instead of being pinned to 14.
-    thTier     = math.max(0, math.floor(thTier))
+    -- RELAUNCH: every TH source shares a server-wide hard cap of TH14.
+    thTier     = utils.clamp(math.floor(thTier), 0, 14)
     thDropRate = utils.clamp(thDropRate, 0, 10000)
 
     -- Early returns: Drop is guaranteed or non-existant.
@@ -65,18 +64,5 @@ xi.combat.treasureHunter.getDropRate = function(thLevel, dropRate)
     end
 
     -- Calculate TH drop rate
-    local thTable = xi.combat.treasureHunter.treasureHunterTable
-    local newDropRate
-
-    if thTier <= 14 then
-        newDropRate = thTable[thTier][thBracket]
-    else
-        -- RELAUNCH: uncapped TH. Past TH14 (the table's end) keep climbing along each
-        -- bracket's final slope (the TH13->TH14 step), capped at 100% (10000).
-        local base  = thTable[14][thBracket]
-        local slope = thTable[14][thBracket] - thTable[13][thBracket]
-        newDropRate = math.min(10000, base + (thTier - 14) * slope)
-    end
-
-    return newDropRate
+    return xi.combat.treasureHunter.treasureHunterTable[thTier][thBracket]
 end

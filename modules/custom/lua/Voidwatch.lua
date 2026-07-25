@@ -29,7 +29,7 @@
 -- re-entrant); the shared mob_mechanics_library drives a tier-scaled fight.
 --
 -- ENTRY: examine a Planar Rift (one per field zone, placed from C.RIFTS) to
--- fight; visit the Voidwatch Officer in Leafallia (GM Home) for Voidstones,
+-- fight; visit the Voidwatch Officer in the zone-44 hub for Voidstones,
 -- the Atmacite Refiner, and status. Command: !voidwatch (menu/status); GM
 -- !voidwatch open force-spawns a rift for testing.
 --
@@ -42,6 +42,8 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local C         = require('modules/custom/lua/voidwatch_catalog')
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
+local unityProgress = require('modules/custom/lua/unity_wanted_progress')
+local waveProgress  = require('modules/custom/lua/game_master_progress')
 local m         = Module:new('voidwatch')
 local SYS       = xi.msg.channel.SYSTEM_3
 
@@ -50,9 +52,11 @@ local sessions = {}
 xi._voidwatch_sessions = sessions
 local function getSession(p)   return sessions[p:getName()] end
 local function clearSession(p) sessions[p:getName()] = nil end
+local nextSessionId = 0
 
 -- forward declarations
-local onRiftCleared, openRift, failRift, openMenu
+local onRiftCleared, openRift, confirmRift, failRift, openMenu
+local openWarpMenu, openWarpStratum
 
 -- ── Currency + atmacite helpers ─────────────────────────────────────────────
 local function nowTs()
@@ -69,6 +73,77 @@ local function getAtm(p, key) return p:getCharVar(C.ATM_PREFIX .. key) or 0 end
 -- Per-stratum clears (Voidwatch_Strat_<KEY>); effective NM tier = base + clears + 1.
 local function getStratClears(p, key) return p:getCharVar(C.STRAT_PREFIX .. key) or 0 end
 local function addStratClear(p, key)  p:setCharVar(C.STRAT_PREFIX .. key, getStratClears(p, key) + 1) end
+
+local function addMarks(player, amount)
+    if amount <= 0 then return end
+    player:setCharVar('HL_Points', (player:getCharVar('HL_Points') or 0) + math.floor(amount))
+end
+
+local function creditUniqueKill(player, nmName)
+    if not player or not nmName then return false end
+    local key = 'VW_NM_' .. nmName
+    if (player:getCharVar(key) or 0) ~= 0 then return false end
+    player:setCharVar(key, 1)
+    player:setCharVar('VW_Unique_Kills', (player:getCharVar('VW_Unique_Kills') or 0) + 1)
+    addMarks(player, C.FIRST_NM_MARK_BONUS)
+    player:printToPlayer(string.format(
+        '[Voidwatch] First defeat of %s recorded. +%d Hunt Marks.',
+        nmName:gsub('_', ' '), C.FIRST_NM_MARK_BONUS), SYS)
+    return true
+end
+
+local function eligiblePlayers(owner)
+    local out, seen, members = {}, {}, nil
+    pcall(function() members = owner:getAlliance() end)
+    if not members or #members == 0 then
+        pcall(function() members = owner:getParty() end)
+    end
+    members = members or {}
+    members[#members + 1] = owner
+
+    for _, member in ipairs(members) do
+        pcall(function()
+            local name = member:getName()
+            if member:isPC() and member:getZoneID() == owner:getZoneID() and not seen[name] then
+                seen[name] = true
+                out[#out + 1] = member
+            end
+        end)
+    end
+    return out
+end
+
+local function groupRiftOwner(player)
+    for _, member in ipairs(eligiblePlayers(player)) do
+        if getSession(member) then return member:getName() end
+    end
+    return nil
+end
+
+local function stratumUnlocked(player, stratum)
+    local key = stratum and stratum.key or 'CRIMSON'
+    if key == 'CRIMSON' then
+        return (player:getCharVar('HL_Tier') or 1) >= 3,
+            'reach Hunting League Rank 3'
+    elseif key == 'INDIGO' or key == 'JADE' then
+        return (player:getCharVar('Voidspire_Best_Floor') or 0) >= 10
+                and waveProgress.hasThrough(player, 3),
+            'reach Voidspire floor 10 and clear Wave Master through Hard'
+    elseif key == 'WHITE' or key == 'ASHEN' then
+        return (player:getCharVar('Voidspire_Best_Floor') or 0) >= 40
+                and unityProgress.tierComplete(player, 2),
+            'reach Voidspire floor 40 and conquer Unity Wanted Tier 2'
+    elseif key == 'HYACINTH' then
+        return (player:getCharVar('Voidspire_Best_Floor') or 0) >= 75
+                and waveProgress.hasThrough(player, 4),
+            'reach Voidspire floor 75 and clear Wave Master Insane'
+    elseif key == 'AMBER' then
+        return (player:getCharVar('Nyzul_F100_Cleared') or 0) == 1
+                or (player:getCharVar('Voidspire_Best_Floor') or 0) >= 90,
+            'record Nyzul floor 100 or reach Voidspire floor 90'
+    end
+    return true, ''
+end
 
 -- atmacite Flow shortens the Voidstone regen interval.
 local function effRegenSeconds(p)
@@ -216,23 +291,9 @@ end
 
 local function registerPartyListeners(owner, sess)
     sess.listenerPlayers = {}
-    local seen = {}
-    local members = { owner }
-    local ok, party = pcall(function() return owner:getParty() end)
-    if ok and party then
-        for _, member in ipairs(party) do members[#members + 1] = member end
-    end
-
-    for _, member in ipairs(members) do
-        local isPlayer = false
-        pcall(function() isPlayer = member:isPC() end)
-        local name
-        pcall(function() name = member:getName() end)
-        if isPlayer and name and not seen[name] then
-            seen[name] = true
-            registerListeners(member, sess.ownerName)
-            sess.listenerPlayers[#sess.listenerPlayers + 1] = member
-        end
+    for _, member in ipairs(eligiblePlayers(owner)) do
+        registerListeners(member, sess.ownerName)
+        sess.listenerPlayers[#sess.listenerPlayers + 1] = member
     end
 end
 
@@ -282,22 +343,11 @@ local function spawnVoidwalker(owner, tier, roster)
             sess.dead = true
             local resolved = GetPlayerByName(ownerName)
             if not resolved then sessions[ownerName] = nil; return end
-            -- Per-NM lifetime kill flag (2026-07-13). Read by the Weapon
-            -- Forge Mythic Stage II preflight ("All Voidwatch NMs killed").
-            -- Bumps the companion VW_Unique_Kills counter on the FIRST kill
-            -- of each NM name so the gate can compare against
-            -- xi.voidwatch.uniqueNmCount in O(1) instead of iterating
-            -- every stratum's roster.
-            pcall(function()
-                if sess.nmName then
-                    local key = 'VW_NM_' .. sess.nmName
-                    if (resolved:getCharVar(key) or 0) == 0 then
-                        resolved:setCharVar(key, 1)
-                        resolved:setCharVar('VW_Unique_Kills',
-                            (resolved:getCharVar('VW_Unique_Kills') or 0) + 1)
-                    end
-                end
-            end)
+            -- Credit every present alliance member. Helpers should not need to
+            -- reopen all 19 rifts as owners to satisfy Mythic Stage II.
+            for _, member in ipairs(eligiblePlayers(resolved)) do
+                pcall(function() creditUniqueKill(member, sess.nmName) end)
+            end
             resolved:timer(10, function(p) onRiftCleared(p) end)   -- never re-entrant
         end,
 
@@ -311,9 +361,10 @@ local function spawnVoidwalker(owner, tier, roster)
     mob:setSpawn(mx, py, mz, 0)
     mob:spawn()
     pcall(function() mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1) end)
-    for modId, val in pairs(C.nmMods(tier)) do
-        if val ~= 0 then mob:setMod(modId, val) end
-    end
+    for modId, val in pairs(C.nmMods(tier)) do mob:setMod(modId, val) end
+    -- Dynamic entities inherit their donor pool. Clear healing authoritatively
+    -- so stale SQL/template values cannot recreate the reported regen wall.
+    mob:setMod(xi.mod.REGEN, 0)
     local hp = C.nmHp(tier)
     mob:setMaxHP(hp)
     mob:setHP(hp)
@@ -342,14 +393,15 @@ end
 
 local function deliverPyxis(player, reward)
     addCruor(player, reward.cruor)
+    addMarks(player, reward.marks or 0)
     pcall(function() player:addExp(reward.exp) end)
     if reward.shards  > 0 then player:setCharVar(C.V.shards, getShards(player) + reward.shards) end
     if reward.periapt > 0 then player:setCharVar(C.V.periapts, (player:getCharVar(C.V.periapts) or 0) + reward.periapt) end
     local got = 0
     for _, itemid in ipairs(reward.items) do if giveItem(player, itemid) then got = got + 1 end end
     player:printToPlayer(string.format(
-        '[Voidwatch] The Riftworn Pyxis yields:  +%d cruor    +%d EXP    %d item%s%s    +%d Periapt',
-        reward.cruor, reward.exp, got, (got == 1) and '' or 's',
+        '[Voidwatch] The Riftworn Pyxis yields: +%d cruor  +%d EXP  +%d marks  %d item%s%s  +%d Periapt',
+        reward.cruor, reward.exp, reward.marks or 0, got, (got == 1) and '' or 's',
         (reward.shards > 0) and string.format('    +%d shard%s', reward.shards, (reward.shards == 1) and '' or 's') or '',
         reward.periapt), SYS)
 end
@@ -434,6 +486,7 @@ onRiftCleared = function(player)
         shards  = white * C.SHARD_PER_WHITE,
         periapt = 1,
         items   = {},
+        marks   = C.markReward(tier),
     }
     local loot  = C.nmLoot(sess.nmName)   -- this NM's own rare/uncommon (+ shared common)
     local rolls = 1 + math.floor(blue / 2) * C.ROLLS_PER_2_BLUE + getAtm(player, 'GREED') * C.ATM.GREED_ROLLS
@@ -453,13 +506,21 @@ onRiftCleared = function(player)
     if white >= C.WHITE_BONUS_RARE_AT then
         reward.items[#reward.items + 1] = loot.rare[math.random(#loot.rare)]
     end
+    -- Sortie earrings use an independent alignment-shaped roll. They no longer
+    -- replace the NM's signature item inside the rare table.
+    if loot.earrings and #loot.earrings > 0 then
+        local chance = math.min(75, C.EARRING_ROLL_CHANCE + red * 5)
+        if math.random(100) <= chance then
+            reward.items[#reward.items + 1] = loot.earrings[math.random(#loot.earrings)]
+        end
+    end
 
     -- Clear report, then drop the chest.
     local strat = C.STRATUM_BY_KEY[skey]
     local sname = strat and strat.name or 'Voidwatch'
     player:printToPlayer(string.format(
-        '[Voidwatch] %s cleared at Tier %d! Your %s abyssite advances to rank %d.',
-        sname, tier, sname, getStratClears(player, skey)), SYS)
+        '[Voidwatch] %s cleared (%s)! Your abyssite advances to rank %d.',
+        sname, C.difficultyName(tier), getStratClears(player, skey)), SYS)
     if total > 0 then
         player:printToPlayer(string.format('  Alignment:  R%d  B%d  G%d  Y%d  W%d   (%d Lights shape the Pyxis)',
             red, blue, green, yellow, white, total), SYS)
@@ -486,17 +547,47 @@ failRift = function(player, reason)
     end
 end
 
+local function monitorRift(player, sessionId)
+    player:timer(3000, function(p)
+        local sess = getSession(p)
+        if not sess or sess.id ~= sessionId or sess.dead then return end
+        if p:getZoneID() ~= sess.zoneId then
+            failRift(p, 'left')
+            return
+        end
+
+        local dx = p:getXPos() - sess.originX
+        local dz = p:getZPos() - sess.originZ
+        if (dx * dx + dz * dz) > (80 * 80) then
+            failRift(p, 'left')
+            return
+        end
+        monitorRift(p, sessionId)
+    end)
+end
+
 -- ── Open a rift here (called by the Planar Rift NPC; GM via !voidwatch open) ──
-openRift = function(player, stratumKey)
+openRift = function(player, stratumKey, bypassGate)
     ensureBorn(player)
-    if getSession(player) then
-        player:printToPlayer('[Voidwatch] You are already locked in a rift battle.', SYS)
+    local activeOwner = groupRiftOwner(player)
+    if activeOwner then
+        player:printToPlayer(string.format(
+            '[Voidwatch] Your group already has an active rift opened by %s.', activeOwner), SYS)
         return
     end
     if not player:canUseMisc(xi.zoneMisc.PET) then
         player:printToPlayer('[Voidwatch] This rift will not stir in a safe area.', SYS)
         return
     end
+    local stratum = C.STRATUM_BY_KEY[stratumKey] or C.STRATA[1]
+    local unlocked, requirement = stratumUnlocked(player, stratum)
+    if not bypassGate and not unlocked then
+        player:printToPlayer(string.format(
+            '[Voidwatch] %s is sealed. To unlock it: %s.',
+            stratum.name, requirement), SYS)
+        return
+    end
+
     local stones = getStones(player)
     if stones < C.RIFT_COST then
         player:printToPlayer(string.format(
@@ -506,12 +597,14 @@ openRift = function(player, stratumKey)
     end
     setStones(player, stones - C.RIFT_COST)
 
-    local stratum = C.STRATUM_BY_KEY[stratumKey] or C.STRATA[1]
-    local tier    = stratum.base + getStratClears(player, stratum.key) + 1
+    local tier = C.effectiveTier(stratum, getStratClears(player, stratum.key))
+    nextSessionId = nextSessionId + 1
     local sess =
     {
+        id = nextSessionId,
         tier = tier, stratumKey = stratum.key, dead = false,
         zoneId = player:getZoneID(), ownerName = player:getName(),
+        originX = player:getXPos(), originZ = player:getZPos(),
     }
     sessions[player:getName()] = sess
 
@@ -530,14 +623,15 @@ openRift = function(player, stratumKey)
     registerPartyListeners(player, sess)
 
     player:printToPlayer(string.format(
-        '[Voidwatch] A Planar Rift tears open!  %s, Tier %d  --  %s (Lv.%d) claws its way out of the void!',
-        stratum.name, tier, (name:gsub('_', ' ')), level), SYS)
+        '[Voidwatch] A Planar Rift tears open! %s -- %s difficulty (Lv.%d, %d HP) -- %s emerges!',
+        stratum.name, C.difficultyName(tier), level, C.nmHp(tier), (name:gsub('_', ' '))), SYS)
     player:printToPlayer(string.format(
         '[Voidwatch] %d hidden weaknesses lurk within. Probe with magic / weaponskills / ranged -- or "!voidwatch reveal" (spends a Periapt) to expose them. Chain weaknesses fast for a Synchronic Blitz.', #sess.weakList), SYS)
 
+    monitorRift(player, sess.id)
     player:timer(C.BATTLE_SECONDS * 1000, function(p)
         local s = sessions[p:getName()]
-        if s and not s.dead and s.tier == tier then failRift(p, 'timeout') end
+        if s and not s.dead and s.id == sess.id then failRift(p, 'timeout') end
     end)
 end
 
@@ -545,6 +639,91 @@ end
 local function show(p, title, options)
     local snap = { title = title, options = options }
     p:timer(30, function(pp) pp:customMenu(snap) end)
+end
+
+confirmRift = function(player, stratumKey)
+    ensureBorn(player)
+    local activeOwner = groupRiftOwner(player)
+    if activeOwner then
+        player:printToPlayer(string.format(
+            '[Voidwatch] Your group already has an active rift opened by %s.', activeOwner), SYS)
+        return
+    end
+
+    local stratum = C.STRATUM_BY_KEY[stratumKey] or C.STRATA[1]
+    local unlocked, requirement = stratumUnlocked(player, stratum)
+    if not unlocked then
+        player:printToPlayer(string.format(
+            '[Voidwatch] %s is sealed. To unlock it: %s.',
+            stratum.name, requirement), SYS)
+        return
+    end
+
+    local tier = C.effectiveTier(stratum, getStratClears(player, stratum.key))
+    local level, hp = C.nmLevel(tier), C.nmHp(tier)
+    player:printToPlayer(string.format(
+        '[Voidwatch] Confirm %s: %s difficulty, Lv.%d, %d HP, cost %d stone. Current stones: %d.',
+        stratum.name, C.difficultyName(tier), level, hp, C.RIFT_COST, getStones(player)), SYS)
+    local confirmZoneId = player:getZoneID()
+    show(player, 'Confirm Planar Rift', {
+        { string.format('Open %s rift', C.difficultyName(tier)),
+          function(p)
+              if p:getZoneID() ~= confirmZoneId then
+                  p:printToPlayer('[Voidwatch] That rift confirmation has expired.', SYS)
+                  return
+              end
+              openRift(p, stratum.key, false)
+          end },
+        { 'Cancel', function(p) end },
+    })
+end
+
+openWarpStratum = function(player, stratum)
+    local options = {}
+    for _, rift in ipairs(C.RIFTS) do
+        if C.ZONE_STRATUM[rift.zone] == stratum.key then
+            local destination = rift
+            options[#options + 1] = {
+                destination.zone:gsub('_', ' '),
+                function(p)
+                    if groupRiftOwner(p) then
+                        p:printToPlayer('[Voidwatch] Close your active group rift before warping.', SYS)
+                        return
+                    end
+                    local zoneId = xi.zone[destination.zone:upper()]
+                    if not zoneId then
+                        p:printToPlayer('[Voidwatch] That rift destination is unavailable.', SYS)
+                        return
+                    end
+                    p:setPos(destination.x + 3, destination.y, destination.z + 3,
+                        destination.rot or 0, zoneId)
+                end,
+            }
+        end
+    end
+    options[#options + 1] = { 'Back', function(p) openWarpMenu(p) end }
+    show(player, stratum.name .. ' Rifts', options)
+end
+
+openWarpMenu = function(player)
+    local options = {}
+    for _, stratum in ipairs(C.STRATA) do
+        local unlocked = stratumUnlocked(player, stratum)
+        local selected = stratum
+        options[#options + 1] = {
+            unlocked and stratum.name or (stratum.name .. ' [Locked]'),
+            function(p)
+                local ok, requirement = stratumUnlocked(p, selected)
+                if not ok then
+                    p:printToPlayer(string.format('[Voidwatch] Unlock requirement: %s.', requirement), SYS)
+                    return
+                end
+                openWarpStratum(p, selected)
+            end,
+        }
+    end
+    options[#options + 1] = { 'Back', function(p) openMenu(p) end }
+    show(player, 'Warp to Planar Rift', options)
 end
 
 -- ── Buy a Voidstone with cruor ──────────────────────────────────────────────
@@ -573,7 +752,10 @@ local function status(player)
         getStones(player), C.MAX_STONES, nxtStr, getCruor(player), getShards(player), player:getCharVar(C.V.periapts) or 0), SYS)
     for _, s in ipairs(C.STRATA) do
         local clears = getStratClears(player, s.key)
-        player:printToPlayer(string.format('  %-16s rank %d  (next rift: Tier %d)', s.name, clears, s.base + clears + 1), SYS)
+        local tier = C.effectiveTier(s, clears)
+        local unlocked = stratumUnlocked(player, s)
+        player:printToPlayer(string.format('  %-16s rank %d  (%s, Lv.%d)%s',
+            s.name, clears, C.difficultyName(tier), C.nmLevel(tier), unlocked and '' or ' [LOCKED]'), SYS)
     end
     player:printToPlayer('  Examine a Planar Rift in the field (each zone belongs to a stratum) to fight. Probe weaknesses to build Lights.', SYS)
 end
@@ -642,6 +824,7 @@ openMenu = function(player)
     show(player, 'Voidwatch Officer', {
         { string.format('Buy Voidstone (%d cruor)', C.STONE_CRUOR), function(p) buyStone(p); openMenu(p) end },
         { 'Atmacite Refiner', function(p) openRefiner(p) end },
+        { 'Warp to Planar Rift', function(p) openWarpMenu(p) end },
         { 'Status',           function(p) status(p) end },
         { 'Close',            function(p) end },
     })
@@ -676,15 +859,14 @@ m:addOverride('xi.player.onGameIn', function(player, gameLogin, zoning)
         local sess = getSession(player)
         if not sess then return end
         if gameLogin then
-            removeSessionListeners(sess) -- stale session from a mid-rift logout; clear quietly
-            clearSession(player)
+            failRift(player, 'left') -- despawn the orphan before allowing a new rift
         elseif player:getZoneID() ~= sess.zoneId then
             failRift(player, 'left')
         end
     end)
 end)
 
--- ── Voidwatch Officer NPC (Leafallia / GM Home) ─────────────────────────────
+-- ── Voidwatch Officer NPC (zone-44 hub) ─────────────────────────────────────
 m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
     local npc = zone:insertDynamicEntity({
@@ -722,7 +904,7 @@ for _, r in ipairs(C.RIFTS) do
                 rotation   = r.rot,
                 widescan   = 1,
                 onTrigger  = function(player, npcEnt)
-                    openRift(player, stratumKey)
+                    confirmRift(player, stratumKey)
                 end,
             })
             utils.unused(npc)
@@ -733,7 +915,7 @@ end
 -- ── Public API (for commands/voidwatch.lua) ─────────────────────────────────
 xi.voidwatch = xi.voidwatch or {}
 xi.voidwatch.menu       = function(p) openMenu(p) end
-xi.voidwatch.open       = function(p, key) openRift(p, key) end   -- GM-gated in the command (key optional)
+xi.voidwatch.open       = function(p, key) openRift(p, key, true) end -- GM-gated in command
 xi.voidwatch.status     = function(p) status(p) end
 xi.voidwatch.reveal     = function(p) revealWeaknesses(p) end
 xi.voidwatch.refiner    = function(p) openRefiner(p) end

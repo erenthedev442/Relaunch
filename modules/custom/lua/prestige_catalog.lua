@@ -462,7 +462,8 @@ return
     --   label    menu display (kept short for the 150-byte menu cap)
     --   perLevel raw delta added per level -- see scale notes below
     --   cap      max levels purchasable
-    --   apCost   AP cost per level
+    --   apCost   fixed AP/RP cost per level
+    --   totalCost optional exact total spread across all levels (variable cost)
     --   note     shown to player on purchase
     --
     -- SCALE REFERENCE (raw perLevel -> human %). VERIFIED against the engine.
@@ -513,7 +514,7 @@ return
         -- ---- Combat traits -------------------------------------------
         { id = 'STP',    label = 'Store TP',    mod = xi.mod.STORETP,            perLevel =  2, cap = 50, apCost = 2, note = '+2 Store TP / level (max +100) [2 AP]'     },
         { id = 'TPBON',  label = 'TP Bonus',    mod = xi.mod.TP_BONUS,           perLevel = 10, cap = 50, apCost = 2, note = '+10 TP Bonus / level (max +500) [2 AP]'    },
-        { id = 'QA',     label = 'Quad Atk',    mod = xi.mod.QUAD_ATTACK,        perLevel =  1, cap = 50, apCost = 2, note = '+1% Quad.Atk / level (max 50%) [2 AP]'    },
+        { id = 'QA',     label = 'Quad Atk',    mod = xi.mod.QUAD_ATTACK,        perLevel =  1, cap = 20, totalCost = 100, legacyCap = 50, legacyCost = 2, note = '+1% Quad.Atk / level (max 20%; 100 points total)' },
         -- DUAL_WIELD is whole-% (1 raw = 1% delay reduction on the off-hand). No
         -- engine clamp, but it's practically capped by the attack-delay floor when
         -- stacked with Haste, so the perk is held to a sane +25%.
@@ -522,9 +523,9 @@ return
         -- CRIT_DMG_INCREASE is WHOLE-% (engine: pDif*(100+mod)/100, clamped 100):
         -- perLevel 2 = +2% crit damage; max +40% at 20 levels.
         { id = 'CRITDMG',label = 'Crit Dmg',    mod = xi.mod.CRIT_DMG_INCREASE,  perLevel = 2, cap = 20, apCost = 3, note = '+2% Crit Dmg / level (max 40%) [3 AP]'   },
-        { id = 'CTR',    label = 'Counter',      mod = xi.mod.COUNTER,            perLevel =  1, cap = 50, apCost = 2, note = '+1 Counter / level (max +50) [2 AP]'       },
+        { id = 'CTR',    label = 'Counter',      mod = xi.mod.COUNTER,            perLevel =  1, cap = 20, totalCost = 100, legacyCap = 50, legacyCost = 2, note = '+1 Counter / level (max +20; 100 points total)' },
         { id = 'PARRY',  label = 'Parry Rate',   mod = xi.mod.PARRY,              perLevel =  1, cap = 25, apCost = 1, note = '+1% Parry / level (max 25%) [1 AP]'        },
-        { id = 'SBL',    label = 'Subtle Blow',  mod = xi.mod.SUBTLE_BLOW,        perLevel =  1, cap = 50, apCost = 1, note = '+1 Subtle Blow / level (max +50) [1 AP]'   },
+        { id = 'SBL',    label = 'Subtle Blow',  mod = xi.mod.SUBTLE_BLOW,        perLevel =  1, cap = 20, totalCost = 50, legacyCap = 50, legacyCost = 1, note = '+1 Subtle Blow / level (max +20; 50 points total)' },
         -- ALL_WSDMG_ALL_HITS is WHOLE-% (engine: dmg*(100+mod)/100):
         -- perLevel 2 = +2% WS damage; max +40% at 20 levels.
         { id = 'WSDMG',  label = 'WS Dmg',       mod = xi.mod.ALL_WSDMG_ALL_HITS, perLevel = 2, cap = 20, apCost = 3, note = '+2% WS Dmg / level (max 40%) [3 AP]'      },
@@ -536,13 +537,13 @@ return
         { id = 'PDT',   label = 'Phys.DT-',  mod = xi.mod.DMGPHYS,    perLevel = -100, cap = 15, apCost = 3, note = '-1% Phys.DT / level (max -15%) [3 AP]'    },
         -- DMGMAGIC mirrors DMGPHYS (same 100:1 scale).
         { id = 'MDT',   label = 'Mag.DT-',   mod = xi.mod.DMGMAGIC,   perLevel = -100, cap = 15, apCost = 3, note = '-1% Mag.DT / level (max -15%) [3 AP]'     },
-        -- 10000:1 scale: perLevel 100 = +1% haste per level; cap 15 = 15% max
-        { id = 'HASTE', label = 'Haste',      mod = xi.mod.HASTE_GEAR, perLevel =  100, cap = 15, apCost = 3, note = '+1% Haste / level (max 15%) [3 AP]'        },
+        -- 10000:1 scale: perLevel 100 = +1% haste per level; cap 10 = 10% max
+        { id = 'HASTE', label = 'Haste',      mod = xi.mod.HASTE_GEAR, perLevel =  100, cap = 10, totalCost = 45, legacyCap = 15, legacyCost = 3, note = '+1% Haste / level (max 10%; 45 points total)' },
 
         -- ---- Magic support -------------------------------------------
         -- SPELLINTERRUPT is WHOLE-% (engine: (100 - mod)/100 interrupt chance):
-        -- perLevel 1 = +1% SIRD; max +50% at 50 levels.
-        { id = 'INTP',  label = 'Spell Intp',   mod = xi.mod.SPELLINTERRUPT,    perLevel = 1, cap = 50, apCost = 2, note = '+1% SIRD / level (max 50%) [2 AP]'          },
+        -- perLevel 1 = +1% SIRD; max +20% at 20 levels.
+        { id = 'INTP',  label = 'Spell Intp',   mod = xi.mod.SPELLINTERRUPT,    perLevel = 1, cap = 20, totalCost = 100, legacyCap = 50, legacyCost = 2, note = '+1% SIRD / level (max 20%; 100 points total)' },
         -- FASTCAST is WHOLE-% (engine reads it as a direct percent, clamped 50/80):
         -- perLevel 1 = +1% fast cast; max +30% at 30 levels.
         { id = 'FCAST', label = 'Fast Cast',     mod = xi.mod.FASTCAST,          perLevel = 1, cap = 30, apCost = 2, note = '+1% Fast Cast / level (max 30%) [2 AP]'     },
@@ -555,7 +556,7 @@ return
         { id = 'RFSH',  label = 'Refresh',       mod = xi.mod.REFRESH,           perLevel = 1, cap = 10, apCost = 3, note = '+1 Refresh / level (max +10 MP/tick) [3 AP]' },
 
         -- ---- Utility --------------------------------------------------
-        { id = 'TH',  label = 'Treas.Hunter', mod = xi.mod.TREASURE_HUNTER, perLevel = 1, cap = 50, apCost = 2, note = '+1 TH / level (max +50) [2 AP]'              },
+        { id = 'TH',  label = 'Treas.Hunter', mod = xi.mod.TREASURE_HUNTER, perLevel = 1, cap = 5, totalCost = 100, legacyCap = 50, legacyCost = 2, note = '+1 TH / level (max +5; 100 points total; server hard cap TH14)' },
         { id = 'GIL', label = 'Gilfinder',    mod = xi.mod.GILFINDER,        perLevel = 2, cap = 50, apCost = 1, note = '+2% Gilfinder / level (max +100%) [1 AP]'    },
 
         -- ---- Resistances ---------------------------------------------
@@ -596,7 +597,7 @@ return
 
         -- ---- Skills --------------------------------------------------
         -- Every weapon, ranged, defensive, and magic skill boosted at once.
-        -- 2 pts/level × 50 levels = +100 to every skill.
+        -- 2 pts/level × 20 levels = +40 to every skill.
         { id = 'SKILL', label = 'All Skills',
           mods =
           {
@@ -613,6 +614,7 @@ return
               xi.mod.SINGING, xi.mod.STRING,   xi.mod.WIND,          xi.mod.BLUE,
               xi.mod.GEOMANCY_SKILL, xi.mod.HANDBELL_SKILL,
           },
-          perLevel = 2, cap = 50, apCost = 1, note = '+2 All Skills / level (max +100 each) [1 AP]' },
+          perLevel = 2, cap = 20, totalCost = 50, legacyCap = 50, legacyCost = 1,
+          note = '+2 All Skills / level (max +40 each; 50 points total)' },
     },
 }

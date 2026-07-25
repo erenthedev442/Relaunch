@@ -83,6 +83,15 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
         return globalCap;
     }
 
+    // Encounter-owned NPCs can impose a lower per-event ceiling across every
+    // ordinary damage path: melee, spells, TP moves, and additional effects.
+    const auto encounterCap =
+        static_cast<int32>(PAttacker->GetLocalVar("EncounterOutgoingDamageCap"));
+    if (encounterCap > 0)
+    {
+        return globalCap > 0 ? std::min(globalCap, encounterCap) : encounterCap;
+    }
+
     // The custom Adventuring Fellow is implemented as a trust and marked by
     // fellow_companion.lua. Cap every damage path at the final takeDamage()
     // choke point: melee, ranged, spells, mob skills, AoE and skillchains.

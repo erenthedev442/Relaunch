@@ -19461,7 +19461,7 @@ int16 CLuaBaseEntity::getTHlevel()
     if (m_PBaseEntity->objtype == TYPE_MOB)
     {
         CMobEntity* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
-        return PMob->m_THLvl;
+        return std::clamp<int16>(PMob->m_THLvl, 0, 14);
     }
     return 0;
 }
@@ -19477,7 +19477,7 @@ void CLuaBaseEntity::setTHlevel(int16 newLevel)
     if (m_PBaseEntity->objtype == TYPE_MOB)
     {
         CMobEntity* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
-        PMob->m_THLvl    = newLevel;
+        PMob->m_THLvl    = std::clamp<int16>(newLevel, 0, 14);
     }
 }
 

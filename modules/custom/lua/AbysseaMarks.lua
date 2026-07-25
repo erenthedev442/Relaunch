@@ -23,6 +23,7 @@ local MARKS_CRUOR_LV   = '[MarksPopCruor]'
 local RIFTBORN_BOULDER = 4061
 local BOULDER_CASE     = 6182
 local BOULDER_CASE_RATE = 0.025
+local MARKS_DAMAGE_CAP = 6000
 
 -- Per zone tier: mark cost + rewards, then the common pacing block applied at
 -- pop.  Individual difficulty comes from abyssea_marks_catalog.lua.
@@ -50,9 +51,9 @@ local zoneConfig =
     [xi.zone.ABYSSEA_MISAREAUX] = { tier = 2, cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 130, maxHP =  8000000, att = 8000, def = 1200, matt = 3200, acc =  900, eva = 1100, macc =  900, meva = 400, weaponDmg = 350, da = 25, haste = 1500, eleRes =  75 },
     [xi.zone.ABYSSEA_VUNKERL]   = { tier = 2, cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 130, maxHP =  8000000, att = 8000, def = 1200, matt = 3200, acc =  900, eva = 1100, macc =  900, meva = 400, weaponDmg = 350, da = 25, haste = 1500, eleRes =  75 },
     -- Heroes: full set pieces, tuned around Relic + up to two Atma.
-    [xi.zone.ABYSSEA_ALTEPA]    = { tier = 3, cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 150, maxHP = 14000000, att = 9500, def = 1650, matt = 4500, acc = 1100, eva = 1400, macc = 1100, meva = 550, weaponDmg = 400, da = 30, haste = 2000, eleRes = 100 },
-    [xi.zone.ABYSSEA_GRAUBERG]  = { tier = 3, cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 150, maxHP = 14000000, att = 9500, def = 1650, matt = 4500, acc = 1100, eva = 1400, macc = 1100, meva = 550, weaponDmg = 400, da = 30, haste = 2000, eleRes = 100 },
-    [xi.zone.ABYSSEA_ULEGUERAND]= { tier = 3, cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 150, maxHP = 14000000, att = 9500, def = 1650, matt = 4500, acc = 1100, eva = 1400, macc = 1100, meva = 550, weaponDmg = 400, da = 30, haste = 2000, eleRes = 100 },
+    [xi.zone.ABYSSEA_ALTEPA]    = { tier = 3, cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 150, maxHP = 14000000, att = 8750, def = 1650, matt = 3850, acc = 1100, eva = 1400, macc = 1100, meva = 550, weaponDmg = 375, da = 27, haste = 1750, eleRes = 100 },
+    [xi.zone.ABYSSEA_GRAUBERG]  = { tier = 3, cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 150, maxHP = 14000000, att = 8750, def = 1650, matt = 3850, acc = 1100, eva = 1400, macc = 1100, meva = 550, weaponDmg = 375, da = 27, haste = 1750, eleRes = 100 },
+    [xi.zone.ABYSSEA_ULEGUERAND]= { tier = 3, cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 150, maxHP = 14000000, att = 8750, def = 1650, matt = 3850, acc = 1100, eva = 1400, macc = 1100, meva = 550, weaponDmg = 375, da = 27, haste = 1750, eleRes = 100 },
 }
 for zoneId, cfg in pairs(zoneConfig) do
     assert(
@@ -146,6 +147,12 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     spawned:addMod(xi.mod.EVA,  cfg.eva)
     spawned:addMod(xi.mod.MACC, cfg.macc)
     spawned:addMod(xi.mod.MEVA, cfg.meva)
+    if nmName == 'Baba Yaga' or nmName == 'Carabosse' then
+        -- Both pixies retained unusually high native mitigation on top of the
+        -- common T1 profile, producing 35-minute clears in live testing.
+        spawned:addMod(xi.mod.DEF,  -500)
+        spawned:addMod(xi.mod.MDEF,  -50)
+    end
     -- MAIN_DMG_RATING feeds getWeaponDmg(), so it strengthens both ordinary
     -- swings and physical TP moves such as Dead Dive and Grand Slam.
     spawned:addMod(xi.mod.MAIN_DMG_RATING, cfg.weaponDmg)
@@ -165,6 +172,11 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     spawned:setLocalVar(MARKS_CRUOR_LV,  cfg.cruor)
     spawned:setLocalVar('[MarksTier]', cfg.tier)
     spawned:setLocalVar('[MarksRealPCs]', pcCount)
+    -- Generic cap covers melee, spells, and ordinary scripted damage. Reuse
+    -- the existing TP-move guard as well so direct-HP instant-death moves
+    -- cannot bypass the same 6,000-point encounter ceiling.
+    spawned:setLocalVar('EncounterOutgoingDamageCap', MARKS_DAMAGE_CAP)
+    spawned:setLocalVar('GeasFeteMobSkillDamageCap', MARKS_DAMAGE_CAP)
 
     encounterRuntime.attach(spawned, encounter, p)
     spawned:updateClaim(p)

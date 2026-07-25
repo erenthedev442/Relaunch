@@ -50,7 +50,8 @@ catalog.npcPositions =
 
 -- Difficulty presets. Each preset is a self-contained spec:
 --   wavesTotal       - how many waves the session runs
---   mobsPerWave      - mobs spawned per wave (random picks from `mobs`)
+--   mobsPerWave      - always 1; difficulty comes from stats and endurance,
+--                      never simultaneous boss pile-ons
 --   graceDelay       - seconds after "Start!" before wave 1 spawns
 --   waveDelay        - seconds after a wave is cleared before next spawns
 --   minLevel/maxLevel - mob level range. REQUIRED - without these,
@@ -63,12 +64,11 @@ catalog.npcPositions =
 --   markBonus        - bonus added per kill (small, not the full HL amount)
 catalog.difficulties =
 {
-    -- Stat-mod scaling rebalance (2026-05): HP gets a SLIGHT bump per
-    -- tier (waves shouldn't last forever - pile-on tempo is the point),
-    -- but the offensive package gets a SIGNIFICANT one. ACC bumps to
-    -- guarantee the mob lands swings on geared L99 players, ATT bumps
-    -- to make those landed hits hurt, and HASTE / DOUBLE_ATTACK /
-    -- TRIPLE_ATTACK to stack additional pressure per second.
+    -- Wave Master follows the same level model as the rest of Relaunch:
+    -- no enemy exceeds level 150. Difficulty comes from HP, offensive
+    -- mods, mechanics, and consecutive unique encounters. Every wave
+    -- contains exactly one enemy so solo players and trusts are never
+    -- subjected to an unavoidable multi-boss alpha strike.
     --
     -- Engine notes:
     --   xi.mod.HASTE_GEAR is 1024ths of 1% (engine caps total gear
@@ -83,24 +83,24 @@ catalog.difficulties =
         spawnStagger    = 0,
         graceDelay      = 5,
         waveDelay       = 20,
-        minLevel        = 125,
-        maxLevel        = 125,
+        minLevel        = 115,
+        maxLevel        = 115,
         completionBonus = 50,
         markBonus       = 20,
-        hpBoost         = 4.0,   -- bumped from 1.5 (2026-05-30) -- Easy fights were ending in seconds.
+        hpBoost         = 2.5,
         mechanics =
         {
             name   = 'Arena Challenger',
-            enrage = { sec = 300, att = 1500, haste = 60, msg = 'grows impatient and presses the attack!' },
+            enrage = { sec = 480, att = 500, haste = 30, msg = 'grows impatient and presses the attack!' },
         },
         mods =
         {
-            [xi.mod.ATT]           = 2000,
-            [xi.mod.ACC]           = 700,
-            [xi.mod.STR]           = 100,
-            [xi.mod.DEX]           = 100,
-            [xi.mod.HASTE_GEAR]    = 100,   -- ~10%
-            [xi.mod.DOUBLE_ATTACK] = 10,
+            [xi.mod.ATT]           = 2200,
+            [xi.mod.ACC]           = 400,
+            [xi.mod.STR]           = 50,
+            [xi.mod.DEX]           = 50,
+            [xi.mod.HASTE_GEAR]    = 60,
+            [xi.mod.DOUBLE_ATTACK] = 6,
         },
         mobs =
         {
@@ -123,27 +123,25 @@ catalog.difficulties =
         mobsPerWave     = 1,
         spawnStagger    = 0,
         graceDelay      = 5,
-        waveDelay       = 10,   -- 25 -> 10 (2026-07-10): faster wave tempo
-        minLevel        = 150,
-        maxLevel        = 150,
+        waveDelay       = 10,
+        minLevel        = 135,
+        maxLevel        = 135,
         completionBonus = 100,
         markBonus       = 20,
-        hpBoost         = 5.0,
+        hpBoost         = 4.0,
         mechanics =
         {
             name   = 'Arena Veteran',
-            drain  = { periodSec = 15, healPct = 1 },
-            enrage = { sec = 270, att = 2000, haste = 70, msg = 'feeds on the battle and quickens!' },
+            enrage = { sec = 420, att = 750, haste = 40, msg = 'feeds on the battle and quickens!' },
         },
         mods =
         {
-            [xi.mod.ATT]           = 4000,
-            [xi.mod.ACC]           = 1100,
-            [xi.mod.STR]           = 200,
-            [xi.mod.DEX]           = 200,
-            [xi.mod.HASTE_GEAR]    = 150,   -- ~15%
-            [xi.mod.DOUBLE_ATTACK] = 15,
-            [xi.mod.TRIPLE_ATTACK] = 3,
+            [xi.mod.ATT]           = 2700,
+            [xi.mod.ACC]           = 500,
+            [xi.mod.STR]           = 75,
+            [xi.mod.DEX]           = 75,
+            [xi.mod.HASTE_GEAR]    = 100,
+            [xi.mod.DOUBLE_ATTACK] = 8,
         },
         mobs =
         {
@@ -162,37 +160,36 @@ catalog.difficulties =
 
     Hard =
     {
-        wavesTotal      = 5,
-        mobsPerWave     = 2,
-        spawnStagger    = 3,
+        wavesTotal      = 7,
+        mobsPerWave     = 1,
+        spawnStagger    = 0,
         graceDelay      = 5,
-        waveDelay       = 10,   -- 25 -> 10 (2026-07-10): faster wave tempo
-        minLevel        = 175,
-        maxLevel        = 175,
+        waveDelay       = 8,
+        minLevel        = 150,
+        maxLevel        = 150,
         completionBonus = 200,
         markBonus       = 20,
-        hpBoost         = 6.0,
+        hpBoost         = 5.0,
         mechanics =
         {
             name   = 'Arena HNM',
-            aoe    = { periodSec = 20, dmgPct = 8, msg = 'unleashes a crushing shockwave!' },
-            enrage = { sec = 240, att = 3000, haste = 90, msg = 'enters a killing frenzy!' },
+            aoe    = { periodSec = 30, dmgPct = 4, msg = 'unleashes a crushing shockwave!' },
+            enrage = { sec = 360, att = 1000, haste = 50, msg = 'enters a killing frenzy!' },
         },
         mods =
         {
-            [xi.mod.ATT]           = 6500,
-            [xi.mod.ACC]           = 1500,
-            [xi.mod.STR]           = 350,
-            [xi.mod.DEX]           = 350,
-            [xi.mod.HASTE_GEAR]    = 200,   -- ~20%
-            [xi.mod.DOUBLE_ATTACK] = 20,
-            [xi.mod.TRIPLE_ATTACK] = 8,
+            [xi.mod.ATT]           = 3800,
+            [xi.mod.ACC]           = 800,
+            [xi.mod.STR]           = 125,
+            [xi.mod.DEX]           = 125,
+            [xi.mod.HASTE_GEAR]    = 150,
+            [xi.mod.DOUBLE_ATTACK] = 10,
+            [xi.mod.TRIPLE_ATTACK] = 3,
         },
         mobs =
         {
             -- Hard: HNM apex beasts. Cerberus / Hydra / Khimaira are the
-            -- iconic Wyrmwall-era HNMs; Tiamat adds a wyrm so 2-mob
-            -- pile-ons feel like a legitimate raid scenario.
+            -- iconic Wyrmwall-era HNMs; the full pool is used before it cycles.
             { groupId = 11408, name = 'Cerberus' },
             { groupId = 11409, name = 'Hydra' },
             { groupId = 11410, name = 'Khimaira' },
@@ -205,47 +202,35 @@ catalog.difficulties =
 
     Insane =
     {
-        -- Augment-T4 challenge: five waves of three Heavenly Kings. A short
-        -- stagger keeps the pile-on readable without the old 30-60s dead air.
-        --
-        -- Why not bump beyond L200: level affects damage / acc / eva, and L200
-        -- is the highest stat
-        -- profile that's confirmed-hittable on this server; going
-        -- higher risks accuracy/evasion outrunning L99 gear. If you
-        -- want more pain later, bump min/maxLevel to 215-225 in 5-pt
-        -- steps and check whether the group can still land melee.
-        wavesTotal      = 5,
-        mobsPerWave     = 3,
-        spawnStagger    = 3,
+        -- Augment-T4 challenge: eight single-enemy waves drawn from the
+        -- Heavenly Kings. Tuned for T3 augments rather than relic damage.
+        wavesTotal      = 8,
+        mobsPerWave     = 1,
+        spawnStagger    = 0,
         graceDelay      = 10,
-        waveDelay       = 15,
-        minLevel        = 200,
-        maxLevel        = 200,
+        waveDelay       = 10,
+        minLevel        = 150,
+        maxLevel        = 150,
         completionBonus = 400,
         markBonus       = 20,
-        hpBoost         = 8.0,
+        hpBoost         = 12.0,
         mechanics =
         {
             name   = 'Heavenly King',
-            aoe    = { periodSec = 18, dmgPct = 7, msg = 'shakes the arena with divine force!' },
-            enrage = { sec = 220, att = 4000, haste = 110, msg = 'casts restraint aside!' },
+            aoe    = { periodSec = 25, dmgPct = 3, msg = 'shakes the arena with divine force!' },
+            enrage = { sec = 330, att = 1250, haste = 60, msg = 'casts restraint aside!' },
             phases = {
-                { hp = 35, action = 'fury', att = 2000, haste = 70, msg = 'calls on its final reserve of power!' },
+                { hp = 35, action = 'fury', att = 750, haste = 35, msg = 'calls on its final reserve of power!' },
             },
         },
         mods =
         {
-            -- At L200 + 3-mob pile-ons with 15s breathers, the mods
-            -- need to outrun a geared L99 group's mitigation. ACC must
-            -- punch through ~1200 EVA stacks; ATT must matter against
-            -- 2000+ DEF stacks.
-            [xi.mod.ATT]           = 10000,
-            [xi.mod.ACC]           = 2000,
-            [xi.mod.STR]           = 500,
-            [xi.mod.DEX]           = 500,
-            [xi.mod.HASTE_GEAR]    = 256,   -- gear-haste cap
-            [xi.mod.DOUBLE_ATTACK] = 25,
-            [xi.mod.TRIPLE_ATTACK] = 12,
+            [xi.mod.ATT]           = 4500,
+            [xi.mod.ACC]           = 1200,
+            [xi.mod.STR]           = 250,
+            [xi.mod.DEX]           = 250,
+            [xi.mod.HASTE_GEAR]    = 180,
+            [xi.mod.DOUBLE_ATTACK] = 12,
         },
         mobs =
         {
@@ -260,36 +245,34 @@ catalog.difficulties =
 
     Nightmare =
     {
-        -- Relic-path capstone: five waves of four elder wyrms at level 225.
-        -- Twenty kills make this a coordinated challenge without the previous
-        -- fourfold workload jump from Insane.
-        wavesTotal      = 5,
-        mobsPerWave     = 4,
+        -- Relic-path capstone: ten elder-wyrm encounters, one per wave. This is a
+        -- pre-relic trial, so its stats assume T3/T4 progression gear.
+        wavesTotal      = 10,
+        mobsPerWave     = 1,
         graceDelay      = 10,
         waveDelay       = 10,
-        spawnStagger    = 3,
-        minLevel        = 225,
-        maxLevel        = 225,
+        spawnStagger    = 0,
+        minLevel        = 150,
+        maxLevel        = 150,
         completionBonus = 800,
         markBonus       = 20,
-        hpBoost         = 10.0,
+        hpBoost         = 16.0,
         mechanics =
         {
             name   = 'Elder Wyrm',
-            aoe    = { periodSec = 17, dmgPct = 6, msg = 'sweeps the field with elder wrath!' },
-            cc     = { periodSec = 32, effect = xi.effect.PARALYSIS, power = 20, dur = 6, msg = 'binds the challengers in draconic dread!' },
-            enrage = { sec = 210, att = 5000, haste = 120, msg = 'erupts in ancient fury!' },
+            aoe    = { periodSec = 25, dmgPct = 4, msg = 'sweeps the field with elder wrath!' },
+            cc     = { periodSec = 45, effect = xi.effect.PARALYSIS, power = 10, dur = 4, msg = 'binds the challengers in draconic dread!' },
+            enrage = { sec = 300, att = 1500, haste = 70, msg = 'erupts in ancient fury!' },
         },
         mods =
         {
-            [xi.mod.ATT]           = 15000,
-            [xi.mod.ACC]           = 2500,
-            [xi.mod.STR]           = 700,
-            [xi.mod.DEX]           = 700,
-            [xi.mod.HASTE_GEAR]    = 256,
-            [xi.mod.DOUBLE_ATTACK] = 30,
-            [xi.mod.TRIPLE_ATTACK] = 18,
-            [xi.mod.QUAD_ATTACK]   = 5,
+            [xi.mod.ATT]           = 5200,
+            [xi.mod.ACC]           = 1400,
+            [xi.mod.STR]           = 350,
+            [xi.mod.DEX]           = 350,
+            [xi.mod.HASTE_GEAR]    = 200,
+            [xi.mod.DOUBLE_ATTACK] = 14,
+            [xi.mod.TRIPLE_ATTACK] = 5,
         },
         mobs =
         {
@@ -303,40 +286,36 @@ catalog.difficulties =
 
     Apocalypse =
     {
-        -- Empyrean/Mythic-path capstone. The step up is carried by HP,
-        -- mechanics, and one more wave, NOT by level: Nightmare already sits
-        -- at L225, past the L200 "confirmed-hittable" mark, so pushing level higher
-        -- risks mob EVASION outrunning geared L99 melee (players whiff = un-fun,
-        -- not hard). Six waves x four titans = 24 kills.
-        wavesTotal      = 6,
-        mobsPerWave     = 4,
+        -- Empyrean/Mythic-path capstone: twelve primeval-titan encounters,
+        -- one per wave. Stats and mechanics provide the step up, not level.
+        wavesTotal      = 12,
+        mobsPerWave     = 1,
         graceDelay      = 10,
         waveDelay       = 10,
-        spawnStagger    = 3,
-        minLevel        = 225,
-        maxLevel        = 225,
+        spawnStagger    = 0,
+        minLevel        = 150,
+        maxLevel        = 150,
         completionBonus = 1200,
         markBonus       = 20,
-        hpBoost         = 14.0,
+        hpBoost         = 20.0,
         mechanics =
         {
             name   = 'Primeval Titan',
-            aoe    = { periodSec = 16, dmgPct = 7, msg = 'splits the arena with primeval force!' },
-            enrage = { sec = 200, att = 6000, haste = 130, msg = 'becomes an unstoppable catastrophe!' },
+            aoe    = { periodSec = 22, dmgPct = 5, msg = 'splits the arena with primeval force!' },
+            enrage = { sec = 280, att = 2000, haste = 80, msg = 'becomes an unstoppable catastrophe!' },
             phases = {
-                { hp = 40, action = 'nuke', dmgPct = 7, msg = 'detonates the ancient power within!' },
+                { hp = 40, action = 'nuke', dmgPct = 4, msg = 'detonates the ancient power within!' },
             },
         },
         mods =
         {
-            [xi.mod.ATT]           = 20000,
-            [xi.mod.ACC]           = 2800,
-            [xi.mod.STR]           = 900,
-            [xi.mod.DEX]           = 900,
-            [xi.mod.HASTE_GEAR]    = 256,
-            [xi.mod.DOUBLE_ATTACK] = 35,
-            [xi.mod.TRIPLE_ATTACK] = 22,
-            [xi.mod.QUAD_ATTACK]   = 8,
+            [xi.mod.ATT]           = 6500,
+            [xi.mod.ACC]           = 1700,
+            [xi.mod.STR]           = 450,
+            [xi.mod.DEX]           = 450,
+            [xi.mod.HASTE_GEAR]    = 225,
+            [xi.mod.DOUBLE_ATTACK] = 18,
+            [xi.mod.TRIPLE_ATTACK] = 7,
         },
         mobs =
         {
@@ -350,39 +329,35 @@ catalog.difficulties =
 
     Oblivion =
     {
-        -- Aeonic-path capstone: seven waves of five sovereigns = 35 kills.
-        -- A short stagger brings the formation in quickly. The mods sit
-        -- just under the int16 mob-mod cap (~31k -- ATT 26000 is the headroom
-        -- limit). Level nudged one cautious step to 230 (re-check that melee still
-        -- lands before going higher). Only the deepest Prestige-geared full parties
-        -- should clear this. Push future pain via HP / mods / counts, not level.
-        wavesTotal      = 7,
-        mobsPerWave     = 5,
+        -- Aeonic-path capstone: fourteen void-sovereign encounters, one
+        -- per wave, cycling the full roster before any model repeats.
+        wavesTotal      = 14,
+        mobsPerWave     = 1,
         graceDelay      = 10,
-        waveDelay       = 8,
-        spawnStagger    = 2,
-        minLevel        = 230,
-        maxLevel        = 230,
+        waveDelay       = 10,
+        spawnStagger    = 0,
+        minLevel        = 150,
+        maxLevel        = 150,
         completionBonus = 2000,
         markBonus       = 20,
-        hpBoost         = 18.0,
+        hpBoost         = 24.0,
         mechanics =
         {
             name   = 'Void Sovereign',
-            aoe    = { periodSec = 15, dmgPct = 5, msg = 'tears open a wave of void energy!' },
-            drain  = { periodSec = 18, healPct = 1 },
-            enrage = { sec = 190, att = 7000, haste = 150, msg = 'unseals its sovereign power!' },
+            aoe    = { periodSec = 20, dmgPct = 5, msg = 'tears open a wave of void energy!' },
+            drain  = { periodSec = 30, healPct = 1 },
+            enrage = { sec = 260, att = 2500, haste = 90, msg = 'unseals its sovereign power!' },
         },
         mods =
         {
-            [xi.mod.ATT]           = 26000,
-            [xi.mod.ACC]           = 3200,
-            [xi.mod.STR]           = 1200,
-            [xi.mod.DEX]           = 1200,
-            [xi.mod.HASTE_GEAR]    = 256,
-            [xi.mod.DOUBLE_ATTACK] = 40,
-            [xi.mod.TRIPLE_ATTACK] = 28,
-            [xi.mod.QUAD_ATTACK]   = 12,
+            [xi.mod.ATT]           = 8000,
+            [xi.mod.ACC]           = 2000,
+            [xi.mod.STR]           = 600,
+            [xi.mod.DEX]           = 600,
+            [xi.mod.HASTE_GEAR]    = 240,
+            [xi.mod.DOUBLE_ATTACK] = 22,
+            [xi.mod.TRIPLE_ATTACK] = 10,
+            [xi.mod.QUAD_ATTACK]   = 2,
         },
         mobs =
         {
@@ -397,45 +372,38 @@ catalog.difficulties =
 
     Ragnarok =
     {
-        -- Prime-path capstone: eight waves of five gods = 40 kills. HP and
-        -- mechanics make each wave an endurance check with little breathing
-        -- room. ATT 28000 sits just under the int16 mob-mod cap
-        -- (~31k) with clamp headroom over the mob's innate attack. Level held at
-        -- 235 (same reason as the tiers above: higher = mob EVASION outruns L99
-        -- melee, un-fun not hard). This is the top flat-menu tier -- an 8th
-        -- difficulty fills the customMenu's ~8-visible-option ceiling, so a 9th
-        -- would need the difficulty menu paginated. Push future pain via HP /
-        -- mods / counts.
-        wavesTotal      = 8,
-        mobsPerWave     = 5,
+        -- Prime-path capstone: sixteen encounters with The Unmade, one
+        -- per wave, cycling the full roster before any model repeats.
+        wavesTotal      = 16,
+        mobsPerWave     = 1,
         graceDelay      = 10,
-        waveDelay       = 8,
-        spawnStagger    = 2,
-        minLevel        = 235,
-        maxLevel        = 235,
+        waveDelay       = 10,
+        spawnStagger    = 0,
+        minLevel        = 150,
+        maxLevel        = 150,
         completionBonus = 2800,
         markBonus       = 20,
-        hpBoost         = 24.0,
+        hpBoost         = 30.0,
         mechanics =
         {
             name   = 'The Unmade',
-            aoe    = { periodSec = 14, dmgPct = 6, msg = 'unmakes the ground beneath the challengers!' },
-            cc     = { periodSec = 28, effect = xi.effect.TERROR, power = 1, dur = 4, msg = 'reveals the end of all things!' },
-            enrage = { sec = 180, att = 8500, haste = 180, msg = 'begins the final unmaking!' },
+            aoe    = { periodSec = 18, dmgPct = 6, msg = 'unmakes the ground beneath the challengers!' },
+            cc     = { periodSec = 35, effect = xi.effect.TERROR, power = 1, dur = 3, msg = 'reveals the end of all things!' },
+            enrage = { sec = 240, att = 3000, haste = 100, msg = 'begins the final unmaking!' },
             phases = {
-                { hp = 30, action = 'fury', att = 3500, haste = 100, msg = 'refuses its own destruction!' },
+                { hp = 30, action = 'fury', att = 1500, haste = 60, msg = 'refuses its own destruction!' },
             },
         },
         mods =
         {
-            [xi.mod.ATT]           = 28000,
-            [xi.mod.ACC]           = 3600,
-            [xi.mod.STR]           = 1400,
-            [xi.mod.DEX]           = 1400,
+            [xi.mod.ATT]           = 10000,
+            [xi.mod.ACC]           = 2300,
+            [xi.mod.STR]           = 750,
+            [xi.mod.DEX]           = 750,
             [xi.mod.HASTE_GEAR]    = 256,
-            [xi.mod.DOUBLE_ATTACK] = 45,
-            [xi.mod.TRIPLE_ATTACK] = 33,
-            [xi.mod.QUAD_ATTACK]   = 16,
+            [xi.mod.DOUBLE_ATTACK] = 25,
+            [xi.mod.TRIPLE_ATTACK] = 12,
+            [xi.mod.QUAD_ATTACK]   = 4,
         },
         mobs =
         {
@@ -450,42 +418,44 @@ catalog.difficulties =
 
     Terror =
     {
-        -- Burtgang's proposal (2026-07-09): a SHORT, HIGH-DENSITY mark farm so
-        -- solo/small groups aren't stuck waiting on trickle waves (report: hunt
-        -- marks too slow solo). FEWER waves, MORE mobs per wave, big payout for
-        -- clearing. 3 waves x 8 gods = 24 kills; +20/kill (480) + 1600 completion
-        -- = ~2080 marks for a full clear -- the fastest marks/time on the board,
-        -- paid for by fielding 8 simultaneous gods. Level held at 225 (the
-        -- confirmed-hittable ceiling -- danger is the pile-on + Apocalypse-grade
-        -- offense, not level/evasion). spawnStagger=2 so the 8 arrive fast (~14s)
-        -- without an instant 8-god alpha strike. completionBonus is the main tuning
-        -- dial. UNPLAYTESTED.
-        -- NOTE: appended LAST in difficultyOrder (bit 256) per the append-only rule,
-        -- even though it's shorter than the tiers above it -- it is a side-grade.
-        wavesTotal      = 3,
-        mobsPerWave     = 8,
+        -- Ultimate optional challenge: eighteen Abyssal Terror encounters,
+        -- one per wave. It exceeds Ragnarok in endurance, stats, mechanics,
+        -- and rewards while preserving the one-enemy-at-a-time rule.
+        wavesTotal      = 18,
+        mobsPerWave     = 1,
         graceDelay      = 10,
-        waveDelay       = 10,
-        spawnStagger    = 2,
-        minLevel        = 225,
-        maxLevel        = 225,
-        completionBonus = 1600,
-        markBonus       = 20,
-        hpBoost         = 12.0,
+        waveDelay       = 8,
+        spawnStagger    = 0,
+        minLevel        = 150,
+        maxLevel        = 150,
+        completionBonus = 4000,
+        markBonus       = 30,
+        hpBoost         = 36.0,
+        mechanics =
+        {
+            name   = 'Abyssal Terror',
+            aoe    = { periodSec = 16, dmgPct = 7, msg = 'floods the arena with abyssal power!' },
+            cc     = { periodSec = 30, effect = xi.effect.TERROR, power = 1, dur = 4, msg = 'freezes the challengers in primal fear!' },
+            drain  = { periodSec = 25, healPct = 1 },
+            enrage = { sec = 220, att = 3500, haste = 110, msg = 'erupts with forbidden strength!' },
+            phases = {
+                { hp = 30, action = 'fury', att = 1800, haste = 70, msg = 'tears open the abyss itself!' },
+            },
+        },
         mods =
         {
-            [xi.mod.ATT]           = 20000,
-            [xi.mod.ACC]           = 2800,
+            [xi.mod.ATT]           = 12000,
+            [xi.mod.ACC]           = 2600,
             [xi.mod.STR]           = 900,
             [xi.mod.DEX]           = 900,
             [xi.mod.HASTE_GEAR]    = 256,
-            [xi.mod.DOUBLE_ATTACK] = 35,
-            [xi.mod.TRIPLE_ATTACK] = 22,
-            [xi.mod.QUAD_ATTACK]   = 8,
+            [xi.mod.DOUBLE_ATTACK] = 28,
+            [xi.mod.TRIPLE_ATTACK] = 15,
+            [xi.mod.QUAD_ATTACK]   = 5,
         },
         mobs =
         {
-            -- Terror: ABYSSAL TERRORS -- apex Abyssea beasts for the 8-god pile-on.
+            -- Terror: ABYSSAL TERRORS -- six distinct Abyssea apex beasts.
             { groupId = 11443, name = 'Glavoid' },
             { groupId = 11444, name = 'Chloris' },
             { groupId = 11445, name = 'Sarameya' },
@@ -513,10 +483,8 @@ catalog.spawnRing =
     maxRadius = 8.0,
 }
 
--- Seconds between each mob spawn within a single wave.
--- 0 = all mobs spawn simultaneously (original behaviour).
--- Every live tier sets this explicitly; three seconds is the safe fallback for
--- future additions so a missing field cannot create minutes of dead air.
-catalog.spawnStagger = 3
+-- Compatibility fallback for the spawn engine. Live tiers use one mob per wave,
+-- so no intra-wave stagger is needed.
+catalog.spawnStagger = 0
 
 return catalog

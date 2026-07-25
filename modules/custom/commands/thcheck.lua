@@ -1,9 +1,8 @@
 -----------------------------------
 -- !thcheck
 -- Treasure Hunter diagnostic. Shows:
---   1. your live TREASURE_HUNTER mod (gear + augments summed by the engine),
---   2. the cap that actually reaches mobs (4 non-THF / 8 THF main; melee
---      first-swing hits proc higher, up to 12 + JP cap),
+--   1. your live TREASURE_HUNTER mod (all sources, hard-capped at TH14),
+--   2. the cap that actually reaches mobs,
 --   3. your current target's APPLIED TH level (m_THLvl) -- engage/hit a mob,
 --      then run this to see exactly what TH it received.
 --
@@ -24,8 +23,8 @@ commandObj.onTrigger = function(player)
     local SYS  = xi.msg.channel.SYSTEM_3
     local th = player:getMod(xi.mod.TREASURE_HUNTER)
 
-    player:printToPlayer(string.format('[TH] Your Treasure Hunter (gear+augments): %d', th), SYS)
-    player:printToPlayer('[TH] UNCAPPED -- your full TH applies to mobs (claim/cast and melee). Drops scale past TH14. Needs the C++ rebuild to be live.', SYS)
+    player:printToPlayer(string.format('[TH] Your Treasure Hunter (all sources): %d / 14', th), SYS)
+    player:printToPlayer('[TH] HARD CAP TH14 -- gear, augments, traits, effects, Ascension, and Rebirth cannot exceed it.', SYS)
 
     local ok, target = pcall(function() return player:getTarget() end)
     if ok and target and target:isMob() then

@@ -83,6 +83,7 @@ zones[xi.zone.ABYSSEA_TAHRONGI] =
         TEFENET         = GetFirstID('Tefenet'),
         MUSCALIET       = GetFirstID('Muscaliet'),
         LACHRYMATER     = GetFirstID('Lachrymater'),
+        MYRMECOLEON     = GetFirstID('Myrmecoleon'),
         CHLORIS_OFFSET  = GetFirstID('Chloris'), -- 3 Copies: +0, +17, +20
         GLAVOID_OFFSET  = GetFirstID('Glavoid'), -- 3 Copies: +0, +17, +20
         LACOVIE_OFFSET  = GetFirstID('Lacovie'), -- 3 Copies: +0, +17, +20

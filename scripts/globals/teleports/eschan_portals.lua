@@ -64,20 +64,10 @@ local portalData =
 
 -----------------------------------
 -- Notes:
--- Portal base cost is 50 in every escha zone.
--- Vorseal Luck+ (Portal Cost per unpgrade) -5%, -10%, -15%, -20%, -25%, -30%, -35%, -40%, -45%, -50%, -55%
--- Vorseal status effect = 602
+-- RELAUNCH grants every local destination on first use and charges no Silt.
 -----------------------------------
-local function getPortalCost(player)
-    -- TODO: get Vorseal Luck+ power amount.
-    -- Note: Rounded down. Base 50 with luck+ 3 (-15%) results in 42. (17/march/2023)
-
-    local cost                  = 50
-    local luckVorsealPower      = 0
-    local luckVorsealMultiplier = utils.clamp(100 - 5 * luckVorsealPower, 45, 100) / 100
-    cost                        = math.floor(cost * luckVorsealMultiplier)
-
-    return cost
+local function getPortalCost(_player)
+    return 0
 end
 
 xi.escha.portals.eschanPortalOnTrigger = function(player, npc)
@@ -87,6 +77,18 @@ xi.escha.portals.eschanPortalOnTrigger = function(player, npc)
     local portalGlobalNumber  = portalData[zoneId][npc:getName()]                  -- Bit number used to track portals unlocked.
     local zonePortalsUnlocked = 0
 
+    -- RELAUNCH: touching any Escha/Reisenjima portal permanently unlocks every
+    -- destination represented in that zone's shared portal bitmask.
+    if portalOffsets[zoneId] then
+        for portalBit = portalOffsets[zoneId][1], portalOffsets[zoneId][2] do
+            if not utils.mask.getBit(portalBitMask, portalBit) then
+                player:addTeleport(xi.teleport.type.ESCHAN_PORTAL, portalBit)
+            end
+        end
+
+        portalBitMask = player:getTeleport(xi.teleport.type.ESCHAN_PORTAL)
+    end
+
     -- Get zone portals and count how many we have unlocked.
     for bit = portalOffsets[zoneId][1], portalOffsets[zoneId][2] do
         if utils.mask.getBit(portalBitMask, bit) then
@@ -94,33 +96,11 @@ xi.escha.portals.eschanPortalOnTrigger = function(player, npc)
         end
     end
 
-    -- Reisenjima only.
+    -- Portal #10 is global bit 32, beyond the uint32 unlock mask. The event's
+    -- Rhapsody flag exposes it without requiring the key item.
     if zoneId == xi.zone.REISENJIMA then
-        -- Scintillating Rhapsody. Unlocks Portal #8 and #10.
-        if player:hasKeyItem(xi.ki.SCINTILLATING_RHAPSODY) then
-            lockValue           = lockValue + 4
-            zonePortalsUnlocked = zonePortalsUnlocked + 1
-        end
-
-        -- Ethereal droplet.
-        if player:hasItem(xi.item.ETHEREAL_DROPLET, xi.inv.TEMPITEMS) then
-            lockValue = lockValue + 2
-        end
-
-    -- Escha Ru'Aun only.
-    elseif zoneId == xi.zone.ESCHA_RUAUN then
-        -- Eschan droplet still works if a player happens to hold one (retail
-        -- bootstrap item from the ??? / qm_droplet), but is NO LONGER REQUIRED.
-        -- RELAUNCH (2026-07-12): dropped the retail "blinding light" gate that
-        -- returned early when zonePortalsUnlocked == 0 and you had no droplet --
-        -- it made a fresh player's first Ru'Aun portal a silent no-op (the
-        -- BLINDING_LIGHT text is nil here, so examining the portal did nothing:
-        -- reported as "eschan portals aren't working"). Ru'Aun now unlocks on
-        -- touch, exactly like Escha - Zi'Tah, since these zones are a Geas Fete
-        -- content hub and free travel is intended. Silt cost is unchanged.
-        if player:hasItem(xi.item.CLUMP_OF_ESCHAN_DROPLETS, xi.inv.TEMPITEMS) then
-            lockValue = lockValue + 2
-        end
+        lockValue           = lockValue + 4
+        zonePortalsUnlocked = zonePortalsUnlocked + 1
     end
 
     -- Player has not activated this Portal.
@@ -155,34 +135,6 @@ xi.escha.portals.eschanPortalEventUpdate = function(player, csid, option, npc)
 end
 
 xi.escha.portals.eschanPortalEventFinish = function(player, csid, option, npc)
-    local portalCost = getPortalCost(player)
-    local zoneId     = player:getZoneID()
-
-    -- Reisenjima only: Ethereal Droplet usage.
-    if
-        zoneId == xi.zone.REISENJIMA and
-        option == 3 and
-        player:hasItem(xi.item.ETHEREAL_DROPLET, xi.inv.TEMPITEMS)
-    then
-        player:delItem(xi.item.ETHEREAL_DROPLET, 1, xi.inv.TEMPITEMS)
-        player:messageSpecial(zones[zoneId].text.YOU_HAVE_USED, xi.item.ETHEREAL_DROPLET)
-
-    -- Escha Ru'Aun: Eschan Droplet usage.
-    elseif
-        zoneId == xi.zone.ESCHA_RUAUN and
-        (option == 2 or option == 3) and
-        player:hasItem(xi.item.CLUMP_OF_ESCHAN_DROPLETS, xi.inv.TEMPITEMS)
-    then
-        player:delItem(xi.item.CLUMP_OF_ESCHAN_DROPLETS, 1, xi.inv.TEMPITEMS)
-        player:messageSpecial(zones[zoneId].text.YOU_HAVE_USED, xi.item.CLUMP_OF_ESCHAN_DROPLETS)
-
-    -- Consume Escha Silt currency.
-    elseif
-        option ~= 0 and
-        option ~= 4 and -- Scintillating Rhapsody usage.
-        option ~= utils.EVENT_CANCELLED_OPTION
-    then
-        -- Standard warp: deduct Escha Silt
-        player:delCurrency('escha_silt', portalCost)
-    end
+    -- RELAUNCH: all Escha/Reisenjima destinations are free. The client performs
+    -- the event warp; no Silt, temporary item, or key item is consumed here.
 end

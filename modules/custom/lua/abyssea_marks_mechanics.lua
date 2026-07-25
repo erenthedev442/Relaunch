@@ -30,6 +30,16 @@ local POSITIONAL_KINDS =
     move = true,
 }
 
+local HOLD_GRACE_SEC = 2
+local BURST_SCALE_BY_TIER = { [1] = 1.00, [2] = 0.75, [3] = 0.50 }
+local CONTROL_LIMITS =
+{
+    [xi.effect.PARALYSIS]     = 30,
+    [xi.effect.PETRIFICATION] = 10,
+    [xi.effect.TERROR]        = 15,
+    [xi.effect.CHARM_I]       = 10,
+}
+
 local function now()
     return os.time()
 end
@@ -142,6 +152,9 @@ local function staggerMob(mob, state, reward)
     staggerReward.sec = 15
 
     openVulnerability(mob, state, staggerReward)
+    -- stun() interrupts an action already in flight and remains reliable
+    -- against retail templates that resist the visible Terror effect.
+    pcall(function() mob:stun(15000) end)
     pcall(function()
         mob:addStatusEffect(xi.effect.TERROR, {
             duration = 15,
@@ -242,7 +255,8 @@ local function counterSucceeded(mob, state, challenge)
     elseif kind == 'hold' then
         return challenge.ownerDamage <= (signature.allowDamage or 0) and not challenge.wsUsed
     elseif kind == 'burst' then
-        local required = math.floor(mob:getMaxHP() * (signature.damagePct or 3) / 100)
+        local scale = BURST_SCALE_BY_TIER[state.cfg.tier or 1] or 1
+        local required = math.floor(mob:getMaxHP() * (signature.damagePct or 3) / 100 * scale)
         return challenge.damageTaken >= required
     elseif kind == 'weaponskill' then
         return challenge.wsUsed
@@ -317,12 +331,25 @@ local function beginChallenge(mob, state, signature, floorHpp)
         magicDamage    = 0,
         wsUsed         = false,
         procTriggered  = false,
+        graceUntil     = now() + HOLD_GRACE_SEC,
         startX         = owner:getXPos(),
         startZ         = owner:getZPos(),
     }
 
     anchorMob(mob, state.challenge)
+    if
+        signature.kind == 'move' or
+        signature.kind == 'near' or
+        signature.kind == 'far' or
+        signature.kind == 'rear'
+    then
+        -- A movement answer must not be invalidated by Bind/Gravity applied
+        -- immediately before the threshold tell.
+        pcall(function() owner:delStatusEffect(xi.effect.BIND) end)
+        pcall(function() owner:delStatusEffect(xi.effect.WEIGHT) end)
+    end
     announce(mob, state, signature.tell)
+    pcall(function() mob:stun(500) end)
     pcall(function() mob:weaknessTrigger(signature.telegraphTrigger or 1) end)
 end
 
@@ -376,6 +403,37 @@ local function pressureTick(mob, state, stamp)
     end)
 end
 
+local function clampNativeControl(state)
+    local owner = ownerEntity(state)
+    if not owner then return end
+
+    for _, player in ipairs(partyPCs(owner)) do
+        -- Doom belongs to explicit failed mechanics on this roster. Native
+        -- Apocalyptic Ray spam between tells is removed instead of turning a
+        -- random TP choice into an unavoidable progression reset.
+        if not state.punishmentUntil or now() >= state.punishmentUntil then
+            pcall(function() player:delStatusEffect(xi.effect.DOOM) end)
+        end
+
+        for effectId, maxSec in pairs(CONTROL_LIMITS) do
+            pcall(function()
+                local effect = player:getStatusEffect(effectId)
+                if effect then
+                    if effect:getTimeRemaining() > maxSec * 1000 then
+                        effect:setDuration(maxSec * 1000)
+                    end
+                    if
+                        effectId == xi.effect.PARALYSIS and
+                        effect:getPower() > 40
+                    then
+                        effect:setPower(40)
+                    end
+                end
+            end)
+        end
+    end
+end
+
 local function combatTick(mob)
     local state = states[mob:getID()]
     if not state then return end
@@ -411,6 +469,7 @@ local function combatTick(mob)
     end
 
     pressureTick(mob, state, stamp)
+    clampNativeControl(state)
     enforceFloor(mob, state)
 end
 
@@ -426,7 +485,12 @@ local function damageTaken(mob, amount, attacker, attackType)
         pcall(function() attackerIsPc = attacker:isPC() end)
         if attackerIsPc and attacker:getID() == state.ownerId then
             ownerAttack = true
-            challenge.ownerDamage = challenge.ownerDamage + amount
+            if
+                challenge.signature.kind ~= 'hold' or
+                now() >= challenge.graceUntil
+            then
+                challenge.ownerDamage = challenge.ownerDamage + amount
+            end
         end
         if attackType == xi.attackType.PHYSICAL or attackType == xi.attackType.RANGED then
             challenge.physicalDamage = challenge.physicalDamage + amount
@@ -593,7 +657,11 @@ function M.onProc(mob, player, triggerType)
     end
 
     announce(mob, state, message)
-    openVulnerability(mob, state, reward)
+    if triggerType == xi.abyssea.triggerType.RED then
+        staggerMob(mob, state, reward)
+    else
+        openVulnerability(mob, state, reward)
+    end
 
     local telemetryPlayer = ownerEntity(state)
     if telemetryPlayer then

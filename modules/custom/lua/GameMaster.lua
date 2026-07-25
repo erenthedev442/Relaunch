@@ -117,12 +117,36 @@ local endSession
 -- Spawn helpers
 -----------------------------------
 
--- Pick `count` mobs from the difficulty's pool, with replacement.
-local function pickMobsForWave(diffDef, count)
+-- Build a shuffled mob roster for the whole session. Each pool is exhausted
+-- before it is reshuffled, and cycle boundaries cannot repeat the previous
+-- model. Longer tiers can therefore revisit a theme without back-to-back
+-- duplicates, while every wave still contains exactly one enemy.
+local function buildSessionRoster(diffDef, count)
     local picks = {}
-    local pool = diffDef.mobs
-    for i = 1, count do
-        picks[i] = pool[math.random(#pool)]
+    if not diffDef.mobs or #diffDef.mobs == 0 then
+        return picks
+    end
+
+    while #picks < count do
+        local pool = {}
+        for i, mobDef in ipairs(diffDef.mobs) do
+            pool[i] = mobDef
+        end
+
+        for i = #pool, 2, -1 do
+            local j = math.random(i)
+            pool[i], pool[j] = pool[j], pool[i]
+        end
+
+        local previous = picks[#picks]
+        if previous and #pool > 1 and pool[1].groupId == previous.groupId then
+            pool[1], pool[2] = pool[2], pool[1]
+        end
+
+        for _, mobDef in ipairs(pool) do
+            if #picks >= count then break end
+            picks[#picks + 1] = mobDef
+        end
     end
     return picks
 end
@@ -248,9 +272,7 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
         mob:spawn()
 
         -- Block capacity points on kill. Game Master is a challenge
-        -- mode, not a CP farm - wave mobs at L200 x EXP_RATE=10 would
-        -- dump ~16k+ CP per kill, turning Insane runs into a degenerate
-        -- JP grind. Requires MOBMOD_NO_CAPACITY_POINTS=200 in the
+        -- mode, not a CP farm. Requires MOBMOD_NO_CAPACITY_POINTS=200 in the
         -- engine + the early-return in charutils::DistributeCapacityPoints
         -- (already shipped for HL).
         mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
@@ -318,7 +340,13 @@ startWave = function(player)
 
     sess.waveIndex = sess.waveIndex + 1
     local diffDef  = catalog.difficulties[sess.difficulty]
-    local mobsThisWave = pickMobsForWave(diffDef, diffDef.mobsPerWave)
+    local nextMob = sess.mobRoster[sess.waveIndex]
+    if not nextMob then
+        player:printToPlayer('[Game Master] Wave roster is invalid. Session aborted safely.', xi.msg.channel.SYSTEM_3)
+        endSession(player, false)
+        return
+    end
+    local mobsThisWave = { nextMob }
 
     player:printToPlayer(
         string.format('[Game Master] Wave %d of %d - incoming!', sess.waveIndex, sess.wavesTotal),
@@ -509,6 +537,7 @@ local function buildConfirmOptions(difficulty, page)
                     difficulty = difficulty,
                     waveIndex  = 0,
                     wavesTotal = diffDef.wavesTotal,
+                    mobRoster  = buildSessionRoster(diffDef, diffDef.wavesTotal),
                     mobsAlive  = {},
                     zoneId     = p:getZoneID(),
                     kills      = 0,

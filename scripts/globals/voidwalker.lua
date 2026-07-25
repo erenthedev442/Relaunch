@@ -359,6 +359,39 @@ local modByMobName =
 
 local mixinByMobName =
 {
+    ['Krabkatoa'] = function(mob)
+        doMobSkillEveryHPP(mob, 25, 75, xi.mobSkill.MIGHTY_STRIKES_1,
+            not mob:hasStatusEffect(xi.effect.MIGHTY_STRIKES))
+    end,
+
+    ['Raker_Bee'] = function(mob)
+        doMobSkillEveryHPP(mob, 25, 75, xi.mobSkill.PERFECT_DODGE_1,
+            not mob:hasStatusEffect(xi.effect.PERFECT_DODGE))
+    end,
+
+    ['Gjenganger'] = function(mob)
+        randomly(mob, 20, 60, xi.effect.BLOOD_WEAPON, xi.mobSkill.BLOOD_WEAPON_1)
+    end,
+
+    ['Gorehound'] = function(mob)
+        doMobSkillEveryHPP(mob, 25, 75, xi.mobSkill.BLOOD_WEAPON_1,
+            not mob:hasStatusEffect(xi.effect.BLOOD_WEAPON))
+    end,
+
+    ['Aglaophotis'] = function(mob)
+        doMobSkillEveryHPP(mob, 25, 75, xi.mobSkill.HUNDRED_FISTS_1,
+            not mob:hasStatusEffect(xi.effect.HUNDRED_FISTS))
+    end,
+
+    ['Lord_Ruthven'] = function(mob)
+        randomly(mob, 30, 60, xi.effect.BLOOD_WEAPON, xi.mobSkill.BLOOD_WEAPON_1)
+    end,
+
+    ['Yilbegan'] = function(mob)
+        doMobSkillEveryHPP(mob, 20, 80, xi.mobSkill.MIGHTY_STRIKES_1,
+            not mob:hasStatusEffect(xi.effect.MIGHTY_STRIKES))
+    end,
+
     ['Capricornus'] = function(mob)
         doMobSkillEveryHPP(mob, 20, 80, xi.mobSkill.MIGHTY_STRIKES_1, not mob:hasStatusEffect(xi.effect.MIGHTY_STRIKES))
         if

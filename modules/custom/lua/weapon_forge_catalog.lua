@@ -14,16 +14,17 @@
 --                                                + 750M gil + HL Rank V gate
 --
 -- PATH 2 — AEONIC (Malformed → 119I → 119II → Aeonic 119III)
---   Base (Malformed)  Bought from Temprix in Reisenjima (50,000 Escha Beads).
+--   Base (Malformed)  Bought from Temprix in Reisenjima at HL Rank V
+--                     (50,000 Escha Beads).
 --   Stage 1 (119I)    Same Ajja/Kaja 119I weapons as the Prime path.
 --   Stage 2 (119II)   Same 119II weapons as the Prime path.
 --   Stage 3 (119III)  Unique Aeonic final form (Godhands / Aeneas / Sequence …).
 --
 --   Costs:
---     Malformed → 119I : 1×  Attestation  +  25×  Riftborn Boulder
---     119I      → 119II: 3×  Attestation  +  100× Riftborn Boulder  +  10,000 Escha Silt
---     119II     → Aeonic: 10× Attestation +  300× Riftborn Boulder  +  50,000 Escha Silt
---                                          +  20,000 Reforge Marks (any pool)
+--     Malformed → 119I : 1×  Attestation  +   3,000 Escha Silt
+--     119I      → 119II: 3×  Attestation  +  12,000 Escha Silt
+--     119II     → Aeonic: 10× Attestation +  35,000 Escha Silt
+--                                          +  24,000 Reforge Marks (any pool)
 --
 --   Attestations drop from Geas Fete zone bosses (Azi Dahaka / Warder of Courage).
 --   Each weapon type has a specific Attestation; the aeonicCosts table maps type→id.
@@ -68,7 +69,7 @@ catalog.markVars = { 'RF_AF_Marks', 'RF_Relic_Marks', 'RF_Empy_Marks' }
 -- AEONIC FORGE COSTS
 -- All three upgrade steps; attestation qty/id resolved per weapon type.
 -- ===================================================================
--- Aeonic is gated at HL Rank IV (Champion) throughout.
+-- Aeonic upgrades use their own Geas Fete bulk currency: Escha Silt.
 catalog.aeonicCosts =
 {
     -- Malformed → 119I
@@ -76,23 +77,21 @@ catalog.aeonicCosts =
     {
         hlRank           = 4,
         attestations     = 1,
-        riftbornBoulders = 25,   -- item 4061
+        eschaSilt        = 3000,
     },
     -- 119I → 119II
     toStage2 =
     {
         hlRank           = 4,
         attestations     = 3,
-        riftbornBoulders = 100,
-        eschaBeads       = 10000,  -- real currency escha_beads (unified Escha currency)
+        eschaSilt        = 12000,
     },
     -- 119II → Aeonic 119III
     toStage3 =
     {
         hlRank           = 4,
         attestations     = 10,
-        riftbornBoulders = 300,
-        eschaBeads       = 50000,
+        eschaSilt        = 35000,
         reforgeMarks     = 24000,
     },
 }
@@ -263,29 +262,22 @@ catalog.forgeMats = { beastcoin = 1875, riftbornBoulder = 4061, byneBill = 1455,
     silverpiece = 1453, jadeshell = 1450, pluton = 4059, imperialBronze = 2184,
     imperialSilver = 2185, imperialGold = 2187, beitetsu = 4060 }
 
--- Display names for empyrean chain materials, keyed by item id. Used by the
--- Weapon Forger NPC so its recipe/error lines print the REAL item name
--- ("Orthrus's Claw") instead of the generic chain-name label ("Twashtar
--- material") that had players looking up retail info and grabbing the wrong
--- material (Jamesta report, 2026-07-13: brought 50 Glavoid Shells for the
--- Twashtar 119 upgrade -- Glavoid is Verethragna's mat; Twashtar wants
--- Orthrus's Claw). Add a row here when you add a new empyrean chain.mat id.
+-- Retail final-Abyssea trial materials, keyed by item id. The Weapon Forger
+-- uses these names in recipe and error messages.
 catalog.empyreanMatNames =
 {
-    [2927] = 'Glavoid Shell',            -- Verethragna
-    [2928] = 'Two-leaf Chloris Bud',     -- Ukonvasara, Gambanteinn
-    [2962] = "Itzpapalotl's Scale",      -- Caladbolg
-    [2963] = "Ulhuadshi's Fang",         -- Farsha, Gandiva
-    [3287] = "Orthrus's Claw",           -- Twashtar, Armageddon
-    [3288] = "Dragua's Scale",           -- Almace
-    [3498] = 'Clump of Riftdross',       -- Rhongomiant, Masamune
-    [3499] = 'Pinch of Riftcinder',      -- Redemption, Kannagi, Hvergelmir
+    [3287] = "Orthrus's Claw",
+    [3288] = "Dragua's Scale",
+    [3289] = "Apademak's Horn",
+    [3290] = "Isgebind's Heart",
+    [3291] = "Alfard's Fang",
+    [3292] = "Azdaja's Horn",
 }
 
 -- Per-step: hlRank gate + material amounts. currency drained via delCurrency.
 catalog.empyreanCosts =
 {
-    { hlRank = 3, cruor =  2000, mat = 50, beastcoin = 10 },              -- base -> 119 I
+    { hlRank = 3, cruor =  2000, mat = 75, beastcoin = 10 },              -- base -> 119 I
     { hlRank = 4, cruor = 10000, boulder = 300, beastcoin = 30 },         -- 119 I -> II
     { hlRank = 5, boulder = 3000, beastcoin = 50, marks = 15000 },        -- 119 II -> III
 }
@@ -305,31 +297,32 @@ catalog.mythicCosts =
 --     Weapon Forge NPC enforces the gate before consuming any materials.
 catalog.relicCosts =
 {
-    { hlRank = 5, divergenceWins = 1, byne = 100, silverpiece = 25 },                         -- base -> 119 I
-    { hlRank = 5, divergenceWins = 2, byne = 300, jadeshell = 50, pluton = 100 },             -- 119 I -> II
-    { hlRank = 5, divergenceWins = 4, pluton = 300, marks = 10000 },                          -- 119 II -> III (Gallimaufry omitted: absent on server)
+    { hlRank = 5, divergenceWins = 1, relicCurrency = 50 },                                  -- base -> 119 I
+    { hlRank = 5, divergenceWins = 2, relicCurrency = 100, pluton = 200 },                    -- 119 I -> II
+    { hlRank = 5, divergenceWins = 4, relicCurrency = 500, highTierAlt = 5, pluton = 500,
+        marks = 10000 },                                                                      -- 119 II -> III
 }
 -- Base provision (forge issues the base; retail NM drops are WIP).
-catalog.empyreanBase = { hlRank = 3, cruor = 2000 }
-catalog.mythicBase   = { hlRank = 3, standing = 1000 }
-catalog.relicBase    = { hlRank = 5, byne = 100 }
+catalog.empyreanBase = { hlRank = 5, cruor = 2000 }
+catalog.mythicBase   = { hlRank = 5, standing = 1000 }
+catalog.relicBase    = { hlRank = 5, relicCurrency = 50 }
 
 catalog.empyreanChains =
 {
-    { type = 'Hand-to-Hand', jobs = 'MNK/PUP', name = 'Verethragna', base = 19805, s1 = 20486, s2 = 20487, s3 = 20512, mat = 2927 },
+    { type = 'Hand-to-Hand', jobs = 'MNK/PUP', name = 'Verethragna', base = 19805, s1 = 20486, s2 = 20487, s3 = 20512, mat = 3288 },
     { type = 'Dagger', jobs = 'THF/BRD/DNC', name = 'Twashtar', base = 19806, s1 = 20563, s2 = 20564, s3 = 20587, mat = 3287 },
-    { type = 'Sword', jobs = 'RDM/PLD/BLU', name = 'Almace', base = 19807, s1 = 20653, s2 = 20654, s3 = 20689, mat = 3288 },
-    { type = 'Great Sword', jobs = 'PLD/DRK', name = 'Caladbolg', base = 19808, s1 = 20747, s2 = 20748, s3 = 21684, mat = 2962 },
-    { type = 'Axe', jobs = 'WAR/BST', name = 'Farsha', base = 19809, s1 = 20794, s2 = 20795, s3 = 21752, mat = 2963 },
-    { type = 'Great Axe', jobs = 'WAR', name = 'Ukonvasara', base = 19810, s1 = 20839, s2 = 20840, s3 = 21758, mat = 2928 },
-    { type = 'Scythe', jobs = 'DRK', name = 'Redemption', base = 19811, s1 = 20884, s2 = 20885, s3 = 21810, mat = 3499 },
-    { type = 'Polearm', jobs = 'DRG', name = 'Rhongomiant', base = 19812, s1 = 20929, s2 = 20930, s3 = 21859, mat = 3498 },
-    { type = 'Katana', jobs = 'NIN', name = 'Kannagi', base = 19813, s1 = 20974, s2 = 20975, s3 = 21908, mat = 3499 },
-    { type = 'Great Katana', jobs = 'SAM', name = 'Masamune', base = 19814, s1 = 21019, s2 = 21020, s3 = 21956, mat = 3498 },
-    { type = 'Club', jobs = 'WHM', name = 'Gambanteinn', base = 19815, s1 = 21064, s2 = 21065, s3 = 21079, mat = 2928 },
-    { type = 'Staff', jobs = 'BLM/SMN/SCH', name = 'Hvergelmir', base = 19816, s1 = 21143, s2 = 21144, s3 = 22064, mat = 3499 },
-    { type = 'Archery', jobs = 'RNG', name = 'Gandiva', base = 19817, s1 = 21213, s2 = 22116, s3 = 22130, mat = 2963 },
-    { type = 'Marksmanship', jobs = 'COR/RNG', name = 'Armageddon', base = 19818, s1 = 21265, s2 = 21269, s3 = 22142, mat = 3287 },
+    { type = 'Sword', jobs = 'RDM/PLD/BLU', name = 'Almace', base = 19807, s1 = 20653, s2 = 20654, s3 = 20689, mat = 3289 },
+    { type = 'Great Sword', jobs = 'PLD/DRK', name = 'Caladbolg', base = 19808, s1 = 20747, s2 = 20748, s3 = 21684, mat = 3290 },
+    { type = 'Axe', jobs = 'WAR/BST', name = 'Farsha', base = 19809, s1 = 20794, s2 = 20795, s3 = 21752, mat = 3291 },
+    { type = 'Great Axe', jobs = 'WAR', name = 'Ukonvasara', base = 19810, s1 = 20839, s2 = 20840, s3 = 21758, mat = 3287 },
+    { type = 'Scythe', jobs = 'DRK', name = 'Redemption', base = 19811, s1 = 20884, s2 = 20885, s3 = 21810, mat = 3288 },
+    { type = 'Polearm', jobs = 'DRG', name = 'Rhongomiant', base = 19812, s1 = 20929, s2 = 20930, s3 = 21859, mat = 3288 },
+    { type = 'Katana', jobs = 'NIN', name = 'Kannagi', base = 19813, s1 = 20974, s2 = 20975, s3 = 21908, mat = 3289 },
+    { type = 'Great Katana', jobs = 'SAM', name = 'Masamune', base = 19814, s1 = 21019, s2 = 21020, s3 = 21956, mat = 3290 },
+    { type = 'Club', jobs = 'WHM', name = 'Gambanteinn', base = 19815, s1 = 21064, s2 = 21065, s3 = 21079, mat = 3291 },
+    { type = 'Staff', jobs = 'BLM/SMN/SCH', name = 'Hvergelmir', base = 19816, s1 = 21143, s2 = 21144, s3 = 22064, mat = 3292 },
+    { type = 'Archery', jobs = 'RNG', name = 'Gandiva', base = 19817, s1 = 21213, s2 = 22116, s3 = 22130, mat = 3291 },
+    { type = 'Marksmanship', jobs = 'COR/RNG', name = 'Armageddon', base = 19818, s1 = 21265, s2 = 21269, s3 = 22142, mat = 3290 },
 }
 
 catalog.mythicChains =
@@ -396,6 +389,24 @@ catalog.relicChains =
     { type = 'Archery', jobs = 'RNG/SAM', name = 'Yoichinoyumi', base = 19759, s1 = 21211, s2 = 22115, s3 = 22129 },
     { type = 'Marksmanship', jobs = 'RNG', name = 'Annihilator', base = 19758, s1 = 21261, s2 = 21267, s3 = 22140 },
 }
+
+-- The repeat Relic Forge owns the canonical retail currency-family mapping.
+-- Match by final 119 III item id so both forge paths always quote and consume
+-- the same low-tier and 100:1 high-tier Dynamis currencies.
+local relicCurrencyById = {}
+for _, relic in ipairs(require('modules/custom/lua/relic_forge_catalog').weapons) do
+    relicCurrencyById[relic.id] = relic
+end
+
+for _, chain in ipairs(catalog.relicChains) do
+    local relic = relicCurrencyById[chain.s3]
+    if relic then
+        chain.currency         = relic.currency
+        chain.currencyName     = relic.currencyName
+        chain.highCurrency     = relic.highCurrency
+        chain.highCurrencyName = relic.highCurrencyName
+    end
+end
 
 
 -- ===================================================================

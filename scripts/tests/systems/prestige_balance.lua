@@ -75,7 +75,7 @@ describe('Job Rebirth R1-R50 reward curve', function()
     it('keeps mapped stats incomplete at R36 and completes them at R50', function()
         local mappedCost = 0
         for _, category in ipairs(catalog.categories) do
-            mappedCost = mappedCost + category.cap * category.apCost
+            mappedCost = mappedCost + (category.totalCost or category.cap * category.apCost)
         end
 
         assert(mappedCost == 2495)
@@ -85,6 +85,31 @@ describe('Job Rebirth R1-R50 reward curve', function()
         assert(earnedThrough(50) == 2497)
         assert(earnedThrough(50) >= mappedCost)
         assert(rebirth.maxRebirths == 50)
+    end)
+
+    it('reduces high-impact caps without shortening the point grind', function()
+        local expected =
+        {
+            QA    = { cap = 20, totalCost = 100 },
+            CTR   = { cap = 20, totalCost = 100 },
+            SBL   = { cap = 20, totalCost = 50 },
+            HASTE = { cap = 10, totalCost = 45 },
+            INTP  = { cap = 20, totalCost = 100 },
+            TH    = { cap = 5,  totalCost = 100 },
+            SKILL = { cap = 20, totalCost = 50 },
+        }
+
+        local preservedCost = 0
+        for _, category in ipairs(catalog.categories) do
+            local target = expected[category.id]
+            if target then
+                assert(category.cap == target.cap)
+                assert(category.totalCost == target.totalCost)
+                preservedCost = preservedCost + category.totalCost
+            end
+        end
+
+        assert(preservedCost == 545)
     end)
 
     it('retunes rewards without weakening the established EXP penalty curve', function()

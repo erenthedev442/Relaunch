@@ -12,12 +12,12 @@
 --   raise your Adventuring Fellow to Lv 100  -> 3 trusts (Fellow_Level)
 --   conquer every Unity Wanted NM (all tiers)-> 4 trusts (Unity_NMs_Conquered,
 --                                                all 56 board NMs, dedup per NM)
---   clear a tier-5 Voidwatch rift            -> 5 trusts (Voidwatch_Tier)
+--   clear at least 3 Voidwatch strata        -> 5 trusts (stratum charVars)
 --
 -- Theme: your allies earn your allies -- hunt with the Concord, close the
 -- rifts, max your companion, and the full trust party follows.
 -- The ladder is CONSECUTIVE (like the augment gates): a capped Fellow without
--- the Voidwatch tier still fields 3.
+-- the Voidwatch breadth gate still fields 3.
 --
 -- HOW: a pre-check in front of retail xi.trust.canCast (scripts/globals/
 -- trust.lua). If the caster's party already fields their cap, block with the
@@ -46,6 +46,7 @@ local m = Module:new('trust_progression_cap')
 -- Total Unity Wanted NMs, derived from the catalog so the "conquer all" gate
 -- auto-tracks roster changes. (Swap `.nms` for a tier-1 filter to soften the gate.)
 local UNITY_TOTAL = #require('modules/custom/lua/unity_wanted_catalog').nms
+local VOIDWATCH_STRATA = require('modules/custom/lua/voidwatch_catalog').STRATA
 
 local BASE_CAP = 2
 
@@ -78,8 +79,17 @@ local TRUST_GATES =
       end },
     { cap = 4, unlock = 'conquer every Unity Wanted NM (all tiers)',
       check = function(p) return (p:getCharVar('Unity_NMs_Conquered') or 0) >= UNITY_TOTAL end },
-    { cap = 5, unlock = 'clear a tier-5 Voidwatch rift',
-      check = function(p) return (p:getCharVar('Voidwatch_Tier') or 0) >= 5 end },
+    { cap = 5, unlock = 'clear at least 3 different Voidwatch strata',
+      check = function(p)
+          if (p:getCharVar('Voidwatch_Tier') or 0) < 5 then return false end
+          local cleared = 0
+          for _, stratum in ipairs(VOIDWATCH_STRATA) do
+              if (p:getCharVar('Voidwatch_Strat_' .. stratum.key) or 0) >= 1 then
+                  cleared = cleared + 1
+              end
+          end
+          return cleared >= 3
+      end },
 }
 
 local function trustCap(player)

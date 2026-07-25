@@ -1,6 +1,7 @@
 local forge = require('modules/custom/lua/relic_forge_catalog')
 local rema  = require('modules/custom/lua/rema_ws_tier_catalog')
 local prime = require('modules/custom/lua/prime_ws_tuning_catalog')
+local weaponForge = require('modules/custom/lua/weapon_forge_catalog')
 
 describe('Relic Forge identifier alignment', function()
     it('forges the fourteen exact Relic 119 III damage items', function()
@@ -25,6 +26,8 @@ describe('Relic Forge identifier alignment', function()
         for _, forged in ipairs(forge.weapons) do
             assert(not primeIds[forged.id], string.format(
                 '%s still collides with a Prime item ID %d', forged.name, forged.id))
+            assert(forged.currency ~= 1449, string.format(
+                '%s still uses Tukuku Whiteshell', forged.name))
         end
     end)
 
@@ -33,5 +36,23 @@ describe('Relic Forge identifier alignment', function()
         assert(forge.weapons[16].name == 'Gjallarhorn')
         assert(rema.BY_ITEM_ID[forge.weapons[15].id] == nil)
         assert(rema.BY_ITEM_ID[forge.weapons[16].id] == nil)
+    end)
+
+    it('shares currency families with the main Weapon Forge', function()
+        local byId = {}
+        for _, relic in ipairs(forge.weapons) do
+            byId[relic.id] = relic
+        end
+
+        for _, chain in ipairs(weaponForge.relicChains) do
+            local relic = byId[chain.s3]
+            assert(relic ~= nil)
+            assert(chain.currency == relic.currency)
+            assert(chain.highCurrency == relic.highCurrency)
+        end
+
+        assert(forge.repeatCurrencyCost == 750)
+        assert(forge.repeatPlutonCost == 500)
+        assert(forge.plutonId == 4059)
     end)
 end)

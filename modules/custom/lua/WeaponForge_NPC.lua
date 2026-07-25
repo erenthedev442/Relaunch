@@ -26,6 +26,7 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m       = Module:new('weapon_forge_npc')
 local catalog = require('modules/custom/lua/weapon_forge_catalog')
+local itemCurrency = require('modules/custom/lua/hl_seal_currency')
 
 local NPC_POS = { x = 568.500, y = -3.360, z = 535.400, rot = 64 }
 
@@ -130,8 +131,6 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -- Aeonic upgrade execution
     -- -------------------------------------------------------------------------
 
-    local RIFTBORN_BOULDER_ID = 4061
-
     local function doAeonicUpgrade(player, chain, fromStage)
         -- Owner spec 2026-07-13: new progression gates enforced BEFORE any
         -- inventory / currency / mark inspection so a locked player never
@@ -171,22 +170,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return false
         end
 
-        local haveRB = player:getItemCount(RIFTBORN_BOULDER_ID)
-        if haveRB < stepCost.riftbornBoulders then
+        local silt = player:getCurrency('escha_silt') or 0
+        if silt < stepCost.eschaSilt then
             player:printToPlayer(
-                string.format('[Weapon Forge] Need %dx Riftborn Boulder (you have %d).',
-                    stepCost.riftbornBoulders, haveRB), S)
+                string.format('[Weapon Forge] Need %d Escha Silt (you have %d).',
+                    stepCost.eschaSilt, silt), S)
             return false
-        end
-
-        if stepCost.eschaBeads then
-            local beads = player:getCurrency('escha_beads') or 0
-            if beads < stepCost.eschaBeads then
-                player:printToPlayer(
-                    string.format('[Weapon Forge] Need %d Escha Beads (you have %d).',
-                        stepCost.eschaBeads, beads), S)
-                return false
-            end
         end
 
         if stepCost.reforgeMarks then
@@ -216,10 +205,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         -- All checks passed — consume.
         player:delItem(fromItem.id, 1)
         player:delItem(ae.attestationId, stepCost.attestations)
-        player:delItem(RIFTBORN_BOULDER_ID, stepCost.riftbornBoulders)
-        if stepCost.eschaBeads then
-            player:delCurrency('escha_beads', stepCost.eschaBeads)
-        end
+        player:delCurrency('escha_silt', stepCost.eschaSilt)
         if stepCost.reforgeMarks then
             drainMarks(player, stepCost.reforgeMarks)
         end
@@ -416,9 +402,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 or ac.toStage3
         local parts = {
             string.format('%dx %s', sc.attestations, chain.aeonic.attestationName),
-            string.format('%dx Riftborn Boulder', sc.riftbornBoulders),
+            string.format('%d Escha Silt', sc.eschaSilt),
         }
-        if sc.eschaBeads   then parts[#parts+1] = string.format('%d Escha Beads', sc.eschaBeads) end
         if sc.reforgeMarks then parts[#parts+1] = string.format('%d Reforge Marks', sc.reforgeMarks) end
         if sc.hlRank       then parts[#parts+1] = string.format('HL Rank %d', sc.hlRank) end
         return table.concat(parts, '  |  ')
@@ -573,7 +558,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             if id and qty and qty > 0 then
                 list[#list + 1] = {
                     have = function(p) return p:getItemCount(id) end,
-                    take = function(p) p:delItem(id, qty) end, qty = qty, name = name }
+                    take = function(p) return itemCurrency.take(p, id, qty) end,
+                    qty = qty,
+                    name = name,
+                }
             end
         end
         local function cur(c, qty, name)
@@ -585,6 +573,37 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end
         cur('cruor',             step.cruor,       'Cruor')
         cur('imperial_standing', step.standing,    'Imperial Standing')
+        if step.relicCurrency and chain.currency then
+            if step.highTierAlt and chain.highCurrency then
+                local lowQty  = step.relicCurrency
+                local highQty = step.highTierAlt
+                list[#list + 1] =
+                {
+                    have = function(p) return p:getItemCount(chain.currency) end,
+                    meets = function(p)
+                        return p:getItemCount(chain.currency) >= lowQty
+                            or p:getItemCount(chain.highCurrency) >= highQty
+                    end,
+                    take = function(p)
+                        if p:getItemCount(chain.highCurrency) >= highQty then
+                            return itemCurrency.take(p, chain.highCurrency, highQty)
+                        end
+
+                        return itemCurrency.take(p, chain.currency, lowQty)
+                    end,
+                    qty = lowQty,
+                    name = chain.currencyName,
+                    display = string.format(
+                        '%dx %s or %dx %s',
+                        lowQty,
+                        chain.currencyName,
+                        highQty,
+                        chain.highCurrencyName),
+                }
+            else
+                item(chain.currency, step.relicCurrency, chain.currencyName)
+            end
+        end
         item(FM.beastcoin,       step.beastcoin,   'Ancient Beastcoin')
         item(FM.riftbornBoulder, step.boulder,     'Riftborn Boulder')
         item(FM.byneBill,        step.byne,        'Byne Bill')
@@ -668,8 +687,14 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end
         local reqs, marks = stepReqs(chain, step)
         for _, req in ipairs(reqs) do
-            if req.have(player) < req.qty then
-                player:printToPlayer(string.format('[Weapon Forge] Need %dx %s (you have %d).', req.qty, req.name, req.have(player)), S)
+            local meets = req.meets and req.meets(player) or req.have(player) >= req.qty
+            if not meets then
+                local need = req.display or string.format('%dx %s', req.qty, req.name)
+                player:printToPlayer(string.format(
+                    '[Weapon Forge] Need %s (you have %d %s).',
+                    need,
+                    req.have(player),
+                    req.name), S)
                 return
             end
         end
@@ -720,7 +745,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                             or def.costs[k]
         local reqs, marks = stepReqs(chain, step)
         local parts       = { string.format('HL Rank %d', step.hlRank or 1) }
-        for _, req in ipairs(reqs) do parts[#parts + 1] = string.format('%dx %s', req.qty, req.name) end
+        for _, req in ipairs(reqs) do
+            parts[#parts + 1] = req.display or string.format('%dx %s', req.qty, req.name)
+        end
         if marks then parts[#parts + 1] = string.format('%d Reforge Marks', marks) end
         local what = (k == 0) and 'Obtain base'
                      or (chain.singleStep and '-> 119 III (combined mythic cost)')

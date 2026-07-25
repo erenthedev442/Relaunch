@@ -2,10 +2,9 @@
 -- Temprix_NPC.lua
 --
 -- Temprix is the gate-keeper for the Aeonic weapon path in Reisenjima.
--- She sells "Malformed" base weapons in exchange for Escha Beads (charVar).
+-- She sells "Malformed" base weapons in exchange for Escha Beads.
 -- Players then forge their Malformed weapon into a full Aeonic 119III at
--- the Weapon Forger (see WeaponForge_NPC.lua) once they have enough Attestations and
--- Riftborn Boulders.
+-- the Weapon Forger (see WeaponForge_NPC.lua) with Attestations and Escha Silt.
 --
 -- POSITION: adjust x/y/z to match Reisenjima zone geometry on first test.
 --
@@ -28,6 +27,7 @@ local S = xi.msg.channel.SYSTEM_3
 -- bead pouch award the same currency.
 local BEADS_KEY = 'escha_beads'
 local COST      = 50000   -- Escha Beads per Malformed weapon
+local REQUIRED_HL_RANK = 5
 local NPC_POS   = { x = 165.000, y = -18.000, z = 335.000, rot = 64 }
 -- TODO: position above is approximate; adjust in-game if off.
 
@@ -83,6 +83,14 @@ showPage = function(player, page)
         options[#options + 1] = {
             wCapture.name,
             function(pp)
+                local hl = math.max(1, pp:getCharVar('HL_Tier'))
+                if hl < REQUIRED_HL_RANK then
+                    pp:printToPlayer(string.format(
+                        '[Temprix] Hunting League Rank %d is required. You are Rank %d.',
+                        REQUIRED_HL_RANK, hl), S)
+                    pp:timer(30, function(p2) showPage(p2, pageCapture) end)
+                    return
+                end
                 local b = pp:getCurrency(BEADS_KEY)
                 if b < COST then
                     pp:printToPlayer(string.format(
@@ -156,6 +164,13 @@ m:addOverride('xi.zones.Reisenjima.Zone.onInitialize', function(zone)
                     player:addCurrency(BEADS_KEY, old)
                     player:setCharVar(var, 0)
                 end
+            end
+            local hl = math.max(1, player:getCharVar('HL_Tier'))
+            if hl < REQUIRED_HL_RANK then
+                player:printToPlayer(string.format(
+                    '[Temprix] Hunting League Rank %d is required to obtain a Malformed weapon. You are Rank %d.',
+                    REQUIRED_HL_RANK, hl), S)
+                return
             end
             local beads = player:getCurrency(BEADS_KEY)
             if beads < COST then

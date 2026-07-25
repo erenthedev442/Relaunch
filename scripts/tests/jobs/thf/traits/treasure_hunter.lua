@@ -47,6 +47,16 @@ describe('Treasure Hunter', function()
         player.assert:hasModifier(xi.mod.TREASURE_HUNTER, 4)
     end)
 
+    it('hard-caps player and applied mob Treasure Hunter at 14', function()
+        player:addMod(xi.mod.TREASURE_HUNTER, 100)
+        player.assert:hasModifier(xi.mod.TREASURE_HUNTER, 14)
+
+        local mob = player.entities:get(17489925)
+        assert(mob)
+        mob:setTHlevel(100)
+        assert(mob:getTHlevel() == 14)
+    end)
+
     it('increases drop rates #long', function()
         player:addItem(xi.item.THIEFS_KNIFE)
         player:equipItem(xi.item.THIEFS_KNIFE, nil, xi.slot.MAIN)

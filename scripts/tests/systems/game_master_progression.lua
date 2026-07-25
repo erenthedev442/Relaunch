@@ -12,20 +12,32 @@ end
 
 describe('Wave Master progression', function()
     it('keeps the linear ladder paced and mechanically distinct', function()
-        local linear = { 'Easy', 'Normal', 'Hard', 'Insane', 'Nightmare', 'Apocalypse', 'Oblivion', 'Ragnarok' }
+        local linear = { 'Easy', 'Normal', 'Hard', 'Insane', 'Nightmare', 'Apocalypse', 'Oblivion', 'Ragnarok', 'Terror' }
+        local expectedWaves = { 3, 5, 7, 8, 10, 12, 14, 16, 18 }
         local previousLevel, previousHp = 0, 0
 
-        for _, name in ipairs(linear) do
+        for index, name in ipairs(linear) do
             local difficulty = catalog.difficulties[name]
             assert(difficulty ~= nil)
             assert(difficulty.minLevel >= previousLevel)
+            assert(difficulty.maxLevel <= 150)
             assert(difficulty.hpBoost > previousHp)
-            assert((difficulty.spawnStagger or 0) <= 3)
+            assert(difficulty.wavesTotal == expectedWaves[index])
+            assert(difficulty.mobsPerWave == 1)
+            assert((difficulty.spawnStagger or 0) == 0)
             assert(difficulty.mechanics ~= nil)
             assert(#difficulty.mobs > 0)
             previousLevel = difficulty.minLevel
             previousHp = difficulty.hpBoost
         end
+
+        local terror = catalog.difficulties.Terror
+        local ragnarok = catalog.difficulties.Ragnarok
+        assert(terror.hpBoost > ragnarok.hpBoost)
+        assert(terror.mods[xi.mod.ATT] > ragnarok.mods[xi.mod.ATT])
+        assert(terror.mods[xi.mod.ACC] > ragnarok.mods[xi.mod.ACC])
+        assert(terror.completionBonus > ragnarok.completionBonus)
+        assert(terror.markBonus > ragnarok.markBonus)
     end)
 
     it('keeps the append-only difficulty bits stable', function()

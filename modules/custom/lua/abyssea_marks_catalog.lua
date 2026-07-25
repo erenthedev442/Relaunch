@@ -469,6 +469,7 @@ add('Lesser Arimaspi', 1, signature('Lesser Lens', 'turn', 'its eye clouds over;
 
 -- Tahrongi (T1)
 add('Hungerer', 1, signature('Devouring Maw', 'near', 'the maw inhales; close inside 6 yalms to dodge the pull!', 'You slip beneath the intake.', 'The maw drags you in.', { distance = 6, effect = e(142) }))
+add('Myrmecoleon', 1, signature('Gravitic Horn', 'move', 'gravity fixes your position; move at least 8 yalms!', 'The horn tears through empty ground.', 'The gravitic charge catches you.', { distance = 8, effect = xi.effect.WEIGHT, punishSkill = 2516 }))
 
 -- La Theine (T1)
 add('Brooder', 1, signature('Hatching Swarm', 'burst', 'the brood stirs; deal 3% of its HP before it hatches!', 'The clutch dies unhatched.', 'The swarm erupts across you.', { damagePct = 3, effect = e(143) }))
@@ -511,11 +512,11 @@ end
 -- Fail module load loudly if a roster edit accidentally drops a logical NM.
 -- The original planning audit reported 135 (45/48/42), but the live QM files
 -- contain a seventeenth Attohwa NM, Pallid Percy: 136 (45/49/42).
--- 2026-07-19 HP audit added the 16 uncatalogued marks-zone NMs (7/8/1):
--- 152 (52/57/43).
-assert(C.count(1) == 52, string.format('Visions encounter count drifted: %d', C.count(1)))
+-- 2026-07-19 HP audit added 16 uncatalogued marks-zone NMs (7/8/1).
+-- Myrmecoleon's missing Tahrongi spawn was restored afterward: 153 (53/57/43).
+assert(C.count(1) == 53, string.format('Visions encounter count drifted: %d', C.count(1)))
 assert(C.count(2) == 57, string.format('Scars encounter count drifted: %d', C.count(2)))
 assert(C.count(3) == 43, string.format('Heroes encounter count drifted: %d', C.count(3)))
-assert(C.count() == 152, string.format('Abyssea encounter count drifted: %d', C.count()))
+assert(C.count() == 153, string.format('Abyssea encounter count drifted: %d', C.count()))
 
 return C

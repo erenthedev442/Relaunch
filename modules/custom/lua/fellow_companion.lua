@@ -239,6 +239,7 @@ local CONFIG =
         hunter    =
         {
             name = 'Hunter', blurb = 'Ranger: high accuracy and evasion; survives by dodging, not soaking.', defaultWs = xi.mobSkill.EAGLE_EYE_SHOT_HUMANOID,
+            behavior = 'ranged',
             mods     = {
                 { xi.mod.AGI, 100 }, { xi.mod.ACC, 200 }, { xi.mod.RACC, 500 },
                 { xi.mod.RATT, 300 }, { xi.mod.EVA, 100 },
@@ -353,16 +354,16 @@ local CONFIG =
     -- as mob_pools.modelid. Select "(None)" to revert to the Appearance model.
     outfits =
     {
-        { name = 'Thief',       modelId = 3128 },  -- Lion (trust era)
-        { name = 'Monk',        modelId = 3129 },  -- Prishe (trust era)
-        { name = 'Red Mage',    modelId = 3131 },  -- Lilisette (trust era)
-        { name = 'Ranger',      modelId = 3133 },  -- Aldo (trust era)
-        { name = 'Dark Knight', modelId = 3135 },  -- Zeid (trust era)
-        { name = 'Warrior',     modelId = 3136 },  -- Volker (trust era)
-        { name = 'Paladin',     modelId = 3137 },  -- Trion (trust era)
-        { name = 'Black Mage',  modelId = 3139 },  -- Shantotto (trust era)
-        { name = 'Scholar',     modelId = 3140 },  -- Ajido-Marujido (trust era)
-        { name = 'Bard',        modelId = 3147 },  -- Ulmia (trust era)
+        { name = 'Thief',       modelId = 3011 },  -- Lion (trust era)
+        { name = 'Monk',        modelId = 3017 },  -- Prishe (trust era)
+        { name = 'Red Mage',    modelId = 3049 },  -- Lilisette (trust era)
+        { name = 'Ranger',      modelId = 3034 },  -- Aldo (trust era)
+        { name = 'Dark Knight', modelId = 3010 },  -- Zeid (trust era)
+        { name = 'Warrior',     modelId = 3007 },  -- Volker (trust era)
+        { name = 'Paladin',     modelId = 3009 },  -- Trion (trust era)
+        { name = 'Black Mage',  modelId = 3000 },  -- Shantotto (trust era)
+        { name = 'Scholar',     modelId = 3008 },  -- Ajido-Marujido (trust era)
+        { name = 'Bard',        modelId = 3018 },  -- Ulmia (trust era)
     },
 
     autoReadyTP         = 1000,
@@ -671,10 +672,17 @@ local function applyFellow(p, pet)
         pet:addMod(xi.mod.STORETP, 86)
         pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
     elseif roleKey == 'bulwark' then
+        -- Fellows suppress Naji's inherited Provoke at raw spawn. Add it back
+        -- only for the dedicated tank role; otherwise NOT_HAS_TOP_ENMITY keeps
+        -- non-tanks queueing Provoke and starves their spells/TP moves.
+        pet:addGambit(
+            ai.t.SELF,
+            { ai.c.NOT_HAS_TOP_ENMITY, 0 },
+            { ai.r.JA, ai.s.SPECIFIC, xi.ja.PROVOKE })
+
         -- Use the same sustained-enmity system as the server's real trust tanks.
-        -- Naji's native Provoke remains available, while this profile supplies
-        -- the CE/VE pressure and retargeting needed to hold against players and
-        -- other trusts instead of merely flashing Provoke.
+        -- This profile supplies the CE/VE pressure and retargeting needed to
+        -- hold against players and other trusts instead of merely flashing Provoke.
         xi.trust.enableTankEnmity(pet,
         {
             profile = 'strong',
@@ -702,6 +710,19 @@ local function applyFellow(p, pet)
             end
         end)
     end
+
+    -- Forced role moves are queued asynchronously. Only consume TP and start
+    -- cooldown after the move actually fires; a busy/out-of-range queue attempt
+    -- must not silently eat TP and leave the Fellow idle.
+    pet:addListener('WEAPONSKILL_USE', 'FELLOW_ROLE_MOVE_COMPLETE', function(actor)
+        actor:setTP(0)
+        actor:setLocalVar('fellowMovePendingAt', 0)
+        if getRole(p) == 'magus' then
+            actor:setLocalVar('fellowNukeAt', os.time())
+        else
+            actor:setLocalVar('fellowWsAt', os.time())
+        end
+    end)
 
     -- Live display name (arbitrary string; silent=true to avoid console spam).
     local nm = chosenName(p)
@@ -745,7 +766,7 @@ scheduleCombatLoop = function(master, pet)
             local function hasBeh(name) return beh == name or (behs and behs[name]) end
             local lvl  = getLevel(master)
             local now  = os.time()
-            local active = master:isEngaged()
+            local active = master:isEngaged() or p:isEngaged()
                 or now - (master:getLocalVar('fellowActivityAt') or 0) <= CONFIG.activityWindowSec
 
             -- Remaining engaged is itself combat activity. Hunter uses ranged
@@ -865,18 +886,22 @@ scheduleCombatLoop = function(master, pet)
             end
             forceClaim(mtgt)
             if ptgt and ptgt ~= mtgt then forceClaim(ptgt) end
-            if master:isEngaged() then
-                local tgt = mtgt
+            local combatTarget = ptgt or mtgt
+            if p:isEngaged() and combatTarget and not combatTarget:isDead() then
+                local tgt = combatTarget
+                local pendingAt = p:getLocalVar('fellowMovePendingAt') or 0
+                local movePending = pendingAt > 0 and now - pendingAt < 4
                 -- Magus uses a visible magical mob skill on its own cadence rather
                 -- than invisible takeDamage. This exercises the normal action,
                 -- resistance, message and magic-burst systems.
                 if hasBeh('nuke') and p:isEngaged() and tgt and not tgt:isDead()
+                   and not movePending
+                   and p:canUseAbilities()
                    and now - (p:getLocalVar('fellowNukeAt') or 0) >= CONFIG.nukeCooldownSec then
                     local spellMove = chosenWs(master)
                     if spellMove and spellMove > 0 then
+                        p:setLocalVar('fellowMovePendingAt', now)
                         p:useMobAbility(spellMove, tgt)
-                        p:setLocalVar('fellowNukeAt', now)
-                        p:setTP(0)
                     end
                 end
 
@@ -885,6 +910,8 @@ scheduleCombatLoop = function(master, pet)
                 -- a BST/pet order). We just force its signature role TP move when
                 -- it's engaged with capped TP.
                 if not hasBeh('nuke') and p:isEngaged() and p:getTP() >= CONFIG.autoReadyTP
+                   and not movePending
+                   and p:canUseAbilities()
                    and now - (p:getLocalVar('fellowWsAt') or 0) >= CONFIG.wsCooldownSec then
                     local ws = chosenWs(master)
                     if ws and ws > 0 and tgt and not tgt:isDead() then
@@ -905,9 +932,8 @@ scheduleCombatLoop = function(master, pet)
                                 end
                             end)
                         end
-                        p:useMobAbility(ws, tgt)  -- the player's chosen role TP move
-                        p:setTP(0)                -- forced skills don't consume TP; reset for a cap-and-build cadence
-                        p:setLocalVar('fellowWsAt', now)
+                        p:setLocalVar('fellowMovePendingAt', now)
+                        p:useMobAbility(ws, tgt)  -- completion listener consumes TP and starts cooldown
                     end
                 end
                 -- NOTE (fix): Magus/Hunter formerly added silent per-tick damage via
@@ -1017,8 +1043,16 @@ local function keeper(p, name, gen)
         local ready = os.time() - getN(p, V.summonedAt) >= CONFIG.summonCooldownSec
         if pending or ready then
             pcall(function()
-                local trust = p:spawnTrust(CONFIG.baseTrustId)
-                if trust then
+                -- Naji normally installs a NOT_HAS_TOP_ENMITY Provoke gambit in
+                -- onMobSpawn. Mark only this synchronous raw spawn so the base
+                -- script leaves role behavior to applyFellow().
+                p:setLocalVar('fellowTrustSpawn', 1)
+                local spawned, trust = pcall(function()
+                    return p:spawnTrust(CONFIG.baseTrustId)
+                end)
+                p:setLocalVar('fellowTrustSpawn', 0)
+
+                if spawned and trust then
                     p:setLocalVar('fellowSummonPending', 0)
                     setN(p, V.summonedAt, os.time())
                     applyFellow(p, trust)

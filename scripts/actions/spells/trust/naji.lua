@@ -27,7 +27,13 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.AYAME] = xi.trust.messageOffset.TEAMWORK_1,
     })
 
-    mob:addGambit(ai.t.SELF, { ai.c.NOT_HAS_TOP_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.PROVOKE })
+    -- Adventuring Fellows use Naji only as a raw melee chassis. Their role
+    -- overlay decides whether Provoke is appropriate; ordinary Naji retains
+    -- his retail tanking gambit.
+    local master = mob:getMaster()
+    if not master or master:getLocalVar('fellowTrustSpawn') ~= 1 then
+        mob:addGambit(ai.t.SELF, { ai.c.NOT_HAS_TOP_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.PROVOKE })
+    end
 end
 
 spellObject.onMobDespawn = function(mob)

@@ -87,6 +87,61 @@ local function getCatLevel(p, id)    return p:getCharVar(catKey(curJob(p), id)) 
 local function getMarks(player)      return player:getCharVar(cfg.markVar) or 0 end
 local function getTier(player)       return player:getCharVar('HL_Tier')   or 1 end
 
+-- Some reduced-cap categories retain their original total point investment.
+-- The floor difference distributes that total exactly across the new levels
+-- (for example 50 points over 20 levels alternates costs of 2 and 3).
+local function categoryCost(cat, nextLevel)
+    if cat.totalCost then
+        return math.floor(cat.totalCost * nextLevel / cat.cap) -
+            math.floor(cat.totalCost * (nextLevel - 1) / cat.cap)
+    end
+
+    return cat.apCost or 1
+end
+
+local function categorySpent(cat, level)
+    if cat.totalCost then
+        return math.floor(cat.totalCost * level / cat.cap)
+    end
+
+    return level * (cat.apCost or 1)
+end
+
+-- Convert legacy allocations by points spent, preserving the old investment
+-- and refunding only a remainder that cannot buy the next reduced-cap level.
+local function migrateReducedCaps(player)
+    if (player:getCharVar('Prestige_StatCapsV3') or 0) == 1 then
+        return 0
+    end
+
+    local refunded = 0
+    for jobId = 1, 22 do
+        local jobRefund = 0
+        for _, cat in ipairs(cfg.categories) do
+            if cat.legacyCap and cat.legacyCost then
+                local oldLevel = math.min(player:getCharVar(catKey(jobId, cat.id)) or 0, cat.legacyCap)
+                local oldSpent = oldLevel * cat.legacyCost
+                local newLevel = 0
+
+                while newLevel < cat.cap and categorySpent(cat, newLevel + 1) <= oldSpent do
+                    newLevel = newLevel + 1
+                end
+
+                player:setCharVar(catKey(jobId, cat.id), newLevel)
+                jobRefund = jobRefund + oldSpent - categorySpent(cat, newLevel)
+            end
+        end
+
+        if jobRefund > 0 then
+            player:setCharVar(apKey(jobId), (player:getCharVar(apKey(jobId)) or 0) + jobRefund)
+            refunded = refunded + jobRefund
+        end
+    end
+
+    player:setCharVar('Prestige_StatCapsV3', 1)
+    return refunded
+end
+
 -- AP granted when ascending to `level` (the level AFTER the ascension).
 -- Walks cfg.apTiers in order (ascending minLevel) and returns the ap for
 -- the highest bracket the new level satisfies. Falls back to 10 if unconfigured.
@@ -291,7 +346,7 @@ end
 
 local function applyJobMods(player, jobId)
     for _, cat in ipairs(cfg.categories) do
-        local lv = player:getCharVar(catKey(jobId, cat.id)) or 0
+        local lv = math.min(player:getCharVar(catKey(jobId, cat.id)) or 0, cat.cap)
         if lv > 0 then
             _modAdd(player, cat, lv * cat.perLevel)
         end
@@ -304,7 +359,7 @@ end
 
 local function removeJobMods(player, jobId)
     for _, cat in ipairs(cfg.categories) do
-        local lv = player:getCharVar(catKey(jobId, cat.id)) or 0
+        local lv = math.min(player:getCharVar(catKey(jobId, cat.id)) or 0, cat.cap)
         if lv > 0 then
             _modDel(player, cat, lv * cat.perLevel)
         end
@@ -512,16 +567,17 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             return
         end
 
+        local cost = categoryCost(cat, lv + 1)
         local ap = getAP(player)
-        if ap < cat.apCost then
+        if ap < cost then
             player:printToPlayer(string.format(
                 '[Ascension] Not enough %s: need %d, have %d.',
-                cfg.apName, cat.apCost, ap), xi.msg.channel.SYSTEM_3)
+                cfg.apName, cost, ap), xi.msg.channel.SYSTEM_3)
             buildSpendMenu(player, page)
             return
         end
 
-        player:setCharVar(apKey(jobId), ap - cat.apCost)
+        player:setCharVar(apKey(jobId), ap - cost)
         player:setCharVar(catKey(jobId, cat.id), lv + 1)
 
         -- Only nudge the live mod map if this job's mods are the applied set
@@ -547,7 +603,7 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
 
         player:printToPlayer(string.format(
             '[Ascension] %s -> %d/%d (%s).  %s left: %d.',
-            cat.label, lv + 1, cat.cap, cat.note, cfg.apName, ap - cat.apCost),
+            cat.label, lv + 1, cat.cap, cat.note, cfg.apName, ap - cost),
             xi.msg.channel.SYSTEM_3)
 
         buildSpendMenu(player, page)
@@ -571,7 +627,8 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
         for i = startIdx, endIdx do
             local cat = cfg.categories[i]
             local lv  = getCatLevel(player, cat.id)
-            local costTag = (cat.apCost or 1) > 1 and string.format(' [%dAP]', cat.apCost or 1) or ''
+            local cost = lv < cat.cap and categoryCost(cat, lv + 1) or 0
+            local costTag = cost > 1 and string.format(' [%dAP]', cost) or ''
             local menuLabel = cat.label .. costTag
             -- e.g. "STR 3/15 1A"  (kept short for the 150-byte menu cap)
             local label = string.format('%s %d/%d',
@@ -1141,8 +1198,14 @@ end)
 -- and applied a second time, doubling every purchased Ascension modifier.
 -----------------------------------
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
+    local refunded = migrateReducedCaps(player)
     player:setLocalVar('PrestigeApplyPending', 1)
     super(player, firstLogin, zoning)
+    if refunded > 0 then
+        player:printToPlayer(string.format(
+            '[Ascension] Reduced stat caps applied; %d unspent AP refunded across your jobs.',
+            refunded), xi.msg.channel.SYSTEM_3)
+    end
     player:timer(3000, function(p)
         p:setLocalVar('PrestigeApplyPending', 0)
         p:setLocalVar('PrestigeModJob', 0)

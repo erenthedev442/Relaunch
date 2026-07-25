@@ -973,6 +973,21 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
         }
     }
 
+    // Encounter scripts may impose a stricter ceiling while a mob TP move is
+    // executing. The active marker is scoped around OnMobWeaponSkill below, so
+    // melee swings and spells from the same mob are unaffected. This remains
+    // authoritative even when a stock instant-death move bypasses the global
+    // cap: Geas Fete explicitly forbids those solo fail points.
+    if (amount > 0 && attacker != nullptr)
+    {
+        const auto mobSkillDamageCap =
+            static_cast<int32>(attacker->GetLocalVar("GeasFeteMobSkillDamageCapActive"));
+        if (mobSkillDamageCap > 0)
+        {
+            amount = std::min(amount, mobSkillDamageCap);
+        }
+    }
+
     if (attacker)
     {
         lastAttackerId_.id     = attacker->id;
@@ -2078,7 +2093,9 @@ int16 CBattleEntity::getMod(Mod modID)
             case Mod::BARRAGE_COUNT:
                 return capGear(320);
             case Mod::TREASURE_HUNTER:
-                return capGear(15);
+                // Server-wide hard cap: gear, augments, traits, effects, and
+                // progression systems may contribute, but the total cannot exceed TH14.
+                return std::min<int16>(value, 14);
             case Mod::PHANTOM_ROLL:
                 return capGear(150);
             case Mod::REGEN:
@@ -3009,6 +3026,15 @@ void CBattleEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
     // Lambda to process a target
     auto processTarget = [&](CBattleEntity* PTargetFound)
     {
+        const auto configuredMobSkillDamageCap =
+            static_cast<int32>(GetLocalVar("GeasFeteMobSkillDamageCap"));
+        const int32 targetHpBeforeSkill = PTargetFound->health.hp;
+        const int32 sourceHpBeforeSkill = health.hp;
+        if (configuredMobSkillDamageCap > 0)
+        {
+            SetLocalVar("GeasFeteMobSkillDamageCapActive", configuredMobSkillDamageCap);
+        }
+
         action_target_t& target = action.addTarget(PTargetFound->id);
         action_result_t& result = target.addResult();
 
@@ -3039,9 +3065,34 @@ void CBattleEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
             damage = luautils::OnMobWeaponSkill(this, PTargetFound, PSkill, &action);
         }
 
+        if (damage > 0 && configuredMobSkillDamageCap > 0)
+        {
+            damage = std::min(damage, configuredMobSkillDamageCap);
+        }
+
         // Call USE and TAKE listeners, no matter what.
         this->PAI->EventHandler.triggerListener("WEAPONSKILL_USE", this, PTargetFound, PSkill, state.GetSpentTP(), &action, damage);
         PTargetFound->PAI->EventHandler.triggerListener("WEAPONSKILL_TAKE", this, PTargetFound, PSkill, state.GetSpentTP(), &action);
+
+        // Enforce the ceiling across the whole TP move, not once per hit. This
+        // also catches stock scripted moves that bypass takeDamage() and write
+        // HP directly (including instant-death implementations).
+        if (configuredMobSkillDamageCap > 0)
+        {
+            const int32 minimumHpAfterSkill = std::max(0, targetHpBeforeSkill - configuredMobSkillDamageCap);
+            if (PTargetFound->health.hp < minimumHpAfterSkill)
+            {
+                PTargetFound->addHP(minimumHpAfterSkill - PTargetFound->health.hp);
+            }
+
+            // The same encounter contract disables drain/self-heal loops. A
+            // stock TP move may still animate and deal capped damage, but it
+            // cannot erase player progress by restoring the Geas NM's HP.
+            if (health.hp > sourceHpBeforeSkill)
+            {
+                addHP(sourceHpBeforeSkill - health.hp);
+            }
+        }
 
         if (msg == MsgBasic::None)
         {
@@ -3128,6 +3179,11 @@ void CBattleEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         else
         {
             battleutils::handleSecondaryTargetEnmity(this, PTargetFound);
+        }
+
+        if (configuredMobSkillDamageCap > 0)
+        {
+            SetLocalVar("GeasFeteMobSkillDamageCapActive", 0);
         }
     };
 

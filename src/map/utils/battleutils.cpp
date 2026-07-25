@@ -1246,13 +1246,13 @@ void HandleEnspell(CBattleEntity* PAttacker, CBattleEntity* PDefender, action_re
                 PChar->getMod(Mod::TREASURE_HUNTER) > 0) // any job with TH mod (augments, Paragon board, gear) can proc
             {
                 auto PMob = dynamic_cast<CMobEntity*>(PDefender);
-                if (PMob && PMob->m_THLvl < (99 + PChar->getMod(Mod::TREASURE_HUNTER_CAP))) // RELAUNCH: TH uncapped -- procs climb freely (99 sentinel); was 12/14
+                if (PMob && PMob->m_THLvl < 14)
                 {
-                    int16 playerTH = PChar->getMod(Mod::TREASURE_HUNTER);
+                    int16 playerTH = std::clamp<int16>(PChar->getMod(Mod::TREASURE_HUNTER), 0, 14);
 
                     int16 THdiff = PMob->m_THLvl - playerTH;
 
-                    // RELAUNCH: auto-upgrade TH to the player's FULL gear TH (uncapped; was 8/14)
+                    // Auto-upgrade to the player's full TH, bounded by the TH14 hard cap.
                     if (THdiff < 0)
                     {
                         PMob->m_THLvl = playerTH;

@@ -29,8 +29,61 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(catalog.costs.toStage3.gil == 750000000)
     end)
 
-    it('uses 3,000 boulders for the final Empyrean stage', function()
+    it('uses retail final-Abyssea materials and quantities for Empyreans', function()
+        local expected =
+        {
+            Verethragna = 3288, Twashtar = 3287, Almace = 3289,
+            Caladbolg = 3290, Farsha = 3291, Ukonvasara = 3287,
+            Redemption = 3288, Rhongomiant = 3288, Kannagi = 3289,
+            Masamune = 3290, Gambanteinn = 3291, Hvergelmir = 3292,
+            Gandiva = 3291, Armageddon = 3290,
+        }
+
+        assert(catalog.empyreanCosts[1].mat == 75)
         assert(catalog.empyreanCosts[3].boulder == 3000)
+        for _, chain in ipairs(catalog.empyreanChains) do
+            assert(chain.mat == expected[chain.name],
+                string.format('%s does not use its retail final-Abyssea material', chain.name))
+            assert(catalog.empyreanMatNames[chain.mat] ~= nil)
+            assert(chain.mat ~= 3498 and chain.mat ~= 3499)
+        end
+    end)
+
+    it('uses each Relic family currency for the 50/100/500 ladder', function()
+        local expected =
+        {
+            Spharai = { 1456, 1457 }, Mandau = { 1456, 1457 },
+            Bravura = { 1456, 1457 }, Kikoku = { 1456, 1457 },
+            Annihilator = { 1456, 1457 },
+            Guttler = { 1450, 1451 }, Apocalypse = { 1450, 1451 },
+            Gungnir = { 1450, 1451 }, Claustrum = { 1450, 1451 },
+            Excalibur = { 1453, 1454 }, Ragnarok = { 1453, 1454 },
+            Amanomurakumo = { 1453, 1454 }, Mjollnir = { 1453, 1454 },
+            Yoichinoyumi = { 1453, 1454 },
+        }
+
+        assert(catalog.relicBase.relicCurrency == 50)
+        assert(catalog.relicCosts[1].relicCurrency == 50)
+        assert(catalog.relicCosts[2].relicCurrency == 100)
+        assert(catalog.relicCosts[2].pluton == 200)
+        assert(catalog.relicCosts[3].relicCurrency == 500)
+        assert(catalog.relicCosts[3].highTierAlt == 5)
+        assert(catalog.relicCosts[3].pluton == 500)
+        assert(catalog.relicCosts[3].marks == 10000)
+        assert(catalog.relicBase.byne == nil)
+        for _, cost in ipairs(catalog.relicCosts) do
+            assert(cost.byne == nil)
+            assert(cost.silverpiece == nil)
+            assert(cost.jadeshell == nil)
+        end
+
+        for _, chain in ipairs(catalog.relicChains) do
+            local currencies = expected[chain.name]
+            assert(currencies ~= nil, string.format('Missing expected Relic currency for %s', chain.name))
+            assert(chain.currency == currencies[1])
+            assert(chain.highCurrency == currencies[2])
+            assert(chain.currency ~= 1449, string.format('%s still uses Tukuku Whiteshell', chain.name))
+        end
     end)
 
     it('requires a final Aeonic before entering the Prime path', function()

@@ -12,7 +12,7 @@
 -- Apex / Paragon / etc.). The Dynamis *gate* is the currency cost, not the NPC
 -- location.
 --
--- Currency is consumed through hl_seal_currency so the 750-unit cost can span
+-- Currency and Plutons are consumed through hl_seal_currency so costs can span
 -- stacks and containers safely.
 -----------------------------------
 require('modules/module_utils')
@@ -23,25 +23,27 @@ local currency = require('modules/custom/lua/hl_seal_currency')
 
 local NPC_POS = { x = 572.000, y = -3.360, z = 534.200, rot = 64 }
 
-local FORGE_COST = 750
-
 -- The 14 final damage Relics use their real 119 III item IDs.  The previous list
 -- reused the Stage-5 Prime IDs (21535 etc.) and merely relabeled them as Relics.
 -- That made a forged "Relic" indistinguishable from a Prime to every combat
 -- system, so it received Prime WS handling and could never receive the RELIC
 -- defense-ignore tuning in rema_ws_tier_catalog.lua.  Shield/instrument retain
 -- their highest real Relic IDs; neither participates in damage-WS tuning.
-local RELICS = require('modules/custom/lua/relic_forge_catalog').weapons
+local relicCatalog = require('modules/custom/lua/relic_forge_catalog')
+local RELICS = relicCatalog.weapons
+local FORGE_COST = relicCatalog.repeatCurrencyCost
+local PLUTON_COST = relicCatalog.repeatPlutonCost
+local PLUTON_ID   = relicCatalog.plutonId
 
 local function costStr(relic)
-    return string.format('%d %s', FORGE_COST, relic.currencyName)
+    return string.format('%d %s + %d Plutons', FORGE_COST, relic.currencyName, PLUTON_COST)
 end
 
-local function refundCurrency(player, relic)
-    local remaining = FORGE_COST
+local function refundItem(player, itemId, amount)
+    local remaining = amount
     while remaining > 0 do
         local quantity = math.min(remaining, 99)
-        if not player:addItem({ id = relic.currency, quantity = quantity }) then
+        if not player:addItem({ id = itemId, quantity = quantity }) then
             return false
         end
         remaining = remaining - quantity
@@ -89,15 +91,29 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 costStr(relic), player:getItemCount(relic.currency)), xi.msg.channel.SYSTEM_3)
             return
         end
+        if player:getItemCount(PLUTON_ID) < PLUTON_COST then
+            player:printToPlayer(string.format(
+                '[Relic Forge] Not enough Plutons -- need %d (you have %d). Kupo!',
+                PLUTON_COST, player:getItemCount(PLUTON_ID)), xi.msg.channel.SYSTEM_3)
+            return
+        end
         if not currency.take(player, relic.currency, FORGE_COST) then
             player:printToPlayer(
                 '[Relic Forge] I could not gather the full currency payment, so nothing was forged, kupo!',
                 xi.msg.channel.SYSTEM_3)
             return
         end
+        if not currency.take(player, PLUTON_ID, PLUTON_COST) then
+            refundItem(player, relic.currency, FORGE_COST)
+            player:printToPlayer(
+                '[Relic Forge] I could not gather the Pluton payment, so your Dynamis currency was returned, kupo!',
+                xi.msg.channel.SYSTEM_3)
+            return
+        end
         if not player:addItem({ id = relic.id, quantity = 1 }) then
-            refundCurrency(player, relic)
-            player:printToPlayer('[Relic Forge] The forging failed -- your currency has been returned, kupo!', xi.msg.channel.SYSTEM_3)
+            refundItem(player, relic.currency, FORGE_COST)
+            refundItem(player, PLUTON_ID, PLUTON_COST)
+            player:printToPlayer('[Relic Forge] The forging failed -- your currency and Plutons have been returned, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
         player:printToPlayer(string.format(
@@ -171,8 +187,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 return
             end
             player:printToPlayer(string.format(
-                '[Relic Forge] Repeat Relics cost %d of their retail final-stage Dynamis currency, kupo!',
-                FORGE_COST), xi.msg.channel.SYSTEM_3)
+                '[Relic Forge] Repeat Relics cost %d of their Dynamis currency plus %d Plutons, kupo!',
+                FORGE_COST, PLUTON_COST), xi.msg.channel.SYSTEM_3)
             showRelics(player, 1)
         end,
     })

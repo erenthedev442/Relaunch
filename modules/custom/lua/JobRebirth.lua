@@ -82,6 +82,23 @@ local function cumulativeRP(count)
     return total
 end
 
+local function categoryCost(cat, nextLevel)
+    if cat.totalCost then
+        return math.floor(cat.totalCost * nextLevel / cat.cap) -
+            math.floor(cat.totalCost * (nextLevel - 1) / cat.cap)
+    end
+
+    return cat.apCost or 1
+end
+
+local function categorySpent(cat, level)
+    if cat.totalCost then
+        return math.floor(cat.totalCost * level / cat.cap)
+    end
+
+    return level * (cat.apCost or 1)
+end
+
 -- Reward-curve v2 migration: the old accelerating curve granted enough RP to
 -- finish the entire stat map around R36. Reset allocations once and refund the
 -- correctly retuned lifetime total for each job so existing players can respec
@@ -107,6 +124,41 @@ local function migrateRewardCurveV2(player)
 
     player:setCharVar('Rebirth_RewardCurveV2', 1)
     return hadProgress
+end
+
+-- Preserve the RP invested under the former caps. Partial allocations are
+-- converted to the highest affordable new level and any remainder is refunded.
+local function migrateReducedCaps(player)
+    if (player:getCharVar('Rebirth_StatCapsV3') or 0) == 1 then
+        return 0
+    end
+
+    local refunded = 0
+    for jobId = 1, 22 do
+        local jobRefund = 0
+        for _, cat in ipairs(categories) do
+            if cat.legacyCap and cat.legacyCost then
+                local oldLevel = math.min(getCatLv(player, jobId, cat.id), cat.legacyCap)
+                local oldSpent = oldLevel * cat.legacyCost
+                local newLevel = 0
+
+                while newLevel < cat.cap and categorySpent(cat, newLevel + 1) <= oldSpent do
+                    newLevel = newLevel + 1
+                end
+
+                player:setCharVar(catKey(jobId, cat.id), newLevel)
+                jobRefund = jobRefund + oldSpent - categorySpent(cat, newLevel)
+            end
+        end
+
+        if jobRefund > 0 then
+            player:setCharVar(rpKey(jobId), getRP(player, jobId) + jobRefund)
+            refunded = refunded + jobRefund
+        end
+    end
+
+    player:setCharVar('Rebirth_StatCapsV3', 1)
+    return refunded
 end
 
 local function isMilestone(count)
@@ -174,7 +226,7 @@ end
 
 local function applyJobMods(player, jobId)
     for _, cat in ipairs(categories) do
-        local lv = getCatLv(player, jobId, cat.id)
+        local lv = math.min(getCatLv(player, jobId, cat.id), cat.cap)
         if lv > 0 then
             _modAdd(player, cat, lv * cat.perLevel)
         end
@@ -187,7 +239,7 @@ end
 
 local function removeJobMods(player, jobId)
     for _, cat in ipairs(categories) do
-        local lv = getCatLv(player, jobId, cat.id)
+        local lv = math.min(getCatLv(player, jobId, cat.id), cat.cap)
         if lv > 0 then
             _modDel(player, cat, lv * cat.perLevel)
         end
@@ -279,18 +331,19 @@ local function tryBuy(player, cat)
         player:printToPlayer(string.format('%s is already maxed (%d/%d), kupo.', cat.label, lv, cat.cap), S)
         return
     end
+    local cost = categoryCost(cat, lv + 1)
     local rp = getRP(player, job)
-    if rp < cat.apCost then
-        player:printToPlayer(string.format('Not enough Rebirth Points: %s costs %d, you have %d.', cat.label, cat.apCost, rp), S)
+    if rp < cost then
+        player:printToPlayer(string.format('Not enough Rebirth Points: %s costs %d, you have %d.', cat.label, cost, rp), S)
         return
     end
 
-    player:setCharVar(rpKey(job), rp - cat.apCost)
+    player:setCharVar(rpKey(job), rp - cost)
     player:setCharVar(catKey(job, cat.id), lv + 1)
     _modAdd(player, cat, cat.perLevel)
     player:recalculateStats()
 
-    player:printToPlayer(string.format('%s: %d -> %d / %d   (-%d RP, %d left).', cat.label, lv, lv + 1, cat.cap, cat.apCost, rp - cat.apCost), S)
+    player:printToPlayer(string.format('%s: %d -> %d / %d   (-%d RP, %d left).', cat.label, lv, lv + 1, cat.cap, cost, rp - cost), S)
 end
 
 -----------------------------------
@@ -304,18 +357,19 @@ showBuy = function(player, cat, page)
     local job = player:getMainJob()
     local lv  = getCatLv(player, job, cat.id)
     local rp  = getRP(player, job)
+    local cost = lv < cat.cap and categoryCost(cat, lv + 1) or 0
 
     player:printToPlayer(string.format('%s -- %s', cat.label, cat.note or ''), S)
-    player:printToPlayer(string.format('  Now %d/%d   --   %d RP per level   --   you have %d RP.', lv, cat.cap, cat.apCost, rp), S)
+    player:printToPlayer(string.format('  Now %d/%d   --   next level %d RP   --   you have %d RP.', lv, cat.cap, cost, rp), S)
 
     local options = {}
     if lv >= cat.cap then
         table.insert(options, { 'Maxed', function(p) showSpend(p, page) end })
-    elseif rp < cat.apCost then
+    elseif rp < cost then
         table.insert(options, { 'Not enough RP', function(p) showSpend(p, page) end })
     else
         table.insert(options, {
-            string.format('Buy +1  (-%d RP)', cat.apCost),
+            string.format('Buy +1  (-%d RP)', cost),
             function(p)
                 tryBuy(p, cat)
                 showBuy(p, cat, page) -- stay here so multiple levels can be bought
@@ -452,12 +506,18 @@ end)
 -----------------------------------
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     local migrated = migrateRewardCurveV2(player)
+    local refunded = migrateReducedCaps(player)
     player:setLocalVar('RebirthApplyPending', 1)
     super(player, firstLogin, zoning)
     if migrated then
         player:printToPlayer(
             '[ Job Rebirth ] Stat allocations were reset and refunded for the new R1-R50 progression curve.',
             S)
+    end
+    if refunded > 0 then
+        player:printToPlayer(string.format(
+            '[ Job Rebirth ] Reduced stat caps applied; %d unspent RP refunded across your jobs.',
+            refunded), S)
     end
     player:timer(3000, function(p)
         p:setLocalVar('RebirthApplyPending', 0)

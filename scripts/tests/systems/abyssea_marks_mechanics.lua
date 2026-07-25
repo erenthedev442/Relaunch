@@ -74,11 +74,18 @@ describe('Abyssea marks encounter lifecycle', function()
             assert(healed == 0)
 
             listeners.ABY_MARKS_DAMAGE(mob, 400, player, xi.attackType.PHYSICAL)
-            assert(state.challenge.ownerDamage == 400)
+            assert(state.challenge.ownerDamage == 0)
             assert(healed == 0)
             local ownerDeferred = table.remove(timers, 1)
             ownerDeferred(mob)
             assert(healed == 400)
+
+            state.challenge.graceUntil = 0
+            listeners.ABY_MARKS_DAMAGE(mob, 400, player, xi.attackType.PHYSICAL)
+            assert(state.challenge.ownerDamage == 400)
+            ownerDeferred = table.remove(timers, 1)
+            ownerDeferred(mob)
+            assert(healed == 800)
 
             runtime.onProc(mob, player, xi.abyssea.triggerType.RED)
             runtime.onProc(mob, player, xi.abyssea.triggerType.RED)
