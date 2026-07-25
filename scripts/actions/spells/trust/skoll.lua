@@ -128,30 +128,30 @@ spellObject.onMobSpawn = function(mob)
 	
 	if masterJob and meleeJobs[masterJob] then
 		-- Master is a melee or hybrid.
-		mob:addGambit(ai.t.PARTY, 
+		mob:addGambit(ai.t.SELF, 
 			{ ai.c.NOT_STATUS, xi.effect.MADRIGAL }, 
 			{ ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.MADRIGAL })  -- ACC
-		mob:addGambit(ai.t.PARTY, 
+		mob:addGambit(ai.t.SELF, 
 			{ ai.c.NOT_STATUS, xi.effect.MINUET }, 
-			{ ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.MINUET }) -- ATT/RATT
+			{ ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.VALOR_MINUET }) -- ATT/RATT
 	
 	elseif masterJob and casterJobs[masterJob] then
 		-- Master is a caster job.
-		mob:addGambit(ai.t.PARTY, 
+		mob:addGambit(ai.t.SELF, 
 			{ ai.c.NOT_STATUS, xi.effect.ETUDE }, 
-			{ ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.ETUDE })  -- INT+
-		mob:addGambit(ai.t.PARTY, 
+			{ ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.INT_ETUDE })  -- INT+
+		mob:addGambit(ai.t.SELF, 
 			{ ai.c.NOT_STATUS, xi.effect.BALLAD }, 
-			{ ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.BALLAD }) -- Refresh
+			{ ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.MAGES_BALLAD }) -- Refresh
 	
 	elseif masterJob and rangedJobs[masterJob] then
 		-- Master if a Ranged Job
-		mob:addGambit(ai.t.PARTY, 
+		mob:addGambit(ai.t.SELF, 
 			{ ai.c.NOT_STATUS, xi.effect.PRELUDE }, 
 			{ ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.PRELUDE })  -- RACC
-		mob:addGambit(ai.t.PARTY, 
+		mob:addGambit(ai.t.SELF, 
 			{ ai.c.NOT_STATUS, xi.effect.MINUET }, 
-			{ ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.MINUET }) -- ATT/RATT
+			{ ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily._VALOR_MINUET }) -- ATT/RATT
 	end
 
     mob:addGambit(ai.t.SELF, { 
