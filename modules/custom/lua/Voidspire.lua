@@ -10,8 +10,8 @@
 -- This is the Game Master wave engine (GameMaster.lua) evolved for infinity:
 --   * Floors never stop; each floor's level/HP/mods/count/affixes scale from
 --     voidspire_catalog.lua.
---   * Mob LEVEL caps (~205) -- past that eva/acc outruns L99 gear -- so depth
---     escalates through mods/HP/count/AFFIXES, not raw level.
+--   * Mob LEVEL caps at 150; exact HP anchors and restrained affixes carry the
+--     deep-floor progression without making enemies unhittable.
 --   * Same hard-won safety: minLevel+maxLevel + detection are required;
 --     releaseIdOnDisappear means we NEVER hold a cross-floor mob ref (a dangling
 --     ref crashes the map server inside C++ setHP, uncatchable by pcall); the
@@ -104,12 +104,29 @@ local function floorMods(floor, affixes)
     return mods
 end
 
-local function floorHpMult(floor, affixes)
-    local mult = ramp(catalog.scaling.hpBoost, floor)
-    for _, a in ipairs(affixes) do
-        if a.hpMult then mult = mult * a.hpMult end
+local function floorMaxHP(floor, affixes)
+    local anchors = catalog.scaling.hpAnchors
+    local hp = anchors[#anchors].hp
+
+    if floor <= anchors[1].floor then
+        hp = anchors[1].hp
+    else
+        for i = 2, #anchors do
+            local upper = anchors[i]
+            if floor <= upper.floor then
+                local lower = anchors[i - 1]
+                local span = upper.floor - lower.floor
+                local progress = (floor - lower.floor) / span
+                hp = lower.hp + (upper.hp - lower.hp) * progress
+                break
+            end
+        end
     end
-    return mult
+
+    for _, a in ipairs(affixes) do
+        if a.hpMult then hp = hp * a.hpMult end
+    end
+    return math.max(1, math.floor(hp))
 end
 
 local function floorLevel(floor)
@@ -143,7 +160,7 @@ end
 -----------------------------------
 -- Spawn one floor mob (mirrors GameMaster.spawnWaveMob)
 -----------------------------------
-local function spawnFloorMob(owner, mobDef, level, mods, hpMult, floor)
+local function spawnFloorMob(owner, mobDef, level, mods, maxHP, floor)
     local px, py, pz = owner:getXPos(), owner:getYPos(), owner:getZPos()
     local angle = math.random() * math.pi * 2
     local ring  = catalog.spawnRing
@@ -202,11 +219,8 @@ local function spawnFloorMob(owner, mobDef, level, mods, hpMult, floor)
         mob:spawn()
         mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)        -- no CP/JP farm
         for modId, val in pairs(mods) do mob:setMod(modId, val) end  -- AFTER spawn()
-        if hpMult and hpMult > 1.0 then
-            local newMax = math.floor(mob:getMaxHP() * hpMult)
-            mob:setMaxHP(newMax)
-            mob:setHP(newMax)
-        end
+        mob:setMaxHP(maxHP)
+        mob:setHP(maxHP)
         mob:updateClaim(owner)                 -- owner gets claim + kill credit
         mob:addEnmity(owner, 30000, 30000)     -- pursue the owner immediately
 
@@ -297,7 +311,7 @@ startFloor = function(player)
     local level   = floorLevel(floor)
     local affixes = activeAffixes(sess, floor)
     local mods    = floorMods(floor, affixes)
-    local hpMult  = floorHpMult(floor, affixes)
+    local maxHP   = floorMaxHP(floor, affixes)
     local count   = mobCountForFloor(floor)
     local pool    = mobPoolForFloor(floor)
 
@@ -320,7 +334,7 @@ startFloor = function(player)
     -- Spawn the whole floor at once (<= mobsCap mobs -- no stagger needed).
     for _ = 1, count do
         local mobDef = pool[math.random(#pool)]
-        local mob = spawnFloorMob(player, mobDef, level, mods, hpMult, floor)
+        local mob = spawnFloorMob(player, mobDef, level, mods, maxHP, floor)
         if mob then sess.mobsAlive[mob:getID()] = mob end
     end
 

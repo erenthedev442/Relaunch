@@ -21,10 +21,9 @@
 -- clearTrusts is all-or-nothing and would wipe the player's real trusts).
 --
 -- Combat: a trust follows the master and assists the master's target on its own
--- AI (so the old petAttack auto-assist is gone); the combat loop only FORCES the
--- role's signature TP move at TP cap and runs the role behaviours (heal/tank/
--- nuke). The base trust (Naji) may also occasionally use its own native moves --
--- acceptable; tune/suppress if a playtest shows it's noisy.
+-- AI (so the old petAttack auto-assist is gone); the combat loop exclusively
+-- fires the player's selected role TP move and runs the role behaviours
+-- (heal/tank/nuke). Autonomous Naji/list TP moves are disabled.
 --
 -- NAME + APPEARANCE:
 --   * NAME  -> trust:renameEntity(str, true). Sets the LIVE displayed name to
@@ -208,7 +207,7 @@ local CONFIG =
                 [xi.mobSkill.EMPTY_SALVATION_1] = 900,
                 [xi.mobSkill.CURSED_SPHERE_1]   = 900,
             },
-            mpPool = { 2500, 8000 },
+            mpPool = { 1200, 3000 },
             healPower = { 1500, 5000 },
             wsDamage = { 700, 4500 },
             moves =
@@ -228,7 +227,7 @@ local CONFIG =
             -- 1,000 here puts capped Magus nukes near the intended 30k band
             -- without creating six-figure Thunder IV hits.
             magicDamage = { 500, 1000 },
-            mpPool = { 3000, 9000 },
+            mpPool = { 1200, 3000 },
             moves =
             {
                 { name = 'Thunder IV',      ws = xi.mobSkill.THUNDER_IV        },
@@ -240,7 +239,10 @@ local CONFIG =
         hunter    =
         {
             name = 'Hunter', blurb = 'Ranger: high accuracy and evasion; survives by dodging, not soaking.', defaultWs = xi.mobSkill.EAGLE_EYE_SHOT_HUMANOID,
-            mods     = { { xi.mod.AGI, 100 }, { xi.mod.ACC, 200 }, { xi.mod.EVA, 100 } }, behavior = 'ranged',
+            mods     = {
+                { xi.mod.AGI, 100 }, { xi.mod.ACC, 200 }, { xi.mod.RACC, 500 },
+                { xi.mod.RATT, 300 }, { xi.mod.EVA, 100 },
+            },
             survival = { hpMin = 2600, hpMax = 4400, pdt = -1000, mdt = -1000 },
             wsDamage = { 2500, 11000 },
             -- Owner-curated ranger pool 2026-07-16 (proven on Semih Lafihna / Qultada
@@ -375,7 +377,6 @@ local CONFIG =
     healMax             = 1500,
     healCooldownSec     = 5,
     cleanseCooldownSec  = 6,
-    benedictionHpp      = 18,
     tauntMinCE          = 400,
     tauntMaxCE          = 800,
     tauntMinVE          = 800,
@@ -385,12 +386,6 @@ local CONFIG =
     keeperMs            = 10000,
     firstMs             = 4000,
     namesPerPage        = 6,   -- customMenu caps: keep page + nav <= 8 options / 150 bytes
-}
-
-local ROLE_SKILL_LIST =
-{
-    vanguard = 9800, berserker = 9801, bulwark = 9802, oracle = 9803,
-    magus = 9804, hunter = 9805, mastered = 9806,
 }
 
 local GRADES =
@@ -529,8 +524,20 @@ local function combatProgress(p)
     return 0.45 * levelProgress(p) + 0.55 * investmentProgress(p)
 end
 
+-- Full Fellow bonuses unlock at main-job level 99. Below 99, offensive power
+-- follows the current job level so a progressed Fellow cannot erase low-level
+-- content after its owner changes to a level-1 job.
+local function masterPowerProgress(p)
+    local level = math.max(1, math.min(99, p:getMainLvl() or 1))
+    return math.max(0, math.min(1, (level - 1) / 98))
+end
+
 local function lerp(a, b, t)
     return math.floor(a + (b - a) * math.max(0, math.min(1, t)))
+end
+
+local function scaledRoleValue(p, range)
+    return math.floor(lerp(range[1], range[2], combatProgress(p)) * masterPowerProgress(p))
 end
 
 local function normalWeaponDamage(p)
@@ -538,7 +545,7 @@ local function normalWeaponDamage(p)
     return math.floor(
         CONFIG.dmgBase +
         CONFIG.dmgPerMasterLevel * math.min(99, masterLvl) +
-        CONFIG.dmgPerLevel * math.max(0, getLevel(p) - 1))
+        CONFIG.dmgPerLevel * math.max(0, getLevel(p) - 1) * masterPowerProgress(p))
 end
 
 local function currentGrade(p)
@@ -577,21 +584,28 @@ local function applyFellow(p, pet)
     local lvl  = getLevel(p)
     local role = roleDef(p)
 
-    for _, mv in ipairs(CONFIG.perLevel) do pet:addMod(mv[1], mv[2] * lvl) end
-    for _, mv in ipairs(role.mods or {})  do pet:addMod(mv[1], mv[2]) end
+    local masterPower = masterPowerProgress(p)
+    for _, mv in ipairs(CONFIG.perLevel) do
+        pet:addMod(mv[1], math.floor(mv[2] * lvl * masterPower))
+    end
+    for _, mv in ipairs(role.mods or {}) do
+        pet:addMod(mv[1], math.floor(mv[2] * masterPower))
+    end
 
     for stat, mods in pairs(CONFIG.statMods) do
         local pts = getStatPts(p, stat)
         if pts > 0 then
-            for _, mv in ipairs(mods) do pet:addMod(mv[1], math.floor(mv[2] * pts)) end
+            for _, mv in ipairs(mods) do
+                pet:addMod(mv[1], math.floor(mv[2] * pts * masterPower))
+            end
         end
     end
 
     if role.magicPower then
-        pet:addMod(xi.mod.MATT, lerp(role.magicPower[1], role.magicPower[2], combatProgress(p)))
+        pet:addMod(xi.mod.MATT, scaledRoleValue(p, role.magicPower))
     end
     if role.magicDamage then
-        pet:addMod(xi.mod.MAGIC_DAMAGE, lerp(role.magicDamage[1], role.magicDamage[2], combatProgress(p)))
+        pet:addMod(xi.mod.MAGIC_DAMAGE, scaledRoleValue(p, role.magicDamage))
     end
     if role.mpPool then
         local targetMP = lerp(role.mpPool[1], role.mpPool[2], combatProgress(p))
@@ -625,8 +639,10 @@ local function applyFellow(p, pet)
     pet:setHP(targetHP)
 
     local roleKey = getRole(p)
-    local skillList = ROLE_SKILL_LIST[roleKey]
-    if skillList then pet:setMobMod(xi.mobMod.SKILL_LIST, skillList) end
+    -- Disable autonomous trust TP moves. The combat loop below exclusively
+    -- fires the move selected in the Fellow menu, so Naji/list randomness can
+    -- no longer consume TP on a different move.
+    pet:setMobMod(xi.mobMod.SKILL_LIST, 9999)
 
     -- Give the two specialist roles real trust-controller behavior instead of
     -- making Naji's melee chassis pretend to cast or shoot.
@@ -637,8 +653,6 @@ local function applyFellow(p, pet)
         pet:setSpellList(310)
         pet:addMod(xi.mod.CURE_POTENCY, 50)
         pet:addMod(xi.mod.FASTCAST, 50)
-        pet:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 25 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
-        pet:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 70 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
         pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.POISON }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.POISONA })
         pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.PARALYSIS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.PARALYNA })
         pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.BLINDNESS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.BLINDNA })
@@ -649,12 +663,8 @@ local function applyFellow(p, pet)
         pet:addGambit(ai.t.PARTY, { ai.c.STATUS_FLAG, xi.effectFlag.ERASABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
         pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
     elseif roleKey == 'magus' then
-        -- Shantotto II's spell list and gambits: burst an available skillchain
-        -- first, otherwise cast periodically. The Fellow's own magic mods above
-        -- scale those casts into the Magus damage band.
-        pet:setSpellList(428)
-        pet:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
-        pet:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 45)
+        -- The combat loop casts only the spell/move selected in the Fellow
+        -- menu. Do not install an autonomous spell list that can override it.
         pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
     elseif roleKey == 'hunter' then
         pet:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 })
@@ -738,12 +748,6 @@ scheduleCombatLoop = function(master, pet)
             local active = master:isEngaged()
                 or now - (master:getLocalVar('fellowActivityAt') or 0) <= CONFIG.activityWindowSec
 
-            -- Reset fight-scoped emergency abilities as soon as combat ends,
-            -- even if the general activity window has already expired.
-            if not master:isEngaged() then
-                p:setLocalVar('fellowBenedictionUsed', 0)
-            end
-
             -- Remaining engaged is itself combat activity. Hunter uses ranged
             -- attacks, so its melee auto-attack must remain disabled.
             p:setAutoAttackEnabled(active and not hasBeh('ranged'))
@@ -758,10 +762,10 @@ scheduleCombatLoop = function(master, pet)
                 end
             end
 
-            -- Oracle is a healer first: emergency Benediction is once per fight,
-            -- routine cures select the most injured party member, and common
-            -- removable ailments are cleansed on their own cadence.
-            if hasBeh('heal') and master:isEngaged()
+            -- Oracle is a healer first. Its pulse selects the most injured
+            -- player, trust, or Fellow and begins healing at 70% HP. This is
+            -- the sole HP-heal path, avoiding competing queued overheals.
+            if hasBeh('heal')
                and now - (p:getLocalVar('fellowHealAt') or 0) >= CONFIG.healCooldownSec then
                 local healTarget = master
                 local lowestHpp = master:getHP() * 100 / math.max(1, master:getMaxHP())
@@ -775,14 +779,9 @@ scheduleCombatLoop = function(master, pet)
                     end
                 end
 
-                if lowestHpp <= CONFIG.benedictionHpp
-                   and p:getLocalVar('fellowBenedictionUsed') == 0 then
-                    p:useMobAbility(xi.mobSkill.BENEDICTION_1, healTarget)
-                    p:setLocalVar('fellowBenedictionUsed', 1)
-                    p:setLocalVar('fellowHealAt', now)
-                elseif lowestHpp <= CONFIG.healHpp then
+                if lowestHpp <= CONFIG.healHpp then
                     local range = rdef.healPower or { CONFIG.healMin, CONFIG.healMax }
-                    local amount = lerp(range[1], range[2], combatProgress(master))
+                    local amount = math.max(CONFIG.healMin, scaledRoleValue(master, range))
                     if getRole(master) == 'mastered' then amount = math.floor(amount * 0.7) end
                     healTarget:addHP(amount)
                     p:setLocalVar('fellowHealAt', now)
@@ -891,25 +890,24 @@ scheduleCombatLoop = function(master, pet)
                     if ws and ws > 0 and tgt and not tgt:isDead() then
                         if rdef.wsDamage then
                             local normalDmg = normalWeaponDamage(master)
-                            p:setDamage(lerp(rdef.wsDamage[1], rdef.wsDamage[2], combatProgress(master)))
+                            p:setDamage(math.max(normalDmg, scaledRoleValue(master, rdef.wsDamage)))
                             p:timer(2500, function(pp)
                                 if pp and pp:isAlive() then pp:setDamage(normalDmg) end
                             end)
                         end
                         if rdef.magicDamageByMove and rdef.magicDamageByMove[ws] then
                             local normalMagicDamage = p:getMod(xi.mod.MAGIC_DAMAGE)
-                            p:setMod(xi.mod.MAGIC_DAMAGE, rdef.magicDamageByMove[ws])
+                            p:setMod(xi.mod.MAGIC_DAMAGE,
+                                math.floor(rdef.magicDamageByMove[ws] * masterPowerProgress(master)))
                             p:timer(2500, function(pp)
                                 if pp and pp:isAlive() then
                                     pp:setMod(xi.mod.MAGIC_DAMAGE, normalMagicDamage)
                                 end
                             end)
                         end
-                        p:useMobAbility(ws, tgt)  -- the chosen FORM's signature TP move (forced)
+                        p:useMobAbility(ws, tgt)  -- the player's chosen role TP move
                         p:setTP(0)                -- forced skills don't consume TP; reset for a cap-and-build cadence
                         p:setLocalVar('fellowWsAt', now)
-                    else
-                        p:useMobAbility()         -- fallback: chassis picks a Ready move (consumes TP itself)
                     end
                 end
                 -- NOTE (fix): Magus/Hunter formerly added silent per-tick damage via
@@ -1897,15 +1895,22 @@ xi.fellow.audit = function(p)
     end
 
     -- Every source applyFellow() adds, mirrored here 1:1.
-    for _, mv in ipairs(CONFIG.perLevel)  do add(mv[1], mv[2] * lvl, 'lvl') end
-    for _, mv in ipairs(role.mods or {})  do add(mv[1], mv[2], 'role') end
+    local masterPower = masterPowerProgress(p)
+    for _, mv in ipairs(CONFIG.perLevel) do
+        add(mv[1], math.floor(mv[2] * lvl * masterPower), 'lvl')
+    end
+    for _, mv in ipairs(role.mods or {}) do
+        add(mv[1], math.floor(mv[2] * masterPower), 'role')
+    end
     local surv = role.survival or {}
     add(xi.mod.DMGPHYS,  surv.pdt or CONFIG.pdt, 'role')
     add(xi.mod.DMGMAGIC, surv.mdt or CONFIG.mdt, 'role')
     for stat, mods in pairs(CONFIG.statMods) do
         local pts = getStatPts(p, stat)
         if pts > 0 then
-            for _, mv in ipairs(mods) do add(mv[1], math.floor(mv[2] * pts), stat .. 'x' .. pts) end
+            for _, mv in ipairs(mods) do
+                add(mv[1], math.floor(mv[2] * pts * masterPower), stat .. 'x' .. pts)
+            end
         end
     end
 

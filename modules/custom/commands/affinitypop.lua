@@ -17,7 +17,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 0,
+    permission = 5, -- GM level 5 only
     parameters = '',
 }
 

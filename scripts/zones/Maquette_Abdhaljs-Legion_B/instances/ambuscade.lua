@@ -6,32 +6,26 @@
 -- Exit zone   : 249 (Mhaura)
 --
 -- Difficulty (1-15) stored in Ambuscade_Difficulty charVar → setProgress().
--- onInstanceProgressUpdate fires immediately after setProgress(); that is
--- where mob HP is scaled AND Urchins/Housemaker are spawned so difficulty
--- is known before the player zones in.
+-- Mobs are spawned and scaled in onInstanceCreated, after the callback has
+-- stored the selected difficulty on the instance.
 -----------------------------------
 local ID = zones[xi.zone.MAQUETTE_ABDHALJS_LEGION_B]
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
 -----------------------------------
 local instanceObject = {}
 
--- ─── Difficulty tuning (owner call 2026-07-13) ────────────────────────────────
--- The prior HP-only scaling (Intense VD = 5x HP) played "easy" because a level-
--- 119 Breadwinner with stock mods can't hurt an ilvl-119 party -- more HP just
--- meant longer autoattacks. Rebuild layers aggressive stat + mech scaling on
--- top of the original HP curve. Owner directive: "make them very deadly, not
--- necessarily with HP" -- read here as "STACK deadliness on top of the HP,
--- don't replace it" (the 2026-07-13 mid-day cut to 2.5x turned out to shrink
--- fights below the point where the new mechanics could land, so it was
--- restored). Doom lands on the Intense VD tier only.
+-- E/N are entry-level encounters. Intense VD is the cosmetic tier and carries
+-- roughly the same aggregate HP as a Tier-2 Abyssea marks encounter:
+-- (280k Breadwinner + 4x60k Urchins) * 15.4 = 8.008M HP. Intense D bridges
+-- that tier at the Tier-1 Abyssea HP budget; Regular and Light stay below it.
 local DIFF_HP_SCALE =
 {
     -- Intense VD→VE
-    [1]  = 5.0,  [2]  = 3.5,  [3]  = 2.5,  [4]  = 1.8,  [5]  = 1.0,
+    [1]  = 15.4, [2]  = 8.7,  [3]  = 1.0,  [4]  = 0.8,  [5]  = 0.7,
     -- Regular VD→VE
-    [6]  = 4.0,  [7]  = 2.8,  [8]  = 2.0,  [9]  = 1.5,  [10] = 1.0,
+    [6]  = 4.0,  [7]  = 2.8,  [8]  = 0.9,  [9]  = 0.7,  [10] = 0.6,
     -- Light VD→VE
-    [11] = 1.3,  [12] = 1.2,  [13] = 1.0,  [14] = 0.9,  [15] = 0.8,
+    [11] = 1.3,  [12] = 1.2,  [13] = 0.75, [14] = 0.6,  [15] = 0.5,
 }
 
 -- Flat stat bumps applied to Breadwinner + Urchins at spawn. Every field is a
@@ -42,15 +36,15 @@ local DIFF_STAT_MODS =
     -- Intense VD→VE
     [1]  = { att = 5000, acc = 500, matt = 3000, macc = 300, haste = 200, da = 40, regen = 200 },
     [2]  = { att = 3500, acc = 400, matt = 2000, macc = 250, haste = 150, da = 30, regen = 150 },
-    [3]  = { att = 2500, acc = 300, matt = 1500, macc = 200, haste = 100, da = 20, regen = 100 },
-    [4]  = { att = 1500, acc = 200, matt =  800, macc = 150, haste =  75, da = 10, regen =  60 },
-    [5]  = { att =  800, acc = 100, matt =  400, macc =  75, haste =  40, da =  5, regen =  30 },
+    [3]  = { att =  400, acc =  50 },
+    [4]  = {},
+    [5]  = {},
     -- Regular VD→VE
     [6]  = { att = 3500, acc = 350, matt = 2000, macc = 250, haste = 150, da = 25, regen = 120 },
     [7]  = { att = 2500, acc = 250, matt = 1200, macc = 150, haste = 100, da = 15, regen =  80 },
-    [8]  = { att = 1500, acc = 200, matt =  800, macc = 100, haste =  50, da = 10, regen =  40 },
-    [9]  = { att =  800, acc = 100, matt =  400, macc =  50, haste =  25, da =  0, regen =  20 },
-    [10] = { att =  400, acc =  50, matt =  200, macc =   0, haste =   0, da =  0, regen =   0 },
+    [8]  = { att =  300, acc =  50 },
+    [9]  = {},
+    [10] = {},
     -- Light VD→VE (only the top of Light gets any bumps; the bottom stays retail)
     [11] = { att =  500, acc = 100, matt =  200, macc =  50, haste =   0, da =  0, regen =   0 },
     [12] = { att =  200, acc =  50, matt =  100, macc =   0, haste =   0, da =  0, regen =   0 },
@@ -97,19 +91,9 @@ local DIFF_MECH_CFG =
             { hp = 25, action = 'nuke', dmgPct = 20, msg = 'The Breadwinner unleashes a burst!' },
         },
     },
-    [3] = {  -- Intense N
-        name   = 'Bozzetto Breadwinner',
-        stance = { startHpp = 85, periodSec = 20, stances = STANCE_PAIR },
-        aoe    = { periodSec = 14, dmgPct = 11, msg = 'The Breadwinner erupts!' },
-        phases = {
-            { hp = 50, action = 'fury', att = 1000, haste = 80, msg = 'The Breadwinner accelerates!' },
-        },
-    },
-    [4] = {  -- Intense E
-        name = 'Bozzetto Breadwinner',
-        aoe  = { periodSec = 16, dmgPct = 9, msg = 'The Breadwinner erupts!' },
-    },
-    [5] = {},  -- Intense VE -- stat bumps only
+    [3] = {},  -- Intense N -- entry-level stats only
+    [4] = {},  -- Intense E -- stock mechanics
+    [5] = {},  -- Intense VE
     [6] = {  -- Regular VD
         name   = 'Bozzetto Breadwinner',
         stance = { startHpp = 85, periodSec = 18, stances = STANCE_PAIR },
@@ -127,18 +111,14 @@ local DIFF_MECH_CFG =
             { hp = 50, action = 'fury', att = 800, haste = 50, msg = 'The Breadwinner accelerates!' },
         },
     },
-    [8] = {  -- Regular N
-        name   = 'Bozzetto Breadwinner',
-        stance = { startHpp = 75, periodSec = 25, stances = STANCE_PAIR },
-    },
+    [8] = {},   -- Regular N
     [9] = {},   -- Regular E
     [10] = {},  -- Regular VE
     [11] = {}, [12] = {}, [13] = {}, [14] = {}, [15] = {},  -- Light: retail baseline
 }
 
--- Apply the flat stat block to a single mob. Called once per mob at spawn time
--- inside onInstanceProgressUpdate. Safe on repeated tiers because the instance
--- is fresh each entry (mob mods don't carry over).
+-- Apply the flat stat block to a single mob. Called once per mob at spawn time.
+-- Safe on repeated tiers because the instance is fresh each entry.
 local function applyDiffMods(mob, mods)
     if not mob or not mods then return end
     if mods.att   and mods.att   > 0 then mob:addMod(xi.mod.ATT,            mods.att)   end
@@ -153,8 +133,8 @@ end
 -- How many Urchin adds to spawn (pre-spawned, never respawn during the fight).
 local URCHIN_COUNT =
 {
-    [1]=4, [2]=3, [3]=2, [4]=2, [5]=1,   -- Intense
-    [6]=3, [7]=2, [8]=2, [9]=1, [10]=1,  -- Regular
+    [1]=4, [2]=3, [3]=1, [4]=1, [5]=1,   -- Intense
+    [6]=3, [7]=2, [8]=1, [9]=1, [10]=1,  -- Regular
     [11]=1,[12]=1,[13]=1,[14]=1,[15]=1,  -- Light
 }
 
@@ -166,10 +146,35 @@ local URCHIN_IDS =
     ID.mob.BOZZETTO_URCHIN_4,
 }
 
--- Spawn only the Breadwinner here; Urchins and Housemaker are spawned
--- in onInstanceProgressUpdate (once difficulty is known).
 instanceObject.onInstanceCreated = function(instance)
-    SpawnMob(ID.mob.BOZZETTO_BREADWINNER, instance)
+    local progress = instance:getProgress()
+    local mult     = DIFF_HP_SCALE[progress] or 1.0
+    local mods     = DIFF_STAT_MODS[progress] or {}
+    local mCfg     = DIFF_MECH_CFG[progress]
+
+    local bw = SpawnMob(ID.mob.BOZZETTO_BREADWINNER, instance)
+    if bw then
+        local newHP = math.max(1, math.floor(bw:getMaxHP() * mult))
+        bw:setMaxHP(newHP)
+        bw:setHP(newHP)
+        applyDiffMods(bw, mods)
+        if mCfg and next(mCfg) then
+            mechanics.attach(bw, mCfg)
+        end
+    end
+
+    local urchinCount = URCHIN_COUNT[progress] or 1
+    for i = 1, urchinCount do
+        local urchin = SpawnMob(URCHIN_IDS[i], instance)
+        if urchin then
+            local newHP = math.max(1, math.floor(urchin:getMaxHP() * mult))
+            urchin:setMaxHP(newHP)
+            urchin:setHP(newHP)
+            applyDiffMods(urchin, mods)
+        end
+    end
+
+    SpawnMob(ID.mob.AMBUSCADE_HOUSEMAKER, instance)
 end
 
 -- Read difficulty, persist to instance, warp player in.
@@ -188,51 +193,6 @@ instanceObject.afterInstanceRegister = function(player)
     if instance then
         player:countdown(instance:getTimeLimit() * 60)
     end
-end
-
--- Fires immediately after onInstanceCreatedCallback calls setProgress().
--- Scale Breadwinner HP, spawn adds, apply per-tier stat bumps + attach the
--- mob_mechanics_library config to the Breadwinner.
-instanceObject.onInstanceProgressUpdate = function(instance, progress)
-    local mult  = DIFF_HP_SCALE[progress] or 1.0
-    local mods  = DIFF_STAT_MODS[progress] or {}
-    local mCfg  = DIFF_MECH_CFG[progress]
-
-    -- Scale Breadwinner HP + apply the tier's stat bumps.
-    local bw = GetMobByID(ID.mob.BOZZETTO_BREADWINNER)
-    if bw and bw:isAlive() then
-        local newHP = math.max(1, math.floor(bw:getMaxHP() * mult))
-        bw:setMaxHP(newHP)
-        bw:setHP(newHP)
-        applyDiffMods(bw, mods)
-        -- Attach mechanics (stance/aoe/drain/doom/phases). Empty cfg = no-op.
-        if mCfg and next(mCfg) then
-            mechanics.attach(bw, mCfg)
-        end
-    end
-
-    -- Spawn difficulty-appropriate number of Urchins.
-    local urchinCount = URCHIN_COUNT[progress] or 1
-    for i = 1, urchinCount do
-        SpawnMob(URCHIN_IDS[i], instance)
-    end
-
-    -- Scale Urchin HP + apply the tier's stat bumps. Urchins share the boss's
-    -- stat curve (they're MNK-typed adds; on Intense VD they hit as hard as
-    -- the boss for their HP pool, so ignoring them means a wipe fast).
-    for i = 1, urchinCount do
-        local u = GetMobByID(URCHIN_IDS[i])
-        if u and u:isAlive() then
-            local newHP = math.max(1, math.floor(u:getMaxHP() * mult))
-            u:setMaxHP(newHP)
-            u:setHP(newHP)
-            applyDiffMods(u, mods)
-        end
-    end
-
-    -- Always spawn one Housemaker. Housemaker is a passive structure so it
-    -- doesn't need the offensive stat curve or a mechanic block.
-    SpawnMob(ID.mob.AMBUSCADE_HOUSEMAKER, instance)
 end
 
 -- Detect when all killable mobs are dead; record elapsed time for time bonus.

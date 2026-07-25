@@ -75,9 +75,25 @@ bool IsPlayerControlled(CBattleEntity* PAttacker)
 
 int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
 {
-    constexpr int32 PRIME_ABSOLUTE_DAMAGE_CAP = 1999999;
+    constexpr int32 PRIME_ABSOLUTE_DAMAGE_CAP  = 1999999;
+    constexpr int32 FELLOW_ABSOLUTE_DAMAGE_CAP = 99999;
 
-    if (PAttacker == nullptr || PAttacker->objtype != TYPE_PC)
+    if (PAttacker == nullptr)
+    {
+        return globalCap;
+    }
+
+    // The custom Adventuring Fellow is implemented as a trust and marked by
+    // fellow_companion.lua. Cap every damage path at the final takeDamage()
+    // choke point: melee, ranged, spells, mob skills, AoE and skillchains.
+    if (PAttacker->GetLocalVar("fellowApplied") == 1)
+    {
+        return globalCap > 0
+            ? std::min(globalCap, FELLOW_ABSOLUTE_DAMAGE_CAP)
+            : FELLOW_ABSOLUTE_DAMAGE_CAP;
+    }
+
+    if (PAttacker->objtype != TYPE_PC)
     {
         return globalCap;
     }

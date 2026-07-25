@@ -12,9 +12,8 @@
 --    claim/enmity lock, NO_CAPACITY_POINTS, and dangling-ref-safe teardown.
 --    Reuses the GM mob pool (groupIds 11400-11425 in
 --    modules/custom/sql/hunting_league_gm_home_mobs.sql) so this needs NO SQL.
---  * Mob LEVEL is capped (~205). The Insane gods have fixed HP overrides and
---    accuracy/evasion outrun L99 gear past ~L200 (see GameMaster Insane notes),
---    so depth escalates through MODS + HP + mob COUNT + AFFIXES, not raw level.
+--  * Mob LEVEL is capped at 150. Depth escalates through controlled HP,
+--    offense, mechanics, and affixes rather than unhittable level scaling.
 --  * Difficulty should kill you via INCOMING damage (offense/haste), not by
 --    making mobs unkillable -- so offense ramps hard while EVA/DEF creep gently.
 --  * Lore: a spire bored down into the sealed Nightmare Court. Deeper floors =
@@ -57,16 +56,29 @@ catalog.spawnRing    = { minRadius = 6, maxRadius = 12 }
 -- Standard ramp for a stat = clamp(base + per * (F - 1), .., cap).
 catalog.scaling =
 {
-    -- Mob level: ramps to a HITTABLE cap (~205). Past that, eva/acc outrun L99
-    -- gear; difficulty beyond the cap comes from mods/hp/affixes instead.
-    level   = { base = 120, per = 2.5, cap = 205 },
+    -- Level reaches 150 just before floor 100 and never exceeds the server cap.
+    level = { base = 115, per = 0.36, cap = 150 },
 
-    -- HP multiplier on the pool mob's base HP. Endurance grows with depth.
-    -- Capped so deep gods stay killable-with-effort, not infinite sponges.
-    hpBoost = { base = 4.0, per = 0.30, cap = 30.0 },
+    -- Exact per-mob HP anchors. Voidspire.lua linearly interpolates between
+    -- them, eliminating donor-pool HP variance. Floors 90-99 occupy the
+    -- Abyssea T2 band; floor 100 is the 14M T3-equivalent Empyrean gate.
+    hpAnchors =
+    {
+        { floor = 1,   hp =   150000 },
+        { floor = 20,  hp =   300000 },
+        { floor = 40,  hp =   600000 },
+        { floor = 60,  hp =  1500000 },
+        { floor = 79,  hp =  3500000 },
+        { floor = 80,  hp =  4000000 },
+        { floor = 89,  hp =  6000000 },
+        { floor = 90,  hp =  8000000 },
+        { floor = 99,  hp = 10000000 },
+        { floor = 100, hp = 14000000 },
+        { floor = 120, hp = 20000000 },
+    },
 
-    -- Mobs per floor: +1 every `mobsStep` floors, capped (lag + readability).
-    mobsBase = 1, mobsStep = 10, mobsCap = 5,
+    -- One opponent per floor keeps this solo-with-trusts progression readable.
+    mobsBase = 1, mobsStep = 1000, mobsCap = 1,
 
     -- Per-mob mods, set AFTER spawn() (spawn recalculates stats). Two groups:
     --   OFFENSE (mob -> you): ramps HARD so deep floors eventually overwhelm.
@@ -76,16 +88,16 @@ catalog.scaling =
     mods =
     {
         -- offense
-        [xi.mod.ATT]           = { base = 2000, per = 300,  cap = 18000 },
-        [xi.mod.ACC]           = { base = 700,  per = 45,   cap = 3200 },
-        [xi.mod.STR]           = { base = 100,  per = 12,   cap = 900 },
-        [xi.mod.DEX]           = { base = 100,  per = 12,   cap = 900 },
-        [xi.mod.HASTE_GEAR]    = { base = 80,   per = 6,    cap = 256 },
-        [xi.mod.DOUBLE_ATTACK] = { base = 8,    per = 0.7,  cap = 40 },
-        [xi.mod.TRIPLE_ATTACK] = { base = 2,    per = 0.4,  cap = 20 },
+        [xi.mod.ATT]           = { base = 1500, per = 65,   cap = 8000 },
+        [xi.mod.ACC]           = { base = 300,  per = 6,    cap = 900 },
+        [xi.mod.STR]           = { base = 50,   per = 3,    cap = 350 },
+        [xi.mod.DEX]           = { base = 50,   per = 3,    cap = 350 },
+        [xi.mod.HASTE_GEAR]    = { base = 40,   per = 1.3,  cap = 170 },
+        [xi.mod.DOUBLE_ATTACK] = { base = 5,    per = 0.2,  cap = 25 },
+        [xi.mod.TRIPLE_ATTACK] = { base = 0,    per = 0.1,  cap = 10 },
         -- endurance (gentle, low caps -- keep mobs damageable)
-        [xi.mod.DEF]           = { base = 0,    per = 8,    cap = 600 },
-        [xi.mod.EVA]           = { base = 0,    per = 5,    cap = 300 },
+        [xi.mod.DEF]           = { base = 0,    per = 5,    cap = 500 },
+        [xi.mod.EVA]           = { base = 0,    per = 3,    cap = 300 },
     },
 }
 
@@ -94,10 +106,10 @@ catalog.scaling =
 -- difficulties[diff].mobs for the band the current floor falls into.
 catalog.bands =
 {
-    { upTo = 9,         diff = 'Easy'   },  -- floors 1-9:   classic camp NMs
-    { upTo = 24,        diff = 'Normal' },  -- floors 10-24: mid-tier classics
-    { upTo = 44,        diff = 'Hard'   },  -- floors 25-44: HNM apex beasts
-    { upTo = math.huge, diff = 'Insane' },  -- floors 45+:   gods + wyrms
+    { upTo = 39,        diff = 'Easy'   },
+    { upTo = 69,        diff = 'Normal' },
+    { upTo = 89,        diff = 'Hard'   },
+    { upTo = math.huge, diff = 'Insane' },
 }
 
 -- ============================ AFFIXES ============================
@@ -106,27 +118,27 @@ catalog.bands =
 -- base floor scaling in a single setMod pass -- no overwrite, no addMod needed.
 --   Starts at `affixStartFloor`; +1 active affix every `affixStep` floors,
 --   capped at `affixCap`. The active set is rolled per run and shown to you.
-catalog.affixStartFloor = 10
-catalog.affixStep       = 15
-catalog.affixCap        = 5
+catalog.affixStartFloor = 40
+catalog.affixStep       = 25
+catalog.affixCap        = 3
 catalog.affixes =
 {
-    { id = 'ravenous',   label = 'Ravenous',   desc = 'They regenerate from the Void itself -- sustain your damage.',
-      mods = { [xi.mod.REGEN] = 150 } },
+    { id = 'ravenous',   label = 'Ravenous',   desc = 'A faint void-current closes minor wounds.',
+      mods = { [xi.mod.REGEN] = 20 } },
     { id = 'cruel',      label = 'Cruel',      desc = 'Their blows fall like falling stars.',
-      mods = { [xi.mod.ATT] = 3000, [xi.mod.STR] = 120 } },
+      mods = { [xi.mod.ATT] = 800, [xi.mod.STR] = 50 } },
     { id = 'manic',      label = 'Manic',      desc = 'A frenzy of impossible speed.',
-      mods = { [xi.mod.HASTE_GEAR] = 120, [xi.mod.DOUBLE_ATTACK] = 15 } },
+      mods = { [xi.mod.HASTE_GEAR] = 40, [xi.mod.DOUBLE_ATTACK] = 8 } },
     { id = 'unerring',   label = 'Unerring',   desc = 'Nothing escapes their sight -- evasion is useless here.',
-      mods = { [xi.mod.ACC] = 700 } },
+      mods = { [xi.mod.ACC] = 150 } },
     { id = 'warded',     label = 'Warded',     desc = 'A void-shell blunts every blow.',
-      mods = { [xi.mod.DMGPHYS] = -10, [xi.mod.DMGMAGIC] = -10 } },
+      mods = { [xi.mod.DMGPHYS] = -1000, [xi.mod.DMGMAGIC] = -1000 } },
     { id = 'venomous',   label = 'Venomous',   desc = 'Their touch corrodes flesh and magic alike.',
-      mods = { [xi.mod.ATT] = 1500, [xi.mod.MATT] = 80 } },
+      mods = { [xi.mod.ATT] = 500, [xi.mod.MATT] = 50 } },
     { id = 'phantasmal', label = 'Phantasmal', desc = 'Half-dreamed, and maddeningly slippery.',
-      mods = { [xi.mod.EVA] = 200 } },
+      mods = { [xi.mod.EVA] = 100 } },
     { id = 'colossal',   label = 'Colossal',   desc = 'Bloated with stolen life.',
-      hpMult = 1.4 },
+      hpMult = 1.15 },
 }
 
 -- ============================ REWARDS ============================
@@ -154,94 +166,79 @@ catalog.milestones =
 -- Per-band hardcore mechanics (mob_mechanics_library.lua), keyed by the
 -- FIRST floor of each band. Voidspire.lua picks the highest key <= floor.
 -- Escalating identity: shallow floors feel manageable; deep floors punish.
---   Zone 289 (Escha_RuAun) groupIds for adds:
---     Easy   pool: 11400 (Argus)   -- floors 1-9
---     Normal pool: 11404 (Boggelmann) -- floors 10-24
---     Hard   pool: 11408 (Cerberus)   -- floors 25-44
---     Insane pool: 11412 (Bahamut)    -- floors 45+
--- addLevel kept lower than the floor-mob level so adds die first but still hurt.
+-- Pool silhouettes change at floors 40, 70, and 90; mechanics become serious
+-- at floor 80 and reach their T3-equivalent capstone at floor 100.
 catalog.floorMechanics =
 {
-    -- Floors 1-9: shallow threat. Occasional self-heal + soft enrage if you
-    -- turtle. Easy entry -- there's barely a mechanic; just regen pressure.
+    -- Floors 1-39: accessible opening climb; no sustain tax.
     [1] = {
         name   = 'Nightmare Vanguard',
-        drain  = { periodSec = 12, healPct = 2 },
         enrage = { sec = 300, att = 2000, haste = 80, msg = 'grows impatient -- its assault quickens!' },
     },
 
-    -- Floors 10-24: slow enrage. First real mechanical identity.
-    [10] = {
+    -- Floors 40-59: introduce light periodic pressure.
+    [40] = {
         name   = 'Voidwalker Scout',
-        drain  = { periodSec = 10, healPct = 2 },
-        enrage = { sec = 240, att = 3500, haste = 100, msg = 'feasts on spilled blood -- striking harder!' },
-        phases = {
-        },
+        aoe    = { periodSec = 30, dmgPct = 5, msg = 'releases a shallow pulse of void energy!' },
+        enrage = { sec = 300, att = 2000, haste = 80, msg = 'presses the assault!' },
     },
 
-    -- Floors 25-44: stance dance begins. Must switch damage type every cycle.
-    -- AoE shockwave added; tighter enrage.
-    [25] = {
+    -- Floors 60-79: teach the stance before the real struggle begins.
+    [60] = {
         name   = 'Jailer of the Deep',
-        stance = { startHpp = 90, periodSec = 16, stances = {
+        stance = { startHpp = 75, periodSec = 30, stances = {
             { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'hardens against weapons -- switch to magic!' },
             { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'wards off magic -- cut it down with steel!' },
         } },
-        aoe    = { periodSec = 14, dmgPct = 20, msg = 'erupts in a shockwave of void energy!' },
-        enrage = { sec = 220, att = 4500, haste = 130, msg = 'tightens its chains -- it presses the assault!' },
+        aoe    = { periodSec = 25, dmgPct = 8, msg = 'erupts in a shockwave of void energy!' },
+        enrage = { sec = 300, att = 2500, haste = 100, msg = 'tightens its chains and presses the assault!' },
     },
 
-    -- Floors 45-74: stance + dispel. Full mid-game pressure.
-    -- Adds use Insane-pool groupId (Bahamut) at reduced level.
-    [45] = {
+    -- Floors 80-89: T1-to-T2 bridge. This is where the climb becomes serious.
+    [80] = {
         name   = 'Voidwalker Lord',
-        stance = { startHpp = 90, periodSec = 14, stances = {
+        stance = { startHpp = 80, periodSec = 25, stances = {
             { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'phases beyond steel -- magic only!' },
             { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'turns magic aside -- weapons only!' },
         } },
-        aoe    = { periodSec = 12, dmgPct = 22, msg = 'detonates the void -- shockwave tears outward!' },
-        enrage = { sec = 200, att = 6000, haste = 150, msg = 'unbinds its full power -- survive or be swept away!' },
+        aoe    = { periodSec = 22, dmgPct = 10, msg = 'detonates the void -- shockwave tears outward!' },
+        enrage = { sec = 300, att = 3000, haste = 100, msg = 'unbinds its full power!' },
         phases = {
-            { hp = 35, action = 'dispel', count = 4, msg = 'rips your blessings away!' },
+            { hp = 50, action = 'nuke', dmgPct = 15, msg = 'collapses a pocket of void-space!' },
         },
     },
 
-    -- Floors 75-99: doom + nuke + tight enrage + CC. High pressure all game.
-    -- Kill it before enrage or it becomes a wall.
-    [75] = {
+    -- Floors 90-99: Abyssea T2 pressure, with restrained CC and no drain.
+    [90] = {
         name   = "World's End Gate",
-        stance = { startHpp = 80, periodSec = 13, stances = {
+        stance = { startHpp = 80, periodSec = 20, stances = {
             { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'phases beyond steel -- magic only!' },
             { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'wards off magic -- weapons only!' },
         } },
-        aoe    = { periodSec = 11, dmgPct = 25, msg = 'detonates the void around it!' },
-        cc     = { periodSec = 25, effect = xi.effect.TERROR, dur = 5, msg = 'fills the air with ancient dread -- you freeze!' },
-        enrage = { sec = 180, att = 7500, haste = 180, msg = "the World's End nears -- it goes all out!" },
+        aoe    = { periodSec = 20, dmgPct = 12, msg = 'detonates the void around it!' },
+        cc     = { periodSec = 35, effect = xi.effect.TERROR, dur = 3, msg = 'fills the air with ancient dread!' },
+        enrage = { sec = 360, att = 3500, haste = 120, msg = "the World's End nears -- it goes all out!" },
         phases = {
-            { hp = 50, action = 'nuke', dmgPct = 38, msg = 'collapses void-space in a cataclysmic blast!' },
-            { hp = 25, action = 'fury', att = 3500, haste = 120, msg = 'erupts in a void frenzy!' },
+            { hp = 50, action = 'nuke', dmgPct = 20, msg = 'collapses void-space in a cataclysmic blast!' },
+            { hp = 25, action = 'fury', att = 1500, haste = 60, msg = 'erupts in a void frenzy!' },
         },
-        doom   = { startHpp = 12, dur = 28, msg = 'marks you for oblivion -- escape or perish!' },
     },
 
-    -- Floors 100+: THE NIGHTMARE. Full kit, mean timers, tight doom.
-    -- Silence CC, 165s enrage. No quarter.
+    -- Floor 100+: T3-equivalent capstone. Hard, but no regen/drain/Doom stack.
     [100] = {
         name   = 'The Nightmare Itself',
-        stance = { startHpp = 90, periodSec = 12, stances = {
+        stance = { startHpp = 85, periodSec = 18, stances = {
             { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'deems your weapons unworthy -- magic only!' },
             { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'deems your magic unworthy -- steel only!' },
         } },
-        aoe    = { periodSec = 10, dmgPct = 28, msg = 'detonates reality -- a void-shockwave tears through you!' },
-        cc     = { periodSec = 20, effect = xi.effect.SILENCE, dur = 8, msg = 'silences the intruders -- magic cut!' },
-        drain  = { periodSec = 9, healPct = 2 },
-        enrage = { sec = 165, att = 9000, haste = 220, msg = 'ascends beyond comprehension -- death approaches!' },
+        aoe    = { periodSec = 18, dmgPct = 15, msg = 'detonates reality -- a void-shockwave tears through you!' },
+        cc     = { periodSec = 30, effect = xi.effect.SILENCE, dur = 5, msg = 'silences the intruders -- magic cut!' },
+        enrage = { sec = 480, att = 4000, haste = 140, msg = 'ascends beyond comprehension -- death approaches!' },
         phases = {
-            { hp = 50, action = 'nuke', dmgPct = 42, msg = 'collapses the void in a final cataclysm!' },
-            { hp = 30, action = 'dispel', count = 5, msg = 'strips every blessing -- you stand naked before the nightmare!' },
-            { hp = 15, action = 'fury', att = 5000, haste = 150, msg = 'the nightmare rages against its end!' },
+            { hp = 50, action = 'nuke', dmgPct = 25, msg = 'collapses the void in a final cataclysm!' },
+            { hp = 30, action = 'dispel', count = 3, msg = 'strips away your blessings!' },
+            { hp = 15, action = 'fury', att = 2500, haste = 100, msg = 'the nightmare rages against its end!' },
         },
-        doom   = { startHpp = 10, dur = 25, msg = 'seals your doom -- the nightmare claims you!' },
     },
 }
 
