@@ -46,6 +46,8 @@ try {
     if (-not (Test-Path $Repo)) { throw "Portal checkout not found at $Repo" }
     Set-Location $Repo
     Log "===== deploy-portal START ($Repo <- $Remote/$Branch) ====="
+    $prev = (git rev-parse HEAD).Trim()
+    Log "current (last-good) commit: $prev"
 
     # ---- 1. Never lose local work: WIP-backup anything uncommitted ----
     $dirty = git status --porcelain
@@ -73,6 +75,27 @@ try {
         & $Py -m pip install -q -r (Join-Path $App "requirements.txt")
     } else {
         Log "WARNING: no venv at $Py -- run deploy\setup_portal_windows.ps1 first"
+    }
+
+    # ---- 3b. SMOKE TEST the new code BEFORE restarting (2026-07-26) ----
+    # A module-level error (bad import, syntax) makes uvicorn crash-loop with
+    # nothing to serve -> 502. Catch it here and ROLL BACK so the still-running
+    # portal keeps serving the last-good code instead of going down.
+    if (Test-Path $Py) {
+        Log "smoke test: python -c 'import app'"
+        $prevEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
+        Push-Location $App
+        $smoke = & $Py -c "import app" 2>&1 | Out-String
+        $rc = $LASTEXITCODE
+        Pop-Location
+        $ErrorActionPreference = $prevEAP
+        if ($rc -ne 0) {
+            Log ("SMOKE FAILED (import app exit=$rc): " + $smoke.Trim())
+            Log "rolling back to last-good $prev and NOT restarting -- running portal keeps serving"
+            git reset --hard $prev | Out-Null
+            throw "portal smoke test failed -- deploy aborted + rolled back to $prev (no restart)"
+        }
+        Log "smoke OK"
     }
 
     # ---- 4. Restart the portal ----

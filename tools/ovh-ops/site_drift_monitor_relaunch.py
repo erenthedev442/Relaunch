@@ -168,6 +168,24 @@ def _kick(task):
         return False
 
 
+def _cycle(task):
+    """Force-restart a portal task: /end first (kills a crash-looping or zombie
+    instance -- otherwise /run is a no-op under MultipleInstances=IgnoreNew, the
+    2026-07-26 blind spot) then /run. Returns True if the /run launch succeeded."""
+    try:
+        subprocess.run(["schtasks", "/end", "/tn", task],
+                       capture_output=True, timeout=30)
+    except Exception:
+        pass
+    time.sleep(2)
+    try:
+        subprocess.run(["schtasks", "/run", "/tn", task],
+                       capture_output=True, timeout=30)
+        return True
+    except Exception:
+        return False
+
+
 def portal_check():
     """None = healthy; else a problem string. Self-heals BOTH a dead app
     (kick FFXIPortal) and a dead tunnel (kick FFXIPortalTunnel).
@@ -177,11 +195,13 @@ def portal_check():
     of backend state (the 2026-07-17 blind spot)."""
     # 1) Authoritative app-liveness check on 127.0.0.1 (no Cloudflare in path).
     if not http_ok(PORTAL_LOCAL, timeout=5):
-        # uvicorn is down. Root cause is usually the FFXIPortal task being
-        # stopped/terminated (a scheduler timeout-kill does NOT trip the
-        # task's RestartCount). Kick it (IgnoreNew makes this a no-op if it is
-        # somehow already running) and re-check before alerting.
-        launched = _kick("FFXIPortal")
+        # uvicorn is down. Two root causes: the FFXIPortal task was
+        # stopped/terminated (a scheduler timeout-kill does NOT trip the task's
+        # RestartCount), OR the supervisor is alive but crash-looping a dead
+        # child -- the task shows Running, so a plain /run is refused under
+        # IgnoreNew (the 2026-07-26 blind spot). FORCE-CYCLE (/end then /run)
+        # recovers both; re-check before alerting.
+        launched = _cycle("FFXIPortal")
         time.sleep(20)
         if http_ok(PORTAL_LOCAL, timeout=5):
             print("[drift] portal app was down on 127.0.0.1:8090; FFXIPortal "
