@@ -500,6 +500,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
         PTrust->addModifier(Mod::MPP, 50);
         PTrust->addModifier(Mod::STATUSRES, 25);
     }
+        PTrust->addModifier(Mod::DMG_AOE, -8500);
 
     // add mob pool mods ahead of applying stats
     mobutils::AddSqlModifiers(PTrust);
