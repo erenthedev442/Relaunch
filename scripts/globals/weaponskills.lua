@@ -949,6 +949,22 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
         wsResults.finalDmg = finaldmg
     end
 
+    -- Ordinary player WSs receive a level-scaled, target-HP-based additive
+    -- floor from StandardWeaponskillTuning. The module exposes it only during
+    -- eligible calculations, so REMA/Prime/final-Ambuscade native WSs never
+    -- enter this branch. Stock damage remains intact, allowing gear and WSD
+    -- augments to continue scaling the result toward the pre-REMA cap.
+    local standardBonus = attacker:getLocalVar('StandardWsDamageBonus')
+    if finaldmg > 0 and standardBonus > 0 then
+        local standardCap = attacker:getLocalVar('StandardWsDamageCap')
+        finaldmg = math.floor(finaldmg + standardBonus)
+        if standardCap > 0 then
+            finaldmg = math.min(finaldmg, standardCap)
+        end
+
+        wsResults.finalDmg = finaldmg
+    end
+
     if wsResults.hitsLanded > 0 then
         if finaldmg >= 0 then
             if primaryMsg then
@@ -1055,11 +1071,15 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
         local effectiveCap = boundedPrime > globalCap and boundedPrime or globalCap
         local aoeCap       = attacker:getLocalVar('AoEWsDamageCap')
         local ambuscadeCap = attacker:getLocalVar('AmbuscadeWsDamageCap')
+        local standardCap  = attacker:getLocalVar('StandardWsDamageCap')
         if aoeCap and aoeCap > 0 and (effectiveCap <= 0 or aoeCap < effectiveCap) then
             effectiveCap = aoeCap
         end
         if ambuscadeCap and ambuscadeCap > 0 and (effectiveCap <= 0 or ambuscadeCap < effectiveCap) then
             effectiveCap = ambuscadeCap
+        end
+        if standardCap and standardCap > 0 and (effectiveCap <= 0 or standardCap < effectiveCap) then
+            effectiveCap = standardCap
         end
         local trackDmg     = (preCap > finaldmg) and preCap or finaldmg
         if effectiveCap > 0 then

@@ -907,6 +907,11 @@ for _, r in ipairs(C.RIFTS) do
                     confirmRift(player, stratumKey)
                 end,
             })
+            if npc then
+                -- Dynamic NPCs default to animation 0, which makes this effect
+                -- model flicker or disappear. Stock Planar Rifts use state 100.
+                npc:setAnimation(100)
+            end
             utils.unused(npc)
         end)
     end

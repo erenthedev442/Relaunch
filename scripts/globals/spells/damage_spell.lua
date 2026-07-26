@@ -9,6 +9,7 @@ require('scripts/globals/magicburst')
 xi = xi or {}
 xi.spells = xi.spells or {}
 xi.spells.damage = xi.spells.damage or {}
+local standardMagic = require('modules/custom/lua/standard_magic_tuning_catalog')
 -----------------------------------
 -- File structure:
 -- 17 INDEPENDENT functions. Close them for better readability.
@@ -1118,7 +1119,12 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     local spellGroup   = spell:getSpellGroup()
     local spellElement = spell:getElement()
     local statUsed     = pTable[spellId][column.STAT_USED]
-    local bonusMacc    = pTable[spellId][column.BONUS_MACC] + cardinalChantBonus(caster, target, xi.direction.SOUTH, spellId, skillType)
+    local standardEligible = standardMagic.isDirectSpellEligible(caster, target, spell)
+    local bonusMacc    = pTable[spellId][column.BONUS_MACC] +
+        cardinalChantBonus(caster, target, xi.direction.SOUTH, spellId, skillType)
+    if standardEligible then
+        bonusMacc = bonusMacc - standardMagic.getMagicAccuracyPenalty(caster, target)
+    end
 
     -- Skip everything if we nullify the spell.
     if xi.spells.damage.calculateNullification(target, spellElement, true, false) == 0 then
@@ -1247,6 +1253,13 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         end
     end
 
+    -- Add the ordinary cast tier before nuke-wall and defensive handling so
+    -- those mechanics continue to function. Gear, MAB and existing spell
+    -- bonuses remain in finalDamage and can carry the result toward the cap.
+    if standardEligible and finalDamage > 0 then
+        finalDamage = finalDamage + standardMagic.getDamageBonus(caster, target, spell)
+    end
+
     -- Handle "Nuke Wall". It must be handled after all previous calculations, but before clamp.
     local nukeWallFactor = calculateNukeWallFactor(target, spellElement, finalDamage)
     finalDamage          = math.floor(finalDamage * nukeWallFactor)
@@ -1265,6 +1278,9 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     finalDamage = utils.handlePhalanx(target, finalDamage)
     finalDamage = utils.handleOneForAll(target, finalDamage)
     finalDamage = utils.handleStoneskin(target, finalDamage)
+    if standardEligible then
+        finalDamage = math.min(finalDamage, standardMagic.getDamageCap(caster))
+    end
 
     -- Handle final adjustments. Most are located in core. TODO: Decide if we want core handling this.
     -- Check if the mob has a damage cap

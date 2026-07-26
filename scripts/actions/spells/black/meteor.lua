@@ -4,6 +4,7 @@
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
+local standardMagic = require('modules/custom/lua/standard_magic_tuning_catalog')
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
     -- TODO: Correct message is "Incorrect job, job level too low, or required ability not activated."  Unable to locate this in our basic or system message functions.
@@ -42,6 +43,12 @@ spellObject.onSpellCast = function(caster, target, spell)
     damage = math.floor(damage * xi.spells.damage.calculateNullification(target, xi.element.NONE, true, false))
     damage = math.floor(damage * xi.spells.damage.calculateMTDR(caster, spell))
     damage = math.floor(damage * xi.combat.damage.calculateDamageAdjustment(target, false, true, false, false))
+
+    if standardMagic.isDirectSpellEligible(caster, target, spell) and damage > 0 then
+        damage = math.min(
+            damage + standardMagic.getDamageBonus(caster, target, spell),
+            standardMagic.getDamageCap(caster))
+    end
 
     -- Handle Phalanx, One for All, Stoneskin.
     damage = utils.clamp(utils.handlePhalanx(target, damage), 0, 99999)

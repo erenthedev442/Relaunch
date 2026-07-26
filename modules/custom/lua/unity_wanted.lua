@@ -565,6 +565,11 @@ for zoneId, jz in pairs(jmap.junctions) do
                         junctionMenu(player, capturedZoneId, trigNpc)
                     end,
                 })
+                if jnpc then
+                    -- Dynamic NPCs default to animation 0, which makes this
+                    -- effect model flicker or disappear. Stock junctions use 116.
+                    jnpc:setAnimation(116)
+                end
                 utils.unused(jnpc)
             else
                 local npc = GetNPCByID(pt.id)

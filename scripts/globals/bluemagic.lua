@@ -11,6 +11,7 @@ require('scripts/globals/spells/damage_spell')
 xi = xi or {}
 xi.spells = xi.spells or {}
 xi.spells.blue = xi.spells.blue or {}
+local standardMagic = require('modules/custom/lua/standard_magic_tuning_catalog')
 -----------------------------------
 
 -- The TP modifier (currently unused)
@@ -427,11 +428,17 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
     local spellGroup         = spell:getSpellGroup()
     local skillType          = xi.skill.BLUE_MAGIC
     local _, skillchainCount = xi.magicburst.formMagicBurst(target, spellElement) -- External function. Not present in magic.lua.
+    local standardMacc       = 0
+    if standardMagic.isMagicalBlueEligible(caster, target, spell, params) then
+        standardMacc = -standardMagic.getMagicAccuracyPenalty(caster, target)
+    end
 
     -- Final D value
     local finalDamage    = (initialD + wsc) * (params.multiplier + azureBonus + correlationMultiplier) + statBonus
 
-    finalDamage = math.floor(finalDamage * xi.combat.magicHitRate.calculateResistRate(caster, target, spellGroup, skillType, 0, spellElement, params.attribute, 0, 0))
+    finalDamage = math.floor(finalDamage * xi.combat.magicHitRate.calculateResistRate(
+        caster, target, spellGroup, skillType, 0, spellElement,
+        params.attribute, 0, standardMacc))
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateElementalStaffBonus(caster, spellElement))
     finalDamage = math.floor(finalDamage * xi.combat.damage.magicalElementSDT(target, spellElement))
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateDayAndWeather(caster, spellElement, false))
@@ -648,6 +655,11 @@ xi.spells.blue.applySpellDamage = function(caster, target, spell, dmg, params, t
     local damageType    = params.damageType or xi.damageType.NONE
     local tpHits        = params.tphitslanded or 0
     local extraTPGained = xi.combat.tp.calculateTPGainOnMagicalDamage(caster, target, dmg) * math.max(tpHits - 1, 0) -- Calculate extra TP gained from multihits. takeSpellDamage accounts for one already.
+    local standardEligible = standardMagic.isMagicalBlueEligible(caster, target, spell, params)
+
+    if standardEligible and dmg > 0 then
+        dmg = dmg + standardMagic.getDamageBonus(caster, target, spell)
+    end
 
     -- handle MDT, One For All, Liement
     if attackType == xi.attackType.MAGICAL then
@@ -667,6 +679,9 @@ xi.spells.blue.applySpellDamage = function(caster, target, spell, dmg, params, t
 
     dmg = utils.handlePhalanx(target, dmg)
     dmg = utils.handleStoneskin(target, dmg)
+    if standardEligible then
+        dmg = math.min(dmg, standardMagic.getDamageCap(caster))
+    end
 
     -- Check if the mob has a damage cap
     dmg = target:checkDamageCap(dmg)
