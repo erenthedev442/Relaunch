@@ -37,6 +37,27 @@ xi.mobskills.shadowBehavior =
     WIPE_SHADOWS   = 999,
 }
 
+local function applyFellowDamageScaling(mob, skill, damage)
+    if mob:getLocalVar('fellowApplied') ~= 1 then
+        return damage
+    end
+
+    -- Magus AoE nukes trade coverage for power. The role marks Thunderstrike
+    -- for quarter damage while leaving single-target and other endgame moves
+    -- at their established output.
+    local aoeScale = mob:getLocalVar('fellowAoEDamageScale')
+    if aoeScale > 0 and skill:isAoE() then
+        damage = math.floor(damage * aoeScale / 100)
+    end
+
+    local progressionCap = mob:getLocalVar('fellowProgressionDamageCap')
+    if progressionCap > 0 then
+        damage = math.min(damage, progressionCap, 99999)
+    end
+
+    return damage
+end
+
 -- TODO: Currently still used by avatar skills. Marked for deletion once they get converted.
 ---@enum xi.mobskills.physicalTpBonus
 xi.mobskills.physicalTpBonus =
@@ -743,6 +764,7 @@ xi.mobskills.mobRangedMove = function(mob, target, skill, action, skillParams)
     -- Handle Miss Messaging
     ----------------------------------
     totalDamage = resolveMissMessage(skill, hitsLanded, hitsYaegasumi, hitsAnticipated, hitsAbsorbed, shadowsAbsorbed, params.primaryMessage, totalDamage)
+    totalDamage = applyFellowDamageScaling(mob, skill, totalDamage)
 
     -- Mob only gets TP for hitting the initial target. AOE hits do not count.
     xi.mobskills.calculateSkillTPReturn(damage, mob, skill, target, params.attackType, hitsLanded)
@@ -976,6 +998,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, action, skillParams)
     -- Handle Miss Messaging
     ----------------------------------
     totalDamage = resolveMissMessage(skill, hitsLanded, hitsYaegasumi, hitsAnticipated, hitsAbsorbed, shadowsAbsorbed, params.primaryMessage, totalDamage)
+    totalDamage = applyFellowDamageScaling(mob, skill, totalDamage)
 
     ----------------------------------
     -- Handle TP Returns
@@ -1052,7 +1075,8 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, action, skillParams)
     local dStatMultiplier      = utils.defaultIfNil(skillParams.dStatMultiplier, 0)
     local dStatAttackerMod     = utils.defaultIfNil(skillParams.dStatAttackerMod, xi.mod.INT)
     local dStatDefenderMod     = utils.defaultIfNil(skillParams.dStatDefenderMod, xi.mod.INT)
-    local canMagicBurst        = utils.defaultIfNil(skillParams.canMagicBurst and true, false)
+    local canMagicBurst        = utils.defaultIfNil(skillParams.canMagicBurst and true, false) or
+        mob:getLocalVar('fellowCanMagicBurst') == 1
     local primaryMessage       = utils.defaultIfNil(skillParams.primaryMessage, xi.msg.basic.DAMAGE)
 
     -- If a stat_wSC is not specified in skill script, it will default to 0. (Sanitized in xi.combat.physical.calculateWSC)
@@ -1259,6 +1283,8 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, action, skillParams)
     damage = utils.handlePhalanx(target, damage)
     damage = utils.handleOneForAll(target, damage)
 
+    damage = applyFellowDamageScaling(mob, skill, damage)
+
     if not skipStoneskin then
         -- TODO: Some Stoneskin effects only absorb certain damage types.
         damage = utils.handleStoneskin(target, damage)
@@ -1446,6 +1472,7 @@ xi.mobskills.mobBreathMove = function(mob, target, skill, action, skillParams)
     damage = math.floor(utils.handleAutomatonAutoAnalyzer(target, skill, damage))
     damage = utils.handlePhalanx(target, damage)
     damage = utils.handleOneForAll(target, damage)
+    damage = applyFellowDamageScaling(mob, skill, damage)
 
     if not skipStoneskin then
         -- TODO: Some Stoneskin effects only absorb certain damage types.

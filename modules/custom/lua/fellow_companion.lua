@@ -43,6 +43,7 @@
 -----------------------------------
 require('modules/module_utils')
 local FN = require('modules/custom/lua/fellow_name')  -- custom free-text name (replaced the preset list)
+local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
 
 local m   = Module:new('fellow_companion')
 local SYS = xi.msg.channel.SYSTEM_3
@@ -370,7 +371,7 @@ local CONFIG =
     combatLoopMs        = 2000,
     wsCooldownSec       = 8,
     nukeCooldownSec     = 10,
-    activityWindowSec   = 30,
+    burstCooldownSec    = 3,
     summonCooldownSec   = 300,
 
     healHpp             = 70,
@@ -415,8 +416,8 @@ local V =
     outfit   = 'Fellow_Outfit',  -- 0 = none (use Appearance); N = CONFIG.outfits[N]
     mastered = 'Fellow_Mastered', -- 1 once the "all 14 capped" unlock message has fired (one-time)
     schema   = 'Fellow_StatSchema',
-    summonedAt = 'Fellow_LastSummon',
 }
+local SUMMONED_AT_LOCAL_VAR = 'fellowSummonedAt'
 local function statVar(stat) return 'Fellow_' .. stat end
 
 -- ════════════════════════════ Data-model helpers ════════════════════════════
@@ -502,6 +503,28 @@ local function chosenWs(p)
     if rd and rd.defaultWs then return rd.defaultWs end
     local mdl = CONFIG.models[getN(p, V.modelPet)]
     return mdl and mdl.ws
+end
+
+local MAGUS_MOVE_ELEMENTS =
+{
+    [xi.mobSkill.THUNDER_IV]    = xi.element.THUNDER,
+    [xi.mobSkill.THUNDERSTRIKE] = xi.element.THUNDER,
+}
+
+local function chosenMagusElement(p)
+    return MAGUS_MOVE_ELEMENTS[chosenWs(p)]
+end
+
+local function masterHasTargetEnmity(master, target)
+    if not master or not target or target:isDead() then
+        return false
+    end
+
+    local ok, hasEnmity = pcall(function()
+        return target:getCE(master) + target:getVE(master) > 0
+    end)
+
+    return ok and hasEnmity
 end
 -- Naming is free-text via the !fellowname command (fellow_name.lua). The old
 -- preset name list (CONFIG.names / Fellow_NameIdx) was replaced 2026-07-09;
@@ -699,7 +722,13 @@ local function applyFellow(p, pet)
                 return
             end
 
-            local bonus = math.max(0, 2500 - (damage or 0))
+            local desiredDamage = 2500
+            if p:getMainLvl() < 99 then
+                desiredDamage = math.min(desiredDamage, progression.getDamageBonus(
+                    p:getMainLvl(), target:getMainLvl(), target:getMaxHP()))
+            end
+
+            local bonus = math.max(0, desiredDamage - (damage or 0))
             if bonus > 0 then
                 target:takeDamage(bonus, tank, xi.attackType.BREATH, xi.damageType.DARK)
             end
@@ -717,11 +746,21 @@ local function applyFellow(p, pet)
     pet:addListener('WEAPONSKILL_USE', 'FELLOW_ROLE_MOVE_COMPLETE', function(actor)
         actor:setTP(0)
         actor:setLocalVar('fellowMovePendingAt', 0)
+        actor:setLocalVar('fellowProgressionDamageCap', 0)
+        actor:setLocalVar('fellowAoEDamageScale', 0)
+        actor:setLocalVar('fellowCanMagicBurst', 0)
         if getRole(p) == 'magus' then
             actor:setLocalVar('fellowNukeAt', os.time())
         else
             actor:setLocalVar('fellowWsAt', os.time())
         end
+    end)
+
+    -- A defeated Fellow stays down like a trust. The player must explicitly
+    -- summon it again once the cooldown is ready.
+    pet:addListener('DEATH', 'FELLOW_DEATH', function()
+        setN(p, V.active, 0)
+        p:setLocalVar('fellowSummonPending', 0)
     end)
 
     -- Live display name (arbitrary string; silent=true to avoid console spam).
@@ -766,21 +805,23 @@ scheduleCombatLoop = function(master, pet)
             local function hasBeh(name) return beh == name or (behs and behs[name]) end
             local lvl  = getLevel(master)
             local now  = os.time()
-            local active = master:isEngaged() or p:isEngaged()
-                or now - (master:getLocalVar('fellowActivityAt') or 0) <= CONFIG.activityWindowSec
+            local masterTarget = master:getTarget()
+            local active = masterHasTargetEnmity(master, masterTarget)
 
-            -- Remaining engaged is itself combat activity. Hunter uses ranged
-            -- attacks, so its melee auto-attack must remain disabled.
+            -- Match normal trust behavior: drawing a weapon is not enough.
+            -- The Fellow assists only after the master has generated enmity.
+            -- Hunter uses ranged attacks, so its melee auto-attack stays disabled.
             p:setAutoAttackEnabled(active and not hasBeh('ranged'))
             if not active then
                 if p:isEngaged() then p:disengage() end
+                p:setLocalVar('fellowCombatStartedAt', 0)
                 return
             end
-            if master:isEngaged() and not p:isEngaged() then
-                local activeTarget = master:getTarget()
-                if activeTarget and not activeTarget:isDead() then
-                    p:engage(activeTarget:getTargID())
-                end
+            if (p:getLocalVar('fellowCombatStartedAt') or 0) == 0 then
+                p:setLocalVar('fellowCombatStartedAt', now)
+            end
+            if not p:isEngaged() then
+                p:engage(masterTarget:getTargID())
             end
 
             -- Oracle is a healer first. Its pulse selects the most injured
@@ -894,12 +935,31 @@ scheduleCombatLoop = function(master, pet)
                 -- Magus uses a visible magical mob skill on its own cadence rather
                 -- than invisible takeDamage. This exercises the normal action,
                 -- resistance, message and magic-burst systems.
+                local magusElement = hasBeh('nuke') and chosenMagusElement(master) or nil
+                local burstTier = 0
+                if magusElement and xi.magicburst and xi.magicburst.formMagicBurst then
+                    burstTier = xi.magicburst.formMagicBurst(tgt, magusElement)
+                end
+                local burstReady = burstTier > 0
+                local lastActivity = math.max(
+                    master:getLocalVar('fellowActivityAt') or 0,
+                    p:getLocalVar('fellowCombatStartedAt') or now)
+                local idleReady = now - lastActivity >= CONFIG.nukeCooldownSec
+
                 if hasBeh('nuke') and p:isEngaged() and tgt and not tgt:isDead()
                    and not movePending
                    and p:canUseAbilities()
-                   and now - (p:getLocalVar('fellowNukeAt') or 0) >= CONFIG.nukeCooldownSec then
+                   and (burstReady or idleReady)
+                   and now - (p:getLocalVar('fellowNukeAt') or 0) >=
+                       (burstReady and CONFIG.burstCooldownSec or CONFIG.nukeCooldownSec) then
                     local spellMove = chosenWs(master)
                     if spellMove and spellMove > 0 then
+                        local scaledCap = progression.getDamageBonus(
+                            master:getMainLvl(), tgt:getMainLvl(), tgt:getMaxHP())
+                        p:setLocalVar('fellowProgressionDamageCap', math.min(99999, scaledCap))
+                        p:setLocalVar('fellowAoEDamageScale',
+                            spellMove == xi.mobSkill.THUNDERSTRIKE and 25 or 0)
+                        p:setLocalVar('fellowCanMagicBurst', burstReady and 1 or 0)
                         p:setLocalVar('fellowMovePendingAt', now)
                         p:useMobAbility(spellMove, tgt)
                     end
@@ -915,6 +975,17 @@ scheduleCombatLoop = function(master, pet)
                    and now - (p:getLocalVar('fellowWsAt') or 0) >= CONFIG.wsCooldownSec then
                     local ws = chosenWs(master)
                     if ws and ws > 0 and tgt and not tgt:isDead() then
+                        -- Below level 99, every role move is constrained by the
+                        -- same player-level/target-HP curve as Magus. At 99 this
+                        -- cap is disabled so existing endgame role power is kept.
+                        local progressionCap = 0
+                        if master:getMainLvl() < 99 then
+                            progressionCap = math.min(99999, progression.getDamageBonus(
+                                master:getMainLvl(), tgt:getMainLvl(), tgt:getMaxHP()))
+                        end
+                        p:setLocalVar('fellowProgressionDamageCap', progressionCap)
+                        p:setLocalVar('fellowAoEDamageScale', 0)
+
                         if rdef.wsDamage then
                             local normalDmg = normalWeaponDamage(master)
                             p:setDamage(math.max(normalDmg, scaledRoleValue(master, rdef.wsDamage)))
@@ -1010,8 +1081,8 @@ local function canChangeFellow(player)
     return true
 end
 
--- Keeper: while active, (re)spawn the chosen chassis whenever the player has NO
--- pet and pets are allowed here -- survives zoning/death, yields to real job pets.
+-- Keeper: completes an explicit summon request and maintains its safety checks.
+-- It never recreates a Fellow after death, despawn, or zoning.
 local function keeper(p, name, gen)
     if not p or genByName[name] ~= gen then return end
 
@@ -1035,13 +1106,18 @@ local function keeper(p, name, gen)
         return
     end
 
-    -- (Re)spawn the Fellow-trust whenever it isn't currently out. A trust does
-    -- not use the pet slot, so this never conflicts with a job pet. spawnTrust
-    -- is a raw spawn; applyFellow overlays the model/name/stats.
+    -- Complete only a pending player-requested summon. A trust does not use the
+    -- pet slot, so this never conflicts with a job pet. spawnTrust is a raw
+    -- spawn; applyFellow overlays the model/name/stats.
     if not hasFellowOut(p) then
         local pending = p:getLocalVar('fellowSummonPending') == 1
-        local ready = os.time() - getN(p, V.summonedAt) >= CONFIG.summonCooldownSec
-        if pending or ready then
+        if pending then
+            if p:isEngaged() or p:hasEnmity() then
+                setN(p, V.active, 0)
+                p:setLocalVar('fellowSummonPending', 0)
+                return
+            end
+
             pcall(function()
                 -- Naji normally installs a NOT_HAS_TOP_ENMITY Provoke gambit in
                 -- onMobSpawn. Mark only this synchronous raw spawn so the base
@@ -1054,10 +1130,13 @@ local function keeper(p, name, gen)
 
                 if spawned and trust then
                     p:setLocalVar('fellowSummonPending', 0)
-                    setN(p, V.summonedAt, os.time())
                     applyFellow(p, trust)
                 end
             end)
+        else
+            -- Never recreate a defeated/despawned Fellow automatically.
+            setN(p, V.active, 0)
+            return
         end
     end
 
@@ -1082,13 +1161,14 @@ local function summon(p)
         p:printToPlayer('[Fellow] Adventuring Fellows cannot be called in areas where trusts are restricted.', SYS)
         return
     end
-    local remaining = CONFIG.summonCooldownSec - (os.time() - getN(p, V.summonedAt))
+    local remaining = CONFIG.summonCooldownSec -
+        (os.time() - (p:getLocalVar(SUMMONED_AT_LOCAL_VAR) or 0))
     if remaining > 0 then
         p:printToPlayer(string.format('[Fellow] Your Fellow needs %d more second(s) before another summon.', remaining), SYS)
         return
     end
     setN(p, V.active, 1)
-    setN(p, V.summonedAt, os.time())
+    p:setLocalVar(SUMMONED_AT_LOCAL_VAR, os.time())
     p:setLocalVar('fellowSummonPending', 1)
     markActivity(p)
     -- No "dismiss your pet first" -- the Fellow is a trust now and coexists
@@ -1857,6 +1937,7 @@ m:addOverride('xi.player.onGameIn', function(player, gameLogin, zoning)
         if zoning then
             setN(player, V.active, 0)
             player:setLocalVar('fellowSummonPending', 0)
+            player:setLocalVar(SUMMONED_AT_LOCAL_VAR, 0)
         elseif getN(player, V.active) == 1 then
             armKeeper(player, CONFIG.firstMs)
         end
