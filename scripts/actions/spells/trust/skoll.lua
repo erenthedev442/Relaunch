@@ -59,6 +59,7 @@ spellObject.onMobSpawn = function(mob)
 	-- = Stat mods =
 	mob:addMod(xi.mod.HP, power * 1.5)
 	mob:addMod(xi.mod.MP, power * 4)
+    mob:addMod(xi.mod.MPP, 50)
 	mob:addMod(xi.mod.DEF, power)
     mob:addMod(xi.mod.MDEF, power)
     mob:addMod(xi.mod.MEVA, power)
