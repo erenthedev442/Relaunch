@@ -1,1224 +1,1188 @@
-﻿Collaborator review  2026-07-27 08:18:46
-Range: HEAD..origin/relaunch  (2 collaborator commit(s))
+﻿Collaborator review  2026-07-27 10:57:57
+Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit 31ca387db8962b40d88fa989920a9fed52a07c31
+commit c1aa690a170d2f3e76c9f9a2f3e90e85bbc1168a
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Sun Jul 26 23:41:34 2026 +0100
+Date:   Mon Jul 27 18:53:59 2026 +0100
 
-    feat(combat): scale progression damage and restore encounter effects
+    feat(combat): tighten progression and companion scaling
+    
+    Keep endgame farming strong while restoring meaningful weapon, mastery, pet, Ranger, and Fellow progression.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
+diff --git a/modules/custom/cpp/fjb_combat.cpp b/modules/custom/cpp/fjb_combat.cpp
+index e09d91bba6..01fcf48a9c 100644
+--- a/modules/custom/cpp/fjb_combat.cpp
++++ b/modules/custom/cpp/fjb_combat.cpp
+@@ -130,6 +130,12 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
+         effectiveCap = ambuscadeWsCap;
+     }
+ 
++    const auto standardWsCap = static_cast<int32>(PAttacker->GetLocalVar("StandardWsDamageCap"));
++    if (standardWsCap > 0 && (effectiveCap <= 0 || standardWsCap < effectiveCap))
++    {
++        effectiveCap = standardWsCap;
++    }
++
+     return effectiveCap;
+ }
+ 
+@@ -174,6 +180,14 @@ int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRan
+     if (damage > 0 && isRanged && PAttacker != nullptr && PAttacker->objtype == TYPE_PC &&
+         PAttacker->GetMJob() == JOB_RNG)
+     {
++        // Preserve the intended 99,999 standard-WS ceiling. Previously the
++        // post-Lua 0.80 adjustment turned a capped ranged WS into 79,999.
++        const auto standardWsCap = static_cast<int32>(PAttacker->GetLocalVar("StandardWsDamageCap"));
++        if (standardWsCap == 99999 && damage >= standardWsCap)
++        {
++            return standardWsCap;
++        }
++
+         return static_cast<int32>(damage * RANGER_RANGED_DMG_MULTIPLIER);
+     }
+     return damage;
+diff --git a/modules/custom/lua/RngOverhaul.lua b/modules/custom/lua/RngOverhaul.lua
+index 2b510ed645..cfd7b79416 100644
+--- a/modules/custom/lua/RngOverhaul.lua
++++ b/modules/custom/lua/RngOverhaul.lua
+@@ -51,7 +51,7 @@ local m = Module:new('rng_overhaul')
+ -- RETUNED 2026-07-13 (owner: an ungeared 99 RNG was sitting at 28,579 RATT --
+ -- gear could NOT move the needle because the ranged pDIF cap was already maxed).
+ -- New identity: RNG keeps its "fast, multi-shot" utility (Snapshot / Rapid Shot /
+--- Double Shot / StoreTP all untouched at 50/50/50/100), but the raw-damage
++-- Double Shot / StoreTP at 50/50/20/50), but the raw-damage
+ -- floor is reduced dramatically so GEAR meaningfully adds. Ungeared 99 RNG
+ -- now sits ~2,500 RATT (500 base + 2,000 flat) and a fully-geared kit reaches
+ -- ~4,000+ RATT -- plenty strong, but pDIF now scales with the gear/food/buffs
+@@ -73,17 +73,14 @@ local CONFIG =
+     rangedDmgRating = 100,   -- Mod.RANGED_DMG_RATING (376) : flat damage added to each
+                              --                   shot. Retuned 2,000 -> 100 -- was
+                              --                   drowning gear/ammo D-rating entirely.
+-    damageLimit     = 100,   -- Mod.DAMAGE_LIMITP (1081) : pDIF cap 3.25*(100+100)/100
+-                             --                   = 6.5x (was 22.75x -- effectively no
+-                             --                   cap). Still doubles vanilla headroom.
+-    storeTP         = 100,   -- Mod.STORETP (73): faster TP gain -> more weaponskills.
+-                             --                   UNCHANGED -- utility, defines RNG.
++    damageLimit     = 50,    -- Keep ranged pDIF headroom without doubling every
++                             --                   Barrage arrow's damage ceiling.
++    storeTP         = 50,    -- Useful TP acceleration without sustained WS spam.
+     snapshot        = 50,    -- Mod.SNAPSHOT (365) : % ranged-delay reduction.
+                              --                   UNCHANGED -- utility, defines RNG.
+     rapidShot       = 50,    -- Mod.RAPID_SHOT (359) : % chance of an instant shot.
+                              --                   UNCHANGED -- utility, defines RNG.
+-    doubleShotRate  = 50,    -- Mod.DOUBLE_SHOT_RATE (422) : +% Double Shot proc.
+-                             --                   UNCHANGED -- utility, defines RNG.
++    doubleShotRate  = 20,    -- Frequent extra shots without dominating normal attacks.
+ }
+ 
+ -- Clamp the RATT mod's running TOTAL (our flat + the player's gear RATT) to
 diff --git a/modules/custom/lua/StandardWeaponskillTuning.lua b/modules/custom/lua/StandardWeaponskillTuning.lua
-new file mode 100644
-index 0000000000..5d88feb6a5
---- /dev/null
+index 5d88feb6a5..80df4a7d04 100644
+--- a/modules/custom/lua/StandardWeaponskillTuning.lua
 +++ b/modules/custom/lua/StandardWeaponskillTuning.lua
-@@ -0,0 +1,144 @@
-+-----------------------------------
-+-- Level-scaled baseline tuning for ordinary player weaponskills.
-+--
-+-- Final REMA, Prime and Ambuscade weapon/native-WS pairs are explicitly
-+-- excluded and continue through their existing private tuning modules.
-+-----------------------------------
-+require('modules/module_utils')
-+
-+local catalog      = require('modules/custom/lua/standard_ws_tuning_catalog')
-+local remaCatalog  = require('modules/custom/lua/rema_ws_tier_catalog')
-+local primeCatalog = require('modules/custom/lua/prime_ws_tuning_catalog')
-+local ambuCatalog  = require('modules/custom/lua/ambuscade_ws_tuning_catalog')
-+
-+xi.standardWsTuning         = xi.standardWsTuning or {}
-+xi.standardWsTuning.catalog = catalog
-+
-+if xi.standardWsTuning.moduleInstalled then
-+    return Module:new('standard_weaponskill_tuning_reload_guard')
-+end
-+
-+local m = Module:new('standard_weaponskill_tuning')
-+
-+local function pack(...)
-+    return { n = select('#', ...), ... }
-+end
-+
-+local activeCalculations = setmetatable({}, { __mode = 'k' })
-+
-+local function specialEntry(attacker, wsId, slot)
-+    local itemId = attacker:getEquipID(slot)
-+    return remaCatalog.getEntry(itemId, wsId, slot) or
-+        primeCatalog.getEntry(itemId, wsId, slot) or
-+        ambuCatalog.getEntry(itemId, wsId, slot)
-+end
-+
-+xi.standardWsTuning.isEligible = function(attacker, target, wsId, slot, wsParams)
-+    return
-+        attacker ~= nil and
-+        target ~= nil and
-+        attacker:isPC() and
-+        target:isMob() and
-+        not (wsParams and wsParams.isJump) and
-+        specialEntry(attacker, wsId, slot) == nil
-+end
-+
-+xi.standardWsTuning.withStandardEffects = function(
-+    attacker, target, wsId, slot, wsParams, magicAccuracy, callback)
-+    if
-+        not xi.standardWsTuning.isEligible(attacker, target, wsId, slot, wsParams) or
-+        activeCalculations[attacker]
-+    then
-+        return callback()
+@@ -60,11 +60,11 @@ xi.standardWsTuning.withStandardEffects = function(
+     local priorAcc    = attacker:getMod(accuracyMod)
+     local penalty     = catalog.getAccuracyPenalty(
+         attacker:getMainLvl(), target:getMainLvl())
+-    local bonus       = catalog.getDamageBonus(
+-        attacker:getMainLvl(), target:getMainLvl(), target:getMaxHP())
++    local bonus       = catalog.getWeaponskillFloor(attacker, target, slot)
++    local damageCap   = catalog.getWeaponskillCap(attacker, slot)
+ 
+     attacker:setLocalVar(bonusVar, bonus)
+-    attacker:setLocalVar(capVar, catalog.DAMAGE_CAP)
++    attacker:setLocalVar(capVar, damageCap)
+     if penalty > 0 then
+         attacker:addMod(accuracyMod, -penalty)
+     end
+diff --git a/modules/custom/lua/Welcome_Moogle.lua b/modules/custom/lua/Welcome_Moogle.lua
+index 4b06cc7187..61b8936187 100644
+--- a/modules/custom/lua/Welcome_Moogle.lua
++++ b/modules/custom/lua/Welcome_Moogle.lua
+@@ -132,6 +132,18 @@ showItems = function(player, categoryName, subcategoryName, page)
+         subcategoryName,
+         pages > 1 and string.format(' (page %d/%d)', page, pages) or ''), S)
+ 
++    -- Native shop packets identify entries by item ID and cannot override the
++    -- item name. Print compact, page-local hints immediately before the shop so
++    -- players can see the two guaranteed augments while choosing.
++    for index = first, last do
++        local entry = items[index]
++        player:printToPlayer(string.format(
++            '%s [%s, %s]',
++            entry.name,
++            entry.augments[1].label,
++            entry.augments[2].label), S)
 +    end
 +
-+    local bonusVar    = catalog.DAMAGE_BONUS_LOCAL_VAR
-+    local capVar      = catalog.DAMAGE_CAP_LOCAL_VAR
-+    local accuracyMod = magicAccuracy and xi.mod.MACC or xi.mod.WSACC
-+    local priorBonus  = attacker:getLocalVar(bonusVar)
-+    local priorCap    = attacker:getLocalVar(capVar)
-+    local priorAcc    = attacker:getMod(accuracyMod)
-+    local penalty     = catalog.getAccuracyPenalty(
-+        attacker:getMainLvl(), target:getMainLvl())
-+    local bonus       = catalog.getDamageBonus(
-+        attacker:getMainLvl(), target:getMainLvl(), target:getMaxHP())
+     player:timer(50, function(p)
+         p:createShop(count)
+         for index = first, last do
+diff --git a/modules/custom/lua/blu_spell_progression.lua b/modules/custom/lua/blu_spell_progression.lua
+index dcc52ef27a..658532d079 100644
+--- a/modules/custom/lua/blu_spell_progression.lua
++++ b/modules/custom/lua/blu_spell_progression.lua
+@@ -67,6 +67,7 @@ local spellsByLevel =
+     [73] = { xi.magic.spell.MIND_BLAST,       xi.magic.spell.RAM_CHARGE,       xi.magic.spell.TEMPORAL_SHIFT    },
+     [74] = { xi.magic.spell.ACTINIC_BURST,    xi.magic.spell.MAGIC_HAMMER,     xi.magic.spell.REACTOR_COOL      },
+     [75] = { xi.magic.spell.EXUVIATION,       xi.magic.spell.PLASMA_CHARGE,    xi.magic.spell.VERTICAL_CLEAVE   },
++    [76] = { xi.magic.spell.PLENILUNE_EMBRACE                                                                    },
+     [77] = { xi.magic.spell.ACRID_STREAM,     xi.magic.spell.LEAFSTORM                                          },
+     [78] = { xi.magic.spell.CIMICINE_DISCHARGE, xi.magic.spell.REGENERATION                                     },
+     [79] = { xi.magic.spell.ANIMATING_WAIL,   xi.magic.spell.BATTERY_CHARGE                                     },
+@@ -139,20 +140,12 @@ m:addOverride('xi.player.onPlayerLevelUp', function(player)
+ end)
+ 
+ -- ---- Hook: login / zone-in ----------------------------------------
+--- On actual login (not zoning), do a full catch-up pass.  This makes
+--- retroactively adding new spells to the table propagate automatically
+--- the next time a BLU logs in, without any GM command.
+--- Also covers /BLU sub so players never have to swap main just to get
+--- their spell list populated before setting spells.
++-- Use the character's stored BLU level rather than only the currently active
++-- main/sub job. This catches up missing spells after login, zoning, hot reload,
++-- or changing to BLU after logging in on another job.
+ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
+     super(player, firstLogin, zoning)
+-    if not zoning then
+-        if player:getMainJob() == xi.job.BLU then
+-            grantUpToLevel(player, player:getMainLvl())
+-        elseif player:getSubJob() == xi.job.BLU then
+-            grantUpToLevel(player, player:getSubLvl())
+-        end
+-    end
++    grantUpToLevel(player, player:getJobLevel(xi.job.BLU) or 0)
+ end)
+ 
+ return m
+diff --git a/modules/custom/lua/fellow_companion.lua b/modules/custom/lua/fellow_companion.lua
+index 1da30cbef1..8ec932e55c 100644
+--- a/modules/custom/lua/fellow_companion.lua
++++ b/modules/custom/lua/fellow_companion.lua
+@@ -556,20 +556,38 @@ local function masterPowerProgress(p)
+     return math.max(0, math.min(1, (level - 1) / 98))
+ end
+ 
++-- Offensive power requires all four progression axes. Small non-zero gates let
++-- a new Fellow participate, but full output requires Fellow level 120, every
++-- attribute capped, a Lv99 master, and 2,100 spent Job Points.
++local function fellowPowerProgress(p)
++    local levelGate      = 0.10 + 0.90 * levelProgress(p)
++    local investmentGate = 0.10 + 0.90 * investmentProgress(p)
++    local masteryGate    = 0.15 + 0.85 * progression.getMasteryProgress(p)
 +
-+    attacker:setLocalVar(bonusVar, bonus)
-+    attacker:setLocalVar(capVar, catalog.DAMAGE_CAP)
-+    if penalty > 0 then
-+        attacker:addMod(accuracyMod, -penalty)
-+    end
-+    activeCalculations[attacker] = true
-+
-+    local results
-+    local ok, err = xpcall(
-+        function()
-+            results = pack(callback())
-+        end,
-+        function(message)
-+            return debug.traceback(message, 2)
-+        end)
-+
-+    local cleanupOk, cleanupErr = pcall(function()
-+        attacker:setLocalVar(bonusVar, priorBonus)
-+        attacker:setLocalVar(capVar, priorCap)
-+        attacker:setMod(accuracyMod, priorAcc)
-+    end)
-+    activeCalculations[attacker] = nil
-+
-+    if not cleanupOk then
-+        error(string.format('Standard WS modifier cleanup failed: %s', cleanupErr), 0)
-+    end
-+
-+    if not ok then
-+        error(err, 0)
-+    end
-+
-+    return unpack(results, 1, results.n)
++    return levelGate * investmentGate * masterPowerProgress(p) * masteryGate
 +end
 +
-+local function callPreservedOriginal(
-+    attacker, target, wsId, slot, wsParams, magicAccuracy, original, ...)
-+    local args = pack(...)
-+    return xi.standardWsTuning.withStandardEffects(
-+        attacker, target, wsId, slot, wsParams, magicAccuracy,
-+        function()
-+            return original(unpack(args, 1, args.n))
-+        end)
+ local function lerp(a, b, t)
+     return math.floor(a + (b - a) * math.max(0, math.min(1, t)))
+ end
+ 
+ local function scaledRoleValue(p, range)
+-    return math.floor(lerp(range[1], range[2], combatProgress(p)) * masterPowerProgress(p))
++    return math.floor(range[2] * fellowPowerProgress(p))
+ end
+ 
+ local function normalWeaponDamage(p)
+     local masterLvl = math.max(1, p:getMainLvl() or 1)
+-    return math.floor(
++    return math.max(1, math.floor((
+         CONFIG.dmgBase +
+         CONFIG.dmgPerMasterLevel * math.min(99, masterLvl) +
+-        CONFIG.dmgPerLevel * math.max(0, getLevel(p) - 1) * masterPowerProgress(p))
++        CONFIG.dmgPerLevel * math.max(0, getLevel(p) - 1)) * fellowPowerProgress(p)))
 +end
 +
-+m:addOverride('xi.weaponskills.doPhysicalWeaponskill',
-+    function(attacker, target, wsId, wsParams, tp, action, primaryMsg, taChar)
-+        local original = super
-+        return callPreservedOriginal(
-+            attacker, target, wsId, xi.slot.MAIN, wsParams, false, original,
-+            attacker, target, wsId, wsParams, tp, action, primaryMsg, taChar)
-+    end)
++local function fellowDamageCap(p, target)
++    local fullPowerCap = math.min(99999, progression.getDamageBonus(
++        p:getMainLvl(), target:getMainLvl(), target:getMaxHP()))
 +
-+m:addOverride('xi.weaponskills.doRangedWeaponskill',
-+    function(attacker, target, wsId, wsParams, tp, action, primaryMsg)
-+        local original = super
-+        return callPreservedOriginal(
-+            attacker, target, wsId, xi.slot.RANGED, wsParams, false, original,
-+            attacker, target, wsId, wsParams, tp, action, primaryMsg)
-+    end)
-+
-+m:addOverride('xi.weaponskills.doMagicWeaponskill',
-+    function(attacker, target, wsId, wsParams, tp, action, primaryMsg)
-+        local original = super
-+        local slot = xi.slot.MAIN
-+        if
-+            wsParams.skill == xi.skill.ARCHERY or
-+            wsParams.skill == xi.skill.MARKSMANSHIP
-+        then
-+            slot = xi.slot.RANGED
-+        end
-+
-+        return callPreservedOriginal(
-+            attacker, target, wsId, slot, wsParams, true, original,
-+            attacker, target, wsId, wsParams, tp, action, primaryMsg)
-+    end)
-+
-+xi.standardWsTuning.moduleInstalled = true
-+
-+return m
-diff --git a/modules/custom/lua/Voidwatch.lua b/modules/custom/lua/Voidwatch.lua
-index e06abd43f7..15e7a27265 100644
---- a/modules/custom/lua/Voidwatch.lua
-+++ b/modules/custom/lua/Voidwatch.lua
-@@ -907,6 +907,11 @@ for _, r in ipairs(C.RIFTS) do
-                     confirmRift(player, stratumKey)
-                 end,
-             })
-+            if npc then
-+                -- Dynamic NPCs default to animation 0, which makes this effect
-+                -- model flicker or disappear. Stock Planar Rifts use state 100.
-+                npc:setAnimation(100)
-+            end
-             utils.unused(npc)
-         end)
++    return math.max(1, math.floor(fullPowerCap * fellowPowerProgress(p)))
+ end
+ 
+ local function currentGrade(p)
+@@ -608,7 +626,10 @@ local function applyFellow(p, pet)
+     local lvl  = getLevel(p)
+     local role = roleDef(p)
+ 
+-    local masterPower = masterPowerProgress(p)
++    local masterPower = fellowPowerProgress(p)
++    pet:setLocalVar(
++        'EncounterOutgoingDamageCap',
++        math.max(1, math.floor(99999 * masterPower)))
+     for _, mv in ipairs(CONFIG.perLevel) do
+         pet:addMod(mv[1], math.floor(mv[2] * lvl * masterPower))
+     end
+@@ -689,7 +710,7 @@ local function applyFellow(p, pet)
+     elseif roleKey == 'magus' then
+         -- The combat loop casts only the spell/move selected in the Fellow
+         -- menu. Do not install an autonomous spell list that can override it.
+-        pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
++        pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
+     elseif roleKey == 'hunter' then
+         pet:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 })
+         pet:addMod(xi.mod.STORETP, 86)
+@@ -954,9 +975,9 @@ scheduleCombatLoop = function(master, pet)
+                        (burstReady and CONFIG.burstCooldownSec or CONFIG.nukeCooldownSec) then
+                     local spellMove = chosenWs(master)
+                     if spellMove and spellMove > 0 then
+-                        local scaledCap = progression.getDamageBonus(
+-                            master:getMainLvl(), tgt:getMainLvl(), tgt:getMaxHP())
+-                        p:setLocalVar('fellowProgressionDamageCap', math.min(99999, scaledCap))
++                        p:setLocalVar(
++                            'fellowProgressionDamageCap',
++                            fellowDamageCap(master, tgt))
+                         p:setLocalVar('fellowAoEDamageScale',
+                             spellMove == xi.mobSkill.THUNDERSTRIKE and 25 or 0)
+                         p:setLocalVar('fellowCanMagicBurst', burstReady and 1 or 0)
+@@ -975,15 +996,11 @@ scheduleCombatLoop = function(master, pet)
+                    and now - (p:getLocalVar('fellowWsAt') or 0) >= CONFIG.wsCooldownSec then
+                     local ws = chosenWs(master)
+                     if ws and ws > 0 and tgt and not tgt:isDead() then
+-                        -- Below level 99, every role move is constrained by the
+-                        -- same player-level/target-HP curve as Magus. At 99 this
+-                        -- cap is disabled so existing endgame role power is kept.
+-                        local progressionCap = 0
+-                        if master:getMainLvl() < 99 then
+-                            progressionCap = math.min(99999, progression.getDamageBonus(
+-                                master:getMainLvl(), tgt:getMainLvl(), tgt:getMaxHP()))
+-                        end
+-                        p:setLocalVar('fellowProgressionDamageCap', progressionCap)
++                        -- Every role is constrained by the same composite
++                        -- Fellow/master progression curve, including at 99.
++                        p:setLocalVar(
++                            'fellowProgressionDamageCap',
++                            fellowDamageCap(master, tgt))
+                         p:setLocalVar('fellowAoEDamageScale', 0)
+ 
+                         if rdef.wsDamage then
+@@ -996,7 +1013,7 @@ scheduleCombatLoop = function(master, pet)
+                         if rdef.magicDamageByMove and rdef.magicDamageByMove[ws] then
+                             local normalMagicDamage = p:getMod(xi.mod.MAGIC_DAMAGE)
+                             p:setMod(xi.mod.MAGIC_DAMAGE,
+-                                math.floor(rdef.magicDamageByMove[ws] * masterPowerProgress(master)))
++                                math.floor(rdef.magicDamageByMove[ws] * fellowPowerProgress(master)))
+                             p:timer(2500, function(pp)
+                                 if pp and pp:isAlive() then
+                                     pp:setMod(xi.mod.MAGIC_DAMAGE, normalMagicDamage)
+@@ -2010,7 +2027,7 @@ xi.fellow.audit = function(p)
+     end
+ 
+     -- Every source applyFellow() adds, mirrored here 1:1.
+-    local masterPower = masterPowerProgress(p)
++    local masterPower = fellowPowerProgress(p)
+     for _, mv in ipairs(CONFIG.perLevel) do
+         add(mv[1], math.floor(mv[2] * lvl * masterPower), 'lvl')
      end
 diff --git a/modules/custom/lua/standard_magic_tuning_catalog.lua b/modules/custom/lua/standard_magic_tuning_catalog.lua
-new file mode 100644
-index 0000000000..3b5a8762a2
---- /dev/null
+index 3b5a8762a2..d7c2c0621c 100644
+--- a/modules/custom/lua/standard_magic_tuning_catalog.lua
 +++ b/modules/custom/lua/standard_magic_tuning_catalog.lua
-@@ -0,0 +1,122 @@
-+-----------------------------------
-+-- Level-scaled baseline tuning for direct player-cast magical damage.
-+--
-+-- Reuses the ordinary WS progression curve so physical and magical damage
-+-- target the same share of enemy HP. Only direct elemental/divine/ninjutsu
-+-- casts and magical Blue Magic are eligible; weaponskills, abilities, pets,
-+-- drains, enfeebles and Helix damage-over-time spells remain untouched.
-+-----------------------------------
-+
-+local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
-+local remaCatalog = require('modules/custom/lua/rema_ws_tier_catalog')
-+local primeCatalog = require('modules/custom/lua/prime_ws_tuning_catalog')
-+local catalog = {}
-+
-+catalog.DAMAGE_CAP             = 99999
-+catalog.REMA_DAMAGE_CAP        = 999999
-+catalog.PRIME_DAMAGE_CAP       = 1999999
-+catalog.FULL_POWER_LEVEL_RATIO = 0.70
-+catalog.MIN_SPELL_FACTOR       = 0.15
-+
-+local remaWeaponIds = {}
-+for _, entry in ipairs(remaCatalog.WEAPONS) do
-+    remaWeaponIds[entry.itemId] = true
-+end
-+
-+local primeWeaponIds = {}
-+for _, entry in pairs(primeCatalog.PRIME_WS_TUNING) do
-+    primeWeaponIds[entry.itemId] = true
-+end
-+
-+local directSkills =
+@@ -1,10 +1,10 @@
+ -----------------------------------
+ -- Level-scaled baseline tuning for direct player-cast magical damage.
+ --
+--- Reuses the ordinary WS progression curve so physical and magical damage
+--- target the same share of enemy HP. Only direct elemental/divine/ninjutsu
+--- casts and magical Blue Magic are eligible; weaponskills, abilities, pets,
+--- drains, enfeebles and Helix damage-over-time spells remain untouched.
++-- Reuses the ordinary WS leveling curve, then assigns fresh-99/mastered floors
++-- by spell family and tier. Direct elemental/divine/ninjutsu casts, damaging
++-- Blue Magic (physical, magical, and breath), and player-automaton nukes are
++-- eligible. Drains, enfeebles and Helix damage-over-time spells remain untouched.
+ -----------------------------------
+ 
+ local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
+@@ -18,6 +18,16 @@ catalog.PRIME_DAMAGE_CAP       = 1999999
+ catalog.FULL_POWER_LEVEL_RATIO = 0.70
+ catalog.MIN_SPELL_FACTOR       = 0.15
+ 
++catalog.FLOORS =
 +{
-+    [xi.skill.DIVINE_MAGIC]    = true,
-+    [xi.skill.ELEMENTAL_MAGIC] = true,
-+    [xi.skill.NINJUTSU]        = true,
++    elementalHigh = { fresh = 42000, mastered = 60000 },
++    elementalMid  = { fresh = 30000, mastered = 45000 },
++    elementalLow  = { fresh = 20000, mastered = 30000 },
++    ninjutsu      = { fresh = 12000, mastered = 18000 },
++    divine        = { fresh = 18000, mastered = 30000 },
++    blue          = { fresh = 24000, mastered = 38000 },
 +}
 +
-+local function isHelix(spellId)
-+    return
-+        (spellId >= xi.magic.spell.GEOHELIX and
-+        spellId <= xi.magic.spell.LUMINOHELIX) or
-+        (spellId >= xi.magic.spell.GEOHELIX_II and
-+        spellId <= xi.magic.spell.LUMINOHELIX_II)
-+end
-+
-+local function validCasterAndTarget(caster, target)
-+    return
+ local remaWeaponIds = {}
+ for _, entry in ipairs(remaCatalog.WEAPONS) do
+     remaWeaponIds[entry.itemId] = true
+@@ -44,14 +54,24 @@ local function isHelix(spellId)
+ end
+ 
+ local function validCasterAndTarget(caster, target)
++    local isPlayerAutomaton =
 +        caster ~= nil and
-+        target ~= nil and
-+        caster:isPC() and
-+        target:isMob()
-+end
++        caster:isAutomaton() and
++        caster:getMaster() ~= nil and
++        caster:getMaster():isPC()
 +
-+local function isNativeMainJobSpell(caster, spell)
-+    local spellLevel = spell:getLevel(caster:getMainJob())
-+    return
-+        spellLevel ~= nil and
-+        spellLevel > 0 and
-+        spellLevel <= caster:getMainLvl()
-+end
-+
-+function catalog.isDirectSpellEligible(caster, target, spell)
-+    if not validCasterAndTarget(caster, target) then
-+        return false
+     return
+         caster ~= nil and
+         target ~= nil and
+-        caster:isPC() and
++        (caster:isPC() or isPlayerAutomaton) and
+         target:isMob()
+ end
+ 
+ local function isNativeMainJobSpell(caster, spell)
++    if caster:isAutomaton() then
++        return true
 +    end
 +
-+    return
-+        directSkills[spell:getSkillType()] == true and
-+        isNativeMainJobSpell(caster, spell) and
-+        not isHelix(spell:getID())
-+end
-+
-+function catalog.isMagicalBlueEligible(caster, target, spell, params)
-+    return
-+        validCasterAndTarget(caster, target) and
-+        isNativeMainJobSpell(caster, spell) and
-+        params ~= nil and
-+        params.attackType == xi.attackType.MAGICAL
-+end
-+
-+function catalog.getDamageCap(caster)
-+    local mainWeapon   = caster:getEquipID(xi.slot.MAIN)
-+    local rangedWeapon = caster:getEquipID(xi.slot.RANGED)
-+
-+    if primeWeaponIds[mainWeapon] or primeWeaponIds[rangedWeapon] then
-+        return catalog.PRIME_DAMAGE_CAP
+     local spellLevel = spell:getLevel(caster:getMainJob())
+     return
+         spellLevel ~= nil and
+@@ -70,15 +90,20 @@ function catalog.isDirectSpellEligible(caster, target, spell)
+         not isHelix(spell:getID())
+ end
+ 
+-function catalog.isMagicalBlueEligible(caster, target, spell, params)
++function catalog.isBlueDamageEligible(caster, target, spell, params)
+     return
+         validCasterAndTarget(caster, target) and
+         isNativeMainJobSpell(caster, spell) and
+         params ~= nil and
+-        params.attackType == xi.attackType.MAGICAL
++        params.attackType ~= nil and
++        params.attackType ~= xi.attackType.NONE
+ end
+ 
+ function catalog.getDamageCap(caster)
++    if not caster:isPC() then
++        return catalog.DAMAGE_CAP
 +    end
 +
-+    if remaWeaponIds[mainWeapon] or remaWeaponIds[rangedWeapon] then
-+        return catalog.REMA_DAMAGE_CAP
-+    end
-+
-+    return catalog.DAMAGE_CAP
+     local mainWeapon   = caster:getEquipID(xi.slot.MAIN)
+     local rangedWeapon = caster:getEquipID(xi.slot.RANGED)
+ 
+@@ -94,8 +119,9 @@ function catalog.getDamageCap(caster)
+ end
+ 
+ function catalog.getSpellProgressionFactor(caster, spell)
+-    local playerLevel = math.max(1, caster:getMainLvl())
+-    local spellLevel  = spell:getLevel(caster:getMainJob())
++    local player = caster:isPC() and caster or caster:getMaster()
++    local playerLevel = math.max(1, player:getMainLvl())
++    local spellLevel  = spell:getLevel(player:getMainJob())
+     if not spellLevel or spellLevel <= 0 then
+         return 0
+     end
+@@ -106,17 +132,69 @@ function catalog.getSpellProgressionFactor(caster, spell)
+         1.00)
+ end
+ 
+-function catalog.getDamageBonus(caster, target, spell)
+-    local levelScaledBonus = progression.getDamageBonus(
+-        caster:getMainLvl(), target:getMainLvl(), target:getMaxHP())
++local function getProgressionPlayer(caster)
++    return caster:isPC() and caster or caster:getMaster()
 +end
 +
-+function catalog.getSpellProgressionFactor(caster, spell)
-+    local playerLevel = math.max(1, caster:getMainLvl())
-+    local spellLevel  = spell:getLevel(caster:getMainJob())
-+    if not spellLevel or spellLevel <= 0 then
++local function isAncientMagic(spellId)
++    return spellId >= xi.magic.spell.FLARE and spellId <= xi.magic.spell.FLOOD_II
++end
++
++local function getFloorBand(caster, spell)
++    local skill = spell:getSkillType()
++    if skill == xi.skill.NINJUTSU then
++        return catalog.FLOORS.ninjutsu
++    elseif skill == xi.skill.DIVINE_MAGIC then
++        return catalog.FLOORS.divine
++    elseif skill == xi.skill.BLUE_MAGIC then
++        return catalog.FLOORS.blue
++    end
++
++    local player = getProgressionPlayer(caster)
++    local spellLevel = spell:getLevel(player:getMainJob()) or 1
++    if spellLevel >= 75 or isAncientMagic(spell:getID()) then
++        return catalog.FLOORS.elementalHigh
++    elseif spellLevel >= 50 then
++        return catalog.FLOORS.elementalMid
++    end
++
++    return catalog.FLOORS.elementalLow
++end
++
++function catalog.getDamageFloor(caster, target, spell)
++    local player = getProgressionPlayer(caster)
++    if caster:isAutomaton() then
++        return progression.getPetDamageFloor(player, target)
++    end
++
++    if player:getMainLvl() < progression.ENDGAME_PLAYER_LEVEL then
++        local levelScaledBonus = progression.getDamageBonus(
++            player:getMainLvl(), target:getMainLvl(), target:getMaxHP())
++        return math.floor(
++            levelScaledBonus * catalog.getSpellProgressionFactor(caster, spell) + 0.5)
++    end
++
++    local band = getFloorBand(caster, spell)
++    local mastery = progression.getMasteryProgress(player)
++    local masteryFloor = math.floor(
++        band.fresh + (band.mastered - band.fresh) * mastery + 0.5)
++
++    -- At 99 the caster's progression floor no longer shrinks with target HP.
++    -- This keeps farming damage consistent on lower-level enemies while the
++    -- target can still lose no more HP than it actually has.
++    return masteryFloor
++end
++
++function catalog.getDamageBonus(caster, target, spell, currentDamage)
++    local floor = catalog.getDamageFloor(caster, target, spell)
+ 
+-    return math.floor(
+-        levelScaledBonus * catalog.getSpellProgressionFactor(caster, spell) + 0.5)
++    return math.max(0, floor - math.max(0, currentDamage or 0))
+ end
+ 
+ function catalog.getMagicAccuracyPenalty(caster, target)
++    local player = getProgressionPlayer(caster)
+     return progression.getAccuracyPenalty(
+-        caster:getMainLvl(), target:getMainLvl())
++        player:getMainLvl(), target:getMainLvl())
+ end
+ 
+ return catalog
+diff --git a/modules/custom/lua/standard_ws_tuning_catalog.lua b/modules/custom/lua/standard_ws_tuning_catalog.lua
+index db9374a882..e8d5f73ada 100644
+--- a/modules/custom/lua/standard_ws_tuning_catalog.lua
++++ b/modules/custom/lua/standard_ws_tuning_catalog.lua
+@@ -1,11 +1,10 @@
+ -----------------------------------
+ -- Baseline weaponskill progression tuning.
+ --
+--- Ordinary player weaponskills receive an additive share of target max HP.
+--- Target HP naturally scales the bonus from low-level enemies through capacity
+--- NMs, while the level-gap table prevents underleveled players from punching
+--- far above their weight. Normal WS damage is added afterward, so equipment,
+--- TP and WSD augments still provide progression up to the pre-REMA cap.
++-- Ordinary player weaponskills receive a target-HP floor while leveling. At
++-- 99, weapon level and Job Point mastery set the floor; the equipped weapon's
++-- stock base damage remains in the normal WS formula. Naturally stronger WSs
++-- keep their stock result up to the weapon-appropriate ceiling.
+ -----------------------------------
+ 
+ local catalog = {}
+@@ -13,8 +12,14 @@ local catalog = {}
+ catalog.DAMAGE_BONUS_LOCAL_VAR = 'StandardWsDamageBonus'
+ catalog.DAMAGE_CAP_LOCAL_VAR   = 'StandardWsDamageCap'
+ catalog.DAMAGE_CAP             = 99999
++catalog.NON_ITEM_LEVEL_119_CAP = 40000
+ catalog.TARGET_HP_FRACTION     = 0.30
+ catalog.ENDGAME_PLAYER_LEVEL   = 99
++catalog.MASTER_JOB_POINTS       = 2100
++catalog.FRESH_99_FLOOR          = 32000
++catalog.MASTERED_99_FLOOR       = 45000
++catalog.PET_FRESH_99_FLOOR      = 18000
++catalog.PET_MASTERED_99_FLOOR   = 28000
+ 
+ -- A three-level grace band keeps ordinary Even Match / Tough combat unchanged.
+ -- Beyond that band, the additive HP share and WS accuracy fall progressively.
+@@ -69,6 +74,72 @@ function catalog.getDamageBonus(playerLevel, targetLevel, targetMaxHp)
+         catalog.getLevelGapFactor(playerLevel, targetLevel) + 0.5)
+ end
+ 
++function catalog.getMasteryProgress(player)
++    if not player or player:getMainLvl() < catalog.ENDGAME_PLAYER_LEVEL then
 +        return 0
 +    end
 +
 +    return utils.clamp(
-+        spellLevel / (playerLevel * catalog.FULL_POWER_LEVEL_RATIO),
-+        catalog.MIN_SPELL_FACTOR,
-+        1.00)
++        (player:getSpentJobPoints() or 0) / catalog.MASTER_JOB_POINTS, 0, 1)
 +end
 +
-+function catalog.getDamageBonus(caster, target, spell)
-+    local levelScaledBonus = progression.getDamageBonus(
-+        caster:getMainLvl(), target:getMainLvl(), target:getMaxHP())
-+
-+    return math.floor(
-+        levelScaledBonus * catalog.getSpellProgressionFactor(caster, spell) + 0.5)
++local function getEndgameFloor(player, freshFloor, masteredFloor)
++    local mastery = catalog.getMasteryProgress(player)
++    return math.floor(freshFloor + (masteredFloor - freshFloor) * mastery + 0.5)
 +end
 +
-+function catalog.getMagicAccuracyPenalty(caster, target)
-+    return progression.getAccuracyPenalty(
-+        caster:getMainLvl(), target:getMainLvl())
-+end
++-- Stock WS formulas already include the equipped weapon's base damage. Scale
++-- only the custom floor by required level so that it cannot erase that weapon
++-- progression (for example, an Onion Sword must not inherit a full Lv99 floor).
++-- Item-level 119 weapons unlock the full floor and normal 99,999 ceiling.
++function catalog.getWeaponProgression(player, slot)
++    local weapon = player:getEquippedItem(slot)
++    if weapon == nil then
++        return 0.01
++    end
 +
-+return catalog
-diff --git a/modules/custom/lua/standard_ws_tuning_catalog.lua b/modules/custom/lua/standard_ws_tuning_catalog.lua
-new file mode 100644
-index 0000000000..db9374a882
---- /dev/null
-+++ b/modules/custom/lua/standard_ws_tuning_catalog.lua
-@@ -0,0 +1,85 @@
-+-----------------------------------
-+-- Baseline weaponskill progression tuning.
-+--
-+-- Ordinary player weaponskills receive an additive share of target max HP.
-+-- Target HP naturally scales the bonus from low-level enemies through capacity
-+-- NMs, while the level-gap table prevents underleveled players from punching
-+-- far above their weight. Normal WS damage is added afterward, so equipment,
-+-- TP and WSD augments still provide progression up to the pre-REMA cap.
-+-----------------------------------
-+
-+local catalog = {}
-+
-+catalog.DAMAGE_BONUS_LOCAL_VAR = 'StandardWsDamageBonus'
-+catalog.DAMAGE_CAP_LOCAL_VAR   = 'StandardWsDamageCap'
-+catalog.DAMAGE_CAP             = 99999
-+catalog.TARGET_HP_FRACTION     = 0.30
-+catalog.ENDGAME_PLAYER_LEVEL   = 99
-+
-+-- A three-level grace band keeps ordinary Even Match / Tough combat unchanged.
-+-- Beyond that band, the additive HP share and WS accuracy fall progressively.
-+catalog.LEVEL_GAP_GRACE       = 3
-+catalog.ACC_PENALTY_PER_LEVEL = 8
-+
-+catalog.LEVEL_GAP_FACTORS =
-+{
-+    { gap =  3, factor = 1.00 },
-+    { gap =  8, factor = 0.70 },
-+    { gap = 15, factor = 0.35 },
-+    { gap = 24, factor = 0.08 },
-+    { gap = 25, factor = 0.03 },
-+}
-+
-+function catalog.getLevelGapFactor(playerLevel, targetLevel)
-+    -- Relaunch endgame mobs commonly use artificial levels 150-250 while
-+    -- remaining intended Lv99 content (Capacity Phantoms are Lv150-160).
-+    -- Their custom stats and HP provide progression; displayed level must not
-+    -- suppress the baseline WS tier once the player has reached the level cap.
-+    if playerLevel >= catalog.ENDGAME_PLAYER_LEVEL then
++    if (weapon:getILvl() or 0) >= 119 then
 +        return 1.00
 +    end
 +
-+    local gap = math.max(0, targetLevel - playerLevel)
-+    local previous = { gap = 0, factor = 1.00 }
-+
-+    for _, point in ipairs(catalog.LEVEL_GAP_FACTORS) do
-+        if gap <= point.gap then
-+            if point.gap == previous.gap then
-+                return point.factor
-+            end
-+
-+            local progress = (gap - previous.gap) / (point.gap - previous.gap)
-+            return previous.factor + (point.factor - previous.factor) * progress
-+        end
-+
-+        previous = point
-+    end
-+
-+    return catalog.LEVEL_GAP_FACTORS[#catalog.LEVEL_GAP_FACTORS].factor
++    return utils.clamp((weapon:getReqLvl() or 0) / 99, 0.01, 1.00)
 +end
 +
-+function catalog.getDamageBonus(playerLevel, targetLevel, targetMaxHp)
-+    if targetMaxHp <= 0 then
-+        return 0
++function catalog.getWeaponskillCap(player, slot)
++    local weapon = player:getEquippedItem(slot)
++    if weapon ~= nil and (weapon:getILvl() or 0) >= 119 then
++        return catalog.DAMAGE_CAP
 +    end
++
++    return catalog.NON_ITEM_LEVEL_119_CAP
++end
++
++-- Standard tuning is a floor, not a blanket additive multiplier. Weak WSs are
++-- lifted into the progression band while naturally strong WSs and augmented
++-- builds keep their stock result and progress toward the unchanged 99,999 cap.
++function catalog.getWeaponskillFloor(player, target, slot)
++    if player:getMainLvl() < catalog.ENDGAME_PLAYER_LEVEL then
++        return catalog.getDamageBonus(
++            player:getMainLvl(), target:getMainLvl(), target:getMaxHP())
++    end
++
++    local endgameFloor = getEndgameFloor(
++        player, catalog.FRESH_99_FLOOR, catalog.MASTERED_99_FLOOR)
 +
 +    return math.floor(
-+        targetMaxHp *
-+        catalog.TARGET_HP_FRACTION *
-+        catalog.getLevelGapFactor(playerLevel, targetLevel) + 0.5)
++        endgameFloor * catalog.getWeaponProgression(player, slot or xi.slot.MAIN) + 0.5)
 +end
 +
-+function catalog.getAccuracyPenalty(playerLevel, targetLevel)
-+    if playerLevel >= catalog.ENDGAME_PLAYER_LEVEL then
-+        return 0
++function catalog.getPetDamageFloor(player, target)
++    if player:getMainLvl() < catalog.ENDGAME_PLAYER_LEVEL then
++        return math.floor(catalog.getDamageBonus(
++            player:getMainLvl(), target:getMainLvl(), target:getMaxHP()) * 0.65 + 0.5)
 +    end
 +
-+    local penalizedLevels = targetLevel - playerLevel - catalog.LEVEL_GAP_GRACE
-+    if penalizedLevels <= 0 then
-+        return 0
-+    end
-+
-+    return penalizedLevels * catalog.ACC_PENALTY_PER_LEVEL
++    return getEndgameFloor(
++        player, catalog.PET_FRESH_99_FLOOR, catalog.PET_MASTERED_99_FLOOR)
 +end
 +
-+return catalog
-diff --git a/modules/custom/lua/unity_wanted.lua b/modules/custom/lua/unity_wanted.lua
-index e7740fb1dd..1bceeea84a 100644
---- a/modules/custom/lua/unity_wanted.lua
-+++ b/modules/custom/lua/unity_wanted.lua
-@@ -565,6 +565,11 @@ for zoneId, jz in pairs(jmap.junctions) do
-                         junctionMenu(player, capturedZoneId, trigNpc)
-                     end,
-                 })
-+                if jnpc then
-+                    -- Dynamic NPCs default to animation 0, which makes this
-+                    -- effect model flicker or disappear. Stock junctions use 116.
-+                    jnpc:setAnimation(116)
-+                end
-                 utils.unused(jnpc)
-             else
-                 local npc = GetNPCByID(pt.id)
+ function catalog.getAccuracyPenalty(playerLevel, targetLevel)
+     if playerLevel >= catalog.ENDGAME_PLAYER_LEVEL then
+         return 0
+diff --git a/modules/custom/lua/welcome_moogle_catalog.lua b/modules/custom/lua/welcome_moogle_catalog.lua
+index dfc58a3dcd..c8b31c8bcd 100644
+--- a/modules/custom/lua/welcome_moogle_catalog.lua
++++ b/modules/custom/lua/welcome_moogle_catalog.lua
+@@ -30,7 +30,7 @@ local A =
+     subtle  = function() return { id = 195, value = 3,  label = 'Subtle Blow +4' } end,
+     mab     = function() return { id = 133, value = 3,  label = 'Mag. Atk. Bns. +4' } end,
+     fc      = function() return { id = 140, value = 1,  label = 'Fast Cast +2' } end,
+-    haste   = function() return { id = 49,  value = 1,  label = 'Haste (T1)' } end,
++    haste   = function() return { id = 49,  value = 1,  label = 'Haste +2%' } end,
+     refresh = function() return { id = 138, value = 0,  label = 'Refresh (T1)' } end,
+     cure    = function() return { id = 329, value = 3,  label = 'Cure potency +4' } end,
+     snapshot= function() return { id = 211, value = 2,  label = 'Snapshot +3' } end,
 diff --git a/scripts/actions/spells/black/meteor.lua b/scripts/actions/spells/black/meteor.lua
-index f6f543cd54..b6410ab79e 100644
+index b6410ab79e..5e71e88653 100644
 --- a/scripts/actions/spells/black/meteor.lua
 +++ b/scripts/actions/spells/black/meteor.lua
-@@ -4,6 +4,7 @@
+@@ -46,7 +46,7 @@ spellObject.onSpellCast = function(caster, target, spell)
+ 
+     if standardMagic.isDirectSpellEligible(caster, target, spell) and damage > 0 then
+         damage = math.min(
+-            damage + standardMagic.getDamageBonus(caster, target, spell),
++            damage + standardMagic.getDamageBonus(caster, target, spell, damage),
+             standardMagic.getDamageCap(caster))
+     end
+ 
+diff --git a/scripts/actions/spells/blue/blitzstrahl.lua b/scripts/actions/spells/blue/blitzstrahl.lua
+index 068a37b23a..19e7f18561 100644
+--- a/scripts/actions/spells/blue/blitzstrahl.lua
++++ b/scripts/actions/spells/blue/blitzstrahl.lua
+@@ -22,7 +22,7 @@ end
+ spellObject.onSpellCast = function(caster, target, spell)
+     local params = {}
+     params.ecosystem   = xi.ecosystem.ARCANA
+-    params.attackType  = xi.damageType.ELEMENTAL
++    params.attackType  = xi.attackType.MAGICAL
+     params.damageType  = xi.damageType.THUNDER
+     params.attribute   = xi.mod.INT
+     params.multiplier  = 1.5625
+diff --git a/scripts/actions/spells/blue/tempestuous_upheaval.lua b/scripts/actions/spells/blue/tempestuous_upheaval.lua
+index 0ae845c3ff..0e4af18355 100644
+--- a/scripts/actions/spells/blue/tempestuous_upheaval.lua
++++ b/scripts/actions/spells/blue/tempestuous_upheaval.lua
+@@ -1,5 +1,5 @@
  -----------------------------------
- ---@type TSpell
- local spellObject = {}
-+local standardMagic = require('modules/custom/lua/standard_magic_tuning_catalog')
- 
- spellObject.onMagicCastingCheck = function(caster, target, spell)
-     -- TODO: Correct message is "Incorrect job, job level too low, or required ability not activated."  Unable to locate this in our basic or system message functions.
-@@ -43,6 +44,12 @@ spellObject.onSpellCast = function(caster, target, spell)
-     damage = math.floor(damage * xi.spells.damage.calculateMTDR(caster, spell))
-     damage = math.floor(damage * xi.combat.damage.calculateDamageAdjustment(target, false, true, false, false))
- 
-+    if standardMagic.isDirectSpellEligible(caster, target, spell) and damage > 0 then
-+        damage = math.min(
-+            damage + standardMagic.getDamageBonus(caster, target, spell),
-+            standardMagic.getDamageCap(caster))
-+    end
-+
-     -- Handle Phalanx, One for All, Stoneskin.
-     damage = utils.clamp(utils.handlePhalanx(target, damage), 0, 99999)
-     damage = utils.clamp(utils.handleOneForAll(target, damage), 0, 99999)
+--- Spell: Temporal Upheaval
++-- Spell: Tempestuous Upheaval
+ -- Deals wind damage to enemies within area of effect
+ -- Spell cost: 133 MP
+ -- Monster Type: Elemental
 diff --git a/scripts/globals/bluemagic.lua b/scripts/globals/bluemagic.lua
-index c032e1a41a..dcfb125e83 100644
+index dcfb125e83..6c3e473bad 100644
 --- a/scripts/globals/bluemagic.lua
 +++ b/scripts/globals/bluemagic.lua
-@@ -11,6 +11,7 @@ require('scripts/globals/spells/damage_spell')
- xi = xi or {}
- xi.spells = xi.spells or {}
- xi.spells.blue = xi.spells.blue or {}
-+local standardMagic = require('modules/custom/lua/standard_magic_tuning_catalog')
- -----------------------------------
- 
- -- The TP modifier (currently unused)
-@@ -427,11 +428,17 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
-     local spellGroup         = spell:getSpellGroup()
+@@ -429,7 +429,7 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
      local skillType          = xi.skill.BLUE_MAGIC
      local _, skillchainCount = xi.magicburst.formMagicBurst(target, spellElement) -- External function. Not present in magic.lua.
-+    local standardMacc       = 0
-+    if standardMagic.isMagicalBlueEligible(caster, target, spell, params) then
-+        standardMacc = -standardMagic.getMagicAccuracyPenalty(caster, target)
+     local standardMacc       = 0
+-    if standardMagic.isMagicalBlueEligible(caster, target, spell, params) then
++    if standardMagic.isBlueDamageEligible(caster, target, spell, params) then
+         standardMacc = -standardMagic.getMagicAccuracyPenalty(caster, target)
+     end
+ 
+@@ -623,11 +623,20 @@ xi.spells.blue.useBreathSpell = function(caster, target, spell, params)
+ 
+     dmg = math.floor(target:handleSevereDamage(dmg, false))
+ 
++    local standardEligible = standardMagic.isBlueDamageEligible(caster, target, spell, params)
++    if standardEligible and dmg > 0 then
++        dmg = dmg + standardMagic.getDamageBonus(caster, target, spell, dmg)
 +    end
- 
-     -- Final D value
-     local finalDamage    = (initialD + wsc) * (params.multiplier + azureBonus + correlationMultiplier) + statBonus
- 
--    finalDamage = math.floor(finalDamage * xi.combat.magicHitRate.calculateResistRate(caster, target, spellGroup, skillType, 0, spellElement, params.attribute, 0, 0))
-+    finalDamage = math.floor(finalDamage * xi.combat.magicHitRate.calculateResistRate(
-+        caster, target, spellGroup, skillType, 0, spellElement,
-+        params.attribute, 0, standardMacc))
-     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateElementalStaffBonus(caster, spellElement))
-     finalDamage = math.floor(finalDamage * xi.combat.damage.magicalElementSDT(target, spellElement))
-     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateDayAndWeather(caster, spellElement, false))
-@@ -648,6 +655,11 @@ xi.spells.blue.applySpellDamage = function(caster, target, spell, dmg, params, t
++
+     -- Final adjustments.
+     if dmg > 0 then
+         dmg = utils.clamp(utils.handlePhalanx(target, dmg), 0, 131071)
+         dmg = utils.clamp(utils.handleOneForAll(target, dmg), 0, 131071)
+         dmg = utils.clamp(utils.handleStoneskin(target, dmg), -131071, 131071)
++        if standardEligible then
++            dmg = math.min(dmg, standardMagic.getDamageCap(caster))
++        end
++
+         dmg = utils.clamp(dmg, 0, target:getHP())
+         dmg = target:checkDamageCap(dmg)
+     end
+@@ -655,10 +664,10 @@ xi.spells.blue.applySpellDamage = function(caster, target, spell, dmg, params, t
      local damageType    = params.damageType or xi.damageType.NONE
      local tpHits        = params.tphitslanded or 0
      local extraTPGained = xi.combat.tp.calculateTPGainOnMagicalDamage(caster, target, dmg) * math.max(tpHits - 1, 0) -- Calculate extra TP gained from multihits. takeSpellDamage accounts for one already.
-+    local standardEligible = standardMagic.isMagicalBlueEligible(caster, target, spell, params)
-+
-+    if standardEligible and dmg > 0 then
-+        dmg = dmg + standardMagic.getDamageBonus(caster, target, spell)
-+    end
+-    local standardEligible = standardMagic.isMagicalBlueEligible(caster, target, spell, params)
++    local standardEligible = standardMagic.isBlueDamageEligible(caster, target, spell, params)
+ 
+     if standardEligible and dmg > 0 then
+-        dmg = dmg + standardMagic.getDamageBonus(caster, target, spell)
++        dmg = dmg + standardMagic.getDamageBonus(caster, target, spell, dmg)
+     end
  
      -- handle MDT, One For All, Liement
-     if attackType == xi.attackType.MAGICAL then
-@@ -667,6 +679,9 @@ xi.spells.blue.applySpellDamage = function(caster, target, spell, dmg, params, t
- 
-     dmg = utils.handlePhalanx(target, dmg)
-     dmg = utils.handleStoneskin(target, dmg)
-+    if standardEligible then
-+        dmg = math.min(dmg, standardMagic.getDamageCap(caster))
-+    end
- 
-     -- Check if the mob has a damage cap
-     dmg = target:checkDamageCap(dmg)
-diff --git a/scripts/globals/spells/damage_spell.lua b/scripts/globals/spells/damage_spell.lua
-index 97b13be64e..c85b9dcd0e 100644
---- a/scripts/globals/spells/damage_spell.lua
-+++ b/scripts/globals/spells/damage_spell.lua
-@@ -9,6 +9,7 @@ require('scripts/globals/magicburst')
- xi = xi or {}
- xi.spells = xi.spells or {}
- xi.spells.damage = xi.spells.damage or {}
-+local standardMagic = require('modules/custom/lua/standard_magic_tuning_catalog')
- -----------------------------------
- -- File structure:
- -- 17 INDEPENDENT functions. Close them for better readability.
-@@ -1118,7 +1119,12 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
-     local spellGroup   = spell:getSpellGroup()
-     local spellElement = spell:getElement()
-     local statUsed     = pTable[spellId][column.STAT_USED]
--    local bonusMacc    = pTable[spellId][column.BONUS_MACC] + cardinalChantBonus(caster, target, xi.direction.SOUTH, spellId, skillType)
-+    local standardEligible = standardMagic.isDirectSpellEligible(caster, target, spell)
-+    local bonusMacc    = pTable[spellId][column.BONUS_MACC] +
-+        cardinalChantBonus(caster, target, xi.direction.SOUTH, spellId, skillType)
-+    if standardEligible then
-+        bonusMacc = bonusMacc - standardMagic.getMagicAccuracyPenalty(caster, target)
-+    end
- 
-     -- Skip everything if we nullify the spell.
-     if xi.spells.damage.calculateNullification(target, spellElement, true, false) == 0 then
-@@ -1247,6 +1253,13 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
-         end
-     end
- 
-+    -- Add the ordinary cast tier before nuke-wall and defensive handling so
-+    -- those mechanics continue to function. Gear, MAB and existing spell
-+    -- bonuses remain in finalDamage and can carry the result toward the cap.
-+    if standardEligible and finalDamage > 0 then
-+        finalDamage = finalDamage + standardMagic.getDamageBonus(caster, target, spell)
-+    end
-+
-     -- Handle "Nuke Wall". It must be handled after all previous calculations, but before clamp.
-     local nukeWallFactor = calculateNukeWallFactor(target, spellElement, finalDamage)
-     finalDamage          = math.floor(finalDamage * nukeWallFactor)
-@@ -1265,6 +1278,9 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
-     finalDamage = utils.handlePhalanx(target, finalDamage)
-     finalDamage = utils.handleOneForAll(target, finalDamage)
-     finalDamage = utils.handleStoneskin(target, finalDamage)
-+    if standardEligible then
-+        finalDamage = math.min(finalDamage, standardMagic.getDamageCap(caster))
-+    end
- 
-     -- Handle final adjustments. Most are located in core. TODO: Decide if we want core handling this.
-     -- Check if the mob has a damage cap
-diff --git a/scripts/globals/weaponskills.lua b/scripts/globals/weaponskills.lua
-index d039a8cf8a..f19c1dd72a 100644
---- a/scripts/globals/weaponskills.lua
-+++ b/scripts/globals/weaponskills.lua
-@@ -949,6 +949,22 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
-         wsResults.finalDmg = finaldmg
-     end
- 
-+    -- Ordinary player WSs receive a level-scaled, target-HP-based additive
-+    -- floor from StandardWeaponskillTuning. The module exposes it only during
-+    -- eligible calculations, so REMA/Prime/final-Ambuscade native WSs never
-+    -- enter this branch. Stock damage remains intact, allowing gear and WSD
-+    -- augments to continue scaling the result toward the pre-REMA cap.
-+    local standardBonus = attacker:getLocalVar('StandardWsDamageBonus')
-+    if finaldmg > 0 and standardBonus > 0 then
-+        local standardCap = attacker:getLocalVar('StandardWsDamageCap')
-+        finaldmg = math.floor(finaldmg + standardBonus)
-+        if standardCap > 0 then
-+            finaldmg = math.min(finaldmg, standardCap)
-+        end
-+
-+        wsResults.finalDmg = finaldmg
-+    end
-+
-     if wsResults.hitsLanded > 0 then
-         if finaldmg >= 0 then
-             if primaryMsg then
-@@ -1055,12 +1071,16 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
-         local effectiveCap = boundedPrime > globalCap and boundedPrime or globalCap
-         local aoeCap       = attacker:getLocalVar('AoEWsDamageCap')
-         local ambuscadeCap = attacker:getLocalVar('AmbuscadeWsDamageCap')
-+        local standardCap  = attacker:getLocalVar('StandardWsDamageCap')
-         if aoeCap and aoeCap > 0 and (effectiveCap <= 0 or aoeCap < effectiveCap) then
-             effectiveCap = aoeCap
-         end
-         if ambuscadeCap and ambuscadeCap > 0 and (effectiveCap <= 0 or ambuscadeCap < effectiveCap) then
-             effectiveCap = ambuscadeCap
-         end
-+        if standardCap and standardCap > 0 and (effectiveCap <= 0 or standardCap < effectiveCap) then
-+            effectiveCap = standardCap
-+        end
-         local trackDmg     = (preCap > finaldmg) and preCap or finaldmg
-         if effectiveCap > 0 then
-             trackDmg = math.min(trackDmg, effectiveCap)
-diff --git a/scripts/tests/systems/standard_magic_tuning.lua b/scripts/tests/systems/standard_magic_tuning.lua
-new file mode 100644
-index 0000000000..8361c856f6
---- /dev/null
-+++ b/scripts/tests/systems/standard_magic_tuning.lua
-@@ -0,0 +1,140 @@
-+local catalog = require('modules/custom/lua/standard_magic_tuning_catalog')
-+
-+describe('Level-scaled direct magic tuning', function()
-+    local function makeCaster(level, isPlayer, mainJob, equipment)
-+        equipment = equipment or {}
-+        return
-+        {
-+            isPC = function()
-+                return isPlayer ~= false
-+            end,
-+            getMainLvl = function()
-+                return level
-+            end,
-+            getMainJob = function()
-+                return mainJob or xi.job.BLM
-+            end,
-+            getEquipID = function(_, slot)
-+                return equipment[slot] or 0
-+            end,
-+        }
-+    end
-+
-+    local function makeTarget(level, maxHp, isMob)
-+        return
-+        {
-+            isMob = function()
-+                return isMob ~= false
-+            end,
-+            getMainLvl = function()
-+                return level
-+            end,
-+            getMaxHP = function()
-+                return maxHp
-+            end,
-+        }
-+    end
-+
-+    local function makeSpell(id, skill, level, nativeJob)
-+        return
-+        {
-+            getID = function()
-+                return id
-+            end,
-+            getSkillType = function()
-+                return skill
-+            end,
-+            getLevel = function(_, jobId)
-+                if nativeJob and jobId ~= nativeJob then
-+                    return 255
-+                end
-+
-+                return level or 99
-+            end,
-+        }
-+    end
-+
-+    it('targets the same HP share as ordinary weaponskills', function()
-+        local caster = makeCaster(99)
-+        local target = makeTarget(155, 120000)
-+        local highTierSpell = makeSpell(
-+            xi.magic.spell.FIRE_V, xi.skill.ELEMENTAL_MAGIC, 86)
-+
-+        assert(catalog.DAMAGE_CAP == 99999)
-+        assert(catalog.getDamageBonus(caster, target, highTierSpell) == 36000)
-+        assert(catalog.getMagicAccuracyPenalty(caster, target) == 0)
-+        assert(catalog.getDamageBonus(
-+            caster, target,
-+            makeSpell(xi.magic.spell.STONE, xi.skill.ELEMENTAL_MAGIC, 1)) == 5400)
-+
-+        caster = makeCaster(50)
-+        target = makeTarget(58, 10000)
-+        assert(catalog.getDamageBonus(
-+            caster, target,
-+            makeSpell(xi.magic.spell.STONE_III, xi.skill.ELEMENTAL_MAGIC, 40)) == 2100)
-+        assert(catalog.getMagicAccuracyPenalty(caster, target) == 40)
-+    end)
-+
-+    it('allows direct elemental, divine, and ninjutsu casts', function()
-+        local caster = makeCaster(99)
-+        local target = makeTarget(155, 120000)
-+
-+        assert(catalog.isDirectSpellEligible(
-+            caster, target, makeSpell(xi.magic.spell.FIRE_V, xi.skill.ELEMENTAL_MAGIC)))
-+        assert(catalog.isDirectSpellEligible(
-+            caster, target, makeSpell(xi.magic.spell.BANISH_III, xi.skill.DIVINE_MAGIC)))
-+        assert(catalog.isDirectSpellEligible(
-+            caster, target, makeSpell(xi.magic.spell.KATON_SAN, xi.skill.NINJUTSU)))
-+    end)
-+
-+    it('requires the spell to be native to the current main job', function()
-+        local target = makeTarget(155, 120000)
-+        local fireV = makeSpell(
-+            xi.magic.spell.FIRE_V, xi.skill.ELEMENTAL_MAGIC, 86, xi.job.BLM)
-+
-+        assert(catalog.isDirectSpellEligible(
-+            makeCaster(99, true, xi.job.BLM), target, fireV))
-+        assert(not catalog.isDirectSpellEligible(
-+            makeCaster(99, true, xi.job.SAM), target, fireV))
-+    end)
-+
-+    it('excludes Helix, dark magic, non-player casts, and non-mob targets', function()
-+        local caster = makeCaster(99)
-+        local target = makeTarget(155, 120000)
-+
-+        assert(not catalog.isDirectSpellEligible(
-+            caster, target, makeSpell(xi.magic.spell.GEOHELIX, xi.skill.ELEMENTAL_MAGIC)))
-+        assert(not catalog.isDirectSpellEligible(
-+            caster, target, makeSpell(xi.magic.spell.BIO_II, xi.skill.DARK_MAGIC)))
-+        assert(not catalog.isDirectSpellEligible(
-+            makeCaster(99, false), target,
-+            makeSpell(xi.magic.spell.FIRE_V, xi.skill.ELEMENTAL_MAGIC)))
-+        assert(not catalog.isDirectSpellEligible(
-+            caster, makeTarget(99, 2000, false),
-+            makeSpell(xi.magic.spell.FIRE_V, xi.skill.ELEMENTAL_MAGIC)))
-+    end)
-+
-+    it('allows only magical Blue Magic damage paths', function()
-+        local caster = makeCaster(99, true, xi.job.BLU)
-+        local target = makeTarget(155, 120000)
-+        local blueSpell = makeSpell(527, xi.skill.BLUE_MAGIC, 68, xi.job.BLU)
-+
-+        assert(catalog.isMagicalBlueEligible(
-+            caster, target, blueSpell, { attackType = xi.attackType.MAGICAL }))
-+        assert(not catalog.isMagicalBlueEligible(
-+            caster, target, blueSpell, { attackType = xi.attackType.PHYSICAL }))
-+        assert(not catalog.isMagicalBlueEligible(
-+            makeCaster(99, true, xi.job.SAM), target, blueSpell,
-+            { attackType = xi.attackType.MAGICAL }))
-+    end)
-+
-+    it('raises cast caps for equipped final REMA and Prime weapons', function()
-+        assert(catalog.getDamageCap(makeCaster(99)) == 99999)
-+        assert(catalog.getDamageCap(makeCaster(
-+            99, true, xi.job.BLM,
-+            { [xi.slot.MAIN] = 22062 })) == 999999)
-+        assert(catalog.getDamageCap(makeCaster(
-+            99, true, xi.job.BLM,
-+            { [xi.slot.MAIN] = 22106 })) == 1999999)
-+    end)
-+end)
-diff --git a/scripts/tests/systems/standard_ws_tuning.lua b/scripts/tests/systems/standard_ws_tuning.lua
-new file mode 100644
-index 0000000000..6650ba719a
---- /dev/null
-+++ b/scripts/tests/systems/standard_ws_tuning.lua
-@@ -0,0 +1,145 @@
-+local catalog = require('modules/custom/lua/standard_ws_tuning_catalog')
-+require('modules/custom/lua/StandardWeaponskillTuning')
-+
-+describe('Level-scaled ordinary weaponskill tuning', function()
-+    local function makePlayer(equipment, level)
-+        local mods      = {}
-+        local localVars = {}
-+        local player    = { equipment = equipment or {} }
-+
-+        player.isPC = function()
-+            return true
-+        end
-+
-+        player.getEquipID = function(self, slot)
-+            return self.equipment[slot] or 0
-+        end
-+
-+        player.getMainLvl = function()
-+            return level or 99
-+        end
-+
-+        player.getMod = function(_, modId)
-+            return mods[modId] or 0
-+        end
-+
-+        player.addMod = function(_, modId, amount)
-+            mods[modId] = (mods[modId] or 0) + amount
-+        end
-+
-+        player.setMod = function(_, modId, amount)
-+            mods[modId] = amount
-+        end
-+
-+        player.getLocalVar = function(_, name)
-+            return localVars[name] or 0
-+        end
-+
-+        player.setLocalVar = function(_, name, value)
-+            localVars[name] = value
-+        end
-+
-+        return player
-+    end
-+
-+    local function makeTarget(level, maxHp)
-+        return
-+        {
-+            isMob = function()
-+                return true
-+            end,
-+            getMainLvl = function()
-+                return level
-+            end,
-+            getMaxHP = function()
-+                return maxHp
-+            end,
-+        }
-+    end
-+
-+    it('scales its additive share with target HP and level gap', function()
-+        assert(catalog.getDamageBonus(99, 155, 120000) == 36000)
-+        assert(catalog.getDamageBonus(1, 1, 100) == 30)
-+        assert(catalog.getDamageBonus(50, 58, 10000) == 2100)
-+        assert(catalog.getDamageBonus(50, 75, 120000) == 1080)
-+    end)
-+
-+    it('adds a progressive accuracy penalty only beyond the grace band', function()
-+        assert(catalog.getAccuracyPenalty(50, 53) == 0)
-+        assert(catalog.getAccuracyPenalty(50, 58) == 40)
-+        assert(catalog.getAccuracyPenalty(50, 75) == 176)
-+        assert(catalog.getAccuracyPenalty(99, 155) == 0)
-+    end)
-+
-+    it('exposes ordinary WS bonus, cap, and underlevel accuracy synchronously', function()
-+        local player = makePlayer({ [xi.slot.MAIN] = 20819 }, 50)
-+        local target = makeTarget(58, 10000)
-+
-+        xi.standardWsTuning.withStandardEffects(
-+            player, target, xi.weaponskill.RAGING_RUSH, xi.slot.MAIN,
-+            {}, false,
-+            function()
-+                assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 2100)
-+                assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 99999)
-+                assert(player:getMod(xi.mod.WSACC) == -40)
-+            end)
-+
-+        assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 0)
-+        assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 0)
-+        assert(player:getMod(xi.mod.WSACC) == 0)
-+    end)
-+
-+    it('excludes exact REMA, Prime, and final Ambuscade native WS pairs', function()
-+        local target = makeTarget(150, 1000000)
-+        local cases =
-+        {
-+            { item = 20509, ws = xi.weaponskill.FINAL_HEAVEN },
-+            { item = 21646, ws = xi.weaponskill.IMPERATOR },
-+            { item = 21621, ws = xi.weaponskill.SAVAGE_BLADE },
-+        }
-+
-+        for _, case in ipairs(cases) do
-+            local player = makePlayer({ [xi.slot.MAIN] = case.item }, 99)
-+            xi.standardWsTuning.withStandardEffects(
-+                player, target, case.ws, xi.slot.MAIN, {}, false,
-+                function()
-+                    assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 0)
-+                    assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 0)
-+                end)
-+        end
-+    end)
-+
-+    it('still tunes ordinary WSs used with a special weapon', function()
-+        local player = makePlayer({ [xi.slot.MAIN] = 20509 }, 99)
-+        local target = makeTarget(155, 120000)
-+
-+        xi.standardWsTuning.withStandardEffects(
-+            player, target, xi.weaponskill.RAGING_FISTS, xi.slot.MAIN,
-+            {}, false,
-+            function()
-+                assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 36000)
-+            end)
-+    end)
-+
-+    it('restores local variables and accuracy after a calculation error', function()
-+        local player = makePlayer({ [xi.slot.MAIN] = 20819 }, 50)
-+        local target = makeTarget(58, 10000)
-+        player:setLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR, 17)
-+        player:setLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR, 23)
-+        player:setMod(xi.mod.WSACC, 11)
-+
-+        local ok = pcall(function()
-+            xi.standardWsTuning.withStandardEffects(
-+                player, target, xi.weaponskill.RAGING_RUSH, xi.slot.MAIN,
-+                {}, false,
-+                function()
-+                    error('expected test failure')
-+                end)
-+        end)
-+
-+        assert(not ok)
-+        assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 17)
-+        assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 23)
-+        assert(player:getMod(xi.mod.WSACC) == 11)
-+    end)
-+end)
-==============================================================================
-commit 7053ab3d4c7e52743d3cc4f2ee01f282a28d4bd6
-Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Mon Jul 27 00:14:43 2026 +0100
-
-    fix(fellow): scale leveling damage and trust behavior
-    
-    Co-authored-by: Cursor <cursoragent@cursor.com>
-
-diff --git a/modules/custom/lua/fellow_companion.lua b/modules/custom/lua/fellow_companion.lua
-index b7c8e42076..1da30cbef1 100644
---- a/modules/custom/lua/fellow_companion.lua
-+++ b/modules/custom/lua/fellow_companion.lua
-@@ -43,6 +43,7 @@
- -----------------------------------
- require('modules/module_utils')
- local FN = require('modules/custom/lua/fellow_name')  -- custom free-text name (replaced the preset list)
-+local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
- 
- local m   = Module:new('fellow_companion')
- local SYS = xi.msg.channel.SYSTEM_3
-@@ -370,7 +371,7 @@ local CONFIG =
-     combatLoopMs        = 2000,
-     wsCooldownSec       = 8,
-     nukeCooldownSec     = 10,
--    activityWindowSec   = 30,
-+    burstCooldownSec    = 3,
-     summonCooldownSec   = 300,
- 
-     healHpp             = 70,
-@@ -415,8 +416,8 @@ local V =
-     outfit   = 'Fellow_Outfit',  -- 0 = none (use Appearance); N = CONFIG.outfits[N]
-     mastered = 'Fellow_Mastered', -- 1 once the "all 14 capped" unlock message has fired (one-time)
-     schema   = 'Fellow_StatSchema',
--    summonedAt = 'Fellow_LastSummon',
- }
-+local SUMMONED_AT_LOCAL_VAR = 'fellowSummonedAt'
- local function statVar(stat) return 'Fellow_' .. stat end
- 
- -- ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ Data-model helpers ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
-@@ -503,6 +504,28 @@ local function chosenWs(p)
-     local mdl = CONFIG.models[getN(p, V.modelPet)]
-     return mdl and mdl.ws
- end
-+
-+local MAGUS_MOVE_ELEMENTS =
-+{
-+    [xi.mobSkill.THUNDER_IV]    = xi.element.THUNDER,
-+    [xi.mobSkill.THUNDERSTRIKE] = xi.element.THUNDER,
-+}
-+
-+local function chosenMagusElement(p)
-+    return MAGUS_MOVE_ELEMENTS[chosenWs(p)]
-+end
-+
-+local function masterHasTargetEnmity(master, target)
-+    if not master or not target or target:isDead() then
-+        return false
-+    end
-+
-+    local ok, hasEnmity = pcall(function()
-+        return target:getCE(master) + target:getVE(master) > 0
-+    end)
-+
-+    return ok and hasEnmity
-+end
- -- Naming is free-text via the !fellowname command (fellow_name.lua). The old
- -- preset name list (CONFIG.names / Fellow_NameIdx) was replaced 2026-07-09;
- -- fall back to a generic default until the player sets a custom name.
-@@ -699,7 +722,13 @@ local function applyFellow(p, pet)
-                 return
-             end
- 
--            local bonus = math.max(0, 2500 - (damage or 0))
-+            local desiredDamage = 2500
-+            if p:getMainLvl() < 99 then
-+                desiredDamage = math.min(desiredDamage, progression.getDamageBonus(
-+                    p:getMainLvl(), target:getMainLvl(), target:getMaxHP()))
-+            end
-+
-+            local bonus = math.max(0, desiredDamage - (damage or 0))
-             if bonus > 0 then
-                 target:takeDamage(bonus, tank, xi.attackType.BREATH, xi.damageType.DARK)
-             end
-@@ -717,6 +746,9 @@ local function applyFellow(p, pet)
-     pet:addListener('WEAPONSKILL_USE', 'FELLOW_ROLE_MOVE_COMPLETE', function(actor)
-         actor:setTP(0)
-         actor:setLocalVar('fellowMovePendingAt', 0)
-+        actor:setLocalVar('fellowProgressionDamageCap', 0)
-+        actor:setLocalVar('fellowAoEDamageScale', 0)
-+        actor:setLocalVar('fellowCanMagicBurst', 0)
-         if getRole(p) == 'magus' then
-             actor:setLocalVar('fellowNukeAt', os.time())
-         else
-@@ -724,6 +756,13 @@ local function applyFellow(p, pet)
-         end
-     end)
- 
-+    -- A defeated Fellow stays down like a trust. The player must explicitly
-+    -- summon it again once the cooldown is ready.
-+    pet:addListener('DEATH', 'FELLOW_DEATH', function()
-+        setN(p, V.active, 0)
-+        p:setLocalVar('fellowSummonPending', 0)
-+    end)
-+
-     -- Live display name (arbitrary string; silent=true to avoid console spam).
-     local nm = chosenName(p)
-     if nm then pcall(function() pet:renameEntity(nm, true) end) end
-@@ -766,21 +805,23 @@ scheduleCombatLoop = function(master, pet)
-             local function hasBeh(name) return beh == name or (behs and behs[name]) end
-             local lvl  = getLevel(master)
-             local now  = os.time()
--            local active = master:isEngaged() or p:isEngaged()
--                or now - (master:getLocalVar('fellowActivityAt') or 0) <= CONFIG.activityWindowSec
-+            local masterTarget = master:getTarget()
-+            local active = masterHasTargetEnmity(master, masterTarget)
- 
--            -- Remaining engaged is itself combat activity. Hunter uses ranged
--            -- attacks, so its melee auto-attack must remain disabled.
-+            -- Match normal trust behavior: drawing a weapon is not enough.
-+            -- The Fellow assists only after the master has generated enmity.
-+            -- Hunter uses ranged attacks, so its melee auto-attack stays disabled.
-             p:setAutoAttackEnabled(active and not hasBeh('ranged'))
-             if not active then
-                 if p:isEngaged() then p:disengage() end
-+                p:setLocalVar('fellowCombatStartedAt', 0)
-                 return
-             end
--            if master:isEngaged() and not p:isEngaged() then
--                local activeTarget = master:getTarget()
--                if activeTarget and not activeTarget:isDead() then
--                    p:engage(activeTarget:getTargID())
--                end
-+            if (p:getLocalVar('fellowCombatStartedAt') or 0) == 0 then
-+                p:setLocalVar('fellowCombatStartedAt', now)
-+            end
-+            if not p:isEngaged() then
-+                p:engage(masterTarget:getTargID())
-             end
- 
-             -- Oracle is a healer first. Its pulse selects the most injured
-@@ -894,12 +935,31 @@ scheduleCombatLoop = function(master, pet)
-                 -- Magus uses a visible magical mob skill on its own cadence rather
-                 -- than invisible takeDamage. This exercises the normal action,
-                 -- resistance, message and magic-burst systems.
-+                local magusElement = hasBeh('nuke') and chosenMagusElement(master) or nil
-+                local burstTier = 0
-+                if magusElement and xi.magicburst and xi.magicburst.formMagicBurst then
-+                    burstTier = xi.magicburst.formMagicBurst(tgt, magusElement)
-+                end
-+                local burstReady = burstTier > 0
-+                local lastActivity = math.max(
-+                    master:getLocalVar('fellowActivityAt') or 0,
-+                    p:getLocalVar('fellowCombatStartedAt') or now)
-+                local idleReady = now - lastActivity >= CONFIG.nukeCooldownSec
-+
-                 if hasBeh('nuke') and p:isEngaged() and tgt and not tgt:isDead()
-                    and not movePending
-                    and p:canUseAbilities()
--                   and now - (p:getLocalVar('fellowNukeAt') or 0) >= CONFIG.nukeCooldownSec then
-+                   and (burstReady or idleReady)
-+                   and now - (p:getLocalVar('fellowNukeAt') or 0) >=
-+                       (burstReady and CONFIG.burstCooldownSec or CONFIG.nukeCooldownSec) then
-                     local spellMove = chosenWs(master)
-                     if spellMove and spellMove > 0 then
-+                        local scaledCap = progression.getDamageBonus(
-+                            master:getMainLvl(), tgt:getMainLvl(), tgt:getMaxHP())
-+                        p:setLocalVar('fellowProgressionDamageCap', math.min(99999, scaledCap))
-+                        p:setLocalVar('fellowAoEDamageScale',
-+                            spellMove == xi.mobSkill.THUNDERSTRIKE and 25 or 0)
-+                        p:setLocalVar('fellowCanMagicBurst', burstReady and 1 or 0)
-                         p:setLocalVar('fellowMovePendingAt', now)
-                         p:useMobAbility(spellMove, tgt)
-                     end
-@@ -915,6 +975,17 @@ scheduleCombatLoop = function(master, pet)
-                    and now - (p:getLocalVar('fellowWsAt') or 0) >= CONFIG.wsCooldownSec then
-                     local ws = chosenWs(master)
-                     if ws and ws > 0 and tgt and not tgt:isDead() then
-+                        -- Below level 99, every role move is constrained by the
-+                        -- same player-level/target-HP curve as Magus. At 99 this
-+                        -- cap is disabled so existing endgame role power is kept.
-+                        local progressionCap = 0
-+                        if master:getMainLvl() < 99 then
-+                            progressionCap = math.min(99999, progression.getDamageBonus(
-+                                master:getMainLvl(), tgt:getMainLvl(), tgt:getMaxHP()))
-+                        end
-+                        p:setLocalVar('fellowProgressionDamageCap', progressionCap)
-+                        p:setLocalVar('fellowAoEDamageScale', 0)
-+
-                         if rdef.wsDamage then
-                             local normalDmg = normalWeaponDamage(master)
-                             p:setDamage(math.max(normalDmg, scaledRoleValue(master, rdef.wsDamage)))
-@@ -1010,8 +1081,8 @@ local function canChangeFellow(player)
-     return true
+diff --git a/scripts/globals/job_utils/ranger.lua b/scripts/globals/job_utils/ranger.lua
+index 60d58b6bb6..f08ad49e0c 100644
+--- a/scripts/globals/job_utils/ranger.lua
++++ b/scripts/globals/job_utils/ranger.lua
+@@ -241,7 +241,7 @@ xi.job_utils.ranger.useCamouflage = function(player, target, ability, action)
  end
  
---- Keeper: while active, (re)spawn the chosen chassis whenever the player has NO
---- pet and pets are allowed here -- survives zoning/death, yields to real job pets.
-+-- Keeper: completes an explicit summon request and maintains its safety checks.
-+-- It never recreates a Fellow after death, despawn, or zoning.
- local function keeper(p, name, gen)
-     if not p or genByName[name] ~= gen then return end
+ xi.job_utils.ranger.useBarrage = function(player, target, ability, action)
+-    player:addStatusEffect(xi.effect.BARRAGE, { duration = 43200, origin = player })
++    player:addStatusEffect(xi.effect.BARRAGE, { duration = 60, origin = player })
  
-@@ -1035,13 +1106,18 @@ local function keeper(p, name, gen)
-         return
-     end
- 
--    -- (Re)spawn the Fellow-trust whenever it isn't currently out. A trust does
--    -- not use the pet slot, so this never conflicts with a job pet. spawnTrust
--    -- is a raw spawn; applyFellow overlays the model/name/stats.
-+    -- Complete only a pending player-requested summon. A trust does not use the
-+    -- pet slot, so this never conflicts with a job pet. spawnTrust is a raw
-+    -- spawn; applyFellow overlays the model/name/stats.
-     if not hasFellowOut(p) then
-         local pending = p:getLocalVar('fellowSummonPending') == 1
--        local ready = os.time() - getN(p, V.summonedAt) >= CONFIG.summonCooldownSec
--        if pending or ready then
-+        if pending then
-+            if p:isEngaged() or p:hasEnmity() then
-+                setN(p, V.active, 0)
-+                p:setLocalVar('fellowSummonPending', 0)
-+                return
-+            end
-+
-             pcall(function()
-                 -- Naji normally installs a NOT_HAS_TOP_ENMITY Provoke gambit in
-                 -- onMobSpawn. Mark only this synchronous raw spawn so the base
-@@ -1054,10 +1130,13 @@ local function keeper(p, name, gen)
- 
-                 if spawned and trust then
-                     p:setLocalVar('fellowSummonPending', 0)
--                    setN(p, V.summonedAt, os.time())
-                     applyFellow(p, trust)
-                 end
-             end)
-+        else
-+            -- Never recreate a defeated/despawned Fellow automatically.
-+            setN(p, V.active, 0)
-+            return
-         end
-     end
- 
-@@ -1082,13 +1161,14 @@ local function summon(p)
-         p:printToPlayer('[Fellow] Adventuring Fellows cannot be called in areas where trusts are restricted.', SYS)
-         return
-     end
--    local remaining = CONFIG.summonCooldownSec - (os.time() - getN(p, V.summonedAt))
-+    local remaining = CONFIG.summonCooldownSec -
-+        (os.time() - (p:getLocalVar(SUMMONED_AT_LOCAL_VAR) or 0))
-     if remaining > 0 then
-         p:printToPlayer(string.format('[Fellow] Your Fellow needs %d more second(s) before another summon.', remaining), SYS)
-         return
-     end
-     setN(p, V.active, 1)
--    setN(p, V.summonedAt, os.time())
-+    p:setLocalVar(SUMMONED_AT_LOCAL_VAR, os.time())
-     p:setLocalVar('fellowSummonPending', 1)
-     markActivity(p)
-     -- No "dismiss your pet first" -- the Fellow is a trust now and coexists
-@@ -1857,6 +1937,7 @@ m:addOverride('xi.player.onGameIn', function(player, gameLogin, zoning)
-         if zoning then
-             setN(player, V.active, 0)
-             player:setLocalVar('fellowSummonPending', 0)
-+            player:setLocalVar(SUMMONED_AT_LOCAL_VAR, 0)
-         elseif getN(player, V.active) == 1 then
-             armKeeper(player, CONFIG.firstMs)
-         end
+     return xi.effect.BARRAGE
+ end
 diff --git a/scripts/globals/mobskills.lua b/scripts/globals/mobskills.lua
-index 135923ca85..3830df2d8e 100644
+index 3830df2d8e..8cd68ae6b8 100644
 --- a/scripts/globals/mobskills.lua
 +++ b/scripts/globals/mobskills.lua
-@@ -37,6 +37,27 @@ xi.mobskills.shadowBehavior =
+@@ -8,6 +8,7 @@ require('scripts/globals/combat/magic_hit_rate')
+ require('scripts/globals/magicburst')
+ require('scripts/globals/magic')
+ require('scripts/globals/spells/damage_spell')
++local standardProgression = require('modules/custom/lua/standard_ws_tuning_catalog')
+ -----------------------------------
+ xi = xi or {}
+ xi.mobskills = xi.mobskills or {}
+@@ -37,25 +38,60 @@ xi.mobskills.shadowBehavior =
      WIPE_SHADOWS   = 999,
  }
  
-+local function applyFellowDamageScaling(mob, skill, damage)
-+    if mob:getLocalVar('fellowApplied') ~= 1 then
+-local function applyFellowDamageScaling(mob, skill, damage)
+-    if mob:getLocalVar('fellowApplied') ~= 1 then
++local petProgressionJobs =
++{
++    [xi.job.BST] = true,
++    [xi.job.DRG] = true,
++    [xi.job.PUP] = true,
++}
++
++local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLanded)
++    if mob:getLocalVar('fellowApplied') == 1 then
++        -- Magus AoE nukes trade coverage for power. The role marks
++        -- Thunderstrike for quarter damage while leaving single-target and
++        -- other endgame moves at their established output.
++        local aoeScale = mob:getLocalVar('fellowAoEDamageScale')
++        if aoeScale > 0 and skill:isAoE() then
++            damage = math.floor(damage * aoeScale / 100)
++        end
++
++        local progressionCap = mob:getLocalVar('fellowProgressionDamageCap')
++        if progressionCap > 0 then
++            damage = math.min(damage, progressionCap, 99999)
++        end
++
 +        return damage
 +    end
 +
-+    -- Magus AoE nukes trade coverage for power. The role marks Thunderstrike
-+    -- for quarter damage while leaving single-target and other endgame moves
-+    -- at their established output.
-+    local aoeScale = mob:getLocalVar('fellowAoEDamageScale')
-+    if aoeScale > 0 and skill:isAoE() then
-+        damage = math.floor(damage * aoeScale / 100)
-+    end
-+
-+    local progressionCap = mob:getLocalVar('fellowProgressionDamageCap')
-+    if progressionCap > 0 then
-+        damage = math.min(damage, progressionCap, 99999)
-+    end
-+
-+    return damage
-+end
-+
++    -- BST Ready moves, DRG breaths and PUP automaton abilities share a modest
++    -- stock-aware floor and the standard pre-REMA ceiling. Existing strong pet
++    -- builds are never multiplied, AoE receives half the floor/cap, and SMN
++    -- avatars retain their dedicated equalization module.
++    local master = mob:getMaster()
++    if
++        damage <= 0 or
++        (hitsLanded or 0) <= 0 or
++        not mob:isPet() or
++        mob:isAvatar() or
++        master == nil or
++        not master:isPC() or
++        not petProgressionJobs[master:getMainJob()]
++    then
+         return damage
+     end
+ 
+-    -- Magus AoE nukes trade coverage for power. The role marks Thunderstrike
+-    -- for quarter damage while leaving single-target and other endgame moves
+-    -- at their established output.
+-    local aoeScale = mob:getLocalVar('fellowAoEDamageScale')
+-    if aoeScale > 0 and skill:isAoE() then
+-        damage = math.floor(damage * aoeScale / 100)
++    local floor = standardProgression.getPetDamageFloor(master, target)
++    local cap = standardProgression.DAMAGE_CAP
++    if skill:isAoE() then
++        floor = math.floor(floor * 0.50)
++        cap = math.floor(cap * 0.50)
+     end
+ 
+-    local progressionCap = mob:getLocalVar('fellowProgressionDamageCap')
+-    if progressionCap > 0 then
+-        damage = math.min(damage, progressionCap, 99999)
++    if master:getMainLvl() < standardProgression.ENDGAME_PLAYER_LEVEL then
++        cap = math.min(cap, math.floor(target:getMaxHP() * 0.40))
+     end
+ 
+-    return damage
++    return math.min(math.max(damage, floor), cap)
+ end
+ 
  -- TODO: Currently still used by avatar skills. Marked for deletion once they get converted.
- ---@enum xi.mobskills.physicalTpBonus
- xi.mobskills.physicalTpBonus =
-@@ -743,6 +764,7 @@ xi.mobskills.mobRangedMove = function(mob, target, skill, action, skillParams)
+@@ -764,7 +800,8 @@ xi.mobskills.mobRangedMove = function(mob, target, skill, action, skillParams)
      -- Handle Miss Messaging
      ----------------------------------
      totalDamage = resolveMissMessage(skill, hitsLanded, hitsYaegasumi, hitsAnticipated, hitsAbsorbed, shadowsAbsorbed, params.primaryMessage, totalDamage)
-+    totalDamage = applyFellowDamageScaling(mob, skill, totalDamage)
+-    totalDamage = applyFellowDamageScaling(mob, skill, totalDamage)
++    totalDamage = applyPlayerCompanionScaling(
++        mob, target, skill, totalDamage, hitsLanded)
  
      -- Mob only gets TP for hitting the initial target. AOE hits do not count.
      xi.mobskills.calculateSkillTPReturn(damage, mob, skill, target, params.attackType, hitsLanded)
-@@ -976,6 +998,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, action, skillParams)
+@@ -998,7 +1035,8 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, action, skillParams)
      -- Handle Miss Messaging
      ----------------------------------
      totalDamage = resolveMissMessage(skill, hitsLanded, hitsYaegasumi, hitsAnticipated, hitsAbsorbed, shadowsAbsorbed, params.primaryMessage, totalDamage)
-+    totalDamage = applyFellowDamageScaling(mob, skill, totalDamage)
+-    totalDamage = applyFellowDamageScaling(mob, skill, totalDamage)
++    totalDamage = applyPlayerCompanionScaling(
++        mob, target, skill, totalDamage, hitsLanded)
  
      ----------------------------------
      -- Handle TP Returns
-@@ -1052,7 +1075,8 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, action, skillParams)
-     local dStatMultiplier      = utils.defaultIfNil(skillParams.dStatMultiplier, 0)
-     local dStatAttackerMod     = utils.defaultIfNil(skillParams.dStatAttackerMod, xi.mod.INT)
-     local dStatDefenderMod     = utils.defaultIfNil(skillParams.dStatDefenderMod, xi.mod.INT)
--    local canMagicBurst        = utils.defaultIfNil(skillParams.canMagicBurst and true, false)
-+    local canMagicBurst        = utils.defaultIfNil(skillParams.canMagicBurst and true, false) or
-+        mob:getLocalVar('fellowCanMagicBurst') == 1
-     local primaryMessage       = utils.defaultIfNil(skillParams.primaryMessage, xi.msg.basic.DAMAGE)
- 
-     -- If a stat_wSC is not specified in skill script, it will default to 0. (Sanitized in xi.combat.physical.calculateWSC)
-@@ -1259,6 +1283,8 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, action, skillParams)
+@@ -1283,7 +1321,8 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, action, skillParams)
      damage = utils.handlePhalanx(target, damage)
      damage = utils.handleOneForAll(target, damage)
  
-+    damage = applyFellowDamageScaling(mob, skill, damage)
-+
+-    damage = applyFellowDamageScaling(mob, skill, damage)
++    damage = applyPlayerCompanionScaling(
++        mob, target, skill, damage, hitsLanded)
+ 
      if not skipStoneskin then
          -- TODO: Some Stoneskin effects only absorb certain damage types.
-         damage = utils.handleStoneskin(target, damage)
-@@ -1446,6 +1472,7 @@ xi.mobskills.mobBreathMove = function(mob, target, skill, action, skillParams)
+@@ -1472,7 +1511,8 @@ xi.mobskills.mobBreathMove = function(mob, target, skill, action, skillParams)
      damage = math.floor(utils.handleAutomatonAutoAnalyzer(target, skill, damage))
      damage = utils.handlePhalanx(target, damage)
      damage = utils.handleOneForAll(target, damage)
-+    damage = applyFellowDamageScaling(mob, skill, damage)
+-    damage = applyFellowDamageScaling(mob, skill, damage)
++    damage = applyPlayerCompanionScaling(
++        mob, target, skill, damage, hitsLanded)
  
      if not skipStoneskin then
          -- TODO: Some Stoneskin effects only absorb certain damage types.
+diff --git a/scripts/globals/spells/damage_spell.lua b/scripts/globals/spells/damage_spell.lua
+index c85b9dcd0e..9f9e3088d5 100644
+--- a/scripts/globals/spells/damage_spell.lua
++++ b/scripts/globals/spells/damage_spell.lua
+@@ -1257,7 +1257,8 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
+     -- those mechanics continue to function. Gear, MAB and existing spell
+     -- bonuses remain in finalDamage and can carry the result toward the cap.
+     if standardEligible and finalDamage > 0 then
+-        finalDamage = finalDamage + standardMagic.getDamageBonus(caster, target, spell)
++        finalDamage = finalDamage +
++            standardMagic.getDamageBonus(caster, target, spell, finalDamage)
+     end
+ 
+     -- Handle "Nuke Wall". It must be handled after all previous calculations, but before clamp.
+diff --git a/scripts/globals/weaponskills.lua b/scripts/globals/weaponskills.lua
+index f19c1dd72a..961dc2adb4 100644
+--- a/scripts/globals/weaponskills.lua
++++ b/scripts/globals/weaponskills.lua
+@@ -949,15 +949,16 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
+         wsResults.finalDmg = finaldmg
+     end
+ 
+-    -- Ordinary player WSs receive a level-scaled, target-HP-based additive
+-    -- floor from StandardWeaponskillTuning. The module exposes it only during
++    -- Ordinary player WSs receive a level-scaled, target-HP-based damage floor
++    -- from StandardWeaponskillTuning. The module exposes it only during
+     -- eligible calculations, so REMA/Prime/final-Ambuscade native WSs never
+-    -- enter this branch. Stock damage remains intact, allowing gear and WSD
+-    -- augments to continue scaling the result toward the pre-REMA cap.
+-    local standardBonus = attacker:getLocalVar('StandardWsDamageBonus')
+-    if finaldmg > 0 and standardBonus > 0 then
++    -- enter this branch. Naturally strong WSs keep their stock damage rather
++    -- than receiving the old flat bonus on top, so gear and WSD augments remain
++    -- the route from the floor toward the pre-REMA cap.
++    local standardFloor = attacker:getLocalVar('StandardWsDamageBonus')
++    if finaldmg > 0 and standardFloor > 0 then
+         local standardCap = attacker:getLocalVar('StandardWsDamageCap')
+-        finaldmg = math.floor(finaldmg + standardBonus)
++        finaldmg = math.max(finaldmg, standardFloor)
+         if standardCap > 0 then
+             finaldmg = math.min(finaldmg, standardCap)
+         end
+diff --git a/scripts/tests/systems/combat/hp_damage_cap.lua b/scripts/tests/systems/combat/hp_damage_cap.lua
+index c50d49f836..c9a94716f4 100644
+--- a/scripts/tests/systems/combat/hp_damage_cap.lua
++++ b/scripts/tests/systems/combat/hp_damage_cap.lua
+@@ -109,6 +109,17 @@ describe('Global HP damage cap', function()
+                 wsCap, maxHP - target:getHP()))
+     end)
+ 
++    it('enforces the active standard weapon progression cap', function()
++        local wsCap = 40000
++        player:setLocalVar('StandardWsDamageCap', wsCap)
++
++        target:takeDamage(damageCap, player, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
++
++        assert(target:getHP() == maxHP - wsCap,
++            string.format('Expected standard WS damage cap %d, got %d damage',
++                wsCap, maxHP - target:getHP()))
++    end)
++
+     it('preserves a lower target-specific received-damage cap', function()
+         local targetCap = 1234
+         target:setMod(xi.mod.RECEIVED_DAMAGE_CAP, targetCap)
+diff --git a/scripts/tests/systems/standard_magic_tuning.lua b/scripts/tests/systems/standard_magic_tuning.lua
+index 8361c856f6..5791787cd7 100644
+--- a/scripts/tests/systems/standard_magic_tuning.lua
++++ b/scripts/tests/systems/standard_magic_tuning.lua
+@@ -1,13 +1,16 @@
+ local catalog = require('modules/custom/lua/standard_magic_tuning_catalog')
+ 
+ describe('Level-scaled direct magic tuning', function()
+-    local function makeCaster(level, isPlayer, mainJob, equipment)
++    local function makeCaster(level, isPlayer, mainJob, equipment, spentJobPoints)
+         equipment = equipment or {}
+         return
+         {
+             isPC = function()
+                 return isPlayer ~= false
+             end,
++            isAutomaton = function()
++                return false
++            end,
+             getMainLvl = function()
+                 return level
+             end,
+@@ -17,6 +20,9 @@ describe('Level-scaled direct magic tuning', function()
+             getEquipID = function(_, slot)
+                 return equipment[slot] or 0
+             end,
++            getSpentJobPoints = function()
++                return spentJobPoints or 0
++            end,
+         }
+     end
+ 
+@@ -54,18 +60,31 @@ describe('Level-scaled direct magic tuning', function()
+         }
+     end
+ 
+-    it('targets the same HP share as ordinary weaponskills', function()
++    it('uses spell-tier and mastery floors without adding above the floor', function()
+         local caster = makeCaster(99)
+         local target = makeTarget(155, 120000)
+         local highTierSpell = makeSpell(
+             xi.magic.spell.FIRE_V, xi.skill.ELEMENTAL_MAGIC, 86)
+ 
+         assert(catalog.DAMAGE_CAP == 99999)
+-        assert(catalog.getDamageBonus(caster, target, highTierSpell) == 36000)
++        assert(catalog.getDamageFloor(caster, target, highTierSpell) == 42000)
++        assert(catalog.getDamageBonus(caster, target, highTierSpell, 30000) == 12000)
++        assert(catalog.getDamageBonus(caster, target, highTierSpell, 50000) == 0)
+         assert(catalog.getMagicAccuracyPenalty(caster, target) == 0)
+-        assert(catalog.getDamageBonus(
++        assert(catalog.getDamageFloor(
+             caster, target,
+-            makeSpell(xi.magic.spell.STONE, xi.skill.ELEMENTAL_MAGIC, 1)) == 5400)
++            makeSpell(xi.magic.spell.STONE, xi.skill.ELEMENTAL_MAGIC, 1)) == 20000)
++        assert(catalog.getDamageFloor(
++            makeCaster(99, true, xi.job.SCH), target,
++            makeSpell(xi.magic.spell.FIRE_IV, xi.skill.ELEMENTAL_MAGIC, 73, xi.job.SCH)) == 30000)
++        assert(catalog.getDamageFloor(
++            caster, target,
++            makeSpell(xi.magic.spell.FREEZE, xi.skill.ELEMENTAL_MAGIC, 50)) == 42000)
++
++        caster = makeCaster(99, true, xi.job.BLM, {}, 2100)
++        assert(catalog.getDamageFloor(caster, target, highTierSpell) == 60000)
++        assert(catalog.getDamageFloor(
++            caster, makeTarget(76, 8000), highTierSpell) == 60000)
+ 
+         caster = makeCaster(50)
+         target = makeTarget(58, 10000)
+@@ -75,6 +94,17 @@ describe('Level-scaled direct magic tuning', function()
+         assert(catalog.getMagicAccuracyPenalty(caster, target) == 40)
+     end)
+ 
++    it('keeps ninjutsu in a lower progression band', function()
++        local target = makeTarget(155, 120000)
++        local katon = makeSpell(
++            xi.magic.spell.KATON_SAN, xi.skill.NINJUTSU, 75, xi.job.NIN)
++
++        assert(catalog.getDamageFloor(
++            makeCaster(99, true, xi.job.NIN), target, katon) == 12000)
++        assert(catalog.getDamageFloor(
++            makeCaster(99, true, xi.job.NIN, {}, 2100), target, katon) == 18000)
++    end)
++
+     it('allows direct elemental, divine, and ninjutsu casts', function()
+         local caster = makeCaster(99)
+         local target = makeTarget(155, 120000)
+@@ -85,6 +115,9 @@ describe('Level-scaled direct magic tuning', function()
+             caster, target, makeSpell(xi.magic.spell.BANISH_III, xi.skill.DIVINE_MAGIC)))
+         assert(catalog.isDirectSpellEligible(
+             caster, target, makeSpell(xi.magic.spell.KATON_SAN, xi.skill.NINJUTSU)))
++        assert(catalog.isDirectSpellEligible(
++            makeCaster(99, true, xi.job.SCH), target,
++            makeSpell(xi.magic.spell.FIRE_IV, xi.skill.ELEMENTAL_MAGIC, 73, xi.job.SCH)))
+     end)
+ 
+     it('requires the spell to be native to the current main job', function()
+@@ -114,20 +147,44 @@ describe('Level-scaled direct magic tuning', function()
+             makeSpell(xi.magic.spell.FIRE_V, xi.skill.ELEMENTAL_MAGIC)))
+     end)
+ 
+-    it('allows only magical Blue Magic damage paths', function()
++    it('allows physical, magical, and breath Blue Magic damage paths', function()
+         local caster = makeCaster(99, true, xi.job.BLU)
+         local target = makeTarget(155, 120000)
+         local blueSpell = makeSpell(527, xi.skill.BLUE_MAGIC, 68, xi.job.BLU)
+ 
+-        assert(catalog.isMagicalBlueEligible(
++        assert(catalog.isBlueDamageEligible(
+             caster, target, blueSpell, { attackType = xi.attackType.MAGICAL }))
+-        assert(not catalog.isMagicalBlueEligible(
++        assert(catalog.isBlueDamageEligible(
+             caster, target, blueSpell, { attackType = xi.attackType.PHYSICAL }))
+-        assert(not catalog.isMagicalBlueEligible(
++        assert(catalog.isBlueDamageEligible(
++            caster, target, blueSpell, { attackType = xi.attackType.BREATH }))
++        assert(not catalog.isBlueDamageEligible(
+             makeCaster(99, true, xi.job.SAM), target, blueSpell,
+             { attackType = xi.attackType.MAGICAL }))
+     end)
+ 
++    it('gives player automatons the restrained pet progression floor', function()
++        local master = makeCaster(99, true, xi.job.PUP)
++        local automaton =
++        {
++            isPC = function()
++                return false
++            end,
++            isAutomaton = function()
++                return true
++            end,
++            getMaster = function()
++                return master
++            end,
++        }
++        local target = makeTarget(155, 120000)
++        local spell = makeSpell(
++            xi.magic.spell.FIRE_IV, xi.skill.ELEMENTAL_MAGIC, 75)
++
++        assert(catalog.isDirectSpellEligible(automaton, target, spell))
++        assert(catalog.getDamageFloor(automaton, target, spell) == 18000)
++    end)
++
+     it('raises cast caps for equipped final REMA and Prime weapons', function()
+         assert(catalog.getDamageCap(makeCaster(99)) == 99999)
+         assert(catalog.getDamageCap(makeCaster(
+diff --git a/scripts/tests/systems/standard_ws_tuning.lua b/scripts/tests/systems/standard_ws_tuning.lua
+index 6650ba719a..08a7f6b8d7 100644
+--- a/scripts/tests/systems/standard_ws_tuning.lua
++++ b/scripts/tests/systems/standard_ws_tuning.lua
+@@ -2,7 +2,7 @@ local catalog = require('modules/custom/lua/standard_ws_tuning_catalog')
+ require('modules/custom/lua/StandardWeaponskillTuning')
+ 
+ describe('Level-scaled ordinary weaponskill tuning', function()
+-    local function makePlayer(equipment, level)
++    local function makePlayer(equipment, level, spentJobPoints)
+         local mods      = {}
+         local localVars = {}
+         local player    = { equipment = equipment or {} }
+@@ -12,13 +12,37 @@ describe('Level-scaled ordinary weaponskill tuning', function()
+         end
+ 
+         player.getEquipID = function(self, slot)
+-            return self.equipment[slot] or 0
++            local equipped = self.equipment[slot]
++            return type(equipped) == 'table' and equipped.id or equipped or 0
++        end
++
++        player.getEquippedItem = function(self, slot)
++            local equipped = self.equipment[slot]
++            if not equipped then
++                return nil
++            end
++
++            local details = type(equipped) == 'table' and equipped or
++                { id = equipped, ilvl = 119, reqLvl = 99 }
++            return
++            {
++                getILvl = function()
++                    return details.ilvl or 0
++                end,
++                getReqLvl = function()
++                    return details.reqLvl or 0
++                end,
++            }
+         end
+ 
+         player.getMainLvl = function()
+             return level or 99
+         end
+ 
++        player.getSpentJobPoints = function()
++            return spentJobPoints or 0
++        end
++
+         player.getMod = function(_, modId)
+             return mods[modId] or 0
+         end
+@@ -64,6 +88,40 @@ describe('Level-scaled ordinary weaponskill tuning', function()
+         assert(catalog.getDamageBonus(50, 75, 120000) == 1080)
+     end)
+ 
++    it('uses mastery-scaled floors at level 99 without lowering strong WSs', function()
++        local target = makeTarget(155, 120000)
++        local weapon = { [xi.slot.MAIN] = { id = 1, ilvl = 119, reqLvl = 99 } }
++        assert(catalog.getWeaponskillFloor(makePlayer(weapon, 99, 0), target) == 32000)
++        assert(catalog.getWeaponskillFloor(makePlayer(weapon, 99, 1050), target) == 38500)
++        assert(catalog.getWeaponskillFloor(makePlayer(weapon, 99, 2100), target) == 45000)
++        assert(catalog.getPetDamageFloor(makePlayer({}, 99, 0), target) == 18000)
++        assert(catalog.getPetDamageFloor(makePlayer({}, 99, 2100), target) == 28000)
++    end)
++
++    it('keeps the full level-99 floor on low-HP farming targets', function()
++        local player = makePlayer(
++            { [xi.slot.MAIN] = { id = 1, ilvl = 119, reqLvl = 99 } }, 99, 2100)
++
++        assert(catalog.getWeaponskillFloor(
++            player, makeTarget(76, 8000), xi.slot.MAIN) == 45000)
++    end)
++
++    it('scales custom floors by weapon level and caps non-item-level weapons', function()
++        local onionSword = makePlayer(
++            { [xi.slot.MAIN] = { id = 2, ilvl = 0, reqLvl = 1 } }, 99, 0)
++        local level99Sword = makePlayer(
++            { [xi.slot.MAIN] = { id = 3, ilvl = 0, reqLvl = 99 } }, 99, 0)
++        local itemLevel119Sword = makePlayer(
++            { [xi.slot.MAIN] = { id = 4, ilvl = 119, reqLvl = 99 } }, 99, 0)
++        local target = makeTarget(155, 120000)
++
++        assert(catalog.getWeaponskillFloor(onionSword, target, xi.slot.MAIN) == 323)
++        assert(catalog.getWeaponskillFloor(level99Sword, target, xi.slot.MAIN) == 32000)
++        assert(catalog.getWeaponskillCap(onionSword, xi.slot.MAIN) == 40000)
++        assert(catalog.getWeaponskillCap(level99Sword, xi.slot.MAIN) == 40000)
++        assert(catalog.getWeaponskillCap(itemLevel119Sword, xi.slot.MAIN) == 99999)
++    end)
++
+     it('adds a progressive accuracy penalty only beyond the grace band', function()
+         assert(catalog.getAccuracyPenalty(50, 53) == 0)
+         assert(catalog.getAccuracyPenalty(50, 58) == 40)
+@@ -72,7 +130,8 @@ describe('Level-scaled ordinary weaponskill tuning', function()
+     end)
+ 
+     it('exposes ordinary WS bonus, cap, and underlevel accuracy synchronously', function()
+-        local player = makePlayer({ [xi.slot.MAIN] = 20819 }, 50)
++        local player = makePlayer(
++            { [xi.slot.MAIN] = { id = 20819, ilvl = 0, reqLvl = 50 } }, 50)
+         local target = makeTarget(58, 10000)
+ 
+         xi.standardWsTuning.withStandardEffects(
+@@ -80,7 +139,7 @@ describe('Level-scaled ordinary weaponskill tuning', function()
+             {}, false,
+             function()
+                 assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 2100)
+-                assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 99999)
++                assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 40000)
+                 assert(player:getMod(xi.mod.WSACC) == -40)
+             end)
+ 
+@@ -117,7 +176,7 @@ describe('Level-scaled ordinary weaponskill tuning', function()
+             player, target, xi.weaponskill.RAGING_FISTS, xi.slot.MAIN,
+             {}, false,
+             function()
+-                assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 36000)
++                assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 32000)
+             end)
+     end)
+ 
+diff --git a/src/map/entities/battleentity.cpp b/src/map/entities/battleentity.cpp
+index 1475698ef1..7910cd76cf 100644
+--- a/src/map/entities/battleentity.cpp
++++ b/src/map/entities/battleentity.cpp
+@@ -3525,12 +3525,12 @@ void CBattleEntity::OnRangedAttack(CRangeState& state, action_t& action)
+         }
+     }
+ 
+-    // Remove sange effect after firing. FJB: Barrage is intentionally NO LONGER
+-    // consumed per shot -- it now persists for its full status-effect duration
+-    // (5:00, set in modules/custom/lua/barrage_tuning.lua) so EVERY ranged attack
+-    // barrages, turning it into a timed RNG DD buff instead of a single shot. It
+-    // still lapses on its own timer, and a throwing weapon still drops it via
+-    // range_state.cpp (retail-accurate -- Barrage doesn't apply to throwing).
++    // Barrage and Sange empower one ranged attack only.
++    if (isBarrage)
++    {
++        StatusEffectContainer->DelStatusEffectSilent(EFFECT_BARRAGE);
++    }
++
+     if (isSange)
+     {
+         StatusEffectContainer->DelStatusEffectSilent(EFFECT_SANGE);
+diff --git a/src/map/entities/charentity.cpp b/src/map/entities/charentity.cpp
+index 49ccce7b0c..24abe820e0 100644
+--- a/src/map/entities/charentity.cpp
++++ b/src/map/entities/charentity.cpp
+@@ -1671,9 +1671,8 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
+             actionResult.resolution = ActionResolution::Hit;
+             actionResult.animation  = PWeaponSkill->getAnimationId();
+ 
+-            // Scope the lower damage ceiling to the synchronous Lua calculation:
+-            // direct WS damage is applied inside OnUseWeaponSkill. Restore it
+-            // before skillchain damage is calculated below.
++            // Scope the lower damage ceiling to this complete AoE WS target,
++            // including any skillchain it produces.
+             const auto priorAoEWsCap = GetLocalVar("AoEWsDamageCap");
+             if (PWeaponSkill->isAoE())
+             {
+@@ -1682,11 +1681,6 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
+ 
+             std::tie(damage, tpHitsLanded, extraHitsLanded) = luautils::OnUseWeaponSkill(this, PTarget, PWeaponSkill, tp, primary, action, taChar);
+ 
+-            if (PWeaponSkill->isAoE())
+-            {
+-                SetLocalVar("AoEWsDamageCap", priorAoEWsCap);
+-            }
+-
+             if (!battleutils::isValidSelfTargetWeaponskill(PWeaponSkill->getID()))
+             {
+                 if (primary && PBattleTarget->objtype == TYPE_MOB)
+@@ -1800,6 +1794,11 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
+                 }
+             }
+ 
++            if (PWeaponSkill->isAoE())
++            {
++                SetLocalVar("AoEWsDamageCap", priorAoEWsCap);
++            }
++
+             // RELAUNCH FIX 2026-07-13 (Spyro report: "AoE WS kills give no exp/gil,
+             // just does the kill"). The post-loop ClaimMob below only claims the
+             // PRIMARY target. Every OTHER mob hit by an AoE WS was damaged (and
