@@ -88,25 +88,25 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         assert(catalog.getDamageBonus(50, 75, 120000) == 1080)
     end)
 
-    it('uses mastery-scaled floors at level 99 without lowering strong WSs', function()
+    it('uses mastery-scaled additive bonuses at level 99', function()
         local target = makeTarget(155, 120000)
         local weapon = { [xi.slot.MAIN] = { id = 1, ilvl = 119, reqLvl = 99 } }
-        assert(catalog.getWeaponskillFloor(makePlayer(weapon, 99, 0), target) == 32000)
-        assert(catalog.getWeaponskillFloor(makePlayer(weapon, 99, 1050), target) == 38500)
-        assert(catalog.getWeaponskillFloor(makePlayer(weapon, 99, 2100), target) == 45000)
+        assert(catalog.getWeaponskillBonus(makePlayer(weapon, 99, 0), target) == 20000)
+        assert(catalog.getWeaponskillBonus(makePlayer(weapon, 99, 1050), target) == 25000)
+        assert(catalog.getWeaponskillBonus(makePlayer(weapon, 99, 2100), target) == 30000)
         assert(catalog.getPetDamageFloor(makePlayer({}, 99, 0), target) == 18000)
         assert(catalog.getPetDamageFloor(makePlayer({}, 99, 2100), target) == 28000)
     end)
 
-    it('keeps the full level-99 floor on low-HP farming targets', function()
+    it('keeps the full level-99 bonus on low-HP farming targets', function()
         local player = makePlayer(
             { [xi.slot.MAIN] = { id = 1, ilvl = 119, reqLvl = 99 } }, 99, 2100)
 
-        assert(catalog.getWeaponskillFloor(
-            player, makeTarget(76, 8000), xi.slot.MAIN) == 45000)
+        assert(catalog.getWeaponskillBonus(
+            player, makeTarget(76, 8000), xi.slot.MAIN) == 30000)
     end)
 
-    it('scales custom floors by weapon level and caps non-item-level weapons', function()
+    it('scales custom bonuses by weapon level and caps non-item-level weapons', function()
         local onionSword = makePlayer(
             { [xi.slot.MAIN] = { id = 2, ilvl = 0, reqLvl = 1 } }, 99, 0)
         local level99Sword = makePlayer(
@@ -115,8 +115,8 @@ describe('Level-scaled ordinary weaponskill tuning', function()
             { [xi.slot.MAIN] = { id = 4, ilvl = 119, reqLvl = 99 } }, 99, 0)
         local target = makeTarget(155, 120000)
 
-        assert(catalog.getWeaponskillFloor(onionSword, target, xi.slot.MAIN) == 323)
-        assert(catalog.getWeaponskillFloor(level99Sword, target, xi.slot.MAIN) == 32000)
+        assert(catalog.getWeaponskillBonus(onionSword, target, xi.slot.MAIN) == 202)
+        assert(catalog.getWeaponskillBonus(level99Sword, target, xi.slot.MAIN) == 20000)
         assert(catalog.getWeaponskillCap(onionSword, xi.slot.MAIN) == 40000)
         assert(catalog.getWeaponskillCap(level99Sword, xi.slot.MAIN) == 40000)
         assert(catalog.getWeaponskillCap(itemLevel119Sword, xi.slot.MAIN) == 99999)
@@ -176,7 +176,7 @@ describe('Level-scaled ordinary weaponskill tuning', function()
             player, target, xi.weaponskill.RAGING_FISTS, xi.slot.MAIN,
             {}, false,
             function()
-                assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 32000)
+                assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 20000)
             end)
     end)
 

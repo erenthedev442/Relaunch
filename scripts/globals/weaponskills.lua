@@ -949,16 +949,15 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
         wsResults.finalDmg = finaldmg
     end
 
-    -- Ordinary player WSs receive a level-scaled, target-HP-based damage floor
+    -- Ordinary player WSs receive a level-, weapon- and mastery-scaled bonus
     -- from StandardWeaponskillTuning. The module exposes it only during
     -- eligible calculations, so REMA/Prime/final-Ambuscade native WSs never
-    -- enter this branch. Naturally strong WSs keep their stock damage rather
-    -- than receiving the old flat bonus on top, so gear and WSD augments remain
-    -- the route from the floor toward the pre-REMA cap.
-    local standardFloor = attacker:getLocalVar('StandardWsDamageBonus')
-    if finaldmg > 0 and standardFloor > 0 then
+    -- enter this branch. Add the bonus to stock damage so weapon damage, TP,
+    -- attack, attributes and WSD gear remain visible below the final cap.
+    local standardBonus = attacker:getLocalVar('StandardWsDamageBonus')
+    if finaldmg > 0 and standardBonus > 0 then
         local standardCap = attacker:getLocalVar('StandardWsDamageCap')
-        finaldmg = math.max(finaldmg, standardFloor)
+        finaldmg = finaldmg + standardBonus
         if standardCap > 0 then
             finaldmg = math.min(finaldmg, standardCap)
         end

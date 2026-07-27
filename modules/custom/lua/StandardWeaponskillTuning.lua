@@ -60,7 +60,7 @@ xi.standardWsTuning.withStandardEffects = function(
     local priorAcc    = attacker:getMod(accuracyMod)
     local penalty     = catalog.getAccuracyPenalty(
         attacker:getMainLvl(), target:getMainLvl())
-    local bonus       = catalog.getWeaponskillFloor(attacker, target, slot)
+    local bonus       = catalog.getWeaponskillBonus(attacker, target, slot)
     local damageCap   = catalog.getWeaponskillCap(attacker, slot)
 
     attacker:setLocalVar(bonusVar, bonus)

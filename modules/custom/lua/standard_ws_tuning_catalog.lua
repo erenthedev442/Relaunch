@@ -1,10 +1,10 @@
 -----------------------------------
 -- Baseline weaponskill progression tuning.
 --
--- Ordinary player weaponskills receive a target-HP floor while leveling. At
--- 99, weapon level and Job Point mastery set the floor; the equipped weapon's
--- stock base damage remains in the normal WS formula. Naturally stronger WSs
--- keep their stock result up to the weapon-appropriate ceiling.
+-- Ordinary player weaponskills receive an additive progression bonus. At 99,
+-- weapon level and Job Point mastery set that bonus; the normal WS formula
+-- retains weapon damage, attributes, attack, TP and gear before the final
+-- weapon-appropriate ceiling is applied.
 -----------------------------------
 
 local catalog = {}
@@ -16,8 +16,8 @@ catalog.NON_ITEM_LEVEL_119_CAP = 40000
 catalog.TARGET_HP_FRACTION     = 0.30
 catalog.ENDGAME_PLAYER_LEVEL   = 99
 catalog.MASTER_JOB_POINTS       = 2100
-catalog.FRESH_99_FLOOR          = 32000
-catalog.MASTERED_99_FLOOR       = 45000
+catalog.FRESH_99_BONUS          = 20000
+catalog.MASTERED_99_BONUS       = 30000
 catalog.PET_FRESH_99_FLOOR      = 18000
 catalog.PET_MASTERED_99_FLOOR   = 28000
 
@@ -83,15 +83,14 @@ function catalog.getMasteryProgress(player)
         (player:getSpentJobPoints() or 0) / catalog.MASTER_JOB_POINTS, 0, 1)
 end
 
-local function getEndgameFloor(player, freshFloor, masteredFloor)
+local function getMasteryScaledValue(player, freshValue, masteredValue)
     local mastery = catalog.getMasteryProgress(player)
-    return math.floor(freshFloor + (masteredFloor - freshFloor) * mastery + 0.5)
+    return math.floor(freshValue + (masteredValue - freshValue) * mastery + 0.5)
 end
 
--- Stock WS formulas already include the equipped weapon's base damage. Scale
--- only the custom floor by required level so that it cannot erase that weapon
--- progression (for example, an Onion Sword must not inherit a full Lv99 floor).
--- Item-level 119 weapons unlock the full floor and normal 99,999 ceiling.
+-- Scale only the custom bonus by required level. Stock formulas already include
+-- weapon base damage, so an Onion Sword remains far behind a level-115 weapon.
+-- Item-level 119 weapons unlock the full bonus and normal 99,999 ceiling.
 function catalog.getWeaponProgression(player, slot)
     local weapon = player:getEquippedItem(slot)
     if weapon == nil then
@@ -114,20 +113,17 @@ function catalog.getWeaponskillCap(player, slot)
     return catalog.NON_ITEM_LEVEL_119_CAP
 end
 
--- Standard tuning is a floor, not a blanket additive multiplier. Weak WSs are
--- lifted into the progression band while naturally strong WSs and augmented
--- builds keep their stock result and progress toward the unchanged 99,999 cap.
-function catalog.getWeaponskillFloor(player, target, slot)
+function catalog.getWeaponskillBonus(player, target, slot)
     if player:getMainLvl() < catalog.ENDGAME_PLAYER_LEVEL then
         return catalog.getDamageBonus(
             player:getMainLvl(), target:getMainLvl(), target:getMaxHP())
     end
 
-    local endgameFloor = getEndgameFloor(
-        player, catalog.FRESH_99_FLOOR, catalog.MASTERED_99_FLOOR)
+    local endgameBonus = getMasteryScaledValue(
+        player, catalog.FRESH_99_BONUS, catalog.MASTERED_99_BONUS)
 
     return math.floor(
-        endgameFloor * catalog.getWeaponProgression(player, slot or xi.slot.MAIN) + 0.5)
+        endgameBonus * catalog.getWeaponProgression(player, slot or xi.slot.MAIN) + 0.5)
 end
 
 function catalog.getPetDamageFloor(player, target)
@@ -136,7 +132,7 @@ function catalog.getPetDamageFloor(player, target)
             player:getMainLvl(), target:getMainLvl(), target:getMaxHP()) * 0.65 + 0.5)
     end
 
-    return getEndgameFloor(
+    return getMasteryScaledValue(
         player, catalog.PET_FRESH_99_FLOOR, catalog.PET_MASTERED_99_FLOOR)
 end
 

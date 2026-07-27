@@ -1,7 +1,7 @@
 -----------------------------------
 -- Level-scaled baseline tuning for direct player-cast magical damage.
 --
--- Reuses the ordinary WS leveling curve, then assigns fresh-99/mastered floors
+-- Reuses the ordinary WS leveling curve, then assigns fresh-99/mastered bonuses
 -- by spell family and tier. Direct elemental/divine/ninjutsu casts, damaging
 -- Blue Magic (physical, magical, and breath), and player-automaton nukes are
 -- eligible. Drains, enfeebles and Helix damage-over-time spells remain untouched.
@@ -18,14 +18,14 @@ catalog.PRIME_DAMAGE_CAP       = 1999999
 catalog.FULL_POWER_LEVEL_RATIO = 0.70
 catalog.MIN_SPELL_FACTOR       = 0.15
 
-catalog.FLOORS =
+catalog.BONUSES =
 {
-    elementalHigh = { fresh = 42000, mastered = 60000 },
-    elementalMid  = { fresh = 30000, mastered = 45000 },
-    elementalLow  = { fresh = 20000, mastered = 30000 },
-    ninjutsu      = { fresh = 12000, mastered = 18000 },
-    divine        = { fresh = 18000, mastered = 30000 },
-    blue          = { fresh = 24000, mastered = 38000 },
+    elementalHigh = { fresh = 25000, mastered = 35000 },
+    elementalMid  = { fresh = 18000, mastered = 27000 },
+    elementalLow  = { fresh = 12000, mastered = 18000 },
+    ninjutsu      = { fresh =  8000, mastered = 12000 },
+    divine        = { fresh = 12000, mastered = 20000 },
+    blue          = { fresh = 16000, mastered = 25000 },
 }
 
 local remaWeaponIds = {}
@@ -140,28 +140,28 @@ local function isAncientMagic(spellId)
     return spellId >= xi.magic.spell.FLARE and spellId <= xi.magic.spell.FLOOD_II
 end
 
-local function getFloorBand(caster, spell)
+local function getBonusBand(caster, spell)
     local skill = spell:getSkillType()
     if skill == xi.skill.NINJUTSU then
-        return catalog.FLOORS.ninjutsu
+        return catalog.BONUSES.ninjutsu
     elseif skill == xi.skill.DIVINE_MAGIC then
-        return catalog.FLOORS.divine
+        return catalog.BONUSES.divine
     elseif skill == xi.skill.BLUE_MAGIC then
-        return catalog.FLOORS.blue
+        return catalog.BONUSES.blue
     end
 
     local player = getProgressionPlayer(caster)
     local spellLevel = spell:getLevel(player:getMainJob()) or 1
     if spellLevel >= 75 or isAncientMagic(spell:getID()) then
-        return catalog.FLOORS.elementalHigh
+        return catalog.BONUSES.elementalHigh
     elseif spellLevel >= 50 then
-        return catalog.FLOORS.elementalMid
+        return catalog.BONUSES.elementalMid
     end
 
-    return catalog.FLOORS.elementalLow
+    return catalog.BONUSES.elementalLow
 end
 
-function catalog.getDamageFloor(caster, target, spell)
+function catalog.getDamageBonus(caster, target, spell)
     local player = getProgressionPlayer(caster)
     if caster:isAutomaton() then
         return progression.getPetDamageFloor(player, target)
@@ -174,21 +174,14 @@ function catalog.getDamageFloor(caster, target, spell)
             levelScaledBonus * catalog.getSpellProgressionFactor(caster, spell) + 0.5)
     end
 
-    local band = getFloorBand(caster, spell)
+    local band = getBonusBand(caster, spell)
     local mastery = progression.getMasteryProgress(player)
-    local masteryFloor = math.floor(
+    local masteryBonus = math.floor(
         band.fresh + (band.mastered - band.fresh) * mastery + 0.5)
 
-    -- At 99 the caster's progression floor no longer shrinks with target HP.
-    -- This keeps farming damage consistent on lower-level enemies while the
-    -- target can still lose no more HP than it actually has.
-    return masteryFloor
-end
-
-function catalog.getDamageBonus(caster, target, spell, currentDamage)
-    local floor = catalog.getDamageFloor(caster, target, spell)
-
-    return math.max(0, floor - math.max(0, currentDamage or 0))
+    -- Add rather than replace stock spell damage so INT, MAB, Magic Damage,
+    -- affinity, skill, burst bonuses and equipment remain effective.
+    return masteryBonus
 end
 
 function catalog.getMagicAccuracyPenalty(caster, target)
