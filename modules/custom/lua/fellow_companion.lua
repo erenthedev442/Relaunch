@@ -556,20 +556,38 @@ local function masterPowerProgress(p)
     return math.max(0, math.min(1, (level - 1) / 98))
 end
 
+-- Offensive power requires all four progression axes. Small non-zero gates let
+-- a new Fellow participate, but full output requires Fellow level 120, every
+-- attribute capped, a Lv99 master, and 2,100 spent Job Points.
+local function fellowPowerProgress(p)
+    local levelGate      = 0.10 + 0.90 * levelProgress(p)
+    local investmentGate = 0.10 + 0.90 * investmentProgress(p)
+    local masteryGate    = 0.15 + 0.85 * progression.getMasteryProgress(p)
+
+    return levelGate * investmentGate * masterPowerProgress(p) * masteryGate
+end
+
 local function lerp(a, b, t)
     return math.floor(a + (b - a) * math.max(0, math.min(1, t)))
 end
 
 local function scaledRoleValue(p, range)
-    return math.floor(lerp(range[1], range[2], combatProgress(p)) * masterPowerProgress(p))
+    return math.floor(range[2] * fellowPowerProgress(p))
 end
 
 local function normalWeaponDamage(p)
     local masterLvl = math.max(1, p:getMainLvl() or 1)
-    return math.floor(
+    return math.max(1, math.floor((
         CONFIG.dmgBase +
         CONFIG.dmgPerMasterLevel * math.min(99, masterLvl) +
-        CONFIG.dmgPerLevel * math.max(0, getLevel(p) - 1) * masterPowerProgress(p))
+        CONFIG.dmgPerLevel * math.max(0, getLevel(p) - 1)) * fellowPowerProgress(p)))
+end
+
+local function fellowDamageCap(p, target)
+    local fullPowerCap = math.min(99999, progression.getDamageBonus(
+        p:getMainLvl(), target:getMainLvl(), target:getMaxHP()))
+
+    return math.max(1, math.floor(fullPowerCap * fellowPowerProgress(p)))
 end
 
 local function currentGrade(p)
@@ -608,7 +626,10 @@ local function applyFellow(p, pet)
     local lvl  = getLevel(p)
     local role = roleDef(p)
 
-    local masterPower = masterPowerProgress(p)
+    local masterPower = fellowPowerProgress(p)
+    pet:setLocalVar(
+        'EncounterOutgoingDamageCap',
+        math.max(1, math.floor(99999 * masterPower)))
     for _, mv in ipairs(CONFIG.perLevel) do
         pet:addMod(mv[1], math.floor(mv[2] * lvl * masterPower))
     end
@@ -689,7 +710,7 @@ local function applyFellow(p, pet)
     elseif roleKey == 'magus' then
         -- The combat loop casts only the spell/move selected in the Fellow
         -- menu. Do not install an autonomous spell list that can override it.
-        pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
+        pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
     elseif roleKey == 'hunter' then
         pet:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 })
         pet:addMod(xi.mod.STORETP, 86)
@@ -954,9 +975,9 @@ scheduleCombatLoop = function(master, pet)
                        (burstReady and CONFIG.burstCooldownSec or CONFIG.nukeCooldownSec) then
                     local spellMove = chosenWs(master)
                     if spellMove and spellMove > 0 then
-                        local scaledCap = progression.getDamageBonus(
-                            master:getMainLvl(), tgt:getMainLvl(), tgt:getMaxHP())
-                        p:setLocalVar('fellowProgressionDamageCap', math.min(99999, scaledCap))
+                        p:setLocalVar(
+                            'fellowProgressionDamageCap',
+                            fellowDamageCap(master, tgt))
                         p:setLocalVar('fellowAoEDamageScale',
                             spellMove == xi.mobSkill.THUNDERSTRIKE and 25 or 0)
                         p:setLocalVar('fellowCanMagicBurst', burstReady and 1 or 0)
@@ -975,15 +996,11 @@ scheduleCombatLoop = function(master, pet)
                    and now - (p:getLocalVar('fellowWsAt') or 0) >= CONFIG.wsCooldownSec then
                     local ws = chosenWs(master)
                     if ws and ws > 0 and tgt and not tgt:isDead() then
-                        -- Below level 99, every role move is constrained by the
-                        -- same player-level/target-HP curve as Magus. At 99 this
-                        -- cap is disabled so existing endgame role power is kept.
-                        local progressionCap = 0
-                        if master:getMainLvl() < 99 then
-                            progressionCap = math.min(99999, progression.getDamageBonus(
-                                master:getMainLvl(), tgt:getMainLvl(), tgt:getMaxHP()))
-                        end
-                        p:setLocalVar('fellowProgressionDamageCap', progressionCap)
+                        -- Every role is constrained by the same composite
+                        -- Fellow/master progression curve, including at 99.
+                        p:setLocalVar(
+                            'fellowProgressionDamageCap',
+                            fellowDamageCap(master, tgt))
                         p:setLocalVar('fellowAoEDamageScale', 0)
 
                         if rdef.wsDamage then
@@ -996,7 +1013,7 @@ scheduleCombatLoop = function(master, pet)
                         if rdef.magicDamageByMove and rdef.magicDamageByMove[ws] then
                             local normalMagicDamage = p:getMod(xi.mod.MAGIC_DAMAGE)
                             p:setMod(xi.mod.MAGIC_DAMAGE,
-                                math.floor(rdef.magicDamageByMove[ws] * masterPowerProgress(master)))
+                                math.floor(rdef.magicDamageByMove[ws] * fellowPowerProgress(master)))
                             p:timer(2500, function(pp)
                                 if pp and pp:isAlive() then
                                     pp:setMod(xi.mod.MAGIC_DAMAGE, normalMagicDamage)
@@ -2010,7 +2027,7 @@ xi.fellow.audit = function(p)
     end
 
     -- Every source applyFellow() adds, mirrored here 1:1.
-    local masterPower = masterPowerProgress(p)
+    local masterPower = fellowPowerProgress(p)
     for _, mv in ipairs(CONFIG.perLevel) do
         add(mv[1], math.floor(mv[2] * lvl * masterPower), 'lvl')
     end

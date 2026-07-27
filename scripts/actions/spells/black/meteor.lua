@@ -46,7 +46,7 @@ spellObject.onSpellCast = function(caster, target, spell)
 
     if standardMagic.isDirectSpellEligible(caster, target, spell) and damage > 0 then
         damage = math.min(
-            damage + standardMagic.getDamageBonus(caster, target, spell),
+            damage + standardMagic.getDamageBonus(caster, target, spell, damage),
             standardMagic.getDamageCap(caster))
     end
 

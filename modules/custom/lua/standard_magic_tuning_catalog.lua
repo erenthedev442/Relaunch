@@ -1,10 +1,10 @@
 -----------------------------------
 -- Level-scaled baseline tuning for direct player-cast magical damage.
 --
--- Reuses the ordinary WS progression curve so physical and magical damage
--- target the same share of enemy HP. Only direct elemental/divine/ninjutsu
--- casts and magical Blue Magic are eligible; weaponskills, abilities, pets,
--- drains, enfeebles and Helix damage-over-time spells remain untouched.
+-- Reuses the ordinary WS leveling curve, then assigns fresh-99/mastered floors
+-- by spell family and tier. Direct elemental/divine/ninjutsu casts, damaging
+-- Blue Magic (physical, magical, and breath), and player-automaton nukes are
+-- eligible. Drains, enfeebles and Helix damage-over-time spells remain untouched.
 -----------------------------------
 
 local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
@@ -17,6 +17,16 @@ catalog.REMA_DAMAGE_CAP        = 999999
 catalog.PRIME_DAMAGE_CAP       = 1999999
 catalog.FULL_POWER_LEVEL_RATIO = 0.70
 catalog.MIN_SPELL_FACTOR       = 0.15
+
+catalog.FLOORS =
+{
+    elementalHigh = { fresh = 42000, mastered = 60000 },
+    elementalMid  = { fresh = 30000, mastered = 45000 },
+    elementalLow  = { fresh = 20000, mastered = 30000 },
+    ninjutsu      = { fresh = 12000, mastered = 18000 },
+    divine        = { fresh = 18000, mastered = 30000 },
+    blue          = { fresh = 24000, mastered = 38000 },
+}
 
 local remaWeaponIds = {}
 for _, entry in ipairs(remaCatalog.WEAPONS) do
@@ -44,14 +54,24 @@ local function isHelix(spellId)
 end
 
 local function validCasterAndTarget(caster, target)
+    local isPlayerAutomaton =
+        caster ~= nil and
+        caster:isAutomaton() and
+        caster:getMaster() ~= nil and
+        caster:getMaster():isPC()
+
     return
         caster ~= nil and
         target ~= nil and
-        caster:isPC() and
+        (caster:isPC() or isPlayerAutomaton) and
         target:isMob()
 end
 
 local function isNativeMainJobSpell(caster, spell)
+    if caster:isAutomaton() then
+        return true
+    end
+
     local spellLevel = spell:getLevel(caster:getMainJob())
     return
         spellLevel ~= nil and
@@ -70,15 +90,20 @@ function catalog.isDirectSpellEligible(caster, target, spell)
         not isHelix(spell:getID())
 end
 
-function catalog.isMagicalBlueEligible(caster, target, spell, params)
+function catalog.isBlueDamageEligible(caster, target, spell, params)
     return
         validCasterAndTarget(caster, target) and
         isNativeMainJobSpell(caster, spell) and
         params ~= nil and
-        params.attackType == xi.attackType.MAGICAL
+        params.attackType ~= nil and
+        params.attackType ~= xi.attackType.NONE
 end
 
 function catalog.getDamageCap(caster)
+    if not caster:isPC() then
+        return catalog.DAMAGE_CAP
+    end
+
     local mainWeapon   = caster:getEquipID(xi.slot.MAIN)
     local rangedWeapon = caster:getEquipID(xi.slot.RANGED)
 
@@ -94,8 +119,9 @@ function catalog.getDamageCap(caster)
 end
 
 function catalog.getSpellProgressionFactor(caster, spell)
-    local playerLevel = math.max(1, caster:getMainLvl())
-    local spellLevel  = spell:getLevel(caster:getMainJob())
+    local player = caster:isPC() and caster or caster:getMaster()
+    local playerLevel = math.max(1, player:getMainLvl())
+    local spellLevel  = spell:getLevel(player:getMainJob())
     if not spellLevel or spellLevel <= 0 then
         return 0
     end
@@ -106,17 +132,69 @@ function catalog.getSpellProgressionFactor(caster, spell)
         1.00)
 end
 
-function catalog.getDamageBonus(caster, target, spell)
-    local levelScaledBonus = progression.getDamageBonus(
-        caster:getMainLvl(), target:getMainLvl(), target:getMaxHP())
+local function getProgressionPlayer(caster)
+    return caster:isPC() and caster or caster:getMaster()
+end
 
-    return math.floor(
-        levelScaledBonus * catalog.getSpellProgressionFactor(caster, spell) + 0.5)
+local function isAncientMagic(spellId)
+    return spellId >= xi.magic.spell.FLARE and spellId <= xi.magic.spell.FLOOD_II
+end
+
+local function getFloorBand(caster, spell)
+    local skill = spell:getSkillType()
+    if skill == xi.skill.NINJUTSU then
+        return catalog.FLOORS.ninjutsu
+    elseif skill == xi.skill.DIVINE_MAGIC then
+        return catalog.FLOORS.divine
+    elseif skill == xi.skill.BLUE_MAGIC then
+        return catalog.FLOORS.blue
+    end
+
+    local player = getProgressionPlayer(caster)
+    local spellLevel = spell:getLevel(player:getMainJob()) or 1
+    if spellLevel >= 75 or isAncientMagic(spell:getID()) then
+        return catalog.FLOORS.elementalHigh
+    elseif spellLevel >= 50 then
+        return catalog.FLOORS.elementalMid
+    end
+
+    return catalog.FLOORS.elementalLow
+end
+
+function catalog.getDamageFloor(caster, target, spell)
+    local player = getProgressionPlayer(caster)
+    if caster:isAutomaton() then
+        return progression.getPetDamageFloor(player, target)
+    end
+
+    if player:getMainLvl() < progression.ENDGAME_PLAYER_LEVEL then
+        local levelScaledBonus = progression.getDamageBonus(
+            player:getMainLvl(), target:getMainLvl(), target:getMaxHP())
+        return math.floor(
+            levelScaledBonus * catalog.getSpellProgressionFactor(caster, spell) + 0.5)
+    end
+
+    local band = getFloorBand(caster, spell)
+    local mastery = progression.getMasteryProgress(player)
+    local masteryFloor = math.floor(
+        band.fresh + (band.mastered - band.fresh) * mastery + 0.5)
+
+    -- At 99 the caster's progression floor no longer shrinks with target HP.
+    -- This keeps farming damage consistent on lower-level enemies while the
+    -- target can still lose no more HP than it actually has.
+    return masteryFloor
+end
+
+function catalog.getDamageBonus(caster, target, spell, currentDamage)
+    local floor = catalog.getDamageFloor(caster, target, spell)
+
+    return math.max(0, floor - math.max(0, currentDamage or 0))
 end
 
 function catalog.getMagicAccuracyPenalty(caster, target)
+    local player = getProgressionPlayer(caster)
     return progression.getAccuracyPenalty(
-        caster:getMainLvl(), target:getMainLvl())
+        player:getMainLvl(), target:getMainLvl())
 end
 
 return catalog

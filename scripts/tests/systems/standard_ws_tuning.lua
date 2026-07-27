@@ -2,7 +2,7 @@ local catalog = require('modules/custom/lua/standard_ws_tuning_catalog')
 require('modules/custom/lua/StandardWeaponskillTuning')
 
 describe('Level-scaled ordinary weaponskill tuning', function()
-    local function makePlayer(equipment, level)
+    local function makePlayer(equipment, level, spentJobPoints)
         local mods      = {}
         local localVars = {}
         local player    = { equipment = equipment or {} }
@@ -12,11 +12,35 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         end
 
         player.getEquipID = function(self, slot)
-            return self.equipment[slot] or 0
+            local equipped = self.equipment[slot]
+            return type(equipped) == 'table' and equipped.id or equipped or 0
+        end
+
+        player.getEquippedItem = function(self, slot)
+            local equipped = self.equipment[slot]
+            if not equipped then
+                return nil
+            end
+
+            local details = type(equipped) == 'table' and equipped or
+                { id = equipped, ilvl = 119, reqLvl = 99 }
+            return
+            {
+                getILvl = function()
+                    return details.ilvl or 0
+                end,
+                getReqLvl = function()
+                    return details.reqLvl or 0
+                end,
+            }
         end
 
         player.getMainLvl = function()
             return level or 99
+        end
+
+        player.getSpentJobPoints = function()
+            return spentJobPoints or 0
         end
 
         player.getMod = function(_, modId)
@@ -64,6 +88,40 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         assert(catalog.getDamageBonus(50, 75, 120000) == 1080)
     end)
 
+    it('uses mastery-scaled floors at level 99 without lowering strong WSs', function()
+        local target = makeTarget(155, 120000)
+        local weapon = { [xi.slot.MAIN] = { id = 1, ilvl = 119, reqLvl = 99 } }
+        assert(catalog.getWeaponskillFloor(makePlayer(weapon, 99, 0), target) == 32000)
+        assert(catalog.getWeaponskillFloor(makePlayer(weapon, 99, 1050), target) == 38500)
+        assert(catalog.getWeaponskillFloor(makePlayer(weapon, 99, 2100), target) == 45000)
+        assert(catalog.getPetDamageFloor(makePlayer({}, 99, 0), target) == 18000)
+        assert(catalog.getPetDamageFloor(makePlayer({}, 99, 2100), target) == 28000)
+    end)
+
+    it('keeps the full level-99 floor on low-HP farming targets', function()
+        local player = makePlayer(
+            { [xi.slot.MAIN] = { id = 1, ilvl = 119, reqLvl = 99 } }, 99, 2100)
+
+        assert(catalog.getWeaponskillFloor(
+            player, makeTarget(76, 8000), xi.slot.MAIN) == 45000)
+    end)
+
+    it('scales custom floors by weapon level and caps non-item-level weapons', function()
+        local onionSword = makePlayer(
+            { [xi.slot.MAIN] = { id = 2, ilvl = 0, reqLvl = 1 } }, 99, 0)
+        local level99Sword = makePlayer(
+            { [xi.slot.MAIN] = { id = 3, ilvl = 0, reqLvl = 99 } }, 99, 0)
+        local itemLevel119Sword = makePlayer(
+            { [xi.slot.MAIN] = { id = 4, ilvl = 119, reqLvl = 99 } }, 99, 0)
+        local target = makeTarget(155, 120000)
+
+        assert(catalog.getWeaponskillFloor(onionSword, target, xi.slot.MAIN) == 323)
+        assert(catalog.getWeaponskillFloor(level99Sword, target, xi.slot.MAIN) == 32000)
+        assert(catalog.getWeaponskillCap(onionSword, xi.slot.MAIN) == 40000)
+        assert(catalog.getWeaponskillCap(level99Sword, xi.slot.MAIN) == 40000)
+        assert(catalog.getWeaponskillCap(itemLevel119Sword, xi.slot.MAIN) == 99999)
+    end)
+
     it('adds a progressive accuracy penalty only beyond the grace band', function()
         assert(catalog.getAccuracyPenalty(50, 53) == 0)
         assert(catalog.getAccuracyPenalty(50, 58) == 40)
@@ -72,7 +130,8 @@ describe('Level-scaled ordinary weaponskill tuning', function()
     end)
 
     it('exposes ordinary WS bonus, cap, and underlevel accuracy synchronously', function()
-        local player = makePlayer({ [xi.slot.MAIN] = 20819 }, 50)
+        local player = makePlayer(
+            { [xi.slot.MAIN] = { id = 20819, ilvl = 0, reqLvl = 50 } }, 50)
         local target = makeTarget(58, 10000)
 
         xi.standardWsTuning.withStandardEffects(
@@ -80,7 +139,7 @@ describe('Level-scaled ordinary weaponskill tuning', function()
             {}, false,
             function()
                 assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 2100)
-                assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 99999)
+                assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 40000)
                 assert(player:getMod(xi.mod.WSACC) == -40)
             end)
 
@@ -117,7 +176,7 @@ describe('Level-scaled ordinary weaponskill tuning', function()
             player, target, xi.weaponskill.RAGING_FISTS, xi.slot.MAIN,
             {}, false,
             function()
-                assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 36000)
+                assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 32000)
             end)
     end)
 

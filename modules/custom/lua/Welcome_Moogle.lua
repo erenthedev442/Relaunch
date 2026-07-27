@@ -132,6 +132,18 @@ showItems = function(player, categoryName, subcategoryName, page)
         subcategoryName,
         pages > 1 and string.format(' (page %d/%d)', page, pages) or ''), S)
 
+    -- Native shop packets identify entries by item ID and cannot override the
+    -- item name. Print compact, page-local hints immediately before the shop so
+    -- players can see the two guaranteed augments while choosing.
+    for index = first, last do
+        local entry = items[index]
+        player:printToPlayer(string.format(
+            '%s [%s, %s]',
+            entry.name,
+            entry.augments[1].label,
+            entry.augments[2].label), S)
+    end
+
     player:timer(50, function(p)
         p:createShop(count)
         for index = first, last do

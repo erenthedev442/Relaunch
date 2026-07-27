@@ -22,7 +22,7 @@ end
 spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
     params.ecosystem   = xi.ecosystem.ARCANA
-    params.attackType  = xi.damageType.ELEMENTAL
+    params.attackType  = xi.attackType.MAGICAL
     params.damageType  = xi.damageType.THUNDER
     params.attribute   = xi.mod.INT
     params.multiplier  = 1.5625

@@ -429,7 +429,7 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
     local skillType          = xi.skill.BLUE_MAGIC
     local _, skillchainCount = xi.magicburst.formMagicBurst(target, spellElement) -- External function. Not present in magic.lua.
     local standardMacc       = 0
-    if standardMagic.isMagicalBlueEligible(caster, target, spell, params) then
+    if standardMagic.isBlueDamageEligible(caster, target, spell, params) then
         standardMacc = -standardMagic.getMagicAccuracyPenalty(caster, target)
     end
 
@@ -623,11 +623,20 @@ xi.spells.blue.useBreathSpell = function(caster, target, spell, params)
 
     dmg = math.floor(target:handleSevereDamage(dmg, false))
 
+    local standardEligible = standardMagic.isBlueDamageEligible(caster, target, spell, params)
+    if standardEligible and dmg > 0 then
+        dmg = dmg + standardMagic.getDamageBonus(caster, target, spell, dmg)
+    end
+
     -- Final adjustments.
     if dmg > 0 then
         dmg = utils.clamp(utils.handlePhalanx(target, dmg), 0, 131071)
         dmg = utils.clamp(utils.handleOneForAll(target, dmg), 0, 131071)
         dmg = utils.clamp(utils.handleStoneskin(target, dmg), -131071, 131071)
+        if standardEligible then
+            dmg = math.min(dmg, standardMagic.getDamageCap(caster))
+        end
+
         dmg = utils.clamp(dmg, 0, target:getHP())
         dmg = target:checkDamageCap(dmg)
     end
@@ -655,10 +664,10 @@ xi.spells.blue.applySpellDamage = function(caster, target, spell, dmg, params, t
     local damageType    = params.damageType or xi.damageType.NONE
     local tpHits        = params.tphitslanded or 0
     local extraTPGained = xi.combat.tp.calculateTPGainOnMagicalDamage(caster, target, dmg) * math.max(tpHits - 1, 0) -- Calculate extra TP gained from multihits. takeSpellDamage accounts for one already.
-    local standardEligible = standardMagic.isMagicalBlueEligible(caster, target, spell, params)
+    local standardEligible = standardMagic.isBlueDamageEligible(caster, target, spell, params)
 
     if standardEligible and dmg > 0 then
-        dmg = dmg + standardMagic.getDamageBonus(caster, target, spell)
+        dmg = dmg + standardMagic.getDamageBonus(caster, target, spell, dmg)
     end
 
     -- handle MDT, One For All, Liement

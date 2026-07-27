@@ -1,5 +1,5 @@
 -----------------------------------
--- Spell: Temporal Upheaval
+-- Spell: Tempestuous Upheaval
 -- Deals wind damage to enemies within area of effect
 -- Spell cost: 133 MP
 -- Monster Type: Elemental

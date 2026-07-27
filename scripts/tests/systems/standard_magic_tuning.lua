@@ -1,12 +1,15 @@
 local catalog = require('modules/custom/lua/standard_magic_tuning_catalog')
 
 describe('Level-scaled direct magic tuning', function()
-    local function makeCaster(level, isPlayer, mainJob, equipment)
+    local function makeCaster(level, isPlayer, mainJob, equipment, spentJobPoints)
         equipment = equipment or {}
         return
         {
             isPC = function()
                 return isPlayer ~= false
+            end,
+            isAutomaton = function()
+                return false
             end,
             getMainLvl = function()
                 return level
@@ -16,6 +19,9 @@ describe('Level-scaled direct magic tuning', function()
             end,
             getEquipID = function(_, slot)
                 return equipment[slot] or 0
+            end,
+            getSpentJobPoints = function()
+                return spentJobPoints or 0
             end,
         }
     end
@@ -54,18 +60,31 @@ describe('Level-scaled direct magic tuning', function()
         }
     end
 
-    it('targets the same HP share as ordinary weaponskills', function()
+    it('uses spell-tier and mastery floors without adding above the floor', function()
         local caster = makeCaster(99)
         local target = makeTarget(155, 120000)
         local highTierSpell = makeSpell(
             xi.magic.spell.FIRE_V, xi.skill.ELEMENTAL_MAGIC, 86)
 
         assert(catalog.DAMAGE_CAP == 99999)
-        assert(catalog.getDamageBonus(caster, target, highTierSpell) == 36000)
+        assert(catalog.getDamageFloor(caster, target, highTierSpell) == 42000)
+        assert(catalog.getDamageBonus(caster, target, highTierSpell, 30000) == 12000)
+        assert(catalog.getDamageBonus(caster, target, highTierSpell, 50000) == 0)
         assert(catalog.getMagicAccuracyPenalty(caster, target) == 0)
-        assert(catalog.getDamageBonus(
+        assert(catalog.getDamageFloor(
             caster, target,
-            makeSpell(xi.magic.spell.STONE, xi.skill.ELEMENTAL_MAGIC, 1)) == 5400)
+            makeSpell(xi.magic.spell.STONE, xi.skill.ELEMENTAL_MAGIC, 1)) == 20000)
+        assert(catalog.getDamageFloor(
+            makeCaster(99, true, xi.job.SCH), target,
+            makeSpell(xi.magic.spell.FIRE_IV, xi.skill.ELEMENTAL_MAGIC, 73, xi.job.SCH)) == 30000)
+        assert(catalog.getDamageFloor(
+            caster, target,
+            makeSpell(xi.magic.spell.FREEZE, xi.skill.ELEMENTAL_MAGIC, 50)) == 42000)
+
+        caster = makeCaster(99, true, xi.job.BLM, {}, 2100)
+        assert(catalog.getDamageFloor(caster, target, highTierSpell) == 60000)
+        assert(catalog.getDamageFloor(
+            caster, makeTarget(76, 8000), highTierSpell) == 60000)
 
         caster = makeCaster(50)
         target = makeTarget(58, 10000)
@@ -73,6 +92,17 @@ describe('Level-scaled direct magic tuning', function()
             caster, target,
             makeSpell(xi.magic.spell.STONE_III, xi.skill.ELEMENTAL_MAGIC, 40)) == 2100)
         assert(catalog.getMagicAccuracyPenalty(caster, target) == 40)
+    end)
+
+    it('keeps ninjutsu in a lower progression band', function()
+        local target = makeTarget(155, 120000)
+        local katon = makeSpell(
+            xi.magic.spell.KATON_SAN, xi.skill.NINJUTSU, 75, xi.job.NIN)
+
+        assert(catalog.getDamageFloor(
+            makeCaster(99, true, xi.job.NIN), target, katon) == 12000)
+        assert(catalog.getDamageFloor(
+            makeCaster(99, true, xi.job.NIN, {}, 2100), target, katon) == 18000)
     end)
 
     it('allows direct elemental, divine, and ninjutsu casts', function()
@@ -85,6 +115,9 @@ describe('Level-scaled direct magic tuning', function()
             caster, target, makeSpell(xi.magic.spell.BANISH_III, xi.skill.DIVINE_MAGIC)))
         assert(catalog.isDirectSpellEligible(
             caster, target, makeSpell(xi.magic.spell.KATON_SAN, xi.skill.NINJUTSU)))
+        assert(catalog.isDirectSpellEligible(
+            makeCaster(99, true, xi.job.SCH), target,
+            makeSpell(xi.magic.spell.FIRE_IV, xi.skill.ELEMENTAL_MAGIC, 73, xi.job.SCH)))
     end)
 
     it('requires the spell to be native to the current main job', function()
@@ -114,18 +147,42 @@ describe('Level-scaled direct magic tuning', function()
             makeSpell(xi.magic.spell.FIRE_V, xi.skill.ELEMENTAL_MAGIC)))
     end)
 
-    it('allows only magical Blue Magic damage paths', function()
+    it('allows physical, magical, and breath Blue Magic damage paths', function()
         local caster = makeCaster(99, true, xi.job.BLU)
         local target = makeTarget(155, 120000)
         local blueSpell = makeSpell(527, xi.skill.BLUE_MAGIC, 68, xi.job.BLU)
 
-        assert(catalog.isMagicalBlueEligible(
+        assert(catalog.isBlueDamageEligible(
             caster, target, blueSpell, { attackType = xi.attackType.MAGICAL }))
-        assert(not catalog.isMagicalBlueEligible(
+        assert(catalog.isBlueDamageEligible(
             caster, target, blueSpell, { attackType = xi.attackType.PHYSICAL }))
-        assert(not catalog.isMagicalBlueEligible(
+        assert(catalog.isBlueDamageEligible(
+            caster, target, blueSpell, { attackType = xi.attackType.BREATH }))
+        assert(not catalog.isBlueDamageEligible(
             makeCaster(99, true, xi.job.SAM), target, blueSpell,
             { attackType = xi.attackType.MAGICAL }))
+    end)
+
+    it('gives player automatons the restrained pet progression floor', function()
+        local master = makeCaster(99, true, xi.job.PUP)
+        local automaton =
+        {
+            isPC = function()
+                return false
+            end,
+            isAutomaton = function()
+                return true
+            end,
+            getMaster = function()
+                return master
+            end,
+        }
+        local target = makeTarget(155, 120000)
+        local spell = makeSpell(
+            xi.magic.spell.FIRE_IV, xi.skill.ELEMENTAL_MAGIC, 75)
+
+        assert(catalog.isDirectSpellEligible(automaton, target, spell))
+        assert(catalog.getDamageFloor(automaton, target, spell) == 18000)
     end)
 
     it('raises cast caps for equipped final REMA and Prime weapons', function()

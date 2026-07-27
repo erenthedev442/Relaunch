@@ -8,6 +8,7 @@ require('scripts/globals/combat/magic_hit_rate')
 require('scripts/globals/magicburst')
 require('scripts/globals/magic')
 require('scripts/globals/spells/damage_spell')
+local standardProgression = require('modules/custom/lua/standard_ws_tuning_catalog')
 -----------------------------------
 xi = xi or {}
 xi.mobskills = xi.mobskills or {}
@@ -37,25 +38,60 @@ xi.mobskills.shadowBehavior =
     WIPE_SHADOWS   = 999,
 }
 
-local function applyFellowDamageScaling(mob, skill, damage)
-    if mob:getLocalVar('fellowApplied') ~= 1 then
+local petProgressionJobs =
+{
+    [xi.job.BST] = true,
+    [xi.job.DRG] = true,
+    [xi.job.PUP] = true,
+}
+
+local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLanded)
+    if mob:getLocalVar('fellowApplied') == 1 then
+        -- Magus AoE nukes trade coverage for power. The role marks
+        -- Thunderstrike for quarter damage while leaving single-target and
+        -- other endgame moves at their established output.
+        local aoeScale = mob:getLocalVar('fellowAoEDamageScale')
+        if aoeScale > 0 and skill:isAoE() then
+            damage = math.floor(damage * aoeScale / 100)
+        end
+
+        local progressionCap = mob:getLocalVar('fellowProgressionDamageCap')
+        if progressionCap > 0 then
+            damage = math.min(damage, progressionCap, 99999)
+        end
+
         return damage
     end
 
-    -- Magus AoE nukes trade coverage for power. The role marks Thunderstrike
-    -- for quarter damage while leaving single-target and other endgame moves
-    -- at their established output.
-    local aoeScale = mob:getLocalVar('fellowAoEDamageScale')
-    if aoeScale > 0 and skill:isAoE() then
-        damage = math.floor(damage * aoeScale / 100)
+    -- BST Ready moves, DRG breaths and PUP automaton abilities share a modest
+    -- stock-aware floor and the standard pre-REMA ceiling. Existing strong pet
+    -- builds are never multiplied, AoE receives half the floor/cap, and SMN
+    -- avatars retain their dedicated equalization module.
+    local master = mob:getMaster()
+    if
+        damage <= 0 or
+        (hitsLanded or 0) <= 0 or
+        not mob:isPet() or
+        mob:isAvatar() or
+        master == nil or
+        not master:isPC() or
+        not petProgressionJobs[master:getMainJob()]
+    then
+        return damage
     end
 
-    local progressionCap = mob:getLocalVar('fellowProgressionDamageCap')
-    if progressionCap > 0 then
-        damage = math.min(damage, progressionCap, 99999)
+    local floor = standardProgression.getPetDamageFloor(master, target)
+    local cap = standardProgression.DAMAGE_CAP
+    if skill:isAoE() then
+        floor = math.floor(floor * 0.50)
+        cap = math.floor(cap * 0.50)
     end
 
-    return damage
+    if master:getMainLvl() < standardProgression.ENDGAME_PLAYER_LEVEL then
+        cap = math.min(cap, math.floor(target:getMaxHP() * 0.40))
+    end
+
+    return math.min(math.max(damage, floor), cap)
 end
 
 -- TODO: Currently still used by avatar skills. Marked for deletion once they get converted.
@@ -764,7 +800,8 @@ xi.mobskills.mobRangedMove = function(mob, target, skill, action, skillParams)
     -- Handle Miss Messaging
     ----------------------------------
     totalDamage = resolveMissMessage(skill, hitsLanded, hitsYaegasumi, hitsAnticipated, hitsAbsorbed, shadowsAbsorbed, params.primaryMessage, totalDamage)
-    totalDamage = applyFellowDamageScaling(mob, skill, totalDamage)
+    totalDamage = applyPlayerCompanionScaling(
+        mob, target, skill, totalDamage, hitsLanded)
 
     -- Mob only gets TP for hitting the initial target. AOE hits do not count.
     xi.mobskills.calculateSkillTPReturn(damage, mob, skill, target, params.attackType, hitsLanded)
@@ -998,7 +1035,8 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, action, skillParams)
     -- Handle Miss Messaging
     ----------------------------------
     totalDamage = resolveMissMessage(skill, hitsLanded, hitsYaegasumi, hitsAnticipated, hitsAbsorbed, shadowsAbsorbed, params.primaryMessage, totalDamage)
-    totalDamage = applyFellowDamageScaling(mob, skill, totalDamage)
+    totalDamage = applyPlayerCompanionScaling(
+        mob, target, skill, totalDamage, hitsLanded)
 
     ----------------------------------
     -- Handle TP Returns
@@ -1283,7 +1321,8 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, action, skillParams)
     damage = utils.handlePhalanx(target, damage)
     damage = utils.handleOneForAll(target, damage)
 
-    damage = applyFellowDamageScaling(mob, skill, damage)
+    damage = applyPlayerCompanionScaling(
+        mob, target, skill, damage, hitsLanded)
 
     if not skipStoneskin then
         -- TODO: Some Stoneskin effects only absorb certain damage types.
@@ -1472,7 +1511,8 @@ xi.mobskills.mobBreathMove = function(mob, target, skill, action, skillParams)
     damage = math.floor(utils.handleAutomatonAutoAnalyzer(target, skill, damage))
     damage = utils.handlePhalanx(target, damage)
     damage = utils.handleOneForAll(target, damage)
-    damage = applyFellowDamageScaling(mob, skill, damage)
+    damage = applyPlayerCompanionScaling(
+        mob, target, skill, damage, hitsLanded)
 
     if not skipStoneskin then
         -- TODO: Some Stoneskin effects only absorb certain damage types.

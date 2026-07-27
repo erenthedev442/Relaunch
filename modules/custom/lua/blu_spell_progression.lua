@@ -67,6 +67,7 @@ local spellsByLevel =
     [73] = { xi.magic.spell.MIND_BLAST,       xi.magic.spell.RAM_CHARGE,       xi.magic.spell.TEMPORAL_SHIFT    },
     [74] = { xi.magic.spell.ACTINIC_BURST,    xi.magic.spell.MAGIC_HAMMER,     xi.magic.spell.REACTOR_COOL      },
     [75] = { xi.magic.spell.EXUVIATION,       xi.magic.spell.PLASMA_CHARGE,    xi.magic.spell.VERTICAL_CLEAVE   },
+    [76] = { xi.magic.spell.PLENILUNE_EMBRACE                                                                    },
     [77] = { xi.magic.spell.ACRID_STREAM,     xi.magic.spell.LEAFSTORM                                          },
     [78] = { xi.magic.spell.CIMICINE_DISCHARGE, xi.magic.spell.REGENERATION                                     },
     [79] = { xi.magic.spell.ANIMATING_WAIL,   xi.magic.spell.BATTERY_CHARGE                                     },
@@ -139,20 +140,12 @@ m:addOverride('xi.player.onPlayerLevelUp', function(player)
 end)
 
 -- ---- Hook: login / zone-in ----------------------------------------
--- On actual login (not zoning), do a full catch-up pass.  This makes
--- retroactively adding new spells to the table propagate automatically
--- the next time a BLU logs in, without any GM command.
--- Also covers /BLU sub so players never have to swap main just to get
--- their spell list populated before setting spells.
+-- Use the character's stored BLU level rather than only the currently active
+-- main/sub job. This catches up missing spells after login, zoning, hot reload,
+-- or changing to BLU after logging in on another job.
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     super(player, firstLogin, zoning)
-    if not zoning then
-        if player:getMainJob() == xi.job.BLU then
-            grantUpToLevel(player, player:getMainLvl())
-        elseif player:getSubJob() == xi.job.BLU then
-            grantUpToLevel(player, player:getSubLvl())
-        end
-    end
+    grantUpToLevel(player, player:getJobLevel(xi.job.BLU) or 0)
 end)
 
 return m

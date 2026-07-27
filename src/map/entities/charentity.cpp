@@ -1671,9 +1671,8 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
             actionResult.resolution = ActionResolution::Hit;
             actionResult.animation  = PWeaponSkill->getAnimationId();
 
-            // Scope the lower damage ceiling to the synchronous Lua calculation:
-            // direct WS damage is applied inside OnUseWeaponSkill. Restore it
-            // before skillchain damage is calculated below.
+            // Scope the lower damage ceiling to this complete AoE WS target,
+            // including any skillchain it produces.
             const auto priorAoEWsCap = GetLocalVar("AoEWsDamageCap");
             if (PWeaponSkill->isAoE())
             {
@@ -1681,11 +1680,6 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
             }
 
             std::tie(damage, tpHitsLanded, extraHitsLanded) = luautils::OnUseWeaponSkill(this, PTarget, PWeaponSkill, tp, primary, action, taChar);
-
-            if (PWeaponSkill->isAoE())
-            {
-                SetLocalVar("AoEWsDamageCap", priorAoEWsCap);
-            }
 
             if (!battleutils::isValidSelfTargetWeaponskill(PWeaponSkill->getID()))
             {
@@ -1798,6 +1792,11 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                         charutils::AddWeaponSkillPoints(this, damslot, wspoints);
                     }
                 }
+            }
+
+            if (PWeaponSkill->isAoE())
+            {
+                SetLocalVar("AoEWsDamageCap", priorAoEWsCap);
             }
 
             // RELAUNCH FIX 2026-07-13 (Spyro report: "AoE WS kills give no exp/gil,

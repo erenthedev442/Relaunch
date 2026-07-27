@@ -30,7 +30,7 @@ local A =
     subtle  = function() return { id = 195, value = 3,  label = 'Subtle Blow +4' } end,
     mab     = function() return { id = 133, value = 3,  label = 'Mag. Atk. Bns. +4' } end,
     fc      = function() return { id = 140, value = 1,  label = 'Fast Cast +2' } end,
-    haste   = function() return { id = 49,  value = 1,  label = 'Haste (T1)' } end,
+    haste   = function() return { id = 49,  value = 1,  label = 'Haste +2%' } end,
     refresh = function() return { id = 138, value = 0,  label = 'Refresh (T1)' } end,
     cure    = function() return { id = 329, value = 3,  label = 'Cure potency +4' } end,
     snapshot= function() return { id = 211, value = 2,  label = 'Snapshot +3' } end,

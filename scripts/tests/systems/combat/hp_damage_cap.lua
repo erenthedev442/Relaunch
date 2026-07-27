@@ -109,6 +109,17 @@ describe('Global HP damage cap', function()
                 wsCap, maxHP - target:getHP()))
     end)
 
+    it('enforces the active standard weapon progression cap', function()
+        local wsCap = 40000
+        player:setLocalVar('StandardWsDamageCap', wsCap)
+
+        target:takeDamage(damageCap, player, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
+
+        assert(target:getHP() == maxHP - wsCap,
+            string.format('Expected standard WS damage cap %d, got %d damage',
+                wsCap, maxHP - target:getHP()))
+    end)
+
     it('preserves a lower target-specific received-damage cap', function()
         local targetCap = 1234
         target:setMod(xi.mod.RECEIVED_DAMAGE_CAP, targetCap)

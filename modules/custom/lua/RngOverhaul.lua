@@ -51,7 +51,7 @@ local m = Module:new('rng_overhaul')
 -- RETUNED 2026-07-13 (owner: an ungeared 99 RNG was sitting at 28,579 RATT --
 -- gear could NOT move the needle because the ranged pDIF cap was already maxed).
 -- New identity: RNG keeps its "fast, multi-shot" utility (Snapshot / Rapid Shot /
--- Double Shot / StoreTP all untouched at 50/50/50/100), but the raw-damage
+-- Double Shot / StoreTP at 50/50/20/50), but the raw-damage
 -- floor is reduced dramatically so GEAR meaningfully adds. Ungeared 99 RNG
 -- now sits ~2,500 RATT (500 base + 2,000 flat) and a fully-geared kit reaches
 -- ~4,000+ RATT -- plenty strong, but pDIF now scales with the gear/food/buffs
@@ -73,17 +73,14 @@ local CONFIG =
     rangedDmgRating = 100,   -- Mod.RANGED_DMG_RATING (376) : flat damage added to each
                              --                   shot. Retuned 2,000 -> 100 -- was
                              --                   drowning gear/ammo D-rating entirely.
-    damageLimit     = 100,   -- Mod.DAMAGE_LIMITP (1081) : pDIF cap 3.25*(100+100)/100
-                             --                   = 6.5x (was 22.75x -- effectively no
-                             --                   cap). Still doubles vanilla headroom.
-    storeTP         = 100,   -- Mod.STORETP (73): faster TP gain -> more weaponskills.
-                             --                   UNCHANGED -- utility, defines RNG.
+    damageLimit     = 50,    -- Keep ranged pDIF headroom without doubling every
+                             --                   Barrage arrow's damage ceiling.
+    storeTP         = 50,    -- Useful TP acceleration without sustained WS spam.
     snapshot        = 50,    -- Mod.SNAPSHOT (365) : % ranged-delay reduction.
                              --                   UNCHANGED -- utility, defines RNG.
     rapidShot       = 50,    -- Mod.RAPID_SHOT (359) : % chance of an instant shot.
                              --                   UNCHANGED -- utility, defines RNG.
-    doubleShotRate  = 50,    -- Mod.DOUBLE_SHOT_RATE (422) : +% Double Shot proc.
-                             --                   UNCHANGED -- utility, defines RNG.
+    doubleShotRate  = 20,    -- Frequent extra shots without dominating normal attacks.
 }
 
 -- Clamp the RATT mod's running TOTAL (our flat + the player's gear RATT) to

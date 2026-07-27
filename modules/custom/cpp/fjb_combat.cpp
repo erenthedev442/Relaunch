@@ -130,6 +130,12 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
         effectiveCap = ambuscadeWsCap;
     }
 
+    const auto standardWsCap = static_cast<int32>(PAttacker->GetLocalVar("StandardWsDamageCap"));
+    if (standardWsCap > 0 && (effectiveCap <= 0 || standardWsCap < effectiveCap))
+    {
+        effectiveCap = standardWsCap;
+    }
+
     return effectiveCap;
 }
 
@@ -174,6 +180,14 @@ int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRan
     if (damage > 0 && isRanged && PAttacker != nullptr && PAttacker->objtype == TYPE_PC &&
         PAttacker->GetMJob() == JOB_RNG)
     {
+        // Preserve the intended 99,999 standard-WS ceiling. Previously the
+        // post-Lua 0.80 adjustment turned a capped ranged WS into 79,999.
+        const auto standardWsCap = static_cast<int32>(PAttacker->GetLocalVar("StandardWsDamageCap"));
+        if (standardWsCap == 99999 && damage >= standardWsCap)
+        {
+            return standardWsCap;
+        }
+
         return static_cast<int32>(damage * RANGER_RANGED_DMG_MULTIPLIER);
     }
     return damage;

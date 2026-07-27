@@ -1257,7 +1257,8 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     -- those mechanics continue to function. Gear, MAB and existing spell
     -- bonuses remain in finalDamage and can carry the result toward the cap.
     if standardEligible and finalDamage > 0 then
-        finalDamage = finalDamage + standardMagic.getDamageBonus(caster, target, spell)
+        finalDamage = finalDamage +
+            standardMagic.getDamageBonus(caster, target, spell, finalDamage)
     end
 
     -- Handle "Nuke Wall". It must be handled after all previous calculations, but before clamp.
