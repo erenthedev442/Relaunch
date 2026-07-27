@@ -625,7 +625,8 @@ xi.spells.blue.useBreathSpell = function(caster, target, spell, params)
 
     local standardEligible = standardMagic.isBlueDamageEligible(caster, target, spell, params)
     if standardEligible and dmg > 0 then
-        dmg = dmg + standardMagic.getDamageBonus(caster, target, spell, dmg)
+        dmg = math.floor(
+            dmg * standardMagic.getDamageMultiplier(caster, target, spell))
     end
 
     -- Final adjustments.
@@ -667,7 +668,8 @@ xi.spells.blue.applySpellDamage = function(caster, target, spell, dmg, params, t
     local standardEligible = standardMagic.isBlueDamageEligible(caster, target, spell, params)
 
     if standardEligible and dmg > 0 then
-        dmg = dmg + standardMagic.getDamageBonus(caster, target, spell, dmg)
+        dmg = math.floor(
+            dmg * standardMagic.getDamageMultiplier(caster, target, spell))
     end
 
     -- handle MDT, One For All, Liement

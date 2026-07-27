@@ -1183,6 +1183,12 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
 
     -- Calculate base damage and the rest of damage multipliers.
     local spellDamage               = xi.spells.damage.calculateBaseDamage(caster, target, spellId, spellGroup, skillType, statUsed)
+    if standardEligible then
+        -- Raise the pre-gear spell base, then let affinity, MAB, MACC/resists,
+        -- weather, burst and every other normal spell modifier act on it.
+        spellDamage = spellDamage +
+            standardMagic.getBaseStockBonus(caster, target, spell)
+    end
     local multipleTargetReduction   = xi.spells.damage.calculateMTDR(caster, spell)
     local elementalStaffBonus       = xi.spells.damage.calculateElementalStaffBonus(caster, spellElement)
     local elementalAffinityBonus    = xi.spells.damage.calculateElementalAffinityBonus(caster, spellElement)
@@ -1253,12 +1259,12 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         end
     end
 
-    -- Add the ordinary cast tier before nuke-wall and defensive handling so
-    -- those mechanics continue to function. Gear, MAB and existing spell
-    -- bonuses remain in finalDamage and can carry the result toward the cap.
+    -- Scale the completed stock cast before nuke-wall and defensive handling.
+    -- INT, Magic Damage, MAB, affinity, weather, burst and resists are already
+    -- represented in finalDamage, so gear retains its full proportional value.
     if standardEligible and finalDamage > 0 then
-        finalDamage = finalDamage +
-            standardMagic.getDamageBonus(caster, target, spell, finalDamage)
+        finalDamage = math.floor(
+            finalDamage * standardMagic.getDamageMultiplier(caster, target, spell))
     end
 
     -- Handle "Nuke Wall". It must be handled after all previous calculations, but before clamp.

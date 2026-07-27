@@ -1,28 +1,27 @@
 -----------------------------------
 -- Baseline weaponskill progression tuning.
 --
--- Ordinary player weaponskills receive an additive progression bonus. At 99,
--- weapon level and Job Point mastery set that bonus; the normal WS formula
--- retains weapon damage, attributes, attack, TP and gear before the final
--- weapon-appropriate ceiling is applied.
+-- Ordinary player weaponskills receive a multiplicative progression boost.
+-- The normal WS formula resolves first, so weapon damage, attributes, attack,
+-- TP, WSD and multi-attacks all retain their full proportional value.
 -----------------------------------
 
 local catalog = {}
 
-catalog.DAMAGE_BONUS_LOCAL_VAR = 'StandardWsDamageBonus'
-catalog.DAMAGE_CAP_LOCAL_VAR   = 'StandardWsDamageCap'
-catalog.DAMAGE_CAP             = 99999
-catalog.NON_ITEM_LEVEL_119_CAP = 40000
-catalog.TARGET_HP_FRACTION     = 0.30
-catalog.ENDGAME_PLAYER_LEVEL   = 99
-catalog.MASTER_JOB_POINTS       = 2100
-catalog.FRESH_99_BONUS          = 20000
-catalog.MASTERED_99_BONUS       = 30000
-catalog.PET_FRESH_99_FLOOR      = 18000
-catalog.PET_MASTERED_99_FLOOR   = 28000
+catalog.DAMAGE_MULTIPLIER_LOCAL_VAR = 'StandardWsDamageMultiplier'
+catalog.DAMAGE_CAP_LOCAL_VAR        = 'StandardWsDamageCap'
+catalog.DAMAGE_CAP                  = 99999
+catalog.NON_ITEM_LEVEL_119_CAP      = 40000
+catalog.TARGET_HP_FRACTION          = 0.30 -- retained for Fellow progression caps
+catalog.ENDGAME_PLAYER_LEVEL        = 99
+catalog.MASTER_JOB_POINTS           = 2100
+catalog.FRESH_99_MULTIPLIER         = 8.00
+catalog.MASTERED_99_MULTIPLIER      = 13.00
+catalog.PET_FRESH_99_MULTIPLIER     = 7.00
+catalog.PET_MASTERED_99_MULTIPLIER  = 11.00
 
 -- A three-level grace band keeps ordinary Even Match / Tough combat unchanged.
--- Beyond that band, the additive HP share and WS accuracy fall progressively.
+-- Beyond that band, progression scaling and WS accuracy fall progressively.
 catalog.LEVEL_GAP_GRACE       = 3
 catalog.ACC_PENALTY_PER_LEVEL = 8
 
@@ -63,6 +62,8 @@ function catalog.getLevelGapFactor(playerLevel, targetLevel)
     return catalog.LEVEL_GAP_FACTORS[#catalog.LEVEL_GAP_FACTORS].factor
 end
 
+-- Fellow progression still uses an encounter-HP budget rather than the player
+-- WS multiplier. Keep this helper isolated from player and pet damage paths.
 function catalog.getDamageBonus(playerLevel, targetLevel, targetMaxHp)
     if targetMaxHp <= 0 then
         return 0
@@ -85,7 +86,7 @@ end
 
 local function getMasteryScaledValue(player, freshValue, masteredValue)
     local mastery = catalog.getMasteryProgress(player)
-    return math.floor(freshValue + (masteredValue - freshValue) * mastery + 0.5)
+    return freshValue + (masteredValue - freshValue) * mastery
 end
 
 -- Scale only the custom bonus by required level. Stock formulas already include
@@ -113,27 +114,36 @@ function catalog.getWeaponskillCap(player, slot)
     return catalog.NON_ITEM_LEVEL_119_CAP
 end
 
-function catalog.getWeaponskillBonus(player, target, slot)
-    if player:getMainLvl() < catalog.ENDGAME_PLAYER_LEVEL then
-        return catalog.getDamageBonus(
-            player:getMainLvl(), target:getMainLvl(), target:getMaxHP())
-    end
+function catalog.getWeaponskillMultiplier(player, target, slot)
+    local levelRatio = utils.clamp(
+        player:getMainLvl() / catalog.ENDGAME_PLAYER_LEVEL, 0.01, 1.00)
+    local endgameMultiplier = getMasteryScaledValue(
+        player, catalog.FRESH_99_MULTIPLIER, catalog.MASTERED_99_MULTIPLIER)
+    local progressionFactor =
+        catalog.getWeaponProgression(player, slot or xi.slot.MAIN) *
+        catalog.getLevelGapFactor(player:getMainLvl(), target:getMainLvl()) *
+        levelRatio
 
-    local endgameBonus = getMasteryScaledValue(
-        player, catalog.FRESH_99_BONUS, catalog.MASTERED_99_BONUS)
-
-    return math.floor(
-        endgameBonus * catalog.getWeaponProgression(player, slot or xi.slot.MAIN) + 0.5)
+    return 1 + (endgameMultiplier - 1) * progressionFactor
 end
 
-function catalog.getPetDamageFloor(player, target)
-    if player:getMainLvl() < catalog.ENDGAME_PLAYER_LEVEL then
-        return math.floor(catalog.getDamageBonus(
-            player:getMainLvl(), target:getMainLvl(), target:getMaxHP()) * 0.65 + 0.5)
-    end
+function catalog.getPetDamageMultiplier(player, target)
+    local levelRatio = utils.clamp(
+        player:getMainLvl() / catalog.ENDGAME_PLAYER_LEVEL, 0.01, 1.00)
+    local endgameMultiplier =
+        getMasteryScaledValue(
+            player,
+            catalog.PET_FRESH_99_MULTIPLIER,
+            catalog.PET_MASTERED_99_MULTIPLIER)
+    local progressionFactor =
+        catalog.getLevelGapFactor(player:getMainLvl(), target:getMainLvl()) *
+        levelRatio
 
-    return getMasteryScaledValue(
-        player, catalog.PET_FRESH_99_FLOOR, catalog.PET_MASTERED_99_FLOOR)
+    return 1 + (endgameMultiplier - 1) * progressionFactor
+end
+
+function catalog.applyMultiplier(damage, multiplier, cap)
+    return math.min(math.floor(damage * multiplier), cap)
 end
 
 function catalog.getAccuracyPenalty(playerLevel, targetLevel)

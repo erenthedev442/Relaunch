@@ -1,7 +1,7 @@
 -----------------------------------
 -- Level-scaled baseline tuning for direct player-cast magical damage.
 --
--- Reuses the ordinary WS leveling curve, then assigns fresh-99/mastered bonuses
+-- Reuses the ordinary WS leveling curve, then assigns fresh-99/mastered multipliers
 -- by spell family and tier. Direct elemental/divine/ninjutsu casts, damaging
 -- Blue Magic (physical, magical, and breath), and player-automaton nukes are
 -- eligible. Drains, enfeebles and Helix damage-over-time spells remain untouched.
@@ -18,14 +18,17 @@ catalog.PRIME_DAMAGE_CAP       = 1999999
 catalog.FULL_POWER_LEVEL_RATIO = 0.70
 catalog.MIN_SPELL_FACTOR       = 0.15
 
-catalog.BONUSES =
+catalog.MULTIPLIERS =
 {
-    elementalHigh = { fresh = 25000, mastered = 35000 },
-    elementalMid  = { fresh = 18000, mastered = 27000 },
-    elementalLow  = { fresh = 12000, mastered = 18000 },
-    ninjutsu      = { fresh =  8000, mastered = 12000 },
-    divine        = { fresh = 12000, mastered = 20000 },
-    blue          = { fresh = 16000, mastered = 25000 },
+    -- base* raises spell base damage before normal modifiers and the progression
+    -- multiplier. It is deliberately small so MAB, INT, affinity, MACC/resists,
+    -- weather and burst still determine whether a cast reaches the 50-99k range.
+    elementalHigh = { fresh = 8.00, mastered = 13.00, baseFresh = 600, baseMastered = 1050 },
+    elementalMid  = { fresh = 6.00, mastered = 10.00, baseFresh = 400, baseMastered =  700 },
+    elementalLow  = { fresh = 4.00, mastered =  7.00, baseFresh = 200, baseMastered =  350 },
+    ninjutsu      = { fresh = 5.00, mastered =  8.00, baseFresh = 250, baseMastered =  450 },
+    divine        = { fresh = 5.00, mastered =  9.00, baseFresh = 300, baseMastered =  550 },
+    blue          = { fresh = 6.00, mastered = 10.00, baseFresh =   0, baseMastered =    0 },
 }
 
 local remaWeaponIds = {}
@@ -140,48 +143,59 @@ local function isAncientMagic(spellId)
     return spellId >= xi.magic.spell.FLARE and spellId <= xi.magic.spell.FLOOD_II
 end
 
-local function getBonusBand(caster, spell)
+local function getMultiplierBand(caster, spell)
     local skill = spell:getSkillType()
     if skill == xi.skill.NINJUTSU then
-        return catalog.BONUSES.ninjutsu
+        return catalog.MULTIPLIERS.ninjutsu
     elseif skill == xi.skill.DIVINE_MAGIC then
-        return catalog.BONUSES.divine
+        return catalog.MULTIPLIERS.divine
     elseif skill == xi.skill.BLUE_MAGIC then
-        return catalog.BONUSES.blue
+        return catalog.MULTIPLIERS.blue
     end
 
     local player = getProgressionPlayer(caster)
     local spellLevel = spell:getLevel(player:getMainJob()) or 1
     if spellLevel >= 75 or isAncientMagic(spell:getID()) then
-        return catalog.BONUSES.elementalHigh
+        return catalog.MULTIPLIERS.elementalHigh
     elseif spellLevel >= 50 then
-        return catalog.BONUSES.elementalMid
+        return catalog.MULTIPLIERS.elementalMid
     end
 
-    return catalog.BONUSES.elementalLow
+    return catalog.MULTIPLIERS.elementalLow
 end
 
-function catalog.getDamageBonus(caster, target, spell)
+function catalog.getDamageMultiplier(caster, target, spell)
     local player = getProgressionPlayer(caster)
-    if caster:isAutomaton() then
-        return progression.getPetDamageFloor(player, target)
-    end
-
-    if player:getMainLvl() < progression.ENDGAME_PLAYER_LEVEL then
-        local levelScaledBonus = progression.getDamageBonus(
-            player:getMainLvl(), target:getMainLvl(), target:getMaxHP())
-        return math.floor(
-            levelScaledBonus * catalog.getSpellProgressionFactor(caster, spell) + 0.5)
-    end
-
-    local band = getBonusBand(caster, spell)
+    local band = getMultiplierBand(caster, spell)
     local mastery = progression.getMasteryProgress(player)
-    local masteryBonus = math.floor(
-        band.fresh + (band.mastered - band.fresh) * mastery + 0.5)
+    local endgameMultiplier =
+        band.fresh + (band.mastered - band.fresh) * mastery
+    local levelRatio = utils.clamp(
+        player:getMainLvl() / progression.ENDGAME_PLAYER_LEVEL, 0.01, 1.00)
+    local progressionFactor =
+        catalog.getSpellProgressionFactor(caster, spell) *
+        progression.getLevelGapFactor(player:getMainLvl(), target:getMainLvl()) *
+        levelRatio
 
-    -- Add rather than replace stock spell damage so INT, MAB, Magic Damage,
-    -- affinity, skill, burst bonuses and equipment remain effective.
-    return masteryBonus
+    -- Stock already contains INT/MND, Magic Damage, MAB, affinity, weather,
+    -- magic burst and resists. Scaling it preserves all of those relationships.
+    return 1 + (endgameMultiplier - 1) * progressionFactor
+end
+
+function catalog.getBaseStockBonus(caster, target, spell)
+    local player = getProgressionPlayer(caster)
+    local band = getMultiplierBand(caster, spell)
+    local mastery = progression.getMasteryProgress(player)
+    local endgameBase =
+        band.baseFresh + (band.baseMastered - band.baseFresh) * mastery
+    local levelRatio = utils.clamp(
+        player:getMainLvl() / progression.ENDGAME_PLAYER_LEVEL, 0.01, 1.00)
+    local progressionFactor =
+        catalog.getSpellProgressionFactor(caster, spell) *
+        progression.getLevelGapFactor(player:getMainLvl(), target:getMainLvl()) *
+        levelRatio
+
+    return math.floor(endgameBase * progressionFactor + 0.5)
 end
 
 function catalog.getMagicAccuracyPenalty(caster, target)

@@ -2,10 +2,23 @@
 require('scripts/globals/weaponskills')
 require('scripts/globals/magicburst')
 require('scripts/globals/magic')
+local standardProgression = require('modules/custom/lua/standard_ws_tuning_catalog')
 
 -- TODO: Consolidate this with weaponskills
 xi = xi or {}
 xi.autows = xi.autows or {}
+
+local function applyAutomatonProgression(attacker, target, damage)
+    local master = attacker:getMaster()
+    if damage <= 0 or master == nil or not master:isPC() then
+        return damage
+    end
+
+    return standardProgression.applyMultiplier(
+        damage,
+        standardProgression.getPetDamageMultiplier(master, target),
+        standardProgression.DAMAGE_CAP)
+end
 
 -- params contains: ftpMod, str_wsc, dex_wsc, vit_wsc, int_wsc, mnd_wsc, critVaries, accVaries, ignoredDefense, atkmulti, kick, accBonus, weaponType, weaponDamage
 xi.autows.doAutoPhysicalWeaponskill = function(attacker, target, wsID, tp, primaryMsg, action, taChar, wsParams, skill)
@@ -79,6 +92,7 @@ xi.autows.doAutoPhysicalWeaponskill = function(attacker, target, wsID, tp, prima
     end
 
     finaldmg = finaldmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
+    finaldmg = applyAutomatonProgression(attacker, target, finaldmg)
     calcParams.finalDmg = finaldmg
 
     if calcParams.tpHitsLanded + calcParams.extraHitsLanded > 0 then
@@ -147,6 +161,7 @@ xi.autows.doAutoRangedWeaponskill = function(attacker, target, wsID, wsParams, t
     finaldmg = finaldmg * (1 + target:getMod(xi.mod.PIERCE_SDT) / 10000)
 
     finaldmg = finaldmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
+    finaldmg = applyAutomatonProgression(attacker, target, finaldmg)
     calcParams.finalDmg = finaldmg
 
     if calcParams.tpHitsLanded + calcParams.extraHitsLanded > 0 then

@@ -949,15 +949,15 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
         wsResults.finalDmg = finaldmg
     end
 
-    -- Ordinary player WSs receive a level-, weapon- and mastery-scaled bonus
+    -- Ordinary player WSs receive a level-, weapon- and mastery-scaled multiplier
     -- from StandardWeaponskillTuning. The module exposes it only during
     -- eligible calculations, so REMA/Prime/final-Ambuscade native WSs never
-    -- enter this branch. Add the bonus to stock damage so weapon damage, TP,
-    -- attack, attributes and WSD gear remain visible below the final cap.
-    local standardBonus = attacker:getLocalVar('StandardWsDamageBonus')
-    if finaldmg > 0 and standardBonus > 0 then
+    -- enter this branch. Stock already contains weapon damage, TP, attack,
+    -- attributes, WSD and multi-attacks, so every one scales proportionally.
+    local standardMultiplier = attacker:getLocalVar('StandardWsDamageMultiplier')
+    if finaldmg > 0 and standardMultiplier > 0 then
         local standardCap = attacker:getLocalVar('StandardWsDamageCap')
-        finaldmg = finaldmg + standardBonus
+        finaldmg = math.floor(finaldmg * standardMultiplier / 1000)
         if standardCap > 0 then
             finaldmg = math.min(finaldmg, standardCap)
         end

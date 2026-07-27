@@ -39,7 +39,8 @@ local HALLMARKS =
     [11]=150, [12]=125, [13]=100, [14]=75,  [15]=50,   -- Light
 }
 
--- Gallantry awarded per extra party member beyond solo.
+-- Gallantry share by difficulty. Solo earns 40% of one share; each additional
+-- party member contributes one full share.
 local GALLANTRY_PER_EXTRA =
 {
     [1]=300, [2]=240, [3]=180, [4]=80,  [5]=20,
@@ -213,9 +214,8 @@ local GAL_SHOP =
 
 -- ─── Abdhaljs Seal ────────────────────────────────────────────────────────────
 -- Item 6500 (usable, stacks to 99). Holding one when you clear a PARTY run
--- (which is the only kind that pays Gallantry -- solo pays 0) auto-consumes it
--- and triples that run's Gallantry. Because it only fires when Gallantry > 0 it
--- can never be wasted on a solo clear. Two sources, mirroring retail: buy one
+-- auto-consumes it and triples that run's Gallantry. Solo clears now earn
+-- reduced Gallantry but never consume a Seal. Two sources, mirroring retail: buy one
 -- per calendar month for Hallmarks, plus claim SEAL_WEEKLY free per week.
 local SEAL_ITEM    = 6500
 local SEAL_HM_COST = 2000   -- monthly merchant price
@@ -792,8 +792,14 @@ xi.ambuscade.onInstanceComplete = function(instance)
 
     local baseHM    = HALLMARKS[difficulty]
     local galBase   = GALLANTRY_PER_EXTRA[difficulty]
-    -- Gallantry: 1× per extra party member (solo = 0 gallantry bonus)
-    local galEarned = galBase * math.max(0, numChars - 1)
+    -- Solo earns 40% of one party-member share (rounded up), keeping every
+    -- weapon completable alone while parties remain the faster path.
+    local galEarned
+    if numChars == 1 then
+        galEarned = math.ceil(galBase * 0.40)
+    else
+        galEarned = galBase * (numChars - 1)
+    end
 
     for _, player in pairs(chars) do
         -- Time bonus (stored in charVar by onInstanceTimeUpdate).
@@ -802,12 +808,11 @@ xi.ambuscade.onInstanceComplete = function(instance)
         local rawHM      = math.floor(baseHM * timeMult)
         local actualHM, remaining = applyMonthlyCapAndEarn(player, rawHM)
 
-        -- Abdhaljs Seal: a party clear (galEarned > 0) consumes one held Seal to
-        -- triple THIS player's Gallantry. Per-player so seals aren't shared, and
-        -- only spent when there is Gallantry to triple (never on a solo run).
+        -- Abdhaljs Seal: a party clear consumes one held Seal to triple THIS
+        -- player's Gallantry. Solo Gallantry never consumes a Seal.
         local pGal   = galEarned
         local sealed = false
-        if pGal > 0 and player:getItemCount(SEAL_ITEM) > 0 then
+        if numChars > 1 and pGal > 0 and player:getItemCount(SEAL_ITEM) > 0 then
             player:delItem(SEAL_ITEM, 1)
             pGal   = pGal * 3
             sealed = true

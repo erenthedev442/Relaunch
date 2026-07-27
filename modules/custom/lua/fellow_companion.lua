@@ -709,8 +709,9 @@ local function applyFellow(p, pet)
         pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
     elseif roleKey == 'magus' then
         -- The combat loop casts only the spell/move selected in the Fellow
-        -- menu. Do not install an autonomous spell list that can override it.
-        pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
+        -- menu. Keep it inside the selected move's 10-yalm range; LONG_RANGE
+        -- holds at 12 yalms and makes useMobAbility silently reject Thunder IV.
+        pet:setMobMod(xi.mobMod.TRUST_DISTANCE, 7)
     elseif roleKey == 'hunter' then
         pet:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 })
         pet:addMod(xi.mod.STORETP, 86)
@@ -962,15 +963,10 @@ scheduleCombatLoop = function(master, pet)
                     burstTier = xi.magicburst.formMagicBurst(tgt, magusElement)
                 end
                 local burstReady = burstTier > 0
-                local lastActivity = math.max(
-                    master:getLocalVar('fellowActivityAt') or 0,
-                    p:getLocalVar('fellowCombatStartedAt') or now)
-                local idleReady = now - lastActivity >= CONFIG.nukeCooldownSec
 
                 if hasBeh('nuke') and p:isEngaged() and tgt and not tgt:isDead()
                    and not movePending
                    and p:canUseAbilities()
-                   and (burstReady or idleReady)
                    and now - (p:getLocalVar('fellowNukeAt') or 0) >=
                        (burstReady and CONFIG.burstCooldownSec or CONFIG.nukeCooldownSec) then
                     local spellMove = chosenWs(master)
@@ -1070,25 +1066,6 @@ local function hasFellowOut(p) return getFellowTrust(p) ~= nil end
 
 -- ════════════════════════════ Summon / keeper ═══════════════════════════════
 local genByName = {}
-
-local function markActivity(player)
-    if player then player:setLocalVar('fellowActivityAt', os.time()) end
-end
-
-local function attachActivityListeners(player)
-    player:addListener('WEAPONSKILL_USE', 'FELLOW_ACTIVITY_WS', function(actor)
-        markActivity(actor)
-    end)
-    player:addListener('MAGIC_USE', 'FELLOW_ACTIVITY_MAGIC', function(actor)
-        markActivity(actor)
-    end)
-    player:addListener('ABILITY_USE', 'FELLOW_ACTIVITY_ABILITY', function(actor)
-        markActivity(actor)
-    end)
-    player:addListener('ITEM_USE', 'FELLOW_ACTIVITY_ITEM', function(actor)
-        markActivity(actor)
-    end)
-end
 
 local function canChangeFellow(player)
     if player:isEngaged() or player:hasEnmity() then
@@ -1948,7 +1925,6 @@ m:addOverride('xi.player.onGameIn', function(player, gameLogin, zoning)
     super(player, gameLogin, zoning)
     pcall(function()
         if getN(player, V.born) == 1 then migrateProgression(player) end
-        attachActivityListeners(player)
         -- Trusts are dismissed by the engine at a zone line. Mirror that
         -- behavior instead of having the keeper silently recreate the Fellow.
         if zoning then

@@ -63,10 +63,10 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
         return damage
     end
 
-    -- BST Ready moves, DRG breaths and PUP automaton abilities share a modest
-    -- stock-aware floor and the standard pre-REMA ceiling. Existing strong pet
-    -- builds are never multiplied, AoE receives half the floor/cap, and SMN
-    -- avatars retain their dedicated equalization module.
+    -- BST Ready moves, DRG breaths and PUP automaton abilities multiply their
+    -- completed stock result. Master/pet augments, WSC, MAB, accuracy, TP,
+    -- multi-hit results and resists therefore retain their proportional value.
+    -- SMN avatars use the equivalent logic in smn_avatar_equalize.
     local master = mob:getMaster()
     if
         damage <= 0 or
@@ -80,10 +80,10 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
         return damage
     end
 
-    local floor = standardProgression.getPetDamageFloor(master, target)
+    local multiplier = standardProgression.getPetDamageMultiplier(master, target)
     local cap = standardProgression.DAMAGE_CAP
     if skill:isAoE() then
-        floor = math.floor(floor * 0.50)
+        multiplier = 1 + (multiplier - 1) * 0.50
         cap = math.floor(cap * 0.50)
     end
 
@@ -91,7 +91,8 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
         cap = math.min(cap, math.floor(target:getMaxHP() * 0.40))
     end
 
-    return math.min(math.max(damage, floor), cap)
+    return target:checkDamageCap(
+        standardProgression.applyMultiplier(damage, multiplier, cap))
 end
 
 -- TODO: Currently still used by avatar skills. Marked for deletion once they get converted.

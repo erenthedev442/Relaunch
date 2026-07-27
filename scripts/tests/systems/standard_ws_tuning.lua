@@ -88,22 +88,27 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         assert(catalog.getDamageBonus(50, 75, 120000) == 1080)
     end)
 
-    it('uses mastery-scaled additive bonuses at level 99', function()
+    it('uses mastery-scaled multipliers at level 99', function()
         local target = makeTarget(155, 120000)
         local weapon = { [xi.slot.MAIN] = { id = 1, ilvl = 119, reqLvl = 99 } }
-        assert(catalog.getWeaponskillBonus(makePlayer(weapon, 99, 0), target) == 20000)
-        assert(catalog.getWeaponskillBonus(makePlayer(weapon, 99, 1050), target) == 25000)
-        assert(catalog.getWeaponskillBonus(makePlayer(weapon, 99, 2100), target) == 30000)
-        assert(catalog.getPetDamageFloor(makePlayer({}, 99, 0), target) == 18000)
-        assert(catalog.getPetDamageFloor(makePlayer({}, 99, 2100), target) == 28000)
+        assert(catalog.getWeaponskillMultiplier(makePlayer(weapon, 99, 0), target) == 8)
+        assert(catalog.getWeaponskillMultiplier(makePlayer(weapon, 99, 1050), target) == 10.5)
+        assert(catalog.getWeaponskillMultiplier(makePlayer(weapon, 99, 2100), target) == 13)
+        assert(catalog.getPetDamageMultiplier(makePlayer({}, 99, 0), target) == 7)
+        assert(catalog.getPetDamageMultiplier(makePlayer({}, 99, 2100), target) == 11)
+        assert(catalog.applyMultiplier(1500, 11, 99999) == 16500)
+        assert(catalog.applyMultiplier(8000, 11, 99999) == 88000)
+        assert(catalog.applyMultiplier(1500, 13, 99999) == 19500)
+        assert(catalog.applyMultiplier(6150, 13, 99999) == 79950)
+        assert(catalog.applyMultiplier(10000, 13, 99999) == 99999)
     end)
 
-    it('keeps the full level-99 bonus on low-HP farming targets', function()
+    it('keeps the full level-99 multiplier on low-HP farming targets', function()
         local player = makePlayer(
             { [xi.slot.MAIN] = { id = 1, ilvl = 119, reqLvl = 99 } }, 99, 2100)
 
-        assert(catalog.getWeaponskillBonus(
-            player, makeTarget(76, 8000), xi.slot.MAIN) == 30000)
+        assert(catalog.getWeaponskillMultiplier(
+            player, makeTarget(76, 8000), xi.slot.MAIN) == 13)
     end)
 
     it('scales custom bonuses by weapon level and caps non-item-level weapons', function()
@@ -115,8 +120,10 @@ describe('Level-scaled ordinary weaponskill tuning', function()
             { [xi.slot.MAIN] = { id = 4, ilvl = 119, reqLvl = 99 } }, 99, 0)
         local target = makeTarget(155, 120000)
 
-        assert(catalog.getWeaponskillBonus(onionSword, target, xi.slot.MAIN) == 202)
-        assert(catalog.getWeaponskillBonus(level99Sword, target, xi.slot.MAIN) == 20000)
+        assert(math.abs(catalog.getWeaponskillMultiplier(
+            onionSword, target, xi.slot.MAIN) - 1.070707) < 0.000001)
+        assert(catalog.getWeaponskillMultiplier(
+            level99Sword, target, xi.slot.MAIN) == 8)
         assert(catalog.getWeaponskillCap(onionSword, xi.slot.MAIN) == 40000)
         assert(catalog.getWeaponskillCap(level99Sword, xi.slot.MAIN) == 40000)
         assert(catalog.getWeaponskillCap(itemLevel119Sword, xi.slot.MAIN) == 99999)
@@ -129,7 +136,7 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         assert(catalog.getAccuracyPenalty(99, 155) == 0)
     end)
 
-    it('exposes ordinary WS bonus, cap, and underlevel accuracy synchronously', function()
+    it('exposes ordinary WS multiplier, cap, and underlevel accuracy synchronously', function()
         local player = makePlayer(
             { [xi.slot.MAIN] = { id = 20819, ilvl = 0, reqLvl = 50 } }, 50)
         local target = makeTarget(58, 10000)
@@ -138,12 +145,12 @@ describe('Level-scaled ordinary weaponskill tuning', function()
             player, target, xi.weaponskill.RAGING_RUSH, xi.slot.MAIN,
             {}, false,
             function()
-                assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 2100)
+                assert(player:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 2250)
                 assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 40000)
                 assert(player:getMod(xi.mod.WSACC) == -40)
             end)
 
-        assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 0)
+        assert(player:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 0)
         assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 0)
         assert(player:getMod(xi.mod.WSACC) == 0)
     end)
@@ -162,7 +169,7 @@ describe('Level-scaled ordinary weaponskill tuning', function()
             xi.standardWsTuning.withStandardEffects(
                 player, target, case.ws, xi.slot.MAIN, {}, false,
                 function()
-                    assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 0)
+                    assert(player:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 0)
                     assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 0)
                 end)
         end
@@ -176,14 +183,14 @@ describe('Level-scaled ordinary weaponskill tuning', function()
             player, target, xi.weaponskill.RAGING_FISTS, xi.slot.MAIN,
             {}, false,
             function()
-                assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 20000)
+                assert(player:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 8000)
             end)
     end)
 
     it('restores local variables and accuracy after a calculation error', function()
         local player = makePlayer({ [xi.slot.MAIN] = 20819 }, 50)
         local target = makeTarget(58, 10000)
-        player:setLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR, 17)
+        player:setLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR, 17)
         player:setLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR, 23)
         player:setMod(xi.mod.WSACC, 11)
 
@@ -197,7 +204,7 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         end)
 
         assert(not ok)
-        assert(player:getLocalVar(catalog.DAMAGE_BONUS_LOCAL_VAR) == 17)
+        assert(player:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 17)
         assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 23)
         assert(player:getMod(xi.mod.WSACC) == 11)
     end)

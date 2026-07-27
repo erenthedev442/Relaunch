@@ -1,11 +1,13 @@
 -----------------------------------
 -- always_popped_nms.lua
 --
--- Forces every NM in Reisenjima to be auto-spawned
+-- Forces every NM in Reisenjima Sanctorium to be auto-spawned
 -- at server start AND to respawn 30 seconds after each death.
 --
 -- Abyssea NMs are intentionally excluded: they are popped via the
 -- AbysseaMarks module (spend Hunt Marks at the ??? to spawn the NM).
+-- Reisenjima field NMs are likewise excluded: Geas Fete owns their
+-- on-demand ???/key-item pop flow.
 --
 -- How it works
 -- ------------
@@ -23,14 +25,11 @@
 --
 -- Excluded zones
 -- --------------
---   Reisenjima Henge and Escha - Zi'Tah are both Hunting League hubs.
---   The tier Spawner NPCs there manage NM pops on demand (rank gating,
---   mark rewards, per-mob arenas). Auto-spawning every NM would
---   conflict with the single-entity-per-ID engine constraint and break
---   the spawner's "pop in front of you" UX. Both are intentionally
---   absent from TARGET_ZONES. All native mob_spawn_points in Escha
---   Zi'Tah have also been cleared from the DB so getMobs() returns
---   nothing there even if the entry were re-added.
+--   Reisenjima uses Geas Fete ???/key-item pops. Reisenjima Henge and
+--   Escha - Zi'Tah use on-demand progression spawners. Auto-spawning
+--   their NMs would conflict with those encounter systems, so all three
+--   are intentionally absent from TARGET_ZONES. Their unwanted native
+--   NM spawn points are also cleared by scoped SQL migrations.
 --
 -- Module enable/disable
 -- ---------------------
@@ -66,8 +65,7 @@ local RESPAWN_SECONDS = 30
 -----------------------------------
 local TARGET_ZONES =
 {
-    -- Reisenjima main + Sanctorium (Henge excluded - see header note)
-    { xi.zone.REISENJIMA,               'Reisenjima',               'xi.zones.Reisenjima.Zone.onInitialize'               },
+    -- Reisenjima field/Henge excluded; Sanctorium retains the legacy QoL.
     { xi.zone.REISENJIMA_SANCTORIUM,    'Reisenjima_Sanctorium',    'xi.zones.Reisenjima_Sanctorium.Zone.onInitialize'    },
 }
 

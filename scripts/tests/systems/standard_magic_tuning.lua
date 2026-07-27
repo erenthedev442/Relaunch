@@ -60,36 +60,44 @@ describe('Level-scaled direct magic tuning', function()
         }
     end
 
-    it('uses additive spell-tier and mastery bonuses', function()
+    it('uses spell-tier and mastery multipliers', function()
         local caster = makeCaster(99)
         local target = makeTarget(155, 120000)
         local highTierSpell = makeSpell(
             xi.magic.spell.FIRE_V, xi.skill.ELEMENTAL_MAGIC, 86)
 
         assert(catalog.DAMAGE_CAP == 99999)
-        assert(catalog.getDamageBonus(caster, target, highTierSpell, 30000) == 25000)
-        assert(catalog.getDamageBonus(caster, target, highTierSpell, 50000) == 25000)
+        assert(catalog.getDamageMultiplier(caster, target, highTierSpell) == 8)
+        assert(catalog.getBaseStockBonus(caster, target, highTierSpell) == 600)
         assert(catalog.getMagicAccuracyPenalty(caster, target) == 0)
-        assert(catalog.getDamageBonus(
+        assert(catalog.getDamageMultiplier(
             caster, target,
-            makeSpell(xi.magic.spell.STONE, xi.skill.ELEMENTAL_MAGIC, 1)) == 12000)
-        assert(catalog.getDamageBonus(
+            makeSpell(xi.magic.spell.STONE, xi.skill.ELEMENTAL_MAGIC, 1)) == 1.45)
+        assert(catalog.getDamageMultiplier(
             makeCaster(99, true, xi.job.SCH), target,
-            makeSpell(xi.magic.spell.FIRE_IV, xi.skill.ELEMENTAL_MAGIC, 73, xi.job.SCH)) == 18000)
-        assert(catalog.getDamageBonus(
+            makeSpell(xi.magic.spell.FIRE_IV, xi.skill.ELEMENTAL_MAGIC, 73, xi.job.SCH)) == 6)
+        assert(catalog.getDamageMultiplier(
             caster, target,
-            makeSpell(xi.magic.spell.FREEZE, xi.skill.ELEMENTAL_MAGIC, 50)) == 25000)
+            makeSpell(xi.magic.spell.FREEZE, xi.skill.ELEMENTAL_MAGIC, 50)) == 8)
 
         caster = makeCaster(99, true, xi.job.BLM, {}, 2100)
-        assert(catalog.getDamageBonus(caster, target, highTierSpell) == 35000)
-        assert(catalog.getDamageBonus(
-            caster, makeTarget(76, 8000), highTierSpell) == 35000)
+        assert(catalog.getDamageMultiplier(caster, target, highTierSpell) == 13)
+        assert(catalog.getBaseStockBonus(caster, target, highTierSpell) == 1050)
+        assert((100 + catalog.getBaseStockBonus(caster, target, highTierSpell)) *
+            catalog.getDamageMultiplier(caster, target, highTierSpell) == 14950)
+        assert((3200 + catalog.getBaseStockBonus(caster, target, highTierSpell)) *
+            catalog.getDamageMultiplier(caster, target, highTierSpell) == 55250)
+        assert((6500 + catalog.getBaseStockBonus(caster, target, highTierSpell)) *
+            catalog.getDamageMultiplier(caster, target, highTierSpell) == 98150)
+        assert(catalog.getDamageMultiplier(
+            caster, makeTarget(76, 8000), highTierSpell) == 13)
 
         caster = makeCaster(50)
         target = makeTarget(58, 10000)
-        assert(catalog.getDamageBonus(
+        assert(math.abs(catalog.getDamageMultiplier(
             caster, target,
-            makeSpell(xi.magic.spell.STONE_III, xi.skill.ELEMENTAL_MAGIC, 40)) == 2100)
+            makeSpell(xi.magic.spell.STONE_III, xi.skill.ELEMENTAL_MAGIC, 40)) -
+            2.060606) < 0.000001)
         assert(catalog.getMagicAccuracyPenalty(caster, target) == 40)
     end)
 
@@ -98,10 +106,10 @@ describe('Level-scaled direct magic tuning', function()
         local katon = makeSpell(
             xi.magic.spell.KATON_SAN, xi.skill.NINJUTSU, 75, xi.job.NIN)
 
-        assert(catalog.getDamageBonus(
-            makeCaster(99, true, xi.job.NIN), target, katon) == 8000)
-        assert(catalog.getDamageBonus(
-            makeCaster(99, true, xi.job.NIN, {}, 2100), target, katon) == 12000)
+        assert(catalog.getDamageMultiplier(
+            makeCaster(99, true, xi.job.NIN), target, katon) == 5)
+        assert(catalog.getDamageMultiplier(
+            makeCaster(99, true, xi.job.NIN, {}, 2100), target, katon) == 8)
     end)
 
     it('allows direct elemental, divine, and ninjutsu casts', function()
@@ -162,7 +170,7 @@ describe('Level-scaled direct magic tuning', function()
             { attackType = xi.attackType.MAGICAL }))
     end)
 
-    it('gives player automatons the restrained pet progression floor', function()
+    it('lets player automatons use their spell-tier multiplier', function()
         local master = makeCaster(99, true, xi.job.PUP)
         local automaton =
         {
@@ -181,7 +189,8 @@ describe('Level-scaled direct magic tuning', function()
             xi.magic.spell.FIRE_IV, xi.skill.ELEMENTAL_MAGIC, 75)
 
         assert(catalog.isDirectSpellEligible(automaton, target, spell))
-        assert(catalog.getDamageBonus(automaton, target, spell) == 18000)
+        assert(catalog.getDamageMultiplier(automaton, target, spell) == 8)
+        assert(catalog.getBaseStockBonus(automaton, target, spell) == 600)
     end)
 
     it('raises cast caps for equipped final REMA and Prime weapons', function()

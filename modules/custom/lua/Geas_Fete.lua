@@ -68,6 +68,7 @@ local BEITETSU         = 4060  -- chunk of beitetsu
 local RIFTBORN_BOULDER = 4061  -- riftborn boulder
 local RIFTCINDER       = 3499  -- pinch of riftcinder
 local ESCHALIXIR_2     = 9086  -- eschalixir +2
+local PULSE_CELL       = 3840  -- alternate solo path for final Ambuscade weapons
 
 -- Reisenjima-crafted armor (retail: crafted from geas-fete NM materials;
 -- relaunch: direct drops off the NMs themselves, owner call 2026-07-12 --
@@ -709,6 +710,18 @@ local function awardDrops(player, mob, def)
     if rc  > 0 then player:addItem({ id = RIFTCINDER,       quantity = rc  }) end
     if rb  > 0 then player:addItem({ id = RIFTBORN_BOULDER, quantity = rb  }) end
     if lix > 0 then player:addItem({ id = ESCHALIXIR_2,     quantity = lix }) end
+
+    -- T3-only alternate path to the final Ambuscade weapon material.
+    -- The existing helper applies Treasure Hunter without lowering the 5% base.
+    if t == 3 and passesTreasureHunterRoll(mob, 5) then
+        if player:addItem({ id = PULSE_CELL, quantity = 1 }) then
+            player:printToPlayer(
+                '[Geas Fete] A Pulse Cell crystallizes from the vanquished NM!', S)
+        else
+            player:printToPlayer(
+                '[Geas Fete] A Pulse Cell was lost -- make inventory room before your next kill!', S)
+        end
+    end
 
     -- Boss only: 1 random Attestation (Aeonic path material).
     -- 40% chance of a second random Attestation.

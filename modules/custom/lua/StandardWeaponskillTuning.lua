@@ -52,18 +52,18 @@ xi.standardWsTuning.withStandardEffects = function(
         return callback()
     end
 
-    local bonusVar    = catalog.DAMAGE_BONUS_LOCAL_VAR
-    local capVar      = catalog.DAMAGE_CAP_LOCAL_VAR
-    local accuracyMod = magicAccuracy and xi.mod.MACC or xi.mod.WSACC
-    local priorBonus  = attacker:getLocalVar(bonusVar)
-    local priorCap    = attacker:getLocalVar(capVar)
-    local priorAcc    = attacker:getMod(accuracyMod)
-    local penalty     = catalog.getAccuracyPenalty(
+    local multiplierVar  = catalog.DAMAGE_MULTIPLIER_LOCAL_VAR
+    local capVar         = catalog.DAMAGE_CAP_LOCAL_VAR
+    local accuracyMod    = magicAccuracy and xi.mod.MACC or xi.mod.WSACC
+    local priorMultiplier = attacker:getLocalVar(multiplierVar)
+    local priorCap       = attacker:getLocalVar(capVar)
+    local priorAcc       = attacker:getMod(accuracyMod)
+    local penalty        = catalog.getAccuracyPenalty(
         attacker:getMainLvl(), target:getMainLvl())
-    local bonus       = catalog.getWeaponskillBonus(attacker, target, slot)
-    local damageCap   = catalog.getWeaponskillCap(attacker, slot)
+    local multiplier     = catalog.getWeaponskillMultiplier(attacker, target, slot)
+    local damageCap      = catalog.getWeaponskillCap(attacker, slot)
 
-    attacker:setLocalVar(bonusVar, bonus)
+    attacker:setLocalVar(multiplierVar, math.floor(multiplier * 1000 + 0.5))
     attacker:setLocalVar(capVar, damageCap)
     if penalty > 0 then
         attacker:addMod(accuracyMod, -penalty)
@@ -80,7 +80,7 @@ xi.standardWsTuning.withStandardEffects = function(
         end)
 
     local cleanupOk, cleanupErr = pcall(function()
-        attacker:setLocalVar(bonusVar, priorBonus)
+        attacker:setLocalVar(multiplierVar, priorMultiplier)
         attacker:setLocalVar(capVar, priorCap)
         attacker:setMod(accuracyMod, priorAcc)
     end)
