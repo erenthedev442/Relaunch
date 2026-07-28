@@ -73,6 +73,31 @@ local function showMenu(player, menu)
     player:timer(30, function(p) p:customMenu(snap) end)
 end
 
+local JUNCTION_SPAWN_DISTANCE = 10
+
+local function junctionSpawnPosition(npc)
+    local rotation = npc:getRotPos()
+    local ok, position = pcall(GetFurthestValidPosition, npc, JUNCTION_SPAWN_DISTANCE, 0)
+    if ok and type(position) == 'table' and position.x ~= nil then
+        return {
+            x   = position.x,
+            y   = position.y,
+            z   = position.z,
+            rot = (rotation + 128) % 256,
+        }
+    end
+
+    -- Navmesh probing can fail in zones without a loaded mesh. Fall back to
+    -- the junction's facing rather than the old fixed +X/+Z diagonal.
+    local radians = (rotation / 256) * 2 * math.pi
+    return {
+        x   = npc:getXPos() + math.cos(radians) * JUNCTION_SPAWN_DISTANCE,
+        y   = npc:getYPos(),
+        z   = npc:getZPos() - math.sin(radians) * JUNCTION_SPAWN_DISTANCE,
+        rot = (rotation + 128) % 256,
+    }
+end
+
 -----------------------------------
 -- Spawn logic
 -----------------------------------
@@ -152,6 +177,12 @@ local function spawnWantedNm(player, nm, pos)
             if not owner then return end
 
             deadMob:setLocalVar('UW_Rewarded', 1)
+            if owner:getHP() <= 0 then
+                owner:printToPlayer(string.format(
+                    '[Unity] %s falls, but the contract fails because you were knocked out.',
+                    nm.label), S)
+                return
+            end
 
             local reward = catalog.rewards[nm.tier]
             local isWeekly = (nm.id == weeklyFeaturedId())
@@ -522,12 +553,7 @@ local function junctionMenu(player, zoneId, npc)
                     return
                 end
                 p:delCurrency('unity_accolades', cost)
-                local outcome = spawnWantedNm(p, nmRef, {
-                    x   = npc:getXPos() + 4.0,
-                    y   = npc:getYPos(),
-                    z   = npc:getZPos() + 4.0,
-                    rot = 128,
-                })
+                local outcome = spawnWantedNm(p, nmRef, junctionSpawnPosition(npc))
                 if outcome == 'refund' then
                     p:addCurrency('unity_accolades', cost)
                     p:printToPlayer(string.format('[Unity] Your %d accolades are returned.', cost), S)
@@ -541,6 +567,11 @@ local function junctionMenu(player, zoneId, npc)
         title   = string.format('Ethereal Junction [%d acc]', have),
         options = opts,
     })
+end
+
+local function revealCustomJunction(npc)
+    npc:setStatus(xi.status.NORMAL)
+    npc:setAnimation(116)
 end
 
 for zoneId, jz in pairs(jmap.junctions) do
@@ -566,9 +597,13 @@ for zoneId, jz in pairs(jmap.junctions) do
                     end,
                 })
                 if jnpc then
-                    -- Dynamic NPCs default to animation 0, which makes this
-                    -- effect model flicker or disappear. Stock junctions use 116.
-                    jnpc:setAnimation(116)
+                    -- The client can overwrite an effect NPC's initial state
+                    -- during zone load. Apply the stock junction state now and
+                    -- once more after that refresh window.
+                    revealCustomJunction(jnpc)
+                    jnpc:timer(1000, function(npc)
+                        revealCustomJunction(npc)
+                    end)
                 end
                 utils.unused(jnpc)
             else

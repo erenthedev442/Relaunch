@@ -338,10 +338,35 @@ function htbf.register(fightKey, tier, variant)
         }
     end
 
-    -- Per-instance tier scaling of the reused base boss(es). Runs after the mobs
-    -- are spawned for THIS battlefield instance, so concurrent tiers scale
-    -- independently. Silent (no player-visible multiplier). int16 mod cap honored
-    -- by the catalog values; HP is the int32 lever.
+    -- Per-instance tier scaling of the reused base boss(es). The local-var latch
+    -- makes this safe to call again after event-driven phase spawns.
+    local function applyTierScale(mob)
+        if mob:getLocalVar('HTBFScaled') == 1 then
+            return
+        end
+
+        if scale.lvl and scale.lvl > 1.0 then
+            mob:setMobLevel(math.min(math.floor(mob:getMainLvl() * scale.lvl), 255))
+        end
+        if scale.hp and scale.hp > 1.0 then
+            local hp = math.floor(mob:getMaxHP() * scale.hp)
+            mob:setMaxHP(hp)
+            mob:setHP(hp)
+        end
+        if scale.att  and scale.att  > 0 then mob:addMod(xi.mod.ATT,  scale.att)  end
+        if scale.def  and scale.def  > 0 then mob:addMod(xi.mod.DEF,  scale.def)  end
+        if scale.macc and scale.macc > 0 then mob:addMod(xi.mod.MACC, scale.macc) end
+        if scale.meva and scale.meva > 0 then mob:addMod(xi.mod.MEVA, scale.meva) end
+        if scale.eva  and scale.eva  > 0 then mob:addMod(xi.mod.EVA,  scale.eva)  end
+        mob:setLocalVar('HTBFScaled', 1)
+    end
+
+    local function scaleBattlefieldMobs(battlefield)
+        for _, mob in ipairs(battlefield:getMobs(true, true)) do
+            pcall(function() applyTierScale(mob) end)
+        end
+    end
+
     function content:setupBattlefield(battlefield)
         -- Tag as an HTBF battlefield so the trust-count patch above lets players
         -- summon Trusts here (the engine's default cap would reject them).
@@ -349,22 +374,19 @@ function htbf.register(fightKey, tier, variant)
         battlefield:setLocalVar('HTBFTier', tier)
         -- Run the base fight's own setup first (spawns/positions/etc.), then scale.
         if baseSetup then pcall(function() baseSetup(self, battlefield) end) end
-        for _, mob in ipairs(battlefield:getMobs(true, true)) do
-            pcall(function()
-                if scale.lvl and scale.lvl > 1.0 then
-                    mob:setMobLevel(math.min(math.floor(mob:getMainLvl() * scale.lvl), 255))
-                end
-                if scale.hp and scale.hp > 1.0 then
-                    local hp = math.floor(mob:getMaxHP() * scale.hp)
-                    mob:setMaxHP(hp)
-                    mob:setHP(hp)
-                end
-                if scale.att  and scale.att  > 0 then mob:addMod(xi.mod.ATT,  scale.att)  end
-                if scale.def  and scale.def  > 0 then mob:addMod(xi.mod.DEF,  scale.def)  end
-                if scale.macc and scale.macc > 0 then mob:addMod(xi.mod.MACC, scale.macc) end
-                if scale.meva and scale.meva > 0 then mob:addMod(xi.mod.MEVA, scale.meva) end
-                if scale.eva  and scale.eva  > 0 then mob:addMod(xi.mod.EVA,  scale.eva)  end
-            end)
+        scaleBattlefieldMobs(battlefield)
+    end
+
+    -- Shadow Lord, Dawn, and Celestial Nexus spawn later phases from this event.
+    -- Scale those new mobs immediately; the latch leaves existing phases alone.
+    local baseEventFinishBattlefield = rawget(content, 'onEventFinishBattlefield')
+    if baseEventFinishBattlefield then
+        function content:onEventFinishBattlefield(player, csid, option, npc)
+            baseEventFinishBattlefield(self, player, csid, option, npc)
+            local battlefield = player:getBattlefield()
+            if battlefield then
+                scaleBattlefieldMobs(battlefield)
+            end
         end
     end
 

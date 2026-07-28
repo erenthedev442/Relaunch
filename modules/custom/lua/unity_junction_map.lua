@@ -109,13 +109,15 @@ return {
             { id = 0, x = 404.5, y = -27.513, z = 123.5, rot = 128, custom = true },
         } },
         [68] = { zoneName = 'Aydeewa_Subterrane', points = {
-            { id = 0, x = 6.0, y = 20.0, z = -88.0, rot = 64, custom = true },
+            -- Shifted out of the Survival Guide corridor for Tumult Curator.
+            { id = 0, x = 26.0, y = 20.0, z = -68.0, rot = 64, custom = true },
         } },
         [72] = { zoneName = 'Alzadaal_Undersea_Ruins', points = {
             { id = 17072392, x = 73.0, y = -4.0, z = -73.0, rot = 0 },
         } },
         [79] = { zoneName = 'Caedarva_Mire', points = {
-            { id = 0, x = -658.0, y = -13.0, z = 343.0, rot = 64, custom = true },
+            -- Shifted away from the narrow Survival Guide tunnel for Shedu.
+            { id = 0, x = -638.0, y = -13.0, z = 363.0, rot = 64, custom = true },
         } },
         [101] = { zoneName = 'East_Ronfaure', points = {
             { id = 17191542, x = 522.23, y = -30.0, z = -41.48, rot = 0 },
@@ -172,7 +174,8 @@ return {
             { id = 0, x = -483.7, y = -32.0, z = 48.0, rot = 64, custom = true },
         } },
         [119] = { zoneName = 'Meriphataud_Mountains', points = {
-            { id = 0, x = -295.0, y = 16.852, z = 425.0, rot = 224, custom = true },
+            -- Keep Warblade Beak outside the outpost structure.
+            { id = 0, x = -315.0, y = 16.852, z = 405.0, rot = 224, custom = true },
         } },
         [120] = { zoneName = 'Sauromugue_Champaign', points = {
             { id = 0, x = 346.0, y = 5.659, z = -254.0, rot = 96, custom = true },
@@ -215,7 +218,8 @@ return {
             { id = 17404425, x = 50.86, y = -18.21, z = -154.58, rot = 0 },
         } },
         [159] = { zoneName = 'Temple_of_Uggalepih', points = {
-            { id = 0, x = 225.75, y = 0.039, z = -25.0, rot = 0, custom = true },
+            -- Pull the custom point away from the wall that trapped Clawberry.
+            { id = 0, x = 215.75, y = 0.039, z = -25.0, rot = 0, custom = true },
             { id = 17429037, x = -97.17, y = -0.1, z = -59.7, rot = 0 },
         } },
         [160] = { zoneName = 'Den_of_Rancor', points = {
@@ -230,7 +234,8 @@ return {
             { id = 17490332, x = 40.01, y = 0.1, z = 166.52, rot = 0 },
         } },
         [176] = { zoneName = 'Sea_Serpent_Grotto', points = {
-            { id = 0, x = 225.0, y = -24.0, z = 337.0, rot = 128, custom = true },
+            -- Move Bakunawa's point away from the Survival Guide passage.
+            { id = 0, x = 245.0, y = -24.0, z = 337.0, rot = 128, custom = true },
         } },
         [200] = { zoneName = 'Garlaige_Citadel', points = {
             { id = 17596876, x = -167.89, y = 19.25, z = 321.51, rot = 0 },
@@ -252,7 +257,8 @@ return {
             { id = 17629793, x = 822.08, y = -8.0, z = -382.99, rot = 0 },
         } },
         [212] = { zoneName = 'Gustav_Tunnel', points = {
-            { id = 0, x = 298.0, y = -40.7, z = 66.0, rot = 96, custom = true },
+            -- Use the wider section beside the original Bambrox corridor point.
+            { id = 0, x = 318.0, y = -40.7, z = 86.0, rot = 96, custom = true },
         } },
         [213] = { zoneName = 'Labyrinth_of_Onzozo', points = {
             -- Stock npc_list junction rows carried (0,0,0) placeholders; verified

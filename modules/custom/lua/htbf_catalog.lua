@@ -239,6 +239,16 @@ local avatarEntryPos =
     [3] = { -377.0, -79.0,  483.0, 0 },
 }
 
+-- Proven walkable points on each La'Loff arena platform. The previous points
+-- extended 30 yalms backward from the bosses and crossed outside the platform,
+-- dropping players below the arena.
+local laLoffEntryPos =
+{
+    [1] = {   -7.509,  -19.727,  1.150, 0 },
+    [2] = { -556.221, -243.678, 43.545, 0 },
+    [3] = {  483.759, -318.678, 66.249, 0 },
+}
+
 -- One-time bridge from Tier II into the real Tier III roster. Final Proving
 -- reuses Garuda Prime but applies roughly half of the Avatar Tier III scaling.
 -- Clearing it sets both completionVar (unlocks every real T3) and tierClearVar
@@ -493,12 +503,7 @@ catalog.fights =
         gem = xi.ki.DIVINE_PHANTOM_GEM, baseIndex = 13, baseBattlefieldId = 4150,
         reuseBaseId = xi.battlefield.id.DIVINE_MIGHT, maxPlayers = 18, label = 'Divine Might',
         difficulty = 'epic', rewardClass = 'epic',
-        entryPosByArea =
-        {
-            [1] = {  -14.0,  -18.7, -16.0, 0 },
-            [2] = { -562.5, -242.7,  26.0, 0 },
-            [3] = {  477.4, -317.7,  49.0, 0 },
-        },
+        entryPosByArea = laLoffEntryPos,
     },
 
     -- Ark Angels: 5 separate fights, each on its own La'Loff entrance (qm1_1..
@@ -511,12 +516,7 @@ catalog.fights =
         gem = xi.ki.PHANTOM_GEM_OF_APATHY, baseIndex = 10, baseBattlefieldId = 4160,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_1, label = 'Ark Angels I',
         difficulty = 'epic', rewardClass = 'epic',
-        entryPosByArea =
-        {
-            [1] = {  -14.0,  -18.7, -16.0, 0 },
-            [2] = { -562.5, -242.7,  26.0, 0 },
-            [3] = {  477.4, -317.7,  49.0, 0 },
-        },
+        entryPosByArea = laLoffEntryPos,
     },
     ark_angels_2 =
     {
@@ -524,12 +524,7 @@ catalog.fights =
         gem = xi.ki.PHANTOM_GEM_OF_COWARDICE, baseIndex = 10, baseBattlefieldId = 4170,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_2, label = 'Ark Angels II',
         difficulty = 'epic', rewardClass = 'epic',
-        entryPosByArea =
-        {
-            [1] = {  -14.0,  -18.7, -16.0, 0 },
-            [2] = { -562.5, -242.7,  26.0, 0 },
-            [3] = {  477.4, -317.7,  49.0, 0 },
-        },
+        entryPosByArea = laLoffEntryPos,
     },
     ark_angels_3 =
     {
@@ -537,12 +532,7 @@ catalog.fights =
         gem = xi.ki.PHANTOM_GEM_OF_ENVY, baseIndex = 10, baseBattlefieldId = 4180,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_3, label = 'Ark Angels III',
         difficulty = 'epic', rewardClass = 'epic',
-        entryPosByArea =
-        {
-            [1] = {  -14.0,  -18.7, -16.0, 0 },
-            [2] = { -562.5, -242.7,  26.0, 0 },
-            [3] = {  477.4, -317.7,  49.0, 0 },
-        },
+        entryPosByArea = laLoffEntryPos,
     },
     ark_angels_4 =
     {
@@ -550,12 +540,7 @@ catalog.fights =
         gem = xi.ki.PHANTOM_GEM_OF_ARROGANCE, baseIndex = 10, baseBattlefieldId = 4190,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_4, label = 'Ark Angels IV',
         difficulty = 'epic', rewardClass = 'epic',
-        entryPosByArea =
-        {
-            [1] = {  -14.0,  -18.7, -16.0, 0 },
-            [2] = { -562.5, -242.7,  26.0, 0 },
-            [3] = {  477.4, -317.7,  49.0, 0 },
-        },
+        entryPosByArea = laLoffEntryPos,
     },
     ark_angels_5 =
     {
@@ -563,12 +548,7 @@ catalog.fights =
         gem = xi.ki.PHANTOM_GEM_OF_RAGE, baseIndex = 10, baseBattlefieldId = 4200,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_5, label = 'Ark Angels V',
         difficulty = 'epic', rewardClass = 'epic',
-        entryPosByArea =
-        {
-            [1] = {  -14.0,  -18.7, -16.0, 0 },
-            [2] = { -562.5, -242.7,  26.0, 0 },
-            [3] = {  477.4, -317.7,  49.0, 0 },
-        },
+        entryPosByArea = laLoffEntryPos,
     },
 }
 

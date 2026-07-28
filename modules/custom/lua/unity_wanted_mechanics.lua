@@ -41,7 +41,7 @@ local profiles =
     Ayapec = { kinds = { 'rear', 'magic' }, tell = 'Ayapec hardens its frontal shell — flank it!', fail = 'The hardened shell reflects the assault.' },
     Hidhaegg = { kinds = { 'burst', 'weaponskill' }, tell = 'A dragon egg begins to hatch — burst it down!', fail = 'The hatchling’s power joins Hidhaegg.' },
     Coca = { kinds = { 'turn', 'far' }, tell = 'Coca gathers a calcifying breath — turn and retreat!', fail = 'The calcifying breath washes over you.' },
-    Grand_Grenade = { kinds = { 'far', 'burst' }, tell = 'Grand Grenade reaches critical pressure — get clear!', fail = 'The grenade reaches critical mass.' },
+    Grand_Grenade = { kinds = { 'far', 'burst' }, farDistance = 22, tell = 'Grand Grenade reaches critical pressure — get clear!', fail = 'The grenade reaches critical mass.' },
     Sarama = { kinds = { 'move', 'magic' }, tell = 'Sarama traces a volcanic line — move!', fail = 'The volcanic trail erupts.' },
     Azrael = { kinds = { 'hold', 'highhp' }, tell = 'Azrael weighs the living — preserve your strength!', fail = 'Azrael’s judgment falls.' },
     Carousing_Celine = { kinds = { 'magic', 'turn' }, tell = 'Celine releases bewitching pollen — answer with magic!', fail = 'The carousing pollen overwhelms the senses.' },
@@ -105,7 +105,7 @@ local function challengeSucceeded(mob, state)
     elseif kind == 'near' then
         return owner:checkDistance(mob) <= 6
     elseif kind == 'far' then
-        return owner:checkDistance(mob) >= 12
+        return owner:checkDistance(mob) >= (state.profile.farDistance or 12)
     elseif kind == 'move' then
         local dx = owner:getXPos() - challenge.startX
         local dz = owner:getZPos() - challenge.startZ
@@ -139,14 +139,16 @@ local function failureEffect(kind)
     return xi.effect.SLOW
 end
 
-local function instruction(kind)
+local function instruction(kind, profile)
     local instructions =
     {
         turn        = 'Turn away before it resolves!',
         face        = 'Face the mark and hold your ground!',
         rear        = 'Move behind the mark!',
         near        = 'Close to melee range!',
-        far         = 'Retreat beyond twelve yalms!',
+        far         = string.format(
+            'Retreat to at least %d yalms!',
+            profile.farDistance or 12),
         move        = 'Leave your current position!',
         hold        = 'Stop attacking and do not weapon skill!',
         burst       = 'Deal at least 2% of its maximum HP!',
@@ -220,7 +222,7 @@ local function beginChallenge(mob, state)
     }
     state.nextAt = now() + (state.tier == 3 and 35 or 45)
     local flavor = state.profile.tell:match('^(.-) —') or state.profile.tell
-    announce(state, flavor .. ' — ' .. instruction(state.challenge.kind))
+    announce(state, flavor .. ' — ' .. instruction(state.challenge.kind, state.profile))
     pcall(function() mob:weaknessTrigger(state.tier == 3 and 2 or 1) end)
 end
 

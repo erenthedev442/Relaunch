@@ -85,6 +85,12 @@ describe('Unity Wanted encounter invariants', function()
         assert(mechanics.profileCount() == upperTierCount)
     end)
 
+    it('keeps Grand Grenade movement outside Self-Destruct range', function()
+        local profile = mechanics.profiles.Grand_Grenade
+        assert(profile)
+        assert(profile.farDistance == 22)
+    end)
+
     it('makes T3 distinctly harder than T2 without changing T1 entry balance', function()
         local t1 = catalog.difficulty[1]
         local t2 = catalog.difficulty[2]
@@ -109,6 +115,25 @@ describe('Unity Wanted encounter invariants', function()
             for _, point in ipairs(zone.points) do
                 assert(point.custom or point.id > 0, nm.name .. ' has an invalid junction entity')
             end
+        end
+    end)
+
+    it('keeps reported custom junctions at their corrected anchors', function()
+        local expected =
+        {
+            [ 68] = { x =   26.0, z = -68.0 },
+            [ 79] = { x = -638.0, z = 363.0 },
+            [119] = { x = -315.0, z = 405.0 },
+            [159] = { x =  215.75, z = -25.0 },
+            [176] = { x =  245.0, z = 337.0 },
+            [212] = { x =  318.0, z =  86.0 },
+        }
+
+        for zoneId, position in pairs(expected) do
+            local point = junctions.junctions[zoneId].points[1]
+            assert(point.custom)
+            assert(point.x == position.x)
+            assert(point.z == position.z)
         end
     end)
 end)
