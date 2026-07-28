@@ -121,12 +121,12 @@ describe('Unity Wanted encounter invariants', function()
     it('keeps reported custom junctions at their corrected anchors', function()
         local expected =
         {
-            [ 68] = { x =   26.0, z = -68.0 },
-            [ 79] = { x = -638.0, z = 363.0 },
+            [ 68] = { x =  -98.7150, z = -92.8438 },
+            [ 79] = { x = -716.9192, z = 340.5056 },
             [119] = { x = -315.0, z = 405.0 },
             [159] = { x =  215.75, z = -25.0 },
-            [176] = { x =  245.0, z = 337.0 },
-            [212] = { x =  318.0, z =  86.0 },
+            [176] = { x =  179.3713, z = 241.6031 },
+            [212] = { x =  145.6993, z = -36.2936 },
         }
 
         for zoneId, position in pairs(expected) do

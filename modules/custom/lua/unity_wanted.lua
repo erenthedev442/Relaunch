@@ -571,7 +571,8 @@ end
 
 local function revealCustomJunction(npc)
     npc:setStatus(xi.status.NORMAL)
-    npc:setAnimation(116)
+    npc:setAnimation(0)
+    npc:setAnimationSub(5)
 end
 
 for zoneId, jz in pairs(jmap.junctions) do
@@ -591,19 +592,17 @@ for zoneId, jz in pairs(jmap.junctions) do
                     y          = pt.y,
                     z          = pt.z,
                     rotation   = pt.rot,
+                    namevis    = 116,
+                    entityFlags = 3,
                     widescan   = 1,
                     onTrigger  = function(player, trigNpc)
                         junctionMenu(player, capturedZoneId, trigNpc)
                     end,
                 })
                 if jnpc then
-                    -- The client can overwrite an effect NPC's initial state
-                    -- during zone load. Apply the stock junction state now and
-                    -- once more after that refresh window.
+                    -- Match stock Ethereal Junction rows: animation 0,
+                    -- animation-sub 5, namevis 116, entity flags 3.
                     revealCustomJunction(jnpc)
-                    jnpc:timer(1000, function(npc)
-                        revealCustomJunction(npc)
-                    end)
                 end
                 utils.unused(jnpc)
             else

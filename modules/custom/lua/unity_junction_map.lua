@@ -109,15 +109,13 @@ return {
             { id = 0, x = 404.5, y = -27.513, z = 123.5, rot = 128, custom = true },
         } },
         [68] = { zoneName = 'Aydeewa_Subterrane', points = {
-            -- Shifted out of the Survival Guide corridor for Tumult Curator.
-            { id = 0, x = 26.0, y = 20.0, z = -68.0, rot = 64, custom = true },
+            { id = 0, x = -98.7150, y = 36.6170, z = -92.8438, rot = 191, custom = true },
         } },
         [72] = { zoneName = 'Alzadaal_Undersea_Ruins', points = {
             { id = 17072392, x = 73.0, y = -4.0, z = -73.0, rot = 0 },
         } },
         [79] = { zoneName = 'Caedarva_Mire', points = {
-            -- Shifted away from the narrow Survival Guide tunnel for Shedu.
-            { id = 0, x = -638.0, y = -13.0, z = 363.0, rot = 64, custom = true },
+            { id = 0, x = -716.9192, y = -15.6071, z = 340.5056, rot = 62, custom = true },
         } },
         [101] = { zoneName = 'East_Ronfaure', points = {
             { id = 17191542, x = 522.23, y = -30.0, z = -41.48, rot = 0 },
@@ -234,8 +232,7 @@ return {
             { id = 17490332, x = 40.01, y = 0.1, z = 166.52, rot = 0 },
         } },
         [176] = { zoneName = 'Sea_Serpent_Grotto', points = {
-            -- Move Bakunawa's point away from the Survival Guide passage.
-            { id = 0, x = 245.0, y = -24.0, z = 337.0, rot = 128, custom = true },
+            { id = 0, x = 179.3713, y = -8.7211, z = 241.6031, rot = 188, custom = true },
         } },
         [200] = { zoneName = 'Garlaige_Citadel', points = {
             { id = 17596876, x = -167.89, y = 19.25, z = 321.51, rot = 0 },
@@ -257,8 +254,7 @@ return {
             { id = 17629793, x = 822.08, y = -8.0, z = -382.99, rot = 0 },
         } },
         [212] = { zoneName = 'Gustav_Tunnel', points = {
-            -- Use the wider section beside the original Bambrox corridor point.
-            { id = 0, x = 318.0, y = -40.7, z = 86.0, rot = 96, custom = true },
+            { id = 0, x = 145.6993, y = -9.3777, z = -36.2936, rot = 56, custom = true },
         } },
         [213] = { zoneName = 'Labyrinth_of_Onzozo', points = {
             -- Stock npc_list junction rows carried (0,0,0) placeholders; verified

@@ -51,13 +51,17 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
         -- Thunderstrike for quarter damage while leaving single-target and
         -- other endgame moves at their established output.
         local aoeScale = mob:getLocalVar('fellowAoEDamageScale')
+        local progressionFloor = mob:getLocalVar('fellowProgressionDamageFloor')
+        local progressionCap   = mob:getLocalVar('fellowProgressionDamageCap')
         if aoeScale > 0 and skill:isAoE() then
             damage = math.floor(damage * aoeScale / 100)
+            progressionFloor = math.floor(progressionFloor * aoeScale / 100)
+            progressionCap = math.floor(progressionCap * aoeScale / 100)
         end
 
-        local progressionCap = mob:getLocalVar('fellowProgressionDamageCap')
-        if progressionCap > 0 then
-            damage = math.min(damage, progressionCap, 99999)
+        if damage > 0 and (hitsLanded or 0) > 0 and progressionCap > 0 then
+            damage = math.max(damage, progressionFloor)
+            damage = math.min(damage, progressionCap, target:getHP(), 99999)
         end
 
         return damage

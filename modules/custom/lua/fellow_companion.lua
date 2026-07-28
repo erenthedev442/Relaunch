@@ -126,9 +126,9 @@ local CONFIG =
     -- fix a small base. setDamage() gives the Fellow a REAL weapon that scales with
     -- LEVEL, so physical output tracks the Fellow's level, and STR investment
     -- (-> ATT -> pDIF) then scales it further. Both knobs are playtest-tunable.
-    -- Autos start around an ordinary trust and rise moderately. Signature moves
+    -- Autos start below an ordinary trust and rise moderately. Signature moves
     -- temporarily use each role's wsDamage range below, keeping autos sane while
-    -- letting the visible TP move reach the approved 5-8k -> 30-40k target.
+    -- their final damage is normalized by the Fellow progression budget.
     dmgBase           = 20,
     dmgPerMasterLevel = 1.25,
     dmgPerLevel       = 0.8,
@@ -392,14 +392,14 @@ local CONFIG =
 
 local GRADES =
 {
-    { name = 'Initiate',  level =   1, points =    0, damage = '5-8k' },
-    { name = 'Bonded',    level =  30, points =   75, damage = '8-12k' },
-    { name = 'Veteran',   level =  60, points =  175, damage = '12-18k' },
-    { name = 'Elite',     level =  90, points =  275, damage = '16-23k' },
-    { name = 'Ascendant', level = 120, points =  350, damage = '20-28k' },
-    { name = 'Empowered', level = 120, points =  700, damage = '24-32k' },
-    { name = 'Exalted',   level = 120, points = 1050, damage = '28-36k' },
-    { name = 'Mastered',  level = 120, points = 1400, damage = '30-40k' },
+    { name = 'Initiate',  level =   1, points =    0, damage = 'very weak' },
+    { name = 'Bonded',    level =  30, points =   75, damage = 'very weak' },
+    { name = 'Veteran',   level =  60, points =  175, damage = 'weak' },
+    { name = 'Elite',     level =  90, points =  275, damage = 'developing' },
+    { name = 'Ascendant', level = 120, points =  350, damage = 'developing' },
+    { name = 'Empowered', level = 120, points =  700, damage = 'strong' },
+    { name = 'Exalted',   level = 120, points = 1050, damage = 'very strong' },
+    { name = 'Mastered',  level = 120, points = 1400, damage = '50-70k at Lv99' },
 }
 
 -- charVar keys (per-character; ALL INTEGER).
@@ -548,23 +548,22 @@ local function combatProgress(p)
     return 0.45 * levelProgress(p) + 0.55 * investmentProgress(p)
 end
 
--- Full Fellow bonuses unlock at main-job level 99. Below 99, offensive power
--- follows the current job level so a progressed Fellow cannot erase low-level
--- content after its owner changes to a level-1 job.
-local function masterPowerProgress(p)
-    local level = math.max(1, math.min(99, p:getMainLvl() or 1))
-    return math.max(0, math.min(1, (level - 1) / 98))
-end
-
--- Offensive power requires all four progression axes. Small non-zero gates let
--- a new Fellow participate, but full output requires Fellow level 120, every
--- attribute capped, a Lv99 master, and 2,100 spent Job Points.
+-- Fellow investment is the progression gate. The first half stays deliberately
+-- weak; power then ramps sharply so the expensive post-cap investment has a
+-- visible payoff. A fresh Lv99 with a roughly Lv50 Fellow remains near the
+-- bottom of this curve, while a fully capped Fellow retains its earned strength
+-- when its owner levels another job.
 local function fellowPowerProgress(p)
-    local levelGate      = 0.10 + 0.90 * levelProgress(p)
-    local investmentGate = 0.10 + 0.90 * investmentProgress(p)
-    local masteryGate    = 0.15 + 0.85 * progression.getMasteryProgress(p)
+    local build = combatProgress(p)
 
-    return levelGate * investmentGate * masterPowerProgress(p) * masteryGate
+    if build <= 0.50 then
+        local early = build / 0.50
+        return 0.005 + 0.095 * early * early
+    end
+
+    local late = (build - 0.50) / 0.50
+    local smooth = late * late * (3 - 2 * late)
+    return 0.10 + 0.90 * smooth
 end
 
 local function lerp(a, b, t)
@@ -577,17 +576,36 @@ end
 
 local function normalWeaponDamage(p)
     local masterLvl = math.max(1, p:getMainLvl() or 1)
+    local masterScale = 0.03 + 0.97 * math.pow(math.min(99, masterLvl) / 99, 0.75)
     return math.max(1, math.floor((
         CONFIG.dmgBase +
         CONFIG.dmgPerMasterLevel * math.min(99, masterLvl) +
-        CONFIG.dmgPerLevel * math.max(0, getLevel(p) - 1)) * fellowPowerProgress(p)))
+        CONFIG.dmgPerLevel * math.max(0, getLevel(p) - 1)) *
+        fellowPowerProgress(p) * masterScale))
 end
 
-local function fellowDamageCap(p, target)
-    local fullPowerCap = math.min(99999, progression.getDamageBonus(
-        p:getMainLvl(), target:getMainLvl(), target:getMaxHP()))
+-- Signature skills use an explicit damage band. While leveling, a maxed Fellow
+-- deals 20-30% of the target's current max HP (and can never one-shot it). On
+-- Lv99 content, the full-investment target is 50-70k, still hard-limited to 50%
+-- of the target's max HP. Partial builds scale both ends of the band together.
+local function fellowDamageBudget(p, target)
+    local power = fellowPowerProgress(p)
+    local targetHp = math.max(1, target:getMaxHP())
+    local fullFloor
+    local fullCap
 
-    return math.max(1, math.floor(fullPowerCap * fellowPowerProgress(p)))
+    if p:getMainLvl() >= 99 then
+        local hpCeiling = math.floor(targetHp * 0.50)
+        fullFloor = math.min(50000, hpCeiling)
+        fullCap   = math.min(70000, hpCeiling)
+    else
+        fullFloor = math.floor(targetHp * 0.20)
+        fullCap   = math.floor(targetHp * 0.30)
+    end
+
+    return
+        math.max(1, math.floor(fullFloor * power)),
+        math.max(1, math.floor(fullCap * power))
 end
 
 local function currentGrade(p)
@@ -769,6 +787,7 @@ local function applyFellow(p, pet)
         actor:setTP(0)
         actor:setLocalVar('fellowMovePendingAt', 0)
         actor:setLocalVar('fellowProgressionDamageCap', 0)
+        actor:setLocalVar('fellowProgressionDamageFloor', 0)
         actor:setLocalVar('fellowAoEDamageScale', 0)
         actor:setLocalVar('fellowCanMagicBurst', 0)
         if getRole(p) == 'magus' then
@@ -971,9 +990,9 @@ scheduleCombatLoop = function(master, pet)
                        (burstReady and CONFIG.burstCooldownSec or CONFIG.nukeCooldownSec) then
                     local spellMove = chosenWs(master)
                     if spellMove and spellMove > 0 then
-                        p:setLocalVar(
-                            'fellowProgressionDamageCap',
-                            fellowDamageCap(master, tgt))
+                        local damageFloor, damageCap = fellowDamageBudget(master, tgt)
+                        p:setLocalVar('fellowProgressionDamageFloor', damageFloor)
+                        p:setLocalVar('fellowProgressionDamageCap', damageCap)
                         p:setLocalVar('fellowAoEDamageScale',
                             spellMove == xi.mobSkill.THUNDERSTRIKE and 25 or 0)
                         p:setLocalVar('fellowCanMagicBurst', burstReady and 1 or 0)
@@ -992,11 +1011,11 @@ scheduleCombatLoop = function(master, pet)
                    and now - (p:getLocalVar('fellowWsAt') or 0) >= CONFIG.wsCooldownSec then
                     local ws = chosenWs(master)
                     if ws and ws > 0 and tgt and not tgt:isDead() then
-                        -- Every role is constrained by the same composite
-                        -- Fellow/master progression curve, including at 99.
-                        p:setLocalVar(
-                            'fellowProgressionDamageCap',
-                            fellowDamageCap(master, tgt))
+                        -- Every role is constrained by the same investment curve
+                        -- and target-relative damage budget.
+                        local damageFloor, damageCap = fellowDamageBudget(master, tgt)
+                        p:setLocalVar('fellowProgressionDamageFloor', damageFloor)
+                        p:setLocalVar('fellowProgressionDamageCap', damageCap)
                         p:setLocalVar('fellowAoEDamageScale', 0)
 
                         if rdef.wsDamage then

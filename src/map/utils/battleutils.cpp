@@ -2228,6 +2228,13 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
     {
         damage = -corrected;
     }
+    else if (PAttacker->GetLocalVar("fellowApplied") == 1)
+    {
+        // Fellow damage is progression-capped inside takeDamage(). Report the
+        // authoritative HP loss instead of the larger pre-cap roll so combat
+        // log values match the damage actually dealt.
+        damage = corrected;
+    }
 
     // Only claim a mob and if the allegiance is not PLAYER. This prevents mobs from calling ClaimMob on other mobs or themselves.
     if (PDefender->objtype == TYPE_MOB && PDefender->allegiance != PAttacker->allegiance)
