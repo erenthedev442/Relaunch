@@ -1,26 +1,414 @@
-﻿Collaborator review  2026-07-28 03:03:37
+﻿Collaborator review  2026-07-28 15:52:49
 Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit de7770f18993f55583858168d23f6e85db777215
+commit 6f956be7d2943663ea3b8f6fc03f4c13d6db7677
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Tue Jul 28 11:02:29 2026 +0100
+Date:   Tue Jul 28 23:51:31 2026 +0100
 
-    fix(fellow): restore companion summoning
+    fix(gameplay): reinforce progression reward boundaries
     
-    Remove the stale activity hook call that aborted the summon flow before the keeper could spawn the Fellow.
+    Make fully invested Fellows powerful without carrying fresh characters, stabilize Unity junction presentation, and close retail reward paths that bypass custom progression.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
 diff --git a/modules/custom/lua/fellow_companion.lua b/modules/custom/lua/fellow_companion.lua
-index 89df5f6c24..40560fb67c 100644
+index 40560fb67c..66ab51144d 100644
 --- a/modules/custom/lua/fellow_companion.lua
 +++ b/modules/custom/lua/fellow_companion.lua
-@@ -1164,7 +1164,6 @@ local function summon(p)
-     setN(p, V.active, 1)
-     p:setLocalVar(SUMMONED_AT_LOCAL_VAR, os.time())
-     p:setLocalVar('fellowSummonPending', 1)
--    markActivity(p)
-     -- No "dismiss your pet first" -- the Fellow is a trust now and coexists
-     -- with any job pet.
-     armKeeper(p, 30)
+@@ -126,9 +126,9 @@ local CONFIG =
+     -- fix a small base. setDamage() gives the Fellow a REAL weapon that scales with
+     -- LEVEL, so physical output tracks the Fellow's level, and STR investment
+     -- (-> ATT -> pDIF) then scales it further. Both knobs are playtest-tunable.
+-    -- Autos start around an ordinary trust and rise moderately. Signature moves
++    -- Autos start below an ordinary trust and rise moderately. Signature moves
+     -- temporarily use each role's wsDamage range below, keeping autos sane while
+-    -- letting the visible TP move reach the approved 5-8k -> 30-40k target.
++    -- their final damage is normalized by the Fellow progression budget.
+     dmgBase           = 20,
+     dmgPerMasterLevel = 1.25,
+     dmgPerLevel       = 0.8,
+@@ -392,14 +392,14 @@ local CONFIG =
+ 
+ local GRADES =
+ {
+-    { name = 'Initiate',  level =   1, points =    0, damage = '5-8k' },
+-    { name = 'Bonded',    level =  30, points =   75, damage = '8-12k' },
+-    { name = 'Veteran',   level =  60, points =  175, damage = '12-18k' },
+-    { name = 'Elite',     level =  90, points =  275, damage = '16-23k' },
+-    { name = 'Ascendant', level = 120, points =  350, damage = '20-28k' },
+-    { name = 'Empowered', level = 120, points =  700, damage = '24-32k' },
+-    { name = 'Exalted',   level = 120, points = 1050, damage = '28-36k' },
+-    { name = 'Mastered',  level = 120, points = 1400, damage = '30-40k' },
++    { name = 'Initiate',  level =   1, points =    0, damage = 'very weak' },
++    { name = 'Bonded',    level =  30, points =   75, damage = 'very weak' },
++    { name = 'Veteran',   level =  60, points =  175, damage = 'weak' },
++    { name = 'Elite',     level =  90, points =  275, damage = 'developing' },
++    { name = 'Ascendant', level = 120, points =  350, damage = 'developing' },
++    { name = 'Empowered', level = 120, points =  700, damage = 'strong' },
++    { name = 'Exalted',   level = 120, points = 1050, damage = 'very strong' },
++    { name = 'Mastered',  level = 120, points = 1400, damage = '50-70k at Lv99' },
+ }
+ 
+ -- charVar keys (per-character; ALL INTEGER).
+@@ -548,23 +548,22 @@ local function combatProgress(p)
+     return 0.45 * levelProgress(p) + 0.55 * investmentProgress(p)
+ end
+ 
+--- Full Fellow bonuses unlock at main-job level 99. Below 99, offensive power
+--- follows the current job level so a progressed Fellow cannot erase low-level
+--- content after its owner changes to a level-1 job.
+-local function masterPowerProgress(p)
+-    local level = math.max(1, math.min(99, p:getMainLvl() or 1))
+-    return math.max(0, math.min(1, (level - 1) / 98))
+-end
+-
+--- Offensive power requires all four progression axes. Small non-zero gates let
+--- a new Fellow participate, but full output requires Fellow level 120, every
+--- attribute capped, a Lv99 master, and 2,100 spent Job Points.
++-- Fellow investment is the progression gate. The first half stays deliberately
++-- weak; power then ramps sharply so the expensive post-cap investment has a
++-- visible payoff. A fresh Lv99 with a roughly Lv50 Fellow remains near the
++-- bottom of this curve, while a fully capped Fellow retains its earned strength
++-- when its owner levels another job.
+ local function fellowPowerProgress(p)
+-    local levelGate      = 0.10 + 0.90 * levelProgress(p)
+-    local investmentGate = 0.10 + 0.90 * investmentProgress(p)
+-    local masteryGate    = 0.15 + 0.85 * progression.getMasteryProgress(p)
++    local build = combatProgress(p)
++
++    if build <= 0.50 then
++        local early = build / 0.50
++        return 0.005 + 0.095 * early * early
++    end
+ 
+-    return levelGate * investmentGate * masterPowerProgress(p) * masteryGate
++    local late = (build - 0.50) / 0.50
++    local smooth = late * late * (3 - 2 * late)
++    return 0.10 + 0.90 * smooth
+ end
+ 
+ local function lerp(a, b, t)
+@@ -577,17 +576,36 @@ end
+ 
+ local function normalWeaponDamage(p)
+     local masterLvl = math.max(1, p:getMainLvl() or 1)
++    local masterScale = 0.03 + 0.97 * math.pow(math.min(99, masterLvl) / 99, 0.75)
+     return math.max(1, math.floor((
+         CONFIG.dmgBase +
+         CONFIG.dmgPerMasterLevel * math.min(99, masterLvl) +
+-        CONFIG.dmgPerLevel * math.max(0, getLevel(p) - 1)) * fellowPowerProgress(p)))
++        CONFIG.dmgPerLevel * math.max(0, getLevel(p) - 1)) *
++        fellowPowerProgress(p) * masterScale))
+ end
+ 
+-local function fellowDamageCap(p, target)
+-    local fullPowerCap = math.min(99999, progression.getDamageBonus(
+-        p:getMainLvl(), target:getMainLvl(), target:getMaxHP()))
++-- Signature skills use an explicit damage band. While leveling, a maxed Fellow
++-- deals 20-30% of the target's current max HP (and can never one-shot it). On
++-- Lv99 content, the full-investment target is 50-70k, still hard-limited to 50%
++-- of the target's max HP. Partial builds scale both ends of the band together.
++local function fellowDamageBudget(p, target)
++    local power = fellowPowerProgress(p)
++    local targetHp = math.max(1, target:getMaxHP())
++    local fullFloor
++    local fullCap
++
++    if p:getMainLvl() >= 99 then
++        local hpCeiling = math.floor(targetHp * 0.50)
++        fullFloor = math.min(50000, hpCeiling)
++        fullCap   = math.min(70000, hpCeiling)
++    else
++        fullFloor = math.floor(targetHp * 0.20)
++        fullCap   = math.floor(targetHp * 0.30)
++    end
+ 
+-    return math.max(1, math.floor(fullPowerCap * fellowPowerProgress(p)))
++    return
++        math.max(1, math.floor(fullFloor * power)),
++        math.max(1, math.floor(fullCap * power))
+ end
+ 
+ local function currentGrade(p)
+@@ -769,6 +787,7 @@ local function applyFellow(p, pet)
+         actor:setTP(0)
+         actor:setLocalVar('fellowMovePendingAt', 0)
+         actor:setLocalVar('fellowProgressionDamageCap', 0)
++        actor:setLocalVar('fellowProgressionDamageFloor', 0)
+         actor:setLocalVar('fellowAoEDamageScale', 0)
+         actor:setLocalVar('fellowCanMagicBurst', 0)
+         if getRole(p) == 'magus' then
+@@ -971,9 +990,9 @@ scheduleCombatLoop = function(master, pet)
+                        (burstReady and CONFIG.burstCooldownSec or CONFIG.nukeCooldownSec) then
+                     local spellMove = chosenWs(master)
+                     if spellMove and spellMove > 0 then
+-                        p:setLocalVar(
+-                            'fellowProgressionDamageCap',
+-                            fellowDamageCap(master, tgt))
++                        local damageFloor, damageCap = fellowDamageBudget(master, tgt)
++                        p:setLocalVar('fellowProgressionDamageFloor', damageFloor)
++                        p:setLocalVar('fellowProgressionDamageCap', damageCap)
+                         p:setLocalVar('fellowAoEDamageScale',
+                             spellMove == xi.mobSkill.THUNDERSTRIKE and 25 or 0)
+                         p:setLocalVar('fellowCanMagicBurst', burstReady and 1 or 0)
+@@ -992,11 +1011,11 @@ scheduleCombatLoop = function(master, pet)
+                    and now - (p:getLocalVar('fellowWsAt') or 0) >= CONFIG.wsCooldownSec then
+                     local ws = chosenWs(master)
+                     if ws and ws > 0 and tgt and not tgt:isDead() then
+-                        -- Every role is constrained by the same composite
+-                        -- Fellow/master progression curve, including at 99.
+-                        p:setLocalVar(
+-                            'fellowProgressionDamageCap',
+-                            fellowDamageCap(master, tgt))
++                        -- Every role is constrained by the same investment curve
++                        -- and target-relative damage budget.
++                        local damageFloor, damageCap = fellowDamageBudget(master, tgt)
++                        p:setLocalVar('fellowProgressionDamageFloor', damageFloor)
++                        p:setLocalVar('fellowProgressionDamageCap', damageCap)
+                         p:setLocalVar('fellowAoEDamageScale', 0)
+ 
+                         if rdef.wsDamage then
+diff --git a/modules/custom/lua/unity_junction_map.lua b/modules/custom/lua/unity_junction_map.lua
+index e8052b7af9..3bc61a9a6d 100644
+--- a/modules/custom/lua/unity_junction_map.lua
++++ b/modules/custom/lua/unity_junction_map.lua
+@@ -109,15 +109,13 @@ return {
+             { id = 0, x = 404.5, y = -27.513, z = 123.5, rot = 128, custom = true },
+         } },
+         [68] = { zoneName = 'Aydeewa_Subterrane', points = {
+-            -- Shifted out of the Survival Guide corridor for Tumult Curator.
+-            { id = 0, x = 26.0, y = 20.0, z = -68.0, rot = 64, custom = true },
++            { id = 0, x = -98.7150, y = 36.6170, z = -92.8438, rot = 191, custom = true },
+         } },
+         [72] = { zoneName = 'Alzadaal_Undersea_Ruins', points = {
+             { id = 17072392, x = 73.0, y = -4.0, z = -73.0, rot = 0 },
+         } },
+         [79] = { zoneName = 'Caedarva_Mire', points = {
+-            -- Shifted away from the narrow Survival Guide tunnel for Shedu.
+-            { id = 0, x = -638.0, y = -13.0, z = 363.0, rot = 64, custom = true },
++            { id = 0, x = -716.9192, y = -15.6071, z = 340.5056, rot = 62, custom = true },
+         } },
+         [101] = { zoneName = 'East_Ronfaure', points = {
+             { id = 17191542, x = 522.23, y = -30.0, z = -41.48, rot = 0 },
+@@ -234,8 +232,7 @@ return {
+             { id = 17490332, x = 40.01, y = 0.1, z = 166.52, rot = 0 },
+         } },
+         [176] = { zoneName = 'Sea_Serpent_Grotto', points = {
+-            -- Move Bakunawa's point away from the Survival Guide passage.
+-            { id = 0, x = 245.0, y = -24.0, z = 337.0, rot = 128, custom = true },
++            { id = 0, x = 179.3713, y = -8.7211, z = 241.6031, rot = 188, custom = true },
+         } },
+         [200] = { zoneName = 'Garlaige_Citadel', points = {
+             { id = 17596876, x = -167.89, y = 19.25, z = 321.51, rot = 0 },
+@@ -257,8 +254,7 @@ return {
+             { id = 17629793, x = 822.08, y = -8.0, z = -382.99, rot = 0 },
+         } },
+         [212] = { zoneName = 'Gustav_Tunnel', points = {
+-            -- Use the wider section beside the original Bambrox corridor point.
+-            { id = 0, x = 318.0, y = -40.7, z = 86.0, rot = 96, custom = true },
++            { id = 0, x = 145.6993, y = -9.3777, z = -36.2936, rot = 56, custom = true },
+         } },
+         [213] = { zoneName = 'Labyrinth_of_Onzozo', points = {
+             -- Stock npc_list junction rows carried (0,0,0) placeholders; verified
+diff --git a/modules/custom/lua/unity_wanted.lua b/modules/custom/lua/unity_wanted.lua
+index 0748900268..bb1d69bac3 100644
+--- a/modules/custom/lua/unity_wanted.lua
++++ b/modules/custom/lua/unity_wanted.lua
+@@ -571,7 +571,8 @@ end
+ 
+ local function revealCustomJunction(npc)
+     npc:setStatus(xi.status.NORMAL)
+-    npc:setAnimation(116)
++    npc:setAnimation(0)
++    npc:setAnimationSub(5)
+ end
+ 
+ for zoneId, jz in pairs(jmap.junctions) do
+@@ -591,19 +592,17 @@ for zoneId, jz in pairs(jmap.junctions) do
+                     y          = pt.y,
+                     z          = pt.z,
+                     rotation   = pt.rot,
++                    namevis    = 116,
++                    entityFlags = 3,
+                     widescan   = 1,
+                     onTrigger  = function(player, trigNpc)
+                         junctionMenu(player, capturedZoneId, trigNpc)
+                     end,
+                 })
+                 if jnpc then
+-                    -- The client can overwrite an effect NPC's initial state
+-                    -- during zone load. Apply the stock junction state now and
+-                    -- once more after that refresh window.
++                    -- Match stock Ethereal Junction rows: animation 0,
++                    -- animation-sub 5, namevis 116, entity flags 3.
+                     revealCustomJunction(jnpc)
+-                    jnpc:timer(1000, function(npc)
+-                        revealCustomJunction(npc)
+-                    end)
+                 end
+                 utils.unused(jnpc)
+             else
+diff --git a/scripts/globals/mobskills.lua b/scripts/globals/mobskills.lua
+index f391ce0d00..4e7e2c12bc 100644
+--- a/scripts/globals/mobskills.lua
++++ b/scripts/globals/mobskills.lua
+@@ -51,13 +51,17 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
+         -- Thunderstrike for quarter damage while leaving single-target and
+         -- other endgame moves at their established output.
+         local aoeScale = mob:getLocalVar('fellowAoEDamageScale')
++        local progressionFloor = mob:getLocalVar('fellowProgressionDamageFloor')
++        local progressionCap   = mob:getLocalVar('fellowProgressionDamageCap')
+         if aoeScale > 0 and skill:isAoE() then
+             damage = math.floor(damage * aoeScale / 100)
++            progressionFloor = math.floor(progressionFloor * aoeScale / 100)
++            progressionCap = math.floor(progressionCap * aoeScale / 100)
+         end
+ 
+-        local progressionCap = mob:getLocalVar('fellowProgressionDamageCap')
+-        if progressionCap > 0 then
+-            damage = math.min(damage, progressionCap, 99999)
++        if damage > 0 and (hitsLanded or 0) > 0 and progressionCap > 0 then
++            damage = math.max(damage, progressionFloor)
++            damage = math.min(damage, progressionCap, target:getHP(), 99999)
+         end
+ 
+         return damage
+diff --git a/scripts/tests/systems/unity_wanted.lua b/scripts/tests/systems/unity_wanted.lua
+index a8a6a62a2f..a4db56df53 100644
+--- a/scripts/tests/systems/unity_wanted.lua
++++ b/scripts/tests/systems/unity_wanted.lua
+@@ -121,12 +121,12 @@ describe('Unity Wanted encounter invariants', function()
+     it('keeps reported custom junctions at their corrected anchors', function()
+         local expected =
+         {
+-            [ 68] = { x =   26.0, z = -68.0 },
+-            [ 79] = { x = -638.0, z = 363.0 },
++            [ 68] = { x =  -98.7150, z = -92.8438 },
++            [ 79] = { x = -716.9192, z = 340.5056 },
+             [119] = { x = -315.0, z = 405.0 },
+             [159] = { x =  215.75, z = -25.0 },
+-            [176] = { x =  245.0, z = 337.0 },
+-            [212] = { x =  318.0, z =  86.0 },
++            [176] = { x =  179.3713, z = 241.6031 },
++            [212] = { x =  145.6993, z = -36.2936 },
+         }
+ 
+         for zoneId, position in pairs(expected) do
+diff --git a/scripts/zones/Bastok_Markets/npcs/AMAN_Validator.lua b/scripts/zones/Bastok_Markets/npcs/AMAN_Validator.lua
+index cd4252f133..87dd846e8c 100644
+--- a/scripts/zones/Bastok_Markets/npcs/AMAN_Validator.lua
++++ b/scripts/zones/Bastok_Markets/npcs/AMAN_Validator.lua
+@@ -2,20 +2,25 @@
+ -- Area: Bastok Markets
+ -- NPC: A.M.A.N Validator
+ -- !pos -338.18 -10 -180.19 235
++-- Disabled on Relaunch: the retail Deeds catalog bypasses custom gear progression.
+ -----------------------------------
+ ---@type TNpcEntity
+ local entity = {}
+ 
++entity.onSpawn = function(npc)
++    npc:setStatus(xi.status.DISAPPEAR)
++end
++
+ entity.onTrigger = function(player, npc)
+-    xi.deeds.validatorOnTrigger(player, npc)
++end
++
++entity.onTrade = function(player, npc, trade)
+ end
+ 
+ entity.onEventUpdate = function(player, csid, option, npc)
+-    xi.deeds.validatorOnEventUpdate(player, csid, option, npc)
+ end
+ 
+ entity.onEventFinish = function(player, csid, option, npc)
+-    xi.deeds.validatorOnEventFinish(player, csid, option, npc)
+ end
+ 
+ return entity
+diff --git a/scripts/zones/Southern_San_dOria/npcs/AMAN_Validator.lua b/scripts/zones/Southern_San_dOria/npcs/AMAN_Validator.lua
+index 02370b5769..6dd4196cd9 100644
+--- a/scripts/zones/Southern_San_dOria/npcs/AMAN_Validator.lua
++++ b/scripts/zones/Southern_San_dOria/npcs/AMAN_Validator.lua
+@@ -2,20 +2,25 @@
+ -- Area: Southern San d'Oria
+ -- NPC: A.M.A.N Validator
+ -- !pos -83.07 1 -55.58 230
++-- Disabled on Relaunch: the retail Deeds catalog bypasses custom gear progression.
+ -----------------------------------
+ ---@type TNpcEntity
+ local entity = {}
+ 
++entity.onSpawn = function(npc)
++    npc:setStatus(xi.status.DISAPPEAR)
++end
++
+ entity.onTrigger = function(player, npc)
+-    xi.deeds.validatorOnTrigger(player, npc)
++end
++
++entity.onTrade = function(player, npc, trade)
+ end
+ 
+ entity.onEventUpdate = function(player, csid, option, npc)
+-    xi.deeds.validatorOnEventUpdate(player, csid, option, npc)
+ end
+ 
+ entity.onEventFinish = function(player, csid, option, npc)
+-    xi.deeds.validatorOnEventFinish(player, csid, option, npc)
+ end
+ 
+ return entity
+diff --git a/scripts/zones/Windurst_Woods/npcs/AMAN_Validator.lua b/scripts/zones/Windurst_Woods/npcs/AMAN_Validator.lua
+index c8eb8d96a8..a3f7e7d6ad 100644
+--- a/scripts/zones/Windurst_Woods/npcs/AMAN_Validator.lua
++++ b/scripts/zones/Windurst_Woods/npcs/AMAN_Validator.lua
+@@ -2,20 +2,25 @@
+ -- Area: Windurst Woods
+ -- NPC: A.M.A.N Validator
+ -- !pos 89.9 -4.2 -47.63 241
++-- Disabled on Relaunch: the retail Deeds catalog bypasses custom gear progression.
+ -----------------------------------
+ ---@type TNpcEntity
+ local entity = {}
+ 
++entity.onSpawn = function(npc)
++    npc:setStatus(xi.status.DISAPPEAR)
++end
++
+ entity.onTrigger = function(player, npc)
+-    xi.deeds.validatorOnTrigger(player, npc)
++end
++
++entity.onTrade = function(player, npc, trade)
+ end
+ 
+ entity.onEventUpdate = function(player, csid, option, npc)
+-    xi.deeds.validatorOnEventUpdate(player, csid, option, npc)
+ end
+ 
+ entity.onEventFinish = function(player, csid, option, npc)
+-    xi.deeds.validatorOnEventFinish(player, csid, option, npc)
+ end
+ 
+ return entity
+diff --git a/src/map/utils/battleutils.cpp b/src/map/utils/battleutils.cpp
+index b690897c90..247682ce1e 100644
+--- a/src/map/utils/battleutils.cpp
++++ b/src/map/utils/battleutils.cpp
+@@ -2228,6 +2228,13 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
+     {
+         damage = -corrected;
+     }
++    else if (PAttacker->GetLocalVar("fellowApplied") == 1)
++    {
++        // Fellow damage is progression-capped inside takeDamage(). Report the
++        // authoritative HP loss instead of the larger pre-cap roll so combat
++        // log values match the damage actually dealt.
++        damage = corrected;
++    }
+ 
+     // Only claim a mob and if the allegiance is not PLAYER. This prevents mobs from calling ClaimMob on other mobs or themselves.
+     if (PDefender->objtype == TYPE_MOB && PDefender->allegiance != PAttacker->allegiance)
