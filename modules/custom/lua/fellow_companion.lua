@@ -1164,7 +1164,6 @@ local function summon(p)
     setN(p, V.active, 1)
     p:setLocalVar(SUMMONED_AT_LOCAL_VAR, os.time())
     p:setLocalVar('fellowSummonPending', 1)
-    markActivity(p)
     -- No "dismiss your pet first" -- the Fellow is a trust now and coexists
     -- with any job pet.
     armKeeper(p, 30)
