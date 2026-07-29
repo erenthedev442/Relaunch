@@ -209,7 +209,6 @@ local CONFIG =
                 [xi.mobSkill.CURSED_SPHERE_1]   = 900,
             },
             mpPool = { 1200, 3000 },
-            healPower = { 1500, 5000 },
             wsDamage = { 700, 4500 },
             moves =
             {
@@ -374,6 +373,7 @@ local CONFIG =
     burstCooldownSec    = 3,
     summonCooldownSec   = 300,
 
+    -- Mastered hybrid fallback only; Oracle uses trust-controller spells.
     healHpp             = 70,
     healMin             = 300,
     healMax             = 1500,
@@ -710,12 +710,22 @@ local function applyFellow(p, pet)
     -- Give the two specialist roles real trust-controller behavior instead of
     -- making Naji's melee chassis pretend to cast or shoot.
     if roleKey == 'oracle' then
-        -- Kupipi's full healer list gives Oracle visible Cure and -na/Erase
-        -- casts. The Lua emergency heal below remains a safety net so healing
-        -- always wins over offense when the trust controller is busy.
-        pet:setSpellList(310)
+        -- Apururu's healer list supplies level-scaled Cure I-VI, Curaga I-V,
+        -- Haste, Protectra/Shellra, -na spells, Stoneskin and Erase. Oracle
+        -- uses only normal trust-controller casts: MP, recasts, animations,
+        -- range checks and cast interruption all apply.
+        pet:setSpellList(367)
         pet:addMod(xi.mod.CURE_POTENCY, 50)
         pet:addMod(xi.mod.FASTCAST, 50)
+
+        -- Emergency single-target cure first, then AoE triage, then routine
+        -- curing. HIGHEST chooses the strongest level/MP-legal spell.
+        pet:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 25 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
+        pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_I }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURAGA })
+        pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_II }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURAGA })
+        pet:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 50 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURAGA })
+        pet:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 75 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
+
         pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.POISON }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.POISONA })
         pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.PARALYSIS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.PARALYNA })
         pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.BLINDNESS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.BLINDNA })
@@ -723,7 +733,14 @@ local function applyFellow(p, pet)
         pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.PETRIFICATION }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STONA })
         pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.DISEASE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.VIRUNA })
         pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.CURSE_I }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURSNA })
+        pet:addGambit(ai.t.SELF, { ai.c.STATUS_FLAG, xi.effectFlag.ERASABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
         pet:addGambit(ai.t.PARTY, { ai.c.STATUS_FLAG, xi.effectFlag.ERASABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
+
+        pet:addGambit(ai.t.MASTER, { ai.c.NOT_STATUS, xi.effect.HASTE }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.HASTE })
+        pet:addGambit(ai.t.MELEE, { ai.c.NOT_STATUS, xi.effect.HASTE }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.HASTE })
+        pet:addGambit(ai.t.PARTY, { ai.c.NOT_STATUS, xi.effect.PROTECT }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.PROTECTRA })
+        pet:addGambit(ai.t.PARTY, { ai.c.NOT_STATUS, xi.effect.SHELL }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.SHELLRA })
+        pet:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.STONESKIN }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STONESKIN })
         pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
     elseif roleKey == 'magus' then
         -- The combat loop casts only the spell/move selected in the Fellow
@@ -865,10 +882,11 @@ scheduleCombatLoop = function(master, pet)
                 p:engage(masterTarget:getTargID())
             end
 
-            -- Oracle is a healer first. Its pulse selects the most injured
-            -- player, trust, or Fellow and begins healing at 70% HP. This is
-            -- the sole HP-heal path, avoiding competing queued overheals.
-            if hasBeh('heal')
+            -- Oracle uses visible trust-controller spells exclusively. The
+            -- pulse remains only for Mastered, whose hybrid role intentionally
+            -- does not install Oracle's full healer spell package.
+            local usesSpellHealing = getRole(master) == 'oracle'
+            if hasBeh('heal') and not usesSpellHealing
                and now - (p:getLocalVar('fellowHealAt') or 0) >= CONFIG.healCooldownSec then
                 local healTarget = master
                 local lowestHpp = master:getHP() * 100 / math.max(1, master:getMaxHP())
@@ -891,7 +909,7 @@ scheduleCombatLoop = function(master, pet)
                 end
             end
 
-            if hasBeh('heal') and master:isEngaged()
+            if hasBeh('heal') and not usesSpellHealing and master:isEngaged()
                and now - (p:getLocalVar('fellowCleanseAt') or 0) >= CONFIG.cleanseCooldownSec then
                 local removable =
                 {
