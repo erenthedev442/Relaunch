@@ -10,7 +10,7 @@ local catalog = {}
 
 catalog.DAMAGE_MULTIPLIER_LOCAL_VAR = 'StandardWsDamageMultiplier'
 catalog.DAMAGE_CAP_LOCAL_VAR        = 'StandardWsDamageCap'
-catalog.DAMAGE_CAP                  = 99999
+catalog.DAMAGE_CAP                  = 79999
 catalog.NON_ITEM_LEVEL_119_CAP      = 40000
 catalog.TARGET_HP_FRACTION          = 0.30 -- retained for Fellow progression caps
 catalog.ENDGAME_PLAYER_LEVEL        = 99
@@ -91,7 +91,7 @@ end
 
 -- Scale only the custom bonus by required level. Stock formulas already include
 -- weapon base damage, so an Onion Sword remains far behind a level-115 weapon.
--- Item-level 119 weapons unlock the full bonus and normal 99,999 ceiling.
+-- Item-level 119 weapons unlock the full bonus and normal 79,999 ceiling.
 function catalog.getWeaponProgression(player, slot)
     local weapon = player:getEquippedItem(slot)
     if weapon == nil then

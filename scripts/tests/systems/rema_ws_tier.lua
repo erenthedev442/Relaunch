@@ -3,7 +3,8 @@ require('modules/custom/lua/REMAWeaponskillEnhancement')
 
 describe('Legendary REMA native-weaponskill enhancement', function()
     local function makePlayer(equipment)
-        local mods = {}
+        local mods      = {}
+        local localVars = {}
         local player =
         {
             equipment = equipment or {},
@@ -33,6 +34,14 @@ describe('Legendary REMA native-weaponskill enhancement', function()
             return mods[modId] or 0
         end
 
+        player.getLocalVar = function(_, name)
+            return localVars[name] or 0
+        end
+
+        player.setLocalVar = function(_, name, value)
+            localVars[name] = value
+        end
+
         return player
     end
 
@@ -54,6 +63,7 @@ describe('Legendary REMA native-weaponskill enhancement', function()
 
     it('uses the configured family bonuses and progression tuning', function()
         assert(catalog.PRIME_EQUIVALENT_BONUS == 2.00)
+        assert(catalog.AOE_DAMAGE_CAP == 149999)
         assert(catalog.getTuning(xi.weaponskill.MERCY_STROKE) == 15.00)
         assert(bonus(makePlayer({ [xi.slot.MAIN] = 20509 }), xi.weaponskill.FINAL_HEAVEN) == 100)
         assert(bonus(makePlayer({ [xi.slot.MAIN] = 20512 }), xi.weaponskill.VICTORY_SMITE) == 120)
@@ -269,6 +279,31 @@ describe('Legendary REMA native-weaponskill enhancement', function()
 
         assert(first == 17 and second == 23)
         assert(player:getMod(modId) == 15)
+    end)
+
+    it('raises and restores the AoE cap for an exact final REMA WS', function()
+        local player = makePlayer({ [xi.slot.MAIN] = 20509 })
+        player:setLocalVar('AoEWsDamageCap', 79999)
+
+        xi.remaWsTier.withTemporaryBonus(
+            player,
+            xi.weaponskill.FINAL_HEAVEN,
+            xi.slot.MAIN,
+            function()
+                assert(player:getLocalVar('AoEWsDamageCap') == 149999)
+            end)
+
+        assert(player:getLocalVar('AoEWsDamageCap') == 79999)
+
+        local rangedPlayer = makePlayer({ [xi.slot.RANGED] = 22141 })
+        rangedPlayer:setLocalVar('AoEWsDamageCap', 79999)
+        xi.remaWsTier.withTemporaryBonus(
+            rangedPlayer,
+            xi.weaponskill.LEADEN_SALUTE,
+            xi.slot.RANGED,
+            function()
+                assert(rangedPlayer:getLocalVar('AoEWsDamageCap') == 79999)
+            end)
     end)
 
     it('adds and restores family magic accuracy only for magical REMA WSs', function()

@@ -29,6 +29,7 @@ describe('Final Ambuscade weaponskill tuning', function()
     it('maps every final damage weapon and excludes the grip', function()
         assert(#tuning.entries == 13)
         assert(tuning.DAMAGE_CAP == 99999)
+        assert(tuning.AOE_DAMAGE_CAP == 99999)
         assert(tuning.DAMAGE_MULTIPLIER == 110)
 
         local finalIds = {}
@@ -75,6 +76,19 @@ describe('Final Ambuscade weaponskill tuning', function()
                 assert(player:getLocalVar(tuning.DAMAGE_CAP_LOCAL_VAR) == 0)
                 assert(player:getLocalVar(tuning.DAMAGE_MULT_LOCAL_VAR) == 0)
             end)
+    end)
+
+    it('raises and restores the AoE cap for a linked final Ambuscade WS', function()
+        local player = makePlayer({ [xi.slot.MAIN] = 21779 })
+        player:setLocalVar('AoEWsDamageCap', 79999)
+
+        xi.ambuscadeWsTuning.withAmbuscadeEffects(
+            player, xi.weaponskill.STEEL_CYCLONE, xi.slot.MAIN,
+            function()
+                assert(player:getLocalVar('AoEWsDamageCap') == 99999)
+            end)
+
+        assert(player:getLocalVar('AoEWsDamageCap') == 79999)
     end)
 
     it('restores prior tuning state when the WS calculation errors', function()

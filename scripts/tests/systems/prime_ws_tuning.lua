@@ -44,6 +44,7 @@ describe('Relaunch Prime weaponskill pinnacle tuning', function()
 
     it('has complete pinnacle tuning for every damage-dealing Prime WS', function()
         assert(catalog.WS_DAMAGE_BONUS == 300)
+        assert(catalog.AOE_DAMAGE_CAP == 199999)
 
         local count = 0
         for _, tuning in pairs(catalog.PRIME_WS_TUNING) do
@@ -176,6 +177,27 @@ describe('Relaunch Prime weaponskill pinnacle tuning', function()
         assert(result == 'prime')
         assert(player:getMod(modId) == 0)
         assert(player:getLocalVar(capVar) == 0)
+    end)
+
+    it('raises and restores the AoE cap for an exact final Prime WS', function()
+        local player = makePlayer({ [xi.slot.MAIN] = 21646 }, xi.job.WAR)
+        player:setLocalVar('AoEWsDamageCap', 79999)
+
+        xi.primeWsTuning.withPrimeEffects(
+            player, xi.weaponskill.IMPERATOR, xi.slot.MAIN,
+            function()
+                assert(player:getLocalVar('AoEWsDamageCap') == 199999)
+            end)
+
+        assert(player:getLocalVar('AoEWsDamageCap') == 79999)
+
+        local rangedPlayer = makePlayer({ [xi.slot.RANGED] = 22163 }, xi.job.RNG)
+        rangedPlayer:setLocalVar('AoEWsDamageCap', 79999)
+        xi.primeWsTuning.withPrimeEffects(
+            rangedPlayer, xi.weaponskill.SARV, xi.slot.RANGED,
+            function()
+                assert(rangedPlayer:getLocalVar('AoEWsDamageCap') == 79999)
+            end)
     end)
 
     it('does not grant Prime damage or cap privileges to a mismatched WS', function()

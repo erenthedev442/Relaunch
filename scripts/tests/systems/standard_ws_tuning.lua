@@ -91,16 +91,17 @@ describe('Level-scaled ordinary weaponskill tuning', function()
     it('uses mastery-scaled multipliers at level 99', function()
         local target = makeTarget(155, 120000)
         local weapon = { [xi.slot.MAIN] = { id = 1, ilvl = 119, reqLvl = 99 } }
+        assert(catalog.DAMAGE_CAP == 79999)
         assert(catalog.getWeaponskillMultiplier(makePlayer(weapon, 99, 0), target) == 8)
         assert(catalog.getWeaponskillMultiplier(makePlayer(weapon, 99, 1050), target) == 10.5)
         assert(catalog.getWeaponskillMultiplier(makePlayer(weapon, 99, 2100), target) == 13)
         assert(catalog.getPetDamageMultiplier(makePlayer({}, 99, 0), target) == 7)
         assert(catalog.getPetDamageMultiplier(makePlayer({}, 99, 2100), target) == 11)
-        assert(catalog.applyMultiplier(1500, 11, 99999) == 16500)
-        assert(catalog.applyMultiplier(8000, 11, 99999) == 88000)
-        assert(catalog.applyMultiplier(1500, 13, 99999) == 19500)
-        assert(catalog.applyMultiplier(6150, 13, 99999) == 79950)
-        assert(catalog.applyMultiplier(10000, 13, 99999) == 99999)
+        assert(catalog.applyMultiplier(1500, 11, 79999) == 16500)
+        assert(catalog.applyMultiplier(8000, 11, 79999) == 79999)
+        assert(catalog.applyMultiplier(1500, 13, 79999) == 19500)
+        assert(catalog.applyMultiplier(6150, 13, 79999) == 79950)
+        assert(catalog.applyMultiplier(10000, 13, 79999) == 79999)
     end)
 
     it('keeps the full level-99 multiplier on low-HP farming targets', function()
@@ -126,7 +127,7 @@ describe('Level-scaled ordinary weaponskill tuning', function()
             level99Sword, target, xi.slot.MAIN) == 8)
         assert(catalog.getWeaponskillCap(onionSword, xi.slot.MAIN) == 40000)
         assert(catalog.getWeaponskillCap(level99Sword, xi.slot.MAIN) == 40000)
-        assert(catalog.getWeaponskillCap(itemLevel119Sword, xi.slot.MAIN) == 99999)
+        assert(catalog.getWeaponskillCap(itemLevel119Sword, xi.slot.MAIN) == 79999)
     end)
 
     it('adds a progressive accuracy penalty only beyond the grace band', function()
@@ -153,6 +154,31 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         assert(player:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 0)
         assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 0)
         assert(player:getMod(xi.mod.WSACC) == 0)
+    end)
+
+    it('raises ordinary AoE caps for final main-hand Ambuscade, REMA, and Prime weapons', function()
+        local target = makeTarget(150, 1000000)
+        local cases =
+        {
+            { item = 21621, cap =  99999 }, -- Naegling
+            { item = 20695, cap = 149999 }, -- Sequence
+            { item = 21646, cap = 199999 }, -- Caliburnus
+        }
+
+        for _, case in ipairs(cases) do
+            local player = makePlayer({ [xi.slot.MAIN] = case.item }, 99)
+            player:setLocalVar('AoEWsDamageCap', 79999)
+
+            xi.standardWsTuning.withStandardEffects(
+                player, target, xi.weaponskill.CIRCLE_BLADE, xi.slot.MAIN,
+                {}, false,
+                function()
+                    assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == case.cap)
+                    assert(player:getLocalVar('AoEWsDamageCap') == case.cap)
+                end)
+
+            assert(player:getLocalVar('AoEWsDamageCap') == 79999)
+        end
     end)
 
     it('excludes exact REMA, Prime, and final Ambuscade native WS pairs', function()

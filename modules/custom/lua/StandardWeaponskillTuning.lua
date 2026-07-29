@@ -33,6 +33,35 @@ local function specialEntry(attacker, wsId, slot)
         ambuCatalog.getEntry(itemId, wsId, slot)
 end
 
+-- An AoE WS earns its premium ceiling from the final-stage weapon equipped in
+-- the main hand, even when the WS is not that weapon's linked/native WS.
+local premiumMainhandAoECaps = {}
+for _, entry in ipairs(ambuCatalog.entries) do
+    if entry.slot == xi.slot.MAIN then
+        premiumMainhandAoECaps[entry.itemId] = ambuCatalog.AOE_DAMAGE_CAP
+    end
+end
+
+for itemId, entry in pairs(remaCatalog.BY_ITEM_ID) do
+    if entry.enabled and entry.slot == xi.slot.MAIN then
+        premiumMainhandAoECaps[itemId] = remaCatalog.AOE_DAMAGE_CAP
+    end
+end
+
+for _, entry in pairs(primeCatalog.PRIME_WS_TUNING) do
+    if entry.slot == xi.slot.MAIN then
+        premiumMainhandAoECaps[entry.itemId] = primeCatalog.AOE_DAMAGE_CAP
+    end
+end
+
+local function getPremiumAoECap(attacker)
+    if attacker:getLocalVar('AoEWsDamageCap') <= 0 then
+        return 0
+    end
+
+    return premiumMainhandAoECaps[attacker:getEquipID(xi.slot.MAIN)] or 0
+end
+
 xi.standardWsTuning.isEligible = function(attacker, target, wsId, slot, wsParams)
     return
         attacker ~= nil and
@@ -57,11 +86,17 @@ xi.standardWsTuning.withStandardEffects = function(
     local accuracyMod    = magicAccuracy and xi.mod.MACC or xi.mod.WSACC
     local priorMultiplier = attacker:getLocalVar(multiplierVar)
     local priorCap       = attacker:getLocalVar(capVar)
+    local priorAoECap    = attacker:getLocalVar('AoEWsDamageCap')
     local priorAcc       = attacker:getMod(accuracyMod)
     local penalty        = catalog.getAccuracyPenalty(
         attacker:getMainLvl(), target:getMainLvl())
     local multiplier     = catalog.getWeaponskillMultiplier(attacker, target, slot)
     local damageCap      = catalog.getWeaponskillCap(attacker, slot)
+    local premiumAoECap  = getPremiumAoECap(attacker)
+    if premiumAoECap > damageCap then
+        damageCap = premiumAoECap
+        attacker:setLocalVar('AoEWsDamageCap', premiumAoECap)
+    end
 
     attacker:setLocalVar(multiplierVar, math.floor(multiplier * 1000 + 0.5))
     attacker:setLocalVar(capVar, damageCap)
@@ -82,6 +117,7 @@ xi.standardWsTuning.withStandardEffects = function(
     local cleanupOk, cleanupErr = pcall(function()
         attacker:setLocalVar(multiplierVar, priorMultiplier)
         attacker:setLocalVar(capVar, priorCap)
+        attacker:setLocalVar('AoEWsDamageCap', priorAoECap)
         attacker:setMod(accuracyMod, priorAcc)
     end)
     activeCalculations[attacker] = nil

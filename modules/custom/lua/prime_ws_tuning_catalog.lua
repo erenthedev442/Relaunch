@@ -12,6 +12,7 @@ local catalog = {}
 
 catalog.DAMAGE_CAP_LOCAL_VAR = 'PrimeWsDamageCap'
 catalog.WS_DAMAGE_BONUS      = 300
+catalog.AOE_DAMAGE_CAP       = 199999
 
 catalog.DAMAGE_CAPS =
 {

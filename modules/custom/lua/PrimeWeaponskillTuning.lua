@@ -79,10 +79,14 @@ xi.primeWsTuning.withPrimeEffects = function(attacker, wsId, slot, callback)
     local priorMod     = attacker:getMod(modId)
     local capVar       = catalog.DAMAGE_CAP_LOCAL_VAR
     local priorCap     = attacker:getLocalVar(capVar)
+    local priorAoECap  = attacker:getLocalVar('AoEWsDamageCap')
     local primeCap     = catalog.getDamageCap(attacker:getMainJob())
 
     attacker:addMod(modId, tuning.wsDamageBonus or catalog.WS_DAMAGE_BONUS)
     attacker:setLocalVar(capVar, primeCap)
+    if priorAoECap > 0 and slot == xi.slot.MAIN then
+        attacker:setLocalVar('AoEWsDamageCap', catalog.AOE_DAMAGE_CAP)
+    end
     activeCalculations[attacker] = true
 
     local results
@@ -97,6 +101,7 @@ xi.primeWsTuning.withPrimeEffects = function(attacker, wsId, slot, callback)
     local cleanupOk, cleanupErr = pcall(function()
         attacker:setMod(modId, priorMod)
         attacker:setLocalVar(capVar, priorCap)
+        attacker:setLocalVar('AoEWsDamageCap', priorAoECap)
     end)
     activeCalculations[attacker] = nil
 

@@ -180,8 +180,8 @@ int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRan
     if (damage > 0 && isRanged && PAttacker != nullptr && PAttacker->objtype == TYPE_PC &&
         PAttacker->GetMJob() == JOB_RNG)
     {
-        // Preserve either standard-WS ceiling. The post-Lua 0.80 adjustment
-        // must not turn the 40,000/99,999 caps into 32,000/79,999.
+        // Preserve the active standard-WS ceiling. The post-Lua 0.80 adjustment
+        // must not reduce a capped 40,000/79,999/premium-AoE result.
         const auto standardWsCap = static_cast<int32>(PAttacker->GetLocalVar("StandardWsDamageCap"));
         if (standardWsCap > 0 && damage >= standardWsCap)
         {

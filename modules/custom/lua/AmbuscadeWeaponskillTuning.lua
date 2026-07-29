@@ -38,10 +38,14 @@ xi.ambuscadeWsTuning.withAmbuscadeEffects = function(attacker, wsId, slot, callb
         return callback()
     end
 
-    local priorCap  = attacker:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR)
-    local priorMult = attacker:getLocalVar(catalog.DAMAGE_MULT_LOCAL_VAR)
+    local priorCap    = attacker:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR)
+    local priorMult   = attacker:getLocalVar(catalog.DAMAGE_MULT_LOCAL_VAR)
+    local priorAoECap = attacker:getLocalVar('AoEWsDamageCap')
     attacker:setLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR, catalog.DAMAGE_CAP)
     attacker:setLocalVar(catalog.DAMAGE_MULT_LOCAL_VAR, catalog.DAMAGE_MULTIPLIER)
+    if priorAoECap > 0 then
+        attacker:setLocalVar('AoEWsDamageCap', catalog.AOE_DAMAGE_CAP)
+    end
     activeCalculations[attacker] = true
 
     local results
@@ -56,6 +60,7 @@ xi.ambuscadeWsTuning.withAmbuscadeEffects = function(attacker, wsId, slot, callb
     local cleanupOk, cleanupErr = pcall(function()
         attacker:setLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR, priorCap)
         attacker:setLocalVar(catalog.DAMAGE_MULT_LOCAL_VAR, priorMult)
+        attacker:setLocalVar('AoEWsDamageCap', priorAoECap)
     end)
     activeCalculations[attacker] = nil
 

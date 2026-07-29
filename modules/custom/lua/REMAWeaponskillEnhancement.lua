@@ -152,10 +152,14 @@ xi.remaWsTier.withTemporaryBonus = function(attacker, wsId, slot, callback)
     local modId         = xi.mod.WEAPONSKILL_DAMAGE_BASE + wsId
     local priorValue    = attacker:getMod(modId)
     local priorMagicAcc = magicAccBonus > 0 and attacker:getMod(xi.mod.MACC) or 0
+    local priorAoECap   = attacker:getLocalVar('AoEWsDamageCap')
 
     attacker:addMod(modId, bonusPercent)
     if magicAccBonus > 0 then
         attacker:addMod(xi.mod.MACC, magicAccBonus)
+    end
+    if priorAoECap > 0 and slot == xi.slot.MAIN then
+        attacker:setLocalVar('AoEWsDamageCap', catalog.AOE_DAMAGE_CAP)
     end
 
     activeCalculations[attacker] = true
@@ -176,6 +180,7 @@ xi.remaWsTier.withTemporaryBonus = function(attacker, wsId, slot, callback)
         if magicAccBonus > 0 then
             attacker:setMod(xi.mod.MACC, priorMagicAcc)
         end
+        attacker:setLocalVar('AoEWsDamageCap', priorAoECap)
     end)
     activeCalculations[attacker] = nil
 

@@ -5,6 +5,7 @@
 local catalog =
 {
     DAMAGE_CAP             = 99999,
+    AOE_DAMAGE_CAP         = 99999,
     DAMAGE_MULTIPLIER      = 110,
     DAMAGE_CAP_LOCAL_VAR   = 'AmbuscadeWsDamageCap',
     DAMAGE_MULT_LOCAL_VAR  = 'AmbuscadeWsDamageMultiplier',

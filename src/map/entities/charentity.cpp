@@ -1676,7 +1676,10 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
             const auto priorAoEWsCap = GetLocalVar("AoEWsDamageCap");
             if (PWeaponSkill->isAoE())
             {
-                SetLocalVar("AoEWsDamageCap", 99999);
+                const auto* PDamageWeapon = getEquip(damslot);
+                const auto  aoeWsCap =
+                    PDamageWeapon != nullptr && PDamageWeapon->getILvl() >= 119 ? 79999 : 40000;
+                SetLocalVar("AoEWsDamageCap", aoeWsCap);
             }
 
             std::tie(damage, tpHitsLanded, extraHitsLanded) = luautils::OnUseWeaponSkill(this, PTarget, PWeaponSkill, tp, primary, action, taChar);

@@ -13,6 +13,7 @@
 local catalog = {}
 
 catalog.PRIME_EQUIVALENT_BONUS = 2.00
+catalog.AOE_DAMAGE_CAP         = 149999
 
 catalog.REMA_TIER_SCALE =
 {
