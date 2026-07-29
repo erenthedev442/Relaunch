@@ -44953,6 +44953,7 @@ INSERT INTO `item_mods` VALUES (21565,25,40);   -- ACC: 40
 INSERT INTO `item_mods` VALUES (21565,28,16);   -- MATT: 16
 INSERT INTO `item_mods` VALUES (21565,30,40);   -- MACC: 40
 INSERT INTO `item_mods` VALUES (21565,311,217); -- MAGIC_DAMAGE: 217
+INSERT INTO `item_mods` VALUES (21565,355,25);  -- ADDS_WEAPONSKILL: Evisceration
 INSERT INTO `item_mods` VALUES (21565,595,50);  -- WSD+% (Evisceration): 50
 
 -- Gleti's Knife
@@ -45211,6 +45212,8 @@ INSERT INTO `item_mods` VALUES (21621,25,40);   -- ACC: 40
 INSERT INTO `item_mods` VALUES (21621,28,16);   -- MATT: 16
 INSERT INTO `item_mods` VALUES (21621,30,40);   -- MACC: 40
 INSERT INTO `item_mods` VALUES (21621,311,217); -- MAGIC_DAMAGE: 217
+INSERT INTO `item_mods` VALUES (21621,355,42);  -- ADDS_WEAPONSKILL: Savage Blade
+INSERT INTO `item_mods` VALUES (21621,612,15);  -- WSD+% (Savage Blade): 15
 
 -- Duelists Sword
 INSERT INTO `item_mods` VALUES (21625,2,100);   -- HP: 100

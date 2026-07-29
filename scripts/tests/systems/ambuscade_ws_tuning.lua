@@ -3,6 +3,12 @@ local tuning  = require('modules/custom/lua/ambuscade_ws_tuning_catalog')
 require('modules/custom/lua/AmbuscadeWeaponskillTuning')
 
 describe('Final Ambuscade weaponskill tuning', function()
+    local target = {
+        getStatusEffect = function()
+            return nil
+        end,
+    }
+
     local function makePlayer(equipment)
         local localVars = {}
         local player    = { equipment = equipment or {} }
@@ -59,7 +65,7 @@ describe('Final Ambuscade weaponskill tuning', function()
         local called = false
 
         xi.ambuscadeWsTuning.withAmbuscadeEffects(
-            player, xi.weaponskill.SAVAGE_BLADE, xi.slot.MAIN,
+            player, target, xi.weaponskill.SAVAGE_BLADE, xi.slot.MAIN,
             function()
                 called = true
                 assert(player:getLocalVar(tuning.DAMAGE_CAP_LOCAL_VAR) == 99999)
@@ -71,7 +77,7 @@ describe('Final Ambuscade weaponskill tuning', function()
         assert(player:getLocalVar(tuning.DAMAGE_MULT_LOCAL_VAR) == 0)
 
         xi.ambuscadeWsTuning.withAmbuscadeEffects(
-            player, xi.weaponskill.BLACK_HALO, xi.slot.MAIN,
+            player, target, xi.weaponskill.BLACK_HALO, xi.slot.MAIN,
             function()
                 assert(player:getLocalVar(tuning.DAMAGE_CAP_LOCAL_VAR) == 0)
                 assert(player:getLocalVar(tuning.DAMAGE_MULT_LOCAL_VAR) == 0)
@@ -83,7 +89,7 @@ describe('Final Ambuscade weaponskill tuning', function()
         player:setLocalVar('AoEWsDamageCap', 79999)
 
         xi.ambuscadeWsTuning.withAmbuscadeEffects(
-            player, xi.weaponskill.STEEL_CYCLONE, xi.slot.MAIN,
+            player, target, xi.weaponskill.STEEL_CYCLONE, xi.slot.MAIN,
             function()
                 assert(player:getLocalVar('AoEWsDamageCap') == 99999)
             end)
@@ -98,7 +104,7 @@ describe('Final Ambuscade weaponskill tuning', function()
 
         local ok = pcall(function()
             xi.ambuscadeWsTuning.withAmbuscadeEffects(
-                player, xi.weaponskill.EMPYREAL_ARROW, xi.slot.RANGED,
+                player, target, xi.weaponskill.EMPYREAL_ARROW, xi.slot.RANGED,
                 function()
                     error('expected test failure')
                 end)
@@ -107,5 +113,25 @@ describe('Final Ambuscade weaponskill tuning', function()
         assert(not ok)
         assert(player:getLocalVar(tuning.DAMAGE_CAP_LOCAL_VAR) == 123)
         assert(player:getLocalVar(tuning.DAMAGE_MULT_LOCAL_VAR) == 104)
+    end)
+
+    it('applies Dolichenus WS damage from prior skillchain links', function()
+        local player = makePlayer({ [xi.slot.MAIN] = tuning.ITEM.DOLICHENUS })
+        local chainedTarget = {
+            getStatusEffect = function(_, effectId)
+                if effectId == xi.effect.SKILLCHAIN then
+                    return { getSubPower = function() return 2 end }
+                end
+            end,
+        }
+
+        xi.ambuscadeWsTuning.withAmbuscadeEffects(
+            player, chainedTarget, xi.weaponskill.RAGING_AXE, xi.slot.MAIN,
+            function()
+                assert(player:getLocalVar(tuning.DAMAGE_CAP_LOCAL_VAR) == 0)
+                assert(player:getLocalVar(tuning.DAMAGE_MULT_LOCAL_VAR) == 106)
+            end)
+
+        assert(player:getLocalVar(tuning.DAMAGE_MULT_LOCAL_VAR) == 0)
     end)
 end)

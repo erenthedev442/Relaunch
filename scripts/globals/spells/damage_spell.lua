@@ -459,6 +459,9 @@ xi.spells.damage.calculateBaseDamage = function(caster, target, spellId, spellGr
 
     -- Bonus to spell base damage from gear.
     baseSpellDamageBonus = baseSpellDamageBonus + caster:getMod(xi.mod.MAGIC_DAMAGE)
+    if caster:getEquipID(xi.slot.MAIN) == 22086 then
+        baseSpellDamageBonus = baseSpellDamageBonus + math.floor(caster:getTP() / 30)
+    end
 
     -----------------------------------
     -- STEP 4: Spell Damage
@@ -1037,6 +1040,14 @@ xi.spells.damage.calculateIfMagicBurstBonus = function(caster, target, spellId, 
 
     -- BLM Job Point: Magic Burst Damage and GEO cardinal chant.
     uncappedBonus = uncappedBonus + caster:getJobPointLevel(xi.jp.MAGIC_BURST_DMG_BONUS) / 100 + cardinalChantBonus(caster, target, xi.direction.WEST, spellId, skillType) / 100
+
+    -- Maxentius: +4% magic burst damage for each completed skillchain link.
+    if caster:getEquipID(xi.slot.MAIN) == 22031 then
+        local skillchain = target:getStatusEffect(xi.effect.SKILLCHAIN)
+        if skillchain then
+            uncappedBonus = uncappedBonus + skillchain:getSubPower() * 0.04
+        end
+    end
 
     -- Get final multiplier
     magicBurstBonus = magicBurstBonus + cappedBonus + uncappedBonus

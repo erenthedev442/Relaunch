@@ -3880,7 +3880,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     actionResult.resolution = ActionResolution::Block;
                 }
 
-                const auto damage = battleutils::TakePhysicalDamage(this, PTarget, attack.GetAttackType(), attack.GetDamage(), attack.IsBlocked(), attack.GetWeaponSlot(), 1, attackRound.GetTAEntity(), true, true, attack.IsCountered(), attack.IsCovered(), POriginalTarget);
+                const auto damage = battleutils::TakePhysicalDamage(this, PTarget, attack.GetAttackType(), attack.GetDamage(), attack.IsBlocked(), attack.GetWeaponSlot(), 1, attackRound.GetTAEntity(), true, true, attack.IsCountered(), attack.IsCovered(), POriginalTarget, attack.IsCritical());
                 if (damage < 0)
                 {
                     actionResult.param     = -damage;

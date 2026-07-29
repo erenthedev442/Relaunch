@@ -251,7 +251,12 @@ end
 -- https://www.ffxiah.com/forum/topic/49614/blade-chi-damage-formula/2/#3171538
 local function calculateHybridMagicDamage(tp, physicaldmg, attacker, target, wsParams, calcParams)
     local ftp      = xi.weaponskills.getHybridMagicFtp(tp, wsParams)
-    local magicdmg = math.floor(physicaldmg * ftp + attacker:getMod(xi.mod.MAGIC_DAMAGE))
+    local magicDamageBonus = attacker:getMod(xi.mod.MAGIC_DAMAGE)
+    if attacker:getEquipID(xi.slot.MAIN) == 22086 then
+        magicDamageBonus = magicDamageBonus + math.floor(attacker:getTP() / 30)
+    end
+
+    local magicdmg = math.floor(physicaldmg * ftp + magicDamageBonus)
 
     -- physicaldmg already includes both general and WS-specific damage bonuses.
     -- Applying them again here made hybrid WS double-dip WSD before MAB, causing
@@ -877,6 +882,10 @@ xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, 
         local ftp = xi.weaponskills.fTP(tp, wsParams.ftpMod) + gearFTP
 
         dmg = dmg * ftp
+        dmg = dmg + attacker:getMod(xi.mod.MAGIC_DAMAGE)
+        if attacker:getEquipID(xi.slot.MAIN) == 22086 then
+            dmg = dmg + math.floor(attacker:getTP() / 30)
+        end
 
         -- Apply Consume Mana and Scarlet Delirium
         -- dmg = dmg + xi.combat.damage.consumeManaAddition(attacker)

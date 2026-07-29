@@ -544,6 +544,9 @@ local function calculateSwipeLungeDamage(player, target, skillModifier, gearBonu
     local damage = math.floor(skillModifier * (0.50 + 0.25 * numHits + gearBonus / 100))
 
     damage = damage + player:getMod(xi.mod.MAGIC_DAMAGE) -- add mdamage to base damage
+    if player:getEquipID(xi.slot.MAIN) == 22086 then
+        damage = damage + math.floor(player:getTP() / 30)
+    end
 
     damage = math.floor(damage * multipliers.eleStaffBonus)
     damage = math.floor(damage * multipliers.eleAffinityBonus)

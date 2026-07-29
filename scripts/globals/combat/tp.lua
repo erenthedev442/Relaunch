@@ -174,6 +174,24 @@ xi.combat.tp.getSingleRangedHitTPReturn = function(actor)
     return math.floor(xi.combat.tp.calculateTPReturn(actor, delay) * storeTPModifier)
 end
 
+-- Hachimonji converts Store TP into auto-attack multi-strike rates.  Store TP
+-- still applies to ordinary single swings, but not to swings in a DA/TA/QA
+-- proc, so the C++ attack path needs the unmodified per-hit value.
+xi.combat.tp.getSingleMeleeHitTPReturnWithoutStoreTP = function(actor, isZanshin)
+    if actor:hasStatusEffect(xi.effect.MEIKYO_SHISUI) then
+        return 0
+    end
+
+    local delay        = actor:getBaseDelay()
+    local attackOutput = xi.combat.tp.getModifiedDelayAndCanZanshin(actor, delay)
+    local tpReturn     = xi.combat.tp.calculateTPReturn(actor, attackOutput.modifiedDelay)
+    if isZanshin and attackOutput.canZanshin then
+        tpReturn = tpReturn + actor:getMerit(xi.merit.IKISHOTEN)
+    end
+
+    return math.floor(tpReturn)
+end
+
 -- This function calculates how much TP a target(The defender) will gain upon being hit by a physical attack.
 -- TODO: does Ikishoten factor into this as a bonus to baseTPGain if it procs on the hit? Needs verification.
 --- @params actor CBaseEntity

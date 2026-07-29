@@ -232,8 +232,20 @@ xi.combat.physicalHitRate.getRangedHitRate = function(attacker, target, bonus, i
 
     local hitrate = accuracyAndEvasionToHitRate(attacker, target, acc, eva)
 
+    local hitRateCap = 0.95
+    if attacker:getEquipID(xi.slot.RANGED) == 22107 then
+        local sweetSpot = xi.combat.ranged.getSweetSpotByAttacker(attacker)
+        local hitboxOffset = target:getHitboxSize() + attacker:getHitboxSize()
+        if
+            distance >= sweetSpot[1] + hitboxOffset and
+            distance <= sweetSpot[2] + hitboxOffset
+        then
+            hitRateCap = 0.99
+        end
+    end
+
     -- Apply hitrate caps
-    hitrate = utils.clamp(hitrate, 0.05, 0.95)
+    hitrate = utils.clamp(hitrate, 0.05, hitRateCap)
 
     return hitrate
 end

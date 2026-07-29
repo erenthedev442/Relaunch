@@ -2006,7 +2006,7 @@ bool TryInterruptSpell(CBattleEntity* PAttacker, CBattleEntity* PDefender, CSpel
 // FJB: ApplyAutomatonDamageBonus (+ AUTOMATON_DMG_MULTIPLIER) extracted to
 // modules/custom/cpp/fjb_combat.cpp.
 
-int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHYSICAL_ATTACK_TYPE physicalAttackType, int32 damage, bool isBlocked, uint8 slot, uint16 tpMultiplier, CBattleEntity* taChar, bool giveTPtoVictim, bool giveTPtoAttacker, bool isCounter, bool isCovered, CBattleEntity* POriginalTarget)
+int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHYSICAL_ATTACK_TYPE physicalAttackType, int32 damage, bool isBlocked, uint8 slot, uint16 tpMultiplier, CBattleEntity* taChar, bool giveTPtoVictim, bool giveTPtoAttacker, bool isCounter, bool isCovered, CBattleEntity* POriginalTarget, bool isCritical)
 {
     damage = ApplyAutomatonDamageBonus(PAttacker, damage); // FJB: automaton DPS multiplier (melee + ranged)
     damage = ApplyRangerDamageAdjust(PAttacker, damage, slot == SLOT_AMMO || slot == SLOT_RANGED); // FJB: relaunch RNG ranged trim
@@ -2316,7 +2316,26 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
         {
             bool isZanshin = physicalAttackType == PHYSICAL_ATTACK_TYPE::ZANSHIN;
 
-            int16 attackerTPReturn = CalculateTPFromDamageDealt(PAttacker, isZanshin, static_cast<SLOTTYPE>(slot));
+            int16 attackerTPReturn = 0;
+            auto* PMain = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_MAIN]);
+            if (PMain && PMain->getID() == 21975 && slot == SLOT_MAIN &&
+                (physicalAttackType == PHYSICAL_ATTACK_TYPE::DOUBLE ||
+                 physicalAttackType == PHYSICAL_ATTACK_TYPE::TRIPLE ||
+                 physicalAttackType == PHYSICAL_ATTACK_TYPE::QUAD))
+            {
+                attackerTPReturn = luautils::callGlobal<int32>(
+                    "xi.combat.tp.getSingleMeleeHitTPReturnWithoutStoreTP", PAttacker, isZanshin);
+            }
+            else if (PMain && PMain->getID() == 21519 && slot == SLOT_MAIN && isCritical)
+            {
+                PAttacker->addModifier(Mod::STORETP, 50);
+                attackerTPReturn = CalculateTPFromDamageDealt(PAttacker, isZanshin, static_cast<SLOTTYPE>(slot));
+                PAttacker->delModifier(Mod::STORETP, 50);
+            }
+            else
+            {
+                attackerTPReturn = CalculateTPFromDamageDealt(PAttacker, isZanshin, static_cast<SLOTTYPE>(slot));
+            }
 
             PAttacker->addTP((int16)(tpMultiplier * attackerTPReturn));
         }
@@ -2707,6 +2726,17 @@ uint8 GetCritHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool ig
             if (weapon && weapon->getModifier(Mod::CRITHITRATE_ONLY_WEP) > 0)
             {
                 critHitRate += weapon->getModifier(Mod::CRITHITRATE_ONLY_WEP);
+            }
+        }
+
+        // Tauret: main-hand auto-attacks gain +50% critical rate at 0 TP,
+        // decreasing linearly to no bonus at 3000 TP.
+        if (weaponSlot == SLOT_MAIN)
+        {
+            auto* PMain = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_MAIN]);
+            if (PMain && PMain->getID() == 21565)
+            {
+                critHitRate += std::clamp<int16>((3000 - PAttacker->health.tp) / 60, 0, 50);
             }
         }
 
@@ -3831,7 +3861,14 @@ int32 TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, i
 
     const auto closingDamage      = static_cast<float>(abs(lastSkillDamage));
     const auto skillchainLevel    = g_SkillChainDamageModifiers[chainLevel][chainCount] / 1000.0f;
-    const auto skillchainBonus    = (100.0f + std::min<int16>(PAttacker->getMod(Mod::SKILLCHAINBONUS), 50)) / 100.0f;
+    int16 drepanumBonus = 0;
+    if (auto* PMain = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_MAIN]);
+        PMain && PMain->getID() == 21830)
+    {
+        drepanumBonus = std::clamp<int16>((100 - PAttacker->GetMPP()) / 2, 0, 50);
+    }
+
+    const auto skillchainBonus    = (100.0f + std::min<int16>(PAttacker->getMod(Mod::SKILLCHAINBONUS), 50) + drepanumBonus) / 100.0f;
     const auto skillchainDmgBonus = (10000.0f + PAttacker->getMod(Mod::SKILLCHAINDMG)) / 10000.0f;
     const auto dayWeatherBonus    = 1.0f; // TODO: Implement day/weather bonuses
     const auto staffAffinity      = 1.0f; // TODO: Implement staff affinity
@@ -6272,6 +6309,13 @@ int16 CalculateWeaponSkillTP(CBattleEntity* PEntity, CWeaponSkill* PWeaponSkill,
 {
     // apply TP Bonus
     int16 tp = spentTP + PEntity->getMod(Mod::TP_BONUS);
+
+    // Lycurgos: Current HP / 5 TP Bonus, capped at +1000, for every WS.
+    if (auto* PMain = dynamic_cast<CItemWeapon*>(PEntity->m_Weapons[SLOT_MAIN]);
+        PMain && PMain->getID() == 21779)
+    {
+        tp += std::min<int32>(PEntity->health.hp / 5, 1000);
+    }
 
     if (PEntity->objtype == TYPE_PC)
     {

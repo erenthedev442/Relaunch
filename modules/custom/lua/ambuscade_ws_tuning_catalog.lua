@@ -10,6 +10,22 @@ local catalog =
     DAMAGE_CAP_LOCAL_VAR   = 'AmbuscadeWsDamageCap',
     DAMAGE_MULT_LOCAL_VAR  = 'AmbuscadeWsDamageMultiplier',
     BY_WS                   = {},
+    ITEM                    =
+    {
+        KARAMBIT    = 21519,
+        TAURET      = 21565,
+        NAEGLING    = 21621,
+        NANDAKA     = 21674,
+        DOLICHENUS  = 21722,
+        LYCURGOS    = 21779,
+        DREPANUM    = 21830,
+        SHINING_ONE = 21883,
+        GOKOTAI     = 21922,
+        HACHIMONJI  = 21975,
+        MAXENTIUS   = 22031,
+        XOANON      = 22086,
+        ULLR        = 22107,
+    },
 }
 
 local entries =

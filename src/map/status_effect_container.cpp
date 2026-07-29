@@ -32,6 +32,7 @@ When a status effect is gained twice on a player. It can do one or more of the f
 #include "common/logging.h"
 #include "common/timer.h"
 
+#include <algorithm>
 #include <array>
 #include <cstring>
 
@@ -47,6 +48,7 @@ When a status effect is gained twice on a player. It can do one or more of the f
 #include "entities/charentity.h"
 #include "entities/mobentity.h"
 #include "entities/trustentity.h"
+#include "items/item_weapon.h"
 #include "latent_effect_container.h"
 #include "notoriety_container.h"
 #include "status_effect_container.h"
@@ -2139,6 +2141,12 @@ void CStatusEffectContainer::TickRegen(timer::time_point tick)
         int16 poison  = m_POwner->getMod(Mod::REGEN_DOWN);
         int16 refresh = m_POwner->getMod(Mod::REFRESH) - m_POwner->getMod(Mod::REFRESH_DOWN);
         int16 regain  = m_POwner->getMod(Mod::REGAIN) - m_POwner->getMod(Mod::REGAIN_DOWN);
+        if (auto* PMain = dynamic_cast<CItemWeapon*>(m_POwner->m_Weapons[SLOT_MAIN]);
+            PMain && PMain->getID() == 21922)
+        {
+            regain += std::clamp<int16>(m_POwner->getMod(Mod::DUAL_WIELD), 0, 100);
+        }
+
         m_POwner->addHP(regen);
 
         if (poison)
