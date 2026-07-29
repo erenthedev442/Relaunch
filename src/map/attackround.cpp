@@ -314,7 +314,7 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
     // Hachimonji: convert total Store TP into auto-attack multi-strike rates.
     // 1-100 -> DA, 101-200 -> TA, 201+ -> QA.  TP return is corrected in
     // TakePhysicalDamage only when one of these multi-attacks actually procs.
-    if (isMainHand && PMain && PMain->getID() == 21975)
+    if (isMainHand && PWeapon->getID() == 21975)
     {
         const int16 storeTP = std::max<int16>(m_attacker->getMod(Mod::STORETP), 0);
         doubleAttack += std::min<int16>(storeTP, 100);
