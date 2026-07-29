@@ -5161,7 +5161,7 @@ INSERT INTO `item_weapon` VALUES (22304,'loughnashade',42,0,0,0,0,0,1,240,1,0); 
 INSERT INTO `item_weapon` VALUES (22305,'loughnashade',42,0,0,0,0,0,1,240,1,0);      -- TODO: Not implemented
 INSERT INTO `item_weapon` VALUES (22306,'loughnashade',42,0,0,0,0,0,1,240,1,0);      -- TODO: Not implemented
 INSERT INTO `item_weapon` VALUES (22307,'loughnashade',42,0,0,0,0,0,1,240,1,0);      -- TODO: Not implemented
-INSERT INTO `item_weapon` VALUES (22308,'bayeux_bullet',26,0,0,0,0,1,1,240,315,0);     -- TODO: Not implemented
+INSERT INTO `item_weapon` VALUES (22308,'bayeux_bullet',26,1,0,0,0,1,1,240,315,0);     -- TODO: Not implemented
 INSERT INTO `item_weapon` VALUES (22309,'bayeux_arrow',25,0,0,0,0,1,1,90,116,0);      -- TODO: Not implemented
 INSERT INTO `item_weapon` VALUES (22310,'hoxne_ampulla',0,0,0,0,0,0,1,999,0,0);     -- TODO: Not implemented
 

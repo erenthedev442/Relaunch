@@ -39,7 +39,13 @@ commandObj.onTrigger = function(player, spellParam, target)
 
     -- add spell
     targ:addSpell(spellId)
-    player:printToPlayer(string.format('Added spell %i to %s.', spellId, targ:getName()))
+    if targ:hasSpell(spellId) then
+        player:printToPlayer(string.format('Added spell %i to %s.', spellId, targ:getName()))
+    else
+        player:printToPlayer(string.format(
+            'Failed to add spell %i to %s. The running map server may not have this spell loaded; apply its SQL and restart xi_map.',
+            spellId, targ:getName()))
+    end
 end
 
 return commandObj
