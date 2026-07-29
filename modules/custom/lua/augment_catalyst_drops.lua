@@ -20,6 +20,7 @@ require('modules/module_utils')
 
 local MAP   = require('modules/custom/lua/augment_catalyst_mobs')   -- ['Mob_Internal_Name'] = itemId
 local POOLS = require('modules/custom/lua/augment_catalyst_pools')  -- M.pickForTier(tier) -> random catalyst
+local BANK  = require('modules/custom/lua/augment_catalyst_bank')
 local m     = Module:new('augment_catalyst_drops')
 local SYS   = xi.msg.channel.SYSTEM_3
 
@@ -95,24 +96,16 @@ local function itemNameFor(itemId)
     end))
 end
 
--- Hand `itemId`'s catalyst to `player` with the drop message. Shared by the
+-- Bank `itemId` for `player` with the drop message. Shared by the
 -- mob-death path below AND the GM !catalysttest command (via xi.augmentCatalystDrops).
--- Returns true if awarded, false if the inventory was full.
+-- Returns true if stored, false only when persistence failed.
 local function award(player, itemId)
-    local itemName = itemNameFor(itemId)
-    local display  = itemName
-        and string.format('%s (%s)', itemName, labelFor(itemId))
-        or  labelFor(itemId)
-
-    if player:getFreeSlotsCount() <= 0 then
+    local stored = BANK.depositDrop(player, itemId, 1)
+    if not stored then
         player:printToPlayer(string.format(
-            '[Augments] %s dropped, but your inventory is full!', display), SYS)
-        return false
+            '[Augments] Could not store %s; contact a GM.', labelFor(itemId)), SYS)
     end
-    pcall(function() player:addItem({ id = itemId, quantity = 1 }) end)
-    player:printToPlayer(string.format(
-        '[Augments] Catalyst dropped: %s.', display), SYS)
-    return true
+    return stored
 end
 
 -- TH-adjusted pass/fail for a catalyst roll. Treasure Hunter boosts catalyst
@@ -176,7 +169,7 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
         if not fbId then dbg(mname .. ' -> skip: fallback tier pool empty'); return end
         local okf = award(player, fbId)
         dbg(string.format('%s (Lv%d) -> FALLBACK %s catalyst itemId=%d for %s', mname, lvl,
-            okf and 'AWARDED' or 'INV-FULL', fbId, player:getName()))
+            okf and 'BANKED' or 'STORAGE-FAIL', fbId, player:getName()))
         return
     end
 
@@ -192,7 +185,7 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
 
     local ok = award(player, itemId)
     dbg(string.format('%s -> %s catalyst itemId=%d for %s', mname,
-        ok and 'AWARDED' or 'INV-FULL', itemId, player:getName()))
+        ok and 'BANKED' or 'STORAGE-FAIL', itemId, player:getName()))
 end)
 
 -- Exposed so the GM !catalysttest command can fire the exact award+message path in

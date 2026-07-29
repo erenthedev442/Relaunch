@@ -30,6 +30,7 @@
 #include <chrono>
 
 #include "lua/luautils.h"
+#include "lua/lua_baseentity.h"
 
 #include "ai/ai_container.h"
 #include "ai/states/attack_state.h"
@@ -4899,6 +4900,29 @@ void DistributeGil(CCharEntity* PChar, CMobEntity* PMob)
     }
 }
 
+bool StoreAugmentCatalystDrop(CCharEntity* PChar, uint16 itemid)
+{
+    // The Lua helper owns the catalyst catalog and returns false for normal
+    // retail items. A missing binding/table also returns false, preserving the
+    // normal treasure-pool path instead of deleting loot.
+    sol::protected_function bankDeposit = lua["xi"]["catalystBank"]["depositDrop"];
+    if (!bankDeposit.valid())
+    {
+        return false;
+    }
+
+    CLuaBaseEntity luaChar(PChar);
+    auto           result = bankDeposit(luaChar, itemid, 1);
+    if (result.valid())
+    {
+        return result.get<bool>();
+    }
+
+    sol::error error = result;
+    ShowErrorFmt("Catalyst bank deposit failed for item {}: {}", itemid, error.what());
+    return false;
+}
+
 void DistributeItem(CCharEntity* PChar, CBaseEntity* PEntity, uint16 itemid, uint16 dropRate)
 {
     TracyZoneScoped;
@@ -4913,7 +4937,10 @@ void DistributeItem(CCharEntity* PChar, CBaseEntity* PEntity, uint16 itemid, uin
 
     if (thDropRate > 0 && (1 + xirand::GetRandomNumber(10000)) <= thDropRate * settings::get<float>("map.DROP_RATE_MULTIPLIER"))
     {
-        PChar->PTreasurePool->addItem(itemid, PEntity);
+        if (!StoreAugmentCatalystDrop(PChar, itemid))
+        {
+            PChar->PTreasurePool->addItem(itemid, PEntity);
+        }
     }
 }
 

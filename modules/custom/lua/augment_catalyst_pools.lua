@@ -29,13 +29,12 @@ M.HL_RANK_TIER = { [1] = 0, [2] = 0, [3] = 1, [4] = 2, [5] = 2 }
 -- uniform-random within the tier pool, so a specific augment is still a grind.)
 M.DROP_RATE = 50
 
--- Lazily-built: pools[tier] = { itemId, ... }; labels[itemId] = 'stat name'.
-local pools, labels
+-- Lazily-built: pools[tier] = { itemId, ... }.
+local pools
 
 local function build()
     if pools then return end
     pools  = { [0] = {}, [1] = {}, [2] = {}, [3] = {}, [4] = {} }
-    labels = {}
     -- Force-reload so a hot-reloaded augment_catalog.lua is picked up without
     -- a map restart (mirrors the old shop.lua catalog pull).
     package.loaded['modules/custom/lua/augment_catalog'] = nil
@@ -44,7 +43,6 @@ local function build()
         for itemId, def in pairs(cat) do
             if type(def) == 'table' and def.tier ~= nil and pools[def.tier] then
                 table.insert(pools[def.tier], itemId)
-                labels[itemId] = def.label or 'augment'
             end
         end
     end
@@ -91,15 +89,7 @@ function M.roll(player, augTier, rate)
     if math.random(100) > (rate or M.DROP_RATE) then return end
 
     local itemId = pool[math.random(#pool)]
-    if player:getFreeSlotsCount() <= 0 then
-        player:printToPlayer('[Augments] An augment catalyst dropped, but your inventory is full!', xi.msg.channel.SYSTEM_3)
-        return
-    end
-    player:addItem({ id = itemId, quantity = 1 })
-    player:printToPlayer(
-        string.format('[Augments] Catalyst dropped: %s (Tier %d). Trade it to the Augment Moogle to apply.',
-            labels[itemId] or 'augment', augTier),
-        xi.msg.channel.SYSTEM_3)
+    require('modules/custom/lua/augment_catalyst_bank').depositDrop(player, itemId, 1)
 end
 
 return M

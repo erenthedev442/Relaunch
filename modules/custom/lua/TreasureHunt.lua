@@ -23,6 +23,7 @@
 require('modules/module_utils')
 require('scripts/globals/npc_util')
 local catalog = require('modules/custom/lua/treasure_catalog')
+local bank    = require('modules/custom/lua/augment_catalyst_bank')
 
 local m = Module:new('treasure_hunt')
 
@@ -126,8 +127,7 @@ local function openStrongbox(player, mapTier)
     for _ = 1, loot.catalysts do
         if #catalystPool > 0 then
             local itemId = catalystPool[math.random(#catalystPool)]
-            local ok, fit = pcall(function() return npcUtil.giveItem(player, itemId) end)
-            if ok and fit then
+            if bank.depositDrop(player, itemId, 1) then
                 given[#given + 1] = itemId
             else
                 missed = missed + 1
@@ -138,7 +138,7 @@ local function openStrongbox(player, mapTier)
         local consolation = missed * catalog.fullInventoryMarks
         player:setCharVar('HL_Points', (player:getCharVar('HL_Points') or 0) + consolation)
         player:printToPlayer(string.format(
-            '[Treasure] %d catalyst(s) would not fit - converted to +%d marks.',
+            '[Treasure] %d catalyst(s) could not be stored - converted to +%d marks.',
             missed, consolation), xi.msg.channel.SYSTEM_3)
     end
 

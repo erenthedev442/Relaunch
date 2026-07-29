@@ -901,6 +901,11 @@ void CMobEntity::DropItems(CCharEntity* PChar)
     // Adds an item to the treasure pool. Treasure pool will automatically kick out items if the pool is full (prioritizing non rare non ex items)
     auto AddItemToPool = [this, PChar](uint16 ItemID)
     {
+        if (charutils::StoreAugmentCatalystDrop(PChar, ItemID))
+        {
+            return;
+        }
+
         PChar->PTreasurePool->addItem(ItemID, this);
         PAI->EventHandler.triggerListener("TREASUREPOOL", CLuaBaseEntity(this), CLuaBaseEntity(PChar), ItemID);
     };

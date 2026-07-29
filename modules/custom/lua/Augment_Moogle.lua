@@ -40,6 +40,8 @@ local sage     = require('modules/custom/lua/augment_sage_catalog')
 local affinity = require('modules/custom/lua/augment_affinity_catalog')
 local waveProgress = require('modules/custom/lua/game_master_progress')
 local wh       = require('modules/custom/lua/weekly_hunts')
+local bank     = require('modules/custom/lua/augment_catalyst_bank')
+local itemNames = require('modules/custom/lua/augment_item_names')
 -----------------------------------
 local m = Module:new('augment_moogle')
 
@@ -290,6 +292,8 @@ end
 --   newMask       = int   (lock bitmask to stamp onto the rebuilt item)
 --   crystalNews   = { 'Accuracy +33', ... }  (labels that crystalized this trade)
 --   scour         = bool  (this pending action strips ALL augments)
+--   bankCatalysts = { {id, qty}, ... } (deducted atomically only on confirm)
+--   bankConsumed  = bool
 -- }
 -----------------------------------
 local playerState = {}
@@ -322,6 +326,13 @@ local function returnAll(player)
     clearState(player)
 end
 
+local function refundBankCatalysts(player, st)
+    if st.bankConsumed and st.bankCatalysts then
+        bank.refund(player, st.bankCatalysts)
+        st.bankConsumed = false
+    end
+end
+
 -----------------------------------
 -- Weapons that CANNOT take a standard augment: the trade would otherwise read as
 -- "success" (the item re-adds fine, passing the weak `if not augmented` check) but the
@@ -342,6 +353,328 @@ local NON_AUGMENTABLE =
 -----------------------------------
 local showConfirmMenu
 local showScourMenu
+local showBankMain
+
+-----------------------------------
+-- Persistent catalyst-bank menus
+-----------------------------------
+local BANK_CATEGORY_NAMES =
+{
+    [1] = 'Base Stats',
+    [2] = 'Melee',
+    [3] = 'Magic',
+    [4] = 'Defense',
+    [5] = 'Delays',
+    [6] = 'Duration',
+    [7] = 'Pets',
+    [8] = 'Potency',
+    [9] = 'Skills',
+    [10] = 'EXP / Capacity',
+    [11] = 'Job Utilities',
+}
+
+local bankCategories = {}
+for categoryId = 1, #BANK_CATEGORY_NAMES do
+    bankCategories[categoryId] = {}
+end
+for itemId, def in pairs(catalog) do
+    if bankCategories[def.cat] then
+        table.insert(bankCategories[def.cat],
+        {
+            itemId = itemId,
+            label  = def.label,
+        })
+    end
+end
+for _, entries in ipairs(bankCategories) do
+    table.sort(entries, function(left, right)
+        if left.label == right.label then
+            return left.itemId < right.itemId
+        end
+        return left.label < right.label
+    end)
+end
+
+local bankSelections = {}
+
+local function readableItemName(itemId)
+    local name = itemNames[itemId] or string.format('catalyst_%d', itemId)
+    name = name:gsub('_', ' ')
+    return name:gsub("(%a[%w']*)", function(word)
+        return word:sub(1, 1):upper() .. word:sub(2)
+    end)
+end
+
+local function sendBankMenu(player, menu)
+    player:timer(30, function(p)
+        p:customMenu(menu)
+    end)
+end
+
+local function getBankSelection(player)
+    local key = player:getName()
+    if not bankSelections[key] then
+        bankSelections[key] =
+        {
+            counts = {},
+            order  = {},
+            total  = 0,
+        }
+    end
+    return bankSelections[key]
+end
+
+local function clearBankSelection(player)
+    bankSelections[player:getName()] = nil
+end
+
+local function selectionRequests(selection)
+    local requests = {}
+    for _, itemId in ipairs(selection.order or {}) do
+        local qty = selection.counts[itemId] or 0
+        if qty > 0 then
+            table.insert(requests, { id = itemId, qty = qty })
+        end
+    end
+    return requests
+end
+
+local function printBankHelp(player)
+    player:printToPlayer(
+        '[ Arcane Augmenter ] Catalyst drops are stored here automatically and never take inventory slots.',
+        xi.msg.channel.SYSTEM_3)
+    player:printToPlayer(
+        '  Choose "Build an augment", select up to 5 stored catalysts, then trade one equipment item.',
+        xi.msg.channel.SYSTEM_3)
+    player:printToPlayer(string.format(
+        '  Catalysts are consumed only when you confirm. Augmentation cost: %d gil.',
+        GIL_COST), xi.msg.channel.SYSTEM_3)
+    player:printToPlayer(
+        '  Physical catalysts from before this update can be traded here without gear to deposit them.',
+        xi.msg.channel.SYSTEM_3)
+end
+
+local showBankCategories
+local showBankItems
+local showBankQuantity
+
+showBankItems = function(player, categoryId, page, selecting)
+    local balances  = bank.balances(player)
+    local selection = getBankSelection(player)
+    local available = {}
+    for _, entry in ipairs(bankCategories[categoryId] or {}) do
+        local balance = balances[entry.itemId] or 0
+        local selected = selection.counts[entry.itemId] or 0
+        local shown = selecting and (balance - selected) or balance
+        if shown > 0 then
+            table.insert(available, entry)
+        end
+    end
+
+    local pageSize = 2
+    local maxPage  = math.max(1, math.ceil(#available / pageSize))
+    page = math.max(1, math.min(page or 1, maxPage))
+    local options = {}
+    local first = (page - 1) * pageSize + 1
+    for index = first, math.min(first + pageSize - 1, #available) do
+        local entry = available[index]
+        local balance = balances[entry.itemId] or 0
+        local selected = selection.counts[entry.itemId] or 0
+        local shown = selecting and (balance - selected) or balance
+        table.insert(options,
+        {
+            string.format('%s [%d]', entry.label:sub(1, 22), shown),
+            function(p)
+                if selecting then
+                    showBankQuantity(p, entry, categoryId, page)
+                else
+                    p:printToPlayer(string.format(
+                        '[Arcane Bank] %s -- %s. Stored: %d.',
+                        readableItemName(entry.itemId), entry.label, balance),
+                        xi.msg.channel.SYSTEM_3)
+                    showBankItems(p, categoryId, page, false)
+                end
+            end,
+        })
+    end
+
+    if page < maxPage then
+        table.insert(options, { 'Next page', function(p) showBankItems(p, categoryId, page + 1, selecting) end })
+    end
+    if page > 1 then
+        table.insert(options, { 'Previous page', function(p) showBankItems(p, categoryId, page - 1, selecting) end })
+    end
+    table.insert(options, { 'Back', function(p) showBankCategories(p, 1, selecting) end })
+
+    sendBankMenu(player,
+    {
+        title = string.format('%s (%d/%d)', BANK_CATEGORY_NAMES[categoryId], page, maxPage),
+        options = options,
+        onCancelled = function(p) showBankMain(p) end,
+    })
+end
+
+showBankQuantity = function(player, entry, categoryId, page)
+    local balances  = bank.balances(player)
+    local selection = getBankSelection(player)
+    local remaining = math.min(
+        (balances[entry.itemId] or 0) - (selection.counts[entry.itemId] or 0),
+        MAX_CATALYST_COUNT - selection.total)
+    if remaining < 1 then
+        showBankItems(player, categoryId, page, true)
+        return
+    end
+
+    local options = {}
+    for qty = 1, remaining do
+        local addQty = qty
+        table.insert(options,
+        {
+            string.format('Add %d', addQty),
+            function(p)
+                local current = getBankSelection(p)
+                if not current.counts[entry.itemId] then
+                    table.insert(current.order, entry.itemId)
+                    current.counts[entry.itemId] = 0
+                end
+                current.counts[entry.itemId] = current.counts[entry.itemId] + addQty
+                current.total = current.total + addQty
+                p:printToPlayer(string.format(
+                    '[Arcane Bank] Added %s x%d to the augment (%d/%d slots).',
+                    entry.label, addQty, current.total, MAX_CATALYST_COUNT),
+                    xi.msg.channel.SYSTEM_3)
+                if current.total >= MAX_CATALYST_COUNT then
+                    p:printToPlayer(
+                        '[Arcane Bank] Selection full. Trade one equipment item to the Arcane Augmenter.',
+                        xi.msg.channel.SYSTEM_3)
+                else
+                    showBankCategories(p, 1, true)
+                end
+            end,
+        })
+    end
+    table.insert(options, { 'Back', function(p) showBankItems(p, categoryId, page, true) end })
+
+    sendBankMenu(player,
+    {
+        title = string.format('%s: choose amount', entry.label:sub(1, 20)),
+        options = options,
+        onCancelled = function(p) showBankCategories(p, 1, true) end,
+    })
+end
+
+showBankCategories = function(player, page, selecting)
+    local balances  = bank.balances(player)
+    local selection = getBankSelection(player)
+    local categories = {}
+    for categoryId, entries in ipairs(bankCategories) do
+        local total, types = 0, 0
+        for _, entry in ipairs(entries) do
+            local amount = balances[entry.itemId] or 0
+            if selecting then
+                amount = amount - (selection.counts[entry.itemId] or 0)
+            end
+            if amount > 0 then
+                total = total + amount
+                types = types + 1
+            end
+        end
+        if types > 0 then
+            table.insert(categories, { id = categoryId, total = total, types = types })
+        end
+    end
+
+    local pageSize = 2
+    local maxPage  = math.max(1, math.ceil(#categories / pageSize))
+    page = math.max(1, math.min(page or 1, maxPage))
+    local options = {}
+    local first = (page - 1) * pageSize + 1
+    for index = first, math.min(first + pageSize - 1, #categories) do
+        local category = categories[index]
+        table.insert(options,
+        {
+            string.format('%s [%d]', BANK_CATEGORY_NAMES[category.id], category.total),
+            function(p) showBankItems(p, category.id, 1, selecting) end,
+        })
+    end
+
+    if page < maxPage then
+        table.insert(options, { 'Next page', function(p) showBankCategories(p, page + 1, selecting) end })
+    end
+    if page > 1 then
+        table.insert(options, { 'Previous page', function(p) showBankCategories(p, page - 1, selecting) end })
+    end
+    if selecting and selection.total > 0 then
+        table.insert(options,
+        {
+            string.format('Ready - trade gear (%d)', selection.total),
+            function(p)
+                p:printToPlayer(string.format(
+                    '[Arcane Bank] %d catalyst%s selected. Trade one equipment item to continue.',
+                    selection.total, selection.total == 1 and '' or 's'),
+                    xi.msg.channel.SYSTEM_3)
+            end,
+        })
+    else
+        table.insert(options, { 'Back', function(p) showBankMain(p) end })
+    end
+
+    sendBankMenu(player,
+    {
+        title = selecting
+            and string.format('Build augment (%d/5)', selection.total)
+            or  string.format('Stored catalysts (%d/%d)', page, maxPage),
+        options = options,
+        onCancelled = function(p) showBankMain(p) end,
+    })
+end
+
+showBankMain = function(player)
+    local balances = bank.balances(player)
+    local total = 0
+    for _, quantity in pairs(balances) do
+        if quantity > 0 then
+            total = total + quantity
+        end
+    end
+    local selection = getBankSelection(player)
+
+    local options =
+    {
+        {
+            string.format('Browse bank (%d)', total),
+            function(p) showBankCategories(p, 1, false) end,
+        },
+        {
+            string.format('Build an augment (%d/5)', selection.total),
+            function(p) showBankCategories(p, 1, true) end,
+        },
+        {
+            'How this works',
+            function(p)
+                printBankHelp(p)
+                showBankMain(p)
+            end,
+        },
+    }
+    if selection.total > 0 then
+        table.insert(options,
+        {
+            'Clear selection',
+            function(p)
+                clearBankSelection(p)
+                p:printToPlayer('[Arcane Bank] Augment selection cleared.', xi.msg.channel.SYSTEM_3)
+                showBankMain(p)
+            end,
+        })
+    end
+
+    sendBankMenu(player,
+    {
+        title = string.format('Arcane Bank: %d catalysts', total),
+        options = options,
+    })
+end
 
 
 -----------------------------------
@@ -369,6 +702,23 @@ showConfirmMenu = function(player)
                 end
 
                 local st2 = getState(playerArg)
+                -- Bank-backed catalysts are consumed atomically only after the
+                -- player confirms. The roll was staged privately and nothing
+                -- below reveals crit/values until this deduction succeeds.
+                if st2.bankCatalysts and #st2.bankCatalysts > 0 then
+                    if not bank.consume(playerArg, st2.bankCatalysts) then
+                        returnAll(playerArg)
+                        playerArg:printToPlayer(
+                            'Your stored catalyst balance changed. Gear returned; no augmentation was applied, kupo!',
+                            xi.msg.channel.SYSTEM_3)
+                        return
+                    end
+                    st2.bankConsumed = true
+                    playerArg:printToPlayer(
+                        'Stored catalysts consumed. Resolving your augmentation now, kupo!',
+                        xi.msg.channel.SYSTEM_3)
+                end
+
                 -- exAugsBySlot is already in {id, value, cat} format -
                 -- pass straight through to addItem. The `cat` field is
                 -- ignored by addItem; it's only used by the Sage affinity
@@ -391,6 +741,7 @@ showConfirmMenu = function(player)
                 -- Never eat the player's gear: if the engine refused the
                 -- augmented item, hand everything back and charge no gil.
                 if not augmented then
+                    refundBankCatalysts(playerArg, st2)
                     returnAll(playerArg)
                     playerArg:printToPlayer('Augmentation failed - gear and catalysts returned, no gil charged, kupo!', xi.msg.channel.SYSTEM_3)
                     return
@@ -404,6 +755,10 @@ showConfirmMenu = function(player)
                     augmented:setExDataRaw({ [SIG_HEAD_BYTE] = 0, [LOCK_MASK_BYTE] = st2.newMask })
                 end
 
+                -- The rebuilt gear now exists. Clear the retryable held-item
+                -- state before optional achievement/message callbacks so a
+                -- later script error can never duplicate the equipment.
+                clearState(playerArg)
                 playerArg:delGil(GIL_COST)
 
                 -- Consume the crit token (Maat's Cap, or a legacy Maat's Blessing) if it guaranteed this crit.
@@ -438,7 +793,6 @@ showConfirmMenu = function(player)
                     playerArg:printToPlayer(string.format('%s CRYSTALIZED: [%s] is now locked at max -- re-rolls can no longer touch it, kupo!', xi.icon.STAR_LARGE, lbl),
                         xi.msg.channel.SYSTEM_3)
                 end
-                clearState(playerArg)
             end,
         },
         {
@@ -558,11 +912,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 end
                 return
             end
-            player:printToPlayer(string.format('[ Augment Moogle ] Trade me 1 piece of gear + up to %d catalyst items (incl. stacks), kupo!', MAX_CATALYST_COUNT), xi.msg.channel.SYSTEM_3)
-            player:printToPlayer('  Each catalyst = 1 augment line, up to 5 per item -- stack one type (5 of one = 5x) or mix several. Cost: 10,000 gil.', xi.msg.channel.SYSTEM_3)
-            player:printToPlayer('  See the full catalyst -> augment list on the wiki: www.ffxi-legendary.com/progression/augments', xi.msg.channel.SYSTEM_3)
-            player:printToPlayer('  Perfect (max) rolls can CRYSTALIZE (lock forever, by Sage rank). Crystalized slots are kept free on re-rolls.', xi.msg.channel.SYSTEM_3)
-            player:printToPlayer(string.format('  Trade the gear ALONE to SCOUR it (strip every augment, incl. crystalized, for %d gil) and start anew.', SCOUR_GIL_COST), xi.msg.channel.SYSTEM_3)
+            showBankMain(player)
         end,
 
         onTrade = function(player, npc, trade)
@@ -606,8 +956,48 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             end
 
             if gearId == nil then
-                player:printToPlayer('Include 1 equipment piece in the trade, kupo!', xi.msg.channel.SYSTEM_3)
+                -- Migration/convenience path for physical catalysts already
+                -- owned before automatic banking was introduced.
+                if totalCatalysts > 0 then
+                    local requests = {}
+                    for _, itemId in ipairs(catalystOrder) do
+                        table.insert(requests, { id = itemId, qty = catalystCounts[itemId] or 0 })
+                    end
+                    player:tradeComplete()
+                    if not bank.depositBatch(player, requests, false) then
+                        for _, request in ipairs(requests) do
+                            player:addItem({ id = request.id, quantity = request.qty })
+                        end
+                        player:printToPlayer(
+                            '[Arcane Bank] Deposit failed; all catalyst items were returned.',
+                            xi.msg.channel.SYSTEM_3)
+                        return
+                    end
+                    player:printToPlayer(string.format(
+                        '[Arcane Bank] Deposit complete: %d catalyst%s stored.',
+                        totalCatalysts, totalCatalysts == 1 and '' or 's'), xi.msg.channel.SYSTEM_3)
+                    return
+                end
+                player:printToPlayer('Trade catalyst materials to deposit them, or select a bank augment first, kupo!', xi.msg.channel.SYSTEM_3)
                 return
+            end
+
+            -- A bank selection is made before the gear trade. Inject it into
+            -- the existing validation/roll pipeline so bank and legacy
+            -- physical catalysts produce identical augments.
+            local bankMode = false
+            local selectedBankCatalysts = {}
+            if totalCatalysts == 0 then
+                local selection = getBankSelection(player)
+                if selection.total > 0 then
+                    bankMode = true
+                    selectedBankCatalysts = selectionRequests(selection)
+                    for _, request in ipairs(selectedBankCatalysts) do
+                        catalystCounts[request.id] = request.qty
+                        table.insert(catalystOrder, request.id)
+                        totalCatalysts = totalCatalysts + request.qty
+                    end
+                end
             end
 
             -- Reject weapons that can't actually take a standard augment (Death Penalty
@@ -650,7 +1040,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             end
 
             if totalCatalysts == 0 then
-                player:printToPlayer('Include at least 1 catalyst item, kupo! (Or trade the gear alone once it has crystalized augments to scour it.)', xi.msg.channel.SYSTEM_3)
+                player:printToPlayer(
+                    'Select stored catalysts from my "Build an augment" menu before trading gear, kupo!',
+                    xi.msg.channel.SYSTEM_3)
                 return
             end
 
@@ -1018,12 +1410,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 itemId        = gearId,
                 exAugsBySlot  = exAugsBySlot,    -- {id,value,cat} per FINAL slot (locked first)
                 labelSummary  = labelSummary,    -- one string per catalyst type
-                catalystsHeld = catalystsHeld,
+                catalystsHeld = bankMode and {} or catalystsHeld,
+                bankCatalysts = bankMode and selectedBankCatalysts or nil,
+                bankConsumed  = false,
                 isCrit        = isCrit,          -- for the confirm screen
                 usedCritToken = usedCritToken,   -- consume Maat's Blessing on success
                 newMask       = newMask,         -- lock bitmask to stamp on the rebuilt item
                 crystalNews   = crystalNews,     -- crystalized labels to announce
             }
+            if bankMode then
+                clearBankSelection(player)
+            end
 
             if lockedCount > 0 then
                 player:printToPlayer(string.format('%d crystalized slot%s preserved. New rolls fill the rest -- results revealed on confirm, kupo!',

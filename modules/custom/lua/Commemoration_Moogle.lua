@@ -16,6 +16,7 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local augmentCatalog = require('modules/custom/lua/augment_catalog')
 local itemNames      = require('modules/custom/lua/augment_item_names')
+local catalystBank   = require('modules/custom/lua/augment_catalyst_bank')
 local m              = Module:new('commemoration_moogle')
 local S              = xi.msg.channel.SYSTEM_3
 
@@ -160,9 +161,9 @@ local function claimCatalyst(player, entry, categoryId, page)
         return
     end
 
-    if not player:addItem(entry.itemId, 1) then
+    if not catalystBank.depositDrop(player, entry.itemId, 1) then
         player:printToPlayer(
-            'Your inventory is full, kupo! Make room and try again; your allowance was not used.', S)
+            'The Arcane Augmenter could not store that catalyst. Your allowance was not used.', S)
         showCatalysts(player, categoryId, page)
         return
     end
@@ -172,7 +173,7 @@ local function claimCatalyst(player, entry, categoryId, page)
     player:setCharVar(TOTAL_VAR, used)
     player:setCharVar(itemVar(entry.itemId), itemCount)
     player:printToPlayer(string.format(
-        '[Commemoration] %s received for %s. This choice is final. (%d/%d of this type; %d/%d total)',
+        '[Commemoration] %s stored for %s. This choice is final. (%d/%d of this type; %d/%d total)',
         entry.itemName, entry.effect, itemCount, ITEM_LIMIT, used, TOTAL_LIMIT), S)
 
     if used >= TOTAL_LIMIT then
