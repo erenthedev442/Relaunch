@@ -3,10 +3,13 @@
 -- desc: Grants the zone-appropriate regional buff (Signet / Sanction /
 --       Sigil / Ionis) plus Refresh, Regen, Regain, Composure, and
 --       Reraise III to the player.
---       Refresh = 10% of max MP per tick
---       Regen   = 10% of max HP per tick
+--       Refresh = 10% of max MP per tick (main job below 99 only)
+--       Regen   = 10% of max HP per tick (main job below 99 only)
 --       Regain  = scales with player level (1 per 10 levels, min 1)
 --       Reraise = tier III (power 3, highest HP restored on death)
+--       Regen and Refresh are a leveling aid: they are applied only while
+--       the main job is below 99. At 99 they are skipped; the regional buff,
+--       Regain, Composure, and Reraise III still apply at every level.
 --
 --       Regional buff is chosen from the player's current region:
 --         Vana'diel conquest regions (0..22)   -> Signet
@@ -73,15 +76,22 @@ commandObj.onTrigger = function(player, target)
     -- Duration: 5 hours (18000 seconds)
     local duration = 18000
 
+    -- Regen/Refresh are a leveling aid only: applied while the main job is
+    -- BELOW 99. At 99 (endgame) they are skipped -- the regional buff, Regain,
+    -- Composure, and Reraise III still apply at every level.
+    local sustainApplies = level < 99
+
     -- Apply the regional buff that matches the target's current zone.
     local regionalId, regionalName = regionalEffect(targ:getCurrentRegion())
     targ:addStatusEffect(regionalId, { power = 1, duration = duration, origin = player, tick = 3, subType = 0, subPower = 0 })
 
-    -- Apply Refresh
-    targ:addStatusEffect(xi.effect.REFRESH, { power = refreshPower, duration = duration, origin = player, tick = 3, subType = 0, subPower = 0 })
+    if sustainApplies then
+        -- Apply Refresh
+        targ:addStatusEffect(xi.effect.REFRESH, { power = refreshPower, duration = duration, origin = player, tick = 3, subType = 0, subPower = 0 })
 
-    -- Apply Regen
-    targ:addStatusEffect(xi.effect.REGEN, { power = regenPower, duration = duration, origin = player, tick = 3, subType = 0, subPower = 0 })
+        -- Apply Regen
+        targ:addStatusEffect(xi.effect.REGEN, { power = regenPower, duration = duration, origin = player, tick = 3, subType = 0, subPower = 0 })
+    end
 
     -- Apply Regain
     targ:addStatusEffect(xi.effect.REGAIN, { power = regainPower, duration = duration, origin = player, tick = 3, subType = 0, subPower = 0 })
@@ -97,10 +107,14 @@ commandObj.onTrigger = function(player, target)
     -- expires with the other buffs after 5 hours if unused.
     targ:addStatusEffect(xi.effect.RERAISE, { power = 3, duration = duration, origin = player, tick = 0, subType = 0, subPower = 0 })
 
-    -- Confirm message
+    -- Confirm message. Regen/Refresh only appear when they were actually
+    -- applied (main job below 99); at 99 they are called out as skipped.
+    local sustainMsg = sustainApplies
+        and string.format('Regen: %d/tick | Refresh: %d/tick | ', regenPower, refreshPower)
+        or 'Regen/Refresh: skipped at Lv.99 | '
     targ:printToPlayer(string.format(
-        'Buffs applied! %s | Regen: %d/tick | Refresh: %d/tick | Regain: %d/tick | Composure | Reraise III | Duration: 5 hours',
-        regionalName, regenPower, refreshPower, regainPower
+        'Buffs applied! %s | %sRegain: %d/tick | Composure | Reraise III | Duration: 5 hours',
+        regionalName, sustainMsg, regainPower
     ))
 end
 
