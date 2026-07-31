@@ -235,29 +235,29 @@ C.NM_LOOT =
 {
     -- Rich pools (retail Tier-III Voidwalkers): gear + signature material.
     -- Earrings have a separate roll so they never dilute signature equipment.
-    Krabkatoa    = { rare = { 11502, 11632 },               earrings = SORTIE_PLUS2_EARRINGS, uncommon = { 2884, 2879, 4172, 4174, 4173, 4175 } },
-    Blobdingnag  = { rare = { 11631, 11585 },               earrings = SORTIE_PLUS2_EARRINGS, uncommon = { 2876, 2882, 4172, 4174, 4173, 4175 } },
-    Dawon        = { rare = { 15859, 16151 },               earrings = SORTIE_PLUS2_EARRINGS, uncommon = { 2570, 4172, 4174, 4173, 4175 } },
-    Lord_Ruthven = { rare = { 11628, 15953 },               earrings = SORTIE_PLUS2_EARRINGS, uncommon = { 2883, 2877, 4172, 4174, 4173, 4175 } },
-    Yilbegan     = { rare = { 11629, 11633, 14162, 19248 }, earrings = SORTIE_PLUS2_EARRINGS, uncommon = { 2878, 4172, 4174, 4173, 4175 } },
+    Krabkatoa    = { rare = { 11502, 11632, 26970, 27724, 20827  },               earrings = SORTIE_PLUS2_EARRINGS, uncommon = { 2884, 2879, 4172, 4174, 4173, 4175 } },
+    Blobdingnag  = { rare = { 11631, 11585, 24188, 24131, 26400  },               earrings = SORTIE_PLUS2_EARRINGS, uncommon = { 2876, 2882, 4172, 4174, 4173, 4175 } },
+    Dawon        = { rare = { 15859, 16151, 28015, 20945  },               earrings = SORTIE_PLUS2_EARRINGS, uncommon = { 2570, 4172, 4174, 4173, 4175 } },
+    Lord_Ruthven = { rare = { 11628, 15953, 27775, 20672  },               earrings = SORTIE_PLUS2_EARRINGS, uncommon = { 2883, 2877, 4172, 4174, 4173, 4175 } },
+    Yilbegan     = { rare = { 11629, 11633, 14162, 19248, 25600, 21104  }, earrings = SORTIE_PLUS2_EARRINGS, uncommon = { 2878, 4172, 4174, 4173, 4175 } },
     -- Single-gear pools (retail Tier-II): the signature equip + shared consumables.
     -- T2 -> Sortie +1 earring sprinkle.
-    Yacumama     = { rare = { 11586 }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Farruca_Fly  = { rare = { 11635 }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Skuld        = { rare = { 11544 }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Capricornus  = { rare = { 15954 }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Lamprey_Lord = { rare = { 16054 }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Jyeshtha     = { rare = { 15955 }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Feuerunke    = { rare = { 16056 }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Tammuz       = { rare = { 16307 }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Erebus       = { rare = { 11587 }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Shoggoth     = { rare = { 19245 }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Yacumama     = { rare = { 11586, 27857, 26721, 21712  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Farruca_Fly  = { rare = { 11635, 28287, 25654, 21221  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Skuld        = { rare = { 11544, 24178, 28152, 21228  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Capricornus  = { rare = { 15954, 28013, 28174, 28649  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Lamprey_Lord = { rare = { 16054, 28016, 28154, 26487  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Jyeshtha     = { rare = { 15955, 24128, 21528, 26403  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Feuerunke    = { rare = { 16056, 27725, 21568  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Tammuz       = { rare = { 16307, 24182, 21570  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Erebus       = { rare = { 11587, 24166, 21569  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Shoggoth     = { rare = { 19245, 27096, 28155, 28648  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
     -- Retail-empty NMs: seeded so every NM has a full table (see note above).
     -- T1 -> Sortie NQ earring sprinkle (entry-tier farm target).
-    Aglaophotis  = { rare = { 15544 }, earrings = SORTIE_NQ_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Gjenganger   = { rare = { 942 },   earrings = SORTIE_NQ_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Gorehound    = { rare = { 942 },   earrings = SORTIE_NQ_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Raker_Bee    = { rare = { 942 },   earrings = SORTIE_NQ_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Aglaophotis  = { rare = { 15544, 26702, 21071  }, earrings = SORTIE_NQ_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Gjenganger   = { rare = { 942, 24274, 21529  },   earrings = SORTIE_NQ_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Gorehound    = { rare = { 942, 28280, 25853, 21256  },   earrings = SORTIE_NQ_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Raker_Bee    = { rare = { 942, 28296, 27720, 22042  },   earrings = SORTIE_NQ_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
 }
 C.EARRING_ROLL_CHANCE = 20
 function C.nmLoot(name)
