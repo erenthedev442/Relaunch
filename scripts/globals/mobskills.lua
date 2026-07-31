@@ -1588,6 +1588,16 @@ end
 -- Used as a conditional filter for target:takeDamage so the target doesn't take chip damage through shadows.
 xi.mobskills.processDamage = function(actor, target, skill, action, info)
     if info.hitsLanded > 0 then
+        local areaOfEffectResistance = xi.spells.damage.calculateAreaOfEffectResistance(target, skill)
+
+        if areaOfEffectResistance ~= 1 then
+            info.damage = math.floor(info.damage * areaOfEffectResistance)
+
+            if info.hybridDamage and info.hybridDamage ~= 0 then
+                info.hybridDamage = math.floor(info.hybridDamage * areaOfEffectResistance)
+            end
+        end
+
         target:updateEnmityFromDamage(actor, info.damage)
 
         -- Tell the summoner the true number when a magical BP punches past the 131k
@@ -1734,13 +1744,48 @@ xi.mobskills.mobBuffMove = function(mob, typeEffect, power, tick, duration, subT
     return xi.msg.basic.SKILL_NO_EFFECT
 end
 
+-- Action-packet HP fields are 17-bit (max 131,071). Heals above that still land
+-- via addHP but the combat log shows the wrapped value (e.g. 375,000 -> 112,856).
+local PACKET_HP_PARAM_MAX = 131071
+
+---@param healer CBaseEntity entity that received the heal (usually the mob itself)
+---@param healAmount number full HP restored server-side
+xi.mobskills.reportHealOverCap = function(healer, healAmount)
+    if not healAmount or healAmount <= PACKET_HP_PARAM_MAX then
+        return
+    end
+
+    local enmityList = healer:getEnmityList()
+    if not enmityList then
+        return
+    end
+
+    local seen = {}
+    local msg = string.format(
+        '%s recovered %d HP! (combat log caps at 131,071)',
+        healer:getName(), healAmount)
+
+    for _, entry in pairs(enmityList) do
+        local player = entry.entity
+        if
+            player and
+            player:isPC() and
+            not seen[player:getID()]
+        then
+            seen[player:getID()] = true
+            player:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
+        end
+    end
+end
+
 xi.mobskills.mobHealMove = function(target, healAmount)
     healAmount = math.min(healAmount, target:getMaxHP() - target:getHP())
 
     target:wakeUp()
     target:addHP(healAmount)
+    xi.mobskills.reportHealOverCap(target, healAmount)
 
-    return healAmount
+    return math.min(healAmount, PACKET_HP_PARAM_MAX)
 end
 
 xi.mobskills.calculateDuration = function(tp, minimum, maximum)

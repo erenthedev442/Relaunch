@@ -136,6 +136,12 @@ describe('Level-scaled direct magic tuning', function()
             makeCaster(99, true, xi.job.BLM), target, fireV))
         assert(not catalog.isDirectSpellEligible(
             makeCaster(99, true, xi.job.SAM), target, fireV))
+        assert(catalog.isDirectSpellEligible(
+            makeCaster(99, true, xi.job.RDM), target,
+            makeSpell(xi.magic.spell.FIRE_V, xi.skill.ELEMENTAL_MAGIC, 91, xi.job.RDM)))
+        assert(catalog.isDirectSpellEligible(
+            makeCaster(99, true, xi.job.BLM), target,
+            makeSpell(xi.magic.spell.BLIZZARD_VI, xi.skill.ELEMENTAL_MAGIC, 99, xi.job.BLM)))
     end)
 
     it('excludes Helix, dark magic, non-player casts, and non-mob targets', function()

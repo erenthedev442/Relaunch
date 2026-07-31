@@ -168,7 +168,15 @@ local function finishChallenge(mob, state)
     if challengeSucceeded(mob, state) then
         announce(state, 'Counter successful — the mark is staggered!')
         pcall(function()
-            mob:addStatusEffect(xi.effect.TERROR, { duration = 6, origin = ownerFor(state) })
+            local owner = ownerFor(state)
+            -- Abyssea marks pattern: Terror alone does not interrupt a TP move
+            -- already in CMobSkillState (status_effect_container skips Inactive
+            -- while a mobskill is active). stun() force-swaps to Inactive and
+            -- blocks new skills for the window; drain TP so bombs cannot detonate
+            -- the instant the stun ends.
+            mob:stun(10000)
+            mob:addStatusEffect(xi.effect.TERROR, { duration = 10, origin = owner })
+            mob:setTP(0)
             mob:addMod(xi.mod.DEF, -200)
             mob:addMod(xi.mod.MDEF, -100)
             mob:timer(10000, function(target)

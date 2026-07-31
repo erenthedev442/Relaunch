@@ -374,7 +374,7 @@ catalog.mythicCostsSum =
 
 catalog.relicChains =
 {
-    { type = 'Hand-to-Hand', jobs = 'MNK', name = 'Spharai', base = 19746, s1 = 20480, s2 = 20481, s3 = 20509 },
+    { type = 'Hand-to-Hand', jobs = 'MNK/PUP', name = 'Spharai', base = 19746, s1 = 20480, s2 = 20481, s3 = 20509 },
     { type = 'Dagger', jobs = 'RDM/THF/BRD/DNC', name = 'Mandau', base = 19747, s1 = 20555, s2 = 20556, s3 = 20583 },
     { type = 'Sword', jobs = 'RDM/PLD/BLU', name = 'Excalibur', base = 19748, s1 = 20645, s2 = 20646, s3 = 20685 },
     { type = 'Great Sword', jobs = 'WAR/PLD/DRK/RUN', name = 'Ragnarok', base = 19749, s1 = 20745, s2 = 20746, s3 = 21683 },
@@ -385,9 +385,9 @@ catalog.relicChains =
     { type = 'Katana', jobs = 'NIN', name = 'Kikoku', base = 19754, s1 = 20970, s2 = 20971, s3 = 21906 },
     { type = 'Great Katana', jobs = 'SAM', name = 'Amanomurakumo', base = 19755, s1 = 21015, s2 = 21016, s3 = 21954 },
     { type = 'Club', jobs = 'WHM/GEO', name = 'Mjollnir', base = 19756, s1 = 21060, s2 = 21061, s3 = 21077 },
-    { type = 'Staff', jobs = 'BLM/SMN', name = 'Claustrum', base = 19757, s1 = 21135, s2 = 21136, s3 = 22060 },
+    { type = 'Staff', jobs = 'BLM/SMN/SCH', name = 'Claustrum', base = 19757, s1 = 21135, s2 = 21136, s3 = 22060 },
     { type = 'Archery', jobs = 'RNG/SAM', name = 'Yoichinoyumi', base = 19759, s1 = 21211, s2 = 22115, s3 = 22129 },
-    { type = 'Marksmanship', jobs = 'RNG', name = 'Annihilator', base = 19758, s1 = 21261, s2 = 21267, s3 = 22140 },
+    { type = 'Marksmanship', jobs = 'RNG/COR', name = 'Annihilator', base = 19758, s1 = 21261, s2 = 21267, s3 = 22140 },
 }
 
 -- The repeat Relic Forge owns the canonical retail currency-family mapping.

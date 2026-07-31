@@ -95,6 +95,65 @@ function M.refund(player, requests)
     return M.depositBatch(player, requests, true)
 end
 
+-- Move stored catalysts back into inventory (Dynamis currency, etc.).
+-- Deducts from the bank first, then addItem; refunds the bank if the
+-- inventory grant fails so balances cannot be lost.
+function M.withdraw(player, itemId, quantity, silent)
+    quantity = math.floor(tonumber(quantity) or 0)
+    if player == nil or not catalog[itemId] or quantity < 1 then
+        return false, 0
+    end
+
+    local have = M.balances(player)[itemId] or 0
+    if have < 1 then
+        return false, 0
+    end
+
+    quantity = math.min(quantity, have)
+    if player:getFreeSlotsCount() < 1 then
+        if not silent then
+            player:printToPlayer(
+                '[Arcane Bank] Inventory full — free a slot before withdrawing.', S)
+        end
+        return false, 0
+    end
+
+    -- Conservative room estimate: each free slot can hold one full stack (99
+    -- for Dynamis currency / most catalysts). addItem failure still refunds.
+    local maxCarry = player:getFreeSlotsCount() * 99
+    quantity = math.min(quantity, maxCarry)
+    if quantity < 1 then
+        return false, 0
+    end
+
+    if not M.consume(player, { { id = itemId, qty = quantity } }) then
+        if not silent then
+            player:printToPlayer(
+                '[Arcane Bank] Withdraw failed — stored balance changed.', S)
+        end
+        return false, 0
+    end
+
+    local added = player:addItem({ id = itemId, quantity = quantity })
+    if not added then
+        M.deposit(player, itemId, quantity, true)
+        if not silent then
+            player:printToPlayer(
+                '[Arcane Bank] Could not place items in inventory — nothing withdrawn.', S)
+        end
+        return false, 0
+    end
+
+    local balance = M.balances(player)[itemId] or 0
+    if not silent then
+        player:printToPlayer(string.format(
+            '[Arcane Bank] Withdrew %s x%d. Remaining stored: %d.',
+            readableItemName(itemId), quantity, balance), S)
+    end
+
+    return true, quantity
+end
+
 xi.catalystBank = M
 
 return M

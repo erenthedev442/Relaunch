@@ -12,11 +12,14 @@
 --
 -- Sets xi._any_invasion_active = true/false so the reraise module can
 -- see when either a scheduled or GM invasion is running.
+--
+-- RETIRED for launch — keep in sync with modules/custom/lua/Invasion.lua.
 -----------------------------------
 local catalog   = require('modules/custom/lua/invasion_catalog')
 local LOOT_POOL = require('modules/custom/lua/invasion_loot_pool')
 local LOOT_POOL_SIZE = #LOOT_POOL
 local DROP_CHANCE = 15  -- % per mob kill
+local RETIRED = true
 
 ---@type TCommand
 local commandObj = {}
@@ -223,6 +226,10 @@ commandObj.onTrigger = function(player, a1, ...)
     local sub = (a1 or ''):lower()
 
     if sub == 'start' then
+        if RETIRED then
+            player:printToPlayer('[Invasion] Al Zahbi Invasion is disabled for launch.')
+            return
+        end
         if player:getZoneID() ~= catalog.zoneId then
             player:printToPlayer(string.format(
                 '[Invasion] You must be in Al Zahbi (zone %d) to start the invasion.',
@@ -256,6 +263,10 @@ commandObj.onTrigger = function(player, a1, ...)
         player:printToPlayer('[Invasion] Invasion aborted - all Voidsent despawned.')
 
     else
+        if RETIRED and not state then
+            player:printToPlayer('[Invasion] Disabled for launch. No active invasion.')
+            return
+        end
         if not state then
             player:printToPlayer('[Invasion] No active invasion. Usage: !invasion start | end')
         else

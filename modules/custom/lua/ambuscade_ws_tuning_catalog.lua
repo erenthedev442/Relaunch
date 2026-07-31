@@ -4,13 +4,20 @@
 
 local catalog =
 {
-    DAMAGE_CAP             = 99999,
-    AOE_DAMAGE_CAP         = 99999,
-    DAMAGE_MULTIPLIER      = 110,
-    DAMAGE_CAP_LOCAL_VAR   = 'AmbuscadeWsDamageCap',
-    DAMAGE_MULT_LOCAL_VAR  = 'AmbuscadeWsDamageMultiplier',
-    BY_WS                   = {},
-    ITEM                    =
+    -- Every weaponskill while a final Ambuscade weapon is equipped soft-caps
+    -- here. The linked native WS may then apply DAMAGE_MULTIPLIER past this
+    -- ceiling, and is hard-capped at LINKED_DAMAGE_CAP.
+    DAMAGE_CAP                  = 99999,
+    LINKED_DAMAGE_CAP           = 149999,
+    AOE_DAMAGE_CAP              = 99999,
+    LINKED_AOE_DAMAGE_CAP       = 149999,
+    DAMAGE_MULTIPLIER           = 110,
+    DAMAGE_CAP_LOCAL_VAR        = 'AmbuscadeWsDamageCap',
+    BASE_DAMAGE_CAP_LOCAL_VAR   = 'AmbuscadeWsBaseDamageCap',
+    DAMAGE_MULT_LOCAL_VAR       = 'AmbuscadeWsDamageMultiplier',
+    BY_WS                       = {},
+    BY_ITEM                     = {},
+    ITEM                        =
     {
         KARAMBIT    = 21519,
         TAURET      = 21565,
@@ -47,6 +54,7 @@ local entries =
 
 for _, entry in ipairs(entries) do
     catalog.BY_WS[entry.wsId] = entry
+    catalog.BY_ITEM[entry.itemId] = entry
 end
 
 catalog.entries = entries
@@ -58,6 +66,19 @@ catalog.getEntry = function(itemId, wsId, slot)
     end
 
     return nil
+end
+
+catalog.getFinalWeapon = function(itemId, slot)
+    local entry = catalog.BY_ITEM[itemId]
+    if entry and entry.slot == slot then
+        return entry
+    end
+
+    return nil
+end
+
+catalog.isFinalWeapon = function(itemId, slot)
+    return catalog.getFinalWeapon(itemId, slot) ~= nil
 end
 
 return catalog

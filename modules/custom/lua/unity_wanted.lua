@@ -141,6 +141,9 @@ local function spawnWantedNm(player, nm, pos)
         rotation             = spawnPos.rot,
         minLevel             = catalog.combatLevel or nm.minLv,
         maxLevel             = catalog.combatLevel or nm.maxLv,
+        -- Solo-sanitized TP lists (unity_wanted_skill_lists.sql). Omitting this
+        -- falls back to the pool's family list (charm/terror/wipe skills intact).
+        skillList            = nm.skillList or 0,
         detection            = xi.detects.SIGHT_AND_HEARING,
         isAggroable          = true,
         releaseIdOnDisappear = true,

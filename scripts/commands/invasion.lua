@@ -24,6 +24,11 @@ commandObject.onUseCommand = function(player, params)
 
     local sub = (params[1] or ''):lower()
 
+    if api.isRetired and api.isRetired() and sub == 'start' then
+        player:printToPlayer('[Invasion] Al Zahbi Invasion is disabled for launch.')
+        return
+    end
+
     if sub == 'start' then
         if player:getZoneID() ~= catalog.zoneId then
             player:printToPlayer(string.format(
@@ -47,6 +52,10 @@ commandObject.onUseCommand = function(player, params)
         end
 
     else
+        if api.isRetired and api.isRetired() and not api.isActive() then
+            player:printToPlayer('[Invasion] Disabled for launch. No active invasion.')
+            return
+        end
         local info = api.info()
         if not info then
             player:printToPlayer('[Invasion] No active invasion. Use: !invasion start (in GM Home) or !invasion end')

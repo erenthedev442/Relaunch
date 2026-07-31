@@ -186,12 +186,17 @@ PROGRESSION = [
 # instead of dropping the whole page.
 def _count_forge_gate_targets() -> dict[str, int]:
     root = Path(__file__).resolve().parents[2]
-    out = {"gf_total": 0, "vw_total": 0, "dungeon_total": 0}
+    # gf_empy_total = T1-T2 only (Empyrean Stage I). T3-T4 are Aeonic-era.
+    out = {"gf_total": 0, "gf_empy_total": 0, "vw_total": 0, "dungeon_total": 0}
     try:
         text = (root / "modules/custom/lua/Geas_Fete.lua").read_text(encoding="utf-8", errors="replace")
         m = re.search(r"^local NM_CATALOG = \{(.*?)\n\}\n", text, re.MULTILINE | re.DOTALL)
         if m:
-            out["gf_total"] = len(re.findall(r"gid\s*=\s*\d+", m.group(1)))
+            for block in re.findall(r"\{[^{}]*gid\s*=\s*\d+[^{}]*\}", m.group(1)):
+                out["gf_total"] += 1
+                tm = re.search(r"tier\s*=\s*(\d+)", block)
+                if tm and int(tm.group(1)) <= 2:
+                    out["gf_empy_total"] += 1
     except OSError:
         pass
     try:
@@ -245,8 +250,8 @@ def _first_empy_roster(cv, _):
 FORGE_GATES: list[dict] = [
     {"cat": "Relic",     "stage": "III", "label": "Wave Master Nightmare cleared",
      "check": lambda cv, _: (_cv(cv, "GM_Wave_Clears") & 16) != 0},
-    {"cat": "Empyrean", "stage": "I",   "label": "All Geas Fete bosses killed at least once",
-     "check": lambda cv, t: _cv(cv, "GF_Unique_Kills") >= (t["gf_total"] or 10**9)},
+    {"cat": "Empyrean", "stage": "I",   "label": "All Geas Fete T1-T2 NMs killed at least once",
+     "check": lambda cv, t: _cv(cv, "GF_Empyrean_Kills") >= (t["gf_empy_total"] or 10**9)},
     {"cat": "Empyrean", "stage": "II",  "label": "Voidspire Floor 100 reached",
      "check": lambda cv, _: _cv(cv, "Voidspire_Best_Floor") >= 100},
     {"cat": "Empyrean", "stage": "III",
@@ -1087,7 +1092,7 @@ def progress(charid: int, request: Request):
                 "  varname IN ('HL_Tier','HL_Points','Prestige_Ascensions_Total','Apex_HighestTier',"
                 "  'Augment_Mastery','Tower_Best_Floor','Voidspire_Best_Floor','Custom_NM_Kills','Paragon_Level',"
                 "  'Unity_NMs_Conquered','Fellow_Level','MasterySigils','Col_Best_Rating','Inv_Kills','DI_Kills',"
-                "  'GF_Unique_Kills','VW_Unique_Kills','Dungeon_Unique_Clears','Maat_Kills','Gauntlet_Clears',"
+                "  'GF_Unique_Kills','GF_Empyrean_Kills','VW_Unique_Kills','Dungeon_Unique_Clears','Maat_Kills','Gauntlet_Clears',"
                 "  'Nyzul_F100_Cleared','Title_Apex_Hunter','WF_Relic_Final','WF_Mythic_Final',"
                 "  'WF_Empyrean_Final','WF_Aeonic_Final') "
                 "  OR varname LIKE 'PW_Trial%%' OR varname LIKE 'Paragon_Perk_%%' OR varname LIKE 'Rebirth_Count_%%'"

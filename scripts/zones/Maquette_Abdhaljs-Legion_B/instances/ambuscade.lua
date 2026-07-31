@@ -14,18 +14,26 @@ local mechanics = require('modules/custom/lua/mob_mechanics_library')
 -----------------------------------
 local instanceObject = {}
 
--- E/N are entry-level encounters. Intense VD is the cosmetic tier and carries
--- roughly the same aggregate HP as a Tier-2 Abyssea marks encounter:
--- (280k Breadwinner + 4x60k Urchins) * 15.4 = 8.008M HP. Intense D bridges
--- that tier at the Tier-1 Abyssea HP budget; Regular and Light stay below it.
+-- Difficulty ladder (easy → hard): Light VE … Regular VD ≤ Intense N < Intense D < Intense VD.
+-- Intense VD is the endgame tier (~Tier-2 Abyssea HP budget at 15.4×); entry tiers stay
+-- approachable so Warbles / Thrashing Assault do not one-shot fresh groups.
 local DIFF_HP_SCALE =
 {
     -- Intense VD→VE
-    [1]  = 15.4, [2]  = 8.7,  [3]  = 1.0,  [4]  = 0.8,  [5]  = 0.7,
-    -- Regular VD→VE
-    [6]  = 4.0,  [7]  = 2.8,  [8]  = 0.9,  [9]  = 0.7,  [10] = 0.6,
+    [1]  = 15.4, [2]  = 8.7,  [3]  = 1.0,  [4]  = 0.85, [5]  = 0.75,
+    -- Regular VD→VE (VD is the top of Regular but still below Intense N)
+    [6]  = 0.85, [7]  = 1.0,  [8]  = 0.9,  [9]  = 0.75, [10] = 0.65,
     -- Light VD→VE
-    [11] = 1.3,  [12] = 1.2,  [13] = 0.75, [14] = 0.6,  [15] = 0.5,
+    [11] = 0.9,  [12] = 0.85, [13] = 0.75, [14] = 0.65, [15] = 0.55,
+}
+
+-- Per-tier ceiling on a single mob-skill hit (Warbles, Thrashing Assault, etc.).
+-- Uses the same Geas Fete hook as scripted encounter mobs.
+local DIFF_SKILL_DAMAGE_CAP =
+{
+    [1]  = 12000, [2]  = 9000, [3]  = 4500, [4]  = 3800, [5]  = 3200,
+    [6]  = 3500,  [7]  = 3800, [8]  = 3200, [9]  = 2800, [10] = 2500,
+    [11] = 2800,  [12] = 2600, [13] = 2400, [14] = 2200, [15] = 2000,
 }
 
 -- Flat stat bumps applied to Breadwinner + Urchins at spawn. Every field is a
@@ -39,14 +47,14 @@ local DIFF_STAT_MODS =
     [3]  = { att =  400, acc =  50 },
     [4]  = {},
     [5]  = {},
-    -- Regular VD→VE
-    [6]  = { att = 3500, acc = 350, matt = 2000, macc = 250, haste = 150, da = 25, regen = 120 },
-    [7]  = { att = 2500, acc = 250, matt = 1200, macc = 150, haste = 100, da = 15, regen =  80 },
-    [8]  = { att =  300, acc =  50 },
+    -- Regular VD→VE (flat bumps only; no endgame ATT/MATT stacks on entry tiers)
+    [6]  = { att =  150, acc =  40 },
+    [7]  = { att =  300, acc =  60, matt = 100 },
+    [8]  = { att =  200, acc =  40 },
     [9]  = {},
     [10] = {},
-    -- Light VD→VE (only the top of Light gets any bumps; the bottom stays retail)
-    [11] = { att =  500, acc = 100, matt =  200, macc =  50, haste =   0, da =  0, regen =   0 },
+    -- Light VD→VE (top of Light still below Regular VD)
+    [11] = { att =  250, acc =  60, matt =  100, macc =  25 },
     [12] = { att =  200, acc =  50, matt =  100, macc =   0, haste =   0, da =  0, regen =   0 },
     [13] = {},
     [14] = {},
@@ -94,23 +102,8 @@ local DIFF_MECH_CFG =
     [3] = {},  -- Intense N -- entry-level stats only
     [4] = {},  -- Intense E -- stock mechanics
     [5] = {},  -- Intense VE
-    [6] = {  -- Regular VD
-        name   = 'Bozzetto Breadwinner',
-        stance = { startHpp = 85, periodSec = 18, stances = STANCE_PAIR },
-        aoe    = { periodSec = 12, dmgPct = 13, msg = 'The Breadwinner erupts!' },
-        drain  = { periodSec = 12, healPct = 3 },
-        phases = {
-            { hp = 50, action = 'fury', att = 1200, haste = 80, msg = 'The Breadwinner accelerates!' },
-        },
-    },
-    [7] = {  -- Regular D
-        name   = 'Bozzetto Breadwinner',
-        stance = { startHpp = 80, periodSec = 22, stances = STANCE_PAIR },
-        aoe    = { periodSec = 14, dmgPct = 10, msg = 'The Breadwinner erupts!' },
-        phases = {
-            { hp = 50, action = 'fury', att = 800, haste = 50, msg = 'The Breadwinner accelerates!' },
-        },
-    },
+    [6] = {},  -- Regular VD -- entry Regular; stats-only (same band as Intense N)
+    [7] = {},  -- Regular D
     [8] = {},   -- Regular N
     [9] = {},   -- Regular E
     [10] = {},  -- Regular VE
@@ -130,11 +123,29 @@ local function applyDiffMods(mob, mods)
     if mods.regen and mods.regen > 0 then mob:addMod(xi.mod.REGEN,          mods.regen) end
 end
 
+local function applyAmbuscadeMob(mob, progress, mult, mods, mCfg)
+    if not mob then return end
+
+    local newHP = math.max(1, math.floor(mob:getMaxHP() * mult))
+    mob:setMaxHP(newHP)
+    mob:setHP(newHP)
+    applyDiffMods(mob, mods)
+
+    local cap = DIFF_SKILL_DAMAGE_CAP[progress]
+    if cap and cap > 0 then
+        mob:setLocalVar('GeasFeteMobSkillDamageCap', cap)
+    end
+
+    if mCfg and next(mCfg) then
+        mechanics.attach(mob, mCfg)
+    end
+end
+
 -- How many Urchin adds to spawn (pre-spawned, never respawn during the fight).
 local URCHIN_COUNT =
 {
     [1]=4, [2]=3, [3]=1, [4]=1, [5]=1,   -- Intense
-    [6]=3, [7]=2, [8]=1, [9]=1, [10]=1,  -- Regular
+    [6]=1, [7]=1, [8]=1, [9]=1, [10]=1,  -- Regular
     [11]=1,[12]=1,[13]=1,[14]=1,[15]=1,  -- Light
 }
 
@@ -154,23 +165,14 @@ instanceObject.onInstanceCreated = function(instance)
 
     local bw = SpawnMob(ID.mob.BOZZETTO_BREADWINNER, instance)
     if bw then
-        local newHP = math.max(1, math.floor(bw:getMaxHP() * mult))
-        bw:setMaxHP(newHP)
-        bw:setHP(newHP)
-        applyDiffMods(bw, mods)
-        if mCfg and next(mCfg) then
-            mechanics.attach(bw, mCfg)
-        end
+        applyAmbuscadeMob(bw, progress, mult, mods, mCfg)
     end
 
     local urchinCount = URCHIN_COUNT[progress] or 1
     for i = 1, urchinCount do
         local urchin = SpawnMob(URCHIN_IDS[i], instance)
         if urchin then
-            local newHP = math.max(1, math.floor(urchin:getMaxHP() * mult))
-            urchin:setMaxHP(newHP)
-            urchin:setHP(newHP)
-            applyDiffMods(urchin, mods)
+            applyAmbuscadeMob(urchin, progress, mult, mods, nil)
         end
     end
 

@@ -28,8 +28,9 @@
 --   Every NM: 1 guaranteed Beitetsu, then independent 80/70/50/30/20/10/5%
 --   rolls for pieces 2-8. Treasure Hunter raises each non-guaranteed roll
 --   through the same helper used by normal droplists.
---   T2+: Riftcinder; T2+: Riftborn Boulder; T4: Eschalixir+2 + Attestations.
---   Every kill also grants tier-scaled Escha Silt: 40 / 120 / 400 / 1,000.
+--   Empy band (T1-T2): Riftborn Boulder (Empy I->II / II->III forge mats).
+--   Aeonic band (T3-T4): Escha Silt + Attestations (T4 always, T3 chance).
+--   T2+: Riftcinder. T4: Eschalixir+2.
 --
 -- All NMs spawn via insertDynamicEntity (no mob_spawn_points rows needed).
 -- restart-gated (addOverride).
@@ -44,10 +45,10 @@ local S = xi.msg.channel.SYSTEM_3
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
 local abysseaBalance = require('modules/custom/lua/abyssea_marks_balance')
 
--- Public namespace for cross-module reads. Populated below with the unique-NM
--- roster size so the Weapon Forge's Empyrean Stage I preflight can compare
--- CharVar 'GF_Unique_Kills' against xi.geasFete.uniqueNmCount without needing
--- to require this whole file (avoids a circular-require risk).
+-- Public namespace for cross-module reads. Populated below with roster sizes:
+--   uniqueNmCount    = full catalog (T1-T4), Warden / !geas progress
+--   empyreanNmCount  = T1-T2 only -- Empyrean Stage I forge gate
+-- T3-T4 are the Aeonic-era band (silt / Attestations); farm them with Empy.
 xi.geasFete = xi.geasFete or {}
 
 -- ===================================================================
@@ -94,8 +95,7 @@ local GEAR_HQ = {
 }
 
 -- Attestations (retail IDs 1556-1569) — weapon-type-specific Aeonic materials.
--- Bosses (tier 4) drop 1-2 random Attestations; players collect the one
--- matching their desired Aeonic weapon type.
+-- T4 drops 1-2; T3 has a 15% chance of 1. Collect the type for your Aeonic.
 local ATTESTATIONS = {
     1556, -- attestation_of_might          (H2H     / Godhands)
     1557, -- attestation_of_celerity       (Dagger  / Aeneas)
@@ -314,13 +314,20 @@ local NM_CATALOG = {
     },
 }
 
--- Unique NM count across all three zones -- read by the Weapon Forge Empyrean
--- Stage I preflight. Computed once at module load; recount happens on Lua
--- hot-reload (a new NM row goes live the moment this file is recached).
+-- Unique NM counts across all three zones. Computed once at module load;
+-- recount happens on Lua hot-reload.
 do
-    local total = 0
-    for _, defs in pairs(NM_CATALOG) do total = total + #defs end
-    xi.geasFete.uniqueNmCount = total
+    local total, empy = 0, 0
+    for _, defs in pairs(NM_CATALOG) do
+        for _, def in ipairs(defs) do
+            total = total + 1
+            if (def.tier or 1) <= 2 then
+                empy = empy + 1
+            end
+        end
+    end
+    xi.geasFete.uniqueNmCount   = total
+    xi.geasFete.empyreanNmCount = empy
 end
 
 -- ===================================================================
@@ -482,6 +489,22 @@ function xi.geasFete.totalProgress(player)
     return cleared, total
 end
 
+-- Empyrean Stage I: T1-T2 uniques only (T3-T4 are Aeonic-era).
+function xi.geasFete.empyreanProgress(player)
+    local cleared, total = 0, 0
+    for _, zoneId in ipairs(ZONE_ORDER) do
+        for _, def in ipairs(NM_CATALOG[zoneId] or {}) do
+            if (def.tier or 1) <= 2 then
+                total = total + 1
+                if (player:getCharVar(killKey(zoneId, def.gid)) or 0) == 1 then
+                    cleared = cleared + 1
+                end
+            end
+        end
+    end
+    return cleared, total
+end
+
 function xi.geasFete.missing(player, zoneFilter)
     local out = {}
     for _, zoneId in ipairs(ZONE_ORDER) do
@@ -523,11 +546,11 @@ end
 -- CURRENCY HELPERS
 -- ===================================================================
 -- Every Geas Fete kill awards Escha Beads for triggers/exchanges and
--- tier-scaled Escha Silt for Aeonic forging.
+-- tier-scaled Escha Silt for Aeonic forging (concentrated on T3-T4).
 local BEADS          = 'escha_beads'
 local CURRENCY_KEY   = { [ZITAH] = BEADS, [RUAUN] = BEADS, [REISEN] = BEADS }
 local CURRENCY_LABEL = { [ZITAH] = 'Escha Beads', [RUAUN] = 'Escha Beads', [REISEN] = 'Escha Beads' }
-local SILT_BY_TIER   = { [1] = 40, [2] = 120, [3] = 400, [4] = 1000 }
+local SILT_BY_TIER   = { [1] = 20, [2] = 40, [3] = 700, [4] = 1400 }
 local STARTER_BEADS = 1000
 local STARTER_BEADS_VAR = 'GF_Starter_Beads'
 
@@ -689,26 +712,44 @@ local function awardBeitetsu(player, mob)
         quantity, thLevel), S)
 end
 
+-- Empy-band Riftborn: T1 drip, T2 primary farm (avg ~2.9; up to 4).
+local function riftbornQuantity(tier)
+    if tier == 1 then
+        return (math.random() < 0.50) and 1 or 0
+    elseif tier == 2 then
+        local n = 2
+        if math.random() < 0.60 then
+            n = n + 1
+        end
+        if math.random() < 0.30 then
+            n = n + 1
+        end
+        return n
+    end
+    return 0
+end
+
 local function awardDrops(player, mob, def)
     local t = def.tier
     awardBeitetsu(player, mob)
 
     -- Riftcinder: T2+ only
     local rc = (t >= 2) and math.random(1, t) or 0
-    -- Riftborn Boulder: T3+ guaranteed, T2 30% chance
-    local rb
-    if t >= 3 then
-        rb = math.random(1, t - 1)
-    elseif t == 2 then
-        rb = (math.random() < 0.30) and 1 or 0
-    else
-        rb = 0
-    end
+    -- Riftborn Boulder: Empy band only (T1-T2). T3-T4 are Aeonic silt/Attestations.
+    local rb = riftbornQuantity(t)
     -- Eschalixir +2: boss only, always
     local lix = (t == 4) and 1 or 0
 
     if rc  > 0 then player:addItem({ id = RIFTCINDER,       quantity = rc  }) end
-    if rb  > 0 then player:addItem({ id = RIFTBORN_BOULDER, quantity = rb  }) end
+    if rb  > 0 then
+        if player:addItem({ id = RIFTBORN_BOULDER, quantity = rb }) then
+            player:printToPlayer(string.format(
+                '[Geas Fete] Riftborn Boulder x%d.', rb), S)
+        else
+            player:printToPlayer(string.format(
+                '[Geas Fete] Riftborn Boulder x%d was lost -- make inventory room!', rb), S)
+        end
+    end
     if lix > 0 then player:addItem({ id = ESCHALIXIR_2,     quantity = lix }) end
 
     -- T3-only alternate path to the final Ambuscade weapon material.
@@ -723,12 +764,15 @@ local function awardDrops(player, mob, def)
         end
     end
 
-    -- Boss only: 1 random Attestation (Aeonic path material).
-    -- 40% chance of a second random Attestation.
+    -- Aeonic Attestations: T4 always 1 (+40% second); T3 15% chance of 1.
     if t == 4 then
         player:addItem({ id = ATTESTATIONS[math.random(#ATTESTATIONS)], quantity = 1 })
         if math.random() < 0.40 then
             player:addItem({ id = ATTESTATIONS[math.random(#ATTESTATIONS)], quantity = 1 })
+        end
+    elseif t == 3 and math.random() < 0.15 then
+        if player:addItem({ id = ATTESTATIONS[math.random(#ATTESTATIONS)], quantity = 1 }) then
+            player:printToPlayer('[Geas Fete] An Attestation crystallizes from the NM!', S)
         end
     end
 
@@ -816,16 +860,16 @@ end
 -- retail bosses of these HP tiers (HP:ATT 600-1500 = "hits hard, but you have
 -- time to react"). ACC + MATT boosted proportionally so mobs don't just miss.
 --
--- Relaunch progression contract: Geas Fete begins at the same sustained
--- Relic-era combat budget as Abyssea Visions, then rises on a compressed
--- 4m/8m/10m/14m ladder. HP scales by real PCs exactly as Abyssea does so
--- grouping helps without trivialising the roster.
+-- Relaunch progression contract:
+--   T1-T2 = Empyrean Stage I clear gate + Riftborn farm (eased T2).
+--   T3-T4 = Aeonic-era silt/Attestation farm (hard T3 restored; farm with Empy).
+-- Ladder: 4M / 7M / 10M / 14M. HP scales by real PCs exactly as Abyssea does.
 local TIER_TUNING = {
     [1] = { level = 120, hp = 4000000, att = 6500, acc = 700, macc = 700, matt = 2000,
             regain = 120, da = 20, ta = 0, def = 850, eva = 800, mdef = 250, meva = 250,
             str = 150, dex = 150, hasteGear = 1000, weaponDmg = 300, eleRes = 50 },
-    [2] = { level = 130, hp = 8000000, att = 8000, acc = 900, macc = 900, matt = 3200,
-            regain = 220, da = 25, ta = 10, def = 1200, eva = 1100, mdef = 350, meva = 400,
+    [2] = { level = 130, hp = 7000000, att = 8000, acc = 900, macc = 900, matt = 3200,
+            regain = 150, da = 25, ta = 10, def = 1200, eva = 1100, mdef = 350, meva = 400,
             str = 225, dex = 225, hasteGear = 1500, weaponDmg = 350, eleRes = 75 },
     [3] = { level = 145, hp = 10000000, att = 9000, acc = 1050, macc = 1050, matt = 4000,
             regain = 280, da = 28, ta = 12, def = 1500, eva = 1300, mdef = 425, meva = 500,
@@ -849,7 +893,7 @@ local MECHANIC_TUNING =
         phases = {
             { hp = 35, action = 'fury', att = 750, haste = 125 },
         },
-        enrage = { sec = 600, att = 2000, haste = 175 },
+        enrage = { sec = 720, att = 2000, haste = 175 },
     },
     [3] = {
         targetPartyOnly = true,
@@ -1027,6 +1071,11 @@ local function spawnNM(player, zone, zoneId, def, campNpc)
                     killer:setCharVar(key, 1)
                     killer:setCharVar('GF_Unique_Kills',
                         (killer:getCharVar('GF_Unique_Kills') or 0) + 1)
+                    -- Empy Stage I tally is T1-T2 only (T3-T4 are Aeonic-era).
+                    if (defCapture.tier or 1) <= 2 then
+                        killer:setCharVar('GF_Empyrean_Kills',
+                            (killer:getCharVar('GF_Empyrean_Kills') or 0) + 1)
+                    end
                 end
             end,
 
@@ -1469,6 +1518,10 @@ local function spawnWardingCircle(zone, zoneId, x, y, z, rot)
             local cleared = xi.geasFete.totalProgress(player)
             if (player:getCharVar('GF_Unique_Kills') or 0) ~= cleared then
                 player:setCharVar('GF_Unique_Kills', cleared)
+            end
+            local empyCleared = xi.geasFete.empyreanProgress(player)
+            if (player:getCharVar('GF_Empyrean_Kills') or 0) ~= empyCleared then
+                player:setCharVar('GF_Empyrean_Kills', empyCleared)
             end
             wardingCircleMenu(player, capturedZone, capturedZoneId)
         end,

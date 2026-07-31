@@ -236,7 +236,7 @@ xi.settings.map =
     -- Damage trusts/fellows take from AoE actions they are NOT the primary
     -- target of, as the DMG_AOE mod (1/100 of a %; -8500 = -85%). The engine
     -- applies clamp(1 + DMG_AOE/10000, 0, 2), so -8500 => alter egos take 15%
-    -- of such hits. Only damage SPELLS honor this (mob TP-move / breath do not).
+    -- of such hits (damage spells, mob TP moves, and breaths).
     -- Default 0 = retail (no reduction).
     ALTER_EGO_AOE_DMG_TAKEN = 0,
 

@@ -76,10 +76,15 @@ M.STAGE_GATES =
     {
         [0] =
         {
-            label = 'All Geas Fete bosses killed at least once',
+            -- T1-T2 roster only. T3-T4 are Aeonic-era (silt / Attestations).
+            label = 'All Geas Fete T1-T2 NMs killed at least once',
             check = function(p)
-                local need = (xi.geasFete and xi.geasFete.uniqueNmCount) or math.huge
-                return (p:getCharVar('GF_Unique_Kills') or 0) >= need
+                if xi.geasFete and xi.geasFete.empyreanProgress then
+                    local cleared, need = xi.geasFete.empyreanProgress(p)
+                    return cleared >= need
+                end
+                local need = (xi.geasFete and xi.geasFete.empyreanNmCount) or math.huge
+                return (p:getCharVar('GF_Empyrean_Kills') or 0) >= need
             end,
         },
         [1] =

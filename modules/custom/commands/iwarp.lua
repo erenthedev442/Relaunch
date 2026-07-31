@@ -13,6 +13,14 @@ commandObj.cmdprops =
 }
 
 commandObj.onTrigger = function(player)
+    -- Default closed for launch when Invasion.lua is not loaded yet / retired.
+    local api = xi._invasion_api
+    if not api or not api.isRetired or api.isRetired() then
+        player:printToPlayer('[Invasion] Al Zahbi Invasion is disabled for launch.',
+            xi.msg.channel.SYSTEM_3)
+        return
+    end
+
     -- Drop the player straight onto the invasion battleground. Pull the exact
     -- spot from invasion_catalog.fixedSpawn so this stays in sync if the
     -- invasion ever relocates again (fallback = the Al Zahbi market plaza).

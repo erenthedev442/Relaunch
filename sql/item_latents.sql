@@ -3810,3 +3810,18 @@ INSERT INTO `item_latents` VALUES (28567,368,10,13,193);  -- While Sleeping: REG
 INSERT INTO `item_latents` VALUES (28567,370,1,13,2);     -- While Sleeping: REGEN +1
 INSERT INTO `item_latents` VALUES (28567,370,1,13,19);    -- While Sleeping: REGEN +1
 INSERT INTO `item_latents` VALUES (28567,370,1,13,193);   -- While Sleeping: REGEN +1
+
+-- Spharai 119 III: MAINJOB PUP kit (Legendary orphan-job Relic attach)
+INSERT INTO `item_latents` VALUES (20509,990,40,62,18);  -- PUP: PET_ATK_DEF +40
+INSERT INTO `item_latents` VALUES (20509,991,40,62,18);  -- PUP: PET_ACC_EVA +40
+INSERT INTO `item_latents` VALUES (20509,504,1,62,18);   -- PUP: MANEUVER_BONUS +1
+INSERT INTO `item_latents` VALUES (20509,505,10,62,18);  -- PUP: OVERLOAD_THRESH +10
+
+-- Annihilator 119 III: MAINJOB COR kit
+INSERT INTO `item_latents` VALUES (22140,191,30,62,17);  -- COR: QUICK_DRAW_MACC +30
+INSERT INTO `item_latents` VALUES (22140,411,30,62,17);  -- COR: QUICK_DRAW_DMG +30
+
+-- Claustrum 119 III: MAINJOB SCH kit
+INSERT INTO `item_latents` VALUES (22060,28,30,62,20);   -- SCH: MATT +30
+INSERT INTO `item_latents` VALUES (22060,30,25,62,20);   -- SCH: MACC +25
+INSERT INTO `item_latents` VALUES (22060,478,10,62,20);  -- SCH: HELIX_EFFECT +10

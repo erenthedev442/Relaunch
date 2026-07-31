@@ -1,8 +1,10 @@
 -----------------------------------
 -- Level-scaled baseline tuning for ordinary player weaponskills.
 --
--- Final REMA, Prime and Ambuscade weapon/native-WS pairs are explicitly
--- excluded and continue through their existing private tuning modules.
+-- Final REMA and Prime weapon/native-WS pairs are explicitly excluded and
+-- continue through their existing private tuning modules. Final Ambuscade
+-- weapons keep this progression multiplier on every WS, with Ambuscade's own
+-- module supplying the 99,999 / linked-149,999 ceilings and linked 10% boost.
 -----------------------------------
 require('modules/module_utils')
 
@@ -29,8 +31,7 @@ local activeCalculations = setmetatable({}, { __mode = 'k' })
 local function specialEntry(attacker, wsId, slot)
     local itemId = attacker:getEquipID(slot)
     return remaCatalog.getEntry(itemId, wsId, slot) or
-        primeCatalog.getEntry(itemId, wsId, slot) or
-        ambuCatalog.getEntry(itemId, wsId, slot)
+        primeCatalog.getEntry(itemId, wsId, slot)
 end
 
 -- An AoE WS earns its premium ceiling from the final-stage weapon equipped in
@@ -92,6 +93,12 @@ xi.standardWsTuning.withStandardEffects = function(
         attacker:getMainLvl(), target:getMainLvl())
     local multiplier     = catalog.getWeaponskillMultiplier(attacker, target, slot)
     local damageCap      = catalog.getWeaponskillCap(attacker, slot)
+    -- Final Ambuscade weapons use a 99,999 ceiling on every WS. The linked
+    -- native WS may later break that soft ceiling via Ambuscade's 10% boost.
+    if ambuCatalog.isFinalWeapon(attacker:getEquipID(slot), slot) then
+        damageCap = math.max(damageCap, ambuCatalog.DAMAGE_CAP)
+    end
+
     local premiumAoECap  = getPremiumAoECap(attacker)
     if premiumAoECap > damageCap then
         damageCap = premiumAoECap

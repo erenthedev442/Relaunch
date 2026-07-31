@@ -197,6 +197,7 @@ return {
         -- Post-Zilart / Chains of Promathia era NMs
         -- =====================================================================
         { id=22, name='Muut',                label='Muut',                tier=2, minLv=110, maxLv=110, groupId=29,
+          skillList = 9700, -- Corse without Danse Macabre (charm)
           drops = { {id=20606, name='Anathema Harpe', plus1=20607, plus1Name='Anathema Harpe +1'} } },
         { id=23, name='Voso',                label='Voso',                tier=2, minLv=119, maxLv=119, groupId=32,
           drops = { {id=26942, name='Agony Jerkin', plus1=26943, plus1Name='Agony Jerkin +1'} } },
@@ -240,28 +241,34 @@ return {
         { id=41, name='Mephitas',                  label='Mephitas',               tier=3, minLv=128, maxLv=128, groupId=100,
           drops = { {id=20603, name='Ternion Dagger', plus1=20604, plus1Name='Ternion Dagger +1'}, {id=27558, name="Mephitas's Ring", plus1=27559, plus1Name="Mephitas's Ring +1"} } },
         { id=42, name='Vidmapire',                 label='Vidmapire',              tier=3, minLv=128, maxLv=128, groupId=101,
+          skillList = 9706, -- Vampyr kit without Eternal Damnation (doom)
           drops = { {id=20980, name='Raicho', plus1=20981, plus1Name='Raicho +1'}, {id=27609, name='Fi Follet Cape', plus1=27610, plus1Name='Fi Follet Cape +1'} } },
         { id=43, name='Shedu',                     label='Shedu',                  tier=3, minLv=135, maxLv=135, groupId=102,
+          skillList = 9702, -- Khimaira without Dreadstorm (terror)
           drops = { {id=20681, name='Flyssa', plus1=20682, plus1Name='Flyssa +1'}, {id=21075, name='Septoptic', plus1=21076, plus1Name='Septoptic +1'}, {id=27148, name='Tatena. Gote', plus1=27149, plus1Name='Tatena. Gote +1'} } },
         -- Retail capstone: unlocked after Thu'ban, Shedu, and Sarama.
         { id=38, name='Tumult_Curator',             label='Tumult Curator',         tier=3, minLv=145, maxLv=145, groupId=97,
           prerequisites = { 37, 43, 52 },
+          skillList = 9703, -- Pandemonium without Thundris Shriek (terror)
           drops = { {id=20507, name='Comeuppances', plus1=20508, plus1Name='Comeuppances +1'}, {id=25732, name='Tatena. Harama.', plus1=25733, plus1Name='Tatena. Harama. +1'}, {id=22057, name='Contemplator', plus1=22058, plus1Name='Contemplator +1'} } },
         { id=44, name='Azure-toothed_Clawberry',   label='Azure-toothed Clawberry',tier=3, minLv=135, maxLv=135, groupId=103,
           drops = { {id=27106, name='Asteria Mitts', plus1=27107, plus1Name='Asteria Mitts +1'}, {id=27108, name='Lamassu Mitts', plus1=27109, plus1Name='Lamassu Mitts +1'} } },
         { id=45, name='Centurio_XX-I',             label='Centurio XX-I',          tier=3, minLv=135, maxLv=135, groupId=104,
           drops = { {id=25680, name='Cohort Cloak', plus1=25681, plus1Name='Cohort Cloak +1'}, {id=28412, name='Kentarch Belt', plus1=28413, plus1Name='Kentarch Belt +1'} } },
         { id=46, name='Wyvernhunter_Bambrox',      label='Wyvernhunter Bambrox',   tier=3, minLv=135, maxLv=135, groupId=105,
+          skillList = 9705, -- Goblin without Bomb Toss Suicide
           drops = { {id=21805, name='Pixquizpan', plus1=21806, plus1Name='Pixquizpan +1'}, {id=22120, name='Imati', plus1=22121, plus1Name='Imati +1'} } },
         { id=47, name='Tolba',                     label='Tolba',                  tier=3, minLv=140, maxLv=140, groupId=106,
           drops = { {id=21483, name='Malison', plus1=21484, plus1Name='Malison +1'}, {id=25709, name='Obviat. Cuirass', plus1=25710, plus1Name='Obviat. Cuirass +1'}, {id=26401, name='Forfend', plus1=26402, plus1Name='Forfend +1'} } },
         { id=48, name='Ayapec',                    label='Ayapec',                 tier=3, minLv=140, maxLv=140, groupId=107,
           drops = { {id=20804, name='Perun', plus1=20805, plus1Name='Perun +1'}, {id=26784, name='Hike Khat', plus1=26785, plus1Name='Hike Khat +1'} } },
         { id=49, name='Hidhaegg',                  label='Hidhaegg',               tier=3, minLv=140, maxLv=140, groupId=108,
+          skillList = 9701, -- Nidhogg kit without Absolute Terror
           drops = { {id=20696, name='Combuster', plus1=20697, plus1Name='Combuster +1'}, {id=21695, name='Nullis', plus1=21696, plus1Name='Nullis +1'}, {id=25635, name='Loess Barbuta', plus1=25636, plus1Name='Loess Barbuta +1'} } },
         { id=50, name='Coca',                      label='Coca',                   tier=3, minLv=140, maxLv=140, groupId=109,
           drops = { {id=20942, name='Gae Derg', plus1=20943, plus1Name='Gae Derg +1'}, {id=27638, name='Ajax', plus1=27639, plus1Name='Ajax +1'} } },
         { id=51, name='Grand_Grenade',             label='Grand Grenade',          tier=3, minLv=140, maxLv=140, groupId=110,
+          skillList = 9704, -- Bomb without Self-Destruct (HP-scaled wipe)
           drops = { {id=21090, name='Loxotic Mace', plus1=21091, plus1Name='Loxotic Mace +1'}, {id=22254, name='Seeth. Bomblet', plus1=22255, plus1Name='Seeth. Bomblet +1'} } },
         { id=52, name='Sarama',                    label='Sarama',                 tier=3, minLv=140, maxLv=140, groupId=111,
           drops = { {id=21688, name='Montante', plus1=21689, plus1Name='Montante +1'}, {id=20679, name='Tanmogayi', plus1=20680, plus1Name='Tanmogayi +1'}, {id=25855, name='Tatena. Haidate', plus1=25856, plus1Name='Tatena. Haidate +1'} } },

@@ -1,6 +1,6 @@
 -----------------------------------
 -- Catharsis
--- Description: Restores HP. (12.5% of max HP)
+-- Description: Restores HP. (5% of max HP)
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -11,7 +11,7 @@ end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     skill:setMsg(xi.msg.basic.SELF_HEAL)
-    return xi.mobskills.mobHealMove(mob, math.floor(mob:getMaxHP() * 0.125))
+    return xi.mobskills.mobHealMove(mob, math.floor(mob:getMaxHP() * 0.05))
 end
 
 return mobskillObject

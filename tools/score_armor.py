@@ -42,7 +42,9 @@ EXCLUDED_NAME_PREFIXES = ('judge',)
 # Argosy Hauberk base (26848) dropped -- its +1 (26849) is pinned to bronze
 # via FORCED_INCLUDE, so the base in silver was redundant (and made the +1
 # both better AND cheaper than the base).
-OWNER_EXCLUDE_IDS = frozenset({26848})
+# Malignance armor (23732-23736) reserved for future content 2026-07-31 --
+# also removed from HTBF loot and gold FORCED_INCLUDE.
+OWNER_EXCLUDE_IDS = frozenset({26848, 23732, 23733, 23734, 23735, 23736})
 
 # Owner exclusivity rule (2026-07): the medal vendor's bronze/silver/gold tiers may
 # ONLY sell gear that is EXCLUSIVE to it. Any ilvl119+ piece obtainable elsewhere
@@ -392,11 +394,10 @@ TIER_COST = {'bronze': 12, 'silver': 25, 'gold': 50, 'infamy': 500}
 FORCED_INCLUDE = {
     ('bronze', 'body'): [25790, 26849, 25683, 25780, 25702, 25686, 26870, 25684],  # 26536 Pinga Tunic +1 removed 2026-07 (craft / Invasion loot -- vendor exclusivity)
     ('silver', 'body'): [25717, 25796, 25752],  # +25752 Inyanga Jubbah +1 -- completes the Inyanga caster set (2026-06-21)
-    ('gold',   'body'): [23733, 23766, 23763],  # 2026-07 removed 26943 Agony Jerkin +1 (Unity/Voso drop) + 26530 Ea Houppelande +1 (craft/Invasion). +23763 Gletis Cuirass -- Gleti (Sortie) set
-    ('gold',   'feet'): [23736],  # Malignance Boots -- pin to gold so the full Malignance gold set is buyable (it scores just under gold's cut). Added 2026-06-14. (Gletis Boots 23784 already auto-scores into gold/feet.)
-    ('gold',   'hands'): [23770, 23734],  # 23770 Gletis Gauntlets -- Gleti (Sortie) set (owner request 2026-06-21). +23734 Malignance Gloves -- completes the Malignance gold set (was missing from ANY vendor; player report 2026-07-08).
-    ('gold',   'head'): [23732, 25575, 23756],  # 2026-07 removed 25554 Ea Hat +1 (craft/Invasion). 23732 Malignance Chapeau + 25575 Meghanada Visor +2 + 23756 Gletis Mask
-    ('gold',   'legs'): [23735],  # 2026-07 removed 25894 Ea Slops +1 (craft/Invasion). 23735 Malignance Tights completes its set. (Gletis Breeches 23777 is NAKED -- not pinned.)
+    ('gold',   'body'): [23766, 23763],  # 2026-07-31 removed 23733 Malignance Tabard (future content). 2026-07 removed 26943 Agony Jerkin +1 (Unity/Voso drop) + 26530 Ea Houppelande +1 (craft/Invasion). +23763 Gletis Cuirass -- Gleti (Sortie) set
+    ('gold',   'hands'): [23770],  # 23770 Gletis Gauntlets -- Gleti (Sortie) set (owner request 2026-06-21). 2026-07-31 removed 23734 Malignance Gloves (future content).
+    ('gold',   'head'): [25575, 23756],  # 2026-07-31 removed 23732 Malignance Chapeau (future content). 2026-07 removed 25554 Ea Hat +1 (craft/Invasion). 25575 Meghanada Visor +2 + 23756 Gletis Mask
+    # gold/feet and gold/legs: Malignance Boots/Tights removed 2026-07-31 (future content). No remaining forced pins.
     # ---- 2026-06-21: two near-finished sets that need a NEW (tier, slot) key ----
     ('silver', 'head'): [25616, 25579],  # 25616 Amalric Coif +1 (completes Amalric); 25579 Flamma Zucchetto re-pinned -- forcing the Amalric caster head bumped this tank head from the per-job top-N, which would have broken the otherwise-complete Flamma set
     ('silver', 'legs'): [25874],  # Flamma Dirs +1  -- completes the bronze/silver Flamma melee set

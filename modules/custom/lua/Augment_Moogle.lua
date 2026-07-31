@@ -50,6 +50,7 @@ local GIL_COST           = 10000   -- flat per trade
 local SCOUR_GIL_COST     = 25000   -- flat to scour (strip ALL augments incl. crystalized)
 local CRIT_TOKEN_ID      = 15194   -- Maat's Cap: guarantees a crit when held (consumed on success). Retail Rare/EX, so it renders on the client (the old custom 29000 had no client DAT).
 local CRIT_TOKEN_LEGACY  = 29000   -- old custom 'Maat's Blessing'; still honored so pre-swap drops aren't stranded
+local LAST_RECIPE_VAR    = 'Augment_LastRecipe'   -- persisted catalyst recipe for "repeat last catalyst set"
 
 -----------------------------------
 -- CRYSTALIZED AUGMENTS config
@@ -354,6 +355,7 @@ local NON_AUGMENTABLE =
 local showConfirmMenu
 local showScourMenu
 local showBankMain
+local showPostAugmentMenu
 
 -----------------------------------
 -- Persistent catalyst-bank menus
@@ -439,6 +441,163 @@ local function selectionRequests(selection)
     return requests
 end
 
+local function encodeRecipe(requests)
+    local parts = {}
+    for _, req in ipairs(requests or {}) do
+        if req.id and req.qty and req.qty > 0 then
+            table.insert(parts, string.format('%d:%d', req.id, req.qty))
+        end
+    end
+    return table.concat(parts, ',')
+end
+
+local function decodeRecipe(raw)
+    if not raw or raw == '' then return nil end
+    local requests = {}
+    for part in string.gmatch(raw, '[^,]+') do
+        local itemId, qty = part:match('^(%d+):(%d+)$')
+        if itemId and qty then
+            table.insert(requests, { id = tonumber(itemId), qty = tonumber(qty) })
+        end
+    end
+    return (#requests > 0) and requests or nil
+end
+
+local function recipeFromState(st)
+    if st.bankCatalysts and #st.bankCatalysts > 0 then
+        return st.bankCatalysts
+    end
+    if st.catalystsHeld and #st.catalystsHeld > 0 then
+        local requests = {}
+        for _, cat in ipairs(st.catalystsHeld) do
+            table.insert(requests, { id = cat.id, qty = cat.qty })
+        end
+        return requests
+    end
+    return nil
+end
+
+local function saveLastRecipe(player, requests)
+    local encoded = encodeRecipe(requests)
+    if encoded ~= '' then
+        player:setCharVar(LAST_RECIPE_VAR, encoded)
+    end
+end
+
+local function loadLastRecipe(player)
+    return decodeRecipe(player:getCharVar(LAST_RECIPE_VAR) or '')
+end
+
+local function recipeSummary(requests)
+    local parts = {}
+    local total = 0
+    for _, req in ipairs(requests or {}) do
+        total = total + req.qty
+        local def = catalog[req.id]
+        table.insert(parts, string.format('%s x%d',
+            def and def.label or readableItemName(req.id), req.qty))
+    end
+    return table.concat(parts, ', '), total
+end
+
+local function validateRecipeForRepeat(player, requests)
+    if not requests or #requests == 0 then
+        return false, 'You have not augmented anything yet, kupo!'
+    end
+
+    local total = 0
+    for _, req in ipairs(requests) do
+        total = total + req.qty
+        if not catalog[req.id] then
+            return false, 'Your saved catalyst set is no longer valid, kupo!'
+        end
+    end
+
+    if total < 1 or total > MAX_CATALYST_COUNT then
+        return false, 'Your saved catalyst set is no longer valid, kupo!'
+    end
+
+    if player:getGil() < GIL_COST then
+        return false, string.format('You need %d gil to augment, kupo!', GIL_COST)
+    end
+
+    local playerTier = augmentTier(player)
+    if playerTier < 1 then
+        return false, string.format(
+            'Augmenting is locked until you prove yourself, kupo! Unlock Tier 1: %s.',
+            nextUnlock(0) or '???')
+    end
+
+    for _, req in ipairs(requests) do
+        local def = catalog[req.id]
+        local need = def and (def.tier or 0) or 0
+        if need > playerTier then
+            return false, string.format(
+                '[%s] requires Augment Tier %d -- yours is %d, kupo!',
+                def.label, need, playerTier)
+        end
+    end
+
+    local balances = bank.balances(player)
+    local missing = {}
+    for _, req in ipairs(requests) do
+        local have = balances[req.id] or 0
+        if have < req.qty then
+            local def = catalog[req.id]
+            table.insert(missing, string.format('%s (need %d, have %d)',
+                def and def.label or readableItemName(req.id), req.qty, have))
+        end
+    end
+
+    if #missing > 0 then
+        return false, string.format(
+            'Not enough stored catalysts to repeat, kupo! Missing: %s.',
+            table.concat(missing, '; '))
+    end
+
+    return true
+end
+
+local function applyRecipeToSelection(player, requests)
+    clearBankSelection(player)
+    local selection = getBankSelection(player)
+    for _, req in ipairs(requests) do
+        if not selection.counts[req.id] then
+            table.insert(selection.order, req.id)
+            selection.counts[req.id] = 0
+        end
+        selection.counts[req.id] = selection.counts[req.id] + req.qty
+        selection.total = selection.total + req.qty
+    end
+end
+
+local function tryRepeatLastRecipe(player, opts)
+    opts = opts or {}
+    local requests = loadLastRecipe(player)
+    local ok, err = validateRecipeForRepeat(player, requests)
+    if not ok then
+        player:printToPlayer('[Arcane Augmenter] ' .. err, xi.msg.channel.SYSTEM_3)
+        if opts.onFail then
+            opts.onFail(player)
+        end
+        return false
+    end
+
+    applyRecipeToSelection(player, requests)
+    local summary, total = recipeSummary(requests)
+    player:printToPlayer(string.format(
+        '[Arcane Augmenter] Last catalyst set loaded (%d slot%s): %s.',
+        total, total == 1 and '' or 's', summary),
+        xi.msg.channel.SYSTEM_3)
+    player:printToPlayer(
+        '[Arcane Augmenter] Trade any equipment piece to roll the same augments again, kupo!',
+        xi.msg.channel.SYSTEM_3)
+    if opts.onSuccess then
+        opts.onSuccess(player)
+    end
+    return true
+end
+
 local function printBankHelp(player)
     player:printToPlayer(
         '[ Arcane Augmenter ] Catalyst drops are stored here automatically and never take inventory slots.',
@@ -450,22 +609,31 @@ local function printBankHelp(player)
         '  Catalysts are consumed only when you confirm. Augmentation cost: %d gil.',
         GIL_COST), xi.msg.channel.SYSTEM_3)
     player:printToPlayer(
+        '  Use "Withdraw catalysts" to pull items back to inventory (Dynamis currency, etc.).',
+        xi.msg.channel.SYSTEM_3)
+    player:printToPlayer(
         '  Physical catalysts from before this update can be traded here without gear to deposit them.',
+        xi.msg.channel.SYSTEM_3)
+    player:printToPlayer(
+        '  "Repeat last catalyst set" reloads your previous catalysts -- trade any gear piece to roll again.',
         xi.msg.channel.SYSTEM_3)
 end
 
+-- mode: 'browse' | 'build' | 'withdraw'
 local showBankCategories
 local showBankItems
 local showBankQuantity
+local showWithdrawQuantity
 
-showBankItems = function(player, categoryId, page, selecting)
+showBankItems = function(player, categoryId, page, mode)
+    mode = mode or 'browse'
     local balances  = bank.balances(player)
     local selection = getBankSelection(player)
     local available = {}
     for _, entry in ipairs(bankCategories[categoryId] or {}) do
         local balance = balances[entry.itemId] or 0
         local selected = selection.counts[entry.itemId] or 0
-        local shown = selecting and (balance - selected) or balance
+        local shown = (mode == 'build') and (balance - selected) or balance
         if shown > 0 then
             table.insert(available, entry)
         end
@@ -480,37 +648,93 @@ showBankItems = function(player, categoryId, page, selecting)
         local entry = available[index]
         local balance = balances[entry.itemId] or 0
         local selected = selection.counts[entry.itemId] or 0
-        local shown = selecting and (balance - selected) or balance
+        local shown = (mode == 'build') and (balance - selected) or balance
         table.insert(options,
         {
             string.format('%s [%d]', entry.label:sub(1, 22), shown),
             function(p)
-                if selecting then
+                if mode == 'build' then
                     showBankQuantity(p, entry, categoryId, page)
+                elseif mode == 'withdraw' then
+                    showWithdrawQuantity(p, entry, categoryId, page)
                 else
                     p:printToPlayer(string.format(
                         '[Arcane Bank] %s -- %s. Stored: %d.',
                         readableItemName(entry.itemId), entry.label, balance),
                         xi.msg.channel.SYSTEM_3)
-                    showBankItems(p, categoryId, page, false)
+                    showBankItems(p, categoryId, page, 'browse')
                 end
             end,
         })
     end
 
     if page < maxPage then
-        table.insert(options, { 'Next page', function(p) showBankItems(p, categoryId, page + 1, selecting) end })
+        table.insert(options, { 'Next page', function(p) showBankItems(p, categoryId, page + 1, mode) end })
     end
     if page > 1 then
-        table.insert(options, { 'Previous page', function(p) showBankItems(p, categoryId, page - 1, selecting) end })
+        table.insert(options, { 'Previous page', function(p) showBankItems(p, categoryId, page - 1, mode) end })
     end
-    table.insert(options, { 'Back', function(p) showBankCategories(p, 1, selecting) end })
+    table.insert(options, { 'Back', function(p) showBankCategories(p, 1, mode) end })
 
     sendBankMenu(player,
     {
         title = string.format('%s (%d/%d)', BANK_CATEGORY_NAMES[categoryId], page, maxPage),
         options = options,
         onCancelled = function(p) showBankMain(p) end,
+    })
+end
+
+showWithdrawQuantity = function(player, entry, categoryId, page)
+    local balance = bank.balances(player)[entry.itemId] or 0
+    if balance < 1 then
+        showBankItems(player, categoryId, page, 'withdraw')
+        return
+    end
+
+    local freeSlots = player:getFreeSlotsCount()
+    if freeSlots < 1 then
+        player:printToPlayer(
+            '[Arcane Bank] Inventory full — free a slot before withdrawing.',
+            xi.msg.channel.SYSTEM_3)
+        showBankItems(player, categoryId, page, 'withdraw')
+        return
+    end
+
+    local maxQty = math.min(balance, freeSlots * 99)
+    local presets = { 1, 5, 12, 24, 48, 99 }
+    local options = {}
+    local seen = {}
+    for _, qty in ipairs(presets) do
+        if qty <= maxQty and not seen[qty] then
+            seen[qty] = true
+            local withdrawQty = qty
+            table.insert(options,
+            {
+                string.format('Withdraw %d', withdrawQty),
+                function(p)
+                    bank.withdraw(p, entry.itemId, withdrawQty, false)
+                    showBankItems(p, categoryId, page, 'withdraw')
+                end,
+            })
+        end
+    end
+    if maxQty > 0 and not seen[maxQty] then
+        table.insert(options,
+        {
+            string.format('Withdraw all (%d)', maxQty),
+            function(p)
+                bank.withdraw(p, entry.itemId, maxQty, false)
+                showBankItems(p, categoryId, page, 'withdraw')
+            end,
+        })
+    end
+    table.insert(options, { 'Back', function(p) showBankItems(p, categoryId, page, 'withdraw') end })
+
+    sendBankMenu(player,
+    {
+        title = string.format('Withdraw %s', entry.label:sub(1, 18)),
+        options = options,
+        onCancelled = function(p) showBankCategories(p, 1, 'withdraw') end,
     })
 end
 
@@ -521,7 +745,7 @@ showBankQuantity = function(player, entry, categoryId, page)
         (balances[entry.itemId] or 0) - (selection.counts[entry.itemId] or 0),
         MAX_CATALYST_COUNT - selection.total)
     if remaining < 1 then
-        showBankItems(player, categoryId, page, true)
+        showBankItems(player, categoryId, page, 'build')
         return
     end
 
@@ -548,22 +772,30 @@ showBankQuantity = function(player, entry, categoryId, page)
                         '[Arcane Bank] Selection full. Trade one equipment item to the Arcane Augmenter.',
                         xi.msg.channel.SYSTEM_3)
                 else
-                    showBankCategories(p, 1, true)
+                    showBankCategories(p, 1, 'build')
                 end
             end,
         })
     end
-    table.insert(options, { 'Back', function(p) showBankItems(p, categoryId, page, true) end })
+    table.insert(options, { 'Back', function(p) showBankItems(p, categoryId, page, 'build') end })
 
     sendBankMenu(player,
     {
         title = string.format('%s: choose amount', entry.label:sub(1, 20)),
         options = options,
-        onCancelled = function(p) showBankCategories(p, 1, true) end,
+        onCancelled = function(p) showBankCategories(p, 1, 'build') end,
     })
 end
 
-showBankCategories = function(player, page, selecting)
+showBankCategories = function(player, page, mode)
+    mode = mode or 'browse'
+    -- Legacy callers passed a boolean selecting flag.
+    if mode == true then
+        mode = 'build'
+    elseif mode == false then
+        mode = 'browse'
+    end
+
     local balances  = bank.balances(player)
     local selection = getBankSelection(player)
     local categories = {}
@@ -571,7 +803,7 @@ showBankCategories = function(player, page, selecting)
         local total, types = 0, 0
         for _, entry in ipairs(entries) do
             local amount = balances[entry.itemId] or 0
-            if selecting then
+            if mode == 'build' then
                 amount = amount - (selection.counts[entry.itemId] or 0)
             end
             if amount > 0 then
@@ -594,17 +826,17 @@ showBankCategories = function(player, page, selecting)
         table.insert(options,
         {
             string.format('%s [%d]', BANK_CATEGORY_NAMES[category.id], category.total),
-            function(p) showBankItems(p, category.id, 1, selecting) end,
+            function(p) showBankItems(p, category.id, 1, mode) end,
         })
     end
 
     if page < maxPage then
-        table.insert(options, { 'Next page', function(p) showBankCategories(p, page + 1, selecting) end })
+        table.insert(options, { 'Next page', function(p) showBankCategories(p, page + 1, mode) end })
     end
     if page > 1 then
-        table.insert(options, { 'Previous page', function(p) showBankCategories(p, page - 1, selecting) end })
+        table.insert(options, { 'Previous page', function(p) showBankCategories(p, page - 1, mode) end })
     end
-    if selecting and selection.total > 0 then
+    if mode == 'build' and selection.total > 0 then
         table.insert(options,
         {
             string.format('Ready - trade gear (%d)', selection.total),
@@ -619,11 +851,18 @@ showBankCategories = function(player, page, selecting)
         table.insert(options, { 'Back', function(p) showBankMain(p) end })
     end
 
+    local title
+    if mode == 'build' then
+        title = string.format('Build augment (%d/5)', selection.total)
+    elseif mode == 'withdraw' then
+        title = string.format('Withdraw (%d/%d)', page, maxPage)
+    else
+        title = string.format('Stored catalysts (%d/%d)', page, maxPage)
+    end
+
     sendBankMenu(player,
     {
-        title = selecting
-            and string.format('Build augment (%d/5)', selection.total)
-            or  string.format('Stored catalysts (%d/%d)', page, maxPage),
+        title = title,
         options = options,
         onCancelled = function(p) showBankMain(p) end,
     })
@@ -638,25 +877,45 @@ showBankMain = function(player)
         end
     end
     local selection = getBankSelection(player)
+    local lastRecipe = loadLastRecipe(player)
+    local lastTotal = 0
+    if lastRecipe then
+        _, lastTotal = recipeSummary(lastRecipe)
+    end
 
-    local options =
-    {
+    local options = {}
+    if lastRecipe then
+        table.insert(options,
         {
-            string.format('Browse bank (%d)', total),
-            function(p) showBankCategories(p, 1, false) end,
-        },
-        {
-            string.format('Build an augment (%d/5)', selection.total),
-            function(p) showBankCategories(p, 1, true) end,
-        },
-        {
-            'How this works',
+            string.format('Repeat last catalyst set (%d)', lastTotal),
             function(p)
-                printBankHelp(p)
-                showBankMain(p)
+                tryRepeatLastRecipe(p, { onFail = function(pp) showBankMain(pp) end })
             end,
-        },
-    }
+        })
+    end
+    table.insert(options,
+    {
+        string.format('Browse bank (%d)', total),
+        function(p) showBankCategories(p, 1, 'browse') end,
+    })
+    table.insert(options,
+    {
+        string.format('Withdraw catalysts (%d)', total),
+        function(p) showBankCategories(p, 1, 'withdraw') end,
+    })
+    table.insert(options,
+    {
+        string.format('Build an augment (%d/5)', selection.total),
+        function(p) showBankCategories(p, 1, 'build') end,
+    })
+    table.insert(options,
+    {
+        'How this works',
+        function(p)
+            printBankHelp(p)
+            showBankMain(p)
+        end,
+    })
     if selection.total > 0 then
         table.insert(options,
         {
@@ -673,6 +932,36 @@ showBankMain = function(player)
     {
         title = string.format('Arcane Bank: %d catalysts', total),
         options = options,
+    })
+end
+
+showPostAugmentMenu = function(player)
+    local lastRecipe = loadLastRecipe(player)
+    if not lastRecipe then
+        showBankMain(player)
+        return
+    end
+
+    local _, total = recipeSummary(lastRecipe)
+    sendBankMenu(player,
+    {
+        title = 'Augment another piece?',
+        options =
+        {
+            {
+                string.format('Same catalysts again (%d)', total),
+                function(p)
+                    tryRepeatLastRecipe(p,
+                    {
+                        onFail = function(pp) showPostAugmentMenu(pp) end,
+                    })
+                end,
+            },
+            {
+                'Back to Arcane Bank',
+                function(p) showBankMain(p) end,
+            },
+        },
     })
 end
 
@@ -758,6 +1047,7 @@ showConfirmMenu = function(player)
                 -- The rebuilt gear now exists. Clear the retryable held-item
                 -- state before optional achievement/message callbacks so a
                 -- later script error can never duplicate the equipment.
+                saveLastRecipe(playerArg, recipeFromState(st2))
                 clearState(playerArg)
                 playerArg:delGil(GIL_COST)
 
@@ -793,6 +1083,7 @@ showConfirmMenu = function(player)
                     playerArg:printToPlayer(string.format('%s CRYSTALIZED: [%s] is now locked at max -- re-rolls can no longer touch it, kupo!', xi.icon.STAR_LARGE, lbl),
                         xi.msg.channel.SYSTEM_3)
                 end
+                showPostAugmentMenu(playerArg)
             end,
         },
         {
@@ -997,6 +1288,28 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                         table.insert(catalystOrder, request.id)
                         totalCatalysts = totalCatalysts + request.qty
                     end
+                else
+                    local lastRecipe = loadLastRecipe(player)
+                    if lastRecipe then
+                        local ok, err = validateRecipeForRepeat(player, lastRecipe)
+                        if ok then
+                            applyRecipeToSelection(player, lastRecipe)
+                            selection = getBankSelection(player)
+                            bankMode = true
+                            selectedBankCatalysts = selectionRequests(selection)
+                            for _, request in ipairs(selectedBankCatalysts) do
+                                catalystCounts[request.id] = request.qty
+                                table.insert(catalystOrder, request.id)
+                                totalCatalysts = totalCatalysts + request.qty
+                            end
+                            player:printToPlayer(
+                                '[Arcane Augmenter] Using your last catalyst set again, kupo!',
+                                xi.msg.channel.SYSTEM_3)
+                        else
+                            player:printToPlayer('[Arcane Augmenter] ' .. err, xi.msg.channel.SYSTEM_3)
+                            return
+                        end
+                    end
                 end
             end
 
@@ -1041,7 +1354,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
 
             if totalCatalysts == 0 then
                 player:printToPlayer(
-                    'Select stored catalysts from my "Build an augment" menu before trading gear, kupo!',
+                    'Select stored catalysts from my menu, use "Repeat last catalyst set", or trade gear after a prior augment to reuse your last catalysts, kupo!',
                     xi.msg.channel.SYSTEM_3)
                 return
             end

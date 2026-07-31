@@ -8,6 +8,7 @@
 -- driven by the shared engine scripts/globals/dynamis_divergence.lua.
 -----------------------------------
 require('modules/module_utils')
+require('scripts/globals/dynamis_divergence')
 require('scripts/zones/Southern_San_dOria/Zone')
 require('scripts/zones/Bastok_Mines/Zone')
 require('scripts/zones/Windurst_Walls/Zone')
@@ -38,12 +39,13 @@ local ENTRY_OPTIONS =
 }
 
 -- One portal per city. pos = {x, y, z, rot} near each Dynamis entrance.
+-- entryPos matches each city's instances/*.lua CONFIG (warp-in coordinates).
 local PORTALS =
 {
-    { zone = 'Southern_San_dOria', instanceId = 29400, label = "San d'Oria [D]", pos = {  158.0,  -2.0,   160.0,  64 } },
-    { zone = 'Bastok_Mines',       instanceId = 29500, label = 'Bastok [D]',     pos = {  112.0,   0.994, -70.0, 128 } },
-    { zone = 'Windurst_Walls',     instanceId = 29600, label = 'Windurst [D]',   pos = { -217.0,   1.0,  -117.0,   0 } },
-    { zone = 'RuLude_Gardens',     instanceId = 29700, label = 'Jeuno [D]',       pos = {   48.93, 10.0,  -69.0, 195 } },
+    { zone = 'Southern_San_dOria', instanceId = 29400, label = "San d'Oria [D]", pos = {  158.0,  -2.0,   160.0,  64 }, entryPos = { 161.838, -2.000, 161.673, 93 } },
+    { zone = 'Bastok_Mines',       instanceId = 29500, label = 'Bastok [D]',     pos = {  112.0,   0.994, -70.0, 128 }, entryPos = { 116.482, 0.994, -72.121, 128 } },
+    { zone = 'Windurst_Walls',     instanceId = 29600, label = 'Windurst [D]',   pos = { -217.0,   1.0,  -117.0,   0 }, entryPos = { -221.988, 1.000, -120.184, 0 } },
+    { zone = 'RuLude_Gardens',     instanceId = 29700, label = 'Jeuno [D]',       pos = {   48.93, 10.0,  -69.0, 195 }, entryPos = { 48.930, 10.002, -71.032, 195 } },
 }
 
 -- Debit `qty` marks of the given charVar; returns (ok, remainingBalance).
@@ -68,6 +70,16 @@ local function enter(player, portal, opt)
             ENTRY_COST.qty, opt.short, remaining), xi.msg.channel.SYSTEM_3)
         return
     end
+
+    local partyInst = xi.divergence.findPartyInstance(player, portal.instanceId)
+    if partyInst then
+        player:printToPlayer(string.format(
+            '[Divergence] The rift to %s opens (paid %d %s Marks, %d remain). Good luck, kupo!',
+            portal.label, ENTRY_COST.qty, opt.short, remaining), xi.msg.channel.SYSTEM_3)
+        xi.divergence.joinPlayer(player, partyInst, { entryPos = portal.entryPos })
+        return
+    end
+
     player:printToPlayer(string.format('[Divergence] The rift to %s opens (paid %d %s Marks, %d remain). Good luck, kupo!',
         portal.label, ENTRY_COST.qty, opt.short, remaining), xi.msg.channel.SYSTEM_3)
     player:createInstance(portal.instanceId)

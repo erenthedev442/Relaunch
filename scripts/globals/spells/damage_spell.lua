@@ -909,10 +909,15 @@ xi.spells.damage.calculateHelixMeritMultiplier = function(caster, spellId)
     return helixMeritMultiplier
 end
 
-xi.spells.damage.calculateAreaOfEffectResistance = function(target, spell)
+-- Non-primary targets honor Mod::DMG_AOE (alter-ego survivability, locus mobs, etc.).
+-- action may be a spell or mob/pet skill; both expose getPrimaryTargetID().
+xi.spells.damage.calculateAreaOfEffectResistance = function(target, action)
     local areaOfEffectMultiplier = 1
 
-    if target:getID() ~= spell:getPrimaryTargetID() then
+    if
+        action and
+        target:getID() ~= action:getPrimaryTargetID()
+    then
         areaOfEffectMultiplier = utils.clamp(areaOfEffectMultiplier + target:getMod(xi.mod.DMG_AOE) / 10000, 0, 2)
     end
 

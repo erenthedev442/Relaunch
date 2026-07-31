@@ -1,4 +1,4 @@
-﻿-----------------------------------
+-----------------------------------
 -- MAP SERVER SETTINGS
 -----------------------------------
 -- All settings are attached to the `xi.settings` object. This is published globally, and be accessed from C++ and any script.
@@ -222,9 +222,9 @@ xi.settings.map =
     -- Adjust skill caps for trusts/fellows. Acts as a multiplier, so default is 1.
     ALTER_EGO_SKILL_MULTIPLIER = 1.0,
 
-    -- Trusts/fellows take 15% of AoE-spell damage when not the primary target
-    -- (DMG_AOE mod, 1/100 of a %; -8500 = -85%). Damage spells only. See
-    -- settings/default/map.lua for the full explanation.
+    -- Trusts/fellows take 15% of AoE damage when not the primary target
+    -- (DMG_AOE mod, 1/100 of a %; -8500 = -85%). Spells, TP moves, and breaths.
+    -- See settings/default/map.lua for the full explanation.
     ALTER_EGO_AOE_DMG_TAKEN = -8500,
 
     -- Adjust the recast time for abilities. Acts as a multiplier, so default is 1

@@ -520,17 +520,15 @@ fightLoot.shadow_lord =
         { itemId = xi.item.DAMASCUS_INGOT, weight = 30 },
         { itemId = xi.item.PHILOSOPHERS_STONE, weight = 25 },
     },
-    { -- BiS (ilvl 119): 15 item(s) x weight 50, whiff 250
+    { -- BiS (ilvl 119): 12 item(s) x weight 50, whiff 400
+        -- Malignance pieces removed 2026-07-31 (reserved for future content).
         quantity = 1,
-        { itemId = 0, weight = 250 },
+        { itemId = 0, weight = 400 },
         { itemId = 26733, weight = 50 },  -- Yorium Barbuta (Alluvion Skirmish armor)
         { itemId = 26891, weight = 50 },  -- Yorium Cuirass (Alluvion Skirmish armor)
         { itemId = 27045, weight = 50 },  -- Yorium Gauntlets (Alluvion Skirmish armor)
         { itemId = 27232, weight = 50 },  -- Yorium Cuisses (Alluvion Skirmish armor)
         { itemId = 27402, weight = 50 },  -- Yorium Sabatons (Alluvion Skirmish armor)
-        { itemId = 23735, weight = 50 },  -- Malignance Tights (Legs)
-        { itemId = 23736, weight = 50 },  -- Malignance Boots (Feet)
-        { itemId = 21635, weight = 50 },  -- Malignance Sword
         { itemId = 20858, weight = 50 },  -- Lightreaver (Great Sword)
         { itemId = 28009, weight = 50 },  -- Onimusha-no-Kote (Hands)
         { itemId = 27858, weight = 50 },  -- Dread Jupon (DRK Body)
@@ -588,16 +586,16 @@ fightLoot.celestial_nexus =
         { itemId = xi.item.DRAGON_HEART, weight = 25 },
         { itemId = xi.item.DAMASCUS_INGOT, weight = 20 },
     },
-    { -- BiS (ilvl 119): 14 item(s) x weight 50, whiff 300
+    { -- BiS (ilvl 119): 13 item(s) x weight 50, whiff 350
+        -- Malignance Pole removed 2026-07-31 (reserved for future content).
         quantity = 1,
-        { itemId = 0, weight = 300 },
+        { itemId = 0, weight = 350 },
         { itemId = 26736, weight = 50 },  -- Telchine Cap (Alluvion Skirmish armor)
         { itemId = 26894, weight = 50 },  -- Telchine Chasuble (Alluvion Skirmish armor)
         { itemId = 27048, weight = 50 },  -- Telchine Gloves (Alluvion Skirmish armor)
         { itemId = 27235, weight = 50 },  -- Telchine Braconi (Alluvion Skirmish armor)
         { itemId = 27405, weight = 50 },  -- Telchine Pigaches (Alluvion Skirmish armor)
         { itemId = 22040, weight = 50 },  -- Daybreak (healer Club)
-        { itemId = 22087, weight = 50 },  -- Malignance Pole (Staff)
         { itemId = 20632, weight = 50 },  -- Vanir Knife (Dagger)
         { itemId = 21284, weight = 50 },  -- Vanir Gun
         { itemId = 27887, weight = 50 },  -- Vanir Cotehardie (Body)
@@ -606,10 +604,10 @@ fightLoot.celestial_nexus =
         { itemId = 21452, weight = 50 },  -- Divinator (mage club)
         { itemId = 22261, weight = 50 },  -- Divinator II (mage club HQ)
     },
-    { -- Non-ilvl (level 95-99): 2 item(s) x weight 80, whiff 840
+    { -- Non-ilvl (level 95-99): 1 item(s) x weight 80, whiff 920
+        -- Malignance Earring removed 2026-07-31 (reserved for future content).
         quantity = 1,
-        { itemId = 0, weight = 840 },
-        { itemId = 26088, weight = 80 },  -- Malignance Earring
+        { itemId = 0, weight = 920 },
         { itemId = 21380, weight = 80 },  -- Vanir Battery (Ammo)
     },
 }
@@ -622,9 +620,10 @@ fightLoot.divine_might =
         { itemId = xi.item.GOLD_INGOT,               weight = 70 },
         { itemId = xi.item.DAMASCUS_INGOT,           weight = 25 },
     },
-    { -- BiS (ilvl 119): 17 item(s) x weight 50, whiff 150
+    { -- BiS (ilvl 119): 14 item(s) x weight 50, whiff 300
+        -- Malignance armor removed 2026-07-31 (reserved for future content).
         quantity = 1,
-        { itemId = 0, weight = 150 },
+        { itemId = 0, weight = 300 },
         { itemId = 26734, weight = 50 },  -- Acro Helm (Alluvion Skirmish armor)
         { itemId = 26892, weight = 50 },  -- Acro Surcoat (Alluvion Skirmish armor)
         { itemId = 27046, weight = 50 },  -- Acro Gauntlets (Alluvion Skirmish armor)
@@ -635,9 +634,6 @@ fightLoot.divine_might =
         { itemId = 27047, weight = 50 },  -- Taeon Gloves (Alluvion Skirmish armor)
         { itemId = 27234, weight = 50 },  -- Taeon Tights (Alluvion Skirmish armor)
         { itemId = 27404, weight = 50 },  -- Taeon Boots (Alluvion Skirmish armor)
-        { itemId = 23732, weight = 50 },  -- Malignance Chapeau (Head)
-        { itemId = 23733, weight = 50 },  -- Malignance Tabard (Body)
-        { itemId = 23734, weight = 50 },  -- Malignance Gloves (Hands)
         { itemId = 27888, weight = 50 },  -- Kyujutsugi (SAM/GEO Body)
         { itemId = 21381, weight = 50 },  -- Seraphicaller (BRD horn)
         { itemId = 21452, weight = 50 },  -- Divinator (mage club)

@@ -251,6 +251,33 @@ xi.divergence.placePlayer = function(player, instance, cfg)
     player:setPos(p[1], p[2], p[3], p[4], instance:getZone():getID())
 end
 
+-- If a party member is already inside a live [D] run, join that copy instead of
+-- spawning a private instance (same fix as Ambuscade party entry).
+xi.divergence.findPartyInstance = function(player, instanceId)
+    for _, member in pairs(player:getParty()) do
+        if member:getID() ~= player:getID() then
+            local inst = member:getInstance()
+            if
+                inst and
+                inst:getID() == instanceId and
+                not inst:completed() and
+                not inst:failed()
+            then
+                return inst
+            end
+        end
+    end
+    return nil
+end
+
+xi.divergence.joinPlayer = function(player, instance, cfg)
+    xi.divergence.placePlayer(player, instance, cfg)
+    xi.divergence.startCountdown(player)
+    player:printToPlayer(
+        '[Divergence] Joining your party\'s run already in progress!',
+        xi.msg.channel.SYSTEM_3)
+end
+
 xi.divergence.startCountdown = function(player)
     local instance = player:getInstance()
     if instance then

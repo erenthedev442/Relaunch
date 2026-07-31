@@ -1,5 +1,9 @@
 -----------------------------------
--- Final Ambuscade weapon linked-WS tuning
+-- Final Ambuscade weapon weaponskill tuning
+--
+-- Final Ambuscade weapons raise every weaponskill to a 99,999 soft ceiling.
+-- The weapon's linked native WS then receives a 10% boost that may break that
+-- ceiling, and is hard-capped at 149,999.
 -----------------------------------
 require('modules/module_utils')
 
@@ -49,26 +53,60 @@ xi.ambuscadeWsTuning.getEntry = function(attacker, wsId, slot)
 end
 
 xi.ambuscadeWsTuning.withAmbuscadeEffects = function(attacker, target, wsId, slot, callback)
-    local entry = xi.ambuscadeWsTuning.getEntry(attacker, wsId, slot)
-    local dolichenusMultiplier = getDolichenusMultiplier(attacker, target, slot)
-    if (not entry and dolichenusMultiplier == 100) or activeCalculations[attacker] then
+    if
+        not attacker or
+        not attacker:isPC() or
+        (slot ~= xi.slot.MAIN and slot ~= xi.slot.RANGED) or
+        activeCalculations[attacker]
+    then
         return callback()
     end
 
-    local priorCap    = attacker:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR)
-    local priorMult   = attacker:getLocalVar(catalog.DAMAGE_MULT_LOCAL_VAR)
-    local priorAoECap = attacker:getLocalVar('AoEWsDamageCap')
-    local baseMultiplier = entry and catalog.DAMAGE_MULTIPLIER or 100
-    attacker:setLocalVar(
-        catalog.DAMAGE_MULT_LOCAL_VAR,
-        math.floor(baseMultiplier * dolichenusMultiplier / 100))
-    if entry then
-        attacker:setLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR, catalog.DAMAGE_CAP)
+    local itemId = attacker:getEquipID(slot)
+    local finalWeapon = catalog.getFinalWeapon(itemId, slot)
+    local linkedEntry = catalog.getEntry(itemId, wsId, slot)
+    local dolichenusMultiplier = getDolichenusMultiplier(attacker, target, slot)
+    if not finalWeapon and dolichenusMultiplier == 100 then
+        return callback()
     end
 
-    if entry and priorAoECap > 0 then
-        attacker:setLocalVar('AoEWsDamageCap', catalog.AOE_DAMAGE_CAP)
+    local priorCap       = attacker:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR)
+    local priorBaseCap   = attacker:getLocalVar(catalog.BASE_DAMAGE_CAP_LOCAL_VAR)
+    local priorMult      = attacker:getLocalVar(catalog.DAMAGE_MULT_LOCAL_VAR)
+    local priorAoECap    = attacker:getLocalVar('AoEWsDamageCap')
+    local priorStandard  = attacker:getLocalVar('StandardWsDamageCap')
+
+    -- Soft ceiling for every WS on a final Ambuscade weapon. Linked WSs apply
+    -- their 10% boost after this value in takeWeaponskillDamage.
+    if finalWeapon then
+        attacker:setLocalVar(catalog.BASE_DAMAGE_CAP_LOCAL_VAR, catalog.DAMAGE_CAP)
     end
+
+    if linkedEntry then
+        attacker:setLocalVar(
+            catalog.DAMAGE_MULT_LOCAL_VAR,
+            math.floor(catalog.DAMAGE_MULTIPLIER * dolichenusMultiplier / 100))
+        attacker:setLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR, catalog.LINKED_DAMAGE_CAP)
+        -- Raise the synchronous Standard/AoE ceilings so C++ HP delivery does
+        -- not clip the post-boost linked WS back to 99,999.
+        attacker:setLocalVar('StandardWsDamageCap', catalog.LINKED_DAMAGE_CAP)
+        if priorAoECap > 0 then
+            attacker:setLocalVar('AoEWsDamageCap', catalog.LINKED_AOE_DAMAGE_CAP)
+        end
+    else
+        if dolichenusMultiplier ~= 100 then
+            attacker:setLocalVar(catalog.DAMAGE_MULT_LOCAL_VAR, dolichenusMultiplier)
+        end
+
+        if finalWeapon then
+            attacker:setLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR, catalog.DAMAGE_CAP)
+            attacker:setLocalVar('StandardWsDamageCap', catalog.DAMAGE_CAP)
+            if priorAoECap > 0 then
+                attacker:setLocalVar('AoEWsDamageCap', catalog.AOE_DAMAGE_CAP)
+            end
+        end
+    end
+
     activeCalculations[attacker] = true
 
     local results
@@ -82,8 +120,10 @@ xi.ambuscadeWsTuning.withAmbuscadeEffects = function(attacker, target, wsId, slo
 
     local cleanupOk, cleanupErr = pcall(function()
         attacker:setLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR, priorCap)
+        attacker:setLocalVar(catalog.BASE_DAMAGE_CAP_LOCAL_VAR, priorBaseCap)
         attacker:setLocalVar(catalog.DAMAGE_MULT_LOCAL_VAR, priorMult)
         attacker:setLocalVar('AoEWsDamageCap', priorAoECap)
+        attacker:setLocalVar('StandardWsDamageCap', priorStandard)
     end)
     activeCalculations[attacker] = nil
 

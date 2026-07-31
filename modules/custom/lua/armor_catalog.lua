@@ -28,12 +28,10 @@
 --
 -- FORCED ADDS (pinned in tools/score_armor.py via FORCED_INCLUDE so the scorer
 -- KEEPS them on every regen -- a plain table.insert HERE is WIPED by the next
--- re-score, so new pins MUST go in FORCED_INCLUDE, not in this file):
---   Malignance Gold set on the Armor NPC: Chapeau (23732), Tabard (23733),
---   Gloves (23734), Tights (23735), Boots (23736) -- the FULL 5-piece set. All
---   score into the gold band but fall below its per-slot top-N, so they need
---   pinning. (Gloves were on NO vendor until 2026-07-08 -- an earlier note wrongly
---   said "Infamy Vendor"; added to gold/hands FORCED_INCLUDE to complete the set.)
+-- re-score, so new pins MUST go in FORCED_INCLUDE, not in this file).
+--
+-- Malignance Gold set (23732-23736) REMOVED 2026-07-31 -- reserved for future
+-- content. Also purged from HTBF loot and OWNER_EXCLUDE_IDS in score_armor.py.
 -----------------------------------
 local catalog = {}
 

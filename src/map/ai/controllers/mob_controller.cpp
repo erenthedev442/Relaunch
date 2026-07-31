@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -336,6 +336,13 @@ auto CMobController::CanDetectTarget(CBattleEntity* PTarget, const bool forceSig
     if ((detects & DETECT_MAGIC) && currentDistance < PMob->getMobMod(MOBMOD_MAGIC_RANGE) &&
         PTarget->PAI->IsCurrentState<CMagicState>() && static_cast<CMagicState*>(PTarget->PAI->GetCurrentState())->GetSpell()->hasMPCost())
     {
+        // Alter egos (TYPE_TRUST), including the custom Adventuring Fellow, do not
+        // trigger magic-detection aggro -- matches retail trust behavior.
+        if (PTarget->objtype == TYPE_TRUST)
+        {
+            return false;
+        }
+
         return isTargetAndInRange || PMob->CanSeeTarget(PTarget);
     }
 

@@ -110,10 +110,12 @@ CHECKS = [
     # Trust AoE survivability (2026-07-18, owner/Kahz): alter egos take reduced
     # damage from AoE actions they are NOT the primary target of. The DMG_AOE mod
     # (map.ALTER_EGO_AOE_DMG_TAKEN, default -8500 => 15% dmg) is consumed by
-    # xi.spells.damage.calculateAreaOfEffectResistance (damage spells only). A
-    # merge of upstream trustutils.cpp would silently drop the addModifier call.
+    # xi.spells.damage.calculateAreaOfEffectResistance (spells + mobskills path).
+    # A merge of upstream trustutils.cpp would silently drop the addModifier call.
     ("Trust AoE mitigation: DMG_AOE knob applied (trustutils.cpp)",
      "src/map/utils/trustutils.cpp", r"Mod::DMG_AOE\s*,.*ALTER_EGO_AOE_DMG_TAKEN", "present", 1),
+    ("Trusts skip magic-detection aggro (mob_controller.cpp)",
+     "src/map/ai/controllers/mob_controller.cpp", r"objtype == TYPE_TRUST", "present", 1),
     ("Patch markers present across src/ (broad-revert tripwire)",
      "src", r"FJB|LEGENDARY[- ]CUSTOM", "min", 30),
 ]

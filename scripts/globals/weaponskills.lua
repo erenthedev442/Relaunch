@@ -952,25 +952,45 @@ end
 -- handles displaying the appropriate action/message, delivering the damage to the mob, and any enmity from it
 xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, primaryMsg, attack, wsResults, action)
     local finaldmg = wsResults.finalDmg
-    local ambuscadeMultiplier = attacker:getLocalVar('AmbuscadeWsDamageMultiplier')
-    if finaldmg > 0 and ambuscadeMultiplier > 0 then
-        finaldmg          = math.floor(finaldmg * ambuscadeMultiplier / 100)
+
+    -- Ordinary player WSs receive a level-, weapon- and mastery-scaled multiplier
+    -- from StandardWeaponskillTuning. REMA/Prime native WSs never enter this
+    -- branch. Final Ambuscade weapons keep the multiplier on every WS.
+    local standardMultiplier = attacker:getLocalVar('StandardWsDamageMultiplier')
+    if finaldmg > 0 and standardMultiplier > 0 then
+        finaldmg = math.floor(finaldmg * standardMultiplier / 1000)
         wsResults.finalDmg = finaldmg
     end
 
-    -- Ordinary player WSs receive a level-, weapon- and mastery-scaled multiplier
-    -- from StandardWeaponskillTuning. The module exposes it only during
-    -- eligible calculations, so REMA/Prime/final-Ambuscade native WSs never
-    -- enter this branch. Stock already contains weapon damage, TP, attack,
-    -- attributes, WSD and multi-attacks, so every one scales proportionally.
-    local standardMultiplier = attacker:getLocalVar('StandardWsDamageMultiplier')
-    if finaldmg > 0 and standardMultiplier > 0 then
-        local standardCap = attacker:getLocalVar('StandardWsDamageCap')
-        finaldmg = math.floor(finaldmg * standardMultiplier / 1000)
-        if standardCap > 0 then
-            finaldmg = math.min(finaldmg, standardCap)
-        end
+    -- Soft-cap before the Ambuscade linked boost. Final Ambuscade weapons use
+    -- AmbuscadeWsBaseDamageCap (99,999). Everything else uses StandardWsDamageCap.
+    local softCap = attacker:getLocalVar('AmbuscadeWsBaseDamageCap')
+    if softCap <= 0 then
+        softCap = attacker:getLocalVar('StandardWsDamageCap')
+    end
 
+    if finaldmg > 0 and softCap > 0 then
+        finaldmg = math.min(finaldmg, softCap)
+        wsResults.finalDmg = finaldmg
+    end
+
+    -- Linked Ambuscade WS: +10% after the 99,999 soft ceiling (may exceed it).
+    -- Dolichenus may also expose a smaller post-soft-cap multiplier.
+    local ambuscadeMultiplier = attacker:getLocalVar('AmbuscadeWsDamageMultiplier')
+    if finaldmg > 0 and ambuscadeMultiplier > 0 then
+        finaldmg = math.floor(finaldmg * ambuscadeMultiplier / 100)
+        wsResults.finalDmg = finaldmg
+    end
+
+    -- Hard delivery ceiling. Linked Ambuscade WS uses 149,999; other final
+    -- Ambuscade WS use 99,999. Falls back to StandardWsDamageCap otherwise.
+    local hardCap = attacker:getLocalVar('AmbuscadeWsDamageCap')
+    if hardCap <= 0 then
+        hardCap = attacker:getLocalVar('StandardWsDamageCap')
+    end
+
+    if finaldmg > 0 and hardCap > 0 then
+        finaldmg = math.min(finaldmg, hardCap)
         wsResults.finalDmg = finaldmg
     end
 

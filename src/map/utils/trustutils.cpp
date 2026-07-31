@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2024 LandSandBoat Dev Teams
@@ -500,7 +500,6 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
         PTrust->addModifier(Mod::MPP, 50);
         PTrust->addModifier(Mod::STATUSRES, 25);
     }
-        PTrust->addModifier(Mod::DMG_AOE, -8500);
 
     // add mob pool mods ahead of applying stats
     mobutils::AddSqlModifiers(PTrust);
@@ -735,7 +734,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
     // DMG_AOE is applied by xi.spells.damage.calculateAreaOfEffectResistance:
     // multiplier = clamp(1 + DMG_AOE/10000, 0, 2). Default -8500 -> 0.15 (15%
     // damage taken). Tunable via map.ALTER_EGO_AOE_DMG_TAKEN without a rebuild.
-    // NOTE: only damage *spells* honor this mod; mob TP-move / breath AoE do not.
+    // Lua applies this for damage spells, mob TP moves, and breaths.
     PTrust->addModifier(Mod::DMG_AOE, static_cast<int16>(settings::get<float>("map.ALTER_EGO_AOE_DMG_TAKEN")));
 
     // Add traits for sub and main

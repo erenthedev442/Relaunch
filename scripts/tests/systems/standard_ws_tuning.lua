@@ -181,13 +181,12 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         end
     end)
 
-    it('excludes exact REMA, Prime, and final Ambuscade native WS pairs', function()
+    it('excludes exact REMA and Prime native WS pairs', function()
         local target = makeTarget(150, 1000000)
         local cases =
         {
             { item = 20509, ws = xi.weaponskill.FINAL_HEAVEN },
             { item = 21646, ws = xi.weaponskill.IMPERATOR },
-            { item = 21621, ws = xi.weaponskill.SAVAGE_BLADE },
         }
 
         for _, case in ipairs(cases) do
@@ -199,6 +198,19 @@ describe('Level-scaled ordinary weaponskill tuning', function()
                     assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 0)
                 end)
         end
+    end)
+
+    it('keeps standard progression on final Ambuscade linked WSs with a 99,999 ceiling', function()
+        local player = makePlayer({ [xi.slot.MAIN] = 21621 }, 99)
+        local target = makeTarget(150, 1000000)
+
+        xi.standardWsTuning.withStandardEffects(
+            player, target, xi.weaponskill.SAVAGE_BLADE, xi.slot.MAIN,
+            {}, false,
+            function()
+                assert(player:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 8000)
+                assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 99999)
+            end)
     end)
 
     it('still tunes ordinary WSs used with a special weapon', function()

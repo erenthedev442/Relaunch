@@ -234,13 +234,18 @@ set{
     xi.zone.WALK_OF_ECHOES_P1
 }
 
--- [LEGENDARY-CUSTOM 2026-06-18] The 8 Abyssea marks-pop zones host lv135-155 custom
+-- [LEGENDARY-CUSTOM 2026-06-18] The 9 Abyssea marks-pop zones host lv120-150 custom
 -- NMs (AbysseaMarks), so per this file's OWN rule -- "any zone with a mob over lvl 99
 -- -> level correction deactivated" -- they are excluded here. Without this a lv99
 -- player eats a -144..-224 accuracy penalty vs the marks NMs ON TOP of their
--- +2000..5000 evasion bonus. Mirrors the PROVENANCE removal above; done as an
+-- +1100..1400 evasion bonus. Mirrors the PROVENANCE removal above; done as an
 -- override set (not list comment-outs) so it ALSO holds on the USE_ADOULIN=false
 -- path, which corrects every zone.
+--
+-- 2026-07-31: ABYSSEA_ULEGUERAND was missing from this set (only Altepa/Grauberg
+-- Heroes zones were listed). Players fighting Apademak/Isgebind ate full Lv99-vs-
+-- Lv150 cRatio + ACC penalties (~-204 ACC, crushed WS pDIF) while the same
+-- profile on Altepa/Grauberg felt normal. Include all three Heroes zones.
 local fjbLevelCorrectionExclusions =
 set{
     xi.zone.ABYSSEA_KONSCHTAT,
@@ -250,6 +255,7 @@ set{
     xi.zone.ABYSSEA_MISAREAUX,
     xi.zone.ABYSSEA_VUNKERL,
     xi.zone.ABYSSEA_ALTEPA,
+    xi.zone.ABYSSEA_ULEGUERAND,
     xi.zone.ABYSSEA_GRAUBERG,
     -- [RELAUNCH-CUSTOM] Diorama Abdhaljs-Ghelsba is the Reforge hub, hosting the
     -- Lv150-250 Reforge NMs (see modules/custom/lua/Reforge_System.lua). Per this

@@ -18,10 +18,17 @@
 -- every spawn; releaseIdOnDisappear and a FRESH alive-set per wave (no
 -- cross-wave refs - a dangling ref crashes the map server); state is
 -- cleared BEFORE despawning on every abort path; NO_CAPACITY_POINTS.
+--
+-- RETIRED 2026-07-31 for launch: Odyssey / endgame gear was leaking through
+-- the Invasion loot pool, and the event is parked until content is revisited.
+-- Flip RETIRED to false to restore scheduled + GM-started Al Zahbi invasions.
 -----------------------------------
 require('modules/module_utils')
 local catalog   = require('modules/custom/lua/invasion_catalog')
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
+
+local RETIRED = true
+local RETIRED_MSG = 'Al Zahbi Invasion is disabled for launch.'
 
 -- Ambuscade weapons are Ambuscade-exclusive (obtained only via Gorpa's weapon
 -- upgrade chain), so strip every Ambuscade weapon stage from the Domain Invasion
@@ -513,9 +520,6 @@ end
 -- day stamps make each phase fire exactly once per window per day.
 -----------------------------------
 local function checkClock(player)
-    local now    = nowSecOfDay()
-    local today  = currentUtcDay()
-
     -- Active event bookkeeping: deadline enforcement rides the same
     -- tick (defenders are in a tick zone by construction).
     if state then
@@ -524,6 +528,11 @@ local function checkClock(player)
         end
         return
     end
+
+    if RETIRED then return end
+
+    local now    = nowSecOfDay()
+    local today  = currentUtcDay()
 
     for idx, w in ipairs(catalog.windows) do
         local target = windowSecOfDay(w)
@@ -568,6 +577,7 @@ end
 
 -- Re-arming per-player ticker (player_trusts pattern), hub zones only.
 local function armClock(player)
+    if RETIRED then return end
     player:timer(catalog.tickSeconds * 1000, function(p)
         if p then
             pcall(function() checkClock(p) end)
@@ -581,7 +591,9 @@ for _, zoneName in ipairs(TICK_ZONES) do
     require(string.format('scripts/zones/%s/Zone', zoneName))
     m:addOverride(string.format('xi.zones.%s.Zone.onZoneIn', zoneName), function(player, prevZone)
         local result = super(player, prevZone)
-        player:timer(3000, function(p) armClock(p) end)
+        if not RETIRED then
+            player:timer(3000, function(p) armClock(p) end)
+        end
         return result
     end)
 end
@@ -591,6 +603,10 @@ end
 -- Lives here so closures can reach state, nextWave, endInvasion, etc.
 -----------------------------------
 xi._invasion_api = {
+    isRetired = function()
+        return RETIRED
+    end,
+
     isActive = function()
         return state ~= nil
     end,
@@ -603,6 +619,7 @@ xi._invasion_api = {
     -- Initiating player must be inside Al Zahbi so their position can
     -- anchor the first wave's mob spawns.
     forceStart = function(zone)
+        if RETIRED then return false, RETIRED_MSG end
         if state then return false, 'Invasion already in progress.' end
         state = {
             wave         = 0,

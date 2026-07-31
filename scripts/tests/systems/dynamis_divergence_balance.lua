@@ -123,4 +123,27 @@ describe('Dynamis Divergence T3 solo balance', function()
         vars.NMKilled_11366 = 0
         assert(xi.augmentTiers.tierOf(player) == 3)
     end)
+
+    it('joins an in-progress party instance for the same city', function()
+        local liveInstance =
+        {
+            getID = function() return 29400 end,
+            completed = function() return false end,
+            failed = function() return false end,
+        }
+        local leader =
+        {
+            getID = function() return 1 end,
+            getInstance = function() return liveInstance end,
+        }
+        local follower =
+        {
+            getID = function() return 2 end,
+            getInstance = function() return nil end,
+            getParty = function() return { leader, follower } end,
+        }
+
+        assert(xi.divergence.findPartyInstance(follower, 29400) == liveInstance)
+        assert(xi.divergence.findPartyInstance(follower, 29500) == nil)
+    end)
 end)
