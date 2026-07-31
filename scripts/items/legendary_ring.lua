@@ -37,6 +37,8 @@ local TRANSFORM_MODEL = 3581                 -- Gargantuan Moogle
 local AURA_DUR        = 31536000             -- 1 year; effectively permanent, re-applied on equip + zone-in
 local EFFECT_DUR      = 3600                 -- vanish/transform hold time; re-applied on each toggle
 local MODE_VAR        = 'LegRingMode'        -- 0 = next use Vanishes, 1 = next use Transforms
+local RING_ID         = 26169
+local RERAISE_TIER    = 3                     -- Reraise III (matches the RERAISE_III/458 gear mod)
 
 ---@type TItem
 local itemObject = {}
@@ -47,6 +49,26 @@ local function applyAura(target)
     end
     if not target:hasStatusEffect(AURA_EFFECT) then
         target:addStatusEffect(AURA_EFFECT, { power = 1, duration = AURA_DUR, origin = target })
+    end
+end
+
+-- Persistent Reraise III so the effect ICON shows in the status bar while worn.
+-- Tagged with subPower = RING_ID so clearReraise removes only OUR reraise, never
+-- one the player cast. The FUNCTIONAL death-reraise still also comes from the
+-- RERAISE_III (458) gear mod in legendary_ring.sql -- this is purely the visible
+-- layer. m_hasRaise is a single scalar (charentity.cpp) so mod + status can't
+-- double-trigger: at most one reraise per KO. Never added over an existing
+-- (possibly higher-tier / cast) Reraise.
+local function applyReraise(target)
+    if not target:hasStatusEffect(xi.effect.RERAISE) then
+        target:addStatusEffect(xi.effect.RERAISE, { power = RERAISE_TIER, subPower = RING_ID, duration = AURA_DUR, origin = target })
+    end
+end
+
+local function clearReraise(target)
+    local eff = target:getStatusEffect(xi.effect.RERAISE)
+    if eff and eff:getSubPower() == RING_ID then
+        target:delStatusEffect(xi.effect.RERAISE)
     end
 end
 
@@ -95,10 +117,12 @@ end
 itemObject.onItemEquip = function(target, item)
     target:setCharVar(MODE_VAR, 0)  -- fresh equip: first use Vanishes
     applyAura(target)
+    applyReraise(target)
 end
 
 itemObject.onItemUnequip = function(target, item)
     clearLook(target)
+    clearReraise(target)
     target:setCharVar(MODE_VAR, 0)
 end
 

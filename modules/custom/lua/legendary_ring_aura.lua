@@ -47,8 +47,18 @@ m:addOverride('InteractionGlobal.onZoneIn', function(player, prevZone, fallbackF
         if p:hasStatusEffect(OLD_AURA_EFFECT) then
             p:delStatusEffect(OLD_AURA_EFFECT)
         end
-        if isWearingRing(p) and not p:hasStatusEffect(AURA_EFFECT) then
-            p:addStatusEffect(AURA_EFFECT, { power = 1, duration = AURA_DUR, origin = p })
+        if isWearingRing(p) then
+            if not p:hasStatusEffect(AURA_EFFECT) then
+                p:addStatusEffect(AURA_EFFECT, { power = 1, duration = AURA_DUR, origin = p })
+            end
+            -- Reraise III icon: status effects drop on zone, so re-apply it here
+            -- just like the aura. Tagged subPower = RING_ID to match the item
+            -- script (scripts/items/legendary_ring.lua); the RERAISE_III gear mod
+            -- stays the functional death-trigger. Never stacks over an existing
+            -- Reraise (a cast one, or one already re-applied).
+            if not p:hasStatusEffect(xi.effect.RERAISE) then
+                p:addStatusEffect(xi.effect.RERAISE, { power = 3, subPower = RING_ID, duration = AURA_DUR, origin = p })
+            end
         end
     end)
 
