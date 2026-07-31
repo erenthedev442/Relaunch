@@ -20,18 +20,21 @@ Target basis: target_qty counts ALL unsold listings (players + bot). Each pass,
 per configured (itemid, stack):
   - under target  -> insert bot listings to fill the gap (priced at sell_price)
   - over target   -> first delist the bot's own surplus (free), then buy the
-                     cheapest player listings priced <= sell_price, paying
-                     sell_price each, until back at target
+                     cheapest player listings priced <= the BUY-BACK price
+                     (BUYBACK_FRACTION x sell_price), paying that, until back
+                     at target
 
-The bot buys and sells at the same single price (sell_price): a fixed-price
-market maker. Listings asking more than sell_price are left alone.
+The bot SELLS at sell_price and BUYS BACK at BUYBACK_FRACTION x sell_price
+(a market-maker spread). Because buy-back < sell, there is no buy-from-bot /
+sell-to-bot gil dupe -- the round trip always loses the spread.
 
 Rules: besides hand-listed `items`, the config supports `rules` - auto-selected
 item sets handled with set-based SQL. The "non_ilvl_gear" rule keeps every
-auctionable piece of equipment that has no item level stocked at a level-scaled
-price. The bot always keeps its own target listed (independent of players), and
-(optionally) buys player listings of those items priced at or below the bot's
-price, paying the bot's price. See the config _README.
+auctionable NQ piece of equipment that has no item level stocked at a
+level-scaled price (HQ / +N crafted gear is excluded -- see GEAR_WHERE). The
+bot always keeps its own target listed (independent of players), and
+(optionally) buys player listings of those items priced at or below its
+buy-back price. See the config _README.
 
 Safe by default: this is a DRY RUN unless you pass --commit. A dry run only
 prints the actions it would take and never modifies the database.
@@ -61,6 +64,10 @@ except Exception:
 
 SELLER_ID = 0            # system seller: its sales pay nobody (gil sink)
 SELLER_NAME = "AH-Jeuno" # cosmetic, stored in auction_house.seller_name (<=15 chars)
+# Buy-back price as a fraction of the sell price. 0.5 = the bot pays half its
+# sell price to buy player listings back (a market-maker spread). Must stay < 1
+# so the buy-from-bot / sell-to-bot round trip loses money (no gil dupe).
+BUYBACK_FRACTION = 0.5
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SERVER_DIR = os.path.dirname(SCRIPT_DIR)
@@ -151,9 +158,10 @@ def remove_bot_surplus(cur, item, n):
 
 
 def buy_back(cur, item, n):
-    # Buy the cheapest eligible player listings (asking <= sell_price) and pay
-    # each seller exactly sell_price; the auction_house_buy trigger delivers it.
-    price = item["sell_price"]
+    # Buy the cheapest eligible player listings (asking <= the buy-back price)
+    # and pay each seller that buy-back price = BUYBACK_FRACTION x sell_price;
+    # the auction_house_buy trigger delivers the gil.
+    price = int(item["sell_price"] * BUYBACK_FRACTION)
     cur.execute(
         "UPDATE auction_house SET buyer_name = %s, sale = %s, sell_date = UNIX_TIMESTAMP() "
         "WHERE itemid = %s AND stack = %s AND buyer_name IS NULL AND seller <> %s AND price <= %s "
@@ -284,15 +292,19 @@ def gear_topup(cur, brackets, target, commit, gear_where=None):
 
 
 def gear_buyback(cur, brackets, cap, commit, gear_where=None):
-    """Buy the cheapest player gear listings priced <= the bot's bracket price.
+    """Buy the cheapest player gear listings priced <= the bot's BUY-BACK price.
 
-    Pays each seller exactly the bracket price (the auction_house_buy trigger
-    delivers the gil). At most `cap` listings per pass - a safety valve against
-    a runaway gil faucet. Returns the number bought (or that would be bought).
+    Pays each seller the buy-back price = BUYBACK_FRACTION x the bracket sell
+    price (the auction_house_buy trigger delivers the gil). At most `cap`
+    listings per pass - a safety valve against a runaway gil faucet. Returns the
+    number bought (or that would be bought).
     """
     if gear_where is None:
         gear_where = GEAR_WHERE
-    pc = price_case(brackets)
+    # Buy-back price = the sell-price CASE scaled by BUYBACK_FRACTION, floored to
+    # whole gil. Used for BOTH the payout and the price ceiling, so a seller is
+    # only bought when they asked at or below what the bot will pay.
+    pc = "FLOOR(({}) * {})".format(price_case(brackets), BUYBACK_FRACTION)
     cur.execute(
         "SELECT ah.id, {pc} AS botprice "
         "FROM auction_house ah JOIN {frm} ON e.itemId = ah.itemid "
@@ -396,9 +408,10 @@ def process_rule(cur, rule, commit):
 
     target = rule.get("target_qty", 1)
     brackets = rule["level_price_brackets"]
-    # Flat discount on the gear price. Applies to BOTH the bot's sell price and
-    # the price it pays to buy player gear back, so the two stay equal (no
-    # buy-low/sell-high arbitrage). 0.10 = 90% off for players.
+    # Flat discount on the gear SELL price (0.10 = 90% off for players). The
+    # buy-back price is derived from this in gear_buyback as BUYBACK_FRACTION x
+    # the discounted sell price, so the two move together but the bot buys back
+    # below what it sells for (a spread, not arbitrage-able upward).
     mult = float(rule.get("price_multiplier", 1.0))
     if mult != 1.0:
         brackets = [[lvl, max(1, int(round(price * mult)))] for lvl, price in brackets]
