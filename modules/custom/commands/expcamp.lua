@@ -16,9 +16,8 @@ commandObj.cmdprops =
 }
 
 -- { label, zone, x, y, z, rot } -- index = the !expcamp number.
--- Coords copied verbatim from the retired ExpCamp_Moogle.lua. Two Aht Urhgan
--- camps (13 Bhaflau, 15 Caedarva) still drop at the zone default (0,0,0);
--- refine with !pos.
+-- Coords copied verbatim from the retired ExpCamp_Moogle.lua. One Aht Urhgan
+-- camp (13 Bhaflau) still drops at the zone default (0,0,0); refine with !pos.
 local camps =
 {
     { '10-25 La Theine Plateau',     xi.zone.LA_THEINE_PLATEAU,      774.35,  29.00,  -18.57, 224 },
@@ -35,7 +34,7 @@ local camps =
     { '60-75 The Boyahda Tree',      xi.zone.THE_BOYAHDA_TREE,        88.00, -15.00, -217.00,   0 },
     { '75-85 Bhaflau Thickets',      xi.zone.BHAFLAU_THICKETS,         0.00,   0.00,    0.00, 128 },
     { '75-85 Mount Zhayolm',         xi.zone.MOUNT_ZHAYOLM,          658.48, -27.4748, 314.4547, 102 },
-    { '80-90 Caedarva Mire',         xi.zone.CAEDARVA_MIRE,            0.00,   0.00,    0.00, 128 },
+    { '80-90 Caedarva Mire',         xi.zone.CAEDARVA_MIRE,          282.7048, -4.1514, -703.4025, 153 },
     { '85-95 Ceizak Battlegrounds',  xi.zone.CEIZAK_BATTLEGROUNDS,  -107.00,   3.00,  295.00, 128 },
     { '90-99 Yorcia Weald',          xi.zone.YORCIA_WEALD,          -183.76,   1.54,   69.93,  29 },
     { '90-99 Marjami Ravine',        xi.zone.MARJAMI_RAVINE,          367.30, -59.27,  145.73,  36 },
