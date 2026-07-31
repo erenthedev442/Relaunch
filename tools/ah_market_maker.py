@@ -218,10 +218,15 @@ def process_item(cur, item, commit):
 #                       never appear in any browse category even if listed.
 #   NoAuction clear  -> the engine lets players list it (flag 0x40 = 64)
 #   Exclusive clear  -> not bind-on-pickup / untradeable (flag 0x4000 = 16384)
-# Aliases: e = item_equipment, b = item_basic. ~5,786 items match.
+#   name not +N      -> exclude HQ / +1/+2/+3 crafted gear (owner: the bot
+#                       stocks NQ base gear only; HQ upgrades are left to
+#                       players). Internal names are e.g. 'leather_gloves_+1'.
+# Aliases: e = item_equipment, b = item_basic. ~4,368 items match after the
+# HQ exclusion (~1,322 +N pieces dropped).
 GEAR_FROM = "item_equipment e JOIN item_basic b ON b.itemid = e.itemId"
 GEAR_WHERE = ("e.ilevel = 0 AND b.aH <> 0 "
-              "AND (b.flags & 64) = 0 AND (b.flags & 16384) = 0")
+              "AND (b.flags & 64) = 0 AND (b.flags & 16384) = 0 "
+              "AND b.name NOT REGEXP '[+][0-9]+$'")
 
 
 def price_case(brackets, col="e.level"):
