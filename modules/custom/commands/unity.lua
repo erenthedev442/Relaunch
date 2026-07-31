@@ -13,7 +13,7 @@ local commandObj = {}
 commandObj.cmdprops =
 {
     permission = 0,
-    parameters = 's',   -- optional 'remaining' | 'all'
+    parameters = 's',   -- optional 'conquered' | 'c'
 }
 
 local S       = xi.msg.channel.SYSTEM_3
@@ -32,7 +32,9 @@ local function line(player, fmt, ...)
 end
 
 commandObj.onTrigger = function(player, mode)
-    local wantRemaining = (mode == 'remaining' or mode == 'r')
+    -- Default view shows the NMs that STILL need a kill; '!unity conquered'
+    -- (or 'c') flips to the already-beaten list.
+    local wantConquered = (mode == 'conquered' or mode == 'c')
 
     local total   = player:getCharVar('Unity_NMs_Conquered') or 0
     local acc     = player:getCurrency('unity_accolades') or 0
@@ -62,10 +64,11 @@ commandObj.onTrigger = function(player, mode)
             player:printToPlayer(' ', S)
             local lock = progress.isTierUnlocked(player, tier) and 'unlocked' or 'locked'
             line(player, 'Tier %d: %d/%d conquered [%s]', tier, #b.fought, total_tier, lock)
-            local show = wantRemaining and b.remaining or b.fought
-            local label = wantRemaining and 'Remaining' or 'Conquered'
+            local show = wantConquered and b.fought or b.remaining
+            local label = wantConquered and 'Conquered' or 'Remaining'
             if #show == 0 then
-                line(player, '  %s: (none yet)', label)
+                local empty = wantConquered and '(none yet)' or '(all conquered!)'
+                line(player, '  %s: %s', label, empty)
             else
                 -- Wrap NM names at ~90 chars per printed line so long tiers stay readable.
                 local buf, width = {}, 0
@@ -93,7 +96,7 @@ commandObj.onTrigger = function(player, mode)
     else
         line(player, 'All Unity Wanted NMs conquered! 4th trust slot is unlocked.')
     end
-    line(player, 'Use  !unity remaining  to list only unfought NMs by tier.')
+    line(player, 'Use  !unity conquered  to list the NMs you have already beaten.')
 end
 
 return commandObj
