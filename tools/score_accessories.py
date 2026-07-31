@@ -181,7 +181,7 @@ ROLE_MASKS = {role: sum(JOB[j] for j in jobs) for role, jobs in ROLE_JOBS.items(
 # THERE, not here. (Previously each scorer kept its own hand-synced copy.)
 # ---------------------------------------------------------------------------
 try:
-    from tools.scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS
+    from tools.scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS, score_latents
 except ImportError:  # run as `python tools/score_*.py` (tools/ is sys.path[0])
     from scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS, score_latents
 

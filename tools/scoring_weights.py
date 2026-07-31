@@ -16,21 +16,21 @@ from __future__ import annotations
 ROLE_WEIGHTS = {
     'DPS': {
         259: 2,       # DUAL_WIELD
-        302: 6,       # TRIPLE_ATTACK
-        430: 12,      # QUAD_ATTACK
-        288: 3,       # DOUBLE_ATTACK
-        62: 5.0,      # ATTP
-        165: 4.0,     # CRITHITRATE
+        302: 10,      # TRIPLE_ATTACK        (retune 2026-07: was 6)
+        430: 16,      # QUAD_ATTACK          (was 12)
+        288: 6,       # DOUBLE_ATTACK        (was 3)
+        62: 2.5,      # ATTP                 (was 5.0)
+        165: 6.0,     # CRITHITRATE          (was 4.0)
         387: -3.0,    # UDMGPHYS
-        8: 2.0,       # STR
-        9: 2.0,       # DEX
-        73: 6,        # STORETP
-        11: 2,        # AGI
-        25: 1.5,      # ACC
+        8: 1.0,       # STR                  (was 2.0; raw stat on every piece)
+        9: 1.0,       # DEX                  (was 2.0)
+        73: 9,        # STORETP              (was 6)
+        11: 1.0,      # AGI                  (was 2)
+        25: 0.5,      # ACC                  (was 1.5)
         421: 1.5,     # CRIT_DMG_INCREASE
-        23: 2,        # ATT
-        368: 1.0,     # REGAIN
-        1039: 1.0,    # TRIPLE_ATTACK_DMG
+        23: 0.5,      # ATT                  (was 2; let multi-attack drive ranking)
+        368: 2.0,     # REGAIN               (was 1.0)
+        1039: 2.0,    # TRIPLE_ATTACK_DMG    (was 1.0)
         289: 0.5,     # SUBTLE_BLOW
         432: 0.3,     # ENSPELL_DMG_BONUS
         113: 5,       # ENHANCE
@@ -45,19 +45,19 @@ ROLE_WEIGHTS = {
         161: -0.03,   # DMGPHYS
     },
     'WS': {
-        840: 5.0,     # ALL_WSDMG_ALL_HITS
+        840: 7.0,     # ALL_WSDMG_ALL_HITS   (retune 2026-07: was 5.0)
         949: 10,      # WS_NO_DEPLETE
-        421: 3.0,     # CRIT_DMG_INCREASE
-        841: 3.0,     # ALL_WSDMG_FIRST_HIT
+        421: 4.0,     # CRIT_DMG_INCREASE    (was 3.0)
+        841: 5.0,     # ALL_WSDMG_FIRST_HIT  (was 3.0)
         1144: 10,     # ANY_FTP_BONUS
-        8: 2.0,       # STR
-        9: 2.0,       # DEX
-        165: 2.0,     # CRITHITRATE
+        8: 2.0,       # STR                  (kept; drives fTP)
+        9: 2.0,       # DEX                  (kept; drives fTP)
+        165: 2.5,     # CRITHITRATE          (was 2.0)
         11: 1.5,      # AGI
-        23: 1.5,      # ATT
-        25: 1.5,      # ACC
-        48: 1.0,      # WSACC
-        570: 1.0,     # WEAPONSKILL_DAMAGE_BASE
+        23: 0.5,      # ATT                  (was 1.5)
+        25: 0.5,      # ACC                  (was 1.5)
+        48: 1.5,      # WSACC                (was 1.0)
+        570: 3.0,     # WEAPONSKILL_DAMAGE_BASE (was 1.0)
         113: 0.2,     # ENHANCE
         506: 0.1,     # EXTRA_DMG_CHANCE
         507: 0.05,    # OCC_DO_EXTRA_DMG
@@ -69,12 +69,12 @@ ROLE_WEIGHTS = {
         387: -8.0,    # UDMGPHYS
         389: -8.0,    # UDMGMAGIC
         3: 3.0,       # HPP
-        27: 3.0,      # ENMITY
+        27: 5.0,      # ENMITY               (retune 2026-07: was 3.0)
         29: 3.0,      # MDEF
-        63: 3.0,      # DEFP
+        63: 2.0,      # DEFP                 (retune 2026-07: was 3.0)
         10: 2.0,      # VIT
         291: 1.5,     # COUNTER
-        1: 1.0,       # DEF
+        1: 0.5,       # DEF                  (retune 2026-07: was 1.0; on every piece)
         166: 1.0,     # CRITICAL_HIT_EVASION
         2: 0.5,       # HP
         68: 0.5,      # EVA
@@ -95,7 +95,7 @@ ROLE_WEIGHTS = {
         28: 3.0,      # MATT
         12: 2.0,      # INT
         30: 2.0,      # MACC
-        170: 2.0,     # FASTCAST
+        170: 2.5,     # FASTCAST             (retune 2026-07: was 2.0)
         6: 1.0,       # MPP
         13: 1.0,      # MND
         114: 0.5,     # ENFEEBLE
@@ -103,24 +103,24 @@ ROLE_WEIGHTS = {
         168: 0.5,     # SPELLINTERRUPT
         113: 0.2,     # ENHANCE
         5: 0.05,      # MP
-        160: -0.03,   # DMG
-        163: -0.03,   # DMGMAGIC
+        # DMG/DMGMAGIC (160/163) removed 2026-07: Damage-Taken gear was
+        # leaking a positive score into CASTER via the negative weight.
     },
     'HEAL': {
-        369: 30.0,    # REFRESH
+        369: 20.0,    # REFRESH              (retune 2026-07: was 30.0)
         13: 2.0,      # MND
         170: 2.0,     # FASTCAST
-        374: 2.0,     # CURE_POTENCY
+        374: 4.0,     # CURE_POTENCY         (was 2.0)
         6: 1.5,       # MPP
         30: 1.0,      # MACC
         14: 0.5,      # CHR
-        112: 0.5,     # HEALING
+        112: 1.0,     # HEALING              (was 0.5)
         168: 0.5,     # SPELLINTERRUPT
         519: 0.5,     # CURE_CAST_TIME
         113: 0.2,     # ENHANCE
         5: 0.05,      # MP
-        160: -0.03,   # DMG
-        163: -0.03,   # DMGMAGIC
+        # DMG/DMGMAGIC (160/163) removed 2026-07: Damage-Taken gear was
+        # reading as healing gear via the negative weight.
     },
     'PET': {
         1040: 5.0,    # AVATAR_LVL_BONUS
