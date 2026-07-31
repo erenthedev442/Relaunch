@@ -224,18 +224,9 @@ catalog.silver =
         -- Trial by Wind HTBF pool in commit f753d47641, vendor row is the duplicate).
         -- Tramontane Axe (20808) REMOVED 2026-07-13 (single-source: added to
         -- Trial by Wind HTBF pool in commit f753d47641, vendor row is the duplicate).
-        { id = 20827, name = "Kerehcatl", cost = 25, jobs = 'WAR/BST', cat = 'Axes' },
-        { id = 20945, name = "Nativus Halberd", cost = 25, jobs = 'WAR/PLD/SAM/DRG', cat = 'Polearms' },
-        { id = 21104, name = "Eosuchus Club", cost = 25, jobs = 'All', cat = 'Clubs' },
-        { id = 21228, name = "Falubeza", cost = 25, jobs = 'RNG', cat = 'Archery' },
-        { id = 21256, name = "Illapa", cost = 25, jobs = 'RNG', cat = 'Marksmanship' },
-        { id = 21529, name = "Premium Heart", cost = 25, jobs = 'MNK/PUP', cat = 'Hand-to-Hand' },
         -- 7 Voluspa weapons removed 2026-07-11: sold by Zurim (Domain Points)
         -- and the Domain Quartermaster (Hunt Marks), so keeping them here broke
         -- medal-vendor exclusivity (validate_vendor_exclusivity.py).
-        { id = 21568, name = "Acrontica", cost = 25, jobs = 'THF/DNC', cat = 'Daggers' },
-        { id = 21569, name = "Chocobo Knife", cost = 25, jobs = 'RDM/THF/BRD/RNG/DNC', cat = 'Daggers' },
-        { id = 21570, name = "Air Knife", cost = 25, jobs = 'THF/DNC', cat = 'Daggers' },
     },
 }
 
@@ -260,24 +251,19 @@ catalog.infamy = { weapons = emptyCategories() }
 do
     -- Hand-to-Hand: 5 pick(s) -> Infamy Vendor
     local inf_h2h = cat(catalog.infamy.weapons, 'Hand-to-Hand')
-    table.insert(inf_h2h, { id = 21528, name = "Dragon Fangs", cost = 500, jobs = 'MNK/PUP', cat = 'Hand-to-Hand' })  -- WS score 214, DMG 188/Dly 606
 
     -- Daggers: 5 pick(s) -> Infamy Vendor
     local inf_daggers = cat(catalog.infamy.weapons, 'Daggers')
 
     -- Swords: 5 pick(s) -> Infamy Vendor
     local inf_swords = cat(catalog.infamy.weapons, 'Swords')
-    table.insert(inf_swords, { id = 20672, name = "Ice Brand", cost = 500, jobs = 'RDM/PLD/BLU', cat = 'Swords' })  -- CASTER score 1060, DMG 187/Dly 264
 
     -- Great Swords: 5 pick(s) -> Infamy Vendor
     local inf_greatswords = cat(catalog.infamy.weapons, 'Great Swords')
-    table.insert(inf_greatswords, { id = 21683, name = "Ragnarok 119 Iii", cost = 500, jobs = 'WAR/PLD/DRK', cat = 'Great Swords' })  -- WS score 296, DMG 304/Dly 431
     -- Do NOT add 21663 Raetic Algol +1 here: HQ1 craft (Alchemy 119).
 
     -- Axes: 5 pick(s) -> Infamy Vendor
     local inf_axes = cat(catalog.infamy.weapons, 'Axes')
-    table.insert(inf_axes, { id = 21707, name = "Barbarity +1", cost = 500, jobs = 'WAR/BST', cat = 'Axes' })  -- WS score 250, DMG 189/Dly 280
-    table.insert(inf_axes, { id = 21712, name = "Voluspa Axe", cost = 500, jobs = 'WAR/DRK/BST/RUN', cat = 'Axes' })  -- WS score 185, DMG 169/Dly 312
 
     -- Great Axes: 5 pick(s) -> Infamy Vendor
     local inf_greataxes = cat(catalog.infamy.weapons, 'Great Axes')
@@ -300,23 +286,17 @@ do
 
     -- Clubs: 5 pick(s) -> Infamy Vendor
     local inf_clubs = cat(catalog.infamy.weapons, 'Clubs')
-    table.insert(inf_clubs, { id = 22042, name = "Wizards Rod", cost = 500, jobs = 'BLM/RDM/SCH/GEO', cat = 'Clubs' })  -- CASTER score 1060, DMG 149/Dly 216
-    table.insert(inf_clubs, { id = 21071, name = "Cath Palug Hammer", cost = 500, jobs = 'WHM/GEO', cat = 'Clubs' })  -- CASTER score 1013, DMG 212/Dly 300
 
     -- Staves: 5 pick(s) -> Infamy Vendor
     local inf_staves = cat(catalog.infamy.weapons, 'Staves')
     -- Do NOT add 22081 Raetic Staff +1 here: HQ1 craft (Wood 110).
-    table.insert(inf_staves, { id = 22058, name = "Contemplator +1", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO', cat = 'Staves' })  -- CASTER score 1004, DMG 232/Dly 390
 
     -- Archery: 5 pick(s) -> Infamy Vendor
     local inf_archery = cat(catalog.infamy.weapons, 'Archery')
-    table.insert(inf_archery, { id = 21221, name = "Brahmastra", cost = 500, jobs = 'RNG', cat = 'Archery' })  -- WS score 326, DMG 261/Dly 600
     -- Do NOT add 22123 Arasy Bow +1 here: HQ1 craft (Wood 102 + Alchemy 110).
-    table.insert(inf_archery, { id = 21220, name = "Paloma Bow +1", cost = 500, jobs = 'RNG', cat = 'Archery' })  -- WS score 272, DMG 220/Dly 480
 
     -- Marksmanship: 5 pick(s) -> Infamy Vendor
     local inf_marksmanship = cat(catalog.infamy.weapons, 'Marksmanship')
-    table.insert(inf_marksmanship, { id = 22121, name = "Imati +1", cost = 500, jobs = 'RNG', cat = 'Marksmanship' })  -- WS score 307, DMG 146/Dly 424
     -- Do NOT add 22136 Arasy Gun +1 here: HQ1 craft (Wood 110 + Smith 102).
 
 end
