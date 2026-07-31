@@ -5,8 +5,8 @@
 -- into a flagship heirloom for Legendary 1.0 migrants (owner, 2026-07-12).
 --
 --     Legendary Ring   [Ring] All Races   (Rare/Ex)   -- item 26169
---       Experience Points Boost  +100%
---       Capacity Points Boost    +100%
+--       Experience Points Boost  +300%
+--       Capacity Points Boost    +300%
 --       Auto-Reraise (tier III)  -- highest a gear item can grant
 --       Movement Speed           +25%  (engine hard cap; highest-piece-only)
 --       Experience Retained on death  100%  -- you never lose EXP on death
@@ -15,8 +15,12 @@
 --       Permanent "legendary" aura -- a pure-visual glow (AFTERGLOW) while worn
 --
 -- The five stat lines are stock engine-honored EQUIPMENT mods (pure data):
---   EXP_BONUS             382 = 100  -> charutils.cpp AddExpBonus (additive +% EXP)
---   CAPACITY_BONUS        915 = 100  -> charutils.cpp capacity gain (+% capacity/JP)
+--   EXP_BONUS             382 = 300  -> charutils.cpp AddExpBonus (additive +% EXP)
+--   CAPACITY_BONUS        915 = 300  -> charutils.cpp capacity gain (+% capacity/JP)
+--     NOTE: EXP_BONUS is ADDITIVE with all other +EXP sources (augments, food,
+--     Dedication, RoV) and is then reduced MULTIPLICATIVELY by any Job Rebirth /
+--     Prestige EXP cut -- so the effective EXP multiplier is rarely a clean 4x.
+--     CAPACITY_BONUS multiplies cleanly (no rebirth/prestige cut) -> ~4x CP.
 --   RERAISE_III           458 = 1    -> charentity.cpp auto-reraise-on-death (tier III)
 --   MOVE_SPEED_GEAR_BONUS  76 = 25   -> battleentity.cpp gear move speed (clamped +25%)
 --   EXPERIENCE_RETAINED   914 = 100  -> charentity.cpp death: retain 100% of EXP
@@ -58,8 +62,8 @@ UPDATE `item_usable`
 DELETE FROM `item_mods` WHERE `itemId` = 26169;
 
 INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
-    (26169, 382, 100),   -- EXP_BONUS             +100%
-    (26169, 915, 100),   -- CAPACITY_BONUS        +100%
+    (26169, 382, 300),   -- EXP_BONUS             +300%
+    (26169, 915, 300),   -- CAPACITY_BONUS        +300%
     (26169, 458,   1),   -- RERAISE_III           Auto-Reraise tier III (max gear tier)
     (26169,  76,  25),   -- MOVE_SPEED_GEAR_BONUS  +25% (engine cap)
     (26169, 914, 100);   -- EXPERIENCE_RETAINED    100% -> no EXP loss on death

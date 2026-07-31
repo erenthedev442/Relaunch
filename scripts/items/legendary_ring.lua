@@ -2,7 +2,7 @@
 -- ID: 26169
 -- Legendary Ring  (RELAUNCH custom -- the Legacy 1.0 migration heirloom)
 --
--- Stats live in modules/custom/sql/legendary_ring.sql (EXP/Cap +100%,
+-- Stats live in modules/custom/sql/legendary_ring.sql (EXP/Cap +300%,
 -- Reraise III, Move +25%, 100% EXP retained on death). "No Weakness after
 -- Reraise" is a guard in src/map/entities/charentity.cpp. The permanent aura
 -- also re-applies on every zone-in via modules/custom/lua/legendary_ring_aura.
