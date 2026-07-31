@@ -35,7 +35,7 @@ local camps =
     { '75-85 Bhaflau Thickets',      xi.zone.BHAFLAU_THICKETS,         0.00,   0.00,    0.00, 128 },
     { '75-85 Mount Zhayolm',         xi.zone.MOUNT_ZHAYOLM,          658.48, -27.4748, 314.4547, 102 },
     { '80-90 Caedarva Mire',         xi.zone.CAEDARVA_MIRE,          282.7048, -4.1514, -703.4025, 153 },
-    { '85-95 Ceizak Battlegrounds',  xi.zone.CEIZAK_BATTLEGROUNDS,  -107.00,   3.00,  295.00, 128 },
+    { '85-95 Ceizak Battlegrounds',  xi.zone.CEIZAK_BATTLEGROUNDS,  332.8839,   0.3897,  136.2704,  69 },
     { '90-99 Yorcia Weald',          xi.zone.YORCIA_WEALD,          -183.76,   1.54,   69.93,  29 },
     { '90-99 Marjami Ravine',        xi.zone.MARJAMI_RAVINE,          367.30, -59.27,  145.73,  36 },
     { '95-99 Foret de Hennetiel',    xi.zone.FORET_DE_HENNETIEL,    -420.14,  -6.17,  181.50, 249 },
