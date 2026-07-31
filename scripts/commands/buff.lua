@@ -1,11 +1,12 @@
 -----------------------------------
 -- func: buff
 -- desc: Grants the zone-appropriate regional buff (Signet / Sanction /
---       Sigil / Ionis) plus Refresh, Regen, Regain, and Composure to
---       the player.
+--       Sigil / Ionis) plus Refresh, Regen, Regain, Composure, and
+--       Reraise III to the player.
 --       Refresh = 10% of max MP per tick
---       Regen   = 10% of max HP per tick 
+--       Regen   = 10% of max HP per tick
 --       Regain  = scales with player level (1 per 10 levels, min 1)
+--       Reraise = tier III (power 3, highest HP restored on death)
 --
 --       Regional buff is chosen from the player's current region:
 --         Vana'diel conquest regions (0..22)   -> Signet
@@ -91,9 +92,14 @@ commandObj.onTrigger = function(player, target)
     -- job points (see scripts/effects/composure.lua). Non-ticking, so tick = 0.
     targ:addStatusEffect(xi.effect.COMPOSURE, { power = 1, duration = duration, origin = player, tick = 0, subType = 0, subPower = 0 })
 
+    -- Apply Reraise III: power = raise tier (see scripts/effects/reraise.lua,
+    -- onEffectLose -> sendReraise(power)). Non-ticking. Consumed on death, or
+    -- expires with the other buffs after 5 hours if unused.
+    targ:addStatusEffect(xi.effect.RERAISE, { power = 3, duration = duration, origin = player, tick = 0, subType = 0, subPower = 0 })
+
     -- Confirm message
     targ:printToPlayer(string.format(
-        'Buffs applied! %s | Regen: %d/tick | Refresh: %d/tick | Regain: %d/tick | Composure | Duration: 5 hours',
+        'Buffs applied! %s | Regen: %d/tick | Refresh: %d/tick | Regain: %d/tick | Composure | Reraise III | Duration: 5 hours',
         regionalName, regenPower, refreshPower, regainPower
     ))
 end
