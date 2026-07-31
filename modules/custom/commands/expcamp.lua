@@ -39,6 +39,7 @@ local camps =
     { '85-95 Ceizak Battlegrounds',  xi.zone.CEIZAK_BATTLEGROUNDS,  332.8839,   0.3897,  136.2704,  69 },
     { '90-99 Yorcia Weald',          xi.zone.YORCIA_WEALD,          -183.76,   1.54,   69.93,  29 },
     { '90-99 Marjami Ravine',        xi.zone.MARJAMI_RAVINE,          367.30, -59.27,  145.73,  36 },
+    { '90-99 North Gustaberg [S]',   xi.zone.NORTH_GUSTABERG_S,     -547.5531, 39.7761, 434.5975, 117 },
     { '95-99 Foret de Hennetiel',    xi.zone.FORET_DE_HENNETIEL,    -420.14,  -6.17,  181.50, 249 },
     { '95-99 Kamihr Drifts',         xi.zone.KAMIHR_DRIFTS,          210.00,  20.30,  315.00, 192 },
 }
