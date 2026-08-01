@@ -11,18 +11,28 @@
 require('modules/module_utils')
 
 local m = Module:new('character_upgrader')
+local spellGrant = require('modules/custom/lua/player_spell_grant_catalog')
 
--- Skoll/Gemma (spell 901), Meat (899), Corvus (902), Aldo (930/1007) are PAID
--- custom trusts (Void Keeper, 50M gil each) sitting on real retail spell ids, so
--- they must be excluded from every bulk grant or they leak for free. Core enums
--- always resolve; the fallbacks cover module load order.
-local SKOLL_SPELL   = (xi.magic and xi.magic.spell and xi.magic.spell.SKOLL) or 901
-local MEAT_SPELL    = (xi.magic and xi.magic.spell and xi.magic.spell.EXCENMILLE) or 899
-local CORVUS_SPELL  = (xi.magic and xi.magic.spell and xi.magic.spell.CURILLA) or 902
-local ALDO_SPELL    = (xi.magic and xi.magic.spell and xi.magic.spell.ALDO) or 930
-local ALDO_UC_SPELL = (xi.magic and xi.magic.spell and xi.magic.spell.ALDO_UC) or 1007
+-- Skoll/Gemma (901), Meat (899), Corvus (902), Cornelia (1003), Matsui-P (1021),
+-- and Aldo (930/1007) are paid custom trusts excluded from bulk grants.
+local SKOLL_SPELL     = (xi.magic and xi.magic.spell and xi.magic.spell.SKOLL) or 901
+local MEAT_SPELL      = (xi.magic and xi.magic.spell and xi.magic.spell.EXCENMILLE) or 899
+local CORVUS_SPELL    = (xi.magic and xi.magic.spell and xi.magic.spell.CURILLA) or 902
+local CORNELIA_SPELL  = (xi.trust and xi.trust.VOID_KEEPER_SPELL and xi.trust.VOID_KEEPER_SPELL.CORNELIA) or 1003
+local MATSUI_P_SPELL  = (xi.trust and xi.trust.VOID_KEEPER_SPELL and xi.trust.VOID_KEEPER_SPELL.MATSUI_P) or 1021
+local ALDO_SPELL      = (xi.magic and xi.magic.spell and xi.magic.spell.ALDO) or 930
+local ALDO_UC_SPELL   = (xi.magic and xi.magic.spell and xi.magic.spell.ALDO_UC) or 1007
 
-local EXCLUDED_SPELLS = { [SKOLL_SPELL] = true, [MEAT_SPELL] = true, [CORVUS_SPELL] = true, [ALDO_SPELL] = true, [ALDO_UC_SPELL] = true }
+local EXCLUDED_SPELLS =
+{
+    [SKOLL_SPELL]    = true,
+    [MEAT_SPELL]     = true,
+    [CORVUS_SPELL]   = true,
+    [CORNELIA_SPELL] = true,
+    [MATSUI_P_SPELL] = true,
+    [ALDO_SPELL]     = true,
+    [ALDO_UC_SPELL]  = true,
+}
 
 -- Automaton heads/frames/attachments (mirrors scripts/commands/addallattachments.lua).
 local AUTOMATON_PARTS =
@@ -54,10 +64,24 @@ local function giveAllWeaponSkills(player)
     end
 end
 
+local function shouldGrantSpell(spellId)
+    return not EXCLUDED_SPELLS[spellId] and not spellGrant.mobOnlySpells[spellId]
+end
+
+local function stripMobOnlySpells(player)
+    for spellId in pairs(spellGrant.mobOnlySpells) do
+        if player:hasSpell(spellId) then
+            pcall(function()
+                player:delSpell(spellId, { silentLog = true, saveToDB = true, sendUpdate = false })
+            end)
+        end
+    end
+end
+
 local function giveAllSpells(player)
     for i = 1, 1024 do
         pcall(function()
-            if not EXCLUDED_SPELLS[i] and not player:hasSpell(i) then
+            if shouldGrantSpell(i) and not player:hasSpell(i) then
                 player:addSpell(i, { silentLog = true })
             end
         end)
@@ -271,6 +295,12 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
             player:addMission(xi.mission.log_id.TOAU, xi.mission.id.toau.ETERNAL_MERCENARY)
         end
     end
+
+    -- One-time strip of mob-only spells wrongly bulk-granted before the filter.
+    if isLogin and (player:getCharVar('MobSpellGrantFix') or 0) == 0 then
+        player:setCharVar('MobSpellGrantFix', 1)
+        player:timer(4000, function(p) stripMobOnlySpells(p) end)
+    end
 end)
 
 -----------------------------------
@@ -289,7 +319,10 @@ m:addOverride('xi.commands.addalltrusts.onTrigger', function(player, target)
         if spellList then
             local filtered = {}
             for _, id in ipairs(spellList) do
-                if id ~= SKOLL_SPELL and id ~= MEAT_SPELL and id ~= CORVUS_SPELL and id ~= ALDO_SPELL and id ~= ALDO_UC_SPELL then
+                if id ~= SKOLL_SPELL and id ~= MEAT_SPELL and id ~= CORVUS_SPELL
+                    and id ~= CORNELIA_SPELL and id ~= MATSUI_P_SPELL
+                    and id ~= ALDO_SPELL and id ~= ALDO_UC_SPELL
+                    and not spellGrant.mobOnlySpells[id] then
                     filtered[#filtered + 1] = id
                 end
             end

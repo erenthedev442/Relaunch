@@ -48,6 +48,8 @@ spellObject.onMobSpawn = function(mob)
             end
         end
     end)
+
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST)
 end
 
 spellObject.onMobDespawn = function(mob)

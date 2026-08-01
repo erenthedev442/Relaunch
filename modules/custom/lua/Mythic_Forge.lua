@@ -12,9 +12,29 @@ local catalog  = require('modules/custom/lua/mythic_forge_catalog')
 local currency = require('modules/custom/lua/hl_seal_currency')
 
 local NPC_POS   = { x = 532.9669, y = -3.1591, z = 469.2771, rot = 188 }
-local ODIN_LOOK = 3411 -- Einherjar Odin (mounted); see mob_groups Odin in Hazhalm
+-- Einherjar / retail Odin on Sleipnir (mob pool 2941). Do NOT use mob_groups.dropid
+-- (3411) here — numeric look -> SetModelId and renders invisible.
+local ODIN_LOOK = '0x0000250700000000000000000000000000000000'
+local ODIN_MODEL_ID = 0x0725
 local PAGE_SIZE = 4
 local PREFIX      = '[Mythic Forge]'
+
+local function fixForgeOdinLook(zone)
+    if not zone then
+        return
+    end
+
+    local ok, entities = pcall(function() return zone:queryEntitiesByName('DE_Odin%') end)
+    if not ok or not entities then
+        return
+    end
+
+    for _, entity in pairs(entities) do
+        if entity:isNPC() then
+            entity:setModelId(ODIN_MODEL_ID)
+        end
+    end
+end
 
 local function costStr()
     return string.format('%d %s', catalog.cost, catalog.currencyName)
@@ -177,6 +197,13 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end,
     })
     utils.unused(MythicForge)
+    fixForgeOdinLook(zone)
+end)
+
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onZoneIn', function(player, prevZone)
+    local cs = super(player, prevZone)
+    fixForgeOdinLook(player:getZone())
+    return cs
 end)
 
 return m

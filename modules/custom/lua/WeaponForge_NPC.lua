@@ -593,8 +593,11 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                     end,
                     qty = lowQty,
                     name = chain.currencyName,
+                    highQty = highQty,
+                    highCurrency = chain.highCurrency,
+                    highCurrencyName = chain.highCurrencyName,
                     display = string.format(
-                        '%dx %s or %dx %s',
+                        '%dx %s OR %dx %s',
                         lowQty,
                         chain.currencyName,
                         highQty,
@@ -690,11 +693,21 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             local meets = req.meets and req.meets(player) or req.have(player) >= req.qty
             if not meets then
                 local need = req.display or string.format('%dx %s', req.qty, req.name)
-                player:printToPlayer(string.format(
-                    '[Weapon Forge] Need %s (you have %d %s).',
-                    need,
-                    req.have(player),
-                    req.name), S)
+                if req.highCurrency then
+                    player:printToPlayer(string.format(
+                        '[Weapon Forge] Need %s. You have %d %s and %d %s.',
+                        need,
+                        req.have(player),
+                        req.name,
+                        player:getItemCount(req.highCurrency),
+                        req.highCurrencyName), S)
+                else
+                    player:printToPlayer(string.format(
+                        '[Weapon Forge] Need %s (you have %d %s).',
+                        need,
+                        req.have(player),
+                        req.name), S)
+                end
                 return
             end
         end
@@ -763,12 +776,13 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
 
     local function showNewWeapon(player, def, chain)
         local k    = heldStage(player, chain)
+        printNewRecipe(player, def, chain)
         local opts = {}
         if k < 4 then
             local verb = (k == 0) and ('Obtain base ' .. chain.name) or ('Forge -> ' .. STAGE_LBL[k + 1])
             opts[#opts + 1] = { verb, function(p) doNewForge(p, def, chain); showNewWeapon(p, def, chain) end }
         end
-        opts[#opts + 1] = { 'Show recipe', function(p) printNewRecipe(p, def, chain); showNewWeapon(p, def, chain) end }
+        opts[#opts + 1] = { 'Show recipe again', function(p) printNewRecipe(p, def, chain); showNewWeapon(p, def, chain) end }
         opts[#opts + 1] = { 'Back', function(p) showNewCat(p, def, 1) end }
         sendMenu(player, string.format('%s (%s) [%s]', chain.name, chain.jobs, STAGE_LBL[k]), opts)
     end
@@ -781,6 +795,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local CAT_PAGE = 5
     showNewCat = function(player, def, page)
         page = page or 1
+        if def.key == 'relic' and page == 1 then
+            player:printToPlayer(
+                '[Weapon Forge] Relic 119 II->III accepts either 500 hundred-tier Dynamis currency '
+                .. 'OR 5 ten-thousand bills per weapon (same total value).',
+                xi.msg.channel.SYSTEM_3)
+        end
         local n     = #def.chains
         local pages = math.max(1, math.ceil(n / CAT_PAGE))
         page = math.max(1, math.min(page, pages))

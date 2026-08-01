@@ -277,6 +277,102 @@ xi.trust.onTradeCipher = function(player, trade, csid, rovCs, arkAngelCs)
     end
 end
 
+xi.trust.CIPHER_MIN_ID = 10112
+xi.trust.CIPHER_MAX_ID = 10193
+
+-- Void Keeper custom trusts — collection/gil gated, never cipher drops.
+xi.trust.VOID_KEEPER_SPELL =
+{
+    MEAT     = 899,
+    GEMMA    = 901,
+    CORVUS   = 902,
+    CORNELIA = 1003,
+    MATSUI_P = 1021,
+}
+
+local blockedCipherSpells =
+{
+    [xi.trust.VOID_KEEPER_SPELL.MEAT]     = true,
+    [xi.trust.VOID_KEEPER_SPELL.GEMMA]    = true,
+    [xi.trust.VOID_KEEPER_SPELL.CORVUS]   = true,
+    [xi.trust.VOID_KEEPER_SPELL.CORNELIA] = true,
+    [xi.trust.VOID_KEEPER_SPELL.MATSUI_P] = true,
+}
+
+-- Every farmable trust except the two Void Keeper capstones (Cornelia, Matsui-P).
+xi.trust.collectionRoster =
+{
+    896, 897, 898, 899, 900, 901, 902, 903, 904, 905, 906, 907, 908, 909, 910,
+    911, 912, 913, 914, 915, 916, 917, 918, 919, 920, 921, 922, 923, 924, 925,
+    926, 927, 928, 929, 930, 931, 932, 933, 934, 935, 936, 937, 938, 939, 940,
+    941, 942, 943, 944, 945, 946, 947, 948, 949, 950, 951, 952, 953, 954, 955,
+    956, 957, 958, 959, 960, 961, 962, 963, 964, 965, 966, 967, 968, 969, 970,
+    971, 972, 973, 974, 975, 976, 977, 978, 979, 980, 981, 982, 983, 984, 985,
+    986, 987, 988, 989, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1004,
+    1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017,
+    1018, 1019,
+}
+
+xi.trust.countCollected = function(player)
+    local count = 0
+
+    for _, spellId in ipairs(xi.trust.collectionRoster) do
+        if player:hasSpell(spellId) then
+            count = count + 1
+        end
+    end
+
+    return count
+end
+
+xi.trust.isCollectionComplete = function(player)
+    return xi.trust.countCollected(player) >= #xi.trust.collectionRoster
+end
+
+xi.trust.isCipherItem = function(itemId)
+    return itemId >= xi.trust.CIPHER_MIN_ID and itemId <= xi.trust.CIPHER_MAX_ID
+end
+
+-- item_basic.subid packs spellId (low 12 bits) + NPC trade cutscene flags (high 4 bits).
+xi.trust.getCipherSpellId = function(itemId, subId)
+    if not xi.trust.isCipherItem(itemId) or subId == 0 then
+        return nil
+    end
+
+    local spellId = bit.band(subId, 0x0FFF)
+    if spellId == 0 or blockedCipherSpells[spellId] then
+        return nil
+    end
+
+    return spellId
+end
+
+xi.trust.onItemCheckCipher = function(target, item)
+    if target == nil or item == nil then
+        return 56
+    end
+
+    local spellId = xi.trust.getCipherSpellId(item:getID(), item:getSubID())
+    if spellId == nil then
+        return 56
+    end
+
+    return target:canLearnSpell(spellId)
+end
+
+xi.trust.onItemUseCipher = function(target, item)
+    if target == nil or item == nil then
+        return
+    end
+
+    local spellId = xi.trust.getCipherSpellId(item:getID(), item:getSubID())
+    if spellId == nil then
+        return
+    end
+
+    target:addSpell(spellId)
+end
+
 xi.trust.canCast = function(caster, spell, notAllowedTrustIds)
     -- Trusts must be enabled in settings
     if xi.settings.main.ENABLE_TRUST_CASTING == 0 then

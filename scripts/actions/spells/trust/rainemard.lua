@@ -34,6 +34,8 @@ spellObject.onMobSpawn = function(mob)
     -- NOTE: Do these late, to try and avoid clashing with healers casting -ra's
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.PROTECT }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.PROTECT })
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.SHELL }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.SHELL })
+
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST)
 end
 
 spellObject.onMobDespawn = function(mob)

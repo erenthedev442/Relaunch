@@ -101,4 +101,57 @@ print(string.format(
     '[hunt_nm_respawn_override] installed 30-min respawn on %d hunt NMs (%d failed)',
     installed, failed))
 
+-- Zone.onInitialize stomp: several vanilla zone scripts re-roll hunt NM respawns
+-- to multi-hour timers on every zone boot -- e.g. Mount_Zhayolm sets Cerberus
+-- to 12-36 hours and Caedarva_Mire sets Khimaira the same way. That runs AFTER
+-- mob_groups SQL and silently shadows the 1800s hunt-guild policy (Cerberus was
+-- stuck off-pop for weeks when the box restarted inside that window).
+local zoneTargets = {}
+for _guildKey, targets in pairs(catalog.huntTargets) do
+    for _, t in ipairs(targets) do
+        zoneTargets[t.zone] = zoneTargets[t.zone] or {}
+        table.insert(zoneTargets[t.zone], t)
+    end
+end
+
+local zoneHooks = 0
+for zone, targets in pairs(zoneTargets) do
+    pcall(require, string.format('scripts/zones/%s/Zone', zone))
+
+    local hook = string.format('xi.zones.%s.Zone.onInitialize', zone)
+    local ok = pcall(function()
+        m:addOverride(hook, function(zoneObj)
+            super(zoneObj)
+
+            pcall(require, string.format('scripts/zones/%s/IDs', zone))
+            local zoneData = zones[targets[1].zoneId]
+            if not zoneData or not zoneData.mob then
+                return
+            end
+
+            for _, hunt in ipairs(targets) do
+                local mobId = zoneData.mob[hunt.name:upper()]
+                if mobId then
+                    local mob = GetMobByID(mobId)
+                    if mob then
+                        mob:setRespawnTime(HUNT_RESPAWN_SECONDS)
+                    end
+                end
+            end
+        end)
+    end)
+
+    if ok then
+        zoneHooks = zoneHooks + 1
+    else
+        print(string.format(
+            '[hunt_nm_respawn_override] WARNING: zone init override failed for %s',
+            zone))
+    end
+end
+
+print(string.format(
+    '[hunt_nm_respawn_override] installed zone-init respawn fix on %d zones',
+    zoneHooks))
+
 return m

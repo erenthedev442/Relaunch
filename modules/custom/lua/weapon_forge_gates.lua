@@ -134,8 +134,15 @@ M.STAGE_GATES =
         },
         [1] =
         {
-            label = '100 Ascensions on a single job (not combined)',
-            check = anyAscension100(),
+            label = 'All Geas Fete T3-T4 NMs killed at least once',
+            check = function(p)
+                if xi.geasFete and xi.geasFete.aeonicProgress then
+                    local cleared, need = xi.geasFete.aeonicProgress(p)
+                    return cleared >= need
+                end
+                local need = (xi.geasFete and xi.geasFete.aeonicNmCount) or math.huge
+                return (p:getCharVar('GF_Aeonic_Kills') or 0) >= need
+            end,
         },
         [2] =
         {

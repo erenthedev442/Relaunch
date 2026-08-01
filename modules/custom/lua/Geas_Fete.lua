@@ -48,6 +48,7 @@ local abysseaBalance = require('modules/custom/lua/abyssea_marks_balance')
 -- Public namespace for cross-module reads. Populated below with roster sizes:
 --   uniqueNmCount    = full catalog (T1-T4), Warden / !geas progress
 --   empyreanNmCount  = T1-T2 only -- Empyrean Stage I forge gate
+--   aeonicNmCount    = T3-T4 only -- Aeonic Stage II forge gate
 -- T3-T4 are the Aeonic-era band (silt / Attestations); farm them with Empy.
 xi.geasFete = xi.geasFete or {}
 
@@ -317,17 +318,22 @@ local NM_CATALOG = {
 -- Unique NM counts across all three zones. Computed once at module load;
 -- recount happens on Lua hot-reload.
 do
-    local total, empy = 0, 0
+    local total, empy, aeonic = 0, 0, 0
     for _, defs in pairs(NM_CATALOG) do
         for _, def in ipairs(defs) do
             total = total + 1
-            if (def.tier or 1) <= 2 then
+            local tier = def.tier or 1
+            if tier <= 2 then
                 empy = empy + 1
+            end
+            if tier >= 3 then
+                aeonic = aeonic + 1
             end
         end
     end
     xi.geasFete.uniqueNmCount   = total
     xi.geasFete.empyreanNmCount = empy
+    xi.geasFete.aeonicNmCount   = aeonic
 end
 
 -- ===================================================================
@@ -495,6 +501,22 @@ function xi.geasFete.empyreanProgress(player)
     for _, zoneId in ipairs(ZONE_ORDER) do
         for _, def in ipairs(NM_CATALOG[zoneId] or {}) do
             if (def.tier or 1) <= 2 then
+                total = total + 1
+                if (player:getCharVar(killKey(zoneId, def.gid)) or 0) == 1 then
+                    cleared = cleared + 1
+                end
+            end
+        end
+    end
+    return cleared, total
+end
+
+-- Aeonic Stage II: T3-T4 uniques only (silt / Attestation farm band).
+function xi.geasFete.aeonicProgress(player)
+    local cleared, total = 0, 0
+    for _, zoneId in ipairs(ZONE_ORDER) do
+        for _, def in ipairs(NM_CATALOG[zoneId] or {}) do
+            if (def.tier or 1) >= 3 then
                 total = total + 1
                 if (player:getCharVar(killKey(zoneId, def.gid)) or 0) == 1 then
                     cleared = cleared + 1
@@ -1522,6 +1544,10 @@ local function spawnWardingCircle(zone, zoneId, x, y, z, rot)
             local empyCleared = xi.geasFete.empyreanProgress(player)
             if (player:getCharVar('GF_Empyrean_Kills') or 0) ~= empyCleared then
                 player:setCharVar('GF_Empyrean_Kills', empyCleared)
+            end
+            local aeonicCleared = xi.geasFete.aeonicProgress(player)
+            if (player:getCharVar('GF_Aeonic_Kills') or 0) ~= aeonicCleared then
+                player:setCharVar('GF_Aeonic_Kills', aeonicCleared)
             end
             wardingCircleMenu(player, capturedZone, capturedZoneId)
         end,

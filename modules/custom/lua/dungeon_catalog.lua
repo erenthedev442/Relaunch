@@ -65,27 +65,27 @@ catalog.dungeons =
         zoneName   = 'Crawlers_Nest',
         zoneId     = 197,
         level      = 125,
-        hpScale    = 4,
+        hpScale    = 5,
         mobs       = buildRoster(
         {
             { 332.950, -33.111, -18.821, 17  },
             { 315.000, -32.781, -17.000, 127 },
             { 299.000, -32.000, -28.000, 120 },
-            { 259.954, -32.979, -53.917, 51  },
-            { 258.524, -32.700, -44.000, 127 },
-            { 251.000, -32.000, -17.000, 39  },
-            -- Wasps 07-12 + Nestblight Exoray boss (13) trailed deep into the nest
-            -- (X 116-218 -- likely disconnected rooms). Proactively pulled into the
-            -- reachable entrance run beside Crawlers 01-06 (adjacent midpoints, same
-            -- -32 floor). PROACTIVE/UNVERIFIED in-game -- report if a straggler remains.
-            { 324.000, -32.950, -17.900, 127 },
-            { 307.000, -32.390, -22.500, 127 },
-            { 279.500, -32.490, -41.000, 127 },
-            { 259.200, -32.840, -49.000, 127 },
-            { 254.800, -32.350, -30.500, 127 },
-            { 328.000, -33.000, -18.300, 127 },
-            { 299.000, -32.000, -25.000, 127 }, -- Nestblight Exoray (boss), centered
-        }, 'Dungeon Crawler', 'Dungeon Wasp', 'Nestblight Exoray', 8),
+            { 251.000, -32.000, -17.000,  39 },
+            { 323.975, -32.946, -17.911, 127 },
+            { 307.000, -32.391, -22.500, 127 },
+            -- Wasps 07-12 + boss pulled into the entrance tunnel beside
+            -- Crawlers 01-06 (Jamesta 2026-08-01: straggler spawning in a wall
+            -- at the old deep coords X~259 Z~-54). Prior roster used stock
+            -- points 80u+ from entry; cluster now stays within ~55u.
+            { 316.475, -32.906, -19.500, 127 },
+            { 303.500, -32.196, -24.500, 127 },
+            { 275.000, -32.000, -22.500, 127 },
+            { 287.475, -32.391, -20.250, 127 },
+            { 309.750, -32.836, -18.400, 127 },
+            { 294.250, -32.196, -25.750, 127 },
+            { 310.000, -32.500, -20.000, 127 }, -- Nestblight Exoray (boss)
+        }, 'Dungeon Crawler', 'Dungeon Wasp', 'Nestblight Exoray', 10),
     },
 
     xarcabard =
@@ -95,8 +95,8 @@ catalog.dungeons =
         label      = 'Xarcabard',
         zoneName   = 'Xarcabard',
         zoneId     = 112,
-        level      = 120,
-        hpScale    = 4,
+        level      = 125,
+        hpScale    = 5,
         mobs       = buildRoster(
         {
             -- Roster fully rebuilt from retail zone-112 stock spawn coords
@@ -120,7 +120,7 @@ catalog.dungeons =
             { 518.660, -0.340, -269.720, 127 },   -- Lost_Soul  (dup)
             { 516.950,  0.010, -260.930, 127 },   -- Lost_Soul  (dup)
             { 444.050, -0.590, -199.800,  16 },   -- Glacier Wyrm boss (161.5u)
-        }, 'Frostbound Demon', 'Rimebound Weapon', 'Glacier Wyrm', 8),
+        }, 'Frostbound Demon', 'Rimebound Weapon', 'Glacier Wyrm', 10),
         -- Boss coord 161u from entry -- per-dungeon leash 175u to include it.
         leash = 175,
     },
@@ -133,7 +133,7 @@ catalog.dungeons =
         zoneName   = 'The_Boyahda_Tree',
         zoneId     = 153,
         level      = 125,
-        hpScale    = 4,
+        hpScale    = 5,
         mobs       = buildRoster(
         {
             -- Roster fully rebuilt from retail zone-153 stock spawn coords
@@ -154,7 +154,7 @@ catalog.dungeons =
             { 265.290,  8.550, -100.020, 158 },   -- Bark_Spider    160.3u
             { 264.020,  8.530,  -98.120,  42 },   -- Bark_Spider    161.1u
             { 260.990,  8.510, -102.200, 253 },   -- Ancient Guardian boss 165.0u
-        }, 'Boyahda Crawler', 'Boyahda Crab', 'Ancient Guardian', 8),
+        }, 'Boyahda Crawler', 'Boyahda Crab', 'Ancient Guardian', 10),
         -- Boss ~165u from entry (corridor dead end); leash 180u to include it.
         leash = 180,
     },
@@ -337,36 +337,25 @@ catalog.dungeons =
         hpScale    = 4,
         mobs       = buildRoster(
         {
-            -- Roster fully rebuilt from retail zone-204 stock spawn coords
-            -- (2026-07-13, Lant + Jamesta reports: players running the wrong
-            -- way get pulled back into a dead-end room, can't reach the mobs
-            -- in the next hallway). Prior roster spanned z=18..111 -- boss at
-            -- z=+58 was 33u from the entry cluster, past the default 55u
-            -- leash bubble, so players who chased west-arm mobs got snapped
-            -- back to entry and couldn't reach them again. New roster is 13
-            -- unique upper-level (Y ~ 0) stock points across three arms
-            -- (tight core, east arm, west arm), per-dungeon leash raised to
-            -- 65u to keep the whole cluster inside the bubble. All coords
-            -- verbatim from stock; NO lower-level (Y=-16) points -- those
-            -- required an unreachable ramp and were the dead-end trap.
-            { -62.330, -0.500, 19.030,  10 },   -- Talos            5.7u
-            { -47.990, -0.110, 21.130,   3 },   -- Underworld_Bats  9.0u
-            { -51.190, -0.020, 32.210, 251 },   -- Talos           12.6u
-            { -49.720, -0.110,  5.450, 104 },   -- Talos           17.2u
-            { -71.840, -0.110, 30.040, 129 },   -- Talos           17.4u
-            { -87.660, -0.110, 20.640, 245 },   -- Underworld_Bats 30.7u
-            {  -3.780, -0.130, 28.430,  18 },   -- Droma           53.7u
-            {-100.500, -0.110, 54.800, 196 },   -- Underworld_Bats 55.1u
-            {  -4.410,  0.340, 40.530, 246 },   -- Camazotz        56.1u
-            { -91.150, -0.500, 68.630,  37 },   -- Killing_Weapon  58.6u
-            {   1.870, -0.120, 27.340,  10 },   -- Droma           59.2u
-            { -90.740, -0.030, 70.510, 196 },   -- Hellish_Weapon  59.9u
-            { -90.000, -0.110, 72.000,  37 },   -- Frostmaw Morbol boss 60.7u
+            -- Core cluster: six stock upper-level (Y ~ 0) coords beside instance
+            -- entry (-57, -0.2, 21). All within ~31u of spawn.
+            { -62.330, -0.500, 19.030,  10 },   -- Talos
+            { -47.990, -0.110, 21.130,   3 },   -- Underworld_Bats
+            { -51.190, -0.020, 32.210, 251 },   -- Talos
+            { -49.720, -0.110,  5.450, 104 },   -- Talos
+            { -71.840, -0.110, 30.040, 129 },   -- Talos
+            { -87.660, -0.110, 20.640, 245 },   -- Underworld_Bats
+            -- Pots 07-12 + boss relocated into the same corridor (Jamesta
+            -- 2026-08-01: last 3 mobs in east/west arms unreachable from entry;
+            -- prior roster put mobs at z=54..72 and x=-4..+2 behind geometry).
+            { -55.160, -0.305, 20.080, 127 },
+            { -49.590, -0.065, 26.670, 127 },
+            { -61.515, -0.065, 31.125, 127 },
+            { -48.855, -0.110, 13.290, 127 },
+            { -79.750, -0.110, 25.340, 127 },
+            { -56.025, -0.305, 12.240, 127 },
+            { -57.000, -0.110, 22.000,  64 },   -- Frostmaw Morbol (boss)
         }, "Fei'Yin Golem", "Fei'Yin Pot", 'Frostmaw Morbol', 8),
-        -- Boss 60.7u from entry (west arm end); leash 65u encloses it with
-        -- ~4u of margin. All 13 mobs on the upper level so no cross-level
-        -- ramping / dead-end trap.
-        leash = 65,
     },
 
     ranguemontPass =
@@ -466,10 +455,15 @@ catalog.bossMechCfgs =
     {
         name            = 'Nestblight Exoray',
         targetPartyOnly = true,
-        drain  = { periodSec = 8,  healPct = 3 },
-        cc     = { periodSec = 30, effect = xi.effect.POISON, power = 250, dur = 30, msg = 'Nestblight Exoray releases a cloud of noxious spores!' },
-        aoe    = { periodSec = 15, dmgPct = 18, msg = 'Nestblight Exoray erupts -- fungal spores burst outward!' },
-        enrage = { sec = 240, att = 3500, haste = 100, msg = 'Nestblight Exoray swells -- the whole colony vibrates with rage!' },
+        drain  = { periodSec = 7,  healPct = 4 },
+        cc     = { periodSec = 26, effect = xi.effect.POISON, power = 300, dur = 30, msg = 'Nestblight Exoray releases a cloud of noxious spores!' },
+        aoe    = { periodSec = 13, dmgPct = 22, msg = 'Nestblight Exoray erupts -- fungal spores burst outward!' },
+        enrage = { sec = 210, att = 4000, haste = 110, msg = 'Nestblight Exoray swells -- the whole colony vibrates with rage!' },
+        phases =
+        {
+            { hp = 50, action = 'fury', att = 2500, haste = 90, msg = 'Nestblight Exoray splits -- twin spore clusters surge!' },
+        },
+        doom   = { startHpp = 18, dur = 25, msg = 'Nestblight Exoray marks you for decomposition!' },
     },
 
     -- Ice wyrm: phys/mag stance dance + freezing breath + two flight phases.
@@ -481,12 +475,12 @@ catalog.bossMechCfgs =
             { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Glacier Wyrm\'s scales sheet with ice -- use magic!' },
             { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Glacier Wyrm shrugs off magic -- cut it with steel!' },
         } },
-        aoe    = { periodSec = 13, dmgPct = 22, msg = 'Glacier Wyrm inhales -- a frost breath is coming!' },
-        enrage = { sec = 220, att = 4000, haste = 120, msg = 'Glacier Wyrm rears back -- the whole cavern chills!' },
+        aoe    = { periodSec = 11, dmgPct = 25, msg = 'Glacier Wyrm inhales -- a frost breath is coming!' },
+        enrage = { sec = 200, att = 4500, haste = 130, msg = 'Glacier Wyrm rears back -- the whole cavern chills!' },
         phases =
         {
-            { hp = 66, action = 'fury', att = 2500, haste = 90,  msg = 'Glacier Wyrm takes flight -- its assault quickens!' },
-            { hp = 33, action = 'fury', att = 3500, haste = 120, msg = 'Glacier Wyrm slams down in a bloodied frenzy!' },
+            { hp = 66, action = 'fury', att = 2800, haste = 100, msg = 'Glacier Wyrm takes flight -- its assault quickens!' },
+            { hp = 33, action = 'fury', att = 3800, haste = 130, msg = 'Glacier Wyrm slams down in a bloodied frenzy!' },
         },
     },
 
@@ -495,16 +489,19 @@ catalog.bossMechCfgs =
     {
         name            = 'Ancient Guardian',
         targetPartyOnly = true,
-        drain  = { periodSec = 8, healPct = 3 },
-        stance = { startHpp = 85, periodSec = 18, stances = {
+        drain  = { periodSec = 7, healPct = 4 },
+        stance = { startHpp = 85, periodSec = 16, stances = {
             { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Ancient Guardian\'s bark thickens -- iron will not bite!' },
             { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Ancient Guardian shrugs off spellcraft -- strike with steel!' },
         } },
-        enrage = { sec = 240, att = 3500, haste = 100, msg = 'Ancient Guardian creaks -- its roots draw fresh strength!' },
+        aoe    = { periodSec = 13, dmgPct = 20, msg = 'Ancient Guardian shakes -- a gale of splinters tears through the party!' },
+        enrage = { sec = 210, att = 4000, haste = 110, msg = 'Ancient Guardian creaks -- its roots draw fresh strength!' },
         phases =
         {
             { hp = 40, action = 'dispel', count = 3, msg = 'Ancient Guardian sheds a wind of leaves -- your blessings scatter!' },
+            { hp = 25, action = 'fury', att = 2800, haste = 100, msg = 'Ancient Guardian uproots itself -- the canopy collapses inward!' },
         },
+        doom   = { startHpp = 15, dur = 25, msg = 'Ancient Guardian brands you with withering sap!' },
     },
 
     -- Ooze: heavy consume-drain + acid burst + two "split & reform" fury phases.
@@ -638,20 +635,20 @@ catalog.trashMechCfgs =
 {
     crawlersNest =
     {
-        first  = { name = 'Dungeon Crawler', targetPartyOnly = true, drain = { periodSec = 10, healPct = 3 } },
-        second = { name = 'Dungeon Wasp',    targetPartyOnly = true, cc = { periodSec = 20, effect = xi.effect.PARALYZE, power = 30, dur = 5, msg = 'A Dungeon Wasp\'s sting paralyses!' } },
+        first  = { name = 'Dungeon Crawler', targetPartyOnly = true, drain = { periodSec = 9, healPct = 4 } },
+        second = { name = 'Dungeon Wasp',    targetPartyOnly = true, cc = { periodSec = 18, effect = xi.effect.PARALYZE, power = 40, dur = 6, msg = 'A Dungeon Wasp\'s sting paralyses!' } },
     },
 
     xarcabard =
     {
-        first  = { name = 'Frostbound Demon', targetPartyOnly = true, cc = { periodSec = 22, effect = xi.effect.PARALYZE, power = 40, dur = 6, msg = 'Frostbound Demon\'s aura chills your muscles!' } },
-        second = { name = 'Rimebound Weapon', targetPartyOnly = true, drain = { periodSec = 10, healPct = 3 } },
+        first  = { name = 'Frostbound Demon', targetPartyOnly = true, cc = { periodSec = 20, effect = xi.effect.PARALYZE, power = 50, dur = 7, msg = 'Frostbound Demon\'s aura chills your muscles!' } },
+        second = { name = 'Rimebound Weapon', targetPartyOnly = true, drain = { periodSec = 9, healPct = 4 } },
     },
 
     boyahdaTree =
     {
-        first  = { name = 'Boyahda Crawler', targetPartyOnly = true, drain = { periodSec = 9,  healPct = 3 } },
-        second = { name = 'Boyahda Crab',    targetPartyOnly = true, cc = { periodSec = 22, effect = xi.effect.BIND, power = 1, dur = 5, msg = 'A Boyahda Crab clamps its pincer around you!' } },
+        first  = { name = 'Boyahda Crawler', targetPartyOnly = true, drain = { periodSec = 8, healPct = 4 } },
+        second = { name = 'Boyahda Crab',    targetPartyOnly = true, cc = { periodSec = 18, effect = xi.effect.BIND, power = 1, dur = 6, msg = 'A Boyahda Crab clamps its pincer around you!' } },
     },
 
     ordellesCaves =

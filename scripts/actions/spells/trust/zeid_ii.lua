@@ -38,7 +38,7 @@ spellObject.onMobSpawn = function(mob)
 
     mob:addGambit(ai.t.SELF, { ai.c.ALWAYS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.LAST_RESORT })
 
-    mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.RANDOM, 3000)
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST)
 end
 
 spellObject.onMobDespawn = function(mob)

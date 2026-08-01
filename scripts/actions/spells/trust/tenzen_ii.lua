@@ -41,7 +41,7 @@ spellObject.onMobSpawn = function(mob)
 
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
 
-    mob:setTrustTPSkillSettings(ai.tp.OPENER, ai.s.HIGHEST)
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST)
 end
 
 spellObject.onMobDespawn = function(mob)

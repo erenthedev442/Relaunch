@@ -99,6 +99,30 @@ local function categoryCost(cat, nextLevel)
     return cat.apCost or 1
 end
 
+local BATCH_SIZES = { 5, 10, 25, 50 }
+
+local function totalCostForLevels(cat, lv, count)
+    local total = 0
+    for i = 1, count do
+        total = total + categoryCost(cat, lv + i)
+    end
+    return total
+end
+
+local function maxBuyable(cat, lv, budget)
+    local n     = 0
+    local spent = 0
+    while lv + n < cat.cap do
+        local c = categoryCost(cat, lv + n + 1)
+        if spent + c > budget then
+            break
+        end
+        spent = spent + c
+        n     = n + 1
+    end
+    return n, spent
+end
+
 local function categorySpent(cat, level)
     if cat.totalCost then
         return math.floor(cat.totalCost * level / cat.cap)
@@ -432,7 +456,7 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
     local menu = { title = '', options = {} }
 
     -- Forward decls so the build/try functions can reference one another.
-    local buildMainMenu, buildStatusMenu, buildAscendMenu, buildSpendMenu
+    local buildMainMenu, buildStatusMenu, buildAscendMenu, buildSpendMenu, buildBuyMenu
 
     -- "Face the Trial" support. summonNextTrial is assigned below (forward
     -- decl here so buildMainMenu's option can capture it as an upvalue).
@@ -551,62 +575,97 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
     end
 
     -----------------------------------
-    -- Buy one level in a spend category for the current job. Charges this
-    -- job's AP, bumps the per-job CharVar, and applies the per-level delta
+    -- Buy levels in a spend category for the current job. Charges this job's
+    -- AP, bumps the per-job CharVar, and applies the per-level delta
     -- immediately IF this job's mods are the live ones (they are, at the
     -- altar) so it takes effect without a zone change.
     -----------------------------------
-    local function tryBuy(player, cat, page)
+    local function tryBuy(player, cat, page, count)
+        count = count or 1
         local jobId = curJob(player)
         local lv    = getCatLevel(player, cat.id)
         if lv >= cat.cap then
             player:printToPlayer(string.format(
                 '[Ascension] %s is already maxed (%d/%d).',
                 cat.label, lv, cat.cap), xi.msg.channel.SYSTEM_3)
-            buildSpendMenu(player, page)
-            return
+            buildBuyMenu(player, cat, page)
+            return false
         end
 
-        local cost = categoryCost(cat, lv + 1)
+        local remaining = cat.cap - lv
+        count = math.min(count, remaining)
+        if count <= 0 then
+            return false
+        end
+
+        local totalCost = totalCostForLevels(cat, lv, count)
         local ap = getAP(player)
-        if ap < cost then
+        if ap < totalCost then
             player:printToPlayer(string.format(
-                '[Ascension] Not enough %s: need %d, have %d.',
-                cfg.apName, cost, ap), xi.msg.channel.SYSTEM_3)
-            buildSpendMenu(player, page)
-            return
+                '[Ascension] Not enough %s: need %d for %d level(s), have %d.',
+                cfg.apName, totalCost, count, ap), xi.msg.channel.SYSTEM_3)
+            buildBuyMenu(player, cat, page)
+            return false
         end
 
-        player:setCharVar(apKey(jobId), ap - cost)
-        player:setCharVar(catKey(jobId, cat.id), lv + 1)
+        player:setCharVar(apKey(jobId), ap - totalCost)
+        player:setCharVar(catKey(jobId, cat.id), lv + count)
 
-        -- Only nudge the live mod map if this job's mods are the applied set
-        -- (always true at the altar). Otherwise the next refresh applies it.
         if player:getLocalVar('PrestigeModJob') == jobId then
-            _modAdd(player, cat, cat.perLevel)
-            -- Most mods (STR, ACC, ATT...) are read live from the mod map by the
-            -- combat formulas, so they bite the instant they're added. But the
-            -- CACHED, derived values are NOT refreshed by addMod alone:
-            --   * Max HP / Max MP  -- Mod::HP/HPP feed UpdateHealth; the health
-            --                         POOL is recomputed, not read live.
-            --   * skill levels     -- the Skills menu / effective hit rate.
-            --   * the stat NUMBERS the client shows.
-            -- recalculateStats() rebuilds skills + stats + health from the (now
-            -- updated) mod map AND pushes the new values to the client, so a Max
-            -- HP / Max MP / All Skills buy SHOWS and WORKS immediately -- no zoning.
-            -- CalculateStats resets the base before re-applying mods, so repeat
-            -- calls never compound; it only READS the mod map, so it never double-
-            -- applies or wipes the prestige mods. (This was the Max HP bug -- the
-            -- buy added Mod::HP but never recomputed the cached health pool.)
+            _modAdd(player, cat, cat.perLevel * count)
             player:recalculateStats()
         end
 
         player:printToPlayer(string.format(
             '[Ascension] %s -> %d/%d (%s).  %s left: %d.',
-            cat.label, lv + 1, cat.cap, cat.note, cfg.apName, ap - cost),
+            cat.label, lv + count, cat.cap, cat.note, cfg.apName, ap - totalCost),
             xi.msg.channel.SYSTEM_3)
 
-        buildSpendMenu(player, page)
+        buildBuyMenu(player, cat, page)
+        return true
+    end
+
+    buildBuyMenu = function(player, cat, page)
+        local lv   = getCatLevel(player, cat.id)
+        local ap   = getAP(player)
+        local cost = lv < cat.cap and categoryCost(cat, lv + 1) or 0
+        local maxN, maxCost = maxBuyable(cat, lv, ap)
+
+        local options = {}
+        if lv >= cat.cap then
+            table.insert(options, { 'Maxed', function(p) buildSpendMenu(p, page) end })
+        elseif ap < cost then
+            table.insert(options, { 'Not enough AP', function(p) buildSpendMenu(p, page) end })
+        else
+            table.insert(options, {
+                string.format('Buy +1  (-%d AP)', cost),
+                function(p) tryBuy(p, cat, page, 1) end,
+            })
+
+            for _, qty in ipairs(BATCH_SIZES) do
+                if qty <= maxN then
+                    local batchCost = totalCostForLevels(cat, lv, qty)
+                    table.insert(options, {
+                        string.format('Buy +%d  (-%d AP)', qty, batchCost),
+                        function(p) tryBuy(p, cat, page, qty) end,
+                    })
+                end
+            end
+
+            if maxN > 1 then
+                table.insert(options, {
+                    string.format('Buy max (%d, -%d AP)', maxN, maxCost),
+                    function(p) tryBuy(p, cat, page, maxN) end,
+                })
+            end
+        end
+
+        table.insert(options, { '<< Back', function(p) buildSpendMenu(p, page) end })
+
+        menu.title   = string.format('%s  %d/%d', cat.label, lv, cat.cap)
+        menu.options = options
+        local snapshot = { title = menu.title, options = menu.options }
+        player:timer(30, function(p) p:customMenu(snapshot) end)
     end
 
     -----------------------------------
@@ -635,7 +694,7 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
                 menuLabel, lv, cat.cap)
             table.insert(options, {
                 label,
-                function(p) tryBuy(p, cat, page) end,
+                function(p) buildBuyMenu(p, cat, page) end,
             })
         end
 

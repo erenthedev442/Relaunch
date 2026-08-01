@@ -91,6 +91,30 @@ local function categoryCost(cat, nextLevel)
     return cat.apCost or 1
 end
 
+local BATCH_SIZES = { 5, 10, 25, 50 }
+
+local function totalCostForLevels(cat, lv, count)
+    local total = 0
+    for i = 1, count do
+        total = total + categoryCost(cat, lv + i)
+    end
+    return total
+end
+
+local function maxBuyable(cat, lv, budget)
+    local n     = 0
+    local spent = 0
+    while lv + n < cat.cap do
+        local c = categoryCost(cat, lv + n + 1)
+        if spent + c > budget then
+            break
+        end
+        spent = spent + c
+        n     = n + 1
+    end
+    return n, spent
+end
+
 local function categorySpent(cat, level)
     if cat.totalCost then
         return math.floor(cat.totalCost * level / cat.cap)
@@ -324,26 +348,39 @@ end
 -- (RebirthModJob == job from login/zone/job-change), so apply just the new
 -- level's delta and recompute derived stats.
 -----------------------------------
-local function tryBuy(player, cat)
+local function tryBuy(player, cat, count)
+    count = count or 1
     local job = player:getMainJob()
     local lv  = getCatLv(player, job, cat.id)
     if lv >= cat.cap then
         player:printToPlayer(string.format('%s is already maxed (%d/%d), kupo.', cat.label, lv, cat.cap), S)
-        return
-    end
-    local cost = categoryCost(cat, lv + 1)
-    local rp = getRP(player, job)
-    if rp < cost then
-        player:printToPlayer(string.format('Not enough Rebirth Points: %s costs %d, you have %d.', cat.label, cost, rp), S)
-        return
+        return false
     end
 
-    player:setCharVar(rpKey(job), rp - cost)
-    player:setCharVar(catKey(job, cat.id), lv + 1)
-    _modAdd(player, cat, cat.perLevel)
+    local remaining = cat.cap - lv
+    count = math.min(count, remaining)
+    if count <= 0 then
+        return false
+    end
+
+    local totalCost = totalCostForLevels(cat, lv, count)
+    local rp = getRP(player, job)
+    if rp < totalCost then
+        player:printToPlayer(string.format(
+            'Not enough Rebirth Points: %d levels of %s costs %d, you have %d.',
+            count, cat.label, totalCost, rp), S)
+        return false
+    end
+
+    player:setCharVar(rpKey(job), rp - totalCost)
+    player:setCharVar(catKey(job, cat.id), lv + count)
+    _modAdd(player, cat, cat.perLevel * count)
     player:recalculateStats()
 
-    player:printToPlayer(string.format('%s: %d -> %d / %d   (-%d RP, %d left).', cat.label, lv, lv + 1, cat.cap, cost, rp - cost), S)
+    player:printToPlayer(string.format(
+        '%s: %d -> %d / %d   (-%d RP, %d left).',
+        cat.label, lv, lv + count, cat.cap, totalCost, rp - totalCost), S)
+    return true
 end
 
 -----------------------------------
@@ -358,9 +395,12 @@ showBuy = function(player, cat, page)
     local lv  = getCatLv(player, job, cat.id)
     local rp  = getRP(player, job)
     local cost = lv < cat.cap and categoryCost(cat, lv + 1) or 0
+    local maxN, maxCost = maxBuyable(cat, lv, rp)
 
     player:printToPlayer(string.format('%s -- %s', cat.label, cat.note or ''), S)
-    player:printToPlayer(string.format('  Now %d/%d   --   next level %d RP   --   you have %d RP.', lv, cat.cap, cost, rp), S)
+    player:printToPlayer(string.format(
+        '  Now %d/%d   --   next level %d RP   --   you have %d RP.',
+        lv, cat.cap, cost, rp), S)
 
     local options = {}
     if lv >= cat.cap then
@@ -371,10 +411,33 @@ showBuy = function(player, cat, page)
         table.insert(options, {
             string.format('Buy +1  (-%d RP)', cost),
             function(p)
-                tryBuy(p, cat)
-                showBuy(p, cat, page) -- stay here so multiple levels can be bought
+                tryBuy(p, cat, 1)
+                showBuy(p, cat, page)
             end,
         })
+
+        for _, qty in ipairs(BATCH_SIZES) do
+            if qty <= maxN then
+                local batchCost = totalCostForLevels(cat, lv, qty)
+                table.insert(options, {
+                    string.format('Buy +%d  (-%d RP)', qty, batchCost),
+                    function(p)
+                        tryBuy(p, cat, qty)
+                        showBuy(p, cat, page)
+                    end,
+                })
+            end
+        end
+
+        if maxN > 1 then
+            table.insert(options, {
+                string.format('Buy max (%d, -%d RP)', maxN, maxCost),
+                function(p)
+                    tryBuy(p, cat, maxN)
+                    showBuy(p, cat, page)
+                end,
+            })
+        end
     end
     table.insert(options, { 'Back', function(p) showSpend(p, page) end })
 

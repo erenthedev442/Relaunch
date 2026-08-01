@@ -2,7 +2,7 @@
 -- !unity
 -- Shows the player's Unity Wanted NM progress: per-tier conquest counts,
 -- weekly-featured NM, current accolade balance, and the specific NMs that
--- still need a first kill. The 4th trust-slot gate (trust_progression_cap)
+-- still need a first kill. The 5th trust-slot gate (trust_progression_cap)
 -- reads Unity_NMs_Conquered, so this is also the "am I close?" readout.
 -- Ported/created 2026-07-13 (player report: 'need a way to see which ones
 -- I've fought to unlock additional trusts').
@@ -88,13 +88,13 @@ commandObj.onTrigger = function(player, mode)
     end
 
     player:printToPlayer(' ', S)
-    -- 4th-trust-slot gate: conquer every Unity Wanted NM.
+    -- 5th-trust-slot gate: conquer every Unity Wanted NM.
     local remaining = #catalog.nms - total
     if remaining > 0 then
-        line(player, 'Conquer %d more to unlock the 4th trust slot. (* = this week\'s bonus NM)',
+        line(player, 'Conquer %d more to unlock the 5th trust slot. (* = this week\'s bonus NM)',
             remaining)
     else
-        line(player, 'All Unity Wanted NMs conquered! 4th trust slot is unlocked.')
+        line(player, 'All Unity Wanted NMs conquered! 5th trust slot is unlocked.')
     end
     line(player, 'Use  !unity conquered  to list the NMs you have already beaten.')
 end

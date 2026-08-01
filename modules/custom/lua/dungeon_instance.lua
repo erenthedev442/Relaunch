@@ -1,9 +1,10 @@
 -----------------------------------
 -- Shared private-dungeon runtime
 -----------------------------------
-local catalog      = require('modules/custom/lua/dungeon_catalog')
-local augmentDrops = require('modules/custom/lua/augment_dungeon_drops')
-local mechanics    = require('modules/custom/lua/mob_mechanics_library')
+local catalog           = require('modules/custom/lua/dungeon_catalog')
+local augmentDrops      = require('modules/custom/lua/augment_dungeon_drops')
+local progressionDrops  = require('modules/custom/lua/progression_dungeon_rewards')
+local mechanics         = require('modules/custom/lua/mob_mechanics_library')
 
 -- Zoning leash (world units): a player more than this far from EVERY roster
 -- anchor is heading for a wall / zone line -- crossing one drops them from the
@@ -184,6 +185,7 @@ runtime.create = function(dungeonKey)
                 -- DungeonMobIndex localvar does NOT survive on these dynamic
                 -- mobs (reads 0 at death), so relying on it dropped nothing.
                 augmentDrops.onDungeonMobDeath(dungeonKey, instance, deadMob, player, optParams, index, index == bossIndex)
+                progressionDrops.onDungeonMobDeath(dungeonKey, instance, deadMob, player, optParams, index, index == bossIndex)
             end,
         })
 

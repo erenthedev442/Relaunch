@@ -10,9 +10,9 @@
 --
 --   fresh character                          -> 2 trusts
 --   raise your Adventuring Fellow to Lv 100  -> 3 trusts (Fellow_Level)
---   conquer every Unity Wanted NM (all tiers)-> 4 trusts (Unity_NMs_Conquered,
+--   clear at least 3 Voidwatch strata        -> 4 trusts (stratum charVars)
+--   conquer every Unity Wanted NM (all tiers)-> 5 trusts (Unity_NMs_Conquered,
 --                                                all 56 board NMs, dedup per NM)
---   clear at least 3 Voidwatch strata        -> 5 trusts (stratum charVars)
 --
 -- Theme: your allies earn your allies -- hunt with the Concord, close the
 -- rifts, max your companion, and the full trust party follows.
@@ -77,9 +77,7 @@ local TRUST_GATES =
           end
           return false
       end },
-    { cap = 4, unlock = 'conquer every Unity Wanted NM (all tiers)',
-      check = function(p) return (p:getCharVar('Unity_NMs_Conquered') or 0) >= UNITY_TOTAL end },
-    { cap = 5, unlock = 'clear at least 3 different Voidwatch strata',
+    { cap = 4, unlock = 'clear at least 3 different Voidwatch strata',
       check = function(p)
           if (p:getCharVar('Voidwatch_Tier') or 0) < 5 then return false end
           local cleared = 0
@@ -90,6 +88,8 @@ local TRUST_GATES =
           end
           return cleared >= 3
       end },
+    { cap = 5, unlock = 'conquer every Unity Wanted NM (all tiers)',
+      check = function(p) return (p:getCharVar('Unity_NMs_Conquered') or 0) >= UNITY_TOTAL end },
 }
 
 local function trustCap(player)

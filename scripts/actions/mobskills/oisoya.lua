@@ -7,6 +7,10 @@
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
+    if mob:isTrust() then
+        return 0
+    end
+
     if
         (mob:getAnimationSub() == 5 or
         mob:getAnimationSub() == 6) and

@@ -1,6 +1,9 @@
 -- ============================================================================
 -- silencega_scroll.sql
 --
+-- DEPRECATED: use modules/custom/sql/player_castable_spells.sql instead
+-- (Silencega + Hastega + Meteor II job unlocks and the Silencega scroll).
+--
 -- Makes Silencega (spell ID 359) castable by players and adds the
 -- Scroll of Silencega as an obtainable item (item ID 29696).
 --
