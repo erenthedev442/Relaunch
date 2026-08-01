@@ -50,6 +50,17 @@ local function allPrimeTrialsAndApexHunter()
     end
 end
 
+local function allGeasAeonicOnce()
+    return function(p)
+        if xi.geasFete and xi.geasFete.aeonicProgress then
+            local cleared, need = xi.geasFete.aeonicProgress(p)
+            return cleared >= need
+        end
+        local need = (xi.geasFete and xi.geasFete.aeonicNmCount) or math.huge
+        return (p:getCharVar('GF_Aeonic_Kills') or 0) >= need
+    end
+end
+
 -- ── STAGE_GATES table ──────────────────────────────────────────────────────
 
 M.STAGE_GATES =
@@ -134,14 +145,9 @@ M.STAGE_GATES =
         },
         [1] =
         {
-            label = 'All Geas Fete T3-T4 NMs killed at least once',
+            label = '100 Ascensions on a single job + all Geas Fete T3-T4 NMs killed once',
             check = function(p)
-                if xi.geasFete and xi.geasFete.aeonicProgress then
-                    local cleared, need = xi.geasFete.aeonicProgress(p)
-                    return cleared >= need
-                end
-                local need = (xi.geasFete and xi.geasFete.aeonicNmCount) or math.huge
-                return (p:getCharVar('GF_Aeonic_Kills') or 0) >= need
+                return anyAscension100()(p) and allGeasAeonicOnce()(p)
             end,
         },
         [2] =

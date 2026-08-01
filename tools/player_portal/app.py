@@ -186,8 +186,8 @@ PROGRESSION = [
 # instead of dropping the whole page.
 def _count_forge_gate_targets() -> dict[str, int]:
     root = Path(__file__).resolve().parents[2]
-    # gf_empy_total = T1-T2 only (Empyrean Stage I). T3-T4 are Aeonic-era.
-    out = {"gf_total": 0, "gf_empy_total": 0, "vw_total": 0, "dungeon_total": 0}
+    # gf_empy_total = T1-T2 only (Empyrean Stage I). gf_aeonic_total = T3-T4 (Aeonic Stage II).
+    out = {"gf_total": 0, "gf_empy_total": 0, "gf_aeonic_total": 0, "vw_total": 0, "dungeon_total": 0}
     try:
         text = (root / "modules/custom/lua/Geas_Fete.lua").read_text(encoding="utf-8", errors="replace")
         m = re.search(r"^local NM_CATALOG = \{(.*?)\n\}\n", text, re.MULTILINE | re.DOTALL)
@@ -197,6 +197,8 @@ def _count_forge_gate_targets() -> dict[str, int]:
                 tm = re.search(r"tier\s*=\s*(\d+)", block)
                 if tm and int(tm.group(1)) <= 2:
                     out["gf_empy_total"] += 1
+                if tm and int(tm.group(1)) >= 3:
+                    out["gf_aeonic_total"] += 1
     except OSError:
         pass
     try:
@@ -267,8 +269,10 @@ FORGE_GATES: list[dict] = [
                         and (_cv(cv, "GM_Wave_Clears") & 32) != 0},
     {"cat": "Aeonic",   "stage": "I",   "label": "50 rebirths on a single job (not combined)",
      "check": _any_rebirth_50},
-    {"cat": "Aeonic",   "stage": "II",  "label": "100 Ascensions on a single job (not combined)",
-     "check": _any_ascension_100},
+    {"cat": "Aeonic",   "stage": "II",
+     "label": "100 Ascensions on a single job + all Geas Fete T3-T4 NMs killed once",
+     "check": lambda cv, t: _any_ascension_100(cv, t)
+                        and _cv(cv, "GF_Aeonic_Kills") >= (t["gf_aeonic_total"] or 10**9)},
     {"cat": "Aeonic",   "stage": "III", "label": "All Dungeons + 10 Maat's Echo wins + Wave Master Oblivion",
      "check": lambda cv, t: _cv(cv, "Dungeon_Unique_Clears") >= (t["dungeon_total"] or 10**9)
                         and _cv(cv, "Maat_Kills") >= 10
@@ -1092,7 +1096,7 @@ def progress(charid: int, request: Request):
                 "  varname IN ('HL_Tier','HL_Points','Prestige_Ascensions_Total','Apex_HighestTier',"
                 "  'Augment_Mastery','Tower_Best_Floor','Voidspire_Best_Floor','Custom_NM_Kills','Paragon_Level',"
                 "  'Unity_NMs_Conquered','Fellow_Level','MasterySigils','Col_Best_Rating','Inv_Kills','DI_Kills',"
-                "  'GF_Unique_Kills','GF_Empyrean_Kills','VW_Unique_Kills','Dungeon_Unique_Clears','Maat_Kills','Gauntlet_Clears',"
+                "  'GF_Unique_Kills','GF_Empyrean_Kills','GF_Aeonic_Kills','VW_Unique_Kills','Dungeon_Unique_Clears','Maat_Kills','Gauntlet_Clears',"
                 "  'Nyzul_F100_Cleared','Title_Apex_Hunter','WF_Relic_Final','WF_Mythic_Final',"
                 "  'WF_Empyrean_Final','WF_Aeonic_Final') "
                 "  OR varname LIKE 'PW_Trial%%' OR varname LIKE 'Paragon_Perk_%%' OR varname LIKE 'Rebirth_Count_%%'"
