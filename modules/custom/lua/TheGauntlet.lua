@@ -29,6 +29,7 @@ require('scripts/globals/job_utils/white_mage')
 
 local C         = require('modules/custom/lua/gauntlet_catalog')
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
+local trustDrops = require('modules/custom/lua/trust_cipher_drops')
 
 local m   = Module:new('the_gauntlet')
 local SYS = xi.msg.channel.SYSTEM_3
@@ -634,6 +635,9 @@ spawnNM = function(player, session)
             if level <= 9 then
                 grantLevelReward(resolved, level)
             end
+            pcall(function()
+                trustDrops.tryAward(resolved, nm.name, 'gauntlet')
+            end)
             resolved:timer(2500, function(p)
                 local s = sessions[p:getName()]
                 if s then advanceLevel(p, s) end

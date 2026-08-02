@@ -27,6 +27,7 @@ local catalog  = require('modules/custom/lua/unity_wanted_catalog')
 local jmap     = require('modules/custom/lua/unity_junction_map')
 local mechanics = require('modules/custom/lua/unity_wanted_mechanics')
 local progress = require('modules/custom/lua/unity_wanted_progress')
+local trustDrops = require('modules/custom/lua/trust_cipher_drops')
 local S        = xi.msg.channel.SYSTEM_3
 local ICON     = xi.icon and xi.icon.STAR_LARGE or ''
 local PAGE     = 5  -- NMs per menu page (stay ≤ 7 to respect customMenu 150-byte limit)
@@ -210,6 +211,10 @@ local function spawnWantedNm(player, nm, pos)
             owner:printToPlayer(
                 string.format('[Unity] %s defeated! +%d accolades (total: %d)', nm.label,
                     reward, owner:getCurrency('unity_accolades')), S)
+
+            pcall(function()
+                trustDrops.tryAward(owner, nm.name, 'unity')
+            end)
         end,
     })
     if not mob then

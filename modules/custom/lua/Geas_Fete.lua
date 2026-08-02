@@ -36,6 +36,7 @@
 -- restart-gated (addOverride).
 -----------------------------------
 require('modules/module_utils')
+local trustDrops = require('modules/custom/lua/trust_cipher_drops')
 require('scripts/zones/Escha_ZiTah/Zone')
 require('scripts/zones/Escha_RuAun/Zone')
 require('scripts/zones/Reisenjima/Zone')  -- for the redirect signpost override
@@ -1084,6 +1085,9 @@ local function spawnNM(player, zone, zoneId, def, campNpc)
                     killer:addCurrency('escha_silt', silt)
                 end
                 awardDrops(killer, mob, defCapture)
+                pcall(function()
+                    trustDrops.tryAward(killer, defCapture.name, 'geas')
+                end)
                 local clbl = CURRENCY_LABEL[zoneId] or 'pts'
                 killer:printToPlayer(string.format(
                     '[Geas Fete] %s defeated! +%d %s, +%d Escha Silt',

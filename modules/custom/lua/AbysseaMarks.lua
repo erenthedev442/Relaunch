@@ -13,6 +13,7 @@ local encounterCatalog = require('modules/custom/lua/abyssea_marks_catalog')
 local encounterRuntime = require('modules/custom/lua/abyssea_marks_mechanics')
 local encounterBalance = require('modules/custom/lua/abyssea_marks_balance')
 local rosterProgress = require('modules/custom/lua/abyssea_marks_progress')
+local trustDrops = require('modules/custom/lua/trust_cipher_drops')
 
 local MARKS_CV         = 'HL_Points'
 local INFAMY_CV        = 'Infamy'
@@ -473,6 +474,11 @@ xi.mob.marksRewardHook = function(mob, player, isKiller, isWeaponSkillKill)
         if cfg and cfg.tier == 3 then
             require('modules/custom/lua/augment_catalyst_pools').roll(player, 4)
         end
+    end)
+
+    -- Trust cipher / direct spell unlock (per in-zone member, independent roll).
+    pcall(function()
+        trustDrops.tryAward(player, mob:getName(), 'abyssea')
     end)
 end
 

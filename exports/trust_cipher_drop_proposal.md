@@ -1,9 +1,9 @@
 # Trust Cipher Drop Proposal — Dev Review Draft
 
-**Status:** Design only · **Not implemented in code**  
-**Last updated:** 2026-08-02 (regenerated from CSV)  
+**Status:** Implemented · `trust_cipher_drops.lua` + per-system death hooks  
+**Last updated:** 2026-08-02 (drops wired from CSV)  
 **Source of truth:** [`exports/trust_cipher_drop_proposal.csv`](trust_cipher_drop_proposal.csv)  
-**Related (implemented):** usable ciphers (`modules/custom/sql/trust_cipher_usable.sql`, `scripts/items/_trust_cipher.lua`)
+**Related:** usable ciphers (`trust_cipher_usable.sql` / `_trust_cipher.lua`); drop helper (`trust_cipher_drops.lua`)
 
 This document is generated from the CSV companion. Edit the CSV, then regenerate this file.
 

@@ -7,6 +7,7 @@
 -----------------------------------
 local catalog = require('modules/custom/lua/unity_wanted_catalog')
 local mechanics = require('modules/custom/lua/unity_wanted_mechanics')
+local trustDrops = require('modules/custom/lua/trust_cipher_drops')
 
 local runtime = {}
 
@@ -177,6 +178,10 @@ local function awardPlayer(player, nm)
         string.format('[Unity Instance] %s defeated! +%d accolades (total: %d)',
             nm.label, reward, player:getCurrency('unity_accolades')),
         xi.msg.channel.SYSTEM_3)
+
+    pcall(function()
+        trustDrops.tryAward(player, nm.name, 'unity')
+    end)
 end
 
 local instanceObject = {}

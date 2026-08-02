@@ -28,6 +28,7 @@ local mechanics  = require('modules/custom/lua/mob_mechanics_library')
 -- Ascension (Prestige) layer. One-directional require: Prestige_System pulls
 -- in only catalogs, never HuntingLeague, so there is no circular dependency.
 local prestige = require('modules/custom/lua/Prestige_System')
+local trustDrops = require('modules/custom/lua/trust_cipher_drops')
 
 -- Require the hunt zone so the override path is resolvable.
 local huntZoneName = catalog.huntZonePath:match('xi%.zones%.(.+)')
@@ -858,6 +859,11 @@ local function insertSpawnerNPC(zone)
                             local catalystPools = require('modules/custom/lua/augment_catalyst_pools')
                             local augTier = (md.groupId == 11369) and 4 or catalystPools.HL_RANK_TIER[td.tier]
                             catalystPools.roll(killer, augTier)
+
+                            -- Trust cipher / direct spell unlock (CSV catalog).
+                            pcall(function()
+                                trustDrops.tryAward(killer, md.name, 'hl')
+                            end)
                         end,
                     })
 

@@ -23,6 +23,7 @@ local wh         = require('modules/custom/lua/weekly_hunts')
 -- enrage / phases). Shared library; per-NM configs live in catalog.mechCfgs.
 local mechanics  = require('modules/custom/lua/mob_mechanics_library')
 local native     = require('modules/custom/lua/reforge_native_mechanics')
+local trustDrops = require('modules/custom/lua/trust_cipher_drops')
 
 local huntZoneName = catalog.huntZonePath:match('xi%.zones%.(.+)')
 require(string.format('scripts/zones/%s/Zone', huntZoneName))
@@ -565,6 +566,10 @@ buildSourceNMMenu = function(player, srcDef, station)
                             partySize     = killer:getPartySize() or 1,
                             secondsToKill = os.time() - spawnedAt,
                         })
+                        -- Use catalog md.name (not Genbu_S1 spawn name).
+                        pcall(function()
+                            trustDrops.tryAward(killer, md.name, 'reforge')
+                        end)
                     end,
                 })
                 if not mob then
