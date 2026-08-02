@@ -286,8 +286,8 @@ xi.trust.VOID_KEEPER_SPELL =
     MEAT     = 899,
     GEMMA    = 901,
     CORVUS   = 902,
-    CORNELIA = 1003,
-    MATSUI_P = 1021,
+    CORNELIA = 1002, -- client spell slot "Cornelia"
+    MATSUI_P = 1003, -- client spell slot "Matsui-P"
 }
 
 local blockedCipherSpells =

@@ -1,8 +1,8 @@
 -----------------------------------
 -- Character_Upgrader.lua
 -- AUTO-GRANT at character creation: on a brand-new character's first login,
--- automatically grants weapon skills, spells, capped skills, trusts, all
--- quests/missions, maps, outpost warps, homepoints, survival guides, wardrobe
+-- automatically grants weapon skills, spells (non-trust), capped skills, four
+-- starter trusts, all quests/missions, maps, outpost warps, homepoints, survival guides, wardrobe
 -- sizes, and automaton parts -- everything the old "Unlocker" GM-Home NPC used
 -- to hand out on demand. The NPC is gone (owner request 2026-06-25); the grant
 -- now runs once via xi.player.onGameIn (firstLogin), deferred a few seconds so
@@ -12,14 +12,19 @@ require('modules/module_utils')
 
 local m = Module:new('character_upgrader')
 local spellGrant = require('modules/custom/lua/player_spell_grant_catalog')
+local trustGrant = require('modules/custom/lua/trust_grant_catalog')
 
--- Skoll/Gemma (901), Meat (899), Corvus (902), Cornelia (1003), Matsui-P (1021),
--- and Aldo (930/1007) are paid custom trusts excluded from bulk grants.
+-- Starter trusts (see exports/trust_cipher_drop_proposal.csv). Every other trust
+-- is earned via cipher drops, direct NM grants, or the Void Keeper.
+local STARTER_TRUSTS    = trustGrant.STARTER_TRUSTS
+local STARTER_TRUST_SET = trustGrant.STARTER_TRUST_SET
+local TRUST_SPELL_MIN   = trustGrant.TRUST_SPELL_MIN
+local TRUST_SPELL_MAX   = trustGrant.TRUST_SPELL_MAX
 local SKOLL_SPELL     = (xi.magic and xi.magic.spell and xi.magic.spell.SKOLL) or 901
 local MEAT_SPELL      = (xi.magic and xi.magic.spell and xi.magic.spell.EXCENMILLE) or 899
 local CORVUS_SPELL    = (xi.magic and xi.magic.spell and xi.magic.spell.CURILLA) or 902
-local CORNELIA_SPELL  = (xi.trust and xi.trust.VOID_KEEPER_SPELL and xi.trust.VOID_KEEPER_SPELL.CORNELIA) or 1003
-local MATSUI_P_SPELL  = (xi.trust and xi.trust.VOID_KEEPER_SPELL and xi.trust.VOID_KEEPER_SPELL.MATSUI_P) or 1021
+local CORNELIA_SPELL  = (xi.trust and xi.trust.VOID_KEEPER_SPELL and xi.trust.VOID_KEEPER_SPELL.CORNELIA) or 1002
+local MATSUI_P_SPELL  = (xi.trust and xi.trust.VOID_KEEPER_SPELL and xi.trust.VOID_KEEPER_SPELL.MATSUI_P) or 1003
 local ALDO_SPELL      = (xi.magic and xi.magic.spell and xi.magic.spell.ALDO) or 930
 local ALDO_UC_SPELL   = (xi.magic and xi.magic.spell and xi.magic.spell.ALDO_UC) or 1007
 
@@ -64,10 +69,30 @@ local function giveAllWeaponSkills(player)
     end
 end
 
-local function shouldGrantSpell(spellId)
-    return not EXCLUDED_SPELLS[spellId] and not spellGrant.mobOnlySpells[spellId]
+local function isTrustSpell(spellId)
+    return spellId >= TRUST_SPELL_MIN and spellId <= TRUST_SPELL_MAX
 end
 
+local function shouldGrantSpell(spellId)
+    if EXCLUDED_SPELLS[spellId] or spellGrant.mobOnlySpells[spellId] then
+        return false
+    end
+    -- Trusts are not part of the spell bulk grant (starters handled separately).
+    if isTrustSpell(spellId) then
+        return false
+    end
+    return true
+end
+
+local function stripNonStarterTrusts(player)
+    for spellId = TRUST_SPELL_MIN, TRUST_SPELL_MAX do
+        if not STARTER_TRUST_SET[spellId] and player:hasSpell(spellId) then
+            pcall(function()
+                player:delSpell(spellId, { silentLog = true, saveToDB = true, sendUpdate = false })
+            end)
+        end
+    end
+end
 local function stripMobOnlySpells(player)
     for spellId in pairs(spellGrant.mobOnlySpells) do
         if player:hasSpell(spellId) then
@@ -92,12 +117,13 @@ local function capAllSkills(player)
     player:capAllSkills()
 end
 
-local function giveAllTrusts(player)
-    local added = 0
-    for i = 1, 10000 do
+local function giveStarterTrusts(player)
+    for _, spellId in ipairs(STARTER_TRUSTS) do
         pcall(function()
-            if not EXCLUDED_SPELLS[i] then
-                if player:addTrust(i) then added = added + 1 end
+            if xi.trustGrant and xi.trustGrant.grantSpell then
+                xi.trustGrant.grantSpell(player, spellId, { silentLog = true })
+            else
+                player:addSpell(spellId, { silentLog = true })
             end
         end)
     end
@@ -243,7 +269,7 @@ local function giveEverything(player)
     giveAllWeaponSkills(player)
     giveAllSpells(player)
     capAllSkills(player)
-    giveAllTrusts(player)
+    giveStarterTrusts(player)
     completeAllQuests(player)
     completeAllMissions(player)
     giveAllKeyItems(player)
@@ -255,7 +281,7 @@ local function giveEverything(player)
     local SYS = xi.msg.channel.SYSTEM_3
     player:printToPlayer('[ Setup Complete ]', SYS)
     player:printToPlayer('Spells, weapon skills & job abilities', SYS)
-    player:printToPlayer('All trusts', SYS)
+    player:printToPlayer('Starter trusts: Shantotto, Kupipi, Trion, Tenzen', SYS)
     player:printToPlayer('All quests & missions completed', SYS)
     player:printToPlayer('All key items, maps, homepoints, survival guides & outpost warps', SYS)
     player:printToPlayer('Full wardrobes & automaton parts', SYS)
@@ -300,6 +326,15 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     if isLogin and (player:getCharVar('MobSpellGrantFix') or 0) == 0 then
         player:setCharVar('MobSpellGrantFix', 1)
         player:timer(4000, function(p) stripMobOnlySpells(p) end)
+    end
+
+    -- One-time strip of bulk-granted trusts (old giveAllTrusts + spell loop).
+    if isLogin and (player:getCharVar('TrustRosterFix') or 0) == 0 then
+        player:setCharVar('TrustRosterFix', 1)
+        player:timer(4500, function(p)
+            stripNonStarterTrusts(p)
+            giveStarterTrusts(p)
+        end)
     end
 end)
 

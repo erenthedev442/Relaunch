@@ -1309,6 +1309,13 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     -- Check if the mob has a damage cap
     finalDamage = target:checkDamageCap(finalDamage)
 
+    -- Trust MB exception caps (e.g. Shantotto II) read this localVar inside
+    -- ResolveOutgoingHpDamageCap for the duration of takeSpellDamage only.
+    local isMagicBurstHit = magicBurst > 1 or helixDetonated
+    if isMagicBurstHit then
+        caster:setLocalVar('OutgoingDamageIsMagicBurst', 1)
+    end
+
     -- FJB: PC casters bypass the 131,071 action-packet ceiling and land the full
     -- damage on HP (same as TakeWeaponskillDamage for WS). The real value is shown
     -- in SYSTEM_3 chat by C++ NotifyOverCapDamage inside TakeSpellDamage.
@@ -1317,6 +1324,10 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         target:takeSpellDamage(caster, spell, finalDamage, xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + spellElement)
     else
         target:takeSpellDamage(caster, spell, math.min(finalDamage, 131071), xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + spellElement)
+    end
+
+    if isMagicBurstHit then
+        caster:setLocalVar('OutgoingDamageIsMagicBurst', 0)
     end
 
     -- Handle Afflatus Misery.

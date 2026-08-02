@@ -19,9 +19,9 @@ spellObject.onMobSpawn = function(mob)
 
     local mlvl = mob:getMainLvl()
     local tick_amount
-    if mlvl == 99 then
+    if mlvl >= 99 then
         tick_amount = 3
-    elseif mlvl < 99 and mlvl > 58 then
+    elseif mlvl > 58 then
         tick_amount = 2
     else
         tick_amount = 1

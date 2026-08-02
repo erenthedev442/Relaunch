@@ -6,8 +6,8 @@
 --   Corvus   -> spell 902 : 40 trusts collected, 10M gil
 --   Meat     -> spell 899 : 50 trusts collected, 10M gil
 --   Gemma    -> spell 901 : 60 trusts collected, 10M gil
---   Cornelia -> spell 1003: all 120 roster trusts, 50M gil
---   Matsui-P -> spell 1021: all 120 roster trusts, 50M gil
+--   Cornelia -> spell 1002: all 120 roster trusts, 50M gil
+--   Matsui-P -> spell 1003: all 120 roster trusts, 50M gil
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
@@ -60,7 +60,7 @@ local TRUSTS =
         },
     },
     {
-        spellId               = 1003,
+        spellId               = 1002,
         name                  = 'Cornelia',
         clientName            = 'Cornelia',
         gilCost               = 50000000,
@@ -73,7 +73,7 @@ local TRUSTS =
         },
     },
     {
-        spellId               = 1021,
+        spellId               = 1003,
         name                  = 'Matsui-P',
         clientName            = 'Matsui-P',
         gilCost               = 50000000,
@@ -167,7 +167,11 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 end
 
                 p:delGil(t.gilCost)
-                p:addSpell(t.spellId)
+                if xi.trustGrant and xi.trustGrant.grantSpell then
+                    xi.trustGrant.grantSpell(p, t.spellId)
+                else
+                    p:addSpell(t.spellId)
+                end
 
                 local S = xi.msg.channel.SYSTEM_3
                 for _, line in ipairs(t.sealMsgs) do

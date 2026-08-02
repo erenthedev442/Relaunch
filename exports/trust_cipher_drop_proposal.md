@@ -262,8 +262,8 @@ Leonoyne (L1), Star Sibyl (L2) â€” remaining Gauntlet slots freed by moving
 | **Corvus** | 902 | 40 trusts collected | 10M gil |
 | **Meat** | 899 | 50 trusts collected | 10M gil |
 | **Gemma** | 901 | 60 trusts collected | 10M gil |
-| **Cornelia** | 1003 | All 120 roster trusts | 50M gil |
-| **Matsui-P** | 1021 | All 120 roster trusts | 50M gil |
+| **Cornelia** | 1002 | All 120 roster trusts | 50M gil |
+| **Matsui-P** | 1003 | All 120 roster trusts | 50M gil |
 
 ---
 

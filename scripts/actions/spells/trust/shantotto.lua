@@ -1,5 +1,6 @@
 -----------------------------------
 -- Trust: Shantotto
+-- MB-first nuker with T4/T5 access (spell list 308). Power from trust_power_scaling.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -17,32 +18,21 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.AJIDO_MARUJIDO] = xi.trust.messageOffset.TEAMWORK_1,
         [xi.magic.spell.STAR_SIBYL] = xi.trust.messageOffset.TEAMWORK_2,
         [xi.magic.spell.KORU_MORU] = xi.trust.messageOffset.TEAMWORK_3,
-        [xi.magic.spell.KING_OF_HEARTS] = xi.trust.messageOffset.TEAMWORK_4
+        [xi.magic.spell.KING_OF_HEARTS] = xi.trust.messageOffset.TEAMWORK_4,
     })
 
+    -- Magic burst windows first, then highest available nuke.
     mob:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 20)
+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
 
-    mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 25)
-
-	-- Base level trust (power = mLevel).
-	local master = mob:getMaster()
-	local power = math.floor(mob:getMainLvl() * 1)
-	local zpower = math.floor(mob:getMainLvl() / 5)
-	-- StatMods--
-	mob:addMod(xi.mod.HP, power * 2)
-	mob:addMod(xi.mod.MP, power * 4)
-	mob:addMod(xi.mod.MND, power)
-	mob:addMod(xi.mod.INT, power)
-	mob:addMod(xi.mod.CHR, power)
-	mob:addMod(xi.mod.EVA, power)
-	mob:addMod(xi.mod.HASTE_GEAR, 1500)
-	mob:addMod(xi.mod.FASTCAST, zpower)
-	mob:addMod(xi.mod.REFRESH, zpower)
-    mob:addMod(xi.mod.MATT, power)
-    mob:addMod(xi.mod.MACC, power)
+    -- Script flavor on top of global scaler (FC for MB windows).
+    mob:addMod(xi.mod.FASTCAST, 80)
+    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 35)
+    mob:addMod(xi.mod.UFASTCAST, 15)
 
     mob:setAutoAttackEnabled(false)
-
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
 end
 

@@ -17,21 +17,25 @@ spellObject.onMobSpawn = function(mob)
 
     local mlvl = mob:getMainLvl()
     local tick_amount
-    if mlvl == 99 then
+    if mlvl >= 99 then
         tick_amount = 6
-    elseif mlvl < 99 then
+    elseif mlvl >= 87 then
         tick_amount = 5
-    elseif mlvl <= 87 then
+    elseif mlvl >= 73 then
         tick_amount = 4
-    elseif mlvl <= 73 then
+    elseif mlvl >= 51 then
         tick_amount = 3
-    elseif mlvl <= 51 then
+    elseif mlvl >= 30 then
         tick_amount = 2
     else
         tick_amount = 1
     end
 
-    mob:addStatusEffect(xi.effect.COLURE_ACTIVE, { power = 6, origin = mob, tick = 3, subType = xi.effect.GEO_REGEN, subPower = tick_amount, tier = xi.auraTarget.ALLIES, flag = xi.effectFlag.AURA })
+    mob:addStatusEffect(xi.effect.COLURE_ACTIVE, {
+        power = 6, origin = mob, tick = 3,
+        subType = xi.effect.GEO_REGEN, subPower = tick_amount,
+        tier = xi.auraTarget.ALLIES, flag = xi.effectFlag.AURA,
+    })
     mob:setAutoAttackEnabled(false)
 end
 

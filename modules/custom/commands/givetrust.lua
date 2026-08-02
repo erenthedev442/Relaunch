@@ -2,19 +2,24 @@
 -- func: givetrust
 -- desc: [GM] Grant a paid Void Keeper trust to a player, free of charge --
 --       the same trusts the Void Keeper sells for gil, but bestowed at will.
---       Trusts: gemma (spell 901), meat (899), corvus (902).
+--       Trusts: gemma (901), meat (899), corvus (902), cornelia (1002),
+--       matsui-p / matsui (1003).
 --
--- Usage:  !givetrust <gemma|meat|corvus> <player>
---         !givetrust <gemma|meat|corvus>            (grant to yourself)
+-- Usage:  !givetrust <gemma|meat|corvus|cornelia|matsui> <player>
+--         !givetrust <gemma|meat|corvus|cornelia|matsui>  (grant to yourself)
 --
 -- The player casts it from their Trust menu under the repurposed client name
 -- shown below (e.g. Gemma is cast as "Nanaa Mihgo").
 -----------------------------------
 local TRUSTS =
 {
-    gemma  = { spell = 901, client = 'Nanaa Mihgo' },
-    meat   = { spell = 899, client = 'Excenmille'  },
-    corvus = { spell = 902, client = 'Curilla'     },
+    gemma     = { spell = 901,  client = 'Nanaa Mihgo' },
+    meat      = { spell = 899,  client = 'Excenmille'  },
+    corvus    = { spell = 902,  client = 'Curilla'     },
+    cornelia  = { spell = 1002, client = 'Cornelia'    },
+    matsui    = { spell = 1003, client = 'Matsui-P'    },
+    ['matsui-p'] = { spell = 1003, client = 'Matsui-P' },
+    matsuip   = { spell = 1003, client = 'Matsui-P'    },
 }
 
 ---@type TCommand
@@ -30,7 +35,7 @@ commandObj.onTrigger = function(player, trustName, name)
     local CH  = xi.msg.channel.SYSTEM_3
     local def = trustName and TRUSTS[string.lower(trustName)]
     if not def then
-        player:printToPlayer('Usage: !givetrust <gemma|meat|corvus> [player]', CH)
+        player:printToPlayer('Usage: !givetrust <gemma|meat|corvus|cornelia|matsui> [player]', CH)
         return
     end
 
@@ -49,7 +54,11 @@ commandObj.onTrigger = function(player, trustName, name)
         return
     end
 
-    target:addSpell(def.spell)
+    if xi.trustGrant and xi.trustGrant.grantSpell then
+        xi.trustGrant.grantSpell(target, def.spell)
+    else
+        target:addSpell(def.spell)
+    end
     target:printToPlayer(string.format('A trust has been bestowed upon you! Cast "%s" from your Trust menu to summon it.', def.client), CH)
 
     if target:getID() ~= player:getID() then

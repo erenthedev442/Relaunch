@@ -14,6 +14,9 @@ end
 
 spellObject.onMobSpawn = function(mob)
     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
+    -- Melee kit injected by trust_power_scaling (melee_dd).
+    mob:addMod(xi.mod.STORETP, 25)
+    mob:addMod(xi.mod.ZANSHIN, 15)
 end
 
 spellObject.onMobDespawn = function(mob)

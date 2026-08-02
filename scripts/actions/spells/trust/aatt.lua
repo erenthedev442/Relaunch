@@ -14,6 +14,9 @@ end
 
 spellObject.onMobSpawn = function(mob)
     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
+    -- Nuker kit injected by trust_power_scaling (nuker).
+    mob:addMod(xi.mod.FASTCAST, 45)
+    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 30)
 end
 
 spellObject.onMobDespawn = function(mob)

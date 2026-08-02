@@ -19,7 +19,7 @@ spellObject.onMobSpawn = function(mob)
 	mob:getMaster():printToPlayer('Stand behind me and fear nothing.', xi.msg.channel.PARTY, 'Meat')
     
 	local master = mob:getMaster()
-	local power = mob:getMainLvl() * master:getCharVar("TrustUpgraded") -- 99 * 1 / 99 * 3 / 99 * 5 / 99 * 7 -- TrustUpgraded grows as you complete server content.
+	local power = mob:getMainLvl() * math.max(1, master:getCharVar('TrustUpgraded') or 1)
 
 	mob:setAutoAttackEnabled(true)
     -- = Stat Mods = --

@@ -83,10 +83,22 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
         return globalCap;
     }
 
-    // Encounter-owned NPCs can impose a lower per-event ceiling across every
-    // ordinary damage path: melee, spells, TP moves, and additional effects.
+    // Encounter-owned NPCs / trusts can impose a lower per-event ceiling across
+    // every ordinary damage path: melee, spells, TP moves, and additional effects.
+    // Magic bursts may use a raised ceiling (e.g. Shantotto II MB → 79,999) when
+    // OutgoingDamageIsMagicBurst is set for the takeDamage call.
     const auto encounterCap =
         static_cast<int32>(PAttacker->GetLocalVar("EncounterOutgoingDamageCap"));
+    const auto encounterMbCap =
+        static_cast<int32>(PAttacker->GetLocalVar("EncounterOutgoingDamageCapMB"));
+    const bool isMagicBurst =
+        PAttacker->GetLocalVar("OutgoingDamageIsMagicBurst") == 1;
+
+    if (isMagicBurst && encounterMbCap > 0)
+    {
+        return globalCap > 0 ? std::min(globalCap, encounterMbCap) : encounterMbCap;
+    }
+
     if (encounterCap > 0)
     {
         return globalCap > 0 ? std::min(globalCap, encounterCap) : encounterCap;

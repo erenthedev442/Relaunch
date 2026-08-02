@@ -1,9 +1,10 @@
 -----------------------------------
 -- trust_progression_cap.lua  (relaunch)
 --
--- SUMMON-COUNT progression for trusts: every trust stays learnable from day 1
--- (Character_Upgrader's grant-all is untouched), but HOW MANY you can field at
--- once climbs its OWN content ladder -- deliberately DIFFERENT content from
+-- SUMMON-COUNT progression for trusts: starters only at creation (see
+-- trust_grant_catalog.lua / Character_Upgrader.lua); every other trust is
+-- earned in content. HOW MANY
+-- you can field at once climbs its OWN content ladder -- deliberately DIFFERENT content from
 -- BOTH the Augment Tier gates (NM kills / HL rank / Voidspire+GM / Divergence
 -- / Maat) AND the five Prime Weapon trials (Abyssea collectibles / Endless
 -- Tower / HL voucher / Job Mastery / Aht Urhgan currencies):
