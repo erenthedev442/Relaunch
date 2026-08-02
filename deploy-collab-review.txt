@@ -1,1876 +1,1097 @@
-﻿Collaborator review  2026-08-01 17:08:27
+﻿Collaborator review  2026-08-01 18:27:12
 Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit 6929dbf66df07796ea916ed8dabe2bef8be8f3d0
+commit 65b18e6e1b0c21fbb4c93485ce2f72ca291c82dd
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Sun Aug 2 01:06:59 2026 +0100
+Date:   Sun Aug 2 02:23:58 2026 +0100
 
-    feat(relaunch/trusts): roster power scaling, caps, kits, and Void Keeper IDs
+    fix(relaunch/trusts): retune scaling, retire Aldo, and cut auto-attacks
     
-    Scale all companion trusts by master level to ilvl-115-class power at 99 with retail-relative tiers, enforce 40k/Matsui 99k/Shantotto II MB 79k caps, inject role kits onto shells, and align Cornelia/Matsui-P to client spell IDs 1002/1003.
+    Tighten content-tiered power curves and caps, retire Aldo/UC from roster grants, clamp leveling trust hits, and reduce trust auto-attacks to 25% so swings no longer match player AA.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
 diff --git a/exports/trust_cipher_drop_proposal.csv b/exports/trust_cipher_drop_proposal.csv
-index ce497b24c9..4a74718963 100644
+index 4a74718963..d158e84b5b 100644
 --- a/exports/trust_cipher_drop_proposal.csv
 +++ b/exports/trust_cipher_drop_proposal.csv
-@@ -119,5 +119,5 @@
- 10184,Arciela II,1017,cipher_drop,Itzpapalotl,Itzpapalotl,Abyssea Marks T2,D3,11,
- 10186,Iroha II,1018,cipher_drop,Shedu,Shedu,Unity Wanted T3,D3,11,
- 10187,Shantotto II,1019,cipher_drop,Absolute Virtue,Absolute_Virtue,Hunting League Rank V,D4,9,CORE
--,Cornelia,1003,void_keeper,,,Void Keeper,,50M,All 120 roster trusts + 50M gil
--,Matsui-P,1021,void_keeper,,,Void Keeper,,50M,All 120 roster trusts + 50M gil
-+,Cornelia,1002,void_keeper,,,Void Keeper,,50M,All 120 roster trusts + 50M gil
-+,Matsui-P,1003,void_keeper,,,Void Keeper,,50M,All 120 roster trusts + 50M gil
+@@ -33,7 +33,7 @@
+ 10123,Sakura,927,cipher_drop,Tangata Manu,Tangata_Manu,Geas Fete T1,D1,15,
+ 10124,Luzaf,928,cipher_drop,Seiryu-Escha,Seiryu-Escha,Geas Ru'Aun T3,D3,11,
+ 10125,Najelith,929,cipher_drop,Carabosse,Carabosse,Abyssea Marks T1,D2,13,
+-10126,Aldo (Locke),930,cipher_drop,Suzaku-Escha,Suzaku-Escha,Geas Ru'Aun T3,D3,11,Server Locke skin on spell 930
++10126,Aldo (Locke),930,disabled,,,Retired,,0,Temporarily removed from live roster / drops (2026-08-02)
+ 10127,Moogle,931,cipher_drop,Genbu,Genbu,Reforge Sky [I],D1,15,
+ 10128,Fablinix,932,cipher_drop,Suzaku,Suzaku,Reforge Sky [II],D2,13,
+ ,Maat,933,direct_spell_grant,Sovereign Behemoth,Sovereign_Behemoth,Unity Wanted T2,D2,13,No cipher item
+@@ -106,7 +106,7 @@
+ ,Excenmille S,1004,direct_spell_grant,Toppling Tuber,Toppling_Tuber,Abyssea Marks T1,D2,13,Variant trust; optional collection row
+ ,Ayame UC,1005,direct_spell_grant,Wyvernhunter Bambrox,Wyvernhunter_Bambrox,Unity Wanted T3,D3,11,No cipher item
+ ,Maat UC,1006,direct_spell_grant,Amarok,Amarok,Abyssea Marks T3,D2,13,No cipher item
+-,Aldo UC,1007,direct_spell_grant,Ningishzida,Ningishzida,Abyssea Marks T3,D3,11,No cipher item; was paid Void Keeper
++,Aldo UC,1007,disabled,,,Retired,,0,Temporarily removed from live roster / drops (2026-08-02)
+ ,Naja UC,1008,direct_spell_grant,Ayapec,Ayapec,Unity Wanted T3,D3,11,No cipher item
+ 10159,Lion II,1009,cipher_drop,Tinnin,Tinnin,Reforge Unity [V],D4,9,
+ 10160,Zeid II,1010,cipher_drop,Orthrus,Orthrus,Abyssea Marks T3,D4,9,CORE; was Prestige Odin trial ├óΓé¼ΓÇ¥ moved to Abyssea
 diff --git a/exports/trust_cipher_drop_proposal.md b/exports/trust_cipher_drop_proposal.md
-index 5e159cc75e..e3af70bbc4 100644
+index e3af70bbc4..a7c08b44b9 100644
 --- a/exports/trust_cipher_drop_proposal.md
 +++ b/exports/trust_cipher_drop_proposal.md
+@@ -131,7 +131,7 @@ Sort key: difficulty band ├óΓÇáΓÇÖ content pool ├óΓÇáΓÇÖ trust name.
+ | 10148 | Gilgamesh | 938 | Genbu-Escha | `Genbu-Escha` | Geas Ru'Aun T3 | D3 | 11 | |
+ | 10124 | Luzaf | 928 | Seiryu-Escha | `Seiryu-Escha` | Geas Ru'Aun T3 | D3 | 11 | |
+ | 10141 | Kuyin Hathdenna | 950 | Byakko-Escha | `Byakko-Escha` | Geas Ru'Aun T3 | D3 | 11 | |
+-| 10126 | Aldo | 930 | Suzaku-Escha | `Suzaku-Escha` | Geas Ru'Aun T3 | D3 | 11 | |
++| 10126 | Aldo (Locke) | 930 | ΓÇö | ΓÇö | **DISABLED** | ΓÇö | ΓÇö | Temporarily removed from live roster |
+ | 10156 | Mildaurion | 971 | Kirin-Escha | `Kirin-Escha` | Geas Ru'Aun T3 | D3 | 11 | |
+ | 10188 | AA HM | 992 | Ark Angel HM | `Ark_Angel_HM` | Geas T3 | D3 | 11 | |
+ | 10191 | AA EV | 993 | Ark Angel EV | `Ark_Angel_EV` | Geas T3 | D3 | 11 | |
+@@ -244,7 +244,7 @@ T1 Warders + Wepwawet ├é┬╖ T2 Ionos/Kamohoalii ├é┬╖ T3 Ark Angels + Escha beasts
+ | Mumor II | Bennu | T3 Heroes |
+ | Ingrid II | Shaula | T3 Heroes |
+ | Maat UC | Amarok | T3 Heroes |
+-| Aldo UC | Ningishzida | T3 Heroes |
++| ~~Aldo UC~~ | ~~Ningishzida~~ | **DISABLED** (retired from roster) |
+ | Ygnas | Isgebind | T3 Heroes |
+ 
+ ### The Gauntlet ├é┬╖ Riverne (subset)
 @@ -262,8 +262,8 @@ Leonoyne (L1), Star Sibyl (L2) ├óΓé¼ΓÇ¥ remaining Gauntlet slots freed by moving
  | **Corvus** | 902 | 40 trusts collected | 10M gil |
  | **Meat** | 899 | 50 trusts collected | 10M gil |
  | **Gemma** | 901 | 60 trusts collected | 10M gil |
--| **Cornelia** | 1003 | All 120 roster trusts | 50M gil |
--| **Matsui-P** | 1021 | All 120 roster trusts | 50M gil |
-+| **Cornelia** | 1002 | All 120 roster trusts | 50M gil |
-+| **Matsui-P** | 1003 | All 120 roster trusts | 50M gil |
+-| **Cornelia** | 1002 | All 120 roster trusts | 50M gil |
+-| **Matsui-P** | 1003 | All 120 roster trusts | 50M gil |
++| **Cornelia** | 1002 | All **118** roster trusts (Aldo / Aldo UC excluded) | 50M gil |
++| **Matsui-P** | 1003 | All **118** roster trusts (Aldo / Aldo UC excluded) | 50M gil |
  
  ---
  
-diff --git a/modules/custom/commands/givetrust.lua b/modules/custom/commands/givetrust.lua
-index 6bc3318576..e6e1f55421 100644
---- a/modules/custom/commands/givetrust.lua
-+++ b/modules/custom/commands/givetrust.lua
-@@ -2,19 +2,24 @@
- -- func: givetrust
- -- desc: [GM] Grant a paid Void Keeper trust to a player, free of charge --
- --       the same trusts the Void Keeper sells for gil, but bestowed at will.
----       Trusts: gemma (spell 901), meat (899), corvus (902).
-+--       Trusts: gemma (901), meat (899), corvus (902), cornelia (1002),
-+--       matsui-p / matsui (1003).
- --
---- Usage:  !givetrust <gemma|meat|corvus> <player>
----         !givetrust <gemma|meat|corvus>            (grant to yourself)
-+-- Usage:  !givetrust <gemma|meat|corvus|cornelia|matsui> <player>
-+--         !givetrust <gemma|meat|corvus|cornelia|matsui>  (grant to yourself)
- --
- -- The player casts it from their Trust menu under the repurposed client name
- -- shown below (e.g. Gemma is cast as "Nanaa Mihgo").
- -----------------------------------
- local TRUSTS =
- {
--    gemma  = { spell = 901, client = 'Nanaa Mihgo' },
--    meat   = { spell = 899, client = 'Excenmille'  },
--    corvus = { spell = 902, client = 'Curilla'     },
-+    gemma     = { spell = 901,  client = 'Nanaa Mihgo' },
-+    meat      = { spell = 899,  client = 'Excenmille'  },
-+    corvus    = { spell = 902,  client = 'Curilla'     },
-+    cornelia  = { spell = 1002, client = 'Cornelia'    },
-+    matsui    = { spell = 1003, client = 'Matsui-P'    },
-+    ['matsui-p'] = { spell = 1003, client = 'Matsui-P' },
-+    matsuip   = { spell = 1003, client = 'Matsui-P'    },
- }
+@@ -303,7 +303,7 @@ These **35 trusts** use **`addSpell` on NM kill** at the rate in the CSV. See th
+ | Excenmille S | 1004 | Toppling Tuber | Abyssea Marks T1 |
+ | Ayame UC | 1005 | Wyvernhunter Bambrox | Unity T3 |
+ | Maat UC | 1006 | Amarok | Abyssea Marks T3 |
+-| Aldo UC | 1007 | Ningishzida | Abyssea Marks T3 |
++| ~~Aldo UC~~ | 1007 | ΓÇö | **DISABLED** (retired from roster) |
+ | Naja UC | 1008 | Ayapec | Unity T3 |
  
- ---@type TCommand
-@@ -30,7 +35,7 @@ commandObj.onTrigger = function(player, trustName, name)
-     local CH  = xi.msg.channel.SYSTEM_3
-     local def = trustName and TRUSTS[string.lower(trustName)]
-     if not def then
--        player:printToPlayer('Usage: !givetrust <gemma|meat|corvus> [player]', CH)
-+        player:printToPlayer('Usage: !givetrust <gemma|meat|corvus|cornelia|matsui> [player]', CH)
-         return
-     end
- 
-@@ -49,7 +54,11 @@ commandObj.onTrigger = function(player, trustName, name)
-         return
-     end
- 
--    target:addSpell(def.spell)
-+    if xi.trustGrant and xi.trustGrant.grantSpell then
-+        xi.trustGrant.grantSpell(target, def.spell)
-+    else
-+        target:addSpell(def.spell)
-+    end
-     target:printToPlayer(string.format('A trust has been bestowed upon you! Cast "%s" from your Trust menu to summon it.', def.client), CH)
- 
-     if target:getID() ~= player:getID() then
+ ├ó╦£ΓÇª = priority trusts from original design brief
 diff --git a/modules/custom/cpp/fjb_combat.cpp b/modules/custom/cpp/fjb_combat.cpp
-index c0caf15d7f..6a41e8e303 100644
+index 6a41e8e303..af5c793e76 100644
 --- a/modules/custom/cpp/fjb_combat.cpp
 +++ b/modules/custom/cpp/fjb_combat.cpp
-@@ -83,10 +83,22 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
-         return globalCap;
+@@ -114,6 +114,16 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
+             : FELLOW_ABSOLUTE_DAMAGE_CAP;
      }
  
--    // Encounter-owned NPCs can impose a lower per-event ceiling across every
--    // ordinary damage path: melee, spells, TP moves, and additional effects.
-+    // Encounter-owned NPCs / trusts can impose a lower per-event ceiling across
-+    // every ordinary damage path: melee, spells, TP moves, and additional effects.
-+    // Magic bursts may use a raised ceiling (e.g. Shantotto II MB ΓåÆ 79,999) when
-+    // OutgoingDamageIsMagicBurst is set for the takeDamage call.
-     const auto encounterCap =
-         static_cast<int32>(PAttacker->GetLocalVar("EncounterOutgoingDamageCap"));
-+    const auto encounterMbCap =
-+        static_cast<int32>(PAttacker->GetLocalVar("EncounterOutgoingDamageCapMB"));
-+    const bool isMagicBurst =
-+        PAttacker->GetLocalVar("OutgoingDamageIsMagicBurst") == 1;
-+
-+    if (isMagicBurst && encounterMbCap > 0)
++    // Hard default for all alter egos. Lua sets EncounterOutgoingDamageCap to
++    // raise exceptions (Matsui-P 99999) or EncounterOutgoingDamageCapMB for
++    // Shantotto II magic bursts. Without a localVar, trusts must never inherit
++    // the global 999999 PC ceiling.
++    if (PAttacker->objtype == TYPE_TRUST)
 +    {
-+        return globalCap > 0 ? std::min(globalCap, encounterMbCap) : encounterMbCap;
++        constexpr int32 TRUST_DEFAULT_CAP = 40000;
++        return globalCap > 0 ? std::min(globalCap, TRUST_DEFAULT_CAP) : TRUST_DEFAULT_CAP;
 +    }
 +
-     if (encounterCap > 0)
+     if (PAttacker->objtype != TYPE_PC)
      {
-         return globalCap > 0 ? std::min(globalCap, encounterCap) : encounterCap;
-diff --git a/modules/custom/lua/Character_Upgrader.lua b/modules/custom/lua/Character_Upgrader.lua
-index 516800df52..4165a6bcf3 100644
---- a/modules/custom/lua/Character_Upgrader.lua
-+++ b/modules/custom/lua/Character_Upgrader.lua
-@@ -1,8 +1,8 @@
- -----------------------------------
- -- Character_Upgrader.lua
- -- AUTO-GRANT at character creation: on a brand-new character's first login,
---- automatically grants weapon skills, spells, capped skills, trusts, all
---- quests/missions, maps, outpost warps, homepoints, survival guides, wardrobe
-+-- automatically grants weapon skills, spells (non-trust), capped skills, four
-+-- starter trusts, all quests/missions, maps, outpost warps, homepoints, survival guides, wardrobe
- -- sizes, and automaton parts -- everything the old "Unlocker" GM-Home NPC used
- -- to hand out on demand. The NPC is gone (owner request 2026-06-25); the grant
- -- now runs once via xi.player.onGameIn (firstLogin), deferred a few seconds so
-@@ -12,14 +12,19 @@ require('modules/module_utils')
+         return globalCap;
+@@ -151,6 +161,36 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
+     return effectiveCap;
+ }
  
- local m = Module:new('character_upgrader')
- local spellGrant = require('modules/custom/lua/player_spell_grant_catalog')
-+local trustGrant = require('modules/custom/lua/trust_grant_catalog')
- 
---- Skoll/Gemma (901), Meat (899), Corvus (902), Cornelia (1003), Matsui-P (1021),
---- and Aldo (930/1007) are paid custom trusts excluded from bulk grants.
-+-- Starter trusts (see exports/trust_cipher_drop_proposal.csv). Every other trust
-+-- is earned via cipher drops, direct NM grants, or the Void Keeper.
-+local STARTER_TRUSTS    = trustGrant.STARTER_TRUSTS
-+local STARTER_TRUST_SET = trustGrant.STARTER_TRUST_SET
-+local TRUST_SPELL_MIN   = trustGrant.TRUST_SPELL_MIN
-+local TRUST_SPELL_MAX   = trustGrant.TRUST_SPELL_MAX
- local SKOLL_SPELL     = (xi.magic and xi.magic.spell and xi.magic.spell.SKOLL) or 901
- local MEAT_SPELL      = (xi.magic and xi.magic.spell and xi.magic.spell.EXCENMILLE) or 899
- local CORVUS_SPELL    = (xi.magic and xi.magic.spell and xi.magic.spell.CURILLA) or 902
--local CORNELIA_SPELL  = (xi.trust and xi.trust.VOID_KEEPER_SPELL and xi.trust.VOID_KEEPER_SPELL.CORNELIA) or 1003
--local MATSUI_P_SPELL  = (xi.trust and xi.trust.VOID_KEEPER_SPELL and xi.trust.VOID_KEEPER_SPELL.MATSUI_P) or 1021
-+local CORNELIA_SPELL  = (xi.trust and xi.trust.VOID_KEEPER_SPELL and xi.trust.VOID_KEEPER_SPELL.CORNELIA) or 1002
-+local MATSUI_P_SPELL  = (xi.trust and xi.trust.VOID_KEEPER_SPELL and xi.trust.VOID_KEEPER_SPELL.MATSUI_P) or 1003
- local ALDO_SPELL      = (xi.magic and xi.magic.spell and xi.magic.spell.ALDO) or 930
- local ALDO_UC_SPELL   = (xi.magic and xi.magic.spell and xi.magic.spell.ALDO_UC) or 1007
- 
-@@ -64,10 +69,30 @@ local function giveAllWeaponSkills(player)
-     end
- end
- 
-+local function isTrustSpell(spellId)
-+    return spellId >= TRUST_SPELL_MIN and spellId <= TRUST_SPELL_MAX
-+end
-+
- local function shouldGrantSpell(spellId)
--    return not EXCLUDED_SPELLS[spellId] and not spellGrant.mobOnlySpells[spellId]
-+    if EXCLUDED_SPELLS[spellId] or spellGrant.mobOnlySpells[spellId] then
-+        return false
-+    end
-+    -- Trusts are not part of the spell bulk grant (starters handled separately).
-+    if isTrustSpell(spellId) then
-+        return false
-+    end
-+    return true
- end
- 
-+local function stripNonStarterTrusts(player)
-+    for spellId = TRUST_SPELL_MIN, TRUST_SPELL_MAX do
-+        if not STARTER_TRUST_SET[spellId] and player:hasSpell(spellId) then
-+            pcall(function()
-+                player:delSpell(spellId, { silentLog = true, saveToDB = true, sendUpdate = false })
-+            end)
-+        end
-+    end
-+end
- local function stripMobOnlySpells(player)
-     for spellId in pairs(spellGrant.mobOnlySpells) do
-         if player:hasSpell(spellId) then
-@@ -92,12 +117,13 @@ local function capAllSkills(player)
-     player:capAllSkills()
- end
- 
--local function giveAllTrusts(player)
--    local added = 0
--    for i = 1, 10000 do
-+local function giveStarterTrusts(player)
-+    for _, spellId in ipairs(STARTER_TRUSTS) do
-         pcall(function()
--            if not EXCLUDED_SPELLS[i] then
--                if player:addTrust(i) then added = added + 1 end
-+            if xi.trustGrant and xi.trustGrant.grantSpell then
-+                xi.trustGrant.grantSpell(player, spellId, { silentLog = true })
-+            else
-+                player:addSpell(spellId, { silentLog = true })
-             end
-         end)
-     end
-@@ -243,7 +269,7 @@ local function giveEverything(player)
-     giveAllWeaponSkills(player)
-     giveAllSpells(player)
-     capAllSkills(player)
--    giveAllTrusts(player)
-+    giveStarterTrusts(player)
-     completeAllQuests(player)
-     completeAllMissions(player)
-     giveAllKeyItems(player)
-@@ -255,7 +281,7 @@ local function giveEverything(player)
-     local SYS = xi.msg.channel.SYSTEM_3
-     player:printToPlayer('[ Setup Complete ]', SYS)
-     player:printToPlayer('Spells, weapon skills & job abilities', SYS)
--    player:printToPlayer('All trusts', SYS)
-+    player:printToPlayer('Starter trusts: Shantotto, Kupipi, Trion, Tenzen', SYS)
-     player:printToPlayer('All quests & missions completed', SYS)
-     player:printToPlayer('All key items, maps, homepoints, survival guides & outpost warps', SYS)
-     player:printToPlayer('Full wardrobes & automaton parts', SYS)
-@@ -301,6 +327,15 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
-         player:setCharVar('MobSpellGrantFix', 1)
-         player:timer(4000, function(p) stripMobOnlySpells(p) end)
-     end
-+
-+    -- One-time strip of bulk-granted trusts (old giveAllTrusts + spell loop).
-+    if isLogin and (player:getCharVar('TrustRosterFix') or 0) == 0 then
-+        player:setCharVar('TrustRosterFix', 1)
-+        player:timer(4500, function(p)
-+            stripNonStarterTrusts(p)
-+            giveStarterTrusts(p)
-+        end)
-+    end
- end)
- 
- -----------------------------------
-diff --git a/modules/custom/lua/trust_grant_catalog.lua b/modules/custom/lua/trust_grant_catalog.lua
-new file mode 100644
-index 0000000000..7dfeaf140e
---- /dev/null
-+++ b/modules/custom/lua/trust_grant_catalog.lua
-@@ -0,0 +1,47 @@
-+-----------------------------------
-+-- trust_grant_catalog.lua
-+-- Shared trust-economy constants (starters, spell id range, Unity UC ids).
-+-- Required by trust_grant_gate.lua and Character_Upgrader.lua.
-+-----------------------------------
-+local catalog = {}
-+
-+catalog.TRUST_SPELL_MIN = 896
-+catalog.TRUST_SPELL_MAX = 1021
-+
-+-- Starter trusts (see exports/trust_cipher_drop_proposal.csv).
-+catalog.STARTER_TRUSTS = { 896, 898, 905, 908 } -- Shantotto, Kupipi, Trion, Tenzen
-+
-+catalog.STARTER_TRUST_SET = {}
-+for _, spellId in ipairs(catalog.STARTER_TRUSTS) do
-+    catalog.STARTER_TRUST_SET[spellId] = true
-+end
-+
-+-- Void Keeper capstones / paid custom trusts ΓÇö grandfather on migration if owned.
-+catalog.VOID_KEEPER_SPELL_SET =
++int32 ApplyTrustLevelingHpPortionCap(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage)
 +{
-+    [899]  = true, -- Meat / Excenmille
-+    [901]  = true, -- Gemma / Nanaa Mihgo
-+    [902]  = true, -- Corvus / Curilla
-+    [1002] = true, -- Cornelia (client spell id)
-+    [1003] = true, -- Matsui-P (client spell id)
-+}
++    constexpr float TRUST_LEVELING_MAX_HP_PORTION = 0.30f;
 +
-+-- Mirror of ROE_TRUST_ID[11] from src/map/roe.h (C++ UpdateUnityTrust grants these).
-+catalog.UNITY_TRUST_ID =
-+{
-+    [1]  = 953,  -- Pieuje
-+    [2]  = 1005, -- Ayame
-+    [3]  = 954,  -- Invincible Shield
-+    [4]  = 955,  -- Apururu
-+    [5]  = 1006, -- Maat
-+    [6]  = 1007, -- Aldo
-+    [7]  = 956,  -- Jakoh
-+    [8]  = 1008, -- Naja
-+    [9]  = 957,  -- Flaviria
-+    [10] = 980,  -- Yoran-Oran
-+    [11] = 981,  -- Sylvie
-+}
-+
-+catalog.EARNED_CHARVAR_PREFIX = 'TrustEarned_'
-+
-+return catalog
-diff --git a/modules/custom/lua/trust_grant_gate.lua b/modules/custom/lua/trust_grant_gate.lua
-new file mode 100644
-index 0000000000..b06f6cbef5
---- /dev/null
-+++ b/modules/custom/lua/trust_grant_gate.lua
-@@ -0,0 +1,218 @@
-+-----------------------------------
-+-- trust_grant_gate.lua
-+-- Single gate for learning trust spells. Retail quests, ROE cipher items,
-+-- Unity UC auto-grants, and NPC cipher trades are blocked; only these paths
-+-- may teach trusts:
-+--   * four starters (Character Upgrader)
-+--   * using a Trust Cipher item from inventory (NM drops / future content)
-+--   * Void Keeper purchases (trust_skoll.lua)
-+--   * GM !givetrust
-+--   * any caller of xi.trustGrant.grantSpell()
-+-----------------------------------
-+require('modules/module_utils')
-+require('scripts/globals/trust')
-+require('scripts/globals/npc_util')
-+require('scripts/globals/player')
-+
-+local m = Module:new('trust_grant_gate')
-+
-+local catalog = require('modules/custom/lua/trust_grant_catalog')
-+
-+local TRUST_SPELL_MIN     = catalog.TRUST_SPELL_MIN
-+local TRUST_SPELL_MAX     = catalog.TRUST_SPELL_MAX
-+local STARTER_TRUSTS      = catalog.STARTER_TRUSTS
-+local STARTER_TRUST_SET   = catalog.STARTER_TRUST_SET
-+local VOID_KEEPER_SET     = catalog.VOID_KEEPER_SPELL_SET
-+local UNITY_TRUST_ID      = catalog.UNITY_TRUST_ID
-+local EARNED_PREFIX       = catalog.EARNED_CHARVAR_PREFIX
-+
-+local STRIP_INTERVAL_S    = 60
-+local BLOCKED_CIPHER_MSG  = 'Trust ciphers are earned in content ΓÇö use them from your inventory, not through NPC trades or Records of Eminence.'
-+
-+xi.trustGrant = xi.trustGrant or {}
-+
-+function xi.trustGrant.isTrustSpell(spellId)
-+    return spellId >= TRUST_SPELL_MIN and spellId <= TRUST_SPELL_MAX
-+end
-+
-+function xi.trustGrant.isStarter(spellId)
-+    return STARTER_TRUST_SET[spellId] == true
-+end
-+
-+function xi.trustGrant.isEarned(player, spellId)
-+    if STARTER_TRUST_SET[spellId] then
-+        return true
-+    end
-+
-+    return player:getCharVar(EARNED_PREFIX .. spellId) == 1
-+end
-+
-+function xi.trustGrant.markEarned(player, spellId)
-+    if xi.trustGrant.isTrustSpell(spellId) then
-+        player:setCharVar(EARNED_PREFIX .. spellId, 1)
-+    end
-+end
-+
-+function xi.trustGrant.grantSpell(player, spellId, params)
-+    if not xi.trustGrant.isTrustSpell(spellId) then
-+        player:addSpell(spellId, params)
-+        return true
-+    end
-+
-+    xi.trustGrant.markEarned(player, spellId)
-+    player:addSpell(spellId, params)
-+    return true
-+end
-+
-+local function stripUnityTrusts(player)
-+    for _, trustId in pairs(UNITY_TRUST_ID) do
-+        if player:hasSpell(trustId) and not xi.trustGrant.isEarned(player, trustId) then
-+            pcall(function()
-+                player:delSpell(trustId, { silentLog = true, saveToDB = true, sendUpdate = false })
-+            end)
-+        end
-+    end
-+end
-+
-+function xi.trustGrant.stripUnauthorized(player)
-+    for spellId = TRUST_SPELL_MIN, TRUST_SPELL_MAX do
-+        if player:hasSpell(spellId) and not xi.trustGrant.isEarned(player, spellId) then
-+            pcall(function()
-+                player:delSpell(spellId, { silentLog = true, saveToDB = true, sendUpdate = false })
-+            end)
-+        end
-+    end
-+
-+    stripUnityTrusts(player)
-+end
-+
-+local function migrate(player)
-+    if (player:getCharVar('TrustGateMigrated') or 0) == 1 then
-+        return
-+    end
-+
-+    player:setCharVar('TrustGateMigrated', 1)
-+
-+    for _, spellId in ipairs(STARTER_TRUSTS) do
-+        if player:hasSpell(spellId) then
-+            xi.trustGrant.markEarned(player, spellId)
-+        end
-+    end
-+
-+    for spellId in pairs(VOID_KEEPER_SET) do
-+        if player:hasSpell(spellId) then
-+            xi.trustGrant.markEarned(player, spellId)
-+        end
-+    end
-+
-+    xi.trustGrant.stripUnauthorized(player)
-+end
-+
-+local function scheduleStripLoop(player)
-+    player:timer(STRIP_INTERVAL_S * 1000, function(p)
-+        if p and p:isPC() then
-+            xi.trustGrant.stripUnauthorized(p)
-+            scheduleStripLoop(p)
-+        end
-+    end)
-+end
-+
-+local function filterCipherItems(items)
-+    if items == nil then
-+        return nil
-+    end
-+
-+    if type(items) == 'number' then
-+        if xi.trust.isCipherItem(items) then
-+            return nil
-+        end
-+
-+        return items
-+    end
-+
-+    if type(items) ~= 'table' then
-+        return items
-+    end
-+
-+    local filtered = {}
-+    for _, v in pairs(items) do
-+        local itemId = nil
-+        if type(v) == 'number' then
-+            itemId = v
-+        elseif type(v) == 'table' and type(v[1]) == 'number' then
-+            itemId = v[1]
-+        end
-+
-+        if itemId and not xi.trust.isCipherItem(itemId) then
-+            filtered[#filtered + 1] = v
-+        end
-+    end
-+
-+    if #filtered == 0 then
-+        return nil
-+    end
-+
-+    return filtered
-+end
-+
-+xi.trustGrant.STARTER_TRUSTS = STARTER_TRUSTS
-+
-+-- Block NPC cipher trades (Clarion Star, Gondebaud, Wetata, ΓÇª).
-+m:addOverride('xi.trust.onTradeCipher', function(player, trade, csid, rovCs, arkAngelCs)
-+    if xi.trust.hasPermit(player) then
-+        player:printToPlayer(BLOCKED_CIPHER_MSG, xi.msg.channel.SYSTEM_3)
-+    end
-+end)
-+
-+-- Cipher items used from inventory ΓÇö intended earn path once ciphers drop in content.
-+m:addOverride('xi.trust.onItemUseCipher', function(target, item)
-+    if target == nil or item == nil then
-+        return
-+    end
-+
-+    local spellId = xi.trust.getCipherSpellId(item:getID(), item:getSubID())
-+    if spellId == nil then
-+        return
-+    end
-+
-+    xi.trustGrant.grantSpell(target, spellId)
-+end)
-+
-+-- Strip Trust Cipher items from npcUtil.giveItem (ROE, missions, quests, regimes, ΓÇª).
-+m:addOverride('npcUtil.giveItem', function(player, items, params)
-+    local filtered = filterCipherItems(items)
-+    if filtered == nil then
-+        return false
-+    end
-+
-+    return super(player, filtered, params)
-+end)
-+
-+-- C++ UpdateUnityTrust() may grant the Unity UC trust after pledging; revoke unless earned.
-+m:addOverride('xi.unity.onEventFinish', function(player, csid, option, npc)
-+    super(player, csid, option, npc)
-+    player:timer(500, function(p)
-+        if p then
-+            xi.trustGrant.stripUnauthorized(p)
-+        end
-+    end)
-+end)
-+
-+m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
-+    local isLogin = player:getLocalVar('gameLogin') == 1
-+    super(player, firstLogin, zoning)
-+
-+    if not isLogin then
-+        return
-+    end
-+
-+    migrate(player)
-+    player:timer(2000, function(p)
-+        if p then
-+            xi.trustGrant.stripUnauthorized(p)
-+            scheduleStripLoop(p)
-+        end
-+    end)
-+end)
-+
-+return m
-diff --git a/modules/custom/lua/trust_kit_library.lua b/modules/custom/lua/trust_kit_library.lua
-new file mode 100644
-index 0000000000..a7b08edb5c
---- /dev/null
-+++ b/modules/custom/lua/trust_kit_library.lua
-@@ -0,0 +1,122 @@
-+-----------------------------------
-+-- trust_kit_library.lua
-+-- Role-based gambit templates injected onto spawn-only trust shells.
-+-----------------------------------
-+local M = {}
-+
-+local function nuker(mob)
-+    -- Magic burst windows first, then highest available nuke.
-+    mob:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
-+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 25)
-+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
-+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
-+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_JA, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
-+    mob:setAutoAttackEnabled(false)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
-+end
-+
-+local function melee(mob)
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.BERSERK }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.BERSERK })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.AGGRESSOR }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.AGGRESSOR })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.WARCRY }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.WARCRY })
-+    mob:addGambit(ai.t.SELF, { ai.c.HAS_TOP_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.PROVOKE })
-+    mob:addGambit(ai.t.SELF, { ai.c.HPP_LT, 35 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.THIRD_EYE })
-+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1500)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
-+end
-+
-+local function ranged(mob)
-+    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.BARRAGE }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.BARRAGE })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.SHARPSHOT }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.SHARPSHOT })
-+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1500)
-+    mob:setAutoAttackEnabled(false)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
-+end
-+
-+local function tank(mob)
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_HAS_TOP_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.PROVOKE })
-+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.FLASH }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.FLASH })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.SENTINEL }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.SENTINEL })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.REPRISAL }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.REPRISAL })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.PHALANX }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.PHALANX })
-+    mob:addGambit(ai.t.SELF, { ai.c.HPP_LT, 50 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
-+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.SHIELD_BASH })
-+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.SHIELD_BASH })
-+    xi.trust.enableTankEnmity(mob, { profile = 'strong', listenerName = 'TRUST_KIT_TANK_' .. mob:getID() })
-+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.RANDOM, 1500)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
-+end
-+
-+local function healer(mob)
-+    mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 75 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
-+    mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 40 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
-+    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_I }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURE })
-+    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.POISON }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.POISONA })
-+    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.PARALYSIS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.PARALYNA })
-+    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.BLINDNESS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.BLINDNA })
-+    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SILENCE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.SILENA })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.PROTECT }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.PROTECTRA })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.SHELL }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.SHELLRA })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.HASTE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.HASTE })
-+    mob:setAutoAttackEnabled(false)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
-+end
-+
-+local function buffer(mob)
-+    mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 50 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.MARCH }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.MARCH })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.MINUET }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.MINUET })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.BALLAD }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.BALLAD })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.MADRIGAL }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.MADRIGAL })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.HASTE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.HASTE })
-+    mob:addGambit(ai.t.PARTY, { ai.c.STATUS_FLAG, xi.effectFlag.ERASABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
-+    mob:setAutoAttackEnabled(false)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
-+end
-+
-+local function hybrid(mob)
-+    mob:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
-+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 40)
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.BERSERK }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.BERSERK })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.WARCRY }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.WARCRY })
-+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1500)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
-+end
-+
-+local function utility(mob)
-+    mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 45 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
-+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.DIA }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.DIA })
-+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.BIO }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.BIO })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.PROTECT }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.PROTECT })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.SHELL }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.SHELL })
-+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 55)
-+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.RANDOM, 2000)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
-+end
-+
-+local KITS =
-+{
-+    nuker     = nuker,
-+    melee_dd  = melee,
-+    ranged_dd = ranged,
-+    tank      = tank,
-+    healer    = healer,
-+    buffer    = buffer,
-+    hybrid    = hybrid,
-+    utility   = utility,
-+}
-+
-+function M.apply(mob, kitName)
-+    if not kitName or kitName == false then
-+        return
-+    end
-+
-+    local fn = KITS[kitName]
-+    if fn then
-+        pcall(fn, mob)
-+        mob:setLocalVar('TrustKitInjected', 1)
-+    end
-+end
-+
-+return M
-diff --git a/modules/custom/lua/trust_power_catalog.lua b/modules/custom/lua/trust_power_catalog.lua
-new file mode 100644
-index 0000000000..72125eeadf
---- /dev/null
-+++ b/modules/custom/lua/trust_power_catalog.lua
-@@ -0,0 +1,174 @@
-+-----------------------------------
-+-- trust_power_catalog.lua
-+-- Role / tier / cap / kit injection for every companion trust spell ID.
-+--
-+-- tier: CΓëê20-25k | BΓëê25-32k | AΓëê32-38k | SΓëê36-40k typical hits at master 99
-+-- injectKit: role template applied after spawn for shell scripts
-+--            (false = script already owns its gambits)
-+-----------------------------------
-+local C = {}
-+
-+C.DEFAULT_CAP         = 40000
-+C.MATSUI_CAP          = 99999
-+C.SHANTOTTO_II_MB_CAP = 79999
-+
-+-- Tier multipliers on the shared power package (1.0 = mid A-ish).
-+C.TIER_MULT =
-+{
-+    C = 0.72,
-+    B = 0.88,
-+    A = 1.00,
-+    S = 1.12,
-+}
-+
-+-- spellId -> { role, tier, cap?, mbCap?, injectKit? }
-+-- Roles: melee_dd, ranged_dd, tank, healer, buffer, nuker, hybrid, utility, aura
-+local function e(role, tier, opts)
-+    opts = opts or {}
-+    return {
-+        role      = role,
-+        tier      = tier,
-+        cap       = opts.cap,
-+        mbCap     = opts.mbCap,
-+        injectKit = opts.injectKit, -- nil/false = no injection
++    if (damage <= 0 || PAttacker == nullptr || PDefender == nullptr)
++    {
++        return damage;
 +    }
-+end
 +
-+C.trusts =
-+{
-+    -- Starters / early
-+    [896] = e('nuker',     'A', { injectKit = false }), -- Shantotto
-+    [897] = e('melee_dd',  'C', { injectKit = false }), -- Naji
-+    [898] = e('healer',    'B', { injectKit = false }), -- Kupipi
-+    [899] = e('tank',      'S', { injectKit = false }), -- Meat
-+    [900] = e('melee_dd',  'B', { injectKit = false }), -- Ayame
-+    [901] = e('buffer',    'S', { injectKit = false }), -- Gemma (skoll.lua)
-+    [902] = e('ranged_dd', 'A', { injectKit = false }), -- Corvus
-+    [903] = e('melee_dd',  'B', { injectKit = false }), -- Volker
-+    [904] = e('nuker',     'A', { injectKit = false }), -- Ajido-Marujido
-+    [905] = e('tank',      'B', { injectKit = false }), -- Trion
-+    [906] = e('melee_dd',  'B', { injectKit = false }), -- Zeid
-+    [907] = e('melee_dd',  'B', { injectKit = false }), -- Lion
-+    [908] = e('melee_dd',  'A', { injectKit = false }), -- Tenzen
-+    [909] = e('healer',    'B', { injectKit = false }), -- Mihli
-+    [910] = e('tank',      'A', { injectKit = false }), -- Valaineral
-+    [911] = e('buffer',    'A', { injectKit = false }), -- Joachim
-+    [912] = e('melee_dd',  'B', { injectKit = false }), -- Naja
-+    [913] = e('melee_dd',  'A', { injectKit = false }), -- Prishe
-+    [914] = e('buffer',    'B', { injectKit = false }), -- Ulmia
-+    [915] = e('ranged_dd', 'B', { injectKit = false }), -- Shikaree Z
-+    [916] = e('healer',    'B', { injectKit = false }), -- Cherukiki
-+    [917] = e('melee_dd',  'B', { injectKit = false }), -- Iron Eater
-+    [918] = e('melee_dd',  'A', { injectKit = false }), -- Gessho
-+    [919] = e('nuker',     'B', { injectKit = 'nuker' }), -- Gadalar (shell)
-+    [920] = e('nuker',     'B', { injectKit = false }), -- Rainemard
-+    [921] = e('healer',    'B', { injectKit = 'healer' }), -- Ingrid (shell)
-+    [922] = e('ranged_dd', 'A', { injectKit = false }), -- Lehko
-+    [923] = e('healer',    'B', { injectKit = 'healer' }), -- Nashmeira (shell)
-+    [924] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Zazarg (shell)
-+    [925] = e('nuker',     'B', { injectKit = 'nuker' }), -- Ovjang (shell)
-+    [926] = e('tank',      'B', { injectKit = false }), -- Mnejing
-+    [927] = e('aura',      'B', { injectKit = false }), -- Sakura
-+    [928] = e('ranged_dd', 'A', { injectKit = 'ranged_dd' }), -- Luzaf (shell)
-+    [929] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Najelith (shell)
-+    [930] = e('melee_dd',  'A', { injectKit = false }), -- Locke
-+    [931] = e('aura',      'B', { injectKit = false }), -- Moogle
-+    [932] = e('hybrid',    'B', { injectKit = false }), -- Fablinix
-+    [933] = e('melee_dd',  'A', { injectKit = false }), -- Maat
-+    [934] = e('nuker',     'A', { injectKit = 'nuker' }), -- D.Shantotto (shell)
-+    [935] = e('utility',   'B', { injectKit = 'utility' }), -- Star Sibyl (shell)
-+    [936] = e('healer',    'A', { injectKit = false }), -- Karaha-Baruha
-+    [937] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Cid (shell)
-+    [938] = e('melee_dd',  'A', { injectKit = 'melee_dd' }), -- Gilgamesh (shell)
-+    [939] = e('melee_dd',  'B', { injectKit = false }), -- Areuhat
-+    [940] = e('ranged_dd', 'A', { injectKit = false }), -- Semih
-+    [941] = e('ranged_dd', 'B', { injectKit = 'ranged_dd' }), -- Elivira (shell)
-+    [942] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Noillurie (shell)
-+    [943] = e('hybrid',    'B', { injectKit = 'hybrid' }), -- Lhu (shell)
-+    [944] = e('healer',    'B', { injectKit = false }), -- Ferreous Coffin
-+    [945] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Lilisette (shell)
-+    [946] = e('buffer',    'B', { injectKit = false }), -- Mumor
-+    [947] = e('buffer',    'B', { injectKit = false }), -- Uka
-+    [948] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Klara (shell)
-+    [949] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Romaa (shell)
-+    [950] = e('utility',   'C', { injectKit = 'utility' }), -- Kuyin (shell)
-+    [951] = e('tank',      'B', { injectKit = false }), -- Rahal
-+    [952] = e('nuker',     'A', { injectKit = false }), -- Koru-Moru
-+    [953] = e('healer',    'A', { injectKit = 'healer' }), -- Pieuje UC (shell)
-+    [954] = e('tank',      'A', { injectKit = 'tank' }), -- I.Shield UC (shell)
-+    [955] = e('healer',    'S', { injectKit = false }), -- Apururu UC
-+    [956] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Jakoh UC (shell)
-+    [957] = e('ranged_dd', 'A', { injectKit = 'ranged_dd' }), -- Flaviria UC (shell)
-+    [958] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Babban (shell)
-+    [959] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Abenzio (shell)
-+    [960] = e('tank',      'B', { injectKit = false }), -- Rughadjeen
-+    [961] = e('nuker',     'B', { injectKit = 'nuker' }), -- Kukki (shell)
-+    [962] = e('ranged_dd', 'B', { injectKit = 'ranged_dd' }), -- Margret (shell)
-+    [963] = e('utility',   'C', { injectKit = 'utility' }), -- Chacharoon (shell)
-+    [964] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Lhe (shell)
-+    [965] = e('nuker',     'A', { injectKit = 'nuker' }), -- Arciela (shell)
-+    [966] = e('buffer',    'B', { injectKit = 'buffer' }), -- Mayakov (shell)
-+    [967] = e('hybrid',    'A', { injectKit = false }), -- Qultada
-+    [968] = e('nuker',     'A', { injectKit = false }), -- Adelheid
-+    [969] = e('tank',      'A', { injectKit = false }), -- Amchuchu
-+    [970] = e('utility',   'B', { injectKit = 'utility' }), -- Brygid (shell)
-+    [971] = e('melee_dd',  'A', { injectKit = 'melee_dd' }), -- Mildaurion (shell)
-+    [972] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Halver (shell)
-+    [973] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Rongelouts (shell)
-+    [974] = e('nuker',     'B', { injectKit = 'nuker' }), -- Leonoyne (shell)
-+    [975] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Maximilian (shell)
-+    [976] = e('nuker',     'A', { injectKit = 'nuker' }), -- Kayeel-Payeel (shell)
-+    [977] = e('nuker',     'A', { injectKit = 'nuker' }), -- Robel-Akbel (shell)
-+    [978] = e('utility',   'A', { injectKit = 'utility' }), -- Kupofried (shell)
-+    [979] = e('utility',   'B', { injectKit = 'utility' }), -- Selh'teus (shell)
-+    [980] = e('healer',    'A', { injectKit = false }), -- Yoran-Oran UC
-+    [981] = e('buffer',    'S', { injectKit = false }), -- Sylvie UC
-+    [982] = e('melee_dd',  'B', { injectKit = false }), -- Abquhbah
-+    [983] = e('nuker',     'A', { injectKit = 'nuker' }), -- Balamor (shell)
-+    [984] = e('melee_dd',  'S', { injectKit = false }), -- August
-+    [985] = e('nuker',     'B', { injectKit = 'nuker' }), -- Rosulatia (shell)
-+    [986] = e('nuker',     'B', { injectKit = 'nuker' }), -- Teodor (shell)
-+    [987] = e('nuker',     'B', { injectKit = 'nuker' }), -- Ullegore (shell)
-+    [988] = e('ranged_dd', 'B', { injectKit = 'ranged_dd' }), -- Makki (shell)
-+    [989] = e('buffer',    'B', { injectKit = 'buffer' }), -- King of Hearts (shell)
-+    [990] = e('melee_dd',  'A', { injectKit = 'melee_dd' }), -- Morimar (shell)
-+    [991] = e('melee_dd',  'A', { injectKit = 'melee_dd' }), -- Darrcuiln (shell)
-+    [992] = e('melee_dd',  'A', { injectKit = false }), -- Ark HM
-+    [993] = e('healer',    'A', { injectKit = false }), -- Ark EV
-+    [994] = e('ranged_dd', 'A', { injectKit = 'ranged_dd' }), -- Ark MR (shell)
-+    [995] = e('nuker',     'A', { injectKit = 'nuker' }), -- Ark TT (shell)
-+    [996] = e('melee_dd',  'A', { injectKit = false }), -- Ark GK
-+    [997] = e('melee_dd',  'A', { injectKit = 'melee_dd' }), -- Iroha (shell)
-+    [998] = e('healer',    'A', { injectKit = false }), -- Ygnas
-+    [999] = e('healer',    'S', { injectKit = false }), -- Monberaux
++    if (PAttacker->objtype != TYPE_TRUST || PDefender->objtype != TYPE_MOB)
++    {
++        return damage;
++    }
 +
-+    -- Void Keeper capstones (client IDs)
-+    [1002] = e('aura',   'S', { injectKit = false }), -- Cornelia
-+    [1003] = e('hybrid', 'S', { cap = C.MATSUI_CAP, injectKit = false }), -- Matsui-P
++    CBattleEntity* PMaster = PAttacker->PMaster;
++    if (PMaster == nullptr || PMaster->GetMLevel() >= 99)
++    {
++        return damage;
++    }
 +
-+    [1004] = e('melee_dd', 'B', { injectKit = 'melee_dd' }), -- Excenmille [S] (shell)
-+    [1005] = e('melee_dd', 'A', { injectKit = 'melee_dd' }), -- Ayame UC (shell)
-+    [1006] = e('melee_dd', 'A', { injectKit = false }), -- Maat UC
-+    [1007] = e('melee_dd', 'A', { injectKit = 'melee_dd' }), -- Aldo UC (shell)
-+    [1008] = e('melee_dd', 'A', { injectKit = 'melee_dd' }), -- Naja UC (shell)
-+    [1009] = e('melee_dd', 'S', { injectKit = false }), -- Lion II
-+    [1010] = e('melee_dd', 'S', { injectKit = false }), -- Zeid II
-+    [1011] = e('melee_dd', 'S', { injectKit = false }), -- Prishe II
-+    [1012] = e('healer',   'A', { injectKit = false }), -- Nashmeira II
-+    [1013] = e('melee_dd', 'A', { injectKit = 'melee_dd' }), -- Lilisette II (shell)
-+    [1014] = e('melee_dd', 'S', { injectKit = false }), -- Tenzen II
-+    [1015] = e('buffer',   'A', { injectKit = false }), -- Mumor II
-+    [1016] = e('healer',   'A', { injectKit = 'healer' }), -- Ingrid II (shell)
-+    [1017] = e('nuker',    'S', { injectKit = 'nuker' }), -- Arciela II (shell)
-+    [1018] = e('melee_dd', 'S', { injectKit = false }), -- Iroha II
-+    [1019] = e('nuker',    'S', {
-+        injectKit = false,
-+        mbCap     = C.SHANTOTTO_II_MB_CAP,
-+    }), -- Shantotto II
++    const int32 maxHp = PDefender->GetMaxHP();
++    if (maxHp <= 0)
++    {
++        return damage;
++    }
++
++    const int32 portionCap = std::max(1, static_cast<int32>(maxHp * TRUST_LEVELING_MAX_HP_PORTION));
++    return std::min(damage, portionCap);
 +}
 +
-+function C.get(spellId)
-+    return C.trusts[spellId]
-+end
+ void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_view type)
+ {
+     const int32 globalHpDamageCap = settings::get<int32>("map.GLOBAL_HP_DAMAGE_CAP");
+@@ -204,3 +244,22 @@ int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRan
+     }
+     return damage;
+ }
 +
-+return C
-diff --git a/modules/custom/lua/trust_power_scaling.lua b/modules/custom/lua/trust_power_scaling.lua
-new file mode 100644
-index 0000000000..d9af66e201
---- /dev/null
-+++ b/modules/custom/lua/trust_power_scaling.lua
-@@ -0,0 +1,184 @@
-+-----------------------------------
-+-- trust_power_scaling.lua
-+-- Global trust combat scaling: master-level curve ΓåÆ ilvl115-class power at 99,
-+-- retail-relative tiers, hard outgoing damage caps.
-+--
-+-- Skips Adventuring Fellow (fellowApplied == 1).
-+-----------------------------------
-+require('modules/module_utils')
-+require('scripts/globals/trust')
-+
-+local m = Module:new('trust_power_scaling')
-+
-+local catalog = require('modules/custom/lua/trust_power_catalog')
-+local kits    = require('modules/custom/lua/trust_kit_library')
-+
-+local function progressOf(masterLvl)
-+    masterLvl = math.max(1, math.min(99, masterLvl or 1))
-+    return (masterLvl / 99) ^ 1.25
-+end
-+
-+local function tierMult(tier)
-+    return catalog.TIER_MULT[tier] or catalog.TIER_MULT.B
-+end
-+
-+local function applyMeleePackage(mob, p, t)
-+    local dmg   = math.floor((55 + 165 * p) * t)
-+    local att   = math.floor((120 + 680 * p) * t)
-+    local acc   = math.floor((150 + 750 * p) * t)
-+    local str   = math.floor((40 + 160 * p) * t)
-+    local dex   = math.floor((30 + 140 * p) * t)
-+    local da    = math.floor((8 + 32 * p) * t)
-+    local ta    = math.floor((4 + 16 * p) * t)
-+    local haste = math.floor((800 + 1700 * p) * math.min(t, 1.05))
-+    local wsd   = math.floor((10 + 45 * p) * t)
-+    local store = math.floor((10 + 40 * p) * t)
-+
-+    pcall(function() mob:setDamage(dmg) end)
-+    mob:addMod(xi.mod.ATT, att)
-+    mob:addMod(xi.mod.RATT, math.floor(att * 0.85))
-+    mob:addMod(xi.mod.ACC, acc)
-+    mob:addMod(xi.mod.RACC, math.floor(acc * 0.85))
-+    mob:addMod(xi.mod.STR, str)
-+    mob:addMod(xi.mod.DEX, dex)
-+    mob:addMod(xi.mod.DOUBLE_ATTACK, da)
-+    mob:addMod(xi.mod.TRIPLE_ATTACK, ta)
-+    mob:addMod(xi.mod.HASTE_GEAR, haste)
-+    mob:addMod(xi.mod.WEAPONSKILL_DAMAGE_BASE, wsd)
-+    mob:addMod(xi.mod.STORETP, store)
-+    mob:addMod(xi.mod.CRITHITRATE, math.floor((5 + 15 * p) * t))
-+    mob:addMod(xi.mod.CRIT_DMG_INCREASE, math.floor((5 + 20 * p) * t))
-+end
-+
-+local function applyMagePackage(mob, p, t)
-+    local matt  = math.floor((80 + 360 * p) * t)
-+    local macc  = math.floor((100 + 400 * p) * t)
-+    local intd  = math.floor((50 + 180 * p) * t)
-+    local mdmg  = math.floor((2500 + 11000 * p) * t)
-+    local fc    = math.floor((35 + 45 * p) * math.min(t, 1.1))
-+    local mbb   = math.floor((20 + 40 * p) * t)
-+
-+    mob:addMod(xi.mod.MATT, matt)
-+    mob:addMod(xi.mod.MACC, macc)
-+    mob:addMod(xi.mod.INT, intd)
-+    mob:addMod(xi.mod.MAGIC_DAMAGE, mdmg)
-+    mob:addMod(xi.mod.FASTCAST, math.min(80, fc))
-+    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, mbb)
-+    mob:addMod(xi.mod.UFASTCAST, math.floor(fc * 0.25))
-+    mob:addMod(xi.mod.HASTE_MAGIC, math.floor((500 + 1000 * p) * t))
-+    mob:addMod(xi.mod.MP, math.floor((200 + 800 * p) * t))
-+    mob:addMod(xi.mod.REFRESH, math.floor((3 + 12 * p) * t))
-+end
-+
-+local function applyTankPackage(mob, p, t)
-+    applyMeleePackage(mob, p, t * 0.55)
-+    mob:addMod(xi.mod.HP, math.floor((400 + 2600 * p) * t))
-+    mob:addMod(xi.mod.DEF, math.floor((100 + 500 * p) * t))
-+    mob:addMod(xi.mod.VIT, math.floor((40 + 160 * p) * t))
-+    mob:addMod(xi.mod.ENMITY, math.floor((40 + 120 * p) * t))
-+    mob:addMod(xi.mod.DMG, -math.floor((500 + 1500 * p) * math.min(t, 1.0)))
-+    mob:addMod(xi.mod.MEVA, math.floor((50 + 200 * p) * t))
-+end
-+
-+local function applySupportPackage(mob, p, t)
-+    applyMagePackage(mob, p, t * 0.55)
-+    mob:addMod(xi.mod.MND, math.floor((40 + 160 * p) * t))
-+    mob:addMod(xi.mod.CHR, math.floor((30 + 120 * p) * t))
-+    mob:addMod(xi.mod.CURE_POTENCY, math.floor((10 + 30 * p) * t))
-+    mob:addMod(xi.mod.CURE_POTENCY_II, math.floor((5 + 15 * p) * t))
-+end
-+
-+local ROLE_APPLY =
++int32 ApplyTrustAutoAttackDamageAdjust(CBattleEntity* PAttacker, int32 damage)
 +{
-+    melee_dd  = function(mob, p, t) applyMeleePackage(mob, p, t) end,
-+    ranged_dd = function(mob, p, t)
-+        applyMeleePackage(mob, p, t)
-+        mob:addMod(xi.mod.RATT, math.floor((80 + 400 * p) * t))
-+        mob:addMod(xi.mod.RACC, math.floor((80 + 400 * p) * t))
-+    end,
-+    tank      = applyTankPackage,
-+    healer    = applySupportPackage,
-+    buffer    = applySupportPackage,
-+    nuker     = applyMagePackage,
-+    hybrid    = function(mob, p, t)
-+        applyMeleePackage(mob, p, t * 0.85)
-+        applyMagePackage(mob, p, t * 0.85)
-+    end,
-+    utility   = function(mob, p, t)
-+        applySupportPackage(mob, p, t * 0.75)
-+        applyMeleePackage(mob, p, t * 0.4)
-+    end,
-+    aura      = function(mob, p, t)
-+        -- Cornelia-style: survivability only; auras come from the script.
-+        mob:addMod(xi.mod.HP, math.floor((300 + 1200 * p) * t))
-+        mob:addMod(xi.mod.MEVA, math.floor((80 + 220 * p) * t))
-+    end,
-+}
++    // Auto-swings only ΓÇö wired exclusively from TakePhysicalDamage, not WS/magic.
++    constexpr float TRUST_AUTO_ATTACK_MULTIPLIER = 0.25f;
 +
-+local function findSpawnedTrust(caster, spellId)
-+    local party = caster:getPartyWithTrusts()
-+    if not party then
-+        return nil
++    if (damage <= 0 || PAttacker == nullptr || PAttacker->objtype != TYPE_TRUST)
++    {
++        return damage;
++    }
++
++    // Custom Adventuring Fellow keeps its own tuned auto profile.
++    if (PAttacker->GetLocalVar("fellowApplied") == 1)
++    {
++        return damage;
++    }
++
++    return std::max(1, static_cast<int32>(damage * TRUST_AUTO_ATTACK_MULTIPLIER));
++}
+diff --git a/modules/custom/cpp/fjb_combat.h b/modules/custom/cpp/fjb_combat.h
+index f8e32e7a5a..c1d7f47b63 100644
+--- a/modules/custom/cpp/fjb_combat.h
++++ b/modules/custom/cpp/fjb_combat.h
+@@ -24,6 +24,11 @@ bool IsPlayerControlled(CBattleEntity* PAttacker);
+ // lower it. All overrides are synchronous entity local variables.
+ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap);
+ 
++// While the trust's master is below level 99, clamp a single hit against a mob
++// to at most 30% of that mob's max HP. Prevents alter egos from one-shotting
++// leveling content. No-op for masters at 99+, non-trust attackers, or non-mobs.
++int32 ApplyTrustLevelingHpPortionCap(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage);
++
+ // Whisper the true (over-cap) damage to the controlling player so it's readable
+ // in chat. No-op for <=131071 or non-player-controlled sources.
+ void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_view type);
+@@ -37,3 +42,8 @@ int32 ApplyAutomatonDamageBonus(CBattleEntity* PAttacker, int32 damage);
+ // damage unchanged for melee swings, other jobs (incl. COR), non-PCs, or
+ // damage <= 0.
+ int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRanged);
++
++// Trust auto-attacks (melee + ranged swings via TakePhysicalDamage) hit at 25%
++// of calculated damage. Weaponskills / magic are unchanged. Adventuring Fellow
++// (fellowApplied) is exempt.
++int32 ApplyTrustAutoAttackDamageAdjust(CBattleEntity* PAttacker, int32 damage);
+diff --git a/modules/custom/lua/trust_cipher_catalog.lua b/modules/custom/lua/trust_cipher_catalog.lua
+index 7dc8cae764..5655bb3f39 100644
+--- a/modules/custom/lua/trust_cipher_catalog.lua
++++ b/modules/custom/lua/trust_cipher_catalog.lua
+@@ -19,7 +19,8 @@ catalog.itemNames =
+     'cipher_of_sakuras_alter_ego',
+     'cipher_of_luzafs_alter_ego',
+     'cipher_of_najeliths_alter_ego',
+-    'cipher_of_aldos_alter_ego',
++    -- Aldo / Locke cipher retired from live usable list (spell 930 disabled).
++    -- 'cipher_of_aldos_alter_ego',
+     'cipher_of_a_moogles_alter_ego',
+     'cipher_of_fablinixs_alter_ego',
+     'cipher_of_d._shantottos_alter_ego',
+diff --git a/modules/custom/lua/trust_grant_gate.lua b/modules/custom/lua/trust_grant_gate.lua
+index b06f6cbef5..891f0006a3 100644
+--- a/modules/custom/lua/trust_grant_gate.lua
++++ b/modules/custom/lua/trust_grant_gate.lua
+@@ -53,12 +53,25 @@ function xi.trustGrant.markEarned(player, spellId)
+     end
+ end
+ 
++local function isDisabledTrust(spellId)
++    local disabled = xi.trust and xi.trust.DISABLED_SPELL
++    if not disabled then
++        return false
 +    end
 +
-+    for _, member in pairs(party) do
-+        if member:getObjType() == xi.objType.TRUST and member:getTrustID() == spellId then
-+            return member
++    return spellId == disabled.ALDO or spellId == disabled.ALDO_UC
++end
++
+ function xi.trustGrant.grantSpell(player, spellId, params)
+     if not xi.trustGrant.isTrustSpell(spellId) then
+         player:addSpell(spellId, params)
+         return true
+     end
+ 
++    if isDisabledTrust(spellId) then
++        return false
++    end
++
+     xi.trustGrant.markEarned(player, spellId)
+     player:addSpell(spellId, params)
+     return true
+@@ -74,7 +87,25 @@ local function stripUnityTrusts(player)
+     end
+ end
+ 
++local function stripDisabledTrusts(player)
++    local disabled = xi.trust and xi.trust.DISABLED_SPELL
++    if not disabled then
++        return
++    end
++
++    for _, spellId in pairs(disabled) do
++        if player:hasSpell(spellId) then
++            pcall(function()
++                player:delSpell(spellId, { silentLog = true, saveToDB = true, sendUpdate = false })
++            end)
++            player:setCharVar(EARNED_PREFIX .. spellId, 0)
 +        end
 +    end
-+
-+    return nil
 +end
 +
-+function xi.trustPowerApply(mob, master, spellId)
-+    if not mob or not master then
-+        return
-+    end
+ function xi.trustGrant.stripUnauthorized(player)
++    stripDisabledTrusts(player)
 +
-+    if mob:getLocalVar('fellowApplied') == 1 then
-+        return
-+    end
+     for spellId = TRUST_SPELL_MIN, TRUST_SPELL_MAX do
+         if player:hasSpell(spellId) and not xi.trustGrant.isEarned(player, spellId) then
+             pcall(function()
+diff --git a/modules/custom/lua/trust_power_catalog.lua b/modules/custom/lua/trust_power_catalog.lua
+index 72125eeadf..53f99d55dc 100644
+--- a/modules/custom/lua/trust_power_catalog.lua
++++ b/modules/custom/lua/trust_power_catalog.lua
+@@ -1,10 +1,15 @@
+ -----------------------------------
+ -- trust_power_catalog.lua
+--- Role / tier / cap / kit injection for every companion trust spell ID.
++-- Role / tier / style / kit injection for every companion trust spell ID.
+ --
+--- tier: CΓëê20-25k | BΓëê25-32k | AΓëê32-38k | SΓëê36-40k typical hits at master 99
+--- injectKit: role template applied after spawn for shell scripts
+---            (false = script already owns its gambits)
++-- Power tiers track content difficulty (cipher drop bands):
++--   C = starters / D1 entry farms     ΓåÆ ~14ΓÇô20k typical hits at master 99
++--   B = D2 mid content                ΓåÆ ~22ΓÇô28k
++--   A = D3 hard content               ΓåÆ ~30ΓÇô36k
++--   S = D4/D5 / CORE / Void Keeper    ΓåÆ ~36ΓÇô40k (hard cap 40k for most)
++--
++-- style: combat personality within a role (especially nukers) so same-tier
++-- BLMs do not feel identical.
+ -----------------------------------
+ local C = {}
+ 
+@@ -12,163 +17,216 @@ C.DEFAULT_CAP         = 40000
+ C.MATSUI_CAP          = 99999
+ C.SHANTOTTO_II_MB_CAP = 79999
+ 
+--- Tier multipliers on the shared power package (1.0 = mid A-ish).
++-- Wide spread so players feel the upgrade path from entry ΓåÆ endgame trusts.
+ C.TIER_MULT =
+ {
+-    C = 0.72,
+-    B = 0.88,
+-    A = 1.00,
+-    S = 1.12,
++    C = 0.52,
++    B = 0.72,
++    A = 0.94,
++    S = 1.18,
++}
 +
-+    if mob:getLocalVar('TrustPowerScaled') == 1 then
-+        return
-+    end
++-- Nuker / mage personality (multiplies mage package axes).
++C.STYLE =
++{
++    -- Entry BLMs: slow, modest, mostly free nukes.
++    apprentice = { matt = 0.88, mdmg = 0.82, mbb = 0.65, fc = 0.80, macc = 0.90 },
++    -- Mid BLMs: solid pressure casters.
++    pressure   = { matt = 1.00, mdmg = 1.00, mbb = 0.90, fc = 0.95, macc = 1.00 },
++    -- SCH / hybrid nukers: slightly less raw, good consistency.
++    scholar    = { matt = 0.95, mdmg = 0.92, mbb = 1.05, fc = 1.05, macc = 1.05 },
++    -- MB specialists: live for skillchain windows.
++    burst      = { matt = 0.96, mdmg = 1.05, mbb = 1.30, fc = 1.18, macc = 1.02 },
++    -- Capstone nukers.
++    apex       = { matt = 1.12, mdmg = 1.18, mbb = 1.40, fc = 1.22, macc = 1.10 },
++    -- Default / non-nuker styles (melee personalities).
++    standard   = { att = 1.00, wsd = 1.00, haste = 1.00, da = 1.00 },
++    bruiser    = { att = 1.08, wsd = 0.92, haste = 1.05, da = 1.15 },
++    weaponskill= { att = 0.95, wsd = 1.18, haste = 0.95, da = 0.90 },
++    skirmisher = { att = 1.00, wsd = 1.05, haste = 1.12, da = 1.05 },
++    support    = { matt = 0.70, mdmg = 0.55, mbb = 0.40, fc = 0.85, macc = 0.85 },
+ }
+ 
+--- spellId -> { role, tier, cap?, mbCap?, injectKit? }
+--- Roles: melee_dd, ranged_dd, tank, healer, buffer, nuker, hybrid, utility, aura
++-- spellId -> { role, tier, style?, cap?, mbCap?, injectKit? }
+ local function e(role, tier, opts)
+     opts = opts or {}
+     return {
+         role      = role,
+         tier      = tier,
++        style     = opts.style or 'standard',
+         cap       = opts.cap,
+         mbCap     = opts.mbCap,
+-        injectKit = opts.injectKit, -- nil/false = no injection
++        injectKit = opts.injectKit,
+     }
+ end
+ 
+ C.trusts =
+ {
+-    -- Starters / early
+-    [896] = e('nuker',     'A', { injectKit = false }), -- Shantotto
+-    [897] = e('melee_dd',  'C', { injectKit = false }), -- Naji
+-    [898] = e('healer',    'B', { injectKit = false }), -- Kupipi
+-    [899] = e('tank',      'S', { injectKit = false }), -- Meat
+-    [900] = e('melee_dd',  'B', { injectKit = false }), -- Ayame
+-    [901] = e('buffer',    'S', { injectKit = false }), -- Gemma (skoll.lua)
+-    [902] = e('ranged_dd', 'A', { injectKit = false }), -- Corvus
+-    [903] = e('melee_dd',  'B', { injectKit = false }), -- Volker
+-    [904] = e('nuker',     'A', { injectKit = false }), -- Ajido-Marujido
+-    [905] = e('tank',      'B', { injectKit = false }), -- Trion
+-    [906] = e('melee_dd',  'B', { injectKit = false }), -- Zeid
+-    [907] = e('melee_dd',  'B', { injectKit = false }), -- Lion
+-    [908] = e('melee_dd',  'A', { injectKit = false }), -- Tenzen
+-    [909] = e('healer',    'B', { injectKit = false }), -- Mihli
+-    [910] = e('tank',      'A', { injectKit = false }), -- Valaineral
+-    [911] = e('buffer',    'A', { injectKit = false }), -- Joachim
+-    [912] = e('melee_dd',  'B', { injectKit = false }), -- Naja
+-    [913] = e('melee_dd',  'A', { injectKit = false }), -- Prishe
+-    [914] = e('buffer',    'B', { injectKit = false }), -- Ulmia
+-    [915] = e('ranged_dd', 'B', { injectKit = false }), -- Shikaree Z
+-    [916] = e('healer',    'B', { injectKit = false }), -- Cherukiki
+-    [917] = e('melee_dd',  'B', { injectKit = false }), -- Iron Eater
+-    [918] = e('melee_dd',  'A', { injectKit = false }), -- Gessho
+-    [919] = e('nuker',     'B', { injectKit = 'nuker' }), -- Gadalar (shell)
+-    [920] = e('nuker',     'B', { injectKit = false }), -- Rainemard
+-    [921] = e('healer',    'B', { injectKit = 'healer' }), -- Ingrid (shell)
+-    [922] = e('ranged_dd', 'A', { injectKit = false }), -- Lehko
+-    [923] = e('healer',    'B', { injectKit = 'healer' }), -- Nashmeira (shell)
+-    [924] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Zazarg (shell)
+-    [925] = e('nuker',     'B', { injectKit = 'nuker' }), -- Ovjang (shell)
+-    [926] = e('tank',      'B', { injectKit = false }), -- Mnejing
+-    [927] = e('aura',      'B', { injectKit = false }), -- Sakura
+-    [928] = e('ranged_dd', 'A', { injectKit = 'ranged_dd' }), -- Luzaf (shell)
+-    [929] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Najelith (shell)
+-    [930] = e('melee_dd',  'A', { injectKit = false }), -- Locke
+-    [931] = e('aura',      'B', { injectKit = false }), -- Moogle
+-    [932] = e('hybrid',    'B', { injectKit = false }), -- Fablinix
+-    [933] = e('melee_dd',  'A', { injectKit = false }), -- Maat
+-    [934] = e('nuker',     'A', { injectKit = 'nuker' }), -- D.Shantotto (shell)
+-    [935] = e('utility',   'B', { injectKit = 'utility' }), -- Star Sibyl (shell)
+-    [936] = e('healer',    'A', { injectKit = false }), -- Karaha-Baruha
+-    [937] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Cid (shell)
+-    [938] = e('melee_dd',  'A', { injectKit = 'melee_dd' }), -- Gilgamesh (shell)
+-    [939] = e('melee_dd',  'B', { injectKit = false }), -- Areuhat
+-    [940] = e('ranged_dd', 'A', { injectKit = false }), -- Semih
+-    [941] = e('ranged_dd', 'B', { injectKit = 'ranged_dd' }), -- Elivira (shell)
+-    [942] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Noillurie (shell)
+-    [943] = e('hybrid',    'B', { injectKit = 'hybrid' }), -- Lhu (shell)
+-    [944] = e('healer',    'B', { injectKit = false }), -- Ferreous Coffin
+-    [945] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Lilisette (shell)
+-    [946] = e('buffer',    'B', { injectKit = false }), -- Mumor
+-    [947] = e('buffer',    'B', { injectKit = false }), -- Uka
+-    [948] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Klara (shell)
+-    [949] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Romaa (shell)
+-    [950] = e('utility',   'C', { injectKit = 'utility' }), -- Kuyin (shell)
+-    [951] = e('tank',      'B', { injectKit = false }), -- Rahal
+-    [952] = e('nuker',     'A', { injectKit = false }), -- Koru-Moru
+-    [953] = e('healer',    'A', { injectKit = 'healer' }), -- Pieuje UC (shell)
+-    [954] = e('tank',      'A', { injectKit = 'tank' }), -- I.Shield UC (shell)
+-    [955] = e('healer',    'S', { injectKit = false }), -- Apururu UC
+-    [956] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Jakoh UC (shell)
+-    [957] = e('ranged_dd', 'A', { injectKit = 'ranged_dd' }), -- Flaviria UC (shell)
+-    [958] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Babban (shell)
+-    [959] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Abenzio (shell)
+-    [960] = e('tank',      'B', { injectKit = false }), -- Rughadjeen
+-    [961] = e('nuker',     'B', { injectKit = 'nuker' }), -- Kukki (shell)
+-    [962] = e('ranged_dd', 'B', { injectKit = 'ranged_dd' }), -- Margret (shell)
+-    [963] = e('utility',   'C', { injectKit = 'utility' }), -- Chacharoon (shell)
+-    [964] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Lhe (shell)
+-    [965] = e('nuker',     'A', { injectKit = 'nuker' }), -- Arciela (shell)
+-    [966] = e('buffer',    'B', { injectKit = 'buffer' }), -- Mayakov (shell)
+-    [967] = e('hybrid',    'A', { injectKit = false }), -- Qultada
+-    [968] = e('nuker',     'A', { injectKit = false }), -- Adelheid
+-    [969] = e('tank',      'A', { injectKit = false }), -- Amchuchu
+-    [970] = e('utility',   'B', { injectKit = 'utility' }), -- Brygid (shell)
+-    [971] = e('melee_dd',  'A', { injectKit = 'melee_dd' }), -- Mildaurion (shell)
+-    [972] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Halver (shell)
+-    [973] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Rongelouts (shell)
+-    [974] = e('nuker',     'B', { injectKit = 'nuker' }), -- Leonoyne (shell)
+-    [975] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Maximilian (shell)
+-    [976] = e('nuker',     'A', { injectKit = 'nuker' }), -- Kayeel-Payeel (shell)
+-    [977] = e('nuker',     'A', { injectKit = 'nuker' }), -- Robel-Akbel (shell)
+-    [978] = e('utility',   'A', { injectKit = 'utility' }), -- Kupofried (shell)
+-    [979] = e('utility',   'B', { injectKit = 'utility' }), -- Selh'teus (shell)
+-    [980] = e('healer',    'A', { injectKit = false }), -- Yoran-Oran UC
+-    [981] = e('buffer',    'S', { injectKit = false }), -- Sylvie UC
+-    [982] = e('melee_dd',  'B', { injectKit = false }), -- Abquhbah
+-    [983] = e('nuker',     'A', { injectKit = 'nuker' }), -- Balamor (shell)
+-    [984] = e('melee_dd',  'S', { injectKit = false }), -- August
+-    [985] = e('nuker',     'B', { injectKit = 'nuker' }), -- Rosulatia (shell)
+-    [986] = e('nuker',     'B', { injectKit = 'nuker' }), -- Teodor (shell)
+-    [987] = e('nuker',     'B', { injectKit = 'nuker' }), -- Ullegore (shell)
+-    [988] = e('ranged_dd', 'B', { injectKit = 'ranged_dd' }), -- Makki (shell)
+-    [989] = e('buffer',    'B', { injectKit = 'buffer' }), -- King of Hearts (shell)
+-    [990] = e('melee_dd',  'A', { injectKit = 'melee_dd' }), -- Morimar (shell)
+-    [991] = e('melee_dd',  'A', { injectKit = 'melee_dd' }), -- Darrcuiln (shell)
+-    [992] = e('melee_dd',  'A', { injectKit = false }), -- Ark HM
+-    [993] = e('healer',    'A', { injectKit = false }), -- Ark EV
+-    [994] = e('ranged_dd', 'A', { injectKit = 'ranged_dd' }), -- Ark MR (shell)
+-    [995] = e('nuker',     'A', { injectKit = 'nuker' }), -- Ark TT (shell)
+-    [996] = e('melee_dd',  'A', { injectKit = false }), -- Ark GK
+-    [997] = e('melee_dd',  'A', { injectKit = 'melee_dd' }), -- Iroha (shell)
+-    [998] = e('healer',    'A', { injectKit = false }), -- Ygnas
+-    [999] = e('healer',    'S', { injectKit = false }), -- Monberaux
++    ------------------------------------------------------------------
++    -- Starters (deliberately modest ΓÇö first party, not endgame DPS)
++    ------------------------------------------------------------------
++    [896] = e('nuker',     'C', { style = 'apprentice', injectKit = false }), -- Shantotto
++    [898] = e('healer',    'C', { style = 'support',    injectKit = false }), -- Kupipi
++    [905] = e('tank',      'C', { style = 'bruiser',    injectKit = false }), -- Trion
++    [908] = e('melee_dd',  'B', { style = 'weaponskill',injectKit = false }), -- Tenzen (starter but iconic)
 +
-+    local entry = catalog.get(spellId) or { role = 'melee_dd', tier = 'B' }
-+    local masterLvl = master:getMainLvl() or mob:getMainLvl() or 1
-+    local p = progressOf(masterLvl)
-+    local t = tierMult(entry.tier)
-+    local roleFn = ROLE_APPLY[entry.role] or ROLE_APPLY.melee_dd
++    ------------------------------------------------------------------
++    -- D1 entry farms
++    ------------------------------------------------------------------
++    [897] = e('melee_dd',  'C', { style = 'bruiser',     injectKit = false }), -- Naji
++    [900] = e('melee_dd',  'C', { style = 'weaponskill', injectKit = false }), -- Ayame
++    [904] = e('nuker',     'C', { style = 'apprentice',  injectKit = false }), -- Ajido
++    [909] = e('healer',    'C', { style = 'support',     injectKit = false }), -- Mihli
++    [912] = e('melee_dd',  'C', { style = 'skirmisher',  injectKit = false }), -- Naja
++    [916] = e('healer',    'C', { style = 'support',     injectKit = false }), -- Cherukiki
++    [922] = e('ranged_dd', 'C', { style = 'skirmisher',  injectKit = false }), -- Lehko
++    [924] = e('melee_dd',  'C', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Zazarg
++    [925] = e('nuker',     'C', { style = 'apprentice',  injectKit = 'nuker' }), -- Ovjang
++    [926] = e('tank',      'C', { style = 'bruiser',     injectKit = false }), -- Mnejing
++    [927] = e('aura',      'C', { style = 'support',     injectKit = false }), -- Sakura
++    [931] = e('aura',      'C', { style = 'support',     injectKit = false }), -- Moogle
++    [936] = e('healer',    'C', { style = 'support',     injectKit = false }), -- Karaha
++    [939] = e('melee_dd',  'C', { style = 'bruiser',     injectKit = false }), -- Areuhat
++    [940] = e('ranged_dd', 'C', { style = 'skirmisher',  injectKit = false }), -- Semih
++    [941] = e('ranged_dd', 'C', { style = 'skirmisher',  injectKit = 'ranged_dd' }), -- Elivira
++    [943] = e('hybrid',    'C', { style = 'pressure',    injectKit = 'hybrid' }), -- Lhu
++    [944] = e('healer',    'C', { style = 'support',     injectKit = false }), -- Ferreous
++    [949] = e('melee_dd',  'C', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Romaa
++    [958] = e('melee_dd',  'C', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Babban
++    [959] = e('melee_dd',  'C', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Abenzio
++    [961] = e('nuker',     'C', { style = 'apprentice',  injectKit = 'nuker' }), -- Kukki
++    [962] = e('ranged_dd', 'C', { style = 'skirmisher',  injectKit = 'ranged_dd' }), -- Margret
++    [966] = e('buffer',    'C', { style = 'support',     injectKit = 'buffer' }), -- Mayakov
++    [968] = e('nuker',     'C', { style = 'scholar',     injectKit = false }), -- Adelheid
++    [972] = e('melee_dd',  'C', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Halver
 +
-+    roleFn(mob, p, t)
++    ------------------------------------------------------------------
++    -- D2 mid content
++    ------------------------------------------------------------------
++    [903] = e('melee_dd',  'B', { style = 'bruiser',     injectKit = false }), -- Volker
++    [911] = e('buffer',    'B', { style = 'support',     injectKit = false }), -- Joachim
++    [913] = e('melee_dd',  'B', { style = 'bruiser',     injectKit = false }), -- Prishe
++    [915] = e('ranged_dd', 'B', { style = 'skirmisher',  injectKit = false }), -- Shikaree Z
++    [917] = e('melee_dd',  'B', { style = 'bruiser',     injectKit = false }), -- Iron Eater
++    [918] = e('melee_dd',  'B', { style = 'skirmisher',  injectKit = false }), -- Gessho
++    [919] = e('nuker',     'B', { style = 'pressure',    injectKit = 'nuker' }), -- Gadalar
++    [921] = e('healer',    'B', { style = 'support',     injectKit = 'healer' }), -- Ingrid
++    [923] = e('healer',    'B', { style = 'support',     injectKit = 'healer' }), -- Nashmeira
++    [929] = e('melee_dd',  'B', { style = 'weaponskill', injectKit = 'melee_dd' }), -- Najelith
++    [932] = e('hybrid',    'B', { style = 'pressure',    injectKit = false }), -- Fablinix
++    [933] = e('melee_dd',  'B', { style = 'bruiser',     injectKit = false }), -- Maat
++    [934] = e('nuker',     'B', { style = 'burst',       injectKit = 'nuker' }), -- D.Shantotto
++    [935] = e('utility',   'B', { style = 'support',     injectKit = 'utility' }), -- Star Sibyl
++    [942] = e('melee_dd',  'B', { style = 'weaponskill', injectKit = 'melee_dd' }), -- Noillurie
++    [946] = e('buffer',    'B', { style = 'support',     injectKit = false }), -- Mumor
++    [948] = e('melee_dd',  'B', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Klara
++    [951] = e('tank',      'B', { style = 'bruiser',     injectKit = false }), -- Rahal
++    [952] = e('nuker',     'B', { style = 'scholar',     injectKit = false }), -- Koru-Moru
++    [960] = e('tank',      'B', { style = 'bruiser',     injectKit = false }), -- Rughadjeen
++    [965] = e('nuker',     'B', { style = 'burst',       injectKit = 'nuker' }), -- Arciela
++    [969] = e('tank',      'B', { style = 'bruiser',     injectKit = false }), -- Amchuchu
++    [970] = e('utility',   'B', { style = 'support',     injectKit = 'utility' }), -- Brygid
++    [974] = e('nuker',     'B', { style = 'pressure',    injectKit = 'nuker' }), -- Leonoyne
++    [977] = e('nuker',     'B', { style = 'burst',       injectKit = 'nuker' }), -- Robel-Akbel
++    [997] = e('melee_dd',  'B', { style = 'weaponskill', injectKit = 'melee_dd' }), -- Iroha
++    [1004]= e('melee_dd',  'B', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Excenmille S
++    [1006]= e('melee_dd',  'B', { style = 'bruiser',     injectKit = false }), -- Maat UC
++    [1014]= e('melee_dd',  'B', { style = 'weaponskill', injectKit = false }), -- Tenzen II (Unity T2)
++    [1016]= e('healer',    'B', { style = 'support',     injectKit = 'healer' }), -- Ingrid II
+ 
+-    -- Void Keeper capstones (client IDs)
+-    [1002] = e('aura',   'S', { injectKit = false }), -- Cornelia
+-    [1003] = e('hybrid', 'S', { cap = C.MATSUI_CAP, injectKit = false }), -- Matsui-P
++    ------------------------------------------------------------------
++    -- D3 hard content
++    ------------------------------------------------------------------
++    [906] = e('melee_dd',  'A', { style = 'weaponskill', injectKit = false }), -- Zeid
++    [907] = e('melee_dd',  'A', { style = 'skirmisher',  injectKit = false }), -- Lion
++    [910] = e('tank',      'A', { style = 'bruiser',     injectKit = false }), -- Valaineral
++    [920] = e('nuker',     'A', { style = 'burst',       injectKit = false }), -- Rainemard
++    [928] = e('ranged_dd', 'A', { style = 'weaponskill', injectKit = 'ranged_dd' }), -- Luzaf
++    [937] = e('melee_dd',  'A', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Cid
++    [938] = e('melee_dd',  'A', { style = 'weaponskill', injectKit = 'melee_dd' }), -- Gilgamesh
++    [945] = e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Lilisette
++    [950] = e('utility',   'A', { style = 'support',     injectKit = 'utility' }), -- Kuyin
++    [953] = e('healer',    'A', { style = 'support',     injectKit = 'healer' }), -- Pieuje UC
++    [954] = e('tank',      'A', { style = 'bruiser',     injectKit = 'tank' }), -- I.Shield UC
++    [956] = e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Jakoh UC
++    [957] = e('ranged_dd', 'A', { style = 'weaponskill', injectKit = 'ranged_dd' }), -- Flaviria UC
++    [967] = e('hybrid',    'A', { style = 'skirmisher',  injectKit = false }), -- Qultada CORE
++    [971] = e('melee_dd',  'A', { style = 'weaponskill', injectKit = 'melee_dd' }), -- Mildaurion
++    [973] = e('melee_dd',  'A', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Rongelouts
++    [975] = e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Maximilian
++    [976] = e('nuker',     'A', { style = 'burst',       injectKit = 'nuker' }), -- Kayeel-Payeel
++    [980] = e('healer',    'A', { style = 'support',     injectKit = false }), -- Yoran-Oran UC
++    [983] = e('nuker',     'A', { style = 'pressure',    injectKit = 'nuker' }), -- Balamor
++    [985] = e('nuker',     'A', { style = 'scholar',     injectKit = 'nuker' }), -- Rosulatia
++    [987] = e('nuker',     'A', { style = 'pressure',    injectKit = 'nuker' }), -- Ullegore
++    [992] = e('melee_dd',  'A', { style = 'bruiser',     injectKit = false }), -- Ark HM
++    [993] = e('healer',    'A', { style = 'support',     injectKit = false }), -- Ark EV
++    [994] = e('ranged_dd', 'A', { style = 'weaponskill', injectKit = 'ranged_dd' }), -- Ark MR
++    [995] = e('nuker',     'A', { style = 'burst',       injectKit = 'nuker' }), -- Ark TT
++    [996] = e('melee_dd',  'A', { style = 'weaponskill', injectKit = false }), -- Ark GK
++    [999] = e('healer',    'A', { style = 'support',     injectKit = false }), -- Monberaux CORE heal
++    [1005]= e('melee_dd',  'A', { style = 'weaponskill', injectKit = 'melee_dd' }), -- Ayame UC
++    [1008]= e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Naja UC
++    [1012]= e('healer',    'A', { style = 'support',     injectKit = false }), -- Nashmeira II
++    [1013]= e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Lilisette II
++    [1015]= e('buffer',    'A', { style = 'support',     injectKit = false }), -- Mumor II
++    [1017]= e('nuker',     'A', { style = 'burst',       injectKit = 'nuker' }), -- Arciela II
++    [1018]= e('melee_dd',  'A', { style = 'weaponskill', injectKit = false }), -- Iroha II
+ 
+-    [1004] = e('melee_dd', 'B', { injectKit = 'melee_dd' }), -- Excenmille [S] (shell)
+-    [1005] = e('melee_dd', 'A', { injectKit = 'melee_dd' }), -- Ayame UC (shell)
+-    [1006] = e('melee_dd', 'A', { injectKit = false }), -- Maat UC
+-    [1007] = e('melee_dd', 'A', { injectKit = 'melee_dd' }), -- Aldo UC (shell)
+-    [1008] = e('melee_dd', 'A', { injectKit = 'melee_dd' }), -- Naja UC (shell)
+-    [1009] = e('melee_dd', 'S', { injectKit = false }), -- Lion II
+-    [1010] = e('melee_dd', 'S', { injectKit = false }), -- Zeid II
+-    [1011] = e('melee_dd', 'S', { injectKit = false }), -- Prishe II
+-    [1012] = e('healer',   'A', { injectKit = false }), -- Nashmeira II
+-    [1013] = e('melee_dd', 'A', { injectKit = 'melee_dd' }), -- Lilisette II (shell)
+-    [1014] = e('melee_dd', 'S', { injectKit = false }), -- Tenzen II
+-    [1015] = e('buffer',   'A', { injectKit = false }), -- Mumor II
+-    [1016] = e('healer',   'A', { injectKit = 'healer' }), -- Ingrid II (shell)
+-    [1017] = e('nuker',    'S', { injectKit = 'nuker' }), -- Arciela II (shell)
+-    [1018] = e('melee_dd', 'S', { injectKit = false }), -- Iroha II
+-    [1019] = e('nuker',    'S', {
++    ------------------------------------------------------------------
++    -- D4 / D5 / CORE endgame
++    ------------------------------------------------------------------
++    [914] = e('buffer',    'S', { style = 'support',     injectKit = false }), -- Ulmia CORE
++    [947] = e('buffer',    'S', { style = 'support',     injectKit = false }), -- Uka (was Prestige)
++    [955] = e('healer',    'S', { style = 'support',     injectKit = false }), -- Apururu UC CORE
++    [963] = e('utility',   'B', { style = 'support',     injectKit = 'utility' }), -- Chacharoon (utility, not DPS)
++    [964] = e('melee_dd',  'S', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Lhe (Prestige move)
++    [978] = e('utility',   'S', { style = 'support',     injectKit = 'utility' }), -- Kupofried CORE chase
++    [979] = e('utility',   'A', { style = 'support',     injectKit = 'utility' }), -- Selh'teus
++    [981] = e('buffer',    'S', { style = 'support',     injectKit = false }), -- Sylvie UC CORE
++    [982] = e('melee_dd',  'A', { style = 'bruiser',     injectKit = false }), -- Abquhbah D4
++    [984] = e('melee_dd',  'S', { style = 'weaponskill', injectKit = false }), -- August CORE
++    [986] = e('nuker',     'S', { style = 'apex',        injectKit = 'nuker' }), -- Teodor
++    [988] = e('ranged_dd', 'S', { style = 'weaponskill', injectKit = 'ranged_dd' }), -- Makki
++    [989] = e('buffer',    'A', { style = 'support',     injectKit = 'buffer' }), -- King of Hearts
++    [990] = e('melee_dd',  'S', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Morimar
++    [991] = e('melee_dd',  'S', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Darrcuiln
++    [998] = e('healer',    'S', { style = 'support',     injectKit = false }), -- Ygnas CORE
++    [1009]= e('melee_dd',  'S', { style = 'skirmisher',  injectKit = false }), -- Lion II
++    [1010]= e('melee_dd',  'S', { style = 'weaponskill', injectKit = false }), -- Zeid II CORE
++    [1011]= e('melee_dd',  'S', { style = 'bruiser',     injectKit = false }), -- Prishe II
++    [1019]= e('nuker',     'S', {
++        style     = 'apex',
+         injectKit = false,
+         mbCap     = C.SHANTOTTO_II_MB_CAP,
+-    }), -- Shantotto II
++    }), -- Shantotto II CORE
 +
-+    -- Universal floors so every trust stays relevant.
-+    mob:addMod(xi.mod.HP, math.floor((150 + 850 * p) * t))
-+    mob:addMod(xi.mod.EVA, math.floor((40 + 160 * p) * t))
++    ------------------------------------------------------------------
++    -- Void Keeper customs (chase rewards ΓÇö top band)
++    ------------------------------------------------------------------
++    [899] = e('tank',      'S', { style = 'bruiser',     injectKit = false }), -- Meat
++    [901] = e('buffer',    'S', { style = 'support',     injectKit = false }), -- Gemma
++    [902] = e('ranged_dd', 'A', { style = 'weaponskill', injectKit = false }), -- Corvus
++    [1002]= e('aura',      'S', { style = 'support',     injectKit = false }), -- Cornelia
++    [1003]= e('hybrid',    'S', {
++        style     = 'apex',
++        cap       = C.MATSUI_CAP,
++        injectKit = false,
++    }), -- Matsui-P
 +
-+    local cap = entry.cap or catalog.DEFAULT_CAP
++    ------------------------------------------------------------------
++    -- Retired (kept for lookup; stripped by grant gate)
++    ------------------------------------------------------------------
++    [930] = e('melee_dd',  'A', { style = 'skirmisher', injectKit = false }), -- Locke / Aldo disabled
++    [1007]= e('melee_dd',  'A', { style = 'skirmisher', injectKit = 'melee_dd' }), -- Aldo UC disabled
+ }
+ 
+ function C.get(spellId)
+     return C.trusts[spellId]
+ end
+ 
++function C.styleWeights(styleName)
++    return C.STYLE[styleName] or C.STYLE.standard
++end
++
+ return C
+diff --git a/modules/custom/lua/trust_power_scaling.lua b/modules/custom/lua/trust_power_scaling.lua
+index d9af66e201..7ac04da40c 100644
+--- a/modules/custom/lua/trust_power_scaling.lua
++++ b/modules/custom/lua/trust_power_scaling.lua
+@@ -15,24 +15,35 @@ local kits    = require('modules/custom/lua/trust_kit_library')
+ 
+ local function progressOf(masterLvl)
+     masterLvl = math.max(1, math.min(99, masterLvl or 1))
+-    return (masterLvl / 99) ^ 1.25
++    -- Keep mid-levels clearly below endgame; full package only at 99.
++    return (masterLvl / 99) ^ 1.35
+ end
+ 
+ local function tierMult(tier)
+     return catalog.TIER_MULT[tier] or catalog.TIER_MULT.B
+ end
+ 
+-local function applyMeleePackage(mob, p, t)
+-    local dmg   = math.floor((55 + 165 * p) * t)
+-    local att   = math.floor((120 + 680 * p) * t)
+-    local acc   = math.floor((150 + 750 * p) * t)
+-    local str   = math.floor((40 + 160 * p) * t)
+-    local dex   = math.floor((30 + 140 * p) * t)
+-    local da    = math.floor((8 + 32 * p) * t)
+-    local ta    = math.floor((4 + 16 * p) * t)
+-    local haste = math.floor((800 + 1700 * p) * math.min(t, 1.05))
+-    local wsd   = math.floor((10 + 45 * p) * t)
+-    local store = math.floor((10 + 40 * p) * t)
++local function styleOf(entry)
++    return catalog.styleWeights(entry and entry.style or 'standard')
++end
++
++local function applyMeleePackage(mob, p, t, s)
++    s = s or catalog.STYLE.standard
++    local attM   = s.att or 1
++    local wsdM   = s.wsd or 1
++    local hasteM = s.haste or 1
++    local daM    = s.da or 1
++
++    local dmg   = math.floor((8 + 212 * p) * t * attM)
++    local att   = math.floor((20 + 780 * p) * t * attM)
++    local acc   = math.floor((30 + 870 * p) * t)
++    local str   = math.floor((5 + 195 * p) * t * attM)
++    local dex   = math.floor((5 + 165 * p) * t)
++    local da    = math.floor((2 + 38 * p) * t * daM)
++    local ta    = math.floor((1 + 19 * p) * t * daM)
++    local haste = math.floor((200 + 2300 * p) * math.min(t, 1.05) * hasteM)
++    local wsd   = math.floor((2 + 53 * p) * t * wsdM)
++    local store = math.floor((2 + 48 * p) * t * wsdM)
+ 
+     pcall(function() mob:setDamage(dmg) end)
+     mob:addMod(xi.mod.ATT, att)
+@@ -46,17 +57,25 @@ local function applyMeleePackage(mob, p, t)
+     mob:addMod(xi.mod.HASTE_GEAR, haste)
+     mob:addMod(xi.mod.WEAPONSKILL_DAMAGE_BASE, wsd)
+     mob:addMod(xi.mod.STORETP, store)
+-    mob:addMod(xi.mod.CRITHITRATE, math.floor((5 + 15 * p) * t))
+-    mob:addMod(xi.mod.CRIT_DMG_INCREASE, math.floor((5 + 20 * p) * t))
++    mob:addMod(xi.mod.CRITHITRATE, math.floor((2 + 18 * p) * t))
++    mob:addMod(xi.mod.CRIT_DMG_INCREASE, math.floor((2 + 23 * p) * t * wsdM))
+ end
+ 
+-local function applyMagePackage(mob, p, t)
+-    local matt  = math.floor((80 + 360 * p) * t)
+-    local macc  = math.floor((100 + 400 * p) * t)
+-    local intd  = math.floor((50 + 180 * p) * t)
+-    local mdmg  = math.floor((2500 + 11000 * p) * t)
+-    local fc    = math.floor((35 + 45 * p) * math.min(t, 1.1))
+-    local mbb   = math.floor((20 + 40 * p) * t)
++local function applyMagePackage(mob, p, t, s)
++    s = s or catalog.STYLE.pressure
++    local mattM = s.matt or 1
++    local mdmgM = s.mdmg or 1
++    local mbbM  = s.mbb or 1
++    local fcM   = s.fc or 1
++    local maccM = s.macc or 1
++
++    -- No multi-k MAGIC_DAMAGE floor at low master levels.
++    local matt  = math.floor((10 + 430 * p) * t * mattM)
++    local macc  = math.floor((15 + 485 * p) * t * maccM)
++    local intd  = math.floor((5 + 225 * p) * t * mattM)
++    local mdmg  = math.floor((80 + 13420 * p) * t * mdmgM)
++    local fc    = math.floor((10 + 70 * p) * math.min(t, 1.1) * fcM)
++    local mbb   = math.floor((5 + 55 * p) * t * mbbM)
+ 
+     mob:addMod(xi.mod.MATT, matt)
+     mob:addMod(xi.mod.MACC, macc)
+@@ -65,53 +84,52 @@ local function applyMagePackage(mob, p, t)
+     mob:addMod(xi.mod.FASTCAST, math.min(80, fc))
+     mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, mbb)
+     mob:addMod(xi.mod.UFASTCAST, math.floor(fc * 0.25))
+-    mob:addMod(xi.mod.HASTE_MAGIC, math.floor((500 + 1000 * p) * t))
+-    mob:addMod(xi.mod.MP, math.floor((200 + 800 * p) * t))
+-    mob:addMod(xi.mod.REFRESH, math.floor((3 + 12 * p) * t))
++    mob:addMod(xi.mod.HASTE_MAGIC, math.floor((100 + 1400 * p) * t * fcM))
++    mob:addMod(xi.mod.MP, math.floor((40 + 960 * p) * t))
++    mob:addMod(xi.mod.REFRESH, math.floor((1 + 14 * p) * t))
+ end
+ 
+-local function applyTankPackage(mob, p, t)
+-    applyMeleePackage(mob, p, t * 0.55)
+-    mob:addMod(xi.mod.HP, math.floor((400 + 2600 * p) * t))
+-    mob:addMod(xi.mod.DEF, math.floor((100 + 500 * p) * t))
+-    mob:addMod(xi.mod.VIT, math.floor((40 + 160 * p) * t))
+-    mob:addMod(xi.mod.ENMITY, math.floor((40 + 120 * p) * t))
+-    mob:addMod(xi.mod.DMG, -math.floor((500 + 1500 * p) * math.min(t, 1.0)))
+-    mob:addMod(xi.mod.MEVA, math.floor((50 + 200 * p) * t))
++local function applyTankPackage(mob, p, t, s)
++    applyMeleePackage(mob, p, t * 0.55, s)
++    mob:addMod(xi.mod.HP, math.floor((80 + 2920 * p) * t))
++    mob:addMod(xi.mod.DEF, math.floor((20 + 580 * p) * t))
++    mob:addMod(xi.mod.VIT, math.floor((5 + 195 * p) * t))
++    mob:addMod(xi.mod.ENMITY, math.floor((10 + 150 * p) * t))
++    mob:addMod(xi.mod.DMG, -math.floor((100 + 1900 * p) * math.min(t, 1.0)))
++    mob:addMod(xi.mod.MEVA, math.floor((10 + 240 * p) * t))
+ end
+ 
+-local function applySupportPackage(mob, p, t)
+-    applyMagePackage(mob, p, t * 0.55)
+-    mob:addMod(xi.mod.MND, math.floor((40 + 160 * p) * t))
+-    mob:addMod(xi.mod.CHR, math.floor((30 + 120 * p) * t))
+-    mob:addMod(xi.mod.CURE_POTENCY, math.floor((10 + 30 * p) * t))
+-    mob:addMod(xi.mod.CURE_POTENCY_II, math.floor((5 + 15 * p) * t))
++local function applySupportPackage(mob, p, t, s)
++    applyMagePackage(mob, p, t * 0.55, s or catalog.STYLE.support)
++    mob:addMod(xi.mod.MND, math.floor((5 + 195 * p) * t))
++    mob:addMod(xi.mod.CHR, math.floor((5 + 145 * p) * t))
++    mob:addMod(xi.mod.CURE_POTENCY, math.floor((2 + 38 * p) * t))
++    mob:addMod(xi.mod.CURE_POTENCY_II, math.floor((1 + 19 * p) * t))
+ end
+ 
+ local ROLE_APPLY =
+ {
+-    melee_dd  = function(mob, p, t) applyMeleePackage(mob, p, t) end,
+-    ranged_dd = function(mob, p, t)
+-        applyMeleePackage(mob, p, t)
+-        mob:addMod(xi.mod.RATT, math.floor((80 + 400 * p) * t))
+-        mob:addMod(xi.mod.RACC, math.floor((80 + 400 * p) * t))
++    melee_dd  = function(mob, p, t, s) applyMeleePackage(mob, p, t, s) end,
++    ranged_dd = function(mob, p, t, s)
++        applyMeleePackage(mob, p, t, s)
++        mob:addMod(xi.mod.RATT, math.floor((15 + 465 * p) * t * ((s and s.att) or 1)))
++        mob:addMod(xi.mod.RACC, math.floor((15 + 465 * p) * t))
+     end,
+     tank      = applyTankPackage,
+     healer    = applySupportPackage,
+     buffer    = applySupportPackage,
+     nuker     = applyMagePackage,
+-    hybrid    = function(mob, p, t)
+-        applyMeleePackage(mob, p, t * 0.85)
+-        applyMagePackage(mob, p, t * 0.85)
++    hybrid    = function(mob, p, t, s)
++        applyMeleePackage(mob, p, t * 0.85, s)
++        applyMagePackage(mob, p, t * 0.85, s)
+     end,
+-    utility   = function(mob, p, t)
+-        applySupportPackage(mob, p, t * 0.75)
+-        applyMeleePackage(mob, p, t * 0.4)
++    utility   = function(mob, p, t, s)
++        applySupportPackage(mob, p, t * 0.75, s or catalog.STYLE.support)
++        applyMeleePackage(mob, p, t * 0.4, catalog.STYLE.standard)
+     end,
+-    aura      = function(mob, p, t)
+-        -- Cornelia-style: survivability only; auras come from the script.
+-        mob:addMod(xi.mod.HP, math.floor((300 + 1200 * p) * t))
+-        mob:addMod(xi.mod.MEVA, math.floor((80 + 220 * p) * t))
++    aura      = function(mob, p, t, s)
++        mob:addMod(xi.mod.HP, math.floor((60 + 1440 * p) * t))
++        mob:addMod(xi.mod.MEVA, math.floor((15 + 285 * p) * t))
+     end,
+ }
+ 
+@@ -130,6 +148,29 @@ local function findSpawnedTrust(caster, spellId)
+     return nil
+ end
+ 
++local function applyCaps(mob, entry)
++    local cap = entry.cap or catalog.DEFAULT_CAP or 40000
 +    mob:setLocalVar('EncounterOutgoingDamageCap', cap)
 +    if entry.mbCap and entry.mbCap > 0 then
 +        mob:setLocalVar('EncounterOutgoingDamageCapMB', entry.mbCap)
++    else
++        mob:setLocalVar('EncounterOutgoingDamageCapMB', 0)
 +    end
-+
-+    if entry.injectKit then
-+        kits.apply(mob, entry.injectKit)
-+    end
-+
-+    mob:setLocalVar('TrustPowerScaled', 1)
 +end
 +
-+m:addOverride('xi.trust.spawn', function(caster, spell)
-+    local result = super(caster, spell)
-+    if caster and spell then
-+        local spellId = spell:getID()
-+        local trust = findSpawnedTrust(caster, spellId)
-+        if trust then
-+            xi.trustPowerApply(trust, caster, spellId)
-+        end
++local function safeInjectKit(mob, kitName)
++    if not kitName then
++        return
 +    end
 +
-+    return result
-+end)
++    local ok, err = pcall(function()
++        kits.apply(mob, kitName)
++    end)
++    if not ok then
++        print(string.format('[trust_power_scaling] kit inject failed: %s', tostring(err)))
++    end
++end
 +
-+return m
-diff --git a/modules/custom/lua/trust_progression_cap.lua b/modules/custom/lua/trust_progression_cap.lua
-index 29d6c2cf00..b93e0c4637 100644
---- a/modules/custom/lua/trust_progression_cap.lua
-+++ b/modules/custom/lua/trust_progression_cap.lua
-@@ -1,9 +1,10 @@
- -----------------------------------
- -- trust_progression_cap.lua  (relaunch)
- --
---- SUMMON-COUNT progression for trusts: every trust stays learnable from day 1
---- (Character_Upgrader's grant-all is untouched), but HOW MANY you can field at
---- once climbs its OWN content ladder -- deliberately DIFFERENT content from
-+-- SUMMON-COUNT progression for trusts: starters only at creation (see
-+-- trust_grant_catalog.lua / Character_Upgrader.lua); every other trust is
-+-- earned in content. HOW MANY
-+-- you can field at once climbs its OWN content ladder -- deliberately DIFFERENT content from
- -- BOTH the Augment Tier gates (NM kills / HL rank / Voidspire+GM / Divergence
- -- / Maat) AND the five Prime Weapon trials (Abyssea collectibles / Endless
- -- Tower / HL voucher / Job Mastery / Aht Urhgan currencies):
+ function xi.trustPowerApply(mob, master, spellId)
+     if not mob or not master then
+         return
+@@ -144,41 +185,57 @@ function xi.trustPowerApply(mob, master, spellId)
+     end
+ 
+     local entry = catalog.get(spellId) or { role = 'melee_dd', tier = 'B' }
++
++    -- Caps first so a later mod error can never leave a trust uncapped.
++    applyCaps(mob, entry)
++
+     local masterLvl = master:getMainLvl() or mob:getMainLvl() or 1
+     local p = progressOf(masterLvl)
+     local t = tierMult(entry.tier)
++    local s = styleOf(entry)
+     local roleFn = ROLE_APPLY[entry.role] or ROLE_APPLY.melee_dd
+ 
+-    roleFn(mob, p, t)
+-
+-    -- Universal floors so every trust stays relevant.
+-    mob:addMod(xi.mod.HP, math.floor((150 + 850 * p) * t))
+-    mob:addMod(xi.mod.EVA, math.floor((40 + 160 * p) * t))
+-
+-    local cap = entry.cap or catalog.DEFAULT_CAP
+-    mob:setLocalVar('EncounterOutgoingDamageCap', cap)
+-    if entry.mbCap and entry.mbCap > 0 then
+-        mob:setLocalVar('EncounterOutgoingDamageCapMB', entry.mbCap)
++    local ok, err = pcall(roleFn, mob, p, t, s)
++    if not ok then
++        print(string.format('[trust_power_scaling] role package failed for spell %s: %s', tostring(spellId), tostring(err)))
+     end
+ 
+-    if entry.injectKit then
+-        kits.apply(mob, entry.injectKit)
+-    end
++    pcall(function()
++        mob:addMod(xi.mod.HP, math.floor((30 + 970 * p) * t))
++        mob:addMod(xi.mod.EVA, math.floor((8 + 192 * p) * t))
++    end)
++
++    applyCaps(mob, entry)
++    safeInjectKit(mob, entry.injectKit)
+ 
+     mob:setLocalVar('TrustPowerScaled', 1)
+ end
+ 
+ m:addOverride('xi.trust.spawn', function(caster, spell)
+-    local result = super(caster, spell)
+-    if caster and spell then
+-        local spellId = spell:getID()
+-        local trust = findSpawnedTrust(caster, spellId)
+-        if trust then
+-            xi.trustPowerApply(trust, caster, spellId)
+-        end
++    -- Spawn directly so we receive the entity. Party-search-after-super was
++    -- unreliable and left trusts on the global 999999 ceiling.
++    if not caster or not spell then
++        return 0
++    end
++
++    local spellId = spell:getID()
++    local trust = caster:spawnTrust(spellId)
++
++    if caster.getEminenceProgress and caster:getEminenceProgress(932) then
++        xi.roe.onRecordTrigger(caster, 932)
++    end
++
++    if not trust then
++        trust = findSpawnedTrust(caster, spellId)
++    end
++
++    if trust then
++        xi.trustPowerApply(trust, caster, spellId)
++    else
++        print(string.format('[trust_power_scaling] failed to resolve spawned trust for spell %s', tostring(spellId)))
+     end
+ 
+-    return result
++    return 0
+ end)
+ 
+ return m
 diff --git a/modules/custom/lua/trust_skoll.lua b/modules/custom/lua/trust_skoll.lua
-index d095677905..d1fc8d4891 100644
+index d1fc8d4891..e04dcd031a 100644
 --- a/modules/custom/lua/trust_skoll.lua
 +++ b/modules/custom/lua/trust_skoll.lua
 @@ -6,8 +6,8 @@
  --   Corvus   -> spell 902 : 40 trusts collected, 10M gil
  --   Meat     -> spell 899 : 50 trusts collected, 10M gil
  --   Gemma    -> spell 901 : 60 trusts collected, 10M gil
----   Cornelia -> spell 1003: all 120 roster trusts, 50M gil
----   Matsui-P -> spell 1021: all 120 roster trusts, 50M gil
-+--   Cornelia -> spell 1002: all 120 roster trusts, 50M gil
-+--   Matsui-P -> spell 1003: all 120 roster trusts, 50M gil
+---   Cornelia -> spell 1002: all 120 roster trusts, 50M gil
+---   Matsui-P -> spell 1003: all 120 roster trusts, 50M gil
++--   Cornelia -> spell 1002: full collection roster (118), 50M gil
++--   Matsui-P -> spell 1003: full collection roster (118), 50M gil
  -----------------------------------
  require('modules/module_utils')
  require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
-@@ -60,7 +60,7 @@ local TRUSTS =
-         },
-     },
-     {
--        spellId               = 1003,
-+        spellId               = 1002,
-         name                  = 'Cornelia',
-         clientName            = 'Cornelia',
-         gilCost               = 50000000,
-@@ -73,7 +73,7 @@ local TRUSTS =
-         },
-     },
-     {
--        spellId               = 1021,
-+        spellId               = 1003,
-         name                  = 'Matsui-P',
-         clientName            = 'Matsui-P',
-         gilCost               = 50000000,
-@@ -167,7 +167,11 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-                 end
- 
-                 p:delGil(t.gilCost)
--                p:addSpell(t.spellId)
-+                if xi.trustGrant and xi.trustGrant.grantSpell then
-+                    xi.trustGrant.grantSpell(p, t.spellId)
-+                else
-+                    p:addSpell(t.spellId)
-+                end
- 
-                 local S = xi.msg.channel.SYSTEM_3
-                 for _, line in ipairs(t.sealMsgs) do
-diff --git a/modules/custom/lua/unity_trust_fix.lua b/modules/custom/lua/unity_trust_fix.lua
-index 63b3f1c521..3a06bd3aa0 100644
---- a/modules/custom/lua/unity_trust_fix.lua
-+++ b/modules/custom/lua/unity_trust_fix.lua
-@@ -1,50 +1,8 @@
- -----------------------------------
- -- unity_trust_fix.lua
---- After any unity NPC interaction, ensure the player's UC trust for their
---- current unity is present in their spell list.
----
---- Root cause: UpdateUnityTrust() in roe.cpp only grants the UC trust when
---- prev_accolades OR current_accolades >= 5 (in char_points).  On this server
---- the Charcter Upgrader grants UC trusts via the blanket addSpell loop, so
---- players START with the trust.  But when they pledge, changeUnityLeader()
---- zeros those accolade currencies BEFORE calling setUnityLeader(), so
---- UpdateUnityTrust() sees 0 and fires the else-branch that removes the trust.
---- Re-pledging to any unity repeats the cycle.
----
---- Fix: after super() runs, call addSpell(trustId) for the current unity
---- leader.  addSpell() is a no-op if the spell is already known (returns false)
---- so this is safe to fire on every unity NPC event, not just pledges.
-+-- RETIRED: trust_grant_gate.lua strips Unity UC trusts that C++
-+-- UpdateUnityTrust() auto-grants when pledging. Kept as an empty module stub.
- -----------------------------------
- require('modules/module_utils')
- 
--local m = Module:new('unity_trust_fix')
--
---- Mirror of ROE_TRUST_ID[11] from src/map/roe.h, indexed 1-11.
--local UNITY_TRUST_ID =
--{
--    [1]  = 953,  -- Pieuje
--    [2]  = 1005, -- Ayame
--    [3]  = 954,  -- Invincible Shield
--    [4]  = 955,  -- Apururu
--    [5]  = 1006, -- Maat
--    [6]  = 1007, -- Aldo
--    [7]  = 956,  -- Jakoh
--    [8]  = 1008, -- Naja
--    [9]  = 957,  -- Flaviria
--    [10] = 980,  -- Yoran-Oran
--    [11] = 981,  -- Sylvie
--}
--
--m:addOverride('xi.unity.onEventFinish', function(player, csid, option, npc)
--    xi.unity.onEventFinish.super(player, csid, option, npc)
--
--    local leader = player:getUnityLeader()
--    if leader and leader > 0 and leader <= 11 then
--        local trustId = UNITY_TRUST_ID[leader]
--        if trustId then
--            player:addSpell(trustId, { silentLog = true })
--        end
--    end
--end)
--
--return m
-+return Module:new('unity_trust_fix')
-diff --git a/modules/custom/sql/trusts/trust_cornelia.sql b/modules/custom/sql/trusts/trust_cornelia.sql
-index 9ff825db03..14252d65d5 100644
---- a/modules/custom/sql/trusts/trust_cornelia.sql
-+++ b/modules/custom/sql/trusts/trust_cornelia.sql
-@@ -1,7 +1,9 @@
- -- =====================================================================
- -- trust_cornelia.sql  --  Trust: Cornelia (Void Keeper capstone)
---- Spell 1003 / pool 6003. Unlocked at Void Keeper when all 120 roster
---- trusts are collected (50M gil).
-+-- Spell 1002 / pool 6002. CLIENT spell ID 1002 = "Cornelia".
-+-- Look 0x00002F0C = model 3119 (same encoding as Monberaux 0x0000300C).
-+-- Do NOT use MODEL_EQUIPPED (size=1) looks or setModelId alone ΓÇö trusts
-+-- with size=1 ignore look.modelid in the entity packet.
- -- =====================================================================
- 
- REPLACE INTO spell_list
-@@ -10,11 +12,15 @@ REPLACE INTO spell_list
-      animation, animationTime, AOE, base, multiplier, CE, VE,
-      requirements, spell_range, radius, content_tag)
- VALUES
--    (1003, 'cornelia', '', 8, 0, 7, 0, 1,
-+    (1002, 'cornelia', 0x01010101010101010101010101010101010101010101, 8, 0, 7, 0, 1,
-      0, 0, 2000, 240000, 0, 0,
-      939, 1500, 0, 0, 1.00, 0, 0,
-      0, 0, 0, NULL);
- 
-+-- Clear old wrong slot if previously applied as 1003/6003.
-+DELETE FROM spell_list WHERE spellid = 1003 AND name = 'cornelia';
-+DELETE FROM mob_pools WHERE poolid = 6003 AND name = 'cornelia';
-+
- REPLACE INTO mob_pools
-     (poolid, name,      packet_name, speciesid, modelid,
-      mJob, sJob, cmbSkill, cmbDelay, cmbDmgMult,
-@@ -23,9 +29,10 @@ REPLACE INTO mob_pools
-      spellList, namevis, roamflag, skill_list_id, resist_id,
-      modelSize, modelHitboxSize)
- VALUES
--    (6003, 'cornelia', 'Cornelia', 246, 3119,
-+    -- model 3119 = 0x0C2F LE -> bytes 2F 0C (trust-era size=0 look, like Monberaux).
-+    (6002, 'cornelia', 'Cornelia', 293, UNHEX('00002F0C00000000000000000000000000000000'),
-      21, 0, 3, 240, 10,
-      0, 0, 0, 0, 0, 0,
-      32, 0, 3, 0, 0,
--     0, 0, 0, 0, 153,
-+     0, 0, 0, 0, 145,
-      1, 12);
-diff --git a/modules/custom/sql/trusts/trust_matsui_p.sql b/modules/custom/sql/trusts/trust_matsui_p.sql
-index 8b9abd5371..f8d8167162 100644
---- a/modules/custom/sql/trusts/trust_matsui_p.sql
-+++ b/modules/custom/sql/trusts/trust_matsui_p.sql
-@@ -1,8 +1,7 @@
- -- =====================================================================
- -- trust_matsui_p.sql  --  Trust: Matsui-P (Void Keeper capstone)
---- Spell 1021 / pool 6021. Unlocked at Void Keeper when all 120 roster
---- trusts are collected (50M gil). Scales like a max Fellow; at master
---- level 99 his outgoing damage cap is 149,999.
-+-- Spell 1003 / pool 6003. CLIENT spell ID 1003 = "Matsui-P".
-+-- Look 0x0000310C = model 3121 (trust-era size=0 look).
- -- =====================================================================
- 
- REPLACE INTO spell_list
-@@ -11,26 +10,33 @@ REPLACE INTO spell_list
-      animation, animationTime, AOE, base, multiplier, CE, VE,
-      requirements, spell_range, radius, content_tag)
- VALUES
--    (1021, 'matsui_p', '', 8, 0, 7, 0, 1,
-+    (1003, 'matsui_p', 0x01010101010101010101010101010101010101010101, 8, 0, 7, 0, 1,
-      0, 0, 2000, 240000, 0, 0,
-      939, 1500, 0, 0, 1.00, 0, 0,
-      0, 0, 0, NULL);
- 
-+-- Clear old wrong slot if previously applied as 1021/6021.
-+DELETE FROM spell_list WHERE spellid = 1021 AND name = 'matsui_p';
-+DELETE FROM mob_pools WHERE poolid = 6021 AND name = 'matsui_p';
- DELETE FROM mob_spell_lists WHERE spell_list_id = 6021;
-+DELETE FROM mob_skill_lists WHERE skill_list_id = 6021;
-+
-+DELETE FROM mob_spell_lists WHERE spell_list_id = 6003;
- INSERT INTO mob_spell_lists
-     (spell_list_name, spell_list_id, spell_id, min_level, max_level)
- VALUES
--    ('matsui_p', 6021, 144,  12, 255),
--    ('matsui_p', 6021, 145,  30, 255),
--    ('matsui_p', 6021, 146,  55, 255),
--    ('matsui_p', 6021, 147,  80, 255),
--    ('matsui_p', 6021, 148,  99, 255),
--    ('matsui_p', 6021, 849, 100, 255);
-+    ('matsui_p', 6003, 144,  12, 255),
-+    ('matsui_p', 6003, 145,  30, 255),
-+    ('matsui_p', 6003, 146,  55, 255),
-+    ('matsui_p', 6003, 147,  80, 255),
-+    ('matsui_p', 6003, 148,  99, 255),
-+    ('matsui_p', 6003, 849, 100, 255);
- 
--REPLACE INTO mob_skill_lists (skill_list_name, skill_list_id, mob_skill_id)
--VALUES ('matsui_p', 6021, 3740),
--       ('matsui_p', 6021, 3743),
--       ('matsui_p', 6021, 202);
-+DELETE FROM mob_skill_lists WHERE skill_list_id = 6003;
-+INSERT INTO mob_skill_lists (skill_list_name, skill_list_id, mob_skill_id)
-+VALUES ('matsui_p', 6003, 3740),
-+       ('matsui_p', 6003, 3743),
-+       ('matsui_p', 6003, 202);
- 
- REPLACE INTO mob_pools
-     (poolid, name,       packet_name, speciesid, modelid,
-@@ -40,9 +46,10 @@ REPLACE INTO mob_pools
-      spellList, namevis, roamflag, skill_list_id, resist_id,
-      modelSize, modelHitboxSize)
- VALUES
--    (6021, 'matsui_p', 'Matsui-P', 246, 3121,
-+    -- model 3121 = 0x0C31 LE -> bytes 31 0C (trust-era size=0 look).
-+    (6003, 'matsui_p', 'Matsui-P', 297, UNHEX('0000310C00000000000000000000000000000000'),
-      12, 4, 25, 240, 300,
-      0, 0, 0, 0, 0, 0,
-      32, 0, 3, 0, 0,
--     6021, 0, 0, 6021, 153,
-+     6003, 0, 0, 6003, 153,
-      1, 12);
-diff --git a/scripts/actions/spells/trust/aamr.lua b/scripts/actions/spells/trust/aamr.lua
-index 233b525831..1abfa1438b 100644
---- a/scripts/actions/spells/trust/aamr.lua
-+++ b/scripts/actions/spells/trust/aamr.lua
-@@ -14,6 +14,9 @@ end
- 
- spellObject.onMobSpawn = function(mob)
-     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
-+    -- Ranged kit injected by trust_power_scaling (ranged_dd).
-+    mob:addMod(xi.mod.RATT, 50)
-+    mob:addMod(xi.mod.RACC, 50)
- end
- 
- spellObject.onMobDespawn = function(mob)
-diff --git a/scripts/actions/spells/trust/aatt.lua b/scripts/actions/spells/trust/aatt.lua
-index ac50db17db..5f1dda901c 100644
---- a/scripts/actions/spells/trust/aatt.lua
-+++ b/scripts/actions/spells/trust/aatt.lua
-@@ -14,6 +14,9 @@ end
- 
- spellObject.onMobSpawn = function(mob)
-     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
-+    -- Nuker kit injected by trust_power_scaling (nuker).
-+    mob:addMod(xi.mod.FASTCAST, 45)
-+    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 30)
- end
- 
- spellObject.onMobDespawn = function(mob)
-diff --git a/scripts/actions/spells/trust/arciela.lua b/scripts/actions/spells/trust/arciela.lua
-index b925fbbfc7..e51e77ef51 100644
---- a/scripts/actions/spells/trust/arciela.lua
-+++ b/scripts/actions/spells/trust/arciela.lua
-@@ -1,5 +1,6 @@
- -----------------------------------
- -- Trust: Arciela
-+-- Kit provided by trust_kit_library (nuker) via trust_power_scaling.
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -14,6 +15,8 @@ end
- 
- spellObject.onMobSpawn = function(mob)
-     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
-+    mob:addMod(xi.mod.FASTCAST, 45)
-+    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 30)
- end
- 
- spellObject.onMobDespawn = function(mob)
-diff --git a/scripts/actions/spells/trust/arciela_ii.lua b/scripts/actions/spells/trust/arciela_ii.lua
-index 2eb2438a29..1f45dc8e3d 100644
---- a/scripts/actions/spells/trust/arciela_ii.lua
-+++ b/scripts/actions/spells/trust/arciela_ii.lua
-@@ -1,5 +1,6 @@
- -----------------------------------
- -- Trust: Arciela II
-+-- Kit provided by trust_kit_library (nuker) via trust_power_scaling.
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -14,6 +15,9 @@ end
- 
- spellObject.onMobSpawn = function(mob)
-     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
-+    mob:addMod(xi.mod.FASTCAST, 60)
-+    mob:addMod(xi.mod.UFASTCAST, 15)
-+    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 45)
- end
- 
- spellObject.onMobDespawn = function(mob)
-diff --git a/scripts/actions/spells/trust/cornelia.lua b/scripts/actions/spells/trust/cornelia.lua
-index 500db9e96c..379dc43a9d 100644
---- a/scripts/actions/spells/trust/cornelia.lua
-+++ b/scripts/actions/spells/trust/cornelia.lua
-@@ -1,6 +1,7 @@
- -----------------------------------
- -- Trust: Cornelia
---- Spell ID: 1003  |  Pool ID: 6003
-+-- Spell ID: 1002  |  Pool ID: 6002  (client menu name: Cornelia)
-+-- Model from mob_pools look 0x00002F0C (3119).
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -14,27 +15,29 @@ spellObject.onSpellCast = function(caster, target, spell)
- end
- 
- spellObject.onMobSpawn = function(mob)
--    mob:setModelId(3119)
-     mob:renameEntity('Cornelia', true)
- 
-     local master = mob:getMaster()
-     local boostAmount = math.ceil((30 / 99) * (master:getMainLvl() or 1))
- 
--    mob:addStatusEffect(xi.effect.GEO_HASTE, {
--        power = 6, tick = 3, origin = mob, subType = xi.effect.GEO_HASTE,
--        subPower = boostAmount, tier = xi.auraTarget.ALLIES, flag = xi.effectFlag.AURA,
-+    -- Retail: haste bubble is the visible colure; Acc / MAcc also apply.
-+    mob:addStatusEffect(xi.effect.COLURE_ACTIVE, {
-+        power = 6, tick = 3, origin = mob,
-+        subType = xi.effect.GEO_HASTE, subPower = boostAmount,
-+        tier = xi.auraTarget.ALLIES, flag = xi.effectFlag.AURA,
-     })
-     mob:addStatusEffect(xi.effect.GEO_ACCURACY_BOOST, {
--        power = 6, tick = 3, origin = mob, subType = xi.effect.GEO_ACCURACY_BOOST,
--        subPower = boostAmount, tier = xi.auraTarget.ALLIES, flag = xi.effectFlag.AURA,
-+        power = 6, tick = 3, origin = mob,
-+        subType = xi.effect.GEO_ACCURACY_BOOST, subPower = boostAmount,
-+        tier = xi.auraTarget.ALLIES, flag = xi.effectFlag.AURA,
-     })
-     mob:addStatusEffect(xi.effect.GEO_MAGIC_ACC_BOOST, {
--        power = 6, tick = 3, origin = mob, subType = xi.effect.GEO_MAGIC_ACC_BOOST,
--        subPower = boostAmount, tier = xi.auraTarget.ALLIES, flag = xi.effectFlag.AURA,
-+        power = 6, tick = 3, origin = mob,
-+        subType = xi.effect.GEO_MAGIC_ACC_BOOST, subPower = boostAmount,
-+        tier = xi.auraTarget.ALLIES, flag = xi.effectFlag.AURA,
-     })
- 
-     mob:setAutoAttackEnabled(false)
--    mob:setUnkillable(true)
-     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
- 
-     master:printToPlayer('Cornelia, at your service.', xi.msg.channel.PARTY, 'Cornelia')
-diff --git a/scripts/actions/spells/trust/d_shantotto.lua b/scripts/actions/spells/trust/d_shantotto.lua
-index 88b2bebcb0..09a6405834 100644
---- a/scripts/actions/spells/trust/d_shantotto.lua
-+++ b/scripts/actions/spells/trust/d_shantotto.lua
-@@ -1,5 +1,6 @@
- -----------------------------------
- -- Trust: D Shantotto
-+-- Kit provided by trust_kit_library (nuker) via trust_power_scaling.
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -14,6 +15,9 @@ end
- 
- spellObject.onMobSpawn = function(mob)
-     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
-+    -- Extra FC for MB windows on top of global scaler.
-+    mob:addMod(xi.mod.FASTCAST, 40)
-+    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 25)
- end
- 
- spellObject.onMobDespawn = function(mob)
-diff --git a/scripts/actions/spells/trust/iroha.lua b/scripts/actions/spells/trust/iroha.lua
-index 586658ed4d..f9def584da 100644
---- a/scripts/actions/spells/trust/iroha.lua
-+++ b/scripts/actions/spells/trust/iroha.lua
-@@ -14,6 +14,9 @@ end
- 
- spellObject.onMobSpawn = function(mob)
-     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
-+    -- Melee kit injected by trust_power_scaling (melee_dd).
-+    mob:addMod(xi.mod.STORETP, 25)
-+    mob:addMod(xi.mod.ZANSHIN, 15)
- end
- 
- spellObject.onMobDespawn = function(mob)
-diff --git a/scripts/actions/spells/trust/kayeel-payeel.lua b/scripts/actions/spells/trust/kayeel-payeel.lua
-index 056fd2c328..7babaa72f6 100644
---- a/scripts/actions/spells/trust/kayeel-payeel.lua
-+++ b/scripts/actions/spells/trust/kayeel-payeel.lua
-@@ -1,5 +1,6 @@
- -----------------------------------
- -- Trust: Kayeel-Payeel
-+-- Kit provided by trust_kit_library (nuker) via trust_power_scaling.
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -14,6 +15,8 @@ end
- 
- spellObject.onMobSpawn = function(mob)
-     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
-+    mob:addMod(xi.mod.FASTCAST, 50)
-+    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 30)
- end
- 
- spellObject.onMobDespawn = function(mob)
-diff --git a/scripts/actions/spells/trust/matsui_p.lua b/scripts/actions/spells/trust/matsui_p.lua
-index df06403537..cbefb7c4de 100644
---- a/scripts/actions/spells/trust/matsui_p.lua
-+++ b/scripts/actions/spells/trust/matsui_p.lua
-@@ -1,26 +1,11 @@
- -----------------------------------
- -- Trust: Matsui-P
---- Spell ID: 1021  |  Pool ID: 6021
---- Scales with master level like a max-investment Fellow. At master level 99
---- he breaks the 99,999 trust damage ceiling and caps at 149,999.
-+-- Spell ID: 1003  |  Pool ID: 6003  (client menu name: Matsui-P)
-+-- Exception hard cap 99,999 (set by trust_power_scaling). Script keeps kit + flavor.
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
- 
--local FELLOW_MAX_CAP = 99999
--local MATSUI_MAX_CAP = 149999
--
--local function matsuiDamageCap(master)
--    local masterLvl = math.max(1, math.min(99, master:getMainLvl() or 1))
--    local progress = (masterLvl - 1) / 98
--
--    if masterLvl >= 99 then
--        return MATSUI_MAX_CAP
--    end
--
--    return math.max(1, math.floor(FELLOW_MAX_CAP * progress * progress))
--end
--
- spellObject.onMagicCastingCheck = function(caster, target, spell)
-     return xi.trust.canCast(caster, spell)
- end
-@@ -30,7 +15,7 @@ spellObject.onSpellCast = function(caster, target, spell)
- end
- 
- spellObject.onMobSpawn = function(mob)
--    mob:setModelId(3121)
-+    -- Model comes from mob_pools look 0x0000310C (3121), not setModelId.
-     mob:renameEntity('Matsui-P', true)
- 
-     local master = mob:getMaster()
-@@ -38,22 +23,22 @@ spellObject.onMobSpawn = function(mob)
-     local upgraded = math.max(1, master:getCharVar('TrustUpgraded') or 1)
-     local power = lvl * upgraded
- 
--    mob:setLocalVar('EncounterOutgoingDamageCap', matsuiDamageCap(master))
--
--    mob:addMod(xi.mod.HP, power * 2)
--    mob:addMod(xi.mod.STR, power * 2)
--    mob:addMod(xi.mod.DEX, power * 2)
--    mob:addMod(xi.mod.INT, power * 2)
--    mob:addMod(xi.mod.ATT, power * 3)
--    mob:addMod(xi.mod.ACC, power * 3)
--    mob:addMod(xi.mod.MATT, power * 3)
--    mob:addMod(xi.mod.MACC, power * 3)
-+    -- Flavor on top of global scaler floors (do not fight EncounterOutgoingDamageCap).
-+    mob:addMod(xi.mod.HP, power)
-+    mob:addMod(xi.mod.STR, math.floor(power * 0.5))
-+    mob:addMod(xi.mod.DEX, math.floor(power * 0.5))
-+    mob:addMod(xi.mod.INT, math.floor(power * 0.5))
-+    mob:addMod(xi.mod.ATT, power)
-+    mob:addMod(xi.mod.ACC, power)
-+    mob:addMod(xi.mod.MATT, power)
-+    mob:addMod(xi.mod.MACC, power)
-     mob:addMod(xi.mod.HASTE_MAGIC, 1500)
-     mob:addMod(xi.mod.FASTCAST, 80)
--    mob:addMod(xi.mod.CRITHITRATE, 20 + math.floor(power / 10))
--    mob:addMod(xi.mod.STORETP, math.floor(power / 4))
--    mob:addMod(xi.mod.WSD, 100 + math.floor(power / 5))
--    mob:addMod(xi.mod.MAGIC_DAMAGE, power * 2)
-+    mob:addMod(xi.mod.CRITHITRATE, 15 + math.floor(power / 15))
-+    mob:addMod(xi.mod.STORETP, math.floor(power / 6))
-+    mob:addMod(xi.mod.WSD, 50 + math.floor(power / 8))
-+    mob:addMod(xi.mod.MAGIC_DAMAGE, math.floor(power * 0.75))
-+    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 40)
- 
-     mob:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
-     mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 60)
-diff --git a/scripts/actions/spells/trust/meat.lua b/scripts/actions/spells/trust/meat.lua
-index 5741848aba..b345256a23 100644
---- a/scripts/actions/spells/trust/meat.lua
-+++ b/scripts/actions/spells/trust/meat.lua
-@@ -19,7 +19,7 @@ spellObject.onMobSpawn = function(mob)
- 	mob:getMaster():printToPlayer('Stand behind me and fear nothing.', xi.msg.channel.PARTY, 'Meat')
-     
- 	local master = mob:getMaster()
--	local power = mob:getMainLvl() * master:getCharVar("TrustUpgraded") -- 99 * 1 / 99 * 3 / 99 * 5 / 99 * 7 -- TrustUpgraded grows as you complete server content.
-+	local power = mob:getMainLvl() * math.max(1, master:getCharVar('TrustUpgraded') or 1)
- 
- 	mob:setAutoAttackEnabled(true)
-     -- = Stat Mods = --
-diff --git a/scripts/actions/spells/trust/moogle.lua b/scripts/actions/spells/trust/moogle.lua
-index efd5d84cc9..adc753b49e 100644
---- a/scripts/actions/spells/trust/moogle.lua
-+++ b/scripts/actions/spells/trust/moogle.lua
-@@ -19,9 +19,9 @@ spellObject.onMobSpawn = function(mob)
- 
-     local mlvl = mob:getMainLvl()
-     local tick_amount
--    if mlvl == 99 then
-+    if mlvl >= 99 then
-         tick_amount = 3
--    elseif mlvl < 99 and mlvl > 58 then
-+    elseif mlvl > 58 then
-         tick_amount = 2
-     else
-         tick_amount = 1
-diff --git a/scripts/actions/spells/trust/robel-akbel.lua b/scripts/actions/spells/trust/robel-akbel.lua
-index ea6034d19d..7de8cc4a0f 100644
---- a/scripts/actions/spells/trust/robel-akbel.lua
-+++ b/scripts/actions/spells/trust/robel-akbel.lua
-@@ -1,5 +1,6 @@
- -----------------------------------
- -- Trust: Robel-Akbel
-+-- Kit provided by trust_kit_library (nuker) via trust_power_scaling.
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -14,6 +15,8 @@ end
- 
- spellObject.onMobSpawn = function(mob)
-     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
-+    mob:addMod(xi.mod.FASTCAST, 55)
-+    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 35)
- end
- 
- spellObject.onMobDespawn = function(mob)
-diff --git a/scripts/actions/spells/trust/sakura.lua b/scripts/actions/spells/trust/sakura.lua
-index 22cc57b2d7..e7946e1ebf 100644
---- a/scripts/actions/spells/trust/sakura.lua
-+++ b/scripts/actions/spells/trust/sakura.lua
-@@ -17,21 +17,25 @@ spellObject.onMobSpawn = function(mob)
- 
-     local mlvl = mob:getMainLvl()
-     local tick_amount
--    if mlvl == 99 then
-+    if mlvl >= 99 then
-         tick_amount = 6
--    elseif mlvl < 99 then
-+    elseif mlvl >= 87 then
-         tick_amount = 5
--    elseif mlvl <= 87 then
-+    elseif mlvl >= 73 then
-         tick_amount = 4
--    elseif mlvl <= 73 then
-+    elseif mlvl >= 51 then
-         tick_amount = 3
--    elseif mlvl <= 51 then
-+    elseif mlvl >= 30 then
-         tick_amount = 2
-     else
-         tick_amount = 1
-     end
- 
--    mob:addStatusEffect(xi.effect.COLURE_ACTIVE, { power = 6, origin = mob, tick = 3, subType = xi.effect.GEO_REGEN, subPower = tick_amount, tier = xi.auraTarget.ALLIES, flag = xi.effectFlag.AURA })
-+    mob:addStatusEffect(xi.effect.COLURE_ACTIVE, {
-+        power = 6, origin = mob, tick = 3,
-+        subType = xi.effect.GEO_REGEN, subPower = tick_amount,
-+        tier = xi.auraTarget.ALLIES, flag = xi.effectFlag.AURA,
-+    })
-     mob:setAutoAttackEnabled(false)
- end
- 
 diff --git a/scripts/actions/spells/trust/shantotto.lua b/scripts/actions/spells/trust/shantotto.lua
-index fd6768e989..1f4676febd 100644
+index 1f4676febd..b24f7cd0c2 100644
 --- a/scripts/actions/spells/trust/shantotto.lua
 +++ b/scripts/actions/spells/trust/shantotto.lua
-@@ -1,5 +1,6 @@
- -----------------------------------
- -- Trust: Shantotto
-+-- MB-first nuker with T4/T5 access (spell list 308). Power from trust_power_scaling.
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -17,32 +18,21 @@ spellObject.onMobSpawn = function(mob)
-         [xi.magic.spell.AJIDO_MARUJIDO] = xi.trust.messageOffset.TEAMWORK_1,
-         [xi.magic.spell.STAR_SIBYL] = xi.trust.messageOffset.TEAMWORK_2,
-         [xi.magic.spell.KORU_MORU] = xi.trust.messageOffset.TEAMWORK_3,
--        [xi.magic.spell.KING_OF_HEARTS] = xi.trust.messageOffset.TEAMWORK_4
-+        [xi.magic.spell.KING_OF_HEARTS] = xi.trust.messageOffset.TEAMWORK_4,
-     })
+@@ -28,9 +28,9 @@ spellObject.onMobSpawn = function(mob)
+     mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
  
-+    -- Magic burst windows first, then highest available nuke.
-     mob:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
-+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 20)
-+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
-+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
- 
--    mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 25)
--
--	-- Base level trust (power = mLevel).
--	local master = mob:getMaster()
--	local power = math.floor(mob:getMainLvl() * 1)
--	local zpower = math.floor(mob:getMainLvl() / 5)
--	-- StatMods--
--	mob:addMod(xi.mod.HP, power * 2)
--	mob:addMod(xi.mod.MP, power * 4)
--	mob:addMod(xi.mod.MND, power)
--	mob:addMod(xi.mod.INT, power)
--	mob:addMod(xi.mod.CHR, power)
--	mob:addMod(xi.mod.EVA, power)
--	mob:addMod(xi.mod.HASTE_GEAR, 1500)
--	mob:addMod(xi.mod.FASTCAST, zpower)
--	mob:addMod(xi.mod.REFRESH, zpower)
--    mob:addMod(xi.mod.MATT, power)
--    mob:addMod(xi.mod.MACC, power)
-+    -- Script flavor on top of global scaler (FC for MB windows).
-+    mob:addMod(xi.mod.FASTCAST, 80)
-+    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 35)
-+    mob:addMod(xi.mod.UFASTCAST, 15)
+     -- Script flavor on top of global scaler (FC for MB windows).
+-    mob:addMod(xi.mod.FASTCAST, 80)
+-    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 35)
+-    mob:addMod(xi.mod.UFASTCAST, 15)
++    mob:addMod(xi.mod.FASTCAST, 45)
++    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 20)
++    mob:addMod(xi.mod.UFASTCAST, 10)
  
      mob:setAutoAttackEnabled(false)
--
      mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
- end
- 
 diff --git a/scripts/actions/spells/trust/shantotto_ii.lua b/scripts/actions/spells/trust/shantotto_ii.lua
-index bdcd165798..3fa6b43eda 100644
+index 3fa6b43eda..5ff68bfedd 100644
 --- a/scripts/actions/spells/trust/shantotto_ii.lua
 +++ b/scripts/actions/spells/trust/shantotto_ii.lua
-@@ -1,5 +1,7 @@
- -----------------------------------
- -- Trust: Shantotto II
-+-- MB-first nuker. Soft cap 40k; magic bursts may hit up to 79,999
-+-- (EncounterOutgoingDamageCapMB set by trust_power_scaling).
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -16,47 +18,35 @@ spellObject.onMobSpawn = function(mob)
-     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
+@@ -22,15 +22,11 @@ spellObject.onMobSpawn = function(mob)
+     mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
+     mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
  
-     mob:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
--    mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 45)
-+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 25)
-+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
-+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
- 
--    local trustLevel  = mob:getMainLvl()
--    local power       = trustLevel / 5
--    local spellDamage = trustLevel * math.floor((trustLevel + 1) / 10)
+-    -- Capstone nuker flavor on top of global scaler.
+-    mob:addMod(xi.mod.FASTCAST, 80)
+-    mob:addMod(xi.mod.UFASTCAST, 20)
+-    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 55)
+-    mob:addMod(xi.mod.MAGIC_BURST_BONUS_CAPPED, 40)
+-    mob:addMod(xi.mod.HASTE_MAGIC, 1500)
 -
--    mob:addMod(xi.mod.MATT, power)
--    mob:addMod(xi.mod.MACC, power)
--    mob:addMod(xi.mod.HASTE_MAGIC, 1000) -- 10% Haste (Magic)
-+    -- Capstone nuker flavor on top of global scaler.
-     mob:addMod(xi.mod.FASTCAST, 80)
--    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 40)
--
--    -- Shantotto's tier I spells scale up to mimic tier 2, 3, etc, spells.
--    mob:addMod(xi.mod.MAGIC_DAMAGE, spellDamage)
-+    mob:addMod(xi.mod.UFASTCAST, 20)
-+    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 55)
-+    mob:addMod(xi.mod.MAGIC_BURST_BONUS_CAPPED, 40)
-+    mob:addMod(xi.mod.HASTE_MAGIC, 1500)
- 
--    -- Shantotto has 100% melee hit rate always.
--    -- TODO: Add support for 'perfect accuracy' in c++ land and stop hacking her accuracy.
-+    -- Perfect hit rate on her typeless melee swings.
-     mob:addMod(xi.mod.ACC, 1000)
--
--    -- Shantotto II attack type is suposed to be 'typeless physical, like requiescat WS.'
+-    -- Perfect hit rate on her typeless melee swings.
+-    mob:addMod(xi.mod.ACC, 1000)
++    -- Capstone nuker flavor on top of global scaler (keep modest ΓÇö scaler + hard caps own the band).
++    mob:addMod(xi.mod.FASTCAST, 50)
++    mob:addMod(xi.mod.UFASTCAST, 10)
++    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 25)
++    mob:addMod(xi.mod.HASTE_MAGIC, 1000)
      mob:setMobSkillAttack(1163)
--
--    -- TODO: Her regular attacks have a big range (distance from mob, not AoE)
--
      mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 2500)
  
-     mob:addListener('WEAPONSKILL_USE', 'SHANTOTTO_II_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
-         if skill:getID() == 3740 then -- Final Exam
--            -- And yet again, the flames of life are snuffed out, and I'll say this--it was an out and out rout!
-             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
-         end
-     end)
- 
--    -- Spellcast (occasionally)
-     mob:addListener('MAGIC_USE', 'SHANTOTTO_II_MAGIC', function(mobArg, target, spell, action)
-         if math.random(1, 100) <= 33 then
--            -- Ohohohohoho!
-             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_2)
-         end
-     end)
- 
-+    mob:setAutoAttackEnabled(false)
-     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
+diff --git a/scripts/commands/addalltrusts.lua b/scripts/commands/addalltrusts.lua
+index 5607124ddc..9c4b50cfae 100644
+--- a/scripts/commands/addalltrusts.lua
++++ b/scripts/commands/addalltrusts.lua
+@@ -18,14 +18,15 @@ local function error(player, msg)
  end
  
-diff --git a/scripts/globals/spells/damage_spell.lua b/scripts/globals/spells/damage_spell.lua
-index e848d2df07..cf4af067b4 100644
---- a/scripts/globals/spells/damage_spell.lua
-+++ b/scripts/globals/spells/damage_spell.lua
-@@ -1309,6 +1309,13 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
-     -- Check if the mob has a damage cap
-     finalDamage = target:checkDamageCap(finalDamage)
+ commandObj.onTrigger = function(player, target)
++    -- Omits retired Aldo (930) / Aldo UC (1007). Includes Void Keeper customs.
+     local validSpells =
+     {
+         896, 897, 898, 899, 900, 901, 902, 903, 904, 905, 906, 907, 908, 909, 910, 911, 912, 913, 914, 915, 916, 917, 918, 919, 920,
+-        921, 922, 923, 924, 925, 926, 927, 928, 929, 930, 931, 932, 933, 934, 935, 936, 937, 938, 939, 940, 941, 942, 943, 944, 945,
++        921, 922, 923, 924, 925, 926, 927, 928, 929, 931, 932, 933, 934, 935, 936, 937, 938, 939, 940, 941, 942, 943, 944, 945,
+         946, 947, 948, 949, 950, 951, 952, 953, 954, 955, 956, 957, 958, 959, 960, 961, 962, 963, 964, 965, 966, 967, 968, 969, 970,
+         971, 972, 973, 974, 975, 976, 977, 978, 979, 980, 981, 982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 994, 995,
+         996, 997, 998, 999,
+-        1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019
++        1002, 1003, 1004, 1005, 1006, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019
+     }
  
-+    -- Trust MB exception caps (e.g. Shantotto II) read this localVar inside
-+    -- ResolveOutgoingHpDamageCap for the duration of takeSpellDamage only.
-+    local isMagicBurstHit = magicBurst > 1 or helixDetonated
-+    if isMagicBurstHit then
-+        caster:setLocalVar('OutgoingDamageIsMagicBurst', 1)
-+    end
-+
-     -- FJB: PC casters bypass the 131,071 action-packet ceiling and land the full
-     -- damage on HP (same as TakeWeaponskillDamage for WS). The real value is shown
-     -- in SYSTEM_3 chat by C++ NotifyOverCapDamage inside TakeSpellDamage.
-@@ -1319,6 +1326,10 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
-         target:takeSpellDamage(caster, spell, math.min(finalDamage, 131071), xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + spellElement)
-     end
- 
-+    if isMagicBurstHit then
-+        caster:setLocalVar('OutgoingDamageIsMagicBurst', 0)
-+    end
-+
-     -- Handle Afflatus Misery.
-     target:handleAfflatusMiseryDamage(finalDamage)
- 
+     -- validate target
 diff --git a/scripts/globals/trust.lua b/scripts/globals/trust.lua
-index e636d80aa3..84f1de7b64 100644
+index 84f1de7b64..8808dac02d 100644
 --- a/scripts/globals/trust.lua
 +++ b/scripts/globals/trust.lua
-@@ -286,8 +286,8 @@ xi.trust.VOID_KEEPER_SPELL =
-     MEAT     = 899,
-     GEMMA    = 901,
-     CORVUS   = 902,
--    CORNELIA = 1003,
--    MATSUI_P = 1021,
-+    CORNELIA = 1002, -- client spell slot "Cornelia"
-+    MATSUI_P = 1003, -- client spell slot "Matsui-P"
+@@ -290,6 +290,13 @@ xi.trust.VOID_KEEPER_SPELL =
+     MATSUI_P = 1003, -- client spell slot "Matsui-P"
  }
  
++-- Temporarily retired from the live roster / cipher economy (Aldo + Aldo UC).
++xi.trust.DISABLED_SPELL =
++{
++    ALDO    = 930,  -- retail Aldo / Locke slot
++    ALDO_UC = 1007,
++}
++
  local blockedCipherSpells =
+ {
+     [xi.trust.VOID_KEEPER_SPELL.MEAT]     = true,
+@@ -297,19 +304,22 @@ local blockedCipherSpells =
+     [xi.trust.VOID_KEEPER_SPELL.CORVUS]   = true,
+     [xi.trust.VOID_KEEPER_SPELL.CORNELIA] = true,
+     [xi.trust.VOID_KEEPER_SPELL.MATSUI_P] = true,
++    [xi.trust.DISABLED_SPELL.ALDO]        = true,
++    [xi.trust.DISABLED_SPELL.ALDO_UC]     = true,
+ }
+ 
+--- Every farmable trust except the two Void Keeper capstones (Cornelia, Matsui-P).
++-- Farmable roster for Void Keeper caps (Cornelia / Matsui-P). Excludes the two
++-- capstones and the temporarily disabled Aldo / Aldo UC slots ΓåÆ 118.
+ xi.trust.collectionRoster =
+ {
+     896, 897, 898, 899, 900, 901, 902, 903, 904, 905, 906, 907, 908, 909, 910,
+     911, 912, 913, 914, 915, 916, 917, 918, 919, 920, 921, 922, 923, 924, 925,
+-    926, 927, 928, 929, 930, 931, 932, 933, 934, 935, 936, 937, 938, 939, 940,
++    926, 927, 928, 929, 931, 932, 933, 934, 935, 936, 937, 938, 939, 940,
+     941, 942, 943, 944, 945, 946, 947, 948, 949, 950, 951, 952, 953, 954, 955,
+     956, 957, 958, 959, 960, 961, 962, 963, 964, 965, 966, 967, 968, 969, 970,
+     971, 972, 973, 974, 975, 976, 977, 978, 979, 980, 981, 982, 983, 984, 985,
+     986, 987, 988, 989, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1004,
+-    1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017,
++    1005, 1006, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017,
+     1018, 1019,
+ }
+ 
+diff --git a/src/map/entities/battleentity.cpp b/src/map/entities/battleentity.cpp
+index 93ad3d2a75..2247107d18 100644
+--- a/src/map/entities/battleentity.cpp
++++ b/src/map/entities/battleentity.cpp
+@@ -971,6 +971,10 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
+         {
+             amount = std::min(amount, effectiveDamageCap);
+         }
++
++        // Trusts while the master is still leveling: never chunk more than 30%
++        // of a mob's max HP in one hit (melee, magic, WS, etc.).
++        amount = ApplyTrustLevelingHpPortionCap(attacker, this, amount);
+     }
+ 
+     // Encounter scripts may impose a stricter ceiling while a mob TP move is
+diff --git a/src/map/utils/battleutils.cpp b/src/map/utils/battleutils.cpp
+index 3b7117f2f8..feebc003e3 100644
+--- a/src/map/utils/battleutils.cpp
++++ b/src/map/utils/battleutils.cpp
+@@ -2010,6 +2010,7 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
+ {
+     damage = ApplyAutomatonDamageBonus(PAttacker, damage); // FJB: automaton DPS multiplier (melee + ranged)
+     damage = ApplyRangerDamageAdjust(PAttacker, damage, slot == SLOT_AMMO || slot == SLOT_RANGED); // FJB: relaunch RNG ranged trim
++    damage = ApplyTrustAutoAttackDamageAdjust(PAttacker, damage); // FJB: trust autos at 25% (WS/magic untouched)
+     auto* weapon           = GetEntityWeapon(PAttacker, (SLOTTYPE)slot);
+     giveTPtoAttacker       = giveTPtoAttacker && !PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MEIKYO_SHISUI);
+     giveTPtoVictim         = giveTPtoVictim && physicalAttackType != PHYSICAL_ATTACK_TYPE::DAKEN;
 diff --git a/tools/validate_trust_power_curve.ps1 b/tools/validate_trust_power_curve.ps1
-new file mode 100644
-index 0000000000..29cdfbd019
---- /dev/null
+index 29cdfbd019..374a0c3e85 100644
+--- a/tools/validate_trust_power_curve.ps1
 +++ b/tools/validate_trust_power_curve.ps1
-@@ -0,0 +1,96 @@
-+# Offline validation of trust_power_scaling curve targets at master 50 / 75 / 99.
-+# Mirrors modules/custom/lua/trust_power_scaling.lua + trust_power_catalog.lua.
-+# Usage: pwsh tools/validate_trust_power_curve.ps1
-+
-+$ErrorActionPreference = 'Stop'
-+
-+$tierMult = @{ C = 0.72; B = 0.88; A = 1.00; S = 1.12 }
-+$defaultCap = 40000
-+$matsuiCap = 99999
-+$shan2MbCap = 79999
-+
-+function Progress([int]$L) {
-+    $L = [Math]::Max(1, [Math]::Min(99, $L))
-+    return [Math]::Pow(($L / 99.0), 1.25)
-+}
-+
-+function MeleePkg([double]$p, [double]$t) {
-+    return [ordered]@{
-+        weaponD = [int][Math]::Floor((55 + 165 * $p) * $t)
-+        att     = [int][Math]::Floor((120 + 680 * $p) * $t)
-+        acc     = [int][Math]::Floor((150 + 750 * $p) * $t)
-+        wsd     = [int][Math]::Floor((10 + 45 * $p) * $t)
-+        da      = [int][Math]::Floor((8 + 32 * $p) * $t)
-+    }
-+}
-+
-+function MagePkg([double]$p, [double]$t) {
-+    return [ordered]@{
-+        matt = [int][Math]::Floor((80 + 360 * $p) * $t)
-+        macc = [int][Math]::Floor((100 + 400 * $p) * $t)
-+        mdmg = [int][Math]::Floor((2500 + 11000 * $p) * $t)
-+        fc   = [int][Math]::Min(80, [Math]::Floor((35 + 45 * $p) * [Math]::Min($t, 1.1)))
-+        mbb  = [int][Math]::Floor((20 + 40 * $p) * $t)
-+    }
-+}
-+
-+$samples = @(
-+    @{ Name = 'Kupipi (healer B)';   Role = 'healer'; Tier = 'B'; Cap = $defaultCap; MbCap = 0 }
-+    @{ Name = 'Zeid II (melee S)';   Role = 'melee';  Tier = 'S'; Cap = $defaultCap; MbCap = 0 }
-+    @{ Name = 'August (melee S)';    Role = 'melee';  Tier = 'S'; Cap = $defaultCap; MbCap = 0 }
-+    @{ Name = 'Shantotto (nuker A)'; Role = 'nuker';  Tier = 'A'; Cap = $defaultCap; MbCap = 0 }
-+    @{ Name = 'Shantotto II (S)';    Role = 'nuker';  Tier = 'S'; Cap = $defaultCap; MbCap = $shan2MbCap }
-+    @{ Name = 'Matsui-P (hybrid S)'; Role = 'hybrid'; Tier = 'S'; Cap = $matsuiCap; MbCap = 0 }
-+    @{ Name = 'Meat (tank S)';       Role = 'tank';   Tier = 'S'; Cap = $defaultCap; MbCap = 0 }
-+)
-+
-+Write-Host 'Trust power curve validation (scaler floors only; scripts add flavor on top)'
-+Write-Host ('=' * 78)
-+
-+foreach ($lvl in @(50, 75, 99)) {
-+    $p = Progress $lvl
-+    Write-Host ''
-+    Write-Host ("Master level {0}  progress={1:N3}" -f $lvl, $p)
-+    Write-Host ('-' * 78)
-+    foreach ($s in $samples) {
-+        $t = $tierMult[$s.Tier]
-+        $line = '{0,-24} tier={1} cap={2}' -f $s.Name, $s.Tier, $s.Cap
-+        if ($s.MbCap -gt 0) { $line += " mbCap=$($s.MbCap)" }
-+        Write-Host $line
-+        switch ($s.Role) {
-+            'melee' {
-+                $m = MeleePkg $p $t
-+                Write-Host ("  melee  D={0} ATT={1} ACC={2} WSD={3} DA={4}" -f $m.weaponD, $m.att, $m.acc, $m.wsd, $m.da)
-+            }
-+            'nuker' {
-+                $m = MagePkg $p $t
-+                Write-Host ("  mage   MATT={0} MACC={1} MAGIC_DMG={2} FC={3} MB+={4}" -f $m.matt, $m.macc, $m.mdmg, $m.fc, $m.mbb)
-+            }
-+            'hybrid' {
-+                $me = MeleePkg $p ($t * 0.85)
-+                $ma = MagePkg $p ($t * 0.85)
-+                Write-Host ("  hybrid D={0} ATT={1} | MATT={2} MAGIC_DMG={3}" -f $me.weaponD, $me.att, $ma.matt, $ma.mdmg)
-+            }
-+            'healer' {
-+                $m = MagePkg $p ($t * 0.55)
-+                Write-Host ("  support MATT={0} MACC={1} FC={2} (heal band, not DPS)" -f $m.matt, $m.macc, $m.fc)
-+            }
-+            'tank' {
-+                $m = MeleePkg $p ($t * 0.55)
-+                Write-Host ("  tank   D={0} ATT={1} ACC={2} (mitigation from tank package)" -f $m.weaponD, $m.att, $m.acc)
-+            }
-+        }
-+    }
-+}
-+
-+Write-Host ''
-+Write-Host 'Expectations at master 99:'
-+Write-Host '  - Melee S ATT ~900+, weapon D ~240+, typical WS aiming 36-40k before hard cap'
-+Write-Host '  - Nuker S MATT ~490+, MAGIC_DAMAGE ~15k+, T4/T5+MB aiming 36-40k (Shan II MB up to 79999)'
-+Write-Host '  - Master 50 progress ~0.42 of full; master 75 ~0.70 ΓÇö hits should stay well under 40k'
-+Write-Host '  - Hard caps: most 40000 | Matsui-P 99999 | Shantotto II MB 79999'
-+Write-Host ''
-+Write-Host 'In-game spot checks after map rebuild + SQL apply:'
-+Write-Host '  1) Master 50/75/99 dummy: Shantotto nuke, Zeid II WS, Meat provoke, Cornelia bubble'
-+Write-Host '  2) Shantotto II magic burst vs non-burst (MB may exceed 40k up to 79999)'
-+Write-Host '  3) Matsui-P can exceed 40k up to 99999; Fellow still independent'
+@@ -4,14 +4,14 @@
+ 
+ $ErrorActionPreference = 'Stop'
+ 
+-$tierMult = @{ C = 0.72; B = 0.88; A = 1.00; S = 1.12 }
++$tierMult = @{ C = 0.52; B = 0.72; A = 0.94; S = 1.18 }
+ $defaultCap = 40000
+ $matsuiCap = 99999
+ $shan2MbCap = 79999
+ 
+ function Progress([int]$L) {
+     $L = [Math]::Max(1, [Math]::Min(99, $L))
+-    return [Math]::Pow(($L / 99.0), 1.25)
++    return [Math]::Pow(($L / 99.0), 1.35)
+ }
+ 
+ function MeleePkg([double]$p, [double]$t) {
+@@ -26,11 +26,11 @@ function MeleePkg([double]$p, [double]$t) {
+ 
+ function MagePkg([double]$p, [double]$t) {
+     return [ordered]@{
+-        matt = [int][Math]::Floor((80 + 360 * $p) * $t)
+-        macc = [int][Math]::Floor((100 + 400 * $p) * $t)
+-        mdmg = [int][Math]::Floor((2500 + 11000 * $p) * $t)
+-        fc   = [int][Math]::Min(80, [Math]::Floor((35 + 45 * $p) * [Math]::Min($t, 1.1)))
+-        mbb  = [int][Math]::Floor((20 + 40 * $p) * $t)
++        matt = [int][Math]::Floor((10 + 430 * $p) * $t)
++        macc = [int][Math]::Floor((15 + 485 * $p) * $t)
++        mdmg = [int][Math]::Floor((80 + 13420 * $p) * $t)
++        fc   = [int][Math]::Min(80, [Math]::Floor((10 + 70 * $p) * [Math]::Min($t, 1.1)))
++        mbb  = [int][Math]::Floor((5 + 55 * $p) * $t)
+     }
+ }
+ 
