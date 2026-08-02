@@ -114,6 +114,16 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
             : FELLOW_ABSOLUTE_DAMAGE_CAP;
     }
 
+    // Hard default for all alter egos. Lua sets EncounterOutgoingDamageCap to
+    // raise exceptions (Matsui-P 99999) or EncounterOutgoingDamageCapMB for
+    // Shantotto II magic bursts. Without a localVar, trusts must never inherit
+    // the global 999999 PC ceiling.
+    if (PAttacker->objtype == TYPE_TRUST)
+    {
+        constexpr int32 TRUST_DEFAULT_CAP = 40000;
+        return globalCap > 0 ? std::min(globalCap, TRUST_DEFAULT_CAP) : TRUST_DEFAULT_CAP;
+    }
+
     if (PAttacker->objtype != TYPE_PC)
     {
         return globalCap;
@@ -149,6 +159,36 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
     }
 
     return effectiveCap;
+}
+
+int32 ApplyTrustLevelingHpPortionCap(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage)
+{
+    constexpr float TRUST_LEVELING_MAX_HP_PORTION = 0.30f;
+
+    if (damage <= 0 || PAttacker == nullptr || PDefender == nullptr)
+    {
+        return damage;
+    }
+
+    if (PAttacker->objtype != TYPE_TRUST || PDefender->objtype != TYPE_MOB)
+    {
+        return damage;
+    }
+
+    CBattleEntity* PMaster = PAttacker->PMaster;
+    if (PMaster == nullptr || PMaster->GetMLevel() >= 99)
+    {
+        return damage;
+    }
+
+    const int32 maxHp = PDefender->GetMaxHP();
+    if (maxHp <= 0)
+    {
+        return damage;
+    }
+
+    const int32 portionCap = std::max(1, static_cast<int32>(maxHp * TRUST_LEVELING_MAX_HP_PORTION));
+    return std::min(damage, portionCap);
 }
 
 void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_view type)
@@ -203,4 +243,23 @@ int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRan
         return static_cast<int32>(damage * RANGER_RANGED_DMG_MULTIPLIER);
     }
     return damage;
+}
+
+int32 ApplyTrustAutoAttackDamageAdjust(CBattleEntity* PAttacker, int32 damage)
+{
+    // Auto-swings only — wired exclusively from TakePhysicalDamage, not WS/magic.
+    constexpr float TRUST_AUTO_ATTACK_MULTIPLIER = 0.25f;
+
+    if (damage <= 0 || PAttacker == nullptr || PAttacker->objtype != TYPE_TRUST)
+    {
+        return damage;
+    }
+
+    // Custom Adventuring Fellow keeps its own tuned auto profile.
+    if (PAttacker->GetLocalVar("fellowApplied") == 1)
+    {
+        return damage;
+    }
+
+    return std::max(1, static_cast<int32>(damage * TRUST_AUTO_ATTACK_MULTIPLIER));
 }

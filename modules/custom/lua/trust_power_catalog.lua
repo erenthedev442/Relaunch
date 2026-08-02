@@ -1,10 +1,15 @@
 -----------------------------------
 -- trust_power_catalog.lua
--- Role / tier / cap / kit injection for every companion trust spell ID.
+-- Role / tier / style / kit injection for every companion trust spell ID.
 --
--- tier: C≈20-25k | B≈25-32k | A≈32-38k | S≈36-40k typical hits at master 99
--- injectKit: role template applied after spawn for shell scripts
---            (false = script already owns its gambits)
+-- Power tiers track content difficulty (cipher drop bands):
+--   C = starters / D1 entry farms     → ~14–20k typical hits at master 99
+--   B = D2 mid content                → ~22–28k
+--   A = D3 hard content               → ~30–36k
+--   S = D4/D5 / CORE / Void Keeper    → ~36–40k (hard cap 40k for most)
+--
+-- style: combat personality within a role (especially nukers) so same-tier
+-- BLMs do not feel identical.
 -----------------------------------
 local C = {}
 
@@ -12,163 +17,216 @@ C.DEFAULT_CAP         = 40000
 C.MATSUI_CAP          = 99999
 C.SHANTOTTO_II_MB_CAP = 79999
 
--- Tier multipliers on the shared power package (1.0 = mid A-ish).
+-- Wide spread so players feel the upgrade path from entry → endgame trusts.
 C.TIER_MULT =
 {
-    C = 0.72,
-    B = 0.88,
-    A = 1.00,
-    S = 1.12,
+    C = 0.52,
+    B = 0.72,
+    A = 0.94,
+    S = 1.18,
 }
 
--- spellId -> { role, tier, cap?, mbCap?, injectKit? }
--- Roles: melee_dd, ranged_dd, tank, healer, buffer, nuker, hybrid, utility, aura
+-- Nuker / mage personality (multiplies mage package axes).
+C.STYLE =
+{
+    -- Entry BLMs: slow, modest, mostly free nukes.
+    apprentice = { matt = 0.88, mdmg = 0.82, mbb = 0.65, fc = 0.80, macc = 0.90 },
+    -- Mid BLMs: solid pressure casters.
+    pressure   = { matt = 1.00, mdmg = 1.00, mbb = 0.90, fc = 0.95, macc = 1.00 },
+    -- SCH / hybrid nukers: slightly less raw, good consistency.
+    scholar    = { matt = 0.95, mdmg = 0.92, mbb = 1.05, fc = 1.05, macc = 1.05 },
+    -- MB specialists: live for skillchain windows.
+    burst      = { matt = 0.96, mdmg = 1.05, mbb = 1.30, fc = 1.18, macc = 1.02 },
+    -- Capstone nukers.
+    apex       = { matt = 1.12, mdmg = 1.18, mbb = 1.40, fc = 1.22, macc = 1.10 },
+    -- Default / non-nuker styles (melee personalities).
+    standard   = { att = 1.00, wsd = 1.00, haste = 1.00, da = 1.00 },
+    bruiser    = { att = 1.08, wsd = 0.92, haste = 1.05, da = 1.15 },
+    weaponskill= { att = 0.95, wsd = 1.18, haste = 0.95, da = 0.90 },
+    skirmisher = { att = 1.00, wsd = 1.05, haste = 1.12, da = 1.05 },
+    support    = { matt = 0.70, mdmg = 0.55, mbb = 0.40, fc = 0.85, macc = 0.85 },
+}
+
+-- spellId -> { role, tier, style?, cap?, mbCap?, injectKit? }
 local function e(role, tier, opts)
     opts = opts or {}
     return {
         role      = role,
         tier      = tier,
+        style     = opts.style or 'standard',
         cap       = opts.cap,
         mbCap     = opts.mbCap,
-        injectKit = opts.injectKit, -- nil/false = no injection
+        injectKit = opts.injectKit,
     }
 end
 
 C.trusts =
 {
-    -- Starters / early
-    [896] = e('nuker',     'A', { injectKit = false }), -- Shantotto
-    [897] = e('melee_dd',  'C', { injectKit = false }), -- Naji
-    [898] = e('healer',    'B', { injectKit = false }), -- Kupipi
-    [899] = e('tank',      'S', { injectKit = false }), -- Meat
-    [900] = e('melee_dd',  'B', { injectKit = false }), -- Ayame
-    [901] = e('buffer',    'S', { injectKit = false }), -- Gemma (skoll.lua)
-    [902] = e('ranged_dd', 'A', { injectKit = false }), -- Corvus
-    [903] = e('melee_dd',  'B', { injectKit = false }), -- Volker
-    [904] = e('nuker',     'A', { injectKit = false }), -- Ajido-Marujido
-    [905] = e('tank',      'B', { injectKit = false }), -- Trion
-    [906] = e('melee_dd',  'B', { injectKit = false }), -- Zeid
-    [907] = e('melee_dd',  'B', { injectKit = false }), -- Lion
-    [908] = e('melee_dd',  'A', { injectKit = false }), -- Tenzen
-    [909] = e('healer',    'B', { injectKit = false }), -- Mihli
-    [910] = e('tank',      'A', { injectKit = false }), -- Valaineral
-    [911] = e('buffer',    'A', { injectKit = false }), -- Joachim
-    [912] = e('melee_dd',  'B', { injectKit = false }), -- Naja
-    [913] = e('melee_dd',  'A', { injectKit = false }), -- Prishe
-    [914] = e('buffer',    'B', { injectKit = false }), -- Ulmia
-    [915] = e('ranged_dd', 'B', { injectKit = false }), -- Shikaree Z
-    [916] = e('healer',    'B', { injectKit = false }), -- Cherukiki
-    [917] = e('melee_dd',  'B', { injectKit = false }), -- Iron Eater
-    [918] = e('melee_dd',  'A', { injectKit = false }), -- Gessho
-    [919] = e('nuker',     'B', { injectKit = 'nuker' }), -- Gadalar (shell)
-    [920] = e('nuker',     'B', { injectKit = false }), -- Rainemard
-    [921] = e('healer',    'B', { injectKit = 'healer' }), -- Ingrid (shell)
-    [922] = e('ranged_dd', 'A', { injectKit = false }), -- Lehko
-    [923] = e('healer',    'B', { injectKit = 'healer' }), -- Nashmeira (shell)
-    [924] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Zazarg (shell)
-    [925] = e('nuker',     'B', { injectKit = 'nuker' }), -- Ovjang (shell)
-    [926] = e('tank',      'B', { injectKit = false }), -- Mnejing
-    [927] = e('aura',      'B', { injectKit = false }), -- Sakura
-    [928] = e('ranged_dd', 'A', { injectKit = 'ranged_dd' }), -- Luzaf (shell)
-    [929] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Najelith (shell)
-    [930] = e('melee_dd',  'A', { injectKit = false }), -- Locke
-    [931] = e('aura',      'B', { injectKit = false }), -- Moogle
-    [932] = e('hybrid',    'B', { injectKit = false }), -- Fablinix
-    [933] = e('melee_dd',  'A', { injectKit = false }), -- Maat
-    [934] = e('nuker',     'A', { injectKit = 'nuker' }), -- D.Shantotto (shell)
-    [935] = e('utility',   'B', { injectKit = 'utility' }), -- Star Sibyl (shell)
-    [936] = e('healer',    'A', { injectKit = false }), -- Karaha-Baruha
-    [937] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Cid (shell)
-    [938] = e('melee_dd',  'A', { injectKit = 'melee_dd' }), -- Gilgamesh (shell)
-    [939] = e('melee_dd',  'B', { injectKit = false }), -- Areuhat
-    [940] = e('ranged_dd', 'A', { injectKit = false }), -- Semih
-    [941] = e('ranged_dd', 'B', { injectKit = 'ranged_dd' }), -- Elivira (shell)
-    [942] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Noillurie (shell)
-    [943] = e('hybrid',    'B', { injectKit = 'hybrid' }), -- Lhu (shell)
-    [944] = e('healer',    'B', { injectKit = false }), -- Ferreous Coffin
-    [945] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Lilisette (shell)
-    [946] = e('buffer',    'B', { injectKit = false }), -- Mumor
-    [947] = e('buffer',    'B', { injectKit = false }), -- Uka
-    [948] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Klara (shell)
-    [949] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Romaa (shell)
-    [950] = e('utility',   'C', { injectKit = 'utility' }), -- Kuyin (shell)
-    [951] = e('tank',      'B', { injectKit = false }), -- Rahal
-    [952] = e('nuker',     'A', { injectKit = false }), -- Koru-Moru
-    [953] = e('healer',    'A', { injectKit = 'healer' }), -- Pieuje UC (shell)
-    [954] = e('tank',      'A', { injectKit = 'tank' }), -- I.Shield UC (shell)
-    [955] = e('healer',    'S', { injectKit = false }), -- Apururu UC
-    [956] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Jakoh UC (shell)
-    [957] = e('ranged_dd', 'A', { injectKit = 'ranged_dd' }), -- Flaviria UC (shell)
-    [958] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Babban (shell)
-    [959] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Abenzio (shell)
-    [960] = e('tank',      'B', { injectKit = false }), -- Rughadjeen
-    [961] = e('nuker',     'B', { injectKit = 'nuker' }), -- Kukki (shell)
-    [962] = e('ranged_dd', 'B', { injectKit = 'ranged_dd' }), -- Margret (shell)
-    [963] = e('utility',   'C', { injectKit = 'utility' }), -- Chacharoon (shell)
-    [964] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Lhe (shell)
-    [965] = e('nuker',     'A', { injectKit = 'nuker' }), -- Arciela (shell)
-    [966] = e('buffer',    'B', { injectKit = 'buffer' }), -- Mayakov (shell)
-    [967] = e('hybrid',    'A', { injectKit = false }), -- Qultada
-    [968] = e('nuker',     'A', { injectKit = false }), -- Adelheid
-    [969] = e('tank',      'A', { injectKit = false }), -- Amchuchu
-    [970] = e('utility',   'B', { injectKit = 'utility' }), -- Brygid (shell)
-    [971] = e('melee_dd',  'A', { injectKit = 'melee_dd' }), -- Mildaurion (shell)
-    [972] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Halver (shell)
-    [973] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Rongelouts (shell)
-    [974] = e('nuker',     'B', { injectKit = 'nuker' }), -- Leonoyne (shell)
-    [975] = e('melee_dd',  'B', { injectKit = 'melee_dd' }), -- Maximilian (shell)
-    [976] = e('nuker',     'A', { injectKit = 'nuker' }), -- Kayeel-Payeel (shell)
-    [977] = e('nuker',     'A', { injectKit = 'nuker' }), -- Robel-Akbel (shell)
-    [978] = e('utility',   'A', { injectKit = 'utility' }), -- Kupofried (shell)
-    [979] = e('utility',   'B', { injectKit = 'utility' }), -- Selh'teus (shell)
-    [980] = e('healer',    'A', { injectKit = false }), -- Yoran-Oran UC
-    [981] = e('buffer',    'S', { injectKit = false }), -- Sylvie UC
-    [982] = e('melee_dd',  'B', { injectKit = false }), -- Abquhbah
-    [983] = e('nuker',     'A', { injectKit = 'nuker' }), -- Balamor (shell)
-    [984] = e('melee_dd',  'S', { injectKit = false }), -- August
-    [985] = e('nuker',     'B', { injectKit = 'nuker' }), -- Rosulatia (shell)
-    [986] = e('nuker',     'B', { injectKit = 'nuker' }), -- Teodor (shell)
-    [987] = e('nuker',     'B', { injectKit = 'nuker' }), -- Ullegore (shell)
-    [988] = e('ranged_dd', 'B', { injectKit = 'ranged_dd' }), -- Makki (shell)
-    [989] = e('buffer',    'B', { injectKit = 'buffer' }), -- King of Hearts (shell)
-    [990] = e('melee_dd',  'A', { injectKit = 'melee_dd' }), -- Morimar (shell)
-    [991] = e('melee_dd',  'A', { injectKit = 'melee_dd' }), -- Darrcuiln (shell)
-    [992] = e('melee_dd',  'A', { injectKit = false }), -- Ark HM
-    [993] = e('healer',    'A', { injectKit = false }), -- Ark EV
-    [994] = e('ranged_dd', 'A', { injectKit = 'ranged_dd' }), -- Ark MR (shell)
-    [995] = e('nuker',     'A', { injectKit = 'nuker' }), -- Ark TT (shell)
-    [996] = e('melee_dd',  'A', { injectKit = false }), -- Ark GK
-    [997] = e('melee_dd',  'A', { injectKit = 'melee_dd' }), -- Iroha (shell)
-    [998] = e('healer',    'A', { injectKit = false }), -- Ygnas
-    [999] = e('healer',    'S', { injectKit = false }), -- Monberaux
+    ------------------------------------------------------------------
+    -- Starters (deliberately modest — first party, not endgame DPS)
+    ------------------------------------------------------------------
+    [896] = e('nuker',     'C', { style = 'apprentice', injectKit = false }), -- Shantotto
+    [898] = e('healer',    'C', { style = 'support',    injectKit = false }), -- Kupipi
+    [905] = e('tank',      'C', { style = 'bruiser',    injectKit = false }), -- Trion
+    [908] = e('melee_dd',  'B', { style = 'weaponskill',injectKit = false }), -- Tenzen (starter but iconic)
 
-    -- Void Keeper capstones (client IDs)
-    [1002] = e('aura',   'S', { injectKit = false }), -- Cornelia
-    [1003] = e('hybrid', 'S', { cap = C.MATSUI_CAP, injectKit = false }), -- Matsui-P
+    ------------------------------------------------------------------
+    -- D1 entry farms
+    ------------------------------------------------------------------
+    [897] = e('melee_dd',  'C', { style = 'bruiser',     injectKit = false }), -- Naji
+    [900] = e('melee_dd',  'C', { style = 'weaponskill', injectKit = false }), -- Ayame
+    [904] = e('nuker',     'C', { style = 'apprentice',  injectKit = false }), -- Ajido
+    [909] = e('healer',    'C', { style = 'support',     injectKit = false }), -- Mihli
+    [912] = e('melee_dd',  'C', { style = 'skirmisher',  injectKit = false }), -- Naja
+    [916] = e('healer',    'C', { style = 'support',     injectKit = false }), -- Cherukiki
+    [922] = e('ranged_dd', 'C', { style = 'skirmisher',  injectKit = false }), -- Lehko
+    [924] = e('melee_dd',  'C', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Zazarg
+    [925] = e('nuker',     'C', { style = 'apprentice',  injectKit = 'nuker' }), -- Ovjang
+    [926] = e('tank',      'C', { style = 'bruiser',     injectKit = false }), -- Mnejing
+    [927] = e('aura',      'C', { style = 'support',     injectKit = false }), -- Sakura
+    [931] = e('aura',      'C', { style = 'support',     injectKit = false }), -- Moogle
+    [936] = e('healer',    'C', { style = 'support',     injectKit = false }), -- Karaha
+    [939] = e('melee_dd',  'C', { style = 'bruiser',     injectKit = false }), -- Areuhat
+    [940] = e('ranged_dd', 'C', { style = 'skirmisher',  injectKit = false }), -- Semih
+    [941] = e('ranged_dd', 'C', { style = 'skirmisher',  injectKit = 'ranged_dd' }), -- Elivira
+    [943] = e('hybrid',    'C', { style = 'pressure',    injectKit = 'hybrid' }), -- Lhu
+    [944] = e('healer',    'C', { style = 'support',     injectKit = false }), -- Ferreous
+    [949] = e('melee_dd',  'C', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Romaa
+    [958] = e('melee_dd',  'C', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Babban
+    [959] = e('melee_dd',  'C', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Abenzio
+    [961] = e('nuker',     'C', { style = 'apprentice',  injectKit = 'nuker' }), -- Kukki
+    [962] = e('ranged_dd', 'C', { style = 'skirmisher',  injectKit = 'ranged_dd' }), -- Margret
+    [966] = e('buffer',    'C', { style = 'support',     injectKit = 'buffer' }), -- Mayakov
+    [968] = e('nuker',     'C', { style = 'scholar',     injectKit = false }), -- Adelheid
+    [972] = e('melee_dd',  'C', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Halver
 
-    [1004] = e('melee_dd', 'B', { injectKit = 'melee_dd' }), -- Excenmille [S] (shell)
-    [1005] = e('melee_dd', 'A', { injectKit = 'melee_dd' }), -- Ayame UC (shell)
-    [1006] = e('melee_dd', 'A', { injectKit = false }), -- Maat UC
-    [1007] = e('melee_dd', 'A', { injectKit = 'melee_dd' }), -- Aldo UC (shell)
-    [1008] = e('melee_dd', 'A', { injectKit = 'melee_dd' }), -- Naja UC (shell)
-    [1009] = e('melee_dd', 'S', { injectKit = false }), -- Lion II
-    [1010] = e('melee_dd', 'S', { injectKit = false }), -- Zeid II
-    [1011] = e('melee_dd', 'S', { injectKit = false }), -- Prishe II
-    [1012] = e('healer',   'A', { injectKit = false }), -- Nashmeira II
-    [1013] = e('melee_dd', 'A', { injectKit = 'melee_dd' }), -- Lilisette II (shell)
-    [1014] = e('melee_dd', 'S', { injectKit = false }), -- Tenzen II
-    [1015] = e('buffer',   'A', { injectKit = false }), -- Mumor II
-    [1016] = e('healer',   'A', { injectKit = 'healer' }), -- Ingrid II (shell)
-    [1017] = e('nuker',    'S', { injectKit = 'nuker' }), -- Arciela II (shell)
-    [1018] = e('melee_dd', 'S', { injectKit = false }), -- Iroha II
-    [1019] = e('nuker',    'S', {
+    ------------------------------------------------------------------
+    -- D2 mid content
+    ------------------------------------------------------------------
+    [903] = e('melee_dd',  'B', { style = 'bruiser',     injectKit = false }), -- Volker
+    [911] = e('buffer',    'B', { style = 'support',     injectKit = false }), -- Joachim
+    [913] = e('melee_dd',  'B', { style = 'bruiser',     injectKit = false }), -- Prishe
+    [915] = e('ranged_dd', 'B', { style = 'skirmisher',  injectKit = false }), -- Shikaree Z
+    [917] = e('melee_dd',  'B', { style = 'bruiser',     injectKit = false }), -- Iron Eater
+    [918] = e('melee_dd',  'B', { style = 'skirmisher',  injectKit = false }), -- Gessho
+    [919] = e('nuker',     'B', { style = 'pressure',    injectKit = 'nuker' }), -- Gadalar
+    [921] = e('healer',    'B', { style = 'support',     injectKit = 'healer' }), -- Ingrid
+    [923] = e('healer',    'B', { style = 'support',     injectKit = 'healer' }), -- Nashmeira
+    [929] = e('melee_dd',  'B', { style = 'weaponskill', injectKit = 'melee_dd' }), -- Najelith
+    [932] = e('hybrid',    'B', { style = 'pressure',    injectKit = false }), -- Fablinix
+    [933] = e('melee_dd',  'B', { style = 'bruiser',     injectKit = false }), -- Maat
+    [934] = e('nuker',     'B', { style = 'burst',       injectKit = 'nuker' }), -- D.Shantotto
+    [935] = e('utility',   'B', { style = 'support',     injectKit = 'utility' }), -- Star Sibyl
+    [942] = e('melee_dd',  'B', { style = 'weaponskill', injectKit = 'melee_dd' }), -- Noillurie
+    [946] = e('buffer',    'B', { style = 'support',     injectKit = false }), -- Mumor
+    [948] = e('melee_dd',  'B', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Klara
+    [951] = e('tank',      'B', { style = 'bruiser',     injectKit = false }), -- Rahal
+    [952] = e('nuker',     'B', { style = 'scholar',     injectKit = false }), -- Koru-Moru
+    [960] = e('tank',      'B', { style = 'bruiser',     injectKit = false }), -- Rughadjeen
+    [965] = e('nuker',     'B', { style = 'burst',       injectKit = 'nuker' }), -- Arciela
+    [969] = e('tank',      'B', { style = 'bruiser',     injectKit = false }), -- Amchuchu
+    [970] = e('utility',   'B', { style = 'support',     injectKit = 'utility' }), -- Brygid
+    [974] = e('nuker',     'B', { style = 'pressure',    injectKit = 'nuker' }), -- Leonoyne
+    [977] = e('nuker',     'B', { style = 'burst',       injectKit = 'nuker' }), -- Robel-Akbel
+    [997] = e('melee_dd',  'B', { style = 'weaponskill', injectKit = 'melee_dd' }), -- Iroha
+    [1004]= e('melee_dd',  'B', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Excenmille S
+    [1006]= e('melee_dd',  'B', { style = 'bruiser',     injectKit = false }), -- Maat UC
+    [1014]= e('melee_dd',  'B', { style = 'weaponskill', injectKit = false }), -- Tenzen II (Unity T2)
+    [1016]= e('healer',    'B', { style = 'support',     injectKit = 'healer' }), -- Ingrid II
+
+    ------------------------------------------------------------------
+    -- D3 hard content
+    ------------------------------------------------------------------
+    [906] = e('melee_dd',  'A', { style = 'weaponskill', injectKit = false }), -- Zeid
+    [907] = e('melee_dd',  'A', { style = 'skirmisher',  injectKit = false }), -- Lion
+    [910] = e('tank',      'A', { style = 'bruiser',     injectKit = false }), -- Valaineral
+    [920] = e('nuker',     'A', { style = 'burst',       injectKit = false }), -- Rainemard
+    [928] = e('ranged_dd', 'A', { style = 'weaponskill', injectKit = 'ranged_dd' }), -- Luzaf
+    [937] = e('melee_dd',  'A', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Cid
+    [938] = e('melee_dd',  'A', { style = 'weaponskill', injectKit = 'melee_dd' }), -- Gilgamesh
+    [945] = e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Lilisette
+    [950] = e('utility',   'A', { style = 'support',     injectKit = 'utility' }), -- Kuyin
+    [953] = e('healer',    'A', { style = 'support',     injectKit = 'healer' }), -- Pieuje UC
+    [954] = e('tank',      'A', { style = 'bruiser',     injectKit = 'tank' }), -- I.Shield UC
+    [956] = e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Jakoh UC
+    [957] = e('ranged_dd', 'A', { style = 'weaponskill', injectKit = 'ranged_dd' }), -- Flaviria UC
+    [967] = e('hybrid',    'A', { style = 'skirmisher',  injectKit = false }), -- Qultada CORE
+    [971] = e('melee_dd',  'A', { style = 'weaponskill', injectKit = 'melee_dd' }), -- Mildaurion
+    [973] = e('melee_dd',  'A', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Rongelouts
+    [975] = e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Maximilian
+    [976] = e('nuker',     'A', { style = 'burst',       injectKit = 'nuker' }), -- Kayeel-Payeel
+    [980] = e('healer',    'A', { style = 'support',     injectKit = false }), -- Yoran-Oran UC
+    [983] = e('nuker',     'A', { style = 'pressure',    injectKit = 'nuker' }), -- Balamor
+    [985] = e('nuker',     'A', { style = 'scholar',     injectKit = 'nuker' }), -- Rosulatia
+    [987] = e('nuker',     'A', { style = 'pressure',    injectKit = 'nuker' }), -- Ullegore
+    [992] = e('melee_dd',  'A', { style = 'bruiser',     injectKit = false }), -- Ark HM
+    [993] = e('healer',    'A', { style = 'support',     injectKit = false }), -- Ark EV
+    [994] = e('ranged_dd', 'A', { style = 'weaponskill', injectKit = 'ranged_dd' }), -- Ark MR
+    [995] = e('nuker',     'A', { style = 'burst',       injectKit = 'nuker' }), -- Ark TT
+    [996] = e('melee_dd',  'A', { style = 'weaponskill', injectKit = false }), -- Ark GK
+    [999] = e('healer',    'A', { style = 'support',     injectKit = false }), -- Monberaux CORE heal
+    [1005]= e('melee_dd',  'A', { style = 'weaponskill', injectKit = 'melee_dd' }), -- Ayame UC
+    [1008]= e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Naja UC
+    [1012]= e('healer',    'A', { style = 'support',     injectKit = false }), -- Nashmeira II
+    [1013]= e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Lilisette II
+    [1015]= e('buffer',    'A', { style = 'support',     injectKit = false }), -- Mumor II
+    [1017]= e('nuker',     'A', { style = 'burst',       injectKit = 'nuker' }), -- Arciela II
+    [1018]= e('melee_dd',  'A', { style = 'weaponskill', injectKit = false }), -- Iroha II
+
+    ------------------------------------------------------------------
+    -- D4 / D5 / CORE endgame
+    ------------------------------------------------------------------
+    [914] = e('buffer',    'S', { style = 'support',     injectKit = false }), -- Ulmia CORE
+    [947] = e('buffer',    'S', { style = 'support',     injectKit = false }), -- Uka (was Prestige)
+    [955] = e('healer',    'S', { style = 'support',     injectKit = false }), -- Apururu UC CORE
+    [963] = e('utility',   'B', { style = 'support',     injectKit = 'utility' }), -- Chacharoon (utility, not DPS)
+    [964] = e('melee_dd',  'S', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Lhe (Prestige move)
+    [978] = e('utility',   'S', { style = 'support',     injectKit = 'utility' }), -- Kupofried CORE chase
+    [979] = e('utility',   'A', { style = 'support',     injectKit = 'utility' }), -- Selh'teus
+    [981] = e('buffer',    'S', { style = 'support',     injectKit = false }), -- Sylvie UC CORE
+    [982] = e('melee_dd',  'A', { style = 'bruiser',     injectKit = false }), -- Abquhbah D4
+    [984] = e('melee_dd',  'S', { style = 'weaponskill', injectKit = false }), -- August CORE
+    [986] = e('nuker',     'S', { style = 'apex',        injectKit = 'nuker' }), -- Teodor
+    [988] = e('ranged_dd', 'S', { style = 'weaponskill', injectKit = 'ranged_dd' }), -- Makki
+    [989] = e('buffer',    'A', { style = 'support',     injectKit = 'buffer' }), -- King of Hearts
+    [990] = e('melee_dd',  'S', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Morimar
+    [991] = e('melee_dd',  'S', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Darrcuiln
+    [998] = e('healer',    'S', { style = 'support',     injectKit = false }), -- Ygnas CORE
+    [1009]= e('melee_dd',  'S', { style = 'skirmisher',  injectKit = false }), -- Lion II
+    [1010]= e('melee_dd',  'S', { style = 'weaponskill', injectKit = false }), -- Zeid II CORE
+    [1011]= e('melee_dd',  'S', { style = 'bruiser',     injectKit = false }), -- Prishe II
+    [1019]= e('nuker',     'S', {
+        style     = 'apex',
         injectKit = false,
         mbCap     = C.SHANTOTTO_II_MB_CAP,
-    }), -- Shantotto II
+    }), -- Shantotto II CORE
+
+    ------------------------------------------------------------------
+    -- Void Keeper customs (chase rewards — top band)
+    ------------------------------------------------------------------
+    [899] = e('tank',      'S', { style = 'bruiser',     injectKit = false }), -- Meat
+    [901] = e('buffer',    'S', { style = 'support',     injectKit = false }), -- Gemma
+    [902] = e('ranged_dd', 'A', { style = 'weaponskill', injectKit = false }), -- Corvus
+    [1002]= e('aura',      'S', { style = 'support',     injectKit = false }), -- Cornelia
+    [1003]= e('hybrid',    'S', {
+        style     = 'apex',
+        cap       = C.MATSUI_CAP,
+        injectKit = false,
+    }), -- Matsui-P
+
+    ------------------------------------------------------------------
+    -- Retired (kept for lookup; stripped by grant gate)
+    ------------------------------------------------------------------
+    [930] = e('melee_dd',  'A', { style = 'skirmisher', injectKit = false }), -- Locke / Aldo disabled
+    [1007]= e('melee_dd',  'A', { style = 'skirmisher', injectKit = 'melee_dd' }), -- Aldo UC disabled
 }
 
 function C.get(spellId)
     return C.trusts[spellId]
+end
+
+function C.styleWeights(styleName)
+    return C.STYLE[styleName] or C.STYLE.standard
 end
 
 return C

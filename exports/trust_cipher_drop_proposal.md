@@ -131,7 +131,7 @@ Sort key: difficulty band â†’ content pool â†’ trust name.
 | 10148 | Gilgamesh | 938 | Genbu-Escha | `Genbu-Escha` | Geas Ru'Aun T3 | D3 | 11 | |
 | 10124 | Luzaf | 928 | Seiryu-Escha | `Seiryu-Escha` | Geas Ru'Aun T3 | D3 | 11 | |
 | 10141 | Kuyin Hathdenna | 950 | Byakko-Escha | `Byakko-Escha` | Geas Ru'Aun T3 | D3 | 11 | |
-| 10126 | Aldo | 930 | Suzaku-Escha | `Suzaku-Escha` | Geas Ru'Aun T3 | D3 | 11 | |
+| 10126 | Aldo (Locke) | 930 | — | — | **DISABLED** | — | — | Temporarily removed from live roster |
 | 10156 | Mildaurion | 971 | Kirin-Escha | `Kirin-Escha` | Geas Ru'Aun T3 | D3 | 11 | |
 | 10188 | AA HM | 992 | Ark Angel HM | `Ark_Angel_HM` | Geas T3 | D3 | 11 | |
 | 10191 | AA EV | 993 | Ark Angel EV | `Ark_Angel_EV` | Geas T3 | D3 | 11 | |
@@ -244,7 +244,7 @@ T1 Warders + Wepwawet Â· T2 Ionos/Kamohoalii Â· T3 Ark Angels + Escha beasts
 | Mumor II | Bennu | T3 Heroes |
 | Ingrid II | Shaula | T3 Heroes |
 | Maat UC | Amarok | T3 Heroes |
-| Aldo UC | Ningishzida | T3 Heroes |
+| ~~Aldo UC~~ | ~~Ningishzida~~ | **DISABLED** (retired from roster) |
 | Ygnas | Isgebind | T3 Heroes |
 
 ### The Gauntlet Â· Riverne (subset)
@@ -262,8 +262,8 @@ Leonoyne (L1), Star Sibyl (L2) â€” remaining Gauntlet slots freed by moving
 | **Corvus** | 902 | 40 trusts collected | 10M gil |
 | **Meat** | 899 | 50 trusts collected | 10M gil |
 | **Gemma** | 901 | 60 trusts collected | 10M gil |
-| **Cornelia** | 1002 | All 120 roster trusts | 50M gil |
-| **Matsui-P** | 1003 | All 120 roster trusts | 50M gil |
+| **Cornelia** | 1002 | All **118** roster trusts (Aldo / Aldo UC excluded) | 50M gil |
+| **Matsui-P** | 1003 | All **118** roster trusts (Aldo / Aldo UC excluded) | 50M gil |
 
 ---
 
@@ -303,7 +303,7 @@ These **35 trusts** use **`addSpell` on NM kill** at the rate in the CSV. See th
 | Excenmille S | 1004 | Toppling Tuber | Abyssea Marks T1 |
 | Ayame UC | 1005 | Wyvernhunter Bambrox | Unity T3 |
 | Maat UC | 1006 | Amarok | Abyssea Marks T3 |
-| Aldo UC | 1007 | Ningishzida | Abyssea Marks T3 |
+| ~~Aldo UC~~ | 1007 | — | **DISABLED** (retired from roster) |
 | Naja UC | 1008 | Ayapec | Unity T3 |
 
 â˜… = priority trusts from original design brief

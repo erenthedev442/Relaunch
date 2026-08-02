@@ -2010,6 +2010,7 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
 {
     damage = ApplyAutomatonDamageBonus(PAttacker, damage); // FJB: automaton DPS multiplier (melee + ranged)
     damage = ApplyRangerDamageAdjust(PAttacker, damage, slot == SLOT_AMMO || slot == SLOT_RANGED); // FJB: relaunch RNG ranged trim
+    damage = ApplyTrustAutoAttackDamageAdjust(PAttacker, damage); // FJB: trust autos at 25% (WS/magic untouched)
     auto* weapon           = GetEntityWeapon(PAttacker, (SLOTTYPE)slot);
     giveTPtoAttacker       = giveTPtoAttacker && !PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MEIKYO_SHISUI);
     giveTPtoVictim         = giveTPtoVictim && physicalAttackType != PHYSICAL_ATTACK_TYPE::DAKEN;

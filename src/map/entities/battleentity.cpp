@@ -971,6 +971,10 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
         {
             amount = std::min(amount, effectiveDamageCap);
         }
+
+        // Trusts while the master is still leveling: never chunk more than 30%
+        // of a mob's max HP in one hit (melee, magic, WS, etc.).
+        amount = ApplyTrustLevelingHpPortionCap(attacker, this, amount);
     }
 
     // Encounter scripts may impose a stricter ceiling while a mob TP move is

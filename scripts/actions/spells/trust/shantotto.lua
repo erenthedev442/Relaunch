@@ -28,9 +28,9 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
 
     -- Script flavor on top of global scaler (FC for MB windows).
-    mob:addMod(xi.mod.FASTCAST, 80)
-    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 35)
-    mob:addMod(xi.mod.UFASTCAST, 15)
+    mob:addMod(xi.mod.FASTCAST, 45)
+    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 20)
+    mob:addMod(xi.mod.UFASTCAST, 10)
 
     mob:setAutoAttackEnabled(false)
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)

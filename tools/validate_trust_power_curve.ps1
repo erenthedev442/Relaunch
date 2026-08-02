@@ -4,14 +4,14 @@
 
 $ErrorActionPreference = 'Stop'
 
-$tierMult = @{ C = 0.72; B = 0.88; A = 1.00; S = 1.12 }
+$tierMult = @{ C = 0.52; B = 0.72; A = 0.94; S = 1.18 }
 $defaultCap = 40000
 $matsuiCap = 99999
 $shan2MbCap = 79999
 
 function Progress([int]$L) {
     $L = [Math]::Max(1, [Math]::Min(99, $L))
-    return [Math]::Pow(($L / 99.0), 1.25)
+    return [Math]::Pow(($L / 99.0), 1.35)
 }
 
 function MeleePkg([double]$p, [double]$t) {
@@ -26,11 +26,11 @@ function MeleePkg([double]$p, [double]$t) {
 
 function MagePkg([double]$p, [double]$t) {
     return [ordered]@{
-        matt = [int][Math]::Floor((80 + 360 * $p) * $t)
-        macc = [int][Math]::Floor((100 + 400 * $p) * $t)
-        mdmg = [int][Math]::Floor((2500 + 11000 * $p) * $t)
-        fc   = [int][Math]::Min(80, [Math]::Floor((35 + 45 * $p) * [Math]::Min($t, 1.1)))
-        mbb  = [int][Math]::Floor((20 + 40 * $p) * $t)
+        matt = [int][Math]::Floor((10 + 430 * $p) * $t)
+        macc = [int][Math]::Floor((15 + 485 * $p) * $t)
+        mdmg = [int][Math]::Floor((80 + 13420 * $p) * $t)
+        fc   = [int][Math]::Min(80, [Math]::Floor((10 + 70 * $p) * [Math]::Min($t, 1.1)))
+        mbb  = [int][Math]::Floor((5 + 55 * $p) * $t)
     }
 }
 

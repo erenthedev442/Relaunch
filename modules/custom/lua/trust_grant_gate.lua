@@ -53,10 +53,23 @@ function xi.trustGrant.markEarned(player, spellId)
     end
 end
 
+local function isDisabledTrust(spellId)
+    local disabled = xi.trust and xi.trust.DISABLED_SPELL
+    if not disabled then
+        return false
+    end
+
+    return spellId == disabled.ALDO or spellId == disabled.ALDO_UC
+end
+
 function xi.trustGrant.grantSpell(player, spellId, params)
     if not xi.trustGrant.isTrustSpell(spellId) then
         player:addSpell(spellId, params)
         return true
+    end
+
+    if isDisabledTrust(spellId) then
+        return false
     end
 
     xi.trustGrant.markEarned(player, spellId)
@@ -74,7 +87,25 @@ local function stripUnityTrusts(player)
     end
 end
 
+local function stripDisabledTrusts(player)
+    local disabled = xi.trust and xi.trust.DISABLED_SPELL
+    if not disabled then
+        return
+    end
+
+    for _, spellId in pairs(disabled) do
+        if player:hasSpell(spellId) then
+            pcall(function()
+                player:delSpell(spellId, { silentLog = true, saveToDB = true, sendUpdate = false })
+            end)
+            player:setCharVar(EARNED_PREFIX .. spellId, 0)
+        end
+    end
+end
+
 function xi.trustGrant.stripUnauthorized(player)
+    stripDisabledTrusts(player)
+
     for spellId = TRUST_SPELL_MIN, TRUST_SPELL_MAX do
         if player:hasSpell(spellId) and not xi.trustGrant.isEarned(player, spellId) then
             pcall(function()

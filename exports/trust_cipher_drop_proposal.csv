@@ -33,7 +33,7 @@
 10123,Sakura,927,cipher_drop,Tangata Manu,Tangata_Manu,Geas Fete T1,D1,15,
 10124,Luzaf,928,cipher_drop,Seiryu-Escha,Seiryu-Escha,Geas Ru'Aun T3,D3,11,
 10125,Najelith,929,cipher_drop,Carabosse,Carabosse,Abyssea Marks T1,D2,13,
-10126,Aldo (Locke),930,cipher_drop,Suzaku-Escha,Suzaku-Escha,Geas Ru'Aun T3,D3,11,Server Locke skin on spell 930
+10126,Aldo (Locke),930,disabled,,,Retired,,0,Temporarily removed from live roster / drops (2026-08-02)
 10127,Moogle,931,cipher_drop,Genbu,Genbu,Reforge Sky [I],D1,15,
 10128,Fablinix,932,cipher_drop,Suzaku,Suzaku,Reforge Sky [II],D2,13,
 ,Maat,933,direct_spell_grant,Sovereign Behemoth,Sovereign_Behemoth,Unity Wanted T2,D2,13,No cipher item
@@ -106,7 +106,7 @@
 ,Excenmille S,1004,direct_spell_grant,Toppling Tuber,Toppling_Tuber,Abyssea Marks T1,D2,13,Variant trust; optional collection row
 ,Ayame UC,1005,direct_spell_grant,Wyvernhunter Bambrox,Wyvernhunter_Bambrox,Unity Wanted T3,D3,11,No cipher item
 ,Maat UC,1006,direct_spell_grant,Amarok,Amarok,Abyssea Marks T3,D2,13,No cipher item
-,Aldo UC,1007,direct_spell_grant,Ningishzida,Ningishzida,Abyssea Marks T3,D3,11,No cipher item; was paid Void Keeper
+,Aldo UC,1007,disabled,,,Retired,,0,Temporarily removed from live roster / drops (2026-08-02)
 ,Naja UC,1008,direct_spell_grant,Ayapec,Ayapec,Unity Wanted T3,D3,11,No cipher item
 10159,Lion II,1009,cipher_drop,Tinnin,Tinnin,Reforge Unity [V],D4,9,
 10160,Zeid II,1010,cipher_drop,Orthrus,Orthrus,Abyssea Marks T3,D4,9,CORE; was Prestige Odin trial â€” moved to Abyssea

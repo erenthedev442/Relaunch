@@ -24,6 +24,11 @@ bool IsPlayerControlled(CBattleEntity* PAttacker);
 // lower it. All overrides are synchronous entity local variables.
 int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap);
 
+// While the trust's master is below level 99, clamp a single hit against a mob
+// to at most 30% of that mob's max HP. Prevents alter egos from one-shotting
+// leveling content. No-op for masters at 99+, non-trust attackers, or non-mobs.
+int32 ApplyTrustLevelingHpPortionCap(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage);
+
 // Whisper the true (over-cap) damage to the controlling player so it's readable
 // in chat. No-op for <=131071 or non-player-controlled sources.
 void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_view type);
@@ -37,3 +42,8 @@ int32 ApplyAutomatonDamageBonus(CBattleEntity* PAttacker, int32 damage);
 // damage unchanged for melee swings, other jobs (incl. COR), non-PCs, or
 // damage <= 0.
 int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRanged);
+
+// Trust auto-attacks (melee + ranged swings via TakePhysicalDamage) hit at 25%
+// of calculated damage. Weaponskills / magic are unchanged. Adventuring Fellow
+// (fellowApplied) is exempt.
+int32 ApplyTrustAutoAttackDamageAdjust(CBattleEntity* PAttacker, int32 damage);

@@ -6,8 +6,8 @@
 --   Corvus   -> spell 902 : 40 trusts collected, 10M gil
 --   Meat     -> spell 899 : 50 trusts collected, 10M gil
 --   Gemma    -> spell 901 : 60 trusts collected, 10M gil
---   Cornelia -> spell 1002: all 120 roster trusts, 50M gil
---   Matsui-P -> spell 1003: all 120 roster trusts, 50M gil
+--   Cornelia -> spell 1002: full collection roster (118), 50M gil
+--   Matsui-P -> spell 1003: full collection roster (118), 50M gil
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')

@@ -22,15 +22,11 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
     mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
 
-    -- Capstone nuker flavor on top of global scaler.
-    mob:addMod(xi.mod.FASTCAST, 80)
-    mob:addMod(xi.mod.UFASTCAST, 20)
-    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 55)
-    mob:addMod(xi.mod.MAGIC_BURST_BONUS_CAPPED, 40)
-    mob:addMod(xi.mod.HASTE_MAGIC, 1500)
-
-    -- Perfect hit rate on her typeless melee swings.
-    mob:addMod(xi.mod.ACC, 1000)
+    -- Capstone nuker flavor on top of global scaler (keep modest — scaler + hard caps own the band).
+    mob:addMod(xi.mod.FASTCAST, 50)
+    mob:addMod(xi.mod.UFASTCAST, 10)
+    mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 25)
+    mob:addMod(xi.mod.HASTE_MAGIC, 1000)
     mob:setMobSkillAttack(1163)
     mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 2500)
 

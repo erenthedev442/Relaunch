@@ -19,7 +19,8 @@ catalog.itemNames =
     'cipher_of_sakuras_alter_ego',
     'cipher_of_luzafs_alter_ego',
     'cipher_of_najeliths_alter_ego',
-    'cipher_of_aldos_alter_ego',
+    -- Aldo / Locke cipher retired from live usable list (spell 930 disabled).
+    -- 'cipher_of_aldos_alter_ego',
     'cipher_of_a_moogles_alter_ego',
     'cipher_of_fablinixs_alter_ego',
     'cipher_of_d._shantottos_alter_ego',
