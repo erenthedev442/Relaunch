@@ -39,14 +39,18 @@ spellObject.onMobSpawn = function(mob)
     mob:setMod(xi.mod.SHIELD_MASTERY_TP, shieldMasteryPower)
     mob:setMod(xi.mod.SHIELDBLOCKRATE, 35)
     mob:addMod(xi.mod.SPELLINTERRUPT, 30)
-    mob:addMod(xi.mod.CURE_POTENCY, 50)
+    -- Cure IV was overshooting (~999); keep modest self-sustain only.
+    mob:addMod(xi.mod.CURE_POTENCY, 15)
     mob:addMod(xi.mod.FASTCAST, 30)
     mob:addMod(xi.mod.REFRESH, 2)
     mob:addMod(xi.mod.ENMITY, 25)
+    mob:addMod(xi.mod.ATT, 45)
+    mob:addMod(xi.mod.ACC, 55)
     mob:addMod(xi.mod.DMG, -800) -- Damage Taken -8%
-    mob:addMod(xi.mod.HPP, 10)
+    -- No script HPP; tank package already supplies A-tier HP.
     mob:addMod(xi.mod.MPP, 20)
-    xi.trust.enableTankEnmity(mob, { tickCE = 2500, tickVE = 5000, actionCE = 1200, actionVE = 2500, tickSeconds = 3, drainMaster = 0, includeParty = false, listenerName = 'VALAINERAL_TANK_ENMITY' })
+    -- Enmity was acceptable on Hadhoyash; keep recovery via party notoriety.
+    xi.trust.enableTankEnmity(mob, { tickCE = 5000, tickVE = 10000, actionCE = 2500, actionVE = 5000, tickSeconds = 2, drainMaster = 10, includeParty = true, listenerName = 'VALAINERAL_TANK_ENMITY' })
 
     if lvl >= 1 then
         mob:addGambit(ai.t.TARGET, { ai.c.VAL_URIEL_CHECK, 0 }, { ai.r.MS, ai.s.SPECIFIC, xi.mobSkill.URIEL_BLADE_1 })

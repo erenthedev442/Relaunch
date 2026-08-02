@@ -28,10 +28,12 @@ spellObject.onMobSpawn = function(mob)
     })
 
     -- Dragon Killer handled in mob_pool_mods
-    mob:addMod(xi.mod.ENMITY, 10)
+    mob:addMod(xi.mod.ENMITY, 40)
+    mob:addMod(xi.mod.ATT, 35)
+    mob:addMod(xi.mod.ACC, 50)
     mob:addMod(xi.mod.DMG, -500) -- Damage Taken -5%
     mob:addMod(xi.mod.HPP, 10)
-    xi.trust.enableTankEnmity(mob, { tickCE = 3000, tickVE = 6000, actionCE = 1500, actionVE = 3000, tickSeconds = 3, drainMaster = 5, includeParty = true, listenerName = 'RAHAL_TANK_ENMITY' })
+    xi.trust.enableTankEnmity(mob, { tickCE = 4500, tickVE = 9000, actionCE = 2200, actionVE = 4500, tickSeconds = 2, drainMaster = 8, includeParty = true, listenerName = 'RAHAL_TANK_ENMITY' })
 
     local lvl = mob:getMainLvl()
 
@@ -52,13 +54,15 @@ spellObject.onMobSpawn = function(mob)
         mob:addGambit(ai.t.SELF,   { ai.c.HPP_LT,     35                }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.SENTINEL })
     end
 
+    mob:addGambit(ai.t.SELF,   { ai.c.HPP_LT,     45                }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE    })
     mob:addGambit(ai.t.PARTY,  { ai.c.HPP_LT,     33                }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE    })
     mob:addGambit(ai.t.SELF,   { ai.c.NOT_STATUS, xi.effect.ENLIGHT }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.ENLIGHT })
     mob:addGambit(ai.t.SELF,   { ai.c.NOT_STATUS, xi.effect.PHALANX }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.PHALANX })
-    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS,     xi.effect.FLASH   }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.FLASH        })
+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.FLASH   }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.FLASH        })
     mob:addGambit(ai.t.PARTY,  { ai.c.STATUS,     xi.effect.SLEEP_I }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURE         })
 
-    mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 2500)
+    -- WS are coded (Fast/Seraph/Savage/Swift); ASAP so he isn't stuck waiting on SCs.
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1500)
 end
 
 spellObject.onMobDespawn = function(mob)

@@ -1320,10 +1320,11 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     -- damage on HP (same as TakeWeaponskillDamage for WS). The real value is shown
     -- in SYSTEM_3 chat by C++ NotifyOverCapDamage inside TakeSpellDamage.
     -- Mob nukes stay capped so they can't punch >131,071 onto players.
+    -- takeSpellDamage returns HP actually removed (trust leveling portion, etc.).
     if caster:getObjType() == xi.objType.PC then
-        target:takeSpellDamage(caster, spell, finalDamage, xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + spellElement)
+        finalDamage = target:takeSpellDamage(caster, spell, finalDamage, xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + spellElement)
     else
-        target:takeSpellDamage(caster, spell, math.min(finalDamage, 131071), xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + spellElement)
+        finalDamage = target:takeSpellDamage(caster, spell, math.min(finalDamage, 131071), xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + spellElement)
     end
 
     if isMagicBurstHit then

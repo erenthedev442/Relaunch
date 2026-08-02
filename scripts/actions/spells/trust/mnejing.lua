@@ -20,10 +20,13 @@ spellObject.onMobSpawn = function(mob)
 
     mob:setMod(xi.mod.SHIELD_MASTERY_TP, 40)
     mob:setMod(xi.mod.SHIELDBLOCKRATE, 45)
-    mob:addMod(xi.mod.ENMITY, 15)
+    -- Entry automaton tank: hate tools + TP moves; still below Amchuchu/B tanks.
+    mob:addMod(xi.mod.ENMITY, 55)
+    mob:addMod(xi.mod.ATT, 40)
+    mob:addMod(xi.mod.ACC, 60)
     mob:addMod(xi.mod.DMG, -375) -- Passive -37.5% Damage Taken Reduction.
     mob:addMod(xi.mod.HPP, 20)
-    xi.trust.enableTankEnmity(mob, { tickCE = 3500, tickVE = 7000, actionCE = 1750, actionVE = 3500, tickSeconds = 3, drainMaster = 5, includeParty = true, listenerName = 'MNEJING_TANK_ENMITY' })
+    xi.trust.enableTankEnmity(mob, { tickCE = 3800, tickVE = 7600, actionCE = 1900, actionVE = 3800, tickSeconds = 3, drainMaster = 5, includeParty = true, listenerName = 'MNEJING_TANK_ENMITY' })
 
     local lastSynergyBonus = 0
 
@@ -55,7 +58,8 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0                        }, { ai.r.MS, ai.s.SPECIFIC, xi.mobSkill.SHIELD_BASH_AUTOMATON }, 30)
     mob:addGambit(ai.t.TARGET, { ai.c.STATUS_FLAG, xi.effectFlag.DISPELABLE }, { ai.r.MS, ai.s.SPECIFIC, xi.mobSkill.DISRUPTOR_AUTOMATON   }, 15)
 
-    mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.RANDOM, 1500)
+    -- Solo tests never open skillchains; ASAP so Chimera Ripper / String Clipper fire.
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.RANDOM, 1500)
 end
 
 spellObject.onMobDespawn = function(mob)

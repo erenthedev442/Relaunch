@@ -3539,7 +3539,10 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rahal', 1066, 42); -- Savage Blade
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rahal', 1066, 41); -- Swift Blade
 -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Koru-Moru',1067,0);
 -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Pieuje_UC',1068,0);
--- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Invincible_Shield_UC',1069,0);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Invincible_Shield_UC',1069,80);  -- Shield Break
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Invincible_Shield_UC',1069,83);  -- Armor Break
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Invincible_Shield_UC',1069,86);  -- Raging Rush
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Invincible_Shield_UC',1069,88);  -- Steel Cyclone
 -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Apururu_UC',1070,0);
 -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Jakoh_Wahcondalo_UC',1071,0);
 -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Flaviria_UC',1072,0);

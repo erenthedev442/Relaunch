@@ -13,7 +13,7 @@
 10112,Zeid,906,cipher_drop,Nidhogg,Nidhogg,Hunting League Rank IV,D3,11,
 10113,Lion,907,cipher_drop,Seiryu,Seiryu,Reforge Sky [III],D3,11,
 10115,Mihli Aliapoh,909,cipher_drop,Valkurm Emperor,Valkurm_Emperor,Hunting League Rank I,D1,15,
-10116,Valaineral,910,cipher_drop,Alfard,Alfard,Abyssea Marks T3,D3,11,Was Prestige trial â€” moved to Abyssea
+10116,Valaineral,910,cipher_drop,Kirin,Kirin,Reforge Sky [V],D4,9,Was Prestige trial — now Reforge Sky
 10117,Joachim,911,cipher_drop,Vrtra,Vrtra,Hunting League Rank III,D2,13,NOTABLE
 10118,Naja Salaheem,912,cipher_drop,Leaping Lizzy,Leaping_Lizzy,Hunting League Rank I,D1,15,
 ,Prishe,913,direct_spell_grant,Sirrush,Sirrush,Abyssea Marks T2,D2,13,No cipher item
@@ -72,7 +72,7 @@
 10151,Mayakov,966,cipher_drop,Cactrot Veloz,Cactrot_Veloz,Unity Wanted T1,D1,15,
 10152,Qultada,967,cipher_drop,Glavoid,Glavoid,Reforge Unity [IV],D3,11,CORE
 10153,Adelheid,968,cipher_drop,Aello,Aello,Reforge Abyssea [I],D1,15,
-10154,Amchuchu,969,cipher_drop,Smok,Smok,Abyssea Marks T2,D2,13,NOTABLE
+10154,Amchuchu,969,cipher_drop,Apademak,Apademak,Abyssea Marks T3,D3,11,NOTABLE
 10155,Brygid,970,cipher_drop,Bomb Queen,Bomb_Queen,Hunting League Rank II,D2,13,
 10156,Mildaurion,971,cipher_drop,Kirin-Escha,Kirin-Escha,Geas Ru'Aun T3,D3,11,
 10158,Halver,972,cipher_drop,Keeper of Heiligtum,Keeper_of_Heiligtum,Unity Wanted T1,D1,15,
@@ -87,12 +87,12 @@
 ,Sylvie UC,981,direct_spell_grant,Tumult Curator,Tumult_Curator,Unity Wanted T3 capstone,D4,9,CORE â€” no cipher item
 10169,Abquhbah,982,cipher_drop,Teles,Teles,Geas Fete T4,D4,9,
 10172,Balamor,983,cipher_drop,Pazuzu,Pazuzu,Geas Fete T3,D3,11,
-10175,August,984,cipher_drop,Kirin,Kirin,Reforge Sky [V],D4,9,CORE
+10175,August,984,cipher_drop,Alfard,Alfard,Abyssea Marks T3,D3,11,CORE
 10176,Rosulatia,985,cipher_drop,Urmahlullu,Urmahlullu,Geas Fete T3,D3,11,
 10179,Teodor,986,cipher_drop,Titlacauan,Titlacauan,Abyssea Marks T2,D4,9,
 10178,Ullegore,987,cipher_drop,Iku-Turso,Iku-Turso,Abyssea Marks T2,D3,11,
 10180,Makki-Chebukki,988,cipher_drop,Warder of Courage,Warder_of_Courage,Geas Fete T4,D4,9,
-10181,King of Hearts,989,cipher_drop,Maju,Maju,Geas Fete T4,D4,9,
+10181,King of Hearts,989,cipher_drop,Briareus,Briareus,Abyssea Marks T1,D3,11,
 10182,Morimar,990,cipher_drop,Warder of Hope,Warder_of_Hope,Geas Fete T4,D4,9,
 10183,Darrcuiln,991,cipher_drop,Azi Dahaka,Azi_Dahaka,Geas Fete T4,D4,9,
 10188,AA HM,992,cipher_drop,Ark Angel HM,Ark_Angel_HM,Geas Fete T3,D3,11,
@@ -102,7 +102,7 @@
 10192,AA GK,996,cipher_drop,Ark Angel GK,Ark_Angel_GK,Geas Fete T3,D3,11,
 10185,Iroha,997,cipher_drop,Iratham,Iratham,Reforge Abyssea [II],D2,13,
 ,Ygnas,998,direct_spell_grant,Isgebind,Isgebind,Abyssea Marks T3,D4,9,CORE â€” no cipher item
-10193,Monberaux,999,cipher_drop,Briareus,Briareus,Abyssea Marks T1,D3,11,CORE
+10193,Monberaux,999,cipher_drop,Maju,Maju,Geas Fete T4,D4,9,CORE
 ,Excenmille S,1004,direct_spell_grant,Toppling Tuber,Toppling_Tuber,Abyssea Marks T1,D2,13,Variant trust; optional collection row
 ,Ayame UC,1005,direct_spell_grant,Wyvernhunter Bambrox,Wyvernhunter_Bambrox,Unity Wanted T3,D3,11,No cipher item
 ,Maat UC,1006,direct_spell_grant,Amarok,Amarok,Abyssea Marks T3,D2,13,No cipher item

@@ -2229,11 +2229,10 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
     {
         damage = -corrected;
     }
-    else if (PAttacker->GetLocalVar("fellowApplied") == 1)
+    else if (PAttacker->objtype == TYPE_TRUST)
     {
-        // Fellow damage is progression-capped inside takeDamage(). Report the
-        // authoritative HP loss instead of the larger pre-cap roll so combat
-        // log values match the damage actually dealt.
+        // Trust/Fellow leveling (and other takeDamage ceilings) are authoritative
+        // for HP. Report the HP actually lost so floating numbers match.
         damage = corrected;
     }
 
@@ -2441,6 +2440,11 @@ int32 TakeWeaponskillDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, 
     {
         damage = -corrected;
     }
+    else if (PAttacker->objtype == TYPE_TRUST)
+    {
+        // Match action-packet WS numbers to HP actually removed (leveling portion).
+        damage = corrected;
+    }
 
     if (PAttacker->objtype == TYPE_PC)
     {
@@ -2538,14 +2542,24 @@ int32 TakeWeaponskillDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, 
  *                                                                       *
  ************************************************************************/
 
-void TakeSpellDamage(CBattleEntity* PDefender, CBattleEntity* PAttacker, CSpell* PSpell, int32 damage, ATTACK_TYPE attackType, DAMAGE_TYPE damageType)
+int32 TakeSpellDamage(CBattleEntity* PDefender, CBattleEntity* PAttacker, CSpell* PSpell, int32 damage, ATTACK_TYPE attackType, DAMAGE_TYPE damageType)
 {
     NotifyOverCapDamage(PAttacker, damage, "Magic");
 
     // Scarlet Delirium: Updates status effect power with damage bonus
     battleutils::HandleScarletDelirium(PDefender, damage);
 
-    PDefender->takeDamage(damage, PAttacker, attackType, damageType);
+    int32 corrected = PDefender->takeDamage(damage, PAttacker, attackType, damageType);
+    if (damage < 0)
+    {
+        damage = -corrected;
+    }
+    else
+    {
+        // Trust leveling portion (and other takeDamage ceilings) must match the
+        // number shown on the spell action packet / combat log.
+        damage = corrected;
+    }
 
     // Remove effects from damage
     if (PSpell->canTargetEnemy() && damage > 0)
@@ -2569,6 +2583,8 @@ void TakeSpellDamage(CBattleEntity* PDefender, CBattleEntity* PAttacker, CSpell*
             PDefender->addTP(tpGainFunc(PAttacker, PDefender, damage));
         }
     }
+
+    return damage;
 }
 
 /************************************************************************
@@ -2635,6 +2651,9 @@ uint8 GetHitRateEx(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 att
 
         hitrate = std::floor<uint8>(luaHitRate * 100);
     }
+
+    // FJB: master-99 trusts — reliable through mob lv120, steep miss penalty above.
+    hitrate = ApplyTrustEndgameHitRateAdjust(PAttacker, PDefender, static_cast<uint8>(hitrate));
     return static_cast<uint8>(hitrate);
 }
 uint8 GetHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
@@ -3913,7 +3932,15 @@ int32 TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, i
     }
 
     uint16 elementOffset = static_cast<uint16>(DAMAGE_TYPE::ELEMENTAL) + static_cast<uint16>(appliedEle);
-    PDefender->takeDamage(damage, PAttacker, ATTACK_TYPE::SPECIAL, appliedEle == ELEMENT_NONE ? DAMAGE_TYPE::NONE : static_cast<DAMAGE_TYPE>(elementOffset), true);
+    int32  corrected     = PDefender->takeDamage(damage, PAttacker, ATTACK_TYPE::SPECIAL, appliedEle == ELEMENT_NONE ? DAMAGE_TYPE::NONE : static_cast<DAMAGE_TYPE>(elementOffset), true);
+    if (damage < 0)
+    {
+        damage = -corrected;
+    }
+    else if (PAttacker != nullptr && PAttacker->objtype == TYPE_TRUST)
+    {
+        damage = corrected;
+    }
 
     battleutils::ClaimMob(PDefender, PAttacker);
     PDefender->updatemask |= UPDATE_STATUS;

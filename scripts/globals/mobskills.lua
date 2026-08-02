@@ -1598,6 +1598,46 @@ xi.mobskills.processDamage = function(actor, target, skill, action, info)
             end
         end
 
+        -- Trust skill-attacks / TP moves: keep floating numbers aligned with the
+        -- HP actually removed (C++ leveling portion + auto-attack band).
+        if
+            actor and
+            actor:getObjType() == xi.objType.TRUST and
+            actor:getLocalVar('fellowApplied') ~= 1 and
+            info.damage > 0
+        then
+            -- Skill-replaced autos use HIT_DMG; match TakePhysicalDamage's 25% AA trim.
+            if
+                info.attackType == xi.attackType.PHYSICAL and
+                skill and
+                skill:getMsg() == xi.msg.basic.HIT_DMG
+            then
+                info.damage = math.max(1, math.floor(info.damage * 0.25))
+            end
+
+            local master = actor:getMaster()
+            if
+                master and
+                master:getMainLvl() < 99 and
+                target:getObjType() == xi.objType.MOB
+            then
+                -- Tier band stamped at spawn (C 8–10%, B 10–15%, A 10–18%, S 10–20%).
+                local bandMin = actor:getLocalVar('TrustLevelingPortionBpsMin')
+                local bandMax = actor:getLocalVar('TrustLevelingPortionBpsMax')
+                if bandMin < 800 or bandMax > 2000 or bandMin > bandMax then
+                    bandMin = 1000
+                    bandMax = 1500
+                end
+
+                local portionBps = math.random(bandMin, bandMax)
+                actor:setLocalVar('TrustLevelingPortionBps', portionBps)
+                local portionCap = math.max(1, math.floor(target:getMaxHP() * (portionBps / 10000)))
+                if info.damage > portionCap then
+                    info.damage = portionCap
+                end
+            end
+        end
+
         target:updateEnmityFromDamage(actor, info.damage)
 
         -- Tell the summoner the true number when a magical BP punches past the 131k

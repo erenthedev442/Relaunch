@@ -965,6 +965,13 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
     // unchanged. Forced-death scripts must opt into the narrow bypass.
     if (amount > 0 && !bypassGlobalHpDamageCap)
     {
+        // Master 99+ DD trusts vs mobs >120: steep outgoing cut (before softclamp).
+        amount = ApplyTrustEndgameLevelDamageMult(attacker, this, amount);
+
+        // Master 99+: compress trust overshoots into tier soft bands (variety,
+        // not 40k spam). Runs after stoneskin/phalanx so a full absorb stays 0.
+        amount = ApplyTrustEndgameSoftClamp(attacker, amount);
+
         const int32 globalHpDamageCap = settings::get<int32>("map.GLOBAL_HP_DAMAGE_CAP");
         const int32 effectiveDamageCap = ResolveOutgoingHpDamageCap(attacker, globalHpDamageCap);
         if (effectiveDamageCap > 0)
@@ -972,8 +979,7 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
             amount = std::min(amount, effectiveDamageCap);
         }
 
-        // Trusts while the master is still leveling: never chunk more than 30%
-        // of a mob's max HP in one hit (melee, magic, WS, etc.).
+        // Trusts while leveling: per-hit tier band % of mob max HP (C/B/A/S).
         amount = ApplyTrustLevelingHpPortionCap(attacker, this, amount);
     }
 

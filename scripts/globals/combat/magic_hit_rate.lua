@@ -595,5 +595,32 @@ xi.combat.magicHitRate.calculateResistRate = function(actor, target, spellGroup,
     params.targetMagicEvasion = calculateTargetMagicEvasion(actor, target, params)
     params.magicHitRate       = calculateMagicHitRate(params)
 
+    -- FJB: master-99 trusts — reliable magic hit through mob lv120; steep falloff above.
+    if
+        actor and
+        actor.getObjType and
+        actor:getObjType() == xi.objType.TRUST and
+        actor:getLocalVar('fellowApplied') ~= 1
+    then
+        local master = actor.getMaster and actor:getMaster() or nil
+        if
+            master and
+            master.getMainLvl and
+            master:getMainLvl() >= 99 and
+            target and
+            target.getObjType and
+            target:getObjType() == xi.objType.MOB
+        then
+            local mobLvl = target:getMainLvl()
+            if mobLvl <= 120 then
+                params.magicHitRate = math.max(params.magicHitRate, 0.90)
+            else
+                local over = mobLvl - 120
+                local mult = utils.clamp(1 - 0.08 * over, 0.15, 1.0)
+                params.magicHitRate = utils.clamp(params.magicHitRate * mult, 0.05, 0.95)
+            end
+        end
+    end
+
     return calculateResistanceFactor(actor, target, params)
 end

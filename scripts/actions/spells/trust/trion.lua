@@ -51,7 +51,8 @@ spellObject.onMobSpawn = function(mob)
     mob:setMod(xi.mod.SHIELDBLOCKRATE, zpower)
     mob:addMod(xi.mod.SPELLINTERRUPT, zpower)
     mob:addMod(xi.mod.FASTCAST, zpower)
-    mob:addMod(xi.mod.ENMITY, 85)
+    -- Entry tank: enough CE to hold casually, well below B/A/S tanks.
+    mob:addMod(xi.mod.ENMITY, 110)
 	mob:addMod(xi.mod.ATT, power)
 	mob:addMod(xi.mod.ACC, power)
 	mob:addMod(xi.mod.STR, power)
@@ -65,7 +66,7 @@ spellObject.onMobSpawn = function(mob)
 	mob:addMod(xi.mod.HPP, 10)
     mob:addMod(xi.mod.MPP, 10)
 	mob:addMod(xi.mod.STATUSRES, math.floor(zpower/2))
-    xi.trust.enableTankEnmity(mob, { tickCE = 2000, tickVE = 4000, actionCE = 1000, actionVE = 2000, tickSeconds = 3, drainMaster = 0, includeParty = false, listenerName = 'TRION_TANK_ENMITY' })
+    xi.trust.enableTankEnmity(mob, { tickCE = 3200, tickVE = 6400, actionCE = 1600, actionVE = 3200, tickSeconds = 3, drainMaster = 5, includeParty = true, listenerName = 'TRION_TANK_ENMITY' })
 
     if lvl >= 5 then
         mob:addGambit(ai.t.SELF, { ai.c.ALWAYS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.PROVOKE })

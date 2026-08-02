@@ -42,8 +42,11 @@ spellObject.onMobSpawn = function(mob)
     mob:setMod(xi.mod.SHIELD_MASTERY_TP, shieldMasteryPower)
     mob:setMod(xi.mod.SHIELDBLOCKRATE, 45)
     mob:addMod(xi.mod.FASTCAST, 30)
-    mob:addMod(xi.mod.CURE_POTENCY, 50)
+    -- Catalog role is tank (not healer); keep cure pot near August (~560 Cure IV).
+    mob:addMod(xi.mod.CURE_POTENCY, 15)
     mob:addMod(xi.mod.ENMITY, 25)
+    mob:addMod(xi.mod.ATT, 45)
+    mob:addMod(xi.mod.ACC, 55)
     mob:addMod(xi.mod.DMG, -1000) -- Damage Taken -10%
     mob:addMod(xi.mod.HPP, 20)
     mob:addMod(xi.mod.ABSORB_PHYSDMG_TO_MP, 5)

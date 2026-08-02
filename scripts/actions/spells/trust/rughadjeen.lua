@@ -30,6 +30,8 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.FASTCAST, 30)
     mob:addMod(xi.mod.CURE_POTENCY_RCVD, 30)
     mob:addMod(xi.mod.TRIPLE_ATTACK, 3)
+    mob:addMod(xi.mod.ATT, 40)
+    mob:addMod(xi.mod.ACC, 55)
     mob:addMod(xi.mod.DMG, -500) -- Damage Taken -5%
     mob:addMod(xi.mod.HPP, 20)
     mob:addMod(xi.mod.MPP, 20)

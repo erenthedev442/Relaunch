@@ -87,7 +87,7 @@ catalog.scaling =
     -- HASTE_GEAR caps at 256 (=25%, engine gear-haste cap).
     mods =
     {
-        -- offense
+        -- offense (physical)
         [xi.mod.ATT]           = { base = 1500, per = 65,   cap = 8000 },
         [xi.mod.ACC]           = { base = 300,  per = 6,    cap = 900 },
         [xi.mod.STR]           = { base = 50,   per = 3,    cap = 350 },
@@ -95,6 +95,16 @@ catalog.scaling =
         [xi.mod.HASTE_GEAR]    = { base = 40,   per = 1.3,  cap = 170 },
         [xi.mod.DOUBLE_ATTACK] = { base = 5,    per = 0.2,  cap = 25 },
         [xi.mod.TRIPLE_ATTACK] = { base = 0,    per = 0.1,  cap = 10 },
+        -- Weapon DMG used to sit at ~level (Suzaku Dread Dive ~400-600 at F95-100).
+        -- MAIN_DMG_RATING feeds GetWeaponDamage so physical specials track the floor.
+        [xi.mod.MAIN_DMG_RATING] = { base = 25, per = 2.0,  cap = 220 },
+        -- offense (magic) — Stormwind / Firaga / Flare were dead without this.
+        -- Magical skills use MATT/MDEF and MAGIC_DAMAGE; ATT alone does nothing.
+        -- F100 ballpark: MATT~1400, MAGIC_DAMAGE~850 → Stormwind thousands, not ~50.
+        [xi.mod.MATT]          = { base = 200,  per = 12,   cap = 1400 },
+        [xi.mod.MACC]          = { base = 200,  per = 6,    cap = 900 },
+        [xi.mod.INT]           = { base = 40,   per = 2.5,  cap = 300 },
+        [xi.mod.MAGIC_DAMAGE]  = { base = 50,   per = 8,    cap = 900 },
         -- endurance (gentle, low caps -- keep mobs damageable)
         [xi.mod.DEF]           = { base = 0,    per = 5,    cap = 500 },
         [xi.mod.EVA]           = { base = 0,    per = 3,    cap = 300 },
@@ -134,7 +144,7 @@ catalog.affixes =
     { id = 'warded',     label = 'Warded',     desc = 'A void-shell blunts every blow.',
       mods = { [xi.mod.DMGPHYS] = -1000, [xi.mod.DMGMAGIC] = -1000 } },
     { id = 'venomous',   label = 'Venomous',   desc = 'Their touch corrodes flesh and magic alike.',
-      mods = { [xi.mod.ATT] = 500, [xi.mod.MATT] = 50 } },
+      mods = { [xi.mod.ATT] = 500, [xi.mod.MATT] = 250 } },
     { id = 'phantasmal', label = 'Phantasmal', desc = 'Half-dreamed, and maddeningly slippery.',
       mods = { [xi.mod.EVA] = 100 } },
     { id = 'colossal',   label = 'Colossal',   desc = 'Bloated with stolen life.',

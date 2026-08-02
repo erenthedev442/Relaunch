@@ -85,7 +85,7 @@ local MILESTONES = {
         reward    = 500,
         announce  = true,
         title     = 'Apex Hunter',
-        desc      = 'First Tier V kill.  These are the hardest NMs on the server.',
+        desc      = 'First Tier V (Rank V - Legend) hunt kill.',
         titleId   = xi.title.HYDRA_HEADHUNTER,
         titleName = 'Hydra Headhunter',
     },

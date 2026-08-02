@@ -10314,12 +10314,12 @@ void CLuaBaseEntity::delHP(int32 delAmt)
  *  Notes   : flags.bypassGlobalHpDamageCap is reserved for explicit forced-death mechanics.
  ************************************************************************/
 
-void CLuaBaseEntity::takeDamage(int32 damage, const sol::object& attacker, const sol::object& atkType, const sol::object& dmgType, const sol::object& flags)
+int32 CLuaBaseEntity::takeDamage(int32 damage, const sol::object& attacker, const sol::object& atkType, const sol::object& dmgType, const sol::object& flags)
 {
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
-        return;
+        return 0;
     }
 
     // Attempt to retrieve the attacker
@@ -10331,7 +10331,7 @@ void CLuaBaseEntity::takeDamage(int32 damage, const sol::object& attacker, const
         if (PLuaAttacker == nullptr || PLuaAttacker->m_PBaseEntity->objtype == TYPE_NPC)
         {
             ShowWarning("CLuaBaseEntity::takeDamage() - PLuaAttacker was null, or was NPC.");
-            return;
+            return 0;
         }
 
         PAttacker = dynamic_cast<CBattleEntity*>(PLuaAttacker->m_PBaseEntity);
@@ -10342,7 +10342,7 @@ void CLuaBaseEntity::takeDamage(int32 damage, const sol::object& attacker, const
     if (!PDefender)
     {
         ShowWarning("CLuaBaseEntity::takeDamage() - Attempt to use non-BattleEntity as PDefender.");
-        return;
+        return 0;
     }
 
     // Check for special flags which may prevent damage from waking up the target
@@ -10392,7 +10392,8 @@ void CLuaBaseEntity::takeDamage(int32 damage, const sol::object& attacker, const
     ATTACK_TYPE attackType = (atkType != sol::lua_nil) ? static_cast<ATTACK_TYPE>(atkType.as<uint8>()) : ATTACK_TYPE::NONE;
     DAMAGE_TYPE damageType = (dmgType != sol::lua_nil) ? static_cast<DAMAGE_TYPE>(dmgType.as<uint8>()) : DAMAGE_TYPE::NONE;
 
-    PDefender->takeDamage(damage, PAttacker, attackType, damageType, false, bypassGlobalHpDamageCap);
+    // Authoritative HP change after global/trust leveling ceilings.
+    const int32 applied = PDefender->takeDamage(damage, PAttacker, attackType, damageType, false, bypassGlobalHpDamageCap);
 
     // liberate target when applicable
     if (damage > 0)
@@ -10413,6 +10414,8 @@ void CLuaBaseEntity::takeDamage(int32 damage, const sol::object& attacker, const
     {
         battleutils::BindBreakCheck(PAttacker, PDefender);
     }
+
+    return applied;
 }
 
 /************************************************************************
@@ -15871,27 +15874,27 @@ int32 CLuaBaseEntity::takeWeaponskillDamage(CLuaBaseEntity* attacker, int32 dama
  *  Notes   : Global function of same name in bluemagic.lua, calls this member function from within
  ************************************************************************/
 
-void CLuaBaseEntity::takeSpellDamage(CLuaBaseEntity* caster, CLuaSpell* spell, int32 damage, uint8 atkType, uint8 dmgType)
+int32 CLuaBaseEntity::takeSpellDamage(CLuaBaseEntity* caster, CLuaSpell* spell, int32 damage, uint8 atkType, uint8 dmgType)
 {
     auto* PBattleDefender = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
     if (!PBattleDefender)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return;
+        return 0;
     }
 
     auto* PBattleAttacker = dynamic_cast<CBattleEntity*>(caster->m_PBaseEntity);
     if (!PBattleAttacker)
     {
         ShowWarning("Invalid entity type passed as Attacker (%s).", m_PBaseEntity->getName());
-        return;
+        return 0;
     }
 
     auto*       PSpell     = spell->GetSpell();
     ATTACK_TYPE attackType = static_cast<ATTACK_TYPE>(atkType);
     DAMAGE_TYPE damageType = static_cast<DAMAGE_TYPE>(dmgType);
 
-    battleutils::TakeSpellDamage(PBattleDefender, PBattleAttacker, PSpell, damage, attackType, damageType);
+    return battleutils::TakeSpellDamage(PBattleDefender, PBattleAttacker, PSpell, damage, attackType, damageType);
 }
 
 /************************************************************************

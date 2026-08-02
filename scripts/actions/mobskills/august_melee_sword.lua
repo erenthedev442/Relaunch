@@ -13,7 +13,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 1
-    params.fTP            = { 2.0, 2.0, 2.0 } -- TODO: Capture fTPs
+    params.fTP            = { 1.0, 1.0, 1.0 } -- tank-tier AA (was 2.0; overshot with S package)
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.SLASHING
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1 -- TODO: Capture shadowBehavior
@@ -22,7 +22,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
-        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+        info.damage = target:takeDamage(info.damage, mob, info.attackType, info.damageType)
     end
 
     return info.damage

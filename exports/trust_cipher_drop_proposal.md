@@ -1,24 +1,25 @@
-﻿# Trust Cipher Drop Proposal â€” Dev Review Draft
+# Trust Cipher Drop Proposal — Dev Review Draft
 
-**Status:** Design only Â· **Not implemented in code**  
-**Last updated:** 2026-08-02  
+**Status:** Design only · **Not implemented in code**  
+**Last updated:** 2026-08-02 (regenerated from CSV)  
+**Source of truth:** [`exports/trust_cipher_drop_proposal.csv`](trust_cipher_drop_proposal.csv)  
 **Related (implemented):** usable ciphers (`modules/custom/sql/trust_cipher_usable.sql`, `scripts/items/_trust_cipher.lua`)
 
-This document is for team review before wiring NM drops. Each row proposes **one primary NM** per cipher. Adjustments welcome â€” flag rows in the CSV companion or inline comments.
+This document is generated from the CSV companion. Edit the CSV, then regenerate this file.
 
 ### Design rule: every trust from a unique farmable NM
 
-**No Rebirth / Prestige / Ascension trial gates.** Every trust except the 4 starters drops from a **dedicated NM kill** â€” one trust per NM, no shared drop tables. **Abyssea Marks** NMs are a first-class source (153 encounters in `abyssea_marks_catalog.lua`).
+**No Rebirth / Prestige / Ascension trial gates** for farmable trusts. Starters are free at creation. Void Keeper customs remain separate collection gates. **Abyssea Marks** NMs are a first-class source.
 
 | Bucket | Count | Unlock |
 |--------|------:|--------|
-| **Cipher NM drops** | 81 | Use cipher item â†’ learn trust |
-| **Direct spell grant** | 35 | `addSpell` on kill â€” no retail cipher item |
-| **Starters** | 4 | Trion, Kupipi, Tenzen, Shantotto â€” free at creation |
-| **â†’ Farmable total** | **116** | Unique NM per trust |
-| **â†’ Roster total** | **120** | Includes Excenmille S variant + all starters |
-
-**Moved off Prestige / gates (2026-08-02):** Meat, Corvus, Gemma (were Void Keeper % gates) Â· Valaineral, Uka, Chacharoon, Lhe, Robel-Akbel, Zeid II, Ingrid II (were Provenance trials) Â· Klara (was Infamy Maat fight) Â· Aldo UC (was paid Void Keeper) â€” all now Abyssea Marks or other farmable NMs.
+| **Cipher NM drops** | 80 | Use cipher item → learn trust |
+| **Direct spell grant** | 31 | `addSpell` on kill — no retail cipher item |
+| **Starters** | 4 | Trion, Kupipi, Tenzen, Shantotto — free at creation |
+| **Void Keeper** | 5 | Meat / Gemma / Corvus / Cornelia / Matsui-P collection gates |
+| **Disabled / retired** | 2 | Aldo (Locke), Aldo UC |
+| **→ NM-farmable** | **111** | Cipher drops + direct grants |
+| **→ Full CSV rows** | **122** | Includes starters, Void Keeper, disabled |
 
 ---
 
@@ -26,328 +27,457 @@ This document is for team review before wiring NM drops. Each row proposes **one
 
 | Layer | Rule |
 |-------|------|
-| **Starters (free)** | Trion, Kupipi, Tenzen, Shantotto â€” granted on first login; remove bulk `giveAllTrusts` from Character Upgrader |
-| **Collectible pool** | **116** NM-farmable trusts + **4** starters = **120** roster entries |
-| **One trust per NM** | Each `mob_groups_name` appears **once** in the CSV â€” no shared drops |
-| **Drop model** | Ciphers: NM drops assigned cipher item. Direct grants: NM kill teaches spell directly |
+| **Starters (free)** | Trion, Kupipi, Tenzen, Shantotto — granted on first login |
+| **One trust per NM** | Each `mob_groups_name` appears once among farmable rows |
+| **Drop model** | Ciphers: NM drops item. Direct grants: NM kill teaches spell |
 | **Dupe protection** | If player already knows the trust: skip roll or convert to Hunt Marks / gil |
-| **Collection display** | Target **116/116** farmable (+ 4 starters = 120/120 full roster) |
-| **Excluded systems** | No Prestige trials, no Job Rebirth gates, no Infamy fights, no Void Keeper % gates, no paid cipher purchases |
+| **Excluded systems** | No Prestige / Rebirth / Infamy gates for these farms; no paid cipher purchases |
 
 ### Drop rate bands
 
 | Band | Example content | Drop rate |
-|------|-----------------|-----------|
-| **D1 â€” Entry** | HL Rank I, Reforge [I], Unity T1, Geas T1, Abyssea Marks T1 | **15%** |
-| **D2 â€” Mid** | HL Rank IIâ€“III, Reforge [IIâ€“III], Unity T2, Geas T2, Abyssea Marks T2 | **13%** |
-| **D3 â€” Hard** | HL Rank IV, Reforge [IV], Unity T3, Geas T3, Abyssea Marks T2â€“3 | **11%** |
-| **D4 â€” Apex** | HL Rank V, Reforge [V], Geas T4, Abyssea Marks T3, Gauntlet high | **9%** |
-| **D5 â€” Chase** | Shinryu (HL Rank V) | **8%** |
+|------|-----------------|----------:|
+| **D1 — Entry** | HL Rank I, Reforge [I], Unity T1, Geas T1, Abyssea Marks T1 | **15%** |
+| **D2 — Mid** | HL Rank II–III, Reforge [II–III], Unity T2, Geas T2, Abyssea Marks T2 | **13%** |
+| **D3 — Hard** | HL Rank IV, Reforge [IV], Unity T3, Geas T3, Abyssea Marks T2–3 | **11%** |
+| **D4 — Apex** | HL Rank V, Reforge [V], Geas T4, Abyssea Marks T3, Gauntlet high | **9%** |
+| **D5 — Chase** | Shinryu (HL Rank V) | **8%** |
 
-### Priority trusts (your short list)
+### Priority trusts
 
-| Trust | Tier | Proposed primary NM | Content | Drop % | Notes |
-|-------|------|---------------------|---------|-------:|-------|
-| **Monberaux** â˜… | Core | Briareus | Abyssea Marks T1 | 11% | |
-| **August** â˜… | Core | Kirin | Reforge Sky [V] | 9% | |
-| **Shantotto II** â˜… | Core | Absolute Virtue | HL Rank V | 9% | |
-| **Sylvie UC** â˜… | Core | Tumult Curator | Unity T3 | 9% | Direct spell grant |
-| **Apururu UC** â˜… | Core | Chloris | Abyssea Marks T1 | 9% | Direct spell grant |
-| **Zeid II** â˜… | Core | Orthrus | Abyssea Marks T3 | 9% | Was Prestige Odin |
-| **Ygnas** â˜… | Core | Isgebind | Abyssea Marks T3 | 9% | Direct spell grant |
-| **Ulmia** â˜… | Core | Pandemonium Warden | HL Rank V | 9% | Direct spell grant |
-| **Qultada** â˜… | Core | Glavoid | Reforge Unity [IV] | 11% | |
-| **Kupofried** â˜… | Core chase | Shinryu | HL Rank V | **8%** | |
-| **Joachim** â˜… | Notable | Vrtra | HL Rank III | 13% | |
-| **Amchuchu** â˜… | Notable | Smok | Abyssea Marks T2 | 13% | |
-| **Gessho** â˜… | Notable | Simurgh | HL Rank III | 13% | Direct spell grant |
-| **Meat** | Custom | Void Keeper | GM Home | — | 50 trusts + 10M gil |
-| **Corvus** | Custom | Void Keeper | GM Home | — | 40 trusts + 10M gil |
-| **Gemma** | Custom | Void Keeper | GM Home | — | 60 trusts + 10M gil |
-
-â˜… = called out in original design brief
+| Trust | Method | Primary NM | Content | Drop % | Notes |
+|-------|--------|------------|---------|-------:|-------|
+| **Monberaux** | cipher_drop | Maju | Geas Fete T4 | 9 | CORE |
+| **August** | cipher_drop | Alfard | Abyssea Marks T3 | 11 | CORE |
+| **Shantotto II** | cipher_drop | Absolute Virtue | Hunting League Rank V | 9 | CORE |
+| **Sylvie UC** | direct_spell_grant | Tumult Curator | Unity Wanted T3 capstone | 9 | CORE — no cipher item |
+| **Apururu UC** | direct_spell_grant | Chloris | Abyssea Marks T1 | 9 | CORE — no cipher item |
+| **Zeid II** | cipher_drop | Orthrus | Abyssea Marks T3 | 9 | CORE; was Prestige Odin trial — moved to Abyssea |
+| **Ygnas** | direct_spell_grant | Isgebind | Abyssea Marks T3 | 9 | CORE — no cipher item |
+| **Ulmia** | direct_spell_grant | Pandemonium Warden | Hunting League Rank V | 9 | CORE — no cipher item |
+| **Qultada** | cipher_drop | Glavoid | Reforge Unity [IV] | 11 | CORE |
+| **Kupofried** | cipher_drop | Shinryu | Hunting League Rank V | 8 | CORE chase |
+| **Joachim** | cipher_drop | Vrtra | Hunting League Rank III | 13 | NOTABLE |
+| **Amchuchu** | cipher_drop | Apademak | Abyssea Marks T3 | 11 | NOTABLE |
+| **Gessho** | direct_spell_grant | Simurgh | Hunting League Rank III | 13 | NOTABLE — no cipher item |
 
 ---
 
-## 2. Master cipher catalog (all 82)
+## 2. Cipher NM drops (80)
 
-Sort key: difficulty band â†’ content pool â†’ trust name.
+Sort: band → content pool → trust name.
 
-| Item ID | Trust | Spell ID | Primary NM | `mob_groups.name` (internal) | Content / zone | Band | Drop % | Notes |
-|--------:|-------|----------|------------|------------------------------|----------------|------|-------:|-------|
-| 10118 | Naja Salaheem | 912 | Leaping Lizzy | `Leaping_Lizzy` | HL Rank I Â· Escha Zi'Tah | D1 | 15 | |
-| 10115 | Mihli Aliapoh | 909 | Valkurm Emperor | `Valkurm_Emperor` | HL Rank I | D1 | 15 | |
-| 10120 | Lehko Habhoka | 922 | Tom Tit Tat | `Tom_Tit_Tat` | HL Rank I | D1 | 15 | |
-| 10143 | Babban | 958 | Hugemaw Harold | `Hugemaw_Harold` | Unity Wanted T1 | D1 | 15 | |
-| 10158 | Halver | 972 | Keeper of Heiligtum | `Keeper_of_Heiligtum` | Unity T1 | D1 | 15 | |
-| 10142 | Karaha-Baruha | 936 | Woodland Mender | `Woodland_Mender` | Unity T1 | D1 | 15 | |
-| 10144 | Abenzio | 959 | Prickly Pitriv | `Prickly_Pitriv` | Unity T1 | D1 | 15 | |
-| 10130 | Elivira | 941 | Abyssdiver | `Abyssdiver` | Unity T1 | D1 | 15 | |
-| 10149 | Areuhat | 939 | Emperor Arthro | `Emperor_Arthro` | Unity T1 | D1 | 15 | |
-| 10132 | Lhu Mhakaracca | 943 | Warblade Beak | `Warblade_Beak` | Unity T1 | D1 | 15 | |
-| 10147 | Margret | 962 | Intuila | `Intuila` | Unity T1 | D1 | 15 | |
-| 10146 | Kukki-Chebukki | 961 | Joyous Green | `Joyous_Green` | Unity T1 | D1 | 15 | |
-| 10151 | Mayakov | 966 | Cactrot Veloz | `Cactrot_Veloz` | Unity T1 | D1 | 15 | |
-| 10127 | Moogle | 931 | Genbu | `Genbu` | Reforge Sky [I] Â· Diorama | D1 | 15 | |
-| 10133 | Ferreous Coffin | 944 | Bukhis | `Bukhis` | Reforge Unity [I] | D1 | 15 | |
-| 10153 | Adelheid | 969 | Aello | `Aello` | Reforge Abyssea [I] | D1 | 15 | |
-| 10122 | Mnejing | 926 | Wepwawet | `Wepwawet` | Geas Fete T1 Â· Escha Zi'Tah | D1 | 15 | |
-| 10157 | Semih Lafihna | 940 | Warder of Faith | `Warder_of_Faith` | Geas Fete T1 | D1 | 15 | |
-| 10123 | Sakura | 927 | Tangata Manu | `Tangata_Manu` | Geas Fete T1 | D1 | 15 | |
-| 10121 | Ovjang | 925 | Warder of Justice | `Warder_of_Justice` | Geas Fete T1 | D1 | 15 | |
-| 10139 | Rahal | 951 | Roc | `Roc` | HL Rank II | D2 | 13 | |
-| 10155 | Brygid | 970 | Bomb Queen | `Bomb_Queen` | HL Rank II | D2 | 13 | |
-| 10117 | Joachim | 911 | Vrtra | `Vrtra` | HL Rank III | D2 | 13 | â˜… Notable |
-| 10154 | Amchuchu | 968 | Serket | `Serket` | HL Rank III | D2 | 13 | â˜… Notable |
-| 10135 | Mumor | 946 | Muut | `Muut` | Unity Wanted T2 | D2 | 13 | |
-| 10131 | Noillurie | 942 | Lumber Jill | `Lumber_Jill` | Unity T2 | D2 | 13 | |
-| 10128 | Fablinix | 932 | Suzaku | `Suzaku` | Reforge Sky [II] | D2 | 13 | |
-| 10140 | Koru-Moru | 952 | Khun | `Khun` | Reforge Unity [II] | D2 | 13 | |
-| 10185 | Iroha | 997 | Iratham | `Iratham` | Reforge Abyssea [II] | D2 | 13 | |
-| 10167 | Tenzen II | 1014 | Thu'ban | `Thuban` | Unity T2 gate | D2 | 13 | |
-| 10116 | Valaineral | 910 | Jailer of Justice | `Jailer_of_Justice` | Prestige P20+ trial | D2 | 13 | Trial spawn, not farm loop |
-| 10166 | Robel-Akbel | 977 | Diabolos | `Diabolos` | Prestige P0 trial | D2 | 13 | |
-| 10174 | Ingrid II | 1016 | Medusa | `Medusa` | Prestige P0 trial | D2 | 13 | |
-| 10145 | Rughadjeen | 960 | Ionos | `Ionos` | Geas Fete T2 Â· Ru'Aun | D2 | 13 | |
-| 10129 | D. Shantotto | 934 | Kamohoalii | `Kamohoalii` | Geas Fete T2 | D2 | 13 | |
-| 10163 | Leonoyne | 974 | Aquarius | `Aquarius` | The Gauntlet L1 | D2 | 13 | |
-| 10134 | Star Sibyl | 935 | Serket | `Serket` | The Gauntlet L2 | D2 | 13 | |
-| 10125 | Najelith | 929 | Simurgh | `Simurgh` | The Gauntlet L3 | D2 | 13 | Simurgh: also desired home for Gessho (no cipher) |
-| 10112 | Zeid | 906 | Nidhogg | `Nidhogg` | HL Rank IV | D3 | 11 | |
-| 10119 | Rainemard | 920 | King Behemoth | `King_Behemoth` | HL Rank IV | D3 | 11 | |
-| 10175 | August | 984 | Kirin | `Kirin` | Reforge Sky [V] Â· Diorama | D4 | 9 | â˜… Core (primary source) |
-| 10113 | Lion | 907 | Seiryu | `Seiryu` | Reforge Sky [III] | D3 | 11 | |
-| 10137 | Lilisette | 945 | Padfoot | `Padfoot` | Reforge Unity [III] | D3 | 11 | |
-| 10193 | Monberaux | 999 | Briareus | `Briareus` | Reforge Abyssea [III] | D3 | 11 | â˜… Core |
-| 10152 | Qultada | 967 | Glavoid | `Glavoid` | Reforge Unity [IV] | D3 | 11 | â˜… Core |
-| 10184 | Arciela II | 965 | Itzpapalotl | `Itzpapalotl` | Reforge Abyssea [IV] | D3 | 11 | |
-| 10138 | Cid | 937 | Byakko | `Byakko` | Reforge Sky [IV] | D3 | 11 | |
-| 10170 | Nashmeira II | 1012 | Specter Worm | `Specter_Worm` | Unity T3 | D3 | 11 | |
-| 10171 | Lilisette II | 1013 | Bakunawa | `Bakunawa` | Unity T3 | D3 | 11 | |
-| 10186 | Iroha II | 1018 | Shedu | `Shedu` | Unity T3 | D3 | 11 | |
-| 10161 | Rongelouts | 973 | Fleetstalker | `Fleetstalker` | Geas Fete T3 | D3 | 11 | |
-| 10176 | Rosulatia | 987 | Urmahlullu | `Urmahlullu` | Geas Fete T3 | D3 | 11 | |
-| 10172 | Balamor | 979 | Pazuzu | `Pazuzu` | Geas Fete T3 | D3 | 11 | |
-| 10148 | Gilgamesh | 938 | Genbu-Escha | `Genbu-Escha` | Geas Ru'Aun T3 | D3 | 11 | |
-| 10124 | Luzaf | 928 | Seiryu-Escha | `Seiryu-Escha` | Geas Ru'Aun T3 | D3 | 11 | |
-| 10141 | Kuyin Hathdenna | 950 | Byakko-Escha | `Byakko-Escha` | Geas Ru'Aun T3 | D3 | 11 | |
-| 10126 | Aldo (Locke) | 930 | — | — | **DISABLED** | — | — | Temporarily removed from live roster |
-| 10156 | Mildaurion | 971 | Kirin-Escha | `Kirin-Escha` | Geas Ru'Aun T3 | D3 | 11 | |
-| 10188 | AA HM | 992 | Ark Angel HM | `Ark_Angel_HM` | Geas T3 | D3 | 11 | |
-| 10191 | AA EV | 993 | Ark Angel EV | `Ark_Angel_EV` | Geas T3 | D3 | 11 | |
-| 10189 | AA TT | 995 | Ark Angel TT | `Ark_Angel_TT` | Geas T3 | D3 | 11 | |
-| 10190 | AA MR | 994 | Ark Angel MR | `Ark_Angel_MR` | Geas T3 | D3 | 11 | |
-| 10192 | AA GK | 996 | Ark Angel GK | `Ark_Angel_GK` | Geas T3 | D3 | 11 | |
-| 10164 | Maximilian | 976 | Nidhogg | `Nidhogg` | The Gauntlet L4 | D3 | 11 | |
-| 10165 | Kayeel-Payeel | 975 | King Behemoth | `King_Behemoth` | The Gauntlet L5 | D3 | 11 | |
-| 10178 | Ullegore | 989 | Vrtra | `Vrtra` | The Gauntlet L6 | D3 | 11 | |
-| 10177 | Mumor II | 1015 | Kirin | `Kirin` | The Gauntlet L7 | D3 | 11 | |
-| 10187 | Shantotto II | 1019 | Absolute Virtue | `Absolute_Virtue` | HL Rank V | D4 | 9 | â˜… Core |
-| 10160 | Zeid II | 1010 | Odin | `Odin` | Prestige trial | D4 | 9 | â˜… Core |
-| 10159 | Lion II | 1009 | Tinnin | `Tinnin` | Reforge Unity [V] | D4 | 9 | |
-| 10179 | Teodor | 986 | Hadhayosh | `Hadhayosh` | Reforge Abyssea [V] | D4 | 9 | Pair w/ Apururu UC direct grant? |
-| 10168 | Prishe II | 1011 | Tumult Curator | `Tumult_Curator` | Unity T3 capstone | D4 | 9 | Pair w/ Sylvie UC direct grant? |
-| 10173 | Selh'Teus | 978 | Albumen | `Albumen` | Geas Fete T4 | D4 | 9 | |
-| 10169 | Abquhbah | 982 | Teles | `Teles` | Geas Fete T4 | D4 | 9 | |
-| 10180 | Makki-Chebukki | 988 | Warder of Courage | `Warder_of_Courage` | Geas T4 | D4 | 9 | |
-| 10181 | King of Hearts | 990 | Maju | `Maju` | Geas T4 | D4 | 9 | |
-| 10182 | Morimar | 991 | Warder of Hope | `Warder_of_Hope` | Geas T4 | D4 | 9 | |
-| 10183 | Darrcuiln | 993 | Azi Dahaka | `Azi_Dahaka` | Geas T4 | D4 | 9 | Pair w/ Ygnas direct grant? |
-| 10162 | Kupofried | 973 | Shinryu | `Shinryu` | HL Rank V | D5 | 8 | â˜… Core chase |
-| 10150 | Lhe Lhangavo | 964 | Sarameya | `Sarameya` | Prestige P10+ | D4 | 9 | |
-| 10136 | Uka Totlihn | 947 | Omega | `Omega` | Prestige P30+ | D4 | 9 | |
-| 10114 | Tenzen | 908 | *(none)* | *(none)* | Starter grant | â€” | â€” | Free at creation â€” do not drop |
-
-**81 farmable cipher drops + 1 starter (Tenzen) = 82 total ciphers.** HL Rank IV Kirin intentionally has no cipher (August is Reforge Sky [V] only).
+| Item ID | Trust | Spell ID | Primary NM | `mob_groups.name` | Content | Band | Drop % | Notes |
+|--------:|-------|---------:|------------|-------------------|---------|------|-------:|-------|
+| 10122 | Mnejing | 926 | Wepwawet | `Wepwawet` | Geas Fete T1 | D1 | 15 |  |
+| 10121 | Ovjang | 925 | Warder of Justice | `Warder_of_Justice` | Geas Fete T1 | D1 | 15 |  |
+| 10123 | Sakura | 927 | Tangata Manu | `Tangata_Manu` | Geas Fete T1 | D1 | 15 |  |
+| 10157 | Semih Lafihna | 940 | Warder of Faith | `Warder_of_Faith` | Geas Fete T1 | D1 | 15 |  |
+| 10120 | Lehko Habhoka | 922 | Tom Tit Tat | `Tom_Tit_Tat` | Hunting League Rank I | D1 | 15 |  |
+| 10115 | Mihli Aliapoh | 909 | Valkurm Emperor | `Valkurm_Emperor` | Hunting League Rank I | D1 | 15 |  |
+| 10118 | Naja Salaheem | 912 | Leaping Lizzy | `Leaping_Lizzy` | Hunting League Rank I | D1 | 15 |  |
+| 10153 | Adelheid | 968 | Aello | `Aello` | Reforge Abyssea [I] | D1 | 15 |  |
+| 10127 | Moogle | 931 | Genbu | `Genbu` | Reforge Sky [I] | D1 | 15 |  |
+| 10133 | Ferreous Coffin | 944 | Bukhis | `Bukhis` | Reforge Unity [I] | D1 | 15 |  |
+| 10144 | Abenzio | 959 | Prickly Pitriv | `Prickly_Pitriv` | Unity Wanted T1 | D1 | 15 |  |
+| 10149 | Areuhat | 939 | Emperor Arthro | `Emperor_Arthro` | Unity Wanted T1 | D1 | 15 |  |
+| 10143 | Babban | 958 | Hugemaw Harold | `Hugemaw_Harold` | Unity Wanted T1 | D1 | 15 |  |
+| 10130 | Elivira | 941 | Abyssdiver | `Abyssdiver` | Unity Wanted T1 | D1 | 15 |  |
+| 10158 | Halver | 972 | Keeper of Heiligtum | `Keeper_of_Heiligtum` | Unity Wanted T1 | D1 | 15 |  |
+| 10142 | Karaha-Baruha | 936 | Woodland Mender | `Woodland_Mender` | Unity Wanted T1 | D1 | 15 |  |
+| 10146 | Kukki-Chebukki | 961 | Joyous Green | `Joyous_Green` | Unity Wanted T1 | D1 | 15 |  |
+| 10132 | Lhu Mhakaracca | 943 | Warblade Beak | `Warblade_Beak` | Unity Wanted T1 | D1 | 15 |  |
+| 10147 | Margret | 962 | Intuila | `Intuila` | Unity Wanted T1 | D1 | 15 |  |
+| 10151 | Mayakov | 966 | Cactrot Veloz | `Cactrot_Veloz` | Unity Wanted T1 | D1 | 15 |  |
+| 10125 | Najelith | 929 | Carabosse | `Carabosse` | Abyssea Marks T1 | D2 | 13 |  |
+| 10166 | Robel-Akbel | 977 | Durinn | `Durinn` | Abyssea Marks T2 | D2 | 13 | Was Prestige Diabolos trial — moved to Abyssea |
+| 10174 | Ingrid II | 1016 | Shaula | `Shaula` | Abyssea Marks T3 | D2 | 13 | Was Prestige Medusa trial — moved to Abyssea |
+| 10129 | D. Shantotto | 934 | Kamohoalii | `Kamohoalii` | Geas Fete T2 | D2 | 13 |  |
+| 10145 | Rughadjeen | 960 | Ionos | `Ionos` | Geas Fete T2 | D2 | 13 |  |
+| 10155 | Brygid | 970 | Bomb Queen | `Bomb_Queen` | Hunting League Rank II | D2 | 13 |  |
+| 10139 | Rahal | 951 | Roc | `Roc` | Hunting League Rank II | D2 | 13 |  |
+| 10117 | Joachim | 911 | Vrtra | `Vrtra` | Hunting League Rank III | D2 | 13 | NOTABLE |
+| 10185 | Iroha | 997 | Iratham | `Iratham` | Reforge Abyssea [II] | D2 | 13 |  |
+| 10128 | Fablinix | 932 | Suzaku | `Suzaku` | Reforge Sky [II] | D2 | 13 |  |
+| 10140 | Koru-Moru | 952 | Khun | `Khun` | Reforge Unity [II] | D2 | 13 |  |
+| 10163 | Leonoyne | 974 | Aquarius | `Aquarius` | The Gauntlet L1 | D2 | 13 |  |
+| 10134 | Star Sibyl | 935 | Serket | `Serket` | The Gauntlet L2 | D2 | 13 |  |
+| 10135 | Mumor | 946 | Muut | `Muut` | Unity Wanted T2 | D2 | 13 |  |
+| 10131 | Noillurie | 942 | Lumber Jill | `Lumber_Jill` | Unity Wanted T2 | D2 | 13 |  |
+| 10167 | Tenzen II | 1014 | Thu'ban | `Thuban` | Unity Wanted T2 | D2 | 13 |  |
+| 10181 | King of Hearts | 989 | Briareus | `Briareus` | Abyssea Marks T1 | D3 | 11 |  |
+| 10184 | Arciela II | 1017 | Itzpapalotl | `Itzpapalotl` | Abyssea Marks T2 | D3 | 11 |  |
+| 10165 | Kayeel-Payeel | 976 | Ketea | `Ketea` | Abyssea Marks T2 | D3 | 11 |  |
+| 10164 | Maximilian | 975 | Dvalinn | `Dvalinn` | Abyssea Marks T2 | D3 | 11 |  |
+| 10178 | Ullegore | 987 | Iku-Turso | `Iku-Turso` | Abyssea Marks T2 | D3 | 11 |  |
+| 10154 | Amchuchu | 969 | Apademak | `Apademak` | Abyssea Marks T3 | D3 | 11 | NOTABLE |
+| 10175 | August | 984 | Alfard | `Alfard` | Abyssea Marks T3 | D3 | 11 | CORE |
+| 10177 | Mumor II | 1015 | Bennu | `Bennu` | Abyssea Marks T3 | D3 | 11 |  |
+| 10191 | AA EV | 993 | Ark Angel EV | `Ark_Angel_EV` | Geas Fete T3 | D3 | 11 |  |
+| 10192 | AA GK | 996 | Ark Angel GK | `Ark_Angel_GK` | Geas Fete T3 | D3 | 11 |  |
+| 10188 | AA HM | 992 | Ark Angel HM | `Ark_Angel_HM` | Geas Fete T3 | D3 | 11 |  |
+| 10190 | AA MR | 994 | Ark Angel MR | `Ark_Angel_MR` | Geas Fete T3 | D3 | 11 |  |
+| 10189 | AA TT | 995 | Ark Angel TT | `Ark_Angel_TT` | Geas Fete T3 | D3 | 11 |  |
+| 10172 | Balamor | 983 | Pazuzu | `Pazuzu` | Geas Fete T3 | D3 | 11 |  |
+| 10161 | Rongelouts | 973 | Fleetstalker | `Fleetstalker` | Geas Fete T3 | D3 | 11 |  |
+| 10176 | Rosulatia | 985 | Urmahlullu | `Urmahlullu` | Geas Fete T3 | D3 | 11 |  |
+| 10148 | Gilgamesh | 938 | Genbu-Escha | `Genbu-Escha` | Geas Ru'Aun T3 | D3 | 11 |  |
+| 10141 | Kuyin Hathdenna | 950 | Byakko-Escha | `Byakko-Escha` | Geas Ru'Aun T3 | D3 | 11 |  |
+| 10124 | Luzaf | 928 | Seiryu-Escha | `Seiryu-Escha` | Geas Ru'Aun T3 | D3 | 11 |  |
+| 10156 | Mildaurion | 971 | Kirin-Escha | `Kirin-Escha` | Geas Ru'Aun T3 | D3 | 11 |  |
+| 10119 | Rainemard | 920 | King Behemoth | `King_Behemoth` | Hunting League Rank IV | D3 | 11 |  |
+| 10112 | Zeid | 906 | Nidhogg | `Nidhogg` | Hunting League Rank IV | D3 | 11 |  |
+| 10113 | Lion | 907 | Seiryu | `Seiryu` | Reforge Sky [III] | D3 | 11 |  |
+| 10138 | Cid | 937 | Byakko | `Byakko` | Reforge Sky [IV] | D3 | 11 |  |
+| 10137 | Lilisette | 945 | Padfoot | `Padfoot` | Reforge Unity [III] | D3 | 11 |  |
+| 10152 | Qultada | 967 | Glavoid | `Glavoid` | Reforge Unity [IV] | D3 | 11 | CORE |
+| 10186 | Iroha II | 1018 | Shedu | `Shedu` | Unity Wanted T3 | D3 | 11 |  |
+| 10171 | Lilisette II | 1013 | Bakunawa | `Bakunawa` | Unity Wanted T3 | D3 | 11 |  |
+| 10170 | Nashmeira II | 1012 | Specter Worm | `Specter_Worm` | Unity Wanted T3 | D3 | 11 |  |
+| 10150 | Lhe Lhangavo | 964 | Kukulkan | `Kukulkan` | Abyssea Marks T1 | D4 | 9 | Was Prestige Sarameya trial — moved to Abyssea |
+| 10179 | Teodor | 986 | Titlacauan | `Titlacauan` | Abyssea Marks T2 | D4 | 9 |  |
+| 10168 | Prishe II | 1011 | Lorelei | `Lorelei` | Abyssea Marks T3 | D4 | 9 |  |
+| 10136 | Uka Totlihn | 947 | Pantokrator | `Pantokrator` | Abyssea Marks T3 | D4 | 9 | Was Prestige Omega trial — moved to Abyssea |
+| 10160 | Zeid II | 1010 | Orthrus | `Orthrus` | Abyssea Marks T3 | D4 | 9 | CORE; was Prestige Odin trial — moved to Abyssea |
+| 10169 | Abquhbah | 982 | Teles | `Teles` | Geas Fete T4 | D4 | 9 |  |
+| 10183 | Darrcuiln | 991 | Azi Dahaka | `Azi_Dahaka` | Geas Fete T4 | D4 | 9 |  |
+| 10180 | Makki-Chebukki | 988 | Warder of Courage | `Warder_of_Courage` | Geas Fete T4 | D4 | 9 |  |
+| 10193 | Monberaux | 999 | Maju | `Maju` | Geas Fete T4 | D4 | 9 | CORE |
+| 10182 | Morimar | 990 | Warder of Hope | `Warder_of_Hope` | Geas Fete T4 | D4 | 9 |  |
+| 10173 | Selh'Teus | 979 | Albumen | `Albumen` | Geas Fete T4 | D4 | 9 |  |
+| 10187 | Shantotto II | 1019 | Absolute Virtue | `Absolute_Virtue` | Hunting League Rank V | D4 | 9 | CORE |
+| 10116 | Valaineral | 910 | Kirin | `Kirin` | Reforge Sky [V] | D4 | 9 | Was Prestige trial — now Reforge Sky |
+| 10159 | Lion II | 1009 | Tinnin | `Tinnin` | Reforge Unity [V] | D4 | 9 |  |
+| 10162 | Kupofried | 978 | Shinryu | `Shinryu` | Hunting League Rank V | D5 | 8 | CORE chase |
 
 ---
 
-## 3. By content pool (quick reference)
+## 3. Direct spell grants (31) — no cipher item
 
-### Hunting League â€” 15 NMs Â· Escha Zi'Tah
-
-| NM | Rank | Cipher / trust | Drop % |
-|----|------|----------------|-------:|
-| Leaping Lizzy | I | Naja | 15 |
-| Valkurm Emperor | I | Mihli Aliapoh | 15 |
-| Tom Tit Tat | I | Lehko Habhoka | 15 |
-| Roc | II | Rahal | 13 |
-| Bomb Queen | II | Brygid | 13 |
-| Serket | III | Amchuchu | 13 |
-| Vrtra | III | Joachim | 13 |
-| Simurgh | III | *(Gessho — no cipher)* | — |
-| Nidhogg | IV | Zeid | 11 |
-| King Behemoth | IV | Rainemard | 11 |
-| Kirin | IV | *(no cipher — August is Reforge Sky [V])* | — |
-| Absolute Virtue | V | Shantotto II | 9 |
-| Pandemonium Warden | V | *(Ulmia — no cipher)* | — |
-| Shinryu | V | Kupofried | 8 |
-
-### Reforge Arena â€” 15 NMs Â· Diorama Abdhaljs-Ghelsba
-
-| NM | Slot | Cipher / trust | Drop % |
-|----|------|----------------|-------:|
-| Genbu | AF [I] | Moogle | 15 |
-| Suzaku | AF [II] | Fablinix | 13 |
-| Seiryu | AF [III] | Lion | 11 |
-| Byakko | AF [IV] | Cid | 11 |
-| Kirin | AF [V] | August ★ | 9 |
-| Bukhis | Relic [I] | Ferreous Coffin | 15 |
-| Khun | Relic [II] | Koru-Moru | 13 |
-| Padfoot | Relic [III] | Lilisette | 11 |
-| Glavoid | Relic [IV] | Qultada ★ | 11 |
-| Tinnin | Relic [V] | Lion II | 9 |
-| Aello | Empy [I] | Adelheid | 15 |
-| Iratham | Empy [II] | Iroha | 13 |
-| Briareus | Empy [III] | Monberaux ★ | 11 |
-| Itzpapalotl | Empy [IV] | Arciela II | 11 |
-| Hadhayosh | Empy [V] | Teodor / Apururu UC? | 9 |
-
-### Unity Wanted â€” 20 mapped (of 56) Â· Escha Zi'Tah
-
-See master table for T1/T2/T3 assignments. Remaining Unity NMs can share a **rotating filler pool** (11% each) for lower-priority ciphers: e.g. Iron Eater proxy â†’ assign **Ovjang** elsewhere, **Kuyin**, **Lhe**, etc.
-
-### Geas Fete â€” sample Â· Escha Zi'Tah / Ru'Aun / Reisenjima
-
-T1 Warders + Wepwawet Â· T2 Ionos/Kamohoalii Â· T3 Ark Angels + Escha beasts Â· T4 Azi Dahaka / Albumen / Teles / Warders
-
-### Abyssea Marks Â· marks-popped NMs (primary rebalance pool)
-
-**35 trusts** now source from Abyssea Marks (`modules/custom/lua/abyssea_marks_catalog.lua`). Each uses a **unique** marks NM â€” no overlap with Prestige Provenance spawns.
-
-| Trust | NM | Abyssea tier |
-|-------|-----|--------------|
-| Naji | Arimaspi | T1 Visions |
-| Cherukiki | Bloodguzzler | T1 Visions |
-| Apururu UC â˜… | Chloris | T1 Visions |
-| Arciela | Eccentric Eve | T1 Visions |
-| Najelith | Carabosse | T1 Visions |
-| Lhe Lhangavo | Kukulkan | T1 Visions |
-| Monberaux â˜… | Briareus | T1 Visions |
-| Excenmille S | Toppling Tuber | T1 Visions |
-| Volker | Maahes | T2 Scars |
-| Prishe | Sirrush | T2 Scars |
-| Iron Eater | Blazing Eruca | T2 Scars |
-| Klara | Lord Varney | T2 Scars |
-| Amchuchu â˜… | Smok | T2 Scars |
-| Maximilian | Dvalinn | T2 Scars |
-| Kayeel-Payeel | Ketea | T2 Scars |
-| Robel-Akbel | Durinn | T2 Scars |
-| Teodor | Titlacauan | T2 Scars |
-| Ullegore | Iku-Turso | T2 Scars |
-| Arciela II | Itzpapalotl | T2 Scars |
-| Chacharoon | Azdaja | T3 Heroes |
-| Valaineral | Alfard | T3 Heroes |
-| Uka Totlihn | Pantokrator | T3 Heroes |
-| Zeid II â˜… | Orthrus | T3 Heroes |
-| Prishe II | Lorelei | T3 Heroes |
-| Mumor II | Bennu | T3 Heroes |
-| Ingrid II | Shaula | T3 Heroes |
-| Maat UC | Amarok | T3 Heroes |
-| ~~Aldo UC~~ | ~~Ningishzida~~ | **DISABLED** (retired from roster) |
-| Ygnas | Isgebind | T3 Heroes |
-
-### The Gauntlet Â· Riverne (subset)
-
-Leonoyne (L1), Star Sibyl (L2) â€” remaining Gauntlet slots freed by moving overlapping trusts to Abyssea.
+| Trust | Spell ID | Primary NM | `mob_groups.name` | Content | Band | Drop % | Notes |
+|-------|---------:|------------|-------------------|---------|------|-------:|-------|
+| Cherukiki | 916 | Bloodguzzler | `Bloodguzzler` | Abyssea Marks T1 | D1 | 15 | No cipher item |
+| Naji | 897 | Arimaspi | `Arimaspi` | Abyssea Marks T1 | D1 | 15 | No cipher item |
+| Ajido-Marujido | 904 | Immanibugard | `Immanibugard` | Unity Wanted T1 | D1 | 15 | No cipher item |
+| Ayame | 900 | Jester Malatrix | `Jester_Malatrix` | Unity Wanted T1 | D1 | 15 | No cipher item |
+| Romaa Mihgo | 949 | Ironhorn Baldurno | `Ironhorn_Baldurno` | Unity Wanted T1 | D1 | 15 | No cipher item |
+| Zazarg | 924 | Tiyanak | `Tiyanak` | Unity Wanted T1 | D1 | 15 | No cipher item |
+| Arciela | 965 | Eccentric Eve | `Eccentric_Eve` | Abyssea Marks T1 | D2 | 13 | No cipher item |
+| Excenmille S | 1004 | Toppling Tuber | `Toppling_Tuber` | Abyssea Marks T1 | D2 | 13 | Variant trust; optional collection row |
+| Iron Eater | 917 | Blazing Eruca | `Blazing_Eruca` | Abyssea Marks T2 | D2 | 13 | No cipher item |
+| Klara | 948 | Lord Varney | `Lord_Varney` | Abyssea Marks T2 | D2 | 13 | No cipher item; was Infamy Maat fight |
+| Prishe | 913 | Sirrush | `Sirrush` | Abyssea Marks T2 | D2 | 13 | No cipher item |
+| Volker | 903 | Maahes | `Maahes` | Abyssea Marks T2 | D2 | 13 | No cipher item |
+| Maat UC | 1006 | Amarok | `Amarok` | Abyssea Marks T3 | D2 | 13 | No cipher item |
+| Gessho | 918 | Simurgh | `Simurgh` | Hunting League Rank III | D2 | 13 | NOTABLE — no cipher item |
+| Gadalar | 919 | Garbage Gel | `Garbage_Gel` | Unity Wanted T2 | D2 | 13 | No cipher item |
+| Ingrid | 921 | Strix | `Strix` | Unity Wanted T2 | D2 | 13 | No cipher item |
+| Maat | 933 | Sovereign Behemoth | `Sovereign_Behemoth` | Unity Wanted T2 | D2 | 13 | No cipher item |
+| Nashmeira | 923 | Arke | `Arke` | Unity Wanted T2 | D2 | 13 | No cipher item |
+| Shikaree Z | 915 | Largantua | `Largantua` | Unity Wanted T2 | D2 | 13 | No cipher item |
+| Ayame UC | 1005 | Wyvernhunter Bambrox | `Wyvernhunter_Bambrox` | Unity Wanted T3 | D3 | 11 | No cipher item |
+| Flaviria UC | 957 | Mephitas | `Mephitas` | Unity Wanted T3 | D3 | 11 | No cipher item |
+| Invincible Shield UC | 954 | Vidmapire | `Vidmapire` | Unity Wanted T3 | D3 | 11 | No cipher item |
+| Jakoh UC | 956 | Tolba | `Tolba` | Unity Wanted T3 | D3 | 11 | No cipher item |
+| Naja UC | 1008 | Ayapec | `Ayapec` | Unity Wanted T3 | D3 | 11 | No cipher item |
+| Pieuje UC | 953 | Centurio XX-I | `Centurio_XX-I` | Unity Wanted T3 | D3 | 11 | No cipher item |
+| Yoran-Oran UC | 980 | Coca | `Coca` | Unity Wanted T3 | D3 | 11 | No cipher item |
+| Apururu UC | 955 | Chloris | `Chloris` | Abyssea Marks T1 | D4 | 9 | CORE — no cipher item |
+| Chacharoon | 963 | Azdaja | `Azdaja` | Abyssea Marks T3 | D4 | 9 | No cipher item; was Prestige Ultima trial |
+| Ygnas | 998 | Isgebind | `Isgebind` | Abyssea Marks T3 | D4 | 9 | CORE — no cipher item |
+| Ulmia | 914 | Pandemonium Warden | `Pandemonium_Warden` | Hunting League Rank V | D4 | 9 | CORE — no cipher item |
+| Sylvie UC | 981 | Tumult Curator | `Tumult_Curator` | Unity Wanted T3 capstone | D4 | 9 | CORE — no cipher item |
 
 ---
 
-## 4. Custom trusts (Meat / Corvus / Gemma / Cornelia / Matsui-P)
+## 4. Starters / Void Keeper / Disabled
 
-**Void Keeper only** — collection progress + gil. Not NM drops.
+### Starters (free at login)
 
-| Trust | Spell | Unlock | Cost |
-|-------|------:|--------|------|
-| **Corvus** | 902 | 40 trusts collected | 10M gil |
-| **Meat** | 899 | 50 trusts collected | 10M gil |
-| **Gemma** | 901 | 60 trusts collected | 10M gil |
-| **Cornelia** | 1002 | All **118** roster trusts (Aldo / Aldo UC excluded) | 50M gil |
-| **Matsui-P** | 1003 | All **118** roster trusts (Aldo / Aldo UC excluded) | 50M gil |
+| Trust | Spell ID | Notes |
+|-------|---------:|-------|
+| Shantotto | 896 | Free at login — only non-NM unlock |
+| Kupipi | 898 | Free at login — only non-NM unlock |
+| Trion | 905 | Free at login — only non-NM unlock |
+| Tenzen | 908 | Free at login; cipher 10114 must NOT drop |
 
----
+### Void Keeper customs
 
-## 5. Trusts with **no retail cipher item** (direct spell grant)
+| Trust | Spell ID | Cost / gate | Notes |
+|-------|---------:|-------------|-------|
+| Meat (Excenmille) | 899 | 10M | 50 trusts collected + 10M gil |
+| Gemma (Nanaa Mihgo) | 901 | 10M | 60 trusts collected + 10M gil |
+| Corvus (Curilla) | 902 | 10M | 40 trusts collected + 10M gil |
+| Cornelia | 1002 | 50M | All 120 roster trusts + 50M gil |
+| Matsui-P | 1003 | 50M | All 120 roster trusts + 50M gil |
 
-These **35 trusts** use **`addSpell` on NM kill** at the rate in the CSV. See the Abyssea table in Â§3 for the marks-sourced subset.
+### Disabled
 
-| Trust | Spell | Primary NM | Pool |
-|-------|------:|------------|------|
-| Naji | 897 | Arimaspi | Abyssea Marks T1 |
-| Ayame | 900 | Jester Malatrix | Unity T1 |
-| Volker | 903 | Maahes | Abyssea Marks T2 |
-| Ajido-Marujido | 904 | Immanibugard | Unity T1 |
-| Prishe | 913 | Sirrush | Abyssea Marks T2 |
-| **Ulmia** â˜… | 914 | Pandemonium Warden | HL Rank V |
-| Shikaree Z | 915 | Largantua | Unity T2 |
-| Cherukiki | 916 | Bloodguzzler | Abyssea Marks T1 |
-| Iron Eater | 917 | Blazing Eruca | Abyssea Marks T2 |
-| **Gessho** â˜… | 918 | Simurgh | HL Rank III |
-| Gadalar | 919 | Garbage Gel | Unity T2 |
-| Ingrid | 921 | Strix | Unity T2 |
-| Nashmeira | 923 | Arke | Unity T2 |
-| Zazarg | 924 | Tiyanak | Unity T1 |
-| Maat | 933 | Sovereign Behemoth | Unity T2 |
-| Klara | 948 | Lord Varney | Abyssea Marks T2 |
-| Romaa Mihgo | 949 | Ironhorn Baldurno | Unity T1 |
-| Pieuje UC | 953 | Centurio XX-I | Unity T3 |
-| Invincible Shield UC | 954 | Vidmapire | Unity T3 |
-| **Apururu UC** â˜… | 955 | Chloris | Abyssea Marks T1 |
-| Jakoh UC | 956 | Tolba | Unity T3 |
-| Flaviria UC | 957 | Mephitas | Unity T3 |
-| Chacharoon | 963 | Azdaja | Abyssea Marks T3 |
-| Arciela | 965 | Eccentric Eve | Abyssea Marks T1 |
-| Yoran-Oran UC | 980 | Coca | Unity T3 |
-| **Sylvie UC** â˜… | 981 | Tumult Curator | Unity T3 |
-| **Ygnas** â˜… | 998 | Isgebind | Abyssea Marks T3 |
-| Excenmille S | 1004 | Toppling Tuber | Abyssea Marks T1 |
-| Ayame UC | 1005 | Wyvernhunter Bambrox | Unity T3 |
-| Maat UC | 1006 | Amarok | Abyssea Marks T3 |
-| ~~Aldo UC~~ | 1007 | — | **DISABLED** (retired from roster) |
-| Naja UC | 1008 | Ayapec | Unity T3 |
-
-â˜… = priority trusts from original design brief
+| Item ID | Trust | Spell ID | Notes |
+|--------:|-------|---------:|-------|
+| 10126 | Aldo (Locke) | 930 | Temporarily removed from live roster / drops (2026-08-02) |
+| — | Aldo UC | 1007 | Temporarily removed from live roster / drops (2026-08-02) |
 
 ---
 
-## 6. Open decisions for dev review
+## 5. By content pool (cipher drops only)
 
-1. **Abyssea drop wiring** â€” hook `AbysseaMarks.lua` `onMobDeath` alongside HL / Unity / Geas / Reforge / Gauntlet
-2. **Dupe conversion** â€” Hunt Marks vs gil vs skip silently?
-3. **Collection UI** â€” `!trusts` or Void Keeper board showing X/116 farmable (+ starters)
-4. **Tenzen cipher (10114)** â€” starter Tenzen is free; drop table should exclude 10114 everywhere
-5. **Excenmille S** â€” count toward 120/120 or optional side collect?
+### Abyssea Marks T1 — 3 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Briareus | King of Hearts | 10181 | D3 | 11 |
+| Kukulkan | Lhe Lhangavo | 10150 | D4 | 9 |
+| Carabosse | Najelith | 10125 | D2 | 13 |
+
+### Abyssea Marks T2 — 6 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Itzpapalotl | Arciela II | 10184 | D3 | 11 |
+| Ketea | Kayeel-Payeel | 10165 | D3 | 11 |
+| Dvalinn | Maximilian | 10164 | D3 | 11 |
+| Durinn | Robel-Akbel | 10166 | D2 | 13 |
+| Titlacauan | Teodor | 10179 | D4 | 9 |
+| Iku-Turso | Ullegore | 10178 | D3 | 11 |
+
+### Abyssea Marks T3 — 7 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Apademak | Amchuchu | 10154 | D3 | 11 |
+| Alfard | August | 10175 | D3 | 11 |
+| Shaula | Ingrid II | 10174 | D2 | 13 |
+| Bennu | Mumor II | 10177 | D3 | 11 |
+| Lorelei | Prishe II | 10168 | D4 | 9 |
+| Pantokrator | Uka Totlihn | 10136 | D4 | 9 |
+| Orthrus | Zeid II | 10160 | D4 | 9 |
+
+### Geas Fete T1 — 4 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Wepwawet | Mnejing | 10122 | D1 | 15 |
+| Warder of Justice | Ovjang | 10121 | D1 | 15 |
+| Tangata Manu | Sakura | 10123 | D1 | 15 |
+| Warder of Faith | Semih Lafihna | 10157 | D1 | 15 |
+
+### Geas Fete T2 — 2 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Kamohoalii | D. Shantotto | 10129 | D2 | 13 |
+| Ionos | Rughadjeen | 10145 | D2 | 13 |
+
+### Geas Fete T3 — 8 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Ark Angel EV | AA EV | 10191 | D3 | 11 |
+| Ark Angel GK | AA GK | 10192 | D3 | 11 |
+| Ark Angel HM | AA HM | 10188 | D3 | 11 |
+| Ark Angel MR | AA MR | 10190 | D3 | 11 |
+| Ark Angel TT | AA TT | 10189 | D3 | 11 |
+| Pazuzu | Balamor | 10172 | D3 | 11 |
+| Fleetstalker | Rongelouts | 10161 | D3 | 11 |
+| Urmahlullu | Rosulatia | 10176 | D3 | 11 |
+
+### Geas Fete T4 — 6 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Teles | Abquhbah | 10169 | D4 | 9 |
+| Azi Dahaka | Darrcuiln | 10183 | D4 | 9 |
+| Warder of Courage | Makki-Chebukki | 10180 | D4 | 9 |
+| Maju | Monberaux | 10193 | D4 | 9 |
+| Warder of Hope | Morimar | 10182 | D4 | 9 |
+| Albumen | Selh'Teus | 10173 | D4 | 9 |
+
+### Geas Ru'Aun T3 — 4 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Genbu-Escha | Gilgamesh | 10148 | D3 | 11 |
+| Byakko-Escha | Kuyin Hathdenna | 10141 | D3 | 11 |
+| Seiryu-Escha | Luzaf | 10124 | D3 | 11 |
+| Kirin-Escha | Mildaurion | 10156 | D3 | 11 |
+
+### Hunting League Rank I — 3 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Tom Tit Tat | Lehko Habhoka | 10120 | D1 | 15 |
+| Valkurm Emperor | Mihli Aliapoh | 10115 | D1 | 15 |
+| Leaping Lizzy | Naja Salaheem | 10118 | D1 | 15 |
+
+### Hunting League Rank II — 2 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Bomb Queen | Brygid | 10155 | D2 | 13 |
+| Roc | Rahal | 10139 | D2 | 13 |
+
+### Hunting League Rank III — 1 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Vrtra | Joachim | 10117 | D2 | 13 |
+
+### Hunting League Rank IV — 2 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| King Behemoth | Rainemard | 10119 | D3 | 11 |
+| Nidhogg | Zeid | 10112 | D3 | 11 |
+
+### Hunting League Rank V — 2 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Shinryu | Kupofried | 10162 | D5 | 8 |
+| Absolute Virtue | Shantotto II | 10187 | D4 | 9 |
+
+### Reforge Abyssea [I] — 1 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Aello | Adelheid | 10153 | D1 | 15 |
+
+### Reforge Abyssea [II] — 1 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Iratham | Iroha | 10185 | D2 | 13 |
+
+### Reforge Sky [I] — 1 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Genbu | Moogle | 10127 | D1 | 15 |
+
+### Reforge Sky [II] — 1 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Suzaku | Fablinix | 10128 | D2 | 13 |
+
+### Reforge Sky [III] — 1 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Seiryu | Lion | 10113 | D3 | 11 |
+
+### Reforge Sky [IV] — 1 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Byakko | Cid | 10138 | D3 | 11 |
+
+### Reforge Sky [V] — 1 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Kirin | Valaineral | 10116 | D4 | 9 |
+
+### Reforge Unity [I] — 1 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Bukhis | Ferreous Coffin | 10133 | D1 | 15 |
+
+### Reforge Unity [II] — 1 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Khun | Koru-Moru | 10140 | D2 | 13 |
+
+### Reforge Unity [III] — 1 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Padfoot | Lilisette | 10137 | D3 | 11 |
+
+### Reforge Unity [IV] — 1 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Glavoid | Qultada | 10152 | D3 | 11 |
+
+### Reforge Unity [V] — 1 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Tinnin | Lion II | 10159 | D4 | 9 |
+
+### The Gauntlet L1 — 1 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Aquarius | Leonoyne | 10163 | D2 | 13 |
+
+### The Gauntlet L2 — 1 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Serket | Star Sibyl | 10134 | D2 | 13 |
+
+### Unity Wanted T1 — 10 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Prickly Pitriv | Abenzio | 10144 | D1 | 15 |
+| Emperor Arthro | Areuhat | 10149 | D1 | 15 |
+| Hugemaw Harold | Babban | 10143 | D1 | 15 |
+| Abyssdiver | Elivira | 10130 | D1 | 15 |
+| Keeper of Heiligtum | Halver | 10158 | D1 | 15 |
+| Woodland Mender | Karaha-Baruha | 10142 | D1 | 15 |
+| Joyous Green | Kukki-Chebukki | 10146 | D1 | 15 |
+| Warblade Beak | Lhu Mhakaracca | 10132 | D1 | 15 |
+| Intuila | Margret | 10147 | D1 | 15 |
+| Cactrot Veloz | Mayakov | 10151 | D1 | 15 |
+
+### Unity Wanted T2 — 3 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Muut | Mumor | 10135 | D2 | 13 |
+| Lumber Jill | Noillurie | 10131 | D2 | 13 |
+| Thu'ban | Tenzen II | 10167 | D2 | 13 |
+
+### Unity Wanted T3 — 3 cipher(s)
+
+| NM | Trust | Item | Band | Drop % |
+|----|-------|-----:|------|-------:|
+| Shedu | Iroha II | 10186 | D3 | 11 |
+| Bakunawa | Lilisette II | 10171 | D3 | 11 |
+| Specter Worm | Nashmeira II | 10170 | D3 | 11 |
 
 ---
 
-## 7. Implementation checklist (after approval)
+## 6. Open decisions for implementation
 
-- [ ] `trust_cipher_drops.lua` catalog (spell/cipherId â†’ mob name â†’ rate â†’ grant type)
-- [ ] Hook HL / Reforge / Unity / Geas / **Abyssea Marks** / Gauntlet `onMobDeath` paths
-- [ ] Dupe protection + optional conversion
-- [ ] Character Upgrader â†’ 4 starters only
-- [ ] Remove Void Keeper % gates for Corvus / Meat / Gemma (if still in `trust_skoll.lua`)
-- [ ] Apply `trust_cipher_usable.sql` if not already on live DB
-- [ ] Player-facing `!trusts` or board showing X/82
+1. Hook `onMobDeath` for HL / Unity / Geas / Reforge / Abyssea Marks / Gauntlet
+2. Dupe conversion — Hunt Marks vs gil vs skip silently
+3. Collection UI — `!trusts` / Void Keeper board showing farmable progress
+4. Tenzen cipher **10114** must not drop (starter is free)
+5. Excenmille S — count toward full collection or optional side collect?
 
 ---
 
-## 8. File references
+## 7. File references
 
 | Resource | Path |
 |----------|------|
-| Cipher item names (82) | `modules/custom/lua/trust_cipher_catalog.lua` |
+| **CSV source of truth** | `exports/trust_cipher_drop_proposal.csv` |
+| Cipher item names | `modules/custom/lua/trust_cipher_catalog.lua` |
 | Usable cipher wiring | `modules/custom/lua/trust_cipher_usable.lua` |
-| Item IDs | `scripts/enum/item.lua` (10112â€“10193) |
+| Item IDs | `scripts/enum/item.lua` (10112–10193) |
 | HL catalog | `modules/custom/lua/hunting_league_catalog.lua` |
 | Reforge catalog | `modules/custom/lua/reforge_catalog.lua` |
 | Unity catalog | `modules/custom/lua/unity_wanted_catalog.lua` |
-| Geas catalog | `modules/custom/lua/Geas_Fete.lua` |
-| Abyssea Marks catalog | `modules/custom/lua/abyssea_marks_catalog.lua` |
-| Abyssea Marks runtime | `modules/custom/lua/AbysseaMarks.lua` |
-| Gauntlet catalog | `modules/custom/lua/gauntlet_catalog.lua` |
-| CSV companion (full roster) | `exports/trust_cipher_drop_proposal.csv` (**120 trusts**, sorted by spell ID) |
+| Geas | `modules/custom/lua/Geas_Fete.lua` |
+| Abyssea Marks | `modules/custom/lua/abyssea_marks_catalog.lua` / `AbysseaMarks.lua` |
+| Gauntlet | `modules/custom/lua/gauntlet_catalog.lua` |
 
----
+*Regenerated from CSV — edit the CSV, then refresh this markdown.*
 
-*End of draft â€” please annotate changes and return for implementation pass.*

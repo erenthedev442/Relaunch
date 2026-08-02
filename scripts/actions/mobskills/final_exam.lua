@@ -22,7 +22,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
-        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+        -- Prefer HP actually removed (leveling portion / overkill).
+        info.damage = target:takeDamage(info.damage, mob, info.attackType, info.damageType)
     end
 
     return info.damage

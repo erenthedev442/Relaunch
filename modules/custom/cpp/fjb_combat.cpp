@@ -14,6 +14,7 @@
 
 #include "common/cbasetypes.h"
 #include "common/settings.h"
+#include "common/xirand.h"
 
 #include "map/entities/battleentity.h"
 #include "map/entities/charentity.h"
@@ -22,11 +23,28 @@
 #include "map/packets/s2c/0x017_chat_std.h"
 
 #include <algorithm>
+#include <cmath>
 #include <string>
 #include <string_view>
 
 namespace
 {
+    constexpr int32 TRUST_ENDGAME_MOB_LEVEL_GATE = 120;
+
+    bool IsEligibleEndgameTrust(CBattleEntity* PAttacker)
+    {
+        if (PAttacker == nullptr || PAttacker->objtype != TYPE_TRUST)
+        {
+            return false;
+        }
+        if (PAttacker->GetLocalVar("fellowApplied") == 1)
+        {
+            return false;
+        }
+        CBattleEntity* PMaster = PAttacker->PMaster;
+        return PMaster != nullptr && PMaster->GetMLevel() >= 99;
+    }
+
     // The PC who should receive the over-cap readout: the attacker itself if it
     // is a PC, otherwise the PC master of a player-owned pet/trust. nullptr when
     // the source isn't player-controlled (mobs get no message).
@@ -163,7 +181,12 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
 
 int32 ApplyTrustLevelingHpPortionCap(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage)
 {
-    constexpr float TRUST_LEVELING_MAX_HP_PORTION = 0.30f;
+    // Per-hit roll inside the trust's tier band (% of mob max HP). Defaults to
+    // medium (B: 10–15%) when spawn did not stamp a band. Disabled at 99+.
+    constexpr int32 DEFAULT_PORTION_BPS_MIN = 1000; // B floor
+    constexpr int32 DEFAULT_PORTION_BPS_MAX = 1500; // B ceiling
+    constexpr int32 ABS_PORTION_BPS_MIN     = 800;  // C floor
+    constexpr int32 ABS_PORTION_BPS_MAX     = 2000; // S ceiling
 
     if (damage <= 0 || PAttacker == nullptr || PDefender == nullptr)
     {
@@ -171,6 +194,12 @@ int32 ApplyTrustLevelingHpPortionCap(CBattleEntity* PAttacker, CBattleEntity* PD
     }
 
     if (PAttacker->objtype != TYPE_TRUST || PDefender->objtype != TYPE_MOB)
+    {
+        return damage;
+    }
+
+    // Adventuring Fellow has its own progression profile.
+    if (PAttacker->GetLocalVar("fellowApplied") == 1)
     {
         return damage;
     }
@@ -187,8 +216,129 @@ int32 ApplyTrustLevelingHpPortionCap(CBattleEntity* PAttacker, CBattleEntity* PD
         return damage;
     }
 
-    const int32 portionCap = std::max(1, static_cast<int32>(maxHp * TRUST_LEVELING_MAX_HP_PORTION));
+    int32 bandMin = static_cast<int32>(PAttacker->GetLocalVar("TrustLevelingPortionBpsMin"));
+    int32 bandMax = static_cast<int32>(PAttacker->GetLocalVar("TrustLevelingPortionBpsMax"));
+    if (bandMin < ABS_PORTION_BPS_MIN || bandMax > ABS_PORTION_BPS_MAX || bandMin > bandMax)
+    {
+        bandMin = DEFAULT_PORTION_BPS_MIN;
+        bandMax = DEFAULT_PORTION_BPS_MAX;
+    }
+
+    int32 portionBps = static_cast<int32>(PAttacker->GetLocalVar("TrustLevelingPortionBps"));
+    if (portionBps >= bandMin && portionBps <= bandMax)
+    {
+        // One-shot stamp from Lua (processDamage) — consume so the next hit re-rolls.
+        PAttacker->SetLocalVar("TrustLevelingPortionBps", 0);
+    }
+    else
+    {
+        // Inclusive bandMin..bandMax (GetRandomNumber max is exclusive for integrals).
+        portionBps = xirand::GetRandomNumber<int32>(bandMin, bandMax + 1);
+    }
+
+    const float portion    = static_cast<float>(portionBps) / 10000.0f;
+    const int32 portionCap = std::max(1, static_cast<int32>(maxHp * portion));
     return std::min(damage, portionCap);
+}
+
+int32 ApplyTrustEndgameSoftClamp(CBattleEntity* PAttacker, int32 damage)
+{
+    // Compress overshoots: T + (hardCap - T) * (1 - exp(-(dmg - T) / scale)).
+    // scale ≈ 40k keeps a raw 80k roll well below a 40k hard cap most of the time.
+    constexpr float SOFTCLAMP_SCALE = 40000.0f;
+    constexpr int32 DEFAULT_BAND_MIN = 22000;
+    constexpr int32 DEFAULT_BAND_MAX = 28000;
+
+    if (damage <= 0 || !IsEligibleEndgameTrust(PAttacker))
+    {
+        return damage;
+    }
+
+    int32 bandMin = static_cast<int32>(PAttacker->GetLocalVar("TrustSoftBandMin"));
+    int32 bandMax = static_cast<int32>(PAttacker->GetLocalVar("TrustSoftBandMax"));
+    if (bandMin <= 0 || bandMax < bandMin)
+    {
+        bandMin = DEFAULT_BAND_MIN;
+        bandMax = DEFAULT_BAND_MAX;
+    }
+
+    const int32 softTarget = (bandMin == bandMax)
+        ? bandMin
+        : xirand::GetRandomNumber<int32>(bandMin, bandMax + 1);
+
+    if (damage <= softTarget)
+    {
+        return damage;
+    }
+
+    const int32 globalHpDamageCap = settings::get<int32>("map.GLOBAL_HP_DAMAGE_CAP");
+    int32       hardCap           = ResolveOutgoingHpDamageCap(PAttacker, globalHpDamageCap);
+    if (hardCap <= softTarget)
+    {
+        hardCap = softTarget;
+    }
+
+    const float overshoot = static_cast<float>(damage - softTarget);
+    const float room      = static_cast<float>(hardCap - softTarget);
+    const float compressed =
+        static_cast<float>(softTarget) + room * (1.0f - std::exp(-overshoot / SOFTCLAMP_SCALE));
+
+    // Tiny jitter so soft-band-top hits are not identical every time.
+    const float jitter = xirand::GetRandomNumber(0.97f, 1.03f);
+    return std::max(1, static_cast<int32>(compressed * jitter));
+}
+
+int32 ApplyTrustEndgameLevelDamageMult(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage)
+{
+    if (damage <= 0 || PDefender == nullptr || !IsEligibleEndgameTrust(PAttacker))
+    {
+        return damage;
+    }
+
+    // Support / aura / utility trusts keep healing and utility; DD roles fall off.
+    if (PAttacker->GetLocalVar("TrustDdRole") != 1)
+    {
+        return damage;
+    }
+
+    if (PDefender->objtype != TYPE_MOB)
+    {
+        return damage;
+    }
+
+    const int32 mobLvl = PDefender->GetMLevel();
+    if (mobLvl <= TRUST_ENDGAME_MOB_LEVEL_GATE)
+    {
+        return damage;
+    }
+
+    const int32 over = mobLvl - TRUST_ENDGAME_MOB_LEVEL_GATE;
+    const float mult = std::clamp(1.0f - 0.06f * static_cast<float>(over), 0.20f, 1.0f);
+    return std::max(1, static_cast<int32>(damage * mult));
+}
+
+uint8 ApplyTrustEndgameHitRateAdjust(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 hitrate)
+{
+    if (PDefender == nullptr || !IsEligibleEndgameTrust(PAttacker))
+    {
+        return hitrate;
+    }
+
+    if (PDefender->objtype != TYPE_MOB)
+    {
+        return hitrate;
+    }
+
+    const int32 mobLvl = PDefender->GetMLevel();
+    if (mobLvl <= TRUST_ENDGAME_MOB_LEVEL_GATE)
+    {
+        // Reliable hits through level 120; shadows / forced misses are elsewhere.
+        return static_cast<uint8>(std::max<int32>(hitrate, 95));
+    }
+
+    const int32 over = mobLvl - TRUST_ENDGAME_MOB_LEVEL_GATE;
+    const float mult = std::clamp(1.0f - 0.08f * static_cast<float>(over), 0.15f, 1.0f);
+    return static_cast<uint8>(std::clamp(static_cast<int32>(std::floor(hitrate * mult)), 5, 100));
 }
 
 void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_view type)

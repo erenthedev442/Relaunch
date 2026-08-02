@@ -2,11 +2,12 @@
 -- trust_power_catalog.lua
 -- Role / tier / style / kit injection for every companion trust spell ID.
 --
--- Power tiers track content difficulty (cipher drop bands):
---   C = starters / D1 entry farms     → ~14–20k typical hits at master 99
---   B = D2 mid content                → ~22–28k
---   A = D3 hard content               → ~30–36k
---   S = D4/D5 / CORE / Void Keeper    → ~36–40k (hard cap 40k for most)
+-- Power tiers track content difficulty (cipher drop bands).
+-- Master-99 soft bands (softclamp backstop; hard cap still 40k for most):
+--   C = starters / D1 entry farms     → soft 14–20k
+--   B = D2 mid content                → soft 22–28k
+--   A = D3 hard content               → soft 30–36k
+--   S = D4/D5 / CORE / Void Keeper    → soft 36–40k (40k uncommon, not spam)
 --
 -- style: combat personality within a role (especially nukers) so same-tier
 -- BLMs do not feel identical.
@@ -78,6 +79,7 @@ C.trusts =
     [904] = e('nuker',     'C', { style = 'apprentice',  injectKit = false }), -- Ajido
     [909] = e('healer',    'C', { style = 'support',     injectKit = false }), -- Mihli
     [912] = e('melee_dd',  'C', { style = 'skirmisher',  injectKit = false }), -- Naja
+    [918] = e('melee_dd',  'C', { style = 'skirmisher',  injectKit = false }), -- Gessho (off-tank, entry)
     [916] = e('healer',    'C', { style = 'support',     injectKit = false }), -- Cherukiki
     [922] = e('ranged_dd', 'C', { style = 'skirmisher',  injectKit = false }), -- Lehko
     [924] = e('melee_dd',  'C', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Zazarg
@@ -108,7 +110,6 @@ C.trusts =
     [913] = e('melee_dd',  'B', { style = 'bruiser',     injectKit = false }), -- Prishe
     [915] = e('ranged_dd', 'B', { style = 'skirmisher',  injectKit = false }), -- Shikaree Z
     [917] = e('melee_dd',  'B', { style = 'bruiser',     injectKit = false }), -- Iron Eater
-    [918] = e('melee_dd',  'B', { style = 'skirmisher',  injectKit = false }), -- Gessho
     [919] = e('nuker',     'B', { style = 'pressure',    injectKit = 'nuker' }), -- Gadalar
     [921] = e('healer',    'B', { style = 'support',     injectKit = 'healer' }), -- Ingrid
     [923] = e('healer',    'B', { style = 'support',     injectKit = 'healer' }), -- Nashmeira
@@ -147,7 +148,7 @@ C.trusts =
     [945] = e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Lilisette
     [950] = e('utility',   'A', { style = 'support',     injectKit = 'utility' }), -- Kuyin
     [953] = e('healer',    'A', { style = 'support',     injectKit = 'healer' }), -- Pieuje UC
-    [954] = e('tank',      'A', { style = 'bruiser',     injectKit = 'tank' }), -- I.Shield UC
+    [954] = e('tank',      'A', { style = 'bruiser',     injectKit = false }), -- I.Shield UC (WAR provoke tank)
     [956] = e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Jakoh UC
     [957] = e('ranged_dd', 'A', { style = 'weaponskill', injectKit = 'ranged_dd' }), -- Flaviria UC
     [967] = e('hybrid',    'A', { style = 'skirmisher',  injectKit = false }), -- Qultada CORE
@@ -160,7 +161,7 @@ C.trusts =
     [985] = e('nuker',     'A', { style = 'scholar',     injectKit = 'nuker' }), -- Rosulatia
     [987] = e('nuker',     'A', { style = 'pressure',    injectKit = 'nuker' }), -- Ullegore
     [992] = e('melee_dd',  'A', { style = 'bruiser',     injectKit = false }), -- Ark HM
-    [993] = e('healer',    'A', { style = 'support',     injectKit = false }), -- Ark EV
+    [993] = e('tank',      'A', { style = 'bruiser',     injectKit = false }), -- Ark EV
     [994] = e('ranged_dd', 'A', { style = 'weaponskill', injectKit = 'ranged_dd' }), -- Ark MR
     [995] = e('nuker',     'A', { style = 'burst',       injectKit = 'nuker' }), -- Ark TT
     [996] = e('melee_dd',  'A', { style = 'weaponskill', injectKit = false }), -- Ark GK
@@ -185,7 +186,7 @@ C.trusts =
     [979] = e('utility',   'A', { style = 'support',     injectKit = 'utility' }), -- Selh'teus
     [981] = e('buffer',    'S', { style = 'support',     injectKit = false }), -- Sylvie UC CORE
     [982] = e('melee_dd',  'A', { style = 'bruiser',     injectKit = false }), -- Abquhbah D4
-    [984] = e('melee_dd',  'S', { style = 'weaponskill', injectKit = false }), -- August CORE
+    [984] = e('tank',      'S', { style = 'bruiser',     injectKit = false }), -- August CORE
     [986] = e('nuker',     'S', { style = 'apex',        injectKit = 'nuker' }), -- Teodor
     [988] = e('ranged_dd', 'S', { style = 'weaponskill', injectKit = 'ranged_dd' }), -- Makki
     [989] = e('buffer',    'A', { style = 'support',     injectKit = 'buffer' }), -- King of Hearts

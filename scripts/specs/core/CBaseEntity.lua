@@ -2146,7 +2146,7 @@ end
 ---@param atkType integer?
 ---@param dmgType integer?
 ---@param flags? { wakeUp: boolean?, removePetrify: boolean?, breakBind: boolean?, bypassGlobalHpDamageCap: boolean? }
----@return nil
+---@return integer # HP actually lost/gained after ceilings
 function CBaseEntity:takeDamage(damage, attacker, atkType, dmgType, flags)
 end
 
@@ -3344,7 +3344,7 @@ end
 ---@param damage integer
 ---@param atkType integer
 ---@param dmgType integer
----@return nil
+---@return integer # HP actually lost/gained after ceilings
 function CBaseEntity:takeSpellDamage(caster, spell, damage, atkType, dmgType)
 end
 
