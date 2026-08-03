@@ -22,7 +22,9 @@ spellObject.onMobSpawn = function(mob)
     mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
 
     mob:addListener('WEAPONSKILL_USE', 'NAJA_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
-        if skill:getID() == 3215 then -- Peacebreaker
+        local skillId = skill:getID()
+        -- Peacebreaker (MS) or Black Halo (player WS) — signature lines.
+        if skillId == 3215 or skillId == 169 then
             --  Cha-ching! Thirty gold coins!
             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
         end

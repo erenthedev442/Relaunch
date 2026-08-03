@@ -16,8 +16,10 @@ end
 spellObject.onMobSpawn = function(mob)
     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
 
+    -- Kit also injects nuker gambits; keep an aggressive ALWAYS so -ga/-ja fire
+    -- even when SC windows / MB selectors miss.
     mob:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
-    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 15)
+    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 12)
 
     mob:setAutoAttackEnabled(false)
     -- NO_MOVE distance (not LONG_RANGE) — LONG_RANGE made him kite to 12' and idle.

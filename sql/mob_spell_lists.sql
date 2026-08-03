@@ -4016,6 +4016,19 @@ INSERT INTO `mob_spell_lists` VALUES ('TRUST_Rosulatia',398,190,40,255); -- ston
 INSERT INTO `mob_spell_lists` VALUES ('TRUST_Rosulatia',398,191,63,255); -- stonega_iii (63~255)
 
 -- TRUST_Teodor (399)
+-- Teodor: add single-target T4/T5 so he isn't -ga/-ja-only (idle when ga selects fail).
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,147,73,255); -- fire_iv
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,148,86,255); -- fire_v
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,152,74,255); -- blizzard_iv
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,153,89,255); -- blizzard_v
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,157,72,255); -- aero_iv
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,158,83,255); -- aero_v
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,162,68,255); -- stone_iv
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,163,77,255); -- stone_v
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,167,75,255); -- thunder_iv
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,168,92,255); -- thunder_v
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,172,70,255); -- water_iv
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,173,80,255); -- water_v
 INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,174,28,255); -- firaga (28~255)
 INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,175,53,255); -- firaga_ii (53~255)
 INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,176,69,255); -- firaga_iii (69~255)

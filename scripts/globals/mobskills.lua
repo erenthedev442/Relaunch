@@ -1614,11 +1614,21 @@ xi.mobskills.processDamage = function(actor, target, skill, action, info)
             then
                 info.damage = math.max(1, math.floor(info.damage * 0.55))
             else
-                -- Trust mobskill WS (Lion II Walk the Plank, Maat Hollow Smite, etc.)
-                -- never hit player weaponskills.lua — apply ALL_WSDMG here.
+                -- Trust mobskill WS never hit player weaponskills.lua — apply ALL_WSDMG here.
                 local wsdPct = actor:getMod(xi.mod.ALL_WSDMG_ALL_HITS) or 0
                 if wsdPct > 0 then
                     info.damage = math.max(1, math.floor(info.damage * (100 + wsdPct) / 100))
+                end
+
+                -- DD-role safety net: leftover custom MS (Peacebreaker, etc.) still
+                -- can't reach soft bands via getWeaponDmg alone — floor to median.
+                if actor:getLocalVar('TrustDdRole') == 1 then
+                    local softMin = actor:getLocalVar('TrustSoftBandMin')
+                    local softMax = actor:getLocalVar('TrustSoftBandMax')
+                    if softMin > 0 and softMax >= softMin and info.damage > 0 and info.damage < softMin then
+                        local median = math.floor((softMin + softMax) / 2)
+                        info.damage = math.min(softMax, math.max(softMin, median))
+                    end
                 end
             end
 

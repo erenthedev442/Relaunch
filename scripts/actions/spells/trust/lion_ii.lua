@@ -21,14 +21,14 @@ spellObject.onMobSpawn = function(mob)
     })
 
     mob:addListener('WEAPONSKILL_USE', 'LION_II_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
-        if skill:getID() == 3493 then -- Powder Keg
+        if skill:getID() == 31 then -- Rudra's Storm (player WS; Powder Keg MS retired)
             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
         end
     end)
 
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.COPY_IMAGE }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.UTSUSEMI })
 
-    -- Match Lion I: stick to melee so Walk the Plank / Pirate Pummel actually fire.
+    -- Match Lion I: stick to melee for dagger WS.
     mob:addMod(xi.mod.ACC, 150)
     mob:addMod(xi.mod.ATT, 100)
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)

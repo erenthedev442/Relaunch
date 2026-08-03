@@ -28,7 +28,8 @@ spellObject.onMobSpawn = function(mob)
     })
 
     mob:addListener('WEAPONSKILL_USE', 'TENZEN_II_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
-        if skill:getID() == 3542 then -- Oisoya
+        -- Empyreal Arrow (player WS) — was Oisoya MS (underpowered).
+        if skill:getID() == 199 then
             -- Epehemeral, fleeting, fading. You are but a memory
             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
         end
@@ -39,9 +40,10 @@ spellObject.onMobSpawn = function(mob)
 
     mob:setAutoAttackEnabled(false)
 
-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
+    -- MID_RANGE: LONG_RANGE parked RA in transit (same Margret/Makki bug).
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
 
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST)
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
 end
 
 spellObject.onMobDespawn = function(mob)

@@ -1569,6 +1569,12 @@ bool CGambitsContainer::TryTrustSkill()
                         }
                     }
                 }
+                // Custom (relaunch): never sit on 1000+ TP because the open SC
+                // can't be closed by this trust's list (party WS / other trusts).
+                if (!chosen_skill)
+                {
+                    chosen_skill = xirand::GetRandomElement(tp_skills);
+                }
                 break;
             }
             case G_SELECT::HIGHEST: // Form the best possible skillchain
@@ -1607,6 +1613,11 @@ bool CGambitsContainer::TryTrustSkill()
                             chosen_skillchain = possible_skillchain;
                         }
                     }
+                }
+                // Custom (relaunch): fallback opener if nothing can close.
+                if (!chosen_skill)
+                {
+                    chosen_skill = tp_skills.at(tp_skills.size() - 1);
                 }
                 break;
             }

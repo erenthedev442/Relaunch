@@ -16,7 +16,8 @@ spellObject.onMobSpawn = function(mob)
     -- TODO: Trust Synergy (Aldo/Lion/Zeid)
     -- https://www.bg-wiki.com/ffxi/Cipher:_Lion
 
-    local kGrapeshot = 3198
+    -- Interrupt opener: Evisceration (player dagger WS; Grapeshot MS retired).
+    local kInterruptWs = 25
 
     xi.trust.teamworkMessage(mob, {
         [xi.magic.spell.ZEID] = xi.trust.messageOffset.TEAMWORK_1,
@@ -25,12 +26,12 @@ spellObject.onMobSpawn = function(mob)
     })
 
     -- Stun all the things!
-    mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.WS, ai.s.SPECIFIC, kGrapeshot })
-    mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.WS, ai.s.SPECIFIC, kGrapeshot })
-    mob:addGambit(ai.t.TARGET, { ai.c.READYING_JA, 0 }, { ai.r.WS, ai.s.SPECIFIC, kGrapeshot })
-    mob:addGambit(ai.t.TARGET, { ai.c.CASTING_MA,  0 }, { ai.r.WS, ai.s.SPECIFIC, kGrapeshot })
+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.WS, ai.s.SPECIFIC, kInterruptWs })
+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.WS, ai.s.SPECIFIC, kInterruptWs })
+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_JA, 0 }, { ai.r.WS, ai.s.SPECIFIC, kInterruptWs })
+    mob:addGambit(ai.t.TARGET, { ai.c.CASTING_MA,  0 }, { ai.r.WS, ai.s.SPECIFIC, kInterruptWs })
 
-    -- A-tier: ACC so Pirate Pummel / Walk the Plank connect; force melee range for WS.
+    -- A-tier: ACC + force melee range for dagger WS.
     mob:addMod(xi.mod.ACC, 150)
     mob:addMod(xi.mod.ATT, 80)
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)

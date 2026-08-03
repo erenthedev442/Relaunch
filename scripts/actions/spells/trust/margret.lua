@@ -27,7 +27,8 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.STORETP, 40)
 
     mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
+    -- MID_RANGE: LONG_RANGE kept her pathing (m_InTransit) so RA/WS stalled.
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
 end
 
 spellObject.onMobDespawn = function(mob)

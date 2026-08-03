@@ -181,7 +181,7 @@ C.trusts =
     [1008]= e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Naja UC
     [1012]= e('healer',    'A', { style = 'support',     injectKit = false }), -- Nashmeira II
     [1013]= e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Lilisette II
-    [1015]= e('buffer',    'A', { style = 'support',     injectKit = false }), -- Mumor II
+    [1015]= e('nuker',     'A', { style = 'burst',       injectKit = 'nuker' }), -- Mumor II (BLM T1–T5, not buffer)
     [1017]= e('nuker',     'A', { style = 'burst',       injectKit = 'nuker' }), -- Arciela II
     [1018]= e('melee_dd',  'A', { style = 'weaponskill', injectKit = false }), -- Iroha II
 

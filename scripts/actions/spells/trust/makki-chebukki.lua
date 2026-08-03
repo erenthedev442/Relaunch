@@ -28,7 +28,8 @@ spellObject.onMobSpawn = function(mob)
 
     mob:setAutoAttackEnabled(false)
     mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
+    -- MID_RANGE: LONG_RANGE parked RA in transit (1 shot then idle, no TP/WS).
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
 end
 
 spellObject.onMobDespawn = function(mob)
