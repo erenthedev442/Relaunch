@@ -1,818 +1,1389 @@
-﻿Collaborator review  2026-08-03 15:09:02
+﻿Collaborator review  2026-08-03 16:18:27
 Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit 871ccde07adb20cbaf1e1c7236bbcf7152724dc7
+commit 53b9508e605379176472d6ed6d5f940db8870a59
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Mon Aug 3 23:07:22 2026 +0100
+Date:   Tue Aug 4 00:17:33 2026 +0100
 
-    fix(relaunch/trusts): restore roster WSD, WS lists, and AI
+    fix(relaunch/trusts): full-roster WS path and combat AI
     
-    Wire ALL_WSDMG for player and mobskill WS, raise AA to 55%, set ranged damage, replace zero-damage custom skill lists, and fix S/A trust AI (Lion II, Teodor, Makki, Ygnas, Lilisette, etc.).
+    Remap remaining custom mobskill WS to player WS, fix cmbSkill/MID_RANGE, unstick SC TP spend, and add soft-band floor for leftover signature MS so tier damage actually lands.
 
-diff --git a/modules/custom/cpp/fjb_combat.cpp b/modules/custom/cpp/fjb_combat.cpp
-index c2065b91e2..d160814903 100644
---- a/modules/custom/cpp/fjb_combat.cpp
-+++ b/modules/custom/cpp/fjb_combat.cpp
-@@ -398,7 +398,9 @@ int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRan
- int32 ApplyTrustAutoAttackDamageAdjust(CBattleEntity* PAttacker, int32 damage)
- {
-     // Auto-swings only ΓÇö wired exclusively from TakePhysicalDamage, not WS/magic.
--    constexpr float TRUST_AUTO_ATTACK_MULTIPLIER = 0.25f;
-+    // Was 0.25 ΓÇö too punishing; S/A melee trusts felt like wet noodles on AA.
-+    // Keep under player AA, but high enough to build TP / chip.
-+    constexpr float TRUST_AUTO_ATTACK_MULTIPLIER = 0.55f;
- 
-     if (damage <= 0 || PAttacker == nullptr || PAttacker->objtype != TYPE_TRUST)
-     {
+diff --git a/exports/trust_cipher_drop_simple.csv b/exports/trust_cipher_drop_simple.csv
+new file mode 100644
+index 0000000000..04e6d97338
+--- /dev/null
++++ b/exports/trust_cipher_drop_simple.csv
+@@ -0,0 +1,112 @@
++∩╗┐"Trust","Which NM","Drop rate"
++"AA EV","Ark Angel EV","11%"
++"AA GK","Ark Angel GK","11%"
++"AA HM","Ark Angel HM","11%"
++"AA MR","Ark Angel MR","11%"
++"AA TT","Ark Angel TT","11%"
++"Abenzio","Prickly Pitriv","15%"
++"Abquhbah","Teles","9%"
++"Adelheid","Aello","15%"
++"Ajido-Marujido","Immanibugard","15%"
++"Amchuchu","Apademak","11%"
++"Apururu UC","Chloris","9%"
++"Arciela","Eccentric Eve","13%"
++"Arciela II","Itzpapalotl","11%"
++"Areuhat","Emperor Arthro","15%"
++"August","Alfard","11%"
++"Ayame","Jester Malatrix","15%"
++"Ayame UC","Wyvernhunter Bambrox","11%"
++"Babban","Hugemaw Harold","15%"
++"Balamor","Pazuzu","11%"
++"Brygid","Bomb Queen","13%"
++"Chacharoon","Azdaja","9%"
++"Cherukiki","Bloodguzzler","15%"
++"Cid","Byakko","11%"
++"D. Shantotto","Kamohoalii","13%"
++"Darrcuiln","Azi Dahaka","9%"
++"Elivira","Abyssdiver","15%"
++"Excenmille S","Toppling Tuber","13%"
++"Fablinix","Suzaku","13%"
++"Ferreous Coffin","Bukhis","15%"
++"Flaviria UC","Mephitas","11%"
++"Gadalar","Garbage Gel","13%"
++"Gessho","Simurgh","13%"
++"Gilgamesh","Genbu-Escha","11%"
++"Halver","Keeper of Heiligtum","15%"
++"Ingrid","Strix","13%"
++"Ingrid II","Shaula","13%"
++"Invincible Shield UC","Vidmapire","11%"
++"Iroha","Iratham","13%"
++"Iroha II","Shedu","11%"
++"Iron Eater","Blazing Eruca","13%"
++"Jakoh UC","Tolba","11%"
++"Joachim","Vrtra","13%"
++"Karaha-Baruha","Woodland Mender","15%"
++"Kayeel-Payeel","Ketea","11%"
++"King of Hearts","Briareus","11%"
++"Klara","Lord Varney","13%"
++"Koru-Moru","Khun","13%"
++"Kukki-Chebukki","Joyous Green","15%"
++"Kupofried","Shinryu","8%"
++"Kuyin Hathdenna","Byakko-Escha","11%"
++"Lehko Habhoka","Tom Tit Tat","15%"
++"Leonoyne","Aquarius","13%"
++"Lhe Lhangavo","Kukulkan","9%"
++"Lhu Mhakaracca","Warblade Beak","15%"
++"Lilisette","Padfoot","11%"
++"Lilisette II","Bakunawa","11%"
++"Lion","Seiryu","11%"
++"Lion II","Tinnin","9%"
++"Luzaf","Seiryu-Escha","11%"
++"Maat","Sovereign Behemoth","13%"
++"Maat UC","Amarok","13%"
++"Makki-Chebukki","Warder of Courage","9%"
++"Margret","Intuila","15%"
++"Maximilian","Dvalinn","11%"
++"Mayakov","Cactrot Veloz","15%"
++"Mihli Aliapoh","Valkurm Emperor","15%"
++"Mildaurion","Kirin","11%"
++"Mnejing","Wepwawet","15%"
++"Monberaux","Maju","9%"
++"Moogle","Genbu","15%"
++"Morimar","Warder of Hope","9%"
++"Mumor","Muut","13%"
++"Mumor II","Bennu","11%"
++"Naja Salaheem","Leaping Lizzy","15%"
++"Naja UC","Ayapec","11%"
++"Najelith","Carabosse","13%"
++"Naji","Arimaspi","15%"
++"Nashmeira","Arke","13%"
++"Nashmeira II","Specter Worm","11%"
++"Noillurie","Lumber Jill","13%"
++"Ovjang","Warder of Justice","15%"
++"Pieuje UC","Centurio XX-I","11%"
++"Prishe","Sirrush","13%"
++"Prishe II","Lorelei","9%"
++"Qultada","Glavoid","11%"
++"Rahal","Roc","13%"
++"Rainemard","King Behemoth","11%"
++"Robel-Akbel","Durinn","13%"
++"Romaa Mihgo","Ironhorn Baldurno","15%"
++"Rongelouts","Fleetstalker","11%"
++"Rosulatia","Urmahlullu","11%"
++"Rughadjeen","Ionos","13%"
++"Sakura","Tangata Manu","15%"
++"Selh'Teus","Albumen","9%"
++"Semih Lafihna","Warder of Faith","15%"
++"Shantotto II","Absolute Virtue","9%"
++"Shikaree Z","Largantua","13%"
++"Star Sibyl","Serket","13%"
++"Sylvie UC","Tumult Curator","9%"
++"Tenzen II","Thu'ban","13%"
++"Teodor","Titlacauan","9%"
++"Uka Totlihn","Pantokrator","9%"
++"Ullegore","Iku-Turso","11%"
++"Ulmia","Pandemonium Warden","9%"
++"Valaineral","Kirin","9%"
++"Volker","Maahes","13%"
++"Ygnas","Isgebind","9%"
++"Yoran-Oran UC","Coca","11%"
++"Zazarg","Tiyanak","15%"
++"Zeid","Nidhogg","11%"
++"Zeid II","Orthrus","9%"
 diff --git a/modules/custom/lua/trust_kit_library.lua b/modules/custom/lua/trust_kit_library.lua
-index 708eb191be..5d2b4dac08 100644
+index 5d2b4dac08..05048341ea 100644
 --- a/modules/custom/lua/trust_kit_library.lua
 +++ b/modules/custom/lua/trust_kit_library.lua
-@@ -13,8 +13,8 @@ local function nuker(mob)
-     mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
-     mob:addGambit(ai.t.TARGET, { ai.c.READYING_JA, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
+@@ -34,7 +34,8 @@ local function ranged(mob)
+     mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 })
+     mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
      mob:setAutoAttackEnabled(false)
--    mob:setMobMod(xi.mobMod.NO_MOVE, 1)
 -    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
-+    -- Stationary caster (LONG_RANGE made nukers path to 12' and look AFK).
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
++    -- MID_RANGE (6'): LONG_RANGE kept trusts in m_InTransit so RATTACK/WS never fired.
++    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
  end
  
- local function melee(mob)
+ local function tank(mob)
 diff --git a/modules/custom/lua/trust_power_catalog.lua b/modules/custom/lua/trust_power_catalog.lua
-index e05ac2d672..a05b223842 100644
+index a05b223842..f2ac90deb6 100644
 --- a/modules/custom/lua/trust_power_catalog.lua
 +++ b/modules/custom/lua/trust_power_catalog.lua
-@@ -189,7 +189,7 @@ C.trusts =
-     -- D4 / D5 / CORE endgame
-     ------------------------------------------------------------------
-     [914] = e('buffer',    'S', { style = 'support',     injectKit = false }), -- Ulmia CORE
--    [947] = e('buffer',    'S', { style = 'support',     injectKit = false }), -- Uka (was Prestige)
-+    [947] = e('melee_dd',  'S', { style = 'skirmisher',  injectKit = false }), -- Uka DNC (melee, not buffer)
-     [955] = e('healer',    'S', { style = 'support',     injectKit = false }), -- Apururu UC CORE
-     [963] = e('utility',   'B', { style = 'support',     injectKit = 'utility' }), -- Chacharoon (utility, not DPS)
-     [964] = e('melee_dd',  'S', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Lhe (Prestige move)
-diff --git a/modules/custom/lua/trust_power_scaling.lua b/modules/custom/lua/trust_power_scaling.lua
-index f8bcc99a8a..f5931f150c 100644
---- a/modules/custom/lua/trust_power_scaling.lua
-+++ b/modules/custom/lua/trust_power_scaling.lua
-@@ -34,17 +34,18 @@ local function applyMeleePackage(mob, p, t, s)
-     local hasteM = s.haste or 1
-     local daM    = s.da or 1
+@@ -181,7 +181,7 @@ C.trusts =
+     [1008]= e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Naja UC
+     [1012]= e('healer',    'A', { style = 'support',     injectKit = false }), -- Nashmeira II
+     [1013]= e('melee_dd',  'A', { style = 'skirmisher',  injectKit = 'melee_dd' }), -- Lilisette II
+-    [1015]= e('buffer',    'A', { style = 'support',     injectKit = false }), -- Mumor II
++    [1015]= e('nuker',     'A', { style = 'burst',       injectKit = 'nuker' }), -- Mumor II (BLM T1ΓÇôT5, not buffer)
+     [1017]= e('nuker',     'A', { style = 'burst',       injectKit = 'nuker' }), -- Arciela II
+     [1018]= e('melee_dd',  'A', { style = 'weaponskill', injectKit = false }), -- Iroha II
  
--    -- Tuned so master-99 medians sit near soft bands (C 14ΓÇô20k ΓÇª S 36ΓÇô40k)
--    -- before softclamp; DEF/EVA still matter. ACC stays generous for Γëñ120.
--    local dmg   = math.floor((6 + 155 * p) * t * attM)
--    local att   = math.floor((18 + 600 * p) * t * attM)
--    local acc   = math.floor((50 + 950 * p) * t)
--    local str   = math.floor((5 + 170 * p) * t * attM)
--    local dex   = math.floor((5 + 150 * p) * t)
--    local da    = math.floor((2 + 32 * p) * t * daM)
--    local ta    = math.floor((1 + 16 * p) * t * daM)
-+    -- Tuned so master-99 medians sit near soft bands (C 8ΓÇô10k ΓÇª S 36ΓÇô40k)
-+    -- before softclamp. ALL_WSDMG_ALL_HITS is a *percentage* (see weaponskills.lua).
-+    -- WEAPONSKILL_DAMAGE_BASE is per-wsID only and was a dead mod here.
-+    local dmg   = math.floor((12 + 210 * p) * t * attM)
-+    local att   = math.floor((30 + 720 * p) * t * attM)
-+    local acc   = math.floor((60 + 1000 * p) * t)
-+    local str   = math.floor((8 + 190 * p) * t * attM)
-+    local dex   = math.floor((8 + 170 * p) * t)
-+    local da    = math.floor((3 + 36 * p) * t * daM)
-+    local ta    = math.floor((1 + 18 * p) * t * daM)
-     local haste = math.floor((200 + 2100 * p) * math.min(t, 1.05) * hasteM)
--    local wsd   = math.floor((2 + 36 * p) * t * wsdM)
-+    local wsd   = math.floor((10 + 50 * p) * t * wsdM) -- % all-hits WSD
-     local store = math.floor((2 + 42 * p) * t * wsdM)
- 
-     pcall(function() mob:setDamage(dmg) end)
-@@ -57,7 +58,7 @@ local function applyMeleePackage(mob, p, t, s)
-     mob:addMod(xi.mod.DOUBLE_ATTACK, da)
-     mob:addMod(xi.mod.TRIPLE_ATTACK, ta)
-     mob:addMod(xi.mod.HASTE_GEAR, haste)
--    mob:addMod(xi.mod.WEAPONSKILL_DAMAGE_BASE, wsd)
-+    mob:addMod(xi.mod.ALL_WSDMG_ALL_HITS, wsd)
-     mob:addMod(xi.mod.STORETP, store)
-     mob:addMod(xi.mod.CRITHITRATE, math.floor((2 + 18 * p) * t))
-     mob:addMod(xi.mod.CRIT_DMG_INCREASE, math.floor((2 + 23 * p) * t * wsdM))
-@@ -132,45 +133,46 @@ local ROLE_APPLY =
-     melee_dd  = function(mob, p, t, s, tier)
-         applyMeleePackage(mob, p, t, s)
-         -- Per-tier WS push so soft bands are reachable without softclamp-only ladders.
-+        -- Percentage-point extras on ALL_WSDMG_ALL_HITS (not flat base).
-         local wsdExtra =
-         {
--            C = math.floor(70 + 160 * p),
--            B = math.floor(40 + 90 * p),
--            A = math.floor(70 + 130 * p),
--            S = math.floor(100 + 180 * p),
-+            C = math.floor(15 + 25 * p),
-+            B = math.floor(25 + 40 * p),
-+            A = math.floor(40 + 55 * p),
-+            S = math.floor(55 + 75 * p),
-         }
-         local ratingExtra =
-         {
--            C = math.floor(15 + 35 * p),
--            B = math.floor(10 + 25 * p),
--            A = math.floor(15 + 35 * p),
--            S = math.floor(20 + 45 * p),
-+            C = math.floor(20 + 45 * p),
-+            B = math.floor(25 + 55 * p),
-+            A = math.floor(35 + 70 * p),
-+            S = math.floor(50 + 90 * p),
-         }
-         if wsdExtra[tier] then
--            mob:addMod(xi.mod.WEAPONSKILL_DAMAGE_BASE, wsdExtra[tier])
-+            mob:addMod(xi.mod.ALL_WSDMG_ALL_HITS, wsdExtra[tier])
-             mob:addMod(xi.mod.MAIN_DMG_RATING, ratingExtra[tier])
-         end
-     end,
-     ranged_dd = function(mob, p, t, s, tier)
-         applyMeleePackage(mob, p, t, s)
--        mob:addMod(xi.mod.RATT, math.floor((15 + 465 * p) * t * ((s and s.att) or 1)))
--        mob:addMod(xi.mod.RACC, math.floor((15 + 465 * p) * t))
-+        mob:addMod(xi.mod.RATT, math.floor((20 + 520 * p) * t * ((s and s.att) or 1)))
-+        mob:addMod(xi.mod.RACC, math.floor((20 + 520 * p) * t))
-         local wsdExtra =
-         {
--            C = math.floor(70 + 160 * p),
--            B = math.floor(40 + 90 * p),
--            A = math.floor(70 + 130 * p),
--            S = math.floor(100 + 180 * p),
-+            C = math.floor(15 + 25 * p),
-+            B = math.floor(25 + 40 * p),
-+            A = math.floor(40 + 55 * p),
-+            S = math.floor(55 + 75 * p),
-         }
-         local ratingExtra =
-         {
--            C = math.floor(15 + 40 * p),
--            B = math.floor(12 + 28 * p),
--            A = math.floor(18 + 38 * p),
--            S = math.floor(22 + 48 * p),
-+            C = math.floor(20 + 50 * p),
-+            B = math.floor(28 + 60 * p),
-+            A = math.floor(40 + 75 * p),
-+            S = math.floor(55 + 95 * p),
-         }
-         if wsdExtra[tier] then
--            mob:addMod(xi.mod.WEAPONSKILL_DAMAGE_BASE, wsdExtra[tier])
-+            mob:addMod(xi.mod.ALL_WSDMG_ALL_HITS, wsdExtra[tier])
-             mob:addMod(xi.mod.RANGED_DMG_RATING, ratingExtra[tier])
-         end
-     end,
-diff --git a/modules/custom/sql/trust_combat_audit_fix.sql b/modules/custom/sql/trust_combat_audit_fix.sql
+diff --git a/modules/custom/sql/trust_combat_round2_fix.sql b/modules/custom/sql/trust_combat_round2_fix.sql
 new file mode 100644
-index 0000000000..b40e2a52e9
+index 0000000000..73e5e12ccd
 --- /dev/null
-+++ b/modules/custom/sql/trust_combat_audit_fix.sql
-@@ -0,0 +1,73 @@
++++ b/modules/custom/sql/trust_combat_round2_fix.sql
+@@ -0,0 +1,101 @@
 +-- ============================================================================
-+-- trust_combat_audit_fix.sql
++-- trust_combat_round2_fix.sql
 +--
-+-- Full-roster hotfixes for broken trust WS / pools:
-+--   1) Morimar / Darrcuiln ΓÇö custom MS had no Lua (0 dmg) ΓåÆ player axe/GA WS
-+--   2) Lilisette / II ΓÇö DNC MS had no Lua ΓåÆ player dagger WS
-+--   3) Strip orphan signature MS (Mayakov / Romaa / Zazarg / Ovjang)
-+--   4) Pool cmbSkill fixes (Makki Archery, Lhe H2H, Morimar Axe, Darrcuiln GA)
++-- Round-2 trust combat hotfixes (post audit):
++--   1) Ark Angels / Babban / Tenzen II ΓÇö custom MS ΓåÆ player WS (real WSD path)
++--   2) Naja ΓÇö Black Halo last for HIGHEST opener
++--   3) Pool cmbSkill: Club / Archery / Marksmanship / H2H / Axe / GK / Sword
++--   4) Teodor ΓÇö add single-target T4/T5 nukes
++--
++-- Also requires map rebuild (gambits_container SC-fallback) + Lua reload
++-- (catalog Mumor II nuker, MID_RANGE kits, AI scripts).
 +--
 +-- Safe to re-apply. Map restart required.
 +-- ============================================================================
 +
 +-- ---------------------------------------------------------------------------
-+-- Morimar / Darrcuiln
++-- Skill lists ΓåÆ player WS
 +-- ---------------------------------------------------------------------------
-+DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1105;
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,69);  -- Rampage
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,70);  -- Calamity
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,72);  -- Decimation
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,76);  -- Cloudsplitter
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,77);  -- Ruinator
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1027;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem',1027,166);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem',1027,168);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem',1027,3215);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem',1027,169);
 +
-+DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1106;
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,86); -- Raging Rush
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,88); -- Steel Cyclone
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,91); -- Fell Cleave
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,92); -- Ukko's Fury
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1073;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,5);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,7);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,9);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,14);
 +
-+DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 491;
-+INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,69);
-+INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,70);
-+INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,72);
-+INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,76);
-+INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,77);
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1107;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,40);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,41);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,42);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,225);
 +
-+DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 489;
-+INSERT INTO `mob_skill_lists` VALUES ('Darrcuiln',489,86);
-+INSERT INTO `mob_skill_lists` VALUES ('Darrcuiln',489,88);
-+INSERT INTO `mob_skill_lists` VALUES ('Darrcuiln',489,91);
-+INSERT INTO `mob_skill_lists` VALUES ('Darrcuiln',489,92);
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1108;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,40);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,41);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,42);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,225);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1109;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,69);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,70);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,72);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,76);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,77);
++
++-- AATT nuker: strip underpowered MS (magic only)
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1110;
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1111;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,150);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,151);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,152);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,156);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,157);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1123;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem_UC',1123,166);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem_UC',1123,168);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem_UC',1123,3215);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem_UC',1123,169);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1129;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen_II',1129,196);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen_II',1129,198);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen_II',1129,199);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen_II',1129,201);
 +
 +-- ---------------------------------------------------------------------------
-+-- Lilisette / Lilisette II ΓÇö dagger WS (custom DNC MS had no Lua)
++-- Pool combat skill / delay (ranged need real SLOT_RANGED)
 +-- ---------------------------------------------------------------------------
-+DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1060;
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,16);  -- Wasp Sting
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,23);  -- Dancing Edge
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,29);  -- Pyrrhic Kleos
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,31);  -- Rudra's Storm
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,224); -- Exenterator
-+
-+DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1128;
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,16);
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,23);
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,29);
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,31);
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,224);
++UPDATE `mob_pools` SET `cmbSkill` = 11 WHERE `poolid` = 5912; -- Naja Club
++UPDATE `mob_pools` SET `cmbSkill` = 26, `cmbDelay` = 600, `cmbDmgMult` = 200 WHERE `poolid` = 5941; -- Elivira Marksmanship
++UPDATE `mob_pools` SET `cmbSkill` = 25, `cmbDelay` = 500, `cmbDmgMult` = 200 WHERE `poolid` = 5957; -- Flaviria Archery
++UPDATE `mob_pools` SET `cmbSkill` = 1 WHERE `poolid` = 5958; -- Babban H2H
++UPDATE `mob_pools` SET `cmbSkill` = 25, `cmbDelay` = 500, `cmbDmgMult` = 200 WHERE `poolid` = 5962; -- Margret Archery
++UPDATE `mob_pools` SET `cmbSkill` = 25, `cmbDelay` = 500, `cmbDmgMult` = 200 WHERE `poolid` = 5988; -- Makki Archery (idempotent)
++UPDATE `mob_pools` SET `cmbSkill` = 3 WHERE `poolid` = 5992; -- AA HM Sword
++UPDATE `mob_pools` SET `cmbSkill` = 5 WHERE `poolid` = 5994; -- AA MR Axe
++UPDATE `mob_pools` SET `cmbSkill` = 10 WHERE `poolid` = 5996; -- AA GK Great Katana
++UPDATE `mob_pools` SET `cmbSkill` = 25, `cmbDelay` = 500, `cmbDmgMult` = 200 WHERE `poolid` = 6014; -- Tenzen II Archery (+dmgMult)
 +
 +-- ---------------------------------------------------------------------------
-+-- Strip orphan signature moves (no Lua ΓåÆ 0 damage if selected as HIGHEST)
++-- Teodor single-target nukes
 +-- ---------------------------------------------------------------------------
-+DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1081 AND `mob_skill_id` = 3454; -- Mayakov Coming Up Roses
-+DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1064 AND `mob_skill_id` = 3297; -- Romaa Cobra Clamp
-+DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1039 AND `mob_skill_id` = 3240; -- Zazarg Meteoric Impact
-+DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1040 AND `mob_skill_id` = 3244; -- Ovjang Sixth Element
++DELETE FROM `mob_spell_lists` WHERE `spell_list_id` = 399 AND `spell_id` IN (147,148,152,153,157,158,162,163,167,168,172,173);
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,147,73,255);
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,148,86,255);
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,152,74,255);
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,153,89,255);
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,157,72,255);
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,158,83,255);
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,162,68,255);
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,163,77,255);
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,167,75,255);
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,168,92,255);
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,172,70,255);
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,173,80,255);
+diff --git a/modules/custom/sql/trust_combat_round3_full.sql b/modules/custom/sql/trust_combat_round3_full.sql
+new file mode 100644
+index 0000000000..c3806f3ea0
+--- /dev/null
++++ b/modules/custom/sql/trust_combat_round3_full.sql
+@@ -0,0 +1,235 @@
++-- ============================================================================
++-- trust_combat_round3_full.sql
++--
++-- Full-roster pass (after round2): remaining MS-only DD/tank/hybrid/ranged
++-- trusts remapped to player WS so weaponskills.lua WSD/ratings apply.
++-- Also cmbSkill fixes + strip weak lvl+2 signature MS from mixed lists.
++--
++-- Apply AFTER trust_combat_audit_fix.sql + trust_combat_round2_fix.sql
++-- (or alone ΓÇö deletes are idempotent). Map restart required.
++-- C++ rebuild still required for gambits_container SC-fallback.
++-- ============================================================================
 +
 +-- ---------------------------------------------------------------------------
-+-- Pool combat skill fixes
++-- MS-only ΓåÆ player WS
 +-- ---------------------------------------------------------------------------
-+UPDATE `mob_pools` SET `cmbSkill` = 25, `cmbDelay` = 500, `cmbDmgMult` = 200 WHERE `poolid` = 5988; -- Makki Archery
-+UPDATE `mob_pools` SET `cmbSkill` = 1 WHERE `poolid` = 5964;  -- Lhe H2H
-+UPDATE `mob_pools` SET `cmbSkill` = 2 WHERE `poolid` = 5990;  -- Morimar Axe
-+UPDATE `mob_pools` SET `cmbSkill` = 6 WHERE `poolid` = 5991;  -- Darrcuiln Great Axe
-diff --git a/scripts/actions/mobskills/grapeshot.lua b/scripts/actions/mobskills/grapeshot.lua
-index 237e8f742f..a9f823175c 100755
---- a/scripts/actions/mobskills/grapeshot.lua
-+++ b/scripts/actions/mobskills/grapeshot.lua
-@@ -16,7 +16,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1020;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,40);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,41);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,42);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,225);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1022;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion',1022,16);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion',1022,23);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion',1022,25);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion',1022,31);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion',1022,224);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1023;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,150);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,151);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,152);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,156);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,157);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1028;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,5);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,7);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,8);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,9);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,14);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1033;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,134);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,135);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,136);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,138);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,141);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1037;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,16);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,23);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,25);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,31);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,224);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1041;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,1);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,5);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,7);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,9);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1047;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Fablinix',1047,165);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Fablinix',1047,168);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Fablinix',1047,169);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1048;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,5);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,7);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,8);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,9);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,14);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1055;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Semih_Lafihna',1055,196);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Semih_Lafihna',1055,198);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Semih_Lafihna',1055,199);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Semih_Lafihna',1055,201);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1074;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,5);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,7);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,9);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,14);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1086;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mildaurion',1086,40);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mildaurion',1086,41);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mildaurion',1086,42);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mildaurion',1086,225);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1094;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Selh_teus',1094,40);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Selh_teus',1094,42);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Selh_teus',1094,225);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1099;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,51);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,54);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,56);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,57);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1112;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,150);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,151);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,152);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,156);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,157);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1121;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat_UC',1121,5);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat_UC',1121,7);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat_UC',1121,8);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat_UC',1121,9);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat_UC',1121,14);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1124;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,16);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,23);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,25);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,31);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,224);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1126;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,5);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,7);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,8);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,9);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,14);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1133;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,150);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,151);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,152);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,156);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,157);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1040;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ovjang',1040,165);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ovjang',1040,168);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ovjang',1040,169);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1083;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Adelheid',1083,165);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Adelheid',1083,168);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Adelheid',1083,169);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Adelheid',1083,174);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1134;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II',1134,165);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II',1134,168);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II',1134,169);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II',1134,174);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1163;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II_Melee',1163,165);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II_Melee',1163,168);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II_Melee',1163,169);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II_Melee',1163,174);
++
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1197;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,51);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,54);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,56);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,57);
++
++-- Strip weak / missing-Lua MS from mixed lists (HIGHEST can pick and stall)
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1054 AND `mob_skill_id` IN (3438,3439); -- Areuhat
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1097 AND `mob_skill_id` = 3541; -- Abquhbah
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1051 AND `mob_skill_id` IN (3336,3337); -- Karaha Howling Moon / Lunar Bay
++
++-- Nashmeira I/II healers: sole MS ΓåÆ dagger WS so they still spend TP
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1038;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira',1038,16);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira',1038,23);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira',1038,25);
++DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1127;
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira_II',1127,16);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira_II',1127,23);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira_II',1127,25);
++
++-- ---------------------------------------------------------------------------
++-- Pool cmbSkill (weapon type must match WS / ranged slot)
++-- ---------------------------------------------------------------------------
++UPDATE `mob_pools` SET `cmbSkill` = 3 WHERE `poolid` = 5905; -- Trion Sword
++UPDATE `mob_pools` SET `cmbSkill` = 2 WHERE `poolid` = 5907; -- Lion Dagger
++UPDATE `mob_pools` SET `cmbSkill` = 10 WHERE `poolid` = 5908; -- Tenzen GK
++UPDATE `mob_pools` SET `cmbSkill` = 4 WHERE `poolid` = 5906; -- Zeid GS
++UPDATE `mob_pools` SET `cmbSkill` = 11 WHERE `poolid` = 5909; -- Mihli Club
++UPDATE `mob_pools` SET `cmbSkill` = 1 WHERE `poolid` = 5913; -- Prishe H2H
++UPDATE `mob_pools` SET `cmbSkill` = 8 WHERE `poolid` = 5915; -- Shikaree Polearm
++UPDATE `mob_pools` SET `cmbSkill` = 6 WHERE `poolid` = 5917; -- Iron Eater GA
++UPDATE `mob_pools` SET `cmbSkill` = 9 WHERE `poolid` = 5918; -- Gessho Katana
++UPDATE `mob_pools` SET `cmbSkill` = 2 WHERE `poolid` = 5922; -- Lehko Dagger
++UPDATE `mob_pools` SET `cmbSkill` = 1 WHERE `poolid` = 5924; -- Zazarg H2H
++UPDATE `mob_pools` SET `cmbSkill` = 1 WHERE `poolid` = 5926; -- Mnejing H2H
++UPDATE `mob_pools` SET `cmbSkill` = 26, `cmbDelay` = 600, `cmbDmgMult` = 200 WHERE `poolid` = 5928; -- Luzaf Marksmanship
++UPDATE `mob_pools` SET `cmbSkill` = 8 WHERE `poolid` = 5929; -- Najelith Polearm
++UPDATE `mob_pools` SET `cmbSkill` = 11 WHERE `poolid` = 5932; -- Fablinix Club
++UPDATE `mob_pools` SET `cmbSkill` = 1 WHERE `poolid` = 5933; -- Maat H2H
++UPDATE `mob_pools` SET `cmbSkill` = 12 WHERE `poolid` = 5936; -- Karaha Staff
++UPDATE `mob_pools` SET `cmbSkill` = 6 WHERE `poolid` = 5937; -- Cid GA
++UPDATE `mob_pools` SET `cmbSkill` = 10 WHERE `poolid` = 5938; -- Gilgamesh GK
++UPDATE `mob_pools` SET `cmbSkill` = 25, `cmbDelay` = 500, `cmbDmgMult` = 200 WHERE `poolid` = 5940; -- Semih Archery
++UPDATE `mob_pools` SET `cmbSkill` = 5 WHERE `poolid` = 5943; -- Lhu Axe
++UPDATE `mob_pools` SET `cmbSkill` = 11 WHERE `poolid` = 5944; -- Ferreous Club
++UPDATE `mob_pools` SET `cmbSkill` = 2 WHERE `poolid` = 5945; -- Lilisette Dagger
++UPDATE `mob_pools` SET `cmbSkill` = 11 WHERE `poolid` = 5946; -- Mumor Club
++UPDATE `mob_pools` SET `cmbSkill` = 11 WHERE `poolid` = 5947; -- Uka Club
++UPDATE `mob_pools` SET `cmbSkill` = 6 WHERE `poolid` = 5954; -- I.Shield GA
++UPDATE `mob_pools` SET `cmbSkill` = 2 WHERE `poolid` = 5956; -- Jakoh Dagger
++UPDATE `mob_pools` SET `cmbSkill` = 1 WHERE `poolid` = 5959; -- Abenzio H2H
++UPDATE `mob_pools` SET `cmbSkill` = 4 WHERE `poolid` = 5960; -- Rughadjeen GS
++UPDATE `mob_pools` SET `cmbSkill` = 26, `cmbDelay` = 600, `cmbDmgMult` = 200 WHERE `poolid` = 5967; -- Qultada Marksmanship
++UPDATE `mob_pools` SET `cmbSkill` = 4 WHERE `poolid` = 5969; -- Amchuchu GS
++UPDATE `mob_pools` SET `cmbSkill` = 3 WHERE `poolid` = 5971; -- Mildaurion Sword
++UPDATE `mob_pools` SET `cmbSkill` = 8 WHERE `poolid` = 5972; -- Halver Polearm
++UPDATE `mob_pools` SET `cmbSkill` = 4 WHERE `poolid` = 5973; -- Rongelouts GS
++UPDATE `mob_pools` SET `cmbSkill` = 2 WHERE `poolid` = 5975; -- Maximilian Dagger
++UPDATE `mob_pools` SET `cmbSkill` = 3 WHERE `poolid` = 5979; -- Selh'teus Sword
++UPDATE `mob_pools` SET `cmbSkill` = 1 WHERE `poolid` = 5982; -- Abquhbah H2H
++UPDATE `mob_pools` SET `cmbSkill` = 4 WHERE `poolid` = 5983; -- Balamor GS
++UPDATE `mob_pools` SET `cmbSkill` = 4 WHERE `poolid` = 5984; -- August GS
++UPDATE `mob_pools` SET `cmbSkill` = 5 WHERE `poolid` = 5990; -- Morimar Axe
++UPDATE `mob_pools` SET `cmbSkill` = 10 WHERE `poolid` = 5997; -- Iroha GK
++UPDATE `mob_pools` SET `cmbSkill` = 8 WHERE `poolid` = 6004; -- Excenmille S Polearm
++UPDATE `mob_pools` SET `cmbSkill` = 10 WHERE `poolid` = 6005; -- Ayame UC GK
++UPDATE `mob_pools` SET `cmbSkill` = 1 WHERE `poolid` = 6006; -- Maat UC H2H
++UPDATE `mob_pools` SET `cmbSkill` = 11 WHERE `poolid` = 6008; -- Naja UC Club
++UPDATE `mob_pools` SET `cmbSkill` = 2 WHERE `poolid` = 6009; -- Lion II Dagger
++UPDATE `mob_pools` SET `cmbSkill` = 4 WHERE `poolid` = 6010; -- Zeid II GS
++UPDATE `mob_pools` SET `cmbSkill` = 1 WHERE `poolid` = 6011; -- Prishe II H2H
++UPDATE `mob_pools` SET `cmbSkill` = 2 WHERE `poolid` = 6013; -- Lilisette II Dagger
++UPDATE `mob_pools` SET `cmbSkill` = 10 WHERE `poolid` = 6018; -- Iroha II GK
+diff --git a/scripts/actions/spells/trust/elivira.lua b/scripts/actions/spells/trust/elivira.lua
+index eb70b3a1ce..78152dd7b0 100644
+--- a/scripts/actions/spells/trust/elivira.lua
++++ b/scripts/actions/spells/trust/elivira.lua
+@@ -22,7 +22,7 @@ spellObject.onMobSpawn = function(mob)
+     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.DECOY_SHOT }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.DECOY_SHOT })
  
-     params.baseDamage     = mob:getWeaponDmg()
-     params.numHits        = 1
--    params.fTP            = { 0.3, 0.3, 0.3 } -- TODO: Capture fTPs
-+    params.fTP            = { 1.5, 1.75, 2.0 } -- stun utility; was stub 0.3
-     params.attackType     = xi.attackType.PHYSICAL
-     params.damageType     = xi.damageType.PIERCING
-     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1 -- TODO: Capture shadowBehavior
-diff --git a/scripts/actions/mobskills/pirate_pummel.lua b/scripts/actions/mobskills/pirate_pummel.lua
-index 1ae785b315..d959a4da39 100755
---- a/scripts/actions/mobskills/pirate_pummel.lua
-+++ b/scripts/actions/mobskills/pirate_pummel.lua
-@@ -15,8 +15,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
-     local params = {}
- 
-     params.baseDamage     = mob:getWeaponDmg()
--    params.numHits        = 2 -- TODO: Capture numHits
--    params.fTP            = { 0.3, 0.3, 0.3 } -- TODO: Capture fTPs
-+    params.numHits        = 2
-+    params.fTP            = { 2.5, 3.0, 3.5 } -- was stub 0.3
-     params.attackType     = xi.attackType.PHYSICAL
-     params.damageType     = xi.damageType.PIERCING
-     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_2 -- TODO: Capture shadowBehavior
-diff --git a/scripts/actions/mobskills/powder_keg.lua b/scripts/actions/mobskills/powder_keg.lua
-index ef8192093d..c4be74a1bd 100755
---- a/scripts/actions/mobskills/powder_keg.lua
-+++ b/scripts/actions/mobskills/powder_keg.lua
-@@ -16,7 +16,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
- 
-     params.baseDamage     = mob:getWeaponDmg()
-     params.numHits        = 1
--    params.fTP            = { 0.3, 0.3, 0.3 }
-+    params.fTP            = { 2.0, 2.5, 3.0 } -- was stub 0.3
-     params.attackType     = xi.attackType.PHYSICAL
-     params.damageType     = xi.damageType.PIERCING
-     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
-diff --git a/scripts/actions/mobskills/walk_the_plank.lua b/scripts/actions/mobskills/walk_the_plank.lua
-index c5360b3333..962d4dd49c 100755
---- a/scripts/actions/mobskills/walk_the_plank.lua
-+++ b/scripts/actions/mobskills/walk_the_plank.lua
-@@ -16,7 +16,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
- 
-     params.baseDamage     = mob:getWeaponDmg()
-     params.numHits        = 1
--    params.fTP            = { 0.3, 0.3, 0.3 }
-+    -- Was stub 0.3 fTP (Walk the Plank did ~170). Trust Lion/Lion II finisher.
-+    params.fTP            = { 3.5, 4.25, 5.0 }
-     params.attackType     = xi.attackType.PHYSICAL
-     params.damageType     = xi.damageType.PIERCING
-     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3 -- TODO: Capture shadowBehavior
-diff --git a/scripts/actions/spells/trust/darrcuiln.lua b/scripts/actions/spells/trust/darrcuiln.lua
-index 4d65e30606..d239972242 100644
---- a/scripts/actions/spells/trust/darrcuiln.lua
-+++ b/scripts/actions/spells/trust/darrcuiln.lua
-@@ -1,5 +1,6 @@
- -----------------------------------
- -- Trust: Darrcuiln
-+-- S-tier WAR ΓÇö player GS WS (custom mobskills had no Lua and dealt 0).
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -14,6 +15,16 @@ end
- 
- spellObject.onMobSpawn = function(mob)
-     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
-+
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.BERSERK }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.BERSERK })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.AGGRESSOR }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.AGGRESSOR })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.WARCRY }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.WARCRY })
-+    mob:addGambit(ai.t.SELF, { ai.c.HAS_TOP_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.PROVOKE })
-+
-+    mob:addMod(xi.mod.ACC, 120)
-+    mob:addMod(xi.mod.ATT, 100)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
-+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+     mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 })
+-    -- Retail: melee if in range, RA regardless. Keep AA on.
++    -- Retail: melee if in range, RA regardless. Keep AA on. Stay MID_RANGE for RA cadence.
+     mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
  end
+diff --git a/scripts/actions/spells/trust/lion.lua b/scripts/actions/spells/trust/lion.lua
+index a20ca3449d..c0576260b8 100644
+--- a/scripts/actions/spells/trust/lion.lua
++++ b/scripts/actions/spells/trust/lion.lua
+@@ -16,7 +16,8 @@ spellObject.onMobSpawn = function(mob)
+     -- TODO: Trust Synergy (Aldo/Lion/Zeid)
+     -- https://www.bg-wiki.com/ffxi/Cipher:_Lion
  
- spellObject.onMobDespawn = function(mob)
-diff --git a/scripts/actions/spells/trust/lhe_lhangavo.lua b/scripts/actions/spells/trust/lhe_lhangavo.lua
-index 1648036ec5..88895df2d2 100644
---- a/scripts/actions/spells/trust/lhe_lhangavo.lua
-+++ b/scripts/actions/spells/trust/lhe_lhangavo.lua
-@@ -1,5 +1,6 @@
- -----------------------------------
- -- Trust: Lhe Lhangavo
-+-- S-tier MNK ΓÇö Victory Smite / Asuran ASAP.
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -14,6 +15,16 @@ end
+-    local kGrapeshot = 3198
++    -- Interrupt opener: Evisceration (player dagger WS; Grapeshot MS retired).
++    local kInterruptWs = 25
  
- spellObject.onMobSpawn = function(mob)
-     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
-+
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.FOCUS }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.FOCUS })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.DODGE }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.DODGE })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.COUNTERSTANCE }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.COUNTERSTANCE })
-+    mob:addGambit(ai.t.SELF, { ai.c.HAS_TOP_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.PROVOKE })
-+
-+    mob:addMod(xi.mod.ACC, 120)
-+    mob:addMod(xi.mod.ATT, 80)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
-+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
- end
+     xi.trust.teamworkMessage(mob, {
+         [xi.magic.spell.ZEID] = xi.trust.messageOffset.TEAMWORK_1,
+@@ -25,12 +26,12 @@ spellObject.onMobSpawn = function(mob)
+     })
  
- spellObject.onMobDespawn = function(mob)
-diff --git a/scripts/actions/spells/trust/lilisette.lua b/scripts/actions/spells/trust/lilisette.lua
-index 07d82796e7..a508fef750 100644
---- a/scripts/actions/spells/trust/lilisette.lua
-+++ b/scripts/actions/spells/trust/lilisette.lua
-@@ -1,5 +1,6 @@
- -----------------------------------
- -- Trust: Lilisette
-+-- A-tier DNC ΓÇö dagger WS ASAP (Rudra / Pyrrhic / Exenterator).
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -14,6 +15,16 @@ end
+     -- Stun all the things!
+-    mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.WS, ai.s.SPECIFIC, kGrapeshot })
+-    mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.WS, ai.s.SPECIFIC, kGrapeshot })
+-    mob:addGambit(ai.t.TARGET, { ai.c.READYING_JA, 0 }, { ai.r.WS, ai.s.SPECIFIC, kGrapeshot })
+-    mob:addGambit(ai.t.TARGET, { ai.c.CASTING_MA,  0 }, { ai.r.WS, ai.s.SPECIFIC, kGrapeshot })
++    mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.WS, ai.s.SPECIFIC, kInterruptWs })
++    mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.WS, ai.s.SPECIFIC, kInterruptWs })
++    mob:addGambit(ai.t.TARGET, { ai.c.READYING_JA, 0 }, { ai.r.WS, ai.s.SPECIFIC, kInterruptWs })
++    mob:addGambit(ai.t.TARGET, { ai.c.CASTING_MA,  0 }, { ai.r.WS, ai.s.SPECIFIC, kInterruptWs })
  
- spellObject.onMobSpawn = function(mob)
-     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
-+
-+    mob:addGambit(ai.t.SELF, { ai.c.NO_SAMBA, 0 }, { ai.r.JA, ai.s.BEST_SAMBA, xi.ja.DRAIN_SAMBA })
-+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.LETHARGIC_DAZE_5 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.QUICKSTEP }, 25)
-+    mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 45 }, { ai.r.JA, ai.s.HIGHEST_WALTZ, xi.ja.CURING_WALTZ })
-+    mob:addGambit(ai.t.SELF, { ai.c.STATUS_FLAG, xi.effectFlag.WALTZABLE }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.HEALING_WALTZ })
-+
-+    mob:addMod(xi.mod.ACC, 100)
-+    mob:addMod(xi.mod.ATT, 60)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
-+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
- end
- 
- spellObject.onMobDespawn = function(mob)
-diff --git a/scripts/actions/spells/trust/lilisette_ii.lua b/scripts/actions/spells/trust/lilisette_ii.lua
-index 67b8c300f3..4925dad89b 100644
---- a/scripts/actions/spells/trust/lilisette_ii.lua
-+++ b/scripts/actions/spells/trust/lilisette_ii.lua
-@@ -1,5 +1,6 @@
- -----------------------------------
- -- Trust: Lilisette II
-+-- A-tier DNC ΓÇö dagger WS ASAP.
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -14,6 +15,16 @@ end
- 
- spellObject.onMobSpawn = function(mob)
-     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
-+
-+    mob:addGambit(ai.t.SELF, { ai.c.NO_SAMBA, 0 }, { ai.r.JA, ai.s.BEST_SAMBA, xi.ja.DRAIN_SAMBA })
-+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.LETHARGIC_DAZE_5 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.QUICKSTEP }, 25)
-+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.VIOLENT_FLOURISH })
-+    mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 45 }, { ai.r.JA, ai.s.HIGHEST_WALTZ, xi.ja.CURING_WALTZ })
-+
-+    mob:addMod(xi.mod.ACC, 120)
-+    mob:addMod(xi.mod.ATT, 80)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
-+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
- end
- 
- spellObject.onMobDespawn = function(mob)
+-    -- A-tier: ACC so Pirate Pummel / Walk the Plank connect; force melee range for WS.
++    -- A-tier: ACC + force melee range for dagger WS.
+     mob:addMod(xi.mod.ACC, 150)
+     mob:addMod(xi.mod.ATT, 80)
+     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
 diff --git a/scripts/actions/spells/trust/lion_ii.lua b/scripts/actions/spells/trust/lion_ii.lua
-index 5bb7e5f7bd..da8f84161b 100644
+index da8f84161b..385b2e7bb7 100644
 --- a/scripts/actions/spells/trust/lion_ii.lua
 +++ b/scripts/actions/spells/trust/lion_ii.lua
-@@ -22,16 +22,17 @@ spellObject.onMobSpawn = function(mob)
+@@ -21,14 +21,14 @@ spellObject.onMobSpawn = function(mob)
+     })
  
      mob:addListener('WEAPONSKILL_USE', 'LION_II_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
-         if skill:getID() == 3493 then -- Powder Keg
--            --  I won't sit by and let Vana'diel be engulged!
+-        if skill:getID() == 3493 then -- Powder Keg
++        if skill:getID() == 31 then -- Rudra's Storm (player WS; Powder Keg MS retired)
              xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
          end
      end)
  
      mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.COPY_IMAGE }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.UTSUSEMI })
  
--    mob:addMod(xi.mod.ACC, 80)
--
--    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1500)
-+    -- Match Lion I: stick to melee so Walk the Plank / Pirate Pummel actually fire.
-+    mob:addMod(xi.mod.ACC, 150)
-+    mob:addMod(xi.mod.ATT, 100)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
-+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
- end
+-    -- Match Lion I: stick to melee so Walk the Plank / Pirate Pummel actually fire.
++    -- Match Lion I: stick to melee for dagger WS.
+     mob:addMod(xi.mod.ACC, 150)
+     mob:addMod(xi.mod.ATT, 100)
+     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
+diff --git a/scripts/actions/spells/trust/luzaf.lua b/scripts/actions/spells/trust/luzaf.lua
+index 1ad872836e..e5105242df 100644
+--- a/scripts/actions/spells/trust/luzaf.lua
++++ b/scripts/actions/spells/trust/luzaf.lua
+@@ -19,7 +19,8 @@ spellObject.onMobSpawn = function(mob)
+     mob:addMod(xi.mod.RACC, 80)
  
- spellObject.onMobDespawn = function(mob)
-diff --git a/scripts/actions/spells/trust/maat.lua b/scripts/actions/spells/trust/maat.lua
-index bc980b258a..342bd61556 100644
---- a/scripts/actions/spells/trust/maat.lua
-+++ b/scripts/actions/spells/trust/maat.lua
-@@ -17,13 +17,18 @@ spellObject.onMobSpawn = function(mob)
- 
-     -- On cooldown
-     mob:addGambit(ai.t.SELF, { ai.c.ALWAYS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.MANTRA })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.FOCUS }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.FOCUS })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.DODGE }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.DODGE })
- 
-     mob:addListener('WEAPONSKILL_USE', 'MAAT_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
-         if skill:getID() == 3263 then -- Bear Killer
--            --  Heh heh heh
-             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
-         end
-     end)
-+
-+    mob:addMod(xi.mod.ACC, 100)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
-+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+     mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
++    -- MID_RANGE: LONG_RANGE parked RA in transit (no TP/WS).
++    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
  end
  
  spellObject.onMobDespawn = function(mob)
 diff --git a/scripts/actions/spells/trust/makki-chebukki.lua b/scripts/actions/spells/trust/makki-chebukki.lua
-index 1f0648f9cb..029d7ad481 100644
+index 029d7ad481..b674a98328 100644
 --- a/scripts/actions/spells/trust/makki-chebukki.lua
 +++ b/scripts/actions/spells/trust/makki-chebukki.lua
-@@ -1,5 +1,6 @@
- -----------------------------------
- -- Trust: Makki-Chebukki
-+-- S-tier RNG ΓÇö Barrage while building TP, then Empyreal / Arching / Sidewinder.
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -14,6 +15,20 @@ end
+@@ -28,7 +28,8 @@ spellObject.onMobSpawn = function(mob)
  
- spellObject.onMobSpawn = function(mob)
-     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
-+
-+    -- Mirror Semih: Barrage only under 1000 TP so WS actually fires.
-+    mob:addGambit(ai.t.SELF, { { ai.c.TP_LT, 1000 }, { ai.c.NOT_STATUS, xi.effect.BARRAGE } }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.BARRAGE })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.SHARPSHOT }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.SHARPSHOT })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.DOUBLE_SHOT }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.DOUBLE_SHOT })
-+    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 })
-+
-+    mob:addMod(xi.mod.STORETP, 86)
-+    mob:addMod(xi.mod.RACC, 100)
-+    mob:addMod(xi.mod.RATT, 80)
-+
-+    mob:setAutoAttackEnabled(false)
-+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
+     mob:setAutoAttackEnabled(false)
+     mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
++    -- MID_RANGE: LONG_RANGE parked RA in transit (1 shot then idle, no TP/WS).
++    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
  end
  
  spellObject.onMobDespawn = function(mob)
-diff --git a/scripts/actions/spells/trust/morimar.lua b/scripts/actions/spells/trust/morimar.lua
-index 750c065362..54cd24082c 100644
---- a/scripts/actions/spells/trust/morimar.lua
-+++ b/scripts/actions/spells/trust/morimar.lua
-@@ -1,5 +1,6 @@
- -----------------------------------
- -- Trust: Morimar
-+-- S-tier BST/axe ΓÇö player axe WS (custom mobskills had no Lua and dealt 0).
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -14,6 +15,15 @@ end
+diff --git a/scripts/actions/spells/trust/margret.lua b/scripts/actions/spells/trust/margret.lua
+index ec774e63c7..4cbac47235 100644
+--- a/scripts/actions/spells/trust/margret.lua
++++ b/scripts/actions/spells/trust/margret.lua
+@@ -27,7 +27,8 @@ spellObject.onMobSpawn = function(mob)
+     mob:addMod(xi.mod.STORETP, 40)
  
- spellObject.onMobSpawn = function(mob)
-     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
-+
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.BERSERK }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.BERSERK })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.AGGRESSOR }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.AGGRESSOR })
-+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.WARCRY }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.WARCRY })
-+
-+    mob:addMod(xi.mod.ACC, 120)
-+    mob:addMod(xi.mod.ATT, 100)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
+     mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
++    -- MID_RANGE: LONG_RANGE kept her pathing (m_InTransit) so RA/WS stalled.
++    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
+ end
+ 
+ spellObject.onMobDespawn = function(mob)
+diff --git a/scripts/actions/spells/trust/mumor_ii.lua b/scripts/actions/spells/trust/mumor_ii.lua
+index 0852b19e8c..db72df60d4 100644
+--- a/scripts/actions/spells/trust/mumor_ii.lua
++++ b/scripts/actions/spells/trust/mumor_ii.lua
+@@ -17,14 +17,12 @@ spellObject.onMobSpawn = function(mob)
+ 
+     mob:addMod(xi.mod.FASTCAST, 50)
+ 
+-    mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
+-    mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
+-    mob:addGambit(ai.t.TARGET, { ai.c.READYING_JA, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
+-    mob:addGambit(ai.t.TARGET, { ai.c.CASTING_MA, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
+     mob:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
+-    mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 30)
++    -- ALWAYS fallback ΓÇö NOT_SC_AVAILABLE alone left her idle during open SC windows.
++    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 20)
+ 
+-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST)
++    mob:setAutoAttackEnabled(false)
++    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
+ end
+ 
+ spellObject.onMobDespawn = function(mob)
+diff --git a/scripts/actions/spells/trust/naja_salaheem.lua b/scripts/actions/spells/trust/naja_salaheem.lua
+index 6e9a35cfb1..1c3e9304f5 100644
+--- a/scripts/actions/spells/trust/naja_salaheem.lua
++++ b/scripts/actions/spells/trust/naja_salaheem.lua
+@@ -22,7 +22,9 @@ spellObject.onMobSpawn = function(mob)
+     mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+ 
+     mob:addListener('WEAPONSKILL_USE', 'NAJA_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
+-        if skill:getID() == 3215 then -- Peacebreaker
++        local skillId = skill:getID()
++        -- Peacebreaker (MS) or Black Halo (player WS) ΓÇö signature lines.
++        if skillId == 3215 or skillId == 169 then
+             --  Cha-ching! Thirty gold coins!
+             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
+         end
+diff --git a/scripts/actions/spells/trust/semih_lafihna.lua b/scripts/actions/spells/trust/semih_lafihna.lua
+index 7d52510ddd..8e4557119e 100644
+--- a/scripts/actions/spells/trust/semih_lafihna.lua
++++ b/scripts/actions/spells/trust/semih_lafihna.lua
+@@ -26,7 +26,7 @@ spellObject.onMobSpawn = function(mob)
+     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.DOUBLE_SHOT }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.DOUBLE_SHOT })
+ 
+     mob:addListener('WEAPONSKILL_USE', 'SEMIH_LAFIHNA_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
+-        if skill:getID() == 3489 then -- Stellar Arrow
++        if skill:getID() == 199 then -- Empyreal Arrow (player WS)
+             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
+         end
+     end)
+@@ -38,7 +38,8 @@ spellObject.onMobSpawn = function(mob)
+     mob:addMod(xi.mod.STORETP, 86)
+ 
+     mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
++    -- MID_RANGE: LONG_RANGE parked RA in transit (no TP/WS).
++    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
+ end
+ 
+ spellObject.onMobDespawn = function(mob)
+diff --git a/scripts/actions/spells/trust/tenzen_ii.lua b/scripts/actions/spells/trust/tenzen_ii.lua
+index d36a3e9e38..d7bb4a0902 100644
+--- a/scripts/actions/spells/trust/tenzen_ii.lua
++++ b/scripts/actions/spells/trust/tenzen_ii.lua
+@@ -28,7 +28,8 @@ spellObject.onMobSpawn = function(mob)
+     })
+ 
+     mob:addListener('WEAPONSKILL_USE', 'TENZEN_II_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
+-        if skill:getID() == 3542 then -- Oisoya
++        -- Empyreal Arrow (player WS) ΓÇö was Oisoya MS (underpowered).
++        if skill:getID() == 199 then
+             -- Epehemeral, fleeting, fading. You are but a memory
+             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
+         end
+@@ -39,9 +40,10 @@ spellObject.onMobSpawn = function(mob)
+ 
+     mob:setAutoAttackEnabled(false)
+ 
+-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
++    -- MID_RANGE: LONG_RANGE parked RA in transit (same Margret/Makki bug).
++    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
+ 
+-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST)
 +    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
  end
  
  spellObject.onMobDespawn = function(mob)
 diff --git a/scripts/actions/spells/trust/teodor.lua b/scripts/actions/spells/trust/teodor.lua
-index dddd9fe9e2..3e21f07712 100644
+index 3e21f07712..7e87db074a 100644
 --- a/scripts/actions/spells/trust/teodor.lua
 +++ b/scripts/actions/spells/trust/teodor.lua
-@@ -1,6 +1,6 @@
- -----------------------------------
- -- Trust: Teodor
---- S-apex nuker ΓÇö MB first, then highest available nuke always. Stationary, no AA.
-+-- S-apex nuker ΓÇö MB first, then highest available nuke. Stationary, no AA.
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -20,8 +20,8 @@ spellObject.onMobSpawn = function(mob)
-     mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 15)
+@@ -16,8 +16,10 @@ end
+ spellObject.onMobSpawn = function(mob)
+     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
+ 
++    -- Kit also injects nuker gambits; keep an aggressive ALWAYS so -ga/-ja fire
++    -- even when SC windows / MB selectors miss.
+     mob:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
+-    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 15)
++    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 12)
  
      mob:setAutoAttackEnabled(false)
--    mob:setMobMod(xi.mobMod.NO_MOVE, 1)
--    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
-+    -- NO_MOVE distance (not LONG_RANGE) ΓÇö LONG_RANGE made him kite to 12' and idle.
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
- end
- 
- spellObject.onMobDespawn = function(mob)
-diff --git a/scripts/actions/spells/trust/uka_totlihn.lua b/scripts/actions/spells/trust/uka_totlihn.lua
-index c07254923f..be935db671 100644
---- a/scripts/actions/spells/trust/uka_totlihn.lua
-+++ b/scripts/actions/spells/trust/uka_totlihn.lua
-@@ -75,7 +75,12 @@ spellObject.onMobSpawn = function(mob)
- 
-     -- TP use and return
-     mob:addGambit(ai.t.SELF, { ai.c.STATUS, xi.effect.FINISHING_MOVE_5 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.REVERSE_FLOURISH }, 60)
--    mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.RANDOM, 2000)
-+
-+    -- Melee DD package now applies (catalog role was wrongly "buffer").
-+    mob:addMod(xi.mod.ACC, 100)
-+    mob:addMod(xi.mod.ATT, 60)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
-+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1500)
- end
- 
- spellObject.onMobDespawn = function(mob)
-diff --git a/scripts/actions/spells/trust/ygnas.lua b/scripts/actions/spells/trust/ygnas.lua
-index ae657ad1e4..6891be29e7 100644
---- a/scripts/actions/spells/trust/ygnas.lua
-+++ b/scripts/actions/spells/trust/ygnas.lua
-@@ -1,6 +1,6 @@
- -----------------------------------
- -- Trust: Ygnas
---- S-tier WHM ΓÇö high cure potency, Regain/Refresh sustain, party cures before self erase.
-+-- S-tier WHM ΓÇö high cure potency, strong cureΓåÆMP recycle, party cures first.
- -----------------------------------
- ---@type TSpellTrust
- local spellObject = {}
-@@ -19,10 +19,8 @@ spellObject.onMobSpawn = function(mob)
-     mob:addMod(xi.mod.CURE_POTENCY, 50)
-     mob:addMod(xi.mod.FASTCAST, 50)
-     mob:addMod(xi.mod.REGAIN, 30)
--    mob:addMod(xi.mod.REFRESH, 12)
--
--    -- Low MP: Refresh if available (Nott WS not implemented in this codebase).
--    mob:addGambit(ai.t.SELF, { ai.c.MPP_LT, 25 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.REFRESH })
-+    mob:addMod(xi.mod.REFRESH, 25)
-+    mob:addMod(xi.mod.MP, 800)
- 
-     mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 35 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
-     mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 75 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
-@@ -37,7 +35,6 @@ spellObject.onMobSpawn = function(mob)
-     mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.DISEASE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.VIRUNA })
-     mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.CURSE_I }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURSNA })
- 
--    -- Party erase before self erase.
-     mob:addGambit(ai.t.PARTY, { ai.c.STATUS_FLAG, xi.effectFlag.ERASABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
-     mob:addGambit(ai.t.SELF, { ai.c.STATUS_FLAG, xi.effectFlag.ERASABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
- 
-@@ -45,17 +42,17 @@ spellObject.onMobSpawn = function(mob)
-     mob:addGambit(ai.t.PARTY, { ai.c.NOT_STATUS, xi.effect.SHELL }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.SHELLRA })
-     mob:addGambit(ai.t.MELEE, { ai.c.NOT_STATUS, xi.effect.HASTE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.HASTE })
- 
--    -- Cure cast returns a slice of MP to sustain long fights.
-+    -- Cure ΓåÆ MP: refund most of the cast so Cure VI spam doesn't OOM him.
-     mob:addListener('MAGIC_USE', 'YGNAS_CURE_MP', function(mobArg, target, spell, action)
-         if spell and spell:getSpellFamily() == xi.magic.spellFamily.CURE then
-             local amount = spell:getMPCost()
--            local restore = math.floor(40 + (amount * 0.15))
-+            local restore = math.floor(amount * 0.75)
-             mobArg:addMP(restore)
-         end
-     end)
- 
-     mob:setAutoAttackEnabled(false)
--    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
-+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
- end
- 
- spellObject.onMobDespawn = function(mob)
+     -- NO_MOVE distance (not LONG_RANGE) ΓÇö LONG_RANGE made him kite to 12' and idle.
 diff --git a/scripts/globals/mobskills.lua b/scripts/globals/mobskills.lua
-index 019f921329..254f178e26 100644
+index 254f178e26..1498827352 100644
 --- a/scripts/globals/mobskills.lua
 +++ b/scripts/globals/mobskills.lua
-@@ -1606,13 +1606,20 @@ xi.mobskills.processDamage = function(actor, target, skill, action, info)
-             actor:getLocalVar('fellowApplied') ~= 1 and
-             info.damage > 0
-         then
--            -- Skill-replaced autos use HIT_DMG; match TakePhysicalDamage's 25% AA trim.
-+            -- Skill-replaced autos use HIT_DMG; match C++ trust AA trim (0.55).
-             if
-                 info.attackType == xi.attackType.PHYSICAL and
-                 skill and
-                 skill:getMsg() == xi.msg.basic.HIT_DMG
+@@ -1614,12 +1614,22 @@ xi.mobskills.processDamage = function(actor, target, skill, action, info)
              then
--                info.damage = math.max(1, math.floor(info.damage * 0.25))
-+                info.damage = math.max(1, math.floor(info.damage * 0.55))
-+            else
-+                -- Trust mobskill WS (Lion II Walk the Plank, Maat Hollow Smite, etc.)
-+                -- never hit player weaponskills.lua ΓÇö apply ALL_WSDMG here.
-+                local wsdPct = actor:getMod(xi.mod.ALL_WSDMG_ALL_HITS) or 0
-+                if wsdPct > 0 then
-+                    info.damage = math.max(1, math.floor(info.damage * (100 + wsdPct) / 100))
+                 info.damage = math.max(1, math.floor(info.damage * 0.55))
+             else
+-                -- Trust mobskill WS (Lion II Walk the Plank, Maat Hollow Smite, etc.)
+-                -- never hit player weaponskills.lua ΓÇö apply ALL_WSDMG here.
++                -- Trust mobskill WS never hit player weaponskills.lua ΓÇö apply ALL_WSDMG here.
+                 local wsdPct = actor:getMod(xi.mod.ALL_WSDMG_ALL_HITS) or 0
+                 if wsdPct > 0 then
+                     info.damage = math.max(1, math.floor(info.damage * (100 + wsdPct) / 100))
+                 end
++
++                -- DD-role safety net: leftover custom MS (Peacebreaker, etc.) still
++                -- can't reach soft bands via getWeaponDmg alone ΓÇö floor to median.
++                if actor:getLocalVar('TrustDdRole') == 1 then
++                    local softMin = actor:getLocalVar('TrustSoftBandMin')
++                    local softMax = actor:getLocalVar('TrustSoftBandMax')
++                    if softMin > 0 and softMax >= softMin and info.damage > 0 and info.damage < softMin then
++                        local median = math.floor((softMin + softMax) / 2)
++                        info.damage = math.min(softMax, math.max(softMin, median))
++                    end
 +                end
              end
  
              local master = actor:getMaster()
 diff --git a/sql/mob_pools.sql b/sql/mob_pools.sql
-index af96787034..1489d41ab2 100644
+index 1489d41ab2..bc34805fb6 100644
 --- a/sql/mob_pools.sql
 +++ b/sql/mob_pools.sql
-@@ -6021,7 +6021,7 @@ INSERT INTO `mob_pools` VALUES (5960,'rughadjeen','Rughadjeen',293,0x0000FD0B000
+@@ -5963,119 +5963,119 @@ INSERT INTO `mob_pools` VALUES (5902,'curilla','Curilla',293,0x0000BE0B000000000
+ INSERT INTO `mob_pools` VALUES (5903,'volker','Volker',295,0x0000BF0B00000000000000000000000000000000,1,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1018,149,1,17);
+ INSERT INTO `mob_pools` VALUES (5904,'ajido-marujido','Ajido-Marujido',297,0x0000C00B00000000000000000000000000000000,4,5,1,400,40,0,0,0,0,0,0,32,0,3,0,0,316,0,0,1019,153,1,15);
+ INSERT INTO `mob_pools` VALUES (5905,'trion','Trion',293,0x0000C10B00000000000000000000000000000000,7,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,317,0,0,1020,145,1,20);
+-INSERT INTO `mob_pools` VALUES (5906,'zeid','Zeid',294,0x0000C20B00000000000000000000000000000000,8,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,318,0,0,1021,146,2,27);
+-INSERT INTO `mob_pools` VALUES (5907,'lion','Lion',295,0x0000C30B00000000000000000000000000000000,6,13,3,240,125,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1022,149,0,12);
++INSERT INTO `mob_pools` VALUES (5906,'zeid','Zeid',294,0x0000C20B00000000000000000000000000000000,8,0,4,240,100,0,0,0,0,0,0,32,0,3,0,0,318,0,0,1021,146,2,27);
++INSERT INTO `mob_pools` VALUES (5907,'lion','Lion',295,0x0000C30B00000000000000000000000000000000,6,13,2,240,125,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1022,149,0,12);
+ INSERT INTO `mob_pools` VALUES (5908,'tenzen','Tenzen',295,0x0000C40B00000000000000000000000000000000,12,0,10,440,200,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1023,149,0,8);
+-INSERT INTO `mob_pools` VALUES (5909,'mihli_aliapoh','MihliAliapoh',296,0x0000C50B00000000000000000000000000000000,3,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,321,0,0,1024,151,2,20);
++INSERT INTO `mob_pools` VALUES (5909,'mihli_aliapoh','MihliAliapoh',296,0x0000C50B00000000000000000000000000000000,3,0,11,240,100,0,0,0,0,0,0,32,0,3,0,0,321,0,0,1024,151,2,20);
+ INSERT INTO `mob_pools` VALUES (5910,'valaineral','Valaineral',293,0x0000C60B00000000000000000000000000000000,7,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,322,0,0,1025,145,1,12);
+ INSERT INTO `mob_pools` VALUES (5911,'joachim','Joachim',295,0x0000C70B00000000000000000000000000000000,10,3,3,500,25,0,0,0,0,0,0,32,0,3,0,0,323,0,0,1026,149,1,17);
+-INSERT INTO `mob_pools` VALUES (5912,'naja_salaheem','NajaSalaheem',296,0x0000C80B00000000000000000000000000000000,2,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1027,151,0,15);
+-INSERT INTO `mob_pools` VALUES (5913,'prishe','Prishe',293,0x0000C90B00000000000000000000000000000000,2,3,3,240,100,0,0,0,0,0,0,32,0,3,0,0,325,0,0,1028,145,0,12);
++INSERT INTO `mob_pools` VALUES (5912,'naja_salaheem','NajaSalaheem',296,0x0000C80B00000000000000000000000000000000,2,1,11,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1027,151,0,15);
++INSERT INTO `mob_pools` VALUES (5913,'prishe','Prishe',293,0x0000C90B00000000000000000000000000000000,2,3,1,240,100,0,0,0,0,0,0,32,0,3,0,0,325,0,0,1028,145,0,12);
+ INSERT INTO `mob_pools` VALUES (5914,'ulmia','Ulmia',293,0x0000CA0B00000000000000000000000000000000,10,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,326,0,0,1029,145,0,15);
+-INSERT INTO `mob_pools` VALUES (5915,'shikaree_z','ShikareeZ',296,0x0000CB0B00000000000000000000000000000000,14,3,3,240,100,0,0,0,0,0,0,32,0,3,0,0,327,0,0,1030,151,2,20);
++INSERT INTO `mob_pools` VALUES (5915,'shikaree_z','ShikareeZ',296,0x0000CB0B00000000000000000000000000000000,14,3,8,240,100,0,0,0,0,0,0,32,0,3,0,0,327,0,0,1030,151,2,20);
+ INSERT INTO `mob_pools` VALUES (5916,'cherukiki','Cherukiki',297,0x0000CC0B00000000000000000000000000000000,3,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,328,0,0,0,153,2,11);
+-INSERT INTO `mob_pools` VALUES (5917,'iron_eater','IronEater',294,0x0000CD0B00000000000000000000000000000000,1,0,3,240,150,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1032,146,0,20);
++INSERT INTO `mob_pools` VALUES (5917,'iron_eater','IronEater',294,0x0000CD0B00000000000000000000000000000000,1,0,6,240,150,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1032,146,0,20);
+ INSERT INTO `mob_pools` VALUES (5918,'gessho','Gessho',168,0x0000CE0B00000000000000000000000000000000,13,1,9,195,80,0,0,0,0,0,0,32,0,3,0,0,330,0,0,1033,270,1,15);
+ INSERT INTO `mob_pools` VALUES (5919,'gadalar','Gadalar',295,0x0000CF0B00000000000000000000000000000000,4,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,331,0,0,1034,149,1,17);
+ INSERT INTO `mob_pools` VALUES (5920,'rainemard','Rainemard',293,0x0000D00B00000000000000000000000000000000,5,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,332,0,0,1035,145,0,17);
+ INSERT INTO `mob_pools` VALUES (5921,'ingrid','Ingrid',295,0x0000D10B00000000000000000000000000000000,3,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,333,0,0,1036,149,0,15);
+-INSERT INTO `mob_pools` VALUES (5922,'lehko_habhoka','LehkoHabhoka',296,0x0000D20B00000000000000000000000000000000,6,4,3,240,100,0,0,0,0,0,0,32,0,3,0,0,334,0,0,1037,151,1,12);
++INSERT INTO `mob_pools` VALUES (5922,'lehko_habhoka','LehkoHabhoka',296,0x0000D20B00000000000000000000000000000000,6,4,2,240,100,0,0,0,0,0,0,32,0,3,0,0,334,0,0,1037,151,1,12);
+ INSERT INTO `mob_pools` VALUES (5923,'nashmeira','Nashmeira',295,0x0000D30B00000000000000000000000000000000,18,3,3,240,100,0,0,0,0,0,0,32,0,3,0,0,335,0,0,1038,149,0,11);
+-INSERT INTO `mob_pools` VALUES (5924,'zazarg','Zazarg',294,0x0000D40B00000000000000000000000000000000,2,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1039,146,2,20);
++INSERT INTO `mob_pools` VALUES (5924,'zazarg','Zazarg',294,0x0000D40B00000000000000000000000000000000,2,1,1,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1039,146,2,20);
+ INSERT INTO `mob_pools` VALUES (5925,'ovjang','Ovjang',382,0x0000D50B00000000000000000000000000000000,5,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,337,0,0,1040,366,1,8);
+-INSERT INTO `mob_pools` VALUES (5926,'mnejing','Mnejing',382,0x0000D60B00000000000000000000000000000000,7,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1041,364,1,8);
++INSERT INTO `mob_pools` VALUES (5926,'mnejing','Mnejing',382,0x0000D60B00000000000000000000000000000000,7,0,1,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1041,364,1,8);
+ INSERT INTO `mob_pools` VALUES (5927,'sakura','Sakura',175,0x0000D70B00000000000000000000000000000000,21,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1042,55,1,8);
+-INSERT INTO `mob_pools` VALUES (5928,'luzaf','Luzaf',293,0x0000D80B00000000000000000000000000000000,17,13,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1043,145,2,22);
+-INSERT INTO `mob_pools` VALUES (5929,'najelith','Najelith',295,0x0000D90B00000000000000000000000000000000,11,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1044,149,0,15);
++INSERT INTO `mob_pools` VALUES (5928,'luzaf','Luzaf',293,0x0000D80B00000000000000000000000000000000,17,13,26,600,200,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1043,145,2,22);
++INSERT INTO `mob_pools` VALUES (5929,'najelith','Najelith',295,0x0000D90B00000000000000000000000000000000,11,0,8,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1044,149,0,15);
+ INSERT INTO `mob_pools` VALUES (5930,'aldo','Aldo',295,0x0000DA0B00000000000000000000000000000000,6,0,1,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1045,149,0,15);
+ INSERT INTO `mob_pools` VALUES (5931,'moogle','Moogle',138,0x0000DB0B00000000000000000000000000000000,21,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1046,185,0,8);
+-INSERT INTO `mob_pools` VALUES (5932,'fablinix','Fablinix',126,0x0000DC0B00000000000000000000000000000000,6,5,3,240,100,0,0,0,0,0,0,32,0,3,0,0,344,0,0,1047,327,1,10);
+-INSERT INTO `mob_pools` VALUES (5933,'maat','Maat',295,0x0000DD0B00000000000000000000000000000000,2,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1048,149,1,17);
++INSERT INTO `mob_pools` VALUES (5932,'fablinix','Fablinix',126,0x0000DC0B00000000000000000000000000000000,6,5,11,240,100,0,0,0,0,0,0,32,0,3,0,0,344,0,0,1047,327,1,10);
++INSERT INTO `mob_pools` VALUES (5933,'maat','Maat',295,0x0000DD0B00000000000000000000000000000000,2,0,1,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1048,149,1,17);
+ INSERT INTO `mob_pools` VALUES (5934,'d_shantotto','D.Shantotto',297,0x0000DE0B00000000000000000000000000000000,4,8,3,240,100,0,0,0,0,0,0,32,0,3,0,0,346,0,0,1049,153,1,15);
+ INSERT INTO `mob_pools` VALUES (5935,'star_sibyl','StarSibyl',297,0x0000DF0B00000000000000000000000000000000,21,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1050,153,1,15);
+-INSERT INTO `mob_pools` VALUES (5936,'karaha-baruha','Karaha-Baruha',297,0x0000E00B00000000000000000000000000000000,3,15,3,240,100,0,0,0,0,0,0,32,0,3,0,0,348,0,0,1051,153,1,15);
+-INSERT INTO `mob_pools` VALUES (5937,'cid','Cid',295,0x0000E10B00000000000000000000000000000000,1,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1052,149,1,17);
+-INSERT INTO `mob_pools` VALUES (5938,'gilgamesh','Gilgamesh',295,0x0000E20B00000000000000000000000000000000,12,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1053,149,1,17);
++INSERT INTO `mob_pools` VALUES (5936,'karaha-baruha','Karaha-Baruha',297,0x0000E00B00000000000000000000000000000000,3,15,12,240,100,0,0,0,0,0,0,32,0,3,0,0,348,0,0,1051,153,1,15);
++INSERT INTO `mob_pools` VALUES (5937,'cid','Cid',295,0x0000E10B00000000000000000000000000000000,1,0,6,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1052,149,1,17);
++INSERT INTO `mob_pools` VALUES (5938,'gilgamesh','Gilgamesh',295,0x0000E20B00000000000000000000000000000000,12,0,10,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1053,149,1,17);
+ INSERT INTO `mob_pools` VALUES (5939,'areuhat','Areuhat',293,0x0000E30B00000000000000000000000000000000,1,7,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1054,145,0,15);
+ INSERT INTO `mob_pools` VALUES (5940,'semih_lafihna','SemihLafihna',296,0x0000E40B00000000000000000000000000000000,11,1,25,500,200,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1055,151,2,20);
+-INSERT INTO `mob_pools` VALUES (5941,'elivira','Elivira',295,0x0000E50B00000000000000000000000000000000,11,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1056,149,1,17);
++INSERT INTO `mob_pools` VALUES (5941,'elivira','Elivira',295,0x0000E50B00000000000000000000000000000000,11,1,26,600,200,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1056,149,1,17);
+ INSERT INTO `mob_pools` VALUES (5942,'noillurie','Noillurie',293,0x0000E60B00000000000000000000000000000000,12,7,3,240,100,0,0,0,0,0,0,32,0,3,0,0,354,0,0,1057,145,1,17);
+-INSERT INTO `mob_pools` VALUES (5943,'lhu_mhakaracca','LhuMhakaracca',296,0x0000E70B00000000000000000000000000000000,9,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1058,151,1,17);
+-INSERT INTO `mob_pools` VALUES (5944,'ferreous_coffin','FerreousCoffin',294,0x0000E80B00000000000000000000000000000000,3,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,356,0,0,1059,146,0,20);
+-INSERT INTO `mob_pools` VALUES (5945,'lilisette','Lilisette',295,0x0000E90B00000000000000000000000000000000,19,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1060,484,1,12);
+-INSERT INTO `mob_pools` VALUES (5946,'mumor','Mumor',295,0x0000EA0B00000000000000000000000000000000,19,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1061,149,0,15);
+-INSERT INTO `mob_pools` VALUES (5947,'uka_totlihn','UkaTotlihn',296,0x0000EB0B00000000000000000000000000000000,19,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1062,151,0,15);
++INSERT INTO `mob_pools` VALUES (5943,'lhu_mhakaracca','LhuMhakaracca',296,0x0000E70B00000000000000000000000000000000,9,1,5,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1058,151,1,17);
++INSERT INTO `mob_pools` VALUES (5944,'ferreous_coffin','FerreousCoffin',294,0x0000E80B00000000000000000000000000000000,3,1,11,240,100,0,0,0,0,0,0,32,0,3,0,0,356,0,0,1059,146,0,20);
++INSERT INTO `mob_pools` VALUES (5945,'lilisette','Lilisette',295,0x0000E90B00000000000000000000000000000000,19,0,2,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1060,484,1,12);
++INSERT INTO `mob_pools` VALUES (5946,'mumor','Mumor',295,0x0000EA0B00000000000000000000000000000000,19,1,11,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1061,149,0,15);
++INSERT INTO `mob_pools` VALUES (5947,'uka_totlihn','UkaTotlihn',296,0x0000EB0B00000000000000000000000000000000,19,1,11,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1062,151,0,15);
+ INSERT INTO `mob_pools` VALUES (5948,'klara','Klara',295,0x0000ED0B00000000000000000000000000000000,1,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1063,149,1,17);
+ INSERT INTO `mob_pools` VALUES (5949,'romaa_mihgo','RomaaMihgo',296,0x0000EE0B00000000000000000000000000000000,6,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1064,151,1,17);
+ INSERT INTO `mob_pools` VALUES (5950,'kuyin_hathdenna','KuyinHathdenna',296,0x0000EF0B00000000000000000000000000000000,21,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1065,151,2,8);
+ INSERT INTO `mob_pools` VALUES (5951,'rahal','Rahal',293,0x0000F00B00000000000000000000000000000000,7,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,363,0,0,1066,145,1,20);
+ INSERT INTO `mob_pools` VALUES (5952,'koru-moru','Koru-Moru',297,0x0000F10B00000000000000000000000000000000,5,0,3,240,100,1,0,0,0,0,0,32,0,3,0,0,364,0,0,1067,153,1,15);
+ INSERT INTO `mob_pools` VALUES (5953,'pieuje_uc','Pieuje',293,0x0000F20B00000000000000000000000000000000,3,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,365,0,0,1068,145,NULL,NULL);
+-INSERT INTO `mob_pools` VALUES (5954,'i_shield_uc','InvincibleShld',294,0x0000F40B00000000000000000000000000000000,1,17,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1069,146,NULL,NULL);
++INSERT INTO `mob_pools` VALUES (5954,'i_shield_uc','InvincibleShld',294,0x0000F40B00000000000000000000000000000000,1,17,6,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1069,146,NULL,NULL);
+ INSERT INTO `mob_pools` VALUES (5955,'apururu_uc','Apururu',297,0x0000F50B00000000000000000000000000000000,3,5,3,240,100,0,0,0,0,0,0,32,0,3,0,0,367,0,0,0,153,0,12);
+-INSERT INTO `mob_pools` VALUES (5956,'jakoh_uc','JakohWahcondalo',296,0x0000F60B00000000000000000000000000000000,6,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1071,151,NULL,NULL);
+-INSERT INTO `mob_pools` VALUES (5957,'flaviria_uc','Flaviria',293,0x0000F30B00000000000000000000000000000000,14,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1072,145,NULL,NULL);
+-INSERT INTO `mob_pools` VALUES (5958,'babban','Babban',350,0x0000FB0B00000000000000000000000000000000,2,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1073,178,0,6);
+-INSERT INTO `mob_pools` VALUES (5959,'abenzio','Abenzio',340,0x0000280100000000000000000000000000000000,2,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1074,136,0,25);
+-INSERT INTO `mob_pools` VALUES (5960,'rughadjeen','Rughadjeen',293,0x0000FD0B00000000000000000000000000000000,7,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,373,0,0,1075,145,2,22);
++INSERT INTO `mob_pools` VALUES (5956,'jakoh_uc','JakohWahcondalo',296,0x0000F60B00000000000000000000000000000000,6,1,2,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1071,151,NULL,NULL);
++INSERT INTO `mob_pools` VALUES (5957,'flaviria_uc','Flaviria',293,0x0000F30B00000000000000000000000000000000,14,1,25,500,200,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1072,145,NULL,NULL);
++INSERT INTO `mob_pools` VALUES (5958,'babban','Babban',350,0x0000FB0B00000000000000000000000000000000,2,0,1,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1073,178,0,6);
++INSERT INTO `mob_pools` VALUES (5959,'abenzio','Abenzio',340,0x0000280100000000000000000000000000000000,2,0,1,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1074,136,0,25);
++INSERT INTO `mob_pools` VALUES (5960,'rughadjeen','Rughadjeen',293,0x0000FD0B00000000000000000000000000000000,7,0,4,240,100,0,0,0,0,0,0,32,0,3,0,0,373,0,0,1075,145,2,22);
  INSERT INTO `mob_pools` VALUES (5961,'kukki-chebukki','Kukki-Chebukki',297,0x0000FE0B00000000000000000000000000000000,4,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,374,0,0,1076,153,2,11);
- INSERT INTO `mob_pools` VALUES (5962,'margret','Margret',295,0x0000FF0B00000000000000000000000000000000,11,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1077,149,1,17);
+-INSERT INTO `mob_pools` VALUES (5962,'margret','Margret',295,0x0000FF0B00000000000000000000000000000000,11,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1077,149,1,17);
++INSERT INTO `mob_pools` VALUES (5962,'margret','Margret',295,0x0000FF0B00000000000000000000000000000000,11,0,25,500,200,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1077,149,1,17);
  INSERT INTO `mob_pools` VALUES (5963,'chacharoon','Chacharoon',147,0x0000000C00000000000000000000000000000000,6,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1078,199,1,6);
--INSERT INTO `mob_pools` VALUES (5964,'lhe_lhangavo','LheLhangavo',293,0x0000010C00000000000000000000000000000000,2,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1079,145,1,17);
-+INSERT INTO `mob_pools` VALUES (5964,'lhe_lhangavo','LheLhangavo',293,0x0000010C00000000000000000000000000000000,2,1,1,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1079,145,1,17);
+ INSERT INTO `mob_pools` VALUES (5964,'lhe_lhangavo','LheLhangavo',293,0x0000010C00000000000000000000000000000000,2,1,1,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1079,145,1,17);
  INSERT INTO `mob_pools` VALUES (5965,'arciela','Arciela',295,0x0000020C00000000000000000000000000000000,5,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,378,0,0,1080,149,0,12);
  INSERT INTO `mob_pools` VALUES (5966,'mayakov','Mayakov',295,0x0000030C00000000000000000000000000000000,19,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1081,149,1,17);
- INSERT INTO `mob_pools` VALUES (5967,'qultada','Qultada',293,0x0000040C00000000000000000000000000000000,17,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1082,145,1,20);
-@@ -6045,10 +6045,10 @@ INSERT INTO `mob_pools` VALUES (5984,'august','August',295,0x00001C0C00000000000
+-INSERT INTO `mob_pools` VALUES (5967,'qultada','Qultada',293,0x0000040C00000000000000000000000000000000,17,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1082,145,1,20);
++INSERT INTO `mob_pools` VALUES (5967,'qultada','Qultada',293,0x0000040C00000000000000000000000000000000,17,0,26,600,200,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1082,145,1,20);
+ INSERT INTO `mob_pools` VALUES (5968,'adelheid','Adelheid',295,0x0000050C00000000000000000000000000000000,20,4,3,240,100,0,0,0,0,0,0,32,0,3,0,0,381,0,0,1083,149,1,17);
+-INSERT INTO `mob_pools` VALUES (5969,'amchuchu','Amchuchu',297,0x0000060C00000000000000000000000000000000,22,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,382,0,0,1084,153,0,12);
++INSERT INTO `mob_pools` VALUES (5969,'amchuchu','Amchuchu',297,0x0000060C00000000000000000000000000000000,22,1,4,240,100,0,0,0,0,0,0,32,0,3,0,0,382,0,0,1084,153,0,12);
+ INSERT INTO `mob_pools` VALUES (5970,'brygid','Brygid',295,0x0000070C00000000000000000000000000000000,21,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1085,149,1,8);
+ INSERT INTO `mob_pools` VALUES (5971,'mildaurion','Mildaurion',295,0x0000080C00000000000000000000000000000000,7,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1086,149,1,17);
+-INSERT INTO `mob_pools` VALUES (5972,'halver','Halver',293,0x00000F0C00000000000000000000000000000000,7,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,385,0,0,1087,145,1,20);
+-INSERT INTO `mob_pools` VALUES (5973,'rongelouts','Rongelouts',293,0x0000100C00000000000000000000000000000000,1,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1088,145,0,17);
++INSERT INTO `mob_pools` VALUES (5972,'halver','Halver',293,0x00000F0C00000000000000000000000000000000,7,1,8,240,100,0,0,0,0,0,0,32,0,3,0,0,385,0,0,1087,145,1,20);
++INSERT INTO `mob_pools` VALUES (5973,'rongelouts','Rongelouts',293,0x0000100C00000000000000000000000000000000,1,0,4,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1088,145,0,17);
+ INSERT INTO `mob_pools` VALUES (5974,'leonoyne','Leonoyne',293,0x0000110C00000000000000000000000000000000,4,8,3,240,100,0,0,0,0,0,0,32,0,3,0,0,387,0,0,1089,145,1,20);
+-INSERT INTO `mob_pools` VALUES (5975,'maximilian','Maximilian',295,0x0000120C00000000000000000000000000000000,6,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1090,149,1,17);
++INSERT INTO `mob_pools` VALUES (5975,'maximilian','Maximilian',295,0x0000120C00000000000000000000000000000000,6,1,2,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1090,149,1,17);
+ INSERT INTO `mob_pools` VALUES (5976,'kayeel-payeel','Kayeel-Payeel',297,0x0000130C00000000000000000000000000000000,4,15,3,240,100,0,0,0,0,0,0,32,0,3,0,0,389,0,0,1091,153,1,15);
+ INSERT INTO `mob_pools` VALUES (5977,'robel-akbel','Robel-Akbel',297,0x0000140C00000000000000000000000000000000,4,15,3,240,100,0,0,0,0,0,0,32,0,3,0,0,390,0,0,1092,153,2,17);
+ INSERT INTO `mob_pools` VALUES (5978,'kupofried','Kupofried',138,0x0000150C00000000000000000000000000000000,21,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1093,185,1,8);
+ INSERT INTO `mob_pools` VALUES (5979,'Selhteus','Selh\'teus',295,0x0000160C00000000000000000000000000000000,7,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1094,477,0,40);
+ INSERT INTO `mob_pools` VALUES (5980,'yoran-oran_uc','Yoran-Oran',297,0x0000170C00000000000000000000000000000000,3,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,393,0,0,1095,153,0,12);
+ INSERT INTO `mob_pools` VALUES (5981,'sylvie_uc','Sylvie',295,0x0000180C00000000000000000000000000000000,21,3,3,240,100,0,0,0,0,0,0,32,0,3,0,0,394,0,0,1096,149,0,15);
+-INSERT INTO `mob_pools` VALUES (5982,'abquhbah','Abquhbah',295,0x00001A0C00000000000000000000000000000000,1,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1097,149,1,17);
+-INSERT INTO `mob_pools` VALUES (5983,'balamor','Balamor',397,0x00001B0C00000000000000000000000000000000,8,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,396,0,0,1098,492,0,21);
+-INSERT INTO `mob_pools` VALUES (5984,'august','August',295,0x00001C0C00000000000000000000000000000000,7,1,3,180,100,0,0,0,0,0,0,32,0,3,0,0,397,0,0,1099,149,0,17);
++INSERT INTO `mob_pools` VALUES (5982,'abquhbah','Abquhbah',295,0x00001A0C00000000000000000000000000000000,1,0,1,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1097,149,1,17);
++INSERT INTO `mob_pools` VALUES (5983,'balamor','Balamor',397,0x00001B0C00000000000000000000000000000000,8,0,4,240,100,0,0,0,0,0,0,32,0,3,0,0,396,0,0,1098,492,0,21);
++INSERT INTO `mob_pools` VALUES (5984,'august','August',295,0x00001C0C00000000000000000000000000000000,7,1,4,180,100,0,0,0,0,0,0,32,0,3,0,0,397,0,0,1099,149,0,17);
  INSERT INTO `mob_pools` VALUES (5985,'rosulatia','Rosulatia',342,0x00001D0C00000000000000000000000000000000,4,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,398,0,0,1100,455,0,10);
  INSERT INTO `mob_pools` VALUES (5986,'teodor','Teodor',295,0x00001F0C00000000000000000000000000000000,4,6,3,240,100,0,0,0,0,0,0,32,0,3,0,0,399,0,0,1101,149,0,12);
  INSERT INTO `mob_pools` VALUES (5987,'ullegore','Ullegore',394,0x0000210C00000000000000000000000000000000,4,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,400,0,0,1102,74,1,12);
--INSERT INTO `mob_pools` VALUES (5988,'makki-chebukki','Makki-Chebukki',297,0x0000220C00000000000000000000000000000000,11,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1103,153,2,11);
-+INSERT INTO `mob_pools` VALUES (5988,'makki-chebukki','Makki-Chebukki',297,0x0000220C00000000000000000000000000000000,11,0,25,500,200,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1103,153,2,11);
+ INSERT INTO `mob_pools` VALUES (5988,'makki-chebukki','Makki-Chebukki',297,0x0000220C00000000000000000000000000000000,11,0,25,500,200,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1103,153,2,11);
  INSERT INTO `mob_pools` VALUES (5989,'king_of_hearts','KingOfHearts',49,0x0000230C00000000000000000000000000000000,5,3,3,240,100,0,0,0,0,0,0,32,0,3,0,0,402,0,0,1104,61,1,10);
--INSERT INTO `mob_pools` VALUES (5990,'morimar','Morimar',295,0x0000240C00000000000000000000000000000000,9,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1105,149,0,12);
--INSERT INTO `mob_pools` VALUES (5991,'darrcuiln','Darrcuiln',93,0x0000250C00000000000000000000000000000000,1,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1106,489,1,25);
-+INSERT INTO `mob_pools` VALUES (5990,'morimar','Morimar',295,0x0000240C00000000000000000000000000000000,9,0,2,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1105,149,0,12);
-+INSERT INTO `mob_pools` VALUES (5991,'darrcuiln','Darrcuiln',93,0x0000250C00000000000000000000000000000000,1,0,6,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1106,489,1,25);
- INSERT INTO `mob_pools` VALUES (5992,'aahm','ArkHM',295,0x0000290C00000000000000000000000000000000,1,13,1,240,100,0,0,0,0,0,0,32,0,3,0,0,405,0,0,1107,149,1,16);
+-INSERT INTO `mob_pools` VALUES (5990,'morimar','Morimar',295,0x0000240C00000000000000000000000000000000,9,0,2,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1105,149,0,12);
++INSERT INTO `mob_pools` VALUES (5990,'morimar','Morimar',295,0x0000240C00000000000000000000000000000000,9,0,5,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1105,149,0,12);
+ INSERT INTO `mob_pools` VALUES (5991,'darrcuiln','Darrcuiln',93,0x0000250C00000000000000000000000000000000,1,0,6,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1106,489,1,25);
+-INSERT INTO `mob_pools` VALUES (5992,'aahm','ArkHM',295,0x0000290C00000000000000000000000000000000,1,13,1,240,100,0,0,0,0,0,0,32,0,3,0,0,405,0,0,1107,149,1,16);
++INSERT INTO `mob_pools` VALUES (5992,'aahm','ArkHM',295,0x0000290C00000000000000000000000000000000,1,13,3,240,100,0,0,0,0,0,0,32,0,3,0,0,405,0,0,1107,149,1,16);
  INSERT INTO `mob_pools` VALUES (5993,'aaev','ArkEV',293,0x00002A0C00000000000000000000000000000000,7,3,3,240,100,0,0,0,0,0,0,32,0,3,0,0,406,0,0,1108,145,1,16);
- INSERT INTO `mob_pools` VALUES (5994,'aamr','ArkMR',296,0x00002B0C00000000000000000000000000000000,9,6,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1109,151,1,15);
+-INSERT INTO `mob_pools` VALUES (5994,'aamr','ArkMR',296,0x00002B0C00000000000000000000000000000000,9,6,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1109,151,1,15);
++INSERT INTO `mob_pools` VALUES (5994,'aamr','ArkMR',296,0x00002B0C00000000000000000000000000000000,9,6,5,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1109,151,1,15);
+ INSERT INTO `mob_pools` VALUES (5995,'aatt','ArkTT',297,0x00002C0C00000000000000000000000000000000,4,8,3,240,100,0,0,0,0,0,0,32,0,3,0,0,408,0,0,1110,153,1,12);
+-INSERT INTO `mob_pools` VALUES (5996,'aagk','ArkGK',294,0x00002D0C00000000000000000000000000000000,12,14,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1111,146,1,15);
+-INSERT INTO `mob_pools` VALUES (5997,'iroha','Iroha',295,0x0000270C00000000000000000000000000000000,12,4,3,240,100,0,0,0,0,0,0,32,0,3,0,0,410,0,0,1112,149,0,12);
++INSERT INTO `mob_pools` VALUES (5996,'aagk','ArkGK',294,0x00002D0C00000000000000000000000000000000,12,14,10,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1111,146,1,15);
++INSERT INTO `mob_pools` VALUES (5997,'iroha','Iroha',295,0x0000270C00000000000000000000000000000000,12,4,10,240,100,0,0,0,0,0,0,32,0,3,0,0,410,0,0,1112,149,0,12);
+ INSERT INTO `mob_pools` VALUES (5998,'ygnas','Ygnas',342,0x00002E0C00000000000000000000000000000000,3,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,411,0,0,1113,455,1,8);
+ INSERT INTO `mob_pools` VALUES (5999,'monberaux','Monberaux',293,0x0000300C00000000000000000000000000000000,7,22,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1114,145,1,20);
+ -- Reserved for future Trust 6000
+ -- Reserved for future Trust 6001
+ -- Reserved for future Trust 6002
+ -- Reserved for future Trust 6003
+-INSERT INTO `mob_pools` VALUES (6004,'excenmille_s','Excenmille',293,0x0000EC0B00000000000000000000000000000000,1,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1119,145,NULL,NULL);
+-INSERT INTO `mob_pools` VALUES (6005,'ayame_uc','Ayame',295,0x0000F70B00000000000000000000000000000000,12,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1120,149,NULL,NULL);
+-INSERT INTO `mob_pools` VALUES (6006,'maat_uc','Maat',295,0x0000F80B00000000000000000000000000000000,2,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1121,149,NULL,NULL);
++INSERT INTO `mob_pools` VALUES (6004,'excenmille_s','Excenmille',293,0x0000EC0B00000000000000000000000000000000,1,0,8,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1119,145,NULL,NULL);
++INSERT INTO `mob_pools` VALUES (6005,'ayame_uc','Ayame',295,0x0000F70B00000000000000000000000000000000,12,0,10,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1120,149,NULL,NULL);
++INSERT INTO `mob_pools` VALUES (6006,'maat_uc','Maat',295,0x0000F80B00000000000000000000000000000000,2,1,1,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1121,149,NULL,NULL);
+ INSERT INTO `mob_pools` VALUES (6007,'aldo_uc','Aldo',295,0x0000F90B00000000000000000000000000000000,6,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1122,149,NULL,NULL);
+-INSERT INTO `mob_pools` VALUES (6008,'naja_uc','NajaSalaheem',296,0x0000FA0B00000000000000000000000000000000,6,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1123,151,NULL,NULL);
+-INSERT INTO `mob_pools` VALUES (6009,'lion_ii','Lion',295,0x0000090C00000000000000000000000000000000,6,13,3,240,100,0,0,0,0,0,0,32,0,3,0,0,418,0,0,1124,149,0,12);
+-INSERT INTO `mob_pools` VALUES (6010,'zeid_ii','Zeid',294,0x00000E0C00000000000000000000000000000000,8,1,3,240,100,0,0,0,0,0,0,32,0,3,0,0,419,0,0,1125,146,2,27);
++INSERT INTO `mob_pools` VALUES (6008,'naja_uc','NajaSalaheem',296,0x0000FA0B00000000000000000000000000000000,6,1,11,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1123,151,NULL,NULL);
++INSERT INTO `mob_pools` VALUES (6009,'lion_ii','Lion',295,0x0000090C00000000000000000000000000000000,6,13,2,240,100,0,0,0,0,0,0,32,0,3,0,0,418,0,0,1124,149,0,12);
++INSERT INTO `mob_pools` VALUES (6010,'zeid_ii','Zeid',294,0x00000E0C00000000000000000000000000000000,8,1,4,240,100,0,0,0,0,0,0,32,0,3,0,0,419,0,0,1125,146,2,27);
+ INSERT INTO `mob_pools` VALUES (6011,'prishe_ii','Prishe',293,0x00000A0C00000000000000000000000000000000,3,2,1,480,100,0,0,0,0,0,0,32,0,3,0,0,420,0,0,1126,145,0,12);
+ INSERT INTO `mob_pools` VALUES (6012,'nashmeira_ii','Nashmeira',295,0x00000B0C00000000000000000000000000000000,3,18,1,480,100,0,0,0,0,0,0,32,0,3,0,0,421,0,0,1127,149,0,11);
+-INSERT INTO `mob_pools` VALUES (6013,'lilisette_ii','Lilisette',295,0x00000C0C00000000000000000000000000000000,19,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1128,484,1,12);
+-INSERT INTO `mob_pools` VALUES (6014,'tenzen_ii','Tenzen',295,0x0000190C00000000000000000000000000000000,12,11,25,500,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1129,149,0,8);
++INSERT INTO `mob_pools` VALUES (6013,'lilisette_ii','Lilisette',295,0x00000C0C00000000000000000000000000000000,19,0,2,240,100,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1128,484,1,12);
++INSERT INTO `mob_pools` VALUES (6014,'tenzen_ii','Tenzen',295,0x0000190C00000000000000000000000000000000,12,11,25,500,200,0,0,0,0,0,0,32,0,3,0,0,0,0,0,1129,149,0,8);
+ INSERT INTO `mob_pools` VALUES (6015,'mumor_ii','Mumor',295,0x0000200C00000000000000000000000000000000,4,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,424,0,0,1130,149,0,11);
+ INSERT INTO `mob_pools` VALUES (6016,'ingrid_ii','Ingrid',295,0x00001E0C00000000000000000000000000000000,3,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,425,0,0,1131,149,0,15);
+ INSERT INTO `mob_pools` VALUES (6017,'arciela_ii','Arciela',295,0x00000D0C00000000000000000000000000000000,5,0,3,240,100,0,0,0,0,0,0,32,0,3,0,0,426,0,0,1132,149,1,12);
+-INSERT INTO `mob_pools` VALUES (6018,'iroha_ii','Iroha',295,0x0000280C00000000000000000000000000000000,12,3,3,240,100,0,0,0,0,0,0,32,0,3,0,0,427,0,0,1133,149,0,12);
++INSERT INTO `mob_pools` VALUES (6018,'iroha_ii','Iroha',295,0x0000280C00000000000000000000000000000000,12,3,10,240,100,0,0,0,0,0,0,32,0,3,0,0,427,0,0,1133,149,0,12);
+ INSERT INTO `mob_pools` VALUES (6019,'shantotto_ii','Shantotto',297,0x0000260C00000000000000000000000000000000,4,0,2,240,100,0,0,0,0,0,0,32,0,3,0,0,428,0,0,1134,153,0,15);
+ -- Reserved for future Trust 6020
+ -- Reserved for future Trust 6021
 diff --git a/sql/mob_skill_lists.sql b/sql/mob_skill_lists.sql
-index cd34d9ffff..a93b6d7c26 100644
+index a93b6d7c26..ef482a515c 100644
 --- a/sql/mob_skill_lists.sql
 +++ b/sql/mob_skill_lists.sql
-@@ -2231,11 +2231,10 @@ INSERT INTO `mob_skill_lists` VALUES ('Theodor',488,3382);
- INSERT INTO `mob_skill_lists` VALUES ('Theodor',488,3383);
- INSERT INTO `mob_skill_lists` VALUES ('Theodor',488,3384);
- INSERT INTO `mob_skill_lists` VALUES ('Theodor',488,3385);
--INSERT INTO `mob_skill_lists` VALUES ('Darrcuiln',489,3168);
--INSERT INTO `mob_skill_lists` VALUES ('Darrcuiln',489,3169);
--INSERT INTO `mob_skill_lists` VALUES ('Darrcuiln',489,3170);
--INSERT INTO `mob_skill_lists` VALUES ('Darrcuiln',489,3171);
--INSERT INTO `mob_skill_lists` VALUES ('Darrcuiln',489,3172);
-+INSERT INTO `mob_skill_lists` VALUES ('Darrcuiln',489,86);
-+INSERT INTO `mob_skill_lists` VALUES ('Darrcuiln',489,88);
-+INSERT INTO `mob_skill_lists` VALUES ('Darrcuiln',489,91);
-+INSERT INTO `mob_skill_lists` VALUES ('Darrcuiln',489,92);
- INSERT INTO `mob_skill_lists` VALUES ('Dhokmak',490,3303);
- INSERT INTO `mob_skill_lists` VALUES ('Dhokmak',490,3304);
- INSERT INTO `mob_skill_lists` VALUES ('Dhokmak',490,3305);
-@@ -2246,11 +2245,11 @@ INSERT INTO `mob_skill_lists` VALUES ('Dhokmak',490,3373);
- INSERT INTO `mob_skill_lists` VALUES ('Dhokmak',490,3374);
- INSERT INTO `mob_skill_lists` VALUES ('Dhokmak',490,3375);
- INSERT INTO `mob_skill_lists` VALUES ('Dhokmak',490,3376);
--INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,3160);
--INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,3161);
--INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,3162);
--INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,3163);
--INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,3164);
-+INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,69);
-+INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,70);
-+INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,72);
-+INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,76);
-+INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,77);
- INSERT INTO `mob_skill_lists` VALUES ('Sobbing_Eyes',492,437); -- death_ray
- INSERT INTO `mob_skill_lists` VALUES ('Sobbing_Eyes',492,438); -- hex_eye
- INSERT INTO `mob_skill_lists` VALUES ('Sobbing_Eyes',492,439); -- petro_gaze
-@@ -3494,10 +3493,9 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira',1038,3243); -- Imperial
+@@ -3429,25 +3429,26 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Volker',1018,39); -- Spirits Within
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Volker',1018,40); -- Vorpal Blade
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Volker',1018,42); -- Savage Blade
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ajido-Marujido',1019,0);
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,968);  -- Red Lotus Blade
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,970);  -- Savage Blade
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,3193); -- Royal Bash
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,3194); -- Royal Savior
++-- Trion: custom MS underpowered ΓåÆ player sword WS
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,40);  -- Vorpal Blade
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,41);  -- Swift Blade
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,42);  -- Savage Blade
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,225); -- Chant du Cygne
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zeid',1021,48);  -- Hard Slash
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zeid',1021,51);  -- Power Slash
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zeid',1021,54);  -- Spinning Slash
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zeid',1021,56);  -- Ground Strike
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zeid',1021,57);  -- Scourge
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion',1022,3198); -- Grapeshot
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion',1022,3199); -- Pirate Pummel
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion',1022,3200); -- Powder Keg
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion',1022,3201); -- Walk the Plank
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,1390); -- Amatsu: Torimai
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,1391); -- Amatsu: Kazakiri
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,1392); -- Amatsu: Yukiarashi
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,1393); -- Amatsu: Tsukioboro
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,1394); -- Amatsu: Hanaikusa
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,1395); -- Amatsu: Tsukikage
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion',1022,16);  -- Wasp Sting
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion',1022,23);  -- Dancing Edge
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion',1022,25);  -- Evisceration
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion',1022,31);  -- Rudra's Storm
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion',1022,224); -- Exenterator
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,150); -- Tachi: Yukikaze
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,151); -- Tachi: Gekko
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,152); -- Tachi: Kasha
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,156); -- Tachi: Fudo
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen',1023,157); -- Tachi: Shoha
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mihli_Aliapoh',1024,162);  -- Brainshaker
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mihli_Aliapoh',1024,166);  -- True Strike
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mihli_Aliapoh',1024,168);  -- Hexastrike
+@@ -3459,12 +3460,13 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Valaineral',1025,238); -- Uriel Bla
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Joachim',1026,0);
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem',1027,166); -- True Strike
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem',1027,168); -- Hexa Strike
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem',1027,169); -- Black Halo
+--- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem',1027,0); -- TODO: Justice Breaker
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem',1027,3215); -- Peacebreaker
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,3234); -- Nullifying Dropkick
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,3235); -- Auroral Uppercut
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,3236); -- Knuckle Sandwich
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem',1027,169); -- Black Halo (HIGHEST opener)
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,5);  -- Raging Fists
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,7);  -- Howling Fist
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,8);  -- Dragon Kick
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,9);  -- Asuran Fists
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,14); -- Victory Smite
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ulmia',1029,0);
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shikaree_Z',1030,114); -- Raiden Thrust
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shikaree_Z',1030,118); -- Skewer
+@@ -3474,31 +3476,36 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shikaree_Z',1030,120); -- Impulse D
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iron_Eater',1032,80); -- Shield Break
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iron_Eater',1032,83); -- Armor Break
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iron_Eater',1032,88); -- Steel Cyclone
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,3256); -- hane_fubuki
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,3257); -- shibaraku
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,3258); -- shiko_no_mitate
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,3259); -- happobarai
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,3260); -- rinpyotosha
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,134); -- Blade: Jin
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,135); -- Blade: Ten
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,136); -- Blade: Ku
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,138); -- Blade: Kamu
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,141); -- Blade: Shun
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gadalar',1034,0);
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rainemard',1035,33); -- Burning Blade
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rainemard',1035,34); -- Red Lotus Blade
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rainemard',1035,40); -- Vorpal Blade
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rainemard',1035,42); -- Savage Blade
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ingrid',1036,0);
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,3230); -- Inspirit
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,3231); -- Debonair Rush
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,3232); -- Iridal Pierce
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,3233); -- Lunar Revolution
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira',1038,3243); -- Imperial Authority
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,16);  -- Wasp Sting
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,23);  -- Dancing Edge
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,25);  -- Evisceration
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,31);  -- Rudra's Storm
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,224); -- Exenterator
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira',1038,16); -- Wasp Sting
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira',1038,23); -- Dancing Edge
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira',1038,25); -- Evisceration
  INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zazarg',1039,7);    -- Howling Fist
  INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zazarg',1039,8);    -- Dragon Kick
  INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zazarg',1039,9);    -- Asuran Fists
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zazarg',1039,3240); -- Meteoric Impact (trust)
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zazarg',1039,14);   -- Victory Smite (was Meteoric Impact ΓÇö no Lua)
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ovjang',1040,1943); -- Slapstick
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ovjang',1040,2067); -- Knockout
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ovjang',1040,3244); -- Sixth Element
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,1940); -- Chimera Ripper
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,1941); -- String Clipper
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,3245); -- Shield Subverter
-@@ -3562,12 +3560,12 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lhu_Mhakaracca',1058,69); -- Rampag
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lhu_Mhakaracca',1058,72); -- Decimation
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lhu_Mhakaracca',1058,73); -- Onslaught
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ferreous_Coffin',1059,170); -- Randgrith
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,2442); -- Sibyl Dance?
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,2443);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,2444);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,2445);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,2446);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,2447);
-+-- Lilisette: player dagger WS (custom DNC MS 2442-2447 had no Lua ΓåÆ 0 dmg).
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,16);  -- Wasp Sting
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,23);  -- Dancing Edge
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,29);  -- Pyrrhic Kleos
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,31);  -- Rudra's Storm
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette',1060,224); -- Exenterator
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mumor',1061,165); -- Skullbreaker
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Uka_Totlihn',1062,167); -- Judgement
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Klara',1063,34); -- Red Lotus Blade
-@@ -3576,8 +3574,8 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Klara',1063,40); -- Vorpal Blade
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Klara',1063,42); -- Savage Blade
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Romaa_Mihgo',1064,32);   -- Fast Blade
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Romaa_Mihgo',1064,40);   -- Vorpal Blade
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Romaa_Mihgo',1064,41);   -- Swift Blade
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Romaa_Mihgo',1064,42);   -- Savage Blade
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Romaa_Mihgo',1064,3297); -- Cobra Clamp
- -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Kuyin_Hathdenna',1065,0);
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rahal', 1066, 32); -- Fast Blade
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rahal', 1066, 37); -- Seraph Blade
-@@ -3625,7 +3623,7 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Arciela',1080,42); -- Savage Blade
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mayakov',1081,32);   -- Fast Blade
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mayakov',1081,40);   -- Vorpal Blade
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mayakov',1081,41);   -- Swift Blade
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mayakov',1081,3454); -- Coming Up Roses
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mayakov',1081,42);   -- Savage Blade (was Coming Up Roses ΓÇö no Lua)
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Qultada',1082,33);  -- Burning Blade
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zazarg',1039,14);   -- Victory Smite (was Meteoric Impact ΓÇö no Lua)
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ovjang',1040,1943); -- Slapstick
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ovjang',1040,2067); -- Knockout
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,1940); -- Chimera Ripper
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,1941); -- String Clipper
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,3245); -- Shield Subverter
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ovjang',1040,165); -- Skullbreaker
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ovjang',1040,168); -- Hexa Strike
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ovjang',1040,169); -- Black Halo
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,1); -- Combo
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,5); -- Raging Fists
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,7); -- Howling Fist
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,9); -- Asuran Fists
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Sakura',1042,0);
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Luzaf',1043,212); -- Hot Shot
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Luzaf',1043,215); -- Detonator
+@@ -3512,21 +3519,19 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Najelith',1044,119); -- Wheeling Th
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Najelith',1044,120); -- Impulse Drive
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Aldo',1045,0);
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Moogle',1046,0);
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Fablinix',1047,3261); -- Bomb Toss
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Fablinix',1047,3262); -- Goblin Rush
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,3263); -- Bear Killer
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,3413); -- Combo (Maat)
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,3414); -- One Inch Punch (Maat)
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,3415); -- Howling Fist (Maat)
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,3416); -- Dragon Kick (Maat)
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,3417); -- Asuran Fists (Maat)
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Fablinix',1047,165); -- Skullbreaker
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Fablinix',1047,168); -- Hexa Strike
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Fablinix',1047,169); -- Black Halo
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,5);  -- Raging Fists
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,7);  -- Howling Fist
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,8);  -- Dragon Kick
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,9);  -- Asuran Fists
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,14); -- Victory Smite
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_D_Shantotto',1049,0);
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Star_Sibyl',1050,0);
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Karaha-Baruha',1051,3336); -- Howling Moon
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Karaha-Baruha',1051,183); -- Spirit Taker
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Karaha-Baruha',1051,179); -- Starburst
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Karaha-Baruha',1051,180); -- Sunburst
+--- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Karaha-Baruha',1051,3337); -- Lunar Bay,disable wrong animation
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Cid',1052,80);  -- Shield Break
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Cid',1052,83);  -- Armor Break
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Cid',1052,86);  -- Raging Rush
+@@ -3540,12 +3545,10 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gilgamesh',1053,153); -- Tachi: Sho
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Areuhat',1054,37); -- Seraph Blade
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Areuhat',1054,40); -- Vorpal Blade
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Areuhat',1054,42); -- Savage Blade
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Areuhat',1054,3438);  -- Dragon Breath (Areuhat)
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Areuhat',1054,3439); -- Hurricane Wing (Areuhat)
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Semih_Lafihna',1055,3487); -- Sidewinder (Semih Lafihna)
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Semih_Lafihna',1055,3488); -- Arching Arrow (Semih Lafihna)
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Semih_Lafihna',1055,3489); -- Stellar Arrow
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Semih_Lafihna',1055,3490); -- Lux Arrow
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Semih_Lafihna',1055,196); -- Sidewinder
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Semih_Lafihna',1055,198); -- Arching Arrow
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Semih_Lafihna',1055,199); -- Empyreal Arrow
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Semih_Lafihna',1055,201); -- Refulgent Arrow
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Elivira',1056,209); -- Split Shot
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Elivira',1056,212); -- Slug Shot
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Elivira',1056,214); -- Heavy Shot
+@@ -3595,13 +3598,15 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Jakoh_Wahcondalo_UC',1071,27); -- A
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Flaviria_UC',1072,196); -- Sidewinder
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Flaviria_UC',1072,198); -- Arching Arrow
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Flaviria_UC',1072,199); -- Empyreal Arrow
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,3351); -- Wild Oats
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,3353); -- Petal Pirouette
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,3354); -- Head Butt
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,3355); -- Blow
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,3356); -- Uppercut
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,3357); -- Antiphase
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,3358); -- Blank Gaze
++-- Babban: plantoid MS underpowered / Petal Pirouette = 0 dmg ΓåÆ player H2H WS
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,5);  -- Raging Fists
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,7);  -- Howling Fist
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,9);  -- Asuran Fists
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,14); -- Victory Smite
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,5);  -- Raging Fists
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,7);  -- Howling Fist
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,9);  -- Asuran Fists
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,14); -- Victory Smite
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rughadjeen',1075,49);   -- Power Slash
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rughadjeen',1075,54);   -- Sickle Moon
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rughadjeen',1075,56);   -- Ground Strike
+@@ -3628,18 +3633,18 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Qultada',1082,33);  -- Burning Blad
  INSERT INTO `mob_skill_lists` VALUES ('TRUST_Qultada',1082,42);  -- Savage Blade
  INSERT INTO `mob_skill_lists` VALUES ('TRUST_Qultada',1082,210); -- Sniper Shot
-@@ -3687,16 +3685,16 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Makki-Chebukki',1103,199); -- Empyr
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_King_of_Hearts',1104,32); -- Fast Blade
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_King_of_Hearts',1104,40); -- Vorpal Blade
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_King_of_Hearts',1104,42); -- Savage Blade
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,3160);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,3161);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,3162);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,3163);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,3164);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,3168);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,3169);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,3170);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,3171);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,3172);
-+-- Morimar / Darrcuiln: player axe/GA WS (custom 3160-3172 had no Lua ΓåÆ 0 dmg).
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,69);  -- Rampage
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,70);  -- Calamity
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,72);  -- Decimation
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,76);  -- Cloudsplitter
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,77);  -- Ruinator
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,86); -- Raging Rush
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,88); -- Steel Cyclone
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,91); -- Fell Cleave
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,92); -- Ukko's Fury
- -- TODO: Verify these
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,3706); -- Cross Reaver
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,3708); -- Swift Blade
-@@ -3755,12 +3753,11 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,3234); -- Nullifyin
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,3235); -- Auroral Uppercut
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,3236); -- Knuckle Sandwich
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira_II',1127,3243); -- Imperial Authority
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,2442);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,2443);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,2444);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,2445);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,2446);
--INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,2447);
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,16);  -- Wasp Sting
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,23);  -- Dancing Edge
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,29);  -- Pyrrhic Kleos
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,31);  -- Rudra's Storm
-+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,224); -- Exenterator
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen_II',1129,1390); -- Amatsu: Torimai
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen_II',1129,1391); -- Amatsu: Kazakiri
- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen_II',1129,1395); -- Amatsu: Tsukikage
-diff --git a/src/map/lua/lua_baseentity.cpp b/src/map/lua/lua_baseentity.cpp
-index 342e36002b..579e73b8fc 100644
---- a/src/map/lua/lua_baseentity.cpp
-+++ b/src/map/lua/lua_baseentity.cpp
-@@ -18179,6 +18179,13 @@ void CLuaBaseEntity::setDamage(uint16 damage)
-     {
-         PItemWeapon->setDamage(damage);
-     }
-+
-+    // Ranged trusts (Makki / Semih / etc.) use SLOT_RANGED ΓÇö MAIN-only left them
-+    // on retail weapon damage and Empyreal Arrow / Sidewinder did nothing.
-+    if (auto* PItemWeapon = dynamic_cast<CItemWeapon*>(PMobEntity->m_Weapons[SLOT_RANGED]))
-+    {
-+        PItemWeapon->setDamage(damage);
-+    }
- }
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Qultada',1082,215); -- Detonator
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Adelheid',1083,3466); -- Paralyzing Microtube
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Adelheid',1083,3467); -- Silencing Microtube
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Adelheid',1083,3468); -- Binding Microtube
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Adelheid',1083,3469); -- Twirling Dervish
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Adelheid',1083,165); -- Skullbreaker
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Adelheid',1083,168); -- Hexa Strike
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Adelheid',1083,169); -- Black Halo
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Adelheid',1083,174); -- Realmrazer
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Amchuchu',1084,61); -- Dimidiation
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Amchuchu',1084,49); -- Power Slash
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Amchuchu',1084,54); -- Sickle Moon
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Brygid',1085,0);
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mildaurion',1086,3470); -- Great Wheel
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mildaurion',1086,3471); -- Light Blade
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mildaurion',1086,3472); -- Vortex
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mildaurion',1086,3473); -- Stellar Burst
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mildaurion',1086,40);  -- Vorpal Blade
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mildaurion',1086,41);  -- Swift Blade
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mildaurion',1086,42);  -- Savage Blade
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mildaurion',1086,225); -- Chant du Cygne
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Halver',1087,114); -- Raiden Thrust
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Halver',1087,116); -- Penta Thrust
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Halver',1087,120); -- Impulse Drive
+@@ -3655,9 +3660,9 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maximilian',1090,27); -- Aeolian Ed
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Kayeel-Payeel',1091,0);
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Robel-Akbel',1092,0);
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Kupofried',1093,0);
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Selh_teus',1094,1508); -- Lunar Bay
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Selh_teus',1094,1509);
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Selh_teus',1094,1510);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Selh_teus',1094,40);  -- Vorpal Blade
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Selh_teus',1094,42);  -- Savage Blade
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Selh_teus',1094,225); -- Chant du Cygne
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Yoran-Oran_UC',1095,0);
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Sylvie_UC',1096,0);
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abquhbah',1097,1); -- Combo
+@@ -3665,17 +3670,14 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abquhbah',1097,4); -- Backhand Blow
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abquhbah',1097,8); -- Howling Fist
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abquhbah',1097,11); -- Asuran Fists
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abquhbah',1097,14); -- Victory Smite
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abquhbah',1097,3541); -- Salaheem Spirit
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Balamor',1098,48); -- Hard Slash
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Balamor',1098,54); -- Spinning Slash
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Balamor',1098,56); -- Ground Strike
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Balamor',1098,57); -- Scourge
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,3653); -- Tartaric Sigil
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,3654); -- Null Field
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,3655); -- Alabaster Burst
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,3656); -- Noble Frenzy
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,3657); -- Fulminous Fury
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,3658); -- No Quarter
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,51); -- Power Slash
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,54); -- Sickle Moon
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,56); -- Ground Strike
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,57); -- Scourge
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rosulatia',1100,0);
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Teodor',1101,0);
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ullegore',1102,0);
+@@ -3695,31 +3697,32 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,86); -- Raging Rush
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,88); -- Steel Cyclone
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,91); -- Fell Cleave
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,92); -- Ukko's Fury
+--- TODO: Verify these
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,3706); -- Cross Reaver
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,3708); -- Swift Blade
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,3709); -- Chant du Cygne
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,3710); -- Arrogance Incarnate
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,3711); -- Vorpal Blade
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,3712); -- Dominion Slash
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,3713); -- Chant du Cygne
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,3715); -- Rampage
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,3716); -- Calamity
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,3717); -- Havoc Spiral
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,3718); -- Cloudsplitter
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AATT',1110,3720); -- Amon Drive
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AATT',1110,3721); -- Guillotine
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,3722); -- Tachi: Yukikaze
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,3723); -- Tachi: Gekko
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,3724); -- Dragonfall
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,3725); -- Tachi: Kasha
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,3726); -- Tachi: Fudo
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,1390); -- Amatsu: Torimai
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,1391); -- Amatsu: Kazakiri
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,1392); -- Amatsu: Yukiarashi
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,1393); -- Amatsu: Tsukioboro
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,1394); -- Amatsu: Hanaikusa
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,1395); -- Amatsu: Tsukikage
++-- Ark Angels: custom MS used lvl+2 / bare getWeaponDmg formulas (Cloudsplitter ~49).
++-- Remap to player WS so ALL_WSDMG + ratings apply via weaponskills.lua.
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,40);  -- Vorpal Blade
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,41);  -- Swift Blade
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,42);  -- Savage Blade
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,225); -- Chant du Cygne
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,40);  -- Vorpal Blade
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,41);  -- Swift Blade
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,42);  -- Savage Blade
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,225); -- Chant du Cygne
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,69);  -- Rampage
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,70);  -- Calamity
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,72);  -- Decimation
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,76);  -- Cloudsplitter
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,77);  -- Ruinator
++-- AATT is a nuker; keep empty skill list (magic only)
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,150); -- Tachi: Yukikaze
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,151); -- Tachi: Gekko
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,152); -- Tachi: Kasha
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,156); -- Tachi: Fudo
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,157); -- Tachi: Shoha
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,150); -- Tachi: Yukikaze
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,151); -- Tachi: Gekko
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,152); -- Tachi: Kasha
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,156); -- Tachi: Fudo
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,157); -- Tachi: Shoha
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ygnas',1113,0);
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Monberaux',1114,0);
+ -- Reserved for future Trust 6000 (ID: 1115)
+@@ -3734,47 +3737,56 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ayame_UC',1120,144); -- Tachi: Enpi
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ayame_UC',1120,150); -- Tachi: Yukikaze
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ayame_UC',1120,151); -- Tachi: Gekko
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ayame_UC',1120,152); -- Tachi: Kasha
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat_UC',1121,3496);
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat_UC',1121,5);  -- Raging Fists
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat_UC',1121,7);  -- Howling Fist
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat_UC',1121,8);  -- Dragon Kick
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat_UC',1121,9);  -- Asuran Fists
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat_UC',1121,14); -- Victory Smite
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Aldo_UC',1122,0);
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem_UC',1123,166); -- True Strike
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem_UC',1123,168); -- Hexa Strike
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem_UC',1123,169); -- Black Halo
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem_UC',1123,3215); -- Peacebreaker
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,3491); -- Grapeshot
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,3492); -- Pirate Pummel
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,3493); -- Powder Keg
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,3494); -- Walk the Plank
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem_UC',1123,169); -- Black Halo
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,16);  -- Wasp Sting
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,23);  -- Dancing Edge
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,25);  -- Evisceration
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,31);  -- Rudra's Storm
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,224); -- Exenterator
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zeid_II',1125,48); -- Hard Slash
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zeid_II',1125,51); -- Power Slash
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zeid_II',1125,54); -- Spinning Slash
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zeid_II',1125,56); -- Ground Strike
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Zeid_II',1125,57); -- Scourge
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,3234); -- Nullifying Dropkick
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,3235); -- Auroral Uppercut
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,3236); -- Knuckle Sandwich
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira_II',1127,3243); -- Imperial Authority
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,5);  -- Raging Fists
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,7);  -- Howling Fist
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,8);  -- Dragon Kick
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,9);  -- Asuran Fists
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe_II',1126,14); -- Victory Smite
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira_II',1127,16); -- Wasp Sting
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira_II',1127,23); -- Dancing Edge
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Nashmeira_II',1127,25); -- Evisceration
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,16);  -- Wasp Sting
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,23);  -- Dancing Edge
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,29);  -- Pyrrhic Kleos
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,31);  -- Rudra's Storm
+ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lilisette_II',1128,224); -- Exenterator
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen_II',1129,1390); -- Amatsu: Torimai
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen_II',1129,1391); -- Amatsu: Kazakiri
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen_II',1129,1395); -- Amatsu: Tsukikage
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen_II',1129,3542); -- Oisoya
++-- Tenzen II: Oisoya MS ~2k; use player bow WS for soft-band damage (keeps Amatsu openers).
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen_II',1129,196); -- Sidewinder
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen_II',1129,198); -- Arching Arrow
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen_II',1129,199); -- Empyreal Arrow
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Tenzen_II',1129,201); -- Refulgent Arrow
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mumor_II',1130,0);
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ingrid_II',1131,0);
+ -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Arciela_II',1132,0);
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,1390); -- Amatsu: Torimai
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,1391); -- Amatsu: Kazakiri
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,1392); -- Amatsu: Yukiarashi
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,1393); -- Amatsu: Tsukioboro
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,1394); -- Amatsu: Hanaikusa
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,1395); -- Amatsu: Tsukikage
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II',1134,3740); -- final_exam
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II',1134,3741); -- doctors_orders
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II',1134,3742); -- empirical_research
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II',1134,3743); -- lesson_in_pain
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,150); -- Tachi: Yukikaze
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,151); -- Tachi: Gekko
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,152); -- Tachi: Kasha
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,156); -- Tachi: Fudo
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha_II',1133,157); -- Tachi: Shoha
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II',1134,165); -- Skullbreaker
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II',1134,168); -- Hexa Strike
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II',1134,169); -- Black Halo
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II',1134,174); -- Realmrazer
+ -- Reserved for future Trust 6020 (ID: 1135)
+ -- Reserved for future Trust 6021 (ID: 1136)
+ -- Reserved for future Trust 6022 (ID: 1137)
+@@ -3881,7 +3893,10 @@ INSERT INTO `mob_skill_lists` VALUES ('The_Briars_elv',1160,42); -- Savage Blade
+ INSERT INTO `mob_skill_lists` VALUES ('The_Briars_gal',1161,86); -- Raging Rush
+ INSERT INTO `mob_skill_lists` VALUES ('The_Briars_gal',1161,91); -- Fell Cleave
+ -- 1162 -> Wamouracampa_curl
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II_Melee',1163,3739); -- shantotto_ii_melee (no name)
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II_Melee',1163,165); -- Skullbreaker
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II_Melee',1163,168); -- Hexa Strike
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II_Melee',1163,169); -- Black Halo
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II_Melee',1163,174); -- Realmrazer
+ INSERT INTO `mob_skill_lists` VALUES ('Snoll_Tzar',1164,599); -- Arctic Impact
+ INSERT INTO `mob_skill_lists` VALUES ('Snoll_Tzar',1164,600); -- Cold Wave
+ INSERT INTO `mob_skill_lists` VALUES ('Snoll_Tzar',1164,601); -- Hiemal Storm
+@@ -3981,10 +3996,10 @@ INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase5',1196,1521); -- armor
+ INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase5',1196,1522); -- energy_screen
+ INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase5',1196,1523); -- mana_screen
  
- /************************************************************************
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,3648); -- august_melee_sword
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,3649); -- august_melee_axe
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,3650); -- august_melee_h2h
+-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,3651); -- august_melee_bow
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,51); -- Power Slash
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,54); -- Sickle Moon
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,56); -- Ground Strike
++INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,57); -- Scourge
+ 
+ INSERT INTO `mob_skill_lists` VALUES ('Fahrafahr_the_Bloodied',1198,2083); -- drop_hammer
+ 
+diff --git a/sql/mob_spell_lists.sql b/sql/mob_spell_lists.sql
+index e493238aed..6c049cbcd0 100644
+--- a/sql/mob_spell_lists.sql
++++ b/sql/mob_spell_lists.sql
+@@ -4016,6 +4016,19 @@ INSERT INTO `mob_spell_lists` VALUES ('TRUST_Rosulatia',398,190,40,255); -- ston
+ INSERT INTO `mob_spell_lists` VALUES ('TRUST_Rosulatia',398,191,63,255); -- stonega_iii (63~255)
+ 
+ -- TRUST_Teodor (399)
++-- Teodor: add single-target T4/T5 so he isn't -ga/-ja-only (idle when ga selects fail).
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,147,73,255); -- fire_iv
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,148,86,255); -- fire_v
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,152,74,255); -- blizzard_iv
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,153,89,255); -- blizzard_v
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,157,72,255); -- aero_iv
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,158,83,255); -- aero_v
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,162,68,255); -- stone_iv
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,163,77,255); -- stone_v
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,167,75,255); -- thunder_iv
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,168,92,255); -- thunder_v
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,172,70,255); -- water_iv
++INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,173,80,255); -- water_v
+ INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,174,28,255); -- firaga (28~255)
+ INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,175,53,255); -- firaga_ii (53~255)
+ INSERT INTO `mob_spell_lists` VALUES ('TRUST_Teodor',399,176,69,255); -- firaga_iii (69~255)
+diff --git a/src/map/ai/helpers/gambits_container.cpp b/src/map/ai/helpers/gambits_container.cpp
+index bfa3f867f3..4a5b1aba3f 100644
+--- a/src/map/ai/helpers/gambits_container.cpp
++++ b/src/map/ai/helpers/gambits_container.cpp
+@@ -1569,6 +1569,12 @@ bool CGambitsContainer::TryTrustSkill()
+                         }
+                     }
+                 }
++                // Custom (relaunch): never sit on 1000+ TP because the open SC
++                // can't be closed by this trust's list (party WS / other trusts).
++                if (!chosen_skill)
++                {
++                    chosen_skill = xirand::GetRandomElement(tp_skills);
++                }
+                 break;
+             }
+             case G_SELECT::HIGHEST: // Form the best possible skillchain
+@@ -1608,6 +1614,11 @@ bool CGambitsContainer::TryTrustSkill()
+                         }
+                     }
+                 }
++                // Custom (relaunch): fallback opener if nothing can close.
++                if (!chosen_skill)
++                {
++                    chosen_skill = tp_skills.at(tp_skills.size() - 1);
++                }
+                 break;
+             }
+             case G_SELECT::SPECIAL_AYAME:
