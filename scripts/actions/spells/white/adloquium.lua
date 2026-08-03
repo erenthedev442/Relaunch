@@ -1,10 +1,6 @@
 -----------------------------------
 -- Spell: Adloquium
------------------------------------
--- RETAIL FIDELITY NOTE
---   SCH stronger Stoneskin variant. Applies the Stoneskin effect at a higher power and longer duration than the base Stoneskin spell. Cannot stack with regular Stoneskin -- it overrides if active.
--- TUNING
---   Power formula: MND/2 + skill/4. Tune the divisors if it caps too high/low. The duration is 3min by default (vs Stoneskin's 5min); some retail data suggests SCH variants run shorter for balance.
+-- SCH enhancing: Regain 10 TP/tick for 180s (retail).
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -14,22 +10,25 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local effect    = xi.effect.STONESKIN
-    local skillLvl  = caster:getSkillLevel(spell:getSkillType())
-    local mnd       = caster:getStat(xi.mod.MND)
-    local potency   = math.floor(mnd / 2) + math.floor(skillLvl / 4)
-    local duration  = 180
+    -- scripts/effects/regain.lua multiplies power by 10 → power 1 = 10 TP/tick.
+    local power    = 1
+    local duration = 180
 
-    if target:hasStatusEffect(effect) then
-        target:delStatusEffect(effect)
-    end
-
-    if target:addStatusEffect(effect, potency, 0, duration) then
+    -- Duration gear / RDM composure-style mods do not apply to Adloquium on retail;
+    -- keep a flat 180s (Accession still AOEs via the spell itself).
+    if target:addStatusEffect(xi.effect.REGAIN, {
+        power    = power,
+        duration = duration,
+        origin   = caster,
+        tick     = 3,
+    })
+    then
         spell:setMsg(xi.msg.basic.MAGIC_GAIN_EFFECT)
     else
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
     end
-    return effect
+
+    return xi.effect.REGAIN
 end
 
 return spellObject

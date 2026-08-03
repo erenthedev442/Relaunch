@@ -20,19 +20,15 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.TENZEN] = xi.trust.messageOffset.TEAMWORK_4,
     })
 
-    -- TODO: Research numerous emotes
-    -- TODO: Verify amount of Regen potency, Regen effect
-    -- TODO: Is supposed to path erratically during battle
-    -- TODO: Meteor casting with siblings
-    -- TODO: Any intelligence with casting Silence on mobs?
+    -- Retail: favors Regen over Cure; does not engage. C-tier cure potency from trust_power_scaling.
 
     mob:addGambit(ai.t.MASTER, { ai.c.NOT_STATUS, xi.effect.REGEN }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.REGEN })
     mob:addGambit(ai.t.MELEE, { ai.c.NOT_STATUS, xi.effect.REGEN }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.REGEN })
 
     mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 25 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
 
-    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_I }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spellFamily.CURE })
-    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_II }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spellFamily.CURE })
+    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_I }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURE })
+    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_II }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURE })
 
     mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 75 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
 

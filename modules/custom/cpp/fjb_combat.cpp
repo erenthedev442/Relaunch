@@ -183,10 +183,10 @@ int32 ApplyTrustLevelingHpPortionCap(CBattleEntity* PAttacker, CBattleEntity* PD
 {
     // Per-hit roll inside the trust's tier band (% of mob max HP). Defaults to
     // medium (B: 10–15%) when spawn did not stamp a band. Disabled at 99+.
-    constexpr int32 DEFAULT_PORTION_BPS_MIN = 1000; // B floor
-    constexpr int32 DEFAULT_PORTION_BPS_MAX = 1500; // B ceiling
+    constexpr int32 DEFAULT_PORTION_BPS_MIN = 1200; // B floor
+    constexpr int32 DEFAULT_PORTION_BPS_MAX = 2000; // B ceiling
     constexpr int32 ABS_PORTION_BPS_MIN     = 800;  // C floor
-    constexpr int32 ABS_PORTION_BPS_MAX     = 2000; // S ceiling
+    constexpr int32 ABS_PORTION_BPS_MAX     = 3000; // S ceiling (never >30% mob HP)
 
     if (damage <= 0 || PAttacker == nullptr || PDefender == nullptr)
     {

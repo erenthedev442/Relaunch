@@ -30,7 +30,11 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.TARGET, { ai.c.READYING_JA, 0 }, { ai.r.WS, ai.s.SPECIFIC, kGrapeshot })
     mob:addGambit(ai.t.TARGET, { ai.c.CASTING_MA,  0 }, { ai.r.WS, ai.s.SPECIFIC, kGrapeshot })
 
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.RANDOM)
+    -- A-tier: ACC so Pirate Pummel / Walk the Plank connect; force melee range for WS.
+    mob:addMod(xi.mod.ACC, 150)
+    mob:addMod(xi.mod.ATT, 80)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
 end
 
 spellObject.onMobDespawn = function(mob)

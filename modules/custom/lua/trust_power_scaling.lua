@@ -92,46 +92,127 @@ local function applyMagePackage(mob, p, t, s)
     mob:addMod(xi.mod.REFRESH, math.floor((1 + 14 * p) * t))
 end
 
-local function applyTankPackage(mob, p, t, s)
+local function applyTankPackage(mob, p, t, s, tier)
     -- AA sits under same-tier DD but must still chip enmity / build TP.
-    applyMeleePackage(mob, p, t * 0.72, s)
-    -- HP/DEF stack with per-script HPP; keep package modest so A tanks aren't sponges.
-    mob:addMod(xi.mod.HP, math.floor((50 + 1680 * p) * t))
+    -- C tanks: thinner AA/DEF so they hold hate without out-tanking B/A.
+    local isC = tier == 'C'
+    local aaScale = isC and 0.55 or 0.72
+    local defScale = isC and 0.70 or 1.0
+    applyMeleePackage(mob, p, t * aaScale, s)
+    mob:addMod(xi.mod.HP, math.floor((50 + 1680 * p) * t * defScale))
     mob:addMod(xi.mod.MP, math.floor((30 + 720 * p) * t))
     mob:addMod(xi.mod.REFRESH, math.floor((1 + 6 * p) * t))
-    mob:addMod(xi.mod.DEF, math.floor((20 + 520 * p) * t))
-    mob:addMod(xi.mod.VIT, math.floor((5 + 175 * p) * t))
+    mob:addMod(xi.mod.DEF, math.floor((20 + 520 * p) * t * defScale))
+    mob:addMod(xi.mod.VIT, math.floor((5 + 175 * p) * t * defScale))
     mob:addMod(xi.mod.ENMITY, math.floor((10 + 150 * p) * t))
-    mob:addMod(xi.mod.DMG, -math.floor((100 + 1700 * p) * math.min(t, 1.0)))
+    mob:addMod(xi.mod.DMG, -math.floor((100 + 1700 * p) * math.min(t, 1.0) * defScale))
     mob:addMod(xi.mod.MEVA, math.floor((10 + 240 * p) * t))
+    -- Keep C-tank Cure IV well under 600 (no big potency stack).
+    if isC then
+        mob:addMod(xi.mod.CURE_POTENCY, 5)
+    end
 end
 
-local function applySupportPackage(mob, p, t, s)
+local function applySupportPackage(mob, p, t, s, tier)
     applyMagePackage(mob, p, t * 0.55, s or catalog.STYLE.support)
     mob:addMod(xi.mod.MND, math.floor((5 + 195 * p) * t))
     mob:addMod(xi.mod.CHR, math.floor((5 + 145 * p) * t))
-    mob:addMod(xi.mod.CURE_POTENCY, math.floor((2 + 38 * p) * t))
-    mob:addMod(xi.mod.CURE_POTENCY_II, math.floor((1 + 19 * p) * t))
+    -- C healers: modest cures only (no 600+ Cure IV).
+    if tier == 'C' then
+        mob:addMod(xi.mod.CURE_POTENCY, 8)
+        mob:addMod(xi.mod.CURE_POTENCY_II, 4)
+    else
+        mob:addMod(xi.mod.CURE_POTENCY, math.floor((2 + 38 * p) * t))
+        mob:addMod(xi.mod.CURE_POTENCY_II, math.floor((1 + 19 * p) * t))
+    end
 end
 
 local ROLE_APPLY =
 {
-    melee_dd  = function(mob, p, t, s) applyMeleePackage(mob, p, t, s) end,
-    ranged_dd = function(mob, p, t, s)
+    melee_dd  = function(mob, p, t, s, tier)
+        applyMeleePackage(mob, p, t, s)
+        -- Per-tier WS push so soft bands are reachable without softclamp-only ladders.
+        local wsdExtra =
+        {
+            C = math.floor(70 + 160 * p),
+            B = math.floor(40 + 90 * p),
+            A = math.floor(70 + 130 * p),
+            S = math.floor(100 + 180 * p),
+        }
+        local ratingExtra =
+        {
+            C = math.floor(15 + 35 * p),
+            B = math.floor(10 + 25 * p),
+            A = math.floor(15 + 35 * p),
+            S = math.floor(20 + 45 * p),
+        }
+        if wsdExtra[tier] then
+            mob:addMod(xi.mod.WEAPONSKILL_DAMAGE_BASE, wsdExtra[tier])
+            mob:addMod(xi.mod.MAIN_DMG_RATING, ratingExtra[tier])
+        end
+    end,
+    ranged_dd = function(mob, p, t, s, tier)
         applyMeleePackage(mob, p, t, s)
         mob:addMod(xi.mod.RATT, math.floor((15 + 465 * p) * t * ((s and s.att) or 1)))
         mob:addMod(xi.mod.RACC, math.floor((15 + 465 * p) * t))
+        local wsdExtra =
+        {
+            C = math.floor(70 + 160 * p),
+            B = math.floor(40 + 90 * p),
+            A = math.floor(70 + 130 * p),
+            S = math.floor(100 + 180 * p),
+        }
+        local ratingExtra =
+        {
+            C = math.floor(15 + 40 * p),
+            B = math.floor(12 + 28 * p),
+            A = math.floor(18 + 38 * p),
+            S = math.floor(22 + 48 * p),
+        }
+        if wsdExtra[tier] then
+            mob:addMod(xi.mod.WEAPONSKILL_DAMAGE_BASE, wsdExtra[tier])
+            mob:addMod(xi.mod.RANGED_DMG_RATING, ratingExtra[tier])
+        end
     end,
-    tank      = applyTankPackage,
-    healer    = applySupportPackage,
-    buffer    = applySupportPackage,
-    nuker     = applyMagePackage,
-    hybrid    = function(mob, p, t, s)
+    tank      = function(mob, p, t, s, tier) applyTankPackage(mob, p, t, s, tier) end,
+    healer    = function(mob, p, t, s, tier) applySupportPackage(mob, p, t, s, tier) end,
+    buffer    = function(mob, p, t, s, tier) applySupportPackage(mob, p, t, s, tier) end,
+    nuker     = function(mob, p, t, s, tier)
+        applyMagePackage(mob, p, t, s)
+        -- Tier MDMG/MP so free nukes sit near soft bands; hard/MB caps stop spikes.
+        local mdmgExtra =
+        {
+            C = math.floor(150 + 700 * p),
+            B = math.floor(200 + 900 * p),
+            A = math.floor(280 + 1200 * p),
+            S = math.floor(350 + 1500 * p),
+        }
+        local mpExtra =
+        {
+            C = math.floor(80 + 400 * p),
+            B = math.floor(100 + 500 * p),
+            A = math.floor(120 + 600 * p),
+            S = math.floor(150 + 700 * p),
+        }
+        local refExtra =
+        {
+            C = math.floor(3 + 8 * p),
+            B = math.floor(4 + 10 * p),
+            A = math.floor(5 + 12 * p),
+            S = math.floor(6 + 14 * p),
+        }
+        if mdmgExtra[tier] then
+            mob:addMod(xi.mod.MAGIC_DAMAGE, mdmgExtra[tier])
+            mob:addMod(xi.mod.MP, mpExtra[tier])
+            mob:addMod(xi.mod.REFRESH, refExtra[tier])
+        end
+    end,
+    hybrid    = function(mob, p, t, s, tier)
         applyMeleePackage(mob, p, t * 0.85, s)
         applyMagePackage(mob, p, t * 0.85, s)
     end,
-    utility   = function(mob, p, t, s)
-        applySupportPackage(mob, p, t * 0.75, s or catalog.STYLE.support)
+    utility   = function(mob, p, t, s, tier)
+        applySupportPackage(mob, p, t * 0.75, s or catalog.STYLE.support, tier)
         applyMeleePackage(mob, p, t * 0.4, catalog.STYLE.standard)
     end,
     aura      = function(mob, p, t, s)
@@ -156,20 +237,20 @@ local function findSpawnedTrust(caster, spellId)
 end
 
 -- Leveling HP-portion bands (basis points of mob max HP), by catalog tier.
--- Weaker / medium / strong (A slightly under S ceiling so rares still hit harder).
+-- Hard rule: never delete more than ~20–30% of a leveling mob in one hit.
 local LEVELING_PORTION_BPS =
 {
     C = { 800,  1000 }, -- weaker:  8–10%
-    B = { 1000, 1500 }, -- medium: 10–15%
-    A = { 1000, 1800 }, -- strong: 10–18%
-    S = { 1000, 2000 }, -- strong: 10–20%
+    B = { 1200, 2000 }, -- medium: 12–20%
+    A = { 1500, 2500 }, -- strong: 15–25%
+    S = { 1800, 3000 }, -- strong: 18–30% (ceiling)
 }
 
 -- Master-99 soft-target bands for WS/nukes (absolute damage). Softclamp in C++
 -- compresses overshoots toward the hard cap so 40k is uncommon, not constant.
 local SOFT_BAND =
 {
-    C = { 14000, 20000 },
+    C = { 8000,  10000 },
     B = { 22000, 28000 },
     A = { 30000, 36000 },
     S = { 36000, 40000 },
@@ -185,12 +266,14 @@ local DD_ROLES =
 }
 
 local function applyCaps(mob, entry)
-    local cap = entry.cap or catalog.DEFAULT_CAP or 40000
+    local tierCap = catalog.TIER_HARD_CAP and catalog.TIER_HARD_CAP[entry.tier]
+    local cap = entry.cap or tierCap or catalog.DEFAULT_CAP or 40000
     mob:setLocalVar('EncounterOutgoingDamageCap', cap)
+    -- MB hard cap defaults to tier hard. Only Shantotto II / Matsui-P override via mbCap/cap.
     if entry.mbCap and entry.mbCap > 0 then
         mob:setLocalVar('EncounterOutgoingDamageCapMB', entry.mbCap)
     else
-        mob:setLocalVar('EncounterOutgoingDamageCapMB', 0)
+        mob:setLocalVar('EncounterOutgoingDamageCapMB', cap)
     end
 
     local portion = LEVELING_PORTION_BPS[entry.tier] or LEVELING_PORTION_BPS.B
@@ -240,7 +323,7 @@ function xi.trustPowerApply(mob, master, spellId)
     local s = styleOf(entry)
     local roleFn = ROLE_APPLY[entry.role] or ROLE_APPLY.melee_dd
 
-    local ok, err = pcall(roleFn, mob, p, t, s)
+    local ok, err = pcall(roleFn, mob, p, t, s, entry.tier)
     if not ok then
         print(string.format('[trust_power_scaling] role package failed for spell %s: %s', tostring(spellId), tostring(err)))
     end

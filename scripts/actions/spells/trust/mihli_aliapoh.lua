@@ -59,6 +59,9 @@ spellObject.onMobSpawn = function(mob)
             end
         end
     end)
+
+    -- Retail: uses TP randomly / prefers Scouring Bubbles.
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.RANDOM, 1000)
 end
 
 spellObject.onMobDespawn = function(mob)

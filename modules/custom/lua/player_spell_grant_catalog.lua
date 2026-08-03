@@ -68,16 +68,10 @@ catalog.mobOnlySpells =
     [416] = true, -- cactuar_fugue
     [418] = true, -- protected_aria
     [423] = true, -- massacre_elegy
-    [848] = true, -- reraise_iv
+    [848] = true, -- reraise_iv (kept; WHM JP re-grants via RefreshGiftMods)
     [855] = true, -- enlight_ii
-    [857] = true, -- sandstorm_ii
-    [858] = true, -- rainstorm_ii
-    [859] = true, -- windstorm_ii
-    [860] = true, -- firestorm_ii
-    [861] = true, -- hailstorm_ii
-    [862] = true, -- thunderstorm_ii
-    [863] = true, -- voidstorm_ii
-    [864] = true, -- aurorastorm_ii
+    -- Storm II / RDM JP gifts intentionally NOT mob-only — Character_Upgrader
+    -- strip was deleting Distract III / Frazzle III / Refresh III / Storm II.
     [871] = true, -- fire_threnody_ii
     [872] = true, -- ice_threnody_ii
     [873] = true, -- wind_threnody_ii
@@ -88,11 +82,7 @@ catalog.mobOnlySpells =
     [878] = true, -- dark_threnody_ii
     [879] = true, -- inundation
     [881] = true, -- aspir_iii
-    [882] = true, -- distract_iii
-    [883] = true, -- frazzle_iii
-    [884] = true, -- addle_ii
     [893] = true, -- full_cure
-    [894] = true, -- refresh_iii
 }
 
 return catalog

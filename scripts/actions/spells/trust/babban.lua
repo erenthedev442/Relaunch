@@ -1,5 +1,6 @@
 -----------------------------------
--- Trust: Babban
+-- Trust: Babban Mheillea
+-- MNK plantoid — Wild Oats / Head Butt / Petal Pirouette ASAP (no JAs).
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -13,8 +14,8 @@ spellObject.onSpellCast = function(caster, target, spell)
 end
 
 local isWearingMandragoraGear = function(player)
-    local wearingHead = player:getEquipID(xi.slot.HEAD) == 26705 or player:getEquipID(xi.slot.HEAD) == 26706 -- Mandragora Masque or Masque + 1
-    local wearingBody = player:getEquipID(xi.slot.BODY) == 27854 or player:getEquipID(xi.slot.BODY) == 27855 -- Mandragora Suit or Suit + 1
+    local wearingHead = player:getEquipID(xi.slot.HEAD) == 26705 or player:getEquipID(xi.slot.HEAD) == 26706
+    local wearingBody = player:getEquipID(xi.slot.BODY) == 27854 or player:getEquipID(xi.slot.BODY) == 27855
     return wearingHead and wearingBody
 end
 
@@ -23,6 +24,9 @@ spellObject.onMobSpawn = function(mob)
     if isWearingMandragoraGear(master) then
         xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
     end
+
+    -- Retail: uses TP randomly, does not skillchain.
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.RANDOM, 1000)
 end
 
 spellObject.onMobDespawn = function(mob)

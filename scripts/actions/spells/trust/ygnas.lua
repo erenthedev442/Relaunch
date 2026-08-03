@@ -1,5 +1,6 @@
 -----------------------------------
 -- Trust: Ygnas
+-- S-tier WHM — high cure potency, Regain/Refresh sustain, party cures before self erase.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -17,7 +18,11 @@ spellObject.onMobSpawn = function(mob)
 
     mob:addMod(xi.mod.CURE_POTENCY, 50)
     mob:addMod(xi.mod.FASTCAST, 50)
-    mob:addMod(xi.mod.REFRESH, 5)
+    mob:addMod(xi.mod.REGAIN, 30)
+    mob:addMod(xi.mod.REFRESH, 12)
+
+    -- Low MP: Refresh if available (Nott WS not implemented in this codebase).
+    mob:addGambit(ai.t.SELF, { ai.c.MPP_LT, 25 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.REFRESH })
 
     mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 35 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
     mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 75 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
@@ -31,11 +36,23 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.PETRIFICATION }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STONA })
     mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.DISEASE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.VIRUNA })
     mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.CURSE_I }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURSNA })
+
+    -- Party erase before self erase.
     mob:addGambit(ai.t.PARTY, { ai.c.STATUS_FLAG, xi.effectFlag.ERASABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
+    mob:addGambit(ai.t.SELF, { ai.c.STATUS_FLAG, xi.effectFlag.ERASABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
 
     mob:addGambit(ai.t.PARTY, { ai.c.NOT_STATUS, xi.effect.PROTECT }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.PROTECTRA })
     mob:addGambit(ai.t.PARTY, { ai.c.NOT_STATUS, xi.effect.SHELL }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.SHELLRA })
     mob:addGambit(ai.t.MELEE, { ai.c.NOT_STATUS, xi.effect.HASTE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.HASTE })
+
+    -- Cure cast returns a slice of MP to sustain long fights.
+    mob:addListener('MAGIC_USE', 'YGNAS_CURE_MP', function(mobArg, target, spell, action)
+        if spell and spell:getSpellFamily() == xi.magic.spellFamily.CURE then
+            local amount = spell:getMPCost()
+            local restore = math.floor(40 + (amount * 0.15))
+            mobArg:addMP(restore)
+        end
+    end)
 
     mob:setAutoAttackEnabled(false)
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)

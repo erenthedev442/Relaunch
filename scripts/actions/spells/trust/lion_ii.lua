@@ -29,7 +29,9 @@ spellObject.onMobSpawn = function(mob)
 
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.COPY_IMAGE }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.UTSUSEMI })
 
-    mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.RANDOM, 3000)
+    mob:addMod(xi.mod.ACC, 80)
+
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1500)
 end
 
 spellObject.onMobDespawn = function(mob)

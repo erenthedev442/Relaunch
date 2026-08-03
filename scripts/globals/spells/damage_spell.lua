@@ -482,12 +482,20 @@ xi.spells.damage.calculateBaseDamage = function(caster, target, spellId, spellGr
     then
         spellDamage = spellDamage + caster:getMod(xi.mod.HELIX_EFFECT)
 
-    -- Kaustra
+    -- Kaustra (Tabula Rasa 2hr nuke). Retail base:
+    --   floor(floor(0.067 * Lv) * (37 + floor(0.67 * dINT) + stratagemBonus))
+    -- Gear MAGIC_DAMAGE is intentionally NOT folded into this base (retail).
     elseif spellId == xi.magic.spell.KAUSTRA then
-        baseSpellDamage = math.floor(caster:getMainLvl() * 0.67) / 10
-        statDiffBonus   = math.floor(statDiffBonus)
+        local dINT = caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+        local stratagemBonus = 0
+        if caster:isPC() and caster:getMainJob() == xi.job.SCH then
+            -- JP Stratagem Effect III: +2 magic damage per rank (retail Kaustra term).
+            stratagemBonus = caster:getJobPointLevel(xi.jp.STRATEGEM_EFFECT_III) * 2
+        end
 
-        spellDamage = math.floor(baseSpellDamage * (baseSpellDamageBonus + statDiffBonus))
+        local levelTerm = math.floor(caster:getMainLvl() * 0.067)
+        local intTerm   = 37 + math.floor(0.67 * dINT) + stratagemBonus
+        spellDamage     = math.max(0, math.floor(levelTerm * intTerm))
     end
 
     -- FJB: PC casters have NO upper cap on base spell damage (true uncapped magic,

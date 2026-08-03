@@ -82,8 +82,9 @@ spellObject.onMobSpawn = function(mob)
     end
 
     if lvl >= 40 then
-        mob:addGambit(ai.t.SELF, { { ai.c.NOT_PT_HAS_TANK, 0 }, { ai.c.NOT_STATUS, xi.effect.INNIN } }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.INNIN })
-        mob:addGambit(ai.t.SELF, { { ai.c.PT_HAS_TANK,     0 }, { ai.c.NOT_STATUS, xi.effect.YONIN } }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.YONIN })
+        -- No party tank: tank stance (Yonin). Party has tank: DD stance (Innin).
+        mob:addGambit(ai.t.SELF, { { ai.c.NOT_PT_HAS_TANK, 0 }, { ai.c.NOT_STATUS, xi.effect.YONIN } }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.YONIN })
+        mob:addGambit(ai.t.SELF, { { ai.c.PT_HAS_TANK,     0 }, { ai.c.NOT_STATUS, xi.effect.INNIN } }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.INNIN })
     end
 
     if lvl >= 70 then

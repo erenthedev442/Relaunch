@@ -65,13 +65,8 @@ spellObject.onMobSpawn = function(mob)
         end
     end)
 
-    if
-        mob:getMPP() < 30
-    then
-        mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.RANDOM)
-    else
-        mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 3000)
-    end
+    -- C-tier: WS ASAP so Spirit Taker / Sunburst fire; low-MP Spirit Taker still helps sustain.
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
 end
 
 spellObject.onMobDespawn = function(mob)

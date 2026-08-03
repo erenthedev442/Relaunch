@@ -19,7 +19,7 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.ABQUHBAH] = xi.trust.messageOffset.TEAMWORK_3,
     })
 
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.RANDOM)
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
 
     mob:addListener('WEAPONSKILL_USE', 'NAJA_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
         if skill:getID() == 3215 then -- Peacebreaker
@@ -28,10 +28,8 @@ spellObject.onMobSpawn = function(mob)
         end
     end)
 
-    mob:addGambit(ai.t.SELF, { ai.c.ALWAYS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.FOCUS })
-
-    mob:addGambit(ai.t.SELF, { ai.c.ALWAYS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.DODGE })
-
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.FOCUS }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.FOCUS })
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.DODGE }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.DODGE })
     mob:addGambit(ai.t.SELF, { ai.c.HAS_TOP_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.COUNTERSTANCE })
 end
 

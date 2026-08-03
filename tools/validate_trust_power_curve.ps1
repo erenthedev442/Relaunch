@@ -4,13 +4,14 @@
 
 $ErrorActionPreference = 'Stop'
 
-$tierMult = @{ C = 0.52; B = 0.72; A = 0.94; S = 1.18 }
+$tierMult = @{ C = 0.70; B = 0.82; A = 0.94; S = 1.18 }
 $defaultCap = 40000
 $matsuiCap = 99999
 $shan2MbCap = 79999
+$tierHardCap = @{ C = 10000; B = 28000; A = 36000; S = 40000 }
 
 $softBand = @{
-    C = @(14000, 20000)
+    C = @(8000, 10000)
     B = @(22000, 28000)
     A = @(30000, 36000)
     S = @(36000, 40000)
@@ -42,13 +43,14 @@ function MagePkg([double]$p, [double]$t) {
 }
 
 $samples = @(
-    @{ Name = 'Kupipi (healer B)';   Role = 'healer'; Tier = 'B'; Cap = $defaultCap; MbCap = 0 }
-    @{ Name = 'Zeid II (melee S)';   Role = 'melee';  Tier = 'S'; Cap = $defaultCap; MbCap = 0 }
-    @{ Name = 'August (melee S)';    Role = 'melee';  Tier = 'S'; Cap = $defaultCap; MbCap = 0 }
-    @{ Name = 'Shantotto (nuker A)'; Role = 'nuker';  Tier = 'A'; Cap = $defaultCap; MbCap = 0 }
-    @{ Name = 'Shantotto II (S)';    Role = 'nuker';  Tier = 'S'; Cap = $defaultCap; MbCap = $shan2MbCap }
-    @{ Name = 'Matsui-P (hybrid S)'; Role = 'hybrid'; Tier = 'S'; Cap = $matsuiCap; MbCap = 0 }
-    @{ Name = 'Meat (tank S)';       Role = 'tank';   Tier = 'S'; Cap = $defaultCap; MbCap = 0 }
+    @{ Name = 'Naji (melee C)';      Role = 'melee';  Tier = 'C'; Cap = $tierHardCap.C; MbCap = $tierHardCap.C }
+    @{ Name = 'Kupipi (healer B)';   Role = 'healer'; Tier = 'B'; Cap = $tierHardCap.B; MbCap = $tierHardCap.B }
+    @{ Name = 'Zeid II (melee S)';   Role = 'melee';  Tier = 'S'; Cap = $tierHardCap.S; MbCap = $tierHardCap.S }
+    @{ Name = 'August (melee S)';    Role = 'melee';  Tier = 'S'; Cap = $tierHardCap.S; MbCap = $tierHardCap.S }
+    @{ Name = 'Shantotto (nuker A)'; Role = 'nuker';  Tier = 'A'; Cap = $tierHardCap.A; MbCap = $tierHardCap.A }
+    @{ Name = 'Shantotto II (S)';    Role = 'nuker';  Tier = 'S'; Cap = $tierHardCap.S; MbCap = $shan2MbCap }
+    @{ Name = 'Matsui-P (hybrid S)'; Role = 'hybrid'; Tier = 'S'; Cap = $matsuiCap; MbCap = $matsuiCap }
+    @{ Name = 'Meat (tank S)';       Role = 'tank';   Tier = 'S'; Cap = $tierHardCap.S; MbCap = $tierHardCap.S }
 )
 
 Write-Host 'Trust power curve validation (scaler floors only; scripts add flavor on top)'
@@ -93,9 +95,9 @@ foreach ($lvl in @(18, 50, 75, 99)) {
 
 Write-Host ''
 Write-Host 'Expectations at master 99:'
-Write-Host '  - Soft bands (WS/nuke typical): C 14-20k | B 22-28k | A 30-36k | S 36-40k'
+Write-Host '  - Soft bands (WS/nuke typical): C 8-10k | B 22-28k | A 30-36k | S 36-40k'
 Write-Host '  - Softclamp asymptotes toward hard cap; 40k should be uncommon even for S'
-Write-Host '  - Hard caps: most 40000 | Matsui-P 99999 | Shantotto II MB 79999'
+Write-Host '  - Hard caps: C 10k | B 28k | A 36k | S 40k | Matsui-P 99999 | Shan2 MB 79999'
 Write-Host '  - Leveling (<99): tier HP-portion bands still apply (C 8-10% ... S 10-20%)'
 Write-Host '  - Mob <=120: trust ACC/MACC reliable; mob >120: steep melee+cast DD falloff'
 Write-Host ''

@@ -42,7 +42,7 @@ spellObject.onSpellCast = function(caster, target, spell)
         end
     end
 
-    if target:addStatusEffect(effect, potency, 0, duration) then
+    if target:addStatusEffect(effect, { power = potency, duration = duration, origin = caster }) then
         spell:setMsg(xi.msg.basic.MAGIC_GAIN_EFFECT)
     else
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)

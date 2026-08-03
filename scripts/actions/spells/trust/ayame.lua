@@ -24,7 +24,8 @@ spellObject.onMobSpawn = function(mob)
 
     mob:addGambit(ai.t.SELF, { ai.c.TP_LT, 1000 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.MEDITATE })
 
-    mob:setTrustTPSkillSettings(ai.tp.OPENER, ai.s.SPECIAL_AYAME)
+    -- C-tier reliability: still prefers opener WS via SPECIAL_AYAME, but fires ASAP.
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.SPECIAL_AYAME)
 end
 
 spellObject.onMobDespawn = function(mob)

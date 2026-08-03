@@ -1,5 +1,6 @@
 -----------------------------------
 -- Trust: Luzaf
+-- COR ranged — kit from trust_power_scaling (ranged_dd); ASAP WS + RACC.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -14,6 +15,11 @@ end
 
 spellObject.onMobSpawn = function(mob)
     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
+
+    mob:addMod(xi.mod.RACC, 80)
+
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
 end
 
 spellObject.onMobDespawn = function(mob)

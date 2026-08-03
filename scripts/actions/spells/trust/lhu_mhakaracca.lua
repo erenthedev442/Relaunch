@@ -1,5 +1,6 @@
 -----------------------------------
 -- Trust: Lhu Mhakaracca
+-- BST/WAR — Berserk / Aggressor / Feral Howl, axe WS ASAP.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -14,6 +15,13 @@ end
 
 spellObject.onMobSpawn = function(mob)
     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
+
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.BERSERK }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.BERSERK })
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.AGGRESSOR }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.AGGRESSOR })
+    -- Retail: Feral Howl when target is under ~20% HP.
+    mob:addGambit(ai.t.TARGET, { ai.c.HPP_LT, 20 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.FERAL_HOWL })
+
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
 end
 
 spellObject.onMobDespawn = function(mob)

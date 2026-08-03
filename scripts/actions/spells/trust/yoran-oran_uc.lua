@@ -16,7 +16,6 @@ end
 spellObject.onMobSpawn = function(mob)
     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
 
-    -- TODO: Nott weaponskill needs implemented and logic added here for Yoran-Oran to use at 50% MP at level 50.
     -- TODO: UC trusts are supposed to get bonuses depending on unity ranking. Needs research.
     -- TODO: Custom spawn messages if Unity ranking is higher.
     -- TODO: Figure out what level of Fast Cast he has.
@@ -24,6 +23,12 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.CURE_POTENCY, 50)
     mob:addMod(xi.mod.REGAIN, 50)
     mob:addMod(xi.mod.MPP, 15) -- TODO: This is supposed to increase with Unity rank, but I don't believe that's implemented so it is set to the minimum.
+
+    -- Nott WS is not implemented; when/if xi.magic.spell.NOTT (or a WS id) exists, prefer it at low MP.
+    local nottSpell = xi.magic.spell.NOTT
+    if nottSpell then
+        mob:addGambit(ai.t.SELF, { ai.c.MPP_LT, 25 }, { ai.r.MA, ai.s.SPECIFIC, nottSpell })
+    end
 
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.AFFLATUS_SOLACE }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.AFFLATUS_SOLACE })
     mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 25 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE }) -- Prioritizes curing party members at lower HP%.

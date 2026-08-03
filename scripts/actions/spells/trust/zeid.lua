@@ -22,7 +22,11 @@ spellObject.onMobSpawn = function(mob)
 
     mob:addGambit(ai.t.SELF, { ai.c.ALWAYS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.SOULEATER })
     mob:addGambit(ai.t.SELF, { ai.c.ALWAYS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.LAST_RESORT })
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST)
+
+    mob:addMod(xi.mod.ACC, 150)
+    mob:addMod(xi.mod.ATT, 40)
+
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
 end
 
 spellObject.onMobDespawn = function(mob)

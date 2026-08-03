@@ -559,7 +559,15 @@ xi.spells.enhancing.useEnhancingSpell = function(caster, target, spell)
             xi.effect.HAILSTORM,
             xi.effect.THUNDERSTORM,
             xi.effect.AURORASTORM,
-            xi.effect.VOIDSTORM
+            xi.effect.VOIDSTORM,
+            xi.effect.FIRESTORM_II,
+            xi.effect.SANDSTORM_II,
+            xi.effect.RAINSTORM_II,
+            xi.effect.WINDSTORM_II,
+            xi.effect.HAILSTORM_II,
+            xi.effect.THUNDERSTORM_II,
+            xi.effect.AURORASTORM_II,
+            xi.effect.VOIDSTORM_II,
         }
 
         for i, effectValue in ipairs(effectOverwrite) do

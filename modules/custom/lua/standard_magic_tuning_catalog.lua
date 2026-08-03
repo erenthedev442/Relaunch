@@ -4,7 +4,8 @@
 -- Reuses the ordinary WS leveling curve, then assigns fresh-99/mastered multipliers
 -- by spell family and tier. Direct elemental/divine/ninjutsu casts, damaging
 -- Blue Magic (physical, magical, and breath), and player-automaton nukes are
--- eligible. Drains, enfeebles and Helix damage-over-time spells remain untouched.
+-- eligible. Helix nukes and Kaustra are included so SCH DoT/2hr keep pace with
+-- endgame elemental. Drains and enfeebles remain untouched.
 -----------------------------------
 
 local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
@@ -87,10 +88,18 @@ function catalog.isDirectSpellEligible(caster, target, spell)
         return false
     end
 
-    return
-        directSkills[spell:getSkillType()] == true and
-        isNativeMainJobSpell(caster, spell) and
-        not isHelix(spell:getID())
+    if not isNativeMainJobSpell(caster, spell) then
+        return false
+    end
+
+    local spellId = spell:getID()
+    -- Kaustra is Dark Magic (not in directSkills); Helix is Elemental but was
+    -- previously excluded so DoTs never reached endgame tick values.
+    if spellId == xi.magic.spell.KAUSTRA or isHelix(spellId) then
+        return true
+    end
+
+    return directSkills[spell:getSkillType()] == true
 end
 
 function catalog.isBlueDamageEligible(caster, target, spell, params)
@@ -124,7 +133,14 @@ end
 function catalog.getSpellProgressionFactor(caster, spell)
     local player = caster:isPC() and caster or caster:getMaster()
     local playerLevel = math.max(1, player:getMainLvl())
-    local spellLevel  = spell:getLevel(player:getMainJob())
+    local spellId = spell:getID()
+
+    -- Kaustra's jobs blob lists SCH at lv5 (Tabula-gated); treat as full-power 2hr.
+    if spellId == xi.magic.spell.KAUSTRA then
+        return 1.00
+    end
+
+    local spellLevel = spell:getLevel(player:getMainJob())
     if not spellLevel or spellLevel <= 0 then
         return 0
     end
@@ -153,9 +169,14 @@ local function getMultiplierBand(caster, spell)
         return catalog.MULTIPLIERS.blue
     end
 
+    local spellId = spell:getID()
+    if spellId == xi.magic.spell.KAUSTRA or isHelix(spellId) then
+        return catalog.MULTIPLIERS.elementalHigh
+    end
+
     local player = getProgressionPlayer(caster)
     local spellLevel = spell:getLevel(player:getMainJob()) or 1
-    if spellLevel >= 75 or isAncientMagic(spell:getID()) then
+    if spellLevel >= 75 or isAncientMagic(spellId) then
         return catalog.MULTIPLIERS.elementalHigh
     elseif spellLevel >= 50 then
         return catalog.MULTIPLIERS.elementalMid

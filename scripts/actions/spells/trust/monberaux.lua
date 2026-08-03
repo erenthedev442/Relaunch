@@ -37,7 +37,7 @@ spellObject.onMobSpawn = function(mob)
         end
     end
 
-    local healingMoveCooldown = 6 -- Was retail 3–4s; slowed so he isn't an infinite heal fountain
+    local healingMoveCooldown = 5 -- Between retail-fast and the old 6s fountain
     local buffMoveCooldown    = 60 -- Mix II Retail values from BGWiki
     local mpMoveCooldown      = 90 -- Mix III Retail values from BGWiki
 

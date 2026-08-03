@@ -53,7 +53,8 @@ spellObject.onMobSpawn = function(mob)
         end
     end)
 
-    mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.RANDOM, 1500)
+    -- C off-tank: still holds hate; WS ASAP for consistent enmity / damage.
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.RANDOM, 1000)
 end
 
 spellObject.onMobDespawn = function(mob)

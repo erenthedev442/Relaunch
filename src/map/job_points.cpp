@@ -571,6 +571,52 @@ void RefreshGiftMods(CCharEntity* PChar)
                 sendUpdate = true;
             }
             break;
+
+        case JOB_SCH:
+            if (totalJpSpent >= 100)
+            {
+                for (const SpellID stormSpell : { SpellID::Sandstorm_II,
+                                                   SpellID::Rainstorm_II,
+                                                   SpellID::Windstorm_II,
+                                                   SpellID::Firestorm_II,
+                                                   SpellID::Hailstorm_II,
+                                                   SpellID::Thunderstorm_II,
+                                                   SpellID::Voidstorm_II,
+                                                   SpellID::Aurorastorm_II })
+                {
+                    uint16 spellIdNum = static_cast<uint16>(stormSpell);
+
+                    if (!charutils::hasSpell(PChar, spellIdNum))
+                    {
+                        charutils::addSpell(PChar, spellIdNum);
+                        charutils::SaveSpell(PChar, spellIdNum);
+                        sendUpdate = true;
+                    }
+                }
+            }
+
+            if (totalJpSpent >= 1200)
+            {
+                for (const SpellID helixSpell : { SpellID::Geohelix_II,
+                                                   SpellID::Hydrohelix_II,
+                                                   SpellID::Anemohelix_II,
+                                                   SpellID::Pyrohelix_II,
+                                                   SpellID::Cryohelix_II,
+                                                   SpellID::Ionohelix_II,
+                                                   SpellID::Noctohelix_II,
+                                                   SpellID::Luminohelix_II })
+                {
+                    uint16 spellIdNum = static_cast<uint16>(helixSpell);
+
+                    if (!charutils::hasSpell(PChar, spellIdNum))
+                    {
+                        charutils::addSpell(PChar, spellIdNum);
+                        charutils::SaveSpell(PChar, spellIdNum);
+                        sendUpdate = true;
+                    }
+                }
+            }
+            break;
     }
 
     if (sendUpdate)

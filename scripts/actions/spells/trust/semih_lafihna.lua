@@ -1,5 +1,7 @@
 -----------------------------------
 -- Trust: Semih Lafihna
+-- RNG — Barrage / Sharpshot / Double Shot + ranged WS (Sidewinder / Arching / Stellar / Lux).
+-- Barrage only while building TP so she actually weaponskills.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -18,31 +20,24 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.AJIDO_MARUJIDO] = xi.trust.messageOffset.TEAMWORK_2,
     })
 
-    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.BARRAGE }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.BARRAGE })
-
+    -- Barrage only while under 1000 TP — otherwise every shot is Barrage and WS never fires.
+    mob:addGambit(ai.t.SELF, { { ai.c.TP_LT, 1000 }, { ai.c.NOT_STATUS, xi.effect.BARRAGE } }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.BARRAGE })
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.SHARPSHOT }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.SHARPSHOT })
-
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.DOUBLE_SHOT }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.DOUBLE_SHOT })
 
-    -- TODO: Stealth Shot not yet implemented
-    -- mob:addGambit(ai.t.SELF, { ai.c.HAS_TOP_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.STEALTH_SHOT })
-
     mob:addListener('WEAPONSKILL_USE', 'SEMIH_LAFIHNA_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
-        if skill:getID() == 3490 then -- Stellar Arrow
-            -- I'll show you no quarter!
+        if skill:getID() == 3489 then -- Stellar Arrow
             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
         end
     end)
 
-    -- Ranged Attack as much as possible (limited by 'weapon' delay)
     mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 })
-
     mob:setAutoAttackEnabled(false)
 
     -- Gets 252 TP per hit even at level 1, see https://www.bg-wiki.com/ffxi/BGWiki:Trusts#Semih_Lafihna
-    -- Using STP as a hack to ensure proper TP amount, as her delay is not that high on retail.
     mob:addMod(xi.mod.STORETP, 86)
 
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
 end
 

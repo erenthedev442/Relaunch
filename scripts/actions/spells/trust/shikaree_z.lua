@@ -5,7 +5,7 @@
 -- Super Jump is used when ShikareeZ is in the top enmity slot
 -- Gains 205 TP on hit; has high TP return on Jump (655 TP) and High Jump (1065 TP).
 -- TODO: Add/Apply MOD for HIGH_JUMP_TP_BONUS
--- Holds TP to 2000 to try to close skillchains. (TODO)
+-- Impulse Drive ASAP (was holding TP to 2000).
 -- Saves Cure for party members under 50% HP or affected by Sleep
 -- Prioritizes Haste over other spells, except to cast Erase when Slow would prevent Haste.
 -----------------------------------
@@ -51,7 +51,7 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.HIGH_JUMP })
     mob:addGambit(ai.t.SELF, { ai.c.HAS_TOP_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.SUPER_JUMP })
 
-    mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 2000)
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
 end
 
 spellObject.onMobDespawn = function(mob)

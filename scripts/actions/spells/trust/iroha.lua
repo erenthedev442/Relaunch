@@ -17,6 +17,8 @@ spellObject.onMobSpawn = function(mob)
     -- Melee kit injected by trust_power_scaling (melee_dd).
     mob:addMod(xi.mod.STORETP, 25)
     mob:addMod(xi.mod.ZANSHIN, 15)
+
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
 end
 
 spellObject.onMobDespawn = function(mob)

@@ -17,10 +17,13 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.CURILLA] = xi.trust.messageOffset.TEAMWORK_1,
     })
 
+    mob:addMod(xi.mod.ACC, 100)
+
     -- TODO: Selection based on enemy weakness
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.ENFIRE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ENFIRE })
 
     mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.EVASION_DOWN }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.DISTRACT }, 60)
+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.MAGIC_EVASION_DOWN }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.FRAZZLE }, 60)
 
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.PHALANX }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.PHALANX })
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.HASTE }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.HASTE })
@@ -35,7 +38,8 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.PROTECT }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.PROTECT })
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.SHELL }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.SHELL })
 
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST)
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
 end
 
 spellObject.onMobDespawn = function(mob)

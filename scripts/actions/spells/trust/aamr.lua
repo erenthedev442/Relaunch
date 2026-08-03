@@ -1,5 +1,6 @@
 -----------------------------------
 -- Trust: AAMR
+-- Melee axe Ark Angel — Sharpshot/Barrage while building TP, ASAP axe WS in melee range.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -14,9 +15,13 @@ end
 
 spellObject.onMobSpawn = function(mob)
     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
-    -- Ranged kit injected by trust_power_scaling (ranged_dd).
-    mob:addMod(xi.mod.RATT, 50)
-    mob:addMod(xi.mod.RACC, 50)
+
+    -- Barrage/Sharpshot only while under 1000 TP so axe WS can fire in melee range.
+    mob:addGambit(ai.t.SELF, { { ai.c.TP_LT, 1000 }, { ai.c.NOT_STATUS, xi.effect.BARRAGE } }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.BARRAGE })
+    mob:addGambit(ai.t.SELF, { { ai.c.TP_LT, 1000 }, { ai.c.NOT_STATUS, xi.effect.SHARPSHOT } }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.SHARPSHOT })
+
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
 end
 
 spellObject.onMobDespawn = function(mob)

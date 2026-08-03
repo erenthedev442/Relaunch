@@ -1,5 +1,6 @@
 -----------------------------------
 -- Trust: Zazarg
+-- MNK — Focus + Howling Fist / Dragon Kick / Asuran / Meteoric Impact ASAP.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -14,6 +15,9 @@ end
 
 spellObject.onMobSpawn = function(mob)
     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
+
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.FOCUS }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.FOCUS })
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
 end
 
 spellObject.onMobDespawn = function(mob)

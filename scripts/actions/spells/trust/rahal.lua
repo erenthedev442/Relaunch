@@ -31,8 +31,10 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.ENMITY, 40)
     mob:addMod(xi.mod.ATT, 35)
     mob:addMod(xi.mod.ACC, 50)
-    mob:addMod(xi.mod.DMG, -500) -- Damage Taken -5%
-    mob:addMod(xi.mod.HPP, 10)
+    mob:addMod(xi.mod.DEF, 180)  -- B tank: less paper than before vs Valaineral/August
+    mob:addMod(xi.mod.DMG, -1200) -- Damage Taken -12%
+    mob:addMod(xi.mod.VIT, 40)
+    mob:addMod(xi.mod.HPP, 15)
     xi.trust.enableTankEnmity(mob, { tickCE = 4500, tickVE = 9000, actionCE = 2200, actionVE = 4500, tickSeconds = 2, drainMaster = 8, includeParty = true, listenerName = 'RAHAL_TANK_ENMITY' })
 
     local lvl = mob:getMainLvl()

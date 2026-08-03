@@ -1,5 +1,6 @@
 -----------------------------------
 -- Trust: Teodor
+-- S-apex nuker — MB first, then highest available nuke always. Stationary, no AA.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -14,6 +15,13 @@ end
 
 spellObject.onMobSpawn = function(mob)
     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
+
+    mob:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
+    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 15)
+
+    mob:setAutoAttackEnabled(false)
+    mob:setMobMod(xi.mobMod.NO_MOVE, 1)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
 end
 
 spellObject.onMobDespawn = function(mob)

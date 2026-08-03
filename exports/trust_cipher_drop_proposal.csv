@@ -1,123 +1,123 @@
-﻿item_id,trust_name,spell_id,unlock_method,nm_label,mob_groups_name,content_pool,band,drop_pct,notes
-,Shantotto,896,starter,,,Character creation,,,Free at login â€” only non-NM unlock
-,Kupipi,898,starter,,,Character creation,,,Free at login â€” only non-NM unlock
-,Trion,905,starter,,,Character creation,,,Free at login â€” only non-NM unlock
-,Tenzen,908,starter,,,Character creation,,,Free at login; cipher 10114 must NOT drop
-,Naji,897,direct_spell_grant,Arimaspi,Arimaspi,Abyssea Marks T1,D1,15,No cipher item
-,Ayame,900,direct_spell_grant,Jester Malatrix,Jester_Malatrix,Unity Wanted T1,D1,15,No cipher item
-,Meat (Excenmille),899,void_keeper,,,Void Keeper,,10M,50 trusts collected + 10M gil
-,Gemma (Nanaa Mihgo),901,void_keeper,,,Void Keeper,,10M,60 trusts collected + 10M gil
-,Corvus (Curilla),902,void_keeper,,,Void Keeper,,10M,40 trusts collected + 10M gil
-,Volker,903,direct_spell_grant,Maahes,Maahes,Abyssea Marks T2,D2,13,No cipher item
-,Ajido-Marujido,904,direct_spell_grant,Immanibugard,Immanibugard,Unity Wanted T1,D1,15,No cipher item
-10112,Zeid,906,cipher_drop,Nidhogg,Nidhogg,Hunting League Rank IV,D3,11,
-10113,Lion,907,cipher_drop,Seiryu,Seiryu,Reforge Sky [III],D3,11,
-10115,Mihli Aliapoh,909,cipher_drop,Valkurm Emperor,Valkurm_Emperor,Hunting League Rank I,D1,15,
-10116,Valaineral,910,cipher_drop,Kirin,Kirin,Reforge Sky [V],D4,9,Was Prestige trial — now Reforge Sky
-10117,Joachim,911,cipher_drop,Vrtra,Vrtra,Hunting League Rank III,D2,13,NOTABLE
-10118,Naja Salaheem,912,cipher_drop,Leaping Lizzy,Leaping_Lizzy,Hunting League Rank I,D1,15,
-,Prishe,913,direct_spell_grant,Sirrush,Sirrush,Abyssea Marks T2,D2,13,No cipher item
-,Ulmia,914,direct_spell_grant,Pandemonium Warden,Pandemonium_Warden,Hunting League Rank V,D4,9,CORE â€” no cipher item
-,Shikaree Z,915,direct_spell_grant,Largantua,Largantua,Unity Wanted T2,D2,13,No cipher item
-,Cherukiki,916,direct_spell_grant,Bloodguzzler,Bloodguzzler,Abyssea Marks T1,D1,15,No cipher item
-,Iron Eater,917,direct_spell_grant,Blazing Eruca,Blazing_Eruca,Abyssea Marks T2,D2,13,No cipher item
-,Gessho,918,direct_spell_grant,Simurgh,Simurgh,Hunting League Rank III,D2,13,NOTABLE â€” no cipher item
-,Gadalar,919,direct_spell_grant,Garbage Gel,Garbage_Gel,Unity Wanted T2,D2,13,No cipher item
-10119,Rainemard,920,cipher_drop,King Behemoth,King_Behemoth,Hunting League Rank IV,D3,11,
-,Ingrid,921,direct_spell_grant,Strix,Strix,Unity Wanted T2,D2,13,No cipher item
-10120,Lehko Habhoka,922,cipher_drop,Tom Tit Tat,Tom_Tit_Tat,Hunting League Rank I,D1,15,
-,Nashmeira,923,direct_spell_grant,Arke,Arke,Unity Wanted T2,D2,13,No cipher item
-,Zazarg,924,direct_spell_grant,Tiyanak,Tiyanak,Unity Wanted T1,D1,15,No cipher item
-10121,Ovjang,925,cipher_drop,Warder of Justice,Warder_of_Justice,Geas Fete T1,D1,15,
-10122,Mnejing,926,cipher_drop,Wepwawet,Wepwawet,Geas Fete T1,D1,15,
-10123,Sakura,927,cipher_drop,Tangata Manu,Tangata_Manu,Geas Fete T1,D1,15,
-10124,Luzaf,928,cipher_drop,Seiryu-Escha,Seiryu-Escha,Geas Ru'Aun T3,D3,11,
-10125,Najelith,929,cipher_drop,Carabosse,Carabosse,Abyssea Marks T1,D2,13,
-10126,Aldo (Locke),930,disabled,,,Retired,,0,Temporarily removed from live roster / drops (2026-08-02)
-10127,Moogle,931,cipher_drop,Genbu,Genbu,Reforge Sky [I],D1,15,
-10128,Fablinix,932,cipher_drop,Suzaku,Suzaku,Reforge Sky [II],D2,13,
-,Maat,933,direct_spell_grant,Sovereign Behemoth,Sovereign_Behemoth,Unity Wanted T2,D2,13,No cipher item
-10129,D. Shantotto,934,cipher_drop,Kamohoalii,Kamohoalii,Geas Fete T2,D2,13,
-10134,Star Sibyl,935,cipher_drop,Serket,Serket,The Gauntlet L2,D2,13,
-10142,Karaha-Baruha,936,cipher_drop,Woodland Mender,Woodland_Mender,Unity Wanted T1,D1,15,
-10138,Cid,937,cipher_drop,Byakko,Byakko,Reforge Sky [IV],D3,11,
-10148,Gilgamesh,938,cipher_drop,Genbu-Escha,Genbu-Escha,Geas Ru'Aun T3,D3,11,
-10149,Areuhat,939,cipher_drop,Emperor Arthro,Emperor_Arthro,Unity Wanted T1,D1,15,
-10157,Semih Lafihna,940,cipher_drop,Warder of Faith,Warder_of_Faith,Geas Fete T1,D1,15,
-10130,Elivira,941,cipher_drop,Abyssdiver,Abyssdiver,Unity Wanted T1,D1,15,
-10131,Noillurie,942,cipher_drop,Lumber Jill,Lumber_Jill,Unity Wanted T2,D2,13,
-10132,Lhu Mhakaracca,943,cipher_drop,Warblade Beak,Warblade_Beak,Unity Wanted T1,D1,15,
-10133,Ferreous Coffin,944,cipher_drop,Bukhis,Bukhis,Reforge Unity [I],D1,15,
-10137,Lilisette,945,cipher_drop,Padfoot,Padfoot,Reforge Unity [III],D3,11,
-10135,Mumor,946,cipher_drop,Muut,Muut,Unity Wanted T2,D2,13,
-10136,Uka Totlihn,947,cipher_drop,Pantokrator,Pantokrator,Abyssea Marks T3,D4,9,Was Prestige Omega trial â€” moved to Abyssea
-,Klara,948,direct_spell_grant,Lord Varney,Lord_Varney,Abyssea Marks T2,D2,13,No cipher item; was Infamy Maat fight
-,Romaa Mihgo,949,direct_spell_grant,Ironhorn Baldurno,Ironhorn_Baldurno,Unity Wanted T1,D1,15,No cipher item
-10141,Kuyin Hathdenna,950,cipher_drop,Byakko-Escha,Byakko-Escha,Geas Ru'Aun T3,D3,11,
-10139,Rahal,951,cipher_drop,Roc,Roc,Hunting League Rank II,D2,13,
-10140,Koru-Moru,952,cipher_drop,Khun,Khun,Reforge Unity [II],D2,13,
-,Pieuje UC,953,direct_spell_grant,Centurio XX-I,Centurio_XX-I,Unity Wanted T3,D3,11,No cipher item
-,Invincible Shield UC,954,direct_spell_grant,Vidmapire,Vidmapire,Unity Wanted T3,D3,11,No cipher item
-,Apururu UC,955,direct_spell_grant,Chloris,Chloris,Abyssea Marks T1,D4,9,CORE â€” no cipher item
-,Jakoh UC,956,direct_spell_grant,Tolba,Tolba,Unity Wanted T3,D3,11,No cipher item
-,Flaviria UC,957,direct_spell_grant,Mephitas,Mephitas,Unity Wanted T3,D3,11,No cipher item
-10143,Babban,958,cipher_drop,Hugemaw Harold,Hugemaw_Harold,Unity Wanted T1,D1,15,
-10144,Abenzio,959,cipher_drop,Prickly Pitriv,Prickly_Pitriv,Unity Wanted T1,D1,15,
-10145,Rughadjeen,960,cipher_drop,Ionos,Ionos,Geas Fete T2,D2,13,
-10146,Kukki-Chebukki,961,cipher_drop,Joyous Green,Joyous_Green,Unity Wanted T1,D1,15,
-10147,Margret,962,cipher_drop,Intuila,Intuila,Unity Wanted T1,D1,15,
-,Chacharoon,963,direct_spell_grant,Azdaja,Azdaja,Abyssea Marks T3,D4,9,No cipher item; was Prestige Ultima trial
-10150,Lhe Lhangavo,964,cipher_drop,Kukulkan,Kukulkan,Abyssea Marks T1,D4,9,Was Prestige Sarameya trial â€” moved to Abyssea
-,Arciela,965,direct_spell_grant,Eccentric Eve,Eccentric_Eve,Abyssea Marks T1,D2,13,No cipher item
-10151,Mayakov,966,cipher_drop,Cactrot Veloz,Cactrot_Veloz,Unity Wanted T1,D1,15,
-10152,Qultada,967,cipher_drop,Glavoid,Glavoid,Reforge Unity [IV],D3,11,CORE
-10153,Adelheid,968,cipher_drop,Aello,Aello,Reforge Abyssea [I],D1,15,
-10154,Amchuchu,969,cipher_drop,Apademak,Apademak,Abyssea Marks T3,D3,11,NOTABLE
-10155,Brygid,970,cipher_drop,Bomb Queen,Bomb_Queen,Hunting League Rank II,D2,13,
-10156,Mildaurion,971,cipher_drop,Kirin,Kirin,Geas Ru'Aun T3,D3,11,Geas catalog name is Kirin (not Kirin-Escha)
-10158,Halver,972,cipher_drop,Keeper of Heiligtum,Keeper_of_Heiligtum,Unity Wanted T1,D1,15,
-10161,Rongelouts,973,cipher_drop,Fleetstalker,Fleetstalker,Geas Fete T3,D3,11,
-10163,Leonoyne,974,cipher_drop,Aquarius,Aquarius,The Gauntlet L1,D2,13,
-10164,Maximilian,975,cipher_drop,Dvalinn,Dvalinn,Abyssea Marks T2,D3,11,
-10165,Kayeel-Payeel,976,cipher_drop,Ketea,Ketea,Abyssea Marks T2,D3,11,
-10166,Robel-Akbel,977,cipher_drop,Durinn,Durinn,Abyssea Marks T2,D2,13,Was Prestige Diabolos trial â€” moved to Abyssea
-10162,Kupofried,978,cipher_drop,Shinryu,Shinryu,Hunting League Rank V,D5,8,CORE chase
-10173,Selh'Teus,979,cipher_drop,Albumen,Albumen,Geas Fete T4,D4,9,
-,Yoran-Oran UC,980,direct_spell_grant,Coca,Coca,Unity Wanted T3,D3,11,No cipher item
-,Sylvie UC,981,direct_spell_grant,Tumult Curator,Tumult_Curator,Unity Wanted T3 capstone,D4,9,CORE â€” no cipher item
-10169,Abquhbah,982,cipher_drop,Teles,Teles,Geas Fete T4,D4,9,
-10172,Balamor,983,cipher_drop,Pazuzu,Pazuzu,Geas Fete T3,D3,11,
-10175,August,984,cipher_drop,Alfard,Alfard,Abyssea Marks T3,D3,11,CORE
-10176,Rosulatia,985,cipher_drop,Urmahlullu,Urmahlullu,Geas Fete T3,D3,11,
-10179,Teodor,986,cipher_drop,Titlacauan,Titlacauan,Abyssea Marks T2,D4,9,
-10178,Ullegore,987,cipher_drop,Iku-Turso,Iku-Turso,Abyssea Marks T2,D3,11,
-10180,Makki-Chebukki,988,cipher_drop,Warder of Courage,Warder_of_Courage,Geas Fete T4,D4,9,
-10181,King of Hearts,989,cipher_drop,Briareus,Briareus,Abyssea Marks T1,D3,11,
-10182,Morimar,990,cipher_drop,Warder of Hope,Warder_of_Hope,Geas Fete T4,D4,9,
-10183,Darrcuiln,991,cipher_drop,Azi Dahaka,Azi_Dahaka,Geas Fete T4,D4,9,
-10188,AA HM,992,cipher_drop,Ark Angel HM,Ark_Angel_HM,Geas Fete T3,D3,11,
-10191,AA EV,993,cipher_drop,Ark Angel EV,Ark_Angel_EV,Geas Fete T3,D3,11,
-10190,AA MR,994,cipher_drop,Ark Angel MR,Ark_Angel_MR,Geas Fete T3,D3,11,
-10189,AA TT,995,cipher_drop,Ark Angel TT,Ark_Angel_TT,Geas Fete T3,D3,11,
-10192,AA GK,996,cipher_drop,Ark Angel GK,Ark_Angel_GK,Geas Fete T3,D3,11,
-10185,Iroha,997,cipher_drop,Iratham,Iratham,Reforge Abyssea [II],D2,13,
-,Ygnas,998,direct_spell_grant,Isgebind,Isgebind,Abyssea Marks T3,D4,9,CORE â€” no cipher item
-10193,Monberaux,999,cipher_drop,Maju,Maju,Geas Fete T4,D4,9,CORE
-,Excenmille S,1004,direct_spell_grant,Toppling Tuber,Toppling_Tuber,Abyssea Marks T1,D2,13,Variant trust; optional collection row
-,Ayame UC,1005,direct_spell_grant,Wyvernhunter Bambrox,Wyvernhunter_Bambrox,Unity Wanted T3,D3,11,No cipher item
-,Maat UC,1006,direct_spell_grant,Amarok,Amarok,Abyssea Marks T3,D2,13,No cipher item
-,Aldo UC,1007,disabled,,,Retired,,0,Temporarily removed from live roster / drops (2026-08-02)
-,Naja UC,1008,direct_spell_grant,Ayapec,Ayapec,Unity Wanted T3,D3,11,No cipher item
-10159,Lion II,1009,cipher_drop,Tinnin,Tinnin,Reforge Unity [V],D4,9,
-10160,Zeid II,1010,cipher_drop,Orthrus,Orthrus,Abyssea Marks T3,D4,9,CORE; was Prestige Odin trial â€” moved to Abyssea
-10168,Prishe II,1011,cipher_drop,Lorelei,Lorelei,Abyssea Marks T3,D4,9,
-10170,Nashmeira II,1012,cipher_drop,Specter Worm,Specter_Worm,Unity Wanted T3,D3,11,
-10171,Lilisette II,1013,cipher_drop,Bakunawa,Bakunawa,Unity Wanted T3,D3,11,
-10167,Tenzen II,1014,cipher_drop,Thu'ban,Thuban,Unity Wanted T2,D2,13,
-10177,Mumor II,1015,cipher_drop,Bennu,Bennu,Abyssea Marks T3,D3,11,
-10174,Ingrid II,1016,cipher_drop,Shaula,Shaula,Abyssea Marks T3,D2,13,Was Prestige Medusa trial â€” moved to Abyssea
-10184,Arciela II,1017,cipher_drop,Itzpapalotl,Itzpapalotl,Abyssea Marks T2,D3,11,
-10186,Iroha II,1018,cipher_drop,Shedu,Shedu,Unity Wanted T3,D3,11,
-10187,Shantotto II,1019,cipher_drop,Absolute Virtue,Absolute_Virtue,Hunting League Rank V,D4,9,CORE
-,Cornelia,1002,void_keeper,,,Void Keeper,,50M,All 120 roster trusts + 50M gil
-,Matsui-P,1003,void_keeper,,,Void Keeper,,50M,All 120 roster trusts + 50M gil
+"item_id","trust_name","spell_id","unlock_method","nm_label","mob_groups_name","content_pool","band","rank","power_tier","drop_pct","notes"
+"","Shantotto","896","starter","","","Character creation","","","C","","Free at login â€” only non-NM unlock"
+"","Kupipi","898","starter","","","Character creation","","","C","","Free at login â€” only non-NM unlock"
+"","Trion","905","starter","","","Character creation","","","C","","Free at login â€” only non-NM unlock"
+"","Tenzen","908","starter","","","Character creation","","","B","","Free at login; cipher 10114 must NOT drop"
+"","Naji","897","direct_spell_grant","Arimaspi","Arimaspi","Abyssea Marks T1","D1","1","C","15","No cipher item"
+"","Ayame","900","direct_spell_grant","Jester Malatrix","Jester_Malatrix","Unity Wanted T1","D1","1","C","15","No cipher item"
+"","Meat (Excenmille)","899","void_keeper","","","Void Keeper","","","S","10M","50 trusts collected + 10M gil"
+"","Gemma (Nanaa Mihgo)","901","void_keeper","","","Void Keeper","","","S","10M","60 trusts collected + 10M gil"
+"","Corvus (Curilla)","902","void_keeper","","","Void Keeper","","","A","10M","40 trusts collected + 10M gil"
+"","Volker","903","direct_spell_grant","Maahes","Maahes","Abyssea Marks T2","D2","2","B","13","No cipher item"
+"","Ajido-Marujido","904","direct_spell_grant","Immanibugard","Immanibugard","Unity Wanted T1","D1","1","C","15","No cipher item"
+"10112","Zeid","906","cipher_drop","Nidhogg","Nidhogg","Hunting League Rank IV","D3","3","A","11",""
+"10113","Lion","907","cipher_drop","Seiryu","Seiryu","Reforge Sky [III]","D3","3","A","11",""
+"10115","Mihli Aliapoh","909","cipher_drop","Valkurm Emperor","Valkurm_Emperor","Hunting League Rank I","D1","1","C","15",""
+"10116","Valaineral","910","cipher_drop","Kirin","Kirin","Reforge Sky [V]","D4","4","A","9","Was Prestige trial — now Reforge Sky"
+"10117","Joachim","911","cipher_drop","Vrtra","Vrtra","Hunting League Rank III","D2","2","B","13","NOTABLE"
+"10118","Naja Salaheem","912","cipher_drop","Leaping Lizzy","Leaping_Lizzy","Hunting League Rank I","D1","1","C","15",""
+"","Prishe","913","direct_spell_grant","Sirrush","Sirrush","Abyssea Marks T2","D2","2","B","13","No cipher item"
+"","Ulmia","914","direct_spell_grant","Pandemonium Warden","Pandemonium_Warden","Hunting League Rank V","D4","4","S","9","CORE â€” no cipher item"
+"","Shikaree Z","915","direct_spell_grant","Largantua","Largantua","Unity Wanted T2","D2","2","B","13","No cipher item"
+"","Cherukiki","916","direct_spell_grant","Bloodguzzler","Bloodguzzler","Abyssea Marks T1","D1","1","C","15","No cipher item"
+"","Iron Eater","917","direct_spell_grant","Blazing Eruca","Blazing_Eruca","Abyssea Marks T2","D2","2","B","13","No cipher item"
+"","Gessho","918","direct_spell_grant","Simurgh","Simurgh","Hunting League Rank III","D2","2","C","13","NOTABLE â€” no cipher item"
+"","Gadalar","919","direct_spell_grant","Garbage Gel","Garbage_Gel","Unity Wanted T2","D2","2","B","13","No cipher item"
+"10119","Rainemard","920","cipher_drop","King Behemoth","King_Behemoth","Hunting League Rank IV","D3","3","A","11",""
+"","Ingrid","921","direct_spell_grant","Strix","Strix","Unity Wanted T2","D2","2","B","13","No cipher item"
+"10120","Lehko Habhoka","922","cipher_drop","Tom Tit Tat","Tom_Tit_Tat","Hunting League Rank I","D1","1","C","15",""
+"","Nashmeira","923","direct_spell_grant","Arke","Arke","Unity Wanted T2","D2","2","B","13","No cipher item"
+"","Zazarg","924","direct_spell_grant","Tiyanak","Tiyanak","Unity Wanted T1","D1","1","C","15","No cipher item"
+"10121","Ovjang","925","cipher_drop","Warder of Justice","Warder_of_Justice","Geas Fete T1","D1","1","C","15",""
+"10122","Mnejing","926","cipher_drop","Wepwawet","Wepwawet","Geas Fete T1","D1","1","C","15",""
+"10123","Sakura","927","cipher_drop","Tangata Manu","Tangata_Manu","Geas Fete T1","D1","1","C","15",""
+"10124","Luzaf","928","cipher_drop","Seiryu-Escha","Seiryu-Escha","Geas Ru'Aun T3","D3","3","A","11",""
+"10125","Najelith","929","cipher_drop","Carabosse","Carabosse","Abyssea Marks T1","D2","2","B","13",""
+"10126","Aldo (Locke)","930","disabled","","","Retired","","","A","0","Temporarily removed from live roster / drops (2026-08-02)"
+"10127","Moogle","931","cipher_drop","Genbu","Genbu","Reforge Sky [I]","D1","1","C","15",""
+"10128","Fablinix","932","cipher_drop","Suzaku","Suzaku","Reforge Sky [II]","D2","2","B","13",""
+"","Maat","933","direct_spell_grant","Sovereign Behemoth","Sovereign_Behemoth","Unity Wanted T2","D2","2","B","13","No cipher item"
+"10129","D. Shantotto","934","cipher_drop","Kamohoalii","Kamohoalii","Geas Fete T2","D2","2","B","13",""
+"10134","Star Sibyl","935","cipher_drop","Serket","Serket","The Gauntlet L2","D2","2","B","13",""
+"10142","Karaha-Baruha","936","cipher_drop","Woodland Mender","Woodland_Mender","Unity Wanted T1","D1","1","C","15",""
+"10138","Cid","937","cipher_drop","Byakko","Byakko","Reforge Sky [IV]","D3","3","A","11",""
+"10148","Gilgamesh","938","cipher_drop","Genbu-Escha","Genbu-Escha","Geas Ru'Aun T3","D3","3","A","11",""
+"10149","Areuhat","939","cipher_drop","Emperor Arthro","Emperor_Arthro","Unity Wanted T1","D1","1","C","15",""
+"10157","Semih Lafihna","940","cipher_drop","Warder of Faith","Warder_of_Faith","Geas Fete T1","D1","1","C","15",""
+"10130","Elivira","941","cipher_drop","Abyssdiver","Abyssdiver","Unity Wanted T1","D1","1","C","15",""
+"10131","Noillurie","942","cipher_drop","Lumber Jill","Lumber_Jill","Unity Wanted T2","D2","2","B","13",""
+"10132","Lhu Mhakaracca","943","cipher_drop","Warblade Beak","Warblade_Beak","Unity Wanted T1","D1","1","C","15",""
+"10133","Ferreous Coffin","944","cipher_drop","Bukhis","Bukhis","Reforge Unity [I]","D1","1","C","15",""
+"10137","Lilisette","945","cipher_drop","Padfoot","Padfoot","Reforge Unity [III]","D3","3","A","11",""
+"10135","Mumor","946","cipher_drop","Muut","Muut","Unity Wanted T2","D2","2","B","13",""
+"10136","Uka Totlihn","947","cipher_drop","Pantokrator","Pantokrator","Abyssea Marks T3","D4","4","S","9","Was Prestige Omega trial â€” moved to Abyssea"
+"","Klara","948","direct_spell_grant","Lord Varney","Lord_Varney","Abyssea Marks T2","D2","2","B","13","No cipher item; was Infamy Maat fight"
+"","Romaa Mihgo","949","direct_spell_grant","Ironhorn Baldurno","Ironhorn_Baldurno","Unity Wanted T1","D1","1","C","15","No cipher item"
+"10141","Kuyin Hathdenna","950","cipher_drop","Byakko-Escha","Byakko-Escha","Geas Ru'Aun T3","D3","3","A","11",""
+"10139","Rahal","951","cipher_drop","Roc","Roc","Hunting League Rank II","D2","2","B","13",""
+"10140","Koru-Moru","952","cipher_drop","Khun","Khun","Reforge Unity [II]","D2","2","B","13",""
+"","Pieuje UC","953","direct_spell_grant","Centurio XX-I","Centurio_XX-I","Unity Wanted T3","D3","3","A","11","No cipher item"
+"","Invincible Shield UC","954","direct_spell_grant","Vidmapire","Vidmapire","Unity Wanted T3","D3","3","A","11","No cipher item"
+"","Apururu UC","955","direct_spell_grant","Chloris","Chloris","Abyssea Marks T1","D4","4","S","9","CORE â€” no cipher item"
+"","Jakoh UC","956","direct_spell_grant","Tolba","Tolba","Unity Wanted T3","D3","3","A","11","No cipher item"
+"","Flaviria UC","957","direct_spell_grant","Mephitas","Mephitas","Unity Wanted T3","D3","3","A","11","No cipher item"
+"10143","Babban","958","cipher_drop","Hugemaw Harold","Hugemaw_Harold","Unity Wanted T1","D1","1","C","15",""
+"10144","Abenzio","959","cipher_drop","Prickly Pitriv","Prickly_Pitriv","Unity Wanted T1","D1","1","C","15",""
+"10145","Rughadjeen","960","cipher_drop","Ionos","Ionos","Geas Fete T2","D2","2","B","13",""
+"10146","Kukki-Chebukki","961","cipher_drop","Joyous Green","Joyous_Green","Unity Wanted T1","D1","1","C","15",""
+"10147","Margret","962","cipher_drop","Intuila","Intuila","Unity Wanted T1","D1","1","C","15",""
+"","Chacharoon","963","direct_spell_grant","Azdaja","Azdaja","Abyssea Marks T3","D4","4","B","9","No cipher item; was Prestige Ultima trial"
+"10150","Lhe Lhangavo","964","cipher_drop","Kukulkan","Kukulkan","Abyssea Marks T1","D4","4","S","9","Was Prestige Sarameya trial â€” moved to Abyssea"
+"","Arciela","965","direct_spell_grant","Eccentric Eve","Eccentric_Eve","Abyssea Marks T1","D2","2","B","13","No cipher item"
+"10151","Mayakov","966","cipher_drop","Cactrot Veloz","Cactrot_Veloz","Unity Wanted T1","D1","1","C","15",""
+"10152","Qultada","967","cipher_drop","Glavoid","Glavoid","Reforge Unity [IV]","D3","3","A","11","CORE"
+"10153","Adelheid","968","cipher_drop","Aello","Aello","Reforge Abyssea [I]","D1","1","C","15",""
+"10154","Amchuchu","969","cipher_drop","Apademak","Apademak","Abyssea Marks T3","D3","3","B","11","NOTABLE"
+"10155","Brygid","970","cipher_drop","Bomb Queen","Bomb_Queen","Hunting League Rank II","D2","2","B","13",""
+"10156","Mildaurion","971","cipher_drop","Kirin","Kirin","Geas Ru'Aun T3","D3","3","A","11","Geas catalog name is Kirin (not Kirin-Escha)"
+"10158","Halver","972","cipher_drop","Keeper of Heiligtum","Keeper_of_Heiligtum","Unity Wanted T1","D1","1","C","15",""
+"10161","Rongelouts","973","cipher_drop","Fleetstalker","Fleetstalker","Geas Fete T3","D3","3","A","11",""
+"10163","Leonoyne","974","cipher_drop","Aquarius","Aquarius","The Gauntlet L1","D2","2","B","13",""
+"10164","Maximilian","975","cipher_drop","Dvalinn","Dvalinn","Abyssea Marks T2","D3","3","A","11",""
+"10165","Kayeel-Payeel","976","cipher_drop","Ketea","Ketea","Abyssea Marks T2","D3","3","A","11",""
+"10166","Robel-Akbel","977","cipher_drop","Durinn","Durinn","Abyssea Marks T2","D2","2","B","13","Was Prestige Diabolos trial â€” moved to Abyssea"
+"10162","Kupofried","978","cipher_drop","Shinryu","Shinryu","Hunting League Rank V","D5","5","S","8","CORE chase"
+"10173","Selh'Teus","979","cipher_drop","Albumen","Albumen","Geas Fete T4","D4","4","A","9",""
+"","Yoran-Oran UC","980","direct_spell_grant","Coca","Coca","Unity Wanted T3","D3","3","A","11","No cipher item"
+"","Sylvie UC","981","direct_spell_grant","Tumult Curator","Tumult_Curator","Unity Wanted T3 capstone","D4","4","S","9","CORE â€” no cipher item"
+"10169","Abquhbah","982","cipher_drop","Teles","Teles","Geas Fete T4","D4","4","A","9",""
+"10172","Balamor","983","cipher_drop","Pazuzu","Pazuzu","Geas Fete T3","D3","3","A","11",""
+"10175","August","984","cipher_drop","Alfard","Alfard","Abyssea Marks T3","D3","3","S","11","CORE"
+"10176","Rosulatia","985","cipher_drop","Urmahlullu","Urmahlullu","Geas Fete T3","D3","3","A","11",""
+"10179","Teodor","986","cipher_drop","Titlacauan","Titlacauan","Abyssea Marks T2","D4","4","S","9",""
+"10178","Ullegore","987","cipher_drop","Iku-Turso","Iku-Turso","Abyssea Marks T2","D3","3","A","11",""
+"10180","Makki-Chebukki","988","cipher_drop","Warder of Courage","Warder_of_Courage","Geas Fete T4","D4","4","S","9",""
+"10181","King of Hearts","989","cipher_drop","Briareus","Briareus","Abyssea Marks T1","D3","3","A","11",""
+"10182","Morimar","990","cipher_drop","Warder of Hope","Warder_of_Hope","Geas Fete T4","D4","4","S","9",""
+"10183","Darrcuiln","991","cipher_drop","Azi Dahaka","Azi_Dahaka","Geas Fete T4","D4","4","S","9",""
+"10188","AA HM","992","cipher_drop","Ark Angel HM","Ark_Angel_HM","Geas Fete T3","D3","3","A","11",""
+"10191","AA EV","993","cipher_drop","Ark Angel EV","Ark_Angel_EV","Geas Fete T3","D3","3","A","11",""
+"10190","AA MR","994","cipher_drop","Ark Angel MR","Ark_Angel_MR","Geas Fete T3","D3","3","A","11",""
+"10189","AA TT","995","cipher_drop","Ark Angel TT","Ark_Angel_TT","Geas Fete T3","D3","3","A","11",""
+"10192","AA GK","996","cipher_drop","Ark Angel GK","Ark_Angel_GK","Geas Fete T3","D3","3","A","11",""
+"10185","Iroha","997","cipher_drop","Iratham","Iratham","Reforge Abyssea [II]","D2","2","B","13",""
+"","Ygnas","998","direct_spell_grant","Isgebind","Isgebind","Abyssea Marks T3","D4","4","S","9","CORE â€” no cipher item"
+"10193","Monberaux","999","cipher_drop","Maju","Maju","Geas Fete T4","D4","4","A","9","CORE"
+"","Excenmille S","1004","direct_spell_grant","Toppling Tuber","Toppling_Tuber","Abyssea Marks T1","D2","2","B","13","Variant trust; optional collection row"
+"","Ayame UC","1005","direct_spell_grant","Wyvernhunter Bambrox","Wyvernhunter_Bambrox","Unity Wanted T3","D3","3","A","11","No cipher item"
+"","Maat UC","1006","direct_spell_grant","Amarok","Amarok","Abyssea Marks T3","D2","2","B","13","No cipher item"
+"","Aldo UC","1007","disabled","","","Retired","","","A","0","Temporarily removed from live roster / drops (2026-08-02)"
+"","Naja UC","1008","direct_spell_grant","Ayapec","Ayapec","Unity Wanted T3","D3","3","A","11","No cipher item"
+"10159","Lion II","1009","cipher_drop","Tinnin","Tinnin","Reforge Unity [V]","D4","4","S","9",""
+"10160","Zeid II","1010","cipher_drop","Orthrus","Orthrus","Abyssea Marks T3","D4","4","S","9","CORE; was Prestige Odin trial â€” moved to Abyssea"
+"10168","Prishe II","1011","cipher_drop","Lorelei","Lorelei","Abyssea Marks T3","D4","4","S","9",""
+"10170","Nashmeira II","1012","cipher_drop","Specter Worm","Specter_Worm","Unity Wanted T3","D3","3","A","11",""
+"10171","Lilisette II","1013","cipher_drop","Bakunawa","Bakunawa","Unity Wanted T3","D3","3","A","11",""
+"10167","Tenzen II","1014","cipher_drop","Thu'ban","Thuban","Unity Wanted T2","D2","2","B","13",""
+"10177","Mumor II","1015","cipher_drop","Bennu","Bennu","Abyssea Marks T3","D3","3","A","11",""
+"10174","Ingrid II","1016","cipher_drop","Shaula","Shaula","Abyssea Marks T3","D2","2","B","13","Was Prestige Medusa trial â€” moved to Abyssea"
+"10184","Arciela II","1017","cipher_drop","Itzpapalotl","Itzpapalotl","Abyssea Marks T2","D3","3","A","11",""
+"10186","Iroha II","1018","cipher_drop","Shedu","Shedu","Unity Wanted T3","D3","3","A","11",""
+"10187","Shantotto II","1019","cipher_drop","Absolute Virtue","Absolute_Virtue","Hunting League Rank V","D4","4","S","9","CORE"
+"","Cornelia","1002","void_keeper","","","Void Keeper","","","S","50M","All 120 roster trusts + 50M gil"
+"","Matsui-P","1003","void_keeper","","","Void Keeper","","","S","50M","All 120 roster trusts + 50M gil"
