@@ -34,17 +34,18 @@ local function applyMeleePackage(mob, p, t, s)
     local hasteM = s.haste or 1
     local daM    = s.da or 1
 
-    -- Tuned so master-99 medians sit near soft bands (C 14–20k … S 36–40k)
-    -- before softclamp; DEF/EVA still matter. ACC stays generous for ≤120.
-    local dmg   = math.floor((6 + 155 * p) * t * attM)
-    local att   = math.floor((18 + 600 * p) * t * attM)
-    local acc   = math.floor((50 + 950 * p) * t)
-    local str   = math.floor((5 + 170 * p) * t * attM)
-    local dex   = math.floor((5 + 150 * p) * t)
-    local da    = math.floor((2 + 32 * p) * t * daM)
-    local ta    = math.floor((1 + 16 * p) * t * daM)
+    -- Tuned so master-99 medians sit near soft bands (C 8–10k … S 36–40k)
+    -- before softclamp. ALL_WSDMG_ALL_HITS is a *percentage* (see weaponskills.lua).
+    -- WEAPONSKILL_DAMAGE_BASE is per-wsID only and was a dead mod here.
+    local dmg   = math.floor((12 + 210 * p) * t * attM)
+    local att   = math.floor((30 + 720 * p) * t * attM)
+    local acc   = math.floor((60 + 1000 * p) * t)
+    local str   = math.floor((8 + 190 * p) * t * attM)
+    local dex   = math.floor((8 + 170 * p) * t)
+    local da    = math.floor((3 + 36 * p) * t * daM)
+    local ta    = math.floor((1 + 18 * p) * t * daM)
     local haste = math.floor((200 + 2100 * p) * math.min(t, 1.05) * hasteM)
-    local wsd   = math.floor((2 + 36 * p) * t * wsdM)
+    local wsd   = math.floor((10 + 50 * p) * t * wsdM) -- % all-hits WSD
     local store = math.floor((2 + 42 * p) * t * wsdM)
 
     pcall(function() mob:setDamage(dmg) end)
@@ -57,7 +58,7 @@ local function applyMeleePackage(mob, p, t, s)
     mob:addMod(xi.mod.DOUBLE_ATTACK, da)
     mob:addMod(xi.mod.TRIPLE_ATTACK, ta)
     mob:addMod(xi.mod.HASTE_GEAR, haste)
-    mob:addMod(xi.mod.WEAPONSKILL_DAMAGE_BASE, wsd)
+    mob:addMod(xi.mod.ALL_WSDMG_ALL_HITS, wsd)
     mob:addMod(xi.mod.STORETP, store)
     mob:addMod(xi.mod.CRITHITRATE, math.floor((2 + 18 * p) * t))
     mob:addMod(xi.mod.CRIT_DMG_INCREASE, math.floor((2 + 23 * p) * t * wsdM))
@@ -132,45 +133,46 @@ local ROLE_APPLY =
     melee_dd  = function(mob, p, t, s, tier)
         applyMeleePackage(mob, p, t, s)
         -- Per-tier WS push so soft bands are reachable without softclamp-only ladders.
+        -- Percentage-point extras on ALL_WSDMG_ALL_HITS (not flat base).
         local wsdExtra =
         {
-            C = math.floor(70 + 160 * p),
-            B = math.floor(40 + 90 * p),
-            A = math.floor(70 + 130 * p),
-            S = math.floor(100 + 180 * p),
+            C = math.floor(15 + 25 * p),
+            B = math.floor(25 + 40 * p),
+            A = math.floor(40 + 55 * p),
+            S = math.floor(55 + 75 * p),
         }
         local ratingExtra =
         {
-            C = math.floor(15 + 35 * p),
-            B = math.floor(10 + 25 * p),
-            A = math.floor(15 + 35 * p),
-            S = math.floor(20 + 45 * p),
+            C = math.floor(20 + 45 * p),
+            B = math.floor(25 + 55 * p),
+            A = math.floor(35 + 70 * p),
+            S = math.floor(50 + 90 * p),
         }
         if wsdExtra[tier] then
-            mob:addMod(xi.mod.WEAPONSKILL_DAMAGE_BASE, wsdExtra[tier])
+            mob:addMod(xi.mod.ALL_WSDMG_ALL_HITS, wsdExtra[tier])
             mob:addMod(xi.mod.MAIN_DMG_RATING, ratingExtra[tier])
         end
     end,
     ranged_dd = function(mob, p, t, s, tier)
         applyMeleePackage(mob, p, t, s)
-        mob:addMod(xi.mod.RATT, math.floor((15 + 465 * p) * t * ((s and s.att) or 1)))
-        mob:addMod(xi.mod.RACC, math.floor((15 + 465 * p) * t))
+        mob:addMod(xi.mod.RATT, math.floor((20 + 520 * p) * t * ((s and s.att) or 1)))
+        mob:addMod(xi.mod.RACC, math.floor((20 + 520 * p) * t))
         local wsdExtra =
         {
-            C = math.floor(70 + 160 * p),
-            B = math.floor(40 + 90 * p),
-            A = math.floor(70 + 130 * p),
-            S = math.floor(100 + 180 * p),
+            C = math.floor(15 + 25 * p),
+            B = math.floor(25 + 40 * p),
+            A = math.floor(40 + 55 * p),
+            S = math.floor(55 + 75 * p),
         }
         local ratingExtra =
         {
-            C = math.floor(15 + 40 * p),
-            B = math.floor(12 + 28 * p),
-            A = math.floor(18 + 38 * p),
-            S = math.floor(22 + 48 * p),
+            C = math.floor(20 + 50 * p),
+            B = math.floor(28 + 60 * p),
+            A = math.floor(40 + 75 * p),
+            S = math.floor(55 + 95 * p),
         }
         if wsdExtra[tier] then
-            mob:addMod(xi.mod.WEAPONSKILL_DAMAGE_BASE, wsdExtra[tier])
+            mob:addMod(xi.mod.ALL_WSDMG_ALL_HITS, wsdExtra[tier])
             mob:addMod(xi.mod.RANGED_DMG_RATING, ratingExtra[tier])
         end
     end,

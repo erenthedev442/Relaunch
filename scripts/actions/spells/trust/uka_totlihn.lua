@@ -75,7 +75,12 @@ spellObject.onMobSpawn = function(mob)
 
     -- TP use and return
     mob:addGambit(ai.t.SELF, { ai.c.STATUS, xi.effect.FINISHING_MOVE_5 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.REVERSE_FLOURISH }, 60)
-    mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.RANDOM, 2000)
+
+    -- Melee DD package now applies (catalog role was wrongly "buffer").
+    mob:addMod(xi.mod.ACC, 100)
+    mob:addMod(xi.mod.ATT, 60)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1500)
 end
 
 spellObject.onMobDespawn = function(mob)

@@ -1,6 +1,6 @@
 -----------------------------------
 -- Trust: Teodor
--- S-apex nuker — MB first, then highest available nuke always. Stationary, no AA.
+-- S-apex nuker — MB first, then highest available nuke. Stationary, no AA.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -20,8 +20,8 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 15)
 
     mob:setAutoAttackEnabled(false)
-    mob:setMobMod(xi.mobMod.NO_MOVE, 1)
-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
+    -- NO_MOVE distance (not LONG_RANGE) — LONG_RANGE made him kite to 12' and idle.
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
 end
 
 spellObject.onMobDespawn = function(mob)

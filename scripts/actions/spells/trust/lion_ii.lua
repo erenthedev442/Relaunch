@@ -22,16 +22,17 @@ spellObject.onMobSpawn = function(mob)
 
     mob:addListener('WEAPONSKILL_USE', 'LION_II_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
         if skill:getID() == 3493 then -- Powder Keg
-            --  I won't sit by and let Vana'diel be engulged!
             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
         end
     end)
 
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.COPY_IMAGE }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.UTSUSEMI })
 
-    mob:addMod(xi.mod.ACC, 80)
-
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1500)
+    -- Match Lion I: stick to melee so Walk the Plank / Pirate Pummel actually fire.
+    mob:addMod(xi.mod.ACC, 150)
+    mob:addMod(xi.mod.ATT, 100)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
 end
 
 spellObject.onMobDespawn = function(mob)

@@ -16,7 +16,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 1
-    params.fTP            = { 0.3, 0.3, 0.3 }
+    -- Was stub 0.3 fTP (Walk the Plank did ~170). Trust Lion/Lion II finisher.
+    params.fTP            = { 3.5, 4.25, 5.0 }
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.PIERCING
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3 -- TODO: Capture shadowBehavior

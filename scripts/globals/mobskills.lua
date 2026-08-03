@@ -1606,13 +1606,20 @@ xi.mobskills.processDamage = function(actor, target, skill, action, info)
             actor:getLocalVar('fellowApplied') ~= 1 and
             info.damage > 0
         then
-            -- Skill-replaced autos use HIT_DMG; match TakePhysicalDamage's 25% AA trim.
+            -- Skill-replaced autos use HIT_DMG; match C++ trust AA trim (0.55).
             if
                 info.attackType == xi.attackType.PHYSICAL and
                 skill and
                 skill:getMsg() == xi.msg.basic.HIT_DMG
             then
-                info.damage = math.max(1, math.floor(info.damage * 0.25))
+                info.damage = math.max(1, math.floor(info.damage * 0.55))
+            else
+                -- Trust mobskill WS (Lion II Walk the Plank, Maat Hollow Smite, etc.)
+                -- never hit player weaponskills.lua — apply ALL_WSDMG here.
+                local wsdPct = actor:getMod(xi.mod.ALL_WSDMG_ALL_HITS) or 0
+                if wsdPct > 0 then
+                    info.damage = math.max(1, math.floor(info.damage * (100 + wsdPct) / 100))
+                end
             end
 
             local master = actor:getMaster()

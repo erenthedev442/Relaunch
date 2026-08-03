@@ -13,8 +13,8 @@ local function nuker(mob)
     mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
     mob:addGambit(ai.t.TARGET, { ai.c.READYING_JA, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
     mob:setAutoAttackEnabled(false)
-    mob:setMobMod(xi.mobMod.NO_MOVE, 1)
-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
+    -- Stationary caster (LONG_RANGE made nukers path to 12' and look AFK).
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
 end
 
 local function melee(mob)

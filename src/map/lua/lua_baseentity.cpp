@@ -18179,6 +18179,13 @@ void CLuaBaseEntity::setDamage(uint16 damage)
     {
         PItemWeapon->setDamage(damage);
     }
+
+    // Ranged trusts (Makki / Semih / etc.) use SLOT_RANGED — MAIN-only left them
+    // on retail weapon damage and Empyreal Arrow / Sidewinder did nothing.
+    if (auto* PItemWeapon = dynamic_cast<CItemWeapon*>(PMobEntity->m_Weapons[SLOT_RANGED]))
+    {
+        PItemWeapon->setDamage(damage);
+    }
 }
 
 /************************************************************************

@@ -398,7 +398,9 @@ int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRan
 int32 ApplyTrustAutoAttackDamageAdjust(CBattleEntity* PAttacker, int32 damage)
 {
     // Auto-swings only — wired exclusively from TakePhysicalDamage, not WS/magic.
-    constexpr float TRUST_AUTO_ATTACK_MULTIPLIER = 0.25f;
+    // Was 0.25 — too punishing; S/A melee trusts felt like wet noodles on AA.
+    // Keep under player AA, but high enough to build TP / chip.
+    constexpr float TRUST_AUTO_ATTACK_MULTIPLIER = 0.55f;
 
     if (damage <= 0 || PAttacker == nullptr || PAttacker->objtype != TYPE_TRUST)
     {

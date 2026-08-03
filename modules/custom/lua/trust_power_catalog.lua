@@ -189,7 +189,7 @@ C.trusts =
     -- D4 / D5 / CORE endgame
     ------------------------------------------------------------------
     [914] = e('buffer',    'S', { style = 'support',     injectKit = false }), -- Ulmia CORE
-    [947] = e('buffer',    'S', { style = 'support',     injectKit = false }), -- Uka (was Prestige)
+    [947] = e('melee_dd',  'S', { style = 'skirmisher',  injectKit = false }), -- Uka DNC (melee, not buffer)
     [955] = e('healer',    'S', { style = 'support',     injectKit = false }), -- Apururu UC CORE
     [963] = e('utility',   'B', { style = 'support',     injectKit = 'utility' }), -- Chacharoon (utility, not DPS)
     [964] = e('melee_dd',  'S', { style = 'bruiser',     injectKit = 'melee_dd' }), -- Lhe (Prestige move)
