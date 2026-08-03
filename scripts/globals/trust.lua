@@ -344,12 +344,27 @@ xi.trust.isCipherItem = function(itemId)
 end
 
 -- item_basic.subid packs spellId (low 12 bits) + NPC trade cutscene flags (high 4 bits).
+-- For stock ciphers, subid is just the spellId (e.g. 10112 -> 906 Zeid).
 xi.trust.getCipherSpellId = function(itemId, subId)
-    if not xi.trust.isCipherItem(itemId) or subId == 0 then
+    if not xi.trust.isCipherItem(itemId) then
         return nil
     end
 
-    local spellId = bit.band(subId, 0x0FFF)
+    -- Prefer packed subId from the item instance / item_basic.subid.
+    -- Fall back to itemId -> spellId via item enum subid when subId is 0
+    -- (some addItem paths leave instance subId unset).
+    local spellId = 0
+    if subId and subId ~= 0 then
+        spellId = bit.band(subId, 0x0FFF)
+    else
+        -- item_basic: cipher itemId's subid column equals the taught spellId
+        -- for retail ciphers (see sql/item_basic.sql 10112-10193).
+        local item = GetItemByID(itemId)
+        if item ~= nil then
+            spellId = bit.band(item:getSubID(), 0x0FFF)
+        end
+    end
+
     if spellId == 0 or blockedCipherSpells[spellId] then
         return nil
     end
