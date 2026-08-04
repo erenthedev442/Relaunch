@@ -1,6 +1,7 @@
 -----------------------------------
 -- Petal Pirouette
--- Description: Whirling petals reduce tp to zero.
+-- Description: Whirling petals reduce TP to zero (AoE).
+-- Notes: Full reset on normal foes; reduced on NMs (remaining TP shown in log).
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -10,12 +11,17 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
-    local tpReduced = 0
-    target:setTP(tpReduced)
+    local newTP = 0
 
+    if target:isNM() then
+        -- Reduced NM effect: strip half of current TP; log shows what remains.
+        newTP = math.floor(target:getTP() * 0.5)
+    end
+
+    target:setTP(newTP)
     skill:setMsg(xi.msg.basic.TP_REDUCED)
 
-    return tpReduced
+    return newTP
 end
 
 return mobskillObject

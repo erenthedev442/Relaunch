@@ -1,5 +1,8 @@
 -----------------------------------
 -- Trust: Areuhat
+-- WAR/PLD. Aggressor, Berserk, Blood Rage (enhanced 60s / 5m CD).
+-- WS: Seraph Blade, Vorpal Blade, Savage Blade, Dragon Breath, Hurricane Wing.
+-- Holds 2000 TP to close skillchains. C-tier bruiser power path.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -17,10 +20,11 @@ spellObject.onMobSpawn = function(mob)
 
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.AGGRESSOR }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.AGGRESSOR })
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.BERSERK }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.BERSERK })
-    mob:addGambit(ai.t.PARTY, { ai.l.OR(
-                        { ai.c.NOT_STATUS, xi.effect.WARCRY },
-                        { ai.c.NOT_STATUS, xi.effect.BLOOD_RAGE })
-                            }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.BLOOD_RAGE })
+    -- Wait for Warcry (and existing Blood Rage) to expire before Blood Rage.
+    mob:addGambit(ai.t.PARTY, {
+        { ai.c.NOT_STATUS, xi.effect.WARCRY },
+        { ai.c.NOT_STATUS, xi.effect.BLOOD_RAGE },
+    }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.BLOOD_RAGE })
 
     mob:addListener('WEAPONSKILL_USE', 'AREUHAT_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
         if skill:getID() == xi.mobSkill.DRAGON_BREATH_3 then
@@ -30,8 +34,7 @@ spellObject.onMobSpawn = function(mob)
         end
     end)
 
-    -- C-tier: WS ASAP so she contributes when no skillchain partner is present.
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+    mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 2000)
 end
 
 spellObject.onMobDespawn = function(mob)

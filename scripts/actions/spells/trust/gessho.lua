@@ -1,8 +1,12 @@
 -----------------------------------
 -- Trust: Gessho
+-- NIN/WAR. Spells: Utsusemi Ichi/Ni, Hojo Ichi/Ni, Kurayami Ichi/Ni.
+-- Abilities: Provoke, Yonin, Shiko no Mitate, Rinpyotosha.
+-- WS: Hane Fubuki, Happobarai, Shibaraku.
+-- Shiko: Defense Boost + Stoneskin + Issekigan.
+-- Rinpyotosha: party Attack Boost +25% for 3 minutes (5 minute cooldown).
 -- Will only use the highest tier debuff available, but will use both Utsusemi spells.
 -- Will maintain Yonin full time.
--- Holds TP until 1500 to try to close skillchains.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -41,6 +45,12 @@ spellObject.onMobSpawn = function(mob)
     if lvl >= 40 then
         mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.YONIN }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.YONIN })
     end
+
+    -- Shiko no Mitate: Defense Boost + Stoneskin + Issekigan
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.DEFENSE_BOOST }, { ai.r.MS, ai.s.SPECIFIC, xi.mobSkill.SHIKO_NO_MITATE_TRUST }, 90)
+
+    -- Rinpyotosha: party Attack Boost +25% / 3 min duration / hard 5 min cooldown
+    mob:addGambit(ai.t.SELF, { ai.c.ALWAYS, 0 }, { ai.r.MS, ai.s.SPECIFIC, xi.mobSkill.RINPYOTOSHA_TRUST }, 300)
 
     mob:addGambit(ai.t.SELF,   { ai.c.NOT_STATUS, xi.effect.COPY_IMAGE }, { ai.r.MA, ai.s.HIGHEST,  xi.magic.spellFamily.UTSUSEMI })
     mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.BLINDNESS  }, { ai.r.MA, ai.s.HIGHEST,  xi.magic.spellFamily.KURAYAMI }, 30)

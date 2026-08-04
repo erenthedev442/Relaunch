@@ -459,6 +459,14 @@ xi.spells.enhancing.calculateEnhancingDuration = function(caster, target, spell,
         duration = duration * 3
     end
 
+    -- Augment Composure (RDM AF3 / King of Hearts): +% duration on others.
+    if
+        caster:getID() ~= target:getID() and
+        caster:getMod(xi.mod.AUGMENT_COMPOSURE) > 0
+    then
+        duration = duration + duration * caster:getMod(xi.mod.AUGMENT_COMPOSURE) / 100
+    end
+
     -- Perpetuance (Doesnt affect spikes and other Black magic enhancements)
     if
         caster:hasStatusEffect(xi.effect.PERPETUANCE) and

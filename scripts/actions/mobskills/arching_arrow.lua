@@ -2,7 +2,7 @@
 -- Arching Arrow
 -- Family: Humanoid Archery Weaponskill
 -- Description: Delivers a single-hit attack. Chance of critical varies with TP.
--- Darkness/Gravitation skillchain properties.
+-- Fusion skillchain property (Lv2 Fire/Light).
 -- NOTES: Used by Semih Lafihna
 -----------------------------------
 ---@type TMobSkill
@@ -15,7 +15,8 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    params.baseDamage     = mob:getWeaponDmg()
+    local rangedDmg = mob:getRangedDmg()
+    params.baseDamage     = (rangedDmg > 0) and rangedDmg or mob:getWeaponDmg()
     params.numHits        = 1
     params.fTP            = { 3.5, 3.5, 3.5 }
     -- params.str_wSC     = 0.16 -- TODO: Capture if mobskill weaponskills have wSC.

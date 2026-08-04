@@ -1,6 +1,7 @@
 -----------------------------------
 -- Doctor's Orders
--- Family: Humanoid (Trust: Shantotto II)
+-- Trust: Shantotto II. Dark magical damage.
+-- Skillchain: Darkness / Gravitation.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -12,12 +13,15 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    params.baseDamage     = mob:getMainLvl() + 2
-    params.fTP            = { 2.8, 2.8, 2.8 } -- TODO: Capture fTPs
-    params.element        = xi.element.NONE   -- TODO: Capture element
-    params.attackType     = xi.attackType.NONE
-    params.damageType     = xi.damageType.NONE
-    params.shadowBehavior = xi.mobskills.shadowBehavior.WIPE_SHADOWS
+    params.baseDamage       = mob:getWeaponDmg()
+    params.fTP              = { 2.5, 3.0, 3.5 }
+    params.element          = xi.element.DARK
+    params.attackType       = xi.attackType.MAGICAL
+    params.damageType       = xi.damageType.DARK
+    params.shadowBehavior   = xi.mobskills.shadowBehavior.WIPE_SHADOWS
+    params.dStatMultiplier  = 1
+    params.dStatAttackerMod = xi.mod.INT
+    params.dStatDefenderMod = xi.mod.INT
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 

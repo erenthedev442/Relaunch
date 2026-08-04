@@ -7,6 +7,11 @@
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
+    -- Trust King of Hearts: unlock after random Level Up.
+    if mob:isTrust() then
+        return mob:getLocalVar('kohLevelUp') == 1 and 0 or 1
+    end
+
     return 0
 end
 

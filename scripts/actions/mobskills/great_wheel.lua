@@ -16,17 +16,19 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 1
-    params.fTP            = { 3.0, 3.0, 3.0 }
+    params.fTP            = { 3.0, 3.5, 4.0 }
     params.attackType     = xi.attackType.PHYSICAL
-    params.damageType     = xi.damageType.SLASHING
-    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3 -- TODO: Capture shadowBehavior
+    -- Mildaurion palm kit is blunt; Kam'lanaut keeps slashing.
+    params.damageType     = (skill:getID() == 3470) and xi.damageType.HTH or xi.damageType.SLASHING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3
 
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
-        if not target:isTrust() then
+        -- Kam'lanaut enmity reset; Mildaurion knockback comes from SQL.
+        if skill:getID() ~= 3470 and not target:isTrust() then
             mob:resetEnmity(target)
         end
     end

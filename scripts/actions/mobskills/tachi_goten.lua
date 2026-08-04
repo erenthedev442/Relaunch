@@ -15,7 +15,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage         = mob:getWeaponDmg()
     params.numHits            = 1
-    params.fTP                = { 1.0, 1.0, 1.0 }
+    -- Trust Gilgamesh: mild TP curve so A weaponskill package has room to land.
+    params.fTP                = mob:getObjType() == xi.objType.TRUST and { 1.5, 2.0, 2.5 } or { 1.0, 1.0, 1.0 }
     -- params.str_wSC         = 0.3 -- TODO: Capture if mobskill weaponskills have wSC.
     params.attackType         = xi.attackType.PHYSICAL
     params.damageType         = xi.damageType.SLASHING

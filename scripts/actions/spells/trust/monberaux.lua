@@ -1,8 +1,22 @@
 -----------------------------------
 -- Trust: Monberaux
+-- PLD/RUN "Chemist". Mix potions only (no spells / no AA / no engage).
+-- MP-90%. A-tier healer (support) — fixed potion heals; do not retune CDs lightly.
+-- Cover when master holds top enmity (stand behind him). Gil/Elixir donations via Upper Jeuno NPC.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
+
+local function masterHasTopEnmity(mobArg)
+    local master = mobArg:getMaster()
+    local battleTarget = mobArg:getTarget()
+    if not master or not battleTarget then
+        return false
+    end
+
+    local hateTarget = battleTarget:getTarget()
+    return hateTarget ~= nil and hateTarget:getID() == master:getID()
+end
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
     return xi.trust.canCast(caster, spell)
@@ -13,11 +27,10 @@ spellObject.onSpellCast = function(caster, target, spell)
 end
 
 spellObject.onMobSpawn = function(mob)
-    -- TODO: Find right animation for Mix: Insomniant.
-    -- TODO: Add PLD/RUN traits like Resist Sleep and Tenacity.
-    -- TODO: Add Cover ability with proper conditions (stand behind Monberaux when you have top enmity)
-    local finalElixir = mob:getMaster():getCharVar('finalElixir') -- CVar used to store Elixir donation info.
-    local potAoe      = mob:getMaster():getCharVar('monbAoe')     -- CVar used to store gil donation info.
+    -- TODO: Find right animation for Mix: Insomniant (still disabled below).
+    local master      = mob:getMaster()
+    local finalElixir = master and master:getCharVar('finalElixir') or 0
+    local potAoe      = master and master:getCharVar('monbAoe') or 0
 
     if potAoe == 0 then
         if finalElixir == 0 then
@@ -41,13 +54,15 @@ spellObject.onMobSpawn = function(mob)
     local buffMoveCooldown    = 60 -- Mix II Retail values from BGWiki
     local mpMoveCooldown      = 90 -- Mix III Retail values from BGWiki
 
-    -- MobMods
+    -- Chemist identity (retail). Keep MPP set (not add) so scaler MP doesn't stick.
     mob:setMod(xi.mod.MPP, -90)
-    mob:setMod(xi.mod.SLEEPRES, 100)   -- Handle negate sleep
-    mob:setMod(xi.mod.LULLABYRES, 100) -- Handle negate sleep
+    mob:setMod(xi.mod.SLEEPRES, 100)   -- PLD/RUN-style sleep resist
+    mob:setMod(xi.mod.LULLABYRES, 100)
     mob:setMod(xi.mod.STATUSRES, 15)
+    -- Functionally immune to Paralyze (Mix actions can't be paralyzed meaningfully).
+    mob:addImmunity(xi.immunity.PARALYZE)
 
-    -- Guard Drink should always be the first spell he casts
+    -- Guard Drink should always be the first mix he uses.
     mob:addGambit(ai.t.PARTY, { ai.c.NOT_STATUS, xi.effect.PROTECT }, { ai.r.MS, ai.s.SPECIFIC, 4255 }, healingMoveCooldown) -- Mix: Guard Drink (Prot/Shell)
     mob:addGambit(ai.t.PARTY, { ai.c.NOT_STATUS, xi.effect.SHELL   }, { ai.r.MS, ai.s.SPECIFIC, 4255 }, healingMoveCooldown) -- Mix: Guard Drink (Prot/Shell)
 
@@ -71,9 +86,9 @@ spellObject.onMobSpawn = function(mob)
         mob:addGambit(ai.t.PARTY, { ai.c.STATUS,      xi.effect.PETRIFICATION   }, { ai.r.MS, ai.s.SPECIFIC, 4252 }, healingMoveCooldown) -- Mix: Gold Needle
         mob:addGambit(ai.t.PARTY, {
             ai.l.OR({ ai.c.STATUS, xi.effect.CURSE_I }, { ai.c.STATUS, xi.effect.CURSE_II }, { ai.c.STATUS, xi.effect.BANE }, { ai.c.STATUS, xi.effect.DOOM })
-        }, { ai.r.MS, ai.s.SPECIFIC, 4242 }, healingMoveCooldown) -- Holy Water
+        }, { ai.r.MS, ai.s.SPECIFIC, 4250 }, healingMoveCooldown) -- Holy Water (ST)
 
-    -- Mix I AoE
+    -- Mix I AoE (gil donation)
     else
         mob:addGambit(ai.t.PARTY, { ai.c.STATUS,      xi.effect.BLINDNESS     }, { ai.r.MS, ai.s.SPECIFIC, 4240 }, healingMoveCooldown) -- AoE Mix: Eye Drops
         mob:addGambit(ai.t.PARTY, { ai.c.STATUS,      xi.effect.POISON        }, { ai.r.MS, ai.s.SPECIFIC, 4238 }, healingMoveCooldown) -- AoE Mix: Antidote
@@ -124,18 +139,39 @@ spellObject.onMobSpawn = function(mob)
     --end)
 
     mob:setAutoAttackEnabled(false)
+    mob:setMobAbilityEnabled(true) -- Mix skills via gambits (MS), not TP WS
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
 
-    -- No TP for Monberaux
+    -- No TP / no engage. Cover when master holds hate (stand behind him).
     mob:addListener('COMBAT_TICK', 'MONBERAUX_CTICK', function(mobArg)
         mobArg:setTP(0)
+
+        if not mobArg:isEngaged() then
+            return
+        end
+
+        local action = mobArg:getCurrentAction()
+        if action ~= xi.action.category.NONE and action ~= xi.action.category.BASIC_ATTACK then
+            return
+        end
+
+        local now = GetSystemTime()
+        if mobArg:getLocalVar('monbCoverCD') > now then
+            return
+        end
+
+        local masterArg = mobArg:getMaster()
+        if masterArg and masterArg:isAlive() and masterHasTopEnmity(mobArg) then
+            -- Throttle attempts; Cover's own 180s recast is the real gate.
+            mobArg:setLocalVar('monbCoverCD', now + 15)
+            mobArg:useJobAbility(xi.ja.COVER, masterArg)
+        end
     end)
 
-    -- This listener is needed for Monberaux to display the correct skill name in the combat log.
+    -- Combat log: Mixes display as abilities, not weaponskills.
     mob:addListener('WEAPONSKILL_USE', 'MONBERAUX_WS', function(mobArg, targetArg, skill, tp, action)
         action:setCategory(xi.action.category.MOBABILITY_FINISH)
     end)
-
-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
 end
 
 spellObject.onMobDespawn = function(mob)

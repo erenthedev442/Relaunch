@@ -18,7 +18,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     params.numHits        = 1
     params.fTP            = { 6.0, 6.0, 6.0 }
     params.attackType     = xi.attackType.PHYSICAL
-    params.damageType     = xi.damageType.SLASHING
+    -- Mildaurion palm kit is blunt; Kam'lanaut keeps slashing.
+    params.damageType     = (skill:getID() == 3471) and xi.damageType.HTH or xi.damageType.SLASHING
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
     params.skipParry      = true
     params.skipGuard      = true

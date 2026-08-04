@@ -1,7 +1,7 @@
 -----------------------------------
 -- Amatsu: Tsukikage
--- Family: Humanoid (Tenzen)
--- Description: Deals physical damage to a target.
+-- Story Tenzen (1395): unique 3-hit Fragmentation closer.
+-- Trust Tenzen: same skill ID; C-tier fTP.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -15,10 +15,15 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 3
-    params.fTP            = { 3.5, 3.5, 3.5 } -- TODO: Capture fTPs
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.SLASHING
-    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1 -- TODO: Capture shadowBehavior
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
+
+    if mob:getObjType() == xi.objType.TRUST then
+        params.fTP = { 1.4, 1.75, 2.25 }
+    else
+        params.fTP = { 3.5, 3.5, 3.5 }
+    end
 
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 

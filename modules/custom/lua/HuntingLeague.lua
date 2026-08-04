@@ -1059,9 +1059,13 @@ end
 
 -----------------------------------
 -- Hunt zone override
--- Places two hub NPCs (Seals, Accessories) and a Zone Guide NPC at the
--- zone-in area, plus five tier-specific spawner NPCs spread across the zone.
--- Weapons + Armor NPCs are registered by their own module files.
+-- Places the Seals hub NPC and a Zone Guide NPC at the zone-in area, plus
+-- five tier-specific spawner NPCs spread across the zone.
+-- Weapons / Armor / Accessory (medal) NPCs are registered by their own modules.
+--
+-- Hunt-Marks "Accessories" NPC removed 2026-08-04: its shop categories were
+-- already decommissioned (stock lives on the medal Accessory NPC at x=-9).
+-- Jul 31 wrongly disabled that medal vendor instead (same hub, similar name).
 -----------------------------------
 m:addOverride(catalog.huntZonePath .. '.Zone.onInitialize', function(zone)
     super(zone)
@@ -1089,29 +1093,6 @@ m:addOverride(catalog.huntZonePath .. '.Zone.onInitialize', function(zone)
         end,
     })
     utils.unused(SealsNPC)
-
-    -- Accessories NPC (Neck / Earrings / Rings / Back / Waist).
-    local aPos     = catalog.accessoriesPos
-    local AccNPC   = zone:insertDynamicEntity({
-        objtype    = xi.objType.NPC,
-        name       = 'HuntingLeague_Accessories',
-        packetName = string.format('%sAccessories', xi.icon.STAR_LARGE),
-        look       = 210,
-        x          = aPos.x,
-        y          = aPos.y,
-        z          = aPos.z,
-        rotation   = aPos.rot,
-        widescan   = 1,
-
-        onTrade = function(player, npc, trade)
-            player:printToPlayer('No trades - use the menu, kupo!', xi.msg.channel.SYSTEM_3)
-        end,
-
-        onTrigger = function(player, npc)
-            player:timer(50, function(p) buildAccessoriesMain(p) end)
-        end,
-    })
-    utils.unused(AccNPC)
 
     insertZoneGuideNPC(zone)
     insertSpawnerNPC(zone)

@@ -111,8 +111,8 @@ spellObject.onMobSpawn = function(mob)
             hppLow and
             daybreakUsed ~= 1
         then
+            mobArg:setLocalVar('DaybreakUsed', 1)
             mobArg:useMobAbility(xi.mobSkill.DAYBREAK_TRUST)
-            daybreakUsed = 1
         end
     end)
 

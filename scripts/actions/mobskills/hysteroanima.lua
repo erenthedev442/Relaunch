@@ -11,7 +11,9 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
-    xi.mobskills.mobBuffMove(mob, xi.effect.MAGIC_SHIELD, 1, 0, 10)
+    -- Retail Trust: magical immunity for <5s (once per summon).
+    -- UDMGMAGIC -100% produces the "resists the effects of the spell!" log.
+    xi.mobskills.mobBuffMove(mob, xi.effect.MAGIC_SHIELD, 1, 0, 5)
 
     skill:setMsg(xi.msg.basic.USES)
 

@@ -27,7 +27,8 @@ spellObject.onMobSpawn = function(mob)
 
     mob:addMod(xi.mod.INSPIRATION_FAST_CAST, 50)
     mob:addMod(xi.mod.ENMITY, 15)
-    mob:addMod(xi.mod.DMG, -500) -- Damage Taken -5%
+    -- Retail: 5% of physical damage taken is converted to MP; this is not DT-5%.
+    mob:addMod(xi.mod.ABSORB_PHYSDMG_TO_MP, 5)
     mob:addMod(xi.mod.HPP, 10)
     mob:addMod(xi.mod.MPP, 10)
     xi.trust.enableTankEnmity(mob, { tickCE = 5000, tickVE = 10000, actionCE = 2500, actionVE = 5000, tickSeconds = 2, drainMaster = 10, includeParty = true, listenerName = 'AMCHUCHU_TANK_ENMITY' })
@@ -61,7 +62,12 @@ spellObject.onMobSpawn = function(mob)
     end
 
     if lvl >= 60 then
-        mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.EMBOLDEN }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.EMBOLDEN })
+        -- Reserve Embolden for Protect instead of consuming it on Phalanx,
+        -- Shell, Regen, or another enhancing spell.
+        mob:addGambit(ai.t.SELF, {
+            { ai.c.NOT_STATUS, xi.effect.EMBOLDEN },
+            { ai.c.NOT_STATUS, xi.effect.PROTECT },
+        }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.EMBOLDEN })
     end
 
     if lvl >= 65 then
@@ -77,9 +83,11 @@ spellObject.onMobSpawn = function(mob)
     end
 
     mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.FLASH   }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.FLASH         })
+    -- Protect must precede her other self-enhancing spells so Embolden is
+    -- consumed by Protect as intended.
+    mob:addGambit(ai.t.SELF,   { ai.c.NOT_STATUS, xi.effect.PROTECT }, { ai.r.MA, ai.s.HIGHEST,  xi.magic.spellFamily.PROTECT })
     mob:addGambit(ai.t.SELF,   { ai.c.NOT_STATUS, xi.effect.PHALANX }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.PHALANX       })
     mob:addGambit(ai.t.SELF,   { ai.c.NOT_STATUS, xi.effect.FOIL    }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.FOIL          })
-    mob:addGambit(ai.t.SELF,   { ai.c.NOT_STATUS, xi.effect.PROTECT }, { ai.r.MA, ai.s.HIGHEST,  xi.magic.spellFamily.PROTECT })
     mob:addGambit(ai.t.SELF,   { ai.c.NOT_STATUS, xi.effect.SHELL   }, { ai.r.MA, ai.s.HIGHEST,  xi.magic.spellFamily.SHELL   })
 
     mob:addGambit(ai.t.TARGET, { { ai.c.CAST_ELE_MA_SELF, 0                   }, { ai.c.NEED_ELE_BAREFFECT,  0 }, }, { ai.r.MA, ai.s.DEF_BAR_ELEMENT, 0                          })
@@ -92,6 +100,7 @@ spellObject.onMobSpawn = function(mob)
         { ai.c.MPP_GTE, 50 }, }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STONESKIN })
 
     mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 3000)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
 
     mob:addListener('WEAPONSKILL_USE', 'AMCHUCHU_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action)
         if skill:getID() == xi.mobSkill.DIMIDIATION_1 then

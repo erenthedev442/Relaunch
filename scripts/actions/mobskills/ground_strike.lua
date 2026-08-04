@@ -7,6 +7,15 @@
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
+    -- Zeid II: Ground Strike from level 50; below that he holds TP at 3000.
+    if
+        mob:getObjType() == xi.objType.TRUST and
+        mob:getTrustID() == xi.magic.spell.ZEID_II and
+        mob:getMainLvl() < 50
+    then
+        return 1
+    end
+
     return 0
 end
 

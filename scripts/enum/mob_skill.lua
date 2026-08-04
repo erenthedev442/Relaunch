@@ -595,6 +595,29 @@ xi.mobSkill =
     WARP_OUT_AATT                 =  936, -- Ark Angel TT Warp Out
 
     TACHI_YUKIKAZE                =  946, -- Ark Angel GK
+    -- Trust: Babban
+    WILD_OATS_TRUST               = 3351,
+    PHOTOSYNTHESIS_TRUST          = 3352,
+    PETAL_PIROUETTE_TRUST         = 3353,
+    HEAD_BUTT_TRUST               = 3354,
+    -- Trust: AAMR
+    RAMPAGE_TRUST                 = 3715,
+    CALAMITY_TRUST                = 3716,
+    HAVOC_SPIRAL_TRUST            = 3717,
+    CLOUDSPLITTER_TRUST           = 3718,
+    -- Trust: AAGK
+    TACHI_YUKIKAZE_TRUST          = 3722,
+    TACHI_GEKKO_TRUST             = 3723,
+    DRAGONFALL_TRUST              = 3724,
+    TACHI_KASHA_TRUST             = 3725,
+    TACHI_FUDO_TRUST              = 3726,
+    HOLLOW_SMITE                  = 3496, -- Maat UC (Victory Smite-like)
+    SARVAS_STORM                  = 3497, -- Jakoh UC (Rudra-like)
+    NOTT                          = 3502, -- Apururu UC / Naja UC (heal WS)
+    JUSTICEBREAKER                = 3503, -- Naja UC (DEF/MDEF Down)
+    SOTURIS_FURY                  = 3499, -- Invincible Shield UC (Ukko-like)
+    CELIDONS_TORMENT              = 3500, -- Flaviria UC (Camlann-like)
+    TACHI_MUDO                    = 3501, -- Ayame UC (Darkness closer)
     TACHI_GEKKO                   =  947, -- Ark Angel GK
     TACHI_KASHA                   =  948, -- Ark Angel GK
 
@@ -910,6 +933,8 @@ xi.mobSkill =
     CHAINS_OF_ENVY                = 1495,
     MALEVOLENT_BLESSING_1         = 1496,
     PESTILENT_PENANCE_1           = 1497,
+    SALVATION_SCYTHE              = 3264, -- Domina Shantotto Trust
+
     EMPTY_SALVATION_1             = 1498,
     INFERNAL_DELIVERANCE_1        = 1499,
     MALEVOLENT_BLESSING_2         = 1500,
@@ -1017,8 +1042,8 @@ xi.mobSkill =
     WARP_OUT_GESSHO               = 1938,
     WARP_IN_GESSHO                = 1939,
 
-    CHIMERA_RIPPER                = 1940,
-    STRING_CLIPPER                = 1941,
+    CHIMERA_RIPPER                = 1940, -- Mnejing / Valoredge
+    STRING_CLIPPER                = 1941, -- Mnejing / Valoredge
     ARCUBALLISTA                  = 1942,
     SLAPSTICK                     = 1943,
     SHIELD_BASH_AUTOMATON         = 1944, -- Used by the trust Mnejing but may also be used by mobs.
@@ -1192,8 +1217,12 @@ xi.mobSkill =
 
     VICTORY_BEACON_TRUST          = 3237, -- Rughadjeen Trust
 
+    SHIELD_SUBVERTER_TRUST        = 3245, -- Mnejing Trust
+
+    HANE_FUBUKI_TRUST             = 3256, -- Gessho Trust
     SHIBARAKU_TRUST               = 3257, -- Gessho Trust
     SHIKO_NO_MITATE_TRUST         = 3258, -- Gessho Trust
+    HAPPOBARAI_TRUST              = 3259, -- Gessho Trust
     RINPYOTOSHA_TRUST             = 3260, -- Gessho Trust
 
     -- ELEMENTAL_SFORZO              = 3265,
@@ -1210,13 +1239,23 @@ xi.mobSkill =
 
     TIDAL_WAVE_5                  = 3335, -- Unknown usage.
 
-    HOWLING_MOON_4                = 3336, -- Unknown usage.
+    HOWLING_MOON_4                = 3336, -- Trust: Karaha-Baruha (AoE).
+    LUNAR_BAY_1                   = 3337, -- Trust: Karaha-Baruha.
+
+    BLOW_ABENZIO_TRUST            = 3355, -- Abenzio Trust
+    UPPERCUT_ABENZIO_TRUST        = 3356, -- Abenzio Trust
+    ANTIPHASE_ABENZIO_TRUST       = 3357, -- Abenzio Trust
+    BLANK_GAZE_ABENZIO_TRUST      = 3358, -- Abenzio Trust
 
     SHEEP_SONG_3                  = 3433,
 
     DRAGON_BREATH_3               = 3438, -- Areuhat Trust
 
+    PARALYZING_MICROTUBE          = 3466, -- Adelheid Trust
+    SILENCING_MICROTUBE           = 3467, -- Adelheid Trust
+    BINDING_MICROTUBE             = 3468, -- Adelheid Trust
     TWIRLING_DERVISH              = 3469, -- Adelheid Trust
+
 
     LIGHT_BLADE_3                 = 3471,
 

@@ -6,6 +6,11 @@
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
+    -- Trust King of Hearts uses the Cardian Shuffle kit (not NM-gated).
+    if mob:isTrust() then
+        return 0
+    end
+
     if not mob:isNM() then
         return 1
     end

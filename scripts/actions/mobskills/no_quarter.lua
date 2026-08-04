@@ -26,9 +26,33 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
     end
 
-    mob:setMod(xi.mod.DMGPHYS, 0) -- Remove the Phyisical damage taken effect
+    -- End Daybreak aura (PDT / stats / Regen / Store TP)
+    if mob:getLocalVar('DaybreakBuffActive') == 1 then
+        local statBoost  = mob:getLocalVar('DaybreakStatBoost')
+        local regenPower = mob:getLocalVar('DaybreakRegen')
+        local storeTp    = mob:getLocalVar('DaybreakStoreTP')
+
+        mob:setMod(xi.mod.DMGPHYS, 0)
+        mob:delMod(xi.mod.STR, statBoost)
+        mob:delMod(xi.mod.DEX, statBoost)
+        mob:delMod(xi.mod.VIT, statBoost)
+        mob:delMod(xi.mod.AGI, statBoost)
+        mob:delMod(xi.mod.INT, statBoost)
+        mob:delMod(xi.mod.MND, statBoost)
+        mob:delMod(xi.mod.CHR, statBoost)
+        mob:delMod(xi.mod.REGEN, regenPower)
+        mob:delMod(xi.mod.STORETP, storeTp)
+
+        mob:setLocalVar('DaybreakBuffActive', 0)
+        mob:setLocalVar('DaybreakStatBoost', 0)
+        mob:setLocalVar('DaybreakRegen', 0)
+        mob:setLocalVar('DaybreakStoreTP', 0)
+    else
+        mob:setMod(xi.mod.DMGPHYS, 0)
+    end
+
     mob:setLocalVar('DaybreakEndTime', GetSystemTime())
-    skill:setFinalAnimationSub(0)
+    skill:setFinalAnimationSub(0) -- wings off
 
     return info.damage
 end

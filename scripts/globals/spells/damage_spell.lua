@@ -919,6 +919,8 @@ end
 
 -- Non-primary targets honor Mod::DMG_AOE (alter-ego survivability, locus mobs, etc.).
 -- action may be a spell or mob/pet skill; both expose getPrimaryTargetID().
+-- Trusts: splash cushion is endgame-only (master 99+). While leveling, splash
+-- hits for full so trusts feel the same threat as the primary target.
 xi.spells.damage.calculateAreaOfEffectResistance = function(target, action)
     local areaOfEffectMultiplier = 1
 
@@ -926,7 +928,18 @@ xi.spells.damage.calculateAreaOfEffectResistance = function(target, action)
         action and
         target:getID() ~= action:getPrimaryTargetID()
     then
-        areaOfEffectMultiplier = utils.clamp(areaOfEffectMultiplier + target:getMod(xi.mod.DMG_AOE) / 10000, 0, 2)
+        local dmgAoe = target:getMod(xi.mod.DMG_AOE)
+        if
+            dmgAoe ~= 0 and
+            target:getObjType() == xi.objType.TRUST
+        then
+            local master = target:getMaster()
+            if master and master:getMainLvl() < 99 then
+                dmgAoe = 0
+            end
+        end
+
+        areaOfEffectMultiplier = utils.clamp(areaOfEffectMultiplier + dmgAoe / 10000, 0, 2)
     end
 
     return areaOfEffectMultiplier

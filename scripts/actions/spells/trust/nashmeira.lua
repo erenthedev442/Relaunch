@@ -1,9 +1,13 @@
 -----------------------------------
 -- Trust: Nashmeira
--- DNC/WHM — Cure priority, -na, Samba, Feather Step, Climactic, ASAP WS.
+-- PUP/WHM. H2H. Imperial Authority (Stun) only WS @1000 TP.
+-- Spells: Cure I–IV, -na line. Cure party at <33% HP.
+-- MP+70%. B-tier utility (support + thin melee) — no kit inject.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
+
+local MS_IMPERIAL_AUTHORITY = 3243
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
     return xi.trust.canCast(caster, spell, xi.magic.spell.NASHMEIRA_II)
@@ -16,12 +20,13 @@ end
 spellObject.onMobSpawn = function(mob)
     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
 
-    mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 40 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
-    mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 75 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
+    mob:addMod(xi.mod.MPP, 70)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
 
-    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_I }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURE })
-    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_II }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURE })
+    -- Retail: Cure only at low HP (<33%), highest available.
+    mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 33 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
 
+    -- -na line / Erase.
     mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.POISON }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.POISONA })
     mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.PARALYSIS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.PARALYNA })
     mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.BLINDNESS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.BLINDNA })
@@ -31,14 +36,15 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.CURSE_I }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURSNA })
     mob:addGambit(ai.t.PARTY, { ai.c.STATUS_FLAG, xi.effectFlag.ERASABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
 
-    mob:addGambit(ai.t.SELF, { ai.c.NO_SAMBA, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.HASTE_SAMBA })
-    mob:addGambit(ai.t.SELF, { ai.c.NO_SAMBA, 0 }, { ai.r.JA, ai.s.BEST_SAMBA, xi.ja.DRAIN_SAMBA })
-
-    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.BEWILDERED_DAZE_5 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.FEATHER_STEP })
-    mob:addGambit(ai.t.SELF, { ai.c.TP_GTE, 1000 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.CLIMACTIC_FLOURISH })
-
+    -- Sole WS: Imperial Authority ASAP @1000.
     mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
+
+    mob:addListener('WEAPONSKILL_USE', 'NASHMEIRA_WS', function(mobArg, target, skill, tp, action, damage)
+        if skill:getID() == MS_IMPERIAL_AUTHORITY then
+            -- No! Stand back!
+            xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
+        end
+    end)
 end
 
 spellObject.onMobDespawn = function(mob)

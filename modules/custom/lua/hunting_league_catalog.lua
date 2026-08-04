@@ -21,8 +21,8 @@ return
     -- Position of the Zone Guide NPC (warps players to a tier cluster area).
     zoneGuidePos   = { x =  3.0000, y = -0.5000, z = -30.0000, rot = 128 },
 
-    -- Position of the Hunt Accessories NPC.
-    accessoriesPos = { x =  6.0000, y = -0.5000, z = -30.0000, rot = 128 },
+    -- (accessoriesPos retired 2026-08-04 — Hunt-Marks Accessories NPC removed;
+    -- medal Accessory_NPC at accessory_catalog.vendorPos owns that shop.)
 
     -- Fallback spawner position for tier NPCs that have no spawnerPos defined.
     spawnerPos     = { x =  8.0000, y = -0.5000, z = -30.0000, rot = 128 },

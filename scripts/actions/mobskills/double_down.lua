@@ -7,6 +7,15 @@
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
+    -- Trust King of Hearts: prefer Shuffle when a dispelable buff is up.
+    if mob:isTrust() then
+        if target:hasStatusEffectByFlag(xi.effectFlag.DISPELABLE) then
+            return 1
+        end
+
+        return 0
+    end
+
     if not mob:isNM() then -- TODO: Set proper skill lists
         return 1
     end

@@ -13,7 +13,8 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    params.baseDamage     = mob:getWeaponDmg()
+    local rangedDmg = mob:getRangedDmg()
+    params.baseDamage     = (rangedDmg > 0) and rangedDmg or mob:getWeaponDmg()
     params.numHits        = 1
     params.fTP            = { 3.5, 3.5, 3.5 }
     -- params.agi_wSC        = 0.3 -- TODO: Capture if mobskill weaponskills have wSC.

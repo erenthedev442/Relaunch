@@ -1,6 +1,9 @@
 -----------------------------------
 -- Trust: Abenzio
--- MNK Goobbue — Blow / Uppercut / Antiphase / Blank Gaze ASAP.
+-- MNK/WAR Goobbue. No spells / no JAs.
+-- WS: Blow (stun), Uppercut, Antiphase (AoE silence), Blank Gaze (conal paralysis).
+-- HP+20%. Plantoid family (intimidates beasts, intimidated by vermin).
+-- Kick Attacks via arm vines (no kick anim). Uses TP randomly; no skillchains.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -25,7 +28,14 @@ spellObject.onMobSpawn = function(mob)
         xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
     end
 
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+    mob:addMod(xi.mod.HPP, 20)
+    -- MNK Kick Attacks (Goobbue uses arm-vine kick anim).
+    mob:addMod(xi.mod.KICK_ATTACK_RATE, 20)
+    -- Monstrous Max HP Boost feel on top of C bruiser package.
+    mob:addMod(xi.mod.HP, xi.trust.modGrowthValMax(mob, 500))
+
+    -- Uses TP randomly; does not try to skillchain.
+    mob:setTrustTPSkillSettings(ai.tp.RANDOM, ai.s.RANDOM, 1000)
 end
 
 spellObject.onMobDespawn = function(mob)

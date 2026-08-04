@@ -1,7 +1,7 @@
 -----------------------------------
 -- Amatsu: Kazakiri
--- Family: Humanoid (Tenzen)
--- Description: Deals physical damage to a target.
+-- Story Tenzen (1391): Jinpu variant (2-hit).
+-- Trust Tenzen: same skill ID; C-tier fTP.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -15,10 +15,15 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 2
-    params.fTP            = { 4.5, 4.5, 4.5 }
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.SLASHING
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
+
+    if mob:getObjType() == xi.objType.TRUST then
+        params.fTP = { 1.6, 2.0, 2.5 }
+    else
+        params.fTP = { 4.5, 4.5, 4.5 }
+    end
 
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 

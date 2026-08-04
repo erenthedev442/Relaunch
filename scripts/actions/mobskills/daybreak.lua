@@ -1,11 +1,10 @@
 -----------------------------------
 -- Daybreak
 -- Family: Humanoid (August)
--- Description: 1 min 30 sec duration, 1 min 30 sec cooldown after either No quater used or daybreak wears off
--- When August's HP drops below 66%, he uses Daybreak if it's available which partially restores some HP and MP,
--- resets his TP, and activates an aura with wings of light
--- Daybreak is a -50% PDT effect, full Erase
--- Daybreak is removed after the use of No Quarter.
+-- When August's HP drops below 66%, he uses Daybreak if available:
+-- partial HP/MP restore, TP reset, wings (animation sub 5).
+-- -50% PDT, full Erase, stats boost, Regen, Store TP.
+-- Removed after No Quarter (cooldown starts then).
 -- Type: Magical
 -----------------------------------
 ---@type TMobSkill
@@ -31,17 +30,40 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
     end
 
-    local hpHeal = mob:getMainLvl() * 7
-    local mpHeal = mob:getMainLvl() * 7
+    local lvl    = mob:getMainLvl()
+    local hpHeal = lvl * 7
+    local mpHeal = lvl * 7
 
-    mob:eraseAllStatusEffect() -- erase all negetive effects
-    mob:addHP(hpHeal) -- restore hp
-    mob:addMP(mpHeal) -- restore mp
-    mob:setMod(xi.mod.DMGPHYS, -5000) -- Phyisical damage taken -50%
-    mob:setTP(0) -- daybreak uses all tp, so set to 0
+    mob:eraseAllStatusEffect()
+    mob:addHP(hpHeal)
+    mob:addMP(mpHeal)
+    mob:setTP(0)
     mob:setLocalVar('DaybreakUsed', 1)
 
-    skill:setFinalAnimationSub(5)
+    -- Aura: PDT / stats / Regen / Store TP (cleared on No Quarter)
+    if mob:getLocalVar('DaybreakBuffActive') == 0 then
+        local statBoost = math.max(5, math.floor(lvl * 0.25))
+        local regenPower = math.max(3, math.floor(lvl / 10))
+        local storeTp    = 15
+
+        mob:setMod(xi.mod.DMGPHYS, -5000) -- -50% PDT
+        mob:addMod(xi.mod.STR, statBoost)
+        mob:addMod(xi.mod.DEX, statBoost)
+        mob:addMod(xi.mod.VIT, statBoost)
+        mob:addMod(xi.mod.AGI, statBoost)
+        mob:addMod(xi.mod.INT, statBoost)
+        mob:addMod(xi.mod.MND, statBoost)
+        mob:addMod(xi.mod.CHR, statBoost)
+        mob:addMod(xi.mod.REGEN, regenPower)
+        mob:addMod(xi.mod.STORETP, storeTp)
+
+        mob:setLocalVar('DaybreakBuffActive', 1)
+        mob:setLocalVar('DaybreakStatBoost', statBoost)
+        mob:setLocalVar('DaybreakRegen', regenPower)
+        mob:setLocalVar('DaybreakStoreTP', storeTp)
+    end
+
+    skill:setFinalAnimationSub(5) -- wings / SPECIAL_AUGUST gate
 
     return info.damage
 end

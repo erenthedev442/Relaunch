@@ -206,29 +206,26 @@ Maybe<SpellID> CMobSpellContainer::GetBestIndiSpell(CBattleEntity* PTarget)
     // (THIS was the core-dump: GetBestIndiSpell -> GetHitRate -> GetHitRateEx). With
     // no target there's nothing to out-accuracy, so leave both buff flags false and
     // fall through to the default (non-accuracy) indi choice.
+    // Sylvie UC Indi selection (retail): melee Acc vs Fury, ranged Acc for RNG/COR,
+    // mage Focus when foe is 5+ levels above master (else Acumen).
     bool accBuffNeeded  = false;
     bool mAccBuffNeeded = false;
     if (mTarget != nullptr)
     {
-        auto hitrate     = battleutils::GetHitRate(PTarget, mTarget);
-        accBuffNeeded    = hitrate < 65;
-
-        auto mInt        = PTarget->getMod(Mod::INT);
-        auto tInt        = mTarget->getMod(Mod::INT);
-        auto intDiff     = mInt - tInt + 10;
-        auto macc        = PTarget->getMod(Mod::MACC);
-        auto tMaeva      = mTarget->getMod(Mod::MEVA);
-        auto mSkill      = PTarget->GetSkill(SKILL_ELEMENTAL_MAGIC);
-        auto maccFromInt = mInt;
-
-        if (mInt > tInt + 10)
+        uint8 hitrate = 100;
+        if (mJob == JOB_RNG || mJob == JOB_COR)
         {
-            maccFromInt = tInt + ((mInt - intDiff) * 0.5);
+            hitrate = battleutils::GetRangedHitRate(PTarget, mTarget, false);
         }
+        else
+        {
+            hitrate = battleutils::GetHitRate(PTarget, mTarget);
+        }
+        accBuffNeeded = hitrate < 65;
 
-        auto totalMacc    = mSkill + maccFromInt + macc;
-        auto magicHitRate = float(totalMacc - tMaeva) / 10;
-        mAccBuffNeeded    = magicHitRate < 10;
+        // Retail Focus gate: enemy level >= player level/ilvl + 5.
+        int16 levelGap = static_cast<int16>(mTarget->GetMLevel()) - static_cast<int16>(PTarget->GetMLevel());
+        mAccBuffNeeded = levelGap >= 5;
     }
 
     Maybe<SpellID> choice    = std::nullopt;
@@ -239,12 +236,10 @@ Maybe<SpellID> CMobSpellContainer::GetBestIndiSpell(CBattleEntity* PTarget)
         case JOB_WAR:
         case JOB_MNK:
         case JOB_THF:
-        case JOB_DRK:
         case JOB_BST:
         case JOB_RNG:
         case JOB_SAM:
         case JOB_DRG:
-        case JOB_BLU:
         case JOB_COR:
         case JOB_PUP:
         case JOB_DNC:
@@ -258,6 +253,21 @@ Maybe<SpellID> CMobSpellContainer::GetBestIndiSpell(CBattleEntity* PTarget)
                 choice = SpellID::Indi_Fury;
             }
             subChoice = SpellID::Indi_Regen;
+            break;
+        }
+        case JOB_DRK:
+        case JOB_BLU:
+        {
+            // MP jobs: below Indi-Haste, prefer Refresh over Regen.
+            if (accBuffNeeded)
+            {
+                choice = SpellID::Indi_Precision;
+            }
+            else
+            {
+                choice = SpellID::Indi_Fury;
+            }
+            subChoice = SpellID::Indi_Refresh;
             break;
         }
         case JOB_WHM:
@@ -286,6 +296,11 @@ Maybe<SpellID> CMobSpellContainer::GetBestIndiSpell(CBattleEntity* PTarget)
         }
         case JOB_PLD:
         case JOB_RUN:
+        {
+            choice    = SpellID::Indi_Haste;
+            subChoice = SpellID::Indi_Refresh;
+            break;
+        }
         case JOB_NIN:
         {
             choice    = SpellID::Indi_Haste;
@@ -349,6 +364,12 @@ Maybe<SpellID> CMobSpellContainer::GetBestEntrustedSpell(CBattleEntity* PTarget)
             choice = SpellID::Indi_Regen;
             break;
         case JOB_GEO:
+            // Sylvie UC: Entrust Indi-Languor onto first PLD/RUN/NIN only when
+            // the GEO master has no self Indicolure (gambits retarget cast).
+            if (!PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_COLURE_ACTIVE))
+            {
+                choice = SpellID::Indi_Languor;
+            }
             break;
         default:
             break;

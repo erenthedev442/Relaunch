@@ -13,8 +13,14 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    params.baseDamage       = mob:getMainLvl() + 2
-    params.fTP              = { 1.0, 2.0, 3.0 }
+    -- Trust Halver: feed C melee_dd weapon rating. Mobs keep level formula.
+    if mob:getObjType() == xi.objType.TRUST then
+        params.baseDamage = mob:getWeaponDmg()
+        params.fTP        = { 1.5, 2.25, 3.0 }
+    else
+        params.baseDamage = mob:getMainLvl() + 2
+        params.fTP        = { 1.0, 2.0, 3.0 }
+    end
     -- params.str_wSC       = 0.3 -- TODO: Capture if mobskill weaponskills have wSC.
     -- params.int_wSC       = 0.3 -- TODO: Capture if mobskill weaponskills have wSC.
     params.element          = xi.element.THUNDER

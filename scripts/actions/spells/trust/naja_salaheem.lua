@@ -1,8 +1,14 @@
 -----------------------------------
 -- Trust: Naja Salaheem
+-- MNK/WAR. Club. Focus / Dodge / Counterstance (on top enmity).
+-- WS: True Strike / Hexa Strike / Peacebreaker / Black Halo.
+-- Peacebreaker: low dmg + DEF/MDEF Down. ~100 TP per hit. ASAP@1000.
+-- C-tier melee_dd (skirmisher) power path — no kit inject.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
+
+local MS_PEACEBREAKER = 3215
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
     return xi.trust.canCast(caster, spell, xi.magic.spell.NAJA_UC)
@@ -19,20 +25,23 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.ABQUHBAH] = xi.trust.messageOffset.TEAMWORK_3,
     })
 
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+    -- Retail: ~100 TP per hit (high Store TP on delay-240 club).
+    mob:addMod(xi.mod.STORETP, 100)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
 
-    mob:addListener('WEAPONSKILL_USE', 'NAJA_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
-        local skillId = skill:getID()
-        -- Peacebreaker (MS) or Black Halo (player WS) — signature lines.
-        if skillId == 3215 or skillId == 169 then
-            --  Cha-ching! Thirty gold coins!
-            xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
-        end
-    end)
+    -- Uses WS at 1000 TP; Black Halo last on list for HIGHEST preference.
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
 
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.FOCUS }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.FOCUS })
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.DODGE }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.DODGE })
     mob:addGambit(ai.t.SELF, { ai.c.HAS_TOP_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.COUNTERSTANCE })
+
+    mob:addListener('WEAPONSKILL_USE', 'NAJA_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
+        if skill:getID() == MS_PEACEBREAKER then
+            -- Cha-ching! Thirty gold coins!
+            xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
+        end
+    end)
 end
 
 spellObject.onMobDespawn = function(mob)

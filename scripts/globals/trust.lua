@@ -290,11 +290,12 @@ xi.trust.VOID_KEEPER_SPELL =
     MATSUI_P = 1003, -- client spell slot "Matsui-P"
 }
 
--- Temporarily retired from the live roster / cipher economy (Aldo + Aldo UC).
+-- Temporarily retired / not yet unlockable (stripped on login; grant blocked).
 xi.trust.DISABLED_SPELL =
 {
-    ALDO    = 930,  -- retail Aldo / Locke slot
-    ALDO_UC = 1007,
+    ALDO      = 930,  -- retail Aldo / Locke slot
+    ALDO_UC   = 1007,
+    FUJITO_PD = 1020, -- implemented; waiting on unlock placement
 }
 
 local blockedCipherSpells =
@@ -306,6 +307,7 @@ local blockedCipherSpells =
     [xi.trust.VOID_KEEPER_SPELL.MATSUI_P] = true,
     [xi.trust.DISABLED_SPELL.ALDO]        = true,
     [xi.trust.DISABLED_SPELL.ALDO_UC]     = true,
+    [xi.trust.DISABLED_SPELL.FUJITO_PD]   = true,
 }
 
 -- Farmable roster for Void Keeper caps (Cornelia / Matsui-P). Excludes the two

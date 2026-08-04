@@ -1,11 +1,14 @@
 -----------------------------------
 -- Trust: Rughadjeen
--- Possesses Fast Cast, Cure Potency Received +30%, Damage Taken -5%.
--- He wields the Algol and so has an enfire effect and a 3% triple attack rate.
--- Uses Holy Circle if the enemy is Undead.
--- Will only cast Cure I - IV when a party member is below 75% (yellow) HP or asleep.
--- Tries to use weapon skills at 1000 TP, but it is lower priority.
--- Uses Chivalry at 50% MP if it's available.
+-- PLD/PLD. Spells: Holy, Flash, Cure I-IV, Raise.
+-- Abilities: Sentinel, Divine Emblem, Holy Circle, Chivalry.
+-- WS: Power Slash, Sickle Moon, Ground Strike, Victory Beacon (conal).
+-- Fast Cast, Cure Potency Received +30%, DT-5%, HP+20%, MP+20%.
+-- Algol: Enfire + 3% Triple Attack.
+-- Holy Circle vs Undead. Cure party <75% HP or asleep.
+-- WS at 1000 TP (lower priority than emergency gambits where possible).
+-- Chivalry at <50% MP. Raise KO'd party in range.
+-- Serpent General synergy: DT-29% with Mihli/Gadalar/Zazarg/Najelith.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -27,6 +30,8 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.MIHLI_ALIAPOH] = xi.trust.messageOffset.TEAMWORK_5
     })
 
+    mob:setMobMod(xi.mobMod.CAN_SHIELD_BLOCK, 1)
+
     mob:addMod(xi.mod.FASTCAST, 30)
     mob:addMod(xi.mod.CURE_POTENCY_RCVD, 30)
     mob:addMod(xi.mod.TRIPLE_ATTACK, 3)
@@ -35,18 +40,18 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.DMG, -500) -- Damage Taken -5%
     mob:addMod(xi.mod.HPP, 20)
     mob:addMod(xi.mod.MPP, 20)
+    mob:setMod(xi.mod.SHIELDBLOCKRATE, 30)
     xi.trust.enableTankEnmity(mob, { tickCE = 6000, tickVE = 12000, actionCE = 3000, actionVE = 6000, tickSeconds = 2, drainMaster = 10, includeParty = true, listenerName = 'RUGHADJEEN_TANK_ENMITY' })
 
     local lvl = mob:getMainLvl()
 
-    -- Algol Additional Effect: Fire DMG, procs around 33%, dmg seems to be around 30 at lvl 99 from testing.
-    local potency =  utils.clamp(math.floor(lvl * 0.26), 3, 30)
+    -- Algol Additional Effect: Fire DMG, procs around 33%, dmg ~30 at lvl 99.
+    local potency = utils.clamp(math.floor(lvl * 0.26), 3, 30)
     mob:addMod(xi.mod.ENSPELL, xi.element.FIRE)
     mob:addMod(xi.mod.ENSPELL_DMG, potency)
     mob:addMod(xi.mod.ENSPELL_CHANCE, 33)
 
     local lastSynergyBonus = 0
-    -- Dynamic modifier that checks party member list on tick to apply
     mob:addListener('COMBAT_TICK', 'RUGHADJEEN_CTICK', function(mobArg)
         local synergyMembers =
         {
@@ -71,16 +76,11 @@ spellObject.onMobSpawn = function(mob)
             end
         end
 
-        -- Determine what the bonus should be
-        -- When any other serpent generals are in the party, Rughadjeen has Damage Taken -29% while in combat with a foe.
+        -- Any other serpent general → Damage Taken -29% while in combat.
         local targetBonus = (synergyCount >= 1) and -2900 or 0
-        -- Only update if the state has changed
         if targetBonus ~= lastSynergyBonus then
-            -- Subtract exactly what we added last time
             mobArg:delMod(xi.mod.DMG, lastSynergyBonus)
-            -- Add the new bonus
             mobArg:addMod(xi.mod.DMG, targetBonus)
-            -- Update lastSynergyBonus
             lastSynergyBonus = targetBonus
         end
     end)
@@ -98,7 +98,11 @@ spellObject.onMobSpawn = function(mob)
     end
 
     if lvl >= 75 then
-        mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.FLASH }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.DIVINE_EMBLEM })
+        -- Divine Emblem → Holy (self buff, then nuke)
+        mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.DIVINE_EMBLEM }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.DIVINE_EMBLEM })
+        mob:addGambit(ai.t.TRIGGER_SELF_ACTION_TARGET, {
+            { ai.c.STATUS, xi.effect.DIVINE_EMBLEM },
+        }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.HOLY })
     end
 
     mob:addGambit(ai.t.TARGET,     { ai.c.NOT_STATUS,   xi.effect.FLASH     }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.FLASH       })
@@ -107,11 +111,12 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.TARGET,     { ai.c.IS_ECOSYSTEM, xi.ecosystem.UNDEAD }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.HOLY        })
     mob:addGambit(ai.t.PARTY,      { ai.c.STATUS,       xi.effect.SLEEP_I   }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURE        })
 
+    -- WS at 1000 TP; RANDOM select across Power Slash / Sickle Moon / Ground Strike / Victory Beacon.
     mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.RANDOM, 1000)
 
     mob:addListener('WEAPONSKILL_USE', 'RUGHADJEEN_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
-        if skill:getID() == xi.mobSkill.VICTORY_BEACON_TRUST then -- Victory Beacon
-        -- Do not despair! The Goddess of Victory fights by our side!
+        if skill:getID() == xi.mobSkill.VICTORY_BEACON_TRUST then
+            -- Do not despair! The Goddess of Victory fights by our side!
             if math.random(1, 100) <= 33 then
                 xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
             end

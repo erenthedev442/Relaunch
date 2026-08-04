@@ -1,7 +1,7 @@
 -----------------------------------
 -- Uriel Blade
--- Family: Humanoid Sword Weaponskill
--- Delivers an area attack that deals light elemental damage. Additional effect: Flash. Damage varies with TP.
+-- Family: Humanoid Sword Weaponskill (Valaineral Trust)
+-- AoE light damage + Flash. Usable under 1000 TP via VAL_URIEL_CHECK gambit.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -14,26 +14,30 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    params.baseDamage     = mob:getWeaponDmg()
-    params.numHits        = 1
-    params.fTP            = { 4.5, 6.0, 7.5 }
-    params.accuracyModifier = { 100, 100, 100 }
-    params.str_wSC        = 0.32
-    params.mnd_wSC        = 0.32
-    params.attackType     = xi.attackType.PHYSICAL
-    params.damageType     = xi.damageType.SLASHING
-    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
-
-    if skill:getTP() < 1000 then
-        params.fTPBonus = 1000
+    -- Early Uriel (engage / enmity) often fires under 1000 TP — use 1000 fTP tier.
+    local ftp = 4.5
+    local tp  = skill:getTP()
+    if tp >= 3000 then
+        ftp = 7.5
+    elseif tp >= 2000 then
+        ftp = 6.0
     end
 
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+    params.baseDamage       = mob:getWeaponDmg()
+    params.fTP              = { ftp, ftp, ftp }
+    params.element          = xi.element.LIGHT
+    params.attackType       = xi.attackType.MAGICAL
+    params.damageType       = xi.damageType.LIGHT
+    params.shadowBehavior   = xi.mobskills.shadowBehavior.WIPE_SHADOWS
+    params.dStatMultiplier  = 1
+    params.dStatAttackerMod = xi.mod.MND
+    params.dStatDefenderMod = xi.mod.MND
+
+    local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
-
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.FLASH, 0, 0, 15)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.FLASH, 200, 0, 15)
     end
 
     return info.damage

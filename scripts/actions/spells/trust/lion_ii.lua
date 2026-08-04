@@ -1,8 +1,15 @@
 -----------------------------------
 -- Trust: Lion II
+-- THF/NIN. Dagger. Utsusemi: Ichi/Ni.
+-- WS: Walk the Plank / Pirate Pummel / Powder Keg / Grapeshot (all single-target).
+-- Holds to 3000 TP to close skillchains.
+-- Traits: Treasure Hunter 5, Gilfinder, Triple Attack.
+-- S-tier melee_dd (skirmisher) power path — no kit inject.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
+
+local MS_WALK_THE_PLANK = 3494
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
     return xi.trust.canCast(caster, spell, xi.magic.spell.LION)
@@ -20,19 +27,22 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.ARCIELA_II] = xi.trust.messageOffset.TEAMWORK_5,
     })
 
-    mob:addListener('WEAPONSKILL_USE', 'LION_II_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
-        if skill:getID() == 31 then -- Rudra's Storm (player WS; Powder Keg MS retired)
-            xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
-        end
-    end)
+    -- THF/NIN traits (on top of S skirmisher package TA).
+    mob:addMod(xi.mod.TREASURE_HUNTER, 5)
+    mob:addMod(xi.mod.GILFINDER, 50)
+    mob:addMod(xi.mod.TRIPLE_ATTACK, 5)
 
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.COPY_IMAGE }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.UTSUSEMI })
 
-    -- Match Lion I: stick to melee for dagger WS.
-    mob:addMod(xi.mod.ACC, 150)
-    mob:addMod(xi.mod.ATT, 100)
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+    -- Hold to close SCs; dump at 3000. RANDOM opener; closer picks best SC.
+    mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.RANDOM, 3000)
+
+    mob:addListener('WEAPONSKILL_USE', 'LION_II_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
+        if skill:getID() == MS_WALK_THE_PLANK then
+            xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
+        end
+    end)
 end
 
 spellObject.onMobDespawn = function(mob)

@@ -22,40 +22,43 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem',1027,168);
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem',1027,3215);
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem',1027,169);
 
+-- Babban: keep plantoid MS (Wild Oats / Head Butt / Photosynthesis / Petal Pirouette)
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1073;
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,5);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,7);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,9);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,14);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,3351);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,3354);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,3352);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,3353);
 
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1107;
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,40);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,41);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,42);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,225);
+-- Captured AAHM Trust animation IDs (retail set).
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,3706);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,3708);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAHM',1107,3709);
 
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1108;
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,40);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,41);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,42);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,225);
+-- Captured AAEV Trust animation IDs; unique AoEs now have working Lua damage.
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,3710);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,3711);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,3712);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAEV',1108,3713);
 
+-- AAMR: Trust-unique axe / Havoc Spiral anims (do not remap to player WS 69-77)
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1109;
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,69);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,70);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,72);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,76);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,77);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,3715);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,3716);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,3717);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAMR',1109,3718);
 
 -- AATT nuker: strip underpowered MS (magic only)
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1110;
 
+-- AAGK: Trust-unique GK / Dragonfall anims (do not remap to player WS 150-157)
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1111;
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,150);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,151);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,152);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,156);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,157);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,3722);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,3723);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,3724);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,3725);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,3726);
 
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1123;
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem_UC',1123,166);

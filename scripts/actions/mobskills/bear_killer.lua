@@ -1,7 +1,8 @@
 -----------------------------------
 -- Bear Killer
 -- Family: Humanoid (Maat)
--- Description: Damage varies with TP.
+-- Description: Conal H2H weaponskill. Damage varies with TP.
+-- Skillchain Properties: Reverberation / Impaction
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -15,7 +16,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 3
-    params.fTP            = { 1.0, 1.0, 1.0 }
+    params.fTP            = { 2.0, 2.5, 3.0 }
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.HTH
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3
@@ -30,3 +31,4 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 end
 
 return mobskillObject
+

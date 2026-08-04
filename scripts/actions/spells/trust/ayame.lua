@@ -1,5 +1,9 @@
 -----------------------------------
 -- Trust: Ayame
+-- SAM/SAM. Meditate, Hasso, Third Eye.
+-- GK WS through Tachi: Kasha (+ Koki). Opens skillchains for the player via
+-- SPECIAL_AYAME (reads master's last WS). Holds for master's 1000 TP / dumps at 3000.
+-- C-tier weaponskill power path.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -19,13 +23,24 @@ spellObject.onMobSpawn = function(mob)
     })
 
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.HASSO }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.HASSO })
-
+    -- Only when she pulls hate.
     mob:addGambit(ai.t.SELF, { ai.c.HAS_TOP_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.THIRD_EYE })
 
-    mob:addGambit(ai.t.SELF, { ai.c.TP_LT, 1000 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.MEDITATE })
+    -- Meditate only when the player has WS TP and she does not (recastId 134).
+    mob:addListener('COMBAT_TICK', 'AYAME_MEDITATE', function(mobArg)
+        if mobArg:hasRecast(xi.recast.ABILITY, 134) then
+            return
+        end
 
-    -- C-tier reliability: still prefers opener WS via SPECIAL_AYAME, but fires ASAP.
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.SPECIAL_AYAME)
+        local master = mobArg:getMaster()
+        if master and master:getTP() >= 1000 and mobArg:getTP() < 1000 then
+            mobArg:useJobAbility(xi.ja.MEDITATE, mobArg)
+        end
+    end)
+
+    -- Open for the player (SPECIAL_AYAME). Holds until master/party has 1000 TP;
+    -- at 3000 TP the trust controller always allows a WS.
+    mob:setTrustTPSkillSettings(ai.tp.OPENER, ai.s.SPECIAL_AYAME)
 end
 
 spellObject.onMobDespawn = function(mob)

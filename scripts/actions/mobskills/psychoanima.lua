@@ -11,7 +11,8 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
-    xi.mobskills.mobBuffMove(mob, xi.effect.PHYSICAL_SHIELD, 1, 0, 10)
+    -- Retail Trust: physical immunity for <5s (once per summon).
+    xi.mobskills.mobBuffMove(mob, xi.effect.PHYSICAL_SHIELD, 1, 0, 5)
 
     skill:setMsg(xi.msg.basic.USES)
 

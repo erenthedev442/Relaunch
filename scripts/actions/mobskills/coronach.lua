@@ -13,7 +13,9 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    params.baseDamage      = mob:getWeaponDmg()
+    -- Prefer ranged rating (RANGED_DMG_RATING on hybrid / pure RA trusts).
+    local rangedDmg = mob:getRangedDmg()
+    params.baseDamage      = (rangedDmg > 0) and rangedDmg or mob:getWeaponDmg()
     params.numHits         = 1
     params.fTP             = { 3.0, 3.0, 3.0 }
     -- params.dex_wSC         = 0.4 -- TODO: Capture if mobskill weaponskills have wSC.

@@ -491,6 +491,7 @@ INSERT INTO `mob_pool_mods` VALUES (5409,33,50,1);   -- SPECIAL_COOL: 50
 INSERT INTO `mob_pool_mods` VALUES (5409,58,40,1);   -- SPECIAL_DELAY: 40
 
 -- Trust: Shikaree Z
+INSERT INTO `mob_pool_mods` VALUES (5915,3,-10,0);      -- HPP: -10
 INSERT INTO `mob_pool_mods` VALUES (5915,6,100,0);      -- MPP: 100
 
 -- Trust: Lehko
@@ -511,8 +512,14 @@ INSERT INTO `mob_pool_mods` VALUES (5939,234,8,0);  -- DEMON_KILLER: 8
 INSERT INTO `mob_pool_mods` VALUES (5944,3,-10,0);      -- HPP: -10
 INSERT INTO `mob_pool_mods` VALUES (5944,6,35,0);       -- MPP: 35
 
+-- Trust: Babban
+INSERT INTO `mob_pool_mods` VALUES (5958,3,-10,0); -- HPP: -10
+
 -- Trust: Rahal
 INSERT INTO `mob_pool_mods` VALUES (5951,233,8,0); -- DRAGON_KILLER: 8
+
+-- Trust: Halver
+INSERT INTO `mob_pool_mods` VALUES (5972,6,30,0);       -- MPP: 30
 
 -- Trust: Prishe II
 INSERT INTO `mob_pool_mods` VALUES (6011,165,25,0);     -- CRITHITRATE: 25

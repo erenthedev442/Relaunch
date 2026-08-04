@@ -224,7 +224,8 @@ xi.settings.map =
 
     -- Trusts/fellows take 15% of AoE damage when not the primary target
     -- (DMG_AOE mod, 1/100 of a %; -8500 = -85%). Spells, TP moves, and breaths.
-    -- See settings/default/map.lua for the full explanation.
+    -- Trusts: applied only when master is 99+ (leveling splash is full damage;
+    -- see calculateAreaOfEffectResistance). See settings/default/map.lua.
     ALTER_EGO_AOE_DMG_TAKEN = -8500,
 
     -- Adjust the recast time for abilities. Acts as a multiplier, so default is 1

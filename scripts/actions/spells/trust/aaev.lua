@@ -42,13 +42,15 @@ spellObject.onMobSpawn = function(mob)
     mob:setMod(xi.mod.SHIELD_MASTERY_TP, shieldMasteryPower)
     mob:setMod(xi.mod.SHIELDBLOCKRATE, 45)
     mob:addMod(xi.mod.FASTCAST, 30)
-    -- Catalog role is tank (not healer); keep cure pot near August (~560 Cure IV).
+    -- Tank heal lane: modest potency only (same band as Valaineral / other A tanks).
+    -- Do not use retail +50% here — that bypasses trust_power_scaling tank cures.
     mob:addMod(xi.mod.CURE_POTENCY, 15)
     mob:addMod(xi.mod.ENMITY, 25)
     mob:addMod(xi.mod.ATT, 45)
     mob:addMod(xi.mod.ACC, 55)
     mob:addMod(xi.mod.DMG, -1000) -- Damage Taken -10%
     mob:addMod(xi.mod.HPP, 20)
+    mob:addMod(xi.mod.MPP, 50)
     mob:addMod(xi.mod.ABSORB_PHYSDMG_TO_MP, 5)
     xi.trust.enableTankEnmity(mob, { tickCE = 7000, tickVE = 14000, actionCE = 3500, actionVE = 7000, tickSeconds = 2, drainMaster = 15, includeParty = true, listenerName = 'AAEV_TANK_ENMITY' })
 
@@ -127,6 +129,7 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.PARTY,  { ai.c.STATUS,     xi.effect.SLEEP_I  }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURE       })
 
     mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.RANDOM, 2000)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
 
     mob:addListener('WEAPONSKILL_USE', 'AAEV_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action)
         local skillId = skill:getID()

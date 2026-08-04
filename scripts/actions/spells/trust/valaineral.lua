@@ -1,5 +1,13 @@
 -----------------------------------
 -- Trust: Valaineral
+-- PLD/WAR. Spells: Cure I-IV, Flash, Protect IV-V, Reprisal, Enlight, Phalanx.
+-- Abilities: Provoke, Sentinel, Majesty, Defender, Fealty, Divine Emblem,
+--            Chivalry, Palisade, Rampart.
+-- WS: Circle Blade, Sanguine Blade, Savage Blade, Uriel Blade (AoE).
+-- Uriel can fire under 1000 TP (VAL_URIEL_CHECK) for multi-target engage.
+-- Tank heal lane: CURE_POTENCY +15 (same band as AAEV / A tanks — not retail +50%).
+-- Enmity+, SIRD, Refresh+3, DT-8%, MP+20%. HP from A-tier tank package (+HPP 10).
+-- WS randomly around 2000 TP; does not try to close skillchains.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -39,17 +47,17 @@ spellObject.onMobSpawn = function(mob)
     mob:setMod(xi.mod.SHIELD_MASTERY_TP, shieldMasteryPower)
     mob:setMod(xi.mod.SHIELDBLOCKRATE, 35)
     mob:addMod(xi.mod.SPELLINTERRUPT, 30)
-    -- Cure IV was overshooting (~999); keep modest self-sustain only.
+    -- Tank heal lane: modest potency only (same band as AAEV / other A tanks).
+    -- Do not use retail +50% — that bypasses trust_power_scaling tank cures.
     mob:addMod(xi.mod.CURE_POTENCY, 15)
     mob:addMod(xi.mod.FASTCAST, 30)
-    mob:addMod(xi.mod.REFRESH, 2)
+    mob:addMod(xi.mod.REFRESH, 3) -- +3 mp/tick (stacks with PLD trait / package)
     mob:addMod(xi.mod.ENMITY, 25)
     mob:addMod(xi.mod.ATT, 45)
     mob:addMod(xi.mod.ACC, 55)
     mob:addMod(xi.mod.DMG, -800) -- Damage Taken -8%
-    -- No script HPP; tank package already supplies A-tier HP.
+    mob:addMod(xi.mod.HPP, 10)
     mob:addMod(xi.mod.MPP, 20)
-    -- Enmity was acceptable on Hadhoyash; keep recovery via party notoriety.
     xi.trust.enableTankEnmity(mob, { tickCE = 5000, tickVE = 10000, actionCE = 2500, actionVE = 5000, tickSeconds = 2, drainMaster = 10, includeParty = true, listenerName = 'VALAINERAL_TANK_ENMITY' })
 
     if lvl >= 1 then
@@ -65,13 +73,13 @@ spellObject.onMobSpawn = function(mob)
     end
 
     if lvl >= 50 then
-        mob:addGambit(ai.t.SELF, { { ai.c.MPP_LT,         50             }, { ai.c.TP_GTE,     1000               } }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.CHIVALRY })
+        mob:addGambit(ai.t.SELF, { { ai.c.MPP_LT, 50 }, { ai.c.TP_GTE, 1000 } }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.CHIVALRY })
         mob:addGambit(ai.t.SELF, { { ai.c.JA_ON_COOLDOWN, xi.ja.SENTINEL }, { ai.c.NOT_STATUS, xi.effect.SENTINEL } }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.DEFENDER })
     end
 
     if lvl >= 62 then
-        mob:addGambit(ai.t.TARGET, { ai.c.STATUS, xi.effect.MANAFONT    }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.RAMPART })
-        mob:addGambit(ai.t.TARGET, { ai.c.STATUS, xi.effect.CHAINSPELL  }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.RAMPART })
+        mob:addGambit(ai.t.TARGET, { ai.c.STATUS, xi.effect.MANAFONT }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.RAMPART })
+        mob:addGambit(ai.t.TARGET, { ai.c.STATUS, xi.effect.CHAINSPELL }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.RAMPART })
         mob:addGambit(ai.t.TARGET, { ai.c.STATUS, xi.effect.ASTRAL_FLOW }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.RAMPART })
     end
 
@@ -80,10 +88,16 @@ spellObject.onMobSpawn = function(mob)
     end
 
     if lvl >= 75 then
-        mob:addGambit(ai.t.TARGET, { ai.c.CASTING_DEBUFF, 0               }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.FEALTY        })
-        mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS,     xi.effect.FLASH }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.DIVINE_EMBLEM })
+        mob:addGambit(ai.t.TARGET, { ai.c.CASTING_DEBUFF, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.FEALTY })
+        -- Divine Emblem before Flash when available.
+        mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.FLASH }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.DIVINE_EMBLEM })
     end
 
+    if lvl >= 95 then
+        mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.PALISADE }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.PALISADE })
+    end
+
+    -- Protect only if missing (does not overwrite stronger Protect).
     mob:addGambit(ai.t.SELF,   { ai.c.NOT_STATUS, xi.effect.PROTECT  }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.PROTECT })
     mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.FLASH    }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.FLASH        })
     mob:addGambit(ai.t.SELF,   { ai.c.NOT_STATUS, xi.effect.REPRISAL }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.REPRISAL     })
@@ -93,14 +107,19 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.SELF,   { ai.c.NOT_STATUS, xi.effect.PHALANX  }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.PHALANX      })
     mob:addGambit(ai.t.PARTY,  { ai.c.STATUS,     xi.effect.SLEEP_I  }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURE         })
 
-    mob:setTrustTPSkillSettings(ai.tp.OPENER, ai.s.RANDOM, 2000)
+    -- Randomly around 2000 TP; does not hold to close skillchains.
+    mob:setTrustTPSkillSettings(ai.tp.RANDOM, ai.s.RANDOM, 2000)
 
     mob:addListener('WEAPONSKILL_USE', 'VALAINERAL_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
-        if skill:getID() == xi.mobSkill.URIEL_BLADE_1 then -- Uriel Blade
+        if skill:getID() == xi.mobSkill.URIEL_BLADE_1 then
             -- Let the Blade of the Conqueror once again bring glory to the Kingdom!
             if math.random(1, 100) <= 33 then
-                if target and skill and type(skill.getPrimaryTargetID) == 'function' and
-                   target:getID() == skill:getPrimaryTargetID() then
+                if
+                    target and
+                    skill and
+                    type(skill.getPrimaryTargetID) == 'function' and
+                    target:getID() == skill:getPrimaryTargetID()
+                then
                     xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
                 end
             end

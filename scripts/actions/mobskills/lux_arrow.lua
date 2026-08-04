@@ -1,7 +1,7 @@
 -----------------------------------
 -- Lux Arrow
--- Trust: Semih Lafihna
--- Notes: Fragmentation/Distortion skillchain properties
+-- Trust: Semih Lafihna. Magical Light. Additional effect: Defense Down.
+-- Skillchain: Fragmentation / Distortion (closes T3 / double T3).
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -12,19 +12,24 @@ end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
+    local rangedDmg = mob:getRangedDmg()
 
-    -- TODO: Is this physical or magical?
-    params.baseDamage     = mob:getMainLvl() + 2
-    params.fTP            = { 2.50, 2.50, 2.50 }   -- TODO: Capture fTPs
-    params.element        = xi.element.LIGHT       -- TODO: Capture element
-    params.attackType     = xi.attackType.RANGED   -- TODO: Capture attackType
-    params.damageType     = xi.damageType.PIERCING -- TODO: Capture damageType
-    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
+    -- Utility closer — Sidewinder remains the damage WS.
+    params.baseDamage       = (rangedDmg > 0) and rangedDmg or mob:getWeaponDmg()
+    params.fTP              = { 2.0, 2.25, 2.5 }
+    params.element          = xi.element.LIGHT
+    params.attackType       = xi.attackType.MAGICAL
+    params.damageType       = xi.damageType.LIGHT
+    params.shadowBehavior   = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+    params.dStatMultiplier  = 1
+    params.dStatAttackerMod = xi.mod.INT
+    params.dStatDefenderMod = xi.mod.INT
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.DEFENSE_DOWN, 25, 0, 60)
     end
 
     return info.damage

@@ -1,7 +1,7 @@
 -----------------------------------
 -- Silencing Microtube
--- Description: Deals Magic damage to target. Additional effect: Silence
--- Used by Adelheid (Trust)
+-- Trust: Adelheid. Magical. Additional effect: Silence.
+-- Skillchain: Liquefaction / Detonation.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -13,20 +13,21 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    params.baseDamage     = mob:getWeaponDmg()
-    params.fTP            = { 12.25, 12.25, 12.25 } -- TODO: Capture fTPs
-    params.element        = xi.element.NONE         -- TODO: Capture Element
-    params.attackType     = xi.attackType.MAGICAL
-    params.damageType     = xi.damageType.NONE
-    params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+    params.baseDamage       = mob:getWeaponDmg()
+    params.fTP              = { 1.75, 2.25, 2.75 }
+    params.element          = xi.element.FIRE
+    params.attackType       = xi.attackType.MAGICAL
+    params.damageType       = xi.damageType.FIRE
+    params.shadowBehavior   = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+    params.dStatMultiplier  = 1
+    params.dStatAttackerMod = xi.mod.INT
+    params.dStatDefenderMod = xi.mod.INT
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
-
-        -- TODO: Capture durations
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SILENCE, 1, 0, 60)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SILENCE, 1, 0, 45)
     end
 
     return info.damage

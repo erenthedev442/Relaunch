@@ -1,6 +1,7 @@
 -----------------------------------
 -- Final Exam
--- Family: Humanoid (Trust: Shantotto II)
+-- Trust: Shantotto II. Light magical damage.
+-- Skillchain: Light / Fusion.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -12,12 +13,15 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    params.baseDamage     = mob:getMainLvl() + 2
-    params.fTP            = { 2.8, 2.8, 2.8 } -- TODO: Capture fTPs
-    params.element        = xi.element.NONE -- TODO: Capture element
-    params.attackType     = xi.attackType.MAGICAL
-    params.damageType     = xi.damageType.NONE
-    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1 -- TODO: Capture shadowBehavior
+    params.baseDamage       = mob:getWeaponDmg()
+    params.fTP              = { 3.0, 3.5, 4.0 }
+    params.element          = xi.element.LIGHT
+    params.attackType       = xi.attackType.MAGICAL
+    params.damageType       = xi.damageType.LIGHT
+    params.shadowBehavior   = xi.mobskills.shadowBehavior.NUMSHADOWS_1
+    params.dStatMultiplier  = 1
+    params.dStatAttackerMod = xi.mod.INT
+    params.dStatDefenderMod = xi.mod.INT
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 

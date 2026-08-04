@@ -2,10 +2,11 @@
 -- trust_combat_audit_fix.sql
 --
 -- Full-roster hotfixes for broken trust WS / pools:
---   1) Morimar / Darrcuiln — custom MS had no Lua (0 dmg) → player axe/GA WS
+--   1) Morimar — custom MS had no Lua (0 dmg) → player axe WS
+--      Darrcuiln — unique Trust MS (see round5_darrcuiln; do not use GA WS)
 --   2) Lilisette / II — DNC MS had no Lua → player dagger WS
 --   3) Strip orphan signature MS (Mayakov / Romaa / Zazarg / Ovjang)
---   4) Pool cmbSkill fixes (Makki Archery, Lhe H2H, Morimar Axe, Darrcuiln GA)
+--   4) Pool cmbSkill fixes (Makki Archery, Lhe H2H, Morimar Axe, Darrcuiln H2H)
 --
 -- Safe to re-apply. Map restart required.
 -- ============================================================================
@@ -20,11 +21,14 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,72);  -- Decimation
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,76);  -- Cloudsplitter
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Morimar',1105,77);  -- Ruinator
 
+-- Darrcuiln unique Trust MS restored in trust_combat_round5_darrcuiln.sql.
+-- Do not remap to player GA WS (breaks anims / special AA).
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1106;
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,86); -- Raging Rush
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,88); -- Steel Cyclone
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,91); -- Fell Cleave
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,92); -- Ukko's Fury
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,3685); -- Howling Gust
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,3687); -- Starward Yowl
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,3686); -- Righteous Rasp
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,3684); -- Aurous Charge
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Darrcuiln',1106,3688); -- Stalking Prey
 
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 491;
 INSERT INTO `mob_skill_lists` VALUES ('Morimar',491,69);
@@ -70,4 +74,4 @@ DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1040 AND `mob_skill_id` = 
 UPDATE `mob_pools` SET `cmbSkill` = 25, `cmbDelay` = 500, `cmbDmgMult` = 200 WHERE `poolid` = 5988; -- Makki Archery
 UPDATE `mob_pools` SET `cmbSkill` = 1 WHERE `poolid` = 5964;  -- Lhe H2H
 UPDATE `mob_pools` SET `cmbSkill` = 2 WHERE `poolid` = 5990;  -- Morimar Axe
-UPDATE `mob_pools` SET `cmbSkill` = 6 WHERE `poolid` = 5991;  -- Darrcuiln Great Axe
+UPDATE `mob_pools` SET `cmbSkill` = 1, `sJob` = 5 WHERE `poolid` = 5991;  -- Darrcuiln H2H / RDM sub

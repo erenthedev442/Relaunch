@@ -1,18 +1,61 @@
 -----------------------------------
 -- Trust: Tenzen II
--- Todo: Constantly adjusts his distance for optimal ranged damage (always shot from sweet spot).
--- BIG Todo: make his TP gains per shot match retail at all levels
--- Tenzen II Gets 252 TP per hit at lv 90+ ONLY, see https://www.bg-wiki.com/ffxi/BGWiki:Trusts#Tenzen_II
--- While the changes in TP gain do happen at the levels a SAM would get a storeTP trait adjustment,
--- no combination of STP and wDelay aligns with the TP change in a way that makes all the different amounts
--- make any kind of sense. Some sort of override is seeded to SET his exact TP gain based on a level check.
--- There's just no other way to be retail accurate while having his attack delay match retail.
--- This also means retail unfairly nerfs his TP gains prior to level 90,
--- as other ranged attackers have the amount at level one he doesn't until level 90.
--- I can't help but wonder if he is simply bugged on retail and nobody ever realized it.
+-- SAM/RNG Archery. Oisoya only (Namas enmity; Light/Distortion).
+-- Store TP+10 + Ranged Attacks TP+100% + SAM Store TP traits (~252 TP/hit @90+).
+-- Stays out of melee. Pure opener: WS only when another party member has 1000+ TP;
+-- holds through 3000 TP if nobody is ready (blocks C++ ASAP-at-3000 dump).
+-- B-tier ranged_dd (weaponskill) — no kit inject.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
+
+local MS_OISOYA = 3542
+
+local function canAct(mob)
+    -- AA off; RA gambit leaves him on NONE between shots (not BASIC_ATTACK).
+    if not mob:isEngaged() or mob:hasPreventActionEffect() then
+        return false
+    end
+
+    local act = mob:getCurrentAction()
+    return act == xi.action.category.NONE or act == xi.action.category.BASIC_ATTACK
+end
+
+local function allyHasTp(mob, threshold)
+    local master = mob:getMaster()
+    if not master then
+        return false
+    end
+
+    for _, member in pairs(master:getPartyWithTrusts() or {}) do
+        if
+            member ~= mob and
+            member:isAlive() and
+            member:getTP() >= threshold
+        then
+            return true
+        end
+    end
+
+    return false
+end
+
+-- SAM Store TP trait ladder (retail Trust TP curve is trait-based).
+local function samStoreTp(level)
+    if level >= 90 then
+        return 30
+    elseif level >= 70 then
+        return 25
+    elseif level >= 50 then
+        return 20
+    elseif level >= 30 then
+        return 15
+    elseif level >= 10 then
+        return 10
+    end
+
+    return 0
+end
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
     return xi.trust.canCast(caster, spell, xi.magic.spell.TENZEN)
@@ -27,23 +70,54 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.PRISHE] = xi.trust.messageOffset.TEAMWORK_1,
     })
 
+    -- Store TP+10 + Ranged Attacks TP+100% + SAM traits.
+    mob:addMod(xi.mod.STORETP, 10)
+    mob:addMod(xi.mod.STORETP, 100)
+    mob:addMod(xi.mod.STORETP, samStoreTp(mob:getMainLvl()))
+    mob:addMod(xi.mod.RACC, 50)
+
+    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 })
+    mob:setAutoAttackEnabled(false)
+    -- Out of melee (~10'); LONG_RANGE 12' historically stuck m_InTransit.
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, 10)
+
+    -- Block built-in 3000-TP dump; we fire Oisoya only as an opener.
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 3001)
+    mob:setMobAbilityEnabled(false)
+    mob:setLocalVar('tenzenIIWsLock', 0)
+
+    mob:addListener('COMBAT_TICK', 'TENZEN_II_OPENER', function(mobArg)
+        local tp = mobArg:getTP()
+        if tp < 1000 then
+            mobArg:setLocalVar('tenzenIIWsLock', 0)
+            return
+        end
+
+        if mobArg:getLocalVar('tenzenIIWsLock') ~= 0 or not canAct(mobArg) then
+            return
+        end
+
+        -- Wait indefinitely (including at 3000) until an ally is ready to close.
+        if not allyHasTp(mobArg, 1000) then
+            return
+        end
+
+        local battleTarget = mobArg:getTarget()
+        if not battleTarget or not battleTarget:isAlive() then
+            return
+        end
+
+        mobArg:setLocalVar('tenzenIIWsLock', 1)
+        mobArg:useMobAbility(MS_OISOYA, battleTarget)
+    end)
+
     mob:addListener('WEAPONSKILL_USE', 'TENZEN_II_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
-        -- Empyreal Arrow (player WS) — was Oisoya MS (underpowered).
-        if skill:getID() == 199 then
-            -- Epehemeral, fleeting, fading. You are but a memory
+        mobArg:setLocalVar('tenzenIIWsLock', 0)
+        if skill:getID() == MS_OISOYA then
+            -- Ephemeral, fleeting, fading. You are but a memory!
             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
         end
     end)
-
-    -- Ranged Attack as much as possible (limited by 'weapon' delay)
-    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 })
-
-    mob:setAutoAttackEnabled(false)
-
-    -- MID_RANGE: LONG_RANGE parked RA in transit (same Margret/Makki bug).
-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
-
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
 end
 
 spellObject.onMobDespawn = function(mob)

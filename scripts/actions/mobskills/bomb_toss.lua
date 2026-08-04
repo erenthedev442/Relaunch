@@ -14,8 +14,16 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    params.baseDamage     = mob:getMainLvl() + 2
-    params.fTP            = { 3, 3, 3 }
+    -- Trust Fablinix: feed hybrid mage/melee package via weapon rating.
+    -- Goblin mobs keep the classic level-based formula.
+    if mob:getObjType() == xi.objType.TRUST then
+        params.baseDamage = mob:getWeaponDmg()
+        params.fTP        = { 2.5, 3.0, 3.5 }
+    else
+        params.baseDamage = mob:getMainLvl() + 2
+        params.fTP        = { 3, 3, 3 }
+    end
+
     params.element        = xi.element.FIRE
     params.attackType     = xi.attackType.MAGICAL
     params.damageType     = xi.damageType.FIRE

@@ -29,8 +29,10 @@
 #include "ai/states/range_state.h"
 #include "ai/states/weaponskill_state.h"
 #include "enmity_container.h"
+#include "entities/mobentity.h"
 #include "mobskill.h"
 #include "notoriety_container.h"
+#include "recast_container.h"
 #include "spell.h"
 #include "utils/battleutils.h"
 #include "utils/trustutils.h"
@@ -413,7 +415,7 @@ auto CGambitsContainer::Tick(timer::time_point tick) -> Task<void>
             }
             else if (action.select == G_SELECT::HELIX_MOB_WEAKNESS)
             {
-                return POwner->SpellContainer->StormDayAgainstTargetWeakness(resolvedTarget);
+                return POwner->SpellContainer->HelixAgainstTargetWeakness(resolvedTarget);
             }
             else if (action.select == G_SELECT::RANDOM)
             {
@@ -580,7 +582,34 @@ auto CGambitsContainer::Tick(timer::time_point tick) -> Task<void>
                         auto* PMaster  = static_cast<CCharEntity*>(POwner->PMaster);
                         auto  spell_id = POwner->SpellContainer->GetBestEntrustedSpell(PMaster);
                         target         = PMaster;
-                        if (spell_id.has_value())
+                        // Sylvie UC / GEO master: Indi-Languor goes on first PLD/RUN/NIN.
+                        if (
+                            PMaster &&
+                            spell_id.has_value() &&
+                            PMaster->GetMJob() == JOB_GEO &&
+                            spell_id.value() == SpellID::Indi_Languor)
+                        {
+                            CBattleEntity* tankTarget = nullptr;
+                            PMaster->ForPartyWithTrusts(
+                                [&](CBattleEntity* PMember)
+                                {
+                                    if (tankTarget != nullptr || PMember == nullptr || PMember->isDead())
+                                    {
+                                        return;
+                                    }
+                                    auto job = PMember->GetMJob();
+                                    if (job == JOB_PLD || job == JOB_RUN || job == JOB_NIN)
+                                    {
+                                        tankTarget = PMember;
+                                    }
+                                });
+                            if (tankTarget == nullptr)
+                            {
+                                break;
+                            }
+                            target = tankTarget;
+                        }
+                        if (spell_id.has_value() && target != nullptr)
                         {
                             controller->Cast(target->targid, spell_id.value());
                             executedAnyAction = true;
@@ -673,7 +702,7 @@ auto CGambitsContainer::Tick(timer::time_point tick) -> Task<void>
                     }
                     else if (action.select == G_SELECT::HELIX_MOB_WEAKNESS)
                     {
-                        auto spell_id = POwner->SpellContainer->StormDayAgainstTargetWeakness(target);
+                        auto spell_id = POwner->SpellContainer->HelixAgainstTargetWeakness(target);
                         if (spell_id.has_value())
                         {
                             controller->Cast(target->targid, spell_id.value());
@@ -1497,10 +1526,18 @@ bool CGambitsContainer::TryTrustSkill()
             case G_TP_TRIGGER::CLOSER: // Hold TP indefinitely to close a SC.
             {
                 auto* PSCEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
+                auto* PCBEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_CHAINBOUND);
 
-                // TODO: ...and has a valid WS...
-
-                return PSCEffect && PSCEffect->GetStartTime() + 3s < timer::now() && PSCEffect->GetTier() == 0;
+                // Tier 0 = opener window; tier > 0 = continue multi-step; Chainbound = Konzen/etc.
+                if (PSCEffect && PSCEffect->GetStartTime() + 3s < timer::now())
+                {
+                    return true;
+                }
+                if (PCBEffect && PCBEffect->GetStartTime() + 2s < timer::now())
+                {
+                    return true;
+                }
+                return false;
                 break;
             }
             case G_TP_TRIGGER::CLOSER_UNTIL_TP: // Will hold TP to close a SC, but WS immediately once specified value is reached.
@@ -1514,10 +1551,17 @@ bool CGambitsContainer::TryTrustSkill()
                     return true; // Time to WS!
                 }
                 auto* PSCEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
+                auto* PCBEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_CHAINBOUND);
 
-                // TODO: ...and has a valid WS...
-
-                return PSCEffect && PSCEffect->GetStartTime() + 3s < timer::now() && PSCEffect->GetTier() == 0;
+                if (PSCEffect && PSCEffect->GetStartTime() + 3s < timer::now())
+                {
+                    return true;
+                }
+                if (PCBEffect && PCBEffect->GetStartTime() + 2s < timer::now())
+                {
+                    return true;
+                }
+                return false;
                 break;
             }
             default:
@@ -1656,6 +1700,235 @@ bool CGambitsContainer::TryTrustSkill()
                     chosen_skill = tp_skills.at(tp_skills.size() - 1);
                 }
 
+                break;
+            }
+            case G_SELECT::SPECIAL_AYAME_UC:
+            {
+                // Ayame UC: close only player/pet skillchains (Lua sets AyameUcAllowClose).
+                // Pick highest-tier closable WS; never dump if nothing closes.
+                // Retail kit rules: Ageha after Detonation; Koki on Chainbound;
+                // Mudo only for Darkness; never form Light II; Sengikori before close.
+                static const uint32 WS_JINPU = 148;
+                static const uint32 WS_KOKI  = 149;
+                static const uint32 WS_MUDO  = 3501;
+                static const uint32 WS_KASHA = 152;
+                static const uint32 WS_AGEHA = 155;
+
+                if (POwner->GetLocalVar("AyameUcAllowClose") == 0)
+                {
+                    break; // Wait — not a player/pet opener
+                }
+
+                auto* PSCEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
+                auto* PCBEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_CHAINBOUND);
+
+                if (!PSCEffect && !PCBEffect)
+                {
+                    break;
+                }
+
+                // Level gates matching retail WS unlocks.
+                auto levelOk = [&](uint32 skillId) -> bool
+                {
+                    const uint8 lvl = POwner->GetMLevel();
+                    switch (skillId)
+                    {
+                        case WS_JINPU:
+                            return lvl >= 5;
+                        case WS_KOKI:
+                            return lvl >= 25;
+                        case WS_MUDO:
+                            return lvl >= 50;
+                        case WS_KASHA:
+                            return lvl >= 60;
+                        case WS_AGEHA:
+                            return lvl >= 70;
+                        default:
+                            return true;
+                    }
+                };
+
+                std::list<SKILLCHAIN_ELEMENT> resonanceProperties;
+                bool                          isDetonationOpener = false;
+                bool                          isChainbound       = false;
+
+                if (PCBEffect && PCBEffect->GetStartTime() + 2s < timer::now())
+                {
+                    isChainbound = true;
+                    // Level-1 Chainbound → Koki for Fragmentation (retail).
+                    resonanceProperties.emplace_back(SC_LIQUEFACTION);
+                    resonanceProperties.emplace_back(SC_INDURATION);
+                    resonanceProperties.emplace_back(SC_REVERBERATION);
+                    resonanceProperties.emplace_back(SC_IMPACTION);
+                    resonanceProperties.emplace_back(SC_COMPRESSION);
+                    if (PCBEffect->GetPower() > 1)
+                    {
+                        resonanceProperties.emplace_back(SC_LIGHT);
+                        resonanceProperties.emplace_back(SC_DARKNESS);
+                        resonanceProperties.emplace_back(SC_GRAVITATION);
+                        resonanceProperties.emplace_back(SC_FRAGMENTATION);
+                        resonanceProperties.emplace_back(SC_DISTORTION);
+                        resonanceProperties.emplace_back(SC_FUSION);
+                    }
+                }
+                else if (PSCEffect && PSCEffect->GetStartTime() + 3s < timer::now())
+                {
+                    if (PSCEffect->GetTier() == 0)
+                    {
+                        const auto properties = PSCEffect->GetPower();
+                        auto       p1         = static_cast<SKILLCHAIN_ELEMENT>(properties & 0b1111);
+                        auto       p2         = static_cast<SKILLCHAIN_ELEMENT>((properties >> 4) & 0b1111);
+                        auto       p3         = static_cast<SKILLCHAIN_ELEMENT>((properties >> 8) & 0b1111);
+                        resonanceProperties.emplace_back(p1);
+                        resonanceProperties.emplace_back(p2);
+                        resonanceProperties.emplace_back(p3);
+                        isDetonationOpener = (p1 == SC_DETONATION || p2 == SC_DETONATION || p3 == SC_DETONATION);
+                    }
+                    else
+                    {
+                        resonanceProperties.emplace_back(static_cast<SKILLCHAIN_ELEMENT>(PSCEffect->GetPower()));
+                        isDetonationOpener = (static_cast<SKILLCHAIN_ELEMENT>(PSCEffect->GetPower()) == SC_DETONATION);
+                    }
+                }
+                else
+                {
+                    break; // Window not ready yet
+                }
+
+                // Prefer Sengikori before the closing WS (MB damage bonus).
+                if (!POwner->StatusEffectContainer->HasStatusEffect(EFFECT_SENGIKORI))
+                {
+                    auto* controller = static_cast<CTrustController*>(POwner->PAI->GetController());
+                    if (controller && !static_cast<CMobEntity*>(POwner)->PRecastContainer->HasRecast(RECAST_ABILITY, static_cast<Recast>(ABILITY_SENGIKORI), 0s))
+                    {
+                        if (controller->Ability(POwner->targid, ABILITY_SENGIKORI))
+                        {
+                            break; // Spend this tick on Sengikori; close next tick
+                        }
+                    }
+                }
+
+                // Chainbound: always try Koki first for Fragmentation.
+                if (isChainbound)
+                {
+                    for (auto& skill : tp_skills)
+                    {
+                        if (skill.skill_id == WS_KOKI && levelOk(WS_KOKI))
+                        {
+                            chosen_skill = skill;
+                            break;
+                        }
+                    }
+                    if (chosen_skill)
+                    {
+                        break;
+                    }
+                }
+
+                // Detonation opener: always Ageha when it can close.
+                if (isDetonationOpener)
+                {
+                    for (auto& skill : tp_skills)
+                    {
+                        if (skill.skill_id != WS_AGEHA || !levelOk(WS_AGEHA))
+                        {
+                            continue;
+                        }
+                        std::list<SKILLCHAIN_ELEMENT> skillProperties{
+                            static_cast<SKILLCHAIN_ELEMENT>(skill.primary),
+                            static_cast<SKILLCHAIN_ELEMENT>(skill.secondary),
+                            static_cast<SKILLCHAIN_ELEMENT>(skill.tertiary)
+                        };
+                        if (battleutils::FormSkillchain(resonanceProperties, skillProperties) != SC_NONE)
+                        {
+                            chosen_skill = skill;
+                            break;
+                        }
+                    }
+                    if (chosen_skill)
+                    {
+                        break;
+                    }
+                }
+
+                // Highest closable SC; skip Light II; Mudo only when result is Darkness.
+                uint8 bestTier = 0;
+                for (auto& skill : tp_skills)
+                {
+                    if (!levelOk(skill.skill_id))
+                    {
+                        continue;
+                    }
+
+                    std::list<SKILLCHAIN_ELEMENT> skillProperties{
+                        static_cast<SKILLCHAIN_ELEMENT>(skill.primary),
+                        static_cast<SKILLCHAIN_ELEMENT>(skill.secondary),
+                        static_cast<SKILLCHAIN_ELEMENT>(skill.tertiary)
+                    };
+                    SKILLCHAIN_ELEMENT possible = battleutils::FormSkillchain(resonanceProperties, skillProperties);
+                    if (possible == SC_NONE || possible == SC_LIGHT_II)
+                    {
+                        continue;
+                    }
+                    if (skill.skill_id == WS_MUDO && possible != SC_DARKNESS && possible != SC_DARKNESS_II)
+                    {
+                        continue;
+                    }
+
+                    const uint8 tiers = battleutils::GetSkillchainTier(possible);
+                    if (possible > chosen_skillchain || (possible == chosen_skillchain && tiers > bestTier))
+                    {
+                        chosen_skill      = skill;
+                        chosen_skillchain = possible;
+                        bestTier         = tiers;
+                    }
+                }
+
+                // No fallback — retail ignores the window if she cannot close.
+                break;
+            }
+            case G_SELECT::SPECIAL_AAMR:
+            {
+                // AAMRPrefer: 1 = Calamity (SA/TA window), 2 = Cloudsplitter (front / dump).
+                // Havoc Spiral is rare (~5%). Does not pick for skillchain properties.
+                static const uint32 RAMPAGE       = 3715;
+                static const uint32 CALAMITY      = 3716;
+                static const uint32 HAVOC_SPIRAL  = 3717;
+                static const uint32 CLOUDSPLITTER = 3718;
+
+                uint32 prefer = POwner->GetLocalVar("AAMRPrefer");
+                uint32 want   = (prefer == 1) ? CALAMITY : CLOUDSPLITTER;
+
+                if (xirand::GetRandomNumber<uint16>(100) < 5)
+                {
+                    want = HAVOC_SPIRAL;
+                }
+
+                auto findSkill = [&](uint32 id) -> Maybe<TrustSkill_t>
+                {
+                    for (auto const& tskill : tp_skills)
+                    {
+                        if (tskill.skill_id == id)
+                        {
+                            return tskill;
+                        }
+                    }
+                    return std::nullopt;
+                };
+
+                chosen_skill = findSkill(want);
+                if (!chosen_skill)
+                {
+                    chosen_skill = findSkill(CALAMITY);
+                }
+                if (!chosen_skill)
+                {
+                    chosen_skill = findSkill(CLOUDSPLITTER);
+                }
+                if (!chosen_skill)
+                {
+                    chosen_skill = findSkill(RAMPAGE);
+                }
                 break;
             }
             case G_SELECT::SPECIAL_AUGUST:

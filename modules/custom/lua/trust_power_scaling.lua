@@ -34,6 +34,11 @@ local function applyMeleePackage(mob, p, t, s)
     local hasteM = s.haste or 1
     local daM    = s.da or 1
 
+    -- Multi-hit (DA/TA) and AA weapon rating scale flatter while leveling so
+    -- S-tier melee (Darrcuiln TA etc.) doesn't wipe packs vs hybrid Matsui-P.
+    -- Full package still lands at master 99 (p == 1).
+    local multiP = p * p
+
     -- Tuned so master-99 medians sit near soft bands (C 8–10k … S 36–40k)
     -- before softclamp. ALL_WSDMG_ALL_HITS is a *percentage* (see weaponskills.lua).
     -- WEAPONSKILL_DAMAGE_BASE is per-wsID only and was a dead mod here.
@@ -42,8 +47,8 @@ local function applyMeleePackage(mob, p, t, s)
     local acc   = math.floor((60 + 1000 * p) * t)
     local str   = math.floor((8 + 190 * p) * t * attM)
     local dex   = math.floor((8 + 170 * p) * t)
-    local da    = math.floor((3 + 36 * p) * t * daM)
-    local ta    = math.floor((1 + 18 * p) * t * daM)
+    local da    = math.floor((3 + 36 * multiP) * t * daM)
+    local ta    = math.floor((1 + 18 * multiP) * t * daM)
     local haste = math.floor((200 + 2100 * p) * math.min(t, 1.05) * hasteM)
     local wsd   = math.floor((10 + 50 * p) * t * wsdM) -- % all-hits WSD
     local store = math.floor((2 + 42 * p) * t * wsdM)
@@ -134,6 +139,9 @@ local ROLE_APPLY =
         applyMeleePackage(mob, p, t, s)
         -- Per-tier WS push so soft bands are reachable without softclamp-only ladders.
         -- Percentage-point extras on ALL_WSDMG_ALL_HITS (not flat base).
+        -- MAIN_DMG_RATING also feeds AA — scale with p^2 so leveling AA tracks
+        -- hybrid trusts (Matsui-P) instead of doubling them via S extras + TA.
+        local multiP = p * p
         local wsdExtra =
         {
             C = math.floor(15 + 25 * p),
@@ -143,10 +151,10 @@ local ROLE_APPLY =
         }
         local ratingExtra =
         {
-            C = math.floor(20 + 45 * p),
-            B = math.floor(25 + 55 * p),
-            A = math.floor(35 + 70 * p),
-            S = math.floor(50 + 90 * p),
+            C = math.floor(20 + 45 * multiP),
+            B = math.floor(25 + 55 * multiP),
+            A = math.floor(35 + 70 * multiP),
+            S = math.floor(50 + 90 * multiP),
         }
         if wsdExtra[tier] then
             mob:addMod(xi.mod.ALL_WSDMG_ALL_HITS, wsdExtra[tier])
@@ -157,6 +165,7 @@ local ROLE_APPLY =
         applyMeleePackage(mob, p, t, s)
         mob:addMod(xi.mod.RATT, math.floor((20 + 520 * p) * t * ((s and s.att) or 1)))
         mob:addMod(xi.mod.RACC, math.floor((20 + 520 * p) * t))
+        local multiP = p * p
         local wsdExtra =
         {
             C = math.floor(15 + 25 * p),
@@ -166,10 +175,10 @@ local ROLE_APPLY =
         }
         local ratingExtra =
         {
-            C = math.floor(20 + 50 * p),
-            B = math.floor(28 + 60 * p),
-            A = math.floor(40 + 75 * p),
-            S = math.floor(55 + 95 * p),
+            C = math.floor(20 + 50 * multiP),
+            B = math.floor(28 + 60 * multiP),
+            A = math.floor(40 + 75 * multiP),
+            S = math.floor(55 + 95 * multiP),
         }
         if wsdExtra[tier] then
             mob:addMod(xi.mod.ALL_WSDMG_ALL_HITS, wsdExtra[tier])
@@ -239,13 +248,14 @@ local function findSpawnedTrust(caster, spellId)
 end
 
 -- Leveling HP-portion bands (basis points of mob max HP), by catalog tier.
--- Hard rule: never delete more than ~20–30% of a leveling mob in one hit.
+-- Per-hit ceiling — multi-hit AA (DA/TA) stacks on top, so S stays below the
+-- old 18–30% band so a TA round can't delete a mob outright vs Matsui-P pace.
 local LEVELING_PORTION_BPS =
 {
     C = { 800,  1000 }, -- weaker:  8–10%
-    B = { 1200, 2000 }, -- medium: 12–20%
-    A = { 1500, 2500 }, -- strong: 15–25%
-    S = { 1800, 3000 }, -- strong: 18–30% (ceiling)
+    B = { 1000, 1500 }, -- medium: 10–15%
+    A = { 1200, 1800 }, -- strong: 12–18%
+    S = { 1400, 2200 }, -- strong: 14–22% (TA round ~still under wipe)
 }
 
 -- Master-99 soft-target bands for WS/nukes (absolute damage). Softclamp in C++
@@ -282,7 +292,7 @@ local function applyCaps(mob, entry)
     mob:setLocalVar('TrustLevelingPortionBpsMin', portion[1])
     mob:setLocalVar('TrustLevelingPortionBpsMax', portion[2])
 
-    local soft = SOFT_BAND[entry.tier] or SOFT_BAND.B
+    local soft = entry.softBand or SOFT_BAND[entry.tier] or SOFT_BAND.B
     mob:setLocalVar('TrustSoftBandMin', soft[1])
     mob:setLocalVar('TrustSoftBandMax', soft[2])
     mob:setLocalVar('TrustDdRole', DD_ROLES[entry.role] and 1 or 0)
@@ -328,6 +338,11 @@ function xi.trustPowerApply(mob, master, spellId)
     local ok, err = pcall(roleFn, mob, p, t, s, entry.tier)
     if not ok then
         print(string.format('[trust_power_scaling] role package failed for spell %s: %s', tostring(spellId), tostring(err)))
+    end
+
+    -- Optional melee chip for support roles that still AA/WS (keeps cure path intact).
+    if entry.meleeChip and entry.meleeChip > 0 then
+        pcall(applyMeleePackage, mob, p, t * entry.meleeChip, catalog.STYLE.standard)
     end
 
     pcall(function()

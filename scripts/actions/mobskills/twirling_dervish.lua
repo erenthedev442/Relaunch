@@ -1,27 +1,34 @@
 -----------------------------------
 -- Twirling Dervish
--- Family: Humanoid (Adelheid Sturm)
--- Description: Deals damage in an area of effect.
+-- Trust: Adelheid. Magical Light AoE. Requires level 50.
+-- Skillchain: Light / Fusion.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
+    if mob:getMainLvl() < 50 then
+        return 1
+    end
+
     return 0
 end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    -- TODO: Magical or physical?
-    params.baseDamage     = mob:getWeaponDmg()
-    params.numHits        = 1
-    params.fTP            = { 6.0, 6.0, 6.0 } -- TODO: Capture fTPs
-    params.attackType     = xi.attackType.PHYSICAL
-    params.damageType     = xi.damageType.BLUNT
-    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3 -- TODO: Capture shadowBehavior
+    -- Signature AoE; C-tier soft band / softclamp own the ceiling.
+    params.baseDamage       = mob:getWeaponDmg()
+    params.fTP              = { 2.5, 3.0, 3.5 }
+    params.element          = xi.element.LIGHT
+    params.attackType       = xi.attackType.MAGICAL
+    params.damageType       = xi.damageType.LIGHT
+    params.shadowBehavior   = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+    params.dStatMultiplier  = 1
+    params.dStatAttackerMod = xi.mod.INT
+    params.dStatDefenderMod = xi.mod.INT
 
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+    local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)

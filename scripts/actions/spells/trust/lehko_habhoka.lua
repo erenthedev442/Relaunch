@@ -1,5 +1,10 @@
 -----------------------------------
 -- Trust: Lehko Habhoka
+-- THF/BLM. Dagger + throwing. Single-target elemental I–II.
+-- WS: Iridal Pierce (AoE Light) / Lunar Revolution (conal) / Debonair Rush / Inspirit.
+-- ASAP @1000 TP. High DA/TA. Occasional throwing RA. No magic burst.
+-- Nukes more often vs Elementals (piercing-resistant). Inspirit is opportunistic.
+-- MP+150% (pool mod). C-tier hybrid (skirmisher) power path.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -18,28 +23,30 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.ROBEL_AKBEL] = xi.trust.messageOffset.TEAMWORK_2,
     })
 
-    mob:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
+    -- Enhanced Magic Accuracy + abnormally high DA/TA (on top of hybrid package).
+    mob:addMod(xi.mod.MACC, 40 + math.floor(mob:getMainLvl() / 2))
+    mob:addMod(xi.mod.DOUBLE_ATTACK, 20)
+    mob:addMod(xi.mod.TRIPLE_ATTACK, 12)
+    -- Iridal Pierce light lane.
+    mob:addMod(xi.mod.MATT, 60)
+    mob:addMod(xi.mod.MAGIC_DAMAGE, 800)
 
-    mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.BEST_AGAINST_TARGET, 0 }, 60)
+    -- No magic burst. Occasional nukes; more often vs Elementals (piercing-resistant).
+    mob:addGambit(ai.t.TARGET, { ai.c.IS_ECOSYSTEM, xi.ecosystem.ELEMENTAL }, { ai.r.MA, ai.s.BEST_AGAINST_TARGET, 0 }, 20)
+    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.BEST_AGAINST_TARGET, 0 }, 60)
 
-    ---- Uses Ranged Attacks very frequently. Always runs to stay in melee range. [Verification Needed]
-    ---- Try and ranged attack every 10s
+    -- Throwing in conjunction with auto-attacks.
     mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 }, 10)
 
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.RANDOM)
+    -- WS right at 1000 TP (Inspirit is on the list — opportunistic, not party-gated).
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.RANDOM, 1000)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
 
     mob:addListener('WEAPONSKILL_USE', 'LEHKO_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
         if skill:getID() == 3231 then -- Debonair Rush
-            --  Here's betting your bark is worrrse than your bite!
             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
         end
     end)
-
-    -- MPP 150 migrated to mob_pool_mods
-    -- https://forum.square-enix.com/ffxi/threads/49425-Dec-10-2015-%28JST%29-Version-Update?p=567979&viewfull=1#post567979
-    -- The attribute "Enhanced Magic Accuracy" has been added.
-    local power = mob:getMainLvl() / 10
-    mob:addMod(xi.mod.MACC, power)
 end
 
 spellObject.onMobDespawn = function(mob)

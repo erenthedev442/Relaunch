@@ -9,6 +9,11 @@ effectObject.onEffectGain = function(target, effect)
 end
 
 effectObject.onEffectTick = function(target, effect)
+    -- Aura-applied CHR (e.g. Brygid) is continually refreshed — do not decay.
+    if effect:hasEffectFlag(xi.effectFlag.ALWAYS_EXPIRING) then
+        return
+    end
+
     -- the effect loses Charism of 1 every 3 ticks depending on the source of the boost
     local boostCHREffectSize = effect:getPower()
     if boostCHREffectSize > 0 then

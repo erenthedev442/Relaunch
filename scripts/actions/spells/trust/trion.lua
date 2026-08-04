@@ -1,10 +1,10 @@
 -----------------------------------
 -- Trust: Trion
--- Royal Bash is stronger than a normal Shield Bash.
--- Royal Saviour is a secondary, stronger version of Sentinel. Trion alternates between this and the normal version of Sentinel.
--- Trion tries to interrupt TP-abilities with Royal Bash.
+-- PLD/WAR. Spells: Cure I-IV, Flash. Abilities: Provoke, Sentinel.
+-- WS: Red Lotus Blade, Savage Blade, Royal Bash, Royal Savior.
+-- Royal Bash: stronger Shield Bash; interrupts TP abilities.
+-- Royal Savior: stronger Sentinel (Palisade + Sentinel + Stoneskin); alternates with JA Sentinel.
 -- Uses TP randomly and does not try to skillchain.
--- With his two defensive TP moves, he's not likely to interrupt skillchains much.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}

@@ -133,9 +133,9 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
     }
 
     // Hard default for all alter egos. Lua sets EncounterOutgoingDamageCap to
-    // raise exceptions (Matsui-P 99999) or EncounterOutgoingDamageCapMB for
-    // Shantotto II magic bursts. Without a localVar, trusts must never inherit
-    // the global 999999 PC ceiling.
+    // raise exceptions (Matsui-P 79999) or EncounterOutgoingDamageCapMB for
+    // Shantotto II / Matsui-P magic bursts. Without a localVar, trusts must
+    // never inherit the global 999999 PC ceiling.
     if (PAttacker->objtype == TYPE_TRUST)
     {
         constexpr int32 TRUST_DEFAULT_CAP = 40000;
@@ -398,9 +398,11 @@ int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRan
 int32 ApplyTrustAutoAttackDamageAdjust(CBattleEntity* PAttacker, int32 damage)
 {
     // Auto-swings only — wired exclusively from TakePhysicalDamage, not WS/magic.
-    // Was 0.25 — too punishing; S/A melee trusts felt like wet noodles on AA.
-    // Keep under player AA, but high enough to build TP / chip.
-    constexpr float TRUST_AUTO_ATTACK_MULTIPLIER = 0.55f;
+    // At 99: 0.55 keeps under player AA but still chips / builds TP.
+    // While leveling: lower so S-tier DA/TA (Darrcuiln etc.) can't outpace hybrid
+    // trusts like Matsui-P that already sit on a softer melee package.
+    constexpr float TRUST_AA_MULT_ENDGAME  = 0.55f;
+    constexpr float TRUST_AA_MULT_LEVELING = 0.28f;
 
     if (damage <= 0 || PAttacker == nullptr || PAttacker->objtype != TYPE_TRUST)
     {
@@ -413,5 +415,12 @@ int32 ApplyTrustAutoAttackDamageAdjust(CBattleEntity* PAttacker, int32 damage)
         return damage;
     }
 
-    return std::max(1, static_cast<int32>(damage * TRUST_AUTO_ATTACK_MULTIPLIER));
+    float mult = TRUST_AA_MULT_ENDGAME;
+    CBattleEntity* PMaster = PAttacker->PMaster;
+    if (PMaster != nullptr && PMaster->GetMLevel() < 99)
+    {
+        mult = TRUST_AA_MULT_LEVELING;
+    }
+
+    return std::max(1, static_cast<int32>(damage * mult));
 }

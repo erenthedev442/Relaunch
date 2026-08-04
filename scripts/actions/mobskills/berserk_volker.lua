@@ -1,7 +1,6 @@
 -----------------------------------
--- Berserk
--- Berserk Ability used by Volker. Maybe other humanoids?
--- Gives Warcry effect instead of Berserk. No defence penalty.
+-- Berserk-Ruf (story / BCNM Volker, skill 976)
+-- Warcry effect (not Berserk). Trust Volker uses berserk_ruf.lua (3205).
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -17,3 +16,4 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 end
 
 return mobskillObject
+

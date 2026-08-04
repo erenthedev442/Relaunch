@@ -1,6 +1,7 @@
 -----------------------------------
 -- Knuckle Sandwich
--- Used by Trust: Prishe II
+-- Trust: Prishe / Prishe II (3236). Magical Light damage.
+-- Skillchain: Fusion / Compression / Impaction.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -12,14 +13,13 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    -- TODO: Capture possible skillchain properties
-    -- TODO: Is this magical or physical skill?
+    -- Weapon rating so B-tier melee setDamage feeds the magical WS.
     params.baseDamage     = mob:getWeaponDmg()
-    params.fTP            = { 1, 1, 1 } -- TODO: Capture fTPs
-    params.element        = xi.element.LIGHT -- TODO: Capture element
+    params.fTP            = { 2.75, 3.25, 4.0 }
+    params.element        = xi.element.LIGHT
     params.attackType     = xi.attackType.MAGICAL
     params.damageType     = xi.damageType.LIGHT
-    params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS -- TODO: Capture shadowBehavior
+    params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 

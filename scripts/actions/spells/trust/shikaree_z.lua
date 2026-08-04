@@ -1,13 +1,10 @@
 -----------------------------------
 -- Trust: Shikaree Z
--- Possesses MP+100%
--- Uses Ancient Circle if the enemy is a dragon
--- Super Jump is used when ShikareeZ is in the top enmity slot
--- Gains 205 TP on hit; has high TP return on Jump (655 TP) and High Jump (1065 TP).
--- TODO: Add/Apply MOD for HIGH_JUMP_TP_BONUS
--- Impulse Drive ASAP (was holding TP to 2000).
--- Saves Cure for party members under 50% HP or affected by Sleep
--- Prioritizes Haste over other spells, except to cast Erase when Slow would prevent Haste.
+-- DRG/WHM polearm. Raiden Thrust / Skewer / Wheeling Thrust / Impulse Drive.
+-- HP-10%, MP+100%. STORE_TP for ~205 TP/hit; Jump / High Jump TP return.
+-- Ancient Circle vs dragons; Super Jump on top enmity.
+-- Holds TP to 2000 to close SCs. Cure @<50% / Sleep; Haste > -na (Erase if Slow).
+-- B-tier melee_dd / skirmisher — no kit inject.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -23,10 +20,11 @@ end
 spellObject.onMobSpawn = function(mob)
     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
 
-    -- MPP mod migrated to sql/mob_pool_mods to apply at spawn
+    -- HP-10% / MP+100% via mob_pool_mods (applied at spawn).
     mob:addMod(xi.mod.STORETP, 174)
     mob:addMod(xi.mod.JUMP_TP_BONUS, 164)
 
+    -- Erase Slow so Haste can land; then Haste (self / master) before -na.
     mob:addGambit(ai.t.SELF, { ai.c.STATUS, xi.effect.SLOW }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.HASTE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.HASTE })
     mob:addGambit(ai.t.MASTER, { ai.c.STATUS, xi.effect.SLOW }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
@@ -51,7 +49,15 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.HIGH_JUMP })
     mob:addGambit(ai.t.SELF, { ai.c.HAS_TOP_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.SUPER_JUMP })
 
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+    -- No HIGH_JUMP_TP_BONUS mod; top up so High Jump ≈ +410 over Jump (~1065 vs ~655).
+    mob:addListener('ABILITY_USE', 'SHIKAREE_Z_HJ_TP', function(mobArg, target, ability, action)
+        if ability:getID() == xi.ja.HIGH_JUMP then
+            local stp = (100 + mobArg:getMod(xi.mod.STORETP)) / 100
+            mobArg:addTP(math.floor(150 * stp))
+        end
+    end)
+
+    mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 2000)
 end
 
 spellObject.onMobDespawn = function(mob)

@@ -1,8 +1,7 @@
 -----------------------------------
 -- Imperial Authority
--- Family: Humanoid (Nashmeira, Nashmeira II)
--- Description: Deals damage to a single target. Additional Effect: Stun
--- Skillchain Properties: Fragmentation/Distortion
+-- Family: Humanoid (Trust: Nashmeira / Nashmeira II)
+-- Physical. Stun. Fragmentation / Distortion.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -15,18 +14,19 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
     params.baseDamage     = mob:getWeaponDmg()
-    params.numHits        = 3
-    params.fTP            = { 0.3, 0.3, 0.3 } -- TODO: Capture fTPs
+    params.numHits        = 1
+    params.fTP            = { 2.75, 3.25, 3.75 }
     params.attackType     = xi.attackType.PHYSICAL
-    params.damageType     = xi.damageType.BLUNT
-    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3
+    params.damageType     = xi.damageType.HTH
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
+    params.str_wSC        = 0.3
+    params.vit_wSC        = 0.3
 
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
-
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STUN, 1, 0, 10)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STUN, 1, 0, 6)
     end
 
     return info.damage

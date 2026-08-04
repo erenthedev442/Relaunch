@@ -1,17 +1,59 @@
 -----------------------------------
 -- Trust: Uka Totlihn
+-- DNC/WAR Club. Judgment @2000 TP (no skillchains).
+-- Quickstep → Reverse Flourish (5 FM, low TP). Curing Waltz @<66%.
+-- Healing Waltz self-only. Haste Samba if party has Cure job or undead;
+-- else Drain Samba I–III. Mumor synergy: Waltz Potency.
+-- S-tier melee_dd (skirmisher) — no kit inject.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
 
--- Define the main jobs with access to primary healing used to toggle Samba type
+local RECAST_QUICKSTEP = 220 -- abilities.sql recastId
+local RECAST_REVERSE   = 222
+
 local healingJobs =
 {
-    xi.job.WHM,
-    xi.job.RDM,
-    xi.job.SCH,
-    xi.job.PLD,
+    [xi.job.WHM] = true,
+    [xi.job.RDM] = true,
+    [xi.job.SCH] = true,
+    [xi.job.PLD] = true,
 }
+
+local function canAct(mobArg)
+    return mobArg:isEngaged() and
+        mobArg:getCurrentAction() == xi.action.category.BASIC_ATTACK
+end
+
+-- Quickstep stacks LETHARGIC_DAZE_1 power (not separate _5 effects).
+local function getLethargicDaze(target)
+    local eff = target:getStatusEffect(xi.effect.LETHARGIC_DAZE_1)
+    if not eff then
+        return 0, 0
+    end
+
+    return eff:getPower() or 0, eff:getTimeRemaining() or 0
+end
+
+local function finishingMoves(mobArg)
+    local fm = mobArg:getStatusEffect(xi.effect.FINISHING_MOVE_1)
+    return fm and fm:getPower() or 0
+end
+
+local function partyHasCureJob(mobArg)
+    local master = mobArg:getMaster()
+    if not master then
+        return false
+    end
+
+    for _, member in pairs(master:getPartyWithTrusts() or {}) do
+        if member:isAlive() and healingJobs[member:getMainJob()] then
+            return true
+        end
+    end
+
+    return false
+end
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
     return xi.trust.canCast(caster, spell)
@@ -27,60 +69,97 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.ULLEGORE] = xi.trust.messageOffset.TEAMWORK_2,
     })
 
-    -- Dynamic modifier that checks party member list on tick to apply synergy
-    mob:addListener('COMBAT_TICK', 'UKA_TOTLIHN_CTICK', function(mobArg)
-        local waltzPotencyBoost = 0
-        local party = mobArg:getMaster():getPartyWithTrusts()
-        for _, member in pairs(party) do
-            if member:getObjType() == xi.objType.TRUST then
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
+
+    -- Curing Waltz party <66%. Healing Waltz self only.
+    mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 66 }, { ai.r.JA, ai.s.HIGHEST_WALTZ, xi.ja.CURING_WALTZ })
+    mob:addGambit(ai.t.SELF, { ai.c.STATUS_FLAG, xi.effectFlag.WALTZABLE }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.HEALING_WALTZ })
+
+    -- Judgment when above 2000 TP; does not skillchain.
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 2000)
+
+    -- Mumor / Mumor II: +Waltz Potency while either is out.
+    mob:addListener('COMBAT_TICK', 'UKA_TOTLIHN_MUMOR', function(mobArg)
+        local boost = 0
+        local master = mobArg:getMaster()
+        if master then
+            for _, member in pairs(master:getPartyWithTrusts() or {}) do
                 if
-                    member:getTrustID() == xi.magic.spell.MUMOR or
-                    member:getTrustID() == xi.magic.spell.MUMOR_II
+                    member:getObjType() == xi.objType.TRUST and
+                    (
+                        member:getTrustID() == xi.magic.spell.MUMOR or
+                        member:getTrustID() == xi.magic.spell.MUMOR_II
+                    )
                 then
-                    waltzPotencyBoost = 10
+                    boost = 10
+                    break
                 end
             end
         end
 
-        -- Always set the boost, even if Mumor wasn't found.
-        -- This accounts for her being in the party and giving the boost
-        -- and also if she dies and the boost goes away.
-        mobArg:setMod(xi.mod.WALTZ_POTENCY, waltzPotencyBoost)
+        mobArg:setMod(xi.mod.WALTZ_POTENCY, boost)
     end)
 
-    for i = 1, #healingJobs do
-        local master  = mob:getMaster()
-        if
-            master and
-            master:getMainJob() == healingJobs[i]
-        then
-            mob:addGambit(ai.t.SELF, { ai.c.NO_SAMBA, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.HASTE_SAMBA })
+    mob:addListener('COMBAT_TICK', 'UKA_TOTLIHN_AI', function(mobArg)
+        if not mobArg:isEngaged() then
+            return
         end
-    end
 
-    -- Step Interactions:
-    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.LETHARGIC_DAZE_5 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.QUICKSTEP }, 20)
-    mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.VIOLENT_FLOURISH })
-    mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.VIOLENT_FLOURISH })
-    mob:addGambit(ai.t.TARGET, { ai.c.READYING_JA, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.VIOLENT_FLOURISH })
-    mob:addGambit(ai.t.TARGET, { ai.c.CASTING_MA, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.VIOLENT_FLOURISH })
+        local battleTarget = mobArg:getTarget()
+        if not battleTarget or not battleTarget:isAlive() then
+            return
+        end
 
-    -- Ecosystem check to swap to Haste samba if the target is undead
-    mob:addGambit(ai.t.TARGET, { ai.c.IS_ECOSYSTEM, xi.ecosystem.UNDEAD }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.HASTE_SAMBA })
+        -- Samba: Haste if any party main can Cure or target Undead; else Drain line.
+        if
+            not mobArg:hasStatusEffect(xi.effect.HASTE_SAMBA) and
+            not mobArg:hasStatusEffect(xi.effect.DRAIN_SAMBA) and
+            not mobArg:hasStatusEffect(xi.effect.ASPIR_SAMBA) and
+            canAct(mobArg)
+        then
+            if partyHasCureJob(mobArg) or battleTarget:getEcosystem() == xi.ecosystem.UNDEAD then
+                mobArg:useJobAbility(xi.ja.HASTE_SAMBA, mobArg)
+            else
+                local lvl = mobArg:getMainLvl()
+                local drainJA = xi.ja.DRAIN_SAMBA
+                if lvl >= 65 then
+                    drainJA = xi.ja.DRAIN_SAMBA_III
+                elseif lvl >= 45 then
+                    drainJA = xi.ja.DRAIN_SAMBA_II
+                end
 
-    -- Healing logic
-    mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 50 }, { ai.r.JA, ai.s.HIGHEST_WALTZ, xi.ja.CURING_WALTZ })
-    mob:addGambit(ai.t.SELF, { ai.c.NO_SAMBA, 0 }, { ai.r.JA, ai.s.BEST_SAMBA, xi.ja.DRAIN_SAMBA })
-    mob:addGambit(ai.t.SELF, { ai.c.STATUS_FLAG, xi.effectFlag.WALTZABLE }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.HEALING_WALTZ })
+                mobArg:useJobAbility(drainJA, mobArg)
+            end
 
-    -- TP use and return
-    mob:addGambit(ai.t.SELF, { ai.c.STATUS, xi.effect.FINISHING_MOVE_5 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.REVERSE_FLOURISH }, 60)
+            return
+        end
 
-    -- Melee DD package now applies (catalog role was wrongly "buffer").
-    mob:addMod(xi.mod.ACC, 100)
-    mob:addMod(xi.mod.ATT, 60)
-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1500)
+        -- Reverse Flourish: 5 FM and TP low (build toward Judgment @2000).
+        if
+            finishingMoves(mobArg) >= 5 and
+            mobArg:getTP() < 1000 and
+            canAct(mobArg) and
+            not mobArg:hasRecast(xi.recast.ABILITY, RECAST_REVERSE)
+        then
+            mobArg:useJobAbility(xi.ja.REVERSE_FLOURISH, mobArg)
+            return
+        end
+
+        -- Quickstep: build to daze 5; at 5 only refresh when <10s remaining.
+        local dazePower, timeRemaining = getLethargicDaze(battleTarget)
+        local needsStep =
+            dazePower < 5 or
+            (dazePower >= 5 and timeRemaining > 0 and timeRemaining < 10000)
+
+        if
+            needsStep and
+            mobArg:getTP() >= 100 and
+            canAct(mobArg) and
+            not mobArg:hasRecast(xi.recast.ABILITY, RECAST_QUICKSTEP)
+        then
+            mobArg:useJobAbility(xi.ja.QUICKSTEP, battleTarget)
+        end
+    end)
 end
 
 spellObject.onMobDespawn = function(mob)

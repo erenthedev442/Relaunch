@@ -122,6 +122,8 @@ enum class G_SELECT : uint16
     MB_ELEMENT          = 4,
     SPECIAL_AYAME       = 5,
     SPECIAL_AUGUST      = 6,
+    SPECIAL_AAMR        = 19, // AAMR: Calamity (SA/TA) vs Cloudsplitter (front); rare Havoc Spiral
+    SPECIAL_AYAME_UC    = 20, // Ayame UC: player/pet closer; no dump if can't close
     BEST_AGAINST_TARGET = 7,
     BEST_SAMBA          = 8,
     HIGHEST_WALTZ       = 9,

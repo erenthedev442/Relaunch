@@ -1,7 +1,7 @@
 -----------------------------------
 -- Amatsu: Tsukioboro
--- Family: Humanoid (Tenzen)
--- Description: Deals physical damage to a target. Additional Effect: Silence
+-- Story Tenzen (1393): Gekko variant + Silence.
+-- Trust Tenzen: same skill ID; C-tier fTP (solo SC step 2).
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -15,16 +15,20 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 1
-    params.fTP            = { 4.0, 4.0, 4.0 }
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.SLASHING
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
+
+    if mob:getObjType() == xi.objType.TRUST then
+        params.fTP = { 2.25, 2.75, 3.5 }
+    else
+        params.fTP = { 4.0, 4.0, 4.0 }
+    end
 
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
-
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SILENCE, 1, 0, 60)
     end
 

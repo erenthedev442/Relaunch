@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2018 Darkstar Dev Teams
@@ -266,13 +266,18 @@ auto CTrustController::DoRoamTick(timer::time_point tick) -> Task<void>
         }
     }
 
-    if (PMaster->PAI->IsEngaged() && trustEngageCondition)
+    // Passive trusts (Kupofried): never auto-engage — stay on roam follow.
+    const bool noEngage = POwner->GetLocalVar("TrustNoEngage") == 1;
+    if (!noEngage && PMaster->PAI->IsEngaged() && trustEngageCondition)
     {
         POwner->PAI->Internal_Engage(PMaster->GetBattleTargetID());
     }
 
     uint8          currentPartyPos = GetPartyPosition();
-    CBattleEntity* PFollowTarget   = (GetPartyPosition() > 0) ? (CBattleEntity*)PMaster->PTrusts.at(currentPartyPos - 1) : POwner->PMaster;
+    // TrustFollowMaster (Kupofried): always stick to summoner, not party-chain.
+    CBattleEntity* PFollowTarget   = (POwner->GetLocalVar("TrustFollowMaster") == 1 || GetPartyPosition() == 0)
+                                         ? POwner->PMaster
+                                         : (CBattleEntity*)PMaster->PTrusts.at(currentPartyPos - 1);
     float          currentDistance = distance(POwner->loc.p, PFollowTarget->loc.p);
 
     for (auto* POtherTrust : PMaster->PTrusts)
@@ -332,6 +337,9 @@ auto CTrustController::DoRoamTick(timer::time_point tick) -> Task<void>
             m_NumHealingTicks = std::clamp(m_NumHealingTicks + 1, static_cast<std::size_t>(0U), m_tickDelays.size() - 1U);
         }
     }
+
+    // Match mob roam — lets passive trusts (Kupofried) tick Lua while not engaged.
+    POwner->PAI->EventHandler.triggerListener("ROAM_TICK", POwner);
 
     co_return;
 }

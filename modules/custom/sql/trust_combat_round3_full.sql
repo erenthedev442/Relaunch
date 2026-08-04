@@ -13,11 +13,12 @@
 -- ---------------------------------------------------------------------------
 -- MS-only → player WS
 -- ---------------------------------------------------------------------------
+-- Trion keeps unique Trust MS (see trust_combat_round5_trion.sql). Do not remap to player sword WS.
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1020;
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,40);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,41);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,42);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,225);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,968);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,970);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,3193);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1020,3194);
 
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1022;
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion',1022,16);
@@ -40,12 +41,11 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,8);
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,9);
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Prishe',1028,14);
 
+-- Gessho keeps unique Trust MS (see trust_combat_round5_gessho.sql). Do not remap to player katana WS.
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1033;
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,134);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,135);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,136);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,138);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,141);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,3256);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,3257);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Gessho',1033,3259);
 
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1037;
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,16);
@@ -54,16 +54,15 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,25);
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,31);
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lehko_Habhoka',1037,224);
 
+-- Mnejing keeps Valoredge Trust MS (see trust_combat_round5_mnejing.sql). Do not remap to player H2H WS.
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1041;
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,1);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,5);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,7);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,9);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,1940);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,1941);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mnejing',1041,3245);
 
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1047;
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Fablinix',1047,165);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Fablinix',1047,168);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Fablinix',1047,169);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Fablinix',1047,3261); -- Bomb Toss (AoE fire)
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Fablinix',1047,3262); -- Goblin Rush
 
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1048;
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat',1048,5);
@@ -78,11 +77,12 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Semih_Lafihna',1055,198);
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Semih_Lafihna',1055,199);
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Semih_Lafihna',1055,201);
 
+-- Abenzio keeps Goobbue Trust MS (see trust_combat_round5_abenzio.sql). Do not remap to player H2H WS.
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1074;
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,5);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,7);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,9);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,14);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,3355);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,3356);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,3357);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,3358);
 
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1086;
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mildaurion',1086,40);
@@ -96,10 +96,13 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Selh_teus',1094,42);
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Selh_teus',1094,225);
 
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1099;
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,51);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,54);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,56);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,57);
+-- August keeps unique Trust MS (see trust_combat_round5_august.sql). Do not remap to player GS WS.
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,3653);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,3654);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,3655);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,3656);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,3657);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_August',1099,3658);
 
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1112;
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Iroha',1112,150);
@@ -160,14 +163,16 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II_Melee',1163,169);
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II_Melee',1163,174);
 
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1197;
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,51);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,54);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,56);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,57);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,3648);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,3649);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,3650);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_August_Melee',1197,3651);
 
+-- Areuhat: keep Dragon Breath / Hurricane Wing (3438/3439); skill checks allow trusts
+-- DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1054 AND `mob_skill_id` IN (3438,3439);
+-- Abquhbah: keep Combo / Backhand Blow / Salaheem Spirit (do not strip 3541)
+-- DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1097 AND `mob_skill_id` = 3541;
 -- Strip weak / missing-Lua MS from mixed lists (HIGHEST can pick and stall)
-DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1054 AND `mob_skill_id` IN (3438,3439); -- Areuhat
-DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1097 AND `mob_skill_id` = 3541; -- Abquhbah
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1051 AND `mob_skill_id` IN (3336,3337); -- Karaha Howling Moon / Lunar Bay
 
 -- Nashmeira I/II healers: sole MS → dagger WS so they still spend TP
@@ -197,10 +202,10 @@ UPDATE `mob_pools` SET `cmbSkill` = 1 WHERE `poolid` = 5924; -- Zazarg H2H
 UPDATE `mob_pools` SET `cmbSkill` = 1 WHERE `poolid` = 5926; -- Mnejing H2H
 UPDATE `mob_pools` SET `cmbSkill` = 26, `cmbDelay` = 600, `cmbDmgMult` = 200 WHERE `poolid` = 5928; -- Luzaf Marksmanship
 UPDATE `mob_pools` SET `cmbSkill` = 8 WHERE `poolid` = 5929; -- Najelith Polearm
-UPDATE `mob_pools` SET `cmbSkill` = 11 WHERE `poolid` = 5932; -- Fablinix Club
+UPDATE `mob_pools` SET `cmbSkill` = 2 WHERE `poolid` = 5932; -- Fablinix Dagger
 UPDATE `mob_pools` SET `cmbSkill` = 1 WHERE `poolid` = 5933; -- Maat H2H
 UPDATE `mob_pools` SET `cmbSkill` = 12 WHERE `poolid` = 5936; -- Karaha Staff
-UPDATE `mob_pools` SET `cmbSkill` = 6 WHERE `poolid` = 5937; -- Cid GA
+UPDATE `mob_pools` SET `cmbSkill` = 11 WHERE `poolid` = 5937; -- Cid Club (not GA)
 UPDATE `mob_pools` SET `cmbSkill` = 10 WHERE `poolid` = 5938; -- Gilgamesh GK
 UPDATE `mob_pools` SET `cmbSkill` = 25, `cmbDelay` = 500, `cmbDmgMult` = 200 WHERE `poolid` = 5940; -- Semih Archery
 UPDATE `mob_pools` SET `cmbSkill` = 5 WHERE `poolid` = 5943; -- Lhu Axe
@@ -224,7 +229,7 @@ UPDATE `mob_pools` SET `cmbSkill` = 4 WHERE `poolid` = 5983; -- Balamor GS
 UPDATE `mob_pools` SET `cmbSkill` = 4 WHERE `poolid` = 5984; -- August GS
 UPDATE `mob_pools` SET `cmbSkill` = 5 WHERE `poolid` = 5990; -- Morimar Axe
 UPDATE `mob_pools` SET `cmbSkill` = 10 WHERE `poolid` = 5997; -- Iroha GK
-UPDATE `mob_pools` SET `cmbSkill` = 8 WHERE `poolid` = 6004; -- Excenmille S Polearm
+UPDATE `mob_pools` SET `cmbSkill` = 4 WHERE `poolid` = 6004; -- Excenmille S Great Sword
 UPDATE `mob_pools` SET `cmbSkill` = 10 WHERE `poolid` = 6005; -- Ayame UC GK
 UPDATE `mob_pools` SET `cmbSkill` = 1 WHERE `poolid` = 6006; -- Maat UC H2H
 UPDATE `mob_pools` SET `cmbSkill` = 11 WHERE `poolid` = 6008; -- Naja UC Club

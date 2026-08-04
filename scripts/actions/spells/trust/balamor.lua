@@ -1,6 +1,9 @@
 -----------------------------------
 -- Trust: Balamor
--- DRK — Souleater/Last Resort, Absorbs, Stun on readying, ASAP WS.
+-- DRK/BLM Defiant (Undead). Absorb-STAT only. No JAs.
+-- WS: Feast of Arrows / Last Laugh / Regurgitated Swarm / Setting the Stage.
+-- HP+40%, MP+100%. Dark magical auto-attacks. RANDOM TP, no skillchains.
+-- A-tier hybrid (pressure) power path.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -16,22 +19,22 @@ end
 spellObject.onMobSpawn = function(mob)
     xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
 
-    mob:addMod(xi.mod.ACC, 80)
+    -- Retail HP/MP package (family is already Undead / Defiant).
+    mob:addMod(xi.mod.HPP, 40)
+    mob:addMod(xi.mod.MPP, 100)
+    -- Immune to Aspir; HP Drain is blocked by undead ecosystem on most drain moves.
+    mob:addImmunity(xi.immunity.ASPIR)
+    -- Special AA ignores Slow (and doesn't benefit from Haste/Sambas).
+    mob:addImmunity(xi.immunity.SLOW)
 
-    mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
-    mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
-    mob:addGambit(ai.t.TARGET, { ai.c.READYING_JA, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
-    mob:addGambit(ai.t.TARGET, { ai.c.CASTING_MA, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
+    -- Absorb-STAT only (no Stun / Souleater / Last Resort — retail has no JAs).
+    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.ABSORB }, 45)
 
-    mob:addGambit(ai.t.SELF, { ai.c.ALWAYS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.SOULEATER })
-    mob:addGambit(ai.t.SELF, { ai.c.ALWAYS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.LAST_RESORT })
+    -- Dark elemental special auto-attacks (not physical GS swings).
+    mob:setMobSkillAttack(2098)
 
-    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.ABSORB }, 60)
-    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ABSORB_STR }, 90)
-    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ABSORB_DEX }, 90)
-    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ABSORB_ACC }, 90)
-
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST, 1000)
+    -- Uses TP randomly; does not try to skillchain.
+    mob:setTrustTPSkillSettings(ai.tp.RANDOM, ai.s.RANDOM, 1000)
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
 end
 

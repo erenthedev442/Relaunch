@@ -9,6 +9,11 @@
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
+    -- Trust: Areuhat uses Dragon Breath in humanoid form (no wyrm animSub / facing gate).
+    if mob:isTrust() then
+        return 0
+    end
+
     if not target:isInfront(mob, 128) then
         return 1
     elseif mob:getAnimationSub() == 1 then

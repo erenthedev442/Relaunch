@@ -13,13 +13,12 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    params.baseDamage     = mob:getMainLvl() + 2
-    params.fTP            = { 7, 7, 7 } -- TODO: Capture fTPs
+    params.baseDamage     = mob:getWeaponDmg()
+    params.fTP            = { 2.5, 3.0, 3.5 }
     params.element        = xi.element.LIGHT
     params.attackType     = xi.attackType.MAGICAL
     params.damageType     = xi.damageType.LIGHT
     params.shadowBehavior = xi.mobskills.shadowBehavior.WIPE_SHADOWS
-    -- TODO: Light skills sometimes use MND for dStat comparisons. Need captures.
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 

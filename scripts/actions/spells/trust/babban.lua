@@ -1,6 +1,8 @@
 -----------------------------------
 -- Trust: Babban Mheillea
--- MNK plantoid — Wild Oats / Head Butt / Petal Pirouette ASAP (no JAs).
+-- MNK plantoid. No JAs. Wild Oats / Head Butt / Photosynthesis / Petal Pirouette.
+-- HP-10% (pool) + large non-humanoid HP. Guard/Counter. RANDOM TP, no skillchains.
+-- Photosynthesis daytime-only via mobskill check. Mandragora gear for dialogue.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -25,8 +27,14 @@ spellObject.onMobSpawn = function(mob)
         xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
     end
 
-    -- Retail: uses TP randomly, does not skillchain.
-    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.RANDOM, 1000)
+    -- Large HP pool common to non-humanoids (on top of C bruiser + pool HPP-10%).
+    mob:addMod(xi.mod.HP, xi.trust.modGrowthValMax(mob, 600))
+    -- MNK Guard / Counter feel (traits; reinforce so plantoid MS kit still tanks hits).
+    mob:addMod(xi.mod.GUARD_PERCENT, 15)
+    mob:addMod(xi.mod.COUNTER, 12)
+
+    -- Uses TP randomly; does not try to skillchain.
+    mob:setTrustTPSkillSettings(ai.tp.RANDOM, ai.s.RANDOM, 1000)
 end
 
 spellObject.onMobDespawn = function(mob)

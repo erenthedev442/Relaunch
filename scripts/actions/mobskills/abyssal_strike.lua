@@ -1,7 +1,8 @@
 -----------------------------------
 -- Abyssal Strike
--- Family: Humanoid (Zeid / Shadow of Rage)
--- Description: Deals physical damage. Additional Effect: Stun
+-- Family: Humanoid (Zeid / Trust: Zeid / Shadow of Rage)
+-- Description: Physical damage. Additional effect: Stun.
+-- No skillchain properties.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -12,20 +13,21 @@ end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
+    local isTrust = mob:getObjType() == xi.objType.TRUST
 
     params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 1
-    params.fTP            = { 4.7, 4.7, 4.7 } -- TODO: Capture fTPs
+    -- Trust A-tier weaponskill path; story Zeid retains heavier fTP.
+    params.fTP            = isTrust and { 2.5, 2.75, 3.0 } or { 4.7, 4.7, 4.7 }
     params.attackType     = xi.attackType.PHYSICAL
-    params.damageType     = xi.damageType.BLUNT -- TODO: Verify damageType
-    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1 -- TODO: Capture shadowBehavior
+    params.damageType     = xi.damageType.SLASHING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
 
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
-
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STUN, 1, 0, 15)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STUN, 1, 0, isTrust and 6 or 15)
     end
 
     return info.damage

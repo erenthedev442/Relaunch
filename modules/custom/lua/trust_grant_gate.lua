@@ -4,10 +4,11 @@
 -- Unity UC auto-grants, and NPC cipher trades are blocked; only these paths
 -- may teach trusts:
 --   * four starters (Character Upgrader)
---   * using a Trust Cipher item from inventory (NM drops / future content)
+--   * content NM % rolls (trust_cipher_drops → grantSpell; no cipher items)
 --   * Void Keeper purchases (trust_skoll.lua)
 --   * GM !givetrust
 --   * any caller of xi.trustGrant.grantSpell()
+-- Leftover inventory ciphers are converted to spells on login and deleted.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/globals/trust')
@@ -27,7 +28,17 @@ local UNITY_TRUST_ID      = catalog.UNITY_TRUST_ID
 local EARNED_PREFIX       = catalog.EARNED_CHARVAR_PREFIX
 
 local STRIP_INTERVAL_S    = 60
-local BLOCKED_CIPHER_MSG  = 'Trust ciphers are earned in content — use them from your inventory, not through NPC trades or Records of Eminence.'
+local BLOCKED_CIPHER_MSG  = 'Alter Egos are learned from content kills — cipher trades and Records of Eminence rewards are disabled.'
+
+local CIPHER_CONTAINERS =
+{
+    xi.inv.INVENTORY,
+    xi.inv.MOGSATCHEL,
+    xi.inv.MOGSACK,
+    xi.inv.MOGCASE,
+    xi.inv.MOGSAFE,
+    xi.inv.MOGSAFE2,
+}
 
 xi.trustGrant = xi.trustGrant or {}
 
@@ -59,7 +70,13 @@ local function isDisabledTrust(spellId)
         return false
     end
 
-    return spellId == disabled.ALDO or spellId == disabled.ALDO_UC
+    for _, id in pairs(disabled) do
+        if spellId == id then
+            return true
+        end
+    end
+
+    return false
 end
 
 function xi.trustGrant.grantSpell(player, spellId, params)
@@ -139,6 +156,53 @@ local function migrate(player)
     xi.trustGrant.stripUnauthorized(player)
 end
 
+-- Ciphers retired: teach any leftover cipher items, then delete them.
+local function convertLeftoverCiphers(player)
+    local taught = 0
+    local removed = 0
+
+    for itemId = xi.trust.CIPHER_MIN_ID, xi.trust.CIPHER_MAX_ID do
+        for _, container in ipairs(CIPHER_CONTAINERS) do
+            local ok, stacks = pcall(function()
+                return player:findItems(itemId, container)
+            end)
+            if ok and stacks and #stacks > 0 then
+                -- Snapshot before mutating slots.
+                local plan = {}
+                for _, it in ipairs(stacks) do
+                    plan[#plan + 1] =
+                    {
+                        slot  = it:getSlotID(),
+                        qty   = it:getQuantity(),
+                        subId = it:getSubID(),
+                    }
+                end
+
+                for _, s in ipairs(plan) do
+                    local spellId = xi.trust.getCipherSpellId(itemId, s.subId)
+                    if spellId and not player:hasSpell(spellId) then
+                        if xi.trustGrant.grantSpell(player, spellId) then
+                            taught = taught + 1
+                        end
+                    end
+
+                    if s.qty > 0 and player:delItemAt(itemId, s.qty, container, s.slot) then
+                        removed = removed + s.qty
+                    end
+                end
+            end
+        end
+    end
+
+    if taught > 0 or removed > 0 then
+        player:printToPlayer(
+            string.format(
+                '[Trust] Cipher items retired — learned %d Alter Ego(s), removed %d cipher(s) from storage.',
+                taught, removed),
+            xi.msg.channel.SYSTEM_3)
+    end
+end
+
 local function scheduleStripLoop(player)
     player:timer(STRIP_INTERVAL_S * 1000, function(p)
         if p and p:isPC() then
@@ -195,7 +259,8 @@ m:addOverride('xi.trust.onTradeCipher', function(player, trade, csid, rovCs, ark
     end
 end)
 
--- Cipher items used from inventory — intended earn path once ciphers drop in content.
+-- Leftover usable ciphers (pre-retirement inventory): still teach, then login
+-- convertLeftoverCiphers removes any remaining stacks.
 m:addOverride('xi.trust.onItemUseCipher', function(target, item)
     if target == nil or item == nil then
         return
@@ -238,6 +303,7 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     end
 
     migrate(player)
+    convertLeftoverCiphers(player)
     player:timer(2000, function(p)
         if p then
             xi.trustGrant.stripUnauthorized(p)

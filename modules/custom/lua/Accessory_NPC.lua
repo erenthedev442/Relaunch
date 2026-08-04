@@ -25,15 +25,8 @@ require(string.format('scripts/zones/%s/Zone', _zoneName))
 
 local m = Module:new('accessory_npc')
 
--- DISABLED (owner request 2026-07-31): the Accessory vendor NPC is removed from
--- the Escha Zi'Tah hub. super(zone) still runs so the zone initializes normally;
--- we just skip inserting the NPC. Flip ENABLED back to true to restore it.
-local ENABLED = false
-
 m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
     super(zone)
-
-    if not ENABLED then return end
 
     -- Native shop windows hold at most 16 items (createShop cap). A (tier, slot)
     -- with more is PAGED so nothing is silently hidden (previously it truncated

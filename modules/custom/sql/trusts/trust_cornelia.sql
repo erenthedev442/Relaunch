@@ -31,8 +31,8 @@ REPLACE INTO mob_pools
 VALUES
     -- model 3119 = 0x0C2F LE -> bytes 2F 0C (trust-era size=0 look, like Monberaux).
     (6002, 'cornelia', 'Cornelia', 293, UNHEX('00002F0C00000000000000000000000000000000'),
-     21, 0, 3, 240, 10,
-     0, 0, 0, 0, 0, 0,
+     21, 10, 3, 240, 100,
+     2, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,
      0, 0, 0, 0, 145,
      1, 12);

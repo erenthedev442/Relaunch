@@ -17,9 +17,16 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     params.numHits        = 3
     params.fTP            = { 1.0, 1.0, 1.0 }
     params.attackType     = xi.attackType.PHYSICAL
-    params.damageType     = xi.damageType.SLASHING
+    -- Trust Fablinix is dagger; goblin mobs stay slashing.
+    params.damageType     = mob:getObjType() == xi.objType.TRUST and xi.damageType.PIERCING or xi.damageType.SLASHING
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3
-    -- TODO: Possible accuracy modifier
+    params.str_wSC        = 0.3
+    params.dex_wSC        = 0.3
+
+    if mob:getObjType() == xi.objType.TRUST then
+        -- Mild TP curve so CLOSER_UNTIL_TP@1500 still matters on B hybrid.
+        params.fTP = { 1.0, 1.35, 1.7 }
+    end
 
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 
