@@ -84,5 +84,5 @@ UPDATE `mob_pools` SET
     `cmbDelay` = 240,
     `cmbDmgMult` = 100,
     `skill_list_id` = 1049,
-    `spell_list_id` = 346
+    `spellList` = 346
 WHERE `poolid` = 5934;

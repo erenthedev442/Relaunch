@@ -29,7 +29,7 @@ INSERT INTO `mob_skill_lists` VALUES
 ('TRUST_Excenmille',1014,115), -- Leg Sweep
 ('TRUST_Excenmille',1014,116); -- Penta Thrust
 
--- Spell list: Cure I-IV + Flash (id 311). Wipe Meat's spell_list_id 899 if present.
+-- Spell list: Cure I-IV + Flash (id 311). Wipe Meat's spell list 899 if present.
 DELETE FROM `mob_spell_lists` WHERE `spell_list_id` = 899;
 DELETE FROM `mob_spell_lists` WHERE `spell_list_id` = 311;
 INSERT INTO `mob_spell_lists` VALUES
