@@ -146,7 +146,6 @@ C.trusts =
     [974] = e('nuker',     'B', { style = 'pressure',    injectKit = false }), -- Leonoyne (Blizzaga; GS + Enblizzard; ASAP@1000)
     [977] = e('nuker',     'B', { style = 'burst',       injectKit = false }), -- Robel-Akbel (MB -aja; Null Blast; NO_MOVE)
     [997] = e('melee_dd',  'B', { style = 'weaponskill', injectKit = false }), -- Iroha (Amatsu solo SC; ASAP kit fights CLOSER@2500)
-    [1004]= e('melee_dd',  'B', { style = 'bruiser',     injectKit = false }), -- Excenmille S (Stag's Call; ASAP@1000)
     [1006]= e('melee_dd',  'B', { style = 'bruiser',     injectKit = false }), -- Maat UC (Hollow Smite SC open/close/dump@3000)
     [1014]= e('ranged_dd', 'B', { style = 'weaponskill', injectKit = false }), -- Tenzen II (Oisoya opener; hold@3000)
     [1016]= e('hybrid',    'B', { style = 'weaponskill', injectKit = false }), -- Ingrid II (Club Light SC / Banish MB)
@@ -227,13 +226,13 @@ C.trusts =
     [901] = e('buffer',    'S', { style = 'support',     injectKit = false }), -- Gemma
     [902] = e('ranged_dd', 'A', { style = 'weaponskill', injectKit = false }), -- Corvus
     [1002]= e('aura',      'S', { style = 'support',     injectKit = false }), -- Cornelia (incorporeal Haste/Acc/RAcc/MAcc)
-    [1003]= e('hybrid',    'S', {
+    [1004]= e('hybrid',    'S', {
         style     = 'apex',
         cap       = C.MATSUI_CAP,
         mbCap     = C.MATSUI_CAP,
         softBand  = C.MATSUI_SOFT_BAND,
         injectKit = false,
-    }), -- Matsui-P (Void Keeper: soft 40–50k, hard 79,999)
+    }), -- Matsui-P (Void Keeper on Exc_S slot: soft 40–50k, hard 79,999)
 
     ------------------------------------------------------------------
     -- Implemented but not grantable yet (DISABLED_SPELL)

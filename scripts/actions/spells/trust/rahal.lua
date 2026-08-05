@@ -25,7 +25,7 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.TRION] = xi.trust.messageOffset.TEAMWORK_1,
         [xi.magic.spell.CURILLA] = xi.trust.messageOffset.TEAMWORK_2,
         [xi.magic.spell.EXCENMILLE] = xi.trust.messageOffset.TEAMWORK_3,
-        [xi.magic.spell.EXCENMILLE_S] = xi.trust.messageOffset.TEAMWORK_4,
+        -- Exc_S slot is Matsui-P; no Exc_S teamwork line.
     })
 
     mob:setMobMod(xi.mobMod.CAN_SHIELD_BLOCK, 1)

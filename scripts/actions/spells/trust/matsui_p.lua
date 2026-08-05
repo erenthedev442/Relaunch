@@ -1,8 +1,8 @@
 -----------------------------------
 -- Trust: Matsui-P
--- Spell 1003 / pool 6003. Void Keeper capstone.
--- Appearance uses Makki-Chebukki's year-round look (seasonal Matsui model
--- R0-crashes). Kit is NIN/BLM: ninjutsu + Blade WS + Innin.
+-- Spell 1004 / pool 6004 (overlays permanent Excenmille_S client slot).
+-- Void Keeper capstone. Menu shows "Excenmille (S)"; casting summons Matsui.
+-- Model 3121 + NIN/BLM: ninjutsu + Blade WS + Innin.
 -- Prioritizes elemental ninjutsu + T1 nukes (Futae MB).
 -- WS: Blade Rin/Retsu/Ei/Jin/Ten/Ku/Kamu/Hi/Shun.
 -- After master uses a Lv2 SC property WS, opens Light/Darkness lines when
@@ -109,8 +109,9 @@ spellObject.onSpellCast = function(caster, target, spell)
 end
 
 spellObject.onMobSpawn = function(mob)
-    -- Look from pool (Makki year-round model); force display name.
+    -- Look from pool (model 3121); force display name over Exc_S menu slot.
     mob:renameEntity('Matsui-P', true)
+    mob:setMobMod(xi.mobMod.DUAL_WIELD, 1)
 
     local master = mob:getMaster()
     local lvl = mob:getMainLvl()
