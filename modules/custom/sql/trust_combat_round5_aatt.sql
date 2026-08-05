@@ -32,13 +32,13 @@ UPDATE `mob_skills` SET
     `tertiary_sc` = 0
 WHERE `mob_skill_id` = 935;
 
--- Spell kit: add Sleep/Sleep II; drop Aspir II; fix Aero IV max level.
-DELETE FROM `mob_spell_lists` WHERE `spell_list_id` = 408 AND `spell_id` IN (248, 157);
+-- Spell kit: ensure Sleep/Sleep II + Aero IV max; drop Aspir II (retail: Aspir).
+-- Stock list already has 253/259 — must DELETE before INSERT (PK spell_list_id+spell_id).
+DELETE FROM `mob_spell_lists` WHERE `spell_list_id` = 408 AND `spell_id` IN (157, 248, 253, 259);
 INSERT INTO `mob_spell_lists` VALUES
-('TRUST_AATT',408,157,72,255), -- aero_iv (was capped 82)
+('TRUST_AATT',408,157,72,255), -- aero_iv
 ('TRUST_AATT',408,253,20,255), -- sleep
 ('TRUST_AATT',408,259,41,255); -- sleep_ii
-DELETE FROM `mob_spell_lists` WHERE `spell_list_id` = 408 AND `spell_id` = 248; -- aspir_ii (retail: Aspir)
 
 -- BLM/DRK, Scythe AA.
 UPDATE `mob_pools` SET
