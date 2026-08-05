@@ -24,7 +24,7 @@ teodorAA.onMobWeaponSkill = function(mob, target, skill, action)
         params.attackType         = xi.attackType.MAGICAL
         params.damageType         = xi.damageType.DARK
         params.shadowBehavior     = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
-        params.skipMagicBonusDiff = true -- AA lane; MAGIC_DAMAGE stays on nukes/WS
+        params.skipMagicBonusDiff = true -- AA lane; HIT_DMG also strips MAGIC_DAMAGE in mobMagicalMove
 
         local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
         if xi.mobskills.processDamage(mob, target, skill, action, info) then

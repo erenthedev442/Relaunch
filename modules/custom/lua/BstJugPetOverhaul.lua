@@ -70,22 +70,24 @@ local CONFIG =
     doubleAttack = 60,
     tripleAttack = 50,
 
-    -- Magical pet damage floor (for Fly/Funguar/Cactuar Ready moves like
-    -- Cursed Sphere, Dark Spore, 1000 Needles which use magic formulas).
-    flatMAB  = 5000,
-    flatMACC = 4000,
-    masterMATTShare = 1.0,   -- inherit 100% of master's MATT mods
-    masterMACCShare = 1.0,   -- inherit 100% of master's MACC mods
+    -- Magical pet damage floor (Fly/Funguar/Lizard/Slug Ready nukes).
+    -- 2026-08-05 retune: Fireball/Purulent Ooze were permanently pinning the
+    -- 79,999 (AoE 39,999) companion cap. Aim ~40-55k unaugmented magic Ready
+    -- at 99, with Beast Affinity / gear pushing strong pets to the default cap.
+    flatMAB  = 1800,
+    flatMACC = 2200,
+    masterMATTShare = 1.0,
+    masterMACCShare = 1.0,
 
-    -- Magical Ready-move power (Cursed Sphere / mobMagicalMove path only).
-    -- flatMagicDamage: flat additive to base damage before fTP (xi.mod.MAGIC_DAMAGE=311).
-    -- flatMagicDMGMult: gives the pet a blood-pact-style multiplier (xi.mod.BP_DAMAGE=126).
-    --   mobskills.lua line 1195 now applies this for any player-owned pet (not avatar-only).
-    --   Formula: finalDmg × (1 + BP_DAMAGE/100). Reduced from 2000 (×21) to
-    --   300 (×4) for the 1M damage ceiling; a reported 1.9M Fireball should land
-    --   around 360k before differences in target resistance and magic bursts.
-    flatMagicDamage  = 500,
-    flatMagicDMGMult = 300,
+    -- Magical Ready: MAGIC_DAMAGE adds before fTP; BP_DAMAGE is ×(1+BP/100).
+    -- Was 500 / 300 (×4) and always hard-capped. Now ~180 / 90 (×1.9).
+    flatMagicDamage  = 180,
+    flatMagicDMGMult = 90,
+
+    -- Physical Ready uses getWeaponDmg(); jug stock weapon DMG ~= level (~99),
+    -- which left tiger/mandy/hippogryph Ready at 3-12k after the ×7-11 curve.
+    -- Raise weapon damage so physical Ready benchmarks ~40-55k with augments.
+    flatWeaponDamage = 550,
 
     -- Auto-Ready: pet fires its TP move on its own once it caps TP.
     autoReady           = true,
@@ -192,6 +194,12 @@ local function applyEndgameScaling(master, pet)
 
     pet:addMod(xi.mod.DOUBLE_ATTACK, CONFIG.doubleAttack)
     pet:addMod(xi.mod.TRIPLE_ATTACK, CONFIG.tripleAttack)
+
+    -- Physical Ready / AA weapon floor (setDamage writes the jug weapon's DMG).
+    local weaponDmg = math.floor(CONFIG.flatWeaponDamage * floorMult)
+    if weaponDmg > 0 then
+        pet:setDamage(weaponDmg)
+    end
 
     -- PET AUGMENTS: the engine only forwards the PET_* mods (990-995) to avatars,
     -- wyverns, and automatons -- NEVER jug pets -- so a BST's "Pet: Attack/Accuracy/

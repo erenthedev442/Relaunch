@@ -16,6 +16,10 @@
 -- individual summoning/<avatar>.lua) is guaranteed to run, and BST already
 -- proves the approach works (BstJugPetOverhaul.lua uses the same hook).
 --
+-- LEVEL SCALING: endgame floors scale with master level (masterLvl/99), same
+-- pattern as BstJugPetOverhaul. Without this, a leveling SMN inherits full
+-- endgame ATT/BP_DAMAGE and Blood Pacts peg the 79,999 hard cap.
+--
 -- petIDs 8-20 = avatars (CARBUNCLE through CAIT_SITH); 76 = SIREN.
 -- petIDs 0-7  = spirits -- these DON'T use the same Blood Pact damage path
 -- (mobskills.lua bloodPactMultiplier is gated on isAvatar() which excludes
@@ -34,11 +38,7 @@ local function isAvatarPet(petID)
     return (petID >= AVATAR_MIN and petID <= AVATAR_MAX) or petID == SIREN_ID
 end
 
--- addMod that can't overflow the engine's int16 mod storage (max 32767). The big
--- BP_DAMAGE / ATT / ACC / HP adds -- especially with a high summoning-skill-over-
--- cap term -- would otherwise wrap NEGATIVE, and a negative BP_DAMAGE makes the
--- Blood Pact multiplier negative (the pact HEALS / zeroes instead of hitting).
--- Clamps the running total to 32000.
+-- addMod that can't overflow the engine's int16 mod storage (max 32767).
 local function safeAddMod(pet, modId, amount)
     local cur = pet:getMod(modId)
     local add = math.min(amount, 32000 - cur)
@@ -48,7 +48,6 @@ local function safeAddMod(pet, modId, amount)
 end
 
 local function applyAvatarBoost(master, pet)
-    -- Guard: skip non-SMN masters and double-applies (zone-in respawn, etc.)
     if not master:isPC() or master:getMainJob() ~= xi.job.SMN then
         return
     end
@@ -58,56 +57,45 @@ local function applyAvatarBoost(master, pet)
     pet:setLocalVar('smnBoostApplied', 1)
 
     local skillOverCap = math.max(xi.summon.getSummoningSkillOverCap(pet), 0)
+    -- 1.0 at 99, ~0.09 at level 9 — matches BST jug floor scaling.
+    local levelScale = math.min((master:getMainLvl() or 1) / 99, 1.0)
 
-    -- 2026-07-13 owner call: cut every added value below by 80% (SMN avatars were
-    -- OP relative to everything on the server outside the endgame NMs the stack
-    -- was originally dimensioned against). Every constant here is 20% of what it
-    -- used to be; comments call out the pre-cut number in parentheses.
+    local function scaled(amount)
+        return math.floor(amount * levelScale)
+    end
 
-    -- BP_DAMAGE: +140 = 2.4x multiplier on Blood Pact Rage/Ward damage (was +700 / 8x).
-    -- formula: finalDmg × (1 + BP_DAMAGE/100); 140 → 2.4x.
-    -- +1 per summoning-skill point over cap (was +5) for modest skill-gear progression.
-    safeAddMod(pet, xi.mod.BP_DAMAGE, 140 + skillOverCap * 1)
+    -- 2026-07-13: cut every endgame floor to 20% of the original stack.
+    -- 2026-08-05: multiply those floors by levelScale so leveling SMNs
+    -- do not inherit full endgame BP/ATT and peg the damage hard cap.
 
-    -- Magic stats so magical BPs (Inferno, Judgment Bolt, Geocrush...) survive
-    -- the (100+MATT)/(100+MDEF) ratio vs Legendary NMs. MATT=60 (was 300) gives a
-    -- ~1.05-1.15x magicBonusDiff against typical NM MDEF (200-300) — noticeably
-    -- less shove than before, still meaningful.
-    pet:addMod(xi.mod.MATT, 60)   -- was 300
-    pet:addMod(xi.mod.MACC, 500)  -- was 2500
-    pet:addMod(xi.mod.INT,  200)  -- was 1000
+    -- BP_DAMAGE: +140 @99 = 2.4x on Blood Pact Rage/Ward.
+    safeAddMod(pet, xi.mod.BP_DAMAGE, scaled(140 + skillOverCap * 1))
 
-    -- Physical stats so PHYSICAL Blood Pacts (Predator Claws, Flaming Crush,
-    -- Mountain Buster, Chaotic Strike, Spinning Dive, Eclipse Bite...) still land.
-    -- A physical BP's damage is pDif = avatarATT / targetDEF; the reduced +1200 flat
-    -- (was +6000) still helps vs Legendary's 150-160 NM DEF, but pDif no longer
-    -- pegs the 4.25x cap on tap. +per-skill-over-cap so gear/skillups matter.
-    safeAddMod(pet, xi.mod.ATT, 1200 + skillOverCap * 8)   -- was 6000 + skillOverCap * 40
-    safeAddMod(pet, xi.mod.ACC, 900  + skillOverCap * 2)   -- was 4500 + skillOverCap * 10
-    pet:addMod(xi.mod.STR, 100) -- was 500
-    pet:addMod(xi.mod.DEX,  60) -- was 300; feeds avatar physical-BP crit rate (getDexCritRate)
+    pet:addMod(xi.mod.MATT, scaled(60))
+    pet:addMod(xi.mod.MACC, scaled(500))
+    pet:addMod(xi.mod.INT,  scaled(200))
 
-    -- ===== EVERY avatar action, not just Blood Pacts =====
-    -- These give melee auto-attacks a real damage floor and let the avatar survive
-    -- to keep swinging. Cut to 20% too so a raw (non-BP) auto-attacking avatar
-    -- contributes but doesn't dominate.
-    pet:addMod(xi.mod.ATTP,              10)    -- +10% attack (was +50)
-    pet:addMod(xi.mod.DOUBLE_ATTACK,     20)    -- 20% double-attack (was 100/guaranteed)
-    pet:addMod(xi.mod.TRIPLE_ATTACK,     20)    -- 20% triple-attack (was 100/guaranteed)
-    pet:addMod(xi.mod.DOUBLE_ATTACK_DMG, 20)    -- +20% damage on double (was +100)
-    pet:addMod(xi.mod.TRIPLE_ATTACK_DMG, 20)    -- +20% damage on triple (was +100)
-    pet:addMod(xi.mod.HASTE_GEAR,        500)   -- +5% attack speed (was 25% engine cap)
+    safeAddMod(pet, xi.mod.ATT, scaled(1200 + skillOverCap * 8))
+    safeAddMod(pet, xi.mod.ACC, scaled(900  + skillOverCap * 2))
+    pet:addMod(xi.mod.STR, scaled(100))
+    pet:addMod(xi.mod.DEX, scaled(60))
 
-    -- Survivability trimmed proportionally. DMGPHYS/DMGMAGIC are /10000 and the
-    -- engine HARD-CAPS each at -50% (-5000); -1000 is a real but modest -10%.
-    pet:addMod(xi.mod.DMGPHYS,  -1000)  -- was -5000 (-50% cap)
-    pet:addMod(xi.mod.DMGMAGIC, -1000)  -- was -5000 (-50% cap)
-    -- HP must use setMaxHP/addHP (mirrors BstJugPetOverhaul pattern) because
-    -- addMod(HP) stores in the int16 mod array and safeAddMod clamps it to 32,000.
-    -- setMaxHP writes the int32 max-HP field directly; addHP fills the new room.
-    local bonusHP = 30000 -- was 150000
-    pet:setMaxHP(pet:getMaxHP() + bonusHP)
-    pet:addHP(bonusHP)
+    pet:addMod(xi.mod.ATTP,              scaled(10))
+    pet:addMod(xi.mod.DOUBLE_ATTACK,     scaled(20))
+    pet:addMod(xi.mod.TRIPLE_ATTACK,     scaled(20))
+    pet:addMod(xi.mod.DOUBLE_ATTACK_DMG, scaled(20))
+    pet:addMod(xi.mod.TRIPLE_ATTACK_DMG, scaled(20))
+    pet:addMod(xi.mod.HASTE_GEAR,        scaled(500))
+
+    pet:addMod(xi.mod.DMGPHYS,  -scaled(1000))
+    pet:addMod(xi.mod.DMGMAGIC, -scaled(1000))
+
+    -- HP must use setMaxHP/addHP (int32); addMod(HP) is int16-capped.
+    local bonusHP = scaled(30000)
+    if bonusHP > 0 then
+        pet:setMaxHP(pet:getMaxHP() + bonusHP)
+        pet:addHP(bonusHP)
+    end
 end
 
 m:addOverride('xi.pet.spawnPet', function(caster, petID, state, target)

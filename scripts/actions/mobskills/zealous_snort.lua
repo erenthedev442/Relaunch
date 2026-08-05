@@ -1,7 +1,7 @@
 -----------------------------------
--- Frenzied Rage
--- Family: Lynx / Coeurl jug
--- Description: Attack Boost for pet and master.
+-- Zealous Snort
+-- Family: Raaz
+-- Description: Attack boost for pet and master.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}

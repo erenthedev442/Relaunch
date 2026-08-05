@@ -818,19 +818,27 @@ xi.aftermath.onEffectGain = function(target, effect)
         -- Mythic
         [2] = function(x)
             local tp  = effect:getSubPower()
-            local pet = target:getPet()
-            if pet then
-                -- pets gain same mods as the player, so give them the effect without a loss message
-                pet:delStatusEffectSilent(xi.effect.AFTERMATH)
-                pet:addStatusEffect(xi.effect.AFTERMATH, { power = effect:getPower(), duration = effect:getDuration() / 1000, origin = target, subType = effect:getSubType(), subPower = effect:getSubPower(), tier = effect:getTier() })
-                pet:getStatusEffect(xi.effect.AFTERMATH):addEffectFlag(xi.effectFlag.NO_LOSS_MESSAGE)
-            end
-
             -- Retail Mythic tiers are mutually exclusive: AM1 accuracy,
             -- AM2 attack, AM3 occasionally attacks twice/thrice.
             local mods = aftermath.mods[getAftermathLevel(tp)]
             for i = 1, #mods, 2 do
                 effect:addMod(mods[i], mods[i + 1](tp))
+            end
+
+            -- Copy effect AND mods onto the pet. Previously the pet got a bare
+            -- AFTERMATH status while OCC_ATT_TWICE/THRICE stayed on the master
+            -- only — Aymur AM3 never multi-hit on jug autos.
+            local pet = target:getPet()
+            if pet then
+                pet:delStatusEffectSilent(xi.effect.AFTERMATH)
+                pet:addStatusEffect(xi.effect.AFTERMATH, { power = effect:getPower(), duration = effect:getDuration() / 1000, origin = target, subType = effect:getSubType(), subPower = effect:getSubPower(), tier = effect:getTier() })
+                local petEffect = pet:getStatusEffect(xi.effect.AFTERMATH)
+                if petEffect then
+                    petEffect:addEffectFlag(xi.effectFlag.NO_LOSS_MESSAGE)
+                    for i = 1, #mods, 2 do
+                        petEffect:addMod(mods[i], mods[i + 1](tp))
+                    end
+                end
             end
         end,
 
@@ -855,7 +863,21 @@ xi.aftermath.onEffectGain = function(target, effect)
             for _, m in ipairs(aftermath.mods) do
                 effect:addMod(m[1], m[2][tier])
             end
-        end,
+
+            -- Retail "Aftermath (Incl. Pets)" — copy DAMAGE_LIMITP etc. to jug/avatar.
+            local pet = target:getPet()
+            if pet then
+                pet:delStatusEffectSilent(xi.effect.AFTERMATH)
+                pet:addStatusEffect(xi.effect.AFTERMATH, { power = effect:getPower(), duration = effect:getDuration() / 1000, origin = target, subType = effect:getSubType(), subPower = effect:getSubPower(), tier = effect:getTier() })
+                local petEffect = pet:getStatusEffect(xi.effect.AFTERMATH)
+                if petEffect then
+                    petEffect:addEffectFlag(xi.effectFlag.NO_LOSS_MESSAGE)
+                    for _, m in ipairs(aftermath.mods) do
+                        petEffect:addMod(m[1], m[2][tier])
+                    end
+                end
+            end
+        end
 
         -- Aeonic
         [5] = function(x)

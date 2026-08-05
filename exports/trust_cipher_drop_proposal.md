@@ -51,7 +51,7 @@ Rank mirrors drop band: **1 = D1 (15%)** · **2 = D2 (13%)** · **3 = D3 (11%)**
 | B | Arciela | direct | Eccentric Eve | Abyssea Marks T1 | 13 | — | 965 |
 | B | Brygid | cipher | Bomb Queen | Hunting League Rank II | 13 | 10155 | 970 |
 | B | D. Shantotto | cipher | Kamohoalii | Geas Fete T2 | 13 | 10129 | 934 |
-| — | Excenmille S | disabled | — | — | 0 | Slot is Matsui-P (Void Keeper) | 1004 |
+| B | Excenmille S | direct | Toppling Tuber | Abyssea Marks T1 | 13 | — | 1004 |
 | B | Fablinix | cipher | Suzaku | Reforge Sky [II] | 13 | 10128 | 932 |
 | B | Gadalar | direct | Garbage Gel | Unity Wanted T2 | 13 | — | 919 |
 | B | Ingrid | direct | Strix | Unity Wanted T2 | 13 | — | 921 |
@@ -303,7 +303,7 @@ Rank mirrors drop band: **1 = D1 (15%)** · **2 = D2 (13%)** · **3 = D3 (11%)**
 | 1 | Romaa Mihgo | C | 949 | Ironhorn Baldurno | Unity Wanted T1 | 15 | No cipher item |
 | 1 | Zazarg | C | 924 | Tiyanak | Unity Wanted T1 | 15 | No cipher item |
 | 2 | Arciela | B | 965 | Eccentric Eve | Abyssea Marks T1 | 13 | No cipher item |
-| — | Excenmille S | — | 1004 | — | — | 0 | Slot is Matsui-P (Void Keeper); Toppling Tuber drop retired |
+| 2 | Excenmille S | B | 1004 | Toppling Tuber | Abyssea Marks T1 | 13 | Variant trust; optional collection row |
 | 2 | Iron Eater | B | 917 | Blazing Eruca | Abyssea Marks T2 | 13 | No cipher item |
 | 2 | Klara | B | 948 | Lord Varney | Abyssea Marks T2 | 13 | No cipher item; was Infamy Maat fight |
 | 2 | Prishe | B | 913 | Sirrush | Abyssea Marks T2 | 13 | No cipher item |

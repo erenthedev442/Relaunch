@@ -1,5 +1,6 @@
 -----------------------------------
--- Shared Arciela light magical auto-attack (MAB/MDB path).
+-- Shared Arciela light magical auto-attack (AA lane).
+-- Weapon-scaled like other skill-replaced trust autos; nuke MATT/MDMG stay on spells.
 -----------------------------------
 local arcielaAA = {}
 
@@ -10,14 +11,14 @@ end
 arcielaAA.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    -- Light AA; support/mage package MATT + MAGIC_DAMAGE carry the tier curve.
-    params.baseDamage     = mob:getMainLvl() + 2
-    params.fTP            = { 1.0, 1.0, 1.0 }
-    params.element        = xi.element.LIGHT
-    params.attackType     = xi.attackType.MAGICAL
-    params.damageType     = xi.damageType.LIGHT
-    params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
-    params.primaryMessage = xi.msg.basic.HIT_DMG
+    params.baseDamage         = mob:getWeaponDmg()
+    params.fTP                = { 1.0, 1.0, 1.0 }
+    params.element            = xi.element.LIGHT
+    params.attackType         = xi.attackType.MAGICAL
+    params.damageType         = xi.damageType.LIGHT
+    params.shadowBehavior     = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+    params.primaryMessage     = xi.msg.basic.HIT_DMG
+    params.skipMagicBonusDiff = true
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 

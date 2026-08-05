@@ -287,7 +287,7 @@ xi.trust.VOID_KEEPER_SPELL =
     GEMMA    = 901,
     CORVUS   = 902,
     CORNELIA = 1002, -- client spell slot "Cornelia"
-    MATSUI_P = 1004, -- overlays permanent Excenmille (S) slot
+    MATSUI_P = 1003, -- client spell slot "Matsui-P" (known-good summon slot)
 }
 
 -- Temporarily retired / not yet unlockable (stripped on login; grant blocked).
@@ -312,7 +312,7 @@ local blockedCipherSpells =
 
 -- Farmable "catch 'em all" roster for Void Keeper caps (Cornelia / Matsui-P).
 -- Excludes Void Keeper customs (Meat/Gemma/Corvus/Cornelia/Matsui) and the
--- temporarily disabled Aldo / Aldo UC slots → 114.
+-- temporarily disabled Aldo / Aldo UC slots → 115.
 xi.trust.collectionRoster =
 {
     896, 897, 898, 900, 903, 904, 905, 906, 907, 908, 909, 910,
@@ -321,7 +321,7 @@ xi.trust.collectionRoster =
     941, 942, 943, 944, 945, 946, 947, 948, 949, 950, 951, 952, 953, 954, 955,
     956, 957, 958, 959, 960, 961, 962, 963, 964, 965, 966, 967, 968, 969, 970,
     971, 972, 973, 974, 975, 976, 977, 978, 979, 980, 981, 982, 983, 984, 985,
-    986, 987, 988, 989, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999,
+    986, 987, 988, 989, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1004,
     1005, 1006, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017,
     1018, 1019,
 }

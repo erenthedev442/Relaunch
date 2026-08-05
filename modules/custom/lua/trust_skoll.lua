@@ -6,8 +6,8 @@
 --   Corvus   -> spell 902 : 40 trusts collected, 10M gil
 --   Meat     -> spell 899 : 50 trusts collected, 10M gil
 --   Gemma    -> spell 901 : 60 trusts collected, 10M gil
---   Cornelia -> spell 1002: full farmable roster (114), 50M gil
---   Matsui-P -> spell 1004 (Excenmille S slot): full farmable roster (114), 50M gil
+--   Cornelia -> spell 1002: full farmable roster (115), 50M gil
+--   Matsui-P -> spell 1003: full farmable roster (115), 50M gil
 --   Meat/Gemma/Corvus/Matsui/Cornelia are NOT part of catch-'em-all.
 -----------------------------------
 require('modules/module_utils')
@@ -74,16 +74,16 @@ local TRUSTS =
         },
     },
     {
-        spellId               = 1004,
+        spellId               = 1003,
         name                  = 'Matsui-P',
-        clientName            = 'Excenmille (S)',
+        clientName            = 'Matsui-P',
         gilCost               = 50000000,
         requireFullCollection = true,
         bindLabel             = 'Bind Matsui-P',
-        boundMsg              = 'Matsui-P is already bound to your service. Cast "Excenmille (S)" from your Trust menu.',
+        boundMsg              = 'Matsui-P is already bound to your service.',
         sealMsgs              = {
             'Matsui-P cracks his knuckles. The cap is his problem now.',
-            'Look for "Excenmille (S)" in your Trust menu -- casting it calls Matsui-P.',
+            'Point him at what needs deleting.',
         },
     },
 }

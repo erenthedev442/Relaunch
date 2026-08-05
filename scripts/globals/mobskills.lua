@@ -85,7 +85,9 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
     end
 
     local multiplier = standardProgression.getPetDamageMultiplier(master, target)
-    local cap = standardProgression.DAMAGE_CAP
+    local cap = standardProgression.getPetDamageCap
+        and standardProgression.getPetDamageCap(master)
+        or standardProgression.DAMAGE_CAP
     if skill:isAoE() then
         multiplier = 1 + (multiplier - 1) * 0.50
         cap = math.floor(cap * 0.50)
@@ -1072,7 +1074,9 @@ end
 -- params.mATTBonus            = { #, #, # }: Flat MACC bonus/penalty (Integer)
 -- params.mACCBonus            = { #, #, # }: Flat MATT bonus/penalty (Integer)
 -- params.skipDamageAdjustment = boolean: Ignores Target Damage Adjustment calculations.
--- params.skipMagicBonusDiff   = boolean: Ignores MDB step
+-- params.skipMagicBonusDiff   = boolean: Ignores MAB/MDB step
+--   Also: primaryMessage HIT_DMG (skill-replaced AA) skips MAGIC_DAMAGE + MAB/MDB
+--   so nuke-package MDMG cannot inflate auto-attacks.
 -- params.skipStoneSkin        = boolean: skips stoneskin calculation.
 -- params.resistTierOverride   = float: Forces a specific resist tier.
 -- params.str_wSC              = float: % of STR stat added to baseDamage of skill.
@@ -1112,6 +1116,11 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, action, skillParams)
     local mACCBonusfTP         = utils.defaultIfNil(skillParams.mACCBonus, { 0, 0, 0 })
     local skipDamageAdjustment = utils.defaultIfNil(skillParams.skipDamageAdjustment and true, false)
     local skipMagicBonusDiff   = utils.defaultIfNil(skillParams.skipMagicBonusDiff and true, false)
+    -- Skill-replaced autos announce HIT_DMG; treat as AA lane (no MDMG / MAB).
+    local isSkillAutoLane      = skillParams.primaryMessage == xi.msg.basic.HIT_DMG
+    if isSkillAutoLane then
+        skipMagicBonusDiff = true
+    end
     local skipStoneskin        = utils.defaultIfNil(skillParams.skipStoneSkin and true, false)
     -- TODO: handle different types of Stoneskin(Magical, Physical, Agnostic)
     local resistTierOverride   = utils.defaultIfNil(skillParams.resistTierOverride, 0)
@@ -1181,7 +1190,10 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, action, skillParams)
         dStat = utils.clamp(dStat, -65, 999)
     end
 
-    damage = math.floor((damage + wscMods + mob:getMod(xi.mod.MAGIC_DAMAGE)) * baseDamagefTPMult + dStat + additiveBonusDamage)
+    -- MAGIC_DAMAGE is the nuke package floor; skill-replaced AA must not inherit it
+    -- (Teodor/Rosulatia/Shantotto II were landing multi-k autos from MDMG alone).
+    local magicDamageBonus = isSkillAutoLane and 0 or mob:getMod(xi.mod.MAGIC_DAMAGE)
+    damage = math.floor((damage + wscMods + magicDamageBonus) * baseDamagefTPMult + dStat + additiveBonusDamage)
     damage = math.max(0, damage)
 
     local hitsLanded      = 1 -- Magic skills can't miss in the same way as physical skills so assume 1 hit landed for calculations.

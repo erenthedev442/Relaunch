@@ -47,6 +47,12 @@ local function scaleDamage(mob, target, skill, damage)
         cap = math.floor(cap * 0.50)
     end
 
+    -- Match BST/DRG/PUP companion leveling: sub-99 pets cannot chunk more
+    -- than 40% of the target's max HP in one hit (stops leveling blitzes).
+    if master and master:getMainLvl() < progression.ENDGAME_PLAYER_LEVEL then
+        cap = math.min(cap, math.floor(target:getMaxHP() * 0.40))
+    end
+
     return progression.applyMultiplier(damage, multiplier, cap)
 end
 

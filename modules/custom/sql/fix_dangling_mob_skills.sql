@@ -23,5 +23,9 @@
 -- (mob skill lists are cached into mob data at zone load / boot).
 -- =====================================================================
 
+-- Keep jug Ready ability IDs (672-798 range living in pet_skills.pet_skill_id).
+-- Those are NOT mob_skills rows; deleting them strips Sensilla Blades, Wing Slap,
+-- Infected Leech, etc. from the Ready menu even though pet_skills + scripts exist.
 DELETE FROM `mob_skill_lists`
-WHERE `mob_skill_id` NOT IN (SELECT `mob_skill_id` FROM `mob_skills`);
+WHERE `mob_skill_id` NOT IN (SELECT `mob_skill_id` FROM `mob_skills`)
+  AND `mob_skill_id` NOT IN (SELECT `pet_skill_id` FROM `pet_skills`);

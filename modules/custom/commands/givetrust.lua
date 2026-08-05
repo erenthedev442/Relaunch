@@ -3,7 +3,7 @@
 -- desc: [GM] Grant a paid Void Keeper trust to a player, free of charge --
 --       the same trusts the Void Keeper sells for gil, but bestowed at will.
 --       Trusts: gemma (901), meat (899), corvus (902), cornelia (1002),
---       matsui-p / matsui (1004 = Excenmille S slot).
+--       matsui-p / matsui (1003).
 --
 -- Usage:  !givetrust <gemma|meat|corvus|cornelia|matsui> <player>
 --         !givetrust <gemma|meat|corvus|cornelia|matsui>  (grant to yourself)
@@ -17,9 +17,9 @@ local TRUSTS =
     meat      = { spell = 899,  client = 'Excenmille'  },
     corvus    = { spell = 902,  client = 'Curilla'     },
     cornelia  = { spell = 1002, client = 'Cornelia'    },
-    matsui    = { spell = 1004, client = 'Excenmille (S)' },
-    ['matsui-p'] = { spell = 1004, client = 'Excenmille (S)' },
-    matsuip   = { spell = 1004, client = 'Excenmille (S)' },
+    matsui    = { spell = 1003, client = 'Matsui-P'    },
+    ['matsui-p'] = { spell = 1003, client = 'Matsui-P' },
+    matsuip   = { spell = 1003, client = 'Matsui-P'    },
 }
 
 ---@type TCommand

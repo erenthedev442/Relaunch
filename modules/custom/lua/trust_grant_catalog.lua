@@ -23,7 +23,7 @@ catalog.VOID_KEEPER_SPELL_SET =
     [901]  = true, -- Gemma / Nanaa Mihgo
     [902]  = true, -- Corvus / Curilla
     [1002] = true, -- Cornelia (client spell id)
-    [1004] = true, -- Matsui-P (overlays Excenmille S)
+    [1003] = true, -- Matsui-P (client spell id)
 }
 
 -- Mirror of ROE_TRUST_ID[11] from src/map/roe.h (C++ UpdateUnityTrust grants these).

@@ -112,7 +112,7 @@ C.bySystem = {
         ['alfard'] = { method = 'direct_spell_grant', itemId = 0, spellId = 984, dropPct = 11, trustName = 'August', nmName = 'Alfard' },
         ['azdaja'] = { method = 'direct_spell_grant', itemId = 0, spellId = 963, dropPct = 9, trustName = 'Chacharoon', nmName = 'Azdaja' },
         ['bloodguzzler'] = { method = 'direct_spell_grant', itemId = 0, spellId = 916, dropPct = 15, trustName = 'Cherukiki', nmName = 'Bloodguzzler' },
-        -- Toppling Tuber no longer grants Exc_S: spell 1004 is Matsui-P (Void Keeper only).
+        ['topplingtuber'] = { method = 'direct_spell_grant', itemId = 0, spellId = 1004, dropPct = 13, trustName = 'Excenmille S', nmName = 'Toppling_Tuber' },
         ['shaula'] = { method = 'direct_spell_grant', itemId = 0, spellId = 1016, dropPct = 13, trustName = 'Ingrid II', nmName = 'Shaula' },
         ['blazingeruca'] = { method = 'direct_spell_grant', itemId = 0, spellId = 917, dropPct = 13, trustName = 'Iron Eater', nmName = 'Blazing_Eruca' },
         ['ketea'] = { method = 'direct_spell_grant', itemId = 0, spellId = 976, dropPct = 11, trustName = 'Kayeel-Payeel', nmName = 'Ketea' },

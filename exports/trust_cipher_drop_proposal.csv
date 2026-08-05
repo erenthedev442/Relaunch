@@ -103,7 +103,7 @@
 "","Iroha","997","direct_spell_grant","Iratham","Iratham","Reforge Abyssea [II]","D2","2","B","13","cipher retired - direct learn"
 "","Ygnas","998","direct_spell_grant","Isgebind","Isgebind","Abyssea Marks T3","D4","4","S","9","CORE â€” no cipher item"
 "","Monberaux","999","direct_spell_grant","Maju","Maju","Geas Fete T4","D4","4","A","9","CORE; cipher retired - direct learn"
-"","Excenmille S","1004","disabled","","","","","","","0","Slot is Matsui-P (Void Keeper); Toppling Tuber drop retired"
+"","Excenmille S","1004","direct_spell_grant","Toppling Tuber","Toppling_Tuber","Abyssea Marks T1","D2","2","B","13","Variant trust; optional collection row"
 "","Ayame UC","1005","direct_spell_grant","Wyvernhunter Bambrox","Wyvernhunter_Bambrox","Unity Wanted T3","D3","3","A","11","No cipher item"
 "","Maat UC","1006","direct_spell_grant","Amarok","Amarok","Abyssea Marks T3","D2","2","B","13","No cipher item"
 "","Aldo UC","1007","disabled","","","Retired","","","A","0","Temporarily removed from live roster / drops (2026-08-02)"

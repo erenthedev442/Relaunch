@@ -19,6 +19,66 @@ catalog.FRESH_99_MULTIPLIER         = 8.00
 catalog.MASTERED_99_MULTIPLIER      = 13.00
 catalog.PET_FRESH_99_MULTIPLIER     = 7.00
 catalog.PET_MASTERED_99_MULTIPLIER  = 11.00
+-- BST/DRG/PUP companion caps by master mainhand tier (pets never use Prime WS ceilings).
+catalog.PET_AMBU_DAMAGE_CAP         = 99999
+catalog.PET_REMA_DAMAGE_CAP         = 999999
+-- Extra mult on top of the JP curve so REMA pets land ~200-300k Ready hits.
+catalog.PET_AMBU_MULTIPLIER_BONUS   = 1.25
+catalog.PET_REMA_MULTIPLIER_BONUS   = 2.85
+
+-- Spalirisos (Prime BST axe) — hard-capped like REMA pets, never Prime-WS tier.
+local PET_PRIME_ITEM_IDS =
+{
+    [21730] = true, -- Spalirisos
+}
+
+local function getMasterMainItemId(player)
+    if not player then
+        return 0
+    end
+
+    return player:getEquipID(xi.slot.MAIN) or 0
+end
+
+local function isAmbuFinalWeapon(itemId)
+    if itemId == 0 then
+        return false
+    end
+
+    local ok, ambu = pcall(require, 'modules/custom/lua/ambuscade_weapons_catalog')
+    if not ok or not ambu or not ambu.BY_ITEM then
+        return false
+    end
+
+    local info = ambu.BY_ITEM[itemId]
+    return info ~= nil and info.stage == 5
+end
+
+local function isRemaFinalWeapon(itemId)
+    if itemId == 0 then
+        return false
+    end
+
+    local ok, rema = pcall(require, 'modules/custom/lua/rema_ws_tier_catalog')
+    if not ok or not rema or not rema.BY_ITEM_ID then
+        return false
+    end
+
+    return rema.BY_ITEM_ID[itemId] ~= nil
+end
+
+function catalog.getPetDamageCap(player)
+    local itemId = getMasterMainItemId(player)
+    if isRemaFinalWeapon(itemId) or PET_PRIME_ITEM_IDS[itemId] then
+        return catalog.PET_REMA_DAMAGE_CAP
+    end
+
+    if isAmbuFinalWeapon(itemId) then
+        return catalog.PET_AMBU_DAMAGE_CAP
+    end
+
+    return catalog.DAMAGE_CAP
+end
 
 -- A three-level grace band keeps ordinary Even Match / Tough combat unchanged.
 -- Beyond that band, progression scaling and WS accuracy fall progressively.
@@ -139,7 +199,15 @@ function catalog.getPetDamageMultiplier(player, target)
         catalog.getLevelGapFactor(player:getMainLvl(), target:getMainLvl()) *
         levelRatio
 
-    return 1 + (endgameMultiplier - 1) * progressionFactor
+    local mult = 1 + (endgameMultiplier - 1) * progressionFactor
+    local itemId = getMasterMainItemId(player)
+    if isRemaFinalWeapon(itemId) or PET_PRIME_ITEM_IDS[itemId] then
+        mult = mult * catalog.PET_REMA_MULTIPLIER_BONUS
+    elseif isAmbuFinalWeapon(itemId) then
+        mult = mult * catalog.PET_AMBU_MULTIPLIER_BONUS
+    end
+
+    return mult
 end
 
 function catalog.applyMultiplier(damage, multiplier, cap)
