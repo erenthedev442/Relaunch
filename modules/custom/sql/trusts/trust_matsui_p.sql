@@ -1,8 +1,11 @@
 -- =====================================================================
 -- trust_matsui_p.sql  --  Trust: Matsui-P (Void Keeper capstone)
 -- Spell 1003 / pool 6003. CLIENT spell ID 1003 = "Matsui-P".
--- Look 0x0000310C = model 3121. Pool mJob is SAM (12) so the client accepts
--- this model; kit stays ninjutsu / Blade WS / Innin via spell+skill lists + Lua.
+--
+-- Look uses Makki-Chebukki's year-round trust model (0x0000220C). Matsui's
+-- seasonal model 3121 R0-crashes the client outside campaign DAT windows;
+-- there is no server-side "enable campaign" switch. Name/packet stay Matsui-P;
+-- kit is real NIN/BLM katana + San ninjutsu / T1 nukes / Blade WS.
 -- =====================================================================
 
 REPLACE INTO spell_list
@@ -75,11 +78,10 @@ REPLACE INTO mob_pools
      spellList, namevis, roamflag, skill_list_id, resist_id,
      modelSize, modelHitboxSize)
 VALUES
-    -- model 3121 + SAM display job (NIN anims on this model R0 the client).
-    -- Katana cmbSkill; spells/skills/Lua still drive the NIN kit.
-    (6003, 'matsui_p', 'Matsui-P', 297, UNHEX('0000310C00000000000000000000000000000000'),
-     12, 4, 9, 210, 300,
+    -- Year-round Makki look (0x0000220C). Real NIN/BLM + katana; name stays Matsui-P.
+    (6003, 'matsui_p', 'Matsui-P', 297, UNHEX('0000220C00000000000000000000000000000000'),
+     13, 4, 9, 210, 300,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,
      6003, 0, 0, 6003, 153,
-     1, 12);
+     2, 11);

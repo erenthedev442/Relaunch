@@ -1,7 +1,8 @@
 -----------------------------------
 -- Trust: Matsui-P
 -- Spell 1003 / pool 6003. Void Keeper capstone.
--- Pool mJob is SAM so model 3121 summons cleanly; kit is still ninjutsu/Blade.
+-- Appearance uses Makki-Chebukki's year-round look (seasonal Matsui model
+-- R0-crashes). Kit is NIN/BLM: ninjutsu + Blade WS + Innin.
 -- Prioritizes elemental ninjutsu + T1 nukes (Futae MB).
 -- WS: Blade Rin/Retsu/Ei/Jin/Ten/Ku/Kamu/Hi/Shun.
 -- After master uses a Lv2 SC property WS, opens Light/Darkness lines when
@@ -108,7 +109,7 @@ spellObject.onSpellCast = function(caster, target, spell)
 end
 
 spellObject.onMobSpawn = function(mob)
-    -- Model from mob_pools look 0x0000310C (3121); pool job SAM for client safety.
+    -- Look from pool (Makki year-round model); force display name.
     mob:renameEntity('Matsui-P', true)
 
     local master = mob:getMaster()
@@ -139,6 +140,9 @@ spellObject.onMobSpawn = function(mob)
     -- Permanent ninjutsu bonus (Innin path is %/100); stacks with Innin uptime.
     mob:addMod(xi.mod.NIN_NUKE_BONUS_INNIN, 20)
 
+    -- SetupJob(NIN) assigns shuriken SPECIAL_SKILL + standback; melee kit only.
+    mob:setMobMod(xi.mobMod.SPECIAL_SKILL, 0)
+    mob:setMobMod(xi.mobMod.HP_STANDBACK, 0)
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
 
     -- Shadows first — never WS without them.
