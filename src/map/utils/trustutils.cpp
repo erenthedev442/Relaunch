@@ -42,6 +42,7 @@
 #include "entities/mobentity.h"
 #include "entities/trustentity.h"
 #include "items/item_weapon.h"
+#include "mob_modifier.h"
 #include "mobskill.h"
 #include "status_effect_container.h"
 #include "weapon_skill.h"
@@ -742,6 +743,14 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
     battleutils::AddTraits(PTrust, traits::GetTraits(sJob), sLvl);
 
     mobutils::SetupJob(PTrust);
+
+    // SetupJob(NIN) assigns mob shuriken SPECIAL_SKILL 272 + standback. Trust NINs
+    // are melee/ninjutsu kits — clear before Spawn so AA never opens that path.
+    if (mJob == JOB_NIN)
+    {
+        PTrust->setMobMod(MOBMOD_SPECIAL_SKILL, 0);
+        PTrust->setMobMod(MOBMOD_HP_STANDBACK, 0);
+    }
 
     // Skills
     using namespace gambits;

@@ -1,8 +1,8 @@
 -- =====================================================================
 -- trust_matsui_p.sql  --  Trust: Matsui-P (Void Keeper capstone)
 -- Spell 1003 / pool 6003. CLIENT spell ID 1003 = "Matsui-P".
--- Look 0x0000310C = model 3121 (trust-era size=0 look). Always available here.
--- NIN/BLM katana + San ninjutsu / T1 nukes / Utsusemi / utility.
+-- Look 0x0000310C = model 3121. Pool mJob is SAM (12) so the client accepts
+-- this model; kit stays ninjutsu / Blade WS / Innin via spell+skill lists + Lua.
 -- =====================================================================
 
 REPLACE INTO spell_list
@@ -75,10 +75,10 @@ REPLACE INTO mob_pools
      spellList, namevis, roamflag, skill_list_id, resist_id,
      modelSize, modelHitboxSize)
 VALUES
-    -- model 3121 = 0x0C31 LE -> bytes 31 0C (trust-era size=0 look).
-    -- NIN/BLM, Katana, high cmbDmgMult for Void Keeper AA identity.
+    -- model 3121 + SAM display job (NIN anims on this model R0 the client).
+    -- Katana cmbSkill; spells/skills/Lua still drive the NIN kit.
     (6003, 'matsui_p', 'Matsui-P', 297, UNHEX('0000310C00000000000000000000000000000000'),
-     13, 4, 9, 210, 300,
+     12, 4, 9, 210, 300,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,
      6003, 0, 0, 6003, 153,

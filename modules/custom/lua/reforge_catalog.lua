@@ -61,20 +61,23 @@ catalog.vendorPos  = { x = 0.0, y = 0.0, z = 0.0, rot = 128 }
 -- the NPCs and route each spawner to its own mob position. Keep `id` unique.
 --
 -- COORDINATES: spawnerPos values are LIVE-VERIFIED !pos readings from zone 43
--- (2026-07-07). Each mobSpawnPos is a small 3-unit nudge off its spawner so the
--- NM pops adjacent to (not on top of) the NPC while staying on the same
--- verified walkable patch -- station 1's NM nudges away from the origin vendor
--- cluster; stations 2/3 nudge +Z into open ground. Y is kept at the verified
--- ground height per station. Add more stations here as you !pos more spots.
+-- (2026-07-07). mobSpawnPos is where the NM actually appears.
+--   Station 1 -- short -Z nudge (hub is open; players report this one fine).
+--   Station 2 -- was +3 Z into a wall corner; oversized models (Seiryu etc.)
+--                stacked the spawner and instantly swung. Spawn toward the
+--                open field center instead (~12y).
+--   Station 3 -- was +3 Z onto fence posts (untargetable / OOB casts). Spawn
+--                toward open ground between stations (~12y).
+-- Y kept at verified ground height per station.
 -- --------------------------------------------------------------------------
 catalog.stations =
 {
     -- Station 1 -- hub entrance (Path), beside the vendor/exchange/warp-in.
     { id = 1, spawnerPos = { x =  -0.66, y =  0.00, z =  -3.10, rot = 143 }, mobSpawnPos = { x =  -0.66, y =  0.00, z =  -6.10, rot = 143 } },
-    -- Station 2 -- mid field (Grass).
-    { id = 2, spawnerPos = { x =  16.64, y = -0.54, z =  52.22, rot = 193 }, mobSpawnPos = { x =  16.64, y = -0.54, z =  55.22, rot = 193 } },
-    -- Station 3 -- far field (Path).
-    { id = 3, spawnerPos = { x = -26.16, y =  0.28, z =  94.49, rot =   9 }, mobSpawnPos = { x = -26.16, y =  0.28, z =  97.49, rot =   9 } },
+    -- Station 2 -- mid field (Grass); NM toward arena center, clear of the wall.
+    { id = 2, spawnerPos = { x =  16.64, y = -0.54, z =  52.22, rot = 193 }, mobSpawnPos = { x =   7.00, y = -0.54, z =  45.00, rot = 193 } },
+    -- Station 3 -- far field (Path); NM inland of the posts.
+    { id = 3, spawnerPos = { x = -26.16, y =  0.28, z =  94.49, rot =   9 }, mobSpawnPos = { x = -18.00, y =  0.28, z =  85.00, rot =   9 } },
 }
 
 -- Un-engaged despawn: a popped NM that nobody engages within this many
@@ -83,6 +86,12 @@ catalog.stations =
 -- countdown is cancelled the instant a player engages, and re-armed if the
 -- NM is abandoned after a fight. Set to 0 to disable. (Mirrors HuntingLeague.)
 catalog.unengagedDespawnSecs = 180  -- 3 minutes
+
+-- Seconds after pop before the NM takes enmity on the spawner. Claim still
+-- locks immediately so nobody can steal the kill; this buffer stops oversized
+-- models (esp. station 2) from DA'ing a caster for ~800 on the spawn tick.
+-- Set to 0 to restore instant engage. (Mirrors ApexTrials' delayed enmity.)
+catalog.engageGraceSecs = 2.5
 
 -- =========================================================
 -- THREE NM POOLS, EACH TIED TO ONE CURRENCY + ONE SET

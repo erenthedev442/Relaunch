@@ -486,11 +486,13 @@ buildSourceNMMenu = function(player, srcDef, station)
                     skillList            = md.skillList,
                     mixins               = native.mixinsFor(md.groupId),
                     -- Detection bitfield from xi.detects. Without this, the
-                    -- engine logs "has no detection methods!" per spawn AND
-                    -- the NM never auto-aggros. Same field handling as HL
-                    -- and the Game Master; read in luautils.cpp.
+                    -- engine logs "has no detection methods!" per spawn.
+                    -- isAggroable stays false so sight/hearing cannot swing
+                    -- during the engage-grace window; enmity is applied on a
+                    -- timer below (catalog.engageGraceSecs). Same delayed-
+                    -- engage idea as ApexTrials.
                     detection            = xi.detects.SIGHT_AND_HEARING,
-                    isAggroable          = true,
+                    isAggroable          = false,
                     releaseIdOnDisappear = true,
 
                     -- Idle despawn: an un-engaged NM cleans itself up after
@@ -645,17 +647,38 @@ buildSourceNMMenu = function(player, srcDef, station)
                 mechanics.attach(mob, mechCfg)
                 native.attach(mob, md.groupId)
 
-                -- Claim to the spawner immediately (same pattern as the
-                -- HuntingLeague / AbysseaMarks pops): claim + enmity, AFTER
-                -- spawn()/mods/HP so the fight starts with final stats.
-                -- Without this the NM popped unclaimed and anyone could
-                -- take it.
+                -- Claim immediately so the kill locks to the popper; delay
+                -- enmity by engageGraceSecs so oversized NMs don't smash a
+                -- caster on the same tick as spawn (station-2 Seiryu report).
+                -- isAggroable is false above so sight can't bypass the grace.
                 mob:updateClaim(p)
-                mob:updateEnmity(p)
+                local graceSecs = catalog.engageGraceSecs or 0
+                if graceSecs > 0 then
+                    local graceMob = mob
+                    local graceStation = station
+                    p:timer(math.floor(graceSecs * 1000), function(pp)
+                        if not pp or not graceMob then return end
+                        if graceStation.activeMob ~= graceMob then return end
+                        local aliveOk, alive = pcall(function()
+                            return graceMob:isAlive() and graceMob:isSpawned()
+                        end)
+                        if not aliveOk or not alive then return end
+                        if pp:getZoneID() ~= catalog.huntZoneId then return end
+                        pcall(function()
+                            graceMob:updateClaim(pp)
+                            graceMob:updateEnmity(pp)
+                        end)
+                    end)
+                else
+                    mob:updateEnmity(p)
+                end
 
+                local graceNote = (graceSecs > 0)
+                    and string.format('  Engages in %.1fs.', graceSecs)
+                    or ''
                 p:printToPlayer(
-                    string.format('%s has appeared!  Slay it for %d %s + base piece, kupo!',
-                        md.label, md.marks, srcDef.currencyName),
+                    string.format('%s has appeared!%s  Slay it for %d %s + base piece, kupo!',
+                        md.label, graceNote, md.marks, srcDef.currencyName),
                     xi.msg.channel.SYSTEM_3)
                 -- Close the spawner on a successful pop. Selecting the option
                 -- already dismisses the client menu; re-showing the NM list here

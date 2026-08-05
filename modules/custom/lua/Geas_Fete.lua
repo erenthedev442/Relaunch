@@ -363,33 +363,38 @@ local QM_POINTS = {
         [17961682] = { 31, 86 },  -- Warder of Faith, Ark Angel TT
         [17961683] = { 34, 78 },  -- Warder of Hope, Byakko-Escha
         [17961699] = { 46, 48 },  -- Ruea, Khon
-        [17961700] = { 35, 80 },  -- Warder of Prudence, Seiryu-Escha
+        [17961700] = { 35, 80, 87 },  -- Warder of Prudence, Seiryu-Escha, Ark Angel MR
         [17961701] = { 45, 81 },  -- Bia, Suzaku-Escha
         [17961702] = { 61, 82 },  -- Yilan, Kirin
-        [17961703] = { 53, 84 },  -- Peirithoos, Kouryu
+        -- 17961703 sat 1y from Ma's ??? but was the wrong twin (untargetable
+        -- flags). Peirithoos + Kouryu share Ma's clickable camp instead.
         [17961704] = { 32, 93 },  -- Warder of Justice, Warder of Courage
-        [17961705] = { 47 },  -- Ma
+        [17961705] = { 47, 53, 84 },  -- Ma, Peirithoos, Kouryu (portal #7)
         [17961706] = { 49 },  -- Met
         [17961707] = { 65 },  -- Naphula
         [17961708] = { 51 },  -- Wasserspeier
         [17961709] = { 52 },  -- Emputa
         [17961710] = { 50, 79 },  -- Khun, Genbu-Escha
         [17961728] = { 29 },  -- Warder of Temperance
-        [17961729] = { 54 },  -- Asida
+        -- Droplet ???s relocated off wall/bridge/void onto solid ground
+        -- (geas_fete_ruaun_qm_fix.sql + npc_list.sql). Bridge/tip camps
+        -- also skip the random spawn ring (CAMP_SPAWN_NO_SCATTER).
+        [17961729] = { 54 },  -- Asida (portal #2 plaza)
         [17961730] = { 55 },  -- Tenodera
         [17961731] = { 56 },  -- Sava Savanovic
         [17961732] = { 57 },  -- Palila
-        [17961733] = { 59 },  -- Hanbi
-        [17961734] = { 36 },  -- Warder of Love
+        [17961733] = { 59 },  -- Hanbi (portal #6 pad)
+        [17961734] = { 36 },  -- Warder of Love (portal #7 stock camp)
         [17961735] = { 63 },  -- Amymone
         [17961736] = { 67 },  -- Kammavaca
         [17961737] = { 72 },  -- Pakecet
         [17961738] = { 74 },  -- Duke Vepar
-        [17961739] = { 76 },  -- Vir'ava
+        [17961739] = { 76 },  -- Vir'ava (portal #12 pad)
         [17961740] = { 90 },  -- Ark Angel EV
         [17961741] = { 91 },  -- Ark Angel GK
-        [17961742] = { 85 },  -- Ark Angel HM
-        [17961777] = { 87 },  -- Ark Angel MR
+        [17961742] = { 85 },  -- Ark Angel HM (inland of portal #15)
+        -- 17961777 was AA MR at (0,0,0) — zone-center void / Ru'Avitau OOB.
+        -- Folded onto 17961700 (portal #4 / stock AA MR camp) above.
     },
     [REISEN] = {
         -- 2026-07-13 REDISTRIBUTION: of the 23 stock 'qm' npcs originally mapped
@@ -408,13 +413,19 @@ local QM_POINTS = {
         [17969915] = { 45, 46, 50 },       -- Crom Dubh, Golden Kist, Belphegor
         [17969965] = { 47, 48, 54 },       -- Mauve-Wristed Gomberry, Dazzling Dolores, Sabotender Royal
         [17969966] = { 51, 67, 74, 80 },   -- Kabandha, Zerde, Schah, Albumen
+        -- 17969974–76: stock ??? looked like MODEL_DOOR; sibling _830–_832 orbs
+        -- + fep1–3 sat on the same coords and blocked targeting. Fixed in
+        -- sql/npc_list.sql + geas_fete_reisen_qm_fix.sql (hide orbs, fix ???).
         [17969974] = { 49, 55, 60 },       -- Taelmoth the Diremaw, Zduhac, Sarsaok
         [17969975] = { 52, 62 },           -- Selkit, Bashmu
         [17969976] = { 57, 66, 71 },       -- Strophadia, Teles, Vinipata
-        [17969990] = { 58, 64 },           -- Gajasimha, Yakshi (droplet ???)
-        [17969991] = { 53, 65 },           -- Sang Buaya, Neak (droplet ???)
-        [17969992] = { 56, 59, 61 },       -- Oryx, Ironside, Old Shuck (droplet ???)
-        [17969993] = { 63, 85 },           -- Maju, Onychophora (droplet ???)
+        [17969990] = { 58, 64 },           -- Gajasimha, Yakshi (Ingress #7 droplet)
+        -- Sang Buaya / Neak were on 17969991 (Temprix / Ingress #8). Neak is a
+        -- large dragon — a leftover pop next to Temprix is a player-safety risk.
+        -- Host them at Ingress #9 with the other off-map droplet camp instead.
+        -- 17969991 stays a stock ethereal-droplet ??? only (no Geas Fete menu).
+        [17969992] = { 53, 56, 59, 61, 65 }, -- Sang Buaya, Oryx, Ironside, Old Shuck, Neak (Ingress #9)
+        [17969993] = { 63, 85 },           -- Maju, Onychophora (Ingress #10 droplet)
         [17969994] = { 87 },               -- Erinys
     },
 }
@@ -1045,12 +1056,25 @@ end
 -- ===================================================================
 -- NM SPAWN
 -- ===================================================================
+-- Narrow bridge / map-tip Ru'Aun camps: the default 5–7y random ring
+-- tosses the NM into void even when the ??? itself is clickable. Spawn
+-- on the ??? instead.
+local CAMP_SPAWN_NO_SCATTER =
+{
+    [17961733] = true, -- Hanbi (portal #6)
+    [17961739] = true, -- Vir'ava (portal #12)
+    [17961742] = true, -- Ark Angel HM (portal #15)
+}
+
 local function spawnNM(player, zone, zoneId, def, campNpc)
     local px, py, pz = campNpc:getXPos(), campNpc:getYPos(), campNpc:getZPos()
-    local angle = math.random() * math.pi * 2
-    local dist  = 5 + math.random(0, 2)
-    local mx    = px + math.cos(angle) * dist
-    local mz    = pz + math.sin(angle) * dist
+    local mx, mz = px, pz
+    if not CAMP_SPAWN_NO_SCATTER[campNpc:getID()] then
+        local angle = math.random() * math.pi * 2
+        local dist  = 5 + math.random(0, 2)
+        mx = px + math.cos(angle) * dist
+        mz = pz + math.sin(angle) * dist
+    end
 
     local rot        = math.random(0, 255)
     local defCapture = def
@@ -1360,17 +1384,28 @@ end
 -- compact packet byte limit.
 local MENU_PAGE_SIZE = 4
 
+-- Off-map Reisenjima droplet ???s sit beside Ethereal Ingress pads. Warping to
+-- the raw ??? XYZ dumps players onto void collision ("no map for this area");
+-- land on the Ingress pad instead. ??? stays put so in-zone approach still works.
+local CAMP_WARP_OVERRIDE =
+{
+    [17969990] = { x = 640.599, y = -374.000, z = -911.200 }, -- Ingress #7 (Gajasimha / Yakshi)
+    [17969992] = { x = -580.000, y = -417.400, z = -1065.000 }, -- Ingress #9 (Oryx / Ironside / Old Shuck)
+    [17969993] = { x = -389.220, y = -439.710, z = -835.130 }, -- Ingress #10 (Maju / Onychophora)
+}
+
 local function warpToCamp(player, zoneId, npcId, label)
-    local pos = campPosition(npcId)
+    local pos = CAMP_WARP_OVERRIDE[npcId] or campPosition(npcId)
     if not pos then
         player:printToPlayer('[Geas Fete] That camp is unavailable. Please report the missing ???.', S)
         return
     end
 
+    local ox = CAMP_WARP_OVERRIDE[npcId] and 0 or 2.5
     player:printToPlayer(string.format(
         '[Geas Fete] Warping to %s near %.1f, %.1f, %.1f in %s.',
         label, pos.x, pos.y, pos.z, ZONE_LABELS[zoneId]), S)
-    player:setPos(pos.x + 2.5, pos.y, pos.z + 2.5, 0, zoneId)
+    player:setPos(pos.x + ox, pos.y, pos.z + ox, 0, zoneId)
 end
 
 local function showCampPage(player, zoneId, page, backFn)
