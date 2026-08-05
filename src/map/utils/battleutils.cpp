@@ -2224,6 +2224,12 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
     // Scarlet Delirium: Updates status effect power with damage bonus
     battleutils::HandleScarletDelirium(PDefender, damage);
 
+    // Mark trust AA so endgame softclamp (WS/nuke bands) does not rewrite autos.
+    if (PAttacker->objtype == TYPE_TRUST && PAttacker->GetLocalVar("fellowApplied") != 1)
+    {
+        PAttacker->SetLocalVar("TrustOutgoingIsAutoAttack", 1);
+    }
+
     int32 corrected = PDefender->takeDamage(damage, PAttacker, attackType, damageType);
     if (damage < 0)
     {

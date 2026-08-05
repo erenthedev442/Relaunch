@@ -31,9 +31,10 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap);
 // one roll. No-op for masters at 99+, Adventuring Fellow, non-trusts, non-mobs.
 int32 ApplyTrustLevelingHpPortionCap(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage);
 
-// Master 99+: softclamp trust outgoing damage into a per-hit soft target rolled
-// from TrustSoftBandMin/Max, asymptoting toward the trust hard cap. No-op when
-// master < 99, fellow, non-trust, or damage <= 0. Runs before the hard cap.
+// Master 99+: softclamp trust WS/nuke overshoots into a per-hit soft target
+// rolled from TrustSoftBandMin/Max, asymptoting toward the hard cap. Skips when
+// TrustOutgoingIsAutoAttack is set (normal AA + skill-replaced HIT_DMG autos).
+// No-op when master < 99, fellow, non-trust, or damage <= 0.
 int32 ApplyTrustEndgameSoftClamp(CBattleEntity* PAttacker, int32 damage);
 
 // Master 99+: DD trusts vs mobs above level 120 take a steep outgoing damage cut.
@@ -58,7 +59,7 @@ int32 ApplyAutomatonDamageBonus(CBattleEntity* PAttacker, int32 damage);
 // damage <= 0.
 int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRanged);
 
-// Trust auto-attacks (melee + ranged swings via TakePhysicalDamage) hit at 25%
-// of calculated damage. Weaponskills / magic are unchanged. Adventuring Fellow
-// (fellowApplied) is exempt.
+// Trust auto-attacks (melee + ranged via TakePhysicalDamage): 0.55x at master 99,
+// 0.28x while leveling. Weaponskills / magic unchanged. Fellow exempt.
+// Skill-replaced HIT_DMG autos apply the same trim in Lua processDamage.
 int32 ApplyTrustAutoAttackDamageAdjust(CBattleEntity* PAttacker, int32 damage);

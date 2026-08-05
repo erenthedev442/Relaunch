@@ -968,8 +968,8 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
         // Master 99+ DD trusts vs mobs >120: steep outgoing cut (before softclamp).
         amount = ApplyTrustEndgameLevelDamageMult(attacker, this, amount);
 
-        // Master 99+: compress trust overshoots into tier soft bands (variety,
-        // not 40k spam). Runs after stoneskin/phalanx so a full absorb stays 0.
+        // Master 99+: compress trust WS/nuke overshoots into tier soft bands.
+        // Auto-attacks set TrustOutgoingIsAutoAttack and are skipped inside.
         amount = ApplyTrustEndgameSoftClamp(attacker, amount);
 
         const int32 globalHpDamageCap = settings::get<int32>("map.GLOBAL_HP_DAMAGE_CAP");
@@ -981,6 +981,11 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
 
         // Trusts while leveling: per-hit tier band % of mob max HP (C/B/A/S).
         amount = ApplyTrustLevelingHpPortionCap(attacker, this, amount);
+    }
+    else if (attacker != nullptr && attacker->GetLocalVar("TrustOutgoingIsAutoAttack") == 1)
+    {
+        // Absorb / zero-damage AA must not leave the flag stuck for the next WS.
+        attacker->SetLocalVar("TrustOutgoingIsAutoAttack", 0);
     }
 
     // Encounter scripts may impose a stricter ceiling while a mob TP move is

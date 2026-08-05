@@ -1,7 +1,7 @@
 -- =====================================================================
 -- trust_matsui_p.sql  --  Trust: Matsui-P (Void Keeper capstone)
 -- Spell 1003 / pool 6003. CLIENT spell ID 1003 = "Matsui-P".
--- Look 0x0000310C = model 3121 (trust-era size=0 look).
+-- Look 0x0000310C = model 3121 (trust-era size=0 look). Always available here.
 -- NIN/BLM katana + San ninjutsu / T1 nukes / Utsusemi / utility.
 -- =====================================================================
 

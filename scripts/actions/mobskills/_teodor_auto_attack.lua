@@ -18,12 +18,13 @@ teodorAA.onMobWeaponSkill = function(mob, target, skill, action)
     params.primaryMessage = xi.msg.basic.HIT_DMG
 
     if id == MS_DARK then
-        params.baseDamage     = mob:getWeaponDmg()
-        params.fTP            = { 1.15, 1.15, 1.15 }
-        params.element        = xi.element.DARK
-        params.attackType     = xi.attackType.MAGICAL
-        params.damageType     = xi.damageType.DARK
-        params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+        params.baseDamage         = mob:getWeaponDmg()
+        params.fTP                = { 1.15, 1.15, 1.15 }
+        params.element            = xi.element.DARK
+        params.attackType         = xi.attackType.MAGICAL
+        params.damageType         = xi.damageType.DARK
+        params.shadowBehavior     = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+        params.skipMagicBonusDiff = true -- AA lane; MAGIC_DAMAGE stays on nukes/WS
 
         local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
         if xi.mobskills.processDamage(mob, target, skill, action, info) then

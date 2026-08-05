@@ -1606,13 +1606,20 @@ xi.mobskills.processDamage = function(actor, target, skill, action, info)
             actor:getLocalVar('fellowApplied') ~= 1 and
             info.damage > 0
         then
-            -- Skill-replaced autos use HIT_DMG; match C++ trust AA trim (0.55).
-            if
-                info.attackType == xi.attackType.PHYSICAL and
-                skill and
-                skill:getMsg() == xi.msg.basic.HIT_DMG
-            then
-                info.damage = math.max(1, math.floor(info.damage * 0.55))
+            -- Skill-replaced autos announce HIT_DMG even when the damage lane is
+            -- MAGICAL (Morimar/Darrcuiln/Shantotto II/etc. — avoid spikes/samba).
+            -- Do NOT apply WS WSD or soft-band floor to those, or AA lands at 33–40k.
+            local isSkillAuto = skill and skill:getMsg() == xi.msg.basic.HIT_DMG
+            if isSkillAuto then
+                local aaMult = 0.55
+                local master = actor:getMaster()
+                if master and master:getMainLvl() < 99 then
+                    aaMult = 0.28
+                end
+
+                info.damage = math.max(1, math.floor(info.damage * aaMult))
+                -- C++ softclamp must not compress AA into WS soft bands.
+                actor:setLocalVar('TrustOutgoingIsAutoAttack', 1)
             else
                 -- Trust mobskill WS never hit player weaponskills.lua — apply ALL_WSDMG here.
                 local wsdPct = actor:getMod(xi.mod.ALL_WSDMG_ALL_HITS) or 0

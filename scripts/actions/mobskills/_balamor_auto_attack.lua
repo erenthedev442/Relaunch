@@ -10,14 +10,15 @@ end
 balamorAA.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    -- Magical default base; hybrid A MAGIC_DAMAGE package carries the tier curve.
-    params.baseDamage     = mob:getMainLvl() + 2
-    params.fTP            = { 1.0, 1.0, 1.0 }
-    params.element        = xi.element.DARK
-    params.attackType     = xi.attackType.MAGICAL
-    params.damageType     = xi.damageType.DARK
-    params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
-    params.primaryMessage = xi.msg.basic.HIT_DMG
+    -- AA lane: no MAGIC_DAMAGE/MAB (nukes/absorbs keep the mage package).
+    params.baseDamage         = mob:getWeaponDmg()
+    params.fTP                = { 1.0, 1.0, 1.0 }
+    params.element            = xi.element.DARK
+    params.attackType         = xi.attackType.MAGICAL
+    params.damageType         = xi.damageType.DARK
+    params.shadowBehavior     = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+    params.primaryMessage     = xi.msg.basic.HIT_DMG
+    params.skipMagicBonusDiff = true
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 

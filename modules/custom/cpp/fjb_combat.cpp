@@ -254,6 +254,14 @@ int32 ApplyTrustEndgameSoftClamp(CBattleEntity* PAttacker, int32 damage)
         return damage;
     }
 
+    // Auto-attacks (TakePhysicalDamage + skill-replaced HIT_DMG) must never be
+    // pulled into WS/nuke soft bands — that looked like every AA hitting 33–40k.
+    if (PAttacker->GetLocalVar("TrustOutgoingIsAutoAttack") == 1)
+    {
+        PAttacker->SetLocalVar("TrustOutgoingIsAutoAttack", 0);
+        return damage;
+    }
+
     int32 bandMin = static_cast<int32>(PAttacker->GetLocalVar("TrustSoftBandMin"));
     int32 bandMax = static_cast<int32>(PAttacker->GetLocalVar("TrustSoftBandMax"));
     if (bandMin <= 0 || bandMax < bandMin)

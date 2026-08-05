@@ -57,7 +57,7 @@ local function hasProp(props, want)
 end
 
 local function isLevel2Prop(prop)
-    return prop >= SC.GRAVITATION and prop <= SC.FRAGMENTATION
+    return prop ~= nil and prop >= SC.GRAVITATION and prop <= SC.FRAGMENTATION
 end
 
 local function pickLightDarknessOpener(p, s, t)
@@ -138,7 +138,9 @@ spellObject.onMobSpawn = function(mob)
     -- Permanent ninjutsu bonus (Innin path is %/100); stacks with Innin uptime.
     mob:addMod(xi.mod.NIN_NUKE_BONUS_INNIN, 20)
 
-    mob:setMobMod(xi.mobMod.DUAL_WIELD, 1)
+    -- SetupJob(NIN) assigns shuriken SPECIAL_SKILL 272 + standback; melee kit only.
+    mob:setMobMod(xi.mobMod.SPECIAL_SKILL, 0)
+    mob:setMobMod(xi.mobMod.HP_STANDBACK, 0)
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
 
     -- Shadows first — never WS without them.
