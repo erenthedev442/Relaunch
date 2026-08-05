@@ -1,589 +1,82 @@
-﻿Collaborator review  2026-08-05 07:20:54
+﻿Collaborator review  2026-08-05 07:47:15
 Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit 2249ade8450b0edbf1757eb0d954ed7e29607527
+commit 9edfef3548234320621c0054943a938c96e40b18
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Wed Aug 5 15:08:54 2026 +0100
+Date:   Wed Aug 5 15:45:27 2026 +0100
 
-    fix(relaunch): Geas Fete camp voids, Reforge spawn grace, Matsui-P model
+    fix(relaunch/trusts): stop Matsui-P R0 with year-round Makki look
     
-    Move Ru'Aun/Reisen ??? camps off walls/void and remount missing NMs onto
-    clickable points; delay Reforge enmity and open station 2/3 spawn pads so
-    oversized pops stop smashing casters. Keep Matsui-P on SAM for model 3121.
+    Seasonal model 3121 crashes the client; use Makki's permanent look with a
+    real NIN/BLM pool so he summons safely while keeping the Void Keeper kit.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/modules/custom/lua/Geas_Fete.lua b/modules/custom/lua/Geas_Fete.lua
-index 33bc31da0d..560716e054 100644
---- a/modules/custom/lua/Geas_Fete.lua
-+++ b/modules/custom/lua/Geas_Fete.lua
-@@ -363,33 +363,38 @@ local QM_POINTS = {
-         [17961682] = { 31, 86 },  -- Warder of Faith, Ark Angel TT
-         [17961683] = { 34, 78 },  -- Warder of Hope, Byakko-Escha
-         [17961699] = { 46, 48 },  -- Ruea, Khon
--        [17961700] = { 35, 80 },  -- Warder of Prudence, Seiryu-Escha
-+        [17961700] = { 35, 80, 87 },  -- Warder of Prudence, Seiryu-Escha, Ark Angel MR
-         [17961701] = { 45, 81 },  -- Bia, Suzaku-Escha
-         [17961702] = { 61, 82 },  -- Yilan, Kirin
--        [17961703] = { 53, 84 },  -- Peirithoos, Kouryu
-+        -- 17961703 sat 1y from Ma's ??? but was the wrong twin (untargetable
-+        -- flags). Peirithoos + Kouryu share Ma's clickable camp instead.
-         [17961704] = { 32, 93 },  -- Warder of Justice, Warder of Courage
--        [17961705] = { 47 },  -- Ma
-+        [17961705] = { 47, 53, 84 },  -- Ma, Peirithoos, Kouryu (portal #7)
-         [17961706] = { 49 },  -- Met
-         [17961707] = { 65 },  -- Naphula
-         [17961708] = { 51 },  -- Wasserspeier
-         [17961709] = { 52 },  -- Emputa
-         [17961710] = { 50, 79 },  -- Khun, Genbu-Escha
-         [17961728] = { 29 },  -- Warder of Temperance
--        [17961729] = { 54 },  -- Asida
-+        -- Droplet ???s relocated off wall/bridge/void onto solid ground
-+        -- (geas_fete_ruaun_qm_fix.sql + npc_list.sql). Bridge/tip camps
-+        -- also skip the random spawn ring (CAMP_SPAWN_NO_SCATTER).
-+        [17961729] = { 54 },  -- Asida (portal #2 plaza)
-         [17961730] = { 55 },  -- Tenodera
-         [17961731] = { 56 },  -- Sava Savanovic
-         [17961732] = { 57 },  -- Palila
--        [17961733] = { 59 },  -- Hanbi
--        [17961734] = { 36 },  -- Warder of Love
-+        [17961733] = { 59 },  -- Hanbi (portal #6 pad)
-+        [17961734] = { 36 },  -- Warder of Love (portal #7 stock camp)
-         [17961735] = { 63 },  -- Amymone
-         [17961736] = { 67 },  -- Kammavaca
-         [17961737] = { 72 },  -- Pakecet
-         [17961738] = { 74 },  -- Duke Vepar
--        [17961739] = { 76 },  -- Vir'ava
-+        [17961739] = { 76 },  -- Vir'ava (portal #12 pad)
-         [17961740] = { 90 },  -- Ark Angel EV
-         [17961741] = { 91 },  -- Ark Angel GK
--        [17961742] = { 85 },  -- Ark Angel HM
--        [17961777] = { 87 },  -- Ark Angel MR
-+        [17961742] = { 85 },  -- Ark Angel HM (inland of portal #15)
-+        -- 17961777 was AA MR at (0,0,0) ΓÇö zone-center void / Ru'Avitau OOB.
-+        -- Folded onto 17961700 (portal #4 / stock AA MR camp) above.
-     },
-     [REISEN] = {
-         -- 2026-07-13 REDISTRIBUTION: of the 23 stock 'qm' npcs originally mapped
-@@ -408,13 +413,19 @@ local QM_POINTS = {
-         [17969915] = { 45, 46, 50 },       -- Crom Dubh, Golden Kist, Belphegor
-         [17969965] = { 47, 48, 54 },       -- Mauve-Wristed Gomberry, Dazzling Dolores, Sabotender Royal
-         [17969966] = { 51, 67, 74, 80 },   -- Kabandha, Zerde, Schah, Albumen
-+        -- 17969974ΓÇô76: stock ??? looked like MODEL_DOOR; sibling _830ΓÇô_832 orbs
-+        -- + fep1ΓÇô3 sat on the same coords and blocked targeting. Fixed in
-+        -- sql/npc_list.sql + geas_fete_reisen_qm_fix.sql (hide orbs, fix ???).
-         [17969974] = { 49, 55, 60 },       -- Taelmoth the Diremaw, Zduhac, Sarsaok
-         [17969975] = { 52, 62 },           -- Selkit, Bashmu
-         [17969976] = { 57, 66, 71 },       -- Strophadia, Teles, Vinipata
--        [17969990] = { 58, 64 },           -- Gajasimha, Yakshi (droplet ???)
--        [17969991] = { 53, 65 },           -- Sang Buaya, Neak (droplet ???)
--        [17969992] = { 56, 59, 61 },       -- Oryx, Ironside, Old Shuck (droplet ???)
--        [17969993] = { 63, 85 },           -- Maju, Onychophora (droplet ???)
-+        [17969990] = { 58, 64 },           -- Gajasimha, Yakshi (Ingress #7 droplet)
-+        -- Sang Buaya / Neak were on 17969991 (Temprix / Ingress #8). Neak is a
-+        -- large dragon ΓÇö a leftover pop next to Temprix is a player-safety risk.
-+        -- Host them at Ingress #9 with the other off-map droplet camp instead.
-+        -- 17969991 stays a stock ethereal-droplet ??? only (no Geas Fete menu).
-+        [17969992] = { 53, 56, 59, 61, 65 }, -- Sang Buaya, Oryx, Ironside, Old Shuck, Neak (Ingress #9)
-+        [17969993] = { 63, 85 },           -- Maju, Onychophora (Ingress #10 droplet)
-         [17969994] = { 87 },               -- Erinys
-     },
- }
-@@ -1045,12 +1056,25 @@ end
- -- ===================================================================
- -- NM SPAWN
- -- ===================================================================
-+-- Narrow bridge / map-tip Ru'Aun camps: the default 5ΓÇô7y random ring
-+-- tosses the NM into void even when the ??? itself is clickable. Spawn
-+-- on the ??? instead.
-+local CAMP_SPAWN_NO_SCATTER =
-+{
-+    [17961733] = true, -- Hanbi (portal #6)
-+    [17961739] = true, -- Vir'ava (portal #12)
-+    [17961742] = true, -- Ark Angel HM (portal #15)
-+}
-+
- local function spawnNM(player, zone, zoneId, def, campNpc)
-     local px, py, pz = campNpc:getXPos(), campNpc:getYPos(), campNpc:getZPos()
--    local angle = math.random() * math.pi * 2
--    local dist  = 5 + math.random(0, 2)
--    local mx    = px + math.cos(angle) * dist
--    local mz    = pz + math.sin(angle) * dist
-+    local mx, mz = px, pz
-+    if not CAMP_SPAWN_NO_SCATTER[campNpc:getID()] then
-+        local angle = math.random() * math.pi * 2
-+        local dist  = 5 + math.random(0, 2)
-+        mx = px + math.cos(angle) * dist
-+        mz = pz + math.sin(angle) * dist
-+    end
- 
-     local rot        = math.random(0, 255)
-     local defCapture = def
-@@ -1360,17 +1384,28 @@ end
- -- compact packet byte limit.
- local MENU_PAGE_SIZE = 4
- 
-+-- Off-map Reisenjima droplet ???s sit beside Ethereal Ingress pads. Warping to
-+-- the raw ??? XYZ dumps players onto void collision ("no map for this area");
-+-- land on the Ingress pad instead. ??? stays put so in-zone approach still works.
-+local CAMP_WARP_OVERRIDE =
-+{
-+    [17969990] = { x = 640.599, y = -374.000, z = -911.200 }, -- Ingress #7 (Gajasimha / Yakshi)
-+    [17969992] = { x = -580.000, y = -417.400, z = -1065.000 }, -- Ingress #9 (Oryx / Ironside / Old Shuck)
-+    [17969993] = { x = -389.220, y = -439.710, z = -835.130 }, -- Ingress #10 (Maju / Onychophora)
-+}
-+
- local function warpToCamp(player, zoneId, npcId, label)
--    local pos = campPosition(npcId)
-+    local pos = CAMP_WARP_OVERRIDE[npcId] or campPosition(npcId)
-     if not pos then
-         player:printToPlayer('[Geas Fete] That camp is unavailable. Please report the missing ???.', S)
-         return
-     end
- 
-+    local ox = CAMP_WARP_OVERRIDE[npcId] and 0 or 2.5
-     player:printToPlayer(string.format(
-         '[Geas Fete] Warping to %s near %.1f, %.1f, %.1f in %s.',
-         label, pos.x, pos.y, pos.z, ZONE_LABELS[zoneId]), S)
--    player:setPos(pos.x + 2.5, pos.y, pos.z + 2.5, 0, zoneId)
-+    player:setPos(pos.x + ox, pos.y, pos.z + ox, 0, zoneId)
- end
- 
- local function showCampPage(player, zoneId, page, backFn)
-diff --git a/modules/custom/lua/Reforge_System.lua b/modules/custom/lua/Reforge_System.lua
-index eef87d2139..85f293ab52 100644
---- a/modules/custom/lua/Reforge_System.lua
-+++ b/modules/custom/lua/Reforge_System.lua
-@@ -486,11 +486,13 @@ buildSourceNMMenu = function(player, srcDef, station)
-                     skillList            = md.skillList,
-                     mixins               = native.mixinsFor(md.groupId),
-                     -- Detection bitfield from xi.detects. Without this, the
--                    -- engine logs "has no detection methods!" per spawn AND
--                    -- the NM never auto-aggros. Same field handling as HL
--                    -- and the Game Master; read in luautils.cpp.
-+                    -- engine logs "has no detection methods!" per spawn.
-+                    -- isAggroable stays false so sight/hearing cannot swing
-+                    -- during the engage-grace window; enmity is applied on a
-+                    -- timer below (catalog.engageGraceSecs). Same delayed-
-+                    -- engage idea as ApexTrials.
-                     detection            = xi.detects.SIGHT_AND_HEARING,
--                    isAggroable          = true,
-+                    isAggroable          = false,
-                     releaseIdOnDisappear = true,
- 
-                     -- Idle despawn: an un-engaged NM cleans itself up after
-@@ -645,17 +647,38 @@ buildSourceNMMenu = function(player, srcDef, station)
-                 mechanics.attach(mob, mechCfg)
-                 native.attach(mob, md.groupId)
- 
--                -- Claim to the spawner immediately (same pattern as the
--                -- HuntingLeague / AbysseaMarks pops): claim + enmity, AFTER
--                -- spawn()/mods/HP so the fight starts with final stats.
--                -- Without this the NM popped unclaimed and anyone could
--                -- take it.
-+                -- Claim immediately so the kill locks to the popper; delay
-+                -- enmity by engageGraceSecs so oversized NMs don't smash a
-+                -- caster on the same tick as spawn (station-2 Seiryu report).
-+                -- isAggroable is false above so sight can't bypass the grace.
-                 mob:updateClaim(p)
--                mob:updateEnmity(p)
-+                local graceSecs = catalog.engageGraceSecs or 0
-+                if graceSecs > 0 then
-+                    local graceMob = mob
-+                    local graceStation = station
-+                    p:timer(math.floor(graceSecs * 1000), function(pp)
-+                        if not pp or not graceMob then return end
-+                        if graceStation.activeMob ~= graceMob then return end
-+                        local aliveOk, alive = pcall(function()
-+                            return graceMob:isAlive() and graceMob:isSpawned()
-+                        end)
-+                        if not aliveOk or not alive then return end
-+                        if pp:getZoneID() ~= catalog.huntZoneId then return end
-+                        pcall(function()
-+                            graceMob:updateClaim(pp)
-+                            graceMob:updateEnmity(pp)
-+                        end)
-+                    end)
-+                else
-+                    mob:updateEnmity(p)
-+                end
- 
-+                local graceNote = (graceSecs > 0)
-+                    and string.format('  Engages in %.1fs.', graceSecs)
-+                    or ''
-                 p:printToPlayer(
--                    string.format('%s has appeared!  Slay it for %d %s + base piece, kupo!',
--                        md.label, md.marks, srcDef.currencyName),
-+                    string.format('%s has appeared!%s  Slay it for %d %s + base piece, kupo!',
-+                        md.label, graceNote, md.marks, srcDef.currencyName),
-                     xi.msg.channel.SYSTEM_3)
-                 -- Close the spawner on a successful pop. Selecting the option
-                 -- already dismisses the client menu; re-showing the NM list here
-diff --git a/modules/custom/lua/reforge_catalog.lua b/modules/custom/lua/reforge_catalog.lua
-index 5630532885..2e676930cb 100644
---- a/modules/custom/lua/reforge_catalog.lua
-+++ b/modules/custom/lua/reforge_catalog.lua
-@@ -61,20 +61,23 @@ catalog.vendorPos  = { x = 0.0, y = 0.0, z = 0.0, rot = 128 }
- -- the NPCs and route each spawner to its own mob position. Keep `id` unique.
- --
- -- COORDINATES: spawnerPos values are LIVE-VERIFIED !pos readings from zone 43
---- (2026-07-07). Each mobSpawnPos is a small 3-unit nudge off its spawner so the
---- NM pops adjacent to (not on top of) the NPC while staying on the same
---- verified walkable patch -- station 1's NM nudges away from the origin vendor
---- cluster; stations 2/3 nudge +Z into open ground. Y is kept at the verified
---- ground height per station. Add more stations here as you !pos more spots.
-+-- (2026-07-07). mobSpawnPos is where the NM actually appears.
-+--   Station 1 -- short -Z nudge (hub is open; players report this one fine).
-+--   Station 2 -- was +3 Z into a wall corner; oversized models (Seiryu etc.)
-+--                stacked the spawner and instantly swung. Spawn toward the
-+--                open field center instead (~12y).
-+--   Station 3 -- was +3 Z onto fence posts (untargetable / OOB casts). Spawn
-+--                toward open ground between stations (~12y).
-+-- Y kept at verified ground height per station.
- -- --------------------------------------------------------------------------
- catalog.stations =
- {
-     -- Station 1 -- hub entrance (Path), beside the vendor/exchange/warp-in.
-     { id = 1, spawnerPos = { x =  -0.66, y =  0.00, z =  -3.10, rot = 143 }, mobSpawnPos = { x =  -0.66, y =  0.00, z =  -6.10, rot = 143 } },
--    -- Station 2 -- mid field (Grass).
--    { id = 2, spawnerPos = { x =  16.64, y = -0.54, z =  52.22, rot = 193 }, mobSpawnPos = { x =  16.64, y = -0.54, z =  55.22, rot = 193 } },
--    -- Station 3 -- far field (Path).
--    { id = 3, spawnerPos = { x = -26.16, y =  0.28, z =  94.49, rot =   9 }, mobSpawnPos = { x = -26.16, y =  0.28, z =  97.49, rot =   9 } },
-+    -- Station 2 -- mid field (Grass); NM toward arena center, clear of the wall.
-+    { id = 2, spawnerPos = { x =  16.64, y = -0.54, z =  52.22, rot = 193 }, mobSpawnPos = { x =   7.00, y = -0.54, z =  45.00, rot = 193 } },
-+    -- Station 3 -- far field (Path); NM inland of the posts.
-+    { id = 3, spawnerPos = { x = -26.16, y =  0.28, z =  94.49, rot =   9 }, mobSpawnPos = { x = -18.00, y =  0.28, z =  85.00, rot =   9 } },
- }
- 
- -- Un-engaged despawn: a popped NM that nobody engages within this many
-@@ -84,6 +87,12 @@ catalog.stations =
- -- NM is abandoned after a fight. Set to 0 to disable. (Mirrors HuntingLeague.)
- catalog.unengagedDespawnSecs = 180  -- 3 minutes
- 
-+-- Seconds after pop before the NM takes enmity on the spawner. Claim still
-+-- locks immediately so nobody can steal the kill; this buffer stops oversized
-+-- models (esp. station 2) from DA'ing a caster for ~800 on the spawn tick.
-+-- Set to 0 to restore instant engage. (Mirrors ApexTrials' delayed enmity.)
-+catalog.engageGraceSecs = 2.5
-+
- -- =========================================================
- -- THREE NM POOLS, EACH TIED TO ONE CURRENCY + ONE SET
- --
-diff --git a/modules/custom/sql/geas_fete_reisen_qm_fix.sql b/modules/custom/sql/geas_fete_reisen_qm_fix.sql
-new file mode 100644
-index 0000000000..1d0271e6d9
---- /dev/null
-+++ b/modules/custom/sql/geas_fete_reisen_qm_fix.sql
-@@ -0,0 +1,57 @@
-+-- =====================================================================
-+-- geas_fete_reisen_qm_fix.sql
-+-- Reisenjima Geas Fete camps Taelmoth / Selkit / Strophadia:
-+--   1) ??? NPCs 17969974ΓÇô76 used MODEL_DOOR looks / bad flags (untargetable).
-+--   2) 17969974 sat in an under-map trench.
-+--   3) Black "darkness" orbs (_830ΓÇô_832) + fep1ΓÇô3 share the same coords and
-+--      steal / block ??? targeting (Selkit report: orb visible, can't spawn).
-+-- =====================================================================
-+
-+-- Taelmoth + Zduhac + Sarsaok ΓÇö walkable ground near Sabotender camp.
-+UPDATE `npc_list`
-+SET
-+    pos_rot      = 0,
-+    pos_x        = -620.000,
-+    pos_y        = -39.500,
-+    pos_z        = -235.000,
-+    flag         = 1,
-+    animation    = 0,
-+    animationsub = 0,
-+    namevis      = 112,
-+    status       = 0,
-+    entityFlags  = 3,
-+    look         = 0x0000340000000000000000000000000000000000,
-+    name_prefix  = 2,
-+    widescan     = 1
-+WHERE npcid = 17969974;
-+
-+-- Selkit + Bashmu ΓÇö restore targetable ??? (keep stock XY; orb hidden below).
-+UPDATE `npc_list`
-+SET
-+    flag         = 1,
-+    animation    = 0,
-+    animationsub = 0,
-+    namevis      = 112,
-+    status       = 0,
-+    entityFlags  = 3,
-+    look         = 0x0000340000000000000000000000000000000000,
-+    name_prefix  = 2,
-+    widescan     = 1
-+WHERE npcid = 17969975;
-+
-+-- Strophadia + Teles + Vinipata ΓÇö same.
-+UPDATE `npc_list`
-+SET
-+    flag         = 1,
-+    animation    = 0,
-+    animationsub = 0,
-+    namevis      = 112,
-+    status       = 0,
-+    entityFlags  = 3,
-+    look         = 0x0000340000000000000000000000000000000000,
-+    name_prefix  = 2,
-+    widescan     = 1
-+WHERE npcid = 17969976;
-+
-+-- Hide the overlapping orbs / fep markers (status 2 = disappeared).
-+UPDATE `npc_list` SET status = 2 WHERE npcid IN (17970032, 17970033, 17970034, 17970035, 17970036, 17970037);
-diff --git a/modules/custom/sql/geas_fete_ruaun_qm_fix.sql b/modules/custom/sql/geas_fete_ruaun_qm_fix.sql
-new file mode 100644
-index 0000000000..91c2e1d6d9
---- /dev/null
-+++ b/modules/custom/sql/geas_fete_ruaun_qm_fix.sql
-@@ -0,0 +1,75 @@
-+-- =====================================================================
-+-- geas_fete_ruaun_qm_fix.sql
-+-- Escha - Ru'Aun Geas Fete ??? camp fixes:
-+--   Asida           17961729 ΓÇö La'Loff wall SW of portal #2
-+--   Warder of Love  17961734 ΓÇö overhang NE of portal #7 (sky / camera jank)
-+--   Hanbi           17961733 ΓÇö void off bridge near portal #6
-+--   Vir'ava         17961739 ΓÇö void off map near portal #12
-+--   Ark Angel HM    17961742 ΓÇö void off southern tip near portal #15
-+--   Ma camp         17961705 ΓÇö ensure targetable (Ma / Peirithoos / Kouryu)
-+--   Ark Angel MR    17961777 ΓÇö hide dead (0,0,0) twin; MR lives on 17961700
-+-- Relocate onto solid ground. Idempotent. Map restart for NPC moves;
-+-- Lua QM_POINTS remap is script-reload. Pair with CAMP_SPAWN_NO_SCATTER
-+-- for bridge/tip camps so the 5ΓÇô7y spawn ring cannot re-void them.
-+-- =====================================================================
-+
-+-- Asida ΓÇö stock camp beside portal #2 / tribulens plaza.
-+UPDATE `npc_list`
-+SET
-+    pos_x = -290.229,
-+    pos_y = -42.587,
-+    pos_z = -399.348
-+WHERE npcid = 17961729;
-+
-+-- Warder of Love ΓÇö stock camp on solid ground near portal #7.
-+UPDATE `npc_list`
-+SET
-+    pos_x = -431.045,
-+    pos_y = -70.803,
-+    pos_z =  397.578
-+WHERE npcid = 17961734;
-+
-+-- Hanbi ΓÇö island pad beside portal #6 (was mid-bridge void).
-+UPDATE `npc_list`
-+SET
-+    pos_x = -275.000,
-+    pos_y =  -3.500,
-+    pos_z =  380.000
-+WHERE npcid = 17961733;
-+
-+-- Vir'ava ΓÇö island pad beside portal #12 (was off-map at Y=-24).
-+UPDATE `npc_list`
-+SET
-+    pos_x =  448.000,
-+    pos_y =   -3.600,
-+    pos_z = -140.000
-+WHERE npcid = 17961739;
-+
-+-- Ark Angel HM ΓÇö inland of portal #15 tip (was on the southern edge).
-+UPDATE `npc_list`
-+SET
-+    pos_x =   -1.000,
-+    pos_y =  -52.000,
-+    pos_z = -555.000
-+WHERE npcid = 17961742;
-+
-+-- Ma / Peirithoos / Kouryu ΓÇö keep the clickable twin targetable.
-+UPDATE `npc_list`
-+SET
-+    flag         = 1,
-+    animation    = 0,
-+    animationsub = 0,
-+    namevis      = 112,
-+    status       = 0,
-+    entityFlags  = 3,
-+    look         = 0x0000340000000000000000000000000000000000,
-+    name_prefix  = 2,
-+    widescan     = 1
-+WHERE npcid = 17961705;
-+
-+-- Ark Angel MR's old ??? sat at (0,0,0) (zone-center void). Menu moved to
-+-- 17961700 in Geas_Fete.lua; hide this stub so warps/lookups can't hit it.
-+UPDATE `npc_list`
-+SET
-+    status = 2
-+WHERE npcid = 17961777;
 diff --git a/modules/custom/sql/trusts/trust_matsui_p.sql b/modules/custom/sql/trusts/trust_matsui_p.sql
-index 8c8b00b095..dcdfd7aebf 100644
+index dcdfd7aebf..f7fc2d0d9a 100644
 --- a/modules/custom/sql/trusts/trust_matsui_p.sql
 +++ b/modules/custom/sql/trusts/trust_matsui_p.sql
-@@ -1,8 +1,8 @@
+@@ -1,8 +1,11 @@
  -- =====================================================================
  -- trust_matsui_p.sql  --  Trust: Matsui-P (Void Keeper capstone)
  -- Spell 1003 / pool 6003. CLIENT spell ID 1003 = "Matsui-P".
---- Look 0x0000310C = model 3121 (trust-era size=0 look). Always available here.
---- NIN/BLM katana + San ninjutsu / T1 nukes / Utsusemi / utility.
-+-- Look 0x0000310C = model 3121. Pool mJob is SAM (12) so the client accepts
-+-- this model; kit stays ninjutsu / Blade WS / Innin via spell+skill lists + Lua.
+--- Look 0x0000310C = model 3121. Pool mJob is SAM (12) so the client accepts
+--- this model; kit stays ninjutsu / Blade WS / Innin via spell+skill lists + Lua.
++--
++-- Look uses Makki-Chebukki's year-round trust model (0x0000220C). Matsui's
++-- seasonal model 3121 R0-crashes the client outside campaign DAT windows;
++-- there is no server-side "enable campaign" switch. Name/packet stay Matsui-P;
++-- kit is real NIN/BLM katana + San ninjutsu / T1 nukes / Blade WS.
  -- =====================================================================
  
  REPLACE INTO spell_list
-@@ -75,10 +75,10 @@ REPLACE INTO mob_pools
+@@ -75,11 +78,10 @@ REPLACE INTO mob_pools
       spellList, namevis, roamflag, skill_list_id, resist_id,
       modelSize, modelHitboxSize)
  VALUES
--    -- model 3121 = 0x0C31 LE -> bytes 31 0C (trust-era size=0 look).
--    -- NIN/BLM, Katana, high cmbDmgMult for Void Keeper AA identity.
-+    -- model 3121 + SAM display job (NIN anims on this model R0 the client).
-+    -- Katana cmbSkill; spells/skills/Lua still drive the NIN kit.
-     (6003, 'matsui_p', 'Matsui-P', 297, UNHEX('0000310C00000000000000000000000000000000'),
--     13, 4, 9, 210, 300,
-+     12, 4, 9, 210, 300,
+-    -- model 3121 + SAM display job (NIN anims on this model R0 the client).
+-    -- Katana cmbSkill; spells/skills/Lua still drive the NIN kit.
+-    (6003, 'matsui_p', 'Matsui-P', 297, UNHEX('0000310C00000000000000000000000000000000'),
+-     12, 4, 9, 210, 300,
++    -- Year-round Makki look (0x0000220C). Real NIN/BLM + katana; name stays Matsui-P.
++    (6003, 'matsui_p', 'Matsui-P', 297, UNHEX('0000220C00000000000000000000000000000000'),
++     13, 4, 9, 210, 300,
       0, 0, 0, 0, 0, 0,
       32, 0, 3, 0, 0,
       6003, 0, 0, 6003, 153,
+-     1, 12);
++     2, 11);
 diff --git a/scripts/actions/spells/trust/matsui_p.lua b/scripts/actions/spells/trust/matsui_p.lua
-index 404ef334e6..eacbf5eb3b 100644
+index eacbf5eb3b..cdb9ff14a2 100644
 --- a/scripts/actions/spells/trust/matsui_p.lua
 +++ b/scripts/actions/spells/trust/matsui_p.lua
 @@ -1,7 +1,8 @@
  -----------------------------------
  -- Trust: Matsui-P
  -- Spell 1003 / pool 6003. Void Keeper capstone.
---- NIN/BLM. Prioritizes elemental ninjutsu + T1 nukes (Futae MB).
-+-- Pool mJob is SAM so model 3121 summons cleanly; kit is still ninjutsu/Blade.
-+-- Prioritizes elemental ninjutsu + T1 nukes (Futae MB).
+--- Pool mJob is SAM so model 3121 summons cleanly; kit is still ninjutsu/Blade.
++-- Appearance uses Makki-Chebukki's year-round look (seasonal Matsui model
++-- R0-crashes). Kit is NIN/BLM: ninjutsu + Blade WS + Innin.
+ -- Prioritizes elemental ninjutsu + T1 nukes (Futae MB).
  -- WS: Blade Rin/Retsu/Ei/Jin/Ten/Ku/Kamu/Hi/Shun.
  -- After master uses a Lv2 SC property WS, opens Light/Darkness lines when
- -- master has 1000+ TP. Holds to 3000 otherwise. No WS without shadows.
-@@ -107,7 +108,7 @@ spellObject.onSpellCast = function(caster, target, spell)
+@@ -108,7 +109,7 @@ spellObject.onSpellCast = function(caster, target, spell)
  end
  
  spellObject.onMobSpawn = function(mob)
--    -- Model from mob_pools look 0x0000310C (3121).
-+    -- Model from mob_pools look 0x0000310C (3121); pool job SAM for client safety.
+-    -- Model from mob_pools look 0x0000310C (3121); pool job SAM for client safety.
++    -- Look from pool (Makki year-round model); force display name.
      mob:renameEntity('Matsui-P', true)
  
      local master = mob:getMaster()
-@@ -138,9 +139,6 @@ spellObject.onMobSpawn = function(mob)
+@@ -139,6 +140,9 @@ spellObject.onMobSpawn = function(mob)
      -- Permanent ninjutsu bonus (Innin path is %/100); stacks with Innin uptime.
      mob:addMod(xi.mod.NIN_NUKE_BONUS_INNIN, 20)
  
--    -- SetupJob(NIN) assigns shuriken SPECIAL_SKILL 272 + standback; melee kit only.
--    mob:setMobMod(xi.mobMod.SPECIAL_SKILL, 0)
--    mob:setMobMod(xi.mobMod.HP_STANDBACK, 0)
++    -- SetupJob(NIN) assigns shuriken SPECIAL_SKILL + standback; melee kit only.
++    mob:setMobMod(xi.mobMod.SPECIAL_SKILL, 0)
++    mob:setMobMod(xi.mobMod.HP_STANDBACK, 0)
      mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
  
      -- Shadows first ΓÇö never WS without them.
-diff --git a/sql/npc_list.sql b/sql/npc_list.sql
-index c37944e4a8..357b9ec82d 100644
---- a/sql/npc_list.sql
-+++ b/sql/npc_list.sql
-@@ -36653,7 +36653,7 @@ INSERT INTO `npc_list` VALUES (17961701,'qm_tribulens','???',0,-440.593,-40.106,
- INSERT INTO `npc_list` VALUES (17961702,'qm_tribulens','???',0,-471.487,-42.088,153.196,0,50,50,1,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- In front of portal #5. (Tribulens)
- INSERT INTO `npc_list` VALUES (17961703,'qm_tribulens','???',0,-352.868,-68.705,486.310,0,50,50,1,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #7. (Tribulens)
- INSERT INTO `npc_list` VALUES (17961704,'qm_tribulens','???',0,-140.480,-40.106,417.622,0,50,50,1,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #6. (Tribulens)
--INSERT INTO `npc_list` VALUES (17961705,'qm_tribulens','???',0,-353.000,-68.699,485.500,1,50,50,1,0,112,0,3,0x0000340000000000000000000000000000000000,2,'ROV',0); -- unknown
-+INSERT INTO `npc_list` VALUES (17961705,'qm_tribulens','???',0,-353.000,-68.699,485.500,1,50,50,1,0,112,0,3,0x0000340000000000000000000000000000000000,2,'ROV',1); -- Ma / Peirithoos / Kouryu (portal #7)
- INSERT INTO `npc_list` VALUES (17961706,'qm_tribulens','???',0,353.070,-68.704,485.995,1,50,50,1,0,112,0,3,0x0000340000000000000000000000000000000000,2,'ROV',0); -- Near portal #10. (Tribulens)
- INSERT INTO `npc_list` VALUES (17961707,'qm_tribulens','???',0,471.487,-42.088,153.196,1,50,50,1,0,112,0,3,0x0000340000000000000000000000000000000000,2,'ROV',0); -- In front of portal #11. (Tribulens)
- INSERT INTO `npc_list` VALUES (17961708,'qm_tribulens','???',0,440.595,-40.106,-4.544,1,50,50,1,0,112,0,3,0x0000340000000000000000000000000000000000,2,'ROV',0); -- Near portal #12. (Tribulens)
-@@ -36677,20 +36677,20 @@ INSERT INTO `npc_list` VALUES (17961725,'Eschan_Portal_#13','Eschan Portal #13',
- INSERT INTO `npc_list` VALUES (17961726,'Eschan_Portal_#14','Eschan Portal #14',0,274.000,-40.500,-376.500,15,50,50,0,0,0,0,27,0x0000BB0900000000000000000000000000000000,32,'ROV',1);
- INSERT INTO `npc_list` VALUES (17961727,'Eschan_Portal_#15','Eschan Portal #15',0,-1.200,-52.000,-580.500,15,50,50,0,0,0,0,27,0x0000BB0900000000000000000000000000000000,32,'ROV',1);
- INSERT INTO `npc_list` VALUES (17961728,'qm_droplet','???',0,-15.000,-34.000,-466.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #1
--INSERT INTO `npc_list` VALUES (17961729,'qm_droplet','???',0,-324.000,-43.266,-446.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #2
-+INSERT INTO `npc_list` VALUES (17961729,'qm_droplet','???',0,-290.229,-42.587,-399.348,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #2 (Asida stock camp; was -324/-446 inside La'Loff wall)
- INSERT INTO `npc_list` VALUES (17961730,'qm_droplet','???',0,-408.000,-8.000,-153.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #3
- INSERT INTO `npc_list` VALUES (17961731,'qm_droplet','???',0,-524.300,-70.220,-272.250,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #4
- INSERT INTO `npc_list` VALUES (17961732,'qm_droplet','???',0,-524.000,-43.266,170.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #5
--INSERT INTO `npc_list` VALUES (17961733,'qm_droplet','???',0,-208.000,-8.000,287.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #6
--INSERT INTO `npc_list` VALUES (17961734,'qm_droplet','???',0,-382.000,-68.000,456.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #7
-+INSERT INTO `npc_list` VALUES (17961733,'qm_droplet','???',0,-275.000,-3.500,380.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #6 (Hanbi; was -208/-8/287 off bridge)
-+INSERT INTO `npc_list` VALUES (17961734,'qm_droplet','???',0,-431.045,-70.803,397.578,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #7 (Warder of Love stock camp; was -382/-68/456 overhang)
- INSERT INTO `npc_list` VALUES (17961735,'qm_droplet','???',0,0.000,-43.266,552.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #8
- INSERT INTO `npc_list` VALUES (17961736,'qm_droplet','???',0,328.000,-24.000,255.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #9
- INSERT INTO `npc_list` VALUES (17961737,'qm_droplet','???',0,339.000,-68.820,470.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #10
- INSERT INTO `npc_list` VALUES (17961738,'qm_droplet','???',0,523.000,-43.266,170.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #11
--INSERT INTO `npc_list` VALUES (17961739,'qm_droplet','???',0,365.000,-24.000,58.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #12
-+INSERT INTO `npc_list` VALUES (17961739,'qm_droplet','???',0,448.000,-3.600,-140.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #12 (Vir'ava; was 365/-24/58 off map)
- INSERT INTO `npc_list` VALUES (17961740,'qm_droplet','???',0,591.000,-70.220,-68.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #13
- INSERT INTO `npc_list` VALUES (17961741,'qm_droplet','???',0,324.000,-43.266,-446.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #14
--INSERT INTO `npc_list` VALUES (17961742,'qm_droplet','???',0,-9.000,-52.040,-582.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #15
-+INSERT INTO `npc_list` VALUES (17961742,'qm_droplet','???',0,-1.000,-52.000,-555.000,7,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,'ROV',0); -- Near portal #15 (Ark Angel HM; was -9/-52/-582 tip/void)
- -- NC: INSERT INTO `npc_list` VALUES (17961743,'NOT_CAPTURED','Emblazoned Reliquary',0,0.000,0.000,0.000,0,50,50,0,0,0,0,0,0x0000320000000000000000000000000000000000,0,NULL,0);
- -- NC: INSERT INTO `npc_list` VALUES (17961744,'NOT_CAPTURED','Emblazoned Reliquary',0,0.000,0.000,0.000,0,50,50,0,0,0,0,0,0x0000320000000000000000000000000000000000,0,NULL,0);
- -- NC: INSERT INTO `npc_list` VALUES (17961745,'NOT_CAPTURED','Emblazoned Reliquary',0,0.000,0.000,0.000,0,50,50,0,0,0,0,0,0x0000320000000000000000000000000000000000,0,NULL,0);
-@@ -36725,7 +36725,7 @@ INSERT INTO `npc_list` VALUES (17961742,'qm_droplet','???',0,-9.000,-52.040,-582
- -- NC: INSERT INTO `npc_list` VALUES (17961774,'NOT_CAPTURED','Emblazoned Reliquary',0,0.000,0.000,0.000,0,50,50,0,0,0,0,0,0x0000320000000000000000000000000000000000,0,NULL,0);
- -- NC: INSERT INTO `npc_list` VALUES (17961775,'NOT_CAPTURED','Emblazoned Reliquary',0,0.000,0.000,0.000,0,50,50,0,0,0,0,0,0x0000320000000000000000000000000000000000,0,NULL,0);
- INSERT INTO `npc_list` VALUES (17961776,'blank','',0,0.000,0.000,0.000,0,50,50,0,0,0,2,2051,0x0000340000000000000000000000000000000000,0,'ROV',1);
--INSERT INTO `npc_list` VALUES (17961777,'qm','???',0,0.000,0.000,0.000,0,50,50,0,0,0,2,2051,0x0000340000000000000000000000000000000000,0,'ROV',1);
-+INSERT INTO `npc_list` VALUES (17961777,'qm','???',0,0.000,0.000,0.000,0,50,50,0,0,0,2,2051,0x0000340000000000000000000000000000000000,0,'ROV',0); -- stub at (0,0,0); AA MR folded onto 17961700
- -- NC: INSERT INTO `npc_list` VALUES (17961778,'NOT_CAPTURED','     ',0,0.000,0.000,0.000,0,50,50,0,0,0,0,0,0x0000320000000000000000000000000000000000,0,NULL,0);
- 
- -- ------------------------------------------------------------
-@@ -36857,9 +36857,11 @@ INSERT INTO `npc_list` VALUES (17969970,'qm','???',0,0.000,0.000,0.000,0,50,50,0
- INSERT INTO `npc_list` VALUES (17969971,'qm','???',0,0.000,0.000,0.000,0,50,50,0,0,0,2,2051,0x0000340000000000000000000000000000000000,0,'ROV',1);
- INSERT INTO `npc_list` VALUES (17969972,'qm','???',0,0.000,0.000,0.000,0,50,50,0,0,0,2,2051,0x0000340000000000000000000000000000000000,0,'ROV',1);
- INSERT INTO `npc_list` VALUES (17969973,'qm','???',0,0.000,0.000,0.000,0,50,50,0,0,0,2,2051,0x0000340000000000000000000000000000000000,0,'ROV',1);
--INSERT INTO `npc_list` VALUES (17969974,'qm','???',0,-628.000,-35.000,-99.599,32775,50,50,9,0,96,0,6147,0x0200000000000000000000000000000000000000,32,'ROV',0);
--INSERT INTO `npc_list` VALUES (17969975,'qm','???',0,-439.000,-42.200,26.000,1,50,50,8,0,96,0,6147,0x0200000000000000000000000000000000000000,32,'ROV',0);
--INSERT INTO `npc_list` VALUES (17969976,'qm','???',0,105.519,-66.199,263.679,1,50,50,8,0,96,0,6147,0x0200000000000000000000000000000000000000,32,'ROV',0);
-+-- RELAUNCH: was OOB trench + MODEL_DOOR look (untargetable orb). Walkable ??? near Sabotender camp.
-+INSERT INTO `npc_list` VALUES (17969974,'qm','???',0,-620.000,-39.500,-235.000,1,50,50,0,0,112,0,3,0x0000340000000000000000000000000000000000,2,'ROV',1);
-+-- RELAUNCH: restore targetable ??? look/flags (was MODEL_DOOR / entityFlags 6147).
-+INSERT INTO `npc_list` VALUES (17969975,'qm','???',0,-439.000,-42.200,26.000,1,50,50,0,0,112,0,3,0x0000340000000000000000000000000000000000,2,'ROV',1);
-+INSERT INTO `npc_list` VALUES (17969976,'qm','???',0,105.519,-66.199,263.679,1,50,50,0,0,112,0,3,0x0000340000000000000000000000000000000000,2,'ROV',1);
- INSERT INTO `npc_list` VALUES (17969977,'Shiftrix','Shiftrix',0,-502.000,-19.000,-486.000,1,50,50,0,0,0,0,3,0x0000E20300000000000000000000000000000000,32,'ROV',1);
- INSERT INTO `npc_list` VALUES (17969978,'Register_of_Deeds','Register of Deeds',128,-502.000,-19.000,-484.000,1,50,50,0,0,0,0,3,0x0000F20800000000000000000000000000000000,0,'ROV',1);
- INSERT INTO `npc_list` VALUES (17969979,'Ethereal_Ingress_#1','Ethereal Ingress #1',0,-494.440,-19.000,-476.480,17,50,50,0,0,0,0,27,0x0000BC0900000000000000000000000000000000,32,'ROV',1);
-@@ -36913,12 +36915,14 @@ INSERT INTO `npc_list` VALUES (17970028,'Emblazoned_Reliquary','Emblazoned Reliq
- INSERT INTO `npc_list` VALUES (17970029,'Emblazoned_Reliquary','Emblazoned Reliquary',0,0.000,0.000,0.000,8,50,50,0,4,4,0,3,0x0000C50300000000000000000000000000000000,0,'ROV',1);
- INSERT INTO `npc_list` VALUES (17970030,'Emblazoned_Reliquary','Emblazoned Reliquary',171,-489.247,-26.843,-419.782,8,50,50,0,4,4,0,3,0x0000C50300000000000000000000000000000000,0,'ROV',1);
- INSERT INTO `npc_list` VALUES (17970031,'blank','',0,0.000,0.000,0.000,0,50,50,0,0,0,6,27,0x0000460100000000000000000000000000000000,32,'ROV',1);
--INSERT INTO `npc_list` VALUES (17970032,'fep1','fep1',0,-628.000,-35.000,-99.599,32775,50,50,0,0,96,0,2179,0x00007D0B00000000000000000000000000000000,32,'ROV',1);
--INSERT INTO `npc_list` VALUES (17970033,'fep2','fep2',0,-439.000,-42.200,26.000,1,50,50,0,0,96,0,2179,0x00007D0B00000000000000000000000000000000,32,'ROV',1);
--INSERT INTO `npc_list` VALUES (17970034,'fep3','fep3',0,105.519,-66.199,263.679,32775,50,50,0,0,96,0,2179,0x00007D0B00000000000000000000000000000000,32,'ROV',1);
--INSERT INTO `npc_list` VALUES (17970035,'_830','',0,-628.000,-35.000,-99.599,32775,50,50,9,0,96,0,6147,0x0200000000000000000000000000000000000000,32,'ROV',0);
--INSERT INTO `npc_list` VALUES (17970036,'_831','',0,-439.000,-42.200,26.000,1,50,50,8,0,96,0,6147,0x0200000000000000000000000000000000000000,32,'ROV',0);
--INSERT INTO `npc_list` VALUES (17970037,'_832','',0,105.519,-66.199,263.679,1,50,50,8,0,96,0,6147,0x0200000000000000000000000000000000000000,32,'ROV',0);
-+-- RELAUNCH: hide Fete event orbs/points that sat on Geas Fete ??? camps and
-+-- blocked targeting (Selkit/Taelmoth/Strophadia). status=2 = disappeared.
-+INSERT INTO `npc_list` VALUES (17970032,'fep1','fep1',0,-628.000,-35.000,-99.599,32775,50,50,0,0,96,2,2179,0x00007D0B00000000000000000000000000000000,32,'ROV',1);
-+INSERT INTO `npc_list` VALUES (17970033,'fep2','fep2',0,-439.000,-42.200,26.000,1,50,50,0,0,96,2,2179,0x00007D0B00000000000000000000000000000000,32,'ROV',1);
-+INSERT INTO `npc_list` VALUES (17970034,'fep3','fep3',0,105.519,-66.199,263.679,32775,50,50,0,0,96,2,2179,0x00007D0B00000000000000000000000000000000,32,'ROV',1);
-+INSERT INTO `npc_list` VALUES (17970035,'_830','',0,-628.000,-35.000,-99.599,32775,50,50,9,0,96,2,6147,0x0200000000000000000000000000000000000000,32,'ROV',0);
-+INSERT INTO `npc_list` VALUES (17970036,'_831','',0,-439.000,-42.200,26.000,1,50,50,8,0,96,2,6147,0x0200000000000000000000000000000000000000,32,'ROV',0);
-+INSERT INTO `npc_list` VALUES (17970037,'_832','',0,105.519,-66.199,263.679,1,50,50,8,0,96,2,6147,0x0200000000000000000000000000000000000000,32,'ROV',0);
- INSERT INTO `npc_list` VALUES (17970038,'Temprix','Temprix',63,-372.408,-113.250,222.279,1,50,50,0,0,0,0,27,0x0000E20300000000000000000000000000000000,32,'ROV',1);
- INSERT INTO `npc_list` VALUES (17970039,'Coelestrox','Coelestrox',64,-360.000,-440.000,-800.000,32769,50,50,0,0,0,0,27,0x0000E20300000000000000000000000000000000,32,NULL,0);
- INSERT INTO `npc_list` VALUES (17970040,'Emporox','Emporox',32,-376.000,-113.339,221.000,1,50,50,0,0,0,0,27,0x0000E20300000000000000000000000000000000,32,'ROV',1);
-diff --git a/src/map/utils/trustutils.cpp b/src/map/utils/trustutils.cpp
-index 26d7942656..e711438e96 100644
---- a/src/map/utils/trustutils.cpp
-+++ b/src/map/utils/trustutils.cpp
-@@ -42,6 +42,7 @@
- #include "entities/mobentity.h"
- #include "entities/trustentity.h"
- #include "items/item_weapon.h"
-+#include "mob_modifier.h"
- #include "mobskill.h"
- #include "status_effect_container.h"
- #include "weapon_skill.h"
-@@ -743,6 +744,14 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
- 
-     mobutils::SetupJob(PTrust);
- 
-+    // SetupJob(NIN) assigns mob shuriken SPECIAL_SKILL 272 + standback. Trust NINs
-+    // are melee/ninjutsu kits ΓÇö clear before Spawn so AA never opens that path.
-+    if (mJob == JOB_NIN)
-+    {
-+        PTrust->setMobMod(MOBMOD_SPECIAL_SKILL, 0);
-+        PTrust->setMobMod(MOBMOD_HP_STANDBACK, 0);
-+    }
-+
-     // Skills
-     using namespace gambits;
-     auto* controller = dynamic_cast<CTrustController*>(PTrust->PAI->GetController());
