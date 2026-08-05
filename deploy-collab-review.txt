@@ -1,245 +1,227 @@
-﻿Collaborator review  2026-08-04 16:18:22
+﻿Collaborator review  2026-08-04 18:04:29
 Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit f6cc1ae7bc7b14b60d98cd4ee3ac39be69082159
+commit d4c6fc0391569dcb6bb011cf7ef69d5ae4812c0a
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Tue Aug 4 23:39:05 2026 +0100
+Date:   Wed Aug 5 02:02:56 2026 +0100
 
-    fix(relaunch/trusts): use spellList column in round5 mob_pools updates
+    fix(relaunch/trusts): stop special AA from landing at soft-band damage
     
-    Deploy FAILED on several trust_combat_round5 SQL files because mob_pools
-    has spellList, not spell_list_id. Correct the column so those pool updates apply.
+    Skill-replaced HIT_DMG autos were misclassified as WS (magical lane), so they got WSD and soft-band floors. Trim them as AA and skip endgame softclamp for auto-attacks.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/modules/custom/sql/trust_combat_round5_aatt.sql b/modules/custom/sql/trust_combat_round5_aatt.sql
-index 7672f43b32..6679e434f2 100644
---- a/modules/custom/sql/trust_combat_round5_aatt.sql
-+++ b/modules/custom/sql/trust_combat_round5_aatt.sql
-@@ -48,5 +48,5 @@ UPDATE `mob_pools` SET
-     `cmbDelay` = 240,
-     `cmbDmgMult` = 100,
-     `skill_list_id` = 1110,
--    `spell_list_id` = 408
-+    `spellList` = 408
- WHERE `poolid` = 5995;
-diff --git a/modules/custom/sql/trust_combat_round5_adelheid.sql b/modules/custom/sql/trust_combat_round5_adelheid.sql
-index 60f9f89300..8c871fc442 100644
---- a/modules/custom/sql/trust_combat_round5_adelheid.sql
-+++ b/modules/custom/sql/trust_combat_round5_adelheid.sql
-@@ -67,5 +67,5 @@ UPDATE `mob_pools` SET
-     `cmbDelay` = 240,
-     `cmbDmgMult` = 100,
-     `skill_list_id` = 1083,
--    `spell_list_id` = 381
-+    `spellList` = 381
- WHERE `poolid` = 5968;
-diff --git a/modules/custom/sql/trust_combat_round5_ajido.sql b/modules/custom/sql/trust_combat_round5_ajido.sql
-index d592492d7a..40175f2d4b 100644
---- a/modules/custom/sql/trust_combat_round5_ajido.sql
-+++ b/modules/custom/sql/trust_combat_round5_ajido.sql
-@@ -53,5 +53,5 @@ UPDATE `mob_pools` SET
-     `cmbDelay` = 400,
-     `cmbDmgMult` = 40,
-     `skill_list_id` = 1019,
--    `spell_list_id` = 316
-+    `spellList` = 316
- WHERE `poolid` = 5904;
-diff --git a/modules/custom/sql/trust_combat_round5_d_shantotto.sql b/modules/custom/sql/trust_combat_round5_d_shantotto.sql
-index cb907763ba..43de16820d 100644
---- a/modules/custom/sql/trust_combat_round5_d_shantotto.sql
-+++ b/modules/custom/sql/trust_combat_round5_d_shantotto.sql
-@@ -84,5 +84,5 @@ UPDATE `mob_pools` SET
-     `cmbDelay` = 240,
-     `cmbDmgMult` = 100,
-     `skill_list_id` = 1049,
--    `spell_list_id` = 346
-+    `spellList` = 346
- WHERE `poolid` = 5934;
-diff --git a/modules/custom/sql/trust_combat_round5_excenmille.sql b/modules/custom/sql/trust_combat_round5_excenmille.sql
-index bcae92a805..eb973f30ea 100644
---- a/modules/custom/sql/trust_combat_round5_excenmille.sql
-+++ b/modules/custom/sql/trust_combat_round5_excenmille.sql
-@@ -29,7 +29,7 @@ INSERT INTO `mob_skill_lists` VALUES
- ('TRUST_Excenmille',1014,115), -- Leg Sweep
- ('TRUST_Excenmille',1014,116); -- Penta Thrust
+diff --git a/modules/custom/cpp/fjb_combat.cpp b/modules/custom/cpp/fjb_combat.cpp
+index 2062a05bc8..89b77dc8ff 100644
+--- a/modules/custom/cpp/fjb_combat.cpp
++++ b/modules/custom/cpp/fjb_combat.cpp
+@@ -254,6 +254,14 @@ int32 ApplyTrustEndgameSoftClamp(CBattleEntity* PAttacker, int32 damage)
+         return damage;
+     }
  
---- Spell list: Cure I-IV + Flash (id 311). Wipe Meat's spell_list_id 899 if present.
-+-- Spell list: Cure I-IV + Flash (id 311). Wipe Meat's spell list 899 if present.
- DELETE FROM `mob_spell_lists` WHERE `spell_list_id` = 899;
- DELETE FROM `mob_spell_lists` WHERE `spell_list_id` = 311;
- INSERT INTO `mob_spell_lists` VALUES
-diff --git a/modules/custom/sql/trust_combat_round5_gadalar.sql b/modules/custom/sql/trust_combat_round5_gadalar.sql
-index b632bfb091..46de0aa7ef 100644
---- a/modules/custom/sql/trust_combat_round5_gadalar.sql
-+++ b/modules/custom/sql/trust_combat_round5_gadalar.sql
-@@ -66,5 +66,5 @@ UPDATE `mob_pools` SET
-     `cmbDelay` = 240,
-     `cmbDmgMult` = 100,
-     `skill_list_id` = 1034,
--    `spell_list_id` = 331
-+    `spellList` = 331
- WHERE `poolid` = 5919;
-diff --git a/modules/custom/sql/trust_combat_round5_ingrid.sql b/modules/custom/sql/trust_combat_round5_ingrid.sql
-index 53e9a04b9c..0d23e8060b 100644
---- a/modules/custom/sql/trust_combat_round5_ingrid.sql
-+++ b/modules/custom/sql/trust_combat_round5_ingrid.sql
-@@ -61,5 +61,5 @@ UPDATE `mob_pools` SET
-     `cmbDelay` = 240,
-     `cmbDmgMult` = 100,
-     `skill_list_id` = 1036,
--    `spell_list_id` = 333
-+    `spellList` = 333
- WHERE `poolid` = 5921;
-diff --git a/modules/custom/sql/trust_combat_round5_kayeel.sql b/modules/custom/sql/trust_combat_round5_kayeel.sql
-index 90497b757c..d42b604120 100644
---- a/modules/custom/sql/trust_combat_round5_kayeel.sql
-+++ b/modules/custom/sql/trust_combat_round5_kayeel.sql
-@@ -52,5 +52,5 @@ UPDATE `mob_pools` SET
-     `cmbDelay` = 240,
-     `cmbDmgMult` = 100,
-     `skill_list_id` = 1091,
--    `spell_list_id` = 389
-+    `spellList` = 389
- WHERE `poolid` = 5976;
-diff --git a/modules/custom/sql/trust_combat_round5_kukki.sql b/modules/custom/sql/trust_combat_round5_kukki.sql
-index e3354a71ae..85754cb8fd 100644
---- a/modules/custom/sql/trust_combat_round5_kukki.sql
-+++ b/modules/custom/sql/trust_combat_round5_kukki.sql
-@@ -18,5 +18,5 @@ UPDATE `mob_pools` SET
-     `cmbDelay` = 240,
-     `cmbDmgMult` = 100,
-     `skill_list_id` = 1076,
--    `spell_list_id` = 374
-+    `spellList` = 374
- WHERE `poolid` = 5961;
-diff --git a/modules/custom/sql/trust_combat_round5_yoran_oran_uc.sql b/modules/custom/sql/trust_combat_round5_yoran_oran_uc.sql
-index ba3e205933..4dbd2e1d4d 100644
---- a/modules/custom/sql/trust_combat_round5_yoran_oran_uc.sql
-+++ b/modules/custom/sql/trust_combat_round5_yoran_oran_uc.sql
-@@ -1,62 +1,62 @@
---- Yoran-Oran UC: WHM/BLM A-tier standback healer.
---- No AA. Nott (3502) is listener-driven ΓÇö skill list stays EMPTY so the
---- engine's TP-before-gambit path cannot steal cure priority (retail Nott
---- is lowest; he may keep curing even at 3000 TP until OOM).
---- Spell kit: Cure IΓÇôVI, -na, Protectra/Shellra IΓÇôV, Erase, Stoneskin.
--
--DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1095;
---- Keep empty ΓÇö Nott fired via useMobAbility(3502), not auto TP skills.
--
---- Self-target club anim; no SC props.
--UPDATE `mob_skills` SET
--    `mob_anim_id` = 89,
--    `mob_skill_name` = 'nott',
--    `mob_skill_aoe` = 0,
--    `mob_skill_aoe_radius` = 0.0,
--    `mob_skill_distance` = 7.0,
--    `mob_anim_time` = 2000,
--    `mob_prepare_time` = 0,
--    `mob_valid_targets` = 1,
--    `primary_sc` = 0,
--    `secondary_sc` = 0,
--    `tertiary_sc` = 0
--WHERE `mob_skill_id` = 3502;
--
--DELETE FROM `mob_spell_lists` WHERE `spell_list_name` = 'TRUST_Yoran-Oran_UC' OR `spell_list_id` = 393;
--
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,1,1,255);    -- cure
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,2,11,255);   -- cure_ii
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,3,21,255);   -- cure_iii
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,4,41,255);   -- cure_iv
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,5,61,255);   -- cure_v
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,6,80,255);   -- cure_vi
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,14,6,255);   -- poisona
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,15,9,255);   -- paralyna
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,16,14,255);  -- blindna
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,17,19,255);  -- silena
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,18,39,255);  -- stona
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,19,34,255);  -- viruna
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,20,29,255);  -- cursna
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,54,28,255);  -- stoneskin
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,125,7,255);  -- protectra
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,126,27,255); -- protectra_ii
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,127,47,255); -- protectra_iii
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,128,63,255); -- protectra_iv
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,129,75,255); -- protectra_v
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,130,17,255); -- shellra
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,131,37,255); -- shellra_ii
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,132,57,255); -- shellra_iii
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,133,68,255); -- shellra_iv
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,134,75,255); -- shellra_v
--INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,143,32,255); -- erase
--
--UPDATE `mob_pools` SET
--    `mJob` = 3,
--    `sJob` = 4,
--    `cmbSkill` = 11,
--    `cmbDelay` = 240,
--    `cmbDmgMult` = 100,
--    `behavior` = 2,
--    `skill_list_id` = 0,
--    `spellList` = 393
--WHERE `poolid` = 5980;
-+-- Yoran-Oran UC: WHM/BLM A-tier standback healer.
-+-- No AA. Nott (3502) is listener-driven ΓÇö skill list stays EMPTY so the
-+-- engine's TP-before-gambit path cannot steal cure priority (retail Nott
-+-- is lowest; he may keep curing even at 3000 TP until OOM).
-+-- Spell kit: Cure IΓÇôVI, -na, Protectra/Shellra IΓÇôV, Erase, Stoneskin.
++    // Auto-attacks (TakePhysicalDamage + skill-replaced HIT_DMG) must never be
++    // pulled into WS/nuke soft bands ΓÇö that looked like every AA hitting 33ΓÇô40k.
++    if (PAttacker->GetLocalVar("TrustOutgoingIsAutoAttack") == 1)
++    {
++        PAttacker->SetLocalVar("TrustOutgoingIsAutoAttack", 0);
++        return damage;
++    }
 +
-+DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 1095;
-+-- Keep empty ΓÇö Nott fired via useMobAbility(3502), not auto TP skills.
+     int32 bandMin = static_cast<int32>(PAttacker->GetLocalVar("TrustSoftBandMin"));
+     int32 bandMax = static_cast<int32>(PAttacker->GetLocalVar("TrustSoftBandMax"));
+     if (bandMin <= 0 || bandMax < bandMin)
+diff --git a/modules/custom/cpp/fjb_combat.h b/modules/custom/cpp/fjb_combat.h
+index 167f90c7e3..cb4195050e 100644
+--- a/modules/custom/cpp/fjb_combat.h
++++ b/modules/custom/cpp/fjb_combat.h
+@@ -31,9 +31,10 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap);
+ // one roll. No-op for masters at 99+, Adventuring Fellow, non-trusts, non-mobs.
+ int32 ApplyTrustLevelingHpPortionCap(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage);
+ 
+-// Master 99+: softclamp trust outgoing damage into a per-hit soft target rolled
+-// from TrustSoftBandMin/Max, asymptoting toward the trust hard cap. No-op when
+-// master < 99, fellow, non-trust, or damage <= 0. Runs before the hard cap.
++// Master 99+: softclamp trust WS/nuke overshoots into a per-hit soft target
++// rolled from TrustSoftBandMin/Max, asymptoting toward the hard cap. Skips when
++// TrustOutgoingIsAutoAttack is set (normal AA + skill-replaced HIT_DMG autos).
++// No-op when master < 99, fellow, non-trust, or damage <= 0.
+ int32 ApplyTrustEndgameSoftClamp(CBattleEntity* PAttacker, int32 damage);
+ 
+ // Master 99+: DD trusts vs mobs above level 120 take a steep outgoing damage cut.
+@@ -58,7 +59,7 @@ int32 ApplyAutomatonDamageBonus(CBattleEntity* PAttacker, int32 damage);
+ // damage <= 0.
+ int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRanged);
+ 
+-// Trust auto-attacks (melee + ranged swings via TakePhysicalDamage) hit at 25%
+-// of calculated damage. Weaponskills / magic are unchanged. Adventuring Fellow
+-// (fellowApplied) is exempt.
++// Trust auto-attacks (melee + ranged via TakePhysicalDamage): 0.55x at master 99,
++// 0.28x while leveling. Weaponskills / magic unchanged. Fellow exempt.
++// Skill-replaced HIT_DMG autos apply the same trim in Lua processDamage.
+ int32 ApplyTrustAutoAttackDamageAdjust(CBattleEntity* PAttacker, int32 damage);
+diff --git a/modules/custom/sql/trusts/trust_matsui_p.sql b/modules/custom/sql/trusts/trust_matsui_p.sql
+index 2aef12a8bd..8c8b00b095 100644
+--- a/modules/custom/sql/trusts/trust_matsui_p.sql
++++ b/modules/custom/sql/trusts/trust_matsui_p.sql
+@@ -1,7 +1,7 @@
+ -- =====================================================================
+ -- trust_matsui_p.sql  --  Trust: Matsui-P (Void Keeper capstone)
+ -- Spell 1003 / pool 6003. CLIENT spell ID 1003 = "Matsui-P".
+--- Look 0x0000310C = model 3121 (trust-era size=0 look).
++-- Look 0x0000310C = model 3121 (trust-era size=0 look). Always available here.
+ -- NIN/BLM katana + San ninjutsu / T1 nukes / Utsusemi / utility.
+ -- =====================================================================
+ 
+diff --git a/scripts/actions/mobskills/_balamor_auto_attack.lua b/scripts/actions/mobskills/_balamor_auto_attack.lua
+index 34b4792981..2003dabd8d 100644
+--- a/scripts/actions/mobskills/_balamor_auto_attack.lua
++++ b/scripts/actions/mobskills/_balamor_auto_attack.lua
+@@ -10,14 +10,15 @@ end
+ balamorAA.onMobWeaponSkill = function(mob, target, skill, action)
+     local params = {}
+ 
+-    -- Magical default base; hybrid A MAGIC_DAMAGE package carries the tier curve.
+-    params.baseDamage     = mob:getMainLvl() + 2
+-    params.fTP            = { 1.0, 1.0, 1.0 }
+-    params.element        = xi.element.DARK
+-    params.attackType     = xi.attackType.MAGICAL
+-    params.damageType     = xi.damageType.DARK
+-    params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+-    params.primaryMessage = xi.msg.basic.HIT_DMG
++    -- AA lane: no MAGIC_DAMAGE/MAB (nukes/absorbs keep the mage package).
++    params.baseDamage         = mob:getWeaponDmg()
++    params.fTP                = { 1.0, 1.0, 1.0 }
++    params.element            = xi.element.DARK
++    params.attackType         = xi.attackType.MAGICAL
++    params.damageType         = xi.damageType.DARK
++    params.shadowBehavior     = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
++    params.primaryMessage     = xi.msg.basic.HIT_DMG
++    params.skipMagicBonusDiff = true
+ 
+     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
+ 
+diff --git a/scripts/actions/mobskills/_teodor_auto_attack.lua b/scripts/actions/mobskills/_teodor_auto_attack.lua
+index d6b023da4b..4bb67b4af1 100644
+--- a/scripts/actions/mobskills/_teodor_auto_attack.lua
++++ b/scripts/actions/mobskills/_teodor_auto_attack.lua
+@@ -18,12 +18,13 @@ teodorAA.onMobWeaponSkill = function(mob, target, skill, action)
+     params.primaryMessage = xi.msg.basic.HIT_DMG
+ 
+     if id == MS_DARK then
+-        params.baseDamage     = mob:getWeaponDmg()
+-        params.fTP            = { 1.15, 1.15, 1.15 }
+-        params.element        = xi.element.DARK
+-        params.attackType     = xi.attackType.MAGICAL
+-        params.damageType     = xi.damageType.DARK
+-        params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
++        params.baseDamage         = mob:getWeaponDmg()
++        params.fTP                = { 1.15, 1.15, 1.15 }
++        params.element            = xi.element.DARK
++        params.attackType         = xi.attackType.MAGICAL
++        params.damageType         = xi.damageType.DARK
++        params.shadowBehavior     = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
++        params.skipMagicBonusDiff = true -- AA lane; MAGIC_DAMAGE stays on nukes/WS
+ 
+         local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
+         if xi.mobskills.processDamage(mob, target, skill, action, info) then
+diff --git a/scripts/actions/spells/trust/matsui_p.lua b/scripts/actions/spells/trust/matsui_p.lua
+index 5b7bb13534..404ef334e6 100644
+--- a/scripts/actions/spells/trust/matsui_p.lua
++++ b/scripts/actions/spells/trust/matsui_p.lua
+@@ -57,7 +57,7 @@ local function hasProp(props, want)
+ end
+ 
+ local function isLevel2Prop(prop)
+-    return prop >= SC.GRAVITATION and prop <= SC.FRAGMENTATION
++    return prop ~= nil and prop >= SC.GRAVITATION and prop <= SC.FRAGMENTATION
+ end
+ 
+ local function pickLightDarknessOpener(p, s, t)
+@@ -138,7 +138,9 @@ spellObject.onMobSpawn = function(mob)
+     -- Permanent ninjutsu bonus (Innin path is %/100); stacks with Innin uptime.
+     mob:addMod(xi.mod.NIN_NUKE_BONUS_INNIN, 20)
+ 
+-    mob:setMobMod(xi.mobMod.DUAL_WIELD, 1)
++    -- SetupJob(NIN) assigns shuriken SPECIAL_SKILL 272 + standback; melee kit only.
++    mob:setMobMod(xi.mobMod.SPECIAL_SKILL, 0)
++    mob:setMobMod(xi.mobMod.HP_STANDBACK, 0)
+     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
+ 
+     -- Shadows first ΓÇö never WS without them.
+diff --git a/scripts/globals/mobskills.lua b/scripts/globals/mobskills.lua
+index 1498827352..04b2e1f0c4 100644
+--- a/scripts/globals/mobskills.lua
++++ b/scripts/globals/mobskills.lua
+@@ -1606,13 +1606,20 @@ xi.mobskills.processDamage = function(actor, target, skill, action, info)
+             actor:getLocalVar('fellowApplied') ~= 1 and
+             info.damage > 0
+         then
+-            -- Skill-replaced autos use HIT_DMG; match C++ trust AA trim (0.55).
+-            if
+-                info.attackType == xi.attackType.PHYSICAL and
+-                skill and
+-                skill:getMsg() == xi.msg.basic.HIT_DMG
+-            then
+-                info.damage = math.max(1, math.floor(info.damage * 0.55))
++            -- Skill-replaced autos announce HIT_DMG even when the damage lane is
++            -- MAGICAL (Morimar/Darrcuiln/Shantotto II/etc. ΓÇö avoid spikes/samba).
++            -- Do NOT apply WS WSD or soft-band floor to those, or AA lands at 33ΓÇô40k.
++            local isSkillAuto = skill and skill:getMsg() == xi.msg.basic.HIT_DMG
++            if isSkillAuto then
++                local aaMult = 0.55
++                local master = actor:getMaster()
++                if master and master:getMainLvl() < 99 then
++                    aaMult = 0.28
++                end
 +
-+-- Self-target club anim; no SC props.
-+UPDATE `mob_skills` SET
-+    `mob_anim_id` = 89,
-+    `mob_skill_name` = 'nott',
-+    `mob_skill_aoe` = 0,
-+    `mob_skill_aoe_radius` = 0.0,
-+    `mob_skill_distance` = 7.0,
-+    `mob_anim_time` = 2000,
-+    `mob_prepare_time` = 0,
-+    `mob_valid_targets` = 1,
-+    `primary_sc` = 0,
-+    `secondary_sc` = 0,
-+    `tertiary_sc` = 0
-+WHERE `mob_skill_id` = 3502;
++                info.damage = math.max(1, math.floor(info.damage * aaMult))
++                -- C++ softclamp must not compress AA into WS soft bands.
++                actor:setLocalVar('TrustOutgoingIsAutoAttack', 1)
+             else
+                 -- Trust mobskill WS never hit player weaponskills.lua ΓÇö apply ALL_WSDMG here.
+                 local wsdPct = actor:getMod(xi.mod.ALL_WSDMG_ALL_HITS) or 0
+diff --git a/src/map/entities/battleentity.cpp b/src/map/entities/battleentity.cpp
+index 2db7167251..3229105204 100644
+--- a/src/map/entities/battleentity.cpp
++++ b/src/map/entities/battleentity.cpp
+@@ -968,8 +968,8 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
+         // Master 99+ DD trusts vs mobs >120: steep outgoing cut (before softclamp).
+         amount = ApplyTrustEndgameLevelDamageMult(attacker, this, amount);
+ 
+-        // Master 99+: compress trust overshoots into tier soft bands (variety,
+-        // not 40k spam). Runs after stoneskin/phalanx so a full absorb stays 0.
++        // Master 99+: compress trust WS/nuke overshoots into tier soft bands.
++        // Auto-attacks set TrustOutgoingIsAutoAttack and are skipped inside.
+         amount = ApplyTrustEndgameSoftClamp(attacker, amount);
+ 
+         const int32 globalHpDamageCap = settings::get<int32>("map.GLOBAL_HP_DAMAGE_CAP");
+@@ -982,6 +982,11 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
+         // Trusts while leveling: per-hit tier band % of mob max HP (C/B/A/S).
+         amount = ApplyTrustLevelingHpPortionCap(attacker, this, amount);
+     }
++    else if (attacker != nullptr && attacker->GetLocalVar("TrustOutgoingIsAutoAttack") == 1)
++    {
++        // Absorb / zero-damage AA must not leave the flag stuck for the next WS.
++        attacker->SetLocalVar("TrustOutgoingIsAutoAttack", 0);
++    }
+ 
+     // Encounter scripts may impose a stricter ceiling while a mob TP move is
+     // executing. The active marker is scoped around OnMobWeaponSkill below, so
+diff --git a/src/map/utils/battleutils.cpp b/src/map/utils/battleutils.cpp
+index 2a5400a0d8..7747a77db2 100644
+--- a/src/map/utils/battleutils.cpp
++++ b/src/map/utils/battleutils.cpp
+@@ -2224,6 +2224,12 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
+     // Scarlet Delirium: Updates status effect power with damage bonus
+     battleutils::HandleScarletDelirium(PDefender, damage);
+ 
++    // Mark trust AA so endgame softclamp (WS/nuke bands) does not rewrite autos.
++    if (PAttacker->objtype == TYPE_TRUST && PAttacker->GetLocalVar("fellowApplied") != 1)
++    {
++        PAttacker->SetLocalVar("TrustOutgoingIsAutoAttack", 1);
++    }
 +
-+DELETE FROM `mob_spell_lists` WHERE `spell_list_name` = 'TRUST_Yoran-Oran_UC' OR `spell_list_id` = 393;
-+
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,1,1,255);    -- cure
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,2,11,255);   -- cure_ii
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,3,21,255);   -- cure_iii
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,4,41,255);   -- cure_iv
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,5,61,255);   -- cure_v
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,6,80,255);   -- cure_vi
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,14,6,255);   -- poisona
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,15,9,255);   -- paralyna
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,16,14,255);  -- blindna
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,17,19,255);  -- silena
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,18,39,255);  -- stona
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,19,34,255);  -- viruna
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,20,29,255);  -- cursna
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,54,28,255);  -- stoneskin
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,125,7,255);  -- protectra
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,126,27,255); -- protectra_ii
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,127,47,255); -- protectra_iii
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,128,63,255); -- protectra_iv
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,129,75,255); -- protectra_v
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,130,17,255); -- shellra
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,131,37,255); -- shellra_ii
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,132,57,255); -- shellra_iii
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,133,68,255); -- shellra_iv
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,134,75,255); -- shellra_v
-+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Yoran-Oran_UC',393,143,32,255); -- erase
-+
-+UPDATE `mob_pools` SET
-+    `mJob` = 3,
-+    `sJob` = 4,
-+    `cmbSkill` = 11,
-+    `cmbDelay` = 240,
-+    `cmbDmgMult` = 100,
-+    `behavior` = 2,
-+    `skill_list_id` = 0,
-+    `spellList` = 393
-+WHERE `poolid` = 5980;
+     int32 corrected = PDefender->takeDamage(damage, PAttacker, attackType, damageType);
+     if (damage < 0)
+     {
