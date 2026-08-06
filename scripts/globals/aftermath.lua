@@ -877,7 +877,7 @@ xi.aftermath.onEffectGain = function(target, effect)
                     end
                 end
             end
-        end
+        end,
 
         -- Aeonic
         [5] = function(x)
