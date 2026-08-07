@@ -23,7 +23,7 @@ xi.settings.login =
 
     -- 0 - disabled (normal operation)
     -- 1 - enabled (only GM characters allowed online, no new character creation)
-    MAINT_MODE = 0,
+    MAINT_MODE = 1,
 
     -- Logging of user IP address to database (true/false)
     LOG_USER_IP = false,
