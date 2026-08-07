@@ -50,9 +50,10 @@ UPDATE `mob_skills` SET
     `mob_valid_targets` = 4
 WHERE `mob_skill_id` = 3295;
 
--- WAR/PLD, Great Sword.
+-- WAR/PLD, Great Sword — only while this slot is still stock Exc_S.
+-- Pool 6004 is Matsui-P (trusts/trust_matsui_p.sql); do not clobber it.
 UPDATE `mob_pools` SET
     `mJob` = 1,
     `sJob` = 7,
     `cmbSkill` = 4
-WHERE `poolid` = 6004;
+WHERE `poolid` = 6004 AND `name` = 'excenmille_s';

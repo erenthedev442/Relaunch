@@ -1,9 +1,8 @@
 -----------------------------------
 -- Trust: Matsui-P
--- Spell ID: 1003  |  Pool ID: 6003  (client menu name: Matsui-P)
--- Known-good summon config (pre-round5). Wrong kit on purpose until
--- summon is re-verified; then kit can be retuned carefully.
--- Exception hard cap via trust_power_scaling. Script keeps kit + flavor.
+-- Spell ID: 1004 | Pool ID: 6004 (client menu: Excenmille (S))
+-- Seasonal spell 1003 R0s outside campaign DAT — this overlays Exc_S.
+-- Safe summon kit; retune NIN identity only after summon is stable.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -17,7 +16,6 @@ spellObject.onSpellCast = function(caster, target, spell)
 end
 
 spellObject.onMobSpawn = function(mob)
-    -- Model comes from mob_pools look 0x0000310C (3121), not setModelId.
     mob:renameEntity('Matsui-P', true)
 
     local master = mob:getMaster()
@@ -25,7 +23,6 @@ spellObject.onMobSpawn = function(mob)
     local upgraded = math.max(1, master:getCharVar('TrustUpgraded') or 1)
     local power = lvl * upgraded
 
-    -- Flavor on top of global scaler floors (do not fight EncounterOutgoingDamageCap).
     mob:addMod(xi.mod.HP, power)
     mob:addMod(xi.mod.STR, math.floor(power * 0.5))
     mob:addMod(xi.mod.DEX, math.floor(power * 0.5))
@@ -38,7 +35,6 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.FASTCAST, 80)
     mob:addMod(xi.mod.CRITHITRATE, 15 + math.floor(power / 15))
     mob:addMod(xi.mod.STORETP, math.floor(power / 6))
-    -- xi.mod.WSD was removed; ALL_WSDMG_ALL_HITS is the current equivalent.
     mob:addMod(xi.mod.ALL_WSDMG_ALL_HITS, 50 + math.floor(power / 8))
     mob:addMod(xi.mod.MAGIC_DAMAGE, math.floor(power * 0.75))
     mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 40)

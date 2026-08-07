@@ -10,7 +10,8 @@
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
-    return xi.trust.canCast(caster, spell, xi.magic.spell.EXCENMILLE_S)
+    -- Exc_S slot (1004) is Matsui-P; no mutual exclusion with Meat/Exc.
+    return xi.trust.canCast(caster, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)

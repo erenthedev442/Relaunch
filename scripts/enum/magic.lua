@@ -1200,8 +1200,8 @@ xi.magic.spell =
     YGNAS                 =  998,
     MONBERAUX             =  999,
 
-    EXCENMILLE_S          = 1004,
-    MATSUI_P              = 1003,
+    MATSUI_P              = 1004, -- overlays retail Excenmille (S); menu label stays Exc_S
+    EXCENMILLE_S          = 1004, -- alias → Matsui-P (slot repurposed)
     AYAME_UC              = 1005,
     MAAT_UC               = 1006,
     ALDO_UC               = 1007,
