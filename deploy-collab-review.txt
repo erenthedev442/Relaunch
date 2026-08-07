@@ -1,27 +1,27 @@
-﻿Collaborator review  2026-08-06 12:28:40
+﻿Collaborator review  2026-08-07 12:41:00
 Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit 65c9abf6ef0f0859f75c16dd70cc7c515f7efa89
+commit a157f713eccfc65d831f2683cfe7689c6036811c
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Thu Aug 6 20:28:06 2026 +0100
+Date:   Fri Aug 7 20:31:17 2026 +0100
 
-    fix(relaunch/aftermath): restore missing comma so PREMA aftermath loads
+    ops(relaunch): enable login MAINT_MODE for GM-only access
     
-    Prime pet-copy edit dropped the switch-table comma before Aeonic, which broke the whole aftermath module.
+    Temporarily block non-GM characters so testers are locked out while staff stay online.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/scripts/globals/aftermath.lua b/scripts/globals/aftermath.lua
-index d12540cbd9..63fce40657 100644
---- a/scripts/globals/aftermath.lua
-+++ b/scripts/globals/aftermath.lua
-@@ -877,7 +877,7 @@ xi.aftermath.onEffectGain = function(target, effect)
-                     end
-                 end
-             end
--        end
-+        end,
+diff --git a/settings/default/login.lua b/settings/default/login.lua
+index 17d9b7b9c9..127fdb1fcd 100644
+--- a/settings/default/login.lua
++++ b/settings/default/login.lua
+@@ -23,7 +23,7 @@ xi.settings.login =
  
-         -- Aeonic
-         [5] = function(x)
+     -- 0 - disabled (normal operation)
+     -- 1 - enabled (only GM characters allowed online, no new character creation)
+-    MAINT_MODE = 0,
++    MAINT_MODE = 1,
+ 
+     -- Logging of user IP address to database (true/false)
+     LOG_USER_IP = false,
