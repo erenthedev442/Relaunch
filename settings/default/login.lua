@@ -29,7 +29,11 @@ xi.settings.login =
     LOG_USER_IP = false,
 
     -- Allow account creation via the loader (true/false)
-    ACCOUNT_CREATION = true,
+    -- INVITE-ONLY (2026-08-07, owner request): the loader no longer auto-creates
+    -- accounts. New players must be added by the owner (see C:\relaunch-ops\
+    -- approve.bat / create-account.bat). Existing accounts are gated by
+    -- accounts.status (0 = locked/denied, 1 = admitted).
+    ACCOUNT_CREATION = false,
 
     -- Allow character deletion through the lobby (true/false)
     CHARACTER_DELETION = true,
