@@ -23,7 +23,10 @@ xi.settings.login =
 
     -- 0 - disabled (normal operation)
     -- 1 - enabled (only GM characters allowed online, no new character creation)
-    MAINT_MODE = 1,
+    -- 0 (owner 2026-08-08): normal operation. Invite-only is enforced by
+    -- ACCOUNT_CREATION=false + per-account accounts.status, NOT by maintenance
+    -- mode (which would also block legit non-GM characters + char creation).
+    MAINT_MODE = 0,
 
     -- Logging of user IP address to database (true/false)
     LOG_USER_IP = false,
