@@ -77,7 +77,10 @@ xi.settings.map =
     EXP_PARTY_GAP_NO_EXP = 35,
 
     -- Capacity Point Settings
-    CAPACITY_RATE = 1.0,
+    -- 3.0 to match main.lua (owner 2026-08-07): the engine reads THIS map value
+    -- for capacity awards, so this is the effective live rate (main.lua's 3.0 was
+    -- otherwise shadowed to 1.0 here).
+    CAPACITY_RATE = 3.0,
     -- Held Job Point cap. job_points.cpp reads map.MAX_JOB_POINTS; if the
     -- key is MISSING it resolves to 0, which refuses EVERY job point (no
     -- player can earn JP). Retail held-JP cap is 2100.
