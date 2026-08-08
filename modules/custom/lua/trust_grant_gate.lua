@@ -278,7 +278,13 @@ end)
 m:addOverride('npcUtil.giveItem', function(player, items, params)
     local filtered = filterCipherItems(items)
     if filtered == nil then
-        return false
+        -- The reward was cipher-only. Ciphers are retired, so there is nothing to
+        -- hand over -- but report SUCCESS (a no-op), not failure. Callers such as
+        -- ROE completeRecord bail out and re-show a misleading "make room in your
+        -- inventory" message on a false return, which stalls the whole record
+        -- (e.g. "Call Forth an Alter Ego") and its sparks/EXP. Treating the
+        -- retired cipher as delivered lets the record complete normally.
+        return true
     end
 
     return super(player, filtered, params)
