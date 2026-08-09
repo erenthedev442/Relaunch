@@ -27,16 +27,10 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
         end)
 
         -- MOTD tip bar - shown privately to the logging-in player only,
-        -- 500ms after the broadcast so it lands below the login message.
+        -- a beat after the broadcast so it lands below the login message.
         player:timer(3000, function(playerArg)
-            local S = xi.msg.channel.SYSTEM_3
             local B = xi.msg.channel.SYSTEM_1
-            playerArg:printToPlayer('[Relaunch] -- Quick Tips --------------------------------------', S)
-            playerArg:printToPlayer('  LINKSHELL     - ask Jbae, Bdr, Bro, Kahz or Kirin in-game for a linkpearl!', B)
-            playerArg:printToPlayer('  !leaf', B)
-            playerArg:printToPlayer('  !lib', B)
-            playerArg:printToPlayer('  Visit the site for information ya noobs - https://www.ffxi-legendary.com/', B)
-            playerArg:printToPlayer('  If stuck logging in, message @admin in Discord', B)
+            playerArg:printToPlayer('  Visit the site for information - https://www.ffxi-legendary.com/', B)
         end)
     end
 end)
