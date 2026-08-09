@@ -32,7 +32,13 @@ local function freeSlotsForQty(qty)
 end
 
 local function giveItems(player, itemId, qty, zoneId)
+    -- Defensive: never hand a nil/zero item id or a non-positive quantity to the
+    -- addItem binding, and never index a nil zone text table. Bail safely instead.
     local ID = zones[zoneId]
+    if not itemId or itemId == 0 or not qty or qty <= 0 or not ID then
+        return false
+    end
+
     local slots = freeSlotsForQty(qty)
     if player:getFreeSlotsCount() < slots then
         player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, itemId)
@@ -69,6 +75,18 @@ local function tryBulkExchange(player, npc, trade)
     local currency = lookup.currency
     local rate     = exchangeRate()
     local count    = trade:getItemCount()
+
+    -- Defensive: a malformed lookup (missing currency tiers) or a non-positive
+    -- exchange rate must not reach the exchange branches below, where they would
+    -- feed nil item ids / divide-by-zero into the item bindings. Fall through to
+    -- the retail handler (super) instead.
+    if not currency or not currency[1] or not currency[2] or not currency[3] then
+        return false
+    end
+
+    if not rate or rate <= 0 then
+        return false
+    end
 
     if count <= 0 then
         return false

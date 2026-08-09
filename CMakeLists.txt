@@ -2,7 +2,14 @@ cmake_minimum_required(VERSION 3.25)
 
 # https://cmake.org/cmake/help/latest/variable/CMAKE_MSVC_DEBUG_INFORMATION_FORMAT.html
 cmake_policy(SET CMP0141 NEW)
-set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT Embedded)
+# RELAUNCH: use a separate .pdb (ProgramDatabase /Zi + linker /DEBUG) instead of
+# Embedded (/Z7). The crash handler (WheatyExceptionReport, DbgHelp SymFromAddr)
+# resolves function names from a .pdb sitting next to the .exe. With Embedded we
+# got no .pdb and every crash dump printed raw addresses only, making the chronic
+# ACCESS_VIOLATION impossible to attribute. Targets output to CMAKE_SOURCE_DIR
+# (= C:\server, see cmake/StandardProjectSettings.cmake set_target_output_directory),
+# so xi_map.pdb lands right beside xi_map.exe automatically — no copy step needed.
+set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT ProgramDatabase)
 
 project(server C CXX)
 

@@ -563,6 +563,8 @@ void CLuaBaseEntity::messagePublic(uint16 messageID, const CLuaBaseEntity* PEnti
 
 void CLuaBaseEntity::messageSpecial(uint16 messageID, sol::variadic_args va)
 {
+    FJB_REQUIRE_ALIVE_VOID()
+
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowError("Function called on non-PC entity (%s)", m_PBaseEntity->name.c_str());
@@ -1257,6 +1259,8 @@ EventInfo* CLuaBaseEntity::ParseEvent(int32 EventID, sol::variadic_args va, Even
 
 void CLuaBaseEntity::startEvent(int32 EventID, sol::variadic_args va)
 {
+    FJB_REQUIRE_ALIVE_VOID()
+
     StartEventHelper(EventID, va, EVENT_TYPE::NORMAL);
 }
 
@@ -4350,6 +4354,8 @@ uint32 CLuaBaseEntity::getItemCount(uint16 itemID)
 
 auto CLuaBaseEntity::addItem(sol::variadic_args va) const -> CItem*
 {
+    FJB_REQUIRE_ALIVE(nullptr)
+
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
@@ -4510,6 +4516,8 @@ auto CLuaBaseEntity::addItem(sol::variadic_args va) const -> CItem*
 
 bool CLuaBaseEntity::delItem(uint16 itemID, int32 quantity, const sol::object& containerID)
 {
+    FJB_REQUIRE_ALIVE(false)
+
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
@@ -5144,6 +5152,8 @@ void CLuaBaseEntity::changeContainerSize(uint8 locationID, int8 newSize)
 
 uint8 CLuaBaseEntity::getFreeSlotsCount(const sol::object& locID)
 {
+    FJB_REQUIRE_ALIVE(0)
+
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
@@ -5208,6 +5218,8 @@ void CLuaBaseEntity::confirmTrade() const
 
 void CLuaBaseEntity::tradeComplete() const
 {
+    FJB_REQUIRE_ALIVE_VOID()
+
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
@@ -5242,6 +5254,8 @@ void CLuaBaseEntity::tradeComplete() const
 
 auto CLuaBaseEntity::getTrade() -> CTradeContainer*
 {
+    FJB_REQUIRE_ALIVE(nullptr)
+
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
@@ -9160,6 +9174,8 @@ void CLuaBaseEntity::addKeyItem(const KeyItem keyItemID) const
 
 auto CLuaBaseEntity::hasKeyItem(const KeyItem keyItemID) const -> bool
 {
+    FJB_REQUIRE_ALIVE(false)
+
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
@@ -9551,6 +9567,8 @@ void CLuaBaseEntity::masterJob()
 
 uint32 CLuaBaseEntity::getGil()
 {
+    FJB_REQUIRE_ALIVE(0)
+
     if (m_PBaseEntity->objtype == TYPE_PC)
     {
         CItem* item = static_cast<CCharEntity*>(m_PBaseEntity)->getStorage(LOC_INVENTORY)->GetItem(0);
