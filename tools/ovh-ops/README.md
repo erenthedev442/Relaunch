@@ -14,16 +14,19 @@ so deploys can't clobber them). These are version-controlled backups.
 | `Relaunch-AHBot` | :30 hourly | `run_ah_market_maker.ps1` → `C:\server\tools\ah_market_maker.py --commit` | market-make the live AH |
 | `Relaunch-DriftMonitor` | :20 / :50 | `run_site_drift_monitor.ps1` → `site_drift_monitor_relaunch.py` | dead-man switch for `fjb-relaunch`; alerts Discord |
 
-**All three run at task Priority 10 (IDLE_PRIORITY_CLASS) — set 2026-08-08.** These
-are disk-I/O-heavy batch jobs (git fetch, mkdocs build, wrangler upload, docgen
-sync_audit, AH DB writes) sharing the single `C:` drive with the game + MariaDB.
-At the default priority 7 their I/O ran at normal priority and periodically starved
-the game's synchronous fsync, tripping the map inactivity watchdog (several trips
-correlated with these tasks' slots, e.g. 18:20 drift, 00:16 docs). IDLE class gives
-them **background I/O priority** (children git/python/mkdocs inherit it), so the
-game's writes win. If these tasks are ever recreated (box rebuild), set Priority 10:
-`$t=Get-ScheduledTask -TaskName <n>; $t.Settings.Priority=10; Set-ScheduledTask -TaskName <n> -Settings $t.Settings`.
-Do NOT lower `FFXIRelaunch` (the game supervisor) or the game processes.
+**All three self-lower to IDLE_PRIORITY_CLASS at startup — added 2026-08-08.** These
+are CPU/disk-heavy batch jobs (git fetch, mkdocs build, wrangler upload, docgen
+sync_audit, AH DB writes) sharing the single `C:` drive with the game + MariaDB. At
+normal priority they periodically starved the game's main tick (CPU) and its
+synchronous fsync (disk), tripping the map inactivity watchdog — several trips
+correlated with these tasks' slots (18:20 = :20 drift, 00:16 = :15 docs). Each script
+now runs `(Get-Process -Id $PID).PriorityClass = 'Idle'` near the top; the heavy
+children (git/python/mkdocs/wrangler) INHERIT IDLE from the parent, so the game wins
+the CPU and disk. NOTE: this is done IN-SCRIPT on purpose — the Task Scheduler
+"Priority" field (even set to 10) does NOT yield IDLE_PRIORITY_CLASS on this box
+(verified 2026-08-08: a priority-10 task still launched its process at Normal), so
+don't rely on the task Priority setting for this. Do NOT lower `FFXIRelaunch` (the
+game supervisor) or the game processes.
 
 Also here (manual, not a scheduled task): `gen-discord-changelog.ps1` — turns
 recent `C:\server` commits into a player-friendly Discord changelog (desktop

@@ -19,6 +19,10 @@ param([switch]$NoDeploy)
 #   SAFE BY DESIGN: only reads xi_relaunch + deploys static files.
 # =====================================================================
 $ErrorActionPreference = "Continue"   # native non-zero exits do NOT throw in PS 5.1; we check $LASTEXITCODE
+# Run at IDLE priority so this disk-heavy job (mkdocs build, git, wrangler upload)
+# yields to the game on the shared C: drive; child git/python/mkdocs inherit it.
+# Prevents starving the map tick -> watchdog trips. See tools/ovh-ops/README.md.
+try { (Get-Process -Id $PID).PriorityClass = [System.Diagnostics.ProcessPriorityClass]::Idle } catch {}
 
 # ---- CONFIG ----
 $DocsRepo  = "C:\relaunch-docs"

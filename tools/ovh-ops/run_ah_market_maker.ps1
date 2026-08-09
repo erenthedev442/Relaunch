@@ -2,6 +2,9 @@
 # Reads C:\server\settings\network.lua (localhost xi_relaunch = the live OVH DB).
 # Self-hosted on OVH 2026-07-06 (migrated off the Azure cron; no remote DB).
 $ErrorActionPreference = "Continue"
+# Run at IDLE priority so this job's DB/CPU work yields to the game on the shared
+# C: drive (the python child inherits it). See tools/ovh-ops/README.md.
+try { (Get-Process -Id $PID).PriorityClass = [System.Diagnostics.ProcessPriorityClass]::Idle } catch {}
 $log = "C:\relaunch-ops\logs\ah_market_maker.log"
 New-Item -ItemType Directory -Force -Path (Split-Path -Parent $log) | Out-Null
 
