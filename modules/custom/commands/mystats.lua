@@ -252,7 +252,9 @@ commandObj.onTrigger = function(player)
     -- DT mods are in 0.01% units (raw 1500 = 15%), same scale as the haste mods
     -- below -- so divide by 100 for the real percent. (%g keeps it clean for
     -- whole and fractional values: -1500 -> -15%, -240 -> -2.4%.)
-    line(player, 'Dmg taken: All %g%%   Phys %g%%   Magic %g%%   Breath %g%%',
+    -- Tier-I DT (matches the 'Phys DT' / 'Magic DT' augments) -- all share the
+    -- single -50% Damage Taken cap.
+    line(player, 'Dmg taken (cap -50%%): All %g%%   Phys %g%%   Magic %g%%   Breath %g%%',
         player:getMod(xi.mod.DMG)      / 100,
         player:getMod(xi.mod.DMGPHYS)  / 100,
         player:getMod(xi.mod.DMGMAGIC) / 100,
@@ -265,7 +267,7 @@ commandObj.onTrigger = function(player)
     local physDtII  = player:getMod(xi.mod.DMGPHYS_II)
     local magicDtII = player:getMod(xi.mod.DMGMAGIC_II)
     if physDtII ~= 0 or magicDtII ~= 0 then
-        line(player, 'Dmg taken II: Phys %g%%   Magic %g%%  (uncapped past -50%%)',
+        line(player, 'Dmg taken II: Phys %g%%   Magic %g%%  (bypasses cap, to -87.5%%)',
             physDtII / 100, magicDtII / 100)
     end
 
