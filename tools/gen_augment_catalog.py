@@ -130,6 +130,17 @@ LABEL_OVERRIDE = {
     # (swept 2026-06-20), so this single override fixes the whole class. (Keep the
     # value quote-free: a literal " in a Moogle/customMenu label corrupts the menu.)
     343: 'Drain/Aspir Potency',
+    # Damage-taken pairs: the tier-I mod (DMGPHYS 54 / DMGMAGIC 55) shares the
+    # -50% DT cap; the tier-II mod (DMGPHYS_II 1155 / DMGMAGIC_II 1156) bypasses
+    # that cap (down to -87.5%). The stock SQL comments ("Phys. dmg. taken" vs
+    # "Physical Damage Taken") only differ by casing and are indistinguishable in
+    # the Moogle menu, so relabel to the compact I/II form (owner request
+    # 2026-08-10). Kept <=18 chars for the Moogle menu truncation; the full
+    # cap-vs-bypass explanation lives on the augments docs page.
+    54:   'Phys DT',
+    55:   'Magic DT',
+    1155: 'Phys DT II',
+    1156: 'Magic DT II',
 }
 
 # Progression augments (Exp. Point / Cap. Point). These are leveling-currency

@@ -13,7 +13,7 @@
 "11": "Job Utilities"
 },
 "formula": "(base + round(roll*maxBoost/31)) * mult / disp, roll 0-31",
-"count": 146,
+"count": 142,
 "augments": [
 {
 "itemId": 878,
@@ -916,24 +916,9 @@
 "max": 32
 },
 {
-"itemId": 2747,
-"augId": 1156,
-"label": "Magic Damage Taken",
-"cat": 4,
-"catName": "Defense",
-"base": 3,
-"mult": 30,
-"disp": 100,
-"maxBoost": 31,
-"item": "item 2747",
-"img": null,
-"min": 1,
-"max": 10
-},
-{
 "itemId": 936,
 "augId": 55,
-"label": "Magic dmg. taken",
+"label": "Magic DT",
 "cat": 4,
 "catName": "Defense",
 "base": 3,
@@ -941,6 +926,21 @@
 "disp": 100,
 "maxBoost": 31,
 "item": "item 936",
+"img": null,
+"min": 1,
+"max": 10
+},
+{
+"itemId": 2747,
+"augId": 1156,
+"label": "Magic DT II",
+"cat": 4,
+"catName": "Defense",
+"base": 3,
+"mult": 30,
+"disp": 100,
+"maxBoost": 31,
+"item": "item 2747",
 "img": null,
 "min": 1,
 "max": 10
@@ -978,7 +978,7 @@
 {
 "itemId": 858,
 "augId": 54,
-"label": "Phys. dmg. taken",
+"label": "Phys DT",
 "cat": 4,
 "catName": "Defense",
 "base": 3,
@@ -993,7 +993,7 @@
 {
 "itemId": 2151,
 "augId": 1155,
-"label": "Physical Damage Taken",
+"label": "Phys DT II",
 "cat": 4,
 "catName": "Defense",
 "base": 3,
@@ -1831,36 +1831,6 @@
 "max": 32
 },
 {
-"itemId": 1889,
-"augId": 280,
-"label": "Magic skill",
-"cat": 9,
-"catName": "Skills",
-"base": 1,
-"mult": 1,
-"disp": 1,
-"maxBoost": 31,
-"item": "item 1889",
-"img": null,
-"min": 1,
-"max": 32
-},
-{
-"itemId": 1616,
-"augId": 278,
-"label": "Melee skill",
-"cat": 9,
-"catName": "Skills",
-"base": 1,
-"mult": 1,
-"disp": 1,
-"maxBoost": 31,
-"item": "Antlion Jaw",
-"img": "https://www.bg-wiki.com/images/9/9e/Antlion_Jaw_description.png",
-"min": 1,
-"max": 32
-},
-{
 "itemId": 1608,
 "augId": 287,
 "label": "Parrying Skill",
@@ -1872,21 +1842,6 @@
 "maxBoost": 31,
 "item": "item 1608",
 "img": null,
-"min": 1,
-"max": 32
-},
-{
-"itemId": 1663,
-"augId": 279,
-"label": "Ranged skill",
-"cat": 9,
-"catName": "Skills",
-"base": 1,
-"mult": 1,
-"disp": 1,
-"maxBoost": 31,
-"item": "Arnica Root",
-"img": "https://www.bg-wiki.com/images/0/08/Arnica_Root_description.png",
 "min": 1,
 "max": 32
 },
@@ -1904,6 +1859,21 @@
 "img": null,
 "min": 1,
 "max": 32
+},
+{
+"itemId": 863,
+"augId": 147,
+"label": "Treasure Hunter",
+"cat": 9,
+"catName": "Skills",
+"base": 1,
+"mult": 1,
+"disp": 1,
+"maxBoost": 0,
+"item": "Coeurl Hide",
+"img": "https://www.bg-wiki.com/images/8/8a/Coeurl_Hide_description.png",
+"min": 1,
+"max": 1
 },
 {
 "itemId": 942,
@@ -2144,21 +2114,6 @@
 "img": null,
 "min": 1,
 "max": 32
-},
-{
-"itemId": 863,
-"augId": 147,
-"label": "Treasure Hunter",
-"cat": 11,
-"catName": "Job Utilities",
-"base": 1,
-"mult": 1,
-"disp": 1,
-"maxBoost": 0,
-"item": "Coeurl Hide",
-"img": "https://www.bg-wiki.com/images/8/8a/Coeurl_Hide_description.png",
-"min": 1,
-"max": 1
 },
 {
 "itemId": 836,
