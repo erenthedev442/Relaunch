@@ -76,7 +76,9 @@ local stock =
     -- variant (verified against item_basic.sql).
     food =
     {
+        { 6540,                              2000 },  -- Altana's Repast +2      -- all attributes + Acc/Att (premium all-round)
         { 6465,                              2000 },  -- Behemoth Steak +1       -- Attack +24% (cap 165), +STR8 +DEX8
+        { 5764,                              2000 },  -- Black Curry Bun +1      -- HP / Att / Def hybrid
         { 5177,                              2000 },  -- Bream Sushi +1          -- Acc+18, Att+12
         { 5925,                              2000 },  -- Charred Salisbury Steak -- Attack +22% (cap 165), +STR8
         { 5167,                              2000 },  -- Coeurl Sub +1           -- STR / DEX
@@ -84,6 +86,7 @@ local stock =
         { 5179,                              2000 },  -- Dorado Sushi +1         -- DEX, AGI
         { 5666,                              2000 },  -- Fin Sushi +1            -- RACC, DEX+8
         { 6344,                              2000 },  -- Grape Daifuku +1        -- TP Bonus +50 (BiS for SAM/COR/RNG WS sets)
+        { 5603,                              2000 },  -- Hydra Kofte +1          -- Attack / STR / Acc (melee)
         { 6072,                              2000 },  -- Magma Steak +1          -- Attack +24% (cap 185), +STR9
         { 5744,                              2000 },  -- Marinara Pizza +1       -- Enmity (PLD / RUN)
         { 5694,                              2000 },  -- Octopus Sushi +1        -- STR, VIT
