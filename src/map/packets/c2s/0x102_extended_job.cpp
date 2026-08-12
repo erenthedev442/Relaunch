@@ -162,7 +162,13 @@ void GP_CLI_COMMAND_EXTENDED_JOB::process(MapSession* PSession, CCharEntity* PCh
                 if (spell != nullptr)
                 {
                     const uint8 mLevel = PChar->m_LevelRestriction != 0 && PChar->m_LevelRestriction < PChar->GetMLevel() ? PChar->m_LevelRestriction : PChar->GetMLevel();
-                    const uint8 sLevel = floor(mLevel / 2);
+                    // Relaunch fix: use the REAL subjob level (GetSLevel already
+                    // respects map.SUBJOB_RATIO + level sync) instead of retail's
+                    // hardcoded half-main. With SUBJOB_RATIO=3 ("equal"), a /BLU is
+                    // main-level, so high-tier blue magic (e.g. Barrier Tusk, Lv91)
+                    // must be settable on a subjob -- the old floor(mLevel/2) capped
+                    // the check at 49 and wrongly rejected everything above it.
+                    const uint8 sLevel = PChar->GetSLevel();
 
                     if (mLevel < spell->getJob(PChar->GetMJob()) && sLevel < spell->getJob(PChar->GetSJob()))
                     {
