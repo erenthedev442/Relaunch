@@ -324,7 +324,12 @@ local function spawnMaat(player)
         return false
     end
 
-    activeFights[ownerName] = mob
+    -- Store the mob's ID, NOT the entity reference. Maat is a dynamic entity
+    -- freed on despawn (releaseIdOnDisappear=true). A held Lua reference would
+    -- dangle once the C++ entity is freed, and the isAlive() re-check on the next
+    -- challenger's trigger would dereference freed memory -> ACCESS_VIOLATION
+    -- (pcall does NOT catch a native access violation). Re-fetched by ID at read.
+    activeFights[ownerName] = mob:getID()
     mob:setSpawn(sx, sy, sz, MAAT_R)
     mob:spawn()
     mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
@@ -386,7 +391,11 @@ m:addOverride('xi.zones.RuLude_Gardens.Zone.onInitialize', function(zone)
                 local infamy = p:getCharVar('Infamy') or 0
 
                 -- Per-challenger gate: one live Maat each (no server-wide lock).
-                if isAlive(activeFights[p:getName()]) then
+                -- Re-fetch by ID (activeFights now stores the id): GetMobByID
+                -- returns nil once the dynamic Maat is freed, so isAlive() can
+                -- never dereference a dangling pointer.
+                local existingId = activeFights[p:getName()]
+                if existingId and isAlive(GetMobByID(existingId)) then
                     p:printToPlayer(
                         '[Maat] Your echo of Maat still stands in the shrine. Finish that fight first.',
                         xi.msg.channel.SYSTEM_3)
