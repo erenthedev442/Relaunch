@@ -2363,11 +2363,9 @@ bool EquipArmor(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 conta
         return false;
     }
 
-    // FJB core patch: equip allowed if the item's job mask matches the MAIN *or*
-    // SUB job (stock LSB checks main only). Loosens job-restricted gear to sub-job
-    // use; item level / superior level / race still gate. reference_lsb_core_patches.md
-    const bool jobAllowed = (PItem->getJobs() & (1 << (PChar->GetMJob() - 1))) ||
-                            (PChar->GetSJob() > 0 && (PItem->getJobs() & (1 << (PChar->GetSJob() - 1))));
+    // Equipment job restrictions are based on the main job only. A matching
+    // support job must never authorize gear or weapon use.
+    const bool jobAllowed = PItem->getJobs() & (1 << (PChar->GetMJob() - 1));
     if ((PChar->m_EquipBlock & (1 << equipSlotID)) || !jobAllowed ||
         (PItem->getSuperiorLevel() > PChar->getMod(Mod::SUPERIOR_LEVEL)) ||
         (PItem->getReqLvl() > (settings::get<bool>("map.DISABLE_GEAR_SCALING") ? PChar->GetMLevel() : PChar->jobs.job[PChar->GetMJob()])) ||
@@ -3250,6 +3248,14 @@ void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 contai
 
     if (PItem && PItem == PChar->getEquip(static_cast<SLOTTYPE>(equipSlotID)))
     {
+        // Revalidate equipset requests that reference an already-equipped item.
+        // This clears stale cross-job equipment instead of preserving it through
+        // the normal same-item fast path.
+        if (!(PItem->getJobs() & (1 << (PChar->GetMJob() - 1))))
+        {
+            UnequipItem(PChar, equipSlotID);
+        }
+
         return;
     }
 

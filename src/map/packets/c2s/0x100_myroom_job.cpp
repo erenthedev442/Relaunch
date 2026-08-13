@@ -140,6 +140,9 @@ void GP_CLI_COMMAND_MYROOM_JOB::process(MapSession* PSession, CCharEntity* PChar
     charutils::BuildingCharSkillsTable(PChar);
     charutils::CalculateStats(PChar);
     charutils::BuildingCharTraitsTable(PChar);
+    // A support-job change must not leave equipment authorized by the old
+    // support job in place. Equipment eligibility is main-job-only.
+    charutils::CheckValidEquipment(PChar);
     PChar->PRecastContainer->ChangeJob();
     charutils::BuildingCharAbilityTable(PChar);
     charutils::BuildingCharWeaponSkills(PChar);
