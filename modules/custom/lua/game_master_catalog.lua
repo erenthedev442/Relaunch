@@ -85,8 +85,8 @@ catalog.difficulties =
         waveDelay       = 20,
         minLevel        = 115,
         maxLevel        = 115,
-        completionBonus = 50,
-        markBonus       = 20,
+        completionBonus = 25,
+        markBonus       = 10,
         hpBoost         = 2.5,
         mechanics =
         {
@@ -126,8 +126,8 @@ catalog.difficulties =
         waveDelay       = 10,
         minLevel        = 135,
         maxLevel        = 135,
-        completionBonus = 100,
-        markBonus       = 20,
+        completionBonus = 40,
+        markBonus       = 12,
         hpBoost         = 4.0,
         mechanics =
         {
@@ -167,8 +167,8 @@ catalog.difficulties =
         waveDelay       = 8,
         minLevel        = 150,
         maxLevel        = 150,
-        completionBonus = 200,
-        markBonus       = 20,
+        completionBonus = 80,
+        markBonus       = 15,
         hpBoost         = 5.0,
         mechanics =
         {

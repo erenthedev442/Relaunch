@@ -197,7 +197,7 @@ local CONFIG =
         oracle    =
         {
             name = 'Oracle', blurb = 'Primary healer: cures and cleanses first, then contributes light offense.', defaultWs = xi.mobSkill.DIVINE_SPEAR,
-            mods     = { { xi.mod.MND, 150 }, { xi.mod.DEF, 100 }, { xi.mod.MDEF, 100 }, { xi.mod.REFRESH, 20 } }, behavior = 'heal',
+            mods     = { { xi.mod.MND, 150 }, { xi.mod.DEF, 100 }, { xi.mod.MDEF, 100 } }, behavior = 'heal',
             survival = { hpMin = 2500, hpMax = 4000, pdt = -1000, mdt = -1500 },
             magicPower = { 1200, 3800 },
             -- Mob-skill fTP varies wildly, so tune offensive magic per move
@@ -209,6 +209,7 @@ local CONFIG =
                 [xi.mobSkill.CURSED_SPHERE_1]   = 900,
             },
             mpPool = { 1200, 3000 },
+            mpReturnPct = 3, -- Successful Cure/Curaga restores 3% max MP.
             wsDamage = { 700, 4500 },
             moves =
             {
@@ -717,14 +718,29 @@ local function applyFellow(p, pet)
         pet:setSpellList(367)
         pet:addMod(xi.mod.CURE_POTENCY, 50)
         pet:addMod(xi.mod.FASTCAST, 50)
+        pet:addMod(xi.mod.REFRESH, 10)
+        pet:setLocalVar('fellowOracleRefreshBonus', 0)
 
-        -- Emergency single-target cure first, then AoE triage, then routine
-        -- curing. HIGHEST chooses the strongest level/MP-legal spell.
+        -- Cure VI is reserved for emergencies. Routine healing uses Cure V to
+        -- avoid burning through the Oracle's MP pool on every moderate injury.
         pet:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 25 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
         pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_I }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURAGA })
         pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_II }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURAGA })
         pet:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 50 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURAGA })
-        pet:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 75 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
+        pet:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 75 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURE_V })
+
+        -- Apururu-style sustain: completed cures return a small percentage of
+        -- maximum MP. This rewards active healing without granting passive,
+        -- unlimited MP while the Fellow is idle.
+        pet:addListener('MAGIC_USE', 'FELLOW_ORACLE_CURE_MP_RETURN', function(actor, target, spell)
+            local family = spell:getSpellFamily()
+            if
+                family == xi.magic.spellFamily.CURE or
+                family == xi.magic.spellFamily.CURAGA
+            then
+                actor:addMP(math.floor(actor:getMaxMP() * role.mpReturnPct / 100))
+            end
+        end)
 
         pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.POISON }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.POISONA })
         pet:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.PARALYSIS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.PARALYNA })
@@ -803,10 +819,17 @@ local function applyFellow(p, pet)
     pet:addListener('WEAPONSKILL_USE', 'FELLOW_ROLE_MOVE_COMPLETE', function(actor)
         actor:setTP(0)
         actor:setLocalVar('fellowMovePendingAt', 0)
-        actor:setLocalVar('fellowProgressionDamageCap', 0)
-        actor:setLocalVar('fellowProgressionDamageFloor', 0)
-        actor:setLocalVar('fellowAoEDamageScale', 0)
-        actor:setLocalVar('fellowCanMagicBurst', 0)
+        -- AoE targets resolve after the main target. Keep the damage budget
+        -- alive briefly so every target receives the same scaling; clearing it
+        -- here made the main hit tiny while secondary targets kept raw damage.
+        actor:timer(1000, function(fellow)
+            if fellow and fellow:isAlive() then
+                fellow:setLocalVar('fellowProgressionDamageCap', 0)
+                fellow:setLocalVar('fellowProgressionDamageFloor', 0)
+                fellow:setLocalVar('fellowAoEDamageScale', 0)
+                fellow:setLocalVar('fellowCanMagicBurst', 0)
+            end
+        end)
         if getRole(p) == 'magus' then
             actor:setLocalVar('fellowNukeAt', os.time())
         else
@@ -865,6 +888,14 @@ scheduleCombatLoop = function(master, pet)
             local now  = os.time()
             local masterTarget = master:getTarget()
             local active = masterHasTargetEnmity(master, masterTarget)
+
+            -- Oracle has 10 Refresh while fighting and 20 between fights.
+            local oracleBonus = p:getLocalVar('fellowOracleRefreshBonus') or 0
+            local desiredOracleBonus = getRole(master) == 'oracle' and (active and 0 or 10) or 0
+            if oracleBonus ~= desiredOracleBonus then
+                p:addMod(xi.mod.REFRESH, desiredOracleBonus - oracleBonus)
+                p:setLocalVar('fellowOracleRefreshBonus', desiredOracleBonus)
+            end
 
             -- Match normal trust behavior: drawing a weapon is not enough.
             -- The Fellow assists only after the master has generated enmity.

@@ -9,9 +9,14 @@
 --   T4 +279 : Staff for BLM/SMN/SCH (Khatvanga)
 
 -- ── Tishtrya (21082, WHM/GEO Club) ── no mods exist upstream
-INSERT IGNORE INTO `item_mods` VALUES (21082, 73,  10);  -- Store TP+10
-INSERT IGNORE INTO `item_mods` VALUES (21082, 311, 217); -- Magic Damage+217
-INSERT IGNORE INTO `item_mods` VALUES (21082, 345, 500); -- TP Bonus+500
+-- Native WS is Realmrazer (174), the merit club WS — not Black Halo (169),
+-- which is the Ambuscade Maxentius WS.
+INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
+    (21082,  73,  10),  -- Store TP+10
+    (21082, 311, 217),  -- Magic Damage+217
+    (21082, 345, 500),  -- TP Bonus+500
+    (21082, 355, 174)   -- ADDS_WEAPONSKILL -> Realmrazer
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);
 
 -- ── Missing MAGIC_DAMAGE (mod 311) on weapons that have other mods upstream ──
 

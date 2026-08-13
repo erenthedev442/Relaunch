@@ -104,6 +104,25 @@ describe('Unity Wanted encounter invariants', function()
         assert(t3.regain > t2.regain)
     end)
 
+    it('slows Shedu TP cadence and gates Fulmination to the execute window', function()
+        local shedu
+        for _, nm in ipairs(catalog.nms) do
+            if nm.name == 'Shedu' then
+                shedu = nm
+                break
+            end
+        end
+        assert(shedu ~= nil)
+
+        local profile = mechanics.resolveDifficulty(shedu, catalog.difficulty)
+        assert(profile.regain == 200)
+        assert(profile.regain < catalog.difficulty[3].regain)
+        assert(profile.hp == catalog.difficulty[3].hp)
+        assert(shedu.skillList == 9702)
+        assert(shedu.lowHpSkillList == 9708)
+        assert(shedu.lowHpThreshold == 37)
+    end)
+
     it('maps every mark to a visible non-origin junction and safe board warp', function()
         for _, nm in ipairs(catalog.nms) do
             local zoneId = junctions.byNm[nm.name]

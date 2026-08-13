@@ -1,7 +1,7 @@
 -- !augment <gear_item_id> <catalyst_id>[:<qty>] ...
 -- Bypass the Augment Moogle — apply augments to a gear piece in inventory.
--- Replicates the full moogle trade logic: rank gates, mastery/affinity/crit
--- boosts, 10k gil cost, Augment_Count increment, achievement + weekly hunt hooks.
+-- Replicates the Moogle's content-tier bands, mastery floor, affinity,
+-- critical roll, crystalize chance, 10k gil cost, and completion hooks.
 --
 -- Used by the AugmentTrade Windower addon (tools/windower/augment_trade/).
 -- The addon sends: !augment <gear_id> <cat_id>:<qty> [<cat_id>:<qty> ...]
@@ -23,7 +23,12 @@ local CRIT_TOKEN_ID      = 15194
 local CRIT_TOKEN_LEGACY  = 29000
 local EXDATA_VALUE_MAX   = 31
 
-local RANK_NAMES = { 'Unranked', 'Initiate', 'Adept', 'Magus', 'Sage', 'Archon' }
+local LOCK_MASK_BYTE = 13
+local SIG_HEAD_BYTE  = 12
+local INSCRIBABLE    = 0x20
+local LAST_RECIPE_COUNT_VAR = 'Augment_LastRecipe_Count'
+local LAST_RECIPE_ID_VAR    = 'Augment_LastRecipe_Id_'
+local LAST_RECIPE_QTY_VAR   = 'Augment_LastRecipe_Qty_'
 
 local NON_AUGMENTABLE = {
     [18987]=true,[19007]=true,[19076]=true,[19096]=true,
@@ -55,9 +60,24 @@ cmdprops.exec = function(player, args)
         return
     end
 
-    if player:getItemCount(gearId) < 1 then
+    local gear = player:findItem(gearId, 0)
+    if not gear then
         player:printToPlayer('You do not have that gear piece in your inventory.', xi.msg.channel.SYSTEM_3)
         return
+    end
+    if not (gear:isType(xi.itemType.WEAPON) or gear:isType(xi.itemType.ARMOR)) then
+        player:printToPlayer('Only weapons and armor can be augmented.', xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    for slot = 0, 4 do
+        local existing = gear:getAugment(slot)
+        if existing and existing[1] ~= 0 then
+            player:printToPlayer(
+                'That item is already augmented. Use the Arcane Augmenter so crystalized lines are preserved safely.',
+                xi.msg.channel.SYSTEM_3)
+            return
+        end
     end
 
     if NON_AUGMENTABLE[gearId] then
@@ -100,10 +120,18 @@ cmdprops.exec = function(player, args)
         return
     end
 
-    -- Verify player holds all catalysts
+    local function inventoryQuantity(itemId)
+        local total = 0
+        for _, item in ipairs(player:findItems(itemId, 0) or {}) do
+            total = total + (item:getQuantity() or 0)
+        end
+        return total
+    end
+
+    -- Verify player holds all catalysts in main inventory.
     for _, catId in ipairs(catalystOrder) do
         local need = catalystCounts[catId]
-        local have = player:getItemCount(catId)
+        local have = inventoryQuantity(catId)
         if have < need then
             local def = catalog[catId]
             player:printToPlayer(
@@ -120,37 +148,52 @@ cmdprops.exec = function(player, args)
         return
     end
 
-    if player:getFreeSlotsCount() == 0 then
-        player:printToPlayer('Inventory full! Free a slot first.', xi.msg.channel.SYSTEM_3)
+    if not xi.augmentTiers or not xi.augmentTiers.tierOf then
+        player:printToPlayer('The Augment Tier service is unavailable. Use the Arcane Augmenter.', xi.msg.channel.SYSTEM_3)
         return
     end
 
-    -- Rank gates
+    local tier  = xi.augmentTiers.tierOf(player)
+    local slice = xi.augmentTiers.slices[tier]
+    if tier < 1 or not slice then
+        player:printToPlayer('Augmenting is locked until you unlock Augment Tier 1.', xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    -- Content-tier gates (Sage rank affects floor/crit, not catalyst access).
     local rank = player:getCharVar('Augment_Mastery') or 0
     for _, catId in ipairs(catalystOrder) do
         local def  = catalog[catId]
         local need = def and (def.tier or 0) or 0
-        if need > rank then
-            local needName = RANK_NAMES[need + 1] or ('rank ' .. need)
-            local haveName = RANK_NAMES[rank + 1] or ('rank ' .. rank)
+        if need > tier then
             player:printToPlayer(
-                string.format('[%s] requires Sage rank %d (%s). Your rank: %d (%s).',
-                    def.label, need, needName, rank, haveName),
+                string.format('[%s] requires Augment Tier %d. Your tier: %d.',
+                    def.label, need, tier),
+                xi.msg.channel.SYSTEM_3)
+            return
+        end
+        if (def.tierValue or def.flatValue) and catalystCounts[catId] > 1 then
+            player:printToPlayer(
+                string.format('[%s] is single-line; use one catalyst.', def.label),
                 xi.msg.channel.SYSTEM_3)
             return
         end
     end
 
-    -- Crit roll (mirrors moogle exactly)
-    local masteryMult   = sage.masteryMult[rank + 1] or 1.0
+    -- Roll once per trade; affinity rolls each individual slot twice.
     local critPct       = sage.critChance[rank + 1]  or 0.0
-    local usedCritToken = player:getItemCount(CRIT_TOKEN_ID) > 0 or player:getItemCount(CRIT_TOKEN_LEGACY) > 0
+    local critTokenItem = player:findItem(CRIT_TOKEN_ID, 0) or player:findItem(CRIT_TOKEN_LEGACY, 0)
+    local usedCritToken = critTokenItem ~= nil
     local isCrit        = usedCritToken or (math.random() < critPct)
-    local critMult      = isCrit and 2.0 or 1.0
+    local rollFloor     = math.min(slice.min + rank, slice.max)
+    local crystalPct    = (xi.augmentTiers.crystalChance and xi.augmentTiers.crystalChance[rank]) or 0
+    local canCrystalize = bit.band(gear:getFlag(), INSCRIBABLE) == 0
 
     -- Build augment slots
     local exAugsBySlot = {}
     local labelSummary = {}
+    local crystalNews  = {}
+    local newMask      = 0
 
     for _, catId in ipairs(catalystOrder) do
         local def   = catalog[catId]
@@ -159,34 +202,88 @@ cmdprops.exec = function(player, args)
         local mult  = (def.mult and def.mult > 1) and def.mult or 1
         local disp  = (def.disp and def.disp > 1) and def.disp or 1
 
-        local affMult   = (def.cat and affinity.hasAffinity(player, def.cat))
-            and affinity.affinityMult or 1.0
-        local totalMult = masteryMult * affMult * critMult
-
-        local maxTotalMult  = (sage.masteryMult[#sage.masteryMult] or 2.0)
-                                * (affinity.affinityMult or 1.5) * 2.0
-        local progress      = (maxTotalMult > 1) and ((totalMult - 1) / (maxTotalMult - 1)) or 0
-        local rawExdata     = math.floor(progress * EXDATA_VALUE_MAX + 0.5)
         local boostCap      = def.maxBoost and math.min(EXDATA_VALUE_MAX, def.maxBoost) or EXDATA_VALUE_MAX
-        local perSlotExdata = math.min(math.max(rawExdata, 0), boostCap)
-
+        local hasAffinity   = def.cat and affinity.hasAffinity(player, def.cat) or false
+        local rolls         = {}
+        local slotMax
         for _ = 1, count do
-            table.insert(exAugsBySlot, { id=def.augId, value=perSlotExdata })
+            local roll
+            if def.tierValue or def.flatValue then
+                local target = def.flatValue or (def.tierValue * tier)
+                local final  = def.flatValue or (def.tierValue * #xi.augmentTiers.slices)
+                roll    = target - base
+                slotMax = final - base
+            else
+                local raw = math.random(rollFloor, slice.max)
+                if hasAffinity then
+                    raw = math.max(raw, math.random(rollFloor, slice.max))
+                end
+                if isCrit then
+                    raw = slice.max
+                end
+                roll    = xi.augmentTiers.scaleRoll(raw, boostCap, tier)
+                slotMax = xi.augmentTiers.scaleRoll(slice.max, boostCap, tier)
+            end
+
+            rolls[#rolls + 1] = roll
+            exAugsBySlot[#exAugsBySlot + 1] = { id = def.augId, value = roll }
+            local slotIndex0 = #exAugsBySlot - 1
+            local canLockRoll = slotMax > 0 or def.flatValue ~= nil
+            if canCrystalize and canLockRoll and roll == slotMax and math.random() < crystalPct then
+                newMask = bit.bor(newMask, bit.lshift(1, slotIndex0))
+                crystalNews[#crystalNews + 1] = def.label
+            end
         end
 
-        local perSlotVal = math.floor((base + perSlotExdata) * mult / disp + 0.5)
+        local total = 0
+        for _, roll in ipairs(rolls) do
+            total = total + math.floor((base + roll) * mult / disp + 0.5)
+        end
         local valStr     = count > 1
-            and string.format('->%d/slot x%d=%d', perSlotVal, count, perSlotVal * count)
-            or  string.format('->%d', perSlotVal)
+            and string.format('->%d total (%d slots)', total, count)
+            or  string.format('->%d', total)
         local boostStr   = boostCap > 0
-            and string.format(' [boost %d/%d]', perSlotExdata, boostCap) or ''
+            and string.format(' [T%d boost %s/%d]', tier, table.concat(rolls, ','), boostCap) or ''
         table.insert(labelSummary, string.format('%s %s%s', def.label, valStr, boostStr))
     end
 
-    -- Consume gear + catalysts
-    player:delItem(gearId, 1)
+    local function takeFromInventory(itemId, quantity)
+        local remaining = quantity
+        local plan = {}
+        for _, item in ipairs(player:findItems(itemId, 0) or {}) do
+            plan[#plan + 1] = { slot = item:getSlotID(), qty = item:getQuantity() }
+        end
+        for _, entry in ipairs(plan) do
+            if remaining <= 0 then break end
+            local take = math.min(entry.qty, remaining)
+            if take > 0 and player:delItemAt(itemId, take, 0, entry.slot) then
+                remaining = remaining - take
+            end
+        end
+        return quantity - remaining
+    end
+
+    -- Consume the exact base gear, then catalysts from main-inventory stacks.
+    if not player:delItemAt(gearId, 1, 0, gear:getSlotID()) then
+        player:printToPlayer('The selected gear moved; augmentation cancelled.', xi.msg.channel.SYSTEM_3)
+        return
+    end
+    local consumed = {}
     for _, catId in ipairs(catalystOrder) do
-        player:delItem(catId, catalystCounts[catId])
+        local qty = catalystCounts[catId]
+        local removed = takeFromInventory(catId, qty)
+        if removed ~= qty then
+            player:addItem({ id = gearId, quantity = 1 })
+            for _, row in ipairs(consumed) do
+                player:addItem({ id = row.id, quantity = row.qty })
+            end
+            if removed > 0 then
+                player:addItem({ id = catId, quantity = removed })
+            end
+            player:printToPlayer('Catalyst consumption failed; consumed items were returned.', xi.msg.channel.SYSTEM_3)
+            return
+        end
+        consumed[#consumed + 1] = { id = catId, qty = qty }
     end
 
     -- Add augmented gear
@@ -209,24 +306,54 @@ cmdprops.exec = function(player, args)
         return
     end
 
+    if newMask ~= 0 then
+        local ok, err = pcall(function()
+            augmented:setExDataRaw({ [SIG_HEAD_BYTE] = 0, [LOCK_MASK_BYTE] = newMask })
+        end)
+        if not ok then
+            print(string.format('[augment] lock-mask stamp failed for %s item %d: %s',
+                player:getName(), gearId, tostring(err)))
+        end
+    end
+
     -- Charge gil and consume crit token
     player:delGil(GIL_COST)
     if usedCritToken then
-        local token = player:getItemCount(CRIT_TOKEN_ID) > 0 and CRIT_TOKEN_ID or CRIT_TOKEN_LEGACY
-        player:delItem(token, 1)
-        player:printToPlayer("Maat's Cap consumed by the augment's power.", xi.msg.channel.SYSTEM_3)
+        player:delItemAt(critTokenItem:getID(), 1, 0, critTokenItem:getSlotID())
+        player:printToPlayer("Maat's Cap consumed to force a perfect roll.", xi.msg.channel.SYSTEM_3)
     end
 
     -- Increment augment counter + fire hooks
     local prev = player:getCharVar('Augment_Count') or 0
     player:setCharVar('Augment_Count', prev + 1)
-    local ach = require('modules/custom/lua/achievements')
-    ach.onAugmentTrade(player)
-    wh.fire(player, 'augment_done', { isCrit=isCrit })
+    player:setCharVar(LAST_RECIPE_COUNT_VAR, #catalystOrder)
+    for i = 1, MAX_CATALYST_COUNT do
+        local catId = catalystOrder[i]
+        player:setCharVar(LAST_RECIPE_ID_VAR .. i, catId or 0)
+        player:setCharVar(LAST_RECIPE_QTY_VAR .. i, catId and catalystCounts[catId] or 0)
+    end
+    local achOk, achErr = pcall(function()
+        require('modules/custom/lua/achievements').onAugmentTrade(player)
+    end)
+    if not achOk then
+        print(string.format('[augment] achievement hook failed for %s: %s',
+            player:getName(), tostring(achErr)))
+    end
+    local huntOk, huntErr = pcall(function()
+        wh.fire(player, 'augment_done', { isCrit=isCrit })
+    end)
+    if not huntOk then
+        print(string.format('[augment] weekly-hunt hook failed for %s: %s',
+            player:getName(), tostring(huntErr)))
+    end
 
     -- Success feedback (intercepted by AugmentTrade addon)
     if isCrit then
-        player:printToPlayer('** Critical augment! ** Catalyst potency doubled!', xi.msg.channel.SYSTEM_3)
+        player:printToPlayer('** Critical augment! ** Every catalyst rolled its tier maximum!', xi.msg.channel.SYSTEM_3)
+    end
+    for _, label in ipairs(crystalNews) do
+        player:printToPlayer(string.format('%s CRYSTALIZED: [%s]', xi.icon.STAR_LARGE, label),
+            xi.msg.channel.SYSTEM_3)
     end
     player:printToPlayer(
         string.format('[AUGDONE]Applied: [%s] (-10,000 gil)', table.concat(labelSummary, '] [')),

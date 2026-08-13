@@ -4626,23 +4626,6 @@ bool canUseWeaponSkill(CCharEntity* PChar, uint16 wsid)
         return false;
     }
 
-    // Cataclysm is listed for every job on the standard staff-WS mask so
-    // eligible staff users can see it in the client menu. Retail execution is
-    // narrower: WAR, MNK, WHM, PLD or GEO must be the main or support job.
-    if (wsid == 189)
-    {
-        const auto canUseCataclysm = [](uint8 job)
-        {
-            return job == JOB_WAR || job == JOB_MNK || job == JOB_WHM ||
-                   job == JOB_PLD || job == JOB_GEO;
-        };
-
-        if (!canUseCataclysm(PChar->GetMJob()) && !canUseCataclysm(PChar->GetSJob()))
-        {
-            return false;
-        }
-    }
-
     return PChar->GetSkill(PWeaponSkill->getType()) >= PWeaponSkill->getSkillLevel();
 }
 

@@ -83,8 +83,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local function getFromItem(chain, fromStage, path)
         if path == 'aeonic' then
             if fromStage == 0 then return chain.aeonic.base
-            elseif fromStage == 1 then return chain.s1
-            else return chain.s2 end
+            elseif fromStage == 1 then return chain.aeonic.s1
+            else return chain.aeonic.s2 end
         end
         return fromStage == 1 and chain.s1 or chain.s2
     end
@@ -92,8 +92,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -- Returns the item the player will receive.
     local function getToItem(chain, fromStage, path)
         if path == 'aeonic' then
-            if fromStage == 0 then return chain.s1
-            elseif fromStage == 1 then return chain.s2
+            if fromStage == 0 then return chain.aeonic.s1
+            elseif fromStage == 1 then return chain.aeonic.s2
             else return chain.aeonic.s3 end
         end
         return fromStage == 1 and chain.s2 or chain.s3
@@ -107,8 +107,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local GATES = require('modules/custom/lua/weapon_forge_gates')
     local STAGE_GATES = GATES.STAGE_GATES
 
-    local function checkGate(player, category, fromStage)
-        local ok, gate = GATES.checkGate(player, category, fromStage)
+    local function checkGate(player, category, fromStage, chain)
+        local ok, gate = GATES.checkGate(player, category, fromStage, chain)
         if ok then return true end
         player:printToPlayer(
             string.format('[Weapon Forge] Gate not met: %s.', gate.label),
@@ -120,8 +120,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -- with a met/not-met marker so players see the target BEFORE they try to
     -- forge instead of eating a "gate not met" line as their only feedback.
     -- Empty string when the (category, fromStage) has no new gate.
-    local function gateLine(player, category, fromStage)
-        local ok, gate = GATES.checkGate(player, category, fromStage)
+    local function gateLine(player, category, fromStage, chain)
+        local ok, gate = GATES.checkGate(player, category, fromStage, chain)
         if not gate then return '' end
         local mark = ok and '✓' or '✗'
         return string.format('  Gate: %s [%s]', gate.label, mark)
@@ -135,7 +135,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         -- Owner spec 2026-07-13: new progression gates enforced BEFORE any
         -- inventory / currency / mark inspection so a locked player never
         -- sees "you have 24 of 25 marks" -- they see the actual blocker.
-        if not checkGate(player, 'aeonic', fromStage) then return false end
+        if not checkGate(player, 'aeonic', fromStage, chain) then return false end
         local ae       = chain.aeonic
         local costs    = catalog.aeonicCosts
         local stepCost = fromStage == 0 and costs.toStage1
@@ -444,7 +444,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                     ae.base.name, chain.s1.name, chain.s2.name, ae.s3.name),
                 xi.msg.channel.SYSTEM_3)
             player:printToPlayer('Cost: ' .. aeonicCostLine(chain, fromStage), xi.msg.channel.SYSTEM_3)
-            local gl = gateLine(player, 'aeonic', fromStage)
+            local gl = gateLine(player, 'aeonic', fromStage, chain)
             if gl ~= '' then player:printToPlayer(gl, xi.msg.channel.SYSTEM_3) end
         else
             player:printToPlayer(chainLine(chain, fromStage),   xi.msg.channel.SYSTEM_3)
@@ -504,7 +504,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer(
                 '[Weapon Forge] I see no upgradeable weapons in your inventory. '
                 .. 'Begin a Prime chain with an Ajja weapon from Ambuscade, '
-                .. 'or buy a Malformed weapon from Temprix in Reisenjima for the Aeonic path.',
+                .. 'or begin an Aeonic chain from the Aeonic category here.',
                 xi.msg.channel.SYSTEM_3)
             return
         end
@@ -819,9 +819,133 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         sendMenu(player, string.format('%s Forge (%d/%d)', def.label, page, pages), opts)
     end
 
+    -- First-class Aeonic category. Unlike the old Reisenjima-only entry point,
+    -- this always shows the path and explains unmet requirements.
+    local showAeonicCategory
+
+    local function aeonicHeldEntry(player, chain)
+        local ae = chain.aeonic
+        if player:getItemCount(ae.s3.id) > 0 then return nil, true end
+        if player:getItemCount(ae.s2.id) > 0 then
+            return { chain = chain, fromStage = 2, path = 'aeonic' }, false
+        end
+        if player:getItemCount(ae.s1.id) > 0 then
+            return { chain = chain, fromStage = 1, path = 'aeonic' }, false
+        end
+        if player:getItemCount(ae.base.id) > 0 then
+            return { chain = chain, fromStage = 0, path = 'aeonic' }, false
+        end
+        return nil, false
+    end
+
+    local function issueAeonicBase(player, chain)
+        local S = xi.msg.channel.SYSTEM_3
+        local cost = catalog.aeonicBase
+        if not checkGate(player, 'aeonic', 0) then return false end
+
+        local rank = math.max(1, player:getCharVar('HL_Tier'))
+        if rank < cost.hlRank then
+            player:printToPlayer(string.format(
+                '[Weapon Forge] Need Hunting League Rank %d (you are Rank %d).',
+                cost.hlRank, rank), S)
+            return false
+        end
+
+        local entry, complete = aeonicHeldEntry(player, chain)
+        if entry or complete then
+            player:printToPlayer('[Weapon Forge] You already hold this Aeonic chain.', S)
+            return false
+        end
+
+        local beads = player:getCurrency('escha_beads') or 0
+        if beads < cost.eschaBeads then
+            player:printToPlayer(string.format(
+                '[Weapon Forge] Need %d Escha Beads (you have %d).',
+                cost.eschaBeads, beads), S)
+            return false
+        end
+        if player:getFreeSlotsCount() == 0 then
+            player:printToPlayer('[Weapon Forge] Free an inventory slot first.', S)
+            return false
+        end
+
+        player:delCurrency('escha_beads', cost.eschaBeads)
+        if not player:addItem({ id = chain.aeonic.base.id, quantity = 1 }) then
+            player:addCurrency('escha_beads', cost.eschaBeads)
+            player:printToPlayer('[Weapon Forge] Base issuance failed; your Escha Beads were returned.', S)
+            return false
+        end
+
+        player:printToPlayer(string.format(
+            '[Weapon Forge] %s entrusted. Begin its Aeonic attunement.',
+            chain.aeonic.base.name), S)
+        return true
+    end
+
+    local function showAeonicWeapon(player, chain, page)
+        local entry, complete = aeonicHeldEntry(player, chain)
+        if entry then
+            showDetail(player, entry)
+            return
+        end
+
+        local ae = chain.aeonic
+        local options = {}
+        if complete then
+            player:printToPlayer(string.format(
+                '[Aeonic] %s is already complete.', ae.s3.name), xi.msg.channel.SYSTEM_3)
+        else
+            options[#options + 1] =
+            {
+                string.format('Obtain %s', ae.base.name),
+                function(p)
+                    if issueAeonicBase(p, chain) then
+                        showDetail(p, { chain = chain, fromStage = 0, path = 'aeonic' })
+                    else
+                        showAeonicWeapon(p, chain, page)
+                    end
+                end,
+            }
+            player:printToPlayer(string.format(
+                '[Aeonic] Base cost: %d Escha Beads. Jobs: %s.',
+                catalog.aeonicBase.eschaBeads, chain.jobs), xi.msg.channel.SYSTEM_3)
+            local gl = gateLine(player, 'aeonic', 0)
+            if gl ~= '' then player:printToPlayer(gl, xi.msg.channel.SYSTEM_3) end
+        end
+        options[#options + 1] = { 'Back', function(p) showAeonicCategory(p, page) end }
+        sendMenu(player, string.format('%s (%s)', ae.s3.name, chain.type), options)
+    end
+
+    showAeonicCategory = function(player, page)
+        page = page or 1
+        local pages = math.ceil(#catalog.chains / CAT_PAGE)
+        page = math.max(1, math.min(page, pages))
+        local first = (page - 1) * CAT_PAGE + 1
+        local last = math.min(first + CAT_PAGE - 1, #catalog.chains)
+        local options = {}
+        for i = first, last do
+            local chain = catalog.chains[i]
+            options[#options + 1] =
+            {
+                chain.aeonic.s3.name,
+                function(p) showAeonicWeapon(p, chain, page) end,
+            }
+        end
+        if page > 1 then
+            options[#options + 1] = { '<< Prev', function(p) showAeonicCategory(p, page - 1) end }
+        end
+        if page < pages then
+            options[#options + 1] = { 'Next >>', function(p) showAeonicCategory(p, page + 1) end }
+        end
+        options[#options + 1] = { 'Back', function(p) showForgeRoot(p) end }
+        sendMenu(player, string.format('Aeonic Forge (%d/%d)', page, pages), options)
+    end
+
     showForgeRoot = function(player)
         local opts = {
             { 'My upgradeable weapons (Prime / Aeonic)', function(p) showUpgrades(p) end },
+            { string.format('Aeonic weapons (%d)', #catalog.chains),
+                function(p) showAeonicCategory(p, 1) end },
         }
         for _, def in ipairs(NEW_CATS) do
             local d = def

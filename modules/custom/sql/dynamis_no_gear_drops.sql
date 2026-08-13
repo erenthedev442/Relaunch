@@ -19,8 +19,10 @@
 --
 -- This removes EVERY equippable item + EVERY '-1' item from every Dynamis-zone
 -- mob droplist. Verified survivors = pure currency/materials (byne bills,
--- shells, medals, fragments/goads, Rusted/Blackened ID cards, attestations,
--- tome chapters, forgotten_*, odious_*, nightmare_*). Zones:
+-- shells, medals, fragments/goads, Rusted/Blackened ID cards, tome chapters,
+-- forgotten_*, odious_*, nightmare_*). Aeonic Attestations are stripped
+-- separately by strip_dynamis_attestation_drops.sql (not equipment, so this
+-- DELETE cannot see them). Zones:
 --   39-42 Valkurm/Buburimu/Qufim/Tavnazia, 134/135 Beaucedine/Xarcabard,
 --   185-188 nation Dynamis, 294-297 Divergence [D] (custom droplists unaffected).
 --

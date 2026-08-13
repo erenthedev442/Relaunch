@@ -66,9 +66,9 @@ catalog.PRIME_WS_TUNING =
         name = 'Imperator', itemId = 21646, slot = xi.slot.MAIN,
         ftpScale = 6.75, wsDamageBonus = 425, ignoredDefense = { 0.60, 0.85, 1.00 },
     },
-    [xi.weaponskill.RESOLUTION] =
+    [xi.weaponskill.FIMBULVETR] =
     {
-        name = 'Resolution', itemId = 21653, slot = xi.slot.MAIN,
+        name = 'Fimbulvetr', itemId = 21653, slot = xi.slot.MAIN,
         ftpScale = 7.50, wsDamageBonus = 425, ignoredDefense = { 0.45, 0.70, 0.90 },
     },
     [xi.weaponskill.BLITZ] =
@@ -109,7 +109,7 @@ catalog.PRIME_WS_TUNING =
     [xi.weaponskill.OSHALA] =
     {
         name = 'Oshala', itemId = 22106, slot = xi.slot.MAIN,
-        ftpScale = 7.00, wsDamageBonus = 400, ignoredDefense = { 0.60, 0.85, 1.00 },
+        ftpScale = 12.00, wsDamageBonus = 450, ignoredDefense = { 0.60, 0.85, 1.00 },
     },
     [xi.weaponskill.SARV] =
     {

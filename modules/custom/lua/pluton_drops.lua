@@ -1,7 +1,8 @@
 -----------------------------------
 -- Dynamis Pluton drops
 --
--- Every monster in a Dynamis - Divergence zone has one 10% base Pluton roll.
+-- Every monster in a Dynamis - Divergence zone has two independent 10% base
+-- Pluton rolls, allowing zero, one, or two Plutons per kill.
 -- addTreasure applies the mob's accumulated Treasure Hunter level.
 -----------------------------------
 require('modules/module_utils')
@@ -29,6 +30,7 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
         return
     end
 
+    player:addTreasure(xi.item.PLUTON, mob, PLUTON_DROP_RATE)
     player:addTreasure(xi.item.PLUTON, mob, PLUTON_DROP_RATE)
 end)
 

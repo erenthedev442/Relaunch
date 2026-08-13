@@ -78,6 +78,16 @@ describe('Relaunch Prime weaponskill pinnacle tuning', function()
             21730, xi.weaponskill.DECIMATION, xi.slot.MAIN) == nil)
         assert(catalog.getEntry(
             21932, xi.weaponskill.ZESHO_MEPPO, xi.slot.MAIN) ~= nil)
+        assert(catalog.getEntry(
+            21930, xi.weaponskill.ZESHO_MEPPO, xi.slot.MAIN) == nil)
+        assert(catalog.getEntry(
+            21653, xi.weaponskill.FIMBULVETR, xi.slot.MAIN) ~= nil)
+        assert(catalog.getEntry(
+            21650, xi.weaponskill.FIMBULVETR, xi.slot.MAIN) == nil)
+        assert(catalog.getEntry(
+            22002, xi.weaponskill.DAGDA, xi.slot.MAIN) ~= nil)
+        assert(catalog.getEntry(
+            21999, xi.weaponskill.DAGDA, xi.slot.MAIN) == nil)
     end)
 
     it('scales a private fTP copy and preserves all other WS mechanics', function()
@@ -220,7 +230,7 @@ describe('Relaunch Prime weaponskill pinnacle tuning', function()
         local player = makePlayer(
             { [xi.slot.MAIN] = 21653 },
             xi.job.WAR)
-        local modId  = xi.mod.WEAPONSKILL_DAMAGE_BASE + xi.weaponskill.RESOLUTION
+        local modId  = xi.mod.WEAPONSKILL_DAMAGE_BASE + xi.weaponskill.FIMBULVETR
         local capVar = catalog.DAMAGE_CAP_LOCAL_VAR
 
         player:setMod(modId, 17)
@@ -228,7 +238,7 @@ describe('Relaunch Prime weaponskill pinnacle tuning', function()
 
         local ok = pcall(function()
             xi.primeWsTuning.withPrimeEffects(
-                player, xi.weaponskill.RESOLUTION, xi.slot.MAIN,
+                player, xi.weaponskill.FIMBULVETR, xi.slot.MAIN,
                 function()
                     error('expected test failure')
                 end)

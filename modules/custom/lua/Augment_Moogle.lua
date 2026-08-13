@@ -50,7 +50,9 @@ local GIL_COST           = 10000   -- flat per trade
 local SCOUR_GIL_COST     = 25000   -- flat to scour (strip ALL augments incl. crystalized)
 local CRIT_TOKEN_ID      = 15194   -- Maat's Cap: guarantees a crit when held (consumed on success). Retail Rare/EX, so it renders on the client (the old custom 29000 had no client DAT).
 local CRIT_TOKEN_LEGACY  = 29000   -- old custom 'Maat's Blessing'; still honored so pre-swap drops aren't stranded
-local LAST_RECIPE_VAR    = 'Augment_LastRecipe'   -- persisted catalyst recipe for "repeat last catalyst set"
+local LAST_RECIPE_COUNT_VAR = 'Augment_LastRecipe_Count'
+local LAST_RECIPE_ID_VAR    = 'Augment_LastRecipe_Id_'
+local LAST_RECIPE_QTY_VAR   = 'Augment_LastRecipe_Qty_'
 
 -----------------------------------
 -- CRYSTALIZED AUGMENTS config
@@ -175,7 +177,28 @@ local function augmentTier(player)
     -- The 2026-07 Wave Master realignment added Insane to T4. Preserve the
     -- strength previously earned by T4/T5 players; this does not fabricate
     -- Wave Master clears and therefore cannot satisfy weapon gates.
-    return math.max(tier, player:getCharVar('Augment_Tier_Grandfather') or 0)
+    tier = math.max(tier, player:getCharVar('Augment_Tier_Grandfather') or 0)
+
+    -- A grandfathered T4 player has already earned the prerequisite band.
+    -- Their first Maat's Echo win must therefore unlock T5 as advertised,
+    -- even if a later ladder realignment added a prerequisite they lack.
+    if tier >= 4 and (player:getCharVar('Maat_Kills') or 0) >= 1 then
+        tier = 5
+    end
+
+    return math.min(tier, #TIER_SLICES)
+end
+
+-- Scale the raw 0..31 roll into an augment's own boost ceiling. Reserve the
+-- actual ceiling for T5: rounded scaling previously let low-ceiling augments
+-- (notably maxBoost 1-2) reach their final value at T4.
+local function scaleTierRoll(raw, boostCap, tier)
+    boostCap = math.max(0, math.min(31, boostCap or 31))
+    local scaled = math.floor(raw * boostCap / 31 + 0.5)
+    if tier < #TIER_SLICES and boostCap > 0 then
+        scaled = math.min(scaled, boostCap - 1)
+    end
+    return math.max(0, scaled)
 end
 
 -- Evaluate the pre-realignment ladder once, before the new Insane requirement
@@ -213,6 +236,7 @@ xi.augmentTiers =
     slices     = TIER_SLICES,
     gates      = TIER_GATES,
     nextUnlock = nextUnlock,
+    scaleRoll  = scaleTierRoll,
     crystalChance = CRYSTAL_CHANCE,
 }
 
@@ -350,6 +374,27 @@ local function clearStaleAugmentSession(player, message)
         xi.msg.channel.SYSTEM_3)
 end
 
+-- Crystalize lock bits live in signature byte 13. Typed addItem(exdata.augments)
+-- cannot set them, so we stamp afterwards. Re-augments almost always have a
+-- non-zero mask (preserved locks). A stamp miss must NEVER look like a failed
+-- confirm -- the item is already in inventory with its new augments.
+local function stampLockMask(player, item, itemId, mask)
+    mask = bit.band(math.floor(tonumber(mask) or 0), 0xFF)
+    if mask == 0 then
+        return true
+    end
+
+    local payload = { [SIG_HEAD_BYTE] = 0, [LOCK_MASK_BYTE] = mask }
+    local ok, err = pcall(function()
+        item:setExDataRaw(payload)
+    end)
+    if not ok then
+        print(string.format('[Augment_Moogle] lock-mask stamp failed for %s item %d mask %d: %s',
+            player:getName(), itemId or 0, mask, tostring(err)))
+    end
+    return ok
+end
+
 -----------------------------------
 -- Weapons that CANNOT take a standard augment: the trade would otherwise read as
 -- "success" (the item re-adds fine, passing the weak `if not augmented` check) but the
@@ -457,28 +502,6 @@ local function selectionRequests(selection)
     return requests
 end
 
-local function encodeRecipe(requests)
-    local parts = {}
-    for _, req in ipairs(requests or {}) do
-        if req.id and req.qty and req.qty > 0 then
-            table.insert(parts, string.format('%d:%d', req.id, req.qty))
-        end
-    end
-    return table.concat(parts, ',')
-end
-
-local function decodeRecipe(raw)
-    if not raw or raw == '' then return nil end
-    local requests = {}
-    for part in string.gmatch(raw, '[^,]+') do
-        local itemId, qty = part:match('^(%d+):(%d+)$')
-        if itemId and qty then
-            table.insert(requests, { id = tonumber(itemId), qty = tonumber(qty) })
-        end
-    end
-    return (#requests > 0) and requests or nil
-end
-
 local function recipeFromState(st)
     if st.bankCatalysts and #st.bankCatalysts > 0 then
         return st.bankCatalysts
@@ -494,14 +517,36 @@ local function recipeFromState(st)
 end
 
 local function saveLastRecipe(player, requests)
-    local encoded = encodeRecipe(requests)
-    if encoded ~= '' then
-        player:setCharVar(LAST_RECIPE_VAR, encoded)
+    local valid = {}
+    for _, req in ipairs(requests or {}) do
+        local id  = math.floor(tonumber(req.id) or 0)
+        local qty = math.floor(tonumber(req.qty) or 0)
+        if id > 0 and qty > 0 and catalog[id] then
+            valid[#valid + 1] = { id = id, qty = qty }
+        end
+    end
+
+    player:setCharVar(LAST_RECIPE_COUNT_VAR, math.min(#valid, MAX_CATALYST_COUNT))
+    for i = 1, MAX_CATALYST_COUNT do
+        local req = valid[i]
+        player:setCharVar(LAST_RECIPE_ID_VAR .. i, req and req.id or 0)
+        player:setCharVar(LAST_RECIPE_QTY_VAR .. i, req and req.qty or 0)
     end
 end
 
 local function loadLastRecipe(player)
-    return decodeRecipe(player:getCharVar(LAST_RECIPE_VAR) or '')
+    local count = math.max(0, math.min(
+        player:getCharVar(LAST_RECIPE_COUNT_VAR) or 0,
+        MAX_CATALYST_COUNT))
+    local requests = {}
+    for i = 1, count do
+        local id  = player:getCharVar(LAST_RECIPE_ID_VAR .. i) or 0
+        local qty = player:getCharVar(LAST_RECIPE_QTY_VAR .. i) or 0
+        if id > 0 and qty > 0 and catalog[id] then
+            requests[#requests + 1] = { id = id, qty = qty }
+        end
+    end
+    return (#requests > 0) and requests or nil
 end
 
 local function recipeSummary(requests)
@@ -1011,9 +1056,33 @@ showConfirmMenu = function(player)
                 -- Recovery: a prior confirm consumed bank catalysts and/or
                 -- delivered the augmented item, then errored before clearState.
                 -- Never returnAll here -- that duplicates gear (Chatoyant Staff dup).
-                if st2.gearDelivered or st2.bankConsumed then
+                -- itemId == 0 with no pending delivery is a double-click after
+                -- success (customMenu can fire Yes twice); do not addItem(0).
+                if st2.gearDelivered then
                     clearStaleAugmentSession(playerArg)
                     showBankMain(playerArg)
+                    return
+                end
+                if st2.bankConsumed then
+                    returnAll(playerArg)
+                    playerArg:printToPlayer(
+                        '[Arcane Augmenter] Interrupted confirmation recovered; gear and stored catalysts returned, kupo!',
+                        xi.msg.channel.SYSTEM_3)
+                    showBankMain(playerArg)
+                    return
+                end
+                if not st2.itemId or st2.itemId == 0 then
+                    showBankMain(playerArg)
+                    return
+                end
+                if st2.usedCritToken
+                    and not playerArg:findItem(CRIT_TOKEN_ID, 0)
+                    and not playerArg:findItem(CRIT_TOKEN_LEGACY, 0)
+                then
+                    returnAll(playerArg)
+                    playerArg:printToPlayer(
+                        "Maat's Cap moved before confirmation; augmentation cancelled and gear returned, kupo!",
+                        xi.msg.channel.SYSTEM_3)
                     return
                 end
 
@@ -1039,8 +1108,9 @@ showConfirmMenu = function(player)
                     table.insert(exAugs, { id = sel.id, value = sel.value })
                 end
 
+                local deliveredId = st2.itemId
                 local augmented = playerArg:addItem({
-                    id     = st2.itemId,
+                    id     = deliveredId,
                     exdata =
                     {
                         augmentKind    = xi.augment.kind.HAS_AUGMENTS,
@@ -1056,68 +1126,67 @@ showConfirmMenu = function(player)
                     return
                 end
 
-                -- Mark delivery BEFORE any follow-up step so returnAll /
-                -- onCancelled can never duplicate the base item if something
-                -- below throws (achievements, menus, setExDataRaw, etc.).
+                -- Mark delivery BEFORE any follow-up so returnAll / onCancelled
+                -- can never duplicate the base item.
                 st2.gearDelivered = true
                 st2.itemId        = 0
 
                 local snapshot =
                 {
-                    labelSummary = st2.labelSummary,
-                    isCrit       = st2.isCrit,
+                    labelSummary  = st2.labelSummary,
+                    isCrit        = st2.isCrit,
                     usedCritToken = st2.usedCritToken,
-                    newMask      = st2.newMask,
-                    crystalNews  = st2.crystalNews,
-                    recipe       = recipeFromState(st2),
+                    newMask       = st2.newMask,
+                    crystalNews   = st2.crystalNews,
+                    recipe        = recipeFromState(st2),
                 }
 
-                local ok, err = pcall(function()
-                    if (snapshot.newMask or 0) ~= 0 and augmented.setExDataRaw then
-                        augmented:setExDataRaw({ [SIG_HEAD_BYTE] = 0, [LOCK_MASK_BYTE] = snapshot.newMask })
+                -- Re-augments preserve crystalize bits (newMask ~= 0). Stamp is
+                -- best-effort: typed addItem already applied the augment lines.
+                stampLockMask(playerArg, augmented, deliveredId, snapshot.newMask)
+
+                saveLastRecipe(playerArg, snapshot.recipe)
+                playerArg:delGil(GIL_COST)
+
+                if snapshot.usedCritToken then
+                    local tokenItem = playerArg:findItem(CRIT_TOKEN_ID, 0) or playerArg:findItem(CRIT_TOKEN_LEGACY, 0)
+                    if tokenItem then
+                        playerArg:delItemAt(tokenItem:getID(), 1, 0, tokenItem:getSlotID())
                     end
+                    playerArg:printToPlayer("Maat's Cap consumed to force a perfect roll.", xi.msg.channel.SYSTEM_3)
+                end
 
-                    saveLastRecipe(playerArg, snapshot.recipe)
-                    clearState(playerArg)
-                    playerArg:delGil(GIL_COST)
+                local prev = playerArg:getCharVar('Augment_Count') or 0
+                playerArg:setCharVar('Augment_Count', prev + 1)
+                clearState(playerArg)
 
-                    if snapshot.usedCritToken then
-                        local token = playerArg:getItemCount(CRIT_TOKEN_ID) > 0 and CRIT_TOKEN_ID or CRIT_TOKEN_LEGACY
-                        playerArg:delItem(token, 1)
-                        playerArg:printToPlayer("Maat's Cap consumed by the augment's power.", xi.msg.channel.SYSTEM_3)
-                    end
-
-                    local prev = playerArg:getCharVar('Augment_Count') or 0
-                    playerArg:setCharVar('Augment_Count', prev + 1)
-
+                local achOk, achErr = pcall(function()
                     local ach = require('modules/custom/lua/achievements')
                     ach.onAugmentTrade(playerArg)
-
-                    wh.fire(playerArg, 'augment_done', { isCrit = snapshot.isCrit })
-
-                    playerArg:printToPlayer(
-                        string.format('Augmentation complete! Applied: [%s], kupo!', table.concat(snapshot.labelSummary, '] [')),
-                        xi.msg.channel.SYSTEM_3)
-                    if snapshot.isCrit then
-                        playerArg:printToPlayer('Critical augment locked in - your catalysts hit twice as hard!',
-                            xi.msg.channel.SYSTEM_3)
-                    end
-                    for _, lbl in ipairs(snapshot.crystalNews or {}) do
-                        playerArg:printToPlayer(string.format('%s CRYSTALIZED: [%s] is now locked at max -- re-rolls can no longer touch it, kupo!', xi.icon.STAR_LARGE, lbl),
-                            xi.msg.channel.SYSTEM_3)
-                    end
                 end)
+                if not achOk then
+                    print(string.format('[Augment_Moogle] achievement hook failed for %s: %s',
+                        playerArg:getName(), tostring(achErr)))
+                end
 
-                if not ok then
-                    clearState(playerArg)
-                    playerArg:printToPlayer(
-                        '[Arcane Augmenter] Your item was augmented, but a follow-up step failed. '
-                        .. 'Check your inventory -- do NOT confirm again. Contact a GM if anything looks wrong, kupo!',
+                local huntOk, huntErr = pcall(function()
+                    wh.fire(playerArg, 'augment_done', { isCrit = snapshot.isCrit })
+                end)
+                if not huntOk then
+                    print(string.format('[Augment_Moogle] weekly-hunt hook failed for %s: %s',
+                        playerArg:getName(), tostring(huntErr)))
+                end
+
+                playerArg:printToPlayer(
+                    string.format('Augmentation complete! Applied: [%s], kupo!', table.concat(snapshot.labelSummary or {}, '] [')),
+                    xi.msg.channel.SYSTEM_3)
+                if snapshot.isCrit then
+                    playerArg:printToPlayer('Critical augment - every catalyst rolled its tier maximum!',
                         xi.msg.channel.SYSTEM_3)
-                    print(string.format('[Augment_Moogle] post-delivery error for %s: %s',
-                        playerArg:getName(), tostring(err)))
-                    showBankMain(playerArg)
-                    return
+                end
+                for _, lbl in ipairs(snapshot.crystalNews or {}) do
+                    playerArg:printToPlayer(string.format('%s CRYSTALIZED: [%s] is now locked at max -- re-rolls can no longer touch it, kupo!', xi.icon.STAR_LARGE, lbl),
+                        xi.msg.channel.SYSTEM_3)
                 end
 
                 showPostAugmentMenu(playerArg)
@@ -1146,6 +1215,11 @@ showConfirmMenu = function(player)
         title   = 'Apply this augment, kupo?',
         options = options,
         onCancelled = function(p)
+            local pending = getState(p)
+            if pending.gearDelivered then
+                clearState(p)
+                return
+            end
             returnAll(p)
             p:printToPlayer('Augmentation cancelled - items returned, kupo!', xi.msg.channel.SYSTEM_3)
         end,
@@ -1174,6 +1248,15 @@ showScourMenu = function(player)
                 end
 
                 local st2 = getState(playerArg)
+                if st2.gearDelivered then
+                    clearState(playerArg)
+                    showBankMain(playerArg)
+                    return
+                end
+                if not st2.itemId or st2.itemId == 0 then
+                    showBankMain(playerArg)
+                    return
+                end
                 -- Re-add the gear with NO exdata: a blank, un-augmented item.
                 local stripped = playerArg:addItem({ id = st2.itemId })
                 if not stripped then
@@ -1184,9 +1267,9 @@ showScourMenu = function(player)
                 st2.gearDelivered = true
                 st2.itemId        = 0
                 -- Belt-and-suspenders: zero the lock mask byte too.
-                if stripped.setExDataRaw then
+                pcall(function()
                     stripped:setExDataRaw({ [SIG_HEAD_BYTE] = 0, [LOCK_MASK_BYTE] = 0 })
-                end
+                end)
 
                 playerArg:delGil(SCOUR_GIL_COST)
                 playerArg:printToPlayer('Scoured! All augments -- crystalized or not -- are gone. Start anew, kupo!', xi.msg.channel.SYSTEM_3)
@@ -1206,6 +1289,11 @@ showScourMenu = function(player)
         title   = 'Scour ALL augments, kupo?',
         options = options,
         onCancelled = function(p)
+            local pending = getState(p)
+            if pending.gearDelivered then
+                clearState(p)
+                return
+            end
             returnAll(p)
             p:printToPlayer('Scour cancelled - gear returned, kupo!', xi.msg.channel.SYSTEM_3)
         end,
@@ -1234,8 +1322,16 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         onTrigger = function(player, npc)
             local st = getState(player)
             if st.itemId ~= 0 or st.gearDelivered or st.bankConsumed then
-                if st.gearDelivered or st.bankConsumed then
+                if st.gearDelivered then
                     clearStaleAugmentSession(player)
+                    showBankMain(player)
+                    return
+                end
+                if st.bankConsumed then
+                    returnAll(player)
+                    player:printToPlayer(
+                        '[Arcane Augmenter] Interrupted confirmation recovered; gear and stored catalysts returned, kupo!',
+                        xi.msg.channel.SYSTEM_3)
                     showBankMain(player)
                     return
                 end
@@ -1361,6 +1457,15 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             -- etc.). The trade would otherwise read as success -- the item re-adds fine so
             -- the weak `if not augmented` check passes -- but the augment never applies and
             -- the player loses the gil + catalysts. Bail here, before anything is taken.
+            if not gearItemObj
+                or not (gearItemObj:isType(xi.itemType.WEAPON)
+                    or gearItemObj:isType(xi.itemType.ARMOR))
+            then
+                player:printToPlayer(
+                    'Only weapons and armor can be augmented, kupo!',
+                    xi.msg.channel.SYSTEM_3)
+                return
+            end
             if NON_AUGMENTABLE[gearId] then
                 player:printToPlayer('That weapon cannot be augmented, kupo! Mythic/Relic weapons (like Death Penalty) have fixed stats and reject augments.', xi.msg.channel.SYSTEM_3)
                 return
@@ -1487,7 +1592,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             -- selection may belong to a different category.
             local critPct     = sage.critChance[rank + 1]  or 0.0
             -- Maat's Cap (or a legacy Maat's Blessing) guarantees a crit; consumed after delGil on success.
-            local usedCritToken = player:getItemCount(CRIT_TOKEN_ID) > 0 or player:getItemCount(CRIT_TOKEN_LEGACY) > 0
+            local usedCritToken = player:findItem(CRIT_TOKEN_ID, 0) ~= nil
+                or player:findItem(CRIT_TOKEN_LEGACY, 0) ~= nil
             local isCrit        = usedCritToken or (math.random() < critPct)
 
             -- Crystalize chance for THIS trade, by Augment Sage rank.
@@ -1656,7 +1762,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 -- augments (maxBoost == EXDATA_VALUE_MAX = 31) scale 1:1 -> unchanged.
                 local boostCap  = def.maxBoost and math.min(EXDATA_VALUE_MAX, def.maxBoost) or EXDATA_VALUE_MAX
                 local function scaleRoll(raw)
-                    return math.floor(raw * boostCap / EXDATA_VALUE_MAX + 0.5)
+                    return scaleTierRoll(raw, boostCap, playerTier)
                 end
                 local slotMax   = scaleRoll(slice.max)   -- the achievable "perfect" (crystalize) value this tier
                 local rolls     = {}
@@ -1706,7 +1812,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                         cat   = def.cat,
                     })
                     local slotIndex0 = #exAugsBySlot - 1
-                    if slotMax > 0 and r == slotMax and math.random() < crystalPct then
+                    local canLockRoll = slotMax > 0 or def.flatValue ~= nil
+                    if canLockRoll and r == slotMax and math.random() < crystalPct then
                         newMask = bit.bor(newMask, bit.lshift(1, slotIndex0))
                         table.insert(crystalNews, def.label)
                     end
@@ -1731,7 +1838,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                         playerTier,
                         count > 1 and 's' or '',
                         table.concat(rolls, ','),
-                        math.min(slice.max, boostCap),
+                        (def.tierValue or def.flatValue) and slotMax or boostCap,
                         hasAff and ' +affinity' or '')
                     or  ''
 

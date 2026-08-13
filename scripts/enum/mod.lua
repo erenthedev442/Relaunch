@@ -1118,6 +1118,10 @@ xi.mod =
     -- (enfeebling_spell.lua executeImmunobreak). No C++ rebuild required.
     IMMUNOBREAK_CHANCE = 1197, -- +N% per attempt, additive with RDM merit IMMUNOBREAK_CHANCE
 
+    -- Relaunch custom BST progression.
+    PET_BEAST_AFF = 1200, -- Scales jug-pet stat floors (100 = +100%).
+    JUG_LVL_BONUS = 1201, -- Jug Pet: Lv.+, bounded by the equipped weapon tier.
+
     -- IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN src/map/modifier.h ASWELL!
 
     -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.

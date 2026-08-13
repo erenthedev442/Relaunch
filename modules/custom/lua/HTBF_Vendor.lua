@@ -46,22 +46,38 @@ local function warpToFinalTest(p)
     p:setPos(dest.x, dest.y, dest.z, dest.rot, dest.zone)
 end
 
+-- Top-level labels MUST stay short: SetCustomMenuContext quote-wraps title +
+-- every option and the client only keeps Mes[150]. Before Final Proving the
+-- menu was already ~155 bytes -- Close was truncated. After completion the
+-- longer "Final Test [Done]" label pushed Warp into the truncated tail, so
+-- "Warp to a Battlefield" silently no-op'd (player reports 2026-08-13).
+local TOP_CAT_SHORT =
+{
+    ['Avatar Prime Trials']     = 'Avatars',
+    ['Chains of Promathia']     = 'CoP',
+    ['Treasures of Aht Urhgan'] = 'ToAU',
+    ['Rise of the Zilart']      = 'Zilart',
+    ['Ark Angels']              = 'Ark Angels',
+}
+
 -- Top level: one button per expansion category, plus a warp shortcut. A flat
 -- 16-gem list would exceed both client caps (8 options / 150 bytes) and hide
 -- gems, so we drill down.
 showMenu = function(p)
     local finalDone = (p:getCharVar(catalog.finalTest.completionVar) or 0) >= 1
         or (p:getCharVar(catalog.finalTest.tierClearVar) or 0) >= 1
-    local finalLabel = finalDone and 'Final Test [Done]' or 'Final Test'
+    -- Keep both states tiny ("Final*" vs "Final Test [Done]") so Warp fits.
+    local finalLabel = finalDone and 'Final*' or 'Final'
     local options =
     {
         { finalLabel, function(pp) showFinalTest(pp) end },
     }
     for _, cat in ipairs(catalog.gemCategories) do
         local cc = cat
-        options[#options + 1] = { cc.label, function(pp) showCategory(pp, cc) end }
+        local lbl = TOP_CAT_SHORT[cc.label] or cc.label
+        options[#options + 1] = { lbl, function(pp) showCategory(pp, cc) end }
     end
-    options[#options + 1] = { 'Warp to a Battlefield', function(pp) showWarpMenu(pp) end }
+    options[#options + 1] = { 'Warp to HTBF', function(pp) showWarpMenu(pp) end }
     options[#options + 1] = { 'Close', function(pp) end }
     p:timer(30, function(pp) pp:customMenu({ title = 'Phantom Gems', options = options }) end)
 end

@@ -32,7 +32,6 @@ INSERT INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
     (22155, 256, 46),  -- prime_bow       (Sarv)
     (22159, 256, 46),  -- prime_gun       (Terminus)
     -- Magic Primes
-    (21999, 256, 47),  -- prime_maul/club (Dagda WS, Lorg Mor)   -> Magic Damage + Cure
     (22102, 256, 48),  -- prime_staff     (Oshala WS, Opashoro)  -> MAB + Magic Damage
     -- prime_dagger (21586, Dagger) had NO Prime WS forged onto it, unlike the 9
     -- above. Grant it the Prime Dagger WS (Merciless Strike, 232) via

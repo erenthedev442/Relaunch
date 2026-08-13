@@ -66,7 +66,7 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
     -- 21642 Prime Sword (Sword) -> Imperator  (DEX/MND)
     (21642,   8, 40), (21642,   9, 40), (21642,  13, 30), (21642,  25, 60), (21642,  23, 60), (21642,  73, 10), (21642, 288, 10), (21642, 355, 233),
     -- 21999 Prime Maul (Club) -> Dagda  (STR/MND)
-    (21999,   8, 40), (21999,  13, 40), (21999,  25, 60), (21999,  23, 60), (21999,  73, 10), (21999, 288, 10), (21999, 355, 234),
+    (21999,   8, 40), (21999,  13, 40), (21999,  25, 60), (21999,  23, 60), (21999,  73, 10), (21999, 288, 10),
     -- 22102 Prime Staff (Staff) -> Oshala  (MND/INT; also a caster staff)
     (22102,  12, 40), (22102,  13, 40), (22102,  30, 60), (22102,  28, 40), (22102, 311, 200), (22102,  25, 50), (22102,  23, 50), (22102, 355, 235),
     -- 21781 Prime Great Axe -> Disaster  (STR/VIT)
@@ -121,8 +121,8 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
     -- 21646 Caliburnus (Sword) -> Imperator
     (21646, 8, 40), (21646, 9, 40), (21646, 25, 60), (21646, 23, 60), (21646, 73, 10), (21646, 288, 10), (21646, 355, 233),
     (21646, 160, -1000), (21646, 369, 4), -- Damage taken -10%, Refresh +4
-    -- 21653 Helheim (Great Sword) -> Resolution
-    (21653, 8, 40), (21653, 10, 20), (21653, 25, 60), (21653, 23, 70), (21653, 73, 10), (21653, 288, 10), (21653, 355, 60),
+    -- 21653 Helheim (Great Sword) -> Fimbulvetr
+    (21653, 8, 40), (21653, 10, 20), (21653, 25, 60), (21653, 23, 70), (21653, 73, 10), (21653, 288, 10), (21653, 355, 62),
     -- 21730 Spalirisos (Axe) -> Blitz
     (21730, 8, 40), (21730, 9, 20), (21730, 25, 60), (21730, 23, 60), (21730, 73, 10), (21730, 288, 10), (21730, 355, 78),
     -- 21785 Laphria (Great Axe) -> Disaster
@@ -161,20 +161,26 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
 -- Aftermath value: 46 = physical, 47 = club (Dagda), 48 = staff (Oshala).
 -- Also (re)grants Origin (355=110) to Foenaria upgrade stages 21834-21836.
 -- ============================================================================
+-- Earlier variants must not retain native Prime WS/aftermath rows from an
+-- older deployment. Only the completed forms below receive the pinnacle path.
+DELETE FROM `item_mods`
+WHERE `itemId` IN (21649, 21650, 21651, 21652, 21930, 21931, 21998, 21999, 22000, 22001)
+  AND `modId` IN (256, 355);
+
 INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
     (21834, 355, 110), (21835, 355, 110), (21836, 355, 110),                       -- Foenaria stages -> Origin WS
     (21833, 256, 46), (21834, 256, 46), (21835, 256, 46), (21836, 256, 46), (21837, 256, 46), -- Scythe / Foenaria
     (21531, 256, 46), (21534, 256, 46), (21535, 256, 46),                         -- Fists / Varga Purnikawa
     (21586, 256, 46), (21589, 256, 46), (21590, 256, 46),                         -- Dagger / Mpu Gandring
     (21642, 256, 46), (21646, 256, 46),                                            -- Prime Sword / Caliburnus (Imperator)
-    (21650, 256, 46), (21653, 256, 46),                                            -- Prime Blade / Helheim
+    (21653, 256, 46),                                                               -- Helheim / Fimbulvetr
     (21726, 256, 46), (21730, 256, 46),                                            -- Prime Pickaxe / Spalirisos
     (21781, 256, 46), (21785, 256, 46),                                            -- Prime Great Axe / Laphria (Disaster)
     (21887, 256, 46), (21891, 256, 46),                                            -- Prime Lance / Gae Buide (Diarmuid)
-    (21932, 256, 46),                                                               -- Dokoku (Zesho Meppo)
+    (21932, 256, 46),                                                               -- Dokoku / Zesho Meppo
     (21986, 256, 46),                                                               -- Kusanagi (Tachi: Mumei)
     (22155, 256, 46), (22163, 256, 46),                                            -- Prime Bow / Pinaka (Sarv)
     (22159, 256, 46), (22164, 256, 46),                                            -- Prime Gun / Earp (Terminus)
-    (21999, 256, 47), (22002, 256, 47),                                            -- Prime Maul / Lorg Mor (club)
+    (22002, 256, 47),                                                               -- Lorg Mor / Dagda
     (22102, 256, 48), (22106, 256, 48)                                             -- Prime Staff / Opashoro (staff)
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);

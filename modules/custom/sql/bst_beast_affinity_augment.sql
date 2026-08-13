@@ -18,3 +18,10 @@
 
 INSERT IGNORE INTO `augments` (`augmentId`, `multiplier`, `modId`, `value`, `isPet`, `petType`)
 VALUES (2100, 0, 1200, 5, 0, 0); -- Beast Affinity +5 per slot
+
+-- Retail "Enhances Beast Affinity" was an inert zero row. Make each augment
+-- point contribute Pet: Lv.+1; CalculateJugPetStats still enforces the
+-- equipped weapon's 117/118/119 ceiling.
+UPDATE `augments`
+SET `multiplier` = 0, `modId` = 1201, `value` = 1, `isPet` = 0, `petType` = 0
+WHERE `augmentId` = 1378;

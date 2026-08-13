@@ -45,6 +45,25 @@ local petProgressionJobs =
     [xi.job.PUP] = true,
 }
 
+-- Retail ecosystem/killer triangle. Jug pets use this as a modest Ready-move
+-- matchup modifier in addition to the engine's existing intimidation checks.
+local ecosystemPrey =
+{
+    [xi.ecosystem.AMORPH]   = xi.ecosystem.BIRD,
+    [xi.ecosystem.AQUAN]    = xi.ecosystem.AMORPH,
+    [xi.ecosystem.ARCANA]   = xi.ecosystem.UNDEAD,
+    [xi.ecosystem.BEAST]    = xi.ecosystem.LIZARD,
+    [xi.ecosystem.BIRD]     = xi.ecosystem.AQUAN,
+    [xi.ecosystem.DEMON]    = xi.ecosystem.DRAGON,
+    [xi.ecosystem.DRAGON]   = xi.ecosystem.DEMON,
+    [xi.ecosystem.LIZARD]   = xi.ecosystem.VERMIN,
+    [xi.ecosystem.LUMINIAN] = xi.ecosystem.LUMINION,
+    [xi.ecosystem.LUMINION] = xi.ecosystem.LUMINIAN,
+    [xi.ecosystem.PLANTOID] = xi.ecosystem.BEAST,
+    [xi.ecosystem.UNDEAD]   = xi.ecosystem.ARCANA,
+    [xi.ecosystem.VERMIN]   = xi.ecosystem.PLANTOID,
+}
+
 local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLanded)
     if mob:getLocalVar('fellowApplied') == 1 then
         -- Magus AoE nukes trade coverage for power. The role marks
@@ -82,6 +101,17 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
         not petProgressionJobs[master:getMainJob()]
     then
         return damage
+    end
+
+    local matchupBps = mob:getLocalVar('JugEcosystemMatchupBps')
+    if matchupBps > 0 and mob:isJugPet() then
+        local petEcosystem = mob:getEcosystem()
+        local targetEcosystem = target:getEcosystem()
+        if ecosystemPrey[petEcosystem] == targetEcosystem then
+            damage = math.floor(damage * (10000 + matchupBps) / 10000)
+        elseif ecosystemPrey[targetEcosystem] == petEcosystem then
+            damage = math.floor(damage * math.max(0, 10000 - matchupBps) / 10000)
+        end
     end
 
     local multiplier = standardProgression.getPetDamageMultiplier(master, target)

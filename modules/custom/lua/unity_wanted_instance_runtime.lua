@@ -256,6 +256,7 @@ instanceObject.onInstanceCreated = function(instance)
         rotation             = pos.rot,
         minLevel             = catalog.combatLevel or nm.minLv,
         maxLevel             = catalog.combatLevel or nm.maxLv,
+        skillList            = nm.skillList or 0,
         detection            = xi.detects.SIGHT_AND_HEARING,
         isAggroable          = true,
         releaseIdOnDisappear = true,

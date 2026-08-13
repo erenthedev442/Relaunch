@@ -153,12 +153,14 @@ xi.remaWsTier.withTemporaryBonus = function(attacker, wsId, slot, callback)
     local priorValue    = attacker:getMod(modId)
     local priorMagicAcc = magicAccBonus > 0 and attacker:getMod(xi.mod.MACC) or 0
     local priorAoECap   = attacker:getLocalVar('AoEWsDamageCap')
+    local priorWsCap    = attacker:getLocalVar('StandardWsDamageCap')
 
     attacker:addMod(modId, bonusPercent)
+    attacker:setLocalVar('StandardWsDamageCap', catalog.NATIVE_DAMAGE_CAP)
     if magicAccBonus > 0 then
         attacker:addMod(xi.mod.MACC, magicAccBonus)
     end
-    if priorAoECap > 0 and slot == xi.slot.MAIN then
+    if priorAoECap > 0 and (slot == xi.slot.MAIN or slot == xi.slot.RANGED) then
         attacker:setLocalVar('AoEWsDamageCap', catalog.AOE_DAMAGE_CAP)
     end
 
@@ -181,6 +183,7 @@ xi.remaWsTier.withTemporaryBonus = function(attacker, wsId, slot, callback)
             attacker:setMod(xi.mod.MACC, priorMagicAcc)
         end
         attacker:setLocalVar('AoEWsDamageCap', priorAoECap)
+        attacker:setLocalVar('StandardWsDamageCap', priorWsCap)
     end)
     activeCalculations[attacker] = nil
 

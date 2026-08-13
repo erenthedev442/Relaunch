@@ -33,7 +33,7 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
     (21531, 256, 46), (21534, 256, 46), (21535, 256, 46), -- Fists / Varga Purnikawa
     (21586, 256, 46), (21589, 256, 46), (21590, 256, 46), -- Dagger / Mpu Gandring
     (21642, 256, 46), (21646, 256, 46),  -- Prime Sword / Caliburnus (Imperator)
-    (21650, 256, 46), (21653, 256, 46),  -- Prime Blade / Helheim
+    (21653, 256, 46),                    -- Helheim
     (21726, 256, 46), (21730, 256, 46),  -- Prime Pickaxe / Spalirisos
     (21781, 256, 46), (21785, 256, 46),  -- Prime Great Axe / Laphria (Disaster)
     (21887, 256, 46), (21891, 256, 46),  -- Prime Lance / Gae Buide (Diarmuid)
@@ -42,7 +42,7 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
     (22155, 256, 46), (22163, 256, 46),  -- Prime Bow / Pinaka (Sarv)
     (22159, 256, 46), (22164, 256, 46),  -- Prime Gun / Earp (Terminus)
     -- ----- Club (Dagda) -> aftermath 47 -----------------------------------
-    (21999, 256, 47), (22002, 256, 47),  -- Prime Maul / Lorg Mor
+    (22002, 256, 47),                    -- Lorg Mor
     -- ----- Staff (Oshala) -> aftermath 48 ---------------------------------
     (22102, 256, 48), (22106, 256, 48)   -- Prime Staff / Opashoro
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);

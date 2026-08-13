@@ -1149,6 +1149,7 @@ enum class Mod
 
     // Relaunch custom augment modifiers.
     PET_BEAST_AFF = 1200, // Scales custom BST jug-pet flat stat bonuses (100 = +100%).
+    JUG_LVL_BONUS = 1201, // Jug Pet: Lv.+ (applied before the main-hand weapon tier ceiling).
 
     // IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN scripts/enum/mod.lua ASWELL!
 

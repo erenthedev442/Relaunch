@@ -64,6 +64,7 @@ describe('Legendary REMA native-weaponskill enhancement', function()
     it('uses the configured family bonuses and progression tuning', function()
         assert(catalog.PRIME_EQUIVALENT_BONUS == 2.00)
         assert(catalog.AOE_DAMAGE_CAP == 149999)
+        assert(catalog.NATIVE_DAMAGE_CAP == 999999)
         assert(catalog.getTuning(xi.weaponskill.MERCY_STROKE) == 15.00)
         assert(bonus(makePlayer({ [xi.slot.MAIN] = 20509 }), xi.weaponskill.FINAL_HEAVEN) == 100)
         assert(bonus(makePlayer({ [xi.slot.MAIN] = 20512 }), xi.weaponskill.VICTORY_SMITE) == 120)
@@ -284,6 +285,7 @@ describe('Legendary REMA native-weaponskill enhancement', function()
     it('raises and restores the AoE cap for an exact final REMA WS', function()
         local player = makePlayer({ [xi.slot.MAIN] = 20509 })
         player:setLocalVar('AoEWsDamageCap', 79999)
+        player:setLocalVar('StandardWsDamageCap', 79999)
 
         xi.remaWsTier.withTemporaryBonus(
             player,
@@ -291,9 +293,11 @@ describe('Legendary REMA native-weaponskill enhancement', function()
             xi.slot.MAIN,
             function()
                 assert(player:getLocalVar('AoEWsDamageCap') == 149999)
+                assert(player:getLocalVar('StandardWsDamageCap') == 999999)
             end)
 
         assert(player:getLocalVar('AoEWsDamageCap') == 79999)
+        assert(player:getLocalVar('StandardWsDamageCap') == 79999)
 
         local rangedPlayer = makePlayer({ [xi.slot.RANGED] = 22141 })
         rangedPlayer:setLocalVar('AoEWsDamageCap', 79999)
@@ -302,7 +306,7 @@ describe('Legendary REMA native-weaponskill enhancement', function()
             xi.weaponskill.LEADEN_SALUTE,
             xi.slot.RANGED,
             function()
-                assert(rangedPlayer:getLocalVar('AoEWsDamageCap') == 79999)
+                assert(rangedPlayer:getLocalVar('AoEWsDamageCap') == 149999)
             end)
     end)
 
@@ -463,9 +467,10 @@ describe('Legendary REMA native-weaponskill enhancement', function()
     end)
 
     it('covers the final Aeonic club and staff mappings', function()
-        assert(bonus(makePlayer({ [xi.slot.MAIN] = 21082 }), xi.weaponskill.BLACK_HALO) == 160)
+        assert(bonus(makePlayer({ [xi.slot.MAIN] = 21082 }), xi.weaponskill.REALMRAZER) == 160)
+        assert(bonus(makePlayer({ [xi.slot.MAIN] = 21082 }), xi.weaponskill.BLACK_HALO) == 0)
         assert(bonus(makePlayer({ [xi.slot.MAIN] = 21147 }), xi.weaponskill.SHATTERSOUL) == 160)
-        assert(catalog.getTuning(xi.weaponskill.BLACK_HALO) == 8.30)
+        assert(catalog.getTuning(xi.weaponskill.REALMRAZER) == 8.30)
         assert(catalog.getTuning(xi.weaponskill.SHATTERSOUL) == 18.00)
     end)
 

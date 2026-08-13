@@ -109,4 +109,22 @@ describe('Augment Tier content gates', function()
         assert(xi.augmentTiers.tierOf(player) == 4)
         assert((player:getCharVar('GM_Wave_Clears') or 0) == 0)
     end)
+
+    it('lets a grandfathered T4 player earn T5 from Maat', function()
+        local vars =
+        {
+            Augment_Tier_Grandfather = 4,
+            Maat_Kills = 1,
+        }
+
+        assert(xi.augmentTiers.tierOf(makePlayer(vars, 1)) == 5)
+    end)
+
+    it('reserves each capped augment ceiling for T5', function()
+        for cap = 1, 31 do
+            assert(xi.augmentTiers.scaleRoll(24, cap, 4) < cap)
+            assert(xi.augmentTiers.scaleRoll(31, cap, 5) == cap)
+        end
+        assert(xi.augmentTiers.scaleRoll(31, 0, 5) == 0)
+    end)
 end)

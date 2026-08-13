@@ -20,6 +20,7 @@ local M = {}
 local abysseaProgress = require('modules/custom/lua/abyssea_marks_progress')
 local unityProgress = require('modules/custom/lua/unity_wanted_progress')
 local waveProgress = require('modules/custom/lua/game_master_progress')
+local aeonicMaat = require('modules/custom/lua/aeonic_maat_catalog')
 
 -- ── Reusable check closures (per-job scans and all-trials) ─────────────────
 
@@ -140,8 +141,13 @@ M.STAGE_GATES =
     {
         [0] =
         {
-            label = '50 rebirths on a single job (not combined)',
-            check = anyRebirthCap50(),
+            label = 'Final Relic + Empyrean + Mythic forged, and 50 rebirths on one job',
+            check = function(p)
+                return (p:getCharVar('WF_Relic_Final') or 0) == 1
+                    and (p:getCharVar('WF_Empyrean_Final') or 0) == 1
+                    and (p:getCharVar('WF_Mythic_Final') or 0) == 1
+                    and anyRebirthCap50()(p)
+            end,
         },
         [1] =
         {
@@ -152,11 +158,13 @@ M.STAGE_GATES =
         },
         [2] =
         {
-            label = "All Dungeons + 10 Maat's Echo wins + Wave Master Oblivion cleared",
-            check = function(p)
+            label = "All Dungeons + this weapon's solo Aeonic Maat trial + Wave Master Oblivion cleared",
+            check = function(p, chain)
                 local need = (xi.dungeonInstances and xi.dungeonInstances.uniqueDungeonCount) or math.huge
                 return (p:getCharVar('Dungeon_Unique_Clears') or 0) >= need
-                   and (p:getCharVar('Maat_Kills') or 0) >= 10
+                   and chain ~= nil
+                   and chain.aeonic ~= nil
+                   and aeonicMaat.isComplete(p, chain.aeonic.s3.id)
                    and waveProgress.has(p, 'Oblivion')
             end,
         },
@@ -199,12 +207,12 @@ M.CATEGORY_LABELS =
 -- ── Helpers ────────────────────────────────────────────────────────────────
 
 -- Returns (ok, gateOrNil). ok is true if the gate passes (or doesn't exist).
-function M.checkGate(player, category, fromStage)
+function M.checkGate(player, category, fromStage, chain)
     local cat = M.STAGE_GATES[category]
     if not cat then return true, nil end
     local gate = cat[fromStage]
     if not gate then return true, nil end
-    return gate.check(player), gate
+    return gate.check(player, chain), gate
 end
 
 return M

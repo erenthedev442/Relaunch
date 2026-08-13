@@ -56,7 +56,7 @@ INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Raaz',759,2178),('Jug_Raaz',75
 INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Acuex',762,317),('Jug_Acuex',762,318);
 -- Jug_Tulfaire (758): Tail Blow, Helldive, Blackout (blind)
 INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Tulfaire',758,366),('Jug_Tulfaire',758,622),('Jug_Tulfaire',758,2952);
--- Jug_Chapuli (757): Diffusion Ray (Light magic), Sensilla Blades, Tegmina Buffet (newly scripted)
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Chapuli',757,2054),('Jug_Chapuli',757,2946),('Jug_Chapuli',757,2947);
+-- Jug_Chapuli (757): Diffusion Ray plus the canonical pet_skills mappings.
+INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Chapuli',757,2054),('Jug_Chapuli',757,3927),('Jug_Chapuli',757,3928);
 -- Jug_Coeurl (747): Charged Whisker (thunder AoE), Blaster (dmg+paralyze), Chaotic Eye (silence)
 INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Coeurl',747,483),('Jug_Coeurl',747,652),('Jug_Coeurl',747,653);

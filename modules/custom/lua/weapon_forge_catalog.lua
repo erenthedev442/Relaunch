@@ -14,20 +14,21 @@
 --                                                + 750M gil + HL Rank V gate
 --
 -- PATH 2 — AEONIC (Malformed → 119I → 119II → Aeonic 119III)
---   Base (Malformed)  Bought from Temprix in Reisenjima at HL Rank V
---                     (50,000 Escha Beads).
---   Stage 1 (119I)    Same Ajja/Kaja 119I weapons as the Prime path.
---   Stage 2 (119II)   Same 119II weapons as the Prime path.
+--   Base (Malformed)  Issued by the Weapon Forge or Temprix at HL Rank V
+--                     (50,000 Escha Beads) after all prior REMA paths.
+--   Stage 1 (119I)    Unique Attuned forge token.
+--   Stage 2 (119II)   Unique Empowered forge token.
 --   Stage 3 (119III)  Unique Aeonic final form (Godhands / Aeneas / Sequence …).
 --
 --   Costs:
 --     Malformed → 119I : 1×  Attestation  +   3,000 Escha Silt
---     119I      → 119II: 3×  Attestation  +  12,000 Escha Silt
---     119II     → Aeonic: 10× Attestation +  35,000 Escha Silt
+--     119I      → 119II: 2×  Attestation  +  12,000 Escha Silt
+--     119II     → Aeonic: 3×  Attestation  +  35,000 Escha Silt
 --                                          +  24,000 Reforge Marks (any pool)
 --
---   Attestations drop from Geas Fete zone bosses (Azi Dahaka / Warder of Courage).
---   Each weapon type has a specific Attestation; the aeonicCosts table maps type→id.
+--   Attestations drop from Geas Fete T4 (always 1, 40% chance of a second)
+--   and T3 (15% chance of 1), random among the 14 weapon types.
+--   Dynamis-Beaucedine Hydra Corps NMs do NOT drop them.
 --
 -- Reforge Marks are pooled from CharVars: RF_AF_Marks, RF_Relic_Marks, RF_Empy_Marks.
 -----------------------------------
@@ -75,25 +76,31 @@ catalog.aeonicCosts =
     -- Malformed → 119I
     toStage1 =
     {
-        hlRank           = 4,
+        hlRank           = 5,
         attestations     = 1,
         eschaSilt        = 3000,
     },
     -- 119I → 119II
     toStage2 =
     {
-        hlRank           = 4,
-        attestations     = 3,
+        hlRank           = 5,
+        attestations     = 2,
         eschaSilt        = 12000,
     },
     -- 119II → Aeonic 119III
     toStage3 =
     {
-        hlRank           = 4,
-        attestations     = 10,
+        hlRank           = 5,
+        attestations     = 3,
         eschaSilt        = 35000,
         reforgeMarks     = 24000,
     },
+}
+
+catalog.aeonicBase =
+{
+    hlRank    = 5,
+    eschaBeads = 50000,
 }
 
 -- ===================================================================
@@ -101,7 +108,7 @@ catalog.aeonicCosts =
 -- Each chain carries:
 --   type, jobs : display metadata
 --   s1/s2/s3   : Prime path (Ajja → Kaja → Stage-5 Relic)
---   aeonic     : { base, attestationId, attestationName, s3 }
+--   aeonic     : { base, s1, s2, attestationId, attestationName, s3 }
 --                base = Malformed weapon bought from Temprix
 --                s3   = Aeonic 119III final form
 --                Aeonic 119I / 119II reuse the same s1 / s2 items.
@@ -115,6 +122,8 @@ catalog.chains =
         s2     = { id = 21515, name = 'Tokko Knuckles'      },
         s3     = { id = 21535, name = 'Varga Purnikawa'     },
         aeonic = { base = { id=29701, name='Malformed Knuckles' },
+                   s1 = { id=29715, name='Attuned Knuckles' },
+                   s2 = { id=29729, name='Empowered Knuckles' },
                    attestationId=1556, attestationName='Attestation of Might',
                    s3 = { id=20515, name='Godhands' } },
     },
@@ -125,6 +134,8 @@ catalog.chains =
         s2     = { id = 21585, name = 'Crepuscular Knife'   },
         s3     = { id = 21590, name = 'Mpu Gandring'        },
         aeonic = { base = { id=29702, name='Malformed Knife' },
+                   s1 = { id=29716, name='Attuned Knife' },
+                   s2 = { id=29730, name='Empowered Knife' },
                    attestationId=1557, attestationName='Attestation of Celerity',
                    s3 = { id=20594, name='Aeneas' } },
     },
@@ -135,6 +146,8 @@ catalog.chains =
         s2     = { id = 20673, name = 'Flametongue'         },
         s3     = { id = 21646, name = 'Caliburnus'          },
         aeonic = { base = { id=29703, name='Malformed Sword' },
+                   s1 = { id=29717, name='Attuned Sword' },
+                   s2 = { id=29731, name='Empowered Sword' },
                    attestationId=1558, attestationName='Attestation of Glory',
                    s3 = { id=20695, name='Sequence' } },
     },
@@ -145,6 +158,8 @@ catalog.chains =
         s2     = { id = 21662, name = 'Raetic Algol'        },
         s3     = { id = 21653, name = 'Helheim'             },
         aeonic = { base = { id=29704, name='Malformed Claymore' },
+                   s1 = { id=29718, name='Attuned Claymore' },
+                   s2 = { id=29732, name='Empowered Claymore' },
                    attestationId=1559, attestationName='Attestation of Righteousness',
                    s3 = { id=21694, name='Lionheart' } },
     },
@@ -155,6 +170,8 @@ catalog.chains =
         s2     = { id = 21706, name = 'Barbarity'           },
         s3     = { id = 21730, name = 'Spalirisos'          },
         aeonic = { base = { id=29705, name='Malformed Axe' },
+                   s1 = { id=29719, name='Attuned Axe' },
+                   s2 = { id=29733, name='Empowered Axe' },
                    attestationId=1560, attestationName='Attestation of Bravery',
                    s3 = { id=21753, name='Tri-edge' } },
     },
@@ -165,6 +182,8 @@ catalog.chains =
         s2     = { id = 21765, name = 'Hepatizon Axe'       },
         s3     = { id = 21785, name = 'Laphria'             },
         aeonic = { base = { id=29706, name='Malformed Greataxe' },
+                   s1 = { id=29720, name='Attuned Greataxe' },
+                   s2 = { id=29734, name='Empowered Greataxe' },
                    attestationId=1561, attestationName='Attestation of Force',
                    s3 = { id=20843, name='Chango' } },
     },
@@ -175,6 +194,8 @@ catalog.chains =
         s2     = { id = 21815, name = 'Maliya Sickle'       },
         s3     = { id = 21837, name = 'Foenaria'            },
         aeonic = { base = { id=29707, name='Malformed Scythe' },
+                   s1 = { id=29721, name='Attuned Scythe' },
+                   s2 = { id=29735, name='Empowered Scythe' },
                    attestationId=1562, attestationName='Attestation of Vigor',
                    s3 = { id=20890, name='Anguta' } },
     },
@@ -185,6 +206,8 @@ catalog.chains =
         s2     = { id = 21881, name = 'Eletta Lance'        },
         s3     = { id = 21891, name = 'Gae Buide'           },
         aeonic = { base = { id=29708, name='Malformed Lance' },
+                   s1 = { id=29722, name='Attuned Lance' },
+                   s2 = { id=29736, name='Empowered Lance' },
                    attestationId=1563, attestationName='Attestation of Fortitude',
                    s3 = { id=20935, name='Trishula' } },
     },
@@ -195,6 +218,8 @@ catalog.chains =
         s2     = { id = 21915, name = 'Koga Shinobi-Gatana' },
         s3     = { id = 21932, name = 'Dokoku'              },
         aeonic = { base = { id=29709, name='Malformed Katana' },
+                   s1 = { id=29723, name='Attuned Katana' },
+                   s2 = { id=29737, name='Empowered Katana' },
                    attestationId=1564, attestationName='Attestation of Legerity',
                    s3 = { id=20977, name='Heishi Shorinken' } },
     },
@@ -205,6 +230,8 @@ catalog.chains =
         s2     = { id = 21963, name = 'Beryllium Tachi'     },
         s3     = { id = 21986, name = 'Kusanagi'            },
         aeonic = { base = { id=29710, name='Malformed Tachi' },
+                   s1 = { id=29724, name='Attuned Tachi' },
+                   s2 = { id=29738, name='Empowered Tachi' },
                    attestationId=1565, attestationName='Attestation of Decisiveness',
                    s3 = { id=21025, name='Dojikiri Yasutsuna' } },
     },
@@ -215,6 +242,8 @@ catalog.chains =
         s2     = { id = 22030, name = 'Kaja Rod'            },
         s3     = { id = 22002, name = 'Lorg Mor'            },
         aeonic = { base = { id=29711, name='Malformed Rod' },
+                   s1 = { id=29725, name='Attuned Rod' },
+                   s2 = { id=29739, name='Empowered Rod' },
                    attestationId=1566, attestationName='Attestation of Sacrifice',
                    s3 = { id=21082, name='Tishtrya' } },
     },
@@ -225,6 +254,8 @@ catalog.chains =
         s2     = { id = 22085, name = 'Kaja Staff'          },
         s3     = { id = 22106, name = 'Opashoro'            },
         aeonic = { base = { id=29712, name='Malformed Staff' },
+                   s1 = { id=29726, name='Attuned Staff' },
+                   s2 = { id=29740, name='Empowered Staff' },
                    attestationId=1567, attestationName='Attestation of Virtue',
                    s3 = { id=21147, name='Khatvanga' } },
     },
@@ -235,6 +266,8 @@ catalog.chains =
         s2     = { id = 22126, name = 'Exalted Bow +1'      },
         s3     = { id = 22163, name = 'Pinaka'              },
         aeonic = { base = { id=29713, name='Malformed Bow' },
+                   s1 = { id=29727, name='Attuned Bow' },
+                   s2 = { id=29741, name='Empowered Bow' },
                    attestationId=1568, attestationName='Attestation of Transcendence',
                    s3 = { id=22117, name='Fail-not' } },
     },
@@ -245,6 +278,8 @@ catalog.chains =
         s2     = { id = 22134, name = 'Holliday'            },
         s3     = { id = 22164, name = 'Earp'                },
         aeonic = { base = { id=29714, name='Malformed Culverin' },
+                   s1 = { id=29728, name='Attuned Culverin' },
+                   s2 = { id=29742, name='Empowered Culverin' },
                    attestationId=1569, attestationName='Attestation of Harmony',
                    s3 = { id=21485, name='Fomalhaut' } },
     },
@@ -417,9 +452,12 @@ for _, chain in ipairs(catalog.chains) do
     -- Prime path scan: detect 119I and 119II weapons.
     catalog.byId[chain.s1.id] = { chain = chain, fromStage = 1, path = 'prime' }
     catalog.byId[chain.s2.id] = { chain = chain, fromStage = 2, path = 'prime' }
-    -- Aeonic path scan: detect Malformed base weapon.
+    -- Aeonic path scan: all stages use unique IDs so Prime cannot capture the
+    -- route after the first upgrade.
     if chain.aeonic then
         catalog.byId[chain.aeonic.base.id] = { chain = chain, fromStage = 0, path = 'aeonic' }
+        catalog.byId[chain.aeonic.s1.id]   = { chain = chain, fromStage = 1, path = 'aeonic' }
+        catalog.byId[chain.aeonic.s2.id]   = { chain = chain, fromStage = 2, path = 'aeonic' }
     end
 end
 

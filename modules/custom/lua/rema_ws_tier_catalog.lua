@@ -1,8 +1,8 @@
 -----------------------------------
 -- Legendary REMA native-weaponskill enhancement catalog
 --
--- Only final 119 III Relic, Empyrean and Mythic weapons, plus final Aeonic
--- weapons, are listed here. Prime weapons are deliberately absent.
+-- Only final 119 III Relic, Empyrean, Mythic/Ergon and Aeonic weapons are
+-- listed here. Prime weapons are deliberately absent.
 --
 -- PRIME_EQUIVALENT_BONUS is a Legendary balancing benchmark, not a value read
 -- from the separate Prime implementation. A value of 2.00 means +200% over the
@@ -14,6 +14,7 @@ local catalog = {}
 
 catalog.PRIME_EQUIVALENT_BONUS = 2.00
 catalog.AOE_DAMAGE_CAP         = 149999
+catalog.NATIVE_DAMAGE_CAP      = 999999
 
 catalog.REMA_TIER_SCALE =
 {
@@ -129,6 +130,7 @@ catalog.REMA_WS_TUNING =
     [xi.weaponskill.OMNISCIENCE]      = 16.80,
     [xi.weaponskill.TRUEFLIGHT]        = 1.55,
     [xi.weaponskill.LEADEN_SALUTE]     = 1.50,
+    [xi.weaponskill.EXUDATION]         = 8.20,
 
     -- Aeonic
     [xi.weaponskill.SHIJIN_SPIRAL] = 7.10,
@@ -141,7 +143,7 @@ catalog.REMA_WS_TUNING =
     [xi.weaponskill.STARDIVER]     = 5.00,
     [xi.weaponskill.BLADE_SHUN]    = 3.50,
     [xi.weaponskill.TACHI_SHOHA]   = 9.30,
-    [xi.weaponskill.BLACK_HALO]     = 8.30,
+    [xi.weaponskill.REALMRAZER]     = 8.30,
     [xi.weaponskill.SHATTERSOUL]    = 18.00,
     [xi.weaponskill.APEX_ARROW]    = 4.00,
     [xi.weaponskill.LAST_STAND]    = 2.05,
@@ -229,6 +231,8 @@ catalog.WEAPONS =
         { magic = true }),
     weapon(22141, 'Death Penalty', 'MYTHIC', xi.weaponskill.LEADEN_SALUTE,     xi.slot.RANGED,
         { magic = true }),
+    weapon(21685, 'Epeolatry',      'MYTHIC', xi.weaponskill.DIMIDIATION,       xi.slot.MAIN),
+    weapon(21080, 'Idris',          'MYTHIC', xi.weaponskill.EXUDATION,         xi.slot.MAIN),
 
     -- Aeonic final
     weapon(20515, 'Godhands',           'AEONIC', xi.weaponskill.SHIJIN_SPIRAL, xi.slot.MAIN),
@@ -241,7 +245,7 @@ catalog.WEAPONS =
     weapon(20935, 'Trishula',           'AEONIC', xi.weaponskill.STARDIVER,     xi.slot.MAIN),
     weapon(20977, 'Heishi Shorinken',   'AEONIC', xi.weaponskill.BLADE_SHUN,    xi.slot.MAIN),
     weapon(21025, 'Dojikiri Yasutsuna', 'AEONIC', xi.weaponskill.TACHI_SHOHA,   xi.slot.MAIN),
-    weapon(21082, 'Tishtrya',           'AEONIC', xi.weaponskill.BLACK_HALO,     xi.slot.MAIN),
+    weapon(21082, 'Tishtrya',           'AEONIC', xi.weaponskill.REALMRAZER,     xi.slot.MAIN),
     weapon(21147, 'Khatvanga',          'AEONIC', xi.weaponskill.SHATTERSOUL,    xi.slot.MAIN),
     weapon(22117, 'Fail-not',           'AEONIC', xi.weaponskill.APEX_ARROW,    xi.slot.RANGED),
     weapon(21485, 'Fomalhaut',          'AEONIC', xi.weaponskill.LAST_STAND,    xi.slot.RANGED),

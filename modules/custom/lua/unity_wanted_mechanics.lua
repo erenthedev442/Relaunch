@@ -234,9 +234,27 @@ local function beginChallenge(mob, state)
     pcall(function() mob:weaknessTrigger(state.tier == 3 and 2 or 1) end)
 end
 
+local function applyLowHpSkillList(mob, state)
+    local nm = state.nm
+    if not nm or not nm.lowHpSkillList or not nm.lowHpThreshold then
+        return
+    end
+    if state.lowHpSkillsArmed then
+        return
+    end
+    if mob:getHPP() > nm.lowHpThreshold then
+        return
+    end
+
+    state.lowHpSkillsArmed = true
+    mob:setMobMod(xi.mobMod.SKILL_LIST, nm.lowHpSkillList)
+end
+
 local function combatTick(mob)
     local state = states[mob:getID()]
     if not state then return end
+
+    applyLowHpSkillList(mob, state)
 
     if state.challenge and now() >= state.challenge.dueAt then
         finishChallenge(mob, state)
@@ -285,8 +303,23 @@ function M.cleanup(mob)
     end
 end
 
+function M.resolveDifficulty(nm, difficulty)
+    local d = difficulty and nm and difficulty[nm.tier]
+    if not d then return nil end
+    if not nm.difficulty then return d end
+
+    local merged = {}
+    for key, value in pairs(d) do
+        merged[key] = value
+    end
+    for key, value in pairs(nm.difficulty) do
+        merged[key] = value
+    end
+    return merged
+end
+
 function M.applyDifficulty(mob, nm, difficulty)
-    local d = difficulty and difficulty[nm.tier]
+    local d = M.resolveDifficulty(nm, difficulty)
     if not mob or not d then return end
 
     mob:setUntargetable(false)
@@ -318,13 +351,15 @@ function M.attach(mob, nm, owner)
     M.cleanup(mob)
     states[mob:getID()] =
     {
-        ownerId       = owner:getID(),
-        label         = nm.label,
-        tier          = nm.tier,
-        profile       = profile,
-        signatureIndex = 0,
-        nextAt        = now() + (nm.tier == 3 and 15 or 20),
-        failures      = 0,
+        ownerId          = owner:getID(),
+        label            = nm.label,
+        tier             = nm.tier,
+        nm               = nm,
+        profile          = profile,
+        signatureIndex   = 0,
+        nextAt           = now() + (nm.tier == 3 and 15 or 20),
+        failures         = 0,
+        lowHpSkillsArmed = false,
     }
 
     mob:addListener('COMBAT_TICK', listenerNames.fight, combatTick)

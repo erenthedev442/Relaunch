@@ -37,7 +37,7 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
     -- Prime physical weapons, including server-supported base/intermediate forms.
     (21531, 256, 46), (21534, 256, 46), (21535, 256, 46),
     (21586, 256, 46), (21589, 256, 46), (21590, 256, 46),
-    (21642, 256, 46), (21646, 256, 46), (21650, 256, 46), (21653, 256, 46),
+    (21642, 256, 46), (21646, 256, 46), (21653, 256, 46),
     (21726, 256, 46), (21730, 256, 46), (21781, 256, 46), (21785, 256, 46),
     (21833, 256, 46), (21834, 256, 46), (21835, 256, 46),
     (21836, 256, 46), (21837, 256, 46),
@@ -46,6 +46,12 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
     (22155, 256, 46), (22159, 256, 46), (22163, 256, 46), (22164, 256, 46),
 
     -- Prime club and staff use their dedicated magic/support aftermath profiles.
-    (21999, 256, 47), (22002, 256, 47),
+    (22002, 256, 47),
     (22102, 256, 48), (22106, 256, 48)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);
+
+-- Gungnir's relic WS row is weapon-granted (all-zero job mask), so the final
+-- weapon must explicitly expose Geirskogul through ADDS_WEAPONSKILL.
+INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
+    (21857, 355, 121)
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);

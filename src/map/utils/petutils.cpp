@@ -1034,27 +1034,109 @@ void CalculateJugPetStats(CBattleEntity* PMaster, CPetEntity* PPet)
 
     auto* PPetData = *maybePetData;
 
-    static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setDelay(240);
-    static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setBaseDelay(240);
-    // Get the Jug pet cap level
-    uint8 highestLvl = PPetData->maxLevel;
-
-    // Increase the pet's level cal by the bonus given by BEAST AFFINITY merits.
+    // Preserve family attack cadence (e.g. fast hippogryphs vs slow mandragora)
+    // instead of flattening every jug to delay 240.
+    const auto jugDelay = PPetData->cmbDelay > 0 ? PPetData->cmbDelay : 240;
+    static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setDelay(jugDelay);
+    static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setBaseDelay(jugDelay);
+    // Build the jug's candidate level from its native cap, Beast Affinity,
+    // gear Pet: Lv.+ and the equipped BST progression weapon.
     CCharEntity* PChar = static_cast<CCharEntity*>(PMaster);
-    highestLvl += PChar->PMeritPoints->GetMeritValue(MERIT_BEAST_AFFINITY, PChar);
+    auto*        PMain = PMaster->m_Weapons[SLOT_MAIN];
+    int16        weaponLevelBonus = 0;
+    int16        weaponLevelCap   = PMain ? std::max<int16>(PMaster->GetMLevel(), PMain->getILvl()) : PMaster->GetMLevel();
 
-    // And cap it to the master's level or weapon ilvl, whichever is greater
-    auto capLevel = std::max(PMaster->GetMLevel(), PMaster->m_Weapons[SLOT_MAIN]->getILvl());
-    if (highestLvl > capLevel)
+    // Custom level progression is deliberately weapon-gated. Beast Affinity
+    // raises the pet within these ceilings; it does not bypass them.
+    if (PMain)
     {
-        highestLvl = capLevel;
+        switch (PMain->getID())
+        {
+            case 21750: // Guttler (Relic)
+                weaponLevelBonus = 8;
+                weaponLevelCap   = 117;
+                break;
+            case 21751: // Aymur (Mythic)
+            case 21752: // Farsha (Empyrean)
+                weaponLevelBonus = 9;
+                weaponLevelCap   = 118;
+                break;
+            case 21753: // Tri-edge (Aeonic)
+                weaponLevelBonus = 10;
+                weaponLevelCap   = 119;
+                break;
+            case 21727: // Spalirisos progression
+                weaponLevelBonus = 7;
+                weaponLevelCap   = 116;
+                break;
+            case 21728:
+                weaponLevelBonus = 8;
+                weaponLevelCap   = 117;
+                break;
+            case 21729:
+                weaponLevelBonus = 9;
+                weaponLevelCap   = 118;
+                break;
+            case 21730:
+                weaponLevelBonus = 10;
+                weaponLevelCap   = 119;
+                break;
+            default:
+                break;
+        }
     }
+
+    // Level 99 is the common endgame baseline; retail native maxLevel values
+    // describe affinity ceilings, not a free item-level pet.
+    int16 highestLvl = std::min<int16>(PPetData->maxLevel, 99) +
+                       PChar->PMeritPoints->GetMeritValue(MERIT_BEAST_AFFINITY, PChar) +
+                       PChar->getMod(Mod::JUG_LVL_BONUS) +
+                       weaponLevelBonus;
+
+    // Endgame equipment must never create an over-levelled pet while levelling.
+    if (PMaster->GetMLevel() < 99)
+    {
+        weaponLevelCap = PMaster->GetMLevel();
+    }
+    highestLvl = std::min(highestLvl, weaponLevelCap);
 
     // Randomize: 0-2 lvls lower, less Monster Gloves(+1/+2) bonus
     highestLvl -= xirand::GetRandomNumber(3 - std::clamp<int16>(PChar->getMod(Mod::JUG_LEVEL_RANGE), 0, 2));
 
-    PPet->SetMLevel(std::min(PPet->getSpawnLevel(), highestLvl));
+    PPet->SetMLevel(std::min<int16>(PPet->getSpawnLevel(), std::max<int16>(1, highestLvl)));
     LoadJugStats(PPet, PPetData); // follow monster calcs (w/o SJ)
+
+    // Player jug pets use the same family resistance profile loaded for mob
+    // pets. Without this, crabs/slimes/etc. lose a major part of their identity.
+    PPet->setModifier(Mod::SLASH_SDT, PPetData->slash_sdt);
+    PPet->setModifier(Mod::PIERCE_SDT, PPetData->pierce_sdt);
+    PPet->setModifier(Mod::HTH_SDT, PPetData->hth_sdt);
+    PPet->setModifier(Mod::IMPACT_SDT, PPetData->impact_sdt);
+    PPet->setModifier(Mod::UDMGMAGIC, PPetData->magical_sdt);
+    PPet->setModifier(Mod::FIRE_SDT, PPetData->fire_sdt);
+    PPet->setModifier(Mod::ICE_SDT, PPetData->ice_sdt);
+    PPet->setModifier(Mod::WIND_SDT, PPetData->wind_sdt);
+    PPet->setModifier(Mod::EARTH_SDT, PPetData->earth_sdt);
+    PPet->setModifier(Mod::THUNDER_SDT, PPetData->thunder_sdt);
+    PPet->setModifier(Mod::WATER_SDT, PPetData->water_sdt);
+    PPet->setModifier(Mod::LIGHT_SDT, PPetData->light_sdt);
+    PPet->setModifier(Mod::DARK_SDT, PPetData->dark_sdt);
+    PPet->setModifier(Mod::FIRE_RES_RANK, PPetData->fire_res_rank);
+    PPet->setModifier(Mod::ICE_RES_RANK, PPetData->ice_res_rank);
+    PPet->setModifier(Mod::WIND_RES_RANK, PPetData->wind_res_rank);
+    PPet->setModifier(Mod::EARTH_RES_RANK, PPetData->earth_res_rank);
+    PPet->setModifier(Mod::THUNDER_RES_RANK, PPetData->thunder_res_rank);
+    PPet->setModifier(Mod::WATER_RES_RANK, PPetData->water_res_rank);
+    PPet->setModifier(Mod::LIGHT_RES_RANK, PPetData->light_res_rank);
+    PPet->setModifier(Mod::DARK_RES_RANK, PPetData->dark_res_rank);
+    PPet->setModifier(Mod::PARALYZE_RES_RANK, PPetData->paralyze_res_rank);
+    PPet->setModifier(Mod::BIND_RES_RANK, PPetData->bind_res_rank);
+    PPet->setModifier(Mod::SILENCE_RES_RANK, PPetData->silence_res_rank);
+    PPet->setModifier(Mod::SLOW_RES_RANK, PPetData->slow_res_rank);
+    PPet->setModifier(Mod::POISON_RES_RANK, PPetData->poison_res_rank);
+    PPet->setModifier(Mod::LIGHT_SLEEP_RES_RANK, PPetData->light_sleep_res_rank);
+    PPet->setModifier(Mod::DARK_SLEEP_RES_RANK, PPetData->dark_sleep_res_rank);
+    PPet->setModifier(Mod::BLIND_RES_RANK, PPetData->blind_res_rank);
 
     FinalizePetStatistics(PMaster, PPet);
 }

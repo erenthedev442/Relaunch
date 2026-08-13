@@ -54,4 +54,4 @@ INSERT INTO `mob_groups` VALUES (11366, 2265, 210, 'Kirin',           0, 128, 28
 -- Tier 5 — Rank V: Legend
 INSERT INTO `mob_groups` VALUES (11367, 21,   210, 'Absolute_Virtue',    0, 128, 3,    66000,  0, 0, NULL);
 INSERT INTO `mob_groups` VALUES (11368, 7175, 210, 'Pandemonium_Warden', 0, 128, 1977, 147000, 0, 0, NULL);
-INSERT INTO `mob_groups` VALUES (11369, 3604, 210, 'Shinryu',            0, 128, 2238, 0,      0, 0, NULL);
+INSERT INTO `mob_groups` VALUES (11369, 3604, 210, 'Shinryu',            0, 128, 2238, 147000, 0, 0, NULL);

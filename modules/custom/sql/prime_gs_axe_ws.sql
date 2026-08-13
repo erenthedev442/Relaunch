@@ -1,5 +1,5 @@
 -- ============================================================================
--- prime_gs_axe_ws.sql -- enable the Great Sword + Axe Prime weaponskills (+AM)
+-- prime_gs_axe_ws.sql -- enable missing Prime weaponskills (+AM)
 -- ----------------------------------------------------------------------------
 -- LSB ships the player WS SCRIPTS for the Great Sword Prime WS (Fimbulvetr) and
 -- the Axe Prime WS (Blitz) -- scripts/actions/weaponskills/{fimbulvetr,blitz}.lua
@@ -26,13 +26,14 @@
 -- Idempotent. weapon_skills + item_mods load at map boot -> needs a restart.
 -- ============================================================================
 
--- ---- enable the two Prime weaponskills (clone imperator 233's weapon-granted
+-- ---- enable missing Prime weaponskills (clone imperator 233's weapon-granted
 --      template: all-zero jobs literal below) -------------------------------
 INSERT INTO `weapon_skills`
     (`weaponskillid`, `name`, `jobs`, `type`, `skilllevel`, `element`, `animation`, `animationTime`, `range`, `aoe`, `radius`, `primary_sc`, `secondary_sc`, `tertiary_sc`, `main_only`, `unlock_id`)
 VALUES
     (62, 'fimbulvetr', 0x00000000000000000000000000000000000000000000, 4, 0, 0, 118, 2000, 3, 0, 0, 6, 2, 10, 1, 0),
-    (78, 'blitz',      0x00000000000000000000000000000000000000000000, 5, 0, 0,  59, 2000, 3, 0, 0, 3, 8, 12, 1, 0)
+    (78, 'blitz',      0x00000000000000000000000000000000000000000000, 5, 0, 0,  59, 2000, 3, 0, 0, 3, 8, 12, 1, 0),
+    (142, 'zesho_meppo', 0x00000000000000000000000000000000000000000000, 9, 0, 0, 165, 2000, 3, 0, 0, 7, 5, 11, 1, 0)
 ON DUPLICATE KEY UPDATE
     `name`=VALUES(`name`), `jobs`=VALUES(`jobs`), `type`=VALUES(`type`), `skilllevel`=VALUES(`skilllevel`),
     `element`=VALUES(`element`), `animation`=VALUES(`animation`), `animationTime`=VALUES(`animationTime`),
@@ -40,10 +41,9 @@ ON DUPLICATE KEY UPDATE
     `primary_sc`=VALUES(`primary_sc`), `secondary_sc`=VALUES(`secondary_sc`), `tertiary_sc`=VALUES(`tertiary_sc`),
     `main_only`=VALUES(`main_only`), `unlock_id`=VALUES(`unlock_id`);
 
--- ---- grant the WS + the physical Prime aftermath on the two weapons --------
+-- Helheim's completed form is granted Fimbulvetr in prime_weapons_gear.sql.
+-- Keep only the Axe bootstrap here; earlier Helheim variants must not gain it.
 INSERT INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
-    (21650, 355, 62),  -- prime_blade   (Great Sword) -> ADDS_WEAPONSKILL Fimbulvetr (62)
-    (21650, 256, 46),  -- prime_blade                 -> AFTERMATH physical (Damage Limit)
     (21726, 355, 78),  -- prime_pickaxe (Axe)         -> ADDS_WEAPONSKILL Blitz (78)
     (21726, 256, 46)   -- prime_pickaxe               -> AFTERMATH physical (Damage Limit)
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);

@@ -6958,6 +6958,7 @@ void CLuaBaseEntity::changeJob(uint8 newJob)
             case JOB_BRD:
             case JOB_RNG:
             case JOB_COR:
+            case JOB_DNC:
                 PWeapon->setSkillType(SKILL_DAGGER);
                 break;
             case JOB_RDM:
@@ -6993,11 +6994,12 @@ void CLuaBaseEntity::changeJob(uint8 newJob)
                 PWeapon->setBaseDelay(480);
                 break;
             case JOB_WHM:
-            case JOB_BLM:
             case JOB_GEO:
                 PWeapon->setSkillType(SKILL_CLUB);
                 break;
+            case JOB_BLM:
             case JOB_SMN:
+            case JOB_SCH:
                 PWeapon->setSkillType(SKILL_STAFF);
                 PWeapon->setDelay(480);
                 PWeapon->setBaseDelay(480);

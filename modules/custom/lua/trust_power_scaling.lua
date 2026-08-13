@@ -357,30 +357,19 @@ function xi.trustPowerApply(mob, master, spellId)
 end
 
 m:addOverride('xi.trust.spawn', function(caster, spell)
-    -- Spawn directly so we receive the entity. Party-search-after-super was
-    -- unreliable and left trusts on the global 999999 ceiling.
-    if not caster or not spell then
-        return 0
+    -- Preserve the stock trust summon path. Calling caster:spawnTrust directly
+    -- here was introduced by Round 5, the same change where Matsui-P began
+    -- disconnecting clients during summon.
+    local result = super(caster, spell)
+    if caster and spell then
+        local spellId = spell:getID()
+        local trust = findSpawnedTrust(caster, spellId)
+        if trust then
+            xi.trustPowerApply(trust, caster, spellId)
+        end
     end
 
-    local spellId = spell:getID()
-    local trust = caster:spawnTrust(spellId)
-
-    if caster.getEminenceProgress and caster:getEminenceProgress(932) then
-        xi.roe.onRecordTrigger(caster, 932)
-    end
-
-    if not trust then
-        trust = findSpawnedTrust(caster, spellId)
-    end
-
-    if trust then
-        xi.trustPowerApply(trust, caster, spellId)
-    else
-        print(string.format('[trust_power_scaling] failed to resolve spawned trust for spell %s', tostring(spellId)))
-    end
-
-    return 0
+    return result
 end)
 
 return m

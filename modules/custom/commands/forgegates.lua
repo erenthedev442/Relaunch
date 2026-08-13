@@ -29,6 +29,7 @@ end
 commandObj.onTrigger = function(player, catArg)
     local SYS   = xi.msg.channel.SYSTEM_3
     local GATES = require('modules/custom/lua/weapon_forge_gates')
+    local forgeCatalog = require('modules/custom/lua/weapon_forge_catalog')
 
     -- Filter to a single category if the player passed one.
     local cats
@@ -57,13 +58,36 @@ commandObj.onTrigger = function(player, catArg)
             for i = 0, 2 do
                 local gate = rows[i]
                 if gate then
-                    total = total + 1
-                    local ok = gate.check(player)
-                    if ok then met = met + 1 end
-                    player:printToPlayer(
-                        string.format('    Stage %s [%s] %s',
-                            ({[0]='I',[1]='II',[2]='III'})[i], ok and '✓' or '✗', gate.label),
-                        SYS)
+                    if cat == 'aeonic' and i == 2 then
+                        local found = false
+                        for _, chain in ipairs(forgeCatalog.chains) do
+                            if player:getItemCount(chain.aeonic.s2.id) > 0 then
+                                found = true
+                                total = total + 1
+                                local ok = gate.check(player, chain)
+                                if ok then met = met + 1 end
+                                player:printToPlayer(
+                                    string.format('    Stage III [%s] %s: %s',
+                                        ok and '✓' or '✗', chain.aeonic.s3.name, gate.label),
+                                    SYS)
+                            end
+                        end
+                        if not found then
+                            total = total + 1
+                            player:printToPlayer(
+                                string.format('    Stage III [✗] %s (bring an Empowered Aeonic-path weapon)',
+                                    gate.label),
+                                SYS)
+                        end
+                    else
+                        total = total + 1
+                        local ok = gate.check(player)
+                        if ok then met = met + 1 end
+                        player:printToPlayer(
+                            string.format('    Stage %s [%s] %s',
+                                ({[0]='I',[1]='II',[2]='III'})[i], ok and '✓' or '✗', gate.label),
+                            SYS)
+                    end
                 end
             end
         end

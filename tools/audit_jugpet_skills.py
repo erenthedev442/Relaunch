@@ -113,21 +113,61 @@ for r in inserts("mob_skill_lists.sql", "mob_skill_lists"):
     list_skills.setdefault(sid, set()).add(mid)
     list_name[sid] = unq(r[0])
 
-# Merge additive Ready-move wiring from modules/custom/sql/*.sql (e.g.
-# jugpet_ready_moves.sql) so the audit reflects the deployed state, not just
-# the base dump. Supports INSERT [IGNORE] INTO `mob_skill_lists` ... VALUES ...
+# pet_skills maps the Ready-menu ability ID to the real mob skill ID.
+pet_skill_to_mob_skill = {}
+for r in inserts("pet_skills.sql", "pet_skills"):
+    pet_skill_to_mob_skill[int(r[0])] = int(r[1])
+
+# Merge Ready-move wiring from modules/custom/sql/*.sql in deployment order so
+# the audit reflects INSERTs and the targeted DELETEs used to remove IDs from
+# the wrong pet_skill_id namespace.
 CUSTOM = ROOT / "modules" / "custom" / "sql"
 for f in sorted(CUSTOM.glob("*.sql")):
     raw = f.read_text(encoding="utf-8", errors="replace")
     txt = "\n".join(ln for ln in raw.splitlines() if not ln.lstrip().startswith("--"))
-    for m in re.finditer(
-        r"INSERT(?:\s+IGNORE)?\s+INTO\s+`mob_skill_lists`\s*(?:\([^)]*\))?\s*VALUES\s*(.*?);",
-        txt, re.DOTALL | re.IGNORECASE,
+    for pool_update in re.finditer(
+        r"UPDATE\s+`mob_pools`\s+SET\s+`skill_list_id`\s*=\s*(\d+)\s+WHERE\s+`poolid`\s*=\s*(\d+)\s*;",
+        txt, re.IGNORECASE,
     ):
-        for r in _tokenize_value_tuples(m.group(1)):
-            if len(r) >= 3 and r[1].isdigit() and r[2].isdigit():
-                list_skills.setdefault(int(r[1]), set()).add(int(r[2]))
-                list_name.setdefault(int(r[1]), unq(r[0]))
+        pool_skilllist[int(pool_update.group(2))] = int(pool_update.group(1))
+
+    if "JOIN `pet_skills` AS p ON p.`pet_skill_id` = m.`mob_skill_id`" in txt:
+        for sid, skills in list_skills.items():
+            if list_name.get(sid, "").startswith("Jug_"):
+                list_skills[sid] = {pet_skill_to_mob_skill.get(mid, mid) for mid in skills}
+
+    statements = re.finditer(
+        r"(?:INSERT(?:\s+IGNORE)?\s+INTO\s+`mob_skill_lists`\s*(?:\([^)]*\))?\s+VALUES\s+.*?;"
+        r"|DELETE\s+FROM\s+`mob_skill_lists`\s+WHERE\s+.*?;)",
+        txt, re.DOTALL | re.IGNORECASE,
+    )
+    for stmt_match in statements:
+        stmt = stmt_match.group(0)
+        if stmt.lstrip().upper().startswith("INSERT"):
+            payload = re.search(r"\bVALUES\s+(.*?);$", stmt, re.DOTALL | re.IGNORECASE)
+            if not payload:
+                continue
+            for r in _tokenize_value_tuples(payload.group(1)):
+                if len(r) >= 3 and r[1].isdigit() and r[2].isdigit():
+                    list_skills.setdefault(int(r[1]), set()).add(int(r[2]))
+                    list_name.setdefault(int(r[1]), unq(r[0]))
+            continue
+
+        sid_match = re.search(r"`?skill_list_id`?\s*=\s*(\d+)", stmt, re.IGNORECASE)
+        if not sid_match:
+            continue
+        sid = int(sid_match.group(1))
+        ids = set()
+        in_match = re.search(r"`?mob_skill_id`?\s+IN\s*\(([^)]*)\)", stmt, re.IGNORECASE)
+        eq_match = re.search(r"`?mob_skill_id`?\s*=\s*(\d+)", stmt, re.IGNORECASE)
+        if in_match:
+            ids = {int(x) for x in re.findall(r"\d+", in_match.group(1))}
+        elif eq_match:
+            ids = {int(eq_match.group(1))}
+        if ids:
+            list_skills.setdefault(sid, set()).difference_update(ids)
+        else:
+            list_skills[sid] = set()
 
 # mob_skills: mob_skill_id, mob_anim_id, mob_skill_name, ...
 skill_name = {}
@@ -241,3 +281,17 @@ if missing_named:
     for nm, e in sorted(missing_named.items()):
         pets = ", ".join(jugpets[p]["name"] for p in sorted(e["pets"]))
         print(f"  {nm:<22} id={e['id']:<5} anim={e['anim']:<5} -> {pets}")
+
+namespace_errors = []
+for petid, data in per_pet.items():
+    for mid, _, _ in data["rows"]:
+        mapped = pet_skill_to_mob_skill.get(mid)
+        if mapped is not None and mapped != mid:
+            namespace_errors.append((petid, data["name"], data["sid"], mid, mapped))
+
+if namespace_errors:
+    print("\n" + "=" * 78)
+    print("WRONG ID NAMESPACE (pet_skill_id used where mob_skill_id is required)")
+    print("=" * 78)
+    for petid, name, sid, wrong, correct in namespace_errors:
+        print(f"  pet {petid:<3} {name:<24} list={sid:<4} wrong={wrong:<4} expected mob_skill_id={correct}")

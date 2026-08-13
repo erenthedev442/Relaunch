@@ -1,8 +1,8 @@
 -----------------------------------
 -- Temprix_NPC.lua
 --
--- Temprix is the gate-keeper for the Aeonic weapon path in Reisenjima.
--- She sells "Malformed" base weapons in exchange for Escha Beads.
+-- Temprix is the Reisenjima entry point for the Aeonic weapon path.
+-- She mirrors the hub Weapon Forge's Malformed-base service for Escha Beads.
 -- Players then forge their Malformed weapon into a full Aeonic 119III at
 -- the Weapon Forger (see WeaponForge_NPC.lua) with Attestations and Escha Silt.
 --
@@ -18,6 +18,8 @@ require('scripts/zones/Reisenjima/Zone')
 
 local m = Module:new('temprix_npc')
 local S = xi.msg.channel.SYSTEM_3
+local forgeCatalog = require('modules/custom/lua/weapon_forge_catalog')
+local forgeGates = require('modules/custom/lua/weapon_forge_gates')
 
 -- ===================================================================
 -- CONSTANTS
@@ -26,32 +28,35 @@ local S = xi.msg.channel.SYSTEM_3
 -- Currencies II tab) -- getCurrency/delCurrency, NOT a charVar. Geas Fete and the
 -- bead pouch award the same currency.
 local BEADS_KEY = 'escha_beads'
-local COST      = 50000   -- Escha Beads per Malformed weapon
-local REQUIRED_HL_RANK = 5
-local NPC_POS   = { x = 165.000, y = -18.000, z = 335.000, rot = 64 }
--- TODO: position above is approximate; adjust in-game if off.
+local COST      = forgeCatalog.aeonicBase.eschaBeads
+local REQUIRED_HL_RANK = forgeCatalog.aeonicBase.hlRank
+local NPC_POS   = { x = -365.000, y = -113.300, z = 211.500, rot = 64 }
+local TEMPRIX_LOOK = '0x0000E20300000000000000000000000000000000'
+
+local function checkEntryGate(player)
+    local ok, gate = forgeGates.checkGate(player, 'aeonic', 0)
+    if not ok then
+        player:printToPlayer(string.format(
+            '[Temprix] Aeonic path locked: %s.', gate.label), S)
+    end
+    return ok
+end
 
 -- ===================================================================
--- WEAPON CATALOG
--- One entry per Aeonic weapon type. 'id' = Malformed item (item_basic).
--- 'attestation' = the attestation item ID accepted for the Aeonic forge.
+-- Weapon list derives from the main forge catalog so Temprix cannot drift.
 -- ===================================================================
-local WEAPONS = {
-    { name='Malformed Knuckles',   id=29701, wtype='Hand-to-Hand', att=1556, attName='Attest. of Might'         },
-    { name='Malformed Knife',      id=29702, wtype='Dagger',       att=1557, attName='Attest. of Celerity'      },
-    { name='Malformed Sword',      id=29703, wtype='Sword',        att=1558, attName='Attest. of Glory'         },
-    { name='Malformed Claymore',   id=29704, wtype='Gt. Sword',    att=1559, attName='Attest. of Righteousness' },
-    { name='Malformed Axe',        id=29705, wtype='Axe',          att=1560, attName='Attest. of Bravery'       },
-    { name='Malformed Greataxe',   id=29706, wtype='Gt. Axe',      att=1561, attName='Attest. of Force'         },
-    { name='Malformed Scythe',     id=29707, wtype='Scythe',       att=1562, attName='Attest. of Vigor'         },
-    { name='Malformed Lance',      id=29708, wtype='Polearm',      att=1563, attName='Attest. of Fortitude'     },
-    { name='Malformed Katana',     id=29709, wtype='Katana',       att=1564, attName='Attest. of Legerity'      },
-    { name='Malformed Tachi',      id=29710, wtype='Gt. Katana',   att=1565, attName='Attest. of Decisiveness'  },
-    { name='Malformed Rod',        id=29711, wtype='Club',         att=1566, attName='Attest. of Sacrifice'     },
-    { name='Malformed Staff',      id=29712, wtype='Staff',        att=1567, attName='Attest. of Virtue'        },
-    { name='Malformed Bow',        id=29713, wtype='Archery',      att=1568, attName='Attest. of Transcendence' },
-    { name='Malformed Culverin',   id=29714, wtype='Marksmanship', att=1569, attName='Attest. of Harmony'       },
-}
+local WEAPONS = {}
+for _, chain in ipairs(forgeCatalog.chains) do
+    WEAPONS[#WEAPONS + 1] =
+    {
+        name    = chain.aeonic.base.name,
+        id      = chain.aeonic.base.id,
+        wtype   = chain.type,
+        att     = chain.aeonic.attestationId,
+        attName = chain.aeonic.attestationName,
+        chain   = chain,
+    }
+end
 
 local PAGE_SIZE   = 5
 local TOTAL_PAGES = math.ceil(#WEAPONS / PAGE_SIZE)
@@ -83,6 +88,7 @@ showPage = function(player, page)
         options[#options + 1] = {
             wCapture.name,
             function(pp)
+                if not checkEntryGate(pp) then return end
                 local hl = math.max(1, pp:getCharVar('HL_Tier'))
                 if hl < REQUIRED_HL_RANK then
                     pp:printToPlayer(string.format(
@@ -106,10 +112,16 @@ showPage = function(player, page)
                 end
                 -- RARE pre-check: charging first would eat the beads with
                 -- nothing granted.
-                if pp:hasItem(wCapture.id) then
+                local ae = wCapture.chain.aeonic
+                if
+                    pp:hasItem(ae.base.id) or
+                    pp:hasItem(ae.s1.id) or
+                    pp:hasItem(ae.s2.id) or
+                    pp:hasItem(ae.s3.id)
+                then
                     pp:printToPlayer(string.format(
-                        '[Temprix] You already hold %s -- it is RARE, so I cannot entrust a second.',
-                        wCapture.name), S)
+                        '[Temprix] You already hold a stage of the %s chain.',
+                        ae.s3.name), S)
                     pp:timer(30, function(p2) showPage(p2, pageCapture) end)
                     return
                 end
@@ -148,10 +160,13 @@ m:addOverride('xi.zones.Reisenjima.Zone.onInitialize', function(zone)
     zone:insertDynamicEntity({
         objtype  = xi.objType.NPC,
         name     = 'Temprix',
+        packetName = string.format('Temprix %sAeonic', xi.icon.STAR_LARGE),
+        look     = TEMPRIX_LOOK,
         x        = NPC_POS.x,
         y        = NPC_POS.y,
         z        = NPC_POS.z,
         rotation = NPC_POS.rot,
+        widescan = 1,
 
         onTrigger = function(player, npc)
             -- One-time migration: fold the DEAD legacy charVars (Escha_Beads /
@@ -166,18 +181,13 @@ m:addOverride('xi.zones.Reisenjima.Zone.onInitialize', function(zone)
                 end
             end
             local hl = math.max(1, player:getCharVar('HL_Tier'))
+            if not checkEntryGate(player) then
+                return
+            end
             if hl < REQUIRED_HL_RANK then
                 player:printToPlayer(string.format(
                     '[Temprix] Hunting League Rank %d is required to obtain a Malformed weapon. You are Rank %d.',
                     REQUIRED_HL_RANK, hl), S)
-                return
-            end
-            local beads = player:getCurrency(BEADS_KEY)
-            if beads < COST then
-                player:printToPlayer(string.format(
-                    '[Temprix] These weapons were forged in the crucible of eternity. '..
-                    'You must offer %d Escha Beads. You carry %d.',
-                    COST, beads), S)
                 return
             end
             showPage(player, 1)

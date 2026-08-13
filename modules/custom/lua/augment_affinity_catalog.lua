@@ -39,7 +39,7 @@ catalog.affinityMult = 1.5
 --     markCost : Hunt Marks (charvar HL_Points) spent per registration
 -----------------------------------
 catalog.affinityRankReq  = 3
-catalog.affinityMarkCost = 1000
+catalog.affinityMarkCost = 250
 
 -----------------------------------
 -- AFFINITY ROWS

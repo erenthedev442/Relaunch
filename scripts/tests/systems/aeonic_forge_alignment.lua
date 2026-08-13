@@ -7,11 +7,16 @@ describe('Aeonic Forge identifier alignment', function()
         assert(#forge.weapons == #weaponForge.chains)
         assert(forge.currencyKey == 'escha_silt')
         assert(forge.cost == 50000)
+        assert(weaponForge.aeonicBase.eschaBeads == 50000)
+        assert(weaponForge.aeonicBase.hlRank == 5)
 
         for index, chain in ipairs(weaponForge.chains) do
             local forged = forge.weapons[index]
             assert(forged.id == chain.aeonic.s3.id)
             assert(forged.name == chain.aeonic.s3.name)
+            assert(chain.aeonic.base.id ~= chain.s1.id)
+            assert(chain.aeonic.s1.id ~= chain.s1.id)
+            assert(chain.aeonic.s2.id ~= chain.s2.id)
         end
     end)
 

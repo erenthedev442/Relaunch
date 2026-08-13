@@ -1,5 +1,6 @@
 local catalog = require('modules/custom/lua/weapon_forge_catalog')
 local gates = require('modules/custom/lua/weapon_forge_gates')
+local aeonicMaat = require('modules/custom/lua/aeonic_maat_catalog')
 
 describe('Weapon Forge catalog and gate integrity', function()
     it('keeps every Prime and Aeonic chain complete with unique item IDs', function()
@@ -9,13 +10,113 @@ describe('Weapon Forge catalog and gate integrity', function()
         for _, chain in ipairs(catalog.chains) do
             assert(chain.s1 and chain.s2 and chain.s3 and chain.aeonic)
             for _, item in ipairs({
-                chain.s1, chain.s2, chain.s3, chain.aeonic.base, chain.aeonic.s3,
+                chain.s1, chain.s2, chain.s3, chain.aeonic.base,
+                chain.aeonic.s1, chain.aeonic.s2, chain.aeonic.s3,
             }) do
                 assert(item.id > 0 and item.name ~= '')
                 assert(not ids[item.id], string.format('duplicate weapon ID %d', item.id))
                 ids[item.id] = true
             end
         end
+    end)
+
+    it('keeps every Aeonic stage on the Aeonic route', function()
+        for _, chain in ipairs(catalog.chains) do
+            for stage, item in ipairs({ chain.aeonic.base, chain.aeonic.s1, chain.aeonic.s2 }) do
+                local entry = catalog.byId[item.id]
+                assert(entry ~= nil)
+                assert(entry.path == 'aeonic')
+                assert(entry.fromStage == stage - 1)
+                assert(entry.chain == chain)
+            end
+        end
+    end)
+
+    it('maps every final Aeonic to one unique job-restricted Maat trial', function()
+        assert(#aeonicMaat.trials == #catalog.chains)
+        local seen = {}
+        for _, chain in ipairs(catalog.chains) do
+            local trial = aeonicMaat.byFinalId[chain.aeonic.s3.id]
+            assert(trial ~= nil, string.format('Missing Maat trial for %s', chain.aeonic.s3.name))
+            assert(trial.empoweredId == chain.aeonic.s2.id)
+            assert(trial.name == chain.aeonic.s3.name)
+            assert(#trial.jobs > 0)
+            assert(aeonicMaat.jobList(trial) == chain.jobs,
+                string.format('%s trial jobs drifted from forge jobs', trial.name))
+            assert(not seen[trial.mechanic], string.format('Duplicate mechanic %s', trial.mechanic))
+            seen[trial.mechanic] = true
+        end
+    end)
+
+    it('requires the matching solo Maat victory for the final Aeonic forge', function()
+        local chain = catalog.chains[2] -- Aeneas
+        local vars =
+        {
+            Dungeon_Unique_Clears = 7,
+            GM_Wave_Clears = 127,
+            Maat_Kills = 999,
+        }
+        local player = {}
+        function player:getCharVar(name) return vars[name] or 0 end
+
+        local oldInstances = xi.dungeonInstances
+        xi.dungeonInstances = { uniqueDungeonCount = 7 }
+
+        assert(not gates.checkGate(player, 'aeonic', 2, chain))
+        vars[aeonicMaat.completionVar(chain.aeonic.s3.id)] = xi.job.BRD
+        assert(gates.checkGate(player, 'aeonic', 2, chain))
+
+        -- Aeneas credit must not satisfy another weapon's final gate.
+        assert(not gates.checkGate(player, 'aeonic', 2, catalog.chains[1]))
+        xi.dungeonInstances = oldInstances
+    end)
+
+    it('admits only a solo allowed job carrying the matching Empowered weapon', function()
+        local trial = aeonicMaat.byFinalId[20594] -- Aeneas
+        local jobId = xi.job.BRD
+        local hasWeapon = true
+        local otherPlayer = false
+        local selfMember = { isPC = function() return true end, getID = function() return 1 end }
+        local trustMember = { isPC = function() return false end, getID = function() return 2 end }
+        local otherMember = { isPC = function() return true end, getID = function() return 3 end }
+        local player = {}
+        function player:getID() return 1 end
+        function player:getMainJob() return jobId end
+        function player:getItemCount(id) return hasWeapon and id == trial.empoweredId and 1 or 0 end
+        function player:getParty()
+            return otherPlayer and { selfMember, trustMember, otherMember } or { selfMember, trustMember }
+        end
+        function player:getAlliance() return {} end
+
+        assert(aeonicMaat.canEnter(player, trial))
+
+        jobId = xi.job.WAR
+        local ok, reason = aeonicMaat.canEnter(player, trial)
+        assert(not ok and reason == 'wrong_job')
+
+        jobId = xi.job.BRD
+        hasWeapon = false
+        ok, reason = aeonicMaat.canEnter(player, trial)
+        assert(not ok and reason == 'missing_weapon')
+
+        hasWeapon = true
+        otherPlayer = true
+        ok, reason = aeonicMaat.canEnter(player, trial)
+        assert(not ok and reason == 'grouped')
+    end)
+
+    it('places Aeonic after completed Relic, Empyrean, and Mythic paths', function()
+        local vars = {}
+        local player = {}
+        function player:getCharVar(name) return vars[name] or 0 end
+
+        assert(not gates.checkGate(player, 'aeonic', 0))
+        vars.WF_Relic_Final = 1
+        vars.WF_Empyrean_Final = 1
+        vars.WF_Mythic_Final = 1
+        assert(not gates.checkGate(player, 'aeonic', 0))
+        vars.Rebirth_Count_1 = 50
+        assert(gates.checkGate(player, 'aeonic', 0))
     end)
 
     it('uses the intended live Prime costs', function()
@@ -27,6 +128,15 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(catalog.costs.toStage3.medals.qty == 100)
         assert(catalog.costs.toStage3.reforgeMarks == 30000)
         assert(catalog.costs.toStage3.gil == 750000000)
+    end)
+
+    it('keeps Aeonic currency time above the prior REMA paths', function()
+        local costs = catalog.aeonicCosts
+        assert(catalog.aeonicBase.eschaBeads == 50000)
+        assert(costs.toStage1.eschaSilt + costs.toStage2.eschaSilt + costs.toStage3.eschaSilt == 50000)
+        assert(costs.toStage1.attestations + costs.toStage2.attestations + costs.toStage3.attestations == 6)
+        assert(costs.toStage3.reforgeMarks == 24000)
+        assert(costs.toStage1.hlRank == 5 and costs.toStage2.hlRank == 5 and costs.toStage3.hlRank == 5)
     end)
 
     it('uses retail final-Abyssea materials and quantities for Empyreans', function()

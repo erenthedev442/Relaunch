@@ -6,7 +6,7 @@
 -- Stripped (not solo-friendly):
 --   Muut              Danse Macabre (533) charm
 --   Hidhaegg          Absolute Terror (957)
---   Shedu             Dreadstorm (2025) terror
+--   Shedu             Dreadstorm (2025) terror; Fulmination (2028) gated to <=37% HP via list 9708
 --   Tumult Curator    Thundris Shriek (2119) terror
 --   Grand Grenade     Self-Destruct (509) HP-scaled wipe + suicide
 --   Bambrox           Bomb Toss Suicide (592)
@@ -15,7 +15,7 @@
 -- REQUIRES MAP RESTART: mob_skill_lists is cached at map-server boot.
 -- ============================================================================
 
-DELETE FROM `mob_skill_lists` WHERE `skill_list_id` BETWEEN 9700 AND 9706;
+DELETE FROM `mob_skill_lists` WHERE `skill_list_id` BETWEEN 9700 AND 9708;
 
 -- 9700 Muut (Corse 74 without Danse Macabre)
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Muut', 9700, 530); -- memento_mori
@@ -28,13 +28,20 @@ REPLACE INTO `mob_skill_lists` VALUES ('UW_Hidhaegg', 9701, 1040); -- spike_flai
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Hidhaegg', 9701, 1041); -- dragon_breath
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Hidhaegg', 9701, 1046); -- horrid_roar_2
 
--- 9702 Shedu (Khimaira 168 without Dreadstorm)
+-- 9702 Shedu (Khimaira 168 without Dreadstorm or Fulmination)
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2022); -- tenebrous_mist
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2023); -- thunderstrike
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2024); -- tourbillion
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2026); -- fossilizing_breath
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2027); -- plague_swipe
-REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2028); -- fulmination
+
+-- 9708 Shedu execute window (adds Fulmination at <=37% HP, retail Khimaira gate)
+REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu_LowHP', 9708, 2022); -- tenebrous_mist
+REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu_LowHP', 9708, 2023); -- thunderstrike
+REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu_LowHP', 9708, 2024); -- tourbillion
+REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu_LowHP', 9708, 2026); -- fossilizing_breath
+REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu_LowHP', 9708, 2027); -- plague_swipe
+REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu_LowHP', 9708, 2028); -- fulmination
 
 -- 9703 Tumult Curator (Pandemonium 316 without Thundris Shriek)
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Tumult_Curator', 9703, 2113); -- hellsnap

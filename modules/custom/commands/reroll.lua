@@ -95,7 +95,10 @@ for catId, def in pairs(catalog) do
             catId    = catId,
             cat      = def.cat,
             label    = def.label or ('#' .. tostring(def.augId)),
+            base     = def.base or 0,
             maxBoost = def.maxBoost,
+            tierValue = def.tierValue,
+            flatValue = def.flatValue,
         }
     end
 end
@@ -194,8 +197,9 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
                 player:printToPlayer(string.format('  %s : %d  ->  CRYSTALIZED (locked, kept)', lbl, ln.oldVal), CHANNEL)
             elseif ln.retired then
                 player:printToPlayer(string.format('  %s : %d  ->  RETIRED (kept, cannot reroll)', lbl, ln.oldVal), CHANNEL)
-            elseif ln.def and ln.def.tierValue then
-                player:printToPlayer(string.format('  %s : %d  ->  tier-fixed at +%d (Augment Tier %d)', lbl, ln.oldVal, ln.def.tierValue * tier, tier), CHANNEL)
+            elseif ln.def and (ln.def.tierValue or ln.def.flatValue) then
+                local target = ln.def.flatValue or (ln.def.tierValue * tier)
+                player:printToPlayer(string.format('  %s : %d  ->  tier-fixed at +%d (Augment Tier %d)', lbl, ln.oldVal, target, tier), CHANNEL)
             else
                 player:printToPlayer(string.format('  %s : %d  ->  will roll %d-%d', lbl, ln.oldVal, rollFloor, slice.max), CHANNEL)
             end
@@ -235,18 +239,26 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
             -- a hard clamp saturates every tier band above the cap, so all
             -- tiers reroll to the SAME value on low-ceiling stats.
             local function scaleRoll(raw)
-                return math.floor(raw * cap / EXDATA_VALUE_MAX + 0.5)
+                if xi.augmentTiers and xi.augmentTiers.scaleRoll then
+                    return xi.augmentTiers.scaleRoll(raw, cap, tier)
+                end
+                local scaled = math.floor(raw * cap / EXDATA_VALUE_MAX + 0.5)
+                if tier < #TIER_SLICES and cap > 0 then
+                    scaled = math.min(scaled, cap - 1)
+                end
+                return math.max(0, scaled)
             end
             local slotMax = scaleRoll(slice.max)
 
             local r
-            if ln.def and ln.def.tierValue then
-                -- Tier-fixed (Treasure Hunter, All songs): value = tierValue x
-                -- your Augment Tier; a reroll just rewrites it (boost =
-                -- tierValue*tier - base). Only a T5 line can crystalize.
+            if ln.def and (ln.def.tierValue or ln.def.flatValue) then
+                -- Tier-fixed / flat augments reroll deterministically, matching
+                -- the Moogle's encoding and crystalize rules.
                 local tvBase = ln.def.base or 0
-                r       = ln.def.tierValue * tier - tvBase
-                slotMax = ln.def.tierValue * #TIER_SLICES - tvBase
+                local target = ln.def.flatValue or (ln.def.tierValue * tier)
+                local final  = ln.def.flatValue or (ln.def.tierValue * #TIER_SLICES)
+                r       = target - tvBase
+                slotMax = final - tvBase
             else
                 r = math.random(rollFloor, slice.max)
                 if hasAff then
@@ -264,7 +276,8 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
             item:setExDataRaw({ [b] = word % 256, [b + 1] = math.floor(word / 256) })
 
             local crystalized = false
-            if slotMax > 0 and r == slotMax and math.random() < crystalPct then
+            local canLockRoll = slotMax > 0 or (ln.def and ln.def.flatValue ~= nil)
+            if canLockRoll and r == slotMax and math.random() < crystalPct then
                 newMask     = bit.bor(newMask, bit.lshift(1, ln.augSlot))
                 crystalized = true
                 crystalNews[#crystalNews + 1] = (ln.def and ln.def.label) or ('#' .. tostring(ln.augId))

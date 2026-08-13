@@ -295,6 +295,20 @@ describe('retail REMA and Prime aftermath handling', function()
         assert(getApplied().params.icon == xi.effect.AFTERMATH_LV3)
     end)
 
+    it('links Tishtrya aftermath to Realmrazer, not Black Halo', function()
+        local player, getApplied = makePlayer(49, xi.slot.MAIN,
+            { itemId = 21082 })
+
+        xi.aftermath.addAeonicStatusEffect(
+            player, 3000, xi.slot.MAIN, xi.weaponskill.BLACK_HALO)
+        assert(getApplied() == nil)
+
+        xi.aftermath.addAeonicStatusEffect(
+            player, 3000, xi.slot.MAIN, xi.weaponskill.REALMRAZER)
+        assert(getApplied().params.duration == 180)
+        assert(getApplied().params.icon == xi.effect.AFTERMATH_LV3)
+    end)
+
     it('applies one retail ranged Mythic damage distribution', function()
         local oldRandom = math.random
         local effect =

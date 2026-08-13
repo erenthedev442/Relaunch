@@ -1,7 +1,7 @@
 -----------------------------------
 -- Trust: AAMR (Ark Angel MR)
 -- BST/THF axe. SA / TA + Rampage / Calamity / Havoc Spiral / Cloudsplitter.
--- HP+20%, TH from lvl 7. Holds to 3000 waiting for SA/TA or front Cloudsplitter.
+-- HP+20%, TH+7 from lvl 7. Holds to 3000 waiting for SA/TA or front Cloudsplitter.
 -- Does not skillchain-select. A-tier bruiser power path + MATT for Cloudsplitter.
 -----------------------------------
 ---@type TSpellTrust
@@ -47,7 +47,7 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.MACC, 120)
 
     if mob:getMainLvl() >= 7 then
-        mob:addMod(xi.mod.TREASURE_HUNTER, 1)
+        mob:addMod(xi.mod.TREASURE_HUNTER, 7)
     end
 
     mob:setLocalVar('AAMRPrefer', PREFER_CLOUDSPLITTER)

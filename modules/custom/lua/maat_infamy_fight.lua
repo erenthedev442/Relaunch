@@ -1,6 +1,6 @@
 -----------------------------------
 -- maat_infamy_fight.lua
--- Custom level-250 Maat challenge.
+-- Custom post-T4 Maat challenge.
 --
 -- Entry NPC: Ru'Lude Gardens (zone 243), near the original Maat NPC.
 -- Fight arena: Waughroon Shrine (zone 144), the BCNM zone retail Maat
@@ -36,75 +36,76 @@ local mechanics = require('modules/custom/lua/mob_mechanics_library')
 
 local m = Module:new('maat_infamy_fight')
 
--- Hardcore mechanics config for the Maat duel.
--- 1v1 duel identity: no adds (thematically wrong for a solo skill-check).
--- Pillars: stance dance (his melee vs Chainspell phases), AoE shockwave,
--- CC terror, lifedrain regen pressure, tight 2.5-min enrage, low-HP doom.
+-- Post-T4 mechanics config. This is a private challenger fight (trusts/pets
+-- remain valid), positioned after Rank 4 Hunts / Divergence / Wave Master
+-- Insane and before T5 augments. It should test mechanics without requiring
+-- an already-finished REMA/Prime weapon.
 local MAAT_MECH_CFG = {
     name    = 'Maat',
 
-    -- 2.5-min DPS check. If you can't kill a 12M-HP boss in 150s you die.
+    -- Four-minute soft enrage: firm pressure without requiring REMA-tier burst.
     enrage  = {
-        sec   = 150,
-        att   = 5000,
-        haste = 200,
+        sec   = 240,
+        att   = 3000,
+        haste = 150,
         msg   = "You haven't proven yourself yet. Witness TRUE power!",
     },
 
     -- Stance dance: alternates between physical-resist (magic window) and
-    -- magic-resist (melee window). DMGPHYS/DMGMAGIC capped at -5000 (=-50%).
+    -- magic-resist (melee window). The 30% resistance rewards adaptation
+    -- without shutting down jobs that primarily use one damage path.
     -- Starts immediately (startHpp=100) and swaps every 18s.
     stance  = {
         startHpp  = 100,
         periodSec = 18,
         stances   = {
             {
-                mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0 },
+                mods = { [xi.mod.DMGPHYS] = -3000, [xi.mod.DMGMAGIC] = 0 },
                 msg  = 'Maat fortifies his body against weapons -- unleash your magic!',
             },
             {
-                mods = { [xi.mod.DMGPHYS] = 0, [xi.mod.DMGMAGIC] = -5000 },
+                mods = { [xi.mod.DMGPHYS] = 0, [xi.mod.DMGMAGIC] = -3000 },
                 msg  = 'Maat channels Chainspell -- steel cuts deeper than spells now!',
             },
         },
     },
 
-    -- AoE shockwave every 14s: 20% of each nearby player's max HP.
+    -- Moderate periodic pressure on this Maat's owner only.
     aoe     = {
-        periodSec = 14,
-        dmgPct    = 20,
+        periodSec = 16,
+        dmgPct    = 12,
         msg       = 'Maat releases a burst of concentrated aura!',
     },
 
-    -- Terror CC every 25s: briefly locks out all actions (5s window).
+    -- Brief interruption, spaced far enough apart to preserve action windows.
     cc      = {
-        periodSec = 25,
+        periodSec = 30,
         effect    = xi.effect.TERROR,
         power     = 1,
-        dur       = 5,
+        dur       = 3,
         msg       = "Maat's presence overwhelms you!",
     },
 
-    -- Lifedrain every 9s: heals 2% max HP -- out-damage this or stall forever.
+    -- Light anti-turtle healing, consistent with the current endgame drain pass.
     drain   = {
-        periodSec = 9,
-        healPct   = 2,
+        periodSec = 12,
+        healPct   = 0.25,
     },
 
     -- HP phases: escalating pressure as the duel progresses.
     phases  = {
-        { hp = 50, action = 'fury',   att = 3000, haste = 120,
+        { hp = 50, action = 'fury',   att = 1800, haste = 80,
           msg = 'Maat cries out -- his speed and power surge!' },
-        { hp = 25, action = 'nuke',   dmgPct = 38,
+        { hp = 25, action = 'nuke',   dmgPct = 25,
           msg = 'Maat unleashes Chainspell -- brace yourself!' },
-        { hp = 15, action = 'dispel', count = 3,
+        { hp = 15, action = 'dispel', count = 2,
           msg = 'Maat tears your enhancements away!' },
     },
 
-    -- Doom at 12% HP: the final execution window (25s to finish him).
+    -- Final execution window.
     doom    = {
         startHpp = 12,
-        dur      = 25,
+        dur      = 30,
         msg      = 'Maat marks you for oblivion -- end this NOW!',
     },
 }
@@ -118,31 +119,29 @@ local DROP_CHANCE   = 0.25
 -- as the spawn template. Level is overridden to MAAT_LEVEL by min/maxLevel.
 local MAAT_GROUP_ID  = 12
 local MAAT_GROUP_ZID = 144
-local MAAT_LEVEL     = 200
+local MAAT_LEVEL     = 175
 
--- "Lv200-equivalent" stat block. Level alone does NOT make a fight: LSB's stat
+-- Post-T4 stat block. Level alone does NOT make a fight: LSB's stat
 -- tables top out near 99, so the raw level is cosmetic -- this profile is the
--- real difficulty. Like every other endgame encounter here (Prestige, Abyssea,
--- the Test Dummy) we apply it AFTER spawn(). Scaled down ~20% from the old Lv250
--- profile to a Lv200 target -- still a hard fight, a clear step easier than
--- before. HP is the main difficulty dial; tune after a playtest.
-local MAAT_HP   = 12000000   -- 12M (Lv200 target; ~20% under the old 15M)
+-- real difficulty. It is deliberately above Rank 4 Hunts but below the Rank 5
+-- bosses it unlocks. Applied after spawn so pool stat recalculation cannot wipe it.
+local MAAT_HP   = 7000000
 local MAAT_MODS =
 {
-    [xi.mod.DEF]           = 7200,    -- mitigates your physical damage
-    [xi.mod.ATT]           = 40000,   -- hits hard even through tank DEF
-    [xi.mod.ACC]           = 8800,    -- rarely whiffs, even vs high-EVA tanks
-    [xi.mod.EVASION]       = 2250,    -- your melee misses a fair bit
-    [xi.mod.MATT]          = 4000,    -- Chainspell nukes HURT
-    [xi.mod.MACC]          = 4150,    -- nukes / debuffs land
-    [xi.mod.MEVA]          = 3050,    -- your spells resist
-    [xi.mod.MDEF]          = 3050,    -- mitigates your magic damage
-    [xi.mod.STR]           = 960,
-    [xi.mod.INT]           = 960,     -- feeds his nuke damage
-    [xi.mod.DOUBLE_ATTACK] = 36,
-    [xi.mod.TRIPLE_ATTACK] = 19,
-    [xi.mod.HASTE_GEAR]    = 400,     -- clamps to the 25% gear-haste cap
-    [xi.mod.REGEN]         = 2400,    -- soft DPS check: out-damage it or stall
+    [xi.mod.DEF]           = 2000,
+    [xi.mod.ATT]           = 8500,
+    [xi.mod.ACC]           = 2200,
+    [xi.mod.EVASION]       = 800,
+    [xi.mod.MATT]          = 1500,
+    [xi.mod.MACC]          = 1800,
+    [xi.mod.MEVA]          = 1000,
+    [xi.mod.MDEF]          = 900,
+    [xi.mod.STR]           = 450,
+    [xi.mod.INT]           = 450,
+    [xi.mod.DOUBLE_ATTACK] = 18,
+    [xi.mod.TRIPLE_ATTACK] = 5,
+    [xi.mod.HASTE_GEAR]    = 300,
+    [xi.mod.REGEN]         = 120,
 }
 
 -- Per-fight tick: holds Maat passive until the challenger approaches within
@@ -280,11 +279,11 @@ local function spawnMaat(player)
             local kills     = (owner:getCharVar('Maat_Kills') or 0) + 1
             owner:setCharVar('Maat_Kills', kills)
 
-            -- First win unlocks Tier 5 (Archon) catalysts at the Augment Moogle
+            -- First win unlocks Tier 5 (Archon) rolls at the Augment Moogle
             -- (the gate reads Maat_Kills -- see Augment_Moogle.lua tier gate).
             if kills == 1 then
                 owner:printToPlayer(
-                    'Maat acknowledges your mastery! Tier 5 augment catalysts are now unlocked at the Augment Moogle.',
+                    'Maat acknowledges your mastery! Tier 5 augment rolls are now unlocked at the Augment Moogle.',
                     xi.msg.channel.SYSTEM_3)
             end
             if elapsed > 0 then
@@ -341,7 +340,7 @@ local function spawnMaat(player)
     -- holds at his far spawn until you provoke him; he can't aggro you on the load
     -- tile. Re-adding NO_MOVE would make him fight in place and never run at you.
 
-    -- Apply the tuned Lv250 profile AFTER spawn() -- spawn() recomputes stats
+    -- Apply the tuned post-T4 profile AFTER spawn() -- spawn() recomputes stats
     -- from the mob pool and would wipe anything set earlier (same ordering the
     -- Test Dummy and Prestige bosses use). Offense + defense first, then HP.
     for mod, val in pairs(MAAT_MODS) do
@@ -352,7 +351,9 @@ local function spawnMaat(player)
     mob:setAggressive(false)   -- stays passive until the challenger approaches
 
     -- Wire hardcore mechanics AFTER all stat/HP setup is complete.
-    mechanics.attach(mob, MAAT_MECH_CFG)
+    -- Scope scripted AoE/CC/dispel/doom to this challenger. Concurrent private
+    -- Maats share the arena and must never punish one another's owners.
+    mechanics.attach(mob, MAAT_MECH_CFG, ownerName)
 
     -- Claim-lock this Maat to its challenger (so no one else can tag or steal it)
     -- but DO NOT give it enmity yet -- it holds at its far spawn until the owner
@@ -438,7 +439,15 @@ m:addOverride('xi.zones.Waughroon_Shrine.Zone.onZoneIn', function(player, prevZo
         player:setCharVar('MaatFight_Pending', 0)
         -- Small delay so the player finishes loading before aggro can trigger.
         player:timer(1000, function(p)
-            spawnMaat(p)
+            if not spawnMaat(p) then
+                p:setCharVar('Infamy', (p:getCharVar('Infamy') or 0) + INFAMY_COST)
+                p:printToPlayer(
+                    string.format('[Maat] The echo failed to manifest. Your %d Infamy has been refunded.',
+                        INFAMY_COST),
+                    xi.msg.channel.SYSTEM_3)
+                return
+            end
+
             p:printToPlayer('[Maat] The echo of Maat stirs. Your legend will be forged here!',
                 xi.msg.channel.SYSTEM_3)
         end)
