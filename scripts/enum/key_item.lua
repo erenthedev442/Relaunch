@@ -3236,6 +3236,7 @@ xi.keyItem =
     -- NULL ENTRY                            = 3359,
     SHEET_OF_DIVINE_TUNES                    = 3360,
     CIPHER_BRACELET                          = 3361,
+    ECHOS_TESTIMONY                          = 3362, -- Relaunch: Maat's Echo entry token
 }
 
 ---@alias xi.ki xi.keyItem

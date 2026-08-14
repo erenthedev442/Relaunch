@@ -42,6 +42,8 @@
 require('modules/module_utils')
 require('scripts/globals/trust')
 
+local echoFight = require('modules/custom/lua/maat_infamy_fight')
+
 local m = Module:new('trust_progression_cap')
 
 -- Total Unity Wanted NMs, derived from the catalog so the "conquer all" gate
@@ -126,6 +128,24 @@ xi.trustCap =
 
 m:addOverride('xi.trust.canCast', function(caster, spell, notAllowedTrustIds)
     if caster:isPC() then
+        -- Maat's Echo is the one fight where the Fellow consumes a companion
+        -- slot. Cap is 2 including Fellow: 2 trusts, or 1 trust + Fellow.
+        if echoFight.isInEchoFight(caster) then
+            if echoFight.companionSlots(caster) >= echoFight.COMPANION_CAP then
+                local now = os.time()
+                if now - (caster:getLocalVar('trustCapMsgTs') or 0) >= 6 then
+                    caster:setLocalVar('trustCapMsgTs', now)
+                    caster:messageSystem(xi.msg.system.TRUST_MAXIMUM_NUMBER)
+                    caster:printToPlayer(
+                        '[Maat] This echo allows only two companions (trusts and your Fellow share those slots).',
+                        xi.msg.channel.SYSTEM_3)
+                end
+                return -1
+            end
+
+            return super(caster, spell, notAllowedTrustIds)
+        end
+
         local cap = trustCap(caster)
 
         local numTrusts = 0

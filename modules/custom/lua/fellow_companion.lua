@@ -1223,6 +1223,12 @@ local function summon(p)
         p:printToPlayer('[Fellow] Adventuring Fellows cannot be called in areas where trusts are restricted.', SYS)
         return
     end
+    -- Maat's Echo is the one fight where the Fellow consumes a companion slot.
+    local echoFight = require('modules/custom/lua/maat_infamy_fight')
+    if echoFight.isInEchoFight(p) and echoFight.companionSlots(p) >= echoFight.COMPANION_CAP then
+        p:printToPlayer('[Maat] This echo allows only two companions. Dismiss a trust before calling your Fellow.', SYS)
+        return
+    end
     local remaining = CONFIG.summonCooldownSec -
         (os.time() - (p:getLocalVar(SUMMONED_AT_LOCAL_VAR) or 0))
     if remaining > 0 then

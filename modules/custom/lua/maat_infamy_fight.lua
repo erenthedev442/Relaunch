@@ -1,64 +1,68 @@
 -----------------------------------
 -- maat_infamy_fight.lua
--- Custom post-T4 Maat challenge.
+-- Custom post-T4 Maat challenge ("Maat's Echo").
 --
 -- Entry NPC: Ru'Lude Gardens (zone 243), near the original Maat NPC.
--- Fight arena: Waughroon Shrine (zone 144), the BCNM zone retail Maat
--- fights actually take place in.
+-- Token: Echo's Testimony (key item). The client DAT has no name for it, so
+-- every player-facing line prints "Echo's Testimony" ourselves.
 --
 -- Flow:
---   1. Player talks to "Maat's Echo" NPC in Ru'Lude Gardens.
---   2. Cost: 150 Infamy.
---   3. Player is teleported to Waughroon Shrine; their OWN Maat spawns FAR
---      across the floor, claim-locked but PASSIVE -- he holds his far spawn with
---      no enmity, so you load in safely. He then engages AND CHASES the moment you
---      provoke him: either land a hit (damage enmity) or walk within ~15 yalms
---      (maatTick). MANY players can fight at once; each gets a private, claim-locked
---      Maat, the way Voidspire / Colosseum isolate per-player mobs.
---   4. On Maat's death: 25% chance to receive Maat's Cap (item 15194 -- a
---      retail Rare/EX item, so it renders correctly on the client).
---   5. Maat's Cap guarantees a critical augment at the Augment Moogle
---      and is consumed on that successful augment.
---   6. The FIRST win (Maat_Kills >= 1) permanently unlocks Tier 5 (Archon)
---      augment catalysts at the Augment Moogle -- Sage rank 5 alone is no
---      longer enough (gate lives in Augment_Moogle.lua).
+--   1. Talk to Maat's Echo. Pay 150 Infamy, receive Echo's Testimony.
+--   2. Warp to Palborough Mines at the Waughroon zone line -- not into the fight.
+--   3. Zone into the shrine lobby (burning circle, no Maat, no aggro).
+--   4. Use the KI at BC_Entrance to enter a private battlefield.
+--   5. Maat stands in the ring and does not engage until you attack or walk
+--      onto him (retail mixin: 8 yalms). Buff / summon first.
+--   6. This fight only: 2 companion slots. Fellow counts. 2 trusts, or
+--      1 trust + Fellow.
 --
--- SQL pre-req: sql/zz_maat_crit_token.sql must be applied to the DB.
--- Deploys: pure Lua. Edits to the NPC / onZoneIn / spawn logic hot-reload on a
--- Lua sync; only the very first registration of this module file needed a
--- restart (long since done).
+-- Rewards (unchanged): first win unlocks T5 augments (Maat_Kills), 25% Maat's
+-- Cap, 0.5% Prime voucher if PW_Trial3_Done == 0.
+--
+-- Aeonic Maat (aeonic_maat_trials.lua) is a separate NPC and is not touched.
+--
+-- Battlefield id 4230 sits after HTBF (4000-4220). Menu index 22 is free on
+-- Waughroon BC_Entrance (retail uses 0-18 and 21). Custom ids are not in the
+-- client DAT, so we warp into the ring ourselves (same workaround as HTBF).
+--
+-- SQL: modules/custom/sql/maats_echo_bcnm_records.sql must be applied
+-- (deploy applies modules/custom/sql/*.sql). Map restart after Lua changes.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/RuLude_Gardens/Zone')
-require('scripts/zones/Waughroon_Shrine/Zone')
 
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
 
 local m = Module:new('maat_infamy_fight')
 
--- Post-T4 mechanics config. This is a private challenger fight (trusts/pets
--- remain valid), positioned after Rank 4 Hunts / Divergence / Wave Master
--- Insane and before T5 augments. It should test mechanics without requiring
--- an already-finished REMA/Prime weapon.
-local MAAT_MECH_CFG = {
-    name    = 'Maat',
+local SYS = xi.msg.channel.SYSTEM_3
 
-    -- Four-minute soft enrage: firm pressure without requiring REMA-tier burst.
-    enrage  = {
+m.BATTLEFIELD_ID = 4230
+m.MENU_INDEX     = 22
+m.COMPANION_CAP  = 2
+m.INFAMY_COST    = 150
+m.KI_NAME        = "Echo's Testimony"
+
+-- Post-T4 mechanics. Private challenger fight, after Rank 4 Hunts / Divergence
+-- / Wave Master Insane and before T5 augments.
+local MAAT_MECH_CFG =
+{
+    name = 'Maat',
+
+    enrage =
+    {
         sec   = 240,
         att   = 3000,
         haste = 150,
         msg   = "You haven't proven yourself yet. Witness TRUE power!",
     },
 
-    -- Stance dance: alternates between physical-resist (magic window) and
-    -- magic-resist (melee window). The 30% resistance rewards adaptation
-    -- without shutting down jobs that primarily use one damage path.
-    -- Starts immediately (startHpp=100) and swaps every 18s.
-    stance  = {
+    stance =
+    {
         startHpp  = 100,
         periodSec = 18,
-        stances   = {
+        stances   =
+        {
             {
                 mods = { [xi.mod.DMGPHYS] = -3000, [xi.mod.DMGMAGIC] = 0 },
                 msg  = 'Maat fortifies his body against weapons -- unleash your magic!',
@@ -70,15 +74,15 @@ local MAAT_MECH_CFG = {
         },
     },
 
-    -- Moderate periodic pressure on this Maat's owner only.
-    aoe     = {
+    aoe =
+    {
         periodSec = 16,
         dmgPct    = 12,
         msg       = 'Maat releases a burst of concentrated aura!',
     },
 
-    -- Brief interruption, spaced far enough apart to preserve action windows.
-    cc      = {
+    cc =
+    {
         periodSec = 30,
         effect    = xi.effect.TERROR,
         power     = 1,
@@ -86,14 +90,14 @@ local MAAT_MECH_CFG = {
         msg       = "Maat's presence overwhelms you!",
     },
 
-    -- Light anti-turtle healing, consistent with the current endgame drain pass.
-    drain   = {
+    drain =
+    {
         periodSec = 12,
         healPct   = 0.25,
     },
 
-    -- HP phases: escalating pressure as the duel progresses.
-    phases  = {
+    phases =
+    {
         { hp = 50, action = 'fury',   att = 1800, haste = 80,
           msg = 'Maat cries out -- his speed and power surge!' },
         { hp = 25, action = 'nuke',   dmgPct = 25,
@@ -102,31 +106,19 @@ local MAAT_MECH_CFG = {
           msg = 'Maat tears your enhancements away!' },
     },
 
-    -- Final execution window.
-    doom    = {
+    doom =
+    {
         startHpp = 12,
         dur      = 30,
         msg      = 'Maat marks you for oblivion -- end this NOW!',
     },
 }
 
-local INFAMY_COST   = 150
-local CRIT_TOKEN_ID = 15194  -- Maat's Cap (retail Rare/EX; renders on the client, unlike the old custom 29000)
+local CRIT_TOKEN_ID = 15194 -- Maat's Cap (retail Rare/EX)
 local DROP_CHANCE   = 0.25
-
--- Maat_rdm (groupId=12, zone=144) - the classic Chainspell-nuke version.
--- All three Maat groups in zone 144 share the same model; this one is used
--- as the spawn template. Level is overridden to MAAT_LEVEL by min/maxLevel.
-local MAAT_GROUP_ID  = 12
-local MAAT_GROUP_ZID = 144
-local MAAT_LEVEL     = 175
-
--- Post-T4 stat block. Level alone does NOT make a fight: LSB's stat
--- tables top out near 99, so the raw level is cosmetic -- this profile is the
--- real difficulty. It is deliberately above Rank 4 Hunts but below the Rank 5
--- bosses it unlocks. Applied after spawn so pool stat recalculation cannot wipe it.
-local MAAT_HP   = 7000000
-local MAAT_MODS =
+local MAAT_LEVEL    = 175
+local MAAT_HP       = 7000000
+local MAAT_MODS     =
 {
     [xi.mod.DEF]           = 2000,
     [xi.mod.ATT]           = 8500,
@@ -144,316 +136,398 @@ local MAAT_MODS =
     [xi.mod.REGEN]         = 120,
 }
 
--- Per-fight tick: holds Maat passive until the challenger approaches within
--- ENGAGE_DIST, then engages him; and despawns him QUICKLY once his owner is dead
--- or gone, so a leftover Maat can't loiter near other challengers. 1s ticks.
-local TICK_MS    = 1000
-local IDLE_LIMIT = 6   -- 6 x 1s = ~6s after the owner is dead/gone -> despawn
+-- Palborough Mines side of the shrine zone line (sql/zonelines.sql 808465530).
+local PALBOROUGH_X, PALBOROUGH_Y, PALBOROUGH_Z, PALBOROUGH_R = 114.483, -41.944, -140.014, 128
 
--- Waughroon Shrine default zone-in point (matches Zone.lua onZoneIn default).
-local SHRINE_ENTRY_X =  -361.434
-local SHRINE_ENTRY_Y =   101.798
-local SHRINE_ENTRY_Z =  -259.996
-local SHRINE_ENTRY_R =     0
+-- Official BCNM entry tiles (documentation/BCNM_entrance_coord_and_offsets.txt).
+-- Custom battlefield ids are not in the client DAT, so we setPos here on enter.
+local ENTRY_POS_BY_AREA =
+{
+    [1] = { -262.139,  60.3048, -139.863, 0 },
+    [2] = {  -61.865,   0.3048,   20.101, 0 },
+    [3] = {  138.085, -59.6952,  140.083, 0 },
+}
 
--- Maat spawns FAR from the challenger's landing tile (SHRINE_ENTRY) and stays
--- PASSIVE until they walk within ENGAGE_DIST yalms -- so you load in safely
--- instead of dying on the zone-in tile. A small random jitter keeps several
--- challengers' (claim-locked, private) Maats from stacking on one model.
--- MAAT_SPAWN_* is an owner-confirmed spot on the open entry floor (read off the
--- in-game position display) -- ~27y from the SHRINE_ENTRY landing tile.
-local MAAT_SPAWN_X = -334.553
-local MAAT_SPAWN_Y =  104.824
-local MAAT_SPAWN_Z = -259.501
-local SPAWN_JITTER =    3.0
-local ENGAGE_DIST  =   15.0     -- Maat engages once the challenger is this close
-local MAAT_R       =  128       -- initial facing (cosmetic; he turns on engage)
-
--- NPC position: alongside Maat's original retail NPC in Ru'Lude Gardens.
--- Retail Maat is at x=8, y=3, z=118. Place the Echo a step to the side.
+-- Echo NPC: a step beside retail Maat (8, 3, 118). !maat / !warp stay here.
 local NPC_X, NPC_Y, NPC_Z, NPC_ROT = 12.0, 3.0, 118.0, 128
 
--- Per-challenger live Maat, keyed by character name. Each player may have at
--- most one fight running; cleared in onMobDeath and on idle-despawn.
-local activeFights = {}
-
-local function isAlive(entity)
-    if entity == nil then return false end
-    local ok, hp = pcall(function() return entity:getHP() end)
-    return ok and hp > 0
+local function echoKi()
+    return xi.ki.ECHOS_TESTIMONY
 end
 
--- Re-arming per-fight tick: (1) engages Maat the moment the challenger gets
--- within ENGAGE_DIST (he holds at his far spawn until then), and (2) despawns an
--- abandoned Maat. mob:timer is dropped automatically when the mob dies, so the
--- chain self-terminates on a real kill; we only stop it on the idle-despawn path.
-local function maatTick(mob, ownerName)
-    mob:timer(TICK_MS, function(m)
-        if not isAlive(m) then return end                 -- killed / despawned
-
-        local owner       = GetPlayerByName(ownerName)
-        local ownerActive = owner ~= nil
-            and owner:getZoneID() == MAAT_GROUP_ZID
-            and owner:getHP() > 0
-
-        -- (1) Proximity engage: stay passive until the owner walks up to him.
-        if ownerActive and not m:isEngaged() and m:checkDistance(owner) <= ENGAGE_DIST then
-            m:updateClaim(owner)                          -- (re)lock to the owner
-            m:addEnmity(owner, 30000, 30000)              -- engages + chases (damage enmity also engages him on its own)
-            -- Start fight timer the first time Maat engages (measures pure fight time).
-            if m:getLocalVar('maatStartTime') == 0 then
-                m:setLocalVar('maatStartTime', os.time())
-            end
-        end
-
-        -- (2) Despawn watchdog: keep Maat ONLY while his owner is alive + in the
-        -- shrine (loading, approaching, or fighting). The instant the owner is dead
-        -- or has left, count down and remove him fast -- even if he's still
-        -- "engaged" on the corpse -- so he can't linger and threaten other players.
-        if ownerActive then
-            m:setLocalVar('maatIdle', 0)
-        else
-            local ticks = (m:getLocalVar('maatIdle') or 0) + 1
-            m:setLocalVar('maatIdle', ticks)
-            if ticks >= IDLE_LIMIT then
-                activeFights[ownerName] = nil
-                m:setLocalVar('maatDespawn', 1)           -- onMobDeath: NOT a kill
-                m:setHP(0)                                 -- remove the orphaned Maat
-                return
-            end
-        end
-
-        maatTick(m, ownerName)
-    end)
+local function say(player, text)
+    player:printToPlayer(text, SYS)
 end
 
-local function spawnMaat(player)
-    local ownerName = player:getName()
-    local zone      = player:getZone()
+function m.isEchoBattlefield(battlefield)
+    return battlefield ~= nil and battlefield:getID() == m.BATTLEFIELD_ID
+end
 
-    -- Fixed FAR spawn (MAAT_SPAWN_*) + small jitter; NOT relative to the player,
-    -- who always lands on the same SHRINE_ENTRY tile -- this keeps Maat well away
-    -- on spawn so you load in before anything can touch you.
-    local sx = MAAT_SPAWN_X + (math.random() * 2 - 1) * SPAWN_JITTER
-    local sy = MAAT_SPAWN_Y
-    local sz = MAAT_SPAWN_Z + (math.random() * 2 - 1) * SPAWN_JITTER
-
-    local mob = zone:insertDynamicEntity({
-        objtype              = xi.objType.MOB,
-        groupId              = MAAT_GROUP_ID,
-        groupZoneId          = MAAT_GROUP_ZID,
-        name                 = 'Maat',
-        x                    = sx,
-        y                    = sy,
-        z                    = sz,
-        rotation             = MAAT_R,
-        minLevel             = MAAT_LEVEL,
-        maxLevel             = MAAT_LEVEL,
-        detection            = 0,            -- no auto-aggro; engages on approach (maatTick)
-        isAggroable          = false,
-        releaseIdOnDisappear = true,
-
-        onMobFight = function(mfMob, mfTarget)
-            mechanics.tick(mfMob, mfTarget)
-        end,
-
-        onMobDeath = function(deadMob, killer)
-            mechanics.cleanup(deadMob)
-            activeFights[ownerName] = nil
-
-            -- The idle watchdog removes an abandoned Maat via setHP(0); that is
-            -- NOT a kill, so don't hand out a reward for it.
-            if deadMob:getLocalVar('maatDespawn') == 1 then
-                return
-            end
-
-            -- Reward the OWNER. The Maat is claim-locked to them so they are the
-            -- only one who could have killed it, but resolve by name so a trust
-            -- or pet landing the final blow still credits the player.
-            local owner = GetPlayerByName(ownerName)
-            if not owner then return end
-
-            -- Track kill count and best fight time.
-            local startTime = deadMob:getLocalVar('maatStartTime')
-            local elapsed   = (startTime and startTime > 0) and (os.time() - startTime) or 0
-            local kills     = (owner:getCharVar('Maat_Kills') or 0) + 1
-            owner:setCharVar('Maat_Kills', kills)
-
-            -- First win unlocks Tier 5 (Archon) rolls at the Augment Moogle
-            -- (the gate reads Maat_Kills -- see Augment_Moogle.lua tier gate).
-            if kills == 1 then
-                owner:printToPlayer(
-                    'Maat acknowledges your mastery! Tier 5 augment rolls are now unlocked at the Augment Moogle.',
-                    xi.msg.channel.SYSTEM_3)
-            end
-            if elapsed > 0 then
-                local best = owner:getCharVar('Maat_Best_Time') or 0
-                if best == 0 or elapsed < best then
-                    owner:setCharVar('Maat_Best_Time', elapsed)
-                end
-            end
-
-            if math.random() < DROP_CHANCE then
-                if owner:addItem(CRIT_TOKEN_ID, 1) then
-                    owner:printToPlayer(
-                        "Maat relinquishes his Cap! Bring Maat's Cap to the Augment Moogle for a guaranteed critical augment.",
-                        xi.msg.channel.SYSTEM_3)
-                else
-                    owner:printToPlayer(
-                        "Maat offered his Cap, but you couldn't carry it (inventory full, or you already hold one).",
-                        xi.msg.channel.SYSTEM_3)
-                end
-            end
-
-            -- Prime Weapon TRIAL 3: a Prime Voucher (the Maze Monger Crown, item 3038) drops 0.5%
-            -- from the Maat fight, on top of the Hunting League source. Gated
-            -- on PW_Trial3_Done so it stops once Trial 3 is cleared; the reward
-            -- helper prints its own message + handles a full inventory.
-            if (owner:getCharVar('PW_Trial3_Done') or 0) == 0 and math.random() < 0.005 then
-                pcall(function()
-                    require('modules/custom/lua/prime_voucher_reward').award(owner, 1, 'Maat')
-                end)
-            end
-        end,
-    })
-
-    if not mob then
-        player:printToPlayer('[Maat] The echo could not manifest in the shrine. Try again.',
-            xi.msg.channel.SYSTEM_3)
+function m.isInEchoFight(player)
+    if not player then
         return false
     end
 
-    -- Store the mob's ID, NOT the entity reference. Maat is a dynamic entity
-    -- freed on despawn (releaseIdOnDisappear=true). A held Lua reference would
-    -- dangle once the C++ entity is freed, and the isAlive() re-check on the next
-    -- challenger's trigger would dereference freed memory -> ACCESS_VIOLATION
-    -- (pcall does NOT catch a native access violation). Re-fetched by ID at read.
-    activeFights[ownerName] = mob:getID()
-    mob:setSpawn(sx, sy, sz, MAAT_R)
-    mob:spawn()
-    mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
-    -- Maat CHASES once provoked (NO_MOVE intentionally NOT set): the instant the
-    -- challenger lands a hit (damage enmity is automatic) OR walks within
-    -- ENGAGE_DIST (maatTick), he engages AND beelines them, like a real duel.
-    -- The safe zone-in is preserved WITHOUT rooting him -- he spawns FAR with NO
-    -- enmity and passive (setAggressive(false) + detection 0 below), so he just
-    -- holds at his far spawn until you provoke him; he can't aggro you on the load
-    -- tile. Re-adding NO_MOVE would make him fight in place and never run at you.
+    local ok, battlefield = pcall(function()
+        return player:getBattlefield()
+    end)
+    return ok and m.isEchoBattlefield(battlefield)
+end
 
-    -- Apply the tuned post-T4 profile AFTER spawn() -- spawn() recomputes stats
-    -- from the mob pool and would wipe anything set earlier (same ordering the
-    -- Test Dummy and Prestige bosses use). Offense + defense first, then HP.
+-- Trusts and the Fellow each consume one of the two Echo slots.
+function m.companionSlots(player)
+    local slots = 0
+    local ok, party = pcall(function()
+        return player:getPartyWithTrusts()
+    end)
+    if not ok or not party then
+        return 0
+    end
+
+    for _, member in pairs(party) do
+        if member:getObjType() == xi.objType.TRUST then
+            slots = slots + 1
+        end
+    end
+
+    return slots
+end
+
+function m.enforceCompanionCap(player)
+    local trusts = {}
+    local fellow = nil
+    local ok, party = pcall(function()
+        return player:getPartyWithTrusts()
+    end)
+    if not ok or not party then
+        return
+    end
+
+    for _, member in pairs(party) do
+        if member:getObjType() == xi.objType.TRUST then
+            if member:getLocalVar('fellowApplied') == 1 then
+                fellow = member
+            else
+                trusts[#trusts + 1] = member
+            end
+        end
+    end
+
+    local used = #trusts + (fellow and 1 or 0)
+    if used <= m.COMPANION_CAP then
+        return
+    end
+
+    local keepTrusts = fellow and (m.COMPANION_CAP - 1) or m.COMPANION_CAP
+    for i = keepTrusts + 1, #trusts do
+        pcall(function()
+            player:despawnTrust(trusts[i])
+        end)
+    end
+
+    say(player, "[Maat] This echo allows only two companions. Extra alter egos were dismissed.")
+end
+
+function m.applyRewards(player, elapsed)
+    local kills = (player:getCharVar('Maat_Kills') or 0) + 1
+    player:setCharVar('Maat_Kills', kills)
+
+    if kills == 1 then
+        say(player, 'Maat acknowledges your mastery! Tier 5 augment rolls are now unlocked at the Augment Moogle.')
+    end
+
+    if elapsed and elapsed > 0 then
+        local best = player:getCharVar('Maat_Best_Time') or 0
+        if best == 0 or elapsed < best then
+            player:setCharVar('Maat_Best_Time', elapsed)
+        end
+    end
+
+    if math.random() < DROP_CHANCE then
+        if player:addItem(CRIT_TOKEN_ID, 1) then
+            say(player, "Maat relinquishes his Cap! Bring Maat's Cap to the Augment Moogle for a guaranteed critical augment.")
+        else
+            say(player, "Maat offered his Cap, but you couldn't carry it (inventory full, or you already hold one).")
+        end
+    end
+
+    if (player:getCharVar('PW_Trial3_Done') or 0) == 0 and math.random() < 0.005 then
+        pcall(function()
+            require('modules/custom/lua/prime_voucher_reward').award(player, 1, 'Maat')
+        end)
+    end
+end
+
+local function scaleEchoMaat(mob, ownerName)
+    -- Retail Shattering Stars yields at 20% HP and on THF steal. This fight
+    -- is a full kill of the post-T4 profile, so strip those listeners.
+    pcall(function()
+        mob:removeListener('MAAT_CTICK')
+        mob:removeListener('MAAT_ITEM_STOLEN')
+    end)
+
+    if mob:getLocalVar('MaatEchoScaled') == 1 then
+        return
+    end
+    mob:setLocalVar('MaatEchoScaled', 1)
+
+    mob:setMobLevel(MAAT_LEVEL)
+    mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
+    mob:setAggressive(false)
+    mob:setLocalVar('MaatEcho', 1)
+    mob:setLocalVar('maatStartTime', 0)
+
     for mod, val in pairs(MAAT_MODS) do
         mob:addMod(mod, val)
     end
     mob:setMaxHP(MAAT_HP)
     mob:setHP(MAAT_HP)
-    mob:setAggressive(false)   -- stays passive until the challenger approaches
 
-    -- Wire hardcore mechanics AFTER all stat/HP setup is complete.
-    -- Scope scripted AoE/CC/dispel/doom to this challenger. Concurrent private
-    -- Maats share the arena and must never punish one another's owners.
     mechanics.attach(mob, MAAT_MECH_CFG, ownerName)
 
-    -- Claim-lock this Maat to its challenger (so no one else can tag or steal it)
-    -- but DO NOT give it enmity yet -- it holds at its far spawn until the owner
-    -- walks within ENGAGE_DIST (handled by maatTick). THIS is the fix for "spawns
-    -- on top of us and kills us before the screen loads". Per-player isolation as
-    -- in Voidspire.
-    mob:updateClaim(player)
+    mob:addListener('ENGAGE', 'ECHO_ENGAGE', function(engaged)
+        if engaged:getLocalVar('maatStartTime') == 0 then
+            local now = os.time()
+            engaged:setLocalVar('maatStartTime', now)
+            local battlefield = engaged:getBattlefield()
+            if battlefield and battlefield:getLocalVar('maatStartTime') == 0 then
+                battlefield:setLocalVar('maatStartTime', now)
+            end
+        end
+    end)
 
-    -- Start the per-fight tick (proximity-engage + abandon-despawn).
-    mob:setLocalVar('maatIdle', 0)
-    mob:setLocalVar('maatStartTime', 0)  -- set to os.time() on first engage in maatTick
-    maatTick(mob, ownerName)
+    -- The retail Maat mixin announces proximity but does not itself create
+    -- enmity. Echo is passive, so explicitly engage only this battlefield's
+    -- owner once they walk within 8 yalms.
+    mob:addListener('ROAM_TICK', 'ECHO_PROXIMITY_ENGAGE', function(roaming)
+        if roaming:isEngaged() or not ownerName then
+            return
+        end
 
-    return true
+        local owner = GetPlayerByName(ownerName)
+        local ownerBattlefield = owner and owner:getBattlefield() or nil
+        if
+            owner and
+            ownerBattlefield and
+            ownerBattlefield:getID() == m.BATTLEFIELD_ID and
+            ownerBattlefield:getArea() == roaming:getBattlefield():getArea() and
+            owner:getHP() > 0 and
+            roaming:checkDistance(owner) < 8
+        then
+            roaming:updateClaim(owner)
+            roaming:addEnmity(owner, 30000, 30000)
+        end
+    end)
+
+    mob:addListener('COMBAT_TICK', 'ECHO_MECH_TICK', function(ticking)
+        mechanics.tick(ticking, ticking:getTarget())
+    end)
+
+    mob:addListener('DEATH', 'ECHO_MECH_CLEANUP', function(dead)
+        mechanics.cleanup(dead)
+    end)
 end
 
------------------------------------
--- Ru'Lude Gardens: spawn the challenge NPC near retail Maat.
------------------------------------
+local function warpToPalborough(player)
+    player:setPos(PALBOROUGH_X, PALBOROUGH_Y, PALBOROUGH_Z, PALBOROUGH_R, xi.zone.PALBOROUGH_MINES)
+end
+
+local function grantTestimonyAndWarp(player)
+    local infamy = player:getCharVar('Infamy') or 0
+    if infamy < m.INFAMY_COST then
+        say(player, string.format("[Maat] Entering Maat's arena costs %d Infamy. You have %d.", m.INFAMY_COST, infamy))
+        return
+    end
+
+    if player:hasKeyItem(echoKi()) then
+        say(player, string.format('[Maat] You already carry %s. The shrine still waits.', m.KI_NAME))
+        warpToPalborough(player)
+        return
+    end
+
+    player:setCharVar('Infamy', infamy - m.INFAMY_COST)
+    player:addKeyItem(echoKi())
+    say(player, string.format('[Maat] %d Infamy paid. You obtain %s.', m.INFAMY_COST, m.KI_NAME))
+    say(player, '[Maat] The burning circle lies beyond Palborough Mines. Two companions. Make them count.')
+    warpToPalborough(player)
+end
+
+local function showEchoMenu(player)
+    player:timer(30, function(p)
+        if p:hasKeyItem(echoKi()) then
+            say(p, string.format('[Maat] You already carry %s. The shrine still waits.', m.KI_NAME))
+            p:customMenu({
+                title = "Maat's Echo",
+                options =
+                {
+                    { 'Return to Palborough', function(pp) warpToPalborough(pp) end },
+                    { 'Not yet', function() end },
+                },
+            })
+            return
+        end
+
+        local infamy = p:getCharVar('Infamy') or 0
+        if infamy < m.INFAMY_COST then
+            say(p, string.format("[Maat] So... you've climbed far enough to stand before my echo."))
+            say(p, string.format('[Maat] %d Infamy. You have %d. Come back when you have earned it.', m.INFAMY_COST, infamy))
+            return
+        end
+
+        say(p, "[Maat] So... you've climbed far enough to stand before my echo.")
+        say(p, string.format('[Maat] %d Infamy. I will give you %s. Take it to the burning circle in Waughroon Shrine.', m.INFAMY_COST, m.KI_NAME))
+        say(p, '[Maat] Two companions. No more. Prove you still remember how to fight.')
+        p:customMenu({
+            title = "Maat's Echo",
+            options =
+            {
+                { string.format('I accept (%d Infamy)', m.INFAMY_COST), function(pp) grantTestimonyAndWarp(pp) end },
+                { 'Not yet', function() end },
+            },
+        })
+    end)
+end
+
+local function installHooks()
+    if xi.trust and xi.trust.checkBattlefieldTrustCount and not xi.trust._echoTrustPatched then
+        xi.trust._echoTrustPatched = true
+        local origCheck = xi.trust.checkBattlefieldTrustCount
+        xi.trust.checkBattlefieldTrustCount = function(caster)
+            if m.isInEchoFight(caster) then
+                return m.companionSlots(caster) < m.COMPANION_CAP
+            end
+
+            return origCheck(caster)
+        end
+    end
+
+    if xi.battlefield and xi.battlefield.getBattlefieldOptions and not xi.battlefield._echoLegendPatched then
+        xi.battlefield._echoLegendPatched = true
+        local origOptions = xi.battlefield.getBattlefieldOptions
+        xi.battlefield.getBattlefieldOptions = function(player, npc, trade)
+            local options = origOptions(player, npc, trade)
+            if
+                not trade and
+                player:getZoneID() == xi.zone.WAUGHROON_SHRINE and
+                npc:getName() == 'BC_Entrance' and
+                player:hasKeyItem(echoKi())
+            then
+                say(player, "[Maat] An unnamed row is Maat's Echo. Two companions. He waits until you strike or close in.")
+            end
+
+            return options
+        end
+    end
+end
+
+function m.registerBattlefield()
+    installHooks()
+
+    local waughroonID = zones[xi.zone.WAUGHROON_SHRINE]
+    local content = Battlefield:new({
+        zoneId           = xi.zone.WAUGHROON_SHRINE,
+        battlefieldId    = m.BATTLEFIELD_ID,
+        maxPlayers       = 1,
+        timeLimit        = utils.minutes(20),
+        index            = m.MENU_INDEX,
+        entryNpc         = 'BC_Entrance',
+        exitNpc          = 'Burning_Circle',
+        allowSubjob      = true,
+        allowTrusts      = true,
+        canLoseExp       = false,
+        requiredKeyItems = { echoKi() },
+    })
+
+    content.groups =
+    {
+        {
+            mobIds =
+            {
+                { waughroonID.mob.MAAT     },
+                { waughroonID.mob.MAAT + 1 },
+                { waughroonID.mob.MAAT + 2 },
+            },
+
+            allDeath = function(battlefield)
+                battlefield:setStatus(xi.battlefield.status.WON)
+            end,
+        },
+    }
+
+    function content:setupBattlefield(battlefield)
+        battlefield:setLocalVar('MaatEcho', 1)
+
+        local initiatorId = battlefield:getInitiator()
+        local owner = initiatorId and GetPlayerByID(initiatorId) or nil
+        local ownerName = owner and owner:getName() or nil
+
+        for _, mob in ipairs(battlefield:getMobs(true, true)) do
+            pcall(function()
+                scaleEchoMaat(mob, ownerName)
+            end)
+        end
+    end
+
+    function content:onBattlefieldEnter(player, battlefield)
+        Battlefield.onBattlefieldEnter(self, player, battlefield)
+        m.enforceCompanionCap(player)
+
+        local entryPos = ENTRY_POS_BY_AREA[battlefield:getArea()]
+        if entryPos then
+            pcall(function()
+                player:setPos(entryPos[1], entryPos[2], entryPos[3], entryPos[4] or 0)
+            end)
+        end
+
+        say(player, string.format("[Maat] %s fades as you step into the ring. Two companions. He will not move until you do.", m.KI_NAME))
+    end
+
+    function content:onEventFinishWin(player)
+        local battlefield = player:getBattlefield()
+        if battlefield then
+            local latch = 'echoPaid_' .. player:getID()
+            if battlefield:getLocalVar(latch) == 1 then
+                return
+            end
+
+            battlefield:setLocalVar(latch, 1)
+        end
+
+        local elapsed = 0
+        if battlefield then
+            local started = battlefield:getLocalVar('maatStartTime')
+            if started and started > 0 then
+                elapsed = os.time() - started
+            end
+        end
+
+        m.applyRewards(player, elapsed)
+    end
+
+    return content:register()
+end
+
 m:addOverride('xi.zones.RuLude_Gardens.Zone.onInitialize', function(zone)
     super(zone)
 
-    local MaatEcho = zone:insertDynamicEntity({
+    local maatEcho = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Maat_Echo',
         packetName = string.format("%sMaat's Echo", xi.icon.STAR_LARGE),
-        look       = 3037,  -- Trust Maat. Distinct from Aeonic Maat (3064) and retail Maat (126).
+        look       = 3037, -- Trust Maat. Distinct from Aeonic Maat (3064) and retail Maat (126).
         x          = NPC_X,
         y          = NPC_Y,
         z          = NPC_Z,
         rotation   = NPC_ROT,
         widescan   = 1,
 
-        onTrigger = function(player, npc)
-            player:timer(50, function(p)
-                local infamy = p:getCharVar('Infamy') or 0
-
-                -- Per-challenger gate: one live Maat each (no server-wide lock).
-                -- Re-fetch by ID (activeFights now stores the id): GetMobByID
-                -- returns nil once the dynamic Maat is freed, so isAlive() can
-                -- never dereference a dangling pointer.
-                local existingId = activeFights[p:getName()]
-                if existingId and isAlive(GetMobByID(existingId)) then
-                    p:printToPlayer(
-                        '[Maat] Your echo of Maat still stands in the shrine. Finish that fight first.',
-                        xi.msg.channel.SYSTEM_3)
-                    return
-                end
-
-                if infamy < INFAMY_COST then
-                    p:printToPlayer(
-                        string.format("[Maat] Entering Maat's arena costs %d Infamy. You have %d.",
-                            INFAMY_COST, infamy),
-                        xi.msg.channel.SYSTEM_3)
-                    return
-                end
-
-                -- Deduct Infamy first; mark the pending fight so onZoneIn knows
-                -- to spawn this challenger's Maat when they land in the shrine.
-                p:setCharVar('Infamy', infamy - INFAMY_COST)
-                p:setCharVar('MaatFight_Pending', 1)
-
-                p:printToPlayer(
-                    string.format('[Maat] %d Infamy paid. Prove your worth in the shrine!',
-                        INFAMY_COST),
-                    xi.msg.channel.SYSTEM_3)
-
-                -- Teleport to Waughroon Shrine (zone 144).
-                p:setPos(SHRINE_ENTRY_X, SHRINE_ENTRY_Y, SHRINE_ENTRY_Z, SHRINE_ENTRY_R, 144)
-            end)
+        onTrigger = function(player)
+            showEchoMenu(player)
         end,
     })
-    utils.unused(MaatEcho)
+    utils.unused(maatEcho)
 end)
 
------------------------------------
--- Waughroon Shrine: spawn this challenger's own Maat when they zone in.
------------------------------------
-m:addOverride('xi.zones.Waughroon_Shrine.Zone.onZoneIn', function(player, prevZone)
-    local cs = super(player, prevZone)
-
-    if player:getCharVar('MaatFight_Pending') == 1 then
-        player:setCharVar('MaatFight_Pending', 0)
-        -- Small delay so the player finishes loading before aggro can trigger.
-        player:timer(1000, function(p)
-            if not spawnMaat(p) then
-                p:setCharVar('Infamy', (p:getCharVar('Infamy') or 0) + INFAMY_COST)
-                p:printToPlayer(
-                    string.format('[Maat] The echo failed to manifest. Your %d Infamy has been refunded.',
-                        INFAMY_COST),
-                    xi.msg.channel.SYSTEM_3)
-                return
-            end
-
-            p:printToPlayer('[Maat] The echo of Maat stirs. Your legend will be forged here!',
-                xi.msg.channel.SYSTEM_3)
-        end)
-    end
-
-    return cs
-end)
+pcall(installHooks)
 
 return m

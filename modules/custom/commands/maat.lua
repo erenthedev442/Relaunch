@@ -1,7 +1,7 @@
 -----------------------------------
 -- !maat
 -- Warps the player to the custom "Maat's Echo" challenge NPC in Ru'Lude Gardens
--- (the level-250 Maat fight entry -- see modules/custom/lua/maat_infamy_fight.lua).
+-- (Infamy testimony + Palborough / Waughroon battlefield -- see maat_infamy_fight.lua).
 -- Available to all players (permission 0), like !henge / !capacity.
 -----------------------------------
 ---@type TCommand
