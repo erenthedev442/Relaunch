@@ -21,15 +21,17 @@
 --
 -- Aeonic Maat (aeonic_maat_trials.lua) is a separate NPC and is not touched.
 --
--- Battlefield id 4230 sits after HTBF (4000-4220). Menu index 22 is free on
--- Waughroon BC_Entrance (retail uses 0-18 and 21). Custom ids are not in the
--- client DAT, so we warp into the ring ourselves (same workaround as HTBF).
+-- Battlefield id 4230 sits after HTBF (4000-4220). Menu index 19 is the unused
+-- Palborough Project slot in the Waughroon DAT (retail uses 0-18 and 21).
+-- Index 22 does not show a selectable row on this client. Custom battlefield
+-- ids are not in the DAT, so we warp into the ring ourselves (HTBF workaround).
 --
 -- SQL: modules/custom/sql/maats_echo_bcnm_records.sql must be applied
 -- (deploy applies modules/custom/sql/*.sql). Map restart after Lua changes.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/RuLude_Gardens/Zone')
+require('scripts/zones/Waughroon_Shrine/Zone')
 
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
 
@@ -38,7 +40,7 @@ local m = Module:new('maat_infamy_fight')
 local SYS = xi.msg.channel.SYSTEM_3
 
 m.BATTLEFIELD_ID = 4230
-m.MENU_INDEX     = 22
+m.MENU_INDEX     = 19 -- client DAT: "The Palborough Project" (unused retail slot)
 m.COMPANION_CAP  = 2
 m.INFAMY_COST    = 150
 m.KI_NAME        = "Echo's Testimony"
@@ -412,7 +414,11 @@ local function installHooks()
                 npc:getName() == 'BC_Entrance' and
                 player:hasKeyItem(echoKi())
             then
-                say(player, "[Maat] An unnamed row is Maat's Echo. Two companions. He waits until you strike or close in.")
+                if bit.band(options, bit.lshift(1, m.MENU_INDEX)) ~= 0 then
+                    say(player, "[Maat] Pick 'The Palborough Project' -- that unused row is Maat's Echo. Two companions. He waits until you strike or close in.")
+                else
+                    say(player, "[Maat] Echo's Testimony is ready, but the circle has not listed the fight. The shrine needs a map restart.")
+                end
             end
 
             return options
@@ -526,6 +532,17 @@ m:addOverride('xi.zones.RuLude_Gardens.Zone.onInitialize', function(zone)
         end,
     })
     utils.unused(maatEcho)
+end)
+
+-- Battlefield scripts can miss a hot-reload. Register from the shrine itself
+-- if the Echo BCNM is not already in contents.
+m:addOverride('xi.zones.Waughroon_Shrine.Zone.onInitialize', function(zone)
+    super(zone)
+    if not (xi.battlefield.contents and xi.battlefield.contents[m.BATTLEFIELD_ID]) then
+        pcall(function()
+            m.registerBattlefield()
+        end)
+    end
 end)
 
 pcall(installHooks)
