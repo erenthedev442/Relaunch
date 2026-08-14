@@ -24,7 +24,7 @@ local ENGAGE_DIST = 15
 
 local ENTRY = { x = -361.434, y = 101.798, z = -259.996, rot = 0 }
 local SPAWN = { x = -334.553, y = 104.824, z = -259.501, rot = 128 }
-local NPC = { x = 16.0, y = 3.0, z = 118.0, rot = 200 }
+local NPC = { x = 10.99660, y = 3.1000, z = 116.2006, rot = 153 }
 
 local activeFights = {}
 local fightState = {}
@@ -758,7 +758,7 @@ m:addOverride('xi.zones.RuLude_Gardens.Zone.onInitialize', function(zone)
         objtype = xi.objType.NPC,
         name = 'Aeonic_Maat',
         packetName = string.format('%sAeonic Maat', xi.icon.STAR_LARGE),
-        look = 126,
+        look = 3064,
         x = NPC.x, y = NPC.y, z = NPC.z, rotation = NPC.rot,
         widescan = 1,
         onTrigger = function(player)

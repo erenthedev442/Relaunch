@@ -171,7 +171,7 @@ local MAAT_R       =  128       -- initial facing (cosmetic; he turns on engage)
 
 -- NPC position: alongside Maat's original retail NPC in Ru'Lude Gardens.
 -- Retail Maat is at x=8, y=3, z=118. Place the Echo a step to the side.
-local NPC_X, NPC_Y, NPC_Z, NPC_ROT = 12.0, 3.0, 118.0, 200
+local NPC_X, NPC_Y, NPC_Z, NPC_ROT = 12.0, 3.0, 118.0, 128
 
 -- Per-challenger live Maat, keyed by character name. Each player may have at
 -- most one fight running; cleared in onMobDeath and on idle-despawn.
@@ -380,7 +380,7 @@ m:addOverride('xi.zones.RuLude_Gardens.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Maat_Echo',
         packetName = string.format("%sMaat's Echo", xi.icon.STAR_LARGE),
-        look       = 126,   -- Maat's actual model. Retail Maat (npc_list 17772593, zone 243) is size=0/modelid=126; insertDynamicEntity look=N -> SetModelId(N), so this renders the real Maat. (Original 2428 was an invalid model id -> NPC inserted but invisible.)
+        look       = 3037,  -- Trust Maat. Distinct from Aeonic Maat (3064) and retail Maat (126).
         x          = NPC_X,
         y          = NPC_Y,
         z          = NPC_Z,

@@ -238,7 +238,7 @@ local function showBattlefields(player)
         {
             "Maat's Echo",
             function(p)
-                warp(p, "Maat's Echo", xi.zone.RULUDE_GARDENS, 12.0, 3.0, 118.0, 200)
+                warp(p, "Maat's Echo", xi.zone.RULUDE_GARDENS, 12.0, 3.0, 118.0, 128)
             end,
         },
         {

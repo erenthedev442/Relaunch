@@ -16,7 +16,7 @@ commandObj.cmdprops =
 commandObj.onTrigger = function(player)
     -- Maat's Echo NPC location (zone 243, RuLude Gardens). Mirrors NPC_X/Y/Z/ROT
     -- in maat_infamy_fight.lua -- keep in sync if that NPC is ever moved.
-    player:setPos(12.0, 3.0, 118.0, 200, xi.zone.RULUDE_GARDENS)
+    player:setPos(12.0, 3.0, 118.0, 128, xi.zone.RULUDE_GARDENS)
 end
 
 return commandObj
