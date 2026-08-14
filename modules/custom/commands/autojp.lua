@@ -1,5 +1,5 @@
 -----------------------------------
--- func: autojp <player>
+-- func: autojp
 -- desc: Auto-spends all unspent job points on whichever categories of
 --       the player's CURRENT MAIN JOB can still be upgraded, distributing
 --       breadth-first so every category grows evenly.
@@ -18,11 +18,10 @@
 --
 -- USAGE
 --   !autojp             -- spend the caller's JP on their current job
---   !autojp Mythraller  -- spend the named player's JP on their job
 --
 -- NOTES
---   - Only spends on the TARGET'S current main job. If they want to JP-up
---     a different job, they need to switch to it first.
+--   - Only spends on the caller's current main job. Switch jobs first to
+--     upgrade a different job.
 --   - JP is earned at lv 99 cap via capacity points. This command does
 --     NOT grant free JP - it only spends what the player already has.
 -----------------------------------
@@ -31,15 +30,9 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 0,  -- GM/admin only by default; lower to 0 if you want
-                     -- players to invoke it on themselves.
-    parameters = 's'
+    permission = 0,
+    parameters = ''
 }
-
-local function err(player, msg)
-    player:printToPlayer(msg)
-    player:printToPlayer('!autojp <player>')
-end
 
 -- Pretty job-id-to-name map for the summary message.
 local function jobName(jobId)
@@ -49,26 +42,14 @@ local function jobName(jobId)
     return string.format('job#%d', jobId)
 end
 
-commandObj.onTrigger = function(player, target)
-    -- Resolve target.
-    local targ
-    if target and target ~= '' then
-        targ = GetPlayerByName(target)
-        if not targ then
-            err(player, string.format('Unable to find player named "%s".', target))
-            return
-        end
-    else
-        targ = player
-    end
-
-    local mainJob = targ:getMainJob()
-    local before  = targ:getJobPoints(mainJob)
+commandObj.onTrigger = function(player)
+    local mainJob = player:getMainJob()
+    local before  = player:getJobPoints(mainJob)
 
     if before == 0 then
         player:printToPlayer(string.format(
             '%s has 0 unspent JP on %s - nothing to do.',
-            targ:getName(), jobName(mainJob)))
+            player:getName(), jobName(mainJob)))
         return
     end
 
@@ -97,28 +78,22 @@ commandObj.onTrigger = function(player, target)
         local anyUpgrade = false
 
         for _, id in ipairs(jpIds) do
-            if targ:raiseJobPoint(id) then
+            if player:raiseJobPoint(id) then
                 applied    = applied + 1
                 anyUpgrade = true
             end
         end
 
         if not anyUpgrade then break end
-        if targ:getJobPoints(mainJob) == 0 then break end
+        if player:getJobPoints(mainJob) == 0 then break end
     end
 
-    local after = targ:getJobPoints(mainJob)
+    local after = player:getJobPoints(mainJob)
     local spent = before - after
 
     player:printToPlayer(string.format(
         'Auto-spent %d JP on %s (%s) across %d upgrade(s). Balance: %d -> %d.',
-        spent, targ:getName(), jobName(mainJob), applied, before, after))
-
-    if targ ~= player then
-        targ:printToPlayer(string.format(
-            'A sage has auto-spent %d of your %s JP across %d upgrades. You now have %d unspent.',
-            spent, jobName(mainJob), applied, after))
-    end
+        spent, player:getName(), jobName(mainJob), applied, before, after))
 
     if after > 0 then
         -- Cost of next rank in any remaining category is > current balance,

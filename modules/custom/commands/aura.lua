@@ -26,14 +26,14 @@
 -- A sweep prints "id=N mode=M" as each plays so you can record the keepers. Running
 -- ANY new !aura command stops a sweep in progress. Ranges are capped at 60 ids.
 --
--- GM-only (permission 1). Lives in modules/custom/commands/ (ours, merge-safe).
+-- Owner/developer GM-only (permission 5). Lives in modules/custom/commands/ (ours, merge-safe).
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 1,
+    permission = 5,
     parameters = 'sssss',
 }
 

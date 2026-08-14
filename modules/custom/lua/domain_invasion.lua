@@ -448,7 +448,7 @@ beginAssault = function(zone, zoneCfg, zoneId)
     end
     local token = st.startedAt
     broadcast(anchor, string.format(
-        '[Domain Invasion] %s is under assault! First wave in %d seconds. !diwarp opts in; other Escha players remain outside the defense.',
+        '[Domain Invasion] %s is under assault! First wave in %d seconds. Join from !warp > Activities.',
         zoneCfg.label, muster))
     anchor:timer(muster * 1000, function(pp)
         local cst = states[zoneId]
@@ -497,7 +497,7 @@ local function checkClock(player)
             SetServerVariable(svWarn(idx), today)
             local zc = catalog.zones[w.zoneIdx]
             broadcast(player, string.format(
-                '[Domain Invasion] Escha beasts mass in %s — attack in ~%d minutes! Type !diwarp to opt in. Hunting League players are not defenders.',
+                '[Domain Invasion] Escha beasts mass in %s — attack in ~%d minutes! Join from !warp > Activities.',
                 zc.label, catalog.warnMinutes))
         end
 
@@ -518,7 +518,7 @@ local function checkClock(player)
                         endsAt       = os.time() + (catalog.musterDelaySec or 0) + catalog.timeLimitSec,
                     }
                     broadcast(player, string.format(
-                        '[Domain Invasion] THE ESCHA ATTACK! %s is under assault — type !diwarp to opt in and join!',
+                        '[Domain Invasion] THE ESCHA ATTACK! %s is under assault — join from !warp > Activities!',
                         zc.label))
                     beginAssault(zone, zc, zc.zoneId)
                 end

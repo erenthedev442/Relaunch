@@ -4,8 +4,8 @@
 --   !tower              show your current run status (or "not in a run")
 --   !tower abort        end your current run immediately (warp back, no reward)
 --   !tower status       GM only: show all active sessions
---   !tower tp <name>    GM only (perm 4): warp a stuck player out
---   !tower floor <N>    GM only (perm 4): skip the target player to floor N
+--   !tower tp <name>    GM 5 only: warp a stuck player out
+--   !tower floor <N>    GM 5 only: skip the target player to floor N
 --
 -- Runtime state lives in xi._et (set by endless_tower.lua).
 -----------------------------------
@@ -49,7 +49,7 @@ commandObj.onTrigger = function(player, sub, arg2)
     end
 
     -- Player-level: own status.
-    if sub == '' or sub == 'status' and player:getGMLevel() < 4 then
+    if sub == '' or sub == 'status' and player:getGMLevel() < 5 then
         local sessions = getSessions()
         if not sessions then
             player:printToPlayer('[Tower] Tower module not loaded.', xi.msg.channel.SYSTEM_3)
@@ -73,8 +73,8 @@ commandObj.onTrigger = function(player, sub, arg2)
         return
     end
 
-    -- GM-level commands (permission 4).
-    if player:getGMLevel() < 4 then
+    -- Owner/developer GM commands.
+    if player:getGMLevel() < 5 then
         player:printToPlayer('[Tower] Permission denied.', xi.msg.channel.SYSTEM_3)
         return
     end

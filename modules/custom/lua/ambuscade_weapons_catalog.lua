@@ -13,11 +13,9 @@
 --   Eletta -> Kaja   : 5x Abdhaljs Anima  (9784)
 --   Kaja   -> Final  : 5x Abdhaljs Matter (9785)
 --
--- NOTE: Tokko + Ajja item IDs are ALSO used by the Prime WeaponForge as its
--- 119I/119II stages (weapon_forge_catalog.lua). This chain shares those items
--- deliberately (they ARE the retail Ambuscade base/first-upgrade); the Eletta/
--- Kaja/Final stages are unique to Ambuscade and are what the "Ambuscade-exclusive"
--- removals (gear vendor + Domain Invasion) protect.
+-- NOTE: Ajja + Kaja item IDs are ALSO used by the Prime Weapon Forge as its
+-- 119I/119II stages (weapon_forge_catalog.lua). Tokko, Eletta, and each
+-- Ambuscade final remain exclusive to the Ambuscade route.
 -----------------------------------
 local M = {}
 
@@ -89,12 +87,12 @@ for _, chain in ipairs(M.CHAINS) do
 end
 
 -- Set used by the "Ambuscade-exclusive" scrubs (gear vendor / Domain Invasion):
--- ALL FIVE stages. As of 2026-07-10 the Prime/Aeonic forge 119I/119II feedstock
--- is EARNED FROM AMBUSCADE (redeem a base Tokko for Hallmarks, then walk the
+-- ALL FIVE stages. Prime forge feedstock is EARNED FROM AMBUSCADE (redeem a
+-- base Tokko for Hallmarks, then walk the
 -- Tokko->Ajja->Eletta->Kaja->Final upgrade chain -- scripts/globals/ambuscade.lua),
 -- NOT bought at the medal vendor, so the ENTIRE Ambuscade weapon family is now
--- vendor-exclusive. Tokko + Ajja (stages 1-2) used to be a deliberate exception
--- kept for the Prime forge's feedstock; that dependency is gone, so they scrub too.
+-- vendor-exclusive. The Prime route can transform Ajja directly into Kaja, but
+-- it cannot bypass Ambuscade because the Ajja feedstock still starts here.
 M.EXCLUSIVE_IDS = {}
 for _, chain in ipairs(M.CHAINS) do
     for si = 1, 5 do

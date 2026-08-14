@@ -147,7 +147,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         objtype    = xi.objType.NPC,
         name       = 'Empyrean_Forge',
         packetName = string.format('%sEmpyrean Forge', xi.icon.STAR_LARGE),
-        look       = 219,
+        look       = 171,
         x          = NPC_POS.x,
         y          = NPC_POS.y,
         z          = NPC_POS.z,

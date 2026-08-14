@@ -13,7 +13,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 0, -- all players
+    permission = 1,
     parameters = '',
 }
 

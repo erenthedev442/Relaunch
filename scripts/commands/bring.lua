@@ -25,10 +25,19 @@ commandObj.onTrigger = function(player, target, forceZone)
 
     local targ = GetPlayerByName(target)
     if targ == nil then
+        if player:getGMLevel() < 5 then
+            error(player, 'Target is not on this map process. Switch clusters before using !bring.')
+            return
+        end
         if not player:bringPlayer(target) then
             error(player, string.format('Player named "%s" not found!', target))
         end
 
+        return
+    end
+
+    if player:getGMLevel() < 5 and (targ:getGMLevel() or 0) > 0 then
+        error(player, 'GM1 cannot move another staff character.')
         return
     end
 

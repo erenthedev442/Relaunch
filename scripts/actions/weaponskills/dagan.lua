@@ -17,7 +17,24 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local ftphp = xi.weaponskills.fTP(tp, { 0.22, 0.33, 0.52 })
     local ftpmp = xi.weaponskills.fTP(tp, { 0.15, 0.22, 0.35 })
+    local hpBefore = player:getHP()
+    local mpBefore = player:getMP()
     player:addHP(ftphp * player:getMaxHP())
+    local mpRestore = math.min(
+        player:getMaxMP() - mpBefore,
+        math.floor(ftpmp * player:getMaxMP()))
+
+    if xi.legendaryPilgrimage and xi.legendaryPilgrimage.onSupportWs then
+        pcall(function()
+            xi.legendaryPilgrimage.onSupportWs(player, target, wsID, {
+                hpBeforePct = hpBefore * 100 / math.max(1, player:getMaxHP()),
+                mpBeforePct = mpBefore * 100 / math.max(1, player:getMaxMP()),
+                hpRestored   = player:getHP() - hpBefore,
+                mpRestored   = math.max(0, mpRestore),
+            })
+        end)
+    end
+
     return 0, 0, false, ftpmp * player:getMaxMP()
 end
 

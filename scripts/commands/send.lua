@@ -329,6 +329,10 @@ commandObj.onTrigger = function(player, bytes)
             error(player, string.format('Player named "%s" not found!', target))
             return
         end
+        if player:getGMLevel() < 5 and (targ:getGMLevel() or 0) > 0 then
+            error(player, 'GM1 cannot move another staff character.')
+            return
+        end
     end
 
     -- validate destination

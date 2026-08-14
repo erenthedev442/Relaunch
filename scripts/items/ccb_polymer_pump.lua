@@ -11,7 +11,10 @@ itemObject.onItemCheck = function(target, item, param, caster)
     local battlefield = caster:getBattlefieldID()
 
     if
-        battlefield == xi.battlefield.id.ONE_TO_BE_FEARED and
+        (
+            battlefield == xi.battlefield.id.ONE_TO_BE_FEARED or
+            (battlefield >= 4080 and battlefield <= 4082)
+        ) and
         (target:getName() == 'Omega' or target:getName() == 'Ultima') and
         not target:hasStatusEffect(xi.effect.AMNESIA)
     then

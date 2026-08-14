@@ -14,7 +14,7 @@ local catalog = {}
 
 catalog.zoneId   = xi.zone.ABDHALJS_ISLE_PURGONORGO
 catalog.zonePath = 'xi.zones.Abdhaljs_Isle-Purgonorgo'
-catalog.npcName  = 'Title Broker'
+catalog.npcName  = 'Title Vendor'
 catalog.npcLook  = 3017
 catalog.npcPos   = { x = 581.0750, y = -2.5712, z = 482.6133, rot = 128 }
 

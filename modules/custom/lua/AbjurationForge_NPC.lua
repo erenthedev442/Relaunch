@@ -193,7 +193,7 @@ end
 --------------------------------------------------------------------
 local function showMain(player)
     local mainFn = showMain
-    menuState.title = 'Reisenjima Forge'
+    menuState.title = 'Abjuration Forge'
     menuState.options = {
         { 'Trade abjuration',    function(p) showTradeMenu(p, mainFn) end },
         { 'Upgrade NQ -> +1',    function(p) showUpgradeMenu(p, mainFn) end },
@@ -216,8 +216,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local forge = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Reisenjima_Forge',
-        packetName = string.format('%sReisenjima Forge', xi.icon.STAR_LARGE),
-        look       = 2419,   -- moogle (same look family as Domain QM / Gil Exchange)
+        packetName = string.format('%sAbjuration Forge', xi.icon.STAR_LARGE),
+        look       = 63,
         x          = p.x,
         y          = p.y,
         z          = p.z,
@@ -225,7 +225,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         widescan   = 1,
         onTrigger  = function(player, npc)
             player:printToPlayer(
-                '[Reisenjima Forge] Bring me a Reisenjima abjuration or crafted piece, and I will reforge it, kupo!', S)
+                '[Abjuration Forge] Bring me a Reisenjima abjuration or crafted piece, and I will reforge it, kupo!', S)
             showMain(player)
         end,
     })

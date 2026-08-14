@@ -116,7 +116,7 @@ end
 local function broadcastJackpot(player, prize)
     if not prize.jackpot then return end
     local msg = string.format(
-        '[Mystery Mog] *** %s just hit the JACKPOT! *** (%s)',
+        '[Mystery Box] *** %s just hit the JACKPOT! *** (%s)',
         player:getName(), prize.label)
     player:printToArea(msg, xi.msg.channel.SYSTEM_3, xi.msg.area.SYSTEM, '', true)
 end
@@ -137,7 +137,7 @@ local function doSingleRoll(player, pool, rollIndex)
             and string.format(' on pull #%d', rollIndex)
             or  ''
         player:printToPlayer(
-            string.format('[Mystery Mog] Pity triggered%s - Epic+ guaranteed!', pitySuffix),
+            string.format('[Mystery Box] Pity triggered%s - Epic+ guaranteed!', pitySuffix),
             xi.msg.channel.SYSTEM_3)
     else
         prize = rollFromPool(pool)
@@ -166,14 +166,14 @@ end
 local function checkPrereqs(player, cost)
     if player:getGil() < cost then
         player:printToPlayer(
-            string.format('[Mystery Mog] Need %s gil, you have %s.',
+            string.format('[Mystery Box] Need %s gil, you have %s.',
                 fmtGil(cost), fmtGil(player:getGil())),
             xi.msg.channel.SYSTEM_3)
         return false
     end
     if player:getFreeSlotsCount() < 1 then
         player:printToPlayer(
-            '[Mystery Mog] Come back after sorting your inventory, kupo!',
+            '[Mystery Box] Come back after sorting your inventory, kupo!',
             xi.msg.channel.SYSTEM_3)
         return false
     end
@@ -185,7 +185,7 @@ local function singlePull(player, pool, cost)
     player:delGil(cost)
     local prize = doSingleRoll(player, pool)
     player:printToPlayer(
-        string.format('[Mystery Mog] You won: %s!', prize.label),
+        string.format('[Mystery Box] You won: %s!', prize.label),
         xi.msg.channel.SYSTEM_3)
     return true
 end
@@ -211,13 +211,13 @@ local function multiPull(player, pool, cost, count, guaranteeUncommon)
         broadcastJackpot(player, bonus)
         -- Pity was already updated per-roll above; don't adjust again here.
         player:printToPlayer(
-            string.format('[Mystery Mog] Deca guarantee bonus: %s', bonus.label),
+            string.format('[Mystery Box] Deca guarantee bonus: %s', bonus.label),
             xi.msg.channel.SYSTEM_3)
     end
 
     -- Print summary
     player:printToPlayer(
-        string.format('[Mystery Mog] %d-pull results:', count),
+        string.format('[Mystery Box] %d-pull results:', count),
         xi.msg.channel.SYSTEM_3)
     for i, prize in ipairs(results) do
         player:printToPlayer(
@@ -244,7 +244,7 @@ local function showManifest(player, pool, poolName)
 
     local S = xi.msg.channel.SYSTEM_3
     player:printToPlayer(
-        string.format('[Mystery Mog] %s odds:', poolName),
+        string.format('[Mystery Box] %s odds:', poolName),
         S)
     for _, t in ipairs(tierOrder) do
         local w = tierWeights[t]
@@ -261,7 +261,7 @@ end
 
 local function showAllManifests(player)
     local S = xi.msg.channel.SYSTEM_3
-    player:printToPlayer('------- Mystery Mog Prize Tiers -------', S)
+    player:printToPlayer('------- Mystery Box Prize Tiers -------', S)
     showManifest(player, catalog.pool,        'Standard (100k)')
     showManifest(player, catalog.premiumPool, 'Premium  (500k)')
     player:printToPlayer(
@@ -304,7 +304,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             -- customMenu packet limit. The old long labels let early options
             -- work while Premium silently no-op'd once the pity suffix appeared.
             title = string.format(
-                'Mystery Mog G:%s P:%d/%d',
+                'Mystery Box G:%s P:%d/%d',
                 fmtGil(player:getGil()), pity, catalog.pityThreshold),
             options =
             {

@@ -23,26 +23,14 @@ local sustain = require('modules/custom/lua/buff_sustain')
 commandObj.cmdprops =
 {
     permission = 0,
-    parameters = 's'
+    parameters = ''
 }
 
-commandObj.onTrigger = function(player, target)
-    local targ
-
-    if target ~= nil then
-        targ = GetPlayerByName(target)
-        if targ == nil then
-            player:printToPlayer(string.format('Player "%s" not found.', target))
-            return
-        end
-    else
-        targ = player
-    end
-
-    local regionalName, refreshPower, regenPower, regainPower = sustain.apply(targ, player)
+commandObj.onTrigger = function(player)
+    local regionalName, refreshPower, regenPower, regainPower = sustain.apply(player, player)
 
     local sustainMsg = string.format('Regen: %d/tick | Refresh: %d/tick | ', regenPower, refreshPower)
-    targ:printToPlayer(string.format(
+    player:printToPlayer(string.format(
         'Buffs applied! %s | %sRegain: %d/tick | Composure | Reraise III | Duration: 5 hours',
         regionalName, sustainMsg, regainPower
     ))

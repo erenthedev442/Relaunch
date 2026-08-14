@@ -2,15 +2,15 @@
 -- weapon_forge_catalog.lua
 -- Data-only: defines the 14 weapon upgrade chains for two forge paths.
 --
--- PATH 1 — PRIME (Ajja → Kaja → Stage-5 Relic)
+-- PATH 1 — PRIME (Ajja → Kaja → Stage-5 Prime)
 --   Stage 1 (119I)   From AMBUSCADE: redeem a base Tokko for Hallmarks (2026-07-10;
 --                    was Bronze medal vendor, pulled since Tokko is Ambuscade content).
---   Stage 2 (119II)  Forge output of 119I; or upgrade Tokko->Ajja in Ambuscade.
+--   Stage 2 (119II)  The matching Kaja weapon.
 --   Stage 3 (119III) Stage-5 Prime.
 --
 --   Costs:
 --     119I → 119II : 50× Kindreds Medal (9541) + HL Rank V gate
---     119II → 119III: 100× Demons Medal (9543) + 30,000 Reforge Marks
+--     119II → 119III: 100× Demons Medal (9543) + 5,000 Reforge Marks
 --                                                + 750M gil + HL Rank V gate
 --
 -- PATH 2 — AEONIC (Malformed → 119I → 119II → Aeonic 119III)
@@ -24,7 +24,7 @@
 --     Malformed → 119I : 1×  Attestation  +   3,000 Escha Silt
 --     119I      → 119II: 2×  Attestation  +  12,000 Escha Silt
 --     119II     → Aeonic: 3×  Attestation  +  35,000 Escha Silt
---                                          +  24,000 Reforge Marks (any pool)
+--                                          +  2,000 Reforge Marks (any pool)
 --
 --   Attestations drop from Geas Fete T4 (always 1, 40% chance of a second)
 --   and T3 (15% chance of 1), random among the 14 weapon types.
@@ -36,7 +36,7 @@ local catalog = {}
 
 -- Forge costs (consumed from inventory).
 -- PRIME is the pinnacle path: HL Legend, all five Prime Armory Trials complete,
--- 750M gil, 30k Reforge Marks, and the steepest medal cost on the server.
+-- 750M gil, pilgrimage, 5k Reforge Marks, and the steepest medal cost.
 catalog.costs =
 {
     -- 119I → 119II
@@ -50,7 +50,7 @@ catalog.costs =
     {
         hlRank        = 5,
         medals        = { id = 9543, qty = 100, name = 'Demons Medal' },
-        reforgeMarks  = 30000,   -- total across all three pools; drained AF→Relic→Empy
+        reforgeMarks  = 5000,    -- pilgrimage replaces most of the former 30,000-mark final tax
         gil           = 750000000,
         requireTrials = true,    -- all of PW_Trial1_Done .. PW_Trial5_Done must be 1
     },
@@ -93,7 +93,7 @@ catalog.aeonicCosts =
         hlRank           = 5,
         attestations     = 3,
         eschaSilt        = 35000,
-        reforgeMarks     = 24000,
+        reforgeMarks     = 2000,
     },
 }
 
@@ -107,7 +107,7 @@ catalog.aeonicBase =
 -- WEAPON CHAINS
 -- Each chain carries:
 --   type, jobs : display metadata
---   s1/s2/s3   : Prime path (Ajja → Kaja → Stage-5 Relic)
+--   s1/s2/s3   : Prime path (Ajja → Kaja → Stage-5 Prime)
 --   aeonic     : { base, s1, s2, attestationId, attestationName, s3 }
 --                base = Malformed weapon bought from Temprix
 --                s3   = Aeonic 119III final form
@@ -119,7 +119,7 @@ catalog.chains =
         type   = 'Hand-to-Hand',
         jobs   = 'MNK/PUP',
         s1     = { id = 21516, name = 'Ajja Knuckles'       },
-        s2     = { id = 21515, name = 'Tokko Knuckles'      },
+        s2     = { id = 21518, name = 'Kaja Knuckles'       },
         s3     = { id = 21535, name = 'Varga Purnikawa'     },
         aeonic = { base = { id=29701, name='Malformed Knuckles' },
                    s1 = { id=29715, name='Attuned Knuckles' },
@@ -131,7 +131,7 @@ catalog.chains =
         type   = 'Dagger',
         jobs   = 'THF/BRD/DNC',
         s1     = { id = 21562, name = 'Ajja Knife'          },
-        s2     = { id = 21585, name = 'Crepuscular Knife'   },
+        s2     = { id = 21564, name = 'Kaja Knife'          },
         s3     = { id = 21590, name = 'Mpu Gandring'        },
         aeonic = { base = { id=29702, name='Malformed Knife' },
                    s1 = { id=29716, name='Attuned Knife' },
@@ -143,7 +143,7 @@ catalog.chains =
         type   = 'Sword',
         jobs   = 'RDM/PLD/BLU/RUN',
         s1     = { id = 21618, name = 'Ajja Sword'          },
-        s2     = { id = 20673, name = 'Flametongue'         },
+        s2     = { id = 21620, name = 'Kaja Sword'          },
         s3     = { id = 21646, name = 'Caliburnus'          },
         aeonic = { base = { id=29703, name='Malformed Sword' },
                    s1 = { id=29717, name='Attuned Sword' },
@@ -155,7 +155,7 @@ catalog.chains =
         type   = 'Great Sword',
         jobs   = 'WAR/DRK',
         s1     = { id = 21671, name = 'Ajja Claymore'       },
-        s2     = { id = 21662, name = 'Raetic Algol'        },
+        s2     = { id = 21673, name = 'Kaja Claymore'       },
         s3     = { id = 21653, name = 'Helheim'             },
         aeonic = { base = { id=29704, name='Malformed Claymore' },
                    s1 = { id=29718, name='Attuned Claymore' },
@@ -167,7 +167,7 @@ catalog.chains =
         type   = 'Axe',
         jobs   = 'WAR/BST',
         s1     = { id = 21719, name = 'Ajja Axe'            },
-        s2     = { id = 21706, name = 'Barbarity'           },
+        s2     = { id = 21721, name = 'Kaja Axe'            },
         s3     = { id = 21730, name = 'Spalirisos'          },
         aeonic = { base = { id=29705, name='Malformed Axe' },
                    s1 = { id=29719, name='Attuned Axe' },
@@ -179,7 +179,7 @@ catalog.chains =
         type   = 'Great Axe',
         jobs   = 'WAR',
         s1     = { id = 21776, name = 'Ajja Chopper'        },
-        s2     = { id = 21765, name = 'Hepatizon Axe'       },
+        s2     = { id = 21778, name = 'Kaja Chopper'        },
         s3     = { id = 21785, name = 'Laphria'             },
         aeonic = { base = { id=29706, name='Malformed Greataxe' },
                    s1 = { id=29720, name='Attuned Greataxe' },
@@ -191,7 +191,7 @@ catalog.chains =
         type   = 'Scythe',
         jobs   = 'DRK',
         s1     = { id = 21827, name = 'Ajja Scythe'         },
-        s2     = { id = 21815, name = 'Maliya Sickle'       },
+        s2     = { id = 21829, name = 'Kaja Scythe'         },
         s3     = { id = 21837, name = 'Foenaria'            },
         aeonic = { base = { id=29707, name='Malformed Scythe' },
                    s1 = { id=29721, name='Attuned Scythe' },
@@ -203,7 +203,7 @@ catalog.chains =
         type   = 'Polearm',
         jobs   = 'DRG',
         s1     = { id = 21880, name = 'Ajja Lance'          },
-        s2     = { id = 21881, name = 'Eletta Lance'        },
+        s2     = { id = 21882, name = 'Kaja Lance'          },
         s3     = { id = 21891, name = 'Gae Buide'           },
         aeonic = { base = { id=29708, name='Malformed Lance' },
                    s1 = { id=29722, name='Attuned Lance' },
@@ -215,7 +215,7 @@ catalog.chains =
         type   = 'Katana',
         jobs   = 'NIN',
         s1     = { id = 21919, name = 'Ajja Katana'         },
-        s2     = { id = 21915, name = 'Koga Shinobi-Gatana' },
+        s2     = { id = 21921, name = 'Kaja Katana'         },
         s3     = { id = 21932, name = 'Dokoku'              },
         aeonic = { base = { id=29709, name='Malformed Katana' },
                    s1 = { id=29723, name='Attuned Katana' },
@@ -227,7 +227,7 @@ catalog.chains =
         type   = 'Great Katana',
         jobs   = 'SAM',
         s1     = { id = 21972, name = 'Ajja Tachi'          },
-        s2     = { id = 21963, name = 'Beryllium Tachi'     },
+        s2     = { id = 21974, name = 'Kaja Tachi'          },
         s3     = { id = 21986, name = 'Kusanagi'            },
         aeonic = { base = { id=29710, name='Malformed Tachi' },
                    s1 = { id=29724, name='Attuned Tachi' },
@@ -263,7 +263,7 @@ catalog.chains =
         type   = 'Archery',
         jobs   = 'RNG',
         s1     = { id = 22109, name = 'Ajja Bow'            },
-        s2     = { id = 22126, name = 'Exalted Bow +1'      },
+        s2     = { id = 22111, name = 'Kaja Bow'            },
         s3     = { id = 22163, name = 'Pinaka'              },
         aeonic = { base = { id=29713, name='Malformed Bow' },
                    s1 = { id=29727, name='Attuned Bow' },
@@ -274,6 +274,8 @@ catalog.chains =
     {
         type   = 'Marksmanship',
         jobs   = 'COR/RNG',
+        -- Ambuscade has no marksmanship weapon family. Pulfanxa and Holliday
+        -- are the obtainable firearm equivalents for Prime stages I and II.
         s1     = { id = 21276, name = 'Pulfanxa'            },
         s2     = { id = 22134, name = 'Holliday'            },
         s3     = { id = 22164, name = 'Earp'                },
@@ -314,13 +316,13 @@ catalog.empyreanCosts =
 {
     { hlRank = 3, cruor =  2000, mat = 75, beastcoin = 10 },              -- base -> 119 I
     { hlRank = 4, cruor = 10000, boulder = 300, beastcoin = 30 },         -- 119 I -> II
-    { hlRank = 5, boulder = 3000, beastcoin = 50, marks = 15000 },        -- 119 II -> III
+    { hlRank = 5, boulder = 3000, beastcoin = 50, marks = 1500 },         -- 119 II -> III
 }
 catalog.mythicCosts =
 {
     { hlRank = 3, standing = 1000, bronze = 10 },                         -- base -> 119 I
     { hlRank = 4, standing = 3000, silver = 25, beitetsu = 300 },         -- 119 I -> II
-    { hlRank = 5, gold = 5, beitetsu = 10000, marks = 20000 },            -- 119 II -> III
+    { hlRank = 5, gold = 5, beitetsu = 10000, marks = 2000 },             -- 119 II -> III
 }
 -- Relic forge gates (2026-07-13 owner tuning):
 --   * hlRank 5 throughout
@@ -335,7 +337,7 @@ catalog.relicCosts =
     { hlRank = 5, divergenceWins = 1, relicCurrency = 50 },                                  -- base -> 119 I
     { hlRank = 5, divergenceWins = 2, relicCurrency = 100, pluton = 200 },                    -- 119 I -> II
     { hlRank = 5, divergenceWins = 4, relicCurrency = 500, highTierAlt = 5, pluton = 500,
-        marks = 10000 },                                                                      -- 119 II -> III
+        marks = 1000 },                                                                       -- 119 II -> III
 }
 -- Base provision (forge issues the base; retail NM drops are WIP).
 catalog.empyreanBase = { hlRank = 5, cruor = 2000 }
@@ -370,7 +372,7 @@ catalog.mythicChains =
     { type = 'Sword', jobs = 'RDM', name = 'Murgleis', base = 19823, s1 = 20647, s2 = 20648, s3 = 20686 },
     { type = 'Sword', jobs = 'PLD', name = 'Burtgang', base = 19825, s1 = 20649, s2 = 20650, s3 = 20687 },
     { type = 'Sword', jobs = 'BLU', name = 'Tizona', base = 19834, s1 = 20651, s2 = 20652, s3 = 20688 },
-    { type = 'Great Sword', jobs = 'WAR', name = 'Conqueror', base = 19819, s1 = 20837, s2 = 20838, s3 = 21757 },
+    { type = 'Great Axe', jobs = 'WAR', name = 'Conqueror', base = 19819, s1 = 20837, s2 = 20838, s3 = 21757 },
     { type = 'Axe', jobs = 'BST', name = 'Aymur', base = 19827, s1 = 20792, s2 = 20793, s3 = 21751 },
     { type = 'Scythe', jobs = 'DRK', name = 'Liberator', base = 19826, s1 = 20882, s2 = 20883, s3 = 21809 },
     { type = 'Polearm', jobs = 'DRG', name = 'Ryunohige', base = 19832, s1 = 20927, s2 = 20928, s3 = 21858 },
@@ -404,7 +406,7 @@ catalog.mythicCostsSum =
     silver = 25,
     gold = 5,
     beitetsu = 10300,    -- 300 + 10000
-    marks = 20000,
+    marks = 2000,
 }
 
 catalog.relicChains =

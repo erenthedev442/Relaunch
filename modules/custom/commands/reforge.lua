@@ -28,7 +28,7 @@ commandObj.onTrigger = function(player)
     player:printToPlayer('  ==================================================', B)
     player:printToPlayer('  Earn Reforge marks by popping Reforge NMs at the hub.', B)
     player:printToPlayer('  Spend them at the Reforge Vendor in the Reforge hub.', B)
-    player:printToPlayer('  !progress reforge - full breakdown  |  !reforged - warp there', B)
+    player:printToPlayer('  !progress reforge - full breakdown  |  !warp > Activities > Progression Hubs', B)
 end
 
 return commandObj

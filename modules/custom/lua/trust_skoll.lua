@@ -207,7 +207,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             end,
         })
 
-        menu.title   = 'Void Keeper'
+        menu.title   = 'Custom Trusts'
         menu.options = options
         local snapshot = { title = menu.title, options = menu.options }
         player:timer(30, function(p) p:customMenu(snapshot) end)
@@ -216,7 +216,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local VoidKeeper = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = NPC_NAME,
-        packetName = string.format('%sVoid Keeper', xi.icon.STAR_LARGE),
+        packetName = string.format('%sCustom Trusts', xi.icon.STAR_LARGE),
         look       = 232,
         x          = NPC_POS.x,
         y          = NPC_POS.y,
@@ -232,7 +232,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
 
         onTrigger = function(player, npc)
             player:printToPlayer(string.format(
-                '[ Void Keeper ]  Trusts collected: %d / %d  |  Gil: %d',
+                '[Custom Trusts]  Trusts collected: %d / %d  |  Gil: %d',
                 xi.trust.countCollected(player),
                 #xi.trust.collectionRoster,
                 player:getGil()), xi.msg.channel.SYSTEM_3)

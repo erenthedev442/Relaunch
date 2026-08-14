@@ -326,7 +326,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
     local TestDummyNpc = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Test_Dummy',
-        packetName = string.format('%sMaster of Arms', xi.icon.STAR_LARGE),
+        packetName = string.format('%sTest Dummy', xi.icon.STAR_LARGE),
         look       = 3018,                -- Trust look; distinct from GameMaster (3017)
         x          = catalog.npcPos.x,
         y          = catalog.npcPos.y,

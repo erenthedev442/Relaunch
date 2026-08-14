@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -3582,6 +3582,12 @@ void BuildingCharWeaponSkills(CCharEntity* PChar)
     CItemWeapon* PItem    = nullptr;
     int          main_ws  = 0;
     int          range_ws = 0;
+    // Legendary Weapon Pilgrimages may expose one native WS on a registered
+    // lower-stage weapon.  Keep this separate from item modifiers so ordinary
+    // ADDS_WEAPONSKILL behavior remains intact (including when no pilgrimage
+    // local variable is set).
+    const auto pilgrimageMainWs  = PChar->GetLocalVar("LWP_GrantedMainWS");
+    const auto pilgrimageRangeWs = PChar->GetLocalVar("LWP_GrantedRangedWS");
 
     for (auto&& slot : { std::make_tuple(SLOT_MAIN, std::ref(main_ws)), std::make_tuple(SLOT_RANGED, std::ref(range_ws)) })
     {
@@ -3604,7 +3610,9 @@ void BuildingCharWeaponSkills(CCharEntity* PChar)
     const auto& MeleeWeaponSkillList = battleutils::GetWeaponSkills(skill);
     for (auto&& PSkill : MeleeWeaponSkillList)
     {
-        if (battleutils::CanUseWeaponskill(PChar, PSkill) || PSkill->getID() == main_ws)
+        if (battleutils::CanUseWeaponskill(PChar, PSkill) ||
+            PSkill->getID() == main_ws ||
+            PSkill->getID() == pilgrimageMainWs)
         {
             addWeaponSkill(PChar, PSkill->getID());
         }
@@ -3618,7 +3626,9 @@ void BuildingCharWeaponSkills(CCharEntity* PChar)
         const auto& RangedWeaponSkillList = battleutils::GetWeaponSkills(skill);
         for (auto&& PSkill : RangedWeaponSkillList)
         {
-            if ((battleutils::CanUseWeaponskill(PChar, PSkill)) || PSkill->getID() == range_ws)
+            if (battleutils::CanUseWeaponskill(PChar, PSkill) ||
+                PSkill->getID() == range_ws ||
+                PSkill->getID() == pilgrimageRangeWs)
             {
                 addWeaponSkill(PChar, PSkill->getID());
             }

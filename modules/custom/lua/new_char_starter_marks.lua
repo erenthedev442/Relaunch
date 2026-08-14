@@ -39,7 +39,7 @@ m:addOverride('xi.player.onPlayerLogin', function(player)
         local lines = {
             '=== Welcome to Legendary ===',
             string.format('A starter gift of %d Hunt Marks is waiting in your pocket.', STARTER_MARKS),
-            'NEW CHARACTER? Type  !gmhome  and visit the setup Moogles there:',
+            'NEW CHARACTER? Type !hub and visit the setup NPCs there:',
             '  - Character Upgrader  -- weapon skills, spells, Trusts, capped skills',
             string.format('  - EXP Camp Moogle     -- warp to a camp and level to 99 (%gx EXP, fast!)', xi.settings.main.EXP_RATE),
             '  - Gear Moogle         -- a starter gear kit to get you going',

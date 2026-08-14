@@ -306,13 +306,13 @@ local NM_CATALOG = {
         { name='Yakshi', gid=64, tier=3, hp=1400000, currency=2000, cooldown=0, drops = { { id=26020, name='Ainia Collar' }, { id=25720, name='Chironic Doublet' }, { id=22199, name='Thrace Strap' }, { id=25717, name='Valorous Mail' } } },
         { name='Neak', gid=65, tier=3, hp=1400000, currency=2000, cooldown=0, drops = { { id=26244, name='Agema Cape' }, { id=25718, name='Herculean Vest' }, { id=26329, name='Luminary Sash' } } },
         -- Apex / HELM bosses (Aeonic-tier) -----------------------
-        { name='Teles', gid=66, tier=4, hp=2800000, currency=4500, cooldown=0, drops = { { id=27143, name='Composer\'s Mitts' }, { id=27499, name='Composer\'s Sabots' }, { id=20889, name='Misanthropy' }, { id=20592, name='Sangoma' } } },
-        { name='Zerde', gid=67, tier=4, hp=2800000, currency=4500, cooldown=0, drops = { { id=25854, name='Arjuna Breeches' }, { id=25760, name='Mrigavyadha Gloves' }, { id=20506, name='Suwaiyas' }, { id=25721, name='Vedic Coat' } } },
-        { name='Vinipata', gid=71, tier=4, hp=2800000, currency=4500, cooldown=0, drops = { { id=21022, name='Shishio' }, { id=21905, name='Taka' }, { id=21073, name='Izcalli' }, { id=25655, name='Ipoca Beret' } } },
-        { name='Schah', gid=74, tier=4, hp=2800000, currency=4500, cooldown=0, drops = { { id=21687, name='Takoba' }, { id=22055, name='Oranyan' }, { id=25730, name='Nzingha Cuirass' }, { id=25920, name='Ahosi Leggings' } } },
-        { name='Albumen', gid=80, tier=4, hp=2800000, currency=4500, cooldown=0, delay=240, drops = { { id=25921, name='Skaoi Boots' }, { id=25656, name='Ynglinga Sallet' }, { id=21747, name='Freydis' }, { id=22114, name='Steinthor' } } },
-        { name='Onychophora', gid=85, tier=4, hp=2800000, currency=4500, cooldown=0, drops = { { id=20678, name='Firangi' }, { id=22056, name='Gozuki Mezuki' }, { id=21855, name='Lembing' }, { id=25922, name='Navon Crackows' } } },
-        { name='Erinys', gid=87, tier=4, hp=2800000, currency=4500, cooldown=0, drops = { { id=21755, name='Hodadenon' }, { id=25761, name='Iktomi Dastanas' }, { id=22119, name='Wochowsen' }, { id=25731, name='Sayadio\'s Kaftan' } } },
+        { name='Teles', gid=66, tier=4, difficulty='teles', hp=2800000, currency=4500, cooldown=0, drops = { { id=27143, name='Composer\'s Mitts' }, { id=27499, name='Composer\'s Sabots' }, { id=20889, name='Misanthropy' }, { id=20592, name='Sangoma' } } },
+        { name='Zerde', gid=67, tier=4, difficulty='apex', hp=2800000, currency=4500, cooldown=0, drops = { { id=25854, name='Arjuna Breeches' }, { id=25760, name='Mrigavyadha Gloves' }, { id=20506, name='Suwaiyas' }, { id=25721, name='Vedic Coat' } } },
+        { name='Vinipata', gid=71, tier=4, difficulty='apex', hp=2800000, currency=4500, cooldown=0, drops = { { id=21022, name='Shishio' }, { id=21905, name='Taka' }, { id=21073, name='Izcalli' }, { id=25655, name='Ipoca Beret' } } },
+        { name='Schah', gid=74, tier=4, difficulty='apex', hp=2800000, currency=4500, cooldown=0, drops = { { id=21687, name='Takoba' }, { id=22055, name='Oranyan' }, { id=25730, name='Nzingha Cuirass' }, { id=25920, name='Ahosi Leggings' } } },
+        { name='Albumen', gid=80, tier=4, difficulty='apex', hp=2800000, currency=4500, cooldown=0, delay=240, drops = { { id=25921, name='Skaoi Boots' }, { id=25656, name='Ynglinga Sallet' }, { id=21747, name='Freydis' }, { id=22114, name='Steinthor' } } },
+        { name='Onychophora', gid=85, tier=4, difficulty='apex', hp=2800000, currency=4500, cooldown=0, drops = { { id=20678, name='Firangi' }, { id=22056, name='Gozuki Mezuki' }, { id=21855, name='Lembing' }, { id=25922, name='Navon Crackows' } } },
+        { name='Erinys', gid=87, tier=4, difficulty='apex', hp=2800000, currency=4500, cooldown=0, drops = { { id=21755, name='Hodadenon' }, { id=25761, name='Iktomi Dastanas' }, { id=22119, name='Wochowsen' }, { id=25731, name='Sayadio\'s Kaftan' } } },
     },
 }
 
@@ -906,6 +906,17 @@ local TIER_TUNING = {
     [4] = { level = 150, hp = 14000000, att = 10000, acc = 1150, macc = 1150, matt = 4700,
             regain = 360, da = 32, ta = 16, def = 1800, eva = 1450, mdef = 500, meva = 600,
             str = 325, dex = 325, hasteGear = 2150, weaponDmg = 415, eleRes = 110 },
+    apex = { level = 150, hp = 9000000, att = 8500, acc = 1050, macc = 1000, matt = 3500,
+             regain = 180, da = 25, ta = 8, def = 1500, eva = 1300, mdef = 425, meva = 500,
+             str = 275, dex = 275, hasteGear = 1800, weaponDmg = 375, eleRes = 90,
+             mobSkillDamageCap = 5000 },
+    -- Teles keeps her retail Harpeia skill list and BLM spell list. Her lower
+    -- tempo and magic pressure account for how punishing that complete kit is
+    -- to one player relying on trusts.
+    teles = { level = 150, hp = 8000000, att = 8000, acc = 1000, macc = 950, matt = 3000,
+              regain = 140, da = 22, ta = 5, def = 1450, eva = 1250, mdef = 400, meva = 475,
+              str = 250, dex = 250, hasteGear = 1600, weaponDmg = 350, eleRes = 85,
+              mobSkillDamageCap = 4500 },
 }
 
 local MECHANIC_TUNING =
@@ -939,6 +950,20 @@ local MECHANIC_TUNING =
         },
         enrage = { sec = 900, att = 3500, haste = 250 },
     },
+    apex = {
+        targetPartyOnly = true,
+        phases = {
+            { hp = 40, action = 'fury', att = 1000, haste = 150 },
+        },
+        enrage = { sec = 900, att = 2500, haste = 200 },
+    },
+    teles = {
+        targetPartyOnly = true,
+        phases = {
+            { hp = 40, action = 'fury', att = 750, haste = 125 },
+        },
+        enrage = { sec = 900, att = 2000, haste = 175 },
+    },
 }
 
 local function realPlayerScale(player)
@@ -963,7 +988,7 @@ local function realPlayerScale(player)
 end
 
 local function applyDifficulty(mob, def, player)
-    local t = TIER_TUNING[def.tier] or TIER_TUNING[1]
+    local t = TIER_TUNING[def.difficulty or def.tier] or TIER_TUNING[1]
     mob:setMobLevel(t.level, false)
     local hpScale, pcCount = realPlayerScale(player)
     local hp = math.floor(t.hp * hpScale)
@@ -972,7 +997,7 @@ local function applyDifficulty(mob, def, player)
     -- Solo roster fights must make forward progress. Stock pool modifiers can
     -- include passive regeneration, so explicitly remove it after level setup.
     mob:setMod(xi.mod.REGEN, 0)
-    mob:setLocalVar('GeasFeteMobSkillDamageCap', 6000)
+    mob:setLocalVar('GeasFeteMobSkillDamageCap', t.mobSkillDamageCap or 6000)
     mob:setLocalVar('GeasFeteOwnerId', player:getID())
     if t.att then mob:addMod(xi.mod.ATT, t.att) end
     mob:addMod(xi.mod.ACC,           t.acc)
@@ -1024,6 +1049,9 @@ local SOLO_FAIL_EFFECTS =
     xi.effect.GRADUAL_PETRIFICATION,
     xi.effect.TERROR,
     xi.effect.DOOM,
+    xi.effect.CHARM_I,
+    xi.effect.SLEEP_I,
+    xi.effect.SLEEP_II,
 }
 
 local function clearSoloFailEffects(mob)
@@ -1148,7 +1176,7 @@ local function spawnNM(player, zone, zoneId, def, campNpc)
             -- into mob_pools.entityFlags. A direct Geas pop must unseal them.
             mob:setUntargetable(false)
             local scaledFor = applyDifficulty(mob, def, player)
-            local mechBase = MECHANIC_TUNING[def.tier] or MECHANIC_TUNING[1]
+            local mechBase = MECHANIC_TUNING[def.difficulty or def.tier] or MECHANIC_TUNING[1]
             local mechCfg = {}
             for key, value in pairs(mechBase) do mechCfg[key] = value end
             mechCfg.name = 'Geas Fete: ' .. (def.label or def.name)

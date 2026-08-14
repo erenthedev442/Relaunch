@@ -21,7 +21,7 @@ local catalog = {}
 
 catalog.zoneId    = xi.zone.ABDHALJS_ISLE_PURGONORGO
 catalog.zonePath  = 'xi.zones.Abdhaljs_Isle-Purgonorgo'
-catalog.npcName   = 'Mystery Mog'
+catalog.npcName   = 'Mystery Box'
 catalog.npcLook   = 2401
 catalog.npcPos    = { x = 585.4050, y = -2.5712, z = 480.1133, rot = 160 }
 

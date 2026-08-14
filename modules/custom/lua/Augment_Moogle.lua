@@ -161,7 +161,7 @@ local TIER_GATES =
               and (p:getCharVar('DivergenceSlots') or 0) >= 1
               and waveProgress.hasThrough(p, 4)
       end },
-    { tier = 5, unlock = "defeat Maat's Echo (Ru'Lude Gardens, !maat)",
+    { tier = 5, unlock = "defeat Maat's Echo (!warp > Activities)",
       check = function(p) return (p:getCharVar('Maat_Kills') or 0) >= 1 end },
 }
 
@@ -531,6 +531,14 @@ local function saveLastRecipe(player, requests)
         local req = valid[i]
         player:setCharVar(LAST_RECIPE_ID_VAR .. i, req and req.id or 0)
         player:setCharVar(LAST_RECIPE_QTY_VAR .. i, req and req.qty or 0)
+    end
+end
+
+local function clearLastRecipe(player)
+    player:setCharVar(LAST_RECIPE_COUNT_VAR, 0)
+    for i = 1, MAX_CATALYST_COUNT do
+        player:setCharVar(LAST_RECIPE_ID_VAR .. i, 0)
+        player:setCharVar(LAST_RECIPE_QTY_VAR .. i, 0)
     end
 end
 
@@ -977,13 +985,16 @@ showBankMain = function(player)
             showBankMain(p)
         end,
     })
-    if selection.total > 0 then
+    if selection.total > 0 or lastRecipe then
         table.insert(options,
         {
-            'Clear selection',
+            'Clear augment build',
             function(p)
                 clearBankSelection(p)
-                p:printToPlayer('[Arcane Bank] Augment selection cleared.', xi.msg.channel.SYSTEM_3)
+                clearLastRecipe(p)
+                p:printToPlayer(
+                    '[Arcane Bank] Augment build and saved repeat cleared. Trade augmented gear alone to scour it.',
+                    xi.msg.channel.SYSTEM_3)
                 showBankMain(p)
             end,
         })
@@ -1428,28 +1439,6 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                         table.insert(catalystOrder, request.id)
                         totalCatalysts = totalCatalysts + request.qty
                     end
-                else
-                    local lastRecipe = loadLastRecipe(player)
-                    if lastRecipe then
-                        local ok, err = validateRecipeForRepeat(player, lastRecipe)
-                        if ok then
-                            applyRecipeToSelection(player, lastRecipe)
-                            selection = getBankSelection(player)
-                            bankMode = true
-                            selectedBankCatalysts = selectionRequests(selection)
-                            for _, request in ipairs(selectedBankCatalysts) do
-                                catalystCounts[request.id] = request.qty
-                                table.insert(catalystOrder, request.id)
-                                totalCatalysts = totalCatalysts + request.qty
-                            end
-                            player:printToPlayer(
-                                '[Arcane Augmenter] Using your last catalyst set again, kupo!',
-                                xi.msg.channel.SYSTEM_3)
-                        else
-                            player:printToPlayer('[Arcane Augmenter] ' .. err, xi.msg.channel.SYSTEM_3)
-                            return
-                        end
-                    end
                 end
             end
 
@@ -1504,7 +1493,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
 
             if totalCatalysts == 0 then
                 player:printToPlayer(
-                    'Select stored catalysts from my menu, use "Repeat last catalyst set", or trade gear after a prior augment to reuse your last catalysts, kupo!',
+                    'Select stored catalysts from my menu or use "Repeat last catalyst set" before trading gear, kupo!',
                     xi.msg.channel.SYSTEM_3)
                 return
             end

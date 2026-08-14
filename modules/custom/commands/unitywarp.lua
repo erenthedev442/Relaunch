@@ -22,7 +22,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 0,     -- player command, same access as !hub / !unity
+    permission = 1,
     parameters = 's',   -- optional: a number (list index) or a name fragment
 }
 

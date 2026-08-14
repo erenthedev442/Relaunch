@@ -3,9 +3,9 @@
 --
 --   !mastery                 show your Trial 4 progress (all players)
 --   !mastery abort           end your active guardian challenge (no reward)
---   !mastery status          GM (4+): list all active challenge sessions
---   !mastery grant <w> [p]   GM (4+): grant PW_T4_<weapon>_Done to self or <p>
---   !mastery reset [p]       GM (4+): clear all mastery charVars for self or <p>
+--   !mastery status          GM (5): list all active challenge sessions
+--   !mastery grant <w> [p]   GM (5): grant PW_T4_<weapon>_Done to self or <p>
+--   !mastery reset [p]       GM (5): clear all mastery charVars for self or <p>
 --
 -- Reads runtime state from xi._jm_* globals set by job_mastery.lua.
 -----------------------------------
@@ -18,10 +18,8 @@ commandObj.cmdprops =
     parameters = 'sss',
 }
 
-local GUARDIAN_ORDER = {
-    'sword', 'dagger', 'greatsword', 'axe', 'greataxe', 'scythe',
-    'polearm', 'katana', 'greatkatana', 'club', 'staff', 'archery',
-}
+local masteryCatalog = require('modules/custom/lua/weapon_mastery_catalog')
+local GUARDIAN_ORDER = masteryCatalog.order
 
 local function sessions()   return xi._jm_sessions  end
 local function guardians()  return xi._jm_guardians  end
@@ -38,7 +36,7 @@ local function printStatus(player, target)
     end
     local done, pending = {}, {}
     for _, key in ipairs(GUARDIAN_ORDER) do
-        if (target:getCharVar('PW_T4_' .. key .. '_Done') or 0) == 1 then
+        if masteryCatalog.isComplete(target, key) then
             done[#done + 1] = G[key].label
         else
             pending[#pending + 1] = G[key].label
@@ -76,7 +74,7 @@ commandObj.onTrigger = function(player, sub, arg2, arg3)
     end
 
     -- GM-only below
-    if player:getGMLevel() < 4 then
+    if player:getGMLevel() < 5 then
         player:printToPlayer('[Mastery] Permission denied.', xi.msg.channel.SYSTEM_3)
         return
     end
@@ -108,7 +106,7 @@ commandObj.onTrigger = function(player, sub, arg2, arg3)
             player:printToPlayer('[Mastery] Player not found: ' .. arg3, xi.msg.channel.SYSTEM_3)
             return
         end
-        target:setCharVar('PW_T4_' .. weapon .. '_Done', 1)
+        target:setCharVar(masteryCatalog.completionVar(weapon), 1)
         if (target:getCharVar('PW_Trial4_Done') or 0) == 0 then
             target:setCharVar('PW_Trial4_Done', 1)
         end
@@ -123,7 +121,7 @@ commandObj.onTrigger = function(player, sub, arg2, arg3)
         local sess = sessions()
         if sess and sess[target:getName()] then doEnd(target, 'abort') end
         for _, key in ipairs(GUARDIAN_ORDER) do
-            target:setCharVar('PW_T4_' .. key .. '_Done', 0)
+            target:setCharVar(masteryCatalog.completionVar(key), 0)
         end
         target:setCharVar('PW_Trial4_Done', 0)
         player:printToPlayer('[Mastery] All Trial 4 progress cleared for ' .. target:getName(), xi.msg.channel.SYSTEM_3)

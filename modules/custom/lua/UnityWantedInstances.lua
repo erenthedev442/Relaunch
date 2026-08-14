@@ -203,7 +203,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local board = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Unity_Instance_Board',
-        packetName = string.format('%sUnity Instances', ICON),
+        packetName = string.format('%sUnity Trials', ICON),
         look       = 233,
         x          = pos.x,
         y          = pos.y,
@@ -212,7 +212,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         widescan   = 1,
 
         onTrade = function(player)
-            player:printToPlayer('[Unity Instance] Use the board menu, kupo!', S)
+            player:printToPlayer('[Unity Trials] Use the board menu, kupo!', S)
         end,
 
         onTrigger = function(player)

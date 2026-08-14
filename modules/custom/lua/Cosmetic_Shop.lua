@@ -39,10 +39,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         local tomorrow = getItem(1)
 
         player:printToPlayer(string.format(
-            "[Boutique] Today's cosmetic: %s -- %s. Examine it in the window to see the look, kupo!",
+            "[Cosmetic Shop] Today's cosmetic: %s -- %s. Examine it in the window to see the look, kupo!",
             today.name, fmtAN(today.price)), S)
         player:printToPlayer(string.format(
-            '[Boutique] Appearance only (no stats). Buying spends Allied Notes -- you have %d. Tomorrow: %s.',
+            '[Cosmetic Shop] Appearance only (no stats). Buying spends Allied Notes -- you have %d. Tomorrow: %s.',
             player:getCurrency('allied_notes'), tomorrow.name), S)
 
         -- Native shop window: one examinable item, charged in Allied Notes via
@@ -69,7 +69,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         widescan   = 1,
 
         onTrade = function(player, npc, trade)
-            player:printToPlayer('[Boutique] No trading -- browse the shop window, kupo!', S)
+            player:printToPlayer('[Cosmetic Shop] No trading -- browse the shop window, kupo!', S)
         end,
 
         onTrigger = function(player, npc)

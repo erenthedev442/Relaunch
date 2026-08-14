@@ -49,7 +49,7 @@ local function validateParty(player)
         if member:getZoneID() ~= catalog.npc.zoneId then
             return nil, string.format('%s must be in GM Home.', member:getName())
         elseif member:checkDistance(player) > catalog.partyRange then
-            return nil, string.format('%s is too far from the Dungeon Guide.', member:getName())
+            return nil, string.format('%s is too far from Dungeon Instances.', member:getName())
         elseif member:getInstance() or member:getLocalVar('DungeonInstancePending') ~= 0 then
             return nil, string.format('%s is already entering an instance.', member:getName())
         elseif member:getCharVar('DungeonActive') ~= 0 then
@@ -65,7 +65,7 @@ end
 local function startDungeon(player, dungeon)
     local members, err = validateParty(player)
     if not members then
-        player:printToPlayer('[Dungeon Guide] ' .. err, xi.msg.channel.SYSTEM_3)
+        player:printToPlayer('[Dungeon Instances] ' .. err, xi.msg.channel.SYSTEM_3)
         return
     end
 
@@ -75,7 +75,7 @@ local function startDungeon(player, dungeon)
     end
 
     player:printToPlayer(
-        string.format('[Dungeon Guide] Opening a private %s for %d player(s)...', dungeon.label, #members),
+        string.format('[Dungeon Instances] Opening a private %s for %d player(s)...', dungeon.label, #members),
         xi.msg.channel.SYSTEM_3)
     player:createInstance(dungeon.instanceId)
 
@@ -89,7 +89,7 @@ local function startDungeon(player, dungeon)
                 end
             end
 
-            p:printToPlayer('[Dungeon Guide] The dungeon failed to open. Please try again.', xi.msg.channel.SYSTEM_3)
+            p:printToPlayer('[Dungeon Instances] The dungeon failed to open. Please try again.', xi.msg.channel.SYSTEM_3)
         end
     end)
 end
@@ -171,12 +171,12 @@ showDungeonMenu = function(player)
         'How do dungeons work?',
         function(p)
             p:printToPlayer(
-                '[Dungeon Guide] Your nearby party receives its own private copy. Other parties can run the same dungeon simultaneously without sharing monsters or progress.',
+                '[Dungeon Instances] Your nearby party receives its own private copy. Other parties can run the same dungeon simultaneously without sharing monsters or progress.',
                 xi.msg.channel.SYSTEM_3)
         end,
     })
 
-    sendMenu(player, 'Dungeon Guide', options)
+    sendMenu(player, 'Dungeon Instances', options)
 end
 
 m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npc.zone), function(zone)
@@ -185,7 +185,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npc.zone), 
     local npc = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Dungeon_Guide',
-        packetName = string.format('%sDungeon Guide', xi.icon.STAR_LARGE),
+        packetName = string.format('%sDungeon Instances', xi.icon.STAR_LARGE),
         look       = 3021,
         x          = catalog.npc.x,
         y          = catalog.npc.y,

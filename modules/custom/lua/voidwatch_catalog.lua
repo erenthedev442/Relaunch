@@ -27,49 +27,32 @@ C.PYXIS_SECONDS  = 180    -- claim window for the physical Riftworn Pyxis chest 
 C.SPAWN_DIST_MIN = 8
 C.SPAWN_DIST_MAX = 13
 
--- ── Tier scaling ────────────────────────────────────────────────────────────
--- Voidwatch occupies the bridge from early Lv99 hunts to the Mythic Stage-II
--- roster gate.  Anchor its single-NM fights to the same language as Voidspire:
--- Amber begins around floors 90-100, while repeat clears add pressure without
--- ever producing invalid Lv178+ enemies.
+-- ── Stratum scaling ─────────────────────────────────────────────────────────
+-- Voidwatch bridges early Lv99 hunts and the Mythic Stage-II roster gate.
+-- Combat profiles are explicit per stratum so repeat clears can never make a
+-- lower stratum overtake the next one. Each clear adds 4% pressure, capped at
+-- five clears / 20%; levels stay fixed so donor-pool formulas remain stable.
 C.MAX_EFFECTIVE_TIER = 24
 C.MAX_STRATUM_SCALING_CLEARS = 5
+C.STRATUM_REPEAT_STEP = 0.04
 
-local LEVEL_ANCHORS =
+local STRATUM_COMBAT =
 {
-    { tier = 1,  value = 99  },
-    { tier = 4,  value = 105 },
-    { tier = 7,  value = 110 },
-    { tier = 10, value = 115 },
-    { tier = 13, value = 120 },
-    { tier = 16, value = 130 },
-    { tier = 19, value = 145 },
-    { tier = 24, value = 150 },
+    CRIMSON  = { level = 99,  hp =  350000, att = 1200, acc = 600,  def = 450,  eva = 250,  matt = 500,  macc = 450,  mdef = 180, da = 5,  ta = 0, regain = 50,  dmgPhys = -400, damageCap = 2000 },
+    INDIGO   = { level = 105, hp =  600000, att = 1700, acc = 700,  def = 600,  eva = 350,  matt = 700,  macc = 550,  mdef = 225, da = 8,  ta = 0, regain = 60,  dmgPhys = -450, damageCap = 2500 },
+    JADE     = { level = 110, hp =  900000, att = 2300, acc = 800,  def = 750,  eva = 450,  matt = 900,  macc = 650,  mdef = 275, da = 10, ta = 0, regain = 75,  dmgPhys = -500, damageCap = 3000 },
+    WHITE    = { level = 115, hp = 1400000, att = 3000, acc = 900,  def = 950,  eva = 600,  matt = 1200, macc = 775,  mdef = 325, da = 12, ta = 2, regain = 90,  dmgPhys = -550, damageCap = 3500 },
+    ASHEN    = { level = 125, hp = 2500000, att = 3900, acc = 1000, def = 1200, eva = 800,  matt = 1500, macc = 900,  mdef = 375, da = 15, ta = 4, regain = 110, dmgPhys = -600, damageCap = 4000 },
+    HYACINTH = { level = 135, hp = 4500000, att = 4800, acc = 1125, def = 1450, eva = 1000, matt = 1800, macc = 1025, mdef = 425, da = 20, ta = 6, regain = 140, dmgPhys = -650, damageCap = 4500 },
+    AMBER    = { level = 145, hp = 7000000, att = 5800, acc = 1250, def = 1700, eva = 1200, matt = 2200, macc = 1150, mdef = 500, da = 25, ta = 8, regain = 180, dmgPhys = -700, damageCap = 5000 },
 }
 
-local HP_ANCHORS =
-{
-    { tier = 1,  value =   300000 },
-    { tier = 4,  value =   500000 },
-    { tier = 7,  value =   850000 },
-    { tier = 10, value =  1500000 },
-    { tier = 13, value =  2500000 },
-    { tier = 16, value =  5000000 },
-    { tier = 19, value = 10000000 },
-    { tier = 24, value = 14000000 },
-}
-
-local function anchoredValue(tier, anchors)
-    tier = math.max(1, math.min(C.MAX_EFFECTIVE_TIER, math.floor(tier or 1)))
-    for i = 2, #anchors do
-        local hi = anchors[i]
-        if tier <= hi.tier then
-            local lo = anchors[i - 1]
-            local ratio = (tier - lo.tier) / (hi.tier - lo.tier)
-            return math.floor(lo.value + (hi.value - lo.value) * ratio + 0.5)
-        end
-    end
-    return anchors[#anchors].value
+local function combatProfile(stratum, clears)
+    local key = type(stratum) == 'table' and stratum.key or stratum
+    local base = STRATUM_COMBAT[key] or STRATUM_COMBAT.CRIMSON
+    local repeats = math.min(math.max(0, clears or 0), C.MAX_STRATUM_SCALING_CLEARS)
+    local scale = 1 + repeats * C.STRATUM_REPEAT_STEP
+    return base, scale
 end
 
 function C.effectiveTier(stratum, clears)
@@ -78,20 +61,37 @@ function C.effectiveTier(stratum, clears)
     return math.min(C.MAX_EFFECTIVE_TIER, base + scaledClears + 1)
 end
 
-function C.nmLevel(tier) return math.min(150, anchoredValue(tier, LEVEL_ANCHORS)) end
-function C.nmHp(tier)    return anchoredValue(tier, HP_ANCHORS) end
-function C.nmMods(tier)
-    tier = math.max(1, math.min(C.MAX_EFFECTIVE_TIER, math.floor(tier or 1)))
+function C.nmLevel(stratum)
+    local base = combatProfile(stratum, 0)
+    return base.level
+end
+
+function C.nmHp(stratum, clears)
+    local base, scale = combatProfile(stratum, clears)
+    return math.floor(base.hp * scale)
+end
+
+function C.nmDamageCap(stratum)
+    local base = combatProfile(stratum, 0)
+    return base.damageCap
+end
+
+function C.nmMods(stratum, clears)
+    local base, scale = combatProfile(stratum, clears)
+    local function scaled(value) return math.floor(value * scale) end
     return {
-        [xi.mod.ATT]     = 900 + tier * 240,
-        [xi.mod.ACC]     = 500 + tier * 45,
-        [xi.mod.DEF]     = 300 + tier * 75,
-        [xi.mod.EVA]     = 150 + tier * 28,
-        [xi.mod.MATT]    = 300 + tier * 95,
-        [xi.mod.MACC]    = 240 + tier * 45,
-        [xi.mod.MDEF]    = 120 + tier * 32,
-        [xi.mod.DMGPHYS] = -800,             -- slightly tanky (engine caps at -50%)
-        [xi.mod.REGEN]   = 0,                -- authoritative: no inherited/pool regen
+        [xi.mod.ATT]           = scaled(base.att),
+        [xi.mod.ACC]           = scaled(base.acc),
+        [xi.mod.DEF]           = scaled(base.def),
+        [xi.mod.EVA]           = scaled(base.eva),
+        [xi.mod.MATT]          = scaled(base.matt),
+        [xi.mod.MACC]          = scaled(base.macc),
+        [xi.mod.MDEF]          = scaled(base.mdef),
+        [xi.mod.DOUBLE_ATTACK] = scaled(base.da),
+        [xi.mod.TRIPLE_ATTACK] = scaled(base.ta),
+        [xi.mod.REGAIN]        = scaled(base.regain),
+        [xi.mod.DMGPHYS]       = base.dmgPhys,
+        [xi.mod.REGEN]         = 0,
     }
 end
 
@@ -209,12 +209,9 @@ C.NM_COMMON =
     1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262,
 }
 -- Sortie JSE earring families -- 22 jobs x NQ/+1/+2 = 66 items (25420..25548).
--- Rolled independently from signature loot per NM band:
---   T3 NMs (5) -> +2 pool  (best tier, hardest NMs -- true chase drops)
---   T2 NMs (10) -> +1 pool (mid-tier)
---   T1 NMs (4) -> NQ pool  (entry tier, most farmable)
--- This keeps the whole Sortie family in Voidwatch without making 22 earrings
--- compete with each NM's one-to-four signature drops.
+-- Earring quality and exact chance follow the Voidwatch stratum, never the
+-- donor NM's historical VNM tier. +2 chase rates are intentionally fixed:
+-- Ashen 5%, Hyacinth 10%, Amber 20%. Lights shape signature loot instead.
 local SORTIE_NQ_EARRINGS =
 {
     25420, 25426, 25432, 25438, 25444, 25450, 25456, 25462, 25468, 25474, 25480,
@@ -231,35 +228,48 @@ local SORTIE_PLUS2_EARRINGS =
     25488, 25494, 25500, 25506, 25512, 25518, 25524, 25530, 25536, 25542, 25548,
 }
 
+local STRATUM_EARRINGS =
+{
+    CRIMSON  = { pool = SORTIE_NQ_EARRINGS,    chance = 20 },
+    INDIGO   = { pool = SORTIE_NQ_EARRINGS,    chance = 20 },
+    JADE     = { pool = SORTIE_PLUS1_EARRINGS, chance = 15 },
+    WHITE    = { pool = SORTIE_PLUS1_EARRINGS, chance = 20 },
+    ASHEN    = { pool = SORTIE_PLUS2_EARRINGS, chance = 5  },
+    HYACINTH = { pool = SORTIE_PLUS2_EARRINGS, chance = 10 },
+    AMBER    = { pool = SORTIE_PLUS2_EARRINGS, chance = 20 },
+}
+
+function C.earringReward(stratumKey)
+    local reward = STRATUM_EARRINGS[stratumKey]
+    if not reward then return nil, 0 end
+    return reward.pool, reward.chance
+end
+
 C.NM_LOOT =
 {
     -- Rich pools (retail Tier-III Voidwalkers): gear + signature material.
-    -- Earrings have a separate roll so they never dilute signature equipment.
-    Krabkatoa    = { rare = { 11502, 11632, 26970, 27724, 20827  },               earrings = SORTIE_PLUS2_EARRINGS, uncommon = { 2884, 2879, 4172, 4174, 4173, 4175 } },
-    Blobdingnag  = { rare = { 11631, 11585, 24188, 24131, 26400  },               earrings = SORTIE_PLUS2_EARRINGS, uncommon = { 2876, 2882, 4172, 4174, 4173, 4175 } },
-    Dawon        = { rare = { 15859, 16151, 28015, 20945  },               earrings = SORTIE_PLUS2_EARRINGS, uncommon = { 2570, 4172, 4174, 4173, 4175 } },
-    Lord_Ruthven = { rare = { 11628, 15953, 27775, 20672  },               earrings = SORTIE_PLUS2_EARRINGS, uncommon = { 2883, 2877, 4172, 4174, 4173, 4175 } },
-    Yilbegan     = { rare = { 11629, 11633, 14162, 19248, 25600, 21104  }, earrings = SORTIE_PLUS2_EARRINGS, uncommon = { 2878, 4172, 4174, 4173, 4175 } },
+    Krabkatoa    = { rare = { 11502, 11632, 26970, 27724, 20827  }, uncommon = { 2884, 2879, 4172, 4174, 4173, 4175 } },
+    Blobdingnag  = { rare = { 11631, 11585, 24188, 24131, 26400  }, uncommon = { 2876, 2882, 4172, 4174, 4173, 4175 } },
+    Dawon        = { rare = { 15859, 16151, 28015, 20945  }, uncommon = { 2570, 4172, 4174, 4173, 4175 } },
+    Lord_Ruthven = { rare = { 11628, 15953, 27775, 20672  }, uncommon = { 2883, 2877, 4172, 4174, 4173, 4175 } },
+    Yilbegan     = { rare = { 11629, 11633, 14162, 19248, 25600, 21104  }, uncommon = { 2878, 4172, 4174, 4173, 4175 } },
     -- Single-gear pools (retail Tier-II): the signature equip + shared consumables.
-    -- T2 -> Sortie +1 earring sprinkle.
-    Yacumama     = { rare = { 11586, 27857, 26721, 21712  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Farruca_Fly  = { rare = { 11635, 28287, 25654, 21221  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Skuld        = { rare = { 11544, 24178, 28152, 21228  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Capricornus  = { rare = { 15954, 28013, 28174, 28649  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Lamprey_Lord = { rare = { 16054, 28016, 28154, 26487  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Jyeshtha     = { rare = { 15955, 24128, 21528, 26403  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Feuerunke    = { rare = { 16056, 27725, 21568  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Tammuz       = { rare = { 16307, 24182, 21570  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Erebus       = { rare = { 11587, 24166, 21569  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Shoggoth     = { rare = { 19245, 27096, 28155, 28648  }, earrings = SORTIE_PLUS1_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Yacumama     = { rare = { 11586, 27857, 26721, 21712  }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Farruca_Fly  = { rare = { 11635, 28287, 25654, 21221  }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Skuld        = { rare = { 11544, 24178, 28152, 21228  }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Capricornus  = { rare = { 15954, 28013, 28174, 28649  }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Lamprey_Lord = { rare = { 16054, 28016, 28154, 26487  }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Jyeshtha     = { rare = { 15955, 24128, 21528, 26403  }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Feuerunke    = { rare = { 16056, 27725, 21568  }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Tammuz       = { rare = { 16307, 24182, 21570  }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Erebus       = { rare = { 11587, 24166, 21569  }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Shoggoth     = { rare = { 19245, 27096, 28155, 28648  }, uncommon = { 4172, 4174, 4173, 4175 } },
     -- Retail-empty NMs: seeded so every NM has a full table (see note above).
-    -- T1 -> Sortie NQ earring sprinkle (entry-tier farm target).
-    Aglaophotis  = { rare = { 15544, 26702, 21071  }, earrings = SORTIE_NQ_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Gjenganger   = { rare = { 942, 24274, 21529  },   earrings = SORTIE_NQ_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Gorehound    = { rare = { 942, 28280, 25853, 21256  },   earrings = SORTIE_NQ_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
-    Raker_Bee    = { rare = { 942, 28296, 27720, 22042  },   earrings = SORTIE_NQ_EARRINGS, uncommon = { 4172, 4174, 4173, 4175 } },
+    Aglaophotis  = { rare = { 15544, 26702, 21071  }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Gjenganger   = { rare = { 942, 24274, 21529  }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Gorehound    = { rare = { 942, 28280, 25853, 21256  }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Raker_Bee    = { rare = { 942, 28296, 27720, 22042  }, uncommon = { 4172, 4174, 4173, 4175 } },
 }
-C.EARRING_ROLL_CHANCE = 20
 function C.nmLoot(name)
     local t = C.NM_LOOT[name]
     if not t then
@@ -269,40 +279,40 @@ function C.nmLoot(name)
         rare     = (t.rare and #t.rare > 0)         and t.rare     or C.LOOT.rare,
         uncommon = (t.uncommon and #t.uncommon > 0) and t.uncommon or C.LOOT.uncommon,
         common   = t.common or C.NM_COMMON,
-        earrings = t.earrings,
     }
 end
 
--- ── Hardcore mechanics (mob_mechanics_library mechCfg, scales by tier) ──────
--- Stance dance (phys/mag immunity windows) does NOT block Lights -- the weakness
--- listeners fire on USE, not on damage, so you can keep probing through a stance.
-function C.mechCfg(tier)
+-- ── Stratum pressure (retail donor abilities remain the fight's identity) ───
+-- Avoid generic immunity dances, unavoidable max-HP nukes, terror and doom:
+-- those stack unfairly with retail kits in solo/trust content. Upper strata
+-- instead gain readable fury phases and a generous 15-minute soft enrage.
+function C.mechCfg(stratum)
+    local key = type(stratum) == 'table' and stratum.key or stratum
     local cfg =
     {
-        name            = 'Voidwalker',
+        name            = 'Voidwatch',
         targetPartyOnly = true,
+        forceMessages   = true,
     }
-    if tier >= 4 then
-        cfg.stance =
-        {
-            startHpp = 100, periodSec = 22,
-            stances =
-            {
-                { mods = { [xi.mod.DMGPHYS] = -10000, [xi.mod.DMGMAGIC] = 0 },     msg = 'hardens -- weapons glance off!' },
-                { mods = { [xi.mod.DMGPHYS] = 0,      [xi.mod.DMGMAGIC] = -10000 }, msg = 'shimmers -- magic warps aside!' },
-            },
-        }
-    end
-    if tier >= 7  then cfg.aoe    = { periodSec = 14, dmgPct = 16, msg = 'unleashes a void shockwave!' } end
-    if tier >= 10 then cfg.cc     = { periodSec = 28, effect = xi.effect.TERROR, power = 1, dur = 4, msg = 'voids your courage!' } end
-    if tier >= 13 then cfg.enrage = { sec = 300, att = 3500, haste = 150, msg = 'the void begins to devour all!' } end
-    if tier >= 16 then cfg.doom   = { startHpp = 12, dur = 30, msg = 'marks you for the void!' } end
-    if tier >= 19 then
+    if key == 'ASHEN' then
         cfg.phases =
         {
-            { hp = 50, action = 'fury', att = 2500, haste = 100, msg = 'enters a void frenzy!' },
-            { hp = 20, action = 'nuke', dmgPct = 35, msg = 'erupts with annihilating force!' },
+            { hp = 40, action = 'fury', att = 500, haste = 75, msg = 'draws deeper strength from the void!' },
         }
+        cfg.enrage = { sec = 900, att = 1000, haste = 100, msg = 'the prolonged battle feeds the void!' }
+    elseif key == 'HYACINTH' then
+        cfg.phases =
+        {
+            { hp = 45, action = 'fury', att = 750, haste = 100, msg = 'surges with concentrated void energy!' },
+        }
+        cfg.enrage = { sec = 900, att = 1500, haste = 125, msg = 'the prolonged battle feeds the void!' }
+    elseif key == 'AMBER' then
+        cfg.phases =
+        {
+            { hp = 55, action = 'fury', att = 1000, haste = 125, msg = 'enters a controlled void frenzy!' },
+            { hp = 25, action = 'enrage', att = 1500, haste = 150, msg = 'tears open the heart of the void!' },
+        }
+        cfg.enrage = { sec = 900, att = 2000, haste = 175, msg = 'the prolonged battle feeds the void!' }
     end
     return cfg
 end

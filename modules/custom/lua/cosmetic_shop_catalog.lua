@@ -15,7 +15,7 @@
 -----------------------------------
 local catalog = {}
 
-catalog.npcName = 'Boutique'
+catalog.npcName = 'Cosmetic Shop'
 catalog.npcLook = 2419  -- Moogle
 catalog.npcPos  = { x = 585.4050, y = -2.5712, z = 475.1133, rot = 224 }
 

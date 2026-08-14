@@ -19,7 +19,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 1,   -- GM only
+    permission = 5,   -- Owner/developer GM only
     parameters = 's', -- parsed as string so we can handle "2 4" together
 }
 

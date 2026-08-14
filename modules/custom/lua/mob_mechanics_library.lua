@@ -184,7 +184,7 @@ M.mechanicPlayersNear = mechanicPlayersNear
 local SHOUTS_ENABLED = false
 
 local function shout(mob, msg, st)
-    if not SHOUTS_ENABLED then return end
+    if not SHOUTS_ENABLED and not (st and st.forceMessages) then return end
     if not msg then return end
     local tag   = (st and st.name) and ('[%s] '):format(st.name) or '[NM] '
     local owner = st and st.ownerName
@@ -637,6 +637,7 @@ function M.attach(mob, cfg, ownerName)
     mechState[id] = {
         cfg          = cfg,
         name         = cfg.name,
+        forceMessages = cfg.forceMessages == true,
         ownerName       = ownerName or nil,  -- when set, AoE/CC/shout only targets this player
         targetPartyOnly = cfg.targetPartyOnly == true,
         damageMessages  = cfg.damageMessages == true,

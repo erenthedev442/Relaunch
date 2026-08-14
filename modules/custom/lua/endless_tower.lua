@@ -490,7 +490,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local npc = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Tower_Arbiter',
-        packetName = 'Tower Climb',
+        packetName = 'Endless Tower',
         look       = 169,
         x          =   613.000,
         y          =   -3.360,

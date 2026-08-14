@@ -240,6 +240,7 @@ function htbf.register(fightKey, tier, variant)
     local isFinalTest = variant == 'finalTest'
     local final       = catalog.finalTest
     local scale       = isFinalTest and final.scale or
+        (f and f.tierScaleOverride and f.tierScaleOverride[tier]) or
         (f and catalog.tierScale[f.difficulty or 'standard'][tier])
     local rew         = isFinalTest and final.reward or
         (f and catalog.tierReward[f.rewardClass or 'standard'][tier])
@@ -298,7 +299,9 @@ function htbf.register(fightKey, tier, variant)
     -- runs identically; we only re-gate it (gem) + scale it. The base script
     -- loads alphabetically before <key>_ht*.lua, so it is registered by now.
     local baseSetup = nil
-    if f.reuseBaseId then
+    if f.groupsForTier then
+        content.groups = f.groupsForTier(tier)
+    elseif f.reuseBaseId then
         local base = xi.battlefield.contents[f.reuseBaseId]
         if base then
             content.groups = base.groups
@@ -348,8 +351,9 @@ function htbf.register(fightKey, tier, variant)
         if scale.lvl and scale.lvl > 1.0 then
             mob:setMobLevel(math.min(math.floor(mob:getMainLvl() * scale.lvl), 255))
         end
-        if scale.hp and scale.hp > 1.0 then
-            local hp = math.floor(mob:getMaxHP() * scale.hp)
+        if (scale.hp and scale.hp > 1.0) or (scale.minHp and scale.minHp > 0) then
+            local hp = math.floor(mob:getMaxHP() * (scale.hp or 1.0))
+            hp = math.max(hp, scale.minHp or 0)
             mob:setMaxHP(hp)
             mob:setHP(hp)
         end

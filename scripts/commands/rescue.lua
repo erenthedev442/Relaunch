@@ -15,12 +15,12 @@
 --                                   to GM Home too, but requires a rebuild.)
 --
 --       Gentler alternatives that don't force a relog:
---         !releaseme <name>        (event-state clear + resync)
---         !releaseme <name> force  (homepoint warp)
+--         !gmrelease <name> <reason>  (GM1 event-state clear + resync)
+--         Ask the player to use !unstick for self-service recovery.
 --       Use !rescue when those aren't enough (e.g. char logged out below
 --       geometry, Y-coord in the void, can't log back in without crashing).
 --
--- permission 1 = GM-only
+-- permission 1 = GM1 support, online or offline
 -----------------------------------
 -- (xi.zone is a global from scripts/enum/zone.lua -- no require needed.)
 
@@ -44,6 +44,10 @@ commandObj.onTrigger = function(gm, charname)
     -- Try to grab the entity object first (only exists if online in this cluster).
     local target = GetPlayerByName(charname)
     if target then
+        if gm:getGMLevel() < 5 and (target:getGMLevel() or 0) > 0 then
+            gm:printToPlayer('[Rescue] GM1 cannot rescue another staff character.', xi.msg.channel.SYSTEM_3)
+            return
+        end
         local fromZone = target:getZoneName() or '?'
         target:setPos(RESCUE_X, RESCUE_Y, RESCUE_Z, RESCUE_ROT, RESCUE_ZONE)
         target:forceLogout()

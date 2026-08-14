@@ -537,7 +537,7 @@ end
 
 -----------------------------------
 -- NPC hidden underground in RuLude Gardens (zone 243).
--- Accessible only via the !rebirth GM command (warps to cfg.npcPos).
+-- Accessible through !warp > Activities > Progression Hubs.
 -----------------------------------
 m:addOverride('xi.zones.RuLude_Gardens.Zone.onInitialize', function(zone)
     super(zone)

@@ -22,9 +22,9 @@ commandObj.cmdprops =
 
 local SYS = xi.msg.channel.SYSTEM_3
 
-local function isGM(player)
+local function isOwnerDevGM(player)
     local ok, lvl = pcall(function() return player:getGMLevel() end)
-    return ok and lvl ~= nil and lvl > 0
+    return ok and lvl ~= nil and lvl >= 5
 end
 
 commandObj.onTrigger = function(player, sub, n)
@@ -43,13 +43,13 @@ commandObj.onTrigger = function(player, sub, n)
         xi.voidwatch.reveal(player)
     elseif sub == 'refiner' then
         xi.voidwatch.refiner(player)
-    elseif sub == 'open' and isGM(player) then
+    elseif sub == 'open' and isOwnerDevGM(player) then
         xi.voidwatch.open(player)   -- GM force-spawn; players open rifts by examining a Planar Rift
-    elseif sub == 'cruor' and isGM(player) then
+    elseif sub == 'cruor' and isOwnerDevGM(player) then
         local amt = tonumber(n) or 1000
         xi.voidwatch.grantCruor(player, amt)
         player:printToPlayer(string.format('[Voidwatch] (GM) granted %d cruor.', amt), SYS)
-    elseif sub == 'shards' and isGM(player) then
+    elseif sub == 'shards' and isOwnerDevGM(player) then
         local amt = tonumber(n) or 20
         xi.voidwatch.grantShards(player, amt)
         player:printToPlayer(string.format('[Voidwatch] (GM) granted %d atmacite shards.', amt), SYS)

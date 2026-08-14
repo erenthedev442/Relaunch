@@ -282,7 +282,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local npc = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Paragon_Sage',
-        packetName = string.format('%sParagon Sage', xi.icon.STAR_LARGE),
+        packetName = string.format('%sParagon Board', xi.icon.STAR_LARGE),
         look       = 215,
         x          = C.NPC_POS.x,
         y          = C.NPC_POS.y,

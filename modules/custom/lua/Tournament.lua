@@ -477,7 +477,7 @@ end)
 -- ─── command handler ──────────────────────────────────────────────────────────
 
 tourney.handleCmd = function(player, sub, a2, a3)
-    local isGM   = player:getGMLevel() >= 1
+    local isGM   = player:getGMLevel() >= 5
     local pname  = player:getName()
     sub = sub and string.lower(sub) or ''
 

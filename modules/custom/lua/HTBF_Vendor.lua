@@ -204,14 +204,21 @@ showCategory = function(p, cat)
 end
 
 showBuy = function(p, g)
+    local useHint = catalog.gemUseHint and catalog.gemUseHint[g.id]
     if p:hasKeyItem(g.id) then
         p:printToPlayer(string.format('[HTBF] You already hold the %s -- use it before buying another.', g.name), SYS)
+        if useHint then
+            p:printToPlayer('[HTBF] ' .. useHint, SYS)
+        end
         showMenu(p)
         return
     end
     p:printToPlayer(string.format(
         '[HTBF] %s -- %s gil. Entry requires 2,100 spent JP on your current job and all NM affinities.',
         g.name, commafy(g.price)), SYS)
+    if useHint then
+        p:printToPlayer('[HTBF] ' .. useHint, SYS)
+    end
     local tier3Open = (p:getCharVar(catalog.finalTest.completionVar) or 0) >= 1
         or (p:getCharVar(catalog.finalTest.tierClearVar) or 0) >= 1
     p:printToPlayer(
@@ -250,7 +257,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'HTBF_Gem_Vendor',
-        packetName = string.format('%sPhantom Gems', xi.icon.STAR_LARGE),
+        packetName = string.format('%sHTBF Vendor', xi.icon.STAR_LARGE),
         look       = 200,
         x          = NPCPOS.x,
         y          = NPCPOS.y,

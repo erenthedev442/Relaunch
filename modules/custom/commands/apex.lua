@@ -5,8 +5,9 @@
 --
 -- Usage:
 --   !apex          -- show your Apex record + unspent Paragon Points
---   !apex abort    -- end your current climb (banked points are kept)
---   !apex cleanup  -- GM: remove orphaned Apex bosses from the arena
+--   !apex abort           -- end your own climb
+--   !apex status [player] -- self status; support GMs may inspect another player
+--   !apex cleanup         -- support GM: remove orphaned Apex bosses from the arena
 --
 -- The engine + tunables live in modules/custom/lua/ApexTrials.lua /
 -- apex_catalog.lua; this file is just the chat front-end.
@@ -17,23 +18,68 @@ local commandObj = {}
 commandObj.cmdprops =
 {
     permission = 0,
-    parameters = 's',
+    parameters = 'ss',
 }
 
 local SYS = xi.msg.channel.SYSTEM_3
 
-commandObj.onTrigger = function(player, sub)
+local function printStatus(viewer, target, inRun)
+    local record = target:getCharVar('Apex_HighestTier') or 0
+    local pp     = target:getCharVar('Paragon_Points') or 0
+    viewer:printToPlayer(string.format(
+        '[Apex] %s: Record Tier %d. Unspent Paragon Points: %d. %s',
+        target:getName(), record, pp,
+        inRun and '(climbing now)' or ('Next push: Tier ' .. (record + 1))), SYS)
+end
+
+commandObj.onTrigger = function(player, sub, targetName)
     sub = (sub or ''):lower()
 
     local sessions = xi._apex_sessions or {}
     local inRun    = sessions[player:getName()] ~= nil
 
     if sub == 'abort' then
-        if inRun and xi._apex_endRun then
-            xi._apex_endRun(player, 'abort')
-        else
-            player:printToPlayer('[Apex] You are not in a climb.', SYS)
+        local target = player
+        if targetName then
+            if player:getGMLevel() < 5 then
+                player:printToPlayer('[Apex] Use !gmcontent reset apex <player> <reason>.', SYS)
+                return
+            end
+
+            target = GetPlayerByName(targetName)
+            if not target then
+                player:printToPlayer('[Apex] Player not found: ' .. targetName, SYS)
+                return
+            end
         end
+
+        if sessions[target:getName()] and xi._apex_endRun then
+            xi._apex_endRun(target, 'abort')
+            if target ~= player then
+                player:printToPlayer('[Apex] Aborted climb for ' .. target:getName() .. '.', SYS)
+            end
+        else
+            player:printToPlayer('[Apex] ' .. target:getName() .. ' is not in a climb.', SYS)
+        end
+        return
+    end
+
+    if sub == 'status' then
+        local target = player
+        if targetName then
+            if player:getGMLevel() < 1 then
+                player:printToPlayer('[Apex] Support GM permission required to inspect another player.', SYS)
+                return
+            end
+
+            target = GetPlayerByName(targetName)
+            if not target then
+                player:printToPlayer('[Apex] Player not found: ' .. targetName, SYS)
+                return
+            end
+        end
+
+        printStatus(player, target, sessions[target:getName()] ~= nil)
         return
     end
 
@@ -58,11 +104,7 @@ commandObj.onTrigger = function(player, sub)
     end
 
     -- Default: status.
-    local record = player:getCharVar('Apex_HighestTier') or 0
-    local pp     = player:getCharVar('Paragon_Points') or 0
-    player:printToPlayer(string.format(
-        '[Apex] Record: Tier %d.  Unspent Paragon Points: %d.  %s',
-        record, pp, inRun and '(climbing now -- !apex abort to stop)' or ('Next push: Tier ' .. (record + 1))), SYS)
+    printStatus(player, player, inRun)
     player:printToPlayer('[Apex] Talk to the Apex Arbiter in Purgonorgo Isle to begin a climb.', SYS)
 end
 

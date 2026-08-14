@@ -1,6 +1,9 @@
 local catalog = require('modules/custom/lua/weapon_forge_catalog')
 local gates = require('modules/custom/lua/weapon_forge_gates')
 local aeonicMaat = require('modules/custom/lua/aeonic_maat_catalog')
+local ambuscade = require('modules/custom/lua/ambuscade_weapons_catalog')
+local aeonicRepeat = require('modules/custom/lua/aeonic_forge_catalog')
+local primeRepeat = require('modules/custom/lua/prime_repeat_catalog')
 
 describe('Weapon Forge catalog and gate integrity', function()
     it('keeps every Prime and Aeonic chain complete with unique item IDs', function()
@@ -126,8 +129,76 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(catalog.costs.toStage3.hlRank == 5)
         assert(catalog.costs.toStage3.medals.id == 9543)
         assert(catalog.costs.toStage3.medals.qty == 100)
-        assert(catalog.costs.toStage3.reforgeMarks == 30000)
+        assert(catalog.costs.toStage3.reforgeMarks == 5000)
         assert(catalog.costs.toStage3.gil == 750000000)
+    end)
+
+    it('uses real Ajja and Kaja stages for every Ambuscade weapon family', function()
+        for index = 1, 13 do
+            assert(catalog.chains[index].s1.id == ambuscade.CHAINS[index].stages[2])
+            assert(catalog.chains[index].s2.id == ambuscade.CHAINS[index].stages[4])
+        end
+
+        -- Ambuscade has no firearm family, so Prime keeps explicit obtainable
+        -- marksmanship equivalents rather than borrowing the grip chain.
+        assert(catalog.chains[14].s1.id == 21276)
+        assert(catalog.chains[14].s2.id == 22134)
+    end)
+
+    it('requires four matching final REMA for each repeat Prime lineage', function()
+        assert(#primeRepeat.recipes == 14)
+        assert(primeRepeat.initialPrimeVar == 'WF_PrimeWeapon_Final')
+        assert(primeRepeat.marks == 5000)
+        assert(primeRepeat.demonsId == 9543 and primeRepeat.demons == 100)
+        assert(primeRepeat.gil == 250000000)
+        assert(primeRepeat.apparition.look == 2680)
+
+        for index, recipe in ipairs(primeRepeat.recipes) do
+            assert(recipe.prime.id == catalog.chains[index].s3.id)
+            assert(#recipe.relics >= 1 and #recipe.empyreans >= 1)
+            assert(#recipe.mythics >= 1 and #recipe.aeonics == 1)
+        end
+
+        local greatKatana = primeRepeat.recipes[10]
+        assert(greatKatana.weaponType == 'Great Katana')
+        assert(greatKatana.relics[1].id == 21954)    -- Amanomurakumo
+        assert(greatKatana.empyreans[1].id == 21956) -- Masamune
+        assert(greatKatana.mythics[1].id == 21955)   -- Kogarasumaru
+        assert(greatKatana.aeonics[1].id == 21025)   -- Dojikiri Yasutsuna
+        assert(greatKatana.prime.id == 21986)        -- Kusanagi
+    end)
+
+    it('recognizes an exact non-consuming four-weapon Prime proof trade', function()
+        local recipe = primeRepeat.recipes[10]
+        local items =
+        {
+            [recipe.relics[1].id] = 1,
+            [recipe.empyreans[1].id] = 1,
+            [recipe.mythics[1].id] = 1,
+            [recipe.aeonics[1].id] = 1,
+        }
+        local trade = {}
+        function trade:getItemCount() return 4 end
+        function trade:hasItemQty(id, qty) return (items[id] or 0) >= qty end
+
+        assert(primeRepeat.tradeMatches(trade, recipe))
+        items[recipe.aeonics[1].id] = nil
+        assert(not primeRepeat.tradeMatches(trade, recipe))
+    end)
+
+    it('requires the selected weapon Maat victory for every repeat Aeonic', function()
+        local vars = { WF_Aeonic_Final = 1 }
+        local player = {}
+        function player:getCharVar(name) return vars[name] or 0 end
+
+        local finalId = catalog.chains[2].aeonic.s3.id
+        local ok, reason = aeonicRepeat.canRepeat(player, finalId)
+        assert(not ok and reason == 'maat')
+        vars[aeonicMaat.completionVar(finalId)] = xi.job.BRD
+        assert(aeonicRepeat.canRepeat(player, finalId))
+
+        -- One weapon's Maat clear cannot authorize a different Aeonic.
+        assert(not aeonicRepeat.canRepeat(player, catalog.chains[1].aeonic.s3.id))
     end)
 
     it('keeps Aeonic currency time above the prior REMA paths', function()
@@ -135,7 +206,7 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(catalog.aeonicBase.eschaBeads == 50000)
         assert(costs.toStage1.eschaSilt + costs.toStage2.eschaSilt + costs.toStage3.eschaSilt == 50000)
         assert(costs.toStage1.attestations + costs.toStage2.attestations + costs.toStage3.attestations == 6)
-        assert(costs.toStage3.reforgeMarks == 24000)
+        assert(costs.toStage3.reforgeMarks == 2000)
         assert(costs.toStage1.hlRank == 5 and costs.toStage2.hlRank == 5 and costs.toStage3.hlRank == 5)
     end)
 
@@ -179,7 +250,7 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(catalog.relicCosts[3].relicCurrency == 500)
         assert(catalog.relicCosts[3].highTierAlt == 5)
         assert(catalog.relicCosts[3].pluton == 500)
-        assert(catalog.relicCosts[3].marks == 10000)
+        assert(catalog.relicCosts[3].marks == 1000)
         assert(catalog.relicBase.byne == nil)
         for _, cost in ipairs(catalog.relicCosts) do
             assert(cost.byne == nil)

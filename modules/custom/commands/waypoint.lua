@@ -23,7 +23,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 0,
+    permission = 1,
     parameters = 'ss',
 }
 

@@ -7,7 +7,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 0,
+    permission = 5,
     parameters = ''
 }
 

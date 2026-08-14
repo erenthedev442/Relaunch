@@ -29,6 +29,11 @@ commandObj.onTrigger = function(player)
     end
 
     local leaderID = leader:getID()
+    if player:getID() ~= leaderID then
+        player:printToPlayer('Only the party leader can use !warpty.', xi.msg.channel.SYSTEM_3)
+        return
+    end
+
     local lx       = leader:getXPos()
     local ly       = leader:getYPos()
     local lz       = leader:getZPos()

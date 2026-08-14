@@ -155,7 +155,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local TraitTrainer = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'CrossJob_TraitTrainer',
-        packetName = string.format('%sBuy: Traits', xi.icon.STAR_LARGE),
+        packetName = string.format('%sTrait Trainer', xi.icon.STAR_LARGE),
         look       = 168,
         x          = catalog.npcPos.x,
         y          = catalog.npcPos.y,

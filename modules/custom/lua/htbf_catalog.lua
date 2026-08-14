@@ -70,6 +70,18 @@ catalog.gemName =
     [xi.ki.PHANTOM_GEM_OF_RAGE]       = 'Phantom Gem of Rage',
 }
 
+-- The five Ark Angel gems are bound to five different Shimmering Circles.
+-- Surface that mapping at the vendor; otherwise players naturally try every
+-- gem at circle I and conclude that Ark Angels II-V do not exist.
+catalog.gemUseHint =
+{
+    [xi.ki.PHANTOM_GEM_OF_APATHY]    = 'Use at Shimmering Circle I.',
+    [xi.ki.PHANTOM_GEM_OF_COWARDICE] = 'Use at Shimmering Circle II.',
+    [xi.ki.PHANTOM_GEM_OF_ENVY]      = 'Use at Shimmering Circle III.',
+    [xi.ki.PHANTOM_GEM_OF_ARROGANCE] = 'Use at Shimmering Circle IV.',
+    [xi.ki.PHANTOM_GEM_OF_RAGE]      = 'Use at Shimmering Circle V.',
+}
+
 -- The vendor groups gems by expansion so each customMenu stays under BOTH client
 -- caps (max 8 options + 150-byte title+labels). A flat 16-gem list would hide
 -- half the gems (incl. the headline Avatar gem) and blow the byte cap. Ordered.
@@ -318,7 +330,7 @@ catalog.fights =
     {
         zone = xi.zone.CLOISTER_OF_TREMORS, entryNpc = 'EP_Entrance', exitNpc = 'Earth_Protocrystal',
         gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4030,
-        mobs = { 'Titan_Prime_TBE' }, label = 'Trial by Earth',
+        mobs = { 'Titan_Prime_HTBF' }, label = 'Trial by Earth',
         difficulty = 'avatar', rewardClass = 'simple', entryPosByArea = avatarEntryPos,
     },
     trial_by_lightning =
@@ -358,16 +370,40 @@ catalog.fights =
     {
         zone = xi.zone.SEALIONS_DEN, entryNpc = '_0w0', exitNpc = 'Airship_Door',
         gem = xi.ki.WARRIORS_PATH_PHANTOM_GEM, baseIndex = 2, baseBattlefieldId = 4070,
-        reuseBaseId = xi.battlefield.id.WARRIORS_PATH, label = "The Warrior's Path",
+        label = "The Warrior's Path",
         difficulty = 'standard', rewardClass = 'standard',
-        -- Sealion's Den starts these encounters inside the airship. The battle
-        -- deck mob coordinates are a different map layer and eject players who
-        -- are placed there directly by a custom battlefield ID.
+        -- Use the dedicated level-99 HTMBF Tenzen/Chebukki groups rather than
+        -- the level-70 story group. Each tier owns a separate set of entities.
+        groupsForTier = function(tier)
+            local first = 16908322 + (tier - 1) * 12
+            return
+            {
+                {
+                    mobIds =
+                    {
+                        { first },
+                        { first + 4 },
+                        { first + 8 },
+                    },
+                    allDeath = function(battlefield)
+                        battlefield:setStatus(xi.battlefield.status.WON)
+                    end,
+                },
+                {
+                    mobIds =
+                    {
+                        { first + 1, first + 2, first + 3 },
+                        { first + 5, first + 6, first + 7 },
+                        { first + 9, first + 10, first + 11 },
+                    },
+                },
+            }
+        end,
         entryPosByArea =
         {
-            [1] = { -780.010, -103.348,  -86.327, 193 },
-            [2] = { -140.029,  -23.348, -446.376, 193 },
-            [3] = {  499.969,   56.652, -806.132, 193 },
+            [1] = { -646.335, -231.648,  486.0, 215 },
+            [2] = {   -6.354, -151.648,  126.0, 215 },
+            [3] = {  633.622,  -71.648, -233.0, 215 },
         },
     },
     -- One to be Feared shares Sealion's Den entrance _0w0 (base 0/1, Warrior's
@@ -377,13 +413,45 @@ catalog.fights =
     {
         zone = xi.zone.SEALIONS_DEN, entryNpc = '_0w0', exitNpc = 'Airship_Door',
         gem = xi.ki.FEARED_ONE_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4080,
-        reuseBaseId = xi.battlefield.id.ONE_TO_BE_FEARED, timeLimit = 2700,
+        timeLimit = 2700,
         label = 'One to be Feared', difficulty = 'mechanics', rewardClass = 'epic',
+        -- Retail HTMBF is Omega -> Ultima only. The mission battlefield also
+        -- contains Mammets and story cutscenes, so it must not be reused here.
+        groupsForTier = function(tier)
+            local first = 16908382 + (tier - 1) * 2
+            return
+            {
+                {
+                    mobIds =
+                    {
+                        { first },
+                        { first + 10 },
+                        { first + 20 },
+                    },
+                    allDeath = function(battlefield)
+                        local ultimaId = first + 1 + (battlefield:getArea() - 1) * 10
+                        SpawnMob(ultimaId)
+                    end,
+                },
+                {
+                    mobIds =
+                    {
+                        { first + 1 },
+                        { first + 11 },
+                        { first + 21 },
+                    },
+                    spawned = false,
+                    allDeath = function(battlefield)
+                        battlefield:setStatus(xi.battlefield.status.WON)
+                    end,
+                },
+            }
+        end,
         entryPosByArea =
         {
-            [1] = { -780.010, -103.348,  -86.327, 193 },
-            [2] = { -140.029,  -23.348, -446.376, 193 },
-            [3] = {  499.969,   56.652, -806.132, 193 },
+            [1] = { -643.105, -231.648,  486.0, 192 },
+            [2] = {   -3.124, -151.648,  126.0, 192 },
+            [3] = {  636.852,  -71.648, -233.0, 192 },
         },
     },
     head_wind =
@@ -412,6 +480,16 @@ catalog.fights =
         gem = xi.ki.DAWN_PHANTOM_GEM, baseIndex = 2, baseBattlefieldId = 4210,
         reuseBaseId = xi.battlefield.id.DAWN, label = 'Dawn',
         difficulty = 'epic', rewardClass = 'epic',
+        -- Promathia's mission pools have only 8k/12k HP and already carry
+        -- bespoke defensive mechanics. Huge flat DEF from the generic epic
+        -- profile made autos deal zero while the tiny scaled HP evaporated to
+        -- capped WS. Give him real HTBF HP with moderate additive stats.
+        tierScaleOverride =
+        {
+            [1] = { name = 'I',   lvl = 1.25, hp = 3.0,  minHp = 1500000, att = 1200, def = 700,  macc = 400,  meva = 500,  eva = 300 },
+            [2] = { name = 'II',  lvl = 1.50, hp = 7.0,  minHp = 3000000, att = 2600, def = 1400, macc = 850,  meva = 1000, eva = 600 },
+            [3] = { name = 'III', lvl = 1.75, hp = 14.0, minHp = 6000000, att = 4500, def = 2400, macc = 1500, meva = 1700, eva = 1000 },
+        },
         entryPosByArea =
         {
             [1] = { -520.0, -120.0,  493.8, 190 },
@@ -469,9 +547,9 @@ catalog.fights =
         difficulty = 'standard', rewardClass = 'standard',
         entryPosByArea =
         {
-            [1] = { 0.0,  202.5, -393.0, 0 },
-            [2] = { 0.0,    2.5,    7.0, 0 },
-            [3] = { 0.0, -197.5,  407.5, 0 },
+            [1] = { 0.0,  202.5, -375.0, 64 },
+            [2] = { 0.0,    2.5,   22.0, 64 },
+            [3] = { 0.0, -197.5,  415.0, 64 },
         },
     },
     celestial_nexus =

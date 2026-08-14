@@ -27,8 +27,8 @@ commandObj.onTrigger = function(player, sub, amt)
 
     -- GM test faucet: !empower give <n>
     if sub == 'give' then
-        if (player:getGMLevel() or 0) < 1 then
-            player:printToPlayer('!empower give is GM-only.', SYS)
+        if (player:getGMLevel() or 0) < 5 then
+            player:printToPlayer('!empower give requires an owner/developer GM.', SYS)
             return
         end
         local n = tonumber(amt) or 0
@@ -47,7 +47,7 @@ commandObj.onTrigger = function(player, sub, amt)
     if xi.spellSkillMastery and xi.spellSkillMastery.report then
         xi.spellSkillMastery.report(player)
     else
-        player:printToPlayer(string.format('You hold %d %s. Visit the Mastery Sage in Leafallia to spend them.',
+        player:printToPlayer(string.format('You hold %d %s. Visit Spell Mastery at !hub to spend them.',
             player:getCharVar(C.CURRENCY_VAR) or 0, C.CURRENCY_NAME), SYS)
     end
 end

@@ -1,6 +1,6 @@
 -----------------------------------
 -- func: release
--- desc: Releases the player from current events.
+-- desc: Legacy alias for !unstick.
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
@@ -8,27 +8,11 @@ local commandObj = {}
 commandObj.cmdprops =
 {
     permission = 0,
-    parameters = 's'
+    parameters = ''
 }
 
-local function error(player, msg)
-    player:printToPlayer(msg)
-    player:printToPlayer('!release (name)')
-end
-
-commandObj.onTrigger = function(player, name)
-    local target
-    if name == nil then
-        target = player
-    else
-        target = GetPlayerByName(name)
-        if target == nil then
-            error(player, string.format('Player named "%s" not found!', name))
-            return
-        end
-    end
-
-    target:release()
+commandObj.onTrigger = function(player)
+    require('scripts/commands/unstick').onTrigger(player)
 end
 
 return commandObj

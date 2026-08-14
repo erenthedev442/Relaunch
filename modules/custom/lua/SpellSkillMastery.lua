@@ -197,7 +197,7 @@ local function show(p, title, options)
 end
 
 openMain = function(p)
-    p:printToPlayer(string.format('[Mastery Sage] You hold %d %s.', getSigils(p), C.CURRENCY_NAME), SYS)
+    p:printToPlayer(string.format('[Spell Mastery] You hold %d %s.', getSigils(p), C.CURRENCY_NAME), SYS)
     local options = {
         { 'Weapon Skills', function(pp) openTrack(pp, 'ws') end },
         { 'Spells',        function(pp) openTrack(pp, 'sp') end },
@@ -207,14 +207,14 @@ openMain = function(p)
     end
     options[#options + 1] = { 'My Mastery', function(pp) xi.spellSkillMastery.report(pp); openMain(pp) end }
     options[#options + 1] = { 'Close',      function(pp) end }
-    show(p, 'Mastery Sage', options)
+    show(p, 'Spell Mastery', options)
 end
 
 -- Show the current rotation targets + claim status; killing them grants sigils.
 openRotation = function(p)
     local list = currentActive()
     local mask = rotationMask(p)
-    p:printToPlayer(string.format('[Mastery Sage] Rotation targets (reset every %dh) — %d %s each:',
+    p:printToPlayer(string.format('[Spell Mastery] Rotation targets (reset every %dh) — %d %s each:',
         C.rotation.periodHours, C.rotation.reward, C.CURRENCY_NAME), SYS)
     for i, entry in ipairs(list) do
         local claimed = (math.floor(mask / (2 ^ (i - 1))) % 2) == 1
@@ -241,13 +241,13 @@ end
 openPotency = function(p, track)
     local potency = (track == 'ws') and C.wsPotency or C.spellPotency
     local tier    = tierOf(p, potency)
-    p:printToPlayer(string.format('[Mastery Sage] %s: tier %d/%d (%s).',
+    p:printToPlayer(string.format('[Spell Mastery] %s: tier %d/%d (%s).',
         potency.name, tier, C.MAX_TIER, potency.blurb), SYS)
 
     local options = {}
     if tier >= C.MAX_TIER then
         options[#options + 1] = { 'Fully mastered', function(pp)
-            pp:printToPlayer(string.format('[Mastery Sage] %s is at maximum.', potency.name), SYS)
+            pp:printToPlayer(string.format('[Spell Mastery] %s is at maximum.', potency.name), SYS)
             openPotency(pp, track)
         end }
     else
@@ -275,7 +275,7 @@ confirmPotency = function(p, track)
                 if curTier >= C.MAX_TIER then openPotency(pp, track); return end
                 local c = C.POTENCY_COST[curTier + 1]
                 if getSigils(pp) < c then
-                    pp:printToPlayer(string.format('[Mastery Sage] You need %d %s (you have %d).',
+                    pp:printToPlayer(string.format('[Spell Mastery] You need %d %s (you have %d).',
                         c, C.CURRENCY_NAME, getSigils(pp)), SYS)
                     openPotency(pp, track)
                     return
@@ -284,7 +284,7 @@ confirmPotency = function(p, track)
                 pp:setCharVar(potency.var, curTier + 1)
                 -- apply only the new tier's DELTA (in-memory already holds curTier)
                 applyPotency(pp, potency, 1)
-                pp:printToPlayer(string.format('[Mastery Sage] %s raised to tier %d!',
+                pp:printToPlayer(string.format('[Spell Mastery] %s raised to tier %d!',
                     potency.name, curTier + 1), SYS)
                 openPotency(pp, track)
             end,
@@ -309,7 +309,7 @@ end
 confirmTrait = function(p, track, t)
     p:printToPlayer(string.format('%s: %s', t.name, t.desc), SYS)
     if owns(p, t) then
-        p:printToPlayer(string.format('[Mastery Sage] You already own %s.', t.name), SYS)
+        p:printToPlayer(string.format('[Spell Mastery] You already own %s.', t.name), SYS)
         openTraits(p, track)
         return
     end
@@ -320,7 +320,7 @@ confirmTrait = function(p, track, t)
             function(pp)
                 if owns(pp, t) then openTraits(pp, track); return end
                 if getSigils(pp) < cost then
-                    pp:printToPlayer(string.format('[Mastery Sage] You need %d %s (you have %d).',
+                    pp:printToPlayer(string.format('[Spell Mastery] You need %d %s (you have %d).',
                         cost, C.CURRENCY_NAME, getSigils(pp)), SYS)
                     openTraits(pp, track)
                     return
@@ -328,7 +328,7 @@ confirmTrait = function(p, track, t)
                 setSigils(pp, getSigils(pp) - cost)
                 pp:setCharVar(traitVar(t), 1)
                 applyTrait(pp, t)
-                pp:printToPlayer(string.format('[Mastery Sage] Learned %s! It applies on every job.', t.name), SYS)
+                pp:printToPlayer(string.format('[Spell Mastery] Learned %s! It applies on every job.', t.name), SYS)
                 openTraits(pp, track)
             end,
         },
@@ -355,7 +355,7 @@ confirmEffect = function(p, fx)
     local tier = p:getCharVar(fx.var) or 0
     p:printToPlayer(string.format('%s: %s', fx.name, fx.desc), SYS)
     if tier >= fx.max then
-        p:printToPlayer(string.format('[Mastery Sage] %s is maxed.', fx.name), SYS)
+        p:printToPlayer(string.format('[Spell Mastery] %s is maxed.', fx.name), SYS)
         openEffects(p)
         return
     end
@@ -368,14 +368,14 @@ confirmEffect = function(p, fx)
                 if cur >= fx.max then openEffects(pp); return end
                 local c = C.EFFECT_COST[cur + 1]
                 if getSigils(pp) < c then
-                    pp:printToPlayer(string.format('[Mastery Sage] You need %d %s (you have %d).',
+                    pp:printToPlayer(string.format('[Spell Mastery] You need %d %s (you have %d).',
                         c, C.CURRENCY_NAME, getSigils(pp)), SYS)
                     openEffects(pp)
                     return
                 end
                 setSigils(pp, getSigils(pp) - c)
                 pp:setCharVar(fx.var, cur + 1)
-                pp:printToPlayer(string.format('[Mastery Sage] %s raised to tier %d!', fx.name, cur + 1), SYS)
+                pp:printToPlayer(string.format('[Spell Mastery] %s raised to tier %d!', fx.name, cur + 1), SYS)
                 openEffects(pp)
             end,
         },
@@ -480,7 +480,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Spell_Mastery_Sage',
-        packetName = string.format('%sMastery Sage', xi.icon.STAR_LARGE),
+        packetName = string.format('%sSpell Mastery', xi.icon.STAR_LARGE),
         look       = 225,
         x          = C.npcPos.x,
         y          = C.npcPos.y,
@@ -488,7 +488,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         rotation   = C.npcPos.rot,
         widescan   = 1,
         onTrigger  = function(player, npc)
-            player:printToPlayer('[Mastery Sage] Empower your weapon skills and magic with Mastery Sigils, earned in battle.', SYS)
+            player:printToPlayer('[Spell Mastery] Empower your weapon skills and magic with Mastery Sigils, earned in battle.', SYS)
             openMain(player)
         end,
     })

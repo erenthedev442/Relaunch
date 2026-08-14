@@ -35,9 +35,16 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local showWeapons
 
     local function doForge(player, weapon)
-        if (player:getCharVar('WF_Aeonic_Final') or 0) ~= 1 then
+        local eligible, reason = catalog.canRepeat(player, weapon.id)
+        if not eligible and reason == 'first_aeonic' then
             player:printToPlayer(
                 PREFIX .. ' Complete one Aeonic to 119 III through the full Weapon Forge path first.',
+                xi.msg.channel.SYSTEM_3)
+            return
+        elseif not eligible and reason == 'maat' then
+            player:printToPlayer(string.format(
+                PREFIX .. " Defeat your weapon-specific Maat on an allowed %s job before repeating %s.",
+                weapon.info:match('Jobs: ([^%.]+)') or 'matching', weapon.name),
                 xi.msg.channel.SYSTEM_3)
             return
         end
@@ -149,7 +156,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         onTrigger = function(player, npc)
             if (player:getCharVar('WF_Aeonic_Final') or 0) ~= 1 then
                 player:printToPlayer(
-                    PREFIX .. ' Walk the full Aeonic path at the Weapon Forger before I will reforge another weapon for you.',
+                    PREFIX .. ' Walk the full Aeonic path at the Weapon Forge before I will reforge another weapon for you.',
                     xi.msg.channel.SYSTEM_3)
                 return
             end

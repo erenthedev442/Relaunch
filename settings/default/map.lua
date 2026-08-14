@@ -297,8 +297,8 @@ xi.settings.map =
     -- Prevent players from performing WS while unengaged using packet injection.
     PREVENT_UNENGAGED_WS = false,
 
-    -- Command Audit [logging] commands with lower permission than this will not be logged.
-    -- Zero for no logging at all. Commands given to non GMs are not logged.
+    -- Set true to audit every command issued by support GMs (GM level 1).
+    -- Owner/developer GM5 commands are intentionally excluded when enabled.
     AUDIT_GM_CMD = false,
 
     -- Todo = other logging including anti-cheat messages

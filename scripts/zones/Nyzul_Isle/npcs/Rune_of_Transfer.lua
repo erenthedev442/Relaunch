@@ -129,6 +129,16 @@ entity.onEventFinish = function(player, csid, option, npc)
         if option >= 2 and npc:getLocalVar('cued') == 0 then
             npc:setLocalVar('cued', 1)
             local currentFloor = instance:getLocalVar('Nyzul_Current_Floor')
+            -- Capture the completed objective before the floor transition
+            -- replaces the instance stage. Pilgrimage credit is observational
+            -- only and does not alter Nyzul rewards, tokens, or progression.
+            local completedStage = instance:getStage()
+
+            if xi.legendaryPilgrimage and xi.legendaryPilgrimage.onNyzulFloorAdvance then
+                for _, member in pairs(chars) do
+                    xi.legendaryPilgrimage.onNyzulFloorAdvance(member, completedStage)
+                end
+            end
 
             if currentFloor == 100 then
                 instance:setLocalVar('Nyzul_Current_Floor', 1)

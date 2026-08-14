@@ -208,7 +208,10 @@ int32 CCommandHandler::call(Scheduler& scheduler, sol::state& lua, CCharEntity* 
     }
     else
     {
-        if (settings::get<uint8>("map.AUDIT_GM_CMD") <= permission && settings::get<uint8>("map.AUDIT_GM_CMD") > 0)
+        // Relaunch uses GM1 for player support and GM5 for the two owners.
+        // Audit every command issued by support GMs, including permission-0
+        // player commands, while excluding owner/developer activity.
+        if (settings::get<bool>("map.AUDIT_GM_CMD") && PChar->m_GMlevel == 1)
         {
             std::string name       = PChar->name;
             std::string cmdlinestr = autotranslate::replaceBytes(commandline);

@@ -205,7 +205,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local DomainQuartermaster = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Domain_Quartermaster',
-        packetName = string.format('%sDomain Quartermaster', xi.icon.STAR_LARGE),
+        packetName = string.format('%sDomain Spoils', xi.icon.STAR_LARGE),
         look       = 2419,   -- moogle (known-valid; same family as Gil Exchange)
         x          = p.x,
         y          = p.y,
@@ -214,7 +214,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         widescan   = 1,
         onTrigger  = function(player, npc)
             player:printToPlayer(
-                '[ Domain Quartermaster ] Spoils of the domains, for Hunt Marks, kupo.',
+                '[Domain Spoils] Spoils of the domains, for Hunt Marks, kupo.',
                 xi.msg.channel.SYSTEM_3)
             showVendorRoot(player)
         end,

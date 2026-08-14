@@ -46,7 +46,7 @@ xi.sparks_exchange = {
 -- ===== static NPC config (requires restart to change) =====
 local cfg = {
     npcPos = { x = 554.400, y = -3.3322, z = 476.000, rot = 160 },
-    name   = 'Me Like Gil',
+    name   = 'Currency Exchange',
     look   = 220,
 }
 

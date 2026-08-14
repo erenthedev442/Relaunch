@@ -1,23 +1,18 @@
 -----------------------------------
 -- PrimeArmory_NPC.lua
--- "Prime Armory" -- a GM Home NPC where players forge a Prime Weapon by
--- completing the five Prime Weapon Trials:
+-- "Prime Armory" -- the trial board for the unified Prime progression.
+-- Completing these five trials stamps the gates consumed by WeaponForge_NPC:
 --
 --   Trial 1 (PW_Trial1_Done)  Turn in 12 each of the 20 Abyssea collectibles
 --   Trial 2 (PW_Trial2_Done)  Clear floor 50 of the Endless Tower
 --   Trial 3 (PW_Trial3_Done)  Turn in a Prime Voucher (rare Hunting League drop)
---   Trial 4 (PW_Trial4_Done)  Defeat any Weapon Guardian (Job Mastery)
+--   Trial 4 (PW_Trial4_Done)  Defeat any Weapon Guardian (support Primes);
+--                             forged Prime weapons require the matching family
 --   Trial 5 (PW_Trial5_Done)  Turn in 99 each of three Aht Urhgan currencies
 --
--- Once all five are complete the player may claim ONE Prime weapon of their
--- choice. Claiming sets PW_WeaponClaimed = item_id (0 = none yet).
---
--- The claim list is the 16 retail Stage-5 Primes (Level 119 III -- the final
--- form of each type, owner-corrected 2026-07-13; the old list mixed Stage-1
--- placeholders, a Stage-4 Varga/Mpu, and Naegling, which is not a Prime).
--- Each weapon's ADDS_WEAPONSKILL mod (modules/custom/sql/prime_weapons_gear.sql,
--- Stage-5 block) unlocks its weapon skill on equip; types whose true Prime WS
--- is not in the engine substitute the type's flagship WS (see that file).
+-- The 14 Prime weapons are issued ONLY by WeaponForge_NPC after the Ajja/Kaja
+-- pilgrimage. This NPC retains one direct claim for the two support Primes
+-- (Duban and Loughnashade), which have no weapon-skill pilgrimage chain.
 --
 -- Zone: GM Home (zone 210).
 -----------------------------------
@@ -25,6 +20,7 @@ require('modules/module_utils')
 require('scripts/globals/player')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local waveProgress = require('modules/custom/lua/game_master_progress')
+local mastery = require('modules/custom/lua/weapon_mastery_catalog')
 
 local m = Module:new('prime_armory')
 local LOUGHNASHADE_ID = 22307
@@ -34,29 +30,12 @@ local TRIALS =
     { var = 'PW_Trial1_Done', label = 'Trial 1', desc = '12 each of all 20 Abyssea collectibles (turn in here)' },
     { var = 'PW_Trial2_Done', label = 'Trial 2', desc = 'Endless Tower floor 50' },
     { var = 'PW_Trial3_Done', label = 'Trial 3', desc = 'Prime Voucher (Maze Monger Crown) - rare Hunting League NM drop (turn in here)' },
-    { var = 'PW_Trial4_Done', label = 'Trial 4', desc = 'Weapon Guardian defeated (Job Mastery)' },
+    { var = 'PW_Trial4_Done', label = 'Trial 4', desc = 'Any Weapon Guardian (support); matching family required at forge' },
     { var = 'PW_Trial5_Done', label = 'Trial 5', desc = '99 each of Jadeshell, Silverpiece & 100 Byne Bill (turn in here)' },
 }
 
-local WEAPONS =
+local SUPPORT_ITEMS =
 {
-    -- The 16 retail Stage-5 Primes (Level 119 III), one per weapon type.
-    -- ids = the final stage of each name run in item_basic; stats + WS links
-    -- live in prime_weapons_gear.sql (Stage-5 block).
-    { id = 21535, name = 'Varga Purnikawa', ws = 'Maru Kala',        info = 'Hand-to-Hand. STR/DEX, Acc, Att, Store TP, Double Attack.' },
-    { id = 21590, name = 'Mpu Gandring',    ws = 'Merciless Strike', info = 'Dagger. DEX/AGI, Acc, Att, Store TP, Double Attack.' },
-    { id = 21646, name = 'Caliburnus',      ws = 'Imperator',        info = 'Sword. STR/DEX, Acc, Att, Store TP, Double Attack.' },
-    { id = 21653, name = 'Helheim',         ws = 'Resolution',       info = 'Great Sword. STR/VIT, Acc, Att, Store TP, Double Attack.' },
-    { id = 21730, name = 'Spalirisos',      ws = 'Decimation',       info = 'Axe. STR/DEX, Acc, Att, Store TP, Double Attack.' },
-    { id = 21785, name = 'Laphria',         ws = 'Disaster',         info = 'Great Axe. STR/VIT, Acc, Att, Store TP, Double Attack.' },
-    { id = 21837, name = 'Foenaria',        ws = 'Origin',           info = 'Scythe. STR/INT, Acc, Att, Store TP, Double Attack.' },
-    { id = 21891, name = 'Gae Buide',       ws = 'Diarmuid',         info = 'Polearm. STR/VIT, Acc, Att, Store TP, Double Attack.' },
-    { id = 21932, name = 'Dokoku',          ws = 'Zesho Meppo',       info = 'Katana. DEX/AGI, Acc, Att, Store TP, Double Attack.' },
-    { id = 21986, name = 'Kusanagi',        ws = 'Tachi: Mumei',     info = 'Great Katana. STR/DEX, Acc, Att, Store TP, Double Attack.' },
-    { id = 22002, name = 'Lorg Mor',        ws = 'Dagda',            info = 'Club. STR/MND, Acc, Att, Store TP, Double Attack.' },
-    { id = 22106, name = 'Opashoro',        ws = 'Oshala',           info = 'Staff. INT/MND, Magic Acc/Att, Magic Dmg, Acc, Att.' },
-    { id = 22163, name = 'Pinaka',          ws = 'Sarv',             info = 'Archery. AGI/STR, Ranged Acc/Att, Store TP, Rapid Shot. Needs arrows.' },
-    { id = 22164, name = 'Earp',            ws = 'Terminus',         info = 'Marksmanship. AGI/DEX, Ranged Acc/Att, Store TP, Rapid Shot. Needs bullets.' },
     { id = 26495, name = 'Duban',           ws = '(shield -- no WS)', info = 'Shield. DEF+150, HP+300, VIT, Magic Evasion. Sub slot.' },
     { id = 22307, name = 'Loughnashade',    ws = '(harp -- no WS)',  info = 'Harp. CHR, Magic Acc, HP/MP. BRD song support. Range slot.' },
 }
@@ -130,7 +109,11 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -----------------------------------
     local function trialsComplete(player)
         for _, t in ipairs(TRIALS) do
-            if (player:getCharVar(t.var) or 0) == 0 then return false end
+            if t.var == 'PW_Trial4_Done' then
+                if not mastery.supportAuthorized(player) then return false end
+            elseif (player:getCharVar(t.var) or 0) == 0 then
+                return false
+            end
         end
         return true
     end
@@ -139,7 +122,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -- Print trial status to the player (used on first talk when incomplete).
     -----------------------------------
     local function printTrialStatus(player)
-        player:printToPlayer(string.format('[Prime Armory] Complete all %d trials and pay 750,000,000 gil to forge a Prime Weapon:', #TRIALS), xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format(
+            '[Prime Trials] Complete all %d trials to unlock the Prime Weapon Forge path:',
+            #TRIALS), xi.msg.channel.SYSTEM_3)
         for _, t in ipairs(TRIALS) do
             local done  = (player:getCharVar(t.var) or 0) == 1
             local icon  = done and '[+]' or '[ ]'
@@ -153,7 +138,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -----------------------------------
     local function printTrial1Progress(player)
         player:printToPlayer(string.format(
-            '[Prime Armory] Trial 1 - bring %d of EACH (Stone/Coin/Jewel/Card) for all five elements:', T1_REQUIRED),
+            '[Prime Trials] Trial 1 - bring %d of EACH (Stone/Coin/Jewel/Card) for all five elements:', T1_REQUIRED),
             xi.msg.channel.SYSTEM_3)
         for _, set in ipairs(T1_SETS) do
             local parts = {}
@@ -174,7 +159,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -----------------------------------
     local function turnInTrial1(player)
         if (player:getCharVar('PW_Trial1_Done') or 0) == 1 then
-            player:printToPlayer('[Prime Armory] Trial 1 is already complete, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Trials] Trial 1 is already complete, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
 
@@ -182,7 +167,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         for _, set in ipairs(T1_SETS) do
             for _, ty in ipairs(set.types) do
                 if player:getItemCount(ty.id) < T1_REQUIRED then
-                    player:printToPlayer('[Prime Armory] Not yet - you still need more. Here is your tally:', xi.msg.channel.SYSTEM_3)
+                    player:printToPlayer('[Prime Trials] Not yet - you still need more. Here is your tally:', xi.msg.channel.SYSTEM_3)
                     printTrial1Progress(player)
                     return
                 end
@@ -206,12 +191,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             for id, qty in pairs(removed) do
                 if qty > 0 then player:addItem({ id = id, quantity = qty }) end
             end
-            player:printToPlayer('[Prime Armory] I could not gather all of them - keep every collectible in your MAIN inventory (not satchel/case) and try again, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Trials] I could not gather all of them - keep every collectible in your MAIN inventory (not satchel/case) and try again, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
 
         player:setCharVar('PW_Trial1_Done', 1)
-        player:printToPlayer('[Prime Armory] The offering of all five elements is accepted! Trial 1 complete, kupo!', xi.msg.channel.SYSTEM_3)
+        player:printToPlayer('[Prime Trials] The offering of all five elements is accepted! Trial 1 complete, kupo!', xi.msg.channel.SYSTEM_3)
     end
 
     -----------------------------------
@@ -220,7 +205,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -----------------------------------
     local function turnInTrial3(player)
         if (player:getCharVar('PW_Trial3_Done') or 0) == 1 then
-            player:printToPlayer('[Prime Armory] Trial 3 is already complete, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Trials] Trial 3 is already complete, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
         -- Accept the new Maze Monger Crown (T3_ITEM) OR the legacy blank voucher
@@ -232,17 +217,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             voucherId = T3_ITEM_LEGACY
         end
         if not voucherId then
-            player:printToPlayer('[Prime Armory] You need a Prime Voucher (a Maze Monger Crown) - a rare drop from Hunting League NMs - for Trial 3, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Trials] You need a Prime Voucher (a Maze Monger Crown) - a rare drop from Hunting League NMs - for Trial 3, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
         local before = player:getItemCount(voucherId)
         player:delItem(voucherId, 1)
         if player:getItemCount(voucherId) >= before then
-            player:printToPlayer('[Prime Armory] Keep the Prime Voucher in your MAIN inventory and try again, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Trials] Keep the Prime Voucher in your MAIN inventory and try again, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
         player:setCharVar('PW_Trial3_Done', 1)
-        player:printToPlayer('[Prime Armory] The Prime Voucher is accepted! Trial 3 complete, kupo!', xi.msg.channel.SYSTEM_3)
+        player:printToPlayer('[Prime Trials] The Prime Voucher is accepted! Trial 3 complete, kupo!', xi.msg.channel.SYSTEM_3)
     end
 
     -----------------------------------
@@ -250,7 +235,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -----------------------------------
     local function printTrial5Progress(player)
         player:printToPlayer(string.format(
-            '[Prime Armory] Trial 5 - bring %d of EACH currency:', T5_REQUIRED),
+            '[Prime Trials] Trial 5 - bring %d of EACH currency:', T5_REQUIRED),
             xi.msg.channel.SYSTEM_3)
         for _, it in ipairs(T5_ITEMS) do
             local have = player:getItemCount(it.id)
@@ -267,14 +252,14 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -----------------------------------
     local function turnInTrial5(player)
         if (player:getCharVar('PW_Trial5_Done') or 0) == 1 then
-            player:printToPlayer('[Prime Armory] Trial 5 is already complete, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Trials] Trial 5 is already complete, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
 
         -- Pass 1: all three currencies present in the required count.
         for _, it in ipairs(T5_ITEMS) do
             if player:getItemCount(it.id) < T5_REQUIRED then
-                player:printToPlayer('[Prime Armory] Not yet - you still need more. Here is your tally:', xi.msg.channel.SYSTEM_3)
+                player:printToPlayer('[Prime Trials] Not yet - you still need more. Here is your tally:', xi.msg.channel.SYSTEM_3)
                 printTrial5Progress(player)
                 return
             end
@@ -295,68 +280,74 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             for id, qty in pairs(removed) do
                 if qty > 0 then player:addItem({ id = id, quantity = qty }) end
             end
-            player:printToPlayer('[Prime Armory] I could not gather all of them - keep each currency as a single 99 stack in your MAIN inventory (not satchel/case) and try again, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Trials] I could not gather all of them - keep each currency as a single 99 stack in your MAIN inventory (not satchel/case) and try again, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
 
         player:setCharVar('PW_Trial5_Done', 1)
-        player:printToPlayer('[Prime Armory] The currency offering is accepted! Trial 5 complete, kupo!', xi.msg.channel.SYSTEM_3)
+        player:printToPlayer('[Prime Trials] The currency offering is accepted! Trial 5 complete, kupo!', xi.msg.channel.SYSTEM_3)
     end
 
     -----------------------------------
-    -- Forge the selected weapon (one per player, ever).
+    -- Claim one support Prime per player. The 14 weapons are forge-only.
     -----------------------------------
     local function claim(player, weapon)
         -- Guard: all trials must still be complete (in case a GM cleared them).
         if not trialsComplete(player) then
-            player:printToPlayer('[Prime Armory] Trial requirement no longer met. Cannot forge.', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Trials] Trial requirement no longer met. Cannot forge.', xi.msg.channel.SYSTEM_3)
             return
         end
         -- Guard: one prime weapon per player.
         local alreadyClaimed = player:getCharVar('PW_WeaponClaimed') or 0
         if alreadyClaimed ~= 0 then
             -- Find the weapon name for the message.
-            for _, w in ipairs(WEAPONS) do
+            for _, w in ipairs(SUPPORT_ITEMS) do
                 if w.id == alreadyClaimed then
                     player:printToPlayer(string.format(
-                        '[Prime Armory] You already forged %s. Each hero may forge one Prime Weapon. Kupo!', w.name),
+                        '[Prime Trials] You already forged %s. Each hero may forge one Prime Weapon. Kupo!', w.name),
                         xi.msg.channel.SYSTEM_3)
                     return
                 end
             end
-            player:printToPlayer('[Prime Armory] You have already forged a Prime Weapon. Kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Trials] You have already forged a Prime Weapon. Kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
         -- Prime follows Aeonic in the Relaunch weapon ladder. Check BEFORE the
         -- gil charge so a locked player sees the real blocker safely.
         if (player:getCharVar('WF_Aeonic_Final') or 0) ~= 1 then
             player:printToPlayer(
-                '[Prime Armory] Gate not met: Build a final Aeonic weapon first. Kupo!',
+                '[Prime Trials] Gate not met: Build a final Aeonic weapon first. Kupo!',
+                xi.msg.channel.SYSTEM_3)
+            return
+        end
+        if (player:getCharVar('Title_Apex_Hunter') or 0) ~= 1 then
+            player:printToPlayer(
+                "[Prime Trials] Gate not met: Earn Apex Hunter in the Hunter's Guild first. Kupo!",
                 xi.msg.channel.SYSTEM_3)
             return
         end
         if not waveProgress.has(player, 'Ragnarok') then
             player:printToPlayer(
-                '[Prime Armory] Gate not met: Clear Wave Master Ragnarok first. Kupo!',
+                '[Prime Trials] Gate not met: Clear Wave Master Ragnarok first. Kupo!',
                 xi.msg.channel.SYSTEM_3)
             return
         end
         -- Inventory check.
         if player:getFreeSlotsCount() == 0 then
-            player:printToPlayer('[Prime Armory] Your inventory is full - free a slot first! Kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Trials] Your inventory is full - free a slot first! Kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
         -- Gil cost.
         if player:getGil() < GIL_COST then
             player:printToPlayer(string.format(
-                '[Prime Armory] Forging requires 750,000,000 gil. You have %d gil. Kupo!',
+                '[Prime Trials] Forging requires 750,000,000 gil. You have %d gil. Kupo!',
                 player:getGil()), xi.msg.channel.SYSTEM_3)
             return
         end
         -- RARE pre-check before anything is charged.
         if player:hasItem(weapon.id) then
             player:printToPlayer(string.format(
-                '[Prime Armory] You already hold %s - it is RARE, so a second cannot be forged. Kupo!',
+                '[Prime Trials] You already hold %s - it is RARE, so a second cannot be forged. Kupo!',
                 weapon.name), xi.msg.channel.SYSTEM_3)
             return
         end
@@ -367,7 +358,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             -- Roll the whole claim back: gil and the once-per-hero flag.
             player:addGil(GIL_COST)
             player:setCharVar('PW_WeaponClaimed', 0)
-            player:printToPlayer('[Prime Armory] The forging failed - your gil has been returned. Kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Trials] The forging failed - your gil has been returned. Kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
         player:setCharVar('WF_Prime_Final', 1)
@@ -377,11 +368,11 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
 
         if weapon.ws and weapon.ws:sub(1, 1) ~= '(' then
             player:printToPlayer(string.format(
-                '[Prime Armory] %s has been forged! Equip it to unlock the weapon skill %s. Kupo!',
+                '[Prime Trials] %s has been forged! Equip it to unlock the weapon skill %s. Kupo!',
                 weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
         else
             player:printToPlayer(string.format(
-                '[Prime Armory] %s has been forged! Kupo!', weapon.name), xi.msg.channel.SYSTEM_3)
+                '[Prime Trials] %s has been forged! Kupo!', weapon.name), xi.msg.channel.SYSTEM_3)
         end
     end
 
@@ -390,17 +381,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -----------------------------------
     local function showWeapon(player, weapon, page)
         if weapon.ws and weapon.ws:sub(1, 1) ~= '(' then
-            player:printToPlayer(string.format('[Prime Armory] %s - Weapon Skill: %s', weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('[Prime Trials] %s - Weapon Skill: %s', weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
         else
-            player:printToPlayer(string.format('[Prime Armory] %s (Prime support equipment; no weapon skill)', weapon.name), xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('[Prime Trials] %s (Prime support equipment; no weapon skill)', weapon.name), xi.msg.channel.SYSTEM_3)
         end
         player:printToPlayer('  ' .. weapon.info, xi.msg.channel.SYSTEM_3)
         local claimed = player:getCharVar('PW_WeaponClaimed') or 0
         if claimed ~= 0 then
-            player:printToPlayer('[Prime Armory] You have already forged a Prime Weapon. Each hero gets one.', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Trials] You have already forged a Prime Weapon. Each hero gets one.', xi.msg.channel.SYSTEM_3)
         else
             player:printToPlayer(string.format(
-                '[Prime Armory] Cost to forge: 750,000,000 gil  (you have %d)', player:getGil()),
+                '[Prime Trials] Cost to forge: 750,000,000 gil  (you have %d)', player:getGil()),
                 xi.msg.channel.SYSTEM_3)
         end
 
@@ -408,7 +399,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             title   = weapon.name,
             options =
             {
-                { 'Forge this weapon', function(p) claim(p, weapon) end },
+                { 'Claim this support Prime', function(p) claim(p, weapon) end },
                 { '<< Back',           function(p) showMain(p, page) end },
             },
         })
@@ -419,13 +410,13 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -----------------------------------
     showMain = function(player, page)
         page = page or 1
-        local totalPages = math.ceil(#WEAPONS / PAGE_SIZE)
+        local totalPages = math.ceil(#SUPPORT_ITEMS / PAGE_SIZE)
         local startIdx   = (page - 1) * PAGE_SIZE + 1
-        local endIdx     = math.min(startIdx + PAGE_SIZE - 1, #WEAPONS)
+        local endIdx     = math.min(startIdx + PAGE_SIZE - 1, #SUPPORT_ITEMS)
 
         local options = {}
         for i = startIdx, endIdx do
-            local weapon = WEAPONS[i]
+            local weapon = SUPPORT_ITEMS[i]
             table.insert(options, {
                 string.format('%s [%s]', weapon.name, weapon.ws),
                 function(p) showWeapon(p, weapon, page) end,
@@ -440,8 +431,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end
 
         local title = totalPages > 1
-            and string.format('Prime Armory (%d/%d)', page, totalPages)
-            or  'Prime Armory'
+            and string.format('Prime Trials (%d/%d)', page, totalPages)
+            or  'Prime Trials'
         sendMenu(player, { title = title, options = options })
     end
 
@@ -451,7 +442,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Prime_Armory',
-        packetName = string.format('%sPrime Armory', xi.icon.STAR_LARGE),
+        packetName = string.format('%sPrime Trials', xi.icon.STAR_LARGE),
         look       = 216,
         x          =  574.600,
         y          =   -3.360,
@@ -460,16 +451,18 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         widescan   =  1,
 
         onTrade = function(player, npc, trade)
-            player:printToPlayer('[Prime Armory] Talk to me to forge your Prime Weapon, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(
+                '[Prime Trials] Talk to me to review your five Prime trials, kupo!',
+                xi.msg.channel.SYSTEM_3)
         end,
 
         onTrigger = function(player, npc)
             local claimed = player:getCharVar('PW_WeaponClaimed') or 0
             if claimed ~= 0 then
-                for _, w in ipairs(WEAPONS) do
+                for _, w in ipairs(SUPPORT_ITEMS) do
                     if w.id == claimed then
                         player:printToPlayer(string.format(
-                            '[Prime Armory] You have forged %s. Each hero may forge one Prime Weapon. Kupo!', w.name),
+                            '[Prime Trials] You have forged %s. Each hero may forge one Prime Weapon. Kupo!', w.name),
                             xi.msg.channel.SYSTEM_3)
                         return
                     end
@@ -500,8 +493,11 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 return
             end
 
-            -- All trials done and no weapon claimed yet - show the forge menu.
-            player:printToPlayer(string.format('[Prime Armory] All %d trials complete! Choose your Prime Weapon (costs 750,000,000 gil). Kupo!', #TRIALS), xi.msg.channel.SYSTEM_3)
+            -- All trials done: weapons continue at the Weapon Forge. Only the
+            -- two support Primes without pilgrimage chains are claimed here.
+            player:printToPlayer(string.format(
+                '[Prime Trials] All %d trials complete! Prime weapons continue at the Weapon Forge; support Primes cost 750,000,000 gil here. Kupo!',
+                #TRIALS), xi.msg.channel.SYSTEM_3)
             showMain(player)
         end,
     })

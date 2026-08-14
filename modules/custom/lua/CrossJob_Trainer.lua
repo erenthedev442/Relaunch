@@ -95,7 +95,7 @@ showMainMenu = function(player, page)
     items[#items + 1] = {
         'How it works',
         function(playerArg)
-            playerArg:printToPlayer('[ Cross-Job Trainer ] Buy a job ability and use it on ANY job.', xi.msg.channel.SYSTEM_3)
+            playerArg:printToPlayer('[Ability Trainer] Buy a job ability and use it on ANY job.', xi.msg.channel.SYSTEM_3)
             playerArg:printToPlayer(string.format('  Cost: %s gil each. The ability stays with you across jobs and logins.', GIL_STR), xi.msg.channel.SYSTEM_3)
             playerArg:printToPlayer('  It will NOT show in your Job Abilities menu - use a macro, e.g.  /ja "Meditate" <me>', xi.msg.channel.SYSTEM_3)
             showMainMenu(playerArg)
@@ -229,7 +229,7 @@ showConfirmMenu = function(player, groupIndex, ab)
 
     local owned = player:getCrossJobAbilities()
     if #owned >= MAX_CROSS_JOB_ABILITIES then
-        player:printToPlayer(string.format('[ Cross-Job Trainer ] You have reached the limit of %d borrowed abilities.', MAX_CROSS_JOB_ABILITIES), xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format('[Ability Trainer] You have reached the limit of %d borrowed abilities.', MAX_CROSS_JOB_ABILITIES), xi.msg.channel.SYSTEM_3)
         showGroupMenu(player, groupIndex)
         return
     end
@@ -248,7 +248,7 @@ showConfirmMenu = function(player, groupIndex, ab)
 
                 local ownedNow = playerArg:getCrossJobAbilities()
                 if #ownedNow >= MAX_CROSS_JOB_ABILITIES then
-                    playerArg:printToPlayer(string.format('[ Cross-Job Trainer ] You have reached the limit of %d borrowed abilities.', MAX_CROSS_JOB_ABILITIES), xi.msg.channel.SYSTEM_3)
+                    playerArg:printToPlayer(string.format('[Ability Trainer] You have reached the limit of %d borrowed abilities.', MAX_CROSS_JOB_ABILITIES), xi.msg.channel.SYSTEM_3)
                     showGroupMenu(playerArg, groupIndex)
                     return
                 end
@@ -297,7 +297,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local CrossJobTrainer = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'CrossJob_Trainer',
-        packetName = string.format('%sBuy: Abilities', xi.icon.STAR_LARGE),
+        packetName = string.format('%sAbility Trainer', xi.icon.STAR_LARGE),
         look       = 167,
         -- Left side of the mastery conversation semicircle, facing Traits.
         x          = 534.9993,
@@ -307,7 +307,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         widescan   =  1,
 
         onTrigger = function(player, npc)
-            player:printToPlayer('[ Cross-Job Trainer ] Learn a job ability and use it on ANY job, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Ability Trainer] Learn a job ability and use it on ANY job, kupo!', xi.msg.channel.SYSTEM_3)
             player:printToPlayer(string.format('  %s gil each. Borrowed abilities are used via macro (e.g. /ja "Meditate" <me>).', GIL_STR), xi.msg.channel.SYSTEM_3)
             showMainMenu(player)
         end,

@@ -14,7 +14,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         objtype    = xi.objType.NPC,
         name       = 'Fellow_Officer',
         packetName = string.format('%sFellow Officer', xi.icon.STAR_LARGE),
-        look       = 167,
+        look       = 76,
         x          = 499.0043,
         y          = 0.3000,
         z          = 564.2281,

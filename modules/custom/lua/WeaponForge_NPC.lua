@@ -19,7 +19,7 @@
 -- GATE CHECKS (applied before any item transfer)
 --   119I → II : HL Rank 5 (Legend) + 50× Kindreds Medal
 --   119II → III: HL Rank 5 (Legend) + 100× Demons Medal
---                                    + 30,000 Reforge Marks + 750M gil
+--                                    + pilgrimage + 5,000 Reforge Marks + 750M gil
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
@@ -27,6 +27,8 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local m       = Module:new('weapon_forge_npc')
 local catalog = require('modules/custom/lua/weapon_forge_catalog')
 local itemCurrency = require('modules/custom/lua/hl_seal_currency')
+local pilgrimage = require('modules/custom/lua/legendary_pilgrimage_catalog')
+local mastery = require('modules/custom/lua/weapon_mastery_catalog')
 
 local NPC_POS = { x = 568.500, y = -3.360, z = 535.400, rot = 64 }
 
@@ -116,6 +118,23 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         return false
     end
 
+    local function checkPilgrimage(player, finalId, throughChapter)
+        local entry = pilgrimage.byFinalId[finalId]
+        if not entry then
+            player:printToPlayer('[Weapon Forge] This weapon has no pilgrimage catalog entry.', xi.msg.channel.SYSTEM_3)
+            return false
+        end
+        for chapter = 1, throughChapter do
+            if not pilgrimage.done(player, entry, chapter) then
+                player:printToPlayer(string.format(
+                    '[Weapon Forge] Complete %s Pilgrimage Chapter %s first.',
+                    entry.name, ({ 'I', 'II', 'III' })[chapter]), xi.msg.channel.SYSTEM_3)
+                return false
+            end
+        end
+        return true
+    end
+
     -- Recipe-preview companion to checkGate: returns the gate label suffixed
     -- with a met/not-met marker so players see the target BEFORE they try to
     -- forge instead of eating a "gate not met" line as their only feedback.
@@ -136,6 +155,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         -- inventory / currency / mark inspection so a locked player never
         -- sees "you have 24 of 25 marks" -- they see the actual blocker.
         if not checkGate(player, 'aeonic', fromStage, chain) then return false end
+        if not checkPilgrimage(player, chain.aeonic.s3.id, fromStage + 1) then return false end
         local ae       = chain.aeonic
         local costs    = catalog.aeonicCosts
         local stepCost = fromStage == 0 and costs.toStage1
@@ -242,6 +262,19 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         -- upgrade, then the existing HL_Tier + all-trials + gil checks run.
         if not checkGate(player, 'prime', 0) then return false end
         if not checkGate(player, 'prime', fromStage) then return false end
+        if fromStage == 2 then
+            local authorized, guardian = mastery.primeAuthorized(player, chain.type)
+            if not authorized then
+                player:printToPlayer(string.format(
+                    '[Weapon Forge] Defeat the %s Mastery Guardian before forging %s.',
+                    guardian and guardian.type or chain.type, chain.s3.name), xi.msg.channel.SYSTEM_3)
+                return false
+            end
+        end
+        -- Prime has no separate pre-Ajja issuance in this forge. Chapters I and
+        -- II therefore run sequentially on Ajja before 119 II; Chapter III runs
+        -- on 119 II before the final weapon.
+        if not checkPilgrimage(player, chain.s3.id, fromStage == 1 and 2 or 3) then return false end
         local fromItem = fromStage == 1 and chain.s1 or chain.s2
         local toItem   = fromStage == 1 and chain.s2 or chain.s3
         local cost     = fromStage == 1 and catalog.costs.toStage2 or catalog.costs.toStage3
@@ -352,6 +385,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         -- own" from CharVars alone -- no item-inventory scan required.
         if fromStage == 2 then
             player:setCharVar('WF_Prime_Final', 1)
+            -- Repeat Prime forging is unlocked only by completing a weapon
+            -- through this full path. Armory-only shield/harp claims do not
+            -- satisfy this milestone.
+            player:setCharVar('WF_PrimeWeapon_Final', 1)
         end
         return true
     end
@@ -653,6 +690,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         -- The (k-1) offset lines the code's held-stage counter up with the
         -- player-facing stage index used by the shared gate table.
         if k >= 1 and not checkGate(player, def.key, k - 1) then return end
+        if k >= 1 then
+            local throughChapter = chain.singleStep and 3 or k
+            if not checkPilgrimage(player, chain.s3, throughChapter) then return end
+        end
         local fromId, toId, step
         if k == 0 then
             step, toId = def.base, chain.base          -- issue the base weapon
@@ -943,13 +984,21 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
 
     showForgeRoot = function(player)
         local opts = {
-            { 'My upgradeable weapons (Prime / Aeonic)', function(p) showUpgrades(p) end },
-            { string.format('Aeonic weapons (%d)', #catalog.chains),
+            { 'Bag upgrades', function(p) showUpgrades(p) end },
+            { 'Pilgrimages', function(p)
+                if xi.legendaryPilgrimage and xi.legendaryPilgrimage.showForgeMenu then
+                    xi.legendaryPilgrimage.showForgeMenu(p, showForgeRoot)
+                else
+                    p:printToPlayer('[Weapon Forge] Pilgrimage service is temporarily unavailable.', xi.msg.channel.SYSTEM_3)
+                    showForgeRoot(p)
+                end
+            end },
+            { string.format('Aeonic (%d)', #catalog.chains),
                 function(p) showAeonicCategory(p, 1) end },
         }
         for _, def in ipairs(NEW_CATS) do
             local d = def
-            opts[#opts + 1] = { string.format('%s weapons (%d)', def.label, #def.chains),
+            opts[#opts + 1] = { string.format('%s (%d)', def.label, #def.chains),
                 function(p) showNewCat(p, d, 1) end }
         end
         opts[#opts + 1] = { 'Not today.', function() end }
@@ -963,7 +1012,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local WeaponForger = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Weapon_Forger',
-        packetName = string.format('%sWeapon Forger', xi.icon.STAR_LARGE),
+        packetName = string.format('%sWeapon Forge', xi.icon.STAR_LARGE),
         look       = 245,
         x          = NPC_POS.x,
         y          = NPC_POS.y,

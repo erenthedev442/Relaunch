@@ -95,7 +95,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         objtype    = xi.objType.NPC,
         name       = 'Gil_Exchange',
         packetName = string.format('%s%s', xi.icon.STAR_LARGE, config.npcName),
-        look       = 172,
+        look       = 2419,
         x          = config.npcPos.x,
         y          = config.npcPos.y,
         z          = config.npcPos.z,

@@ -129,10 +129,15 @@ local function stratumUnlocked(player, stratum)
         return (player:getCharVar('Voidspire_Best_Floor') or 0) >= 10
                 and waveProgress.hasThrough(player, 3),
             'reach Voidspire floor 10 and clear Wave Master through Hard'
-    elseif key == 'WHITE' or key == 'ASHEN' then
+    elseif key == 'WHITE' then
         return (player:getCharVar('Voidspire_Best_Floor') or 0) >= 40
                 and unityProgress.tierComplete(player, 2),
             'reach Voidspire floor 40 and conquer Unity Wanted Tier 2'
+    elseif key == 'ASHEN' then
+        return (player:getCharVar('Voidspire_Best_Floor') or 0) >= 40
+                and unityProgress.tierComplete(player, 2)
+                and getStratClears(player, 'WHITE') >= 1,
+            'reach Voidspire floor 40, conquer Unity Wanted Tier 2, and clear White Stratum'
     elseif key == 'HYACINTH' then
         return (player:getCharVar('Voidspire_Best_Floor') or 0) >= 75
                 and waveProgress.hasThrough(player, 4),
@@ -313,15 +318,47 @@ local function giveItem(player, itemid)
     return (ok and res) and true or false
 end
 
--- ── Spawn one tier-scaled Voidwalker (from a stratum roster) at the player ──
-local function spawnVoidwalker(owner, tier, roster)
+-- ── Spawn one stratum-scaled Voidwalker at the player ───────────────────────
+local SOLO_FAIL_EFFECTS =
+{
+    xi.effect.PETRIFICATION,
+    xi.effect.GRADUAL_PETRIFICATION,
+    xi.effect.TERROR,
+    xi.effect.DOOM,
+    xi.effect.CHARM_I,
+    xi.effect.SLEEP_I,
+    xi.effect.SLEEP_II,
+}
+
+local function clearSoloFailEffects(ownerName, mob)
+    local owner
+    pcall(function() owner = GetPlayerByName(ownerName) end)
+    if not owner or #eligiblePlayers(owner) > 1 then return end
+
+    local members = { owner }
+    pcall(function()
+        for _, member in ipairs(owner:getPartyWithTrusts() or {}) do
+            if member ~= owner then members[#members + 1] = member end
+        end
+    end)
+    for _, member in ipairs(members) do
+        if member and member:getZoneID() == mob:getZoneID() then
+            for _, effectId in ipairs(SOLO_FAIL_EFFECTS) do
+                pcall(function() member:delStatusEffectSilent(effectId) end)
+            end
+        end
+    end
+end
+
+local function spawnVoidwalker(owner, stratum, clears)
     local px, py, pz = owner:getXPos(), owner:getYPos(), owner:getZPos()
     local angle = math.random() * math.pi * 2
     local dist  = C.SPAWN_DIST_MIN + math.random() * (C.SPAWN_DIST_MAX - C.SPAWN_DIST_MIN)
     local mx, mz = px + math.cos(angle) * dist, pz + math.sin(angle) * dist
     local ownerName = owner:getName()
+    local roster = stratum.roster
     local entry = roster[math.random(#roster)]
-    local level = C.nmLevel(tier)
+    local level = C.nmLevel(stratum)
 
     local mob = owner:getZone():insertDynamicEntity({
         objtype              = xi.objType.MOB,
@@ -352,6 +389,7 @@ local function spawnVoidwalker(owner, tier, roster)
         end,
 
         onMobFight = function(mfMob, mfTarget)
+            clearSoloFailEffects(ownerName, mfMob)
             mechanics.tick(mfMob, mfTarget)
             xi.voidwalker.applyCombatBehavior(mfMob)
         end,
@@ -361,16 +399,17 @@ local function spawnVoidwalker(owner, tier, roster)
     mob:setSpawn(mx, py, mz, 0)
     mob:spawn()
     pcall(function() mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1) end)
-    for modId, val in pairs(C.nmMods(tier)) do mob:setMod(modId, val) end
+    for modId, val in pairs(C.nmMods(stratum, clears)) do mob:setMod(modId, val) end
     -- Dynamic entities inherit their donor pool. Clear healing authoritatively
     -- so stale SQL/template values cannot recreate the reported regen wall.
     mob:setMod(xi.mod.REGEN, 0)
-    local hp = C.nmHp(tier)
+    local hp = C.nmHp(stratum, clears)
     mob:setMaxHP(hp)
     mob:setHP(hp)
+    mob:setLocalVar('GeasFeteMobSkillDamageCap', C.nmDamageCap(stratum))
     xi.voidwalker.applySpawnBehavior(mob)
     pcall(function() mob:addEnmity(owner, 30000, 30000) end)
-    pcall(function() mechanics.attach(mob, C.mechCfg(tier)) end)  -- AFTER stats/HP; target party takes mechanics
+    pcall(function() mechanics.attach(mob, C.mechCfg(stratum)) end)  -- AFTER stats/HP; target party takes mechanics
     return mob, entry.name, level
 end
 
@@ -506,13 +545,11 @@ onRiftCleared = function(player)
     if white >= C.WHITE_BONUS_RARE_AT then
         reward.items[#reward.items + 1] = loot.rare[math.random(#loot.rare)]
     end
-    -- Sortie earrings use an independent alignment-shaped roll. They no longer
-    -- replace the NM's signature item inside the rare table.
-    if loot.earrings and #loot.earrings > 0 then
-        local chance = math.min(75, C.EARRING_ROLL_CHANCE + red * 5)
-        if math.random(100) <= chance then
-            reward.items[#reward.items + 1] = loot.earrings[math.random(#loot.earrings)]
-        end
+    -- Sortie earrings use an exact, independent stratum rate. Vermillion
+    -- continues to shape signature quality without inflating chase percentages.
+    local earringPool, earringChance = C.earringReward(skey)
+    if earringPool and #earringPool > 0 and math.random(100) <= earringChance then
+        reward.items[#reward.items + 1] = earringPool[math.random(#earringPool)]
     end
 
     -- Clear report, then drop the chest.
@@ -597,7 +634,8 @@ openRift = function(player, stratumKey, bypassGate)
     end
     setStones(player, stones - C.RIFT_COST)
 
-    local tier = C.effectiveTier(stratum, getStratClears(player, stratum.key))
+    local clears = getStratClears(player, stratum.key)
+    local tier = C.effectiveTier(stratum, clears)
     nextSessionId = nextSessionId + 1
     local sess =
     {
@@ -608,7 +646,7 @@ openRift = function(player, stratumKey, bypassGate)
     }
     sessions[player:getName()] = sess
 
-    local mob, name, level = spawnVoidwalker(player, tier, stratum.roster)
+    local mob, name, level = spawnVoidwalker(player, stratum, clears)
     if not mob then
         clearSession(player)
         setStones(player, getStones(player) + C.RIFT_COST)
@@ -624,7 +662,7 @@ openRift = function(player, stratumKey, bypassGate)
 
     player:printToPlayer(string.format(
         '[Voidwatch] A Planar Rift tears open! %s -- %s difficulty (Lv.%d, %d HP) -- %s emerges!',
-        stratum.name, C.difficultyName(tier), level, C.nmHp(tier), (name:gsub('_', ' '))), SYS)
+        stratum.name, C.difficultyName(tier), level, C.nmHp(stratum, clears), (name:gsub('_', ' '))), SYS)
     player:printToPlayer(string.format(
         '[Voidwatch] %d hidden weaknesses lurk within. Probe with magic / weaponskills / ranged -- or "!voidwatch reveal" (spends a Periapt) to expose them. Chain weaknesses fast for a Synchronic Blitz.', #sess.weakList), SYS)
 
@@ -659,8 +697,9 @@ confirmRift = function(player, stratumKey)
         return
     end
 
-    local tier = C.effectiveTier(stratum, getStratClears(player, stratum.key))
-    local level, hp = C.nmLevel(tier), C.nmHp(tier)
+    local clears = getStratClears(player, stratum.key)
+    local tier = C.effectiveTier(stratum, clears)
+    local level, hp = C.nmLevel(stratum), C.nmHp(stratum, clears)
     player:printToPlayer(string.format(
         '[Voidwatch] Confirm %s: %s difficulty, Lv.%d, %d HP, cost %d stone. Current stones: %d.',
         stratum.name, C.difficultyName(tier), level, hp, C.RIFT_COST, getStones(player)), SYS)
@@ -755,7 +794,7 @@ local function status(player)
         local tier = C.effectiveTier(s, clears)
         local unlocked = stratumUnlocked(player, s)
         player:printToPlayer(string.format('  %-16s rank %d  (%s, Lv.%d)%s',
-            s.name, clears, C.difficultyName(tier), C.nmLevel(tier), unlocked and '' or ' [LOCKED]'), SYS)
+            s.name, clears, C.difficultyName(tier), C.nmLevel(s), unlocked and '' or ' [LOCKED]'), SYS)
     end
     player:printToPlayer('  Examine a Planar Rift in the field (each zone belongs to a stratum) to fight. Probe weaknesses to build Lights.', SYS)
 end

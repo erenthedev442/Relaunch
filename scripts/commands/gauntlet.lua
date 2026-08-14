@@ -1,9 +1,9 @@
 -----------------------------------
 -- !gauntlet abort        -- any player: cancel your own active run
--- !gauntlet abort <name> -- GM (perm 1): cancel another player's run
--- !gauntlet status       -- GM (perm 1): list all active sessions
--- !gauntlet fix <name>   -- GM (perm 1): clear a stuck run and return player home
--- !gauntlet set <name> <level> -- GM (perm 1): place player at a Gauntlet level
+-- !gauntlet abort <name> -- owner/dev GM5: cancel another player's run
+-- !gauntlet status       -- support GM1: list all active sessions
+-- !gauntlet fix <name>   -- owner/dev GM5; GM1 uses audited !gmcontent
+-- !gauntlet set <name> <level> -- owner/dev GM5: place player at a Gauntlet level
 -----------------------------------
 local cmdObj = {}
 
@@ -21,8 +21,8 @@ cmdObj.onTrigger = function(player, args)
     if sub == 'abort' then
         local target
         if name and name ~= '' then
-            if player:getGMLevel() < 1 then
-                player:printToPlayer('[gauntlet] GM permission required to abort another player\'s run.', SYS)
+            if player:getGMLevel() < 5 then
+                player:printToPlayer('[gauntlet] Use !gmcontent reset gauntlet <player> <reason>.', SYS)
                 return
             end
             target = GetPlayerByName(name)
@@ -73,8 +73,8 @@ cmdObj.onTrigger = function(player, args)
         end
 
     elseif sub == 'fix' then
-        if player:getGMLevel() < 1 then
-            player:printToPlayer('[gauntlet] GM permission required.', SYS)
+        if player:getGMLevel() < 5 then
+            player:printToPlayer('[gauntlet] Use !gmcontent reset gauntlet <player> <reason>.', SYS)
             return
         end
         if not sessions then
@@ -101,8 +101,8 @@ cmdObj.onTrigger = function(player, args)
         player:printToPlayer(string.format('[gauntlet] Cleared Gauntlet state for %s.', target:getName()), SYS)
 
     elseif sub == 'set' then
-        if player:getGMLevel() < 1 then
-            player:printToPlayer('[gauntlet] GM permission required.', SYS)
+        if player:getGMLevel() < 5 then
+            player:printToPlayer('[gauntlet] GM5 permission required.', SYS)
             return
         end
         if not sessions then

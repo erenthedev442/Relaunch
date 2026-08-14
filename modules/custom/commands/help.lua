@@ -1,6 +1,6 @@
 -----------------------------------
 -- func: help
--- desc: Lists all custom commands with a one-line description.
+-- desc: Categorized player-command help menu.
 --
 -- Usage: !help
 -----------------------------------
@@ -13,34 +13,124 @@ commandObj.cmdprops =
     parameters = '',
 }
 
-local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.SYSTEM_3
+local SYS = xi.msg.channel.SYSTEM_3
+
+local categories =
+{
+    {
+        label = 'Travel & Recovery',
+        lines =
+        {
+            '!hub - return to the Relaunch hub',
+            '!warp - open the player warp menu',
+            '!home - return to your home point',
+            '!unstick - safely recover from a stuck event',
+            '!warpty - party leader summons online party members',
+            '!pos - display your current coordinates',
+        },
+    },
+    {
+        label = 'Progress & Rewards',
+        lines =
+        {
+            '!progress [section] - overall progression summary',
+            '!marks / !streak / !tier - Hunting League status',
+            '!week / !featured - weekly objectives and bonuses',
+            '!achievements / !nms / !unity - completion trackers',
+            '!reforge / !forgegates / !empyaby - forge progress',
+            '!mastery / !empower - endgame progression status',
+            '!checkascend / !checkrebirth - prestige progress',
+        },
+    },
+    {
+        label = 'Battle Content',
+        lines =
+        {
+            '!geas [page] / !geaski <tier> - Geas Fete tools',
+            '!voidwatch / !ambuscade - battle helpers and status',
+            '!tower / !apex / !gauntlet - climb status and abort',
+            '!paragon - Paragon Board status',
+            '!visitant - extend Visitant status inside Abyssea',
+            '!tournament - tournament information',
+        },
+    },
+    {
+        label = 'Character & Gear',
+        lines =
+        {
+            '!shop / !ah - shops and auction house',
+            '!buff - apply your personal support package',
+            '!autojp / !automerits - spend your own points',
+            '!profile [name] / !mystats / !reallevel - stats',
+            '!catalysts - catalyst inventory',
+            '!reroll <slot> - augment reroll preview',
+            '!offhand - Cross-Job Dual Wield equipment',
+            '!hovershot - use the Ranger Hover Shot workaround',
+        },
+    },
+    {
+        label = 'Companions',
+        lines =
+        {
+            '!fellow - Adventuring Fellow controls',
+            '!fellowname - rename your Fellow',
+            '!fellowstats - Fellow build summary',
+            '!pup - Automaton controls',
+            '!petstats - current pet stats',
+            '!trustattack - Trust targeting controls',
+        },
+    },
+    {
+        label = 'Community & Server',
+        lines =
+        {
+            '!who - online players',
+            '!top [kills|marks|infamy] - online leaderboard',
+            '!events - upcoming bonus events',
+            '!time - server time and reset countdowns',
+            '!optin / !optout - public leaderboard privacy',
+            'Docs: www.ffxi-legendary.com',
+        },
+    },
+}
+
+local showRoot
+
+local function showCategory(player, category)
+    player:printToPlayer(string.format('[Help] == %s ==', category.label), SYS)
+    for _, line in ipairs(category.lines) do
+        player:printToPlayer('  ' .. line, SYS)
+    end
+
+    player:timer(30, function(p)
+        showRoot(p)
+    end)
+end
+
+showRoot = function(player)
+    local options = {}
+    for _, category in ipairs(categories) do
+        local categoryRef = category
+        options[#options + 1] =
+        {
+            categoryRef.label,
+            function(p)
+                showCategory(p, categoryRef)
+            end,
+        }
+    end
+    options[#options + 1] = { 'Close', function() end }
+
+    player:timer(30, function(p)
+        p:customMenu({
+            title = 'Relaunch Player Commands',
+            options = options,
+        })
+    end)
+end
 
 commandObj.onTrigger = function(player)
-    player:printToPlayer('[Relaunch] == Custom Commands ===========================', H)
-    player:printToPlayer("  !hunt            - Warp to Escha - Zi'Tah (hunting hub)", B)
-    player:printToPlayer('  !marks           - Quick marks balance (current + lifetime)', B)
-    player:printToPlayer('  !streak          - Your current kill streak status + timer', B)
-    player:printToPlayer('  !tier            - Next HL tier requirements + cost', B)
-    player:printToPlayer('  !week            - This week\'s objectives at a glance', B)
-    player:printToPlayer('  !featured        - This week\'s featured bonus NMs (2x marks)', B)
-    player:printToPlayer('  !achievements    - Your personal milestone progress', B)
-    player:printToPlayer('  !reforge         - Your Reforge AF / Relic / Empy mark balances', B)
-    player:printToPlayer('  !nms             - NM Encyclopedia: killed vs. remaining', B)
-    player:printToPlayer('  !progress [sub]  - Full progression (hunt/reforge/weekly/guilds/etc.)', B)
-    player:printToPlayer('  !profile [name]  - View any player\'s stats', B)
-    player:printToPlayer('  !mystats         - Full stat dump incl. your augment/gear extras', B)
-    player:printToPlayer('  !checkascend / !checkrebirth - Ascension AP / Job Rebirth progress', B)
-    player:printToPlayer('  !unity [conquered] - Unity Wanted NM conquest progress by tier (defaults to NMs still needed)', B)
-    player:printToPlayer('  !geas [page]     - Missing Geas Fete NMs, positions, and zones', B)
-    player:printToPlayer('  !geaski <tier>   - Buy a Geas Fete pop trigger remotely', B)
-    player:printToPlayer('  !who             - Who is currently online', B)
-    player:printToPlayer('  !top [kills|marks|infamy] - Top 5 online players by stat', B)
-    player:printToPlayer('  !events          - Upcoming seasonal bonus mark events', B)
-    player:printToPlayer('  !time            - Server time + daily/weekly reset countdowns', B)
-    player:printToPlayer('  !optin / !optout - Opt in or out of public leaderboards', B)
-    player:printToPlayer('  =====================================================', B)
-    player:printToPlayer('  Docs: www.ffxi-legendary.com', B)
+    showRoot(player)
 end
 
 return commandObj

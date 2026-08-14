@@ -1,6 +1,6 @@
 -----------------------------------
 -- !worldboss [status | spawn | kill | reset]
--- GM command (permission 4) for World Boss management.
+-- Owner/developer GM command (permission 5) for World Boss management.
 --
 --   !worldboss            show current boss status
 --   !worldboss spawn      force-spawn this week's boss (GM must be in Hall of the Gods)
@@ -19,7 +19,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 4,
+    permission = 5,
     parameters = 'ssss',
 }
 

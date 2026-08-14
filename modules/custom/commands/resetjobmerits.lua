@@ -1,6 +1,6 @@
 -----------------------------------
 -- !resetjobmerits [player]
--- GM command (permission 1+).
+-- Owner/developer GM command (permission 5).
 --
 -- Clears all job-specific merit ranks (Others, Group 1, Group 2, WS) from
 -- the target player (or yourself if no name given) and refunds the exact
@@ -50,7 +50,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 1,
+    permission = 5,
     parameters = 's',
 }
 

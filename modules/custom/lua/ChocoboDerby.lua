@@ -213,7 +213,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
     local caller = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Race_Caller',
-        packetName = string.format('%sRace Caller', xi.icon.STAR_LARGE),
+        packetName = string.format('%sChocobo Derby', xi.icon.STAR_LARGE),
         look       = 162,
         x = catalog.npcPos.x, y = catalog.npcPos.y, z = catalog.npcPos.z,
         rotation   = catalog.npcPos.rotation,
@@ -223,12 +223,12 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
             local wins   = player:getCharVar('Derby_Wins')   or 0
             local profit = player:getCharVar('Derby_Profit') or 0
             player:printToPlayer(string.format(
-                '[Race Caller] Welcome to the Derby! Your card: %d races, %d wins, %s%d gil lifetime.',
+                '[Chocobo Derby] Welcome to the Derby! Your card: %d races, %d wins, %s%d gil lifetime.',
                 races, wins, profit >= 0 and '+' or '', profit),
                 xi.msg.channel.SYSTEM_3)
             if ownBirdRunner(player) then
                 player:printToPlayer(
-                    '[Race Caller] Your raised chocobo is fit to race - look for (YOURS) on the card. Home wins pay a bonus!',
+                    '[Chocobo Derby] Your raised chocobo is fit to race - look for (YOURS) on the card. Home wins pay a bonus!',
                     xi.msg.channel.SYSTEM_3)
             end
 
@@ -246,7 +246,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
             end }
             options[#options + 1] = { 'Close', function(p) end }
 
-            sendMenu(player, 'Race Caller', options)
+            sendMenu(player, 'Chocobo Derby', options)
         end,
     })
     utils.unused(caller)

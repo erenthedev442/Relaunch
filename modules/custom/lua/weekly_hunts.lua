@@ -159,7 +159,7 @@ local function ensureCurrentWeek(player)
     if stored ~= currentWeekId() then
         rollNewWeek(player)
         player:printToPlayer(
-            '[Hunt Board] New week! 5 fresh objectives are available - talk to the Hunt Board NPC to view.',
+            '[Weekly Hunts] New week! 5 fresh objectives are available - talk to Weekly Hunts to view.',
             xi.msg.channel.SYSTEM_3)
     end
 end
@@ -182,7 +182,7 @@ local function payReward(player, reward)
     local prev = player:getCharVar(curr.cv) or 0
     player:setCharVar(curr.cv, prev + reward.amount)
     player:printToPlayer(
-        string.format('[Hunt Board] Reward: +%d %s, kupo!',
+        string.format('[Weekly Hunts] Reward: +%d %s, kupo!',
             reward.amount, curr.label),
         xi.msg.channel.SYSTEM_3)
 end
@@ -200,7 +200,7 @@ local function completeSlot(player, slot, obj)
     -- Cap progress at target so the menu doesn't display "37 / 25".
     player:setCharVar(cvSlot(slot, 'Prog'), obj.target)
     player:printToPlayer(
-        string.format('[Hunt Board] Objective complete: %s!', obj.label),
+        string.format('[Weekly Hunts] Objective complete: %s!', obj.label),
         xi.msg.channel.SYSTEM_3)
     payReward(player, obj.reward)
 
@@ -223,7 +223,7 @@ local function completeSlot(player, slot, obj)
             player:setCharVar(partialCv, weekId)
             payReward(player, pr)
             player:printToPlayer(
-                string.format('[Hunt Board] %d/5 cleared - partial sweep bonus!', doneCount),
+                string.format('[Weekly Hunts] %d/5 cleared - partial sweep bonus!', doneCount),
                 xi.msg.channel.SYSTEM_3)
         end
     end
@@ -237,13 +237,13 @@ local function completeSlot(player, slot, obj)
         local prevCount = player:getCharVar(meta.titleCv) or 0
         player:setCharVar(meta.titleCv, prevCount + 1)
         player:printToPlayer(
-            string.format('*** [Hunt Board] WEEKLY SWEEP! All %d objectives cleared! ***',
+            string.format('*** [Weekly Hunts] WEEKLY SWEEP! All %d objectives cleared! ***',
                 SLOT_COUNT),
             xi.msg.channel.SYSTEM_3)
         payReward(player, { currency = meta.currency, amount = meta.amount })
         if prevCount == 0 then
             player:printToPlayer(
-                '[Hunt Board] First Weekly Hunter clear, kupo! Title unlocked.',
+                '[Weekly Hunts] First Weekly Hunter clear, kupo! Title unlocked.',
                 xi.msg.channel.SYSTEM_3)
         end
     end
@@ -329,7 +329,7 @@ m:addOverride('xi.player.onPlayerDeath', function(player, ...)
     if (player:getCharVar('WH_KillStreak') or 0) > 0 then
         player:setCharVar('WH_KillStreak', 0)
         player:printToPlayer(
-            '[Hunt Board] Kill streak broken.',
+            '[Weekly Hunts] Kill streak broken.',
             xi.msg.channel.SYSTEM_3)
     end
 end)
@@ -431,7 +431,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
     local HuntBoard = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Hunt_Board',
-        packetName = string.format('%sHunt Board', xi.icon.STAR_LARGE),
+        packetName = string.format('%sWeekly Hunts', xi.icon.STAR_LARGE),
         look       = 2418,  -- moogle, generic; distinct from the others
         x          = catalog.npcPos.x,
         y          = catalog.npcPos.y,
@@ -440,7 +440,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
         widescan   = 1,
         onTrigger = function(player, npc)
             player:printToPlayer(
-                '[Hunt Board] Behold the week\'s objectives, kupo!',
+                '[Weekly Hunts] Behold the week\'s objectives, kupo!',
                 xi.msg.channel.SYSTEM_3)
             showBoardMenu(player)
         end,

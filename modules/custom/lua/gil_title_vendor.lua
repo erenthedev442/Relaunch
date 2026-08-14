@@ -34,7 +34,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             function(p) p:printToPlayer('Look your best!', xi.msg.channel.SYSTEM_3) end,
         })
 
-        menu.title   = string.format('Title Broker  (Your gil: %d)', player:getGil())
+        menu.title   = string.format('Title Vendor  (Your gil: %d)', player:getGil())
         menu.options = options
         local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
         player:timer(30, function(p) p:customMenu(snapshot) end)

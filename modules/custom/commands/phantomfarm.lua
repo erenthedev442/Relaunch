@@ -194,6 +194,11 @@ commandObj.onTrigger = function(player, farmArg, actionArg)
         return
     end
 
+    if (player:getGMLevel() or 0) < 5 then
+        player:printToPlayer('  => refill requires an owner/developer GM.', S)
+        return
+    end
+
     -- Refill: spawn (target - total) new phantoms directly. Doesn't touch
     -- existing entities (alive OR pending-GC).
     local toSpawn = math.max(0, target - total)

@@ -110,7 +110,7 @@ end
 -- Trade: no services take items -- point reforgers at the right systems.
 -----------------------------------
 entity.onTrade = function(player, npc, trade)
-    player:printToPlayer("[Coelestrox] I no longer work armor. Artifact reforges are done at the Reforge hub (!reforged); the +4 tier at the Divergence Forge in San d'Oria.", xi.msg.channel.SYSTEM_3)
+    player:printToPlayer("[Coelestrox] I no longer work armor. Find the Reforge hub under !warp > Activities > Progression Hubs; the +4 tier is at the Divergence Forge in San d'Oria.", xi.msg.channel.SYSTEM_3)
 end
 
 entity.onEventUpdate = function(player, csid, option, npc)

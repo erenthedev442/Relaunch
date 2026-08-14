@@ -3,6 +3,7 @@
 -----------------------------------
 
 local weaponForge = require('modules/custom/lua/weapon_forge_catalog')
+local aeonicMaat  = require('modules/custom/lua/aeonic_maat_catalog')
 
 local C =
 {
@@ -19,6 +20,16 @@ for _, chain in ipairs(weaponForge.chains) do
         name = chain.aeonic.s3.name,
         info = string.format('%s Aeonic weapon. Jobs: %s.', chain.type, chain.jobs),
     }
+end
+
+function C.canRepeat(player, finalId)
+    if (player:getCharVar('WF_Aeonic_Final') or 0) ~= 1 then
+        return false, 'first_aeonic'
+    end
+    if not aeonicMaat.isComplete(player, finalId) then
+        return false, 'maat'
+    end
+    return true, nil
 end
 
 return C

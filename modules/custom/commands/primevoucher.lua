@@ -1,7 +1,7 @@
 -----------------------------------
 -- func: primevoucher
 -- desc: [GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one
---       at the Prime Armory NPC in Leafallia (!leaf) to claim a Prime weapon of their
+--       at the Prime Trials NPC in the hub (!hub) to claim a Prime weapon of their
 --       choice. The voucher is EX (bound), so a GM cannot trade it over by
 --       hand -- this command is how you grant it.
 --
@@ -40,7 +40,7 @@ commandObj.onTrigger = function(player, name, count)
     end
 
     target:addItem({ id = VOUCHER, quantity = count })
-    target:printToPlayer(string.format('You received %d Prime Voucher(s)! Visit the Prime Armory in Leafallia (!leaf) and trade one to claim a Prime weapon.', count), xi.msg.channel.SYSTEM_3)
+    target:printToPlayer(string.format('You received %d Prime Voucher(s)! Visit Prime Trials at !hub and trade one to claim a Prime weapon.', count), xi.msg.channel.SYSTEM_3)
 
     if target:getID() ~= player:getID() then
         player:printToPlayer(string.format('Gave %d Prime Voucher(s) to %s.', count, target:getName()), xi.msg.channel.SYSTEM_3)

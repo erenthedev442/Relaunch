@@ -7,14 +7,14 @@
 --       the Azure box that inserts the pearl into char_inventory directly.
 --
 -- Usage: !grantpearls
--- Permission: GM level 4
+-- Permission: GM level 5
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 1,
+    permission = 5,
     parameters = ''
 }
 

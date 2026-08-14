@@ -21,7 +21,7 @@ local catalog = {}
 
 catalog.zoneId    = xi.zone.ABDHALJS_ISLE_PURGONORGO
 catalog.zonePath  = 'xi.zones.Abdhaljs_Isle-Purgonorgo'
-catalog.npcName   = 'Warpman'
+catalog.npcName   = 'Warp Guide'
 catalog.npcLook   = 3000
 catalog.npcPos    = { x = 514.1982, y = -3.0378, z = 541.3422, rot = 255 }
 

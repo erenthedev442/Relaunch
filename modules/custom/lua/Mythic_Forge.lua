@@ -185,7 +185,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         onTrigger = function(player, npc)
             if (player:getCharVar('WF_Mythic_Final') or 0) ~= 1 then
                 player:printToPlayer(
-                    PREFIX .. ' Walk the full Mythic path at the Weapon Forger before I will temper another blade for you.',
+                    PREFIX .. ' Walk the full Mythic path at the Weapon Forge before I will temper another blade for you.',
                     xi.msg.channel.SYSTEM_3)
                 return
             end

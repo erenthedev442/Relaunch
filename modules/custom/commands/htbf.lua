@@ -29,7 +29,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 0,
+    permission = 1,
     parameters = '',
 }
 
@@ -117,7 +117,7 @@ commandObj.onTrigger = function(player)
     local keys = heldFightKeys(player)
 
     if #keys == 0 then
-        player:printToPlayer('[HTBF] You are not holding a Phantom Gem. Buy one from the Phantom Gems vendor in Leafallia, then use !htbf.', SYS)
+        player:printToPlayer('[HTBF] You are not holding a Phantom Gem. Buy one from the HTBF Vendor at !hub first.', SYS)
         return
     end
 
