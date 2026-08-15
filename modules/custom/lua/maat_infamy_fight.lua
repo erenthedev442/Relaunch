@@ -118,7 +118,10 @@ local MAAT_MECH_CFG =
 
 local CRIT_TOKEN_ID = 15194 -- Maat's Cap (retail Rare/EX)
 local DROP_CHANCE   = 0.25
-local MAAT_LEVEL    = 175
+-- Echo sits beside H4 progression, well before the Lv150 Prime ceiling. Hunt
+-- ranks preserve Lv99 and layer difficulty through stat overlays, so Echo
+-- follows that same Lv99 baseline rather than the old endgame Lv175 value.
+local MAAT_LEVEL    = 99
 local MAAT_HP       = 7000000
 local MAAT_MODS     =
 {
