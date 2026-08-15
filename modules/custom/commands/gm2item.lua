@@ -21,7 +21,8 @@ local function usage(player)
 end
 
 commandObj.onTrigger = function(player, args)
-    local itemText, amountText = (args or ''):match('^%s*(%S+)%s*(%S*)%s*$')
+    args = (args or ''):gsub('^gm2item%s*', '', 1)
+    local itemText, amountText = args:match('^%s*(%S+)%s*(%S*)%s*$')
     local itemId = tonumber(itemText)
     local amount = amountText == '' and 1 or tonumber(amountText)
 
