@@ -1,93 +1,1046 @@
-﻿Collaborator review  2026-08-14 15:39:16
+﻿Collaborator review  2026-08-15 10:05:35
 Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit 5e2383bdc0315200103c342ff14c68efc5cea157
+commit 926b5e92c09c91caf7856b81be5aa9d61379a7ad
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Fri Aug 14 23:38:31 2026 +0100
+Date:   Sat Aug 15 18:04:52 2026 +0100
 
-    fix(relaunch/maat): expose Echo on a visible shrine menu row
+    fix(relaunch/aeonic): make pilgrimage progression state-driven
     
-    Reuse Waughroon's unused Palborough Project row and only advertise Echo
-    when the burning circle actually includes it for the player.
+    Replace invalid client item tokens with a single active route, while keeping Maat and final weapon gates tied to each weapon's milestone.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/modules/custom/lua/maat_infamy_fight.lua b/modules/custom/lua/maat_infamy_fight.lua
-index d228b7f7c0..b9c26c6c3a 100644
---- a/modules/custom/lua/maat_infamy_fight.lua
-+++ b/modules/custom/lua/maat_infamy_fight.lua
-@@ -21,15 +21,17 @@
+diff --git a/modules/custom/commands/forgegates.lua b/modules/custom/commands/forgegates.lua
+index 762e6da53c..9b02cedd16 100644
+--- a/modules/custom/commands/forgegates.lua
++++ b/modules/custom/commands/forgegates.lua
+@@ -30,6 +30,7 @@ commandObj.onTrigger = function(player, catArg)
+     local SYS   = xi.msg.channel.SYSTEM_3
+     local GATES = require('modules/custom/lua/weapon_forge_gates')
+     local forgeCatalog = require('modules/custom/lua/weapon_forge_catalog')
++local pilgrimageCatalog = require('modules/custom/lua/legendary_pilgrimage_catalog')
+ 
+     -- Filter to a single category if the player passed one.
+     local cats
+@@ -61,7 +62,11 @@ commandObj.onTrigger = function(player, catArg)
+                     if cat == 'aeonic' and i == 2 then
+                         local found = false
+                         for _, chain in ipairs(forgeCatalog.chains) do
+-                            if player:getItemCount(chain.aeonic.s2.id) > 0 then
++                            local entry = pilgrimageCatalog.byFinalId[chain.aeonic.s3.id]
++                            if
++                                player:getCharVar('LWP_AeonicActive') == entry.index and
++                                (player:getCharVar(string.format('LWP_AeonicStage_%d', chain.aeonic.s3.id)) or 0) >= 2
++                            then
+                                 found = true
+                                 total = total + 1
+                                 local ok = gate.check(player, chain)
+@@ -75,7 +80,7 @@ commandObj.onTrigger = function(player, catArg)
+                         if not found then
+                             total = total + 1
+                             player:printToPlayer(
+-                                string.format('    Stage III [Γ£ù] %s (bring an Empowered Aeonic-path weapon)',
++                                string.format('    Stage III [Γ£ù] %s (complete Chapters I and II of an Aeonic pilgrimage)',
+                                     gate.label),
+                                 SYS)
+                         end
+diff --git a/modules/custom/lua/Character_Upgrader.lua b/modules/custom/lua/Character_Upgrader.lua
+index 78810a6c81..60b782f810 100644
+--- a/modules/custom/lua/Character_Upgrader.lua
++++ b/modules/custom/lua/Character_Upgrader.lua
+@@ -13,6 +13,7 @@ require('modules/module_utils')
+ local m = Module:new('character_upgrader')
+ local spellGrant = require('modules/custom/lua/player_spell_grant_catalog')
+ local trustGrant = require('modules/custom/lua/trust_grant_catalog')
++local remaCatalog = require('modules/custom/lua/rema_ws_tier_catalog')
+ 
+ -- Starter trusts (see exports/trust_cipher_drop_proposal.csv). Every other trust
+ -- is earned via cipher drops, direct NM grants, or the Void Keeper.
+@@ -60,9 +61,15 @@ local AUTOMATON_PARTS =
+ -----------------------------------
+ -- Grant helpers (unchanged from the old Unlocker NPC; now module-scope).
+ -----------------------------------
++local AEONIC_WS = {}
++for _, entry in ipairs(remaCatalog.WEAPONS) do
++    if entry.family == 'AEONIC' then AEONIC_WS[entry.wsId] = true end
++end
++
+ local function giveAllWeaponSkills(player)
+     for i = 1, 256 do
+-        pcall(function() player:addWeaponSkill(i) end)
++        -- Aeonic WSs unlock when the player begins that specific pilgrimage.
++        if not AEONIC_WS[i] then pcall(function() player:addWeaponSkill(i) end) end
+     end
+     for _, unlockId in pairs(xi.wsUnlock) do
+         pcall(function() player:addLearnedWeaponskill(unlockId) end)
+diff --git a/modules/custom/lua/LegendaryWeaponPilgrimage.lua b/modules/custom/lua/LegendaryWeaponPilgrimage.lua
+index 8b3b74f49d..c3e5d29f72 100644
+--- a/modules/custom/lua/LegendaryWeaponPilgrimage.lua
++++ b/modules/custom/lua/LegendaryWeaponPilgrimage.lua
+@@ -12,6 +12,7 @@ P.catalog = C
+ 
+ local SYS = xi.msg.channel.SYSTEM_3
+ local ACTIVE_VARS = { 'LWP_Active1', 'LWP_Active2' }
++local AEONIC_ACTIVE_VAR = 'LWP_AeonicActive'
+ local ABYSSEA_ZONES =
+ {
+     [xi.zone.ABYSSEA_KONSCHTAT] = true, [xi.zone.ABYSSEA_TAHRONGI] = true,
+@@ -38,6 +39,8 @@ local function activeEntries(player)
+         local entry = C.byIndex[player:getCharVar(var) or 0]
+         if entry then entries[#entries + 1] = entry end
+     end
++    local aeonic = C.byIndex[player:getCharVar(AEONIC_ACTIVE_VAR) or 0]
++    if aeonic then entries[#entries + 1] = aeonic end
+     return entries
+ end
+ 
+@@ -53,6 +56,12 @@ local function entryUnlocked(player, entry)
+ end
+ 
+ local function equippedForChapter(player, entry, chapter)
++    if entry.family == 'aeonic' then
++        return entryUnlocked(player, entry)
++            and chapter >= 1 and chapter <= 3
++            and player:getCharVar(AEONIC_ACTIVE_VAR) == entry.index
++    end
++
+     return entryUnlocked(player, entry)
+         and chapter >= 1 and chapter <= 3
+         and player:getEquipID(entry.slot) == entry.stages[chapter]
+@@ -75,11 +84,50 @@ local function targetIndex(requirement, mob)
+         or C.targetIndex(requirement, mob:getPacketName())
+ end
+ 
++function P.aeonicStageVar(finalId)
++    return string.format('LWP_AeonicStage_%d', finalId)
++end
++
++function P.aeonicStage(player, finalId)
++    return player:getCharVar(P.aeonicStageVar(finalId)) or 0
++end
++
++function P.startAeonic(player, entry)
++    local active = player:getCharVar(AEONIC_ACTIVE_VAR) or 0
++    if active ~= 0 and active ~= entry.index then
++        return false, 'You may have only one active Aeonic pilgrimage.'
++    end
++
++    player:setCharVar(AEONIC_ACTIVE_VAR, entry.index)
++    return true
++end
++
++function P.advanceAeonic(player, entry, fromStage)
++    if player:getCharVar(AEONIC_ACTIVE_VAR) ~= entry.index then
++        return false
++    end
++    if P.aeonicStage(player, entry.finalId) ~= fromStage then
++        return false
++    end
++
++    player:setCharVar(P.aeonicStageVar(entry.finalId), fromStage + 1)
++    return true
++end
++
+ function P.register(player, entry)
+     if entry and not entryUnlocked(player, entry) then
+         return false, 'Forge a final Aeonic weapon before beginning a Prime pilgrimage.'
+     end
+-    if not entry or not ownsChain(player, entry) then
++    if not entry then
++        return false, 'That pilgrimage is invalid.'
++    end
++    if entry.family == 'aeonic' then
++        if C.chapter(player, entry) == 4 then
++            return false, 'That pilgrimage is already complete.'
++        end
++        return P.startAeonic(player, entry)
++    end
++    if not ownsChain(player, entry) then
+         return false, 'You must possess a weapon from that exact chain.'
+     end
+     if C.chapter(player, entry) == 4 then
+@@ -98,6 +146,9 @@ function P.register(player, entry)
+ end
+ 
+ function P.abandon(player, entry)
++    if entry.family == 'aeonic' then
++        return false
++    end
+     for _, var in ipairs(ACTIVE_VARS) do
+         if (player:getCharVar(var) or 0) == entry.index then
+             player:setCharVar(var, 0)
+@@ -158,7 +209,7 @@ local function targetEligible(player, mob, entry, chapter)
+         return jobName ~= nil and entry.jobs:find(jobName, 1, true) ~= nil and mob:isNM()
+     elseif requirement.tag == 'magian_family' then
+         return mob:getMainLvl() >= requirement.minLevel
+-            and mob:getMaxHP() >= requirement.minMaxHP
++            and (not requirement.minMaxHP or mob:getMaxHP() >= requirement.minMaxHP)
+             and ecosystemMatches()
+     end
+     return false
+@@ -458,8 +509,8 @@ local function requirementText(entry, chapter)
+     elseif r.kind == 'nyzul_objectives' then
+         return string.format('%d Nyzul Eliminate Specified Enemy objective clears', r.count)
+     elseif r.tag == 'magian_family' then
+-        return string.format('%d Lv%d+ family exact-WS killing blows (target max HP %d+); %s',
+-            r.count, r.minLevel, r.minMaxHP, P.archetypeText(entry.archetypeRule))
++        return string.format('%d Lv%d+ eligible-family exact-WS killing blows; %s',
++            r.count, r.minLevel, P.archetypeText(entry.archetypeRule))
+     elseif r.distinct then
+         return string.format('%d distinct %s exact-WS killing blows; %s',
+             r.count, r.tag:gsub('_', ' '), P.archetypeText(entry.archetypeRule))
+@@ -468,10 +519,26 @@ local function requirementText(entry, chapter)
+         r.count, r.tag:gsub('_', ' '), P.archetypeText(entry.archetypeRule))
+ end
+ 
++local function requiredStageText(entry, chapter)
++    if entry.family == 'aeonic' then
++        return 'any compatible ' .. entry.weaponType .. ' weapon'
++    elseif entry.singleStep or chapter == 1 and entry.family ~= 'prime' then
++        return 'the base ' .. entry.name
++    elseif entry.family == 'prime' and chapter <= 2 then
++        return 'the 119 I Prime weapon'
++    elseif chapter == 2 then
++        return entry.name .. ' 119 I'
++    end
++
++    return entry.name .. ' 119 II'
++end
++
+ local function printCurrentTargets(player, requirement)
+     local targets = requirement.targets
++    local label = 'Eligible targets'
+     if not targets and requirement.ecosystems then
+         targets = {}
++        label = 'Eligible families'
+         for _, ecosystem in ipairs(requirement.ecosystems) do
+             targets[#targets + 1] = C.ECOLOGY_NAMES[ecosystem] or tostring(ecosystem)
+         end
+@@ -483,7 +550,7 @@ local function printCurrentTargets(player, requirement)
+         for index = first, math.min(#targets, first + 3) do
+             names[#names + 1] = targets[index]
+         end
+-        player:printToPlayer('[Pilgrimage] Eligible: ' .. table.concat(names, ', '), SYS)
++        player:printToPlayer('[Pilgrimage] ' .. label .. ': ' .. table.concat(names, ', '), SYS)
+     end
+ end
+ 
+@@ -497,17 +564,27 @@ function P.showStatus(player, entry, back)
+         player:printToPlayer(
+             '[Pilgrimage] Prime Chapters I and II are sequential on Ajja; Chapter III uses the 119 II weapon.',
+             SYS)
++    elseif entry.family == 'aeonic' then
++        player:printToPlayer(
++            '[Pilgrimage] Aeonic progress is route-bound, not item-bound: use the listed Aeonic weaponskill with any compatible weapon.',
++            SYS)
+     end
+     for number = 1, 3 do
+         local value = math.min(player:getCharVar(C.progressVar(entry.index, number)) or 0,
+             entry.chapters[number].count)
+-        player:printToPlayer(string.format('[Pilgrimage] Chapter %s %d/%d - %s',
++        player:printToPlayer(string.format(
++            '[Pilgrimage] Chapter %s %d/%d - Equip %s; kill with %s. %s',
+             ({ 'I', 'II', 'III' })[number], value, entry.chapters[number].count,
+-            requirementText(entry, number)), SYS)
++            requiredStageText(entry, number), entry.wsName, requirementText(entry, number)), SYS)
++    end
++    if chapter <= 3 then
++        player:printToPlayer(string.format(
++            '[Pilgrimage] Current Chapter %s is active: satisfy every condition above for each killing blow.',
++            ({ 'I', 'II', 'III' })[chapter]), SYS)
++        printCurrentTargets(player, entry.chapters[chapter])
+     end
+-    if chapter <= 3 then printCurrentTargets(player, entry.chapters[chapter]) end
+     local options = {}
+-    if activeEntry(player, entry.index) then
++    if activeEntry(player, entry.index) and entry.family ~= 'aeonic' then
+         options[#options + 1] = { 'Abandon (progress kept)', function(p)
+             P.abandon(p, entry)
+             p:printToPlayer('[Pilgrimage] Registration released; chapter progress was preserved.', SYS)
+diff --git a/modules/custom/lua/Temprix_NPC.lua b/modules/custom/lua/Temprix_NPC.lua
+index 846c1f302d..e771ea2bc4 100644
+--- a/modules/custom/lua/Temprix_NPC.lua
++++ b/modules/custom/lua/Temprix_NPC.lua
+@@ -2,15 +2,10 @@
+ -- Temprix_NPC.lua
  --
- -- Aeonic Maat (aeonic_maat_trials.lua) is a separate NPC and is not touched.
+ -- Temprix is the Reisenjima entry point for the Aeonic weapon path.
+--- She mirrors the hub Weapon Forge's Malformed-base service for Escha Beads.
+--- Players then forge their Malformed weapon into a full Aeonic 119III at
+--- the Weapon Forger (see WeaponForge_NPC.lua) with Attestations and Escha Silt.
++-- She starts the state-driven Aeonic pilgrimage for Escha Beads.
  --
---- Battlefield id 4230 sits after HTBF (4000-4220). Menu index 22 is free on
---- Waughroon BC_Entrance (retail uses 0-18 and 21). Custom ids are not in the
---- client DAT, so we warp into the ring ourselves (same workaround as HTBF).
-+-- Battlefield id 4230 sits after HTBF (4000-4220). Menu index 19 is the unused
-+-- Palborough Project slot in the Waughroon DAT (retail uses 0-18 and 21).
-+-- Index 22 does not show a selectable row on this client. Custom battlefield
-+-- ids are not in the DAT, so we warp into the ring ourselves (HTBF workaround).
+ -- POSITION: adjust x/y/z to match Reisenjima zone geometry on first test.
  --
- -- SQL: modules/custom/sql/maats_echo_bcnm_records.sql must be applied
- -- (deploy applies modules/custom/sql/*.sql). Map restart after Lua changes.
+--- The 14 Malformed weapon item rows (IDs 29701-29714) are added to item_basic by
+--- modules/custom/sql/aeonic_malformed_items.sql (auto-applied every deploy).
+---
+ -- restart-gated (addOverride)
  -----------------------------------
  require('modules/module_utils')
- require('scripts/zones/RuLude_Gardens/Zone')
-+require('scripts/zones/Waughroon_Shrine/Zone')
+@@ -20,6 +15,9 @@ local m = Module:new('temprix_npc')
+ local S = xi.msg.channel.SYSTEM_3
+ local forgeCatalog = require('modules/custom/lua/weapon_forge_catalog')
+ local forgeGates = require('modules/custom/lua/weapon_forge_gates')
++local pilgrimageCatalog = require('modules/custom/lua/legendary_pilgrimage_catalog')
++require('modules/custom/lua/LegendaryWeaponPilgrimage')
++local pilgrimageRuntime = xi.legendaryPilgrimage
  
- local mechanics = require('modules/custom/lua/mob_mechanics_library')
- 
-@@ -38,7 +40,7 @@ local m = Module:new('maat_infamy_fight')
- local SYS = xi.msg.channel.SYSTEM_3
- 
- m.BATTLEFIELD_ID = 4230
--m.MENU_INDEX     = 22
-+m.MENU_INDEX     = 19 -- client DAT: "The Palborough Project" (unused retail slot)
- m.COMPANION_CAP  = 2
- m.INFAMY_COST    = 150
- m.KI_NAME        = "Echo's Testimony"
-@@ -412,7 +414,11 @@ local function installHooks()
-                 npc:getName() == 'BC_Entrance' and
-                 player:hasKeyItem(echoKi())
-             then
--                say(player, "[Maat] An unnamed row is Maat's Echo. Two companions. He waits until you strike or close in.")
-+                if bit.band(options, bit.lshift(1, m.MENU_INDEX)) ~= 0 then
-+                    say(player, "[Maat] Pick 'The Palborough Project' -- that unused row is Maat's Echo. Two companions. He waits until you strike or close in.")
-+                else
-+                    say(player, "[Maat] Echo's Testimony is ready, but the circle has not listed the fight. The shrine needs a map restart.")
-+                end
+ -- ===================================================================
+ -- CONSTANTS
+@@ -49,8 +47,7 @@ local WEAPONS = {}
+ for _, chain in ipairs(forgeCatalog.chains) do
+     WEAPONS[#WEAPONS + 1] =
+     {
+-        name    = chain.aeonic.base.name,
+-        id      = chain.aeonic.base.id,
++        name    = chain.aeonic.s3.name,
+         wtype   = chain.type,
+         att     = chain.aeonic.attestationId,
+         attName = chain.aeonic.attestationName,
+@@ -105,36 +102,31 @@ showPage = function(player, page)
+                     pp:timer(30, function(p2) showPage(p2, pageCapture) end)
+                     return
+                 end
+-                if pp:getFreeSlotsCount() < 1 then
+-                    pp:printToPlayer('[Temprix] Your inventory is full.', S)
++                local ae = wCapture.chain.aeonic
++                local entry = pilgrimageCatalog.byFinalId[ae.s3.id]
++                if pp:hasItem(ae.s3.id) then
++                    pp:printToPlayer(string.format(
++                        '[Temprix] You already hold %s.',
++                        ae.s3.name), S)
+                     pp:timer(30, function(p2) showPage(p2, pageCapture) end)
+                     return
+                 end
+-                -- RARE pre-check: charging first would eat the beads with
+-                -- nothing granted.
+-                local ae = wCapture.chain.aeonic
+-                if
+-                    pp:hasItem(ae.base.id) or
+-                    pp:hasItem(ae.s1.id) or
+-                    pp:hasItem(ae.s2.id) or
+-                    pp:hasItem(ae.s3.id)
+-                then
++                if pp:getCharVar('LWP_AeonicActive') == entry.index then
+                     pp:printToPlayer(string.format(
+-                        '[Temprix] You already hold a stage of the %s chain.',
+-                        ae.s3.name), S)
++                        '[Temprix] Your %s pilgrimage is already active.', ae.s3.name), S)
+                     pp:timer(30, function(p2) showPage(p2, pageCapture) end)
+                     return
+                 end
+-                pp:delCurrency(BEADS_KEY, COST)
+-                if not pp:addItem({ id = wCapture.id, quantity = 1 }) then
+-                    pp:addCurrency(BEADS_KEY, COST)
+-                    pp:printToPlayer('[Temprix] Something went wrong -- your beads have been returned.', S)
++                local started, reason = pilgrimageRuntime.startAeonic(pp, entry)
++                if not started then
++                    pp:printToPlayer('[Temprix] ' .. reason, S)
+                     pp:timer(30, function(p2) showPage(p2, pageCapture) end)
+                     return
+                 end
++                pp:delCurrency(BEADS_KEY, COST)
+                 pp:printToPlayer(string.format(
+-                    '[Temprix] %s entrusted to you. Attune it with %s to begin forging.',
+-                    wCapture.name, wCapture.attName), S)
++                    '[Temprix] %s pilgrimage begun. Complete Chapter I to begin attunement.',
++                    wCapture.name), S)
+                 pp:timer(30, function(p2) showPage(p2, pageCapture) end)
+             end,
+         }
+@@ -186,7 +178,7 @@ m:addOverride('xi.zones.Reisenjima.Zone.onInitialize', function(zone)
              end
+             if hl < REQUIRED_HL_RANK then
+                 player:printToPlayer(string.format(
+-                    '[Temprix] Hunting League Rank %d is required to obtain a Malformed weapon. You are Rank %d.',
++                    '[Temprix] Hunting League Rank %d is required to begin an Aeonic pilgrimage. You are Rank %d.',
+                     REQUIRED_HL_RANK, hl), S)
+                 return
+             end
+diff --git a/modules/custom/lua/WeaponForge_NPC.lua b/modules/custom/lua/WeaponForge_NPC.lua
+index b050d822a7..e696fa2ff0 100644
+--- a/modules/custom/lua/WeaponForge_NPC.lua
++++ b/modules/custom/lua/WeaponForge_NPC.lua
+@@ -29,6 +29,8 @@ local catalog = require('modules/custom/lua/weapon_forge_catalog')
+ local itemCurrency = require('modules/custom/lua/hl_seal_currency')
+ local pilgrimage = require('modules/custom/lua/legendary_pilgrimage_catalog')
+ local mastery = require('modules/custom/lua/weapon_mastery_catalog')
++require('modules/custom/lua/LegendaryWeaponPilgrimage')
++local pilgrimageRuntime = xi.legendaryPilgrimage
  
-             return options
-@@ -528,6 +534,17 @@ m:addOverride('xi.zones.RuLude_Gardens.Zone.onInitialize', function(zone)
-     utils.unused(maatEcho)
- end)
+ local NPC_POS = { x = 568.500, y = -3.360, z = 535.400, rot = 64 }
  
-+-- Battlefield scripts can miss a hot-reload. Register from the shrine itself
-+-- if the Echo BCNM is not already in contents.
-+m:addOverride('xi.zones.Waughroon_Shrine.Zone.onInitialize', function(zone)
-+    super(zone)
-+    if not (xi.battlefield.contents and xi.battlefield.contents[m.BATTLEFIELD_ID]) then
-+        pcall(function()
-+            m.registerBattlefield()
-+        end)
-+    end
-+end)
+@@ -84,9 +86,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
+     -- Returns the item the player is trading in.
+     local function getFromItem(chain, fromStage, path)
+         if path == 'aeonic' then
+-            if fromStage == 0 then return chain.aeonic.base
+-            elseif fromStage == 1 then return chain.aeonic.s1
+-            else return chain.aeonic.s2 end
++            return
++            {
++                name = fromStage == 0 and 'Chapter I pilgrimage'
++                    or fromStage == 1 and 'Chapter II pilgrimage'
++                    or 'Chapter III pilgrimage',
++            }
+         end
+         return fromStage == 1 and chain.s1 or chain.s2
+     end
+@@ -94,9 +99,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
+     -- Returns the item the player will receive.
+     local function getToItem(chain, fromStage, path)
+         if path == 'aeonic' then
+-            if fromStage == 0 then return chain.aeonic.s1
+-            elseif fromStage == 1 then return chain.aeonic.s2
+-            else return chain.aeonic.s3 end
++            return
++            {
++                name = fromStage == 0 and 'Chapter II pilgrimage'
++                    or fromStage == 1 and 'Chapter III pilgrimage'
++                    or chain.aeonic.s3.name,
++            }
+         end
+         return fromStage == 1 and chain.s2 or chain.s3
+     end
+@@ -161,16 +169,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
+         local stepCost = fromStage == 0 and costs.toStage1
+                       or fromStage == 1 and costs.toStage2
+                       or costs.toStage3
+-        local fromItem = getFromItem(chain, fromStage, 'aeonic')
+-        local toItem   = getToItem(chain, fromStage, 'aeonic')
+         local S        = xi.msg.channel.SYSTEM_3
+ 
+-        if player:getItemCount(fromItem.id) < 1 then
+-            player:printToPlayer(
+-                string.format('[Weapon Forge] You no longer have the %s.', fromItem.name), S)
+-            return false
+-        end
+-
+         -- Aeonic rank gate (HL_Tier; see note in doUpgrade below).
+         if stepCost.hlRank then
+             local hlRank = math.max(1, player:getCharVar('HL_Tier'))
+@@ -207,37 +207,40 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
+             end
+         end
+ 
+-        if player:getFreeSlotsCount() == 0 then
++        if fromStage == 2 and player:getFreeSlotsCount() == 0 then
+             player:printToPlayer('[Weapon Forge] Free an inventory slot before forging.', S)
+             return false
+         end
+ 
+-        -- RARE pre-check: the engine refuses a second copy, and consuming
+-        -- first would eat the materials with nothing granted (Jbae's Empy
+-        -- reforge loss, 2026-07-12 ΓÇö same defect class).
+-        if player:hasItem(toItem.id) then
++        if fromStage == 2 and player:hasItem(chain.aeonic.s3.id) then
+             player:printToPlayer(
+                 string.format('[Weapon Forge] You already hold %s ΓÇö it is RARE, so a second cannot be forged.',
+-                    toItem.name), S)
++                    chain.aeonic.s3.name), S)
+             return false
+         end
+ 
+-        -- All checks passed ΓÇö consume.
+-        player:delItem(fromItem.id, 1)
++        if fromStage == 2 and not player:addItem({ id = chain.aeonic.s3.id, quantity = 1 }) then
++            player:printToPlayer('[Weapon Forge] The final weapon could not be issued. No materials were consumed.', S)
++            return false
++        end
 +
- pcall(installHooks)
++        if not pilgrimageRuntime.advanceAeonic(player, pilgrimage.byFinalId[chain.aeonic.s3.id], fromStage) then
++            if fromStage == 2 then player:delItem(chain.aeonic.s3.id, 1) end
++            player:printToPlayer('[Weapon Forge] Aeonic route state changed. Try again.', S)
++            return false
++        end
++
++        -- All checks passed ΓÇö advance the route, then consume the agreed cost.
+         player:delItem(ae.attestationId, stepCost.attestations)
+         player:delCurrency('escha_silt', stepCost.eschaSilt)
+         if stepCost.reforgeMarks then
+             drainMarks(player, stepCost.reforgeMarks)
+         end
  
- return m
-diff --git a/scripts/tests/systems/maats_echo_integrity.lua b/scripts/tests/systems/maats_echo_integrity.lua
-index 0daab05705..133b62307a 100644
---- a/scripts/tests/systems/maats_echo_integrity.lua
-+++ b/scripts/tests/systems/maats_echo_integrity.lua
-@@ -5,7 +5,7 @@ describe("Maat's Echo integrity", function()
-     it('uses a free battlefield id after the HTBF block', function()
-         assert(echo.BATTLEFIELD_ID == 4230)
-         assert(xi.battlefield.id.MAATS_ECHO == echo.BATTLEFIELD_ID)
--        assert(echo.MENU_INDEX == 22)
-+        assert(echo.MENU_INDEX == 19)
-         assert(echo.COMPANION_CAP == 2)
-         assert(echo.INFAMY_COST == 150)
-         assert(echo.KI_NAME == "Echo's Testimony")
+-        if not player:addItem({ id = toItem.id, quantity = 1 }) then
+-            player:printToPlayer(
+-                '[Weapon Forge] ERROR: the forge consumed your materials but could not hand over the weapon ΓÇö contact a GM with this message.', S)
+-            return true
+-        end
+-        player:printToPlayer(
+-            string.format('[Weapon Forge] The %s resonates with ancient power ΓÇö behold the %s!',
+-                fromItem.name, toItem.name), S)
++        player:printToPlayer(fromStage == 2
++            and string.format('[Weapon Forge] The pilgrimage is complete ΓÇö behold %s!', chain.aeonic.s3.name)
++            or string.format('[Weapon Forge] %s Aeonic pilgrimage advances to Chapter %s.',
++                chain.aeonic.s3.name, ({ 'II', 'III' })[fromStage + 1]), S)
+         -- Stage III (final Aeonic) completion flag. Prime progression requires
+         -- this permanent milestone.
+         -- Persists so trading/losing the weapon doesn't retract the milestone.
+@@ -477,8 +480,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
+         if path == 'aeonic' then
+             local ae = chain.aeonic
+             player:printToPlayer(
+-                string.format('[Aeonic] %s > %s > %s > %s',
+-                    ae.base.name, chain.s1.name, chain.s2.name, ae.s3.name),
++                string.format('[Aeonic] Chapter I > Chapter II > Chapter III > %s',
++                    ae.s3.name),
+                 xi.msg.channel.SYSTEM_3)
+             player:printToPlayer('Cost: ' .. aeonicCostLine(chain, fromStage), xi.msg.channel.SYSTEM_3)
+             local gl = gateLine(player, 'aeonic', fromStage, chain)
+@@ -508,8 +511,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
+                 if path == 'aeonic' then
+                     local ae = chain.aeonic
+                     p:printToPlayer(
+-                        string.format('[Aeonic %s] %s > %s > %s > %s',
+-                            chain.type, ae.base.name, chain.s1.name, chain.s2.name, ae.s3.name),
++                        string.format('[Aeonic %s] Chapter I > Chapter II > Chapter III > %s',
++                            chain.type, ae.s3.name),
+                         xi.msg.channel.SYSTEM_3)
+                     p:printToPlayer('Cost: ' .. aeonicCostLine(chain, fromStage), xi.msg.channel.SYSTEM_3)
+                 else
+@@ -865,16 +868,16 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
+     local showAeonicCategory
+ 
+     local function aeonicHeldEntry(player, chain)
+-        local ae = chain.aeonic
+-        if player:getItemCount(ae.s3.id) > 0 then return nil, true end
+-        if player:getItemCount(ae.s2.id) > 0 then
+-            return { chain = chain, fromStage = 2, path = 'aeonic' }, false
+-        end
+-        if player:getItemCount(ae.s1.id) > 0 then
+-            return { chain = chain, fromStage = 1, path = 'aeonic' }, false
+-        end
+-        if player:getItemCount(ae.base.id) > 0 then
+-            return { chain = chain, fromStage = 0, path = 'aeonic' }, false
++        if player:getItemCount(chain.aeonic.s3.id) > 0 then return nil, true end
++
++        local pilgrimageEntry = pilgrimage.byFinalId[chain.aeonic.s3.id]
++        if player:getCharVar('LWP_AeonicActive') == pilgrimageEntry.index then
++            return
++            {
++                chain = chain,
++                fromStage = pilgrimageRuntime.aeonicStage(player, chain.aeonic.s3.id),
++                path = 'aeonic',
++            }, false
+         end
+         return nil, false
+     end
+@@ -905,21 +908,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
+                 cost.eschaBeads, beads), S)
+             return false
+         end
+-        if player:getFreeSlotsCount() == 0 then
+-            player:printToPlayer('[Weapon Forge] Free an inventory slot first.', S)
++        local pilgrimageEntry = pilgrimage.byFinalId[chain.aeonic.s3.id]
++        local started, reason = pilgrimageRuntime.startAeonic(player, pilgrimageEntry)
++        if not started then
++            player:printToPlayer('[Weapon Forge] ' .. reason, S)
+             return false
+         end
+ 
+         player:delCurrency('escha_beads', cost.eschaBeads)
+-        if not player:addItem({ id = chain.aeonic.base.id, quantity = 1 }) then
+-            player:addCurrency('escha_beads', cost.eschaBeads)
+-            player:printToPlayer('[Weapon Forge] Base issuance failed; your Escha Beads were returned.', S)
+-            return false
+-        end
+-
+         player:printToPlayer(string.format(
+-            '[Weapon Forge] %s entrusted. Begin its Aeonic attunement.',
+-            chain.aeonic.base.name), S)
++            '[Weapon Forge] %s pilgrimage begun. Complete Chapter I to begin its attunement.',
++            chain.aeonic.s3.name), S)
+         return true
+     end
+ 
+@@ -938,7 +937,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
+         else
+             options[#options + 1] =
+             {
+-                string.format('Obtain %s', ae.base.name),
++                string.format('Begin %s pilgrimage', ae.s3.name),
+                 function(p)
+                     if issueAeonicBase(p, chain) then
+                         showDetail(p, { chain = chain, fromStage = 0, path = 'aeonic' })
+@@ -948,7 +947,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
+                 end,
+             }
+             player:printToPlayer(string.format(
+-                '[Aeonic] Base cost: %d Escha Beads. Jobs: %s.',
++                '[Aeonic] Begin cost: %d Escha Beads. Jobs: %s.',
+                 catalog.aeonicBase.eschaBeads, chain.jobs), xi.msg.channel.SYSTEM_3)
+             local gl = gateLine(player, 'aeonic', 0)
+             if gl ~= '' then player:printToPlayer(gl, xi.msg.channel.SYSTEM_3) end
+diff --git a/modules/custom/lua/aeonic_maat_catalog.lua b/modules/custom/lua/aeonic_maat_catalog.lua
+index 1c7a46f9e5..354ca94b83 100644
+--- a/modules/custom/lua/aeonic_maat_catalog.lua
++++ b/modules/custom/lua/aeonic_maat_catalog.lua
+@@ -1,8 +1,8 @@
+ -----------------------------------
+ -- Weapon-specific Aeonic Maat trials.
+ --
+--- The challenger must hold the matching Empowered weapon and enter on one of
+--- the jobs listed for that Aeonic. Maat mirrors that exact current job while
++-- The challenger must reach the matching Empowered pilgrimage milestone and
++-- enter on one of the jobs listed for that Aeonic. Maat mirrors that exact current job while
+ -- the weapon profile supplies the encounter's unique mechanic.
+ -----------------------------------
+ local M = {}
+@@ -10,85 +10,85 @@ local M = {}
+ M.trials =
+ {
+     {
+-        finalId = 20515, empoweredId = 29729, name = 'Godhands',
++        finalId = 20515, name = 'Godhands',
+         jobs = { xi.job.MNK, xi.job.PUP },
+         mechanic = 'momentum',
+         mechanicLabel = 'Relentless Momentum',
+     },
+     {
+-        finalId = 20594, empoweredId = 29730, name = 'Aeneas',
++        finalId = 20594, name = 'Aeneas',
+         jobs = { xi.job.THF, xi.job.BRD, xi.job.DNC },
+         mechanic = 'performance',
+         mechanicLabel = 'Deadly Performance',
+     },
+     {
+-        finalId = 20695, empoweredId = 29731, name = 'Sequence',
++        finalId = 20695, name = 'Sequence',
+         jobs = { xi.job.RDM, xi.job.PLD, xi.job.BLU, xi.job.RUN },
+         mechanic = 'rune_cycle',
+         mechanicLabel = 'Runic Reversal',
+     },
+     {
+-        finalId = 21694, empoweredId = 29732, name = 'Lionheart',
++        finalId = 21694, name = 'Lionheart',
+         jobs = { xi.job.WAR, xi.job.DRK },
+         mechanic = 'doom_brand',
+         mechanicLabel = 'Lionheart Brand',
+     },
+     {
+-        finalId = 21753, empoweredId = 29733, name = 'Tri-edge',
++        finalId = 21753, name = 'Tri-edge',
+         jobs = { xi.job.WAR, xi.job.BST },
+         mechanic = 'beast_rage',
+         mechanicLabel = 'Primal Dominion',
+     },
+     {
+-        finalId = 20843, empoweredId = 29734, name = 'Chango',
++        finalId = 20843, name = 'Chango',
+         jobs = { xi.job.WAR },
+         mechanic = 'war_cry',
+         mechanicLabel = 'Unbroken Warcry',
+     },
+     {
+-        finalId = 20890, empoweredId = 29735, name = 'Anguta',
++        finalId = 20890, name = 'Anguta',
+         jobs = { xi.job.DRK },
+         mechanic = 'dread_cycle',
+         mechanicLabel = 'Dread Covenant',
+     },
+     {
+-        finalId = 20935, empoweredId = 29736, name = 'Trishula',
++        finalId = 20935, name = 'Trishula',
+         jobs = { xi.job.DRG },
+         mechanic = 'sky_assault',
+         mechanicLabel = 'Skybreaker',
+     },
+     {
+-        finalId = 20977, empoweredId = 29737, name = 'Heishi Shorinken',
++        finalId = 20977, name = 'Heishi Shorinken',
+         jobs = { xi.job.NIN },
+         mechanic = 'shadow_wheel',
+         mechanicLabel = 'Wheel of Shadows',
+     },
+     {
+-        finalId = 21025, empoweredId = 29738, name = 'Dojikiri Yasutsuna',
++        finalId = 21025, name = 'Dojikiri Yasutsuna',
+         jobs = { xi.job.SAM },
+         mechanic = 'skillchain',
+         mechanicLabel = 'Perfect Skillchain',
+     },
+     {
+-        finalId = 21082, empoweredId = 29739, name = 'Tishtrya',
++        finalId = 21082, name = 'Tishtrya',
+         jobs = { xi.job.WHM, xi.job.GEO },
+         mechanic = 'sanctuary',
+         mechanicLabel = 'Shifting Sanctuary',
+     },
+     {
+-        finalId = 21147, empoweredId = 29740, name = 'Khatvanga',
++        finalId = 21147, name = 'Khatvanga',
+         jobs = { xi.job.BLM, xi.job.SMN, xi.job.SCH },
+         mechanic = 'grimoire',
+         mechanicLabel = 'Forbidden Grimoire',
+     },
+     {
+-        finalId = 22117, empoweredId = 29741, name = 'Fail-not',
++        finalId = 22117, name = 'Fail-not',
+         jobs = { xi.job.RNG },
+         mechanic = 'deadzone',
+         mechanicLabel = "Archer's Deadzone",
+     },
+     {
+-        finalId = 21485, empoweredId = 29742, name = 'Fomalhaut',
++        finalId = 21485, name = 'Fomalhaut',
+         jobs = { xi.job.COR, xi.job.RNG },
+         mechanic = 'crooked_roll',
+         mechanicLabel = 'Crooked Fortune',
+@@ -96,10 +96,8 @@ M.trials =
+ }
+ 
+ M.byFinalId = {}
+-M.byEmpoweredId = {}
+ for _, trial in ipairs(M.trials) do
+     M.byFinalId[trial.finalId] = trial
+-    M.byEmpoweredId[trial.empoweredId] = trial
+ end
+ 
+ M.jobNames =
+@@ -144,6 +142,10 @@ function M.isComplete(player, finalId)
+     return (player:getCharVar(M.completionVar(finalId)) or 0) > 0
+ end
+ 
++function M.isReady(player, trial)
++    return trial and (player:getCharVar(string.format('LWP_AeonicStage_%d', trial.finalId)) or 0) >= 2
++end
++
+ function M.isGrouped(player)
+     local grouped = false
+     pcall(function()
+@@ -167,7 +169,7 @@ function M.canEnter(player, trial)
+     if not trial then return false, 'invalid_trial' end
+     if M.isGrouped(player) then return false, 'grouped' end
+     if not M.allowsJob(trial, player:getMainJob()) then return false, 'wrong_job' end
+-    if player:getItemCount(trial.empoweredId) < 1 then return false, 'missing_weapon' end
++    if not M.isReady(player, trial) then return false, 'not_empowered' end
+     return true, nil
+ end
+ 
+diff --git a/modules/custom/lua/aeonic_maat_trials.lua b/modules/custom/lua/aeonic_maat_trials.lua
+index 12526c852e..a61614e0cf 100644
+--- a/modules/custom/lua/aeonic_maat_trials.lua
++++ b/modules/custom/lua/aeonic_maat_trials.lua
+@@ -691,8 +691,8 @@ local function beginTrial(player, trial)
+             trial.name, catalog.jobList(trial), catalog.jobNames[jobId] or tostring(jobId)))
+         return
+     end
+-    if not canEnter and reason == 'missing_weapon' then
+-        ownerMessage(player, string.format('You must carry the Empowered weapon for %s.', trial.name))
++    if not canEnter and reason == 'not_empowered' then
++        ownerMessage(player, string.format('Complete %s Aeonic Pilgrimage Chapters I and II first.', trial.name))
+         return
+     end
+     if not canEnter then
+@@ -714,12 +714,12 @@ end
+ local function showTrialMenu(player, page)
+     local held = {}
+     for _, trial in ipairs(catalog.trials) do
+-        if player:getItemCount(trial.empoweredId) > 0 then
++        if catalog.isReady(player, trial) and not catalog.isComplete(player, trial.finalId) then
+             held[#held + 1] = trial
+         end
+     end
+     if #held == 0 then
+-        ownerMessage(player, 'Bring an Empowered Aeonic-path weapon to challenge its Maat trial.')
++        ownerMessage(player, 'Complete Chapters I and II of an Aeonic pilgrimage to challenge its Maat trial.')
+         return
+     end
+ 
+diff --git a/modules/custom/lua/legendary_pilgrimage_catalog.lua b/modules/custom/lua/legendary_pilgrimage_catalog.lua
+index c9797d14af..90c66175fd 100644
+--- a/modules/custom/lua/legendary_pilgrimage_catalog.lua
++++ b/modules/custom/lua/legendary_pilgrimage_catalog.lua
+@@ -223,7 +223,6 @@ local function add(family, source, index, stages, finalId)
+                     tag = 'magian_family',
+                     ecosystems = rotated(C.ECOLOGIES, index, 3),
+                     minLevel = 99,
+-                    minMaxHP = 200000,
+                 }),
+             objective('named_ws_kills', 6 + ((index - 1) % 5), rotated(C.TARGETS.unity, index, 10), true, { tag = 'unity_nm' }),
+             objective('named_ws_kills', 4, C.TARGETS.divergence, true, { tag = 'divergence_disjoined' }),
+@@ -304,7 +303,9 @@ end
+ for index, chain in ipairs(forge.chains) do
+     add('aeonic',
+         { name = chain.aeonic.s3.name, jobs = chain.jobs, type = chain.type },
+-        index, { chain.aeonic.base.id, chain.aeonic.s1.id, chain.aeonic.s2.id }, chain.aeonic.s3.id)
++        -- Aeonic pilgrimage is state-driven. The former 297xx intermediary
++        -- tokens have no client DAT/equipment records and must never be issued.
++        index, { 0, 0, 0 }, chain.aeonic.s3.id)
+ end
+ for index, chain in ipairs(forge.chains) do
+     -- The live Prime route begins at Ajja (119 I), so Chapters I and II are
+diff --git a/modules/custom/lua/trust_progression_cap.lua b/modules/custom/lua/trust_progression_cap.lua
+index f58f4208b1..8c40e0e1e9 100644
+--- a/modules/custom/lua/trust_progression_cap.lua
++++ b/modules/custom/lua/trust_progression_cap.lua
+@@ -126,6 +126,21 @@ xi.trustCap =
+     base     = BASE_CAP,
+ }
+ 
++-- Echo is a solo battlefield, so retail's generic participant-count check
++-- rejects every Trust cast. Install this from the always-loaded trust module:
++-- the Echo battlefield script can otherwise load before that check exists.
++if not xi.trust._progressionEchoBattlefieldCap then
++    xi.trust._progressionEchoBattlefieldCap = true
++    local baseBattlefieldTrustCheck = xi.trust.checkBattlefieldTrustCount
++    xi.trust.checkBattlefieldTrustCount = function(caster)
++        if echoFight.isInEchoFight(caster) then
++            return echoFight.companionSlots(caster) < echoFight.COMPANION_CAP
++        end
++
++        return baseBattlefieldTrustCheck(caster)
++    end
++end
++
+ m:addOverride('xi.trust.canCast', function(caster, spell, notAllowedTrustIds)
+     if caster:isPC() then
+         -- Maat's Echo is the one fight where the Fellow consumes a companion
+diff --git a/modules/custom/lua/weapon_forge_catalog.lua b/modules/custom/lua/weapon_forge_catalog.lua
+index 29472ce741..de23e50ad9 100644
+--- a/modules/custom/lua/weapon_forge_catalog.lua
++++ b/modules/custom/lua/weapon_forge_catalog.lua
+@@ -454,13 +454,8 @@ for _, chain in ipairs(catalog.chains) do
+     -- Prime path scan: detect 119I and 119II weapons.
+     catalog.byId[chain.s1.id] = { chain = chain, fromStage = 1, path = 'prime' }
+     catalog.byId[chain.s2.id] = { chain = chain, fromStage = 2, path = 'prime' }
+-    -- Aeonic path scan: all stages use unique IDs so Prime cannot capture the
+-    -- route after the first upgrade.
+-    if chain.aeonic then
+-        catalog.byId[chain.aeonic.base.id] = { chain = chain, fromStage = 0, path = 'aeonic' }
+-        catalog.byId[chain.aeonic.s1.id]   = { chain = chain, fromStage = 1, path = 'aeonic' }
+-        catalog.byId[chain.aeonic.s2.id]   = { chain = chain, fromStage = 2, path = 'aeonic' }
+-    end
++    -- Aeonic is state-driven. Never register the retired 297xx intermediary
++    -- tokens here: those IDs have no usable client equipment records.
+ end
+ 
+ return catalog
+diff --git a/modules/custom/sql/aeonic_malformed_items.sql b/modules/custom/sql/aeonic_malformed_items.sql
+deleted file mode 100644
+index 562d104a31..0000000000
+--- a/modules/custom/sql/aeonic_malformed_items.sql
++++ /dev/null
+@@ -1,72 +0,0 @@
+--- Aeonic forge tokens: 14 Malformed bases plus unique Stage I / Stage II
+--- intermediates. Unique intermediates prevent the Aeonic route from colliding
+--- with the Prime route's Ajja/Kaja equipment.
+--- Apply once on box: mysql xidb < sql/aeonic_malformed_items.sql
+---
+--- IDs 29701-29714 are confirmed free (highest retail item is 29695).
+---
+--- NOTE: item_basic has no nolog/nodrop/noauction/nodelivery columns -- those
+--- live in the `flags` bitfield (see src/map/enums/item_flag.h). The original
+--- All tokens are Rare/Exclusive, unsellable, undeliverable, and unauctionable
+--- (0xF040 = 61504) so a forge stage cannot be duplicated or transferred.
+-
+-SET @AEONIC_OLD_SQL_MODE = @@SQL_MODE;
+-SET SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO';
+-
+-INSERT IGNORE INTO item_basic
+-    (itemid, name, type, stackSize, flags, aH)
+-VALUES
+-    (29701, 'Malformed Knuckles',   1, 1, 64, 0),  -- H2H (MNK/PUP)
+-    (29702, 'Malformed Knife',      1, 1, 64, 0),  -- Dagger (THF/BRD/DNC)
+-    (29703, 'Malformed Sword',      1, 1, 64, 0),  -- Sword (RDM/PLD/BLU/RUN)
+-    (29704, 'Malformed Claymore',   1, 1, 64, 0),  -- Great Sword (WAR/DRK)
+-    (29705, 'Malformed Axe',        1, 1, 64, 0),  -- Axe (WAR/BST)
+-    (29706, 'Malformed Greataxe',   1, 1, 64, 0),  -- Great Axe (WAR)
+-    (29707, 'Malformed Scythe',     1, 1, 64, 0),  -- Scythe (DRK)
+-    (29708, 'Malformed Lance',      1, 1, 64, 0),  -- Polearm (DRG)
+-    (29709, 'Malformed Katana',     1, 1, 64, 0),  -- Katana (NIN)
+-    (29710, 'Malformed Tachi',      1, 1, 64, 0),  -- Great Katana (SAM)
+-    (29711, 'Malformed Rod',        1, 1, 64, 0),  -- Club (WHM/GEO)
+-    (29712, 'Malformed Staff',      1, 1, 64, 0),  -- Staff (BLM/SMN/SCH)
+-    (29713, 'Malformed Bow',        1, 1, 64, 0),  -- Archery (RNG)
+-    (29714, 'Malformed Culverin',   1, 1, 64, 0);  -- Marksmanship (COR/RNG)
+-
+-INSERT IGNORE INTO item_basic
+-    (itemid, name, type, stackSize, flags, aH)
+-VALUES
+-    (29715, 'Attuned Knuckles',   1, 1, 64, 0),
+-    (29716, 'Attuned Knife',      1, 1, 64, 0),
+-    (29717, 'Attuned Sword',      1, 1, 64, 0),
+-    (29718, 'Attuned Claymore',   1, 1, 64, 0),
+-    (29719, 'Attuned Axe',        1, 1, 64, 0),
+-    (29720, 'Attuned Greataxe',   1, 1, 64, 0),
+-    (29721, 'Attuned Scythe',     1, 1, 64, 0),
+-    (29722, 'Attuned Lance',      1, 1, 64, 0),
+-    (29723, 'Attuned Katana',     1, 1, 64, 0),
+-    (29724, 'Attuned Tachi',      1, 1, 64, 0),
+-    (29725, 'Attuned Rod',        1, 1, 64, 0),
+-    (29726, 'Attuned Staff',      1, 1, 64, 0),
+-    (29727, 'Attuned Bow',        1, 1, 64, 0),
+-    (29728, 'Attuned Culverin',   1, 1, 64, 0),
+-    (29729, 'Empowered Knuckles', 1, 1, 64, 0),
+-    (29730, 'Empowered Knife',    1, 1, 64, 0),
+-    (29731, 'Empowered Sword',    1, 1, 64, 0),
+-    (29732, 'Empowered Claymore', 1, 1, 64, 0),
+-    (29733, 'Empowered Axe',      1, 1, 64, 0),
+-    (29734, 'Empowered Greataxe', 1, 1, 64, 0),
+-    (29735, 'Empowered Scythe',   1, 1, 64, 0),
+-    (29736, 'Empowered Lance',    1, 1, 64, 0),
+-    (29737, 'Empowered Katana',   1, 1, 64, 0),
+-    (29738, 'Empowered Tachi',    1, 1, 64, 0),
+-    (29739, 'Empowered Rod',      1, 1, 64, 0),
+-    (29740, 'Empowered Staff',    1, 1, 64, 0),
+-    (29741, 'Empowered Bow',      1, 1, 64, 0),
+-    (29742, 'Empowered Culverin', 1, 1, 64, 0);
+-
+--- Repair rows created by earlier versions of this migration. INSERT IGNORE does
+--- not update an existing row, so explicitly correct the cached item class.
+-UPDATE item_basic
+-SET type = 1, flags = 61504
+-WHERE itemid BETWEEN 29701 AND 29742;
+-
+-SET SQL_MODE = @AEONIC_OLD_SQL_MODE;
+diff --git a/scripts/tests/systems/aeonic_forge_alignment.lua b/scripts/tests/systems/aeonic_forge_alignment.lua
+index e5d7463cf4..fbbaad667b 100644
+--- a/scripts/tests/systems/aeonic_forge_alignment.lua
++++ b/scripts/tests/systems/aeonic_forge_alignment.lua
+@@ -14,9 +14,9 @@ describe('Aeonic Forge identifier alignment', function()
+             local forged = forge.weapons[index]
+             assert(forged.id == chain.aeonic.s3.id)
+             assert(forged.name == chain.aeonic.s3.name)
+-            assert(chain.aeonic.base.id ~= chain.s1.id)
+-            assert(chain.aeonic.s1.id ~= chain.s1.id)
+-            assert(chain.aeonic.s2.id ~= chain.s2.id)
++            assert(weaponForge.byId[chain.aeonic.base.id] == nil)
++            assert(weaponForge.byId[chain.aeonic.s1.id] == nil)
++            assert(weaponForge.byId[chain.aeonic.s2.id] == nil)
+         end
+     end)
+ 
+diff --git a/scripts/tests/systems/legendary_weapon_pilgrimage.lua b/scripts/tests/systems/legendary_weapon_pilgrimage.lua
+index c5d01800c8..081bcde019 100644
+--- a/scripts/tests/systems/legendary_weapon_pilgrimage.lua
++++ b/scripts/tests/systems/legendary_weapon_pilgrimage.lua
+@@ -22,7 +22,7 @@ describe('Legendary Weapon Pilgrimage integrity', function()
+             archetypes[entry.archetype] = true
+             familyCounts[entry.family] = (familyCounts[entry.family] or 0) + 1
+             for chapter = 1, 3 do
+-                assert(entry.stages[chapter] > 0)
++                assert(entry.family == 'aeonic' or entry.stages[chapter] > 0)
+                 assert(entry.chapters[chapter].count > 0)
+                 local kind = entry.chapters[chapter].kind
+                 if entry.chapters[chapter].distinct then
+@@ -56,12 +56,16 @@ describe('Legendary Weapon Pilgrimage integrity', function()
+ 
+     it('binds chapters to lower, 119 I, and 119 II stages', function()
+         for _, entry in ipairs(pilgrimage.chains) do
+-            assert(entry.stages[1] ~= entry.finalId)
+-            assert(entry.stages[2] ~= entry.finalId)
+-            assert(entry.stages[3] ~= entry.finalId)
++            if entry.family == 'aeonic' then
++                assert(entry.stages[1] == 0 and entry.stages[2] == 0 and entry.stages[3] == 0)
++            else
++                assert(entry.stages[1] ~= entry.finalId)
++                assert(entry.stages[2] ~= entry.finalId)
++                assert(entry.stages[3] ~= entry.finalId)
++            end
+             if entry.singleStep then
+                 assert(entry.stages[1] == entry.stages[2] and entry.stages[2] == entry.stages[3])
+-            elseif entry.family ~= 'prime' then
++            elseif entry.family ~= 'prime' and entry.family ~= 'aeonic' then
+                 assert(entry.stages[1] ~= entry.stages[2])
+                 assert(entry.stages[2] ~= entry.stages[3])
+             else
+@@ -96,7 +100,7 @@ describe('Legendary Weapon Pilgrimage integrity', function()
+             local c1, c2, c3 = entry.chapters[1], entry.chapters[2], entry.chapters[3]
+             if entry.family == 'relic' then
+                 assert(c1.count >= 60 and c1.count <= 80)
+-                assert(c1.minLevel == 99 and c1.minMaxHP == 200000)
++                assert(c1.minLevel == 99 and c1.minMaxHP == nil)
+                 assert(c2.count >= 6 and c2.count <= 10 and c2.distinct)
+                 assert(c3.count == 4 and c3.distinct and c3.tag == 'divergence_disjoined')
+             elseif entry.family == 'empyrean' then
+diff --git a/scripts/tests/systems/weapon_forge_integrity.lua b/scripts/tests/systems/weapon_forge_integrity.lua
+index 0aceb0ef27..09730ac2ac 100644
+--- a/scripts/tests/systems/weapon_forge_integrity.lua
++++ b/scripts/tests/systems/weapon_forge_integrity.lua
+@@ -6,15 +6,14 @@ local aeonicRepeat = require('modules/custom/lua/aeonic_forge_catalog')
+ local primeRepeat = require('modules/custom/lua/prime_repeat_catalog')
+ 
+ describe('Weapon Forge catalog and gate integrity', function()
+-    it('keeps every Prime and Aeonic chain complete with unique item IDs', function()
++    it('keeps every Prime and final Aeonic weapon unique', function()
+         local ids = {}
+ 
+         assert(#catalog.chains == 14)
+         for _, chain in ipairs(catalog.chains) do
+             assert(chain.s1 and chain.s2 and chain.s3 and chain.aeonic)
+             for _, item in ipairs({
+-                chain.s1, chain.s2, chain.s3, chain.aeonic.base,
+-                chain.aeonic.s1, chain.aeonic.s2, chain.aeonic.s3,
++                chain.s1, chain.s2, chain.s3, chain.aeonic.s3,
+             }) do
+                 assert(item.id > 0 and item.name ~= '')
+                 assert(not ids[item.id], string.format('duplicate weapon ID %d', item.id))
+@@ -23,14 +22,10 @@ describe('Weapon Forge catalog and gate integrity', function()
+         end
+     end)
+ 
+-    it('keeps every Aeonic stage on the Aeonic route', function()
++    it('keeps retired Aeonic intermediary tokens out of the item route', function()
+         for _, chain in ipairs(catalog.chains) do
+             for stage, item in ipairs({ chain.aeonic.base, chain.aeonic.s1, chain.aeonic.s2 }) do
+-                local entry = catalog.byId[item.id]
+-                assert(entry ~= nil)
+-                assert(entry.path == 'aeonic')
+-                assert(entry.fromStage == stage - 1)
+-                assert(entry.chain == chain)
++                assert(catalog.byId[item.id] == nil, string.format('Retired stage %d remains item-routed', stage))
+             end
+         end
+     end)
+@@ -41,7 +36,7 @@ describe('Weapon Forge catalog and gate integrity', function()
+         for _, chain in ipairs(catalog.chains) do
+             local trial = aeonicMaat.byFinalId[chain.aeonic.s3.id]
+             assert(trial ~= nil, string.format('Missing Maat trial for %s', chain.aeonic.s3.name))
+-            assert(trial.empoweredId == chain.aeonic.s2.id)
++            assert(trial.empoweredId == nil)
+             assert(trial.name == chain.aeonic.s3.name)
+             assert(#trial.jobs > 0)
+             assert(aeonicMaat.jobList(trial) == chain.jobs,
+@@ -74,10 +69,10 @@ describe('Weapon Forge catalog and gate integrity', function()
+         xi.dungeonInstances = oldInstances
+     end)
+ 
+-    it('admits only a solo allowed job carrying the matching Empowered weapon', function()
++    it('admits only a solo allowed job at the Empowered route milestone', function()
+         local trial = aeonicMaat.byFinalId[20594] -- Aeneas
+         local jobId = xi.job.BRD
+-        local hasWeapon = true
++        local empowered = true
+         local otherPlayer = false
+         local selfMember = { isPC = function() return true end, getID = function() return 1 end }
+         local trustMember = { isPC = function() return false end, getID = function() return 2 end }
+@@ -85,7 +80,9 @@ describe('Weapon Forge catalog and gate integrity', function()
+         local player = {}
+         function player:getID() return 1 end
+         function player:getMainJob() return jobId end
+-        function player:getItemCount(id) return hasWeapon and id == trial.empoweredId and 1 or 0 end
++        function player:getCharVar(name)
++            return empowered and name == string.format('LWP_AeonicStage_%d', trial.finalId) and 2 or 0
++        end
+         function player:getParty()
+             return otherPlayer and { selfMember, trustMember, otherMember } or { selfMember, trustMember }
+         end
+@@ -98,11 +95,11 @@ describe('Weapon Forge catalog and gate integrity', function()
+         assert(not ok and reason == 'wrong_job')
+ 
+         jobId = xi.job.BRD
+-        hasWeapon = false
++        empowered = false
+         ok, reason = aeonicMaat.canEnter(player, trial)
+-        assert(not ok and reason == 'missing_weapon')
++        assert(not ok and reason == 'not_empowered')
+ 
+-        hasWeapon = true
++        empowered = true
+         otherPlayer = true
+         ok, reason = aeonicMaat.canEnter(player, trial)
+         assert(not ok and reason == 'grouped')
