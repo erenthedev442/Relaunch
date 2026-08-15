@@ -29,6 +29,8 @@ local catalog = require('modules/custom/lua/weapon_forge_catalog')
 local itemCurrency = require('modules/custom/lua/hl_seal_currency')
 local pilgrimage = require('modules/custom/lua/legendary_pilgrimage_catalog')
 local mastery = require('modules/custom/lua/weapon_mastery_catalog')
+require('modules/custom/lua/LegendaryWeaponPilgrimage')
+local pilgrimageRuntime = xi.legendaryPilgrimage
 
 local NPC_POS = { x = 568.500, y = -3.360, z = 535.400, rot = 64 }
 
@@ -84,9 +86,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -- Returns the item the player is trading in.
     local function getFromItem(chain, fromStage, path)
         if path == 'aeonic' then
-            if fromStage == 0 then return chain.aeonic.base
-            elseif fromStage == 1 then return chain.aeonic.s1
-            else return chain.aeonic.s2 end
+            return
+            {
+                name = fromStage == 0 and 'Chapter I pilgrimage'
+                    or fromStage == 1 and 'Chapter II pilgrimage'
+                    or 'Chapter III pilgrimage',
+            }
         end
         return fromStage == 1 and chain.s1 or chain.s2
     end
@@ -94,9 +99,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -- Returns the item the player will receive.
     local function getToItem(chain, fromStage, path)
         if path == 'aeonic' then
-            if fromStage == 0 then return chain.aeonic.s1
-            elseif fromStage == 1 then return chain.aeonic.s2
-            else return chain.aeonic.s3 end
+            return
+            {
+                name = fromStage == 0 and 'Chapter II pilgrimage'
+                    or fromStage == 1 and 'Chapter III pilgrimage'
+                    or chain.aeonic.s3.name,
+            }
         end
         return fromStage == 1 and chain.s2 or chain.s3
     end
@@ -161,15 +169,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         local stepCost = fromStage == 0 and costs.toStage1
                       or fromStage == 1 and costs.toStage2
                       or costs.toStage3
-        local fromItem = getFromItem(chain, fromStage, 'aeonic')
-        local toItem   = getToItem(chain, fromStage, 'aeonic')
         local S        = xi.msg.channel.SYSTEM_3
-
-        if player:getItemCount(fromItem.id) < 1 then
-            player:printToPlayer(
-                string.format('[Weapon Forge] You no longer have the %s.', fromItem.name), S)
-            return false
-        end
 
         -- Aeonic rank gate (HL_Tier; see note in doUpgrade below).
         if stepCost.hlRank then
@@ -207,37 +207,40 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             end
         end
 
-        if player:getFreeSlotsCount() == 0 then
+        if fromStage == 2 and player:getFreeSlotsCount() == 0 then
             player:printToPlayer('[Weapon Forge] Free an inventory slot before forging.', S)
             return false
         end
 
-        -- RARE pre-check: the engine refuses a second copy, and consuming
-        -- first would eat the materials with nothing granted (Jbae's Empy
-        -- reforge loss, 2026-07-12 — same defect class).
-        if player:hasItem(toItem.id) then
+        if fromStage == 2 and player:hasItem(chain.aeonic.s3.id) then
             player:printToPlayer(
                 string.format('[Weapon Forge] You already hold %s — it is RARE, so a second cannot be forged.',
-                    toItem.name), S)
+                    chain.aeonic.s3.name), S)
             return false
         end
 
-        -- All checks passed — consume.
-        player:delItem(fromItem.id, 1)
+        if fromStage == 2 and not player:addItem({ id = chain.aeonic.s3.id, quantity = 1 }) then
+            player:printToPlayer('[Weapon Forge] The final weapon could not be issued. No materials were consumed.', S)
+            return false
+        end
+
+        if not pilgrimageRuntime.advanceAeonic(player, pilgrimage.byFinalId[chain.aeonic.s3.id], fromStage) then
+            if fromStage == 2 then player:delItem(chain.aeonic.s3.id, 1) end
+            player:printToPlayer('[Weapon Forge] Aeonic route state changed. Try again.', S)
+            return false
+        end
+
+        -- All checks passed — advance the route, then consume the agreed cost.
         player:delItem(ae.attestationId, stepCost.attestations)
         player:delCurrency('escha_silt', stepCost.eschaSilt)
         if stepCost.reforgeMarks then
             drainMarks(player, stepCost.reforgeMarks)
         end
 
-        if not player:addItem({ id = toItem.id, quantity = 1 }) then
-            player:printToPlayer(
-                '[Weapon Forge] ERROR: the forge consumed your materials but could not hand over the weapon — contact a GM with this message.', S)
-            return true
-        end
-        player:printToPlayer(
-            string.format('[Weapon Forge] The %s resonates with ancient power — behold the %s!',
-                fromItem.name, toItem.name), S)
+        player:printToPlayer(fromStage == 2
+            and string.format('[Weapon Forge] The pilgrimage is complete — behold %s!', chain.aeonic.s3.name)
+            or string.format('[Weapon Forge] %s Aeonic pilgrimage advances to Chapter %s.',
+                chain.aeonic.s3.name, ({ 'II', 'III' })[fromStage + 1]), S)
         -- Stage III (final Aeonic) completion flag. Prime progression requires
         -- this permanent milestone.
         -- Persists so trading/losing the weapon doesn't retract the milestone.
@@ -477,8 +480,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         if path == 'aeonic' then
             local ae = chain.aeonic
             player:printToPlayer(
-                string.format('[Aeonic] %s > %s > %s > %s',
-                    ae.base.name, chain.s1.name, chain.s2.name, ae.s3.name),
+                string.format('[Aeonic] Chapter I > Chapter II > Chapter III > %s',
+                    ae.s3.name),
                 xi.msg.channel.SYSTEM_3)
             player:printToPlayer('Cost: ' .. aeonicCostLine(chain, fromStage), xi.msg.channel.SYSTEM_3)
             local gl = gateLine(player, 'aeonic', fromStage, chain)
@@ -508,8 +511,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 if path == 'aeonic' then
                     local ae = chain.aeonic
                     p:printToPlayer(
-                        string.format('[Aeonic %s] %s > %s > %s > %s',
-                            chain.type, ae.base.name, chain.s1.name, chain.s2.name, ae.s3.name),
+                        string.format('[Aeonic %s] Chapter I > Chapter II > Chapter III > %s',
+                            chain.type, ae.s3.name),
                         xi.msg.channel.SYSTEM_3)
                     p:printToPlayer('Cost: ' .. aeonicCostLine(chain, fromStage), xi.msg.channel.SYSTEM_3)
                 else
@@ -865,16 +868,16 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local showAeonicCategory
 
     local function aeonicHeldEntry(player, chain)
-        local ae = chain.aeonic
-        if player:getItemCount(ae.s3.id) > 0 then return nil, true end
-        if player:getItemCount(ae.s2.id) > 0 then
-            return { chain = chain, fromStage = 2, path = 'aeonic' }, false
-        end
-        if player:getItemCount(ae.s1.id) > 0 then
-            return { chain = chain, fromStage = 1, path = 'aeonic' }, false
-        end
-        if player:getItemCount(ae.base.id) > 0 then
-            return { chain = chain, fromStage = 0, path = 'aeonic' }, false
+        if player:getItemCount(chain.aeonic.s3.id) > 0 then return nil, true end
+
+        local pilgrimageEntry = pilgrimage.byFinalId[chain.aeonic.s3.id]
+        if player:getCharVar('LWP_AeonicActive') == pilgrimageEntry.index then
+            return
+            {
+                chain = chain,
+                fromStage = pilgrimageRuntime.aeonicStage(player, chain.aeonic.s3.id),
+                path = 'aeonic',
+            }, false
         end
         return nil, false
     end
@@ -905,21 +908,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 cost.eschaBeads, beads), S)
             return false
         end
-        if player:getFreeSlotsCount() == 0 then
-            player:printToPlayer('[Weapon Forge] Free an inventory slot first.', S)
+        local pilgrimageEntry = pilgrimage.byFinalId[chain.aeonic.s3.id]
+        local started, reason = pilgrimageRuntime.startAeonic(player, pilgrimageEntry)
+        if not started then
+            player:printToPlayer('[Weapon Forge] ' .. reason, S)
             return false
         end
 
         player:delCurrency('escha_beads', cost.eschaBeads)
-        if not player:addItem({ id = chain.aeonic.base.id, quantity = 1 }) then
-            player:addCurrency('escha_beads', cost.eschaBeads)
-            player:printToPlayer('[Weapon Forge] Base issuance failed; your Escha Beads were returned.', S)
-            return false
-        end
-
         player:printToPlayer(string.format(
-            '[Weapon Forge] %s entrusted. Begin its Aeonic attunement.',
-            chain.aeonic.base.name), S)
+            '[Weapon Forge] %s pilgrimage begun. Complete Chapter I to begin its attunement.',
+            chain.aeonic.s3.name), S)
         return true
     end
 
@@ -938,7 +937,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         else
             options[#options + 1] =
             {
-                string.format('Obtain %s', ae.base.name),
+                string.format('Begin %s pilgrimage', ae.s3.name),
                 function(p)
                     if issueAeonicBase(p, chain) then
                         showDetail(p, { chain = chain, fromStage = 0, path = 'aeonic' })
@@ -948,7 +947,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 end,
             }
             player:printToPlayer(string.format(
-                '[Aeonic] Base cost: %d Escha Beads. Jobs: %s.',
+                '[Aeonic] Begin cost: %d Escha Beads. Jobs: %s.',
                 catalog.aeonicBase.eschaBeads, chain.jobs), xi.msg.channel.SYSTEM_3)
             local gl = gateLine(player, 'aeonic', 0)
             if gl ~= '' then player:printToPlayer(gl, xi.msg.channel.SYSTEM_3) end

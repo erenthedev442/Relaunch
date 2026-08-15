@@ -22,7 +22,7 @@ describe('Legendary Weapon Pilgrimage integrity', function()
             archetypes[entry.archetype] = true
             familyCounts[entry.family] = (familyCounts[entry.family] or 0) + 1
             for chapter = 1, 3 do
-                assert(entry.stages[chapter] > 0)
+                assert(entry.family == 'aeonic' or entry.stages[chapter] > 0)
                 assert(entry.chapters[chapter].count > 0)
                 local kind = entry.chapters[chapter].kind
                 if entry.chapters[chapter].distinct then
@@ -56,12 +56,16 @@ describe('Legendary Weapon Pilgrimage integrity', function()
 
     it('binds chapters to lower, 119 I, and 119 II stages', function()
         for _, entry in ipairs(pilgrimage.chains) do
-            assert(entry.stages[1] ~= entry.finalId)
-            assert(entry.stages[2] ~= entry.finalId)
-            assert(entry.stages[3] ~= entry.finalId)
+            if entry.family == 'aeonic' then
+                assert(entry.stages[1] == 0 and entry.stages[2] == 0 and entry.stages[3] == 0)
+            else
+                assert(entry.stages[1] ~= entry.finalId)
+                assert(entry.stages[2] ~= entry.finalId)
+                assert(entry.stages[3] ~= entry.finalId)
+            end
             if entry.singleStep then
                 assert(entry.stages[1] == entry.stages[2] and entry.stages[2] == entry.stages[3])
-            elseif entry.family ~= 'prime' then
+            elseif entry.family ~= 'prime' and entry.family ~= 'aeonic' then
                 assert(entry.stages[1] ~= entry.stages[2])
                 assert(entry.stages[2] ~= entry.stages[3])
             else
@@ -96,7 +100,7 @@ describe('Legendary Weapon Pilgrimage integrity', function()
             local c1, c2, c3 = entry.chapters[1], entry.chapters[2], entry.chapters[3]
             if entry.family == 'relic' then
                 assert(c1.count >= 60 and c1.count <= 80)
-                assert(c1.minLevel == 99 and c1.minMaxHP == 200000)
+                assert(c1.minLevel == 99 and c1.minMaxHP == nil)
                 assert(c2.count >= 6 and c2.count <= 10 and c2.distinct)
                 assert(c3.count == 4 and c3.distinct and c3.tag == 'divergence_disjoined')
             elseif entry.family == 'empyrean' then

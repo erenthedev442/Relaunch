@@ -2,14 +2,9 @@
 -- Temprix_NPC.lua
 --
 -- Temprix is the Reisenjima entry point for the Aeonic weapon path.
--- She mirrors the hub Weapon Forge's Malformed-base service for Escha Beads.
--- Players then forge their Malformed weapon into a full Aeonic 119III at
--- the Weapon Forger (see WeaponForge_NPC.lua) with Attestations and Escha Silt.
+-- She starts the state-driven Aeonic pilgrimage for Escha Beads.
 --
 -- POSITION: adjust x/y/z to match Reisenjima zone geometry on first test.
---
--- The 14 Malformed weapon item rows (IDs 29701-29714) are added to item_basic by
--- modules/custom/sql/aeonic_malformed_items.sql (auto-applied every deploy).
 --
 -- restart-gated (addOverride)
 -----------------------------------
@@ -20,6 +15,9 @@ local m = Module:new('temprix_npc')
 local S = xi.msg.channel.SYSTEM_3
 local forgeCatalog = require('modules/custom/lua/weapon_forge_catalog')
 local forgeGates = require('modules/custom/lua/weapon_forge_gates')
+local pilgrimageCatalog = require('modules/custom/lua/legendary_pilgrimage_catalog')
+require('modules/custom/lua/LegendaryWeaponPilgrimage')
+local pilgrimageRuntime = xi.legendaryPilgrimage
 
 -- ===================================================================
 -- CONSTANTS
@@ -49,8 +47,7 @@ local WEAPONS = {}
 for _, chain in ipairs(forgeCatalog.chains) do
     WEAPONS[#WEAPONS + 1] =
     {
-        name    = chain.aeonic.base.name,
-        id      = chain.aeonic.base.id,
+        name    = chain.aeonic.s3.name,
         wtype   = chain.type,
         att     = chain.aeonic.attestationId,
         attName = chain.aeonic.attestationName,
@@ -105,36 +102,31 @@ showPage = function(player, page)
                     pp:timer(30, function(p2) showPage(p2, pageCapture) end)
                     return
                 end
-                if pp:getFreeSlotsCount() < 1 then
-                    pp:printToPlayer('[Temprix] Your inventory is full.', S)
-                    pp:timer(30, function(p2) showPage(p2, pageCapture) end)
-                    return
-                end
-                -- RARE pre-check: charging first would eat the beads with
-                -- nothing granted.
                 local ae = wCapture.chain.aeonic
-                if
-                    pp:hasItem(ae.base.id) or
-                    pp:hasItem(ae.s1.id) or
-                    pp:hasItem(ae.s2.id) or
-                    pp:hasItem(ae.s3.id)
-                then
+                local entry = pilgrimageCatalog.byFinalId[ae.s3.id]
+                if pp:hasItem(ae.s3.id) then
                     pp:printToPlayer(string.format(
-                        '[Temprix] You already hold a stage of the %s chain.',
+                        '[Temprix] You already hold %s.',
                         ae.s3.name), S)
                     pp:timer(30, function(p2) showPage(p2, pageCapture) end)
                     return
                 end
-                pp:delCurrency(BEADS_KEY, COST)
-                if not pp:addItem({ id = wCapture.id, quantity = 1 }) then
-                    pp:addCurrency(BEADS_KEY, COST)
-                    pp:printToPlayer('[Temprix] Something went wrong -- your beads have been returned.', S)
+                if pp:getCharVar('LWP_AeonicActive') == entry.index then
+                    pp:printToPlayer(string.format(
+                        '[Temprix] Your %s pilgrimage is already active.', ae.s3.name), S)
                     pp:timer(30, function(p2) showPage(p2, pageCapture) end)
                     return
                 end
+                local started, reason = pilgrimageRuntime.startAeonic(pp, entry)
+                if not started then
+                    pp:printToPlayer('[Temprix] ' .. reason, S)
+                    pp:timer(30, function(p2) showPage(p2, pageCapture) end)
+                    return
+                end
+                pp:delCurrency(BEADS_KEY, COST)
                 pp:printToPlayer(string.format(
-                    '[Temprix] %s entrusted to you. Attune it with %s to begin forging.',
-                    wCapture.name, wCapture.attName), S)
+                    '[Temprix] %s pilgrimage begun. Complete Chapter I to begin attunement.',
+                    wCapture.name), S)
                 pp:timer(30, function(p2) showPage(p2, pageCapture) end)
             end,
         }
@@ -186,7 +178,7 @@ m:addOverride('xi.zones.Reisenjima.Zone.onInitialize', function(zone)
             end
             if hl < REQUIRED_HL_RANK then
                 player:printToPlayer(string.format(
-                    '[Temprix] Hunting League Rank %d is required to obtain a Malformed weapon. You are Rank %d.',
+                    '[Temprix] Hunting League Rank %d is required to begin an Aeonic pilgrimage. You are Rank %d.',
                     REQUIRED_HL_RANK, hl), S)
                 return
             end

@@ -13,6 +13,7 @@ require('modules/module_utils')
 local m = Module:new('character_upgrader')
 local spellGrant = require('modules/custom/lua/player_spell_grant_catalog')
 local trustGrant = require('modules/custom/lua/trust_grant_catalog')
+local remaCatalog = require('modules/custom/lua/rema_ws_tier_catalog')
 
 -- Starter trusts (see exports/trust_cipher_drop_proposal.csv). Every other trust
 -- is earned via cipher drops, direct NM grants, or the Void Keeper.
@@ -60,9 +61,15 @@ local AUTOMATON_PARTS =
 -----------------------------------
 -- Grant helpers (unchanged from the old Unlocker NPC; now module-scope).
 -----------------------------------
+local AEONIC_WS = {}
+for _, entry in ipairs(remaCatalog.WEAPONS) do
+    if entry.family == 'AEONIC' then AEONIC_WS[entry.wsId] = true end
+end
+
 local function giveAllWeaponSkills(player)
     for i = 1, 256 do
-        pcall(function() player:addWeaponSkill(i) end)
+        -- Aeonic WSs unlock when the player begins that specific pilgrimage.
+        if not AEONIC_WS[i] then pcall(function() player:addWeaponSkill(i) end) end
     end
     for _, unlockId in pairs(xi.wsUnlock) do
         pcall(function() player:addLearnedWeaponskill(unlockId) end)

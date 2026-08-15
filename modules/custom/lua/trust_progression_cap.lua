@@ -126,6 +126,21 @@ xi.trustCap =
     base     = BASE_CAP,
 }
 
+-- Echo is a solo battlefield, so retail's generic participant-count check
+-- rejects every Trust cast. Install this from the always-loaded trust module:
+-- the Echo battlefield script can otherwise load before that check exists.
+if not xi.trust._progressionEchoBattlefieldCap then
+    xi.trust._progressionEchoBattlefieldCap = true
+    local baseBattlefieldTrustCheck = xi.trust.checkBattlefieldTrustCount
+    xi.trust.checkBattlefieldTrustCount = function(caster)
+        if echoFight.isInEchoFight(caster) then
+            return echoFight.companionSlots(caster) < echoFight.COMPANION_CAP
+        end
+
+        return baseBattlefieldTrustCheck(caster)
+    end
+end
+
 m:addOverride('xi.trust.canCast', function(caster, spell, notAllowedTrustIds)
     if caster:isPC() then
         -- Maat's Echo is the one fight where the Fellow consumes a companion

@@ -691,8 +691,8 @@ local function beginTrial(player, trial)
             trial.name, catalog.jobList(trial), catalog.jobNames[jobId] or tostring(jobId)))
         return
     end
-    if not canEnter and reason == 'missing_weapon' then
-        ownerMessage(player, string.format('You must carry the Empowered weapon for %s.', trial.name))
+    if not canEnter and reason == 'not_empowered' then
+        ownerMessage(player, string.format('Complete %s Aeonic Pilgrimage Chapters I and II first.', trial.name))
         return
     end
     if not canEnter then
@@ -714,12 +714,12 @@ end
 local function showTrialMenu(player, page)
     local held = {}
     for _, trial in ipairs(catalog.trials) do
-        if player:getItemCount(trial.empoweredId) > 0 then
+        if catalog.isReady(player, trial) and not catalog.isComplete(player, trial.finalId) then
             held[#held + 1] = trial
         end
     end
     if #held == 0 then
-        ownerMessage(player, 'Bring an Empowered Aeonic-path weapon to challenge its Maat trial.')
+        ownerMessage(player, 'Complete Chapters I and II of an Aeonic pilgrimage to challenge its Maat trial.')
         return
     end
 

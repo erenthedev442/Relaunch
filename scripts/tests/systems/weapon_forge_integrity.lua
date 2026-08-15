@@ -6,15 +6,14 @@ local aeonicRepeat = require('modules/custom/lua/aeonic_forge_catalog')
 local primeRepeat = require('modules/custom/lua/prime_repeat_catalog')
 
 describe('Weapon Forge catalog and gate integrity', function()
-    it('keeps every Prime and Aeonic chain complete with unique item IDs', function()
+    it('keeps every Prime and final Aeonic weapon unique', function()
         local ids = {}
 
         assert(#catalog.chains == 14)
         for _, chain in ipairs(catalog.chains) do
             assert(chain.s1 and chain.s2 and chain.s3 and chain.aeonic)
             for _, item in ipairs({
-                chain.s1, chain.s2, chain.s3, chain.aeonic.base,
-                chain.aeonic.s1, chain.aeonic.s2, chain.aeonic.s3,
+                chain.s1, chain.s2, chain.s3, chain.aeonic.s3,
             }) do
                 assert(item.id > 0 and item.name ~= '')
                 assert(not ids[item.id], string.format('duplicate weapon ID %d', item.id))
@@ -23,14 +22,10 @@ describe('Weapon Forge catalog and gate integrity', function()
         end
     end)
 
-    it('keeps every Aeonic stage on the Aeonic route', function()
+    it('keeps retired Aeonic intermediary tokens out of the item route', function()
         for _, chain in ipairs(catalog.chains) do
             for stage, item in ipairs({ chain.aeonic.base, chain.aeonic.s1, chain.aeonic.s2 }) do
-                local entry = catalog.byId[item.id]
-                assert(entry ~= nil)
-                assert(entry.path == 'aeonic')
-                assert(entry.fromStage == stage - 1)
-                assert(entry.chain == chain)
+                assert(catalog.byId[item.id] == nil, string.format('Retired stage %d remains item-routed', stage))
             end
         end
     end)
@@ -41,7 +36,7 @@ describe('Weapon Forge catalog and gate integrity', function()
         for _, chain in ipairs(catalog.chains) do
             local trial = aeonicMaat.byFinalId[chain.aeonic.s3.id]
             assert(trial ~= nil, string.format('Missing Maat trial for %s', chain.aeonic.s3.name))
-            assert(trial.empoweredId == chain.aeonic.s2.id)
+            assert(trial.empoweredId == nil)
             assert(trial.name == chain.aeonic.s3.name)
             assert(#trial.jobs > 0)
             assert(aeonicMaat.jobList(trial) == chain.jobs,
@@ -74,10 +69,10 @@ describe('Weapon Forge catalog and gate integrity', function()
         xi.dungeonInstances = oldInstances
     end)
 
-    it('admits only a solo allowed job carrying the matching Empowered weapon', function()
+    it('admits only a solo allowed job at the Empowered route milestone', function()
         local trial = aeonicMaat.byFinalId[20594] -- Aeneas
         local jobId = xi.job.BRD
-        local hasWeapon = true
+        local empowered = true
         local otherPlayer = false
         local selfMember = { isPC = function() return true end, getID = function() return 1 end }
         local trustMember = { isPC = function() return false end, getID = function() return 2 end }
@@ -85,7 +80,9 @@ describe('Weapon Forge catalog and gate integrity', function()
         local player = {}
         function player:getID() return 1 end
         function player:getMainJob() return jobId end
-        function player:getItemCount(id) return hasWeapon and id == trial.empoweredId and 1 or 0 end
+        function player:getCharVar(name)
+            return empowered and name == string.format('LWP_AeonicStage_%d', trial.finalId) and 2 or 0
+        end
         function player:getParty()
             return otherPlayer and { selfMember, trustMember, otherMember } or { selfMember, trustMember }
         end
@@ -98,11 +95,11 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(not ok and reason == 'wrong_job')
 
         jobId = xi.job.BRD
-        hasWeapon = false
+        empowered = false
         ok, reason = aeonicMaat.canEnter(player, trial)
-        assert(not ok and reason == 'missing_weapon')
+        assert(not ok and reason == 'not_empowered')
 
-        hasWeapon = true
+        empowered = true
         otherPlayer = true
         ok, reason = aeonicMaat.canEnter(player, trial)
         assert(not ok and reason == 'grouped')

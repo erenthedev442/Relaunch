@@ -14,9 +14,9 @@ describe('Aeonic Forge identifier alignment', function()
             local forged = forge.weapons[index]
             assert(forged.id == chain.aeonic.s3.id)
             assert(forged.name == chain.aeonic.s3.name)
-            assert(chain.aeonic.base.id ~= chain.s1.id)
-            assert(chain.aeonic.s1.id ~= chain.s1.id)
-            assert(chain.aeonic.s2.id ~= chain.s2.id)
+            assert(weaponForge.byId[chain.aeonic.base.id] == nil)
+            assert(weaponForge.byId[chain.aeonic.s1.id] == nil)
+            assert(weaponForge.byId[chain.aeonic.s2.id] == nil)
         end
     end)
 

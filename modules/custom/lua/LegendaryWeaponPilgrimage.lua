@@ -12,6 +12,7 @@ P.catalog = C
 
 local SYS = xi.msg.channel.SYSTEM_3
 local ACTIVE_VARS = { 'LWP_Active1', 'LWP_Active2' }
+local AEONIC_ACTIVE_VAR = 'LWP_AeonicActive'
 local ABYSSEA_ZONES =
 {
     [xi.zone.ABYSSEA_KONSCHTAT] = true, [xi.zone.ABYSSEA_TAHRONGI] = true,
@@ -38,6 +39,8 @@ local function activeEntries(player)
         local entry = C.byIndex[player:getCharVar(var) or 0]
         if entry then entries[#entries + 1] = entry end
     end
+    local aeonic = C.byIndex[player:getCharVar(AEONIC_ACTIVE_VAR) or 0]
+    if aeonic then entries[#entries + 1] = aeonic end
     return entries
 end
 
@@ -53,6 +56,12 @@ local function entryUnlocked(player, entry)
 end
 
 local function equippedForChapter(player, entry, chapter)
+    if entry.family == 'aeonic' then
+        return entryUnlocked(player, entry)
+            and chapter >= 1 and chapter <= 3
+            and player:getCharVar(AEONIC_ACTIVE_VAR) == entry.index
+    end
+
     return entryUnlocked(player, entry)
         and chapter >= 1 and chapter <= 3
         and player:getEquipID(entry.slot) == entry.stages[chapter]
@@ -75,11 +84,50 @@ local function targetIndex(requirement, mob)
         or C.targetIndex(requirement, mob:getPacketName())
 end
 
+function P.aeonicStageVar(finalId)
+    return string.format('LWP_AeonicStage_%d', finalId)
+end
+
+function P.aeonicStage(player, finalId)
+    return player:getCharVar(P.aeonicStageVar(finalId)) or 0
+end
+
+function P.startAeonic(player, entry)
+    local active = player:getCharVar(AEONIC_ACTIVE_VAR) or 0
+    if active ~= 0 and active ~= entry.index then
+        return false, 'You may have only one active Aeonic pilgrimage.'
+    end
+
+    player:setCharVar(AEONIC_ACTIVE_VAR, entry.index)
+    return true
+end
+
+function P.advanceAeonic(player, entry, fromStage)
+    if player:getCharVar(AEONIC_ACTIVE_VAR) ~= entry.index then
+        return false
+    end
+    if P.aeonicStage(player, entry.finalId) ~= fromStage then
+        return false
+    end
+
+    player:setCharVar(P.aeonicStageVar(entry.finalId), fromStage + 1)
+    return true
+end
+
 function P.register(player, entry)
     if entry and not entryUnlocked(player, entry) then
         return false, 'Forge a final Aeonic weapon before beginning a Prime pilgrimage.'
     end
-    if not entry or not ownsChain(player, entry) then
+    if not entry then
+        return false, 'That pilgrimage is invalid.'
+    end
+    if entry.family == 'aeonic' then
+        if C.chapter(player, entry) == 4 then
+            return false, 'That pilgrimage is already complete.'
+        end
+        return P.startAeonic(player, entry)
+    end
+    if not ownsChain(player, entry) then
         return false, 'You must possess a weapon from that exact chain.'
     end
     if C.chapter(player, entry) == 4 then
@@ -98,6 +146,9 @@ function P.register(player, entry)
 end
 
 function P.abandon(player, entry)
+    if entry.family == 'aeonic' then
+        return false
+    end
     for _, var in ipairs(ACTIVE_VARS) do
         if (player:getCharVar(var) or 0) == entry.index then
             player:setCharVar(var, 0)
@@ -158,7 +209,7 @@ local function targetEligible(player, mob, entry, chapter)
         return jobName ~= nil and entry.jobs:find(jobName, 1, true) ~= nil and mob:isNM()
     elseif requirement.tag == 'magian_family' then
         return mob:getMainLvl() >= requirement.minLevel
-            and mob:getMaxHP() >= requirement.minMaxHP
+            and (not requirement.minMaxHP or mob:getMaxHP() >= requirement.minMaxHP)
             and ecosystemMatches()
     end
     return false
@@ -458,8 +509,8 @@ local function requirementText(entry, chapter)
     elseif r.kind == 'nyzul_objectives' then
         return string.format('%d Nyzul Eliminate Specified Enemy objective clears', r.count)
     elseif r.tag == 'magian_family' then
-        return string.format('%d Lv%d+ family exact-WS killing blows (target max HP %d+); %s',
-            r.count, r.minLevel, r.minMaxHP, P.archetypeText(entry.archetypeRule))
+        return string.format('%d Lv%d+ eligible-family exact-WS killing blows; %s',
+            r.count, r.minLevel, P.archetypeText(entry.archetypeRule))
     elseif r.distinct then
         return string.format('%d distinct %s exact-WS killing blows; %s',
             r.count, r.tag:gsub('_', ' '), P.archetypeText(entry.archetypeRule))
@@ -468,10 +519,26 @@ local function requirementText(entry, chapter)
         r.count, r.tag:gsub('_', ' '), P.archetypeText(entry.archetypeRule))
 end
 
+local function requiredStageText(entry, chapter)
+    if entry.family == 'aeonic' then
+        return 'any compatible ' .. entry.weaponType .. ' weapon'
+    elseif entry.singleStep or chapter == 1 and entry.family ~= 'prime' then
+        return 'the base ' .. entry.name
+    elseif entry.family == 'prime' and chapter <= 2 then
+        return 'the 119 I Prime weapon'
+    elseif chapter == 2 then
+        return entry.name .. ' 119 I'
+    end
+
+    return entry.name .. ' 119 II'
+end
+
 local function printCurrentTargets(player, requirement)
     local targets = requirement.targets
+    local label = 'Eligible targets'
     if not targets and requirement.ecosystems then
         targets = {}
+        label = 'Eligible families'
         for _, ecosystem in ipairs(requirement.ecosystems) do
             targets[#targets + 1] = C.ECOLOGY_NAMES[ecosystem] or tostring(ecosystem)
         end
@@ -483,7 +550,7 @@ local function printCurrentTargets(player, requirement)
         for index = first, math.min(#targets, first + 3) do
             names[#names + 1] = targets[index]
         end
-        player:printToPlayer('[Pilgrimage] Eligible: ' .. table.concat(names, ', '), SYS)
+        player:printToPlayer('[Pilgrimage] ' .. label .. ': ' .. table.concat(names, ', '), SYS)
     end
 end
 
@@ -497,17 +564,27 @@ function P.showStatus(player, entry, back)
         player:printToPlayer(
             '[Pilgrimage] Prime Chapters I and II are sequential on Ajja; Chapter III uses the 119 II weapon.',
             SYS)
+    elseif entry.family == 'aeonic' then
+        player:printToPlayer(
+            '[Pilgrimage] Aeonic progress is route-bound, not item-bound: use the listed Aeonic weaponskill with any compatible weapon.',
+            SYS)
     end
     for number = 1, 3 do
         local value = math.min(player:getCharVar(C.progressVar(entry.index, number)) or 0,
             entry.chapters[number].count)
-        player:printToPlayer(string.format('[Pilgrimage] Chapter %s %d/%d - %s',
+        player:printToPlayer(string.format(
+            '[Pilgrimage] Chapter %s %d/%d - Equip %s; kill with %s. %s',
             ({ 'I', 'II', 'III' })[number], value, entry.chapters[number].count,
-            requirementText(entry, number)), SYS)
+            requiredStageText(entry, number), entry.wsName, requirementText(entry, number)), SYS)
     end
-    if chapter <= 3 then printCurrentTargets(player, entry.chapters[chapter]) end
+    if chapter <= 3 then
+        player:printToPlayer(string.format(
+            '[Pilgrimage] Current Chapter %s is active: satisfy every condition above for each killing blow.',
+            ({ 'I', 'II', 'III' })[chapter]), SYS)
+        printCurrentTargets(player, entry.chapters[chapter])
+    end
     local options = {}
-    if activeEntry(player, entry.index) then
+    if activeEntry(player, entry.index) and entry.family ~= 'aeonic' then
         options[#options + 1] = { 'Abandon (progress kept)', function(p)
             P.abandon(p, entry)
             p:printToPlayer('[Pilgrimage] Registration released; chapter progress was preserved.', SYS)

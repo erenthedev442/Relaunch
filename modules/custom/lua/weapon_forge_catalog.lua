@@ -454,13 +454,8 @@ for _, chain in ipairs(catalog.chains) do
     -- Prime path scan: detect 119I and 119II weapons.
     catalog.byId[chain.s1.id] = { chain = chain, fromStage = 1, path = 'prime' }
     catalog.byId[chain.s2.id] = { chain = chain, fromStage = 2, path = 'prime' }
-    -- Aeonic path scan: all stages use unique IDs so Prime cannot capture the
-    -- route after the first upgrade.
-    if chain.aeonic then
-        catalog.byId[chain.aeonic.base.id] = { chain = chain, fromStage = 0, path = 'aeonic' }
-        catalog.byId[chain.aeonic.s1.id]   = { chain = chain, fromStage = 1, path = 'aeonic' }
-        catalog.byId[chain.aeonic.s2.id]   = { chain = chain, fromStage = 2, path = 'aeonic' }
-    end
+    -- Aeonic is state-driven. Never register the retired 297xx intermediary
+    -- tokens here: those IDs have no usable client equipment records.
 end
 
 return catalog

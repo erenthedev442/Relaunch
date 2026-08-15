@@ -223,7 +223,6 @@ local function add(family, source, index, stages, finalId)
                     tag = 'magian_family',
                     ecosystems = rotated(C.ECOLOGIES, index, 3),
                     minLevel = 99,
-                    minMaxHP = 200000,
                 }),
             objective('named_ws_kills', 6 + ((index - 1) % 5), rotated(C.TARGETS.unity, index, 10), true, { tag = 'unity_nm' }),
             objective('named_ws_kills', 4, C.TARGETS.divergence, true, { tag = 'divergence_disjoined' }),
@@ -304,7 +303,9 @@ end
 for index, chain in ipairs(forge.chains) do
     add('aeonic',
         { name = chain.aeonic.s3.name, jobs = chain.jobs, type = chain.type },
-        index, { chain.aeonic.base.id, chain.aeonic.s1.id, chain.aeonic.s2.id }, chain.aeonic.s3.id)
+        -- Aeonic pilgrimage is state-driven. The former 297xx intermediary
+        -- tokens have no client DAT/equipment records and must never be issued.
+        index, { 0, 0, 0 }, chain.aeonic.s3.id)
 end
 for index, chain in ipairs(forge.chains) do
     -- The live Prime route begins at Ajja (119 I), so Chapters I and II are

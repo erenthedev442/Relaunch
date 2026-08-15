@@ -30,6 +30,7 @@ commandObj.onTrigger = function(player, catArg)
     local SYS   = xi.msg.channel.SYSTEM_3
     local GATES = require('modules/custom/lua/weapon_forge_gates')
     local forgeCatalog = require('modules/custom/lua/weapon_forge_catalog')
+local pilgrimageCatalog = require('modules/custom/lua/legendary_pilgrimage_catalog')
 
     -- Filter to a single category if the player passed one.
     local cats
@@ -61,7 +62,11 @@ commandObj.onTrigger = function(player, catArg)
                     if cat == 'aeonic' and i == 2 then
                         local found = false
                         for _, chain in ipairs(forgeCatalog.chains) do
-                            if player:getItemCount(chain.aeonic.s2.id) > 0 then
+                            local entry = pilgrimageCatalog.byFinalId[chain.aeonic.s3.id]
+                            if
+                                player:getCharVar('LWP_AeonicActive') == entry.index and
+                                (player:getCharVar(string.format('LWP_AeonicStage_%d', chain.aeonic.s3.id)) or 0) >= 2
+                            then
                                 found = true
                                 total = total + 1
                                 local ok = gate.check(player, chain)
@@ -75,7 +80,7 @@ commandObj.onTrigger = function(player, catArg)
                         if not found then
                             total = total + 1
                             player:printToPlayer(
-                                string.format('    Stage III [✗] %s (bring an Empowered Aeonic-path weapon)',
+                                string.format('    Stage III [✗] %s (complete Chapters I and II of an Aeonic pilgrimage)',
                                     gate.label),
                                 SYS)
                         end
