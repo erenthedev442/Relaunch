@@ -112,6 +112,12 @@ function catalog.isBlueDamageEligible(caster, target, spell, params)
 end
 
 function catalog.getDamageCap(caster)
+    if caster:isAutomaton() then
+        -- Automata inherit the master's companion tier, not player REMA/Prime
+        -- spell ceilings. This matches their physical WS and ability contract.
+        return progression.getPetDamageCap(caster:getMaster())
+    end
+
     if not caster:isPC() then
         return catalog.DAMAGE_CAP
     end

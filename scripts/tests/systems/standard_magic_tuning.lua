@@ -101,6 +101,28 @@ describe('Level-scaled direct magic tuning', function()
         assert(catalog.getMagicAccuracyPenalty(caster, target) == 40)
     end)
 
+    it('keeps automaton nukes on companion weapon tiers', function()
+        local function makeAutomaton(master)
+            return
+            {
+                isAutomaton = function()
+                    return true
+                end,
+                isPC = function()
+                    return false
+                end,
+                getMaster = function()
+                    return master
+                end,
+            }
+        end
+
+        assert(catalog.getDamageCap(
+            makeAutomaton(makeCaster(99, true, xi.job.PUP, { [xi.slot.MAIN] = 1 }))) == 79999)
+        assert(catalog.getDamageCap(
+            makeAutomaton(makeCaster(99, true, xi.job.PUP, { [xi.slot.MAIN] = 20511 }))) == 999999)
+    end)
+
     it('keeps ninjutsu in a lower progression band', function()
         local target = makeTarget(155, 120000)
         local katon = makeSpell(

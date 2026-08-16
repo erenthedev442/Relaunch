@@ -2399,8 +2399,6 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
 
 int32 TakeWeaponskillDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage, ATTACK_TYPE attackType, DAMAGE_TYPE damageType, uint8 slot, bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier)
 {
-    damage = ApplyAutomatonDamageBonus(PAttacker, damage); // FJB: automaton DPS multiplier (weaponskills)
-
     bool isRanged = (slot == SLOT_AMMO || slot == SLOT_RANGED);
 
     damage = ApplyRangerDamageAdjust(PAttacker, damage, isRanged); // FJB: relaunch RNG ranged trim

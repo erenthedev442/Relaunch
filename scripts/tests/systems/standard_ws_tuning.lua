@@ -104,6 +104,17 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         assert(catalog.applyMultiplier(10000, 13, 79999) == 79999)
     end)
 
+    it('uses companion-only caps from the master main-hand tier', function()
+        local standard = makePlayer({ [xi.slot.MAIN] = 1 }, 99)
+        local ambuscade = makePlayer({ [xi.slot.MAIN] = 21621 }, 99) -- Naegling
+        local pupMythic = makePlayer({ [xi.slot.MAIN] = 20511 }, 99) -- Kenkonken
+
+        assert(catalog.getPetDamageCap(standard) == catalog.DAMAGE_CAP)
+        assert(catalog.getPetDamageCap(ambuscade) == catalog.PET_AMBU_DAMAGE_CAP)
+        assert(catalog.getPetDamageCap(pupMythic) == catalog.PET_REMA_DAMAGE_CAP)
+        assert(catalog.applyMultiplier(200000, 1, catalog.getPetDamageCap(pupMythic)) == 200000)
+    end)
+
     it('keeps the full level-99 multiplier on low-HP farming targets', function()
         local player = makePlayer(
             { [xi.slot.MAIN] = { id = 1, ilvl = 119, reqLvl = 99 } }, 99, 2100)

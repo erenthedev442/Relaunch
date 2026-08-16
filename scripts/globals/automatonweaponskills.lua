@@ -8,6 +8,11 @@ local standardProgression = require('modules/custom/lua/standard_ws_tuning_catal
 xi = xi or {}
 xi.autows = xi.autows or {}
 
+-- Keep the Legendary automaton physical boost, but apply it before the
+-- companion ceiling. A post-cap multiplier made the advertised 79,999 cap
+-- land as 143,998 damage.
+local AUTOMATON_COMBAT_MULTIPLIER = 1.8
+
 local function applyAutomatonProgression(attacker, target, damage)
     local master = attacker:getMaster()
     if damage <= 0 or master == nil or not master:isPC() then
@@ -15,9 +20,9 @@ local function applyAutomatonProgression(attacker, target, damage)
     end
 
     return standardProgression.applyMultiplier(
-        damage,
+        damage * AUTOMATON_COMBAT_MULTIPLIER,
         standardProgression.getPetDamageMultiplier(master, target),
-        standardProgression.DAMAGE_CAP)
+        standardProgression.getPetDamageCap(master))
 end
 
 -- params contains: ftpMod, str_wsc, dex_wsc, vit_wsc, int_wsc, mnd_wsc, critVaries, accVaries, ignoredDefense, atkmulti, kick, accBonus, weaponType, weaponDamage

@@ -1250,6 +1250,12 @@ void FinalizePetStatistics(CBattleEntity* PMaster, CPetEntity* PPet)
     // set C magic evasion, add MEVA that may have come from other sources (Automaton, Wyvern, Avatar bonus meva in their respective CalculateXStats function)
     PPet->setModifier(Mod::MEVA, battleutils::GetMaxSkill(7, std::min<uint8>(99, PPet->GetMLevel())) + PPet->getMod(Mod::MEVA));
     PPet->health.tp = 0;
+
+    // Stat recalculation runs for living pets after level, equipment, and
+    // attachment changes. Pet gear modifiers are additive, so reapplying them
+    // without first removing the current set compounds HP, regen, and every
+    // other pet stat on each recalculation.
+    PMaster->removePetModifiers(PPet);
     PMaster->applyPetModifiers(PPet);
     PPet->UpdateHealth();
     PPet->health.hp = PPet->GetMaxHP();

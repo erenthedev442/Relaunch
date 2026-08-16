@@ -115,6 +115,7 @@ private:
     timer::time_point m_LastStatusTime;
     timer::time_point m_LastRangedTime;
     timer::time_point m_LastShieldBashTime;
+    timer::time_point m_TpHoldStarted;
 };
 
 namespace automaton

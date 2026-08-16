@@ -40,6 +40,33 @@
 #include "utils/petutils.h"
 #include "utils/puppetutils.h"
 
+namespace
+{
+    constexpr timer::duration AUTOMATON_SKILLCHAIN_HOLD_MAX = 12s;
+
+    // Explicit retail-style priority for tied maneuver counts. Unknown future
+    // moves retain their required-skill ordering as a safe fallback.
+    int16 GetAutomatonWsPriority(uint16 skillId, int16 fallback)
+    {
+        switch (skillId)
+        {
+            case 2744: return 500; // Armor Shatterer
+            case 2743: return 500; // String Shredder
+            case 2301: return 400; // Magic Mortar
+            case 2300: return 400; // Armor Piercer
+            case 2299: return 400; // Bone Crusher
+            case 2067: return 300; // Knockout
+            case 2066: return 300; // Daze
+            case 2065: return 300; // Cannibal Blade
+            case 1942: return 200; // Arcuballista
+            case 1941: return 200; // String Clipper
+            case 1940: return 100; // Chimera Ripper
+            case 1943: return 100; // Slapstick
+            default:   return fallback;
+        }
+    }
+}
+
 CAutomatonController::CAutomatonController(CAutomatonEntity* PPet)
 : CPetController(PPet)
 , PAutomaton(PPet)
@@ -1516,6 +1543,7 @@ auto CAutomatonController::TryTPMove() -> bool
         }
 
         int16      currentSkill     = -1;
+        int16      currentPriority  = -1;
         CMobSkill* PWSkill          = nullptr;
         int8       currentManeuvers = -1;
 
@@ -1554,15 +1582,37 @@ auto CAutomatonController::TryTPMove() -> bool
             }
         }
 
-        if (!attemptChain || (currentManeuvers == -1 && PAutomaton->PMaster && PAutomaton->PMaster->health.tp < PAutomaton->getMod(Mod::AUTO_TP_EFFICIENCY)))
+        const bool masterIsReady = attemptChain && PAutomaton->PMaster != nullptr &&
+            PAutomaton->PMaster->health.tp >= PAutomaton->getMod(Mod::AUTO_TP_EFFICIENCY);
+        if (currentManeuvers == -1 && masterIsReady)
+        {
+            if (m_TpHoldStarted == timer::time_point{})
+            {
+                m_TpHoldStarted = m_Tick;
+            }
+
+            // Inhibitor/Speedloader should hold for a player skillchain, but
+            // never suppress every WS forever when the master remains at TP.
+            if (m_Tick < m_TpHoldStarted + AUTOMATON_SKILLCHAIN_HOLD_MAX)
+            {
+                return false;
+            }
+        }
+        else
+        {
+            m_TpHoldStarted = {};
+        }
+
+        if (!attemptChain || currentManeuvers == -1)
         {
             for (auto* PSkill : validSkills)
             {
                 int8 maneuvers = luautils::OnAutomatonAbilityCheck(PTarget, PAutomaton, PSkill);
-                if (maneuvers > -1 && (maneuvers > currentManeuvers || (maneuvers == currentManeuvers && PSkill->getParam() > currentSkill)))
+                int16 priority = GetAutomatonWsPriority(PSkill->getID(), PSkill->getParam());
+                if (maneuvers > -1 && (maneuvers > currentManeuvers || (maneuvers == currentManeuvers && priority > currentPriority)))
                 {
                     currentManeuvers = maneuvers;
-                    currentSkill     = PSkill->getParam();
+                    currentPriority  = priority;
                     PWSkill          = PSkill;
                 }
             }
@@ -1579,6 +1629,7 @@ auto CAutomatonController::TryTPMove() -> bool
             return MobSkill(PTarget->targid, PWSkill->getID(), std::nullopt);
         }
     }
+    m_TpHoldStarted = {};
     return false;
 }
 
