@@ -124,6 +124,7 @@ uint16 GetMaxSkill(uint8 rank, uint8 level);
 CWeaponSkill* GetWeaponSkill(uint16 WSkillID);
 CMobSkill*    GetMobSkill(uint16 SkillID);
 CPetSkill*    GetPetSkill(uint16 SkillID);
+CPetSkill*    GetPetSkillByMobSkill(uint16 MobSkillID);
 
 const std::list<CWeaponSkill*>& GetWeaponSkills(uint8 skill);
 const std::vector<uint16>&      GetMobSkillList(uint16 ListID);

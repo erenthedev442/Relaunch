@@ -43,8 +43,6 @@ entity.onMobFight = function(mob, target)
         return
     end
 
-    local bfID = battlefield:getArea()
-
     local changetime = mob:getLocalVar('changetime')
     local battletime = mob:getBattleTime()
     if battlefield:getLocalVar('fireworks') == 1 then
@@ -56,7 +54,11 @@ entity.onMobFight = function(mob, target)
         end
     end
 
-    local tenzenObj = GetMobByID(ID.mob.TENZEN + (bfID - 1))
+    -- Cherukiki is always the third companion after Tenzen in both the
+    -- mission and HTBF entity layouts. Resolving relative to her own ID keeps
+    -- the healing logic inside the current HTBF tier instead of targeting the
+    -- mission pool.
+    local tenzenObj = GetMobByID(mob:getID() - 3)
     if
         tenzenObj and
         tenzenObj:getHPP() <= 70 and

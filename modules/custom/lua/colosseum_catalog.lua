@@ -59,8 +59,8 @@ catalog.elo =
 -- REPLICA SCALING (rating -> mob stats)
 -- ============================================================
 -- Level: 99 at rating<=1000, +1 level per `levelPerRating` rating above
--- that, hard-capped at 205 (past there mob acc/eva outruns L99 gear -
--- same engine lesson as the Voidspire).
+-- that, hard-capped at 150. Higher ratings continue to strengthen the
+-- replica through the existing HP and combat-mod progression.
 catalog.replica =
 {
     groupId      = 11361,  -- HL Serket group (registered in zone 210); the
@@ -69,7 +69,7 @@ catalog.replica =
     levelBase    = 99,
     ratingBase   = 1000,
     levelPerRating = 10,   -- +1 level per 10 rating above ratingBase
-    levelCap     = 205,
+    levelCap     = 150,
 
     -- HP multiplier: base + (rating - 1200)/hpRatingDiv, clamped.
     hpBase      = 3.0,
@@ -85,9 +85,9 @@ catalog.replica =
         { level =  99, mods = { [xi.mod.ATT] = 1100, [xi.mod.ACC] =  600, [xi.mod.STR] =  45, [xi.mod.DEX] =  45, [xi.mod.HASTE_GEAR] =  60, [xi.mod.DOUBLE_ATTACK] =  4 } },
         { level = 120, mods = { [xi.mod.ATT] = 1900, [xi.mod.ACC] =  750, [xi.mod.STR] =  75, [xi.mod.DEX] =  75, [xi.mod.HASTE_GEAR] = 110, [xi.mod.DOUBLE_ATTACK] =  7 } },
         { level = 140, mods = { [xi.mod.ATT] = 2400, [xi.mod.ACC] =  880, [xi.mod.STR] =  95, [xi.mod.DEX] =  95, [xi.mod.HASTE_GEAR] = 140, [xi.mod.DOUBLE_ATTACK] =  9 } },
-        { level = 160, mods = { [xi.mod.ATT] = 2900, [xi.mod.ACC] = 1000, [xi.mod.STR] = 115, [xi.mod.DEX] = 115, [xi.mod.HASTE_GEAR] = 170, [xi.mod.DOUBLE_ATTACK] = 11 } },
-        { level = 180, mods = { [xi.mod.ATT] = 3400, [xi.mod.ACC] = 1120, [xi.mod.STR] = 135, [xi.mod.DEX] = 135, [xi.mod.HASTE_GEAR] = 200, [xi.mod.DOUBLE_ATTACK] = 13 } },
-        { level = 205, mods = { [xi.mod.ATT] = 4000, [xi.mod.ACC] = 1250, [xi.mod.STR] = 160, [xi.mod.DEX] = 160, [xi.mod.HASTE_GEAR] = 230, [xi.mod.DOUBLE_ATTACK] = 15 } },
+        -- Preserve the former high-Elo profile without exceeding the Lv150
+        -- combat ceiling. Rating and HP multipliers still differentiate elites.
+        { level = 150, mods = { [xi.mod.ATT] = 4000, [xi.mod.ACC] = 1250, [xi.mod.STR] = 160, [xi.mod.DEX] = 160, [xi.mod.HASTE_GEAR] = 230, [xi.mod.DOUBLE_ATTACK] = 15 } },
     },
 
     -- Spawn ring around the player (yalms) - geometry-safe anywhere.

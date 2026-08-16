@@ -103,20 +103,20 @@ catalog.waves =
         hpMult = 2.6,
     },
     {
-        label = 'Apex Guard', level = 155, base = 4, perDefender = 2,
+        label = 'Apex Guard', level = 150, base = 4, perDefender = 2,
         groups = { 11364, 11366, 11367 },
         names  = { 'Voidsent Houndmaster', 'Voidsent Banneret', 'Voidsent Destroyer', 'Voidsent Champion' },
         mods = { [xi.mod.ATT] = 2900, [xi.mod.ACC] = 980, [xi.mod.HASTE_GEAR] = 170, [xi.mod.DOUBLE_ATTACK] = 11 },
         hpMult = 3.0,
     },
     {
-        label = 'The Warlord', level = 165, base = 3, perDefender = 1,
+        label = 'The Warlord', level = 150, base = 3, perDefender = 1,
         groups = { 11368, 11369 },
         names  = { 'Voidsent Sentinel', 'Voidsent Harbinger', 'Voidsent Executioner' },
         mods = { [xi.mod.ATT] = 3200, [xi.mod.ACC] = 1040, [xi.mod.HASTE_GEAR] = 185, [xi.mod.DOUBLE_ATTACK] = 12 },
         hpMult = 3.5,
         boss = {
-            name = 'Voidsent Warlord', level = 175, group = 11368,
+            name = 'Voidsent Warlord', level = 150, group = 11368,
             mods = { [xi.mod.ATT] = 3800, [xi.mod.ACC] = 1120, [xi.mod.HASTE_GEAR] = 210, [xi.mod.DOUBLE_ATTACK] = 14 },
             hpMult = 8.0,
             modelSize = 3,

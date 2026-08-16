@@ -392,6 +392,47 @@ local petStock =
         { 21494, 1000 },  -- Wetlands Broth     -- utility jug
     },
 
+    -- Additional Call Beast / Bestial Loyalty items. Kept on separate pages:
+    -- a client shop window supports a maximum of 16 entries.
+    jugsAdvanced =
+    {
+        { 17900, 1000 },  -- Cloudy Wheat Broth
+        { 17903, 1000 },  -- Shadowy Broth
+        { 21447, 1000 },  -- Crumbly Soil
+        { 21470, 1000 },  -- Decaying Broth
+        { 21471, 1000 },  -- Putrescent Broth
+        { 21451, 1000 },  -- Bug-Ridden Broth
+        { 21466, 1000 },  -- Frizzante Broth
+        { 21467, 1000 },  -- Spumante Broth
+        { 17912, 1000 },  -- Fizzy Broth
+        { 21492, 1000 },  -- Insipid Broth
+        { 21448, 1000 },  -- Pale Sap
+        { 21438, 1000 },  -- Poisonous Broth
+        { 21439, 1000 },  -- Venomous Broth
+        { 21488, 1000 },  -- Pristine Sap
+        { 21489, 1000 },  -- Truly Pristine Sap
+        { 17913, 1000 },  -- Saline Broth
+    },
+
+    jugsSpecialist =
+    {
+        { 21464, 1000 },  -- Rancid Broth
+        { 21465, 1000 },  -- Pungent Broth
+        { 17911, 1000 },  -- Salubrious Broth
+        { 17918, 1000 },  -- Windy Greens
+        { 17908, 1000 },  -- Shimmering Broth
+        { 17916, 1000 },  -- Fermented Broth
+        { 21442, 1000 },  -- Sticky Webbing
+        { 21443, 1000 },  -- Slimy Webbing
+        { 17915, 1000 },  -- Viscous Broth
+        { 17910, 1000 },  -- Translucent Broth
+        { 21472, 1000 },  -- Turpid Broth
+        { 21473, 1000 },  -- Feculent Broth
+        { 17914, 1000 },  -- Wispy Broth
+        { 21468, 1000 },  -- Zestful Sap
+        { 21469, 1000 },  -- Gassy Sap
+    },
+
     food =
     {
         { 17016, 500 },  -- Pet Food Alpha Biscuit
@@ -543,9 +584,11 @@ end
 showPetMenu = function(player)
     openMenu(player, 'Shop: Beastmaster',
     {
-        { 'Jug Pets', function(p) openStock(p, petStock.jugs) end },
-        { 'Pet Food', function(p) openStock(p, petStock.food) end },
-        { 'Back',     function(p) showMainMenu(p) end },
+        { 'Jug Pets I',   function(p) openStock(p, petStock.jugs) end },
+        { 'Jug Pets II',  function(p) openStock(p, petStock.jugsAdvanced) end },
+        { 'Jug Pets III', function(p) openStock(p, petStock.jugsSpecialist) end },
+        { 'Pet Food',     function(p) openStock(p, petStock.food) end },
+        { 'Back',         function(p) showMainMenu(p) end },
     })
 end
 

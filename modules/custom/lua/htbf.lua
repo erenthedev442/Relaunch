@@ -73,18 +73,14 @@ function htbf.accessCheck(player)
 end
 
 local function tier3Unlocked(player)
-    local final = catalog.finalTest
-    return
-        (player:getCharVar(final.completionVar) or 0) >= 1 or
-        (player:getCharVar(final.tierClearVar) or 0) >= 1
+    return catalog.progress.get(player).tier3
 end
 
 local function finalTestReady(player)
-    return
-        (player:getCharVar('HTBF_Cleared_T1') or 0) >= 1 and
-        (player:getCharVar('HTBF_Cleared_T2') or 0) >= 1 and
-        not tier3Unlocked(player)
+    return catalog.progress.get(player).finalReady
 end
+
+htbf.progress = catalog.progress
 
 -- ---------------------------------------------------------------------------
 -- Let players field Trusts inside HTBF battlefields.
@@ -194,13 +190,11 @@ function htbf.printEntranceLegend(player, npc)
     end
 
     local hasTier3 = tier3Unlocked(player)
-    for group, r in ipairs(rows) do
+    for _, r in ipairs(rows) do
         player:printToPlayer(string.format(
-            '[HTBF]   Group %d: %s (%s) -- %s.',
-            group,
-            r.label,
-            r.gem,
-            hasTier3 and 'Tier I, II, III' or 'Tier I, II (Tier III locked)'),
+            '[HTBF]   Rows %d/%d/%d: %s (%s) -- Tier I/II/%s.',
+            r.idx, r.idx + 1, r.idx + 2, r.label, r.gem,
+            hasTier3 and 'III' or 'III locked'),
             xi.msg.channel.SYSTEM_3)
     end
 
@@ -226,6 +220,32 @@ if xi.battlefield and xi.battlefield.getBattlefieldOptions and not xi.battlefiel
     local _origOptions = xi.battlefield.getBattlefieldOptions
     xi.battlefield.getBattlefieldOptions = function(player, npc, trade)
         local options = _origOptions(player, npc, trade)
+        if not trade then
+            -- A Phantom Gem is an explicit HTBF intent. Remove the retail rows
+            -- on this same entrance so a client DAT label can never route that
+            -- gem holder into a mission battlefield with a coincident index.
+            local hasHTBFGem = false
+            for _, fight in pairs(catalog.fights) do
+                local matches = fight.entryNpc == npc:getName()
+                if not matches and fight.entryNpcs then
+                    matches = utils.contains(npc:getName(), fight.entryNpcs)
+                end
+                if matches and player:hasKeyItem(fight.gem) then
+                    hasHTBFGem = true
+                    break
+                end
+            end
+            if hasHTBFGem then
+                for _, content in ipairs(xi.battlefield.contentsByZone[player:getZoneID()] or {}) do
+                    if
+                        not content.partyKeyItem and
+                        content:isValidEntry(player, npc)
+                    then
+                        options = utils.mask.setBit(options, content.index, false)
+                    end
+                end
+            end
+        end
         -- Only for gem entry (no trade); printEntranceLegend no-ops on any
         -- entrance without HTBF tiers the player qualifies for.
         if not trade then
@@ -265,6 +285,10 @@ function htbf.register(fightKey, tier, variant)
         timeLimit        = f.timeLimit or utils.minutes(30),
         canLoseExp       = false,
         requiredKeyItems = { f.gem },   -- consumed on entry (no keep); HTBF is gem-gated
+        -- Battlefield:onEntryEventUpdate enforces and consumes this for every
+        -- actual entrant. The engine's requiredKeyItems consumption only covers
+        -- the registrant.
+        partyKeyItem     = f.gem,
     })
 
     -- ACCESS GATE (see top): only a master of the entering job who holds every
@@ -309,8 +333,10 @@ function htbf.register(fightKey, tier, variant)
             -- event-driven fights run identically. We keep our OWN onEventFinishWin
             -- (the reward) and chain setupBattlefield (below) for the tier scaling.
             for _, hook in ipairs({
-                'onBattlefieldTick', 'sections', 'onExitTrigger', 'onEventFinishExit',
-                'onEventUpdate', 'onBattlefieldLoss', 'onBattlefieldRegister', 'paths',
+                -- Retail exit/loss handlers frequently calculate from their
+                -- retail battlefield IDs or mission variables. HTBF keeps the
+                -- stock exit path instead of inheriting those closures.
+                'onBattlefieldTick', 'sections', 'onEventUpdate', 'onBattlefieldRegister', 'paths',
                 'onBattlefieldEnter',
                 -- onEventFinishBattlefield drives the PHASE-2 spawn on multi-phase
                 -- fights (Dawn spawns Promathia P2 here; Shadow Lord and Celestial
@@ -349,7 +375,7 @@ function htbf.register(fightKey, tier, variant)
         end
 
         if scale.lvl and scale.lvl > 1.0 then
-            mob:setMobLevel(math.min(math.floor(mob:getMainLvl() * scale.lvl), 255))
+            mob:setMobLevel(math.min(math.floor(mob:getMainLvl() * scale.lvl), 150))
         end
         if (scale.hp and scale.hp > 1.0) or (scale.minHp and scale.minHp > 0) then
             local hp = math.floor(mob:getMaxHP() * (scale.hp or 1.0))
@@ -439,19 +465,7 @@ function htbf.register(fightKey, tier, variant)
         if firstClear then
             player:setCharVar(firstClearCv, 1)
         end
-        if isFinalTest then
-            player:setCharVar(final.completionVar, 1)
-            player:setCharVar(final.tierClearVar, 1)
-        end
-        -- Per-tier clear flag: used as an entry gate for Ambuscade (must have
-        -- cleared at least one HTBF at each of T1/T2/T3). tier is the register()
-        -- arg captured in this closure -- one flag per player per tier, sticky
-        -- (never cleared).
-        pcall(function()
-            if tier and tier >= 1 and tier <= 3 then
-                player:setCharVar('HTBF_Cleared_T' .. tier, 1)
-            end
-        end)
+        catalog.progress.recordClear(player, tier, isFinalTest)
         -- Item loot. HTBF fights use a custom battlefieldId with NO C++ retail
         -- treasure, and the reuse-base fights end their win in varied ways (most
         -- on a bare setStatus(WON) that never opens an Armoury Crate), so the

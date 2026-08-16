@@ -57,7 +57,7 @@ local RETIRED = true
 -----------------------------------
 local BOSS_ZONE_ID  = xi.zone.WEST_RONFAURE   -- 100
 local GROUP_ZONE_ID = 210   -- GM Home (where all HL mob_groups are registered)
-local BOSS_LEVEL    = 250
+local BOSS_LEVEL    = 150
 local TICK_SECONDS  = 30
 
 -----------------------------------

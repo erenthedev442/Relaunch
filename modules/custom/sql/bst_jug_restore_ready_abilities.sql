@@ -96,6 +96,11 @@ INSERT INTO `mob_skill_lists` VALUES
 ('Jug_Toad',2098,3926); -- Water Wall
 UPDATE `mob_pools` SET `skill_list_id` = 2098 WHERE `poolid` = 7548;
 
+-- Pugil (Slippery Silas) also shipped with no skill list. Share the complete
+-- Jug_Pugil Ready kit so both the auto-Ready controller and player menu have
+-- working moves.
+UPDATE `mob_pools` SET `skill_list_id` = 756 WHERE `poolid` = 4639;
+
 -- Zealous Snort: self/master buff, not enemy target.
 UPDATE `pet_skills`
 SET `pet_valid_targets` = 3

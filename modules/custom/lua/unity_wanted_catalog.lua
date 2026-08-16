@@ -244,10 +244,11 @@ return {
           skillList = 9706, -- Vampyr kit without Eternal Damnation (doom)
           drops = { {id=20980, name='Raicho', plus1=20981, plus1Name='Raicho +1'}, {id=27609, name='Fi Follet Cape', plus1=27610, plus1Name='Fi Follet Cape +1'} } },
         { id=43, name='Shedu',                     label='Shedu',                  tier=3, minLv=135, maxLv=135, groupId=102,
-          -- Khimaira kit without Dreadstorm. Fulmination stays off until 37% HP
-          -- (retail Khimaira gate) so the thunder nuke is an execute window, not
-          -- a pull-to-wipe spam. Regain is also cut so TP moves cannot chain
-          -- animation-to-animation on the shared T3 450 Regain profile.
+          -- Solo/trust-safe Khimaira kit. The execute list restores
+          -- Fulmination below 37% HP; its Unity-only damage modifier is handled
+          -- in the mobskill. Fossilizing Breath remains, with its Unity-only
+          -- petrify duration capped at 10 seconds. Regain is also cut so TP
+          -- moves cannot chain animation-to-animation on the T3 450 profile.
           skillList = 9702,
           lowHpSkillList = 9708,
           lowHpThreshold = 37,

@@ -298,6 +298,7 @@ function M.cleanup(mob)
     if not mob then return end
 
     states[mob:getID()] = nil
+    mob:setLocalVar('UW_Shedu', 0)
     for _, name in pairs(listenerNames) do
         pcall(function() mob:removeListener(name) end)
     end
@@ -349,6 +350,7 @@ function M.attach(mob, nm, owner)
     if not mob or not profile or not owner then return end
 
     M.cleanup(mob)
+    mob:setLocalVar('UW_Shedu', nm.name == 'Shedu' and 1 or 0)
     states[mob:getID()] =
     {
         ownerId          = owner:getID(),

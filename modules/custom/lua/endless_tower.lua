@@ -51,27 +51,27 @@ local EXIT_WARP = { zoneId = 44, x = 571.471, y = -3.360, z = 512.586, rot = 65 
 -- Trash mobs and their levels/groups per 10-floor band.
 -----------------------------------
 local BANDS = {
-    { maxFloor = 10, level = 120, bossLevel = 135,
+    { maxFloor = 10, level = 120, bossLevel = 135, trashHpMult = 1.0,
       groups = { 11355, 11356, 11357, 11358 },
       bossGroup = 11358, bossHp = 600000,
       names  = { 'Tower Guardian', 'Spire Sentinel', 'Ascendant Watcher' },
       bossName = 'Guardian of the Spire' },
-    { maxFloor = 20, level = 155, bossLevel = 170,
+    { maxFloor = 20, level = 130, bossLevel = 140, trashHpMult = 1.25,
       groups = { 11359, 11360, 11361, 11362 },
       bossGroup = 11362, bossHp = 1200000,
       names  = { 'Shadow Hulk', 'Void Sentinel', 'Abyssal Watcher' },
       bossName = 'Shadow of the Abyss' },
-    { maxFloor = 30, level = 185, bossLevel = 205,
+    { maxFloor = 30, level = 140, bossLevel = 145, trashHpMult = 1.50,
       groups = { 11362, 11363, 11364, 11365 },
       bossGroup = 11365, bossHp = 2500000,
       names  = { 'Eternal Hulk', 'Timeless Watcher', 'Void Drake' },
       bossName = 'The Eternal Warden' },
-    { maxFloor = 40, level = 215, bossLevel = 240,
+    { maxFloor = 40, level = 145, bossLevel = 150, trashHpMult = 1.80,
       groups = { 11364, 11365, 11366, 11367 },
       bossGroup = 11367, bossHp = 4000000,
       names  = { 'Divine Revenant', 'Apex Inquisitor', 'Celestial Hulk' },
       bossName = 'Lord of the Void' },
-    { maxFloor = 50, level = 240, bossLevel = 250,  -- 275 wrapped past uint8 255 -> ~lv20 (weak base stats); 250 is the safe ceiling (matches the Lv250 HL/Reforge apex NMs)
+    { maxFloor = 50, level = 150, bossLevel = 150, trashHpMult = 2.10,
       groups = { 11366, 11367, 11368, 11369 },
       bossGroup = 11369, bossHp = 7000000,
       names  = { 'Pinnacle Revenant', 'Apex Guardian', 'Sovereign Watcher' },
@@ -384,7 +384,7 @@ startFloor = function(player)
         for _ = 1, count do
             local groupId = band.groups[math.random(#band.groups)]
             local name    = band.names[math.random(#band.names)]
-            local mob     = spawnTowerMob(player, groupId, name, band.level, 1.0, nil)
+            local mob     = spawnTowerMob(player, groupId, name, band.level, band.trashHpMult, nil)
             if mob then sess.mobsAlive[mob:getID()] = mob end
         end
     end

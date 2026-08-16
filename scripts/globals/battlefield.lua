@@ -540,12 +540,14 @@ function Battlefield:register()
     end
 
     if self.exitNpcs then
-        local exitTrigger = self.onExitTrigger and self.onExitTrigger or Battlefield.onExitTrigger
         for _, exitNpc in ipairs(self.exitNpcs) do
             utils.append(zoneSection, {
                 [exitNpc] =
                 {
-                    onTrigger = exitTrigger,
+                    -- Shared exits can serve several battlefield IDs. Resolve
+                    -- the active content at trigger time instead of letting the
+                    -- last loaded script replace every other exit handler.
+                    onTrigger = Battlefield.onExitTrigger,
                 }
             })
         end
@@ -822,6 +824,29 @@ function Battlefield:onEntryEventUpdate(player, csid, option, npc)
         area = self.area
     end
 
+    -- Party-gated battlefields (HTBF) require every member who would be
+    -- registered to supply the same key item. Check before creating/registering
+    -- the instance so a missing gem cannot produce a partially joined party.
+    if self.partyKeyItem then
+        local zone = player:getZoneID()
+        for _, member in pairs(player:getAlliance()) do
+            if
+                member:getZoneID() == zone and
+                member:getStatus() ~= xi.status.DISAPPEAR and
+                not member:hasStatusEffect(xi.effect.BATTLEFIELD) and
+                not member:getBattlefield() and
+                not member:hasKeyItem(self.partyKeyItem)
+            then
+                player:printToPlayer(
+                    string.format('[HTBF] %s must hold the matching Phantom Gem before the party can enter.', member:getName()),
+                    xi.msg.channel.SYSTEM_3)
+                player:updateEvent(xi.battlefield.returnCode.REQS_NOT_MET)
+                player:setLocalVar('noPosUpdate', 1)
+                return 0
+            end
+        end
+    end
+
     local result = player:registerBattlefield(self.battlefieldId, area, player:getID(), self)
     local status = xi.battlefield.status.OPEN
 
@@ -888,6 +913,12 @@ function Battlefield:onEntryEventUpdate(player, csid, option, npc)
             then
                 member:copyStatusEffect(effect)
                 member:registerBattlefield(self.battlefieldId, area, player:getID(), self)
+                -- The registrant's requiredKeyItems are consumed by the engine
+                -- during registerBattlefield. Party members are attached later,
+                -- so consume exactly one matching gem from each of them here.
+                if self.partyKeyItem then
+                    member:delKeyItem(self.partyKeyItem)
+                end
             end
         end
     end
@@ -934,7 +965,13 @@ function Battlefield:onEventFinishWin(player, csid, option, npc)
 end
 
 function Battlefield.onExitTrigger(player, npc)
-    if player:getBattlefield() then
+    local battlefield = player:getBattlefield()
+    if battlefield then
+        local content = xi.battlefield.contents[battlefield:getID()]
+        local customExit = content and rawget(content, 'onExitTrigger')
+        if customExit and customExit ~= Battlefield.onExitTrigger then
+            return customExit(content, player, npc)
+        end
         return Battlefield:progressCutscene(32003)
     end
 end

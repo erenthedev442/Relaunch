@@ -2,6 +2,15 @@ local catalog   = require('modules/custom/lua/hunting_league_catalog')
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
 
 describe('Hunting League damage-ceiling regen balance', function()
+    it('uses the Lv99 hunt baseline and reserves Lv150 for Shinryu', function()
+        for _, tier in ipairs(catalog.tiers) do
+            for _, mob in ipairs(tier.mobs) do
+                local expected = mob.groupId == 11369 and 150 or 99
+                assert(mob.minLv == expected and mob.maxLv == expected)
+            end
+        end
+    end)
+
     it('uses reduced flat regen by rank', function()
         local expectedByTier = { 12, 24, 40, 70, 120 }
 

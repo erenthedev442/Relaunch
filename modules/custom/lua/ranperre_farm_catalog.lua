@@ -48,8 +48,8 @@ catalog.mobName  = 'Capacity Phantom'
 -- 100 persistent mobs: same 511 dynamic-entity limit as Bibiki Bay; each mob
 -- reuses its targid while player trusts and pets share the remaining pool.
 catalog.mobCount = 100
-catalog.minLv    = 150
-catalog.maxLv    = 160
+catalog.minLv    = 120
+catalog.maxLv    = 150
 catalog.maxHP    = 120000
 catalog.respawnSeconds = 5
 catalog.cpBonus  = 2000

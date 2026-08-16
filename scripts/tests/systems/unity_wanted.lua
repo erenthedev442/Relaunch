@@ -104,7 +104,7 @@ describe('Unity Wanted encounter invariants', function()
         assert(t3.regain > t2.regain)
     end)
 
-    it('slows Shedu TP cadence and gates Fulmination to the execute window', function()
+    it('keeps Shedu execute pressure bounded for solo/trust play', function()
         local shedu
         for _, nm in ipairs(catalog.nms) do
             if nm.name == 'Shedu' then

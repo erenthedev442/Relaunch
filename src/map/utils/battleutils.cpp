@@ -523,6 +523,23 @@ CPetSkill* GetPetSkill(uint16 SkillID)
     }
 }
 
+// Jug-pet combat lists contain executable mob-skill IDs, while the client
+// Ready menu requires the corresponding pet-skill/ability ID. Resolve the
+// latter from the former so the same list can drive both auto-Ready combat and
+// the player-facing command menu.
+CPetSkill* GetPetSkillByMobSkill(uint16 MobSkillID)
+{
+    for (const auto& [_, petSkill] : g_PPetSkillList)
+    {
+        if (petSkill->getMobSkillID() == MobSkillID)
+        {
+            return petSkill;
+        }
+    }
+
+    return nullptr;
+}
+
 /************************************************************************
  *                                                                       *
  *  Get Mob Skills by List Id                                            *

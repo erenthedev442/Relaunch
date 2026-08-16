@@ -90,7 +90,7 @@ return
             warpPos    = { x = -41.5941, y = 0.1103, z = 73.7704, rot = 176 },
             mobs =
             {
-                { name = 'Leaping_Lizzy',    label = 'Leaping Lizzy',    points = 15,  groupId = 11355, minLv = 150, maxLv = 150,
+                { name = 'Leaping_Lizzy',    label = 'Leaping Lizzy',    points = 15,  groupId = 11355, minLv = 99, maxLv = 99,
                   spawnPos = { x =  -56.6, y =  0.11, z =  73.8, rot =   0 },  -- T1 cluster: W
                   hpBoost = 5,
                   mods = {
@@ -106,7 +106,7 @@ return
                       [xi.mod.REGEN] = 12,
                   },
                 },
-                { name = 'Valkurm_Emperor',  label = 'Valkurm Emperor',  points = 15,  groupId = 11356, minLv = 150, maxLv = 150,
+                { name = 'Valkurm_Emperor',  label = 'Valkurm Emperor',  points = 15,  groupId = 11356, minLv = 99, maxLv = 99,
                   spawnPos = { x =  -41.6, y =  0.11, z =  58.8, rot = 128 },  -- T1 cluster: S
                   drops = { { id = 8983, qty = 5 } },  -- Emperor Arthro's Shell (Augment Affinity: DEX/Accuracy)
                   hpBoost = 5,
@@ -121,7 +121,7 @@ return
                       [xi.mod.REGEN] = 12,
                   },
                 },
-                { name = 'Tom_Tit_Tat',      label = 'Tom Tit Tat',      points = 15,  groupId = 11357, minLv = 150, maxLv = 150,
+                { name = 'Tom_Tit_Tat',      label = 'Tom Tit Tat',      points = 15,  groupId = 11357, minLv = 99, maxLv = 99,
                   spawnPos = { x =  -26.6, y =  0.11, z =  73.8, rot = 192 },  -- T1 cluster: E
                   hpBoost = 5,
                   mods = {
@@ -147,7 +147,7 @@ return
             warpPos    = { x = 40.9101, y = 0.4831, z = 132.8770, rot = 71 },
             mobs =
             {
-                { name = 'Roc',         label = 'Roc',         points = 28, groupId = 11358, minLv = 150, maxLv = 150,
+                { name = 'Roc',         label = 'Roc',         points = 28, groupId = 11358, minLv = 99, maxLv = 99,
                   spawnPos = { x =   25.9, y =  0.48, z =  132.9, rot =   0 },  -- T2 cluster: W
                   drops = { { id = 843, qty = 5 } },  -- Giant Bird Plume (Augment Affinity: AGI/Evasion/Haste)
                   hpBoost = 9,
@@ -163,7 +163,7 @@ return
                       [xi.mod.REGEN] = 24,
                   },
                 },
-                { name = 'Bomb_Queen',  label = 'Bomb Queen',  points = 28, groupId = 11359, minLv = 150, maxLv = 150,
+                { name = 'Bomb_Queen',  label = 'Bomb Queen',  points = 28, groupId = 11359, minLv = 99, maxLv = 99,
                   spawnPos = { x =   40.9, y =  0.48, z =  117.9, rot = 128 },  -- T2 cluster: S
                   hpBoost = 9,
                   mods = {
@@ -180,7 +180,7 @@ return
                       [xi.mod.REGEN] = 24,
                   },
                 },
-                { name = 'Aquarius',    label = 'Aquarius',    points = 28, groupId = 11360, minLv = 150, maxLv = 150,
+                { name = 'Aquarius',    label = 'Aquarius',    points = 28, groupId = 11360, minLv = 99, maxLv = 99,
                   spawnPos = { x =   55.9, y =  0.48, z =  132.9, rot = 192 },  -- T2 cluster: E
                   drops = { { id = 908, qty = 5 } },  -- Adamantoise Shell (Augment Affinity: VIT/Defense)
                   hpBoost = 9,
@@ -210,7 +210,7 @@ return
             warpPos    = { x = 48.6277, y = 0.8776, z = 18.8663, rot = 215 },
             mobs =
             {
-                { name = 'Serket',    label = 'Serket',    points = 45, groupId = 11361, minLv = 150, maxLv = 150,
+                { name = 'Serket',    label = 'Serket',    points = 45, groupId = 11361, minLv = 99, maxLv = 99,
                   spawnPos = { x =   33.6, y =  0.88, z =   18.9, rot =  96 },  -- T3 cluster: W
                   drops = { { id = 1015, qty = 5 } },  -- Sand Bat Fang (Augment Affinity: Pet)
                   hpBoost = 15,
@@ -227,7 +227,7 @@ return
                       [xi.mod.REGEN] = 40,
                   },
                 },
-                { name = 'Vrtra',     label = 'Vrtra',     points = 45, groupId = 11362, minLv = 150, maxLv = 150,
+                { name = 'Vrtra',     label = 'Vrtra',     points = 45, groupId = 11362, minLv = 99, maxLv = 99,
                   spawnPos = { x =   48.6, y =  0.88, z =    3.9, rot =  64 },  -- T3 cluster: S
                   drops = { { id = 909, qty = 5 } },  -- Guivre's Skull (Augment Affinity: INT/Magic)
                   hpBoost = 15,
@@ -246,7 +246,7 @@ return
                       [xi.mod.REGEN] = 40,
                   },
                 },
-                { name = 'Simurgh',   label = 'Simurgh',   points = 45, groupId = 11363, minLv = 150, maxLv = 150,
+                { name = 'Simurgh',   label = 'Simurgh',   points = 45, groupId = 11363, minLv = 99, maxLv = 99,
                   spawnPos = { x =   63.6, y =  0.88, z =   18.9, rot = 128 },  -- T3 cluster: E
                   drops = { { id = 844, qty = 5 } },  -- Phoenix Feather (Augment Affinity: MND/Healing)
                   -- Difficulty bump (2026-06-13, owner request): tuned a notch
@@ -281,7 +281,7 @@ return
             warpPos    = { x = 22.0112, y = 0.8983, z = -121.4367, rot = 126 },
             mobs =
             {
-                { name = 'Nidhogg',       label = 'Nidhogg',       points = 48, groupId = 11364, minLv = 150, maxLv = 150,
+                { name = 'Nidhogg',       label = 'Nidhogg',       points = 48, groupId = 11364, minLv = 99, maxLv = 99,
                   spawnPos = { x =    7.0, y =  0.90, z = -121.4, rot =  96 },  -- T4 cluster: W
                   drops = { { id = 1122, qty = 5 }, { id = 10037, qty = 5 }, { id = 865, qty = 5 } },  -- Wyvern Skin (Affinity: HP/Regen) + Fafnir's Scale (Augment Sage rank 4) + Handful of Nidhogg's Scales (Augment Sage rank 2)
                   hpBoost = 21,
@@ -298,7 +298,7 @@ return
                       [xi.mod.REGEN] = 70,
                   },
                 },
-                { name = 'King_Behemoth', label = 'King Behemoth', points = 48, groupId = 11365, minLv = 150, maxLv = 150,
+                { name = 'King_Behemoth', label = 'King Behemoth', points = 48, groupId = 11365, minLv = 99, maxLv = 99,
                   spawnPos = { x =   22.0, y =  0.90, z = -136.4, rot =  64 },  -- T4 cluster: S
                   drops = { { id = 893, qty = 5 }, { id = 883, qty = 5 } },  -- Giant Femur (Affinity: STR/Attack) + Behemoth Horn (Augment Sage rank 1)
                   hpBoost = 21,
@@ -317,7 +317,7 @@ return
                       [xi.mod.REGEN] = 70,
                   },
                 },
-                { name = 'Kirin',         label = 'Kirin',         points = 48, groupId = 11366, minLv = 150, maxLv = 150,
+                { name = 'Kirin',         label = 'Kirin',         points = 48, groupId = 11366, minLv = 99, maxLv = 99,
                   spawnPos = { x =   37.0, y =  0.90, z = -121.4, rot = 128 },  -- T4 cluster: E
                   drops = { { id = 2893, qty = 5 }, { id = 10038, qty = 5 } },  -- Gargantuan Black Tiger Fang (Affinity: Skill+) + Kirin's Mane (Augment Sage rank 5)
                   hpBoost = 21,
@@ -348,7 +348,7 @@ return
             warpPos    = { x = 433.8451, y = 0.1066, z = -199.3157, rot = 119 },
             mobs =
             {
-                { name = 'Absolute_Virtue',    label = 'Absolute Virtue',    points = 100, groupId = 11367, minLv = 150, maxLv = 150,
+                { name = 'Absolute_Virtue',    label = 'Absolute Virtue',    points = 100, groupId = 11367, minLv = 99, maxLv = 99,
                   spawnPos = { x =  418.8, y =  0.11, z = -199.3, rot =  96 },  -- T5 cluster: W
                   drops = { { id = 1473, qty = 5 } },  -- HQ Scorpion Shell (Augment Affinity: WS DMG+)
                   hpBoost = 36,
@@ -367,7 +367,7 @@ return
                       [xi.mod.REGEN] = 120,
                   },
                 },
-                { name = 'Pandemonium_Warden', label = 'Pandemonium Warden', points = 100, groupId = 11368, minLv = 150, maxLv = 150,
+                { name = 'Pandemonium_Warden', label = 'Pandemonium Warden', points = 100, groupId = 11368, minLv = 99, maxLv = 99,
                   spawnPos = { x =  433.8, y =  0.11, z = -214.3, rot =  64 },  -- T5 cluster: S
                   drops = { { id = xi.item.KHIMAIRA_HORN, qty = 5 }, { id = 2372, qty = 5 } },  -- Khimaira Horn + Khimaira Mane (Augment Affinity: CHR/Charm)
                   hpBoost = 36,
@@ -384,7 +384,7 @@ return
                       [xi.mod.REGEN] = 120,
                   },
                 },
-                { name = 'Shinryu',            label = 'Shinryu',            points = 120, groupId = 11369, minLv = 225, maxLv = 250,
+                { name = 'Shinryu',            label = 'Shinryu',            points = 120, groupId = 11369, minLv = 150, maxLv = 150,
                   spawnPos = { x =  448.8, y =  0.11, z = -199.3, rot = 128 },  -- T5 cluster: E
                   drops = { { id = 1133, qty = 5 } },  -- Vial of Dragon Blood (Augment Affinity: MP/Refresh)
                   hpBoost = 72,

@@ -47,8 +47,8 @@ catalog.addsPoolDifficulty = 'Hard'    -- stat template donor for tendrils
 catalog.boss =
 {
     name      = 'The Star-Devourer',
-    level     = 200,
-    hpMult    = 45.0,     -- a long, phase-driven fight - not a burn check
+    level     = 150,
+    hpMult    = 60.0,     -- preserves raid duration at the Lv150 ceiling
     modelSize = 3,
     mods =
     {
@@ -101,12 +101,12 @@ catalog.stance =
 -- action 'fury'    : permanent ATT/haste spike.
 catalog.phases =
 {
-    { hp = 75, action = 'tendrils', count = 2, level = 170, hpMult = 1.5,
+    { hp = 75, action = 'tendrils', count = 2, level = 150, hpMult = 2.0,
       name = 'Starspawn Tendril', regenWhileAlive = 2000,
       message = 'Starspawn Tendrils burst from the void - they FEED the Devourer! Kill them!' },
     { hp = 50, action = 'dispel',   count = 4,
       message = 'A wave of unbeing strips your protections!' },
-    { hp = 30, action = 'tendrils', count = 3, level = 180, hpMult = 1.8,
+    { hp = 30, action = 'tendrils', count = 3, level = 150, hpMult = 2.2,
       name = 'Starspawn Tendril', regenWhileAlive = 3500,
       message = 'The Devourer shrieks - more tendrils erupt! Sever them!' },
     { hp = 15, action = 'fury',     att = 2500, haste = 150,

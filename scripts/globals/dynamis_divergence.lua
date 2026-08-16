@@ -647,7 +647,7 @@ xi.divergence.bossMechCfgs =
             { hp = 50, action = 'dispel', count = 2, msg = 'Evincing Idol pulses -- your blessings are banished!' },
         },
     },
-    -- Fii Pexu the Eternal -- Fomor immortal mega-boss. Stance + terror + drain + phases.
+    -- Fii Pexu the Eternal -- Yagudo THF mega-boss. Stance + terror + drain + phases.
     [17990606] =
     {
         name            = 'Fii Pexu the Eternal',
@@ -659,7 +659,7 @@ xi.divergence.bossMechCfgs =
         } },
         drain  = { periodSec = 10, healPct = 0.25 },
         cc     = { periodSec = 28, effect = xi.effect.TERROR, power = 1, dur = 3, msg = 'Fii Pexu\'s eternal gaze pins you in dread!' },
-        enrage = { sec = 390, att = 2750, haste = 100, msg = 'Fii Pexu the Eternal draws on the endless well of Fomor rage!' },
+        enrage = { sec = 390, att = 2750, haste = 100, msg = 'Fii Pexu the Eternal draws on an endless well of Yagudo rage!' },
         phases =
         {
             { hp = 60, action = 'fury',   att = 2200, haste = 90, msg = 'Fii Pexu shrugs off the wound and comes on faster!' },

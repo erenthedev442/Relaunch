@@ -54,11 +54,11 @@ local enrageMeikyo =
     [4] = { xi.mobSkill.COSMIC_ELUCIDATION },
 }
 
-local taruOffsets =
+local taruVictoryOffsets =
 {
-    [ID.mob.MAKKI_CHEBUKKI] = ID.text.MAKKI_CHEBUKKI_OFFSET,
-    [ID.mob.KUKKI_CHEBUKKI] = ID.text.KUKKI_CHEBUKKI_OFFSET,
-    [ID.mob.CHERUKIKI     ] = ID.text.CHERUKIKI_OFFSET,
+    ID.text.MAKKI_CHEBUKKI_OFFSET,
+    ID.text.KUKKI_CHEBUKKI_OFFSET,
+    ID.text.CHERUKIKI_OFFSET,
 }
 
 local function setupForm(mob, newForm)
@@ -136,6 +136,7 @@ entity.onMobSpawn = function(mob)
     mob:setLocalVar('[Tenzen]LastWeaponskill', 0)
     mob:setLocalVar('[Tenzen]EnrageHP', math.random(25, 30))
     mob:setLocalVar('[Tenzen]MeikyoHP', math.random(60, 80))
+    mob:setLocalVar('[Tenzen]Victory', 0)
 end
 
 entity.onMobEngage = function(mob, target)
@@ -248,15 +249,26 @@ entity.onMobFight = function(mob, target)
 
     -- Win battle.
     if mobHPP <= 15 then
+        if mob:getLocalVar('[Tenzen]Victory') == 1 then
+            return
+        end
+        mob:setLocalVar('[Tenzen]Victory', 1)
+        mob:setAutoAttackEnabled(false)
+        mob:setMobAbilityEnabled(false)
+        mob:disengage()
         mob:setAnimationSub(forms.SHEATHED)
         mob:showText(mob, ID.text.TENZEN_MSG_OFFSET + 2)
 
         local mobId = mob:getID()
-        for taruId = mobId + 1, mobId + 3 do
+        local battlefield = mob:getBattlefield()
+        if battlefield then battlefield:setLocalVar('fireworks', 1) end
+        for offset, taruId in ipairs({ mobId + 1, mobId + 2, mobId + 3 }) do
             local taruMob = GetMobByID(taruId)
-            local offset  = taruOffsets[taruId]
             if taruMob then
-                taruMob:showText(taruMob, offset + 5)
+                taruMob:setAutoAttackEnabled(false)
+                taruMob:setMobAbilityEnabled(false)
+                taruMob:disengage()
+                taruMob:showText(taruMob, taruVictoryOffsets[offset] + 5)
             end
         end
 

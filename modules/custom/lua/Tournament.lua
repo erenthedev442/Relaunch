@@ -64,15 +64,15 @@ local WAVES = {
     { label = 'Wave 1',  count = 3, level = 110, hpMult = 6,   groups = { 11355, 11356 } },
     { label = 'Wave 2',  count = 4, level = 130, hpMult = 10,  groups = { 11357, 11358 } },
     { label = 'Wave 3',  count = 4, level = 150, hpMult = 16,  groups = { 11359, 11360 } },
-    { label = 'Wave 4',  count = 5, level = 170, hpMult = 24,  groups = { 11361, 11362 } },
-    { label = 'Wave 5',  count = 5, level = 190, hpMult = 36,  groups = { 11363, 11364 } },
-    { label = 'Wave 6',  count = 6, level = 210, hpMult = 52,  groups = { 11365, 11366 } },
-    { label = 'Wave 7',  count = 6, level = 230, hpMult = 72,  groups = { 11367, 11368 } },
-    { label = 'Wave 8',  count = 7, level = 250, hpMult = 96,  groups = { 11368, 11369 } },
+    { label = 'Wave 4',  count = 5, level = 150, hpMult = 24,  groups = { 11361, 11362 } },
+    { label = 'Wave 5',  count = 5, level = 150, hpMult = 36,  groups = { 11363, 11364 } },
+    { label = 'Wave 6',  count = 6, level = 150, hpMult = 64,  groups = { 11365, 11366 } },
+    { label = 'Wave 7',  count = 6, level = 150, hpMult = 90,  groups = { 11367, 11368 } },
+    { label = 'Wave 8',  count = 7, level = 150, hpMult = 120, groups = { 11368, 11369 } },
 }
 
 -- ─── Wave 8 Champion mechanics ────────────────────────────────────────────────
--- The final wave (Wave 8) has no explicit boss entity — all 7 mobs are level-250
+-- The final wave (Wave 8) has no explicit boss entity — all 7 mobs are Lv150
 -- juggernauts. The FIRST mob spawned in Wave 8 (i==1, waveNum==8) is designated
 -- the "Tournament Champion" and receives the full hardcore kit. The remaining 6
 -- are left vanilla (mechanics.tick() is a safe no-op on un-attached mobs).

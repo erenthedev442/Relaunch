@@ -61,8 +61,8 @@ catalog.mobName  = 'Capacity Phantom'  -- display name; also used to count/top-u
 -- every kill, so this pool consumes a stable 100 slots. Raising it substantially
 -- would still crowd out player trusts/pets under group load.
 catalog.mobCount = 100
-catalog.minLv    = 150                  -- engine rolls each spawn in [minLv, maxLv]
-catalog.maxLv    = 160
+catalog.minLv    = 120                  -- engine rolls each spawn in [minLv, maxLv]
+catalog.maxLv    = 150
 catalog.maxHP    = 120000
 catalog.respawnSeconds = 5              -- delay after the death/despawn sequence
 catalog.cpBonus  = 2000                 -- flat bonus Capacity Points to the killer per kill, ON TOP of

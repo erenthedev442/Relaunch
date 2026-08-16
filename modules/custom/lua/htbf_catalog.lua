@@ -18,6 +18,37 @@
 -----------------------------------
 local catalog = {}
 
+-- The persistent progression contract is intentionally defined beside the
+-- battlefield data. Every consumer (entry, vendor, and Ambuscade) asks this
+-- one API rather than reimplementing combinations of charvars.
+catalog.progress =
+{
+    tierVar       = 'HTBF_Cleared_T',
+    finalDoneVar  = 'HTBF_FinalTest_Done',
+}
+
+function catalog.progress.get(player)
+    local result =
+    {
+        tier1 = (player:getCharVar(catalog.progress.tierVar .. '1') or 0) >= 1,
+        tier2 = (player:getCharVar(catalog.progress.tierVar .. '2') or 0) >= 1,
+        tier3 = (player:getCharVar(catalog.progress.tierVar .. '3') or 0) >= 1,
+    }
+    result.finalProving = (player:getCharVar(catalog.progress.finalDoneVar) or 0) >= 1 or result.tier3
+    result.finalReady = result.tier1 and result.tier2 and not result.finalProving
+    return result
+end
+
+function catalog.progress.recordClear(player, tier, isFinalProving)
+    if tier >= 1 and tier <= 3 then
+        player:setCharVar(catalog.progress.tierVar .. tier, 1)
+    end
+    if isFinalProving then
+        player:setCharVar(catalog.progress.finalDoneVar, 1)
+        player:setCharVar(catalog.progress.tierVar .. '3', 1)
+    end
+end
+
 -- Real trusts per tier. The Adventuring Fellow is a free extra and is excluded
 -- from this count by htbf.lua.
 catalog.trustCap = { [1] = 2, [2] = 3, [3] = 4 }
@@ -60,7 +91,7 @@ catalog.gemName =
     [xi.ki.PUPPET_IN_PERIL_PHANTOM_GEM] = 'Puppet in Peril Phantom Gem',
     [xi.ki.LEGACY_PHANTOM_GEM]        = 'Legacy Phantom Gem',
     [xi.ki.SHADOW_LORD_PHANTOM_GEM]   = 'Shadow Lord Phantom Gem',
-    [xi.ki.STELLAR_FULCRUM_PHANTOM_GEM] = 'Stellar Fulcrum Phantom Gem',
+    [xi.ki.STELLAR_FULCRUM_PHANTOM_GEM] = "Return to Delkfutt's Tower Phantom Gem",
     [xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM] = 'Celestial Nexus Phantom Gem',
     [xi.ki.DIVINE_PHANTOM_GEM]        = 'Divine Phantom Gem',
     [xi.ki.PHANTOM_GEM_OF_APATHY]     = 'Phantom Gem of Apathy',
@@ -330,7 +361,7 @@ catalog.fights =
     {
         zone = xi.zone.CLOISTER_OF_TREMORS, entryNpc = 'EP_Entrance', exitNpc = 'Earth_Protocrystal',
         gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4030,
-        mobs = { 'Titan_Prime_HTBF' }, label = 'Trial by Earth',
+        mobs = { 'Titan_Prime_TBE' }, label = 'Trial by Earth',
         difficulty = 'avatar', rewardClass = 'simple', entryPosByArea = avatarEntryPos,
     },
     trial_by_lightning =
@@ -418,7 +449,7 @@ catalog.fights =
         -- Retail HTMBF is Omega -> Ultima only. The mission battlefield also
         -- contains Mammets and story cutscenes, so it must not be reused here.
         groupsForTier = function(tier)
-            local first = 16908382 + (tier - 1) * 2
+        local first = 16908382 + (tier - 1) * 30
             return
             {
                 {
@@ -477,7 +508,7 @@ catalog.fights =
     dawn =
     {
         zone = xi.zone.EMPYREAL_PARADOX, entryNpc = 'TR_Entrance', exitNpc = 'Transcendental_Radiance',
-        gem = xi.ki.DAWN_PHANTOM_GEM, baseIndex = 2, baseBattlefieldId = 4210,
+        gem = xi.ki.DAWN_PHANTOM_GEM, baseIndex = 12, baseBattlefieldId = 4210,
         reuseBaseId = xi.battlefield.id.DAWN, label = 'Dawn',
         difficulty = 'epic', rewardClass = 'epic',
         -- Promathia's mission pools have only 8k/12k HP and already carry
@@ -528,7 +559,7 @@ catalog.fights =
     {
         zone = xi.zone.THRONE_ROOM, entryNpc = '_4l1',
         exitNpcs = { '_4l2', '_4l3', '_4l4' },
-        gem = xi.ki.SHADOW_LORD_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4120,
+        gem = xi.ki.SHADOW_LORD_PHANTOM_GEM, baseIndex = 12, baseBattlefieldId = 4120,
         reuseBaseId = xi.battlefield.id.SHADOW_LORD_BATTLE, label = 'Shadow Lord',
         difficulty = 'standard', rewardClass = 'standard',
         entryPosByArea =
@@ -542,7 +573,7 @@ catalog.fights =
     {
         zone = xi.zone.STELLAR_FULCRUM, entryNpc = '_4z0',
         exitNpcs = { '_4z1', '_4z2', '_4z3' },
-        gem = xi.ki.STELLAR_FULCRUM_PHANTOM_GEM, baseIndex = 1, baseBattlefieldId = 4130,
+        gem = xi.ki.STELLAR_FULCRUM_PHANTOM_GEM, baseIndex = 12, baseBattlefieldId = 4130,
         reuseBaseId = xi.battlefield.id.RETURN_TO_DELKFUTTS_TOWER, label = "Return to Delkfutt's Tower",
         difficulty = 'standard', rewardClass = 'standard',
         entryPosByArea =
@@ -556,7 +587,7 @@ catalog.fights =
     {
         zone = xi.zone.THE_CELESTIAL_NEXUS, entryNpc = '_513',
         exitNpcs = { '_514', '_515' },
-        gem = xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM, baseIndex = 1, baseBattlefieldId = 4140,
+        gem = xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM, baseIndex = 12, baseBattlefieldId = 4140,
         reuseBaseId = xi.battlefield.id.CELESTIAL_NEXUS, label = 'The Celestial Nexus',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea =
@@ -578,7 +609,7 @@ catalog.fights =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpcs = { 'qm1_1', 'qm1_2', 'qm1_3', 'qm1_4', 'qm1_5' },
         exitNpc = 'qm2',
-        gem = xi.ki.DIVINE_PHANTOM_GEM, baseIndex = 13, baseBattlefieldId = 4150,
+        gem = xi.ki.DIVINE_PHANTOM_GEM, baseIndex = 16, baseBattlefieldId = 4150,
         reuseBaseId = xi.battlefield.id.DIVINE_MIGHT, maxPlayers = 18, label = 'Divine Might',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
@@ -591,7 +622,7 @@ catalog.fights =
     ark_angels_1 =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_1', exitNpc = 'qm2',
-        gem = xi.ki.PHANTOM_GEM_OF_APATHY, baseIndex = 10, baseBattlefieldId = 4160,
+        gem = xi.ki.PHANTOM_GEM_OF_APATHY, baseIndex = 12, baseBattlefieldId = 4160,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_1, label = 'Ark Angels I',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
@@ -599,7 +630,7 @@ catalog.fights =
     ark_angels_2 =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_2', exitNpc = 'qm2',
-        gem = xi.ki.PHANTOM_GEM_OF_COWARDICE, baseIndex = 10, baseBattlefieldId = 4170,
+        gem = xi.ki.PHANTOM_GEM_OF_COWARDICE, baseIndex = 12, baseBattlefieldId = 4170,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_2, label = 'Ark Angels II',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
@@ -607,7 +638,7 @@ catalog.fights =
     ark_angels_3 =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_3', exitNpc = 'qm2',
-        gem = xi.ki.PHANTOM_GEM_OF_ENVY, baseIndex = 10, baseBattlefieldId = 4180,
+        gem = xi.ki.PHANTOM_GEM_OF_ENVY, baseIndex = 12, baseBattlefieldId = 4180,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_3, label = 'Ark Angels III',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
@@ -615,7 +646,7 @@ catalog.fights =
     ark_angels_4 =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_4', exitNpc = 'qm2',
-        gem = xi.ki.PHANTOM_GEM_OF_ARROGANCE, baseIndex = 10, baseBattlefieldId = 4190,
+        gem = xi.ki.PHANTOM_GEM_OF_ARROGANCE, baseIndex = 12, baseBattlefieldId = 4190,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_4, label = 'Ark Angels IV',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
@@ -623,7 +654,7 @@ catalog.fights =
     ark_angels_5 =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_5', exitNpc = 'qm2',
-        gem = xi.ki.PHANTOM_GEM_OF_RAGE, baseIndex = 10, baseBattlefieldId = 4200,
+        gem = xi.ki.PHANTOM_GEM_OF_RAGE, baseIndex = 12, baseBattlefieldId = 4200,
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_5, label = 'Ark Angels V',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,

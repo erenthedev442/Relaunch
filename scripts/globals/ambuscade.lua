@@ -15,6 +15,7 @@ xi = xi or {}
 xi.ambuscade = {}
 
 local SYS = xi.msg.channel.SYSTEM_3
+local HTBF_PROGRESS
 
 -- Retail-faithful Ambuscade weapon upgrade chain (Tokko->Ajja->Eletta->Kaja->Final).
 -- LAZY-loaded on first "Weapons" menu click (see showGorpaMain), NOT at globals
@@ -585,18 +586,19 @@ end
 -- qualified host can't smuggle unqualified party members into the fight.
 local function checkAmbuscadeEntryReqs(player)
     local kings = player:getCharVar('HNM_King_Kills') or 0
-    local t1 = player:getCharVar('HTBF_Cleared_T1') or 0
-    local t2 = player:getCharVar('HTBF_Cleared_T2') or 0
-    local t3 = player:getCharVar('HTBF_Cleared_T3') or 0
-    if kings >= 1 and t1 >= 1 and t2 >= 1 and t3 >= 1 then
+    if not HTBF_PROGRESS then
+        HTBF_PROGRESS = require('modules/custom/lua/htbf_catalog').progress
+    end
+    local progress = HTBF_PROGRESS.get(player)
+    if kings >= 1 and progress.tier1 and progress.tier2 and progress.tier3 then
         return true
     end
     -- Concise, one-line status so the player knows exactly what's missing.
     local missing = {}
     if kings < 1 then missing[#missing + 1] = 'HNM King kill' end
-    if t1 < 1 then missing[#missing + 1] = 'HTBF T1' end
-    if t2 < 1 then missing[#missing + 1] = 'HTBF T2' end
-    if t3 < 1 then missing[#missing + 1] = 'HTBF T3' end
+    if not progress.tier1 then missing[#missing + 1] = 'HTBF T1' end
+    if not progress.tier2 then missing[#missing + 1] = 'HTBF T2' end
+    if not progress.tier3 then missing[#missing + 1] = 'HTBF T3' end
     player:printToPlayer(
         '[Ambuscade] Entry requires: 1 HNM King kill + 1 HTBF clear at each of T1/T2/T3.',
         SYS)

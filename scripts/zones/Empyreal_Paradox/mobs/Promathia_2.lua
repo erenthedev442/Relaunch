@@ -115,6 +115,32 @@ entity.onMobMobskillChoose = function(mob, target, skillId)
     return tpList[math.random(#tpList)]
 end
 
+entity.onMobWeaponSkill = function(mob, target, skill)
+    local battlefield = mob:getBattlefield()
+    if not battlefield or battlefield:getLocalVar('HTBF') ~= 1 then
+        return
+    end
+
+    local skillId = skill:getID()
+    if
+        skillId == xi.mobSkill.WHEEL_OF_IMPREGNABILITY or
+        skillId == xi.mobSkill.BASTION_OF_TWILIGHT
+    then
+        -- Retail's phase shield is driven by a mission-length state. In the
+        -- repeatable HTBF it must expire even if the next HP breakpoint is not
+        -- crossed, otherwise physical or magical jobs can be locked out.
+        mob:timer(12000, function(mobArg)
+            mobArg:delStatusEffect(xi.effect.PHYSICAL_SHIELD)
+            mobArg:delStatusEffect(xi.effect.MAGIC_SHIELD)
+        end)
+    elseif skillId == xi.mobSkill.WINDS_OF_OBLIVION and target then
+        -- Preserve the move while keeping its HTBF-only solo penalty bounded.
+        target:timer(15000, function(targetArg)
+            targetArg:delStatusEffect(xi.effect.AMNESIA)
+        end)
+    end
+end
+
 entity.onMobDespawn = function(mob)
     mob:removeListener('PROMY_SKILL_MSG')
 end

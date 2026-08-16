@@ -3709,7 +3709,18 @@ void BuildingCharPetAbilityTable(CCharEntity* PChar, CPetEntity* PPet, uint32 Pe
         auto skillList{ battleutils::GetMobSkillList(PPet->m_MobSkillList) };
         for (auto&& abilityid : skillList)
         {
-            addPetAbility(PChar, abilityid - ABILITY_HEALING_RUBY);
+            // Jug combat lists store executable mob skill IDs for the AI and
+            // auto-Ready loop. Convert those back to pet ability IDs for the
+            // client Ready menu; preserve legacy lists that already store a
+            // pet ability ID.
+            if (auto* PPetSkill = battleutils::GetPetSkill(abilityid))
+            {
+                addPetAbility(PChar, PPetSkill->getID() - ABILITY_HEALING_RUBY);
+            }
+            else if (auto* PPetSkill = battleutils::GetPetSkillByMobSkill(abilityid))
+            {
+                addPetAbility(PChar, PPetSkill->getID() - ABILITY_HEALING_RUBY);
+            }
         }
     }
     PChar->pushPacket<GP_SERV_COMMAND_COMMAND_DATA>(PChar);

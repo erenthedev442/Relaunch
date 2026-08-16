@@ -6,7 +6,8 @@
 -- Stripped (not solo-friendly):
 --   Muut              Danse Macabre (533) charm
 --   Hidhaegg          Absolute Terror (957)
---   Shedu             Dreadstorm (2025) terror; Fulmination (2028) gated to <=37% HP via list 9708
+--   Shedu             Dreadstorm (2025) terror; Unity-only reduced Fulmination
+--                     and 10-second Fossilizing Breath petrify remain enabled
 --   Tumult Curator    Thundris Shriek (2119) terror
 --   Grand Grenade     Self-Destruct (509) HP-scaled wipe + suicide
 --   Bambrox           Bomb Toss Suicide (592)
@@ -28,14 +29,14 @@ REPLACE INTO `mob_skill_lists` VALUES ('UW_Hidhaegg', 9701, 1040); -- spike_flai
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Hidhaegg', 9701, 1041); -- dragon_breath
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Hidhaegg', 9701, 1046); -- horrid_roar_2
 
--- 9702 Shedu (Khimaira 168 without Dreadstorm or Fulmination)
+-- 9702 Shedu (Khimaira 168 without Dreadstorm)
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2022); -- tenebrous_mist
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2023); -- thunderstrike
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2024); -- tourbillion
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2026); -- fossilizing_breath
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2027); -- plague_swipe
 
--- 9708 Shedu execute window (adds Fulmination at <=37% HP, retail Khimaira gate)
+-- 9708 Shedu execute window (adds Fulmination at <=37% HP)
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu_LowHP', 9708, 2022); -- tenebrous_mist
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu_LowHP', 9708, 2023); -- thunderstrike
 REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu_LowHP', 9708, 2024); -- tourbillion

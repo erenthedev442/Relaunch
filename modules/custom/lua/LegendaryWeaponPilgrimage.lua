@@ -250,8 +250,28 @@ local function onDefeatedMob(mob, player, opt)
         player:setLocalVar('LWP_SupportTarget', 0)
     end
 
-    if not opt.isKiller or not opt.isWeaponSkillKill then return end
-    if not opt.weaponskillUsed or not opt.weaponskillDamage or opt.weaponskillDamage <= 0 then return end
+    -- The engine's isWeaponSkillKill flag can be false for a multi-hit WS or
+    -- skillchain whose final action packet is resolved as a follow-up hit.
+    -- WEAPONSKILL_USE observes the completed action and records a fallback only
+    -- when that exact action already reduced this exact target to zero HP.
+    -- This is deliberately not a time window: a post-WS auto-attack cannot
+    -- inherit credit because it never sets LWP_ConfirmedWsKillTarget.
+    local confirmedKill =
+        player:getLocalVar('LWP_ConfirmedWsKillTarget') == mob:getID() and
+        player:getLocalVar('LWP_ConfirmedWsKillWS') > 0
+    local wsId = opt.weaponskillUsed
+    local wsDamage = opt.weaponskillDamage
+    if confirmedKill then
+        wsId = player:getLocalVar('LWP_ConfirmedWsKillWS')
+        wsDamage = player:getLocalVar('LWP_ConfirmedWsKillDamage')
+    end
+    player:setLocalVar('LWP_ConfirmedWsKillTarget', 0)
+    player:setLocalVar('LWP_ConfirmedWsKillWS', 0)
+    player:setLocalVar('LWP_ConfirmedWsKillDamage', 0)
+
+    if not opt.isKiller and not confirmedKill then return end
+    if not opt.isWeaponSkillKill and not confirmedKill then return end
+    if not wsId or not wsDamage or wsDamage <= 0 then return end
     if player:isDead() or not player:checkKillCredit(mob) then return end
 
     for _, entry in ipairs(activeEntries(player)) do
@@ -260,14 +280,14 @@ local function onDefeatedMob(mob, player, opt)
         if
             chapter <= 3 and
             (requirement.kind == 'ws_kills' or requirement.kind == 'named_ws_kills') and
-            opt.weaponskillUsed == entry.wsId and
+            wsId == entry.wsId and
             equippedForChapter(player, entry, chapter) and
             player:getLocalVar('LWP_SnapEntry') == entry.index and
             player:getLocalVar('LWP_SnapTarget') == mob:getID() and
             player:getLocalVar('LWP_SnapWS') == entry.wsId and
             player:getLocalVar('LWP_SnapPass') == 1 and
             (not entry.archetypeRule.minDamage or
-                opt.weaponskillDamage >= entry.archetypeRule.minDamage) and
+                wsDamage >= entry.archetypeRule.minDamage) and
             targetEligible(player, mob, entry, chapter)
         then
             markProgress(player, entry, chapter, displayName(mob))
@@ -278,6 +298,14 @@ end
 local function onWeaponskill(attacker, target, skill, tp, action, damage)
     if not attacker or not target or target:getObjType() ~= xi.objType.MOB then return end
     local wsId = skill:getID()
+    -- Capture only a completed weaponskill that has already killed the target.
+    -- This is consumed by onDefeatedMob as a narrowly-scoped fallback when the
+    -- core death event loses its WS attribution during multi-hit resolution.
+    if target:getHP() <= 0 and damage and damage > 0 then
+        attacker:setLocalVar('LWP_ConfirmedWsKillTarget', target:getID())
+        attacker:setLocalVar('LWP_ConfirmedWsKillWS', wsId)
+        attacker:setLocalVar('LWP_ConfirmedWsKillDamage', damage)
+    end
     for _, entry in ipairs(activeEntries(attacker)) do
         local chapter = C.chapter(attacker, entry)
         local requirement = entry.chapters[chapter]

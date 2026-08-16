@@ -145,11 +145,35 @@ describe('HTBF catalog integrity and balance', function()
     end)
 
     it('uses dedicated HTBF enemies for the reported fights', function()
-        assert(catalog.fights.trial_by_earth.mobs[1] == 'Titan_Prime_HTBF')
+        assert(catalog.fights.trial_by_earth.mobs[1] == 'Titan_Prime_TBE')
         assert(catalog.fights.warriors_path.reuseBaseId == nil)
         assert(type(catalog.fights.warriors_path.groupsForTier) == 'function')
         assert(catalog.fights.one_to_be_feared.reuseBaseId == nil)
         assert(type(catalog.fights.one_to_be_feared.groupsForTier) == 'function')
+    end)
+
+    it('uses non-overlapping Sealion tier pools and dedicated Ark menu rows', function()
+        local feared = catalog.fights.one_to_be_feared
+        for tier = 1, 3 do
+            local groups = feared.groupsForTier(tier)
+            local omega = groups[1].mobIds[1][1]
+            local ultima = groups[2].mobIds[1][1]
+            assert(ultima == omega + 1)
+            if tier > 1 then
+                assert(omega - feared.groupsForTier(tier - 1)[1].mobIds[1][1] == 30)
+            end
+        end
+
+        for index = 1, 5 do
+            assert(catalog.fights['ark_angels_' .. index].baseIndex == 12)
+        end
+        assert(catalog.fights.divine_might.baseIndex == 16)
+    end)
+
+    it('exposes one progression contract for final proving and tier clears', function()
+        assert(catalog.progress.tierVar == 'HTBF_Cleared_T')
+        assert(catalog.progress.finalDoneVar == 'HTBF_FinalTest_Done')
+        assert(catalog.fights.trial_by_earth.mobs[1] == 'Titan_Prime_TBE')
     end)
 
     it('keeps Dawn durable without the generic epic defense wall', function()

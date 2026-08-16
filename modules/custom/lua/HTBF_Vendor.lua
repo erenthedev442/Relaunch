@@ -64,8 +64,8 @@ local TOP_CAT_SHORT =
 -- 16-gem list would exceed both client caps (8 options / 150 bytes) and hide
 -- gems, so we drill down.
 showMenu = function(p)
-    local finalDone = (p:getCharVar(catalog.finalTest.completionVar) or 0) >= 1
-        or (p:getCharVar(catalog.finalTest.tierClearVar) or 0) >= 1
+    local progress = catalog.progress.get(p)
+    local finalDone = progress.finalProving
     -- Keep both states tiny ("Final*" vs "Final Test [Done]") so Warp fits.
     local finalLabel = finalDone and 'Final*' or 'Final'
     local options =
@@ -87,10 +87,10 @@ end
 -- real T3 and supplies the T3 clear flag Ambuscade already checks.
 showFinalTest = function(p)
     local final      = catalog.finalTest
-    local finalDone  = (p:getCharVar(final.completionVar) or 0) >= 1
-        or (p:getCharVar(final.tierClearVar) or 0) >= 1
-    local clearedT1 = (p:getCharVar('HTBF_Cleared_T1') or 0) >= 1
-    local clearedT2 = (p:getCharVar('HTBF_Cleared_T2') or 0) >= 1
+    local progress  = catalog.progress.get(p)
+    local finalDone  = progress.finalProving
+    local clearedT1 = progress.tier1
+    local clearedT2 = progress.tier2
 
     if finalDone then
         p:printToPlayer(

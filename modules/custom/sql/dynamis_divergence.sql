@@ -568,6 +568,23 @@ INSERT INTO `mob_droplist` VALUES (29504, 0, 0, 1000, 9543, @UNCOMMON);
 -- Reuses zone-187 Vanguard Yagudo pools; coords from retail Dynamis-Windy stock spawns.
 -- ============================================================================
 
+-- Fii Pexu is a Yagudo THF. The previous group reused pool 2464 directly,
+-- whose packet name is Maa Febi the Steadfast; the client therefore rendered
+-- the Wave 2 boss as an unrelated NPC. Clone its correct Yagudo model/job data
+-- into a dedicated pool with Fii Pexu's packet identity.
+INSERT INTO `mob_pools`
+SELECT
+    8000, 'FiiPexuTheEternal', 'Fii Pexu the Eternal',
+    `speciesid`, `modelid`, `mJob`, `sJob`, `cmbSkill`, `cmbDelay`, `cmbDmgMult`,
+    `behavior`, `aggro`, `true_detection`, `links`, `mobType`, `immunity`,
+    `name_prefix`, `flag`, `entityFlags`, `animationsub`, `hasSpellScript`,
+    `spellList`, `namevis`, `roamflag`, `skill_list_id`, `resist_id`,
+    `modelSize`, `modelHitboxSize`
+FROM `mob_pools`
+WHERE `poolid` = 2464
+ON DUPLICATE KEY UPDATE
+    `name` = VALUES(`name`), `packet_name` = VALUES(`packet_name`);
+
 -- ── mob_groups (unchanged: retail Vanguard family pools) ──
 REPLACE INTO `mob_groups` VALUES (1, 4070, 296, 'EvincingIdol_WindyD', 0, 128, 29601, 35000, 1000, 0, NULL);
 REPLACE INTO `mob_groups` VALUES (2, 4183, 296, 'WindyD_Squadron_A',   0, 128, 29602,  8000,    0, 0, NULL);
@@ -577,7 +594,7 @@ REPLACE INTO `mob_groups` VALUES (5, 3548, 296, 'WindyD_Statue',       0, 128,  
 REPLACE INTO `mob_groups` VALUES (6, 4181, 296, 'WindyD_Regiment_A',   0, 128, 29603, 11000,    0, 0, NULL);
 REPLACE INTO `mob_groups` VALUES (7, 4198, 296, 'WindyD_Regiment_B',   0, 128, 29603, 11000,    0, 0, NULL);
 REPLACE INTO `mob_groups` VALUES (8, 4141, 296, 'WindyD_Regiment_C',   0, 128, 29603, 11000,    0, 0, NULL);
-REPLACE INTO `mob_groups` VALUES (9, 2464, 296, 'FiiPexuTheEternal',   0, 128, 29604, 70000, 2000, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (9, 8000, 296, 'FiiPexuTheEternal',   0, 128, 29604, 70000, 2000, 0, NULL);
 
 -- ── mob_spawn_points: corridor pass ──
 DELETE FROM `mob_spawn_points` WHERE `mobid` BETWEEN 17989632 AND 17993727;

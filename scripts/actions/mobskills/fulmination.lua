@@ -21,6 +21,9 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     params.shadowBehavior = xi.mobskills.shadowBehavior.WIPE_SHADOWS
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
+    if mob:getLocalVar('UW_Shedu') == 1 then
+        info.damage = math.floor(info.damage / 2)
+    end
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
