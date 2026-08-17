@@ -1,39 +1,26 @@
-﻿Collaborator review  2026-08-17 11:43:21
+﻿Collaborator review  2026-08-17 11:56:56
 Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit 3a2157cd992afaaf714bf8a304bc22f1bfa46d02
+commit 8bdca31219dbb26e99ad97f692d20f2e8abca5e3
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Mon Aug 17 19:41:07 2026 +0100
+Date:   Mon Aug 17 19:55:54 2026 +0100
 
-    fix(relaunch/pup): compile automaton merit tracking
+    fix(relaunch): include companion equipment definition
     
-    Apply recalculation modifiers through the validated automaton entity instead of its generic battle-entity pointer.
+    Provide the complete equipment type required when validating equipped Prime weapons during companion damage-cap resolution.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/src/map/utils/petutils.cpp b/src/map/utils/petutils.cpp
-index d68a3236bf..73a0b7dd8b 100644
---- a/src/map/utils/petutils.cpp
-+++ b/src/map/utils/petutils.cpp
-@@ -1274,13 +1274,13 @@ void CalculateAutomatonStats(CBattleEntity* PMaster, CBattleEntity* PPet)
-         {
-             if (PMaster->objtype == TYPE_PC)
-             {
--                PPet->addStatRecalculationModifier(Mod::ATTP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
--                PPet->addStatRecalculationModifier(Mod::DEFP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
--                PPet->addStatRecalculationModifier(Mod::MATT, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
--                PPet->addStatRecalculationModifier(Mod::ACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
--                PPet->addStatRecalculationModifier(Mod::RACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
--                PPet->addStatRecalculationModifier(Mod::EVA, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
--                PPet->addStatRecalculationModifier(Mod::MDEF, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
-+                PAutomaton->addStatRecalculationModifier(Mod::ATTP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
-+                PAutomaton->addStatRecalculationModifier(Mod::DEFP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
-+                PAutomaton->addStatRecalculationModifier(Mod::MATT, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
-+                PAutomaton->addStatRecalculationModifier(Mod::ACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
-+                PAutomaton->addStatRecalculationModifier(Mod::RACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
-+                PAutomaton->addStatRecalculationModifier(Mod::EVA, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
-+                PAutomaton->addStatRecalculationModifier(Mod::MDEF, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
-             }
+diff --git a/modules/custom/cpp/fjb_combat.cpp b/modules/custom/cpp/fjb_combat.cpp
+index 796d7f8ea8..93994c4252 100644
+--- a/modules/custom/cpp/fjb_combat.cpp
++++ b/modules/custom/cpp/fjb_combat.cpp
+@@ -21,6 +21,7 @@
+ #include "map/entities/petentity.h"
+ #include "map/enums/chat_message_type.h"
+ #include "map/items.h"
++#include "map/items/item_equipment.h"
+ #include "map/packets/s2c/0x017_chat_std.h"
  
-             FinalizePetStatistics(PMaster, PAutomaton);
+ #include <algorithm>
