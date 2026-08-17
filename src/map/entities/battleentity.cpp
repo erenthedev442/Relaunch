@@ -44,6 +44,7 @@
 #include "attack.h"
 #include "attackround.h"
 #include "entities/charentity.h"
+#include "entities/petentity.h"
 #include "items/item_weapon.h"
 #include "job_points.h"
 #include "lua/luautils.h"
@@ -2222,7 +2223,7 @@ void CBattleEntity::addPetModifier(Mod type, PetModType petmod, int16 amount)
     if (PPet && petutils::CheckPetModType(PPet, petmod))
     {
         PPet->addModifier(type, amount);
-        PPet->recordAppliedMasterPetModifier(type, amount);
+        static_cast<CPetEntity*>(PPet)->recordAppliedMasterPetModifier(type, amount);
         PPet->UpdateHealth();
     }
 }
@@ -2237,7 +2238,7 @@ void CBattleEntity::setPetModifier(Mod type, PetModType petmod, int16 amount)
     {
         const int16 difference = amount - previousAmount;
         PPet->addModifier(type, difference);
-        PPet->recordAppliedMasterPetModifier(type, difference);
+        static_cast<CPetEntity*>(PPet)->recordAppliedMasterPetModifier(type, difference);
         PPet->UpdateHealth();
     }
 }
@@ -2250,7 +2251,7 @@ void CBattleEntity::delPetModifier(Mod type, PetModType petmod, int16 amount)
     if (PPet && petutils::CheckPetModType(PPet, petmod))
     {
         PPet->delModifier(type, amount);
-        PPet->recordAppliedMasterPetModifier(type, -amount);
+        static_cast<CPetEntity*>(PPet)->recordAppliedMasterPetModifier(type, -amount);
         PPet->UpdateHealth();
     }
 }
@@ -2280,7 +2281,7 @@ void CBattleEntity::applyPetModifiers(CPetEntity* PPet)
     // Reapplication may follow an equipment or pet-frame change. Remove the
     // exact old set first; m_petMod already describes the new equipment and
     // cannot reliably be used to undo what the pet currently has.
-    PPet->clearAppliedMasterPetModifiers();
+    static_cast<CPetEntity*>(PPet)->clearAppliedMasterPetModifiers();
 
     for (const auto& modtype : m_petMod)
     {
@@ -2289,7 +2290,7 @@ void CBattleEntity::applyPetModifiers(CPetEntity* PPet)
             for (auto mod : modtype.second)
             {
                 PPet->addModifier(mod.first, mod.second);
-                PPet->recordAppliedMasterPetModifier(mod.first, mod.second);
+                static_cast<CPetEntity*>(PPet)->recordAppliedMasterPetModifier(mod.first, mod.second);
                 PPet->UpdateHealth();
             }
         }
@@ -2299,7 +2300,7 @@ void CBattleEntity::applyPetModifiers(CPetEntity* PPet)
 void CBattleEntity::removePetModifiers(CPetEntity* PPet)
 {
     TracyZoneScoped;
-    PPet->clearAppliedMasterPetModifiers();
+    static_cast<CPetEntity*>(PPet)->clearAppliedMasterPetModifiers();
     PPet->UpdateHealth();
 }
 
