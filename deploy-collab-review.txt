@@ -1,1848 +1,710 @@
-﻿Collaborator review  2026-08-17 14:01:44
-Range: HEAD..origin/relaunch  (1 collaborator commit(s))
+﻿Collaborator review  2026-08-17 15:52:29
+Range: HEAD..origin/relaunch  (2 collaborator commit(s))
 
 ==============================================================================
-commit 4588b23d1c67621a7410ab7065d1a688711b56fa
+commit 05dbc3434b22de0788b2ebd097f170ea93beefa0
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Mon Aug 17 21:46:00 2026 +0100
+Date:   Mon Aug 17 23:46:01 2026 +0100
 
-    feat(relaunch): strengthen BST and simplify HTBF entry
+    fix(relaunch): restore HTBF entry and physical Ready
     
-    Make invested jug pets and Ready cadence viable for endgame DPS, while replacing confusing client battlefield rows with a named Legendary purchase, warp, and tier flow.
+    Unblock Sealion Iron Gate HTBF menus, correct avatar/Savage staging, and keep named menus from stacking. Apply BST physical Ready investment after pDIF so Prime pet DPS can reach the companion ceiling, and credit Katana pilgrimages on the Metsu killing blow alone.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/modules/custom/commands/htbf.lua b/modules/custom/commands/htbf.lua
-index 22ff189c1e..f261eb02cb 100644
---- a/modules/custom/commands/htbf.lua
-+++ b/modules/custom/commands/htbf.lua
-@@ -29,7 +29,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = '',
- }
- 
-@@ -48,6 +48,7 @@ local ZONE_ENTRY =
-     [xi.zone.MONARCH_LINN]         = {   12.527,   0.345, -539.602, 127 },
-     [xi.zone.SEALIONS_DEN]         = {  600.101, 130.355,  797.612,  50 },
-     [xi.zone.BONEYARD_GULLY]       = { -709.508,  18.066,  456.241,  24 },
-+    [xi.zone.EMPYREAL_PARADOX]      = {  540.040,  -1.180, -597.680,   0 },
-     [xi.zone.JADE_SEPULCHER]       = {  340.383, -13.625, -157.447, 189 },
-     [xi.zone.TALACCA_COVE]         = {   64.007,  -9.281,  -99.988,  88 },
-     [xi.zone.THRONE_ROOM]          = {  114.308,  -7.639,    0.022, 126 },
-@@ -68,6 +69,10 @@ local function heldFightKeys(player)
-             end
-         end
-     end
-+    table.sort(out, function(left, right)
-+        return (catalog.fights[left].label or left) <
-+            (catalog.fights[right].label or right)
-+    end)
-     return out
- end
- 
-@@ -113,6 +118,66 @@ local function warpToFight(player, fightKey)
-     end
- end
- 
-+local function showFightPicker(player, keys, title)
-+    local options = {}
-+    for _, key in ipairs(keys) do
-+        local capturedKey = key
-+        local fight = catalog.fights[key]
-+        options[#options + 1] =
-+        {
-+            fight.label or key,
-+            function(p) warpToFight(p, capturedKey) end,
-+        }
-+    end
-+    options[#options + 1] = { 'Cancel', function() end }
-+    player:customMenu({ title = title, options = options })
-+end
-+
-+local function showCategoryPicker(player, keys)
-+    local held = {}
-+    for _, key in ipairs(keys) do
-+        held[key] = true
-+    end
-+
-+    local categories = {}
-+    for _, category in ipairs(catalog.gemCategories) do
-+        local categoryKeys = {}
-+        for _, fightKey in ipairs(category.fightKeys) do
-+            if held[fightKey] then
-+                categoryKeys[#categoryKeys + 1] = fightKey
-+            end
-+        end
-+        if #categoryKeys > 0 then
-+            categories[#categories + 1] =
-+            {
-+                label = category.label,
-+                keys = categoryKeys,
-+            }
-+        end
-+    end
-+
-+    if #categories == 1 then
-+        showFightPicker(player, categories[1].keys, categories[1].label)
-+        return
-+    end
-+
-+    local options = {}
-+    for _, category in ipairs(categories) do
-+        local selected = category
-+        options[#options + 1] =
-+        {
-+            selected.label,
-+            function(p)
-+                p:timer(50, function(pp)
-+                    showFightPicker(pp, selected.keys, selected.label)
-+                end)
-+            end,
-+        }
-+    end
-+    options[#options + 1] = { 'Cancel', function() end }
-+    player:customMenu({ title = 'HTBF Warp Category', options = options })
-+end
-+
- commandObj.onTrigger = function(player)
-     local keys = heldFightKeys(player)
- 
-@@ -126,22 +191,9 @@ commandObj.onTrigger = function(player)
-         return
-     end
- 
--    -- Several candidate fights (the Avatar gem opens all 6 elemental trials, or
--    -- you're carrying more than one gem). Let the player pick which entrance.
--    -- customMenu caps: 8 options and ~150 bytes of title+labels -- keep 7 fights
--    -- + Cancel; the Avatar gem yields exactly 6, so it always fits.
--    local options = {}
--    for _, key in ipairs(keys) do
--        local f           = catalog.fights[key]
--        local capturedKey = key
--        table.insert(options, { f.label or key, function(p) warpToFight(p, capturedKey) end })
--        if #options >= 7 then
--            break
--        end
--    end
--    table.insert(options, { 'Cancel', function(p) end })
--
--    player:customMenu({ title = 'HTBF Warp', options = options })
-+    -- Group by the same short vendor categories so every held destination stays
-+    -- reachable without exceeding the client menu's option/byte limits.
-+    showCategoryPicker(player, keys)
- end
- 
- return commandObj
 diff --git a/modules/custom/lua/BstJugPetOverhaul.lua b/modules/custom/lua/BstJugPetOverhaul.lua
-index 126925a2e5..51d593b06b 100644
+index 51d593b06b..f4444547fb 100644
 --- a/modules/custom/lua/BstJugPetOverhaul.lua
 +++ b/modules/custom/lua/BstJugPetOverhaul.lua
-@@ -72,6 +72,16 @@ local CONFIG =
-     -- while Pet: attributes, attack and TP Bonus scale the complete formula.
+@@ -68,17 +68,19 @@ local CONFIG =
+     flatMagicDamage  = 40,
+     flatMagicDMGMult = 10,
+ 
+-    -- Physical Ready uses getWeaponDmg(); Beast Affinity scales this floor,
+-    -- while Pet: attributes, attack and TP Bonus scale the complete formula.
++    -- Physical Ready uses getWeaponDmg(). The full physical PET_* investment
++    -- is applied once after the stock hit resolves in mobskills.lua.
      flatWeaponDamage = 120,
  
-+    -- Ready investment converts the server's long-form pet progression into
-+    -- actual jug weapon/magic floors. Prestige PET + Paragon Dominion reach
-+    -- 3000 in each PET_* bucket; ordinary gear contributes before that cap.
-+    -- At full investment the floor is ├ù12, while an uninvested jug remains at
-+    -- ├ù1. This is intentionally applied before the stock Ready formula so pet
-+    -- role, move fTP, target defense and ecosystem selection still matter.
-+    readyInvestmentPerPoint = 11.0,
-+    readyInvestmentModCap   = 3000,
-+    readyInvestmentAffCap   = 100,
-+
-     -- Auto-Ready: pet fires its TP move on its own once it caps TP.
-     autoReady           = true,
-     autoReadyTP         = 1000,
-@@ -89,6 +99,37 @@ local CONFIG =
- local JUG_MIN = xi.petId.SHEEP_FAMILIAR
- local AUTO_READY_OFF_VAR = 'BST_AutoReadyOff'
+     -- Ready investment converts the server's long-form pet progression into
+     -- actual jug weapon/magic floors. Prestige PET + Paragon Dominion reach
+     -- 3000 in each PET_* bucket; ordinary gear contributes before that cap.
+-    -- At full investment the floor is ├ù12, while an uninvested jug remains at
+-    -- ├ù1. This is intentionally applied before the stock Ready formula so pet
+-    -- role, move fTP, target defense and ecosystem selection still matter.
+-    readyInvestmentPerPoint = 11.0,
++    -- Magical Ready keeps its established ├ù12 maximum. Physical Ready must
++    -- overcome high-level target defense before the companion progression
++    -- multiplier applies, so a complete Prime-oriented physical build reaches
++    -- ├ù20 through its broader offensive pet-stat package.
++    readyInvestmentPerPoint         = 11.0,
++    physicalReadyInvestmentPerPoint = 19.0,
+     readyInvestmentModCap   = 3000,
+     readyInvestmentAffCap   = 100,
  
-+local function cappedProgress(value, cap)
-+    if cap <= 0 then
-+        return 0
+@@ -107,24 +109,38 @@ local function cappedProgress(value, cap)
+     return math.min(math.max(value or 0, 0) / cap, 1.0)
+ end
+ 
+--- Physical and magical Ready floors use their matching offensive PET_* bundle.
+--- Beast Affinity, Attributes and TP Bonus contribute to both paths. Accuracy
+--- modifiers remain valuable for landing hits/effects but do not inflate damage.
++-- Physical and magical Ready paths use their matching offensive PET_* bundles.
++-- Physical builds additionally need Pet: Accuracy to connect against Legendary
++-- evasive targets, so it contributes to their damage progression. Multi-attack
++-- stats remain throughput choices: they produce more TP/auto-attack DPS, but
++-- do not inflate a single Ready hit.
+ local function getReadyInvestmentMultiplier(master, magical)
+     if master == nil then
+         return 1.0
+     end
+ 
+-    local offenseMod = magical and xi.mod.PET_MAB_MDB or xi.mod.PET_ATK_DEF
++    if magical then
++        local score =
++            (
++                cappedProgress(master:getMod(xi.mod.PET_BEAST_AFF), CONFIG.readyInvestmentAffCap) +
++                cappedProgress(master:getMod(xi.mod.PET_MAB_MDB), CONFIG.readyInvestmentModCap) +
++                cappedProgress(master:getMod(xi.mod.PET_ATTR_BONUS), CONFIG.readyInvestmentModCap) +
++                cappedProgress(master:getMod(xi.mod.PET_TP_BONUS), CONFIG.readyInvestmentModCap)
++            ) / 4
++
++        return 1.0 + CONFIG.readyInvestmentPerPoint * score
 +    end
 +
-+    return math.min(math.max(value or 0, 0) / cap, 1.0)
-+end
-+
-+-- Physical and magical Ready floors use their matching offensive PET_* bundle.
-+-- Beast Affinity, Attributes and TP Bonus contribute to both paths. Accuracy
-+-- modifiers remain valuable for landing hits/effects but do not inflate damage.
-+local function getReadyInvestmentMultiplier(master, magical)
-+    if master == nil then
-+        return 1.0
-+    end
-+
-+    local offenseMod = magical and xi.mod.PET_MAB_MDB or xi.mod.PET_ATK_DEF
-+    local score =
-+        (
-+            cappedProgress(master:getMod(xi.mod.PET_BEAST_AFF), CONFIG.readyInvestmentAffCap) +
-+            cappedProgress(master:getMod(offenseMod), CONFIG.readyInvestmentModCap) +
-+            cappedProgress(master:getMod(xi.mod.PET_ATTR_BONUS), CONFIG.readyInvestmentModCap) +
-+            cappedProgress(master:getMod(xi.mod.PET_TP_BONUS), CONFIG.readyInvestmentModCap)
-+        ) / 4
-+
-+    return 1.0 + CONFIG.readyInvestmentPerPoint * score
-+end
-+
-+-- Exported on the module for deterministic balance tests.
-+m.getReadyInvestmentMultiplier = getReadyInvestmentMultiplier
-+
- -- ΓöÇΓöÇ Auto-Ready loop ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
- -- Self-rescheduling; bails out when the pet dies/despawns.
- local function scheduleAutoReady(pet)
-@@ -165,6 +206,8 @@ local function applyEndgameScaling(master, pet)
+     local score =
+         (
+             cappedProgress(master:getMod(xi.mod.PET_BEAST_AFF), CONFIG.readyInvestmentAffCap) +
+-            cappedProgress(master:getMod(offenseMod), CONFIG.readyInvestmentModCap) +
++            cappedProgress(master:getMod(xi.mod.PET_ATK_DEF), CONFIG.readyInvestmentModCap) +
++            cappedProgress(master:getMod(xi.mod.PET_ACC_EVA), CONFIG.readyInvestmentModCap) +
+             cappedProgress(master:getMod(xi.mod.PET_ATTR_BONUS), CONFIG.readyInvestmentModCap) +
+             cappedProgress(master:getMod(xi.mod.PET_TP_BONUS), CONFIG.readyInvestmentModCap)
+-        ) / 4
++        ) / 5
+ 
+-    return 1.0 + CONFIG.readyInvestmentPerPoint * score
++    return 1.0 + CONFIG.physicalReadyInvestmentPerPoint * score
+ end
+ 
+ -- Exported on the module for deterministic balance tests.
+@@ -206,7 +222,6 @@ local function applyEndgameScaling(master, pet)
      -- and are intentionally NOT level-scaled. All flat floors below use floorMult.
      local levelScale = math.min((master:getMainLvl() or 1) / 99, 1.0)
      local floorMult  = beastAffMult * levelScale * power
-+    local physicalReadyMult = getReadyInvestmentMultiplier(master, false)
-+    local magicalReadyMult  = getReadyInvestmentMultiplier(master, true)
+-    local physicalReadyMult = getReadyInvestmentMultiplier(master, false)
+     local magicalReadyMult  = getReadyInvestmentMultiplier(master, true)
  
      local strFromMaster = math.floor(mSTR * CONFIG.masterSTRShare * w.str)
- 
-@@ -183,14 +226,14 @@ local function applyEndgameScaling(master, pet)
-     -- BP_DAMAGE is a post-MAB multiplier (├ù4 at 300) now enabled for player pets in
-     -- scripts/globals/mobskills.lua. Scales with beastAffMult so Beast Affinity boosts
-     -- magical output too.
--    pet:addMod(xi.mod.MAGIC_DAMAGE, math.floor(CONFIG.flatMagicDamage * floorMult * w.magic))
--    pet:addMod(xi.mod.BP_DAMAGE, math.floor(CONFIG.flatMagicDMGMult * floorMult * w.magic))
-+    pet:addMod(xi.mod.MAGIC_DAMAGE, math.floor(CONFIG.flatMagicDamage * floorMult * w.magic * magicalReadyMult))
-+    pet:addMod(xi.mod.BP_DAMAGE, math.floor(CONFIG.flatMagicDMGMult * floorMult * w.magic * magicalReadyMult))
- 
+@@ -232,8 +247,10 @@ local function applyEndgameScaling(master, pet)
      pet:addMod(xi.mod.DOUBLE_ATTACK, math.floor(CONFIG.doubleAttack * levelScale * w.multi))
      pet:addMod(xi.mod.TRIPLE_ATTACK, math.floor(CONFIG.tripleAttack * levelScale * w.multi))
  
-     -- Physical Ready / AA weapon floor (setDamage writes the jug weapon's DMG).
--    local weaponDmg = math.floor(CONFIG.flatWeaponDamage * floorMult * w.weapon)
-+    local weaponDmg = math.floor(CONFIG.flatWeaponDamage * floorMult * w.weapon * physicalReadyMult)
+-    -- Physical Ready / AA weapon floor (setDamage writes the jug weapon's DMG).
+-    local weaponDmg = math.floor(CONFIG.flatWeaponDamage * floorMult * w.weapon * physicalReadyMult)
++    -- Physical jug weapon floor. The physical investment multiplier is applied
++    -- once later in the shared Ready progression path, after pDIF, so it works
++    -- even when this setter cannot replace the native jug weapon damage.
++    local weaponDmg = math.floor(CONFIG.flatWeaponDamage * floorMult * w.weapon)
      if weaponDmg > 0 then
          pet:setDamage(weaponDmg)
      end
-diff --git a/modules/custom/lua/HTBF_Vendor.lua b/modules/custom/lua/HTBF_Vendor.lua
-index 902532f3ee..0a2b3a1c50 100644
---- a/modules/custom/lua/HTBF_Vendor.lua
-+++ b/modules/custom/lua/HTBF_Vendor.lua
-@@ -2,9 +2,9 @@
- -- HTBF_Vendor.lua  -- "Phantom Gems" vendor (relaunch, Leafallia hub)
- --
- -- Sells the High-Tier Mission Battlefield entry Phantom Gems (key items) for
---- gil. The player buys a gem here, travels to the battlefield's zone, interacts
---- with the entrance while holding it, and picks a tier. Tier III is hidden until
---- one-time Final Proving is complete. See htbf_catalog + htbf.lua.
-+-- gil. Choosing a fight buys its gem and warps directly to the entrance, where
-+-- a named Legendary tier menu replaces the client-DAT battlefield list.
-+-- Tier III is hidden until one-time Final Proving is complete.
- --
- -- Gems are key items (binary: one at a time), so the menu blocks a re-buy while
- -- you already hold one. Needs a map restart to load (addOverride NPC).
-@@ -13,6 +13,7 @@ require('modules/module_utils')
- require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
- 
- local catalog = require('modules/custom/lua/htbf_catalog')
-+local htbf    = require('modules/custom/lua/htbf')
- local m       = Module:new('htbf_vendor')
- local SYS     = xi.msg.channel.SYSTEM_3
- local NPCPOS  = { x = 592.000, y = -3.360, z = 516.500, rot = 135 }
-@@ -22,12 +23,6 @@ local function commafy(n)
-     return (s:reverse():gsub('(%d%d%d)', '%1,'):reverse():gsub('^,', ''))
- end
- 
---- Short forms keep each customMenu under the client's 150-byte (title+labels)
---- cap: drop the "Phantom Gem" boilerplate and abbreviate the price as "150k".
--local function shortName(name)
--    return (name:gsub(' Phantom Gem$', ''):gsub('^Phantom Gem of ', ''))
--end
--
- local function kPrice(n)
-     return string.format('%dk', math.floor(n / 1000))
- end
-@@ -36,12 +31,42 @@ local function gemOf(id)
-     return { id = id, price = catalog.gemPrice[id], name = catalog.gemName[id] or ('Phantom Gem ' .. id) }
- end
- 
--local showMenu, showCategory, showBuy, showWarpMenu, showWarpCategory, showFinalTest
-+local showMenu, showCategory, showBuy, showFinalTest
-+
-+local function printAccessFailure(p)
-+    local canEnter, missing = htbf.accessCheck(p)
-+    if canEnter then
-+        return false
-+    end
-+
-+    p:printToPlayer('[HTBF] You cannot purchase an entry gem yet:', SYS)
-+    for _, requirement in ipairs(missing) do
-+        p:printToPlayer('[HTBF]   - ' .. requirement, SYS)
-+    end
-+
-+    return true
-+end
-+
-+local function warpToFight(p, fightKey)
-+    local destination = catalog.warpByFight[fightKey]
-+    local fight = catalog.fights[fightKey]
-+    if not destination or not fight then
-+        p:printToPlayer('[HTBF] That battlefield has no configured entrance warp.', SYS)
-+        return
-+    end
-+
-+    p:printToPlayer(string.format(
-+        '[HTBF] Warping to %s. Use the entrance and choose a named Legendary tier.',
-+        destination.name), SYS)
-+    p:setPos(
-+        destination.x, destination.y, destination.z,
-+        destination.rot, destination.zone)
-+end
- 
- local function warpToFinalTest(p)
-     local dest = catalog.finalTest.warp
-     p:printToPlayer(
--        '[HTBF] Warping to Final Proving. Use the entrance while holding the Avatar Phantom Gem, then choose the final blank row.',
-+        '[HTBF] Warping to Final Proving. Use the entrance and choose Final Proving.',
-         SYS)
-     p:setPos(dest.x, dest.y, dest.z, dest.rot, dest.zone)
- end
-@@ -77,7 +102,6 @@ showMenu = function(p)
-         local lbl = TOP_CAT_SHORT[cc.label] or cc.label
-         options[#options + 1] = { lbl, function(pp) showCategory(pp, cc) end }
-     end
--    options[#options + 1] = { 'Warp to HTBF', function(pp) showWarpMenu(pp) end }
-     options[#options + 1] = { 'Close', function(pp) end }
-     p:timer(30, function(pp) pp:customMenu({ title = 'Phantom Gems', options = options }) end)
- end
-@@ -126,6 +150,10 @@ showFinalTest = function(p)
-     end
- 
-     local gem = gemOf(xi.ki.AVATAR_PHANTOM_GEM)
-+    if printAccessFailure(p) then
-+        showMenu(p)
-+        return
-+    end
-     p:printToPlayer(
-         '[HTBF] Final Proving is a one-time, half-strength Tier III Garuda test. Winning unlocks all real T3 fights and Ambuscade T3 credit.',
-         SYS)
-@@ -138,6 +166,10 @@ showFinalTest = function(p)
-         {
-             string.format('Buy Gem + Warp (%s)', kPrice(gem.price)),
-             function(pp)
-+                if printAccessFailure(pp) then
-+                    showMenu(pp)
-+                    return
-+                end
-                 if pp:getGil() < gem.price then
-                     pp:printToPlayer(string.format('[HTBF] You need %s gil.', commafy(gem.price)), SYS)
-                     showFinalTest(pp)
-@@ -156,85 +188,66 @@ showFinalTest = function(p)
-     end)
- end
- 
---- Warp: same expansion grouping as the gems. Free QoL teleport straight to a
---- battlefield entrance (you still need the gem + a clear to enter the fight).
--showWarpMenu = function(p)
--    local options = {}
--    for _, grp in ipairs(catalog.warpDestinations) do
--        local gg = grp
--        options[#options + 1] = { gg.label, function(pp) showWarpCategory(pp, gg) end }
--    end
--    options[#options + 1] = { 'Back', function(pp) showMenu(pp) end }
--    p:timer(30, function(pp) pp:customMenu({ title = 'Warp -- pick expansion', options = options }) end)
--end
--
---- One expansion's battlefields (<= 6). Selecting one teleports the player to
---- that entrance's zone/coords via cross-zone setPos(x, y, z, rot, zone).
--showWarpCategory = function(p, grp)
--    local options = {}
--    for _, d in ipairs(grp.dests) do
--        local dd = d
--        options[#options + 1] = {
--            dd.name,
--            function(pp)
--                pp:printToPlayer(string.format('[HTBF] Warping to %s...', dd.name), SYS)
--                pp:setPos(dd.x, dd.y, dd.z, dd.rot, dd.zone)
--            end,
--        }
--    end
--    options[#options + 1] = { 'Back', function(pp) showWarpMenu(pp) end }
--    p:timer(30, function(pp) pp:customMenu({ title = grp.label, options = options }) end)
--end
--
---- One category's gems (<= 8). "* " marks a gem already held. Short labels + kPrice
---- keep the menu under the byte cap; the full name + exact price show on buy.
-+-- One category's fights (<= 6). Fight selection is kept distinct from gem
-+-- selection because the Avatar Phantom Gem serves six different entrances.
- showCategory = function(p, cat)
-     local options = {}
-     p:printToPlayer('[HTBF] * means that gem is already in your key-item inventory.', SYS)
--    for _, id in ipairs(cat.gems) do
--        local g     = gemOf(id)
--        local owned = p:hasKeyItem(id)
-+    for _, fightKey in ipairs(cat.fightKeys) do
-+        local key = fightKey
-+        local fight = catalog.fights[key]
-+        local g = gemOf(fight.gem)
-+        local destination = catalog.warpByFight[key]
-+        local label = destination and destination.name or fight.label
-+        local owned = p:hasKeyItem(g.id)
-         options[#options + 1] = {
--            string.format('%s (%s)%s', shortName(g.name), kPrice(g.price), owned and ' *' or ''),
--            function(pp) showBuy(pp, g) end,
-+            string.format('%s%s', label, owned and ' *' or ''),
-+            function(pp) showBuy(pp, g, key) end,
-         }
-     end
-     options[#options + 1] = { 'Back', function(pp) showMenu(pp) end }
-     p:timer(30, function(pp) pp:customMenu({ title = cat.label, options = options }) end)
- end
- 
--showBuy = function(p, g)
--    local useHint = catalog.gemUseHint and catalog.gemUseHint[g.id]
--    if p:hasKeyItem(g.id) then
--        p:printToPlayer(string.format('[HTBF] You already hold the %s -- use it before buying another.', g.name), SYS)
--        if useHint then
--            p:printToPlayer('[HTBF] ' .. useHint, SYS)
--        end
-+showBuy = function(p, g, fightKey)
-+    local destination = catalog.warpByFight[fightKey]
-+    local fightName = destination and destination.name or
-+        (catalog.fights[fightKey] and catalog.fights[fightKey].label) or fightKey
-+    if printAccessFailure(p) then
-         showMenu(p)
-         return
-     end
--    p:printToPlayer(string.format(
--        '[HTBF] %s -- %s gil. Entry requires 2,100 spent JP on your current job and all NM affinities.',
--        g.name, commafy(g.price)), SYS)
--    if useHint then
--        p:printToPlayer('[HTBF] ' .. useHint, SYS)
-+
-+    if p:hasKeyItem(g.id) then
-+        p:printToPlayer(string.format(
-+            '[HTBF] You already hold the %s. Warping to %s.',
-+            g.name, fightName), SYS)
-+        warpToFight(p, fightKey)
-+        return
-     end
-+    p:printToPlayer(string.format(
-+        '[HTBF] %s entry uses the %s and costs %s gil.',
-+        fightName, g.name, commafy(g.price)), SYS)
-     local tier3Open = (p:getCharVar(catalog.finalTest.completionVar) or 0) >= 1
-         or (p:getCharVar(catalog.finalTest.tierClearVar) or 0) >= 1
-     p:printToPlayer(
-         tier3Open and
--            '[HTBF] Use the battlefield entrance while holding it, then pick Tier I, II, or III.' or
--            '[HTBF] Use the battlefield entrance while holding it, then pick Tier I or II. Final Proving unlocks Tier III.',
-+            '[HTBF] The entrance will offer named Tier I, II, and III choices.' or
-+            '[HTBF] The entrance will offer named Tier I and II choices. Final Proving unlocks Tier III.',
-         SYS)
-     p:timer(30, function(pp)
-         pp:customMenu({
--            title   = string.format('Buy %s?', g.name),
-+            title   = string.format('Buy + Warp: %s?', fightName),
-             options =
-             {
-                 {
--                    string.format('Yes (%s gil)', commafy(g.price)),
-+                    string.format('Buy + Warp (%s)', kPrice(g.price)),
-                     function(q)
--                        if q:hasKeyItem(g.id) then showMenu(q); return end
-+                        if q:hasKeyItem(g.id) then
-+                            warpToFight(q, fightKey)
-+                            return
-+                        end
-+                        if printAccessFailure(q) then showMenu(q); return end
-                         if q:getGil() < g.price then
-                             q:printToPlayer(string.format('[HTBF] You need %s gil.', commafy(g.price)), SYS)
-                             showMenu(q)
-@@ -243,7 +256,7 @@ showBuy = function(p, g)
-                         q:delGil(g.price)
-                         npcUtil.giveKeyItem(q, g.id)
-                         q:printToPlayer(string.format('[HTBF] Purchased the %s.', g.name), SYS)
--                        showMenu(q)
-+                        warpToFight(q, fightKey)
-                     end,
-                 },
-                 { 'No', function(q) showMenu(q) end },
-@@ -265,7 +278,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-         rotation   = NPCPOS.rot,
-         widescan   = 1,
-         onTrigger  = function(player, npc)
--            player:printToPlayer('[HTBF] Phantom Gems for High-Tier Mission Battlefields -- buy with gil, then use the battlefield entrance while holding one.', SYS)
-+            player:printToPlayer(
-+                '[HTBF] Choose a Legendary fight. The vendor buys its gem and warps you to the correct entrance.',
-+                SYS)
-             showMenu(player)
-         end,
-     })
+diff --git a/modules/custom/lua/LegendaryWeaponPilgrimage.lua b/modules/custom/lua/LegendaryWeaponPilgrimage.lua
+index f8217ec074..3a6f46145e 100644
+--- a/modules/custom/lua/LegendaryWeaponPilgrimage.lua
++++ b/modules/custom/lua/LegendaryWeaponPilgrimage.lua
+@@ -508,7 +508,7 @@ function P.archetypeText(rule)
+     if rule.key == 'great_axe_armor' then return 'deliver the weaponskill killing blow' end
+     if rule.key == 'scythe_resource' then return string.format('remain at or below %d%% HP', rule.maxHpp) end
+     if rule.key == 'polearm_aerial' then return string.format('keep wyvern alive and use at %d+ TP', rule.minTp) end
+-    if rule.key == 'katana_shadows' then return 'retain at least one copy-image shadow' end
++    if rule.key == 'katana_shadows' then return 'deliver the weaponskill killing blow' end
+     if rule.key == 'great_katana_skillchain' then return string.format('use at %d+ TP', rule.minTp) end
+     if rule.key == 'club_support' then return string.format('remain at or below %d%% HP', rule.maxHpp) end
+     if rule.key == 'staff_magic' then return string.format('remain at or below %d%% MP', rule.maxMpp) end
 diff --git a/modules/custom/lua/htbf.lua b/modules/custom/lua/htbf.lua
-index 4c656d4cea..dd4dc144d5 100644
+index dd4dc144d5..962cdfd037 100644
 --- a/modules/custom/lua/htbf.lua
 +++ b/modules/custom/lua/htbf.lua
-@@ -82,6 +82,139 @@ end
+@@ -130,10 +130,18 @@ local function getRegisteredChoices(player, npc, fightKey)
+ end
+ htbf.getRegisteredChoices = getRegisteredChoices
  
- htbf.progress = catalog.progress
++local namedMenuLatch = '[HTBF]NamedMenuOpen'
++local namedMenuToken = '[HTBF]NamedMenuToken'
++
++local function releaseNamedMenu(player)
++    player:setLocalVar(namedMenuLatch, 0)
++end
++
+ local function showTierMenu(player, npc, fightKey)
+     local fight = catalog.fights[fightKey]
+     local choices = getRegisteredChoices(player, npc, fightKey)
+     if #choices == 0 then
++        releaseNamedMenu(player)
+         player:printToPlayer(
+             '[HTBF] No Legendary tiers are currently available for this fight.',
+             xi.msg.channel.SYSTEM_3)
+@@ -147,6 +155,7 @@ local function showTierMenu(player, npc, fightKey)
+         {
+             selected.customEntryLabel,
+             function(p)
++                releaseNamedMenu(p)
+                 if not selected:directEntry(p, npc) then
+                     p:printToPlayer(
+                         '[HTBF] Entry failed; your gem was not intentionally consumed.',
+@@ -155,7 +164,7 @@ local function showTierMenu(player, npc, fightKey)
+             end,
+         }
+     end
+-    options[#options + 1] = { 'Cancel', function() end }
++    options[#options + 1] = { 'Cancel', releaseNamedMenu }
  
-+local function fightMatchesEntrance(fight, zoneId, npcName)
-+    if fight.zone ~= zoneId then
-+        return false
-+    end
-+    if fight.entryNpc == npcName then
-+        return true
-+    end
-+
-+    return fight.entryNpcs and utils.contains(npcName, fight.entryNpcs) or false
-+end
-+
-+function htbf.getMatchingFightKeys(player, npc)
-+    local matches = {}
-+    local zoneId = player:getZoneID()
-+    local npcName = npc:getName()
-+    for fightKey, fight in pairs(catalog.fights) do
-+        if
-+            fightMatchesEntrance(fight, zoneId, npcName) and
-+            player:hasKeyItem(fight.gem)
-+        then
-+            matches[#matches + 1] = fightKey
-+        end
-+    end
-+    table.sort(matches)
-+    return matches
-+end
-+
-+local function getRegisteredChoices(player, npc, fightKey)
-+    local choices = {}
-+    for _, content in ipairs(
-+        xi.battlefield.contentsByZone[player:getZoneID()] or {})
-+    do
-+        if
-+            content.customEntryFight == fightKey and
-+            content:isValidEntry(player, npc) and
-+            content:checkRequirements(player, npc, true) and
-+            not player:battlefieldAtCapacity(content.battlefieldId)
-+        then
-+            choices[#choices + 1] = content
-+        end
-+    end
-+    table.sort(choices, function(left, right)
-+        return left.customEntryOrder < right.customEntryOrder
-+    end)
-+    return choices
-+end
-+htbf.getRegisteredChoices = getRegisteredChoices
-+
-+local function showTierMenu(player, npc, fightKey)
-+    local fight = catalog.fights[fightKey]
-+    local choices = getRegisteredChoices(player, npc, fightKey)
-+    if #choices == 0 then
-+        player:printToPlayer(
-+            '[HTBF] No Legendary tiers are currently available for this fight.',
-+            xi.msg.channel.SYSTEM_3)
-+        return
-+    end
-+
-+    local options = {}
-+    for _, content in ipairs(choices) do
-+        local selected = content
-+        options[#options + 1] =
-+        {
-+            selected.customEntryLabel,
-+            function(p)
-+                if not selected:directEntry(p, npc) then
-+                    p:printToPlayer(
-+                        '[HTBF] Entry failed; your gem was not intentionally consumed.',
-+                        xi.msg.channel.SYSTEM_3)
-+                end
-+            end,
-+        }
-+    end
-+    options[#options + 1] = { 'Cancel', function() end }
-+
-+    local label = fight and fight.label or fightKey
-+    player:customMenu({
-+        title = 'Legendary: ' .. label,
-+        options = options,
-+    })
-+end
-+
-+local function showFightMenu(player, npc, fightKeys)
-+    if #fightKeys == 1 then
-+        showTierMenu(player, npc, fightKeys[1])
-+        return
-+    end
-+
-+    local options = {}
-+    for _, fightKey in ipairs(fightKeys) do
-+        local key = fightKey
-+        local fight = catalog.fights[key]
-+        options[#options + 1] =
-+        {
-+            fight.label,
-+            function(p)
-+                p:timer(50, function(pp) showTierMenu(pp, npc, key) end)
-+            end,
-+        }
-+    end
-+    options[#options + 1] = { 'Cancel', function() end }
-+    player:customMenu({ title = 'Choose Legendary fight', options = options })
-+end
-+
-+-- Dynamic hook: Battlefield.onEntryTrigger consults this at interaction time,
-+-- so shared retail NPC handlers do not need to be replaced or load-order aware.
-+if xi.battlefield and not xi.battlefield._htbfNamedEntryPatched then
-+    xi.battlefield._htbfNamedEntryPatched = true
-+    local previousCustomEntry = xi.battlefield.customEntryTrigger
-+    xi.battlefield.customEntryTrigger = function(player, npc)
-+        local fightKeys = htbf.getMatchingFightKeys(player, npc)
-+        if #fightKeys == 0 then
-+            return previousCustomEntry and
-+                previousCustomEntry(player, npc) or false
-+        end
-+
-+        local canEnter, missing = htbf.accessCheck(player)
-+        if not canEnter then
-+            player:printToPlayer(
-+                '[HTBF] Legendary entry requirements are incomplete:',
-+                xi.msg.channel.SYSTEM_3)
-+            for _, requirement in ipairs(missing) do
-+                player:printToPlayer(
-+                    '[HTBF]   - ' .. requirement, xi.msg.channel.SYSTEM_3)
-+            end
+     local label = fight and fight.label or fightKey
+     player:customMenu({
+@@ -178,11 +187,15 @@ local function showFightMenu(player, npc, fightKeys)
+         {
+             fight.label,
+             function(p)
+-                p:timer(50, function(pp) showTierMenu(pp, npc, key) end)
++                -- HandleCustomMenu clears the old context after this callback.
++                -- Do not install the next context until that teardown has
++                -- completed, otherwise the client's next choice is sent as an
++                -- ordinary tell to _CUSTOM_MENU.
++                p:timer(500, function(pp) showTierMenu(pp, npc, key) end)
+             end,
+         }
+     end
+-    options[#options + 1] = { 'Cancel', function() end }
++    options[#options + 1] = { 'Cancel', releaseNamedMenu }
+     player:customMenu({ title = 'Choose Legendary fight', options = options })
+ end
+ 
+@@ -198,8 +211,27 @@ if xi.battlefield and not xi.battlefield._htbfNamedEntryPatched then
+                 previousCustomEntry(player, npc) or false
+         end
+ 
++        -- Shared battlefield NPC sections can dispatch the same trigger more
++        -- than once. Multiple customMenu packets stack client prompts, but only
++        -- one server context survives; the remaining selections become failed
++        -- tells to _CUSTOM_MENU. Debounce centrally for every HTBF entrance.
++        if player:getLocalVar(namedMenuLatch) == 1 then
 +            return true
 +        end
-+
-+        showFightMenu(player, npc, fightKeys)
-+        return true
-+    end
-+end
-+
- -- ---------------------------------------------------------------------------
- -- Let players field Trusts inside HTBF battlefields.
- -- The engine gates battlefield trust summons on
-@@ -224,22 +357,27 @@ if xi.battlefield and xi.battlefield.getBattlefieldOptions and not xi.battlefiel
-             -- A Phantom Gem is an explicit HTBF intent. Remove the retail rows
-             -- on this same entrance so a client DAT label can never route that
-             -- gem holder into a mission battlefield with a coincident index.
--            local hasHTBFGem = false
-+            local matchedBaseIds = {}
-+            local broadFallback = false
-             for _, fight in pairs(catalog.fights) do
--                local matches = fight.entryNpc == npc:getName()
--                if not matches and fight.entryNpcs then
--                    matches = utils.contains(npc:getName(), fight.entryNpcs)
--                end
--                if matches and player:hasKeyItem(fight.gem) then
--                    hasHTBFGem = true
--                    break
-+                if
-+                    fightMatchesEntrance(
-+                        fight, player:getZoneID(), npc:getName()) and
-+                    player:hasKeyItem(fight.gem)
-+                then
-+                    if fight.reuseBaseId then
-+                        matchedBaseIds[fight.reuseBaseId] = true
-+                    else
-+                        broadFallback = true
-+                    end
-                 end
-             end
--            if hasHTBFGem then
-+            if broadFallback or next(matchedBaseIds) then
-                 for _, content in ipairs(xi.battlefield.contentsByZone[player:getZoneID()] or {}) do
-                     if
-                         not content.partyKeyItem and
--                        content:isValidEntry(player, npc)
-+                        content:isValidEntry(player, npc) and
-+                        (broadFallback or matchedBaseIds[content.battlefieldId])
-                     then
-                         options = utils.mask.setBit(options, content.index, false)
-                     end
-@@ -290,6 +428,10 @@ function htbf.register(fightKey, tier, variant)
-         -- the registrant.
-         partyKeyItem     = f.gem,
-     })
-+    content.customEntryFight = fightKey
-+    content.customEntryLabel = isFinalTest and 'Final Proving' or
-+        string.format('Tier %s', scale.name)
-+    content.customEntryOrder = isFinalTest and 4 or tier
- 
-     -- ACCESS GATE (see top): only a master of the entering job who holds every
-     -- NM affinity may enter. checkRequirements calls entryRequirement LAST, so
-@@ -528,20 +670,40 @@ function htbf.register(fightKey, tier, variant)
-     -- f.entryPosByArea, do the warp ourselves right after the player is inserted.
-     -- Chain any base onBattlefieldEnter so multi-phase fights keep their setup.
-     if f.entryPosByArea then
--        local baseEnter = rawget(content, 'onBattlefieldEnter')
--        function content:onBattlefieldEnter(player, battlefield)
--            Battlefield.onBattlefieldEnter(self, player, battlefield)
--            if baseEnter then pcall(function() baseEnter(self, player, battlefield) end) end
--            local entryPos = f.entryPosByArea[battlefield:getArea()]
-+        local function warpToStagingPosition(player, battlefield)
-+            if not battlefield then
-+                return
++        player:setLocalVar(namedMenuLatch, 1)
++        local token = player:getLocalVar(namedMenuToken) + 1
++        player:setLocalVar(namedMenuToken, token)
++        player:timer(30000, function(p)
++            -- Recover if the client closes the menu without invoking Cancel,
++            -- but never let an old timeout unlock a newer menu.
++            if p:getLocalVar(namedMenuToken) == token then
++                releaseNamedMenu(p)
 +            end
++        end)
 +
-+            local area = battlefield:getArea()
-+            local entryPos = f.entryPosByArea[area]
-             if entryPos then
--                pcall(function()
-+                local ok, err = pcall(function()
-                     player:setPos(entryPos[1], entryPos[2], entryPos[3], entryPos[4] or 0)
-                 end)
-+                if not ok then
-+                    print(string.format('[HTBF] %s tier %d: staging warp failed for area %d (%s)',
-+                        tostring(fightKey), tier, area, tostring(err)))
-+                end
-             else
-                 print(string.format('[HTBF] %s tier %d: no staging position for area %d',
--                    tostring(fightKey), tier, battlefield:getArea()))
-+                    tostring(fightKey), tier, area))
-             end
-         end
-+
-+        local baseEnter = rawget(content, 'onBattlefieldEnter')
-+        function content:onBattlefieldEnter(player, battlefield)
-+            Battlefield.onBattlefieldEnter(self, player, battlefield)
-+            if baseEnter then pcall(function() baseEnter(self, player, battlefield) end) end
-+            warpToStagingPosition(player, battlefield)
-+        end
-+
-+        -- Reassert after either the retail event finishes or direct named-menu
-+        -- entry completes. Custom battlefield IDs have no client DAT position.
-+        function content:onEntryComplete(player, npc)
-+            Battlefield.onEntryComplete(self, player, npc)
-+            warpToStagingPosition(player, player:getBattlefield())
-+        end
+         local canEnter, missing = htbf.accessCheck(player)
+         if not canEnter then
++            releaseNamedMenu(player)
+             player:printToPlayer(
+                 '[HTBF] Legendary entry requirements are incomplete:',
+                 xi.msg.channel.SYSTEM_3)
+@@ -568,7 +600,7 @@ function htbf.register(fightKey, tier, variant)
+     -- "Marks Earned (Lifetime)" leaderboard. The real retail per-fight item LOOT
+     -- still goes in catalog.fights[key].loot[tier] (armoury-crate) as it is
+     -- sourced from bg-wiki; this is the guaranteed completion reward on top.
+-    function content:onEventFinishWin(player, csid, option, npc)
++    local function grantWinRewards(player)
+         if not rew then return end
+         -- Idempotency latch. On 2026-07-13 the Ark Angel HM T3 clear paid the
+         -- reward FOUR times to the same player (400k gil * 4, 600 marks * 4,
+@@ -645,6 +677,31 @@ function htbf.register(fightKey, tier, variant)
+         end)
      end
  
-     return content:register()
++    -- Custom HTBF battlefield IDs have no client win-cutscene entry. Sending
++    -- event 32001 can therefore leave the player frozen after a clear. Award
++    -- first, then leave the instance and return to the hub after a short win
++    -- window instead of starting the unavailable client event.
++    function content:onBattlefieldWin(player, battlefield)
++        grantWinRewards(player)
++        player:timer(2500, function(p)
++            if p:getBattlefield() then
++                p:leaveBattlefield(1)
++            end
++            p:timer(100, function(q)
++                q:setPos(
++                    571.5259, -3.3592, 508.8601, 65,
++                    xi.zone.ABDHALJS_ISLE_PURGONORGO)
++            end)
++        end)
++    end
++
++    -- Defensive fallback for an engine path that still reaches the standard
++    -- finish callback. The battlefield-scoped latch in grantWinRewards keeps
++    -- a reward from being paid twice.
++    function content:onEventFinishWin(player, csid, option, npc)
++        grantWinRewards(player)
++    end
++
+     -- Armoury-crate loot. Priority: a fight's per-tier override (f.loot[tier]),
+     -- then its flat retail pool (catalog.fightLoot[fightKey], same pool across
+     -- tiers -- retail loot is per-fight, the tiers differ in difficulty + marks),
 diff --git a/modules/custom/lua/htbf_catalog.lua b/modules/custom/lua/htbf_catalog.lua
-index 6b1055710b..3632c896bd 100644
+index 3632c896bd..bd5c33a743 100644
 --- a/modules/custom/lua/htbf_catalog.lua
 +++ b/modules/custom/lua/htbf_catalog.lua
-@@ -113,16 +113,16 @@ catalog.gemUseHint =
-     [xi.ki.PHANTOM_GEM_OF_RAGE]      = 'Use at Shimmering Circle V.',
+@@ -279,14 +279,23 @@ catalog.tierLoot =
+ -- its own file (one table per fight) -- tune individual fights there.
+ catalog.fightLoot = require('modules/custom/lua/htbf_loot')
+ 
+--- Server-side staging positions for custom battlefield IDs. Each point is
+--- roughly 30 yalms from the first enemy so players can buff before engaging.
+--- Coordinates are keyed by battlefield area; they are not entrance-NPC warps.
++-- Server-side staging positions for custom battlefield IDs. The six elemental
++-- cloisters share the same three arena layouts. These are verified walkable
++-- points beside each arena's internal Protocrystal, translated for areas 2/3.
+ local avatarEntryPos =
+ {
+-    [1] = {  503.0,  41.0, -397.0, 0 },
+-    [2] = {   23.0, -19.0,    3.0, 0 },
+-    [3] = { -377.0, -79.0,  483.0, 0 },
++    [1] = {  497.6078,  55.5905, -434.2727, 154 },
++    [2] = {   17.6858,  -4.4115,  -34.3137, 154 },
++    [3] = { -382.3442, -64.4185,  445.6693, 154 },
++}
++
++-- Titan's verified point is one yalm farther forward than Ifrit's. Preserve
++-- that exact safe placement and translate it against Titan's own Protocrystals.
++local titanEntryPos =
++{
++    [1] = {  496.9633,  55.5569, -433.3694, 156 },
++    [2] = {   17.0843,  -4.4421,  -33.3584, 156 },
++    [3] = { -382.9837, -64.4591,  446.6106, 156 },
  }
  
---- The vendor groups gems by expansion so each customMenu stays under BOTH client
---- caps (max 8 options + 150-byte title+labels). A flat 16-gem list would hide
---- half the gems (incl. the headline Avatar gem) and blow the byte cap. Ordered.
-+-- The vendor groups fights by expansion so each customMenu stays under BOTH
-+-- client caps (max 8 options + 150-byte title+labels). Fight keys, rather than
-+-- gem IDs, preserve the selected destination for the six shared Avatar gems.
- catalog.gemCategories =
- {
--    { label = 'Avatar Prime Trials',     gems = { xi.ki.AVATAR_PHANTOM_GEM } },
--    { label = 'Chains of Promathia',     gems = { xi.ki.SAVAGES_PHANTOM_GEM, xi.ki.WARRIORS_PATH_PHANTOM_GEM, xi.ki.FEARED_ONE_PHANTOM_GEM, xi.ki.HEAD_WIND_PHANTOM_GEM, xi.ki.DAWN_PHANTOM_GEM } },
--    { label = 'Treasures of Aht Urhgan', gems = { xi.ki.PUPPET_IN_PERIL_PHANTOM_GEM, xi.ki.LEGACY_PHANTOM_GEM } },
--    { label = 'Rise of the Zilart',      gems = { xi.ki.SHADOW_LORD_PHANTOM_GEM, xi.ki.STELLAR_FULCRUM_PHANTOM_GEM, xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM, xi.ki.DIVINE_PHANTOM_GEM } },
--    { label = 'Ark Angels',              gems = { xi.ki.PHANTOM_GEM_OF_APATHY, xi.ki.PHANTOM_GEM_OF_COWARDICE, xi.ki.PHANTOM_GEM_OF_ENVY, xi.ki.PHANTOM_GEM_OF_ARROGANCE, xi.ki.PHANTOM_GEM_OF_RAGE } },
-+    { label = 'Avatar Prime Trials', fightKeys = { 'trial_by_fire', 'trial_by_ice', 'trial_by_wind', 'trial_by_earth', 'trial_by_lightning', 'trial_by_water' } },
-+    { label = 'Chains of Promathia', fightKeys = { 'the_savage', 'warriors_path', 'one_to_be_feared', 'head_wind', 'dawn' } },
-+    { label = 'Treasures of Aht Urhgan', fightKeys = { 'puppet_in_peril', 'legacy_of_the_lost' } },
-+    { label = 'Rise of the Zilart', fightKeys = { 'shadow_lord', 'stellar_fulcrum', 'celestial_nexus', 'divine_might' } },
-+    { label = 'Ark Angels', fightKeys = { 'ark_angels_1', 'ark_angels_2', 'ark_angels_3', 'ark_angels_4', 'ark_angels_5' } },
- }
- 
- -- WARP DESTINATIONS: the HTBF vendor can warp you straight to any battlefield
-@@ -135,43 +135,50 @@ catalog.warpDestinations =
- {
-     { label = 'Avatar Prime Trials', dests =
-         {
--            { name = 'Trial by Fire',      zone = 207, x = -722.13, y =  -1.40, z = -597.96, rot =   0 },
--            { name = 'Trial by Ice',       zone = 203, x =  560.01, y =  -0.83, z =  600.02, rot =   0 },
--            { name = 'Trial by Wind',      zone = 201, x = -359.05, y =  -0.13, z = -379.98, rot =   0 },
--            { name = 'Trial by Earth',     zone = 209, x = -539.95, y =   0.46, z = -493.87, rot =   0 },
--            { name = 'Trial by Lightning', zone = 202, x =  535.09, y = -14.93, z =  493.01, rot =   0 },
--            { name = 'Trial by Water',     zone = 211, x =  558.99, y =  35.10, z =  562.96, rot =   0 },
-+            { fightKey = 'trial_by_fire', name = 'Trial by Fire', zone = 207, x = -722.13, y = -1.40, z = -597.96, rot = 0 },
-+            { fightKey = 'trial_by_ice', name = 'Trial by Ice', zone = 203, x = 560.01, y = -0.83, z = 600.02, rot = 0 },
-+            { fightKey = 'trial_by_wind', name = 'Trial by Wind', zone = 201, x = -359.05, y = -0.13, z = -379.98, rot = 0 },
-+            { fightKey = 'trial_by_earth', name = 'Trial by Earth', zone = 209, x = -539.95, y = 0.46, z = -493.87, rot = 0 },
-+            { fightKey = 'trial_by_lightning', name = 'Trial by Lightning', zone = 202, x = 535.09, y = -14.93, z = 493.01, rot = 0 },
-+            { fightKey = 'trial_by_water', name = 'Trial by Water', zone = 211, x = 558.99, y = 35.10, z = 562.96, rot = 0 },
-         } },
-     { label = 'Chains of Promathia', dests =
-         {
--            { name = 'The Savage',          zone =  31, x =  -39.11, y =  -3.35, z = -539.99, rot =   0 },
--            { name = "The Warrior's Path",  zone =  32, x =  612.00, y = 130.90, z =  770.03, rot =   0 },
--            { name = 'One to be Feared',    zone =  32, x =  612.00, y = 130.90, z =  770.03, rot =   0 },
--            { name = 'Head Wind',           zone =   8, x = -619.42, y =  -1.52, z =  505.67, rot =   0 },
--            { name = 'Dawn',                zone =  36, x =  540.04, y =  -1.18, z = -597.68, rot =   0 },
-+            { fightKey = 'the_savage', name = 'The Savage', zone = 31, x = -39.11, y = -3.35, z = -539.99, rot = 0 },
-+            { fightKey = 'warriors_path', name = "The Warrior's Path", zone = 32, x = 612.00, y = 130.90, z = 770.03, rot = 0 },
-+            { fightKey = 'one_to_be_feared', name = 'One to be Feared', zone = 32, x = 612.00, y = 130.90, z = 770.03, rot = 0 },
-+            { fightKey = 'head_wind', name = 'Head Wind', zone = 8, x = -619.42, y = -1.52, z = 505.67, rot = 0 },
-+            { fightKey = 'dawn', name = 'Dawn', zone = 36, x = 540.04, y = -1.18, z = -597.68, rot = 0 },
-         } },
-     { label = 'Treasures of Aht Urhgan', dests =
-         {
--            { name = 'Puppet in Peril',     zone =  67, x =  300.00, y =  -2.52, z = -200.00, rot =   0 },
--            { name = 'Legacy of the Lost',  zone =  57, x = -100.00, y =  -9.40, z =  -87.00, rot =   0 },
-+            { fightKey = 'puppet_in_peril', name = 'Puppet in Peril', zone = 67, x = 300.00, y = -2.52, z = -200.00, rot = 0 },
-+            { fightKey = 'legacy_of_the_lost', name = 'Legacy of the Lost', zone = 57, x = -100.00, y = -9.40, z = -87.00, rot = 0 },
-         } },
-     { label = 'Rise of the Zilart', dests =
-         {
--            { name = 'Shadow Lord',               zone = 165, x = -115.85, y =  -8.66, z =    0.00, rot =   0 },
--            { name = "Return to Delkfutt's Tower",zone = 179, x = -519.99, y =  -6.30, z =   22.35, rot =   0 },
--            { name = 'The Celestial Nexus',       zone = 181, x = -582.07, y =  -8.07, z =  -32.35, rot =   0 },
--            { name = 'Divine Might',              zone = 180, x = -605.06, y = -22.68, z =  483.94, rot = 190 },
-+            { fightKey = 'shadow_lord', name = 'Shadow Lord', zone = 165, x = -115.85, y = -8.66, z = 0.00, rot = 0 },
-+            { fightKey = 'stellar_fulcrum', name = "Return to Delkfutt's Tower", zone = 179, x = -519.99, y = -6.30, z = 22.35, rot = 0 },
-+            { fightKey = 'celestial_nexus', name = 'The Celestial Nexus', zone = 181, x = -582.07, y = -8.07, z = -32.35, rot = 0 },
-+            { fightKey = 'divine_might', name = 'Divine Might', zone = 180, x = -605.06, y = -22.68, z = 483.94, rot = 190 },
-         } },
-     { label = 'Ark Angels', dests =
-         {
--            { name = 'Ark Angels I',   zone = 180, x = -605.06, y =  -22.68, z = 483.94, rot = 190 },
--            { name = 'Ark Angels II',  zone = 180, x = -264.78, y = -137.31, z = 374.52, rot = 115 },
--            { name = 'Ark Angels III', zone = 180, x =   14.15, y = -224.33, z = 488.12, rot = 166 },
--            { name = 'Ark Angels IV',  zone = 180, x =  235.65, y = -173.57, z = 361.27, rot = 217 },
--            { name = 'Ark Angels V',   zone = 180, x =  556.00, y =  -38.21, z = 520.63, rot =  11 },
-+            { fightKey = 'ark_angels_1', name = 'Ark Angel HM', zone = 180, x = -605.06, y = -22.68, z = 483.94, rot = 190 },
-+            { fightKey = 'ark_angels_2', name = 'Ark Angel TT', zone = 180, x = -264.78, y = -137.31, z = 374.52, rot = 115 },
-+            { fightKey = 'ark_angels_3', name = 'Ark Angel MR', zone = 180, x = 14.15, y = -224.33, z = 488.12, rot = 166 },
-+            { fightKey = 'ark_angels_4', name = 'Ark Angel EV', zone = 180, x = 235.65, y = -173.57, z = 361.27, rot = 217 },
-+            { fightKey = 'ark_angels_5', name = 'Ark Angel GK', zone = 180, x = 556.00, y = -38.21, z = 520.63, rot = 11 },
-         } },
- }
- 
-+catalog.warpByFight = {}
-+for _, group in ipairs(catalog.warpDestinations) do
-+    for _, destination in ipairs(group.dests) do
-+        catalog.warpByFight[destination.fightKey] = destination
-+    end
-+end
-+
- -- Difficulty profiles preserve each retail fight's mobs, TP moves, phase logic,
- -- and scripts. Only ordinary combat stats are adjusted; no drain, regen, or
- -- artificial time-extension mechanics are added.
-@@ -623,7 +630,7 @@ catalog.fights =
-     {
-         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_1', exitNpc = 'qm2',
-         gem = xi.ki.PHANTOM_GEM_OF_APATHY, baseIndex = 12, baseBattlefieldId = 4160,
--        reuseBaseId = xi.battlefield.id.ARK_ANGELS_1, label = 'Ark Angels I',
-+        reuseBaseId = xi.battlefield.id.ARK_ANGELS_1, label = 'Ark Angel HM',
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
+ -- Proven walkable points on each La'Loff arena platform. The previous points
+@@ -369,7 +378,7 @@ catalog.fights =
+         zone = xi.zone.CLOISTER_OF_TREMORS, entryNpc = 'EP_Entrance', exitNpc = 'Earth_Protocrystal',
+         gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4030,
+         mobs = { 'Titan_Prime_TBE' }, label = 'Trial by Earth',
+-        difficulty = 'avatar', rewardClass = 'simple', entryPosByArea = avatarEntryPos,
++        difficulty = 'avatar', rewardClass = 'simple', entryPosByArea = titanEntryPos,
      },
-@@ -631,7 +638,7 @@ catalog.fights =
+     trial_by_lightning =
      {
-         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_2', exitNpc = 'qm2',
-         gem = xi.ki.PHANTOM_GEM_OF_COWARDICE, baseIndex = 12, baseBattlefieldId = 4170,
--        reuseBaseId = xi.battlefield.id.ARK_ANGELS_2, label = 'Ark Angels II',
-+        reuseBaseId = xi.battlefield.id.ARK_ANGELS_2, label = 'Ark Angel TT',
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
+@@ -399,9 +408,11 @@ catalog.fights =
+         difficulty = 'standard', rewardClass = 'standard',
+         entryPosByArea =
+         {
+-            [1] = { -605.0, 81.7, -29.0, 0 },
+-            [2] = {   -1.4,  1.5, -29.4, 0 },
+-            [3] = {  595.8, -78.3, -28.6, 0 },
++            -- Safe staging point beside each arena's Spatial Displacement.
++            -- Areas 2/3 are translated copies of the same Monarch Linn arena.
++            [1] = { -526.2602,  80.1184, -0.3888, 128 },
++            [2] = {   73.7848,   0.5194, -0.3308, 128 },
++            [3] = {  673.5318, -79.8806, -0.2078, 128 },
+         },
      },
-@@ -639,7 +646,7 @@ catalog.fights =
-     {
-         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_3', exitNpc = 'qm2',
-         gem = xi.ki.PHANTOM_GEM_OF_ENVY, baseIndex = 12, baseBattlefieldId = 4180,
--        reuseBaseId = xi.battlefield.id.ARK_ANGELS_3, label = 'Ark Angels III',
-+        reuseBaseId = xi.battlefield.id.ARK_ANGELS_3, label = 'Ark Angel MR',
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
-     },
-@@ -647,7 +654,7 @@ catalog.fights =
-     {
-         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_4', exitNpc = 'qm2',
-         gem = xi.ki.PHANTOM_GEM_OF_ARROGANCE, baseIndex = 12, baseBattlefieldId = 4190,
--        reuseBaseId = xi.battlefield.id.ARK_ANGELS_4, label = 'Ark Angels IV',
-+        reuseBaseId = xi.battlefield.id.ARK_ANGELS_4, label = 'Ark Angel EV',
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
-     },
-@@ -655,7 +662,7 @@ catalog.fights =
-     {
-         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_5', exitNpc = 'qm2',
-         gem = xi.ki.PHANTOM_GEM_OF_RAGE, baseIndex = 12, baseBattlefieldId = 4200,
--        reuseBaseId = xi.battlefield.id.ARK_ANGELS_5, label = 'Ark Angels V',
-+        reuseBaseId = xi.battlefield.id.ARK_ANGELS_5, label = 'Ark Angel GK',
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
-     },
-diff --git a/modules/custom/lua/jug_power_catalog.lua b/modules/custom/lua/jug_power_catalog.lua
-index 479e0e0525..81da682b13 100644
---- a/modules/custom/lua/jug_power_catalog.lua
-+++ b/modules/custom/lua/jug_power_catalog.lua
-@@ -51,6 +51,7 @@ end
- -- Every HQ/high-level jug has an explicit selection reason at level 99.
- catalog.PETS =
- {
-+    [55]  = pet('fast', 'Ladybug rapid attacks, stuns and evasion'),
-     [77]  = pet('magical', 'AoE magical damage'),
-     [78]  = pet('physical', 'Balanced bird physical damage', 0.94),
-     [79]  = pet('physical', 'High physical burst', 1.02),
-diff --git a/modules/custom/sql/bst_ready_recast.sql b/modules/custom/sql/bst_ready_recast.sql
-index 6cc9924265..b7d406d3bf 100644
---- a/modules/custom/sql/bst_ready_recast.sql
-+++ b/modules/custom/sql/bst_ready_recast.sql
-@@ -5,19 +5,31 @@
- -- Stock LSB row (sql/abilities.sql):
- --   (251,'ready',9,25,1,0,102,...)   -- recastTime=0, recastId=102
- -- Sic (abilityId 72) is also in recast group 102 with recastTime=90, so on
---- stock LSB the two SHARE Sic's 90-second cooldown -- Ready follows whatever
-+-- stock LSB the two SHARE Sic's long cooldown -- Ready follows whatever
- -- Sic's shared slot has ticked down to.
- --
- -- Owner call 2026-07-13: Ready should have its own 9-second recast, decoupled
- -- from Sic. Achieved by (a) giving Ready its own recastId (251, matching the
- -- ability's own id to keep the mapping obvious) and (b) setting recastTime=9.
---- Sic (72) is untouched -- it keeps its 90-second cooldown on group 102.
-+-- Sic (72) is untouched -- the SoA module keeps its 120-second cooldown.
- --
- -- Applies via the modules/custom/sql deploy pipeline (idempotent UPDATE, safe
- -- to re-run). Ability recasts are cached at map boot, so a MAP RESTART is
- -- required for this to take effect -- every deploy restarts the map, so no
- -- extra step on the normal path.
- -- ============================================================
-+-- Manual Ready pet-skill entries (672+) use charge group 102. Keep three
-+-- charges but regenerate them at Relaunch's 10-second BST DPS baseline.
-+UPDATE `abilities_charges`
-+   SET `chargeTime` = 10
-+ WHERE `recastId` = 102;
-+
-+-- One second per rank: 5/5 merits lowers a charge from 10s to 5s. C++ then
-+-- permits SIC_READY_RECAST gear/augments to reach, but never pass, 3 seconds.
-+UPDATE `merits`
-+   SET `value` = 1
-+ WHERE `name` = 'sic_recast';
-+
- UPDATE `abilities`
-    SET `recastTime` = 9,
-        `recastId`   = 251
-diff --git a/modules/soa/sql/job_adjustments.sql b/modules/soa/sql/job_adjustments.sql
-index a142140a2c..6ba9dc7183 100644
---- a/modules/soa/sql/job_adjustments.sql
-+++ b/modules/soa/sql/job_adjustments.sql
-@@ -30,8 +30,8 @@ UPDATE abilities SET recastTime = 120 WHERE name = 'sic';
- -- Ready: Revert charge recast from 30 to 60 seconds
- UPDATE abilities SET recastTime = 60 WHERE name = 'ready';
- 
---- Sic merit: Revert value from 2 to 4 seconds per level
--UPDATE merits SET value = 4 WHERE name = 'sic_recast';
-+-- Relaunch Ready cadence: one second per merit rank (five seconds at 5/5).
-+UPDATE merits SET value = 1 WHERE name = 'sic_recast';
- 
- ------------------------------------
- -- Ranger
-diff --git a/scripts/globals/battlefield.lua b/scripts/globals/battlefield.lua
-index bd0b944b3c..c8d8312c38 100644
---- a/scripts/globals/battlefield.lua
-+++ b/scripts/globals/battlefield.lua
-@@ -739,6 +739,15 @@ function Battlefield.onEntryTrigger(player, npc)
-         end
+     warriors_path =
+diff --git a/modules/custom/lua/legendary_pilgrimage_catalog.lua b/modules/custom/lua/legendary_pilgrimage_catalog.lua
+index 2932ec78a2..1ddf87ec28 100644
+--- a/modules/custom/lua/legendary_pilgrimage_catalog.lua
++++ b/modules/custom/lua/legendary_pilgrimage_catalog.lua
+@@ -156,7 +156,10 @@ local function archetypeRule(weaponType, index)
+         great_axe_armor             = {},
+         scythe_resource             = { maxHpp = 60 - ((index - 1) % 3) * 5 },
+         polearm_aerial              = { petAlive = true, minTp = 1200 + ((index - 1) % 3) * 200 },
+-        katana_shadows              = { shadows = true },
++        -- Katana pilgrimage credit is the exact native-WS killing blow. The
++        -- previous copy-image requirement proved unreliable at death-event
++        -- time even when the player visibly retained an Utsusemi shadow.
++        katana_shadows              = {},
+         great_katana_skillchain     = { minTp = 1800 + ((index - 1) % 3) * 200 },
+         club_support                = { maxHpp = 80 - ((index - 1) % 3) * 5 },
+         staff_magic                 = { maxMpp = 60 - ((index - 1) % 3) * 5 },
+@@ -173,13 +176,6 @@ function C.archetypePass(attacker, target, rule, tp)
+         local pet = attacker:getPet()
+         return pet ~= nil and pet:getHP() > 0
      end
+-    local function hasCopyImage()
+-        return attacker:hasStatusEffect(xi.effect.COPY_IMAGE)
+-            or attacker:hasStatusEffect(xi.effect.COPY_IMAGE_2)
+-            or attacker:hasStatusEffect(xi.effect.COPY_IMAGE_3)
+-            or attacker:hasStatusEffect(xi.effect.COPY_IMAGE_4)
+-    end
+-
+     if rule.minTp and tp < rule.minTp then return false end
+     if rule.behind and not attacker:isBehind(target, 48) then return false end
+     if rule.maxHpp and attacker:getHPP() > rule.maxHpp then return false end
+@@ -189,7 +185,6 @@ function C.archetypePass(attacker, target, rule, tp)
+     if rule.petOrBerserk and not livingPet() and not attacker:hasStatusEffect(xi.effect.BERSERK) then
+         return false
+     end
+-    if rule.shadows and not hasCopyImage() then return false end
+     return true
+ end
  
-+    -- Custom systems can replace the client-DAT picker for a NEW battlefield.
-+    -- Existing registrations above must retain their normal join path.
+diff --git a/scripts/actions/mobskills/choke_breath.lua b/scripts/actions/mobskills/choke_breath.lua
+index bb24ea6ae9..ce53152003 100644
+--- a/scripts/actions/mobskills/choke_breath.lua
++++ b/scripts/actions/mobskills/choke_breath.lua
+@@ -13,7 +13,9 @@ end
+ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+     local params = {}
+ 
+-    params.baseDamage     = 100
++    -- Use the jug's physical weapon floor so this Ready benefits from the
++    -- same BST investment and companion progression as other physical moves.
++    params.baseDamage     = mob:getWeaponDmg()
+     params.numHits        = 1
+     params.fTP            = { 1.0, 1.0, 1.0 }
+     params.attackType     = xi.attackType.PHYSICAL
+diff --git a/scripts/globals/mobskills.lua b/scripts/globals/mobskills.lua
+index 9b53ceda37..e1e608004c 100644
+--- a/scripts/globals/mobskills.lua
++++ b/scripts/globals/mobskills.lua
+@@ -9,6 +9,7 @@ require('scripts/globals/magicburst')
+ require('scripts/globals/magic')
+ require('scripts/globals/spells/damage_spell')
+ local standardProgression = require('modules/custom/lua/standard_ws_tuning_catalog')
++local bstJugOverhaul = require('modules/custom/lua/BstJugPetOverhaul')
+ -----------------------------------
+ xi = xi or {}
+ xi.mobskills = xi.mobskills or {}
+@@ -97,7 +98,7 @@ xi.mobskills.applyJugEcosystemMatchupDamage = function(mob, target, damage)
+     return damage
+ end
+ 
+-local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLanded)
++local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLanded, isPhysical)
+     if mob:getLocalVar('fellowApplied') == 1 then
+         -- Magus AoE nukes trade coverage for power. The role marks
+         -- Thunderstrike for quarter damage while leaving single-target and
+@@ -139,6 +140,17 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
+     damage = xi.mobskills.applyJugEcosystemMatchupDamage(mob, target, damage)
+ 
+     local multiplier = standardProgression.getPetDamageMultiplier(master, target)
 +    if
-+        xi.battlefield.customEntryTrigger and
-+        xi.battlefield.customEntryTrigger(player, npc)
++        isPhysical and
++        mob:isJugPet() and
++        master:getMainJob() == xi.job.BST
 +    then
-+        return
++        -- Physical Ready investment belongs on the completed stock hit, after
++        -- accuracy/pDIF/target defense and before the companion cap. This makes
++        -- Pet: Attack, Accuracy, Attributes, TP Bonus and Beast Affinity define
++        -- endgame burst without relying on a jug weapon setter alone.
++        multiplier = multiplier * bstJugOverhaul.getReadyInvestmentMultiplier(master, false)
 +    end
-+
-     -- No one in party/alliance has battlefield status effect. We want to register a new battlefield.
-     local options = xi.battlefield.getBattlefieldOptions(player, npc)
+     local cap = standardProgression.setPetDamageCap
+         and standardProgression.setPetDamageCap(mob, master)
+         or standardProgression.DAMAGE_CAP
+@@ -862,7 +874,7 @@ xi.mobskills.mobRangedMove = function(mob, target, skill, action, skillParams)
+     ----------------------------------
+     totalDamage = resolveMissMessage(skill, hitsLanded, hitsYaegasumi, hitsAnticipated, hitsAbsorbed, shadowsAbsorbed, params.primaryMessage, totalDamage)
+     totalDamage = applyPlayerCompanionScaling(
+-        mob, target, skill, totalDamage, hitsLanded)
++        mob, target, skill, totalDamage, hitsLanded, true)
  
-@@ -931,6 +940,146 @@ function Battlefield:onEntryEventUpdate(player, csid, option, npc)
-     return (status < xi.battlefield.status.LOCKED and result < xi.battlefield.returnCode.LOCKED) and 1 or 0
- end
+     -- Mob only gets TP for hitting the initial target. AOE hits do not count.
+     xi.mobskills.calculateSkillTPReturn(damage, mob, skill, target, params.attackType, hitsLanded)
+@@ -1097,7 +1109,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, action, skillParams)
+     ----------------------------------
+     totalDamage = resolveMissMessage(skill, hitsLanded, hitsYaegasumi, hitsAnticipated, hitsAbsorbed, shadowsAbsorbed, params.primaryMessage, totalDamage)
+     totalDamage = applyPlayerCompanionScaling(
+-        mob, target, skill, totalDamage, hitsLanded)
++        mob, target, skill, totalDamage, hitsLanded, true)
  
-+-- Register and enter a battlefield without event 32000's client-DAT menu.
-+-- Used by custom named menus such as Legendary HTBF. The normal event path
-+-- remains unchanged for retail mission, quest, and orb battlefields.
-+function Battlefield:directEntry(player, npc)
-+    if
-+        xi.battlefield.rejectLevelSyncedParty(player, npc) or
-+        player:getZoneID() ~= self.zoneId or
-+        not self:isValidEntry(player, npc) or
-+        not self:checkRequirements(player, npc, true) or
-+        player:battlefieldAtCapacity(self.battlefieldId)
-+    then
-+        return false
-+    end
-+
-+    local zone = player:getZoneID()
-+    local entrants = {}
-+    for _, member in pairs(player:getAlliance()) do
-+        if
-+            member:getZoneID() == zone and
-+            member:getStatus() ~= xi.status.DISAPPEAR and
-+            not member:hasStatusEffect(xi.effect.BATTLEFIELD) and
-+            not member:getBattlefield()
-+        then
-+            if not self:checkRequirements(member, npc, false) then
-+                player:printToPlayer(string.format(
-+                    '[HTBF] %s does not meet this battlefield entry requirement.',
-+                    member:getName()), xi.msg.channel.SYSTEM_3)
-+                return false
-+            end
-+
-+            entrants[#entrants + 1] = member
-+        elseif member:hasStatusEffect(xi.effect.BATTLEFIELD) or member:getBattlefield() then
-+            player:messageSpecial(zones[zone].text.PARTY_MEMBERS_ARE_ENGAGED)
-+            return false
-+        end
-+    end
-+
-+    if #entrants > self.maxPlayers then
-+        player:printToPlayer(string.format(
-+            '[HTBF] This battlefield allows at most %d players.',
-+            self.maxPlayers), xi.msg.channel.SYSTEM_3)
-+        return false
-+    end
-+
-+    local result = xi.battlefield.returnCode.WAIT
-+    local area = self.area or 1
-+    while area <= 3 do
-+        if not self.allowedAreas or self.allowedAreas[area] then
-+            result = player:registerBattlefield(
-+                self.battlefieldId, area, player:getID(), self)
-+            if result ~= xi.battlefield.returnCode.INCREMENT_REQUEST then
-+                break
-+            end
-+        end
-+
-+        if self.area then
-+            break
-+        end
-+        area = area + 1
-+    end
-+
-+    if result ~= xi.battlefield.returnCode.CUTSCENE then
-+        player:delStatusEffect(xi.effect.BATTLEFIELD)
-+        player:printToPlayer(
-+            '[HTBF] That battlefield could not be opened. Try again shortly.',
-+            xi.msg.channel.SYSTEM_3)
-+        return false
-+    end
-+
-+    local registered = { player }
-+    local function rollbackDirectEntry()
-+        for _, entrant in ipairs(registered) do
-+            if entrant:getBattlefield() then
-+                pcall(function() entrant:leaveBattlefield(1) end)
-+            end
-+            entrant:delStatusEffect(xi.effect.BATTLEFIELD)
-+            if
-+                self.partyKeyItem and
-+                not entrant:hasKeyItem(self.partyKeyItem)
-+            then
-+                entrant:addKeyItem(self.partyKeyItem)
-+            end
-+        end
-+    end
-+
-+    local effect = player:getStatusEffect(xi.effect.BATTLEFIELD)
-+    if not effect then
-+        rollbackDirectEntry()
-+        player:printToPlayer(
-+            '[HTBF] Battlefield registration did not return an entry effect.',
-+            xi.msg.channel.SYSTEM_3)
-+        return false
-+    end
-+
-+    for _, member in ipairs(entrants) do
-+        if member:getID() ~= player:getID() then
-+            member:copyStatusEffect(effect)
-+            registered[#registered + 1] = member
-+            local memberResult = member:registerBattlefield(
-+                self.battlefieldId, area, player:getID(), self)
-+            if memberResult ~= xi.battlefield.returnCode.CUTSCENE then
-+                member:delStatusEffect(xi.effect.BATTLEFIELD)
-+                player:printToPlayer(string.format(
-+                    '[HTBF] %s could not be registered.',
-+                    member:getName()), xi.msg.channel.SYSTEM_3)
-+                rollbackDirectEntry()
-+                return false
-+            end
-+
-+            if not member:getBattlefield() then
-+                member:enterBattlefield()
-+            end
-+
-+            if not member:getBattlefield() then
-+                player:printToPlayer(string.format(
-+                    '[HTBF] %s could not enter after registration.',
-+                    member:getName()), xi.msg.channel.SYSTEM_3)
-+                rollbackDirectEntry()
-+                return false
-+            end
-+        end
-+    end
-+
-+    if not player:getBattlefield() then
-+        player:enterBattlefield()
-+    end
-+    if not player:getBattlefield() then
-+        player:printToPlayer(
-+            '[HTBF] Battlefield registration succeeded, but entry failed.',
-+            xi.msg.channel.SYSTEM_3)
-+        rollbackDirectEntry()
-+        return false
-+    end
-+
-+    for _, entrant in ipairs(registered) do
-+        self:onEntryComplete(entrant, npc)
-+    end
-+    return true
-+end
-+
- function Battlefield.redirectEventCall(eventName, player, csid, option)
-     local battlefieldID = 0
-     local battlefield   = player:getBattlefield()
-@@ -949,12 +1098,16 @@ function Battlefield.redirectEventCall(eventName, player, csid, option)
-     content[eventName](content, player, csid, option)
- end
- 
--function Battlefield:onEventFinishEnter(player, csid, option, npc)
-+function Battlefield:onEntryComplete(player, npc)
-     player:setEnteredBattlefield(true)
-     player:setLocalVar('[battlefield]area', 0)
-     self:setLocalVar(player, 'CS', 1)
- end
- 
-+function Battlefield:onEventFinishEnter(player, csid, option, npc)
-+    self:onEntryComplete(player, npc)
-+end
-+
- function Battlefield:onEventFinishWin(player, csid, option, npc)
-     if self.title then
-         player:addTitle(self.title)
+     ----------------------------------
+     -- Handle TP Returns
 diff --git a/scripts/tests/systems/bst_jug_progression.lua b/scripts/tests/systems/bst_jug_progression.lua
-new file mode 100644
-index 0000000000..adc8ea4975
---- /dev/null
+index adc8ea4975..44fc852a14 100644
+--- a/scripts/tests/systems/bst_jug_progression.lua
 +++ b/scripts/tests/systems/bst_jug_progression.lua
-@@ -0,0 +1,214 @@
-+local overhaul = require('modules/custom/lua/BstJugPetOverhaul')
-+local jugCatalog = require('modules/custom/lua/jug_power_catalog')
-+local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
-+require('scripts/globals/mobskills')
-+
-+describe('BST jug investment progression', function()
-+    local function makeMaster(mods, itemId, jobPoints, mainJob)
-+        return
-+        {
-+            getMod = function(_, modId)
-+                return (mods or {})[modId] or 0
-+            end,
-+            getEquipID = function()
-+                return itemId or 1
-+            end,
-+            getMainLvl = function()
-+                return 99
-+            end,
-+            getMainJob = function()
-+                return mainJob or xi.job.BST
-+            end,
-+            getSpentJobPoints = function()
-+                return jobPoints or 0
-+            end,
-+            isPC = function()
-+                return true
-+            end,
-+        }
-+    end
-+
-+    local function makeJug(master, ecosystem)
-+        local localVars =
-+        {
-+            JugEcosystemFavorableBps = 5000,
-+            JugEcosystemUnfavorableBps = 2500,
-+        }
-+
-+        return
-+        {
-+            getMaster = function()
-+                return master
-+            end,
-+            getEcosystem = function()
-+                return ecosystem
-+            end,
-+            getLocalVar = function(_, name)
-+                return localVars[name] or 0
-+            end,
-+            isJugPet = function()
-+                return true
-+            end,
-+            setLocalVar = function(_, name, value)
-+                localVars[name] = value
-+            end,
-+        }
-+    end
-+
-+    local function makeTarget(ecosystem)
-+        return
-+        {
-+            getEcosystem = function()
-+                return ecosystem
-+            end,
-+            getMainLvl = function()
-+                return 155
-+            end,
-+        }
-+    end
-+
-+    it('does not raise Ready floors without meaningful pet investment', function()
-+        local master = makeMaster({})
-+
-+        assert(overhaul.getReadyInvestmentMultiplier(master, false) == 1)
-+        assert(overhaul.getReadyInvestmentMultiplier(master, true) == 1)
-+    end)
-+
-+    it('scales physical and magical floors from their matching offensive mods', function()
-+        local shared =
-+        {
-+            [xi.mod.PET_BEAST_AFF] = 50,
-+            [xi.mod.PET_ATTR_BONUS] = 750,
-+            [xi.mod.PET_TP_BONUS] = 750,
-+        }
-+        local physical = {}
-+        local magical = {}
-+        for modId, value in pairs(shared) do
-+            physical[modId] = value
-+            magical[modId] = value
+@@ -88,10 +88,18 @@ describe('BST jug investment progression', function()
+             magical[modId] = value
+         end
+         physical[xi.mod.PET_ATK_DEF] = 750
++        physical[xi.mod.PET_ACC_EVA] = 750
++        local physicalWithoutAccuracy = {}
++        for modId, value in pairs(physical) do
++            physicalWithoutAccuracy[modId] = value
 +        end
-+        physical[xi.mod.PET_ATK_DEF] = 750
-+        magical[xi.mod.PET_MAB_MDB] = 750
-+
++        physicalWithoutAccuracy[xi.mod.PET_ACC_EVA] = 0
+         magical[xi.mod.PET_MAB_MDB] = 750
+ 
+         assert(overhaul.getReadyInvestmentMultiplier(
+-            makeMaster(physical), false) == 4.4375)
++            makeMaster(physical), false) == 6.7)
 +        assert(overhaul.getReadyInvestmentMultiplier(
-+            makeMaster(physical), false) == 4.4375)
-+        assert(overhaul.getReadyInvestmentMultiplier(
-+            makeMaster(physical), true) == 3.75)
-+        assert(overhaul.getReadyInvestmentMultiplier(
-+            makeMaster(magical), true) == 4.4375)
-+        assert(overhaul.getReadyInvestmentMultiplier(
-+            makeMaster(magical), false) == 3.75)
-+    end)
-+
-+    it('caps full and malformed investment at safe bounds', function()
-+        local maxed =
-+        {
-+            [xi.mod.PET_BEAST_AFF] = 900,
-+            [xi.mod.PET_ATK_DEF] = 9000,
-+            [xi.mod.PET_MAB_MDB] = 9000,
-+            [xi.mod.PET_ATTR_BONUS] = 9000,
-+            [xi.mod.PET_TP_BONUS] = 9000,
-+        }
-+        local negative =
-+        {
-+            [xi.mod.PET_BEAST_AFF] = -100,
-+            [xi.mod.PET_ATK_DEF] = -100,
-+            [xi.mod.PET_MAB_MDB] = -100,
-+            [xi.mod.PET_ATTR_BONUS] = -100,
-+            [xi.mod.PET_TP_BONUS] = -100,
-+        }
-+
-+        assert(overhaul.getReadyInvestmentMultiplier(
-+            makeMaster(maxed), false) == 12)
-+        assert(overhaul.getReadyInvestmentMultiplier(
-+            makeMaster(maxed), true) == 12)
-+        assert(overhaul.getReadyInvestmentMultiplier(
-+            makeMaster(negative), false) == 1)
-+    end)
-+
-+    it('gives Dipper Yuly an explicit fast-role identity', function()
-+        local dipper = jugCatalog.get(xi.petId.DIPPER_YULY)
-+
-+        assert(dipper.style == 'fast')
-+        assert(dipper.power == 1)
-+        assert(dipper.weights.weapon == 0.95)
-+    end)
-+
-+    it('puts max-investment Prime burst above REMA without automatic cap hits', function()
-+        local maxed =
-+        {
-+            [xi.mod.PET_BEAST_AFF] = 100,
-+            [xi.mod.PET_ATK_DEF] = 3000,
-+            [xi.mod.PET_ATTR_BONUS] = 3000,
-+            [xi.mod.PET_TP_BONUS] = 3000,
-+        }
-+        local primeMaster = makeMaster(maxed, 21730, 2100)
-+        local remaMaster = makeMaster(maxed, 21751, 2100) -- Aymur
-+        local target = makeTarget(xi.ecosystem.PLANTOID)
-+        local primeJug = makeJug(primeMaster, xi.ecosystem.VERMIN)
-+        local remaJug = makeJug(remaMaster, xi.ecosystem.VERMIN)
-+        local investedStock = math.floor(
-+            1200 * overhaul.getReadyInvestmentMultiplier(primeMaster, false))
-+        local primeMatched = xi.mobskills.applyJugEcosystemMatchupDamage(
-+            primeJug, target, investedStock)
-+        local remaMatched = xi.mobskills.applyJugEcosystemMatchupDamage(
-+            remaJug, target, investedStock)
-+        local primeDamage = progression.applyMultiplier(
-+            primeMatched,
-+            progression.getPetDamageMultiplier(primeMaster, target),
-+            progression.setPetDamageCap(primeJug, primeMaster))
-+        local remaDamage = progression.applyMultiplier(
-+            remaMatched,
-+            progression.getPetDamageMultiplier(remaMaster, target),
-+            progression.setPetDamageCap(remaJug, remaMaster))
-+
-+        assert(remaDamage == 677160)
-+        assert(primeDamage == 1009800)
-+        assert(primeDamage < progression.PET_PRIME_DAMAGE_CAP)
-+    end)
-+
-+    it('caps exceptional favorable Prime Ready damage at 1499999', function()
-+        local maxed =
-+        {
-+            [xi.mod.PET_BEAST_AFF] = 100,
-+            [xi.mod.PET_ATK_DEF] = 3000,
-+            [xi.mod.PET_ATTR_BONUS] = 3000,
-+            [xi.mod.PET_TP_BONUS] = 3000,
-+        }
-+        local master = makeMaster(maxed, 21730, 2100)
-+        local target = makeTarget(xi.ecosystem.PLANTOID)
-+        local jug = makeJug(master, xi.ecosystem.VERMIN)
-+        local matched = xi.mobskills.applyJugEcosystemMatchupDamage(
-+            jug, target, 24000)
-+
-+        assert(progression.applyMultiplier(
-+            matched,
-+            progression.getPetDamageMultiplier(master, target),
-+            progression.setPetDamageCap(jug, master)) == 1499999)
-+    end)
-+
-+    it('retains the companion AoE reduction at maximum investment', function()
-+        local master = makeMaster({}, 21730, 2100)
-+        local target = makeTarget(xi.ecosystem.PLANTOID)
-+        local jug = makeJug(master, xi.ecosystem.VERMIN)
-+        local fullMultiplier = progression.getPetDamageMultiplier(master, target)
-+        local aoeMultiplier = 1 + (fullMultiplier - 1) * 0.50
-+        local aoeCap = math.floor(
-+            progression.setPetDamageCap(jug, master) * 0.50)
-+        local matched = xi.mobskills.applyJugEcosystemMatchupDamage(
-+            jug, target, 24000)
-+
-+        assert(aoeMultiplier == 23.875)
-+        assert(aoeCap == 749999)
-+        assert(progression.applyMultiplier(
-+            matched, aoeMultiplier, aoeCap) == 749999)
-+    end)
-+
-+    it('does not grant BST progression from another jobs Prime weapon', function()
-+        local master = makeMaster({}, 22106, 2100) -- SMN Opashoro on BST
-+        local target = makeTarget(xi.ecosystem.PLANTOID)
-+
-+        assert(progression.getPetDamageMultiplier(master, target) == 11)
-+        assert(progression.getPetDamageCap(master) == 79999)
-+    end)
-+end)
-diff --git a/scripts/tests/systems/htbf_integrity.lua b/scripts/tests/systems/htbf_integrity.lua
-index f2e9f951b0..5d1023f02d 100644
---- a/scripts/tests/systems/htbf_integrity.lua
-+++ b/scripts/tests/systems/htbf_integrity.lua
-@@ -176,6 +176,67 @@ describe('HTBF catalog integrity and balance', function()
-         assert(catalog.fights.trial_by_earth.mobs[1] == 'Titan_Prime_TBE')
++            makeMaster(physicalWithoutAccuracy), false) == 5.75)
+         assert(overhaul.getReadyInvestmentMultiplier(
+             makeMaster(physical), true) == 3.75)
+         assert(overhaul.getReadyInvestmentMultiplier(
+@@ -105,6 +113,7 @@ describe('BST jug investment progression', function()
+         {
+             [xi.mod.PET_BEAST_AFF] = 900,
+             [xi.mod.PET_ATK_DEF] = 9000,
++            [xi.mod.PET_ACC_EVA] = 9000,
+             [xi.mod.PET_MAB_MDB] = 9000,
+             [xi.mod.PET_ATTR_BONUS] = 9000,
+             [xi.mod.PET_TP_BONUS] = 9000,
+@@ -119,7 +128,7 @@ describe('BST jug investment progression', function()
+         }
+ 
+         assert(overhaul.getReadyInvestmentMultiplier(
+-            makeMaster(maxed), false) == 12)
++            makeMaster(maxed), false) == 20)
+         assert(overhaul.getReadyInvestmentMultiplier(
+             makeMaster(maxed), true) == 12)
+         assert(overhaul.getReadyInvestmentMultiplier(
+@@ -139,31 +148,33 @@ describe('BST jug investment progression', function()
+         {
+             [xi.mod.PET_BEAST_AFF] = 100,
+             [xi.mod.PET_ATK_DEF] = 3000,
++            [xi.mod.PET_ACC_EVA] = 3000,
+             [xi.mod.PET_ATTR_BONUS] = 3000,
+             [xi.mod.PET_TP_BONUS] = 3000,
+         }
+         local primeMaster = makeMaster(maxed, 21730, 2100)
+         local remaMaster = makeMaster(maxed, 21751, 2100) -- Aymur
+-        local target = makeTarget(xi.ecosystem.PLANTOID)
++        local target = makeTarget(xi.ecosystem.BEAST)
+         local primeJug = makeJug(primeMaster, xi.ecosystem.VERMIN)
+         local remaJug = makeJug(remaMaster, xi.ecosystem.VERMIN)
+-        local investedStock = math.floor(
+-            1200 * overhaul.getReadyInvestmentMultiplier(primeMaster, false))
++        local stockDamage = 1200
+         local primeMatched = xi.mobskills.applyJugEcosystemMatchupDamage(
+-            primeJug, target, investedStock)
++            primeJug, target, stockDamage)
+         local remaMatched = xi.mobskills.applyJugEcosystemMatchupDamage(
+-            remaJug, target, investedStock)
++            remaJug, target, stockDamage)
+         local primeDamage = progression.applyMultiplier(
+             primeMatched,
+-            progression.getPetDamageMultiplier(primeMaster, target),
++            progression.getPetDamageMultiplier(primeMaster, target) *
++                overhaul.getReadyInvestmentMultiplier(primeMaster, false),
+             progression.setPetDamageCap(primeJug, primeMaster))
+         local remaDamage = progression.applyMultiplier(
+             remaMatched,
+-            progression.getPetDamageMultiplier(remaMaster, target),
++            progression.getPetDamageMultiplier(remaMaster, target) *
++                overhaul.getReadyInvestmentMultiplier(remaMaster, false),
+             progression.setPetDamageCap(remaJug, remaMaster))
+ 
+-        assert(remaDamage == 677160)
+-        assert(primeDamage == 1009800)
++        assert(remaDamage == 752400)
++        assert(primeDamage == 1122000)
+         assert(primeDamage < progression.PET_PRIME_DAMAGE_CAP)
      end)
  
-+    it('routes every Legendary fight through one vendor choice and warp', function()
-+        local categorized = {}
-+        local count = 0
-+        for _, category in ipairs(catalog.gemCategories) do
-+            assert(#category.fightKeys > 0)
-+            assert(#category.fightKeys <= 6)
-+            for _, fightKey in ipairs(category.fightKeys) do
-+                assert(catalog.fights[fightKey] ~= nil)
-+                assert(not categorized[fightKey], fightKey .. ' appears twice')
-+                categorized[fightKey] = true
-+                count = count + 1
-+
-+                local destination = catalog.warpByFight[fightKey]
-+                assert(destination ~= nil, fightKey .. ' has no vendor warp')
-+                assert(destination.zone == catalog.fights[fightKey].zone)
-+                assert(destination.fightKey == fightKey)
-+            end
-+        end
-+
-+        assert(count == 22)
-+        for fightKey in pairs(catalog.fights) do
-+            assert(categorized[fightKey], fightKey .. ' is absent from vendor routing')
-+        end
-+    end)
-+
-+    it('names and routes all five Ark Angels explicitly', function()
-+        local expected =
-+        {
-+            { key = 'ark_angels_1', label = 'Ark Angel HM', npc = 'qm1_1' },
-+            { key = 'ark_angels_2', label = 'Ark Angel TT', npc = 'qm1_2' },
-+            { key = 'ark_angels_3', label = 'Ark Angel MR', npc = 'qm1_3' },
-+            { key = 'ark_angels_4', label = 'Ark Angel EV', npc = 'qm1_4' },
-+            { key = 'ark_angels_5', label = 'Ark Angel GK', npc = 'qm1_5' },
-+        }
-+
-+        for _, entry in ipairs(expected) do
-+            local fight = catalog.fights[entry.key]
-+            local destination = catalog.warpByFight[entry.key]
-+            assert(fight.label == entry.label)
-+            assert(fight.entryNpc == entry.npc)
-+            assert(destination.name == entry.label)
-+            assert(destination.zone == xi.zone.LALOFF_AMPHITHEATER)
-+        end
-+    end)
-+
-+    it('keeps shared Avatar gems bound to six distinct selected fights', function()
-+        local avatars = catalog.gemCategories[1].fightKeys
-+        local coordinates = {}
-+        assert(#avatars == 6)
-+        for _, fightKey in ipairs(avatars) do
-+            local fight = catalog.fights[fightKey]
-+            local destination = catalog.warpByFight[fightKey]
-+            assert(fight.gem == xi.ki.AVATAR_PHANTOM_GEM)
-+            local key = string.format(
-+                '%d:%.2f:%.2f:%.2f',
-+                destination.zone, destination.x, destination.y, destination.z)
-+            assert(not coordinates[key])
-+            coordinates[key] = true
-+        end
-+    end)
-+
-     it('keeps Dawn durable without the generic epic defense wall', function()
-         local dawn = catalog.fights.dawn.tierScaleOverride
-         assert(dawn[1].minHp == 1500000)
-diff --git a/scripts/tests/systems/htbf_named_entry.lua b/scripts/tests/systems/htbf_named_entry.lua
-new file mode 100644
-index 0000000000..7c95f78ac1
---- /dev/null
-+++ b/scripts/tests/systems/htbf_named_entry.lua
-@@ -0,0 +1,288 @@
-+local htbf = require('modules/custom/lua/htbf')
-+
-+describe('Legendary HTBF named entry routing', function()
-+    local function makeNpc(name)
-+        return
-+        {
-+            getName = function()
-+                return name
-+            end,
-+        }
-+    end
-+
-+    local function makeRoutingPlayer(zoneId, heldGems)
-+        return
-+        {
-+            getZoneID = function()
-+                return zoneId
-+            end,
-+            hasKeyItem = function(_, keyItem)
-+                return heldGems[keyItem] == true
-+            end,
-+            battlefieldAtCapacity = function()
-+                return false
-+            end,
-+        }
-+    end
-+
-+    it('resolves only the matching gem at the exact entrance', function()
-+        local player = makeRoutingPlayer(
-+            xi.zone.LALOFF_AMPHITHEATER,
-+            { [xi.ki.PHANTOM_GEM_OF_COWARDICE] = true })
-+
-+        local matches = htbf.getMatchingFightKeys(player, makeNpc('qm1_2'))
-+        assert(#matches == 1)
-+        assert(matches[1] == 'ark_angels_2')
-+        assert(#htbf.getMatchingFightKeys(player, makeNpc('qm1_1')) == 0)
-+    end)
-+
-+    it('leaves retail entry untouched when no matching gem is held', function()
-+        local player = makeRoutingPlayer(
-+            xi.zone.LALOFF_AMPHITHEATER, {})
-+        local npc = makeNpc('qm1_2')
-+
-+        assert(#htbf.getMatchingFightKeys(player, npc) == 0)
-+        assert(not xi.battlefield.customEntryTrigger(player, npc))
-+    end)
-+
-+    it('sorts and exposes only currently eligible named choices', function()
-+        local zoneId = xi.zone.LALOFF_AMPHITHEATER
-+        local previous = xi.battlefield.contentsByZone[zoneId]
-+        local player = makeRoutingPlayer(zoneId, {})
-+        local npc = makeNpc('qm1_1')
-+        local function choice(order, eligible)
-+            return
-+            {
-+                customEntryFight = 'ark_angels_1',
-+                customEntryOrder = order,
-+                isValidEntry = function()
-+                    return true
-+                end,
-+                checkRequirements = function()
-+                    return eligible
-+                end,
-+                battlefieldId = 4160 + order - 1,
-+            }
-+        end
-+        xi.battlefield.contentsByZone[zoneId] =
-+        {
-+            choice(3, false),
-+            choice(2, true),
-+            choice(1, true),
-+        }
-+
-+        local choices = htbf.getRegisteredChoices(
-+            player, npc, 'ark_angels_1')
-+        assert(#choices == 2)
-+        assert(choices[1].customEntryOrder == 1)
-+        assert(choices[2].customEntryOrder == 2)
-+
-+        xi.battlefield.contentsByZone[zoneId] = previous
-+    end)
-+
-+    it('directly registers and completes entry without event 32000', function()
-+        local zoneId = xi.zone.LALOFF_AMPHITHEATER
-+        local battlefield = {}
-+        local effect = {}
-+        local completed = 0
-+        local player = {}
-+        player.getID = function()
-+            return 1
-+        end
-+        player.getName = function()
-+            return 'Leader'
-+        end
-+        player.getZoneID = function()
-+            return zoneId
-+        end
-+        player.getAlliance = function()
-+            return { player }
-+        end
-+        player.getStatus = function()
-+            return xi.status.NORMAL
-+        end
-+        player.hasStatusEffect = function()
-+            return false
-+        end
-+        player.getBattlefield = function()
-+            return player.battlefield
-+        end
-+        player.battlefieldAtCapacity = function()
-+            return false
-+        end
-+        player.registerBattlefield = function()
-+            player.effect = effect
-+            player.battlefield = battlefield
-+            return xi.battlefield.returnCode.CUTSCENE
-+        end
-+        player.getStatusEffect = function()
-+            return player.effect
-+        end
-+        player.delStatusEffect = function()
-+        end
-+        player.enterBattlefield = function()
-+        end
-+        player.printToPlayer = function()
-+        end
-+        player.messageSpecial = function()
-+        end
-+
-+        local content =
-+        {
-+            zoneId = zoneId,
-+            battlefieldId = 4160,
-+            maxPlayers = 6,
-+            isValidEntry = function()
-+                return true
-+            end,
-+            checkRequirements = function()
-+                return true
-+            end,
-+            onEntryComplete = function()
-+                completed = completed + 1
-+            end,
-+        }
-+
-+        assert(Battlefield.directEntry(
-+            content, player, makeNpc('qm1_1')))
-+        assert(completed == 1)
-+        assert(player:getBattlefield() == battlefield)
-+    end)
-+
-+    it('preflights every party members gem before registration', function()
-+        local zoneId = xi.zone.LALOFF_AMPHITHEATER
-+        local leader = {}
-+        local member =
-+        {
-+            getID = function()
-+                return 2
-+            end,
-+            getName = function()
-+                return 'MissingGem'
-+            end,
-+            getZoneID = function()
-+                return zoneId
-+            end,
-+            getStatus = function()
-+                return xi.status.NORMAL
-+            end,
-+            hasStatusEffect = function()
-+                return false
-+            end,
-+            getBattlefield = function()
-+                return nil
-+            end,
-+        }
-+        leader.getID = function()
-+            return 1
-+        end
-+        leader.getName = function()
-+            return 'Leader'
-+        end
-+        leader.getZoneID = function()
-+            return zoneId
-+        end
-+        leader.getAlliance = function()
-+            return { leader, member }
-+        end
-+        leader.getStatus = function()
-+            return xi.status.NORMAL
-+        end
-+        leader.hasStatusEffect = function()
-+            return false
-+        end
-+        leader.getBattlefield = function()
-+            return nil
-+        end
-+        leader.battlefieldAtCapacity = function()
-+            return false
-+        end
-+        leader.printToPlayer = function()
-+        end
-+        leader.messageSpecial = function()
-+        end
-+        leader.registerBattlefield = function()
-+            error('registration must not run before party preflight passes')
-+        end
-+
-+        local content =
-+        {
-+            zoneId = zoneId,
-+            battlefieldId = 4160,
-+            maxPlayers = 6,
-+            isValidEntry = function()
-+                return true
-+            end,
-+            checkRequirements = function(_, candidate)
-+                return candidate:getID() == 1
-+            end,
-+        }
-+
-+        assert(not Battlefield.directEntry(
-+            content, leader, makeNpc('qm1_1')))
-+    end)
-+
-+    it('rolls back and refunds entry if a party registration fails', function()
-+        local zoneId = xi.zone.LALOFF_AMPHITHEATER
-+        local battlefield = {}
-+        local effect = {}
-+        local leader = { refunded = false, left = false }
-+        local member = { hasGem = true }
-+
-+        leader.getID = function() return 1 end
-+        leader.getName = function() return 'Leader' end
-+        leader.getZoneID = function() return zoneId end
-+        leader.getAlliance = function() return { leader, member } end
-+        leader.getStatus = function() return xi.status.NORMAL end
-+        leader.hasStatusEffect = function() return false end
-+        leader.getBattlefield = function() return leader.battlefield end
-+        leader.battlefieldAtCapacity = function() return false end
-+        leader.registerBattlefield = function()
-+            leader.battlefield = battlefield
-+            leader.effect = effect
-+            return xi.battlefield.returnCode.CUTSCENE
-+        end
-+        leader.getStatusEffect = function() return leader.effect end
-+        leader.delStatusEffect = function() end
-+        leader.hasKeyItem = function() return false end
-+        leader.addKeyItem = function()
-+            leader.refunded = true
-+        end
-+        leader.leaveBattlefield = function()
-+            leader.left = true
-+            leader.battlefield = nil
-+        end
-+        leader.printToPlayer = function() end
-+        leader.messageSpecial = function() end
-+
-+        member.getID = function() return 2 end
-+        member.getName = function() return 'Member' end
-+        member.getZoneID = function() return zoneId end
-+        member.getStatus = function() return xi.status.NORMAL end
-+        member.hasStatusEffect = function() return false end
-+        member.getBattlefield = function() return nil end
-+        member.copyStatusEffect = function() end
-+        member.registerBattlefield = function()
-+            return xi.battlefield.returnCode.REQS_NOT_MET
-+        end
-+        member.delStatusEffect = function() end
-+        member.hasKeyItem = function() return member.hasGem end
-+        member.addKeyItem = function() member.hasGem = true end
-+
-+        local content =
-+        {
-+            zoneId = zoneId,
-+            battlefieldId = 4160,
-+            maxPlayers = 6,
-+            partyKeyItem = xi.ki.PHANTOM_GEM_OF_APATHY,
-+            isValidEntry = function() return true end,
-+            checkRequirements = function() return true end,
-+        }
-+
-+        assert(not Battlefield.directEntry(
-+            content, leader, makeNpc('qm1_1')))
-+        assert(leader.left)
-+        assert(leader.refunded)
-+        assert(member.hasGem)
-+    end)
-+end)
-diff --git a/sql/abilities_charges.sql b/sql/abilities_charges.sql
-index e7e5496151..c210a9c79f 100644
---- a/sql/abilities_charges.sql
-+++ b/sql/abilities_charges.sql
-@@ -16,7 +16,7 @@ CREATE TABLE `abilities_charges` (
- -- ----------------------------
- -- Records 
- -- ----------------------------
--INSERT INTO `abilities_charges` VALUES (102,9,25,3,30,902);
-+INSERT INTO `abilities_charges` VALUES (102,9,25,3,10,902);
- INSERT INTO `abilities_charges` VALUES (195,17,40,2,60,1410);
- INSERT INTO `abilities_charges` VALUES (231,20,10,1,240,0);
- INSERT INTO `abilities_charges` VALUES (231,20,30,2,120,0);
-diff --git a/src/map/entities/charentity.cpp b/src/map/entities/charentity.cpp
-index fa133ff7bb..57cd7451ae 100644
---- a/src/map/entities/charentity.cpp
-+++ b/src/map/entities/charentity.cpp
-@@ -1880,13 +1880,16 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
-             if (PAbility->getRecastId() == Recast::Sic) // Sic/Ready recast ID
-             {
-                 recastReduction = std::chrono::seconds(PMeritPoints->GetMeritValue(MERIT_SIC_RECAST, this));
-+                recastReduction += std::chrono::seconds(std::max<int16>(0, this->getMod(Mod::SIC_READY_RECAST)));
-             }
-             else if (PAbility->getRecastId() == Recast::Strategems)
-             {
-                 recastReduction += std::chrono::seconds(this->getMod(Mod::STRATAGEM_RECAST));
-             }
- 
--            baseChargeTime = charge->chargeTime - recastReduction;
-+            const timer::duration minimumChargeTime =
-+                PAbility->getRecastId() == Recast::Sic ? 3s : 0s;
-+            baseChargeTime = std::max(minimumChargeTime, charge->chargeTime - recastReduction);
- 
-             action.recast = baseChargeTime * chargesUsed;
+@@ -172,6 +183,7 @@ describe('BST jug investment progression', function()
+         {
+             [xi.mod.PET_BEAST_AFF] = 100,
+             [xi.mod.PET_ATK_DEF] = 3000,
++            [xi.mod.PET_ACC_EVA] = 3000,
+             [xi.mod.PET_ATTR_BONUS] = 3000,
+             [xi.mod.PET_TP_BONUS] = 3000,
          }
-diff --git a/tools/audit_bst_ready.py b/tools/audit_bst_ready.py
-new file mode 100644
-index 0000000000..94e680a051
---- /dev/null
-+++ b/tools/audit_bst_ready.py
-@@ -0,0 +1,88 @@
-+#!/usr/bin/env python3
-+"""Validate Relaunch BST Ready charge timing across SQL and C++."""
-+from __future__ import annotations
-+
-+import re
-+import sys
-+from pathlib import Path
-+
-+
-+ROOT = Path(__file__).resolve().parents[1]
-+CHARGES_SQL = ROOT / "sql" / "abilities_charges.sql"
-+SOA_SQL = ROOT / "modules" / "soa" / "sql" / "job_adjustments.sql"
-+DEPLOY_SQL = ROOT / "modules" / "custom" / "sql" / "bst_ready_recast.sql"
-+CHAR_CPP = ROOT / "src" / "map" / "entities" / "charentity.cpp"
-+
-+
-+def ready_charge_time(merit_reduction: int, gear_reduction: int) -> int:
-+    return max(3, 10 - max(0, merit_reduction) - max(0, gear_reduction))
-+
-+
-+def main() -> int:
-+    charges = CHARGES_SQL.read_text(encoding="utf-8")
-+    soa = SOA_SQL.read_text(encoding="utf-8")
-+    deploy = DEPLOY_SQL.read_text(encoding="utf-8")
-+    cpp = CHAR_CPP.read_text(encoding="utf-8")
-+    failures: list[str] = []
-+
-+    charge_row = re.search(
-+        r"INSERT INTO `abilities_charges` VALUES "
-+        r"\(102,\s*9,\s*25,\s*(\d+),\s*(\d+),\s*902\);",
-+        charges,
-+    )
-+    if not charge_row:
-+        failures.append("missing BST recast-group 102 charge row")
-+    elif charge_row.groups() != ("3", "10"):
-+        failures.append(
-+            "BST Ready must retain 3 charges with a 10-second base interval"
-+        )
-+
-+    if not re.search(
-+        r"UPDATE merits SET value = 1 WHERE name = 'sic_recast';", soa
-+    ):
-+        failures.append("Sic Recast merit must be 1 second per rank")
-+
-+    if not re.search(
-+        r"UPDATE `abilities_charges`[\s\S]*?`chargeTime` = 10"
-+        r"[\s\S]*?`recastId` = 102;",
-+        deploy,
-+    ):
-+        failures.append("deploy SQL does not enforce the live 10-second interval")
-+
-+    if "this->getMod(Mod::SIC_READY_RECAST)" not in cpp:
-+        failures.append("Ready charge math does not consume SIC_READY_RECAST")
-+    if "PAbility->getRecastId() == Recast::Sic ? 3s : 0s" not in cpp:
-+        failures.append("Ready charge math does not enforce the 3-second floor")
-+
-+    timing_cases = {
-+        "baseline": (0, 0, 10),
-+        "max merits": (5, 0, 5),
-+        "max investment": (5, 2, 3),
-+        "overcapped": (99, 99, 3),
-+        "malformed negatives": (-5, -5, 10),
-+    }
-+    for label, (merits, gear, expected) in timing_cases.items():
-+        actual = ready_charge_time(merits, gear)
-+        if actual != expected:
-+            failures.append(
-+                f"{label} timing is {actual}s; expected {expected}s"
-+            )
-+
-+    if ready_charge_time(5, 2) * 2 != 6:
-+        failures.append("two-charge Ready moves must recover in 6 seconds at cap")
-+
-+    if failures:
-+        print("BST Ready audit failed:", file=sys.stderr)
-+        for failure in failures:
-+            print(f"  - {failure}", file=sys.stderr)
-+        return 1
-+
-+    print(
-+        "BST Ready audit passed: 3 charges, "
-+        "10s baseline / 5s merits / 3s geared floor"
-+    )
-+    return 0
-+
-+
-+if __name__ == "__main__":
-+    raise SystemExit(main())
-diff --git a/tools/ci/sanity_checks.sh b/tools/ci/sanity_checks.sh
-index 5a60f357f3..bf9fc1b599 100755
---- a/tools/ci/sanity_checks.sh
-+++ b/tools/ci/sanity_checks.sh
-@@ -46,6 +46,11 @@ if ! python tools/audit_smn_blood_pacts.py | tee -a "$OUTPUT"; then
-     checks_failed=true
- fi
+diff --git a/scripts/tests/systems/legendary_weapon_pilgrimage.lua b/scripts/tests/systems/legendary_weapon_pilgrimage.lua
+index d2070bc920..ede28e7dad 100644
+--- a/scripts/tests/systems/legendary_weapon_pilgrimage.lua
++++ b/scripts/tests/systems/legendary_weapon_pilgrimage.lua
+@@ -215,9 +215,10 @@ describe('Legendary Weapon Pilgrimage integrity', function()
+             local rule = entry.archetypeRule
+             seen[rule.key] = true
+             assert(rule.key == 'great_sword_burst_survival' or rule.key == 'great_axe_armor'
++                or rule.key == 'katana_shadows'
+                 or rule.minTp or rule.behind or rule.maxHpp
+                 or rule.maxMpp or rule.minDistance or rule.petAlive
+-                or rule.petOrBerserk or rule.shadows)
++                or rule.petOrBerserk)
+             assert(rule.minDamage == nil)
+             assert(pilgrimage.archetypePass(attacker, {}, rule, state.tp))
+             if rule.minTp then
+@@ -242,10 +243,6 @@ describe('Legendary Weapon Pilgrimage integrity', function()
+                 state.pet, state.status = false, false
+                 assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
+                 state.pet, state.status = true, true
+-            elseif rule.shadows then
+-                state.status = false
+-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
+-                state.status = true
+             end
+         end
+         local count = 0
+diff --git a/scripts/zones/Sealions_Den/DefaultActions.lua b/scripts/zones/Sealions_Den/DefaultActions.lua
+index 986c62ae1c..8078df0ab7 100644
+--- a/scripts/zones/Sealions_Den/DefaultActions.lua
++++ b/scripts/zones/Sealions_Den/DefaultActions.lua
+@@ -1,7 +1,8 @@
+-local ID = zones[xi.zone.SEALIONS_DEN]
+-
+ return {
+-    ['_0w0']       = { messageSpecial = ID.text.IRON_GATE_LOCKED },
++    -- _0w0 is the shared battlefield entrance for The Warrior's Path and
++    -- One to be Feared. Battlefield registration owns its fallback behavior;
++    -- an always-active locked-gate action can win the interaction cycle and
++    -- prevent Legendary's named HTBF menu from opening.
+     ['Jovial_Rat'] = { event = 4 },
+     ['Sueleen']    = { event = 20 },
+ }
+==============================================================================
+commit 6113348a1a57c1c74df4ebaad7aa6a38eeaaa60a
+Author: Sion Roberts <siondewiroberts@gmail.com>
+Date:   Mon Aug 17 23:50:53 2026 +0100
+
+    feat(relaunch): lower Blood Pact recast to 20s native and 6s floor
+    
+    Co-authored-by: Cursor <cursoragent@cursor.com>
+
+diff --git a/modules/custom/lua/Augment_Moogle.lua b/modules/custom/lua/Augment_Moogle.lua
+index f1919e45fd..fb2bed8d0e 100644
+--- a/modules/custom/lua/Augment_Moogle.lua
++++ b/modules/custom/lua/Augment_Moogle.lua
+@@ -1721,7 +1721,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
+                 [1152] = 'Defense gear ceiling is +3200.',
+                 [1157] = 'Spell Interruption Rate Down gear ceiling is +80%.',
+                 [  57] = 'Magic Critical Hit Rate gear ceiling is +100%.',
+-                [ 320] = 'Blood Pact Delay I contributes up to 24s; Rage/Ward floor at 20s.',
++                [ 320] = 'Blood Pact Delay I contributes up to 24s; Rage/Ward start at 20s and floor at 6s.',
+             }
  
-+# Cross-check BST Ready charge SQL against the C++ charge-floor path.
-+if ! python tools/audit_bst_ready.py | tee -a "$OUTPUT"; then
-+    checks_failed=true
-+fi
+             for _, itemId in ipairs(catalystOrder) do
+diff --git a/modules/custom/lua/bp_delay_uncap.lua b/modules/custom/lua/bp_delay_uncap.lua
+index 8bf40c69bc..090d34ccac 100644
+--- a/modules/custom/lua/bp_delay_uncap.lua
++++ b/modules/custom/lua/bp_delay_uncap.lua
+@@ -3,7 +3,7 @@
+ --
+ -- Makes Summoner "Blood Pact Ability Delay" gear + augments actually scale.
+ --
+--- THE PROBLEM: a Blood Pact's base recast is 60s. The engine
++-- THE PROBLEM: a Blood Pact's engine recast is 60s. The C++ snapshot
+ -- (src/map/entities/charentity.cpp:1834) HARD-CAPS the BP_DELAY (mod 357)
+ -- reduction at 15s and the I+II total at 30s, so a SMN stacking AF/+2 gear AND
+ -- the "Blood Pact ability delay" augment -- which are ALL mod 357 -- pours
+@@ -13,16 +13,17 @@
+ -- THE FIX: the C++ snapshots the (capped) reduced recast into the "bpRecastTime"
+ -- localvar at ability-use time; the Lua handler xi.job_utils.summoner.onUseBloodPact
+ -- re-reads that localvar (summoner.lua:211) when the pact goes off and applies it
+--- as the recast. We override that handler, recompute bpRecastTime with the per-mod
+--- cap raised (so BP-delay gear/augments continue to count), clamp to the intended
+--- 20-second floor, then delegate to the original via super().
+--- Avatar's Favor stays capped at 10 (retail).
++-- as the recast. We override that handler, recompute bpRecastTime with Relaunch's
++-- 20s native base, raised per-mod cap, and 6s floor, then delegate via super().
++-- Avatar's Favor stays capped at 10 (retail). Astral Conduit bypasses the floor.
+ --
+ -- Pure Lua override module -> needs ONE map restart to load (no C++ rebuild). Every
+ -- BP script calls xi.job_utils.summoner.onUseBloodPact by full path at runtime
+ -- (scripts/actions/abilities/pets/*.lua), so the override is guaranteed to intercept.
+ --
+--- TUNING: 20 seconds is the maximum normal BP frequency with a completed setup.
++-- TUNING: 20 seconds is the uninvested Relaunch recast. Gear, augments and
++-- Avatar's Favor then reduce toward a 6-second floor. Astral Conduit still
++-- bypasses that floor so the job ability remains a true burst window.
+ -----------------------------------
+ require('modules/module_utils')
+ require('scripts/globals/job_utils/summoner')
+@@ -31,12 +32,17 @@ local m = Module:new('bp_delay_uncap')
+ 
+ local CONFIG =
+ {
++    base      = 20, -- Relaunch native Rage/Ward recast before delay gear.
+     perModCap = 24, -- was 60; engine stock is 15. Gear/augments still count past 15.
+-    floor     = 20, -- maximum normal frequency: one Rage and one Ward per 20s each.
++    floor     = 6,  -- maximum normal frequency: one Rage and one Ward per 6s each.
+     favorCap  = 10, -- Avatar's Favor reduction cap (retail). Unchanged.
+ }
+ 
+ xi.job_utils.summoner.getRelaunchBloodPactRecast = function(summoner)
++    if summoner:hasStatusEffect(xi.effect.ASTRAL_CONDUIT) then
++        return 0
++    end
 +
- # Lua
- python tools/ci/sanity_checks/lua_stylecheck.py test | tee -a "$OUTPUT"
- run_check tools/ci/sanity_checks/lua.sh "${CHANGED_FILES[@]}"
+     local favor = 0
+     local fav   = summoner:getStatusEffect(xi.effect.AVATARS_FAVOR)
+     if fav then
+@@ -46,7 +52,7 @@ xi.job_utils.summoner.getRelaunchBloodPactRecast = function(summoner)
+     local delayI  = math.min(math.max(summoner:getMod(xi.mod.BP_DELAY), 0), CONFIG.perModCap)
+     local delayII = math.min(math.max(summoner:getMod(xi.mod.BP_DELAY_II), 0), CONFIG.perModCap)
+ 
+-    return math.max(CONFIG.floor, 60 - delayI - delayII - favor)
++    return math.max(CONFIG.floor, CONFIG.base - delayI - delayII - favor)
+ end
+ 
+ m:addOverride('xi.job_utils.summoner.onUseBloodPact', function(target, petskill, summoner, action)
+diff --git a/scripts/tests/systems/blood_pact_delay.lua b/scripts/tests/systems/blood_pact_delay.lua
+index 7e3c8b76fe..3b872e27f9 100644
+--- a/scripts/tests/systems/blood_pact_delay.lua
++++ b/scripts/tests/systems/blood_pact_delay.lua
+@@ -1,7 +1,7 @@
+ require('modules/custom/lua/bp_delay_uncap')
+ 
+ describe('Blood Pact delay progression', function()
+-    local function makeSummoner(delayI, delayII, favorPower)
++    local function makeSummoner(delayI, delayII, favorPower, conduit)
+         return
+         {
+             getMod = function(_, modId)
+@@ -25,32 +25,47 @@ describe('Blood Pact delay progression', function()
+                     end,
+                 }
+             end,
++            hasStatusEffect = function(_, effectId)
++                return conduit and effectId == xi.effect.ASTRAL_CONDUIT
++            end,
+         }
+     end
+ 
++    it('uses a 20-second native recast before delay gear', function()
++        local summoner = makeSummoner(0, 0, nil)
++
++        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 20)
++    end)
++
+     it('allows ordinary Blood Pact delay augments past the stock 15-second bucket', function()
+-        local summoner = makeSummoner(20, 0, nil)
++        local summoner = makeSummoner(8, 0, nil)
+ 
+-        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 40)
++        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 12)
+     end)
+ 
+-    it('combines delay I, delay II and Avatars Favor', function()
+-        local summoner = makeSummoner(18, 7, 10)
++    it('combines delay I, delay II and Avatars Favor down to the 6-second floor', function()
++        local summoner = makeSummoner(8, 3, 10)
+ 
+-        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 25)
++        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 6)
+     end)
+ 
+-    it('enforces the 20-second maximum-frequency floor', function()
++    it('enforces the 6-second maximum-frequency floor', function()
+         local augmented = makeSummoner(32, 7, 10)
+         local overcapped = makeSummoner(99, 99, 99)
+ 
+-        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(augmented) == 20)
+-        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(overcapped) == 20)
++        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(augmented) == 6)
++        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(overcapped) == 6)
++    end)
++
++    it('lets Astral Conduit ignore the normal Blood Pact floor', function()
++        local summoner = makeSummoner(0, 0, nil, true)
++
++        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 0)
+     end)
+ 
+     it('does not let malformed negative delay values increase recast', function()
+         local summoner = makeSummoner(-3, -3, nil)
+ 
+-        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 60)
++        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 20)
+     end)
+ end)
