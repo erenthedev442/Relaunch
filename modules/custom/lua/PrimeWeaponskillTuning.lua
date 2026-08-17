@@ -5,6 +5,7 @@
 require('modules/module_utils')
 
 local catalog = require('modules/custom/lua/prime_ws_tuning_catalog')
+local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
 
 xi.primeWsTuning         = xi.primeWsTuning or {}
 xi.primeWsTuning.catalog = catalog
@@ -80,10 +81,14 @@ xi.primeWsTuning.withPrimeEffects = function(attacker, wsId, slot, callback)
     local capVar       = catalog.DAMAGE_CAP_LOCAL_VAR
     local priorCap     = attacker:getLocalVar(capVar)
     local priorAoECap  = attacker:getLocalVar('AoEWsDamageCap')
-    local primeCap     = catalog.getDamageCap(attacker:getMainJob())
+    local priorWsCap   = attacker:getLocalVar('StandardWsDamageCap')
+    local primeCap     = progression.getPlayerPrimeDamageCap(
+        attacker,
+        catalog.getDamageCap(attacker:getMainJob()))
 
     attacker:addMod(modId, tuning.wsDamageBonus or catalog.WS_DAMAGE_BONUS)
     attacker:setLocalVar(capVar, primeCap)
+    attacker:setLocalVar('StandardWsDamageCap', primeCap)
     if priorAoECap > 0 and slot == xi.slot.MAIN then
         attacker:setLocalVar('AoEWsDamageCap', catalog.AOE_DAMAGE_CAP)
     end
@@ -102,6 +107,7 @@ xi.primeWsTuning.withPrimeEffects = function(attacker, wsId, slot, callback)
         attacker:setMod(modId, priorMod)
         attacker:setLocalVar(capVar, priorCap)
         attacker:setLocalVar('AoEWsDamageCap', priorAoECap)
+        attacker:setLocalVar('StandardWsDamageCap', priorWsCap)
     end)
     activeCalculations[attacker] = nil
 

@@ -103,6 +103,8 @@ describe('Level-scaled direct magic tuning', function()
 
     it('keeps automaton nukes on companion weapon tiers', function()
         local function makeAutomaton(master)
+            local localVars = {}
+
             return
             {
                 isAutomaton = function()
@@ -114,6 +116,9 @@ describe('Level-scaled direct magic tuning', function()
                 getMaster = function()
                     return master
                 end,
+                setLocalVar = function(_, name, value)
+                    localVars[name] = value
+                end,
             }
         end
 
@@ -121,6 +126,17 @@ describe('Level-scaled direct magic tuning', function()
             makeAutomaton(makeCaster(99, true, xi.job.PUP, { [xi.slot.MAIN] = 1 }))) == 79999)
         assert(catalog.getDamageCap(
             makeAutomaton(makeCaster(99, true, xi.job.PUP, { [xi.slot.MAIN] = 20511 }))) == 999999)
+        assert(catalog.getDamageCap(
+            makeAutomaton(makeCaster(99, true, xi.job.PUP, { [xi.slot.MAIN] = 21535 }))) == 1499999)
+    end)
+
+    it('uses lower player caps for companion main jobs only', function()
+        assert(catalog.getDamageCap(
+            makeCaster(99, true, xi.job.SMN, { [xi.slot.MAIN] = 22063 })) == 249999)
+        assert(catalog.getDamageCap(
+            makeCaster(99, true, xi.job.PUP, { [xi.slot.MAIN] = 21535 })) == 499999)
+        assert(catalog.getDamageCap(
+            makeCaster(99, true, xi.job.BLM, { [xi.slot.MAIN] = 22062 })) == 999999)
     end)
 
     it('keeps ninjutsu in a lower progression band', function()
@@ -166,11 +182,11 @@ describe('Level-scaled direct magic tuning', function()
             makeSpell(xi.magic.spell.BLIZZARD_VI, xi.skill.ELEMENTAL_MAGIC, 99, xi.job.BLM)))
     end)
 
-    it('excludes Helix, dark magic, non-player casts, and non-mob targets', function()
+    it('allows Helix but excludes ordinary dark magic, non-player casts, and non-mob targets', function()
         local caster = makeCaster(99)
         local target = makeTarget(155, 120000)
 
-        assert(not catalog.isDirectSpellEligible(
+        assert(catalog.isDirectSpellEligible(
             caster, target, makeSpell(xi.magic.spell.GEOHELIX, xi.skill.ELEMENTAL_MAGIC)))
         assert(not catalog.isDirectSpellEligible(
             caster, target, makeSpell(xi.magic.spell.BIO_II, xi.skill.DARK_MAGIC)))

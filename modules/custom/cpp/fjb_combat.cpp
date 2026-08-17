@@ -20,6 +20,7 @@
 #include "map/entities/charentity.h"
 #include "map/entities/petentity.h"
 #include "map/enums/chat_message_type.h"
+#include "map/items.h"
 #include "map/packets/s2c/0x017_chat_std.h"
 
 #include <algorithm>
@@ -65,15 +66,6 @@ namespace
         return nullptr;
     }
 
-    // Automaton physical-damage multiplier (melee + ranged auto-attacks AND
-    // weaponskills, which all funnel through TakePhysical/TakeWeaponskillDamage).
-    // Does NOT touch magic-frame nukes or any non-automaton entity.
-    // 2026-07-06: turned down 20 -> 5 (relaunch PUP power reduction).
-    // 2026-07-13: owner call to cut the boost by 80%. The "boost" is the delta above
-    // baseline 1.0x, so 5.0x (boost +4.0) -> 1.8x (boost +0.8). Small headroom over
-    // stock damage; stat block in petutils.cpp got the same 80% trim in the same pass.
-    constexpr float AUTOMATON_DMG_MULTIPLIER = 1.8f;
-
     // Main-job-RNG player ranged-damage multiplier (auto-shots, Barrage,
     // ranged weaponskills, Eagle Eye Shot — everything funnels through
     // TakePhysical/TakeWeaponskillDamage with a ranged slot). Melee swings,
@@ -93,8 +85,9 @@ bool IsPlayerControlled(CBattleEntity* PAttacker)
 
 int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
 {
-    constexpr int32 PRIME_ABSOLUTE_DAMAGE_CAP  = 1999999;
-    constexpr int32 FELLOW_ABSOLUTE_DAMAGE_CAP = 99999;
+    constexpr int32 PRIME_ABSOLUTE_DAMAGE_CAP     = 1999999;
+    constexpr int32 COMPANION_ABSOLUTE_DAMAGE_CAP = 1499999;
+    constexpr int32 FELLOW_ABSOLUTE_DAMAGE_CAP    = 99999;
 
     if (PAttacker == nullptr)
     {
@@ -140,6 +133,56 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
     {
         constexpr int32 TRUST_DEFAULT_CAP = 40000;
         return globalCap > 0 ? std::min(globalCap, TRUST_DEFAULT_CAP) : TRUST_DEFAULT_CAP;
+    }
+
+    // BST/PUP/SMN Lua progression stamps the active weapon-tier ceiling on
+    // player-owned pets immediately before damage is applied. This permits the
+    // completed Prime tier to exceed the ordinary 999,999 global ceiling while
+    // leaving unrelated pets, mobs, trusts and baseline attacks unchanged.
+    if (
+        PAttacker->objtype == TYPE_PET &&
+        PAttacker->PMaster != nullptr &&
+        PAttacker->PMaster->objtype == TYPE_PC)
+    {
+        const auto companionCap =
+            static_cast<int32>(PAttacker->GetLocalVar("CompanionDamageCap"));
+        if (companionCap > 0)
+        {
+            const auto boundedCap = std::min(companionCap, COMPANION_ABSOLUTE_DAMAGE_CAP);
+            if (globalCap <= 0 || boundedCap <= globalCap)
+            {
+                return boundedCap;
+            }
+
+            auto*      PMaster                 = static_cast<CCharEntity*>(PAttacker->PMaster);
+            const auto masterJob               = PMaster->GetMJob();
+            const auto* PMainWeapon            = PMaster->getEquip(SLOT_MAIN);
+            const auto equippedMainItemId      = PMainWeapon != nullptr ? PMainWeapon->getID() : 0;
+            uint16     expectedPrimeMainItemId = 0;
+            switch (masterJob)
+            {
+                case JOB_BST:
+                    expectedPrimeMainItemId = 21730; // Spalirisos
+                    break;
+                case JOB_PUP:
+                    expectedPrimeMainItemId = 21535; // Varga Purnikawa
+                    break;
+                case JOB_SMN:
+                    expectedPrimeMainItemId = 22106; // Opashoro
+                    break;
+                default:
+                    break;
+            }
+
+            if (
+                companionCap == COMPANION_ABSOLUTE_DAMAGE_CAP &&
+                equippedMainItemId == expectedPrimeMainItemId)
+            {
+                return COMPANION_ABSOLUTE_DAMAGE_CAP;
+            }
+
+            return globalCap;
+        }
     }
 
     if (PAttacker->objtype != TYPE_PC)
@@ -375,13 +418,11 @@ void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_vie
         fmt::format("[{}] {}", label, damage));
 }
 
-int32 ApplyAutomatonDamageBonus(CBattleEntity* PAttacker, int32 damage)
+int32 ApplyAutomatonDamageBonus(CBattleEntity* /* PAttacker */, int32 damage)
 {
-    if (damage > 0 && PAttacker != nullptr && PAttacker->objtype == TYPE_PET &&
-        static_cast<CPetEntity*>(PAttacker)->getPetType() == PET_TYPE::AUTOMATON)
-    {
-        return static_cast<int32>(damage * AUTOMATON_DMG_MULTIPLIER);
-    }
+    // Automaton strength is supplied by its frame, attachments and maneuvers.
+    // Keep this compatibility hook neutral so callers do not grant every frame
+    // the same unconditional damage multiplier.
     return damage;
 }
 

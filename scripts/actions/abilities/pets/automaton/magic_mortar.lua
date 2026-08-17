@@ -33,6 +33,7 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
     local hpdamage = (automaton:getMaxHP() - automaton:getHP()) * ftp
     local skilldamage = automaton:getSkillLevel(xi.skill.AUTOMATON_MELEE) * ftp
     local damage = (hpdamage > skilldamage) and hpdamage or skilldamage
+    damage = xi.autows.applyAutomatonProgression(automaton, target, damage)
 
     if damage > 0 then
         target:addTP(20)

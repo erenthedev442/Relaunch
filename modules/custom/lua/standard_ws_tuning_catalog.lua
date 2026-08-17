@@ -19,18 +19,56 @@ catalog.FRESH_99_MULTIPLIER         = 8.00
 catalog.MASTERED_99_MULTIPLIER      = 13.00
 catalog.PET_FRESH_99_MULTIPLIER     = 7.00
 catalog.PET_MASTERED_99_MULTIPLIER  = 11.00
--- BST/DRG/PUP companion caps by master mainhand tier (pets never use Prime WS ceilings).
+-- BST/DRG/PUP/SMN companion caps by master mainhand tier (pets never use
+-- player Prime WS ceilings).
 catalog.PET_AMBU_DAMAGE_CAP         = 99999
 catalog.PET_REMA_DAMAGE_CAP         = 999999
--- Extra mult on top of the JP curve so REMA pets land ~200-300k Ready hits.
+catalog.PET_PRIME_DAMAGE_CAP        = 1499999
+catalog.COMPANION_PLAYER_REMA_CAP   = 249999
+catalog.COMPANION_PLAYER_PRIME_CAP  = 499999
+catalog.PET_DAMAGE_CAP_LOCAL_VAR    = 'CompanionDamageCap'
+-- Extra multipliers on top of the JP curve. Prime is the pinnacle companion
+-- tier; it raises potential without changing any pet's baseline formula.
 catalog.PET_AMBU_MULTIPLIER_BONUS   = 1.25
 catalog.PET_REMA_MULTIPLIER_BONUS   = 2.85
+catalog.PET_PRIME_MULTIPLIER_BONUS  = 4.25
 
--- Spalirisos (Prime BST axe) — hard-capped like REMA pets, never Prime-WS tier.
-local PET_PRIME_ITEM_IDS =
+local companionMainJobs =
 {
-    [21730] = true, -- Spalirisos
+    [xi.job.BST] = true,
+    [xi.job.PUP] = true,
+    [xi.job.SMN] = true,
 }
+
+local companionPrimeItemByJob =
+{
+    [xi.job.BST] = 21730, -- Spalirisos
+    [xi.job.PUP] = 21535, -- Varga Purnikawa
+    [xi.job.SMN] = 22106, -- Opashoro
+}
+
+local function isCompanionMainJob(player)
+    return
+        player ~= nil and
+        player:isPC() and
+        companionMainJobs[player:getMainJob()] == true
+end
+
+function catalog.getPlayerRemaDamageCap(player, defaultCap)
+    if isCompanionMainJob(player) then
+        return math.min(defaultCap, catalog.COMPANION_PLAYER_REMA_CAP)
+    end
+
+    return defaultCap
+end
+
+function catalog.getPlayerPrimeDamageCap(player, defaultCap)
+    if isCompanionMainJob(player) then
+        return math.min(defaultCap, catalog.COMPANION_PLAYER_PRIME_CAP)
+    end
+
+    return defaultCap
+end
 
 local function getMasterMainItemId(player)
     if not player then
@@ -67,9 +105,43 @@ local function isRemaFinalWeapon(itemId)
     return rema.BY_ITEM_ID[itemId] ~= nil
 end
 
+local function isPrimeFinalWeapon(itemId)
+    if itemId == 0 then
+        return false
+    end
+
+    local ok, prime = pcall(require, 'modules/custom/lua/prime_ws_tuning_catalog')
+    if not ok or not prime or not prime.PRIME_WS_TUNING then
+        return false
+    end
+
+    for _, entry in pairs(prime.PRIME_WS_TUNING) do
+        if entry.itemId == itemId then
+            return true
+        end
+    end
+
+    return false
+end
+
 function catalog.getPetDamageCap(player)
     local itemId = getMasterMainItemId(player)
-    if isRemaFinalWeapon(itemId) or PET_PRIME_ITEM_IDS[itemId] then
+    if isPrimeFinalWeapon(itemId) then
+        local mainJob = player:getMainJob()
+        if companionPrimeItemByJob[mainJob] == itemId then
+            return catalog.PET_PRIME_DAMAGE_CAP
+        end
+
+        if companionMainJobs[mainJob] then
+            return catalog.DAMAGE_CAP
+        end
+
+        -- Jobs outside this identity change keep their previous
+        -- REMA-equivalent Prime pet tier.
+        return catalog.PET_REMA_DAMAGE_CAP
+    end
+
+    if isRemaFinalWeapon(itemId) then
         return catalog.PET_REMA_DAMAGE_CAP
     end
 
@@ -78,6 +150,13 @@ function catalog.getPetDamageCap(player)
     end
 
     return catalog.DAMAGE_CAP
+end
+
+function catalog.setPetDamageCap(pet, player)
+    local cap = catalog.getPetDamageCap(player)
+    pet:setLocalVar(catalog.PET_DAMAGE_CAP_LOCAL_VAR, cap)
+
+    return cap
 end
 
 -- A three-level grace band keeps ordinary Even Match / Tough combat unchanged.
@@ -201,7 +280,14 @@ function catalog.getPetDamageMultiplier(player, target)
 
     local mult = 1 + (endgameMultiplier - 1) * progressionFactor
     local itemId = getMasterMainItemId(player)
-    if isRemaFinalWeapon(itemId) or PET_PRIME_ITEM_IDS[itemId] then
+    if isPrimeFinalWeapon(itemId) then
+        local mainJob = player:getMainJob()
+        if companionPrimeItemByJob[mainJob] == itemId then
+            mult = mult * catalog.PET_PRIME_MULTIPLIER_BONUS
+        elseif not companionMainJobs[mainJob] then
+            mult = mult * catalog.PET_REMA_MULTIPLIER_BONUS
+        end
+    elseif isRemaFinalWeapon(itemId) then
         mult = mult * catalog.PET_REMA_MULTIPLIER_BONUS
     elseif isAmbuFinalWeapon(itemId) then
         mult = mult * catalog.PET_AMBU_MULTIPLIER_BONUS

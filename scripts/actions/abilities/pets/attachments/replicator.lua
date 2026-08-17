@@ -11,6 +11,7 @@ attachmentObject.onEquip = function(pet)
 
         if
             master and
+            not automaton:hasRecast(xi.recast.ABILITY, xi.automaton.abilities.REPLICATOR) and
             master:countEffect(xi.effect.WIND_MANEUVER) > 0 and
             automaton:getHPP() <= hpthreshold and
             not automaton:hasStatusEffect(xi.effect.BLINK)

@@ -184,6 +184,28 @@ const std::set traverserStoneReductionKeyItems = {
     KeyItem::IVORY_ABYSSITE_OF_CELERITY
 };
 
+void snapshotAvatarVitals(CCharEntity* PChar)
+{
+    if (PChar->GetMJob() != JOB_SMN ||
+        !PChar->PPet ||
+        PChar->PPet->objtype != TYPE_PET)
+    {
+        return;
+    }
+
+    auto* PPet = static_cast<CPetEntity*>(PChar->PPet);
+    if (PPet->getPetType() != PET_TYPE::AVATAR)
+    {
+        return;
+    }
+
+    PPet->SetLocalVar("avatar_vitals_snapshot", 1);
+    PPet->SetLocalVar("avatar_previous_hp", PPet->health.hp);
+    PPet->SetLocalVar("avatar_previous_mp", PPet->health.mp);
+    PPet->SetLocalVar("avatar_previous_maxhp", PPet->GetMaxHP());
+    PPet->SetLocalVar("avatar_previous_maxmp", PPet->GetMaxMP());
+}
+
 } // namespace
 
 namespace charutils
@@ -2213,6 +2235,7 @@ void UnequipItem(CCharEntity* PChar, uint8 equipSlotID, Recalculate recalculate)
         }
         PChar->delEquipModifiers(&((CItemEquipment*)PItem)->modList, ((CItemEquipment*)PItem)->getReqLvl(), equipSlotID);
         PChar->PLatentEffectContainer->DelLatentEffects(((CItemEquipment*)PItem)->getReqLvl(), equipSlotID);
+        snapshotAvatarVitals(PChar);
         PChar->delPetModifiers(&((CItemEquipment*)PItem)->petModList);
 
         // Legendary: re-run CalculateAvatarStats so AVATAR_LVL_BONUS (and
@@ -3418,6 +3441,7 @@ void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 contai
                 PChar->addEquipModifiers(&PItem->modList, PItem->getReqLvl(), equipSlotID);
                 PChar->PLatentEffectContainer->AddLatentEffects(PItem->latentList, PItem->getReqLvl(), equipSlotID);
                 PChar->PLatentEffectContainer->CheckLatentsEquip(equipSlotID);
+                snapshotAvatarVitals(PChar);
                 PChar->addPetModifiers(&PItem->petModList);
 
                 // Legendary: re-run CalculateAvatarStats so AVATAR_LVL_BONUS (and

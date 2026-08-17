@@ -77,6 +77,7 @@ local categories =
             '!fellowstats - Fellow build summary',
             '!pup - Automaton controls',
             '!petstats - current pet stats',
+            '!autoready [on|off|status] - BST jug auto-Ready',
             '!trustattack - Trust targeting controls',
         },
     },

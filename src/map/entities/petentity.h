@@ -73,11 +73,20 @@ public:
     void              OnPetSkillFinished(CPetSkillState& state, action_t& action);
     virtual bool      CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg) override;
 
+    void clearStatRecalculationModifiers();
+    void addStatRecalculationModifier(Mod type, int16 amount);
+    void clearAppliedMasterPetModifiers();
+    void recordAppliedMasterPetModifier(Mod type, int16 amount);
+    void resetModifierTracking();
+
 private:
     PET_TYPE          m_PetType;      // the type of pet e.g. avatar/wyvern/jugpet etc
     uint8             m_spawnLevel;   // The level the pet was spawned at
     timer::time_point m_jugSpawnTime; // original spawn time of a jug pet
     timer::duration   m_jugDuration;  // Time before the jug is despawned after being called
+
+    std::unordered_map<Mod, int16, EnumClassHash> m_statRecalculationModifiers;
+    std::unordered_map<Mod, int16, EnumClassHash> m_appliedMasterPetModifiers;
 
     void setJugSpawnTime(timer::time_point spawnTime); // sets the initial spawn time of this pet
 };

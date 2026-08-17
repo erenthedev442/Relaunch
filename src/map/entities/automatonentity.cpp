@@ -180,22 +180,23 @@ void CAutomatonEntity::OnCastFinished(CMagicState& state, action_t& action)
     CMobEntity::OnCastFinished(state, action);
 
     auto* PSpell  = state.GetSpell();
-    auto* PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+    auto* PTarget = dynamic_cast<CBattleEntity*>(state.GetTarget());
+
+    if (!PSpell)
+    {
+        return;
+    }
 
     PRecastContainer->Add(RECAST_MAGIC, static_cast<Recast>(PSpell->getID()), action.recast);
 
-    if (PSpell->tookEffect())
+    if (PSpell->tookEffect() && PTarget)
     {
         puppetutils::TrySkillUP(this, SKILL_AUTOMATON_MAGIC, PTarget->GetMLevel());
 
-        if (PTarget && PTarget->objtype == TYPE_MOB && PTarget->allegiance != ALLEGIANCE_TYPE::PLAYER)
+        if (PTarget->objtype == TYPE_MOB && PTarget->allegiance != ALLEGIANCE_TYPE::PLAYER)
         {
-            auto* PMob    = static_cast<CMobEntity*>(PTarget);
-            auto* PMaster = dynamic_cast<CBattleEntity*>(this->PMaster);
-            if (PMaster && PMaster->objtype == TYPE_PC)
-            {
-                PMob->PEnmityContainer->AddBaseEnmity(PMaster);
-            }
+            auto* PMob = static_cast<CMobEntity*>(PTarget);
+            PMob->PEnmityContainer->AddBaseEnmity(this);
         }
     }
 }
@@ -205,20 +206,16 @@ void CAutomatonEntity::OnMobSkillFinished(CMobSkillState& state, action_t& actio
     CMobEntity::OnMobSkillFinished(state, action);
 
     auto* PSkill  = state.GetSkill();
-    auto* PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+    auto* PTarget = dynamic_cast<CBattleEntity*>(state.GetTarget());
 
     if (PTarget && PTarget->objtype == TYPE_MOB && PTarget->allegiance != ALLEGIANCE_TYPE::PLAYER)
     {
-        auto* PMob    = static_cast<CMobEntity*>(PTarget);
-        auto* PMaster = dynamic_cast<CBattleEntity*>(this->PMaster);
-        if (PMaster && PMaster->objtype == TYPE_PC)
-        {
-            PMob->PEnmityContainer->AddBaseEnmity(PMaster);
-        }
+        auto* PMob = static_cast<CMobEntity*>(PTarget);
+        PMob->PEnmityContainer->AddBaseEnmity(this);
     }
 
     // Ranged attack skill up
-    if (PSkill->getID() == 1949 && !PSkill->hasMissMsg())
+    if (PSkill && PTarget && PSkill->getID() == 1949 && !PSkill->hasMissMsg())
     {
         puppetutils::TrySkillUP(this, SKILL_AUTOMATON_RANGED, PTarget->GetMLevel());
     }

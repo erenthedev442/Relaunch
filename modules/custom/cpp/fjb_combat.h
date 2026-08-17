@@ -49,8 +49,8 @@ uint8 ApplyTrustEndgameHitRateAdjust(CBattleEntity* PAttacker, CBattleEntity* PD
 // in chat. No-op for <=131071 or non-player-controlled sources.
 void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_view type);
 
-// Scale an automaton's outgoing PHYSICAL damage by AUTOMATON_DMG_MULTIPLIER.
-// Returns damage unchanged for non-automaton attackers or damage <= 0.
+// Compatibility hook for the retired universal automaton physical multiplier.
+// Role output now comes from frames, attachments and maneuvers.
 int32 ApplyAutomatonDamageBonus(CBattleEntity* PAttacker, int32 damage);
 
 // Scale a main-job-RNG player's outgoing RANGED damage (auto-shots, ranged

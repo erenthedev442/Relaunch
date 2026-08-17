@@ -31,51 +31,46 @@ local jugCatalog = require('modules/custom/lua/jug_power_catalog')
 -- ── Tunables ───────────────────────────────────────────────────────────────
 local CONFIG =
 {
-    -- Flat endgame floors so even a fresh BST's pet is immediately viable. These
-    -- are the LEVEL-99 values; applyEndgameScaling multiplies them by mainLvl/99
-    -- so low-level pets aren't overtuned (see floorMult below).
+    -- Modest level-99 floors. Beast Affinity, master stats and Pet: augments
+    -- must provide the majority of endgame strength.
     -- These shared values are weighted per pet by jug_power_catalog. They are
     -- intentionally modest so unstacked pets do not pin their damage cap.
-    flatATT = 1800,
-    flatACC = 2200,
-    flatSTR = 180,
-    flatHP  = 30000,
+    flatATT = 500,
+    flatACC = 600,
+    flatSTR = 45,
+    flatHP  = 8000,
 
     -- Gear-scaling: the pet inherits this share of the MASTER's stats, so it
     -- gets stronger as the BST gears/augments up (the "scales toward the cap" bit).
-    masterSTRShare = 0.50,
-    masterATTShare = 0.60,
-    masterACCShare = 0.75,
-    masterHPShare  = 1.00,
+    masterSTRShare = 0.75,
+    masterATTShare = 1.00,
+    masterACCShare = 1.00,
+    masterHPShare  = 1.50,
 
-    attp = 20,
+    attp = 10,
 
     -- Survivability. Tank roles multiply this baseline; the engine caps at -50%.
-    pdt = -1000,
-    mdt = -1000,
+    pdt = -500,
+    mdt = -500,
 
     -- Melee throughput. Fast roles multiply this baseline.
-    doubleAttack = 20,
-    tripleAttack = 5,
+    doubleAttack = 8,
+    tripleAttack = 2,
 
-    -- Magical pet damage floor (Fly/Funguar/Lizard/Slug Ready nukes).
-    -- 2026-08-05 retune: Fireball/Purulent Ooze were permanently pinning the
-    -- 79,999 (AoE 39,999) companion cap. Aim ~40-55k unaugmented magic Ready
-    -- at 99, with Beast Affinity / gear pushing strong pets to the default cap.
-    flatMAB  = 350,
-    flatMACC = 500,
-    masterMATTShare = 0.60,
-    masterMACCShare = 0.75,
+    -- Magical pet floor (Fly/Funguar/Lizard/Slug Ready nukes). Deliberately
+    -- restrained so Pet: MAB/MACC, Beast Affinity and master gear dominate.
+    flatMAB  = 100,
+    flatMACC = 180,
+    masterMATTShare = 1.00,
+    masterMACCShare = 1.00,
 
     -- Magical Ready: MAGIC_DAMAGE adds before fTP; BP_DAMAGE is ×(1+BP/100).
-    -- Was 500 / 300 (×4) and always hard-capped. Now ~180 / 90 (×1.9).
-    flatMagicDamage  = 75,
-    flatMagicDMGMult = 20,
+    flatMagicDamage  = 40,
+    flatMagicDMGMult = 10,
 
-    -- Physical Ready uses getWeaponDmg(); jug stock weapon DMG ~= level (~99),
-    -- which left tiger/mandy/hippogryph Ready at 3-12k after the ×7-11 curve.
-    -- Raise weapon damage so physical Ready benchmarks ~40-55k with augments.
-    flatWeaponDamage = 180,
+    -- Physical Ready uses getWeaponDmg(); Beast Affinity scales this floor,
+    -- while Pet: attributes, attack and TP Bonus scale the complete formula.
+    flatWeaponDamage = 120,
 
     -- Auto-Ready: pet fires its TP move on its own once it caps TP.
     autoReady           = true,
@@ -92,6 +87,7 @@ local CONFIG =
 
 -- Jug pets are petID >= SHEEP_FAMILIAR (21). 0-7 = spirits, 8-20 = SMN avatars.
 local JUG_MIN = xi.petId.SHEEP_FAMILIAR
+local AUTO_READY_OFF_VAR = 'BST_AutoReadyOff'
 
 -- ── Auto-Ready loop ────────────────────────────────────────────────────────
 -- Self-rescheduling; bails out when the pet dies/despawns.
@@ -100,7 +96,13 @@ local function scheduleAutoReady(pet)
         if not p or not p:isAlive() then
             return
         end
-        if p:isEngaged() and p:getTP() >= CONFIG.autoReadyTP then
+        local master = p:getMaster()
+        if
+            master and
+            (master:getCharVar(AUTO_READY_OFF_VAR) or 0) == 0 and
+            p:isEngaged() and
+            p:getTP() >= CONFIG.autoReadyTP
+        then
             p:useMobAbility() -- no arg = pet picks from its Ready-move list
         end
         scheduleAutoReady(p)
@@ -223,9 +225,12 @@ local function applyEndgameScaling(master, pet)
     pet:setMaxHP(pet:getMaxHP() + bonusHP)
     pet:addHP(bonusHP)
 
-    -- Ready moves receive a modest ecosystem matchup bonus/penalty in
-    -- mobskills.lua. It is applied before weapon-tier caps.
-    pet:setLocalVar('JugEcosystemMatchupBps', 1000)
+    -- Ready moves receive an asymmetric ecosystem modifier in mobskills.lua.
+    -- The correct family gains +50%; using a pet into its predator loses 25%.
+    -- Both multiply the result built from gear, augments, stats, TP and weapon
+    -- progression rather than supplying flat baseline damage.
+    pet:setLocalVar('JugEcosystemFavorableBps', 5000)
+    pet:setLocalVar('JugEcosystemUnfavorableBps', 2500)
 
     if CONFIG.autoReady then
         scheduleAutoReady(pet)

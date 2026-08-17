@@ -14,6 +14,7 @@
 require('modules/module_utils')
 
 local catalog = require('modules/custom/lua/rema_ws_tier_catalog')
+local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
 
 xi.remaWsTier         = xi.remaWsTier or {}
 xi.remaWsTier.catalog = catalog
@@ -156,7 +157,9 @@ xi.remaWsTier.withTemporaryBonus = function(attacker, wsId, slot, callback)
     local priorWsCap    = attacker:getLocalVar('StandardWsDamageCap')
 
     attacker:addMod(modId, bonusPercent)
-    attacker:setLocalVar('StandardWsDamageCap', catalog.NATIVE_DAMAGE_CAP)
+    attacker:setLocalVar(
+        'StandardWsDamageCap',
+        progression.getPlayerRemaDamageCap(attacker, catalog.NATIVE_DAMAGE_CAP))
     if magicAccBonus > 0 then
         attacker:addMod(xi.mod.MACC, magicAccBonus)
     end

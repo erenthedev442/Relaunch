@@ -8,21 +8,16 @@ local standardProgression = require('modules/custom/lua/standard_ws_tuning_catal
 xi = xi or {}
 xi.autows = xi.autows or {}
 
--- Keep the Legendary automaton physical boost, but apply it before the
--- companion ceiling. A post-cap multiplier made the advertised 79,999 cap
--- land as 143,998 damage.
-local AUTOMATON_COMBAT_MULTIPLIER = 1.8
-
-local function applyAutomatonProgression(attacker, target, damage)
+xi.autows.applyAutomatonProgression = function(attacker, target, damage)
     local master = attacker:getMaster()
     if damage <= 0 or master == nil or not master:isPC() then
         return damage
     end
 
     return standardProgression.applyMultiplier(
-        damage * AUTOMATON_COMBAT_MULTIPLIER,
+        damage,
         standardProgression.getPetDamageMultiplier(master, target),
-        standardProgression.getPetDamageCap(master))
+        standardProgression.setPetDamageCap(attacker, master))
 end
 
 -- params contains: ftpMod, str_wsc, dex_wsc, vit_wsc, int_wsc, mnd_wsc, critVaries, accVaries, ignoredDefense, atkmulti, kick, accBonus, weaponType, weaponDamage
@@ -97,7 +92,7 @@ xi.autows.doAutoPhysicalWeaponskill = function(attacker, target, wsID, tp, prima
     end
 
     finaldmg = finaldmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
-    finaldmg = applyAutomatonProgression(attacker, target, finaldmg)
+    finaldmg = xi.autows.applyAutomatonProgression(attacker, target, finaldmg)
     calcParams.finalDmg = finaldmg
 
     if calcParams.tpHitsLanded + calcParams.extraHitsLanded > 0 then
@@ -166,7 +161,7 @@ xi.autows.doAutoRangedWeaponskill = function(attacker, target, wsID, wsParams, t
     finaldmg = finaldmg * (1 + target:getMod(xi.mod.PIERCE_SDT) / 10000)
 
     finaldmg = finaldmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
-    finaldmg = applyAutomatonProgression(attacker, target, finaldmg)
+    finaldmg = xi.autows.applyAutomatonProgression(attacker, target, finaldmg)
     calcParams.finalDmg = finaldmg
 
     if calcParams.tpHitsLanded + calcParams.extraHitsLanded > 0 then

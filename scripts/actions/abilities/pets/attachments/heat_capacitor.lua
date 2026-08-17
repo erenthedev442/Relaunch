@@ -10,10 +10,11 @@ attachmentObject.onEquip = function(pet)
         local master = automaton:getMaster()
         if
             master and
+            not automaton:hasRecast(xi.recast.ABILITY, xi.automaton.abilities.HEAT_CAPACITOR) and
             master:countEffect(xi.effect.FIRE_MANEUVER) > 0 and
             automaton:getLocalVar('meditate') < VanadielTime()
         then
-            automaton:useMobAbility(2745, automaton)
+            automaton:useMobAbility(xi.automaton.abilities.HEAT_CAPACITOR, automaton)
         end
     end)
 end

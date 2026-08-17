@@ -19,7 +19,11 @@ attachmentObject.onEquip = function(pet)
         end
 
         local mpp = (automaton:getMaxMP() > 0) and math.ceil(automaton:getMP() / automaton:getMaxMP() * 100) or 100
-        if mpp < mpthreshold and automaton:getLocalVar('convert') < VanadielTime() then
+        if
+            mpp < mpthreshold and
+            not automaton:hasRecast(xi.recast.ABILITY, xi.automaton.abilities.MANA_CONVERTER) and
+            automaton:getLocalVar('convert') < VanadielTime()
+        then
             automaton:useMobAbility(xi.automaton.abilities.MANA_CONVERTER, automaton)
         end
     end)

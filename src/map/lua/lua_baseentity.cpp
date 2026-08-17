@@ -7411,6 +7411,7 @@ uint8 CLuaBaseEntity::levelRestriction(const sol::object& level)
                 PPet->StatusEffectContainer->KillAllStatusEffect();
                 PPet->restoreModifiers();
                 PPet->restoreMobModifiers();
+                PPet->resetModifierTracking();
                 PPet->TraitList.clear();
 
                 switch (PPet->getPetType())
@@ -18878,6 +18879,7 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
     m_PBaseEntity->PAI->QueueAction(queueAction_t(0ms, true, [PTarget, skillid, PMobSkill, castTimeOverride, ignoreDistance](auto PEntity)
     {
         auto mobObj = dynamic_cast<CMobEntity*>(PEntity);
+        bool activated = false;
 
         // has both a valid target (specified by user and mob)
         if (PTarget && mobObj)
@@ -18885,7 +18887,7 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
             float currentDistance = distance(mobObj->loc.p, PTarget->loc.p);
             if (ignoreDistance || currentDistance <= PMobSkill->getDistance())
             {
-                PEntity->PAI->MobSkill(PTarget->targid, skillid, castTimeOverride);
+                activated = PEntity->PAI->MobSkill(PTarget->targid, skillid, castTimeOverride);
             }
         }
         // does not have a specified target so default to current battle target
@@ -18894,7 +18896,7 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
             // Self-centered AoE uses self as target
             if (PMobSkill->getAoe() == static_cast<uint8>(AOE_RADIUS::ATTACKER))
             {
-                PEntity->PAI->MobSkill(PEntity->targid, skillid, castTimeOverride);
+                activated = PEntity->PAI->MobSkill(PEntity->targid, skillid, castTimeOverride);
             }
             else if (PMobSkill->getValidTargets() & TARGET_ENEMY)
             {
@@ -18905,14 +18907,19 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
                     float currentDistance = distance(mobObj->loc.p, defaultTarget->loc.p);
                     if (ignoreDistance || currentDistance <= PMobSkill->getDistance())
                     {
-                        PEntity->PAI->MobSkill(defaultTarget->targid, skillid, castTimeOverride);
+                        activated = PEntity->PAI->MobSkill(defaultTarget->targid, skillid, castTimeOverride);
                     }
                 }
             }
             else if (PMobSkill->getValidTargets() & TARGET_SELF)
             {
-                PEntity->PAI->MobSkill(PEntity->targid, skillid, castTimeOverride);
+                activated = PEntity->PAI->MobSkill(PEntity->targid, skillid, castTimeOverride);
             }
+        }
+
+        if (activated && dynamic_cast<CAutomatonEntity*>(PEntity) && PEntity->GetLocalVar("AutomatonAttachmentChecking") != 0)
+        {
+            PEntity->SetLocalVar("AutomatonAttachmentActivated", 1);
         }
     }));
     // clang-format on
@@ -19005,17 +19012,18 @@ bool CLuaBaseEntity::hasTPMoves()
         return false;
     }
 
-    uint16 speciesID = 0;
+    auto* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
 
-    if (m_PBaseEntity->objtype & TYPE_PET)
+    // Species/family IDs and mob skill-list IDs are separate namespaces.
+    // Prefer the active mob-mod list (which content can override), then fall
+    // back to the entity's pool list.
+    uint16 skillListID = PMob->getMobMod(MOBMOD_SKILL_LIST);
+    if (skillListID == 0)
     {
-        speciesID = static_cast<CPetEntity*>(m_PBaseEntity)->m_Species;
+        skillListID = PMob->m_MobSkillList;
     }
-    else if (m_PBaseEntity->objtype & TYPE_MOB)
-    {
-        speciesID = static_cast<CMobEntity*>(m_PBaseEntity)->m_Species;
-    }
-    const std::vector<uint16>& MobSkills = battleutils::GetMobSkillList(speciesID);
+
+    const std::vector<uint16>& MobSkills = battleutils::GetMobSkillList(skillListID);
 
     return !MobSkills.empty();
 }

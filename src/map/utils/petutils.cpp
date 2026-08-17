@@ -582,96 +582,118 @@ void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats,
         static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setSkillType(SKILL_AUTOMATON_MELEE);
         static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setDelay(petStats->cmbDelay); // every pet should use this eventually
         static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setBaseDelay(petStats->cmbDelay);
-        // FJB: bumped weapon rating so automatons contribute vs high-level custom NMs.
-        // Stock formula (skill/9)*2+3 gives D87 at rank-5 lv99 (skill 380); the initial FJB
-        // formula skill/3+20 pushed that to D146 (+59). 2026-07-13 owner call: cut the boost
-        // by 80% -> (skill/9)*2 + 15 gives a flat +12 over stock at every skill level (D99 at
-        // rank-5 lv99). Retail-shaped scaling, small headroom for lv150 NMs.
-        static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_MELEE) / 9) * 2 + 15);
+        // Both attack rounds and automaton WS read these weapon objects. Keep
+        // the retail-like +3 rating in one stored source instead of maintaining
+        // a second formula in CBattleEntity::GetMainWeaponDmg().
+        const auto getAutomatonWeaponDamage = [](uint16 skill)
+        {
+            return static_cast<uint16>((skill / 9) * 2 + 3);
+        };
+        static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setDamage(getAutomatonWeaponDamage(PPet->GetSkill(SKILL_AUTOMATON_MELEE)));
 
         static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_RANGED])->setSkillType(SKILL_AUTOMATON_RANGED);
-        static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_RANGED])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_RANGED) / 9) * 2 + 15);
+        static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_RANGED])->setDamage(getAutomatonWeaponDamage(PPet->GetSkill(SKILL_AUTOMATON_RANGED)));
         static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_RANGED])->setDmgType(DAMAGE_TYPE::PIERCING);
 
         // Automatons are hard to interrupt
-        PPet->addModifier(Mod::SPELLINTERRUPT, 85);
+        PPet->addStatRecalculationModifier(Mod::SPELLINTERRUPT, 85);
 
+        const auto roleBonus = [mlvl](int16 level99Value)
+        {
+            return static_cast<int16>(level99Value * std::min<uint8>(mlvl, 99) / 99);
+        };
+
+        // Frames provide aptitude, not a complete build. Attachments and
+        // maneuvers supply the larger combat, mitigation and sustain layers.
         switch (PAutomaton->getFrame())
         {
             default: // case AutomatonFrame::Harlequin:
                 tempSkills.evasion = battleutils::GetMaxSkill(2, mlvl > 99 ? 99 : mlvl);
-                PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(10, mlvl > 99 ? 99 : mlvl));
+                PPet->addStatRecalculationModifier(Mod::DEF, battleutils::GetMaxSkill(10, mlvl > 99 ? 99 : mlvl));
+                PPet->addStatRecalculationModifier(Mod::HP, roleBonus(150));
+                PPet->addStatRecalculationModifier(Mod::MP, roleBonus(100));
                 break;
             case AutomatonFrame::Valoredge:
-                PPet->setModifier(Mod::SHIELDBLOCKRATE, 45);
+                PPet->addStatRecalculationModifier(Mod::SHIELDBLOCKRATE, 45);
                 PPet->setMobMod(MOBMOD_CAN_SHIELD_BLOCK, 1);
                 tempSkills.evasion = battleutils::GetMaxSkill(5, mlvl > 99 ? 99 : mlvl);
-                PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(5, mlvl > 99 ? 99 : mlvl));
+                PPet->addStatRecalculationModifier(Mod::DEF, battleutils::GetMaxSkill(5, mlvl > 99 ? 99 : mlvl));
+                PPet->addStatRecalculationModifier(Mod::HP, roleBonus(500));
+                PPet->addStatRecalculationModifier(Mod::VIT, roleBonus(20));
+                PPet->addStatRecalculationModifier(Mod::DEF, roleBonus(30));
                 break;
             case AutomatonFrame::Sharpshot:
                 tempSkills.evasion = battleutils::GetMaxSkill(1, mlvl > 99 ? 99 : mlvl);
-                PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(11, mlvl > 99 ? 99 : mlvl));
+                PPet->addStatRecalculationModifier(Mod::DEF, battleutils::GetMaxSkill(11, mlvl > 99 ? 99 : mlvl));
+                PPet->addStatRecalculationModifier(Mod::DEX, roleBonus(15));
+                PPet->addStatRecalculationModifier(Mod::AGI, roleBonus(25));
+                PPet->addStatRecalculationModifier(Mod::RATT, roleBonus(25));
+                PPet->addStatRecalculationModifier(Mod::RACC, roleBonus(15));
                 break;
             case AutomatonFrame::Stormwaker:
                 tempSkills.evasion = battleutils::GetMaxSkill(10, mlvl > 99 ? 99 : mlvl);
-                PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(12, mlvl > 99 ? 99 : mlvl));
+                PPet->addStatRecalculationModifier(Mod::DEF, battleutils::GetMaxSkill(12, mlvl > 99 ? 99 : mlvl));
+                PPet->addStatRecalculationModifier(Mod::MP, roleBonus(300));
+                PPet->addStatRecalculationModifier(Mod::INT, roleBonus(25));
+                PPet->addStatRecalculationModifier(Mod::MND, roleBonus(15));
+                PPet->addStatRecalculationModifier(Mod::MATT, roleBonus(20));
+                PPet->addStatRecalculationModifier(Mod::MACC, roleBonus(15));
+                break;
+        }
+        PPet->WorkingSkills.evasion = tempSkills.evasion;
+
+        // Heads refine the frame into a job. Mixed head/frame combinations
+        // remain useful without inheriting the full strength of another frame.
+        switch (PAutomaton->getHead())
+        {
+            case AutomatonHead::Valoredge:
+                PPet->addStatRecalculationModifier(Mod::VIT, roleBonus(10));
+                PPet->addStatRecalculationModifier(Mod::DEF, roleBonus(10));
+                break;
+            case AutomatonHead::Sharpshot:
+                PPet->addStatRecalculationModifier(Mod::DEX, roleBonus(10));
+                PPet->addStatRecalculationModifier(Mod::AGI, roleBonus(10));
+                PPet->addStatRecalculationModifier(Mod::RACC, roleBonus(10));
+                break;
+            case AutomatonHead::Stormwaker:
+                PPet->addStatRecalculationModifier(Mod::MP, roleBonus(100));
+                PPet->addStatRecalculationModifier(Mod::INT, roleBonus(10));
+                PPet->addStatRecalculationModifier(Mod::MND, roleBonus(10));
+                break;
+            case AutomatonHead::Soulsoother:
+                PPet->addStatRecalculationModifier(Mod::MP, roleBonus(150));
+                PPet->addStatRecalculationModifier(Mod::MND, roleBonus(20));
+                break;
+            case AutomatonHead::Spiritreaver:
+                PPet->addStatRecalculationModifier(Mod::MP, roleBonus(150));
+                PPet->addStatRecalculationModifier(Mod::INT, roleBonus(20));
+                PPet->addStatRecalculationModifier(Mod::MACC, roleBonus(10));
+                break;
+            default:
                 break;
         }
 
         // Add Job Point Stat Bonuses
         if (PMaster->GetMJob() == JOB_PUP)
         {
-            PPet->addModifier(Mod::ATT, PMaster->getMod(Mod::PET_ATK_DEF));
-            PPet->addModifier(Mod::DEF, PMaster->getMod(Mod::PET_ATK_DEF));
-            PPet->addModifier(Mod::ACC, PMaster->getMod(Mod::PET_ACC_EVA));
-            PPet->addModifier(Mod::EVA, PMaster->getMod(Mod::PET_ACC_EVA));
-            PPet->addModifier(Mod::MATT, PMaster->getMod(Mod::PET_MAB_MDB));
-            PPet->addModifier(Mod::MDEF, PMaster->getMod(Mod::PET_MAB_MDB));
-            PPet->addModifier(Mod::MACC, PMaster->getMod(Mod::PET_MACC_MEVA));
-            PPet->addModifier(Mod::MEVA, PMaster->getMod(Mod::PET_MACC_MEVA));
-            // FJB: flat ACC/ATT bonus so automatons can meaningfully participate against
-            // level-150 custom NMs. Skill is capped at lv99 but our NMs are lv150 with
-            // large EVA/DEF mods -- without a bump automatons miss constantly and do
-            // near-zero damage even with optimal attachments.
-            //
-            // 2026-07-13 owner call: cut all six flats by 80% (ATT 400->80, ACC 300->60,
-            // DEF 400->80, REGEN 100->20, HP 10k+MaxHP/2 clamp 28k -> 2k+MaxHP/10 clamp 5.6k)
-            // because the previous stack was tuned against lv150 NMs but stomped everything
-            // else on the server. Trim leaves the shape retail-adjacent with headroom for
-            // lv150 fights.
-            //
-            // IDEMPOTENT RE-ENTRY GUARD (ported from Legendary): this block re-runs
-            // against the LIVING pet on every mid-life recalc -- stock LSB calls
-            // puppetutils::LoadAutomaton on EVERY master level-up (charutils
-            // AddExperiencePoints), plus head/frame changes (0x102) and
-            // level-restriction recalcs. addModifier stacking wrapped the int16 HP mod
-            // negative after 1-2 level-ups and the automaton dropped dead the moment
-            // its master leveled. Strip the previous application (tracked in entity
-            // local vars, which live and die with the same entity the mods live on)
-            // before re-adding. IMPORTANT: the del constants MUST match the current add
-            // constants -- if you retune, retune both sides together.
-            if (PPet->GetLocalVar("fjb_auto_boost") == 1)
-            {
-                PPet->delModifier(Mod::ATT, 80);
-                PPet->delModifier(Mod::ACC, 60);
-                PPet->delModifier(Mod::DEF, 80);
-                PPet->delModifier(Mod::REGEN, 20);
-                PPet->delModifier(Mod::HP, (int16)PPet->GetLocalVar("fjb_auto_hp"));
-            }
-            PPet->addModifier(Mod::ATT, 80);
-            PPet->addModifier(Mod::ACC, 60);
+            PPet->addStatRecalculationModifier(Mod::ATT, PMaster->getMod(Mod::PET_ATK_DEF));
+            PPet->addStatRecalculationModifier(Mod::DEF, PMaster->getMod(Mod::PET_ATK_DEF));
+            PPet->addStatRecalculationModifier(Mod::ACC, PMaster->getMod(Mod::PET_ACC_EVA));
+            PPet->addStatRecalculationModifier(Mod::EVA, PMaster->getMod(Mod::PET_ACC_EVA));
+            PPet->addStatRecalculationModifier(Mod::MATT, PMaster->getMod(Mod::PET_MAB_MDB));
+            PPet->addStatRecalculationModifier(Mod::MDEF, PMaster->getMod(Mod::PET_MAB_MDB));
+            PPet->addStatRecalculationModifier(Mod::MACC, PMaster->getMod(Mod::PET_MACC_MEVA));
+            PPet->addStatRecalculationModifier(Mod::MEVA, PMaster->getMod(Mod::PET_MACC_MEVA));
+            // Small Legendary floor only. The former universal +80/+60 stats,
+            // 2k-5.6k HP and +20 regen made attachments optional.
+            PPet->addStatRecalculationModifier(Mod::ATT, roleBonus(20));
+            PPet->addStatRecalculationModifier(Mod::ACC, roleBonus(15));
 
-            // FJB: survivability pass -- lv99-capped automatons fight lv150 NMs, so the
-            // stock ~2-3k HP gets them one-shot by NM hits/AoEs. Give a modest flat HP buffer
-            // (partly scaled to the master's own max HP so the pet grows with your gear;
-            // clamped well below the int16 modifier ceiling), extra DEF on top of the
-            // frame's, and light regen for between-Repair sustain. Spawn at full HP.
-            const int16 fjbAutoHp = (int16)std::min(5600, 2000 + (int32)(PMaster->GetMaxHP() / 10));
-            PPet->addModifier(Mod::HP, fjbAutoHp);
-            PPet->addModifier(Mod::DEF, 80);
-            PPet->addModifier(Mod::REGEN, 20);
-            PPet->SetLocalVar("fjb_auto_boost", 1);
-            PPet->SetLocalVar("fjb_auto_hp", (uint32)fjbAutoHp);
+            const int16 fjbAutoHp = roleBonus(static_cast<int16>(
+                std::min(1500, 500 + static_cast<int32>(PMaster->GetMaxHP() / 20))));
+            PPet->addStatRecalculationModifier(Mod::HP, fjbAutoHp);
+            PPet->addStatRecalculationModifier(Mod::DEF, roleBonus(20));
+            PPet->addStatRecalculationModifier(Mod::REGEN, roleBonus(5));
             PPet->health.hp = PPet->GetMaxHP(); // full HP on (re)apply — mirrors the master's own level-up heal
         }
     }
@@ -760,15 +782,6 @@ void LoadAvatarStats(CBattleEntity* PMaster, CPetEntity* PPet)
     PPet->health.maxmp = (int16)(raceStat + jobStat + sJobStat);
     PPet->health.mp    = PPet->health.maxmp;
 
-    // add in evasion from skill
-    int16 evaskill = PPet->GetSkill(SKILL_EVASION);
-    int16 eva      = evaskill;
-    if (evaskill > 200)
-    { // Evasion skill is 0.9 evasion post-200
-        eva = (int16)(200 + (evaskill - 200) * 0.9);
-    }
-    PPet->setModifier(Mod::EVA, eva);
-
     // Start of calculation of characteristics
     uint8 counter = 0;
     for (uint8 StatIndex = 2; StatIndex <= 8; ++StatIndex)
@@ -810,6 +823,25 @@ void LoadAvatarStats(CBattleEntity* PMaster, CPetEntity* PPet)
 
 void CalculateAvatarStats(CBattleEntity* PMaster, CPetEntity* PPet)
 {
+    // Equipment changes recalculate a living avatar in place. Keep raw
+    // spawn/status-effect modifiers, but remove the exact intrinsic and
+    // master-equipment layers applied by the previous calculation.
+    const bool isLiveRecalculation = PPet->GetLocalVar("avatar_stats_initialized") != 0;
+    const bool hasVitalsSnapshot   = PPet->GetLocalVar("avatar_vitals_snapshot") != 0;
+
+    const int32 previousHP = hasVitalsSnapshot ? PPet->GetLocalVar("avatar_previous_hp") : PPet->health.hp;
+    const int32 previousMP = hasVitalsSnapshot ? PPet->GetLocalVar("avatar_previous_mp") : PPet->health.mp;
+    const int32 previousTP = PPet->health.tp;
+    const int32 previousMaxHP =
+        isLiveRecalculation ? (hasVitalsSnapshot ? PPet->GetLocalVar("avatar_previous_maxhp") : PPet->GetMaxHP()) : 0;
+    const int32 previousMaxMP =
+        isLiveRecalculation ? (hasVitalsSnapshot ? PPet->GetLocalVar("avatar_previous_maxmp") : PPet->GetMaxMP()) : 0;
+
+    PPet->SetLocalVar("avatar_vitals_snapshot", 0);
+
+    PPet->clearStatRecalculationModifiers();
+    PMaster->removePetModifiers(PPet);
+
     uint32 petID = PPet->m_PetID;
 
     // clang-format off
@@ -859,25 +891,25 @@ void CalculateAvatarStats(CBattleEntity* PMaster, CPetEntity* PPet)
 
     PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(PPetData->spellList);
 
-    PPet->setModifier(Mod::DMGPHYS, -5000); //-50% PDT
+    PPet->addStatRecalculationModifier(Mod::DMGPHYS, -5000); //-50% PDT
 
-    PPet->setModifier(Mod::CRIT_DMG_INCREASE, 8); // Avatars have Crit Att Bonus II for +8 crit dmg
+    PPet->addStatRecalculationModifier(Mod::CRIT_DMG_INCREASE, 8); // Avatars have Crit Att Bonus II for +8 crit dmg
 
     if (mLvl >= 70)
     {
-        PPet->setModifier(Mod::MATT, 32);
+        PPet->addStatRecalculationModifier(Mod::MATT, 32);
     }
     else if (mLvl >= 50)
     {
-        PPet->setModifier(Mod::MATT, 28);
+        PPet->addStatRecalculationModifier(Mod::MATT, 28);
     }
     else if (mLvl >= 30)
     {
-        PPet->setModifier(Mod::MATT, 24);
+        PPet->addStatRecalculationModifier(Mod::MATT, 24);
     }
     else if (mLvl >= 10)
     {
-        PPet->setModifier(Mod::MATT, 20);
+        PPet->addStatRecalculationModifier(Mod::MATT, 20);
     }
     static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setDelay(320);
 
@@ -898,11 +930,11 @@ void CalculateAvatarStats(CBattleEntity* PMaster, CPetEntity* PPet)
     static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setBaseDelay(PPetData->cmbDelay);
     // Set B+ weapon skill (assumed capped for level derp)
     // attack is madly high for avatars (roughly x2)
-    PPet->setModifier(Mod::ATT, 2 * battleutils::GetMaxSkill(SKILL_CLUB, JOB_WHM, mLvl > 99 ? 99 : mLvl));
-    PPet->setModifier(Mod::ACC, battleutils::GetMaxSkill(SKILL_CLUB, JOB_WHM, mLvl > 99 ? 99 : mLvl));
+    PPet->addStatRecalculationModifier(Mod::ATT, 2 * battleutils::GetMaxSkill(SKILL_CLUB, JOB_WHM, mLvl > 99 ? 99 : mLvl));
+    PPet->addStatRecalculationModifier(Mod::ACC, battleutils::GetMaxSkill(SKILL_CLUB, JOB_WHM, mLvl > 99 ? 99 : mLvl));
     // Set E evasion and def
-    PPet->setModifier(Mod::EVA, battleutils::GetMaxSkill(SKILL_THROWING, JOB_WHM, mLvl > 99 ? 99 : mLvl));
-    PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(SKILL_THROWING, JOB_WHM, mLvl > 99 ? 99 : mLvl));
+    PPet->addStatRecalculationModifier(Mod::EVA, battleutils::GetMaxSkill(SKILL_THROWING, JOB_WHM, mLvl > 99 ? 99 : mLvl));
+    PPet->addStatRecalculationModifier(Mod::DEF, battleutils::GetMaxSkill(SKILL_THROWING, JOB_WHM, mLvl > 99 ? 99 : mLvl));
 
     // cap all magic skills so they play nice with spell scripts
     for (int i = SKILL_DIVINE_MAGIC; i <= SKILL_BLUE_MAGIC; i++)
@@ -927,34 +959,62 @@ void CalculateAvatarStats(CBattleEntity* PMaster, CPetEntity* PPet)
     if (PMaster->objtype == TYPE_PC)
     {
         CCharEntity* PChar = static_cast<CCharEntity*>(PMaster);
-        PPet->addModifier(Mod::MATT, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_MAGICAL_ATTACK, PChar));
-        PPet->addModifier(Mod::ATT, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_PHYSICAL_ATTACK, PChar));
-        PPet->addModifier(Mod::MACC, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_MAGICAL_ACCURACY, PChar));
-        PPet->addModifier(Mod::ACC, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_PHYSICAL_ACCURACY, PChar));
+        PPet->addStatRecalculationModifier(Mod::MATT, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_MAGICAL_ATTACK, PChar));
+        PPet->addStatRecalculationModifier(Mod::ATT, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_PHYSICAL_ATTACK, PChar));
+        PPet->addStatRecalculationModifier(Mod::MACC, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_MAGICAL_ACCURACY, PChar));
+        PPet->addStatRecalculationModifier(Mod::ACC, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_PHYSICAL_ACCURACY, PChar));
 
-        PPet->addModifier(Mod::ACC, PChar->PJobPoints->GetJobPointValue(JP_SUMMON_ACC_BONUS));
-        PPet->addModifier(Mod::MACC, PChar->PJobPoints->GetJobPointValue(JP_SUMMON_MAGIC_ACC_BONUS));
-        PPet->addModifier(Mod::ATT, PChar->PJobPoints->GetJobPointValue(JP_SUMMON_PHYS_ATK_BONUS) * 2);
-        PPet->addModifier(Mod::MAGIC_DAMAGE, PChar->PJobPoints->GetJobPointValue(JP_SUMMON_MAGIC_DMG_BONUS) * 5);
-        PPet->addModifier(Mod::BP_DAMAGE, PChar->PJobPoints->GetJobPointValue(JP_BLOOD_PACT_DMG_BONUS) * 3);
+        PPet->addStatRecalculationModifier(Mod::ACC, PChar->PJobPoints->GetJobPointValue(JP_SUMMON_ACC_BONUS));
+        PPet->addStatRecalculationModifier(Mod::MACC, PChar->PJobPoints->GetJobPointValue(JP_SUMMON_MAGIC_ACC_BONUS));
+        PPet->addStatRecalculationModifier(Mod::ATT, PChar->PJobPoints->GetJobPointValue(JP_SUMMON_PHYS_ATK_BONUS) * 2);
+        PPet->addStatRecalculationModifier(Mod::MAGIC_DAMAGE, PChar->PJobPoints->GetJobPointValue(JP_SUMMON_MAGIC_DMG_BONUS) * 5);
+        PPet->addStatRecalculationModifier(Mod::BP_DAMAGE, PChar->PJobPoints->GetJobPointValue(JP_BLOOD_PACT_DMG_BONUS) * 3);
     }
 
     // SMN Job Gift Bonuses, DRG and PUP handled in their respective functions
     if (PMaster->GetMJob() == JOB_SMN)
     {
-        PPet->addModifier(Mod::ATT, PMaster->getMod(Mod::PET_ATK_DEF));
-        PPet->addModifier(Mod::DEF, PMaster->getMod(Mod::PET_ATK_DEF));
-        PPet->addModifier(Mod::ACC, PMaster->getMod(Mod::PET_ACC_EVA));
-        PPet->addModifier(Mod::EVA, PMaster->getMod(Mod::PET_ACC_EVA));
-        PPet->addModifier(Mod::MATT, PMaster->getMod(Mod::PET_MAB_MDB));
-        PPet->addModifier(Mod::MDEF, PMaster->getMod(Mod::PET_MAB_MDB));
-        PPet->addModifier(Mod::MACC, PMaster->getMod(Mod::PET_MACC_MEVA));
-        PPet->addModifier(Mod::MEVA, PMaster->getMod(Mod::PET_MACC_MEVA));
+        PPet->addStatRecalculationModifier(Mod::ATT, PMaster->getMod(Mod::PET_ATK_DEF));
+        PPet->addStatRecalculationModifier(Mod::DEF, PMaster->getMod(Mod::PET_ATK_DEF));
+        PPet->addStatRecalculationModifier(Mod::ACC, PMaster->getMod(Mod::PET_ACC_EVA));
+        PPet->addStatRecalculationModifier(Mod::EVA, PMaster->getMod(Mod::PET_ACC_EVA));
+        PPet->addStatRecalculationModifier(Mod::MATT, PMaster->getMod(Mod::PET_MAB_MDB));
+        PPet->addStatRecalculationModifier(Mod::MDEF, PMaster->getMod(Mod::PET_MAB_MDB));
+        PPet->addStatRecalculationModifier(Mod::MACC, PMaster->getMod(Mod::PET_MACC_MEVA));
+        PPet->addStatRecalculationModifier(Mod::MEVA, PMaster->getMod(Mod::PET_MACC_MEVA));
     }
 
     PMaster->setModifier(Mod::AVATAR_PERPETUATION, PerpetuationCost(petID, mLvl));
 
     FinalizePetStatistics(PMaster, PPet);
+
+    if (isLiveRecalculation)
+    {
+        const auto preservePercentage = [](int32 current, int32 oldMaximum, int32 newMaximum, bool keepAlive)
+        {
+            if (current <= 0 || newMaximum <= 0)
+            {
+                return 0;
+            }
+
+            if (oldMaximum <= 0)
+            {
+                return std::min(current, newMaximum);
+            }
+
+            const int64 scaled = (static_cast<int64>(current) * newMaximum + oldMaximum - 1) / oldMaximum;
+            return static_cast<int32>(std::clamp<int64>(scaled, keepAlive ? 1 : 0, newMaximum));
+        };
+
+        PPet->health.hp = preservePercentage(previousHP, previousMaxHP, PPet->GetMaxHP(), true);
+        PPet->health.mp = preservePercentage(previousMP, previousMaxMP, PPet->GetMaxMP(), false);
+        PPet->health.tp = previousTP;
+        PPet->updatemask |= UPDATE_HP;
+    }
+    else
+    {
+        PPet->SetLocalVar("avatar_stats_initialized", 1);
+    }
 }
 
 void CalculateWyvernStats(CBattleEntity* PMaster, CPetEntity* PPet)
@@ -1177,6 +1237,13 @@ void CalculateAutomatonStats(CBattleEntity* PMaster, CBattleEntity* PPet)
         if (PAutomaton)
         {
             petID = PAutomaton->m_PetID;
+
+            // Recalculate against a clean intrinsic/master-gear layer while
+            // preserving status effects and attachment modifiers.
+            PAutomaton->clearStatRecalculationModifiers();
+            PMaster->removePetModifiers(PAutomaton);
+            PAutomaton->setMobMod(MOBMOD_CAN_SHIELD_BLOCK, 0);
+
             // TEMP: should be MLevel when unsummoned, and PUP level when summoned
             PPet->SetMLevel(mainLevel);
             PPet->SetSLevel(mainLevel / 2); // Todo: SetSLevel() already reduces the level?
@@ -1207,13 +1274,13 @@ void CalculateAutomatonStats(CBattleEntity* PMaster, CBattleEntity* PPet)
         {
             if (PMaster->objtype == TYPE_PC)
             {
-                PPet->addModifier(Mod::ATTP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
-                PPet->addModifier(Mod::DEFP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
-                PPet->addModifier(Mod::MATT, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
-                PPet->addModifier(Mod::ACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
-                PPet->addModifier(Mod::RACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
-                PPet->addModifier(Mod::EVA, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
-                PPet->addModifier(Mod::MDEF, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+                PPet->addStatRecalculationModifier(Mod::ATTP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
+                PPet->addStatRecalculationModifier(Mod::DEFP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
+                PPet->addStatRecalculationModifier(Mod::MATT, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
+                PPet->addStatRecalculationModifier(Mod::ACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+                PPet->addStatRecalculationModifier(Mod::RACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+                PPet->addStatRecalculationModifier(Mod::EVA, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+                PPet->addStatRecalculationModifier(Mod::MDEF, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
             }
 
             FinalizePetStatistics(PMaster, PAutomaton);
@@ -1247,8 +1314,17 @@ void CalculateLuopanStats(CBattleEntity* PMaster, CPetEntity* PPet)
 
 void FinalizePetStatistics(CBattleEntity* PMaster, CPetEntity* PPet)
 {
-    // set C magic evasion, add MEVA that may have come from other sources (Automaton, Wyvern, Avatar bonus meva in their respective CalculateXStats function)
-    PPet->setModifier(Mod::MEVA, battleutils::GetMaxSkill(7, std::min<uint8>(99, PPet->GetMLevel())) + PPet->getMod(Mod::MEVA));
+    // Replace only the base C-rank MEVA contribution. Other MEVA sources
+    // (attachments, JP, gear, status effects) remain independent.
+    const int16 previousBaseMeva = static_cast<int16>(PPet->GetLocalVar("pet_base_meva"));
+    if (previousBaseMeva != 0)
+    {
+        PPet->delModifier(Mod::MEVA, previousBaseMeva);
+    }
+
+    const int16 baseMeva = battleutils::GetMaxSkill(7, std::min<uint8>(99, PPet->GetMLevel()));
+    PPet->addModifier(Mod::MEVA, baseMeva);
+    PPet->SetLocalVar("pet_base_meva", baseMeva);
     PPet->health.tp = 0;
 
     // Stat recalculation runs for living pets after level, equipment, and
@@ -1261,7 +1337,15 @@ void FinalizePetStatistics(CBattleEntity* PMaster, CPetEntity* PPet)
     PPet->health.hp = PPet->GetMaxHP();
     PPet->health.mp = PPet->GetMaxMP();
 
-    // Stout Servant - Can't really tie it ot a real mod since it applies to the pet
+    // Stout Servant applies to the pet rather than the trait owner. Remove the
+    // exact previous contribution so repeated recalculation cannot stack it.
+    const int16 previousStoutServant = static_cast<int16>(PPet->GetLocalVar("pet_stout_servant"));
+    if (previousStoutServant != 0)
+    {
+        PPet->delModifier(Mod::DMG, -previousStoutServant);
+    }
+    PPet->SetLocalVar("pet_stout_servant", 0);
+
     if (CCharEntity* PCharMaster = dynamic_cast<CCharEntity*>(PMaster))
     {
         if (charutils::hasTrait(PCharMaster, TRAIT_STOUT_SERVANT))
@@ -1270,7 +1354,9 @@ void FinalizePetStatistics(CBattleEntity* PMaster, CPetEntity* PPet)
             {
                 if (trait->getID() == TRAIT_STOUT_SERVANT)
                 {
-                    PPet->addModifier(Mod::DMG, -(trait->getValue() * 100));
+                    const int16 stoutServant = trait->getValue() * 100;
+                    PPet->addModifier(Mod::DMG, -stoutServant);
+                    PPet->SetLocalVar("pet_stout_servant", stoutServant);
                     break;
                 }
             }
@@ -1990,6 +2076,12 @@ void LoadPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
     }
     else if (PPet->getPetType() == PET_TYPE::JUG_PET)
     {
+        // Jug pets do not pass through mobutils::InitializeMob(), so publish
+        // their pool skill list as a mob mod here. Sic and the Legendary
+        // auto-Ready loop both use CMobController::MobSkill(), which reads
+        // MOBMOD_SKILL_LIST rather than m_MobSkillList directly.
+        PPet->defaultMobMod(MOBMOD_SKILL_LIST, PPet->m_MobSkillList);
+
         uint8 spawnLevel = static_cast<CCharEntity*>(PMaster)->petZoningInfo.petLevel;
         PPet->setSpawnLevel(spawnLevel > 0 ? spawnLevel : UINT8_MAX);
         PPet->setJugDuration(PPetData->time);

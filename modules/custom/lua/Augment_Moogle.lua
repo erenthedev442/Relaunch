@@ -1721,6 +1721,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 [1152] = 'Defense gear ceiling is +3200.',
                 [1157] = 'Spell Interruption Rate Down gear ceiling is +80%.',
                 [  57] = 'Magic Critical Hit Rate gear ceiling is +100%.',
+                [ 320] = 'Blood Pact Delay I contributes up to 24s; Rage/Ward floor at 20s.',
             }
 
             for _, itemId in ipairs(catalystOrder) do

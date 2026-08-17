@@ -41,6 +41,11 @@ run_check tools/ci/sanity_checks/python.sh "${CHANGED_FILES[@]}"
 # SQL
 run_check tools/ci/sanity_checks/sql.sh "${CHANGED_FILES[@]}"
 
+# Cross-check enabled Blood Pact SQL rows against player-pet scripts.
+if ! python tools/audit_smn_blood_pacts.py | tee -a "$OUTPUT"; then
+    checks_failed=true
+fi
+
 # Lua
 python tools/ci/sanity_checks/lua_stylecheck.py test | tee -a "$OUTPUT"
 run_check tools/ci/sanity_checks/lua.sh "${CHANGED_FILES[@]}"

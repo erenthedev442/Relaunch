@@ -1,9 +1,10 @@
 -----------------------------------
 -- smn_avatar_boost.lua
 --
--- Turns player-summoned avatars into full endgame DD pets at spawn time (via the
--- xi.pet.spawnPet override). So the boost lands on EVERY avatar action -- not just
--- Blood Pacts -- it layers:
+-- Gives player-summoned avatars a modest Legendary floor at spawn time (via
+-- the xi.pet.spawnPet override). Their real endgame strength still comes from
+-- summoning skill, BP/Pet gear, augments and the master's weapon progression.
+-- The floor lands on EVERY avatar action -- not just Blood Pacts -- it layers:
 --   * Blood Pacts: BP_DAMAGE mult + magical (MATT/MACC/INT) + physical (ATT/ACC/
 --     STR/DEX) stats.
 --   * Auto-attacks / melee: ATTP, Double/Triple Attack (+their damage), Haste.
@@ -64,36 +65,36 @@ local function applyAvatarBoost(master, pet)
         return math.floor(amount * levelScale)
     end
 
-    -- 2026-07-13: cut every endgame floor to 20% of the original stack.
-    -- 2026-08-05: multiply those floors by levelScale so leveling SMNs
-    -- do not inherit full endgame BP/ATT and peg the damage hard cap.
+    -- Keep the baseline functional but well below a geared avatar. Excess
+    -- summoning skill remains an investment-driven contribution.
+    safeAddMod(pet, xi.mod.BP_DAMAGE, scaled(20 + math.floor(skillOverCap * 0.25)))
 
-    -- BP_DAMAGE: +140 @99 = 2.4x on Blood Pact Rage/Ward.
-    safeAddMod(pet, xi.mod.BP_DAMAGE, scaled(140 + skillOverCap * 1))
+    pet:addMod(xi.mod.MATT, scaled(20))
+    pet:addMod(xi.mod.MACC, scaled(120))
+    pet:addMod(xi.mod.INT,  scaled(40))
 
-    pet:addMod(xi.mod.MATT, scaled(60))
-    pet:addMod(xi.mod.MACC, scaled(500))
-    pet:addMod(xi.mod.INT,  scaled(200))
+    safeAddMod(pet, xi.mod.ATT, scaled(300 + skillOverCap * 2))
+    safeAddMod(pet, xi.mod.ACC, scaled(250 + skillOverCap))
+    pet:addMod(xi.mod.STR, scaled(30))
+    pet:addMod(xi.mod.DEX, scaled(20))
 
-    safeAddMod(pet, xi.mod.ATT, scaled(1200 + skillOverCap * 8))
-    safeAddMod(pet, xi.mod.ACC, scaled(900  + skillOverCap * 2))
-    pet:addMod(xi.mod.STR, scaled(100))
-    pet:addMod(xi.mod.DEX, scaled(60))
+    pet:addMod(xi.mod.ATTP,              scaled(5))
+    pet:addMod(xi.mod.DOUBLE_ATTACK,     scaled(5))
+    pet:addMod(xi.mod.TRIPLE_ATTACK,     scaled(2))
+    pet:addMod(xi.mod.DOUBLE_ATTACK_DMG, scaled(5))
+    pet:addMod(xi.mod.TRIPLE_ATTACK_DMG, scaled(5))
+    pet:addMod(xi.mod.HASTE_GEAR,        scaled(200))
 
-    pet:addMod(xi.mod.ATTP,              scaled(10))
-    pet:addMod(xi.mod.DOUBLE_ATTACK,     scaled(20))
-    pet:addMod(xi.mod.TRIPLE_ATTACK,     scaled(20))
-    pet:addMod(xi.mod.DOUBLE_ATTACK_DMG, scaled(20))
-    pet:addMod(xi.mod.TRIPLE_ATTACK_DMG, scaled(20))
-    pet:addMod(xi.mod.HASTE_GEAR,        scaled(500))
+    pet:addMod(xi.mod.DMGPHYS,  -scaled(500))
+    pet:addMod(xi.mod.DMGMAGIC, -scaled(500))
 
-    pet:addMod(xi.mod.DMGPHYS,  -scaled(1000))
-    pet:addMod(xi.mod.DMGMAGIC, -scaled(1000))
-
-    -- HP must use setMaxHP/addHP (int32); addMod(HP) is int16-capped.
-    local bonusHP = scaled(30000)
+    -- Keep this as a modifier instead of mutating base max HP. Avatar stat
+    -- recalculation rebuilds health.maxhp, while raw spawn modifiers survive
+    -- the tracked C++ calculation layer.
+    local bonusHP = scaled(5000)
     if bonusHP > 0 then
-        pet:setMaxHP(pet:getMaxHP() + bonusHP)
+        pet:addMod(xi.mod.HP, bonusHP)
+        pet:updateHealth()
         pet:addHP(bonusHP)
     end
 end

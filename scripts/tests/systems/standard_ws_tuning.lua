@@ -2,7 +2,7 @@ local catalog = require('modules/custom/lua/standard_ws_tuning_catalog')
 require('modules/custom/lua/StandardWeaponskillTuning')
 
 describe('Level-scaled ordinary weaponskill tuning', function()
-    local function makePlayer(equipment, level, spentJobPoints)
+    local function makePlayer(equipment, level, spentJobPoints, mainJob)
         local mods      = {}
         local localVars = {}
         local player    = { equipment = equipment or {} }
@@ -37,6 +37,10 @@ describe('Level-scaled ordinary weaponskill tuning', function()
 
         player.getMainLvl = function()
             return level or 99
+        end
+
+        player.getMainJob = function()
+            return mainJob or xi.job.WAR
         end
 
         player.getSpentJobPoints = function()
@@ -105,14 +109,61 @@ describe('Level-scaled ordinary weaponskill tuning', function()
     end)
 
     it('uses companion-only caps from the master main-hand tier', function()
+        assert(catalog.DAMAGE_CAP == 79999)
+        assert(catalog.PET_AMBU_DAMAGE_CAP == 99999)
+        assert(catalog.PET_REMA_DAMAGE_CAP == 999999)
+        assert(catalog.PET_PRIME_DAMAGE_CAP == 1499999)
+        assert(catalog.COMPANION_PLAYER_REMA_CAP == 249999)
+        assert(catalog.COMPANION_PLAYER_PRIME_CAP == 499999)
+        assert(catalog.PET_REMA_MULTIPLIER_BONUS == 2.85)
+        assert(catalog.PET_PRIME_MULTIPLIER_BONUS == 4.25)
+
         local standard = makePlayer({ [xi.slot.MAIN] = 1 }, 99)
         local ambuscade = makePlayer({ [xi.slot.MAIN] = 21621 }, 99) -- Naegling
         local pupMythic = makePlayer({ [xi.slot.MAIN] = 20511 }, 99) -- Kenkonken
+        local pupPrime = makePlayer(
+            { [xi.slot.MAIN] = 21535 }, 99, 2100, xi.job.PUP) -- Varga Purnikawa
+        local bstPrime = makePlayer(
+            { [xi.slot.MAIN] = 21730 }, 99, 2100, xi.job.BST) -- Spalirisos
+        local smnPrime = makePlayer(
+            { [xi.slot.MAIN] = 22106 }, 99, 2100, xi.job.SMN) -- Opashoro
+        local mismatchedPupPrime = makePlayer(
+            { [xi.slot.MAIN] = 22106 }, 99, 2100, xi.job.PUP) -- SMN's Opashoro
+        local drgPrime = makePlayer(
+            { [xi.slot.MAIN] = 21891 }, 99, 2100, xi.job.DRG) -- Gae Buide
 
         assert(catalog.getPetDamageCap(standard) == catalog.DAMAGE_CAP)
         assert(catalog.getPetDamageCap(ambuscade) == catalog.PET_AMBU_DAMAGE_CAP)
         assert(catalog.getPetDamageCap(pupMythic) == catalog.PET_REMA_DAMAGE_CAP)
+        assert(catalog.getPetDamageCap(pupPrime) == catalog.PET_PRIME_DAMAGE_CAP)
+        assert(catalog.getPetDamageCap(bstPrime) == catalog.PET_PRIME_DAMAGE_CAP)
+        assert(catalog.getPetDamageCap(smnPrime) == catalog.PET_PRIME_DAMAGE_CAP)
+        assert(catalog.getPetDamageMultiplier(pupPrime, makeTarget(155, 120000)) == 46.75)
+        assert(catalog.getPetDamageCap(mismatchedPupPrime) == catalog.DAMAGE_CAP)
+        assert(catalog.getPetDamageMultiplier(
+            mismatchedPupPrime, makeTarget(155, 120000)) == 11)
+        assert(catalog.getPetDamageCap(drgPrime) == catalog.PET_REMA_DAMAGE_CAP)
+        assert(catalog.getPetDamageMultiplier(drgPrime, makeTarget(155, 120000)) == 31.35)
         assert(catalog.applyMultiplier(200000, 1, catalog.getPetDamageCap(pupMythic)) == 200000)
+    end)
+
+    it('refreshes a live pet cap from the currently equipped main hand', function()
+        local player = makePlayer(
+            { [xi.slot.MAIN] = 21535 }, 99, 2100, xi.job.PUP)
+        local localVars = {}
+        local pet =
+        {
+            setLocalVar = function(_, name, value)
+                localVars[name] = value
+            end,
+        }
+
+        assert(catalog.setPetDamageCap(pet, player) == catalog.PET_PRIME_DAMAGE_CAP)
+        assert(localVars[catalog.PET_DAMAGE_CAP_LOCAL_VAR] == catalog.PET_PRIME_DAMAGE_CAP)
+
+        player.equipment[xi.slot.MAIN] = 1
+        assert(catalog.setPetDamageCap(pet, player) == catalog.DAMAGE_CAP)
+        assert(localVars[catalog.PET_DAMAGE_CAP_LOCAL_VAR] == catalog.DAMAGE_CAP)
     end)
 
     it('keeps the full level-99 multiplier on low-HP farming targets', function()

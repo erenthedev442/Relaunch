@@ -14,59 +14,55 @@
 -- localvar at ability-use time; the Lua handler xi.job_utils.summoner.onUseBloodPact
 -- re-reads that localvar (summoner.lua:211) when the pact goes off and applies it
 -- as the recast. We override that handler, recompute bpRecastTime with the per-mod
--- cap effectively removed (so every point of BP-delay gear/augment counts), clamp
--- to a FLOOR so BPs can't become instant, then delegate to the original via super().
+-- cap raised (so BP-delay gear/augments continue to count), clamp to the intended
+-- 20-second floor, then delegate to the original via super().
 -- Avatar's Favor stays capped at 10 (retail).
 --
 -- Pure Lua override module -> needs ONE map restart to load (no C++ rebuild). Every
 -- BP script calls xi.job_utils.summoner.onUseBloodPact by full path at runtime
 -- (scripts/actions/abilities/pets/*.lua), so the override is guaranteed to intercept.
 --
--- TUNING: lower CONFIG.floor for faster BP spam; raise it to keep BPs rarer.
+-- TUNING: 20 seconds is the maximum normal BP frequency with a completed setup.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/globals/job_utils/summoner')
 
 local m = Module:new('bp_delay_uncap')
 
--- 2026-07-13 owner call: cut the boost above stock by 80%.
---   * perModCap was 60 (engine stock 15, delta +45); cut delta to 9 -> new cap 24.
---     Gear/augments still push past the stock 15s wall but not as far.
---   * floor was 5s (retail effective minimum with maxed gear+favor is ~20s,
---     delta -15s); cut delta to -3s -> new floor 17s. BPs stay noticeably
---     faster than retail but the "5s BP spam" pattern is gone.
 local CONFIG =
 {
     perModCap = 24, -- was 60; engine stock is 15. Gear/augments still count past 15.
-    floor     = 17, -- was 5s; ~3s below the retail-with-max-gear floor.
+    floor     = 20, -- maximum normal frequency: one Rage and one Ward per 20s each.
     favorCap  = 10, -- Avatar's Favor reduction cap (retail). Unchanged.
 }
+
+xi.job_utils.summoner.getRelaunchBloodPactRecast = function(summoner)
+    local favor = 0
+    local fav   = summoner:getStatusEffect(xi.effect.AVATARS_FAVOR)
+    if fav then
+        favor = math.min(math.max(fav:getPower(), 0), CONFIG.favorCap)
+    end
+
+    local delayI  = math.min(math.max(summoner:getMod(xi.mod.BP_DELAY), 0), CONFIG.perModCap)
+    local delayII = math.min(math.max(summoner:getMod(xi.mod.BP_DELAY_II), 0), CONFIG.perModCap)
+
+    return math.max(CONFIG.floor, 60 - delayI - delayII - favor)
+end
 
 m:addOverride('xi.job_utils.summoner.onUseBloodPact', function(target, petskill, summoner, action)
     -- Recompute only on the primary target (the original consumes recast there too)
     -- and only when the ability's base recast resolves. Setting bpRecastTime BEFORE
     -- super() means the original reads OUR uncapped value.
-    -- Recompute the BP recast with the per-mod cap effectively removed.
+    -- Recompute the BP recast with Relaunch's raised per-mod cap.
     -- WRAPPED IN pcall so a binding hiccup can NEVER abort super() again. THE BUG:
     -- the old `ability:getRecastTime()` binding does not exist -> it threw HERE,
     -- BEFORE super(), so the original onUseBloodPact never ran and EVERY Blood Pact
     -- did 0 damage (all avatars, not just Siren). super() must always fire.
     pcall(function()
         if target:getID() == action:getPrimaryTargetID() then
-            local base  = 60 -- Blood Pact base recast is 60s (constant; the value the C++ caps from). No binding needed.
-
-            local favor = 0
-            local fav   = summoner:getStatusEffect(xi.effect.AVATARS_FAVOR)
-            if fav then
-                favor = math.min(fav:getPower(), CONFIG.favorCap)
-            end
-
-            local reduction =
-                  math.min(summoner:getMod(xi.mod.BP_DELAY),    CONFIG.perModCap)
-                + math.min(summoner:getMod(xi.mod.BP_DELAY_II), CONFIG.perModCap)
-                + favor
-
-            summoner:setLocalVar('bpRecastTime', math.max(CONFIG.floor, base - reduction))
+            summoner:setLocalVar(
+                'bpRecastTime',
+                xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner))
         end
     end)
 

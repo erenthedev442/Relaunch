@@ -75,6 +75,45 @@ PET_TYPE CPetEntity::getPetType() const
     return m_PetType;
 }
 
+void CPetEntity::clearStatRecalculationModifiers()
+{
+    for (const auto& [type, amount] : m_statRecalculationModifiers)
+    {
+        delModifier(type, amount);
+    }
+
+    m_statRecalculationModifiers.clear();
+}
+
+void CPetEntity::addStatRecalculationModifier(Mod type, int16 amount)
+{
+    addModifier(type, amount);
+    m_statRecalculationModifiers[type] += amount;
+}
+
+void CPetEntity::clearAppliedMasterPetModifiers()
+{
+    for (const auto& [type, amount] : m_appliedMasterPetModifiers)
+    {
+        delModifier(type, amount);
+    }
+
+    m_appliedMasterPetModifiers.clear();
+}
+
+void CPetEntity::recordAppliedMasterPetModifier(Mod type, int16 amount)
+{
+    m_appliedMasterPetModifiers[type] += amount;
+}
+
+void CPetEntity::resetModifierTracking()
+{
+    m_statRecalculationModifiers.clear();
+    m_appliedMasterPetModifiers.clear();
+    SetLocalVar("pet_base_meva", 0);
+    SetLocalVar("pet_stout_servant", 0);
+}
+
 uint8 CPetEntity::getSpawnLevel()
 {
     return m_spawnLevel;

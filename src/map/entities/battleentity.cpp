@@ -646,8 +646,8 @@ uint16 CBattleEntity::GetMainWeaponDmg()
 
         if (PPetEntity->getPetType() == PET_TYPE::AUTOMATON)
         {
-            // Unsure of the accuracy of this, but it's what we have in petutils
-            return std::floor(GetSkill(SKILL_AUTOMATON_MELEE) / 9 * 2) + 3 + getMod(Mod::MAIN_DMG_RATING);
+            auto* PWeapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]);
+            return (PWeapon ? PWeapon->getDamage() : 0) + getMod(Mod::MAIN_DMG_RATING);
         }
         else if (PPetEntity->getPetType() == PET_TYPE::WYVERN)
         {
@@ -740,8 +740,8 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
 
         if (PPetEntity->getPetType() == PET_TYPE::AUTOMATON)
         {
-            // Unsure of the accuracy of this, but it's what we have in petutils
-            return std::floor(GetSkill(SKILL_AUTOMATON_RANGED) / 9 * 2) + 3 + getMod(Mod::RANGED_DMG_RATING);
+            auto* PWeapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_RANGED]);
+            return (PWeapon ? PWeapon->getDamage() : 0) + getMod(Mod::RANGED_DMG_RATING);
         }
         else if (PPetEntity->getPetType() == PET_TYPE::WYVERN)
         {
@@ -2222,6 +2222,7 @@ void CBattleEntity::addPetModifier(Mod type, PetModType petmod, int16 amount)
     if (PPet && petutils::CheckPetModType(PPet, petmod))
     {
         PPet->addModifier(type, amount);
+        PPet->recordAppliedMasterPetModifier(type, amount);
         PPet->UpdateHealth();
     }
 }
@@ -2229,11 +2230,14 @@ void CBattleEntity::addPetModifier(Mod type, PetModType petmod, int16 amount)
 void CBattleEntity::setPetModifier(Mod type, PetModType petmod, int16 amount)
 {
     TracyZoneScoped;
+    const int16 previousAmount = m_petMod[petmod][type];
     m_petMod[petmod][type] = amount;
 
     if (PPet && petutils::CheckPetModType(PPet, petmod))
     {
-        PPet->setModifier(type, amount);
+        const int16 difference = amount - previousAmount;
+        PPet->addModifier(type, difference);
+        PPet->recordAppliedMasterPetModifier(type, difference);
         PPet->UpdateHealth();
     }
 }
@@ -2246,6 +2250,7 @@ void CBattleEntity::delPetModifier(Mod type, PetModType petmod, int16 amount)
     if (PPet && petutils::CheckPetModType(PPet, petmod))
     {
         PPet->delModifier(type, amount);
+        PPet->recordAppliedMasterPetModifier(type, -amount);
         PPet->UpdateHealth();
     }
 }
@@ -2271,6 +2276,12 @@ void CBattleEntity::delPetModifiers(std::vector<CPetModifier>* modList)
 void CBattleEntity::applyPetModifiers(CPetEntity* PPet)
 {
     TracyZoneScoped;
+
+    // Reapplication may follow an equipment or pet-frame change. Remove the
+    // exact old set first; m_petMod already describes the new equipment and
+    // cannot reliably be used to undo what the pet currently has.
+    PPet->clearAppliedMasterPetModifiers();
+
     for (const auto& modtype : m_petMod)
     {
         if (petutils::CheckPetModType(PPet, modtype.first))
@@ -2278,6 +2289,7 @@ void CBattleEntity::applyPetModifiers(CPetEntity* PPet)
             for (auto mod : modtype.second)
             {
                 PPet->addModifier(mod.first, mod.second);
+                PPet->recordAppliedMasterPetModifier(mod.first, mod.second);
                 PPet->UpdateHealth();
             }
         }
@@ -2287,17 +2299,8 @@ void CBattleEntity::applyPetModifiers(CPetEntity* PPet)
 void CBattleEntity::removePetModifiers(CPetEntity* PPet)
 {
     TracyZoneScoped;
-    for (const auto& modtype : m_petMod)
-    {
-        if (petutils::CheckPetModType(PPet, modtype.first))
-        {
-            for (auto mod : modtype.second)
-            {
-                PPet->delModifier(mod.first, mod.second);
-                PPet->UpdateHealth();
-            }
-        }
-    }
+    PPet->clearAppliedMasterPetModifiers();
+    PPet->UpdateHealth();
 }
 
 /************************************************************************

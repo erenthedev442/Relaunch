@@ -10,6 +10,7 @@ attachmentObject.onEquip = function(pet)
         if
             master and
             master:countEffect(xi.effect.DARK_MANEUVER) > 0 and
+            not automaton:hasRecast(xi.recast.ABILITY, xi.automaton.abilities.DISRUPTOR) and
             automaton:getLocalVar('dispel') < VanadielTime() and
             target:hasStatusEffectByFlag(xi.effectFlag.DISPELABLE) and
             automaton:checkDistance(target) < (7 + target:getHitboxSize() + automaton:getHitboxSize()) -- needs verification
@@ -20,6 +21,9 @@ attachmentObject.onEquip = function(pet)
 end
 
 attachmentObject.onUnequip = function(pet)
+    if pet then
+        pet:removeListener('ATTACHMENT_DISRUPTOR')
+    end
 end
 
 attachmentObject.onManeuverGain = function(pet, maneuvers)

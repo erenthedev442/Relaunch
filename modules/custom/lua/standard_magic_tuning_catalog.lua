@@ -115,7 +115,7 @@ function catalog.getDamageCap(caster)
     if caster:isAutomaton() then
         -- Automata inherit the master's companion tier, not player REMA/Prime
         -- spell ceilings. This matches their physical WS and ability contract.
-        return progression.getPetDamageCap(caster:getMaster())
+        return progression.setPetDamageCap(caster, caster:getMaster())
     end
 
     if not caster:isPC() then
@@ -126,11 +126,11 @@ function catalog.getDamageCap(caster)
     local rangedWeapon = caster:getEquipID(xi.slot.RANGED)
 
     if primeWeaponIds[mainWeapon] or primeWeaponIds[rangedWeapon] then
-        return catalog.PRIME_DAMAGE_CAP
+        return progression.getPlayerPrimeDamageCap(caster, catalog.PRIME_DAMAGE_CAP)
     end
 
     if remaWeaponIds[mainWeapon] or remaWeaponIds[rangedWeapon] then
-        return catalog.REMA_DAMAGE_CAP
+        return progression.getPlayerRemaDamageCap(caster, catalog.REMA_DAMAGE_CAP)
     end
 
     return catalog.DAMAGE_CAP

@@ -31,6 +31,7 @@ xi.automaton.abilities =
     HEAT_CAPACITOR  = 2745,
     BARRAGE_TURBINE = 2746,
     DISRUPTOR       = 2747,
+    REGULATOR       = 3485,
 }
 
 -- [FRAME][HEAD] = Model ID
@@ -99,6 +100,10 @@ local attachmentModifiers =
     ['accelerator_iii']     = { { xi.mod.EVA,                         {    20,    30,    40,    50 }, true  }, },
     ['accelerator_iv']      = { { xi.mod.EVA,                         {    30,    45,    60,    80 }, true  }, },
     ['analyzer']            = { { xi.mod.AUTO_ANALYZER,               {     1,     2,     4,     6 }, true  }, },
+    ['amplifier']           = { { xi.mod.MAGIC_BURST_BONUS_UNCAPPED, {    10,    20,    35,    50 }, true  },
+                                { xi.mod.ELEMENTAL_CELERITY,          {    25,    25,    25,    25 }, true  }, },
+    ['amplifier_ii']        = { { xi.mod.MAGIC_BURST_BONUS_UNCAPPED, {    20,    30,    50,    70 }, true  },
+                                { xi.mod.ELEMENTAL_CELERITY,          {    25,    25,    25,    25 }, true  }, },
     ['arcanic_cell']        = { { xi.mod.OCCULT_ACUMEN,               {    10,    20,    35,    50 }, true  }, },
     ['arcanic_cell_ii']     = { { xi.mod.OCCULT_ACUMEN,               {    20,    40,    70,   100 }, true  }, },
     ['arcanoclutch']        = { { xi.mod.MAGIC_DAMAGE,                {    20,    40,    60,    80 }, true  }, },
@@ -115,10 +120,21 @@ local attachmentModifiers =
                                 { xi.mod.REGEN,                       {   nil,   nil,   nil,   nil }, true  }, },
     ['auto-repair_kit_iv']  = { { xi.mod.HPP,                         {    20,    20,    20,    20 }, false },
                                 { xi.mod.REGEN,                       {   nil,   nil,   nil,   nil }, true  }, },
+    ['barrier_module']      = { { xi.mod.SHIELDBLOCKRATE,             {     0,     5,    10,    15 }, true  },
+                                { xi.mod.SHIELD_MASTERY_TP,           {     0,    10,    20,    30 }, true  },
+                                { xi.mod.AUTO_SHIELD_BASH_DELAY,      {     0,     5,    10,    15 }, false }, },
+    ['barrier_module_ii']   = { { xi.mod.SHIELDBLOCKRATE,             {     0,    10,    20,    30 }, true  },
+                                { xi.mod.SHIELD_MASTERY_TP,           {     0,    20,    40,    60 }, true  },
+                                { xi.mod.AUTO_SHIELD_BASH_DELAY,      {     0,     5,    10,    15 }, false }, },
     ['coiler']              = { { xi.mod.DOUBLE_ATTACK,               {     3,    10,    20,    30 }, true  }, },
     ['coiler_ii']           = { { xi.mod.DOUBLE_ATTACK,               {    10,    15,    25,    35 }, true  }, },
-    ['damage_gauge']        = { { xi.mod.AUTO_HEALING_THRESHOLD,      {    30,    40,    50,    75 }, true  },
-                                { xi.mod.AUTO_HEALING_DELAY,          {     3,     6,     8,    10 }, false }, },
+    -- The controller adds AUTO_HEALING_THRESHOLD to its native
+    -- 30 / 40 / 50 / 75 Light Maneuver thresholds. Store only the delta
+    -- required to reach each attachment's advertised final threshold.
+    ['damage_gauge']        = { { xi.mod.AUTO_HEALING_THRESHOLD,      {    20,    20,    20,     5 }, false },
+                                { xi.mod.AUTO_HEALING_DELAY,          {     3,     3,     3,     3 }, false }, },
+    ['damage_gauge_ii']     = { { xi.mod.AUTO_HEALING_THRESHOLD,      {    30,    30,    30,    15 }, false },
+                                { xi.mod.AUTO_HEALING_DELAY,          {     3,     3,     3,     3 }, false }, },
     ['drum_magazine']       = { { xi.mod.AUTO_RANGED_DELAY,           {     3,     6,     9,    15 }, true  }, },
     ['dynamo']              = { { xi.mod.CRITHITRATE,                 {     3,     5,     7,     9 }, true  }, },
     ['dynamo_ii']           = { { xi.mod.CRITHITRATE,                 {     5,    10,    15,    20 }, true  }, },
@@ -142,6 +158,10 @@ local attachmentModifiers =
     ['magniplug_ii']        = { { xi.mod.MAIN_DMG_RATING,             {    10,    20,    35,    50 }, true  },
                                 { xi.mod.RANGED_DMG_RATING,           {    10,    20,    35,    50 }, true  }, },
     ['mana_booster']        = { { xi.mod.AUTO_MAGIC_DELAY,            {     2,     4,     6,     8 }, false }, },
+    -- AUTO_MAGIC_DELAY is a cooldown reduction in this engine, so negative
+    -- values model Mana Channeler's documented recast-time penalty.
+    ['mana_channeler_ii']   = { { xi.mod.MATT,                        {    20,    30,    40,    50 }, true  },
+                                { xi.mod.AUTO_MAGIC_DELAY,            {    -6,   -12,   -18,   -24 }, true  }, },
     ['mana_conserver']      = { { xi.mod.CONSERVE_MP,                 {    15,    30,    45,    60 }, true  }, },
     ['mana_jammer']         = { { xi.mod.MDEF,                        {    10,    20,    30,    40 }, true  }, },
     ['mana_jammer_ii']      = { { xi.mod.MDEF,                        {    20,    30,    40,    50 }, true  }, },
@@ -158,7 +178,13 @@ local attachmentModifiers =
     ['optic_fiber']         = { { xi.mod.AUTO_PERFORMANCE_BOOST,      {    10,    20,    25,    30 }, false }, },
     ['optic_fiber_ii']      = { { xi.mod.AUTO_PERFORMANCE_BOOST,      {    15,    30,    37,    45 }, false }, },
     ['percolator']          = { { xi.mod.COMBAT_SKILLUP_RATE,         {     5,    10,    15,    20 }, true  }, },
+    -- There is no all-spell MP-cost modifier in this engine. Automatons use
+    -- black/white spell groups, so applying both is the bounded retail match.
+    ['power_cooler']        = { { xi.mod.BLACK_MAGIC_COST,            {   -10,   -20,   -35,   -50 }, true  },
+                                { xi.mod.WHITE_MAGIC_COST,            {   -10,   -20,   -35,   -50 }, true  }, },
     ['repeater']            = { { xi.mod.DOUBLE_SHOT_RATE,            {    10,    15,    35,    65 }, true  }, },
+    ['resister']            = { { xi.mod.STATUSRES,                   {     5,    10,    20,    30 }, true  }, },
+    ['resister_ii']         = { { xi.mod.STATUSRES,                   {    10,    20,    40,    60 }, true  }, },
     ['scanner']             = { { xi.mod.AUTO_SCAN_RESISTS,           {     0,     1,     1,     1 }, false }, },
     ['schurzen']            = { { xi.mod.AUTO_SCHURZEN,               {     0,     1,     1,     1 }, false }, },
     ['scope']               = { { xi.mod.RACC,                        {    10,    20,    30,    40 }, true  }, },
@@ -242,19 +268,41 @@ end
 -- Due to load order, we can't expect to determine Optic Fiber enhancements on change.
 -- For maneuvers, calculate this based on the number of light maneuvers that are active.
 local function calculatePerformanceBoost(pet)
+    if not pet then
+        return 0
+    end
+
     local master = pet:getMaster()
     local performanceBoost = 0
 
     local numLightManeuvers = master and master:countEffect(xi.effect.LIGHT_MANEUVER) or 0
-    for _, attachmentObj in ipairs(pet:getAttachments()) do
-        local attachmentName = attachmentObj:getName()
+    for _, attachmentObj in pairs(pet:getAttachments() or {}) do
+        local attachmentName = attachmentObj and attachmentObj:getName()
 
-        if isOpticFiber(attachmentName) then
+        if
+            attachmentName and
+            isOpticFiber(attachmentName) and
+            attachmentModifiers[attachmentName]
+        then
             performanceBoost = performanceBoost + attachmentModifiers[attachmentName][1][2][numLightManeuvers + 1]
         end
     end
 
     return performanceBoost
+end
+
+local function hasAttachment(pet, attachmentName)
+    if not pet then
+        return false
+    end
+
+    for _, attachmentObj in pairs(pet:getAttachments() or {}) do
+        if attachmentObj and attachmentObj:getName() == attachmentName then
+            return true
+        end
+    end
+
+    return false
 end
 
 -- Global functions to handle attachment equip, unequip, maneuver and performance changes
@@ -263,21 +311,43 @@ end
 -- of the functions below have offsets applied.
 
 xi.automaton.onAttachmentEquip = function(pet, attachment)
+    if not pet or not attachment then
+        return
+    end
+
     xi.automaton.updateAttachmentModifier(pet, attachment, 0)
 end
 
 xi.automaton.onAttachmentUnequip = function(pet, attachment)
-    local modTable = attachmentModifiers[attachment:getName()]
-
-    for k, modList in ipairs(modTable) do
-        if modList[2][1] then
-            pet:delMod(modList[1], modList[2][1])
-        else
-            pet:setMod(modList[1], 0)
-        end
+    if not pet or not attachment then
+        return
     end
 
-    pet:clearLocalVarsWithPrefix(attachment:getName())
+    local modTable = attachmentModifiers[attachment:getName()]
+
+    if not modTable then
+        return
+    end
+
+    local attachmentName = attachment:getName()
+
+    for attachmentModPos, modList in ipairs(modTable) do
+        local localVarName = attachmentName .. attachmentModPos
+        local previousMod  = pet:getLocalVar(localVarName)
+
+        if modList[2][4] and modList[2][4] < 0 then
+            previousMod = previousMod * -1
+        end
+
+        if previousMod ~= 0 then
+            pet:delMod(modList[1], previousMod)
+        end
+
+        -- Clear only this attachment's exact tracking key. Prefix clearing
+        -- also matched tiered names (for example damage_gauge_ii), orphaning
+        -- their applied modifier and allowing it to stack on the next update.
+        pet:setLocalVar(localVarName, 0)
+    end
 end
 
 xi.automaton.onManeuverGain = function(pet, attachment, maneuvers)
@@ -289,8 +359,17 @@ xi.automaton.onManeuverLose = function(pet, attachment, maneuvers)
 end
 
 xi.automaton.updateAttachmentModifier = function(pet, attachment, maneuvers)
+    if not pet or not attachment then
+        return
+    end
+
     local attachmentName = attachment:getName()
     local modTable       = attachmentModifiers[attachmentName]
+    maneuvers            = math.max(0, math.min(tonumber(maneuvers) or 0, 3))
+
+    if not modTable then
+        return
+    end
 
     for attachmentModPos, modList in ipairs(modTable) do
         local previousMod = pet:getLocalVar(attachmentName .. attachmentModPos)
@@ -310,6 +389,14 @@ xi.automaton.updateAttachmentModifier = function(pet, attachment, maneuvers)
             modValue = getRefreshModValue(pet, attachmentName, maneuvers)
         else
             modValue = modList[2][maneuvers + 1]
+        end
+
+        -- Damage Gauge II replaces, rather than stacks with, Damage Gauge.
+        if
+            attachmentName == 'damage_gauge' and
+            hasAttachment(pet, 'damage_gauge_ii')
+        then
+            modValue = 0
         end
 
         -- Apply Automaton Performance Boost if applicable.

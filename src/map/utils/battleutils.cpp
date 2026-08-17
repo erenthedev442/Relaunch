@@ -2020,12 +2020,12 @@ bool TryInterruptSpell(CBattleEntity* PAttacker, CBattleEntity* PDefender, CSpel
  *                                                                       *
  ************************************************************************/
 
-// FJB: ApplyAutomatonDamageBonus (+ AUTOMATON_DMG_MULTIPLIER) extracted to
-// modules/custom/cpp/fjb_combat.cpp.
+// FJB compatibility hook; currently neutral because automaton output is
+// attachment-driven.
 
 int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHYSICAL_ATTACK_TYPE physicalAttackType, int32 damage, bool isBlocked, uint8 slot, uint16 tpMultiplier, CBattleEntity* taChar, bool giveTPtoVictim, bool giveTPtoAttacker, bool isCounter, bool isCovered, CBattleEntity* POriginalTarget, bool isCritical)
 {
-    damage = ApplyAutomatonDamageBonus(PAttacker, damage); // FJB: automaton DPS multiplier (melee + ranged)
+    damage = ApplyAutomatonDamageBonus(PAttacker, damage);
     damage = ApplyRangerDamageAdjust(PAttacker, damage, slot == SLOT_AMMO || slot == SLOT_RANGED); // FJB: relaunch RNG ranged trim
     damage = ApplyTrustAutoAttackDamageAdjust(PAttacker, damage); // FJB: trust autos at 25% (WS/magic untouched)
     auto* weapon           = GetEntityWeapon(PAttacker, (SLOTTYPE)slot);
@@ -4926,9 +4926,11 @@ int32 PhysicalDmgTaken(CBattleEntity* PDefender, int32 damage, DAMAGE_TYPE damag
         damage = HandleSteamJacket(PDefender, damage, damageType);
     }
 
-    if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_EQUALIZER) > 0)
+    if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->GetMaxHP() > 0 &&
+        PDefender->getMod(Mod::AUTO_EQUALIZER) > 0)
     {
-        damage -= (int32)(damage / float(PDefender->GetMaxHP()) * (PDefender->getMod(Mod::AUTO_EQUALIZER) / 100.0f));
+        const auto reductionRate = std::floor(damage / static_cast<float>(PDefender->GetMaxHP()) * PDefender->getMod(Mod::AUTO_EQUALIZER)) / 100.0f;
+        damage                   = static_cast<int32>(std::floor(damage * (1.0f - std::min(reductionRate, 0.90f))));
     }
 
     // Handle damage absorption.
@@ -4974,9 +4976,11 @@ int32 RangedDmgTaken(CBattleEntity* PDefender, int32 damage, DAMAGE_TYPE damageT
         damage = HandleSteamJacket(PDefender, damage, damageType);
     }
 
-    if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_EQUALIZER) > 0)
+    if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->GetMaxHP() > 0 &&
+        PDefender->getMod(Mod::AUTO_EQUALIZER) > 0)
     {
-        damage -= (int32)(damage / float(PDefender->GetMaxHP()) * (PDefender->getMod(Mod::AUTO_EQUALIZER) / 10000.0f));
+        const auto reductionRate = std::floor(damage / static_cast<float>(PDefender->GetMaxHP()) * PDefender->getMod(Mod::AUTO_EQUALIZER)) / 100.0f;
+        damage                   = static_cast<int32>(std::floor(damage * (1.0f - std::min(reductionRate, 0.90f))));
     }
 
     // Handle damage absorption.

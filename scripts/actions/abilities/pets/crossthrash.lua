@@ -4,10 +4,14 @@
 -----------------------------------
 ---@type TAbilityPet
 local abilityObject = {}
+local skillName = 'crossthrash'
 
 abilityObject.onAbilityCheck = function(player, target, ability)
-    -- TODO implement this ability
-    return xi.msg.basic.PET_CANNOT_DO_ACTION
+    return 0
+end
+
+abilityObject.onPetAbility = function(target, pet, petskill, owner, action)
+    return xi.actions.mobskills[skillName].onMobWeaponSkill(pet, target, petskill, action)
 end
 
 return abilityObject

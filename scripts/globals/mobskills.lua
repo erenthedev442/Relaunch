@@ -45,8 +45,8 @@ local petProgressionJobs =
     [xi.job.PUP] = true,
 }
 
--- Retail ecosystem/killer triangle. Jug pets use this as a modest Ready-move
--- matchup modifier in addition to the engine's existing intimidation checks.
+-- Retail ecosystem/killer triangle. PC-owned BST jug pets use this for a major
+-- Ready-move matchup modifier in addition to the engine's intimidation checks.
 local ecosystemPrey =
 {
     [xi.ecosystem.AMORPH]   = xi.ecosystem.BIRD,
@@ -64,6 +64,39 @@ local ecosystemPrey =
     [xi.ecosystem.VERMIN]   = xi.ecosystem.PLANTOID,
 }
 
+xi.mobskills.applyJugEcosystemMatchupDamage = function(mob, target, damage)
+    if
+        type(damage) ~= 'number' or
+        damage <= 0 or
+        mob == nil or
+        target == nil or
+        not mob:isJugPet()
+    then
+        return damage
+    end
+
+    local master = mob:getMaster()
+    if
+        master == nil or
+        not master:isPC() or
+        master:getMainJob() ~= xi.job.BST
+    then
+        return damage
+    end
+
+    local petEcosystem    = mob:getEcosystem()
+    local targetEcosystem = target:getEcosystem()
+    if ecosystemPrey[petEcosystem] == targetEcosystem then
+        local favorableBps = mob:getLocalVar('JugEcosystemFavorableBps')
+        return math.floor(damage * (10000 + math.max(0, favorableBps)) / 10000)
+    elseif ecosystemPrey[targetEcosystem] == petEcosystem then
+        local unfavorableBps = mob:getLocalVar('JugEcosystemUnfavorableBps')
+        return math.floor(damage * math.max(0, 10000 - unfavorableBps) / 10000)
+    end
+
+    return damage
+end
+
 local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLanded)
     if mob:getLocalVar('fellowApplied') == 1 then
         -- Magus AoE nukes trade coverage for power. The role marks
@@ -72,7 +105,7 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
         local aoeScale = mob:getLocalVar('fellowAoEDamageScale')
         local progressionFloor = mob:getLocalVar('fellowProgressionDamageFloor')
         local progressionCap   = mob:getLocalVar('fellowProgressionDamageCap')
-        if aoeScale > 0 and skill:isAoE() then
+        if aoeScale > 0 and (skill:isAoE() or skill:isConal()) then
             damage = math.floor(damage * aoeScale / 100)
             progressionFloor = math.floor(progressionFloor * aoeScale / 100)
             progressionCap = math.floor(progressionCap * aoeScale / 100)
@@ -103,22 +136,13 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
         return damage
     end
 
-    local matchupBps = mob:getLocalVar('JugEcosystemMatchupBps')
-    if matchupBps > 0 and mob:isJugPet() then
-        local petEcosystem = mob:getEcosystem()
-        local targetEcosystem = target:getEcosystem()
-        if ecosystemPrey[petEcosystem] == targetEcosystem then
-            damage = math.floor(damage * (10000 + matchupBps) / 10000)
-        elseif ecosystemPrey[targetEcosystem] == petEcosystem then
-            damage = math.floor(damage * math.max(0, 10000 - matchupBps) / 10000)
-        end
-    end
+    damage = xi.mobskills.applyJugEcosystemMatchupDamage(mob, target, damage)
 
     local multiplier = standardProgression.getPetDamageMultiplier(master, target)
-    local cap = standardProgression.getPetDamageCap
-        and standardProgression.getPetDamageCap(master)
+    local cap = standardProgression.setPetDamageCap
+        and standardProgression.setPetDamageCap(mob, master)
         or standardProgression.DAMAGE_CAP
-    if skill:isAoE() then
+    if skill:isAoE() or skill:isConal() then
         multiplier = 1 + (multiplier - 1) * 0.50
         cap = math.floor(cap * 0.50)
     end

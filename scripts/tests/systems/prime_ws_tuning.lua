@@ -181,12 +181,34 @@ describe('Relaunch Prime weaponskill pinnacle tuning', function()
                 assert(player:getMod(modId) ==
                     catalog.PRIME_WS_TUNING[xi.weaponskill.IMPERATOR].wsDamageBonus)
                 assert(player:getLocalVar(capVar) == 1749999)
+                assert(player:getLocalVar('StandardWsDamageCap') == 1749999)
                 return 'prime'
             end)
 
         assert(result == 'prime')
         assert(player:getMod(modId) == 0)
         assert(player:getLocalVar(capVar) == 0)
+        assert(player:getLocalVar('StandardWsDamageCap') == 0)
+    end)
+
+    it('caps companion main job Prime WS without lowering pet progression', function()
+        local player = makePlayer(
+            { [xi.slot.MAIN] = 21535 },
+            xi.job.PUP)
+        local capVar = catalog.DAMAGE_CAP_LOCAL_VAR
+
+        xi.primeWsTuning.withPrimeEffects(
+            player, xi.weaponskill.MARU_KALA, xi.slot.MAIN,
+            function()
+                assert(player:getLocalVar(capVar) == 499999)
+                assert(player:getLocalVar('StandardWsDamageCap') == 499999)
+            end)
+
+        assert(player:getLocalVar(capVar) == 0)
+        assert(player:getLocalVar('StandardWsDamageCap') == 0)
+
+        local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
+        assert(progression.getPetDamageCap(player) == 1499999)
     end)
 
     it('raises and restores the AoE cap for an exact final Prime WS', function()
@@ -235,6 +257,7 @@ describe('Relaunch Prime weaponskill pinnacle tuning', function()
 
         player:setMod(modId, 17)
         player:setLocalVar(capVar, 23)
+        player:setLocalVar('StandardWsDamageCap', 29)
 
         local ok = pcall(function()
             xi.primeWsTuning.withPrimeEffects(
@@ -247,6 +270,7 @@ describe('Relaunch Prime weaponskill pinnacle tuning', function()
         assert(not ok)
         assert(player:getMod(modId) == 17)
         assert(player:getLocalVar(capVar) == 23)
+        assert(player:getLocalVar('StandardWsDamageCap') == 29)
     end)
 
     it('does not register wrappers again when reloaded', function()

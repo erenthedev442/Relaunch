@@ -2,7 +2,7 @@ local catalog = require('modules/custom/lua/rema_ws_tier_catalog')
 require('modules/custom/lua/REMAWeaponskillEnhancement')
 
 describe('Legendary REMA native-weaponskill enhancement', function()
-    local function makePlayer(equipment)
+    local function makePlayer(equipment, mainJob)
         local mods      = {}
         local localVars = {}
         local player =
@@ -16,6 +16,10 @@ describe('Legendary REMA native-weaponskill enhancement', function()
 
         player.getEquipID = function(self, slot)
             return self.equipment[slot] or 0
+        end
+
+        player.getMainJob = function()
+            return mainJob or xi.job.MNK
         end
 
         player.addMod = function(_, modId, amount)
@@ -308,6 +312,21 @@ describe('Legendary REMA native-weaponskill enhancement', function()
             function()
                 assert(rangedPlayer:getLocalVar('AoEWsDamageCap') == 149999)
             end)
+    end)
+
+    it('caps a companion main job player below its REMA pet', function()
+        local player = makePlayer({ [xi.slot.MAIN] = 21750 }, xi.job.BST)
+
+        xi.remaWsTier.withTemporaryBonus(
+            player,
+            xi.weaponskill.ONSLAUGHT,
+            xi.slot.MAIN,
+            function()
+                assert(player:getLocalVar('StandardWsDamageCap') == 249999)
+            end)
+
+        local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
+        assert(progression.getPetDamageCap(player) == 999999)
     end)
 
     it('adds and restores family magic accuracy only for magical REMA WSs', function()

@@ -15,7 +15,7 @@ DELETE FROM `mob_skill_lists`
 WHERE `skill_list_id` IN
 (
     737, 738, 739, 740, 741, 742, 747, 755,
-    756, 757, 758, 759, 762, 763, 2096
+    756, 757, 758, 759, 760, 762, 763, 2096
 );
 
 INSERT INTO `mob_skill_lists` VALUES
@@ -72,6 +72,11 @@ INSERT INTO `mob_skill_lists` VALUES
 -- Raaz
 ('Jug_Raaz',759,3931), -- Sweeping Gouge
 ('Jug_Raaz',759,3932), -- Zealous Snort
+-- Snapweed
+('Jug_Snapweed',760,3934), -- Tickling Tendrils
+('Jug_Snapweed',760,3935), -- Stink Bomb
+('Jug_Snapweed',760,3936), -- Nectarous Deluge
+('Jug_Snapweed',760,3937), -- Nepenthic Plunge
 -- Acuex
 ('Jug_Acuex',762,3939), -- Foul Waters
 ('Jug_Acuex',762,3940), -- Pestilent Plume
@@ -80,3 +85,16 @@ INSERT INTO `mob_skill_lists` VALUES
 -- Mosquito
 ('Jug_Mosquito',2096,3945), -- Infected Leech
 ('Jug_Mosquito',2096,3946); -- Gloom Spray
+
+-- Correct targeting/knockback metadata shared by manual and auto-Ready.
+UPDATE `mob_skills`
+SET `mob_skill_aoe` = 0
+WHERE `mob_skill_id` IN (3064, 3933); -- Pentapeck is single-target
+
+UPDATE `mob_skills`
+SET `knockback` = 3
+WHERE `mob_skill_id` IN (3063, 3929); -- Molting Plumage
+
+UPDATE `pet_skills`
+SET `knockback` = 3
+WHERE `pet_skill_id` = 763; -- Molting Plumage
