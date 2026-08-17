@@ -1,80 +1,39 @@
-﻿Collaborator review  2026-08-17 11:23:19
+﻿Collaborator review  2026-08-17 11:43:21
 Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit 8b4c3d31b701298095e10ca96c72fff3f9e3e71b
+commit 3a2157cd992afaaf714bf8a304bc22f1bfa46d02
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Mon Aug 17 19:22:05 2026 +0100
+Date:   Mon Aug 17 19:41:07 2026 +0100
 
-    fix(relaunch): compile pet modifier tracking
+    fix(relaunch/pup): compile automaton merit tracking
     
-    Cast active pets to their concrete entity type before calling companion modifier tracking APIs.
+    Apply recalculation modifiers through the validated automaton entity instead of its generic battle-entity pointer.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/src/map/entities/battleentity.cpp b/src/map/entities/battleentity.cpp
-index 227ba8d9af..10f2981b95 100644
---- a/src/map/entities/battleentity.cpp
-+++ b/src/map/entities/battleentity.cpp
-@@ -44,6 +44,7 @@
- #include "attack.h"
- #include "attackround.h"
- #include "entities/charentity.h"
-+#include "entities/petentity.h"
- #include "items/item_weapon.h"
- #include "job_points.h"
- #include "lua/luautils.h"
-@@ -2222,7 +2223,7 @@ void CBattleEntity::addPetModifier(Mod type, PetModType petmod, int16 amount)
-     if (PPet && petutils::CheckPetModType(PPet, petmod))
-     {
-         PPet->addModifier(type, amount);
--        PPet->recordAppliedMasterPetModifier(type, amount);
-+        static_cast<CPetEntity*>(PPet)->recordAppliedMasterPetModifier(type, amount);
-         PPet->UpdateHealth();
-     }
- }
-@@ -2237,7 +2238,7 @@ void CBattleEntity::setPetModifier(Mod type, PetModType petmod, int16 amount)
-     {
-         const int16 difference = amount - previousAmount;
-         PPet->addModifier(type, difference);
--        PPet->recordAppliedMasterPetModifier(type, difference);
-+        static_cast<CPetEntity*>(PPet)->recordAppliedMasterPetModifier(type, difference);
-         PPet->UpdateHealth();
-     }
- }
-@@ -2250,7 +2251,7 @@ void CBattleEntity::delPetModifier(Mod type, PetModType petmod, int16 amount)
-     if (PPet && petutils::CheckPetModType(PPet, petmod))
-     {
-         PPet->delModifier(type, amount);
--        PPet->recordAppliedMasterPetModifier(type, -amount);
-+        static_cast<CPetEntity*>(PPet)->recordAppliedMasterPetModifier(type, -amount);
-         PPet->UpdateHealth();
-     }
- }
-@@ -2280,7 +2281,7 @@ void CBattleEntity::applyPetModifiers(CPetEntity* PPet)
-     // Reapplication may follow an equipment or pet-frame change. Remove the
-     // exact old set first; m_petMod already describes the new equipment and
-     // cannot reliably be used to undo what the pet currently has.
--    PPet->clearAppliedMasterPetModifiers();
-+    static_cast<CPetEntity*>(PPet)->clearAppliedMasterPetModifiers();
- 
-     for (const auto& modtype : m_petMod)
-     {
-@@ -2289,7 +2290,7 @@ void CBattleEntity::applyPetModifiers(CPetEntity* PPet)
-             for (auto mod : modtype.second)
+diff --git a/src/map/utils/petutils.cpp b/src/map/utils/petutils.cpp
+index d68a3236bf..73a0b7dd8b 100644
+--- a/src/map/utils/petutils.cpp
++++ b/src/map/utils/petutils.cpp
+@@ -1274,13 +1274,13 @@ void CalculateAutomatonStats(CBattleEntity* PMaster, CBattleEntity* PPet)
+         {
+             if (PMaster->objtype == TYPE_PC)
              {
-                 PPet->addModifier(mod.first, mod.second);
--                PPet->recordAppliedMasterPetModifier(mod.first, mod.second);
-+                static_cast<CPetEntity*>(PPet)->recordAppliedMasterPetModifier(mod.first, mod.second);
-                 PPet->UpdateHealth();
+-                PPet->addStatRecalculationModifier(Mod::ATTP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
+-                PPet->addStatRecalculationModifier(Mod::DEFP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
+-                PPet->addStatRecalculationModifier(Mod::MATT, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
+-                PPet->addStatRecalculationModifier(Mod::ACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+-                PPet->addStatRecalculationModifier(Mod::RACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+-                PPet->addStatRecalculationModifier(Mod::EVA, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+-                PPet->addStatRecalculationModifier(Mod::MDEF, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
++                PAutomaton->addStatRecalculationModifier(Mod::ATTP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
++                PAutomaton->addStatRecalculationModifier(Mod::DEFP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
++                PAutomaton->addStatRecalculationModifier(Mod::MATT, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
++                PAutomaton->addStatRecalculationModifier(Mod::ACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
++                PAutomaton->addStatRecalculationModifier(Mod::RACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
++                PAutomaton->addStatRecalculationModifier(Mod::EVA, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
++                PAutomaton->addStatRecalculationModifier(Mod::MDEF, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
              }
-         }
-@@ -2299,7 +2300,7 @@ void CBattleEntity::applyPetModifiers(CPetEntity* PPet)
- void CBattleEntity::removePetModifiers(CPetEntity* PPet)
- {
-     TracyZoneScoped;
--    PPet->clearAppliedMasterPetModifiers();
-+    static_cast<CPetEntity*>(PPet)->clearAppliedMasterPetModifiers();
-     PPet->UpdateHealth();
- }
  
+             FinalizePetStatistics(PMaster, PAutomaton);
