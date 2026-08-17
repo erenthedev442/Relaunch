@@ -739,6 +739,15 @@ function Battlefield.onEntryTrigger(player, npc)
         end
     end
 
+    -- Custom systems can replace the client-DAT picker for a NEW battlefield.
+    -- Existing registrations above must retain their normal join path.
+    if
+        xi.battlefield.customEntryTrigger and
+        xi.battlefield.customEntryTrigger(player, npc)
+    then
+        return
+    end
+
     -- No one in party/alliance has battlefield status effect. We want to register a new battlefield.
     local options = xi.battlefield.getBattlefieldOptions(player, npc)
 
@@ -931,6 +940,146 @@ function Battlefield:onEntryEventUpdate(player, csid, option, npc)
     return (status < xi.battlefield.status.LOCKED and result < xi.battlefield.returnCode.LOCKED) and 1 or 0
 end
 
+-- Register and enter a battlefield without event 32000's client-DAT menu.
+-- Used by custom named menus such as Legendary HTBF. The normal event path
+-- remains unchanged for retail mission, quest, and orb battlefields.
+function Battlefield:directEntry(player, npc)
+    if
+        xi.battlefield.rejectLevelSyncedParty(player, npc) or
+        player:getZoneID() ~= self.zoneId or
+        not self:isValidEntry(player, npc) or
+        not self:checkRequirements(player, npc, true) or
+        player:battlefieldAtCapacity(self.battlefieldId)
+    then
+        return false
+    end
+
+    local zone = player:getZoneID()
+    local entrants = {}
+    for _, member in pairs(player:getAlliance()) do
+        if
+            member:getZoneID() == zone and
+            member:getStatus() ~= xi.status.DISAPPEAR and
+            not member:hasStatusEffect(xi.effect.BATTLEFIELD) and
+            not member:getBattlefield()
+        then
+            if not self:checkRequirements(member, npc, false) then
+                player:printToPlayer(string.format(
+                    '[HTBF] %s does not meet this battlefield entry requirement.',
+                    member:getName()), xi.msg.channel.SYSTEM_3)
+                return false
+            end
+
+            entrants[#entrants + 1] = member
+        elseif member:hasStatusEffect(xi.effect.BATTLEFIELD) or member:getBattlefield() then
+            player:messageSpecial(zones[zone].text.PARTY_MEMBERS_ARE_ENGAGED)
+            return false
+        end
+    end
+
+    if #entrants > self.maxPlayers then
+        player:printToPlayer(string.format(
+            '[HTBF] This battlefield allows at most %d players.',
+            self.maxPlayers), xi.msg.channel.SYSTEM_3)
+        return false
+    end
+
+    local result = xi.battlefield.returnCode.WAIT
+    local area = self.area or 1
+    while area <= 3 do
+        if not self.allowedAreas or self.allowedAreas[area] then
+            result = player:registerBattlefield(
+                self.battlefieldId, area, player:getID(), self)
+            if result ~= xi.battlefield.returnCode.INCREMENT_REQUEST then
+                break
+            end
+        end
+
+        if self.area then
+            break
+        end
+        area = area + 1
+    end
+
+    if result ~= xi.battlefield.returnCode.CUTSCENE then
+        player:delStatusEffect(xi.effect.BATTLEFIELD)
+        player:printToPlayer(
+            '[HTBF] That battlefield could not be opened. Try again shortly.',
+            xi.msg.channel.SYSTEM_3)
+        return false
+    end
+
+    local registered = { player }
+    local function rollbackDirectEntry()
+        for _, entrant in ipairs(registered) do
+            if entrant:getBattlefield() then
+                pcall(function() entrant:leaveBattlefield(1) end)
+            end
+            entrant:delStatusEffect(xi.effect.BATTLEFIELD)
+            if
+                self.partyKeyItem and
+                not entrant:hasKeyItem(self.partyKeyItem)
+            then
+                entrant:addKeyItem(self.partyKeyItem)
+            end
+        end
+    end
+
+    local effect = player:getStatusEffect(xi.effect.BATTLEFIELD)
+    if not effect then
+        rollbackDirectEntry()
+        player:printToPlayer(
+            '[HTBF] Battlefield registration did not return an entry effect.',
+            xi.msg.channel.SYSTEM_3)
+        return false
+    end
+
+    for _, member in ipairs(entrants) do
+        if member:getID() ~= player:getID() then
+            member:copyStatusEffect(effect)
+            registered[#registered + 1] = member
+            local memberResult = member:registerBattlefield(
+                self.battlefieldId, area, player:getID(), self)
+            if memberResult ~= xi.battlefield.returnCode.CUTSCENE then
+                member:delStatusEffect(xi.effect.BATTLEFIELD)
+                player:printToPlayer(string.format(
+                    '[HTBF] %s could not be registered.',
+                    member:getName()), xi.msg.channel.SYSTEM_3)
+                rollbackDirectEntry()
+                return false
+            end
+
+            if not member:getBattlefield() then
+                member:enterBattlefield()
+            end
+
+            if not member:getBattlefield() then
+                player:printToPlayer(string.format(
+                    '[HTBF] %s could not enter after registration.',
+                    member:getName()), xi.msg.channel.SYSTEM_3)
+                rollbackDirectEntry()
+                return false
+            end
+        end
+    end
+
+    if not player:getBattlefield() then
+        player:enterBattlefield()
+    end
+    if not player:getBattlefield() then
+        player:printToPlayer(
+            '[HTBF] Battlefield registration succeeded, but entry failed.',
+            xi.msg.channel.SYSTEM_3)
+        rollbackDirectEntry()
+        return false
+    end
+
+    for _, entrant in ipairs(registered) do
+        self:onEntryComplete(entrant, npc)
+    end
+    return true
+end
+
 function Battlefield.redirectEventCall(eventName, player, csid, option)
     local battlefieldID = 0
     local battlefield   = player:getBattlefield()
@@ -949,10 +1098,14 @@ function Battlefield.redirectEventCall(eventName, player, csid, option)
     content[eventName](content, player, csid, option)
 end
 
-function Battlefield:onEventFinishEnter(player, csid, option, npc)
+function Battlefield:onEntryComplete(player, npc)
     player:setEnteredBattlefield(true)
     player:setLocalVar('[battlefield]area', 0)
     self:setLocalVar(player, 'CS', 1)
+end
+
+function Battlefield:onEventFinishEnter(player, csid, option, npc)
+    self:onEntryComplete(player, npc)
 end
 
 function Battlefield:onEventFinishWin(player, csid, option, npc)

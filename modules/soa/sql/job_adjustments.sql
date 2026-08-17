@@ -30,8 +30,8 @@ UPDATE abilities SET recastTime = 120 WHERE name = 'sic';
 -- Ready: Revert charge recast from 30 to 60 seconds
 UPDATE abilities SET recastTime = 60 WHERE name = 'ready';
 
--- Sic merit: Revert value from 2 to 4 seconds per level
-UPDATE merits SET value = 4 WHERE name = 'sic_recast';
+-- Relaunch Ready cadence: one second per merit rank (five seconds at 5/5).
+UPDATE merits SET value = 1 WHERE name = 'sic_recast';
 
 ------------------------------------
 -- Ranger

@@ -29,7 +29,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 1,
+    permission = 0,
     parameters = '',
 }
 
@@ -48,6 +48,7 @@ local ZONE_ENTRY =
     [xi.zone.MONARCH_LINN]         = {   12.527,   0.345, -539.602, 127 },
     [xi.zone.SEALIONS_DEN]         = {  600.101, 130.355,  797.612,  50 },
     [xi.zone.BONEYARD_GULLY]       = { -709.508,  18.066,  456.241,  24 },
+    [xi.zone.EMPYREAL_PARADOX]      = {  540.040,  -1.180, -597.680,   0 },
     [xi.zone.JADE_SEPULCHER]       = {  340.383, -13.625, -157.447, 189 },
     [xi.zone.TALACCA_COVE]         = {   64.007,  -9.281,  -99.988,  88 },
     [xi.zone.THRONE_ROOM]          = {  114.308,  -7.639,    0.022, 126 },
@@ -68,6 +69,10 @@ local function heldFightKeys(player)
             end
         end
     end
+    table.sort(out, function(left, right)
+        return (catalog.fights[left].label or left) <
+            (catalog.fights[right].label or right)
+    end)
     return out
 end
 
@@ -113,6 +118,66 @@ local function warpToFight(player, fightKey)
     end
 end
 
+local function showFightPicker(player, keys, title)
+    local options = {}
+    for _, key in ipairs(keys) do
+        local capturedKey = key
+        local fight = catalog.fights[key]
+        options[#options + 1] =
+        {
+            fight.label or key,
+            function(p) warpToFight(p, capturedKey) end,
+        }
+    end
+    options[#options + 1] = { 'Cancel', function() end }
+    player:customMenu({ title = title, options = options })
+end
+
+local function showCategoryPicker(player, keys)
+    local held = {}
+    for _, key in ipairs(keys) do
+        held[key] = true
+    end
+
+    local categories = {}
+    for _, category in ipairs(catalog.gemCategories) do
+        local categoryKeys = {}
+        for _, fightKey in ipairs(category.fightKeys) do
+            if held[fightKey] then
+                categoryKeys[#categoryKeys + 1] = fightKey
+            end
+        end
+        if #categoryKeys > 0 then
+            categories[#categories + 1] =
+            {
+                label = category.label,
+                keys = categoryKeys,
+            }
+        end
+    end
+
+    if #categories == 1 then
+        showFightPicker(player, categories[1].keys, categories[1].label)
+        return
+    end
+
+    local options = {}
+    for _, category in ipairs(categories) do
+        local selected = category
+        options[#options + 1] =
+        {
+            selected.label,
+            function(p)
+                p:timer(50, function(pp)
+                    showFightPicker(pp, selected.keys, selected.label)
+                end)
+            end,
+        }
+    end
+    options[#options + 1] = { 'Cancel', function() end }
+    player:customMenu({ title = 'HTBF Warp Category', options = options })
+end
+
 commandObj.onTrigger = function(player)
     local keys = heldFightKeys(player)
 
@@ -126,22 +191,9 @@ commandObj.onTrigger = function(player)
         return
     end
 
-    -- Several candidate fights (the Avatar gem opens all 6 elemental trials, or
-    -- you're carrying more than one gem). Let the player pick which entrance.
-    -- customMenu caps: 8 options and ~150 bytes of title+labels -- keep 7 fights
-    -- + Cancel; the Avatar gem yields exactly 6, so it always fits.
-    local options = {}
-    for _, key in ipairs(keys) do
-        local f           = catalog.fights[key]
-        local capturedKey = key
-        table.insert(options, { f.label or key, function(p) warpToFight(p, capturedKey) end })
-        if #options >= 7 then
-            break
-        end
-    end
-    table.insert(options, { 'Cancel', function(p) end })
-
-    player:customMenu({ title = 'HTBF Warp', options = options })
+    -- Group by the same short vendor categories so every held destination stays
+    -- reachable without exceeding the client menu's option/byte limits.
+    showCategoryPicker(player, keys)
 end
 
 return commandObj

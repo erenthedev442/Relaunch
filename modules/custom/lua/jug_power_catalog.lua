@@ -51,6 +51,7 @@ end
 -- Every HQ/high-level jug has an explicit selection reason at level 99.
 catalog.PETS =
 {
+    [55]  = pet('fast', 'Ladybug rapid attacks, stuns and evasion'),
     [77]  = pet('magical', 'AoE magical damage'),
     [78]  = pet('physical', 'Balanced bird physical damage', 0.94),
     [79]  = pet('physical', 'High physical burst', 1.02),

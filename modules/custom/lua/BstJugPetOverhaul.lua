@@ -72,6 +72,16 @@ local CONFIG =
     -- while Pet: attributes, attack and TP Bonus scale the complete formula.
     flatWeaponDamage = 120,
 
+    -- Ready investment converts the server's long-form pet progression into
+    -- actual jug weapon/magic floors. Prestige PET + Paragon Dominion reach
+    -- 3000 in each PET_* bucket; ordinary gear contributes before that cap.
+    -- At full investment the floor is ×12, while an uninvested jug remains at
+    -- ×1. This is intentionally applied before the stock Ready formula so pet
+    -- role, move fTP, target defense and ecosystem selection still matter.
+    readyInvestmentPerPoint = 11.0,
+    readyInvestmentModCap   = 3000,
+    readyInvestmentAffCap   = 100,
+
     -- Auto-Ready: pet fires its TP move on its own once it caps TP.
     autoReady           = true,
     autoReadyTP         = 1000,
@@ -88,6 +98,37 @@ local CONFIG =
 -- Jug pets are petID >= SHEEP_FAMILIAR (21). 0-7 = spirits, 8-20 = SMN avatars.
 local JUG_MIN = xi.petId.SHEEP_FAMILIAR
 local AUTO_READY_OFF_VAR = 'BST_AutoReadyOff'
+
+local function cappedProgress(value, cap)
+    if cap <= 0 then
+        return 0
+    end
+
+    return math.min(math.max(value or 0, 0) / cap, 1.0)
+end
+
+-- Physical and magical Ready floors use their matching offensive PET_* bundle.
+-- Beast Affinity, Attributes and TP Bonus contribute to both paths. Accuracy
+-- modifiers remain valuable for landing hits/effects but do not inflate damage.
+local function getReadyInvestmentMultiplier(master, magical)
+    if master == nil then
+        return 1.0
+    end
+
+    local offenseMod = magical and xi.mod.PET_MAB_MDB or xi.mod.PET_ATK_DEF
+    local score =
+        (
+            cappedProgress(master:getMod(xi.mod.PET_BEAST_AFF), CONFIG.readyInvestmentAffCap) +
+            cappedProgress(master:getMod(offenseMod), CONFIG.readyInvestmentModCap) +
+            cappedProgress(master:getMod(xi.mod.PET_ATTR_BONUS), CONFIG.readyInvestmentModCap) +
+            cappedProgress(master:getMod(xi.mod.PET_TP_BONUS), CONFIG.readyInvestmentModCap)
+        ) / 4
+
+    return 1.0 + CONFIG.readyInvestmentPerPoint * score
+end
+
+-- Exported on the module for deterministic balance tests.
+m.getReadyInvestmentMultiplier = getReadyInvestmentMultiplier
 
 -- ── Auto-Ready loop ────────────────────────────────────────────────────────
 -- Self-rescheduling; bails out when the pet dies/despawns.
@@ -165,6 +206,8 @@ local function applyEndgameScaling(master, pet)
     -- and are intentionally NOT level-scaled. All flat floors below use floorMult.
     local levelScale = math.min((master:getMainLvl() or 1) / 99, 1.0)
     local floorMult  = beastAffMult * levelScale * power
+    local physicalReadyMult = getReadyInvestmentMultiplier(master, false)
+    local magicalReadyMult  = getReadyInvestmentMultiplier(master, true)
 
     local strFromMaster = math.floor(mSTR * CONFIG.masterSTRShare * w.str)
 
@@ -183,14 +226,14 @@ local function applyEndgameScaling(master, pet)
     -- BP_DAMAGE is a post-MAB multiplier (×4 at 300) now enabled for player pets in
     -- scripts/globals/mobskills.lua. Scales with beastAffMult so Beast Affinity boosts
     -- magical output too.
-    pet:addMod(xi.mod.MAGIC_DAMAGE, math.floor(CONFIG.flatMagicDamage * floorMult * w.magic))
-    pet:addMod(xi.mod.BP_DAMAGE, math.floor(CONFIG.flatMagicDMGMult * floorMult * w.magic))
+    pet:addMod(xi.mod.MAGIC_DAMAGE, math.floor(CONFIG.flatMagicDamage * floorMult * w.magic * magicalReadyMult))
+    pet:addMod(xi.mod.BP_DAMAGE, math.floor(CONFIG.flatMagicDMGMult * floorMult * w.magic * magicalReadyMult))
 
     pet:addMod(xi.mod.DOUBLE_ATTACK, math.floor(CONFIG.doubleAttack * levelScale * w.multi))
     pet:addMod(xi.mod.TRIPLE_ATTACK, math.floor(CONFIG.tripleAttack * levelScale * w.multi))
 
     -- Physical Ready / AA weapon floor (setDamage writes the jug weapon's DMG).
-    local weaponDmg = math.floor(CONFIG.flatWeaponDamage * floorMult * w.weapon)
+    local weaponDmg = math.floor(CONFIG.flatWeaponDamage * floorMult * w.weapon * physicalReadyMult)
     if weaponDmg > 0 then
         pet:setDamage(weaponDmg)
     end

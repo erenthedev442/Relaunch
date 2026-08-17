@@ -113,16 +113,16 @@ catalog.gemUseHint =
     [xi.ki.PHANTOM_GEM_OF_RAGE]      = 'Use at Shimmering Circle V.',
 }
 
--- The vendor groups gems by expansion so each customMenu stays under BOTH client
--- caps (max 8 options + 150-byte title+labels). A flat 16-gem list would hide
--- half the gems (incl. the headline Avatar gem) and blow the byte cap. Ordered.
+-- The vendor groups fights by expansion so each customMenu stays under BOTH
+-- client caps (max 8 options + 150-byte title+labels). Fight keys, rather than
+-- gem IDs, preserve the selected destination for the six shared Avatar gems.
 catalog.gemCategories =
 {
-    { label = 'Avatar Prime Trials',     gems = { xi.ki.AVATAR_PHANTOM_GEM } },
-    { label = 'Chains of Promathia',     gems = { xi.ki.SAVAGES_PHANTOM_GEM, xi.ki.WARRIORS_PATH_PHANTOM_GEM, xi.ki.FEARED_ONE_PHANTOM_GEM, xi.ki.HEAD_WIND_PHANTOM_GEM, xi.ki.DAWN_PHANTOM_GEM } },
-    { label = 'Treasures of Aht Urhgan', gems = { xi.ki.PUPPET_IN_PERIL_PHANTOM_GEM, xi.ki.LEGACY_PHANTOM_GEM } },
-    { label = 'Rise of the Zilart',      gems = { xi.ki.SHADOW_LORD_PHANTOM_GEM, xi.ki.STELLAR_FULCRUM_PHANTOM_GEM, xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM, xi.ki.DIVINE_PHANTOM_GEM } },
-    { label = 'Ark Angels',              gems = { xi.ki.PHANTOM_GEM_OF_APATHY, xi.ki.PHANTOM_GEM_OF_COWARDICE, xi.ki.PHANTOM_GEM_OF_ENVY, xi.ki.PHANTOM_GEM_OF_ARROGANCE, xi.ki.PHANTOM_GEM_OF_RAGE } },
+    { label = 'Avatar Prime Trials', fightKeys = { 'trial_by_fire', 'trial_by_ice', 'trial_by_wind', 'trial_by_earth', 'trial_by_lightning', 'trial_by_water' } },
+    { label = 'Chains of Promathia', fightKeys = { 'the_savage', 'warriors_path', 'one_to_be_feared', 'head_wind', 'dawn' } },
+    { label = 'Treasures of Aht Urhgan', fightKeys = { 'puppet_in_peril', 'legacy_of_the_lost' } },
+    { label = 'Rise of the Zilart', fightKeys = { 'shadow_lord', 'stellar_fulcrum', 'celestial_nexus', 'divine_might' } },
+    { label = 'Ark Angels', fightKeys = { 'ark_angels_1', 'ark_angels_2', 'ark_angels_3', 'ark_angels_4', 'ark_angels_5' } },
 }
 
 -- WARP DESTINATIONS: the HTBF vendor can warp you straight to any battlefield
@@ -135,42 +135,49 @@ catalog.warpDestinations =
 {
     { label = 'Avatar Prime Trials', dests =
         {
-            { name = 'Trial by Fire',      zone = 207, x = -722.13, y =  -1.40, z = -597.96, rot =   0 },
-            { name = 'Trial by Ice',       zone = 203, x =  560.01, y =  -0.83, z =  600.02, rot =   0 },
-            { name = 'Trial by Wind',      zone = 201, x = -359.05, y =  -0.13, z = -379.98, rot =   0 },
-            { name = 'Trial by Earth',     zone = 209, x = -539.95, y =   0.46, z = -493.87, rot =   0 },
-            { name = 'Trial by Lightning', zone = 202, x =  535.09, y = -14.93, z =  493.01, rot =   0 },
-            { name = 'Trial by Water',     zone = 211, x =  558.99, y =  35.10, z =  562.96, rot =   0 },
+            { fightKey = 'trial_by_fire', name = 'Trial by Fire', zone = 207, x = -722.13, y = -1.40, z = -597.96, rot = 0 },
+            { fightKey = 'trial_by_ice', name = 'Trial by Ice', zone = 203, x = 560.01, y = -0.83, z = 600.02, rot = 0 },
+            { fightKey = 'trial_by_wind', name = 'Trial by Wind', zone = 201, x = -359.05, y = -0.13, z = -379.98, rot = 0 },
+            { fightKey = 'trial_by_earth', name = 'Trial by Earth', zone = 209, x = -539.95, y = 0.46, z = -493.87, rot = 0 },
+            { fightKey = 'trial_by_lightning', name = 'Trial by Lightning', zone = 202, x = 535.09, y = -14.93, z = 493.01, rot = 0 },
+            { fightKey = 'trial_by_water', name = 'Trial by Water', zone = 211, x = 558.99, y = 35.10, z = 562.96, rot = 0 },
         } },
     { label = 'Chains of Promathia', dests =
         {
-            { name = 'The Savage',          zone =  31, x =  -39.11, y =  -3.35, z = -539.99, rot =   0 },
-            { name = "The Warrior's Path",  zone =  32, x =  612.00, y = 130.90, z =  770.03, rot =   0 },
-            { name = 'One to be Feared',    zone =  32, x =  612.00, y = 130.90, z =  770.03, rot =   0 },
-            { name = 'Head Wind',           zone =   8, x = -619.42, y =  -1.52, z =  505.67, rot =   0 },
-            { name = 'Dawn',                zone =  36, x =  540.04, y =  -1.18, z = -597.68, rot =   0 },
+            { fightKey = 'the_savage', name = 'The Savage', zone = 31, x = -39.11, y = -3.35, z = -539.99, rot = 0 },
+            { fightKey = 'warriors_path', name = "The Warrior's Path", zone = 32, x = 612.00, y = 130.90, z = 770.03, rot = 0 },
+            { fightKey = 'one_to_be_feared', name = 'One to be Feared', zone = 32, x = 612.00, y = 130.90, z = 770.03, rot = 0 },
+            { fightKey = 'head_wind', name = 'Head Wind', zone = 8, x = -619.42, y = -1.52, z = 505.67, rot = 0 },
+            { fightKey = 'dawn', name = 'Dawn', zone = 36, x = 540.04, y = -1.18, z = -597.68, rot = 0 },
         } },
     { label = 'Treasures of Aht Urhgan', dests =
         {
-            { name = 'Puppet in Peril',     zone =  67, x =  300.00, y =  -2.52, z = -200.00, rot =   0 },
-            { name = 'Legacy of the Lost',  zone =  57, x = -100.00, y =  -9.40, z =  -87.00, rot =   0 },
+            { fightKey = 'puppet_in_peril', name = 'Puppet in Peril', zone = 67, x = 300.00, y = -2.52, z = -200.00, rot = 0 },
+            { fightKey = 'legacy_of_the_lost', name = 'Legacy of the Lost', zone = 57, x = -100.00, y = -9.40, z = -87.00, rot = 0 },
         } },
     { label = 'Rise of the Zilart', dests =
         {
-            { name = 'Shadow Lord',               zone = 165, x = -115.85, y =  -8.66, z =    0.00, rot =   0 },
-            { name = "Return to Delkfutt's Tower",zone = 179, x = -519.99, y =  -6.30, z =   22.35, rot =   0 },
-            { name = 'The Celestial Nexus',       zone = 181, x = -582.07, y =  -8.07, z =  -32.35, rot =   0 },
-            { name = 'Divine Might',              zone = 180, x = -605.06, y = -22.68, z =  483.94, rot = 190 },
+            { fightKey = 'shadow_lord', name = 'Shadow Lord', zone = 165, x = -115.85, y = -8.66, z = 0.00, rot = 0 },
+            { fightKey = 'stellar_fulcrum', name = "Return to Delkfutt's Tower", zone = 179, x = -519.99, y = -6.30, z = 22.35, rot = 0 },
+            { fightKey = 'celestial_nexus', name = 'The Celestial Nexus', zone = 181, x = -582.07, y = -8.07, z = -32.35, rot = 0 },
+            { fightKey = 'divine_might', name = 'Divine Might', zone = 180, x = -605.06, y = -22.68, z = 483.94, rot = 190 },
         } },
     { label = 'Ark Angels', dests =
         {
-            { name = 'Ark Angels I',   zone = 180, x = -605.06, y =  -22.68, z = 483.94, rot = 190 },
-            { name = 'Ark Angels II',  zone = 180, x = -264.78, y = -137.31, z = 374.52, rot = 115 },
-            { name = 'Ark Angels III', zone = 180, x =   14.15, y = -224.33, z = 488.12, rot = 166 },
-            { name = 'Ark Angels IV',  zone = 180, x =  235.65, y = -173.57, z = 361.27, rot = 217 },
-            { name = 'Ark Angels V',   zone = 180, x =  556.00, y =  -38.21, z = 520.63, rot =  11 },
+            { fightKey = 'ark_angels_1', name = 'Ark Angel HM', zone = 180, x = -605.06, y = -22.68, z = 483.94, rot = 190 },
+            { fightKey = 'ark_angels_2', name = 'Ark Angel TT', zone = 180, x = -264.78, y = -137.31, z = 374.52, rot = 115 },
+            { fightKey = 'ark_angels_3', name = 'Ark Angel MR', zone = 180, x = 14.15, y = -224.33, z = 488.12, rot = 166 },
+            { fightKey = 'ark_angels_4', name = 'Ark Angel EV', zone = 180, x = 235.65, y = -173.57, z = 361.27, rot = 217 },
+            { fightKey = 'ark_angels_5', name = 'Ark Angel GK', zone = 180, x = 556.00, y = -38.21, z = 520.63, rot = 11 },
         } },
 }
+
+catalog.warpByFight = {}
+for _, group in ipairs(catalog.warpDestinations) do
+    for _, destination in ipairs(group.dests) do
+        catalog.warpByFight[destination.fightKey] = destination
+    end
+end
 
 -- Difficulty profiles preserve each retail fight's mobs, TP moves, phase logic,
 -- and scripts. Only ordinary combat stats are adjusted; no drain, regen, or
@@ -623,7 +630,7 @@ catalog.fights =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_1', exitNpc = 'qm2',
         gem = xi.ki.PHANTOM_GEM_OF_APATHY, baseIndex = 12, baseBattlefieldId = 4160,
-        reuseBaseId = xi.battlefield.id.ARK_ANGELS_1, label = 'Ark Angels I',
+        reuseBaseId = xi.battlefield.id.ARK_ANGELS_1, label = 'Ark Angel HM',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
     },
@@ -631,7 +638,7 @@ catalog.fights =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_2', exitNpc = 'qm2',
         gem = xi.ki.PHANTOM_GEM_OF_COWARDICE, baseIndex = 12, baseBattlefieldId = 4170,
-        reuseBaseId = xi.battlefield.id.ARK_ANGELS_2, label = 'Ark Angels II',
+        reuseBaseId = xi.battlefield.id.ARK_ANGELS_2, label = 'Ark Angel TT',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
     },
@@ -639,7 +646,7 @@ catalog.fights =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_3', exitNpc = 'qm2',
         gem = xi.ki.PHANTOM_GEM_OF_ENVY, baseIndex = 12, baseBattlefieldId = 4180,
-        reuseBaseId = xi.battlefield.id.ARK_ANGELS_3, label = 'Ark Angels III',
+        reuseBaseId = xi.battlefield.id.ARK_ANGELS_3, label = 'Ark Angel MR',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
     },
@@ -647,7 +654,7 @@ catalog.fights =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_4', exitNpc = 'qm2',
         gem = xi.ki.PHANTOM_GEM_OF_ARROGANCE, baseIndex = 12, baseBattlefieldId = 4190,
-        reuseBaseId = xi.battlefield.id.ARK_ANGELS_4, label = 'Ark Angels IV',
+        reuseBaseId = xi.battlefield.id.ARK_ANGELS_4, label = 'Ark Angel EV',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
     },
@@ -655,7 +662,7 @@ catalog.fights =
     {
         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_5', exitNpc = 'qm2',
         gem = xi.ki.PHANTOM_GEM_OF_RAGE, baseIndex = 12, baseBattlefieldId = 4200,
-        reuseBaseId = xi.battlefield.id.ARK_ANGELS_5, label = 'Ark Angels V',
+        reuseBaseId = xi.battlefield.id.ARK_ANGELS_5, label = 'Ark Angel GK',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
     },

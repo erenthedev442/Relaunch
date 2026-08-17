@@ -1880,13 +1880,16 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             if (PAbility->getRecastId() == Recast::Sic) // Sic/Ready recast ID
             {
                 recastReduction = std::chrono::seconds(PMeritPoints->GetMeritValue(MERIT_SIC_RECAST, this));
+                recastReduction += std::chrono::seconds(std::max<int16>(0, this->getMod(Mod::SIC_READY_RECAST)));
             }
             else if (PAbility->getRecastId() == Recast::Strategems)
             {
                 recastReduction += std::chrono::seconds(this->getMod(Mod::STRATAGEM_RECAST));
             }
 
-            baseChargeTime = charge->chargeTime - recastReduction;
+            const timer::duration minimumChargeTime =
+                PAbility->getRecastId() == Recast::Sic ? 3s : 0s;
+            baseChargeTime = std::max(minimumChargeTime, charge->chargeTime - recastReduction);
 
             action.recast = baseChargeTime * chargesUsed;
         }

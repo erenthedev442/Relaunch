@@ -46,6 +46,11 @@ if ! python tools/audit_smn_blood_pacts.py | tee -a "$OUTPUT"; then
     checks_failed=true
 fi
 
+# Cross-check BST Ready charge SQL against the C++ charge-floor path.
+if ! python tools/audit_bst_ready.py | tee -a "$OUTPUT"; then
+    checks_failed=true
+fi
+
 # Lua
 python tools/ci/sanity_checks/lua_stylecheck.py test | tee -a "$OUTPUT"
 run_check tools/ci/sanity_checks/lua.sh "${CHANGED_FILES[@]}"

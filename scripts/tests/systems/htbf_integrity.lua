@@ -176,6 +176,67 @@ describe('HTBF catalog integrity and balance', function()
         assert(catalog.fights.trial_by_earth.mobs[1] == 'Titan_Prime_TBE')
     end)
 
+    it('routes every Legendary fight through one vendor choice and warp', function()
+        local categorized = {}
+        local count = 0
+        for _, category in ipairs(catalog.gemCategories) do
+            assert(#category.fightKeys > 0)
+            assert(#category.fightKeys <= 6)
+            for _, fightKey in ipairs(category.fightKeys) do
+                assert(catalog.fights[fightKey] ~= nil)
+                assert(not categorized[fightKey], fightKey .. ' appears twice')
+                categorized[fightKey] = true
+                count = count + 1
+
+                local destination = catalog.warpByFight[fightKey]
+                assert(destination ~= nil, fightKey .. ' has no vendor warp')
+                assert(destination.zone == catalog.fights[fightKey].zone)
+                assert(destination.fightKey == fightKey)
+            end
+        end
+
+        assert(count == 22)
+        for fightKey in pairs(catalog.fights) do
+            assert(categorized[fightKey], fightKey .. ' is absent from vendor routing')
+        end
+    end)
+
+    it('names and routes all five Ark Angels explicitly', function()
+        local expected =
+        {
+            { key = 'ark_angels_1', label = 'Ark Angel HM', npc = 'qm1_1' },
+            { key = 'ark_angels_2', label = 'Ark Angel TT', npc = 'qm1_2' },
+            { key = 'ark_angels_3', label = 'Ark Angel MR', npc = 'qm1_3' },
+            { key = 'ark_angels_4', label = 'Ark Angel EV', npc = 'qm1_4' },
+            { key = 'ark_angels_5', label = 'Ark Angel GK', npc = 'qm1_5' },
+        }
+
+        for _, entry in ipairs(expected) do
+            local fight = catalog.fights[entry.key]
+            local destination = catalog.warpByFight[entry.key]
+            assert(fight.label == entry.label)
+            assert(fight.entryNpc == entry.npc)
+            assert(destination.name == entry.label)
+            assert(destination.zone == xi.zone.LALOFF_AMPHITHEATER)
+        end
+    end)
+
+    it('keeps shared Avatar gems bound to six distinct selected fights', function()
+        local avatars = catalog.gemCategories[1].fightKeys
+        local coordinates = {}
+        assert(#avatars == 6)
+        for _, fightKey in ipairs(avatars) do
+            local fight = catalog.fights[fightKey]
+            local destination = catalog.warpByFight[fightKey]
+            assert(fight.gem == xi.ki.AVATAR_PHANTOM_GEM)
+            local key = string.format(
+                '%d:%.2f:%.2f:%.2f',
+                destination.zone, destination.x, destination.y, destination.z)
+            assert(not coordinates[key])
+            coordinates[key] = true
+        end
+    end)
+
     it('keeps Dawn durable without the generic epic defense wall', function()
         local dawn = catalog.fights.dawn.tierScaleOverride
         assert(dawn[1].minHp == 1500000)

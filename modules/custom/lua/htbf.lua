@@ -82,6 +82,139 @@ end
 
 htbf.progress = catalog.progress
 
+local function fightMatchesEntrance(fight, zoneId, npcName)
+    if fight.zone ~= zoneId then
+        return false
+    end
+    if fight.entryNpc == npcName then
+        return true
+    end
+
+    return fight.entryNpcs and utils.contains(npcName, fight.entryNpcs) or false
+end
+
+function htbf.getMatchingFightKeys(player, npc)
+    local matches = {}
+    local zoneId = player:getZoneID()
+    local npcName = npc:getName()
+    for fightKey, fight in pairs(catalog.fights) do
+        if
+            fightMatchesEntrance(fight, zoneId, npcName) and
+            player:hasKeyItem(fight.gem)
+        then
+            matches[#matches + 1] = fightKey
+        end
+    end
+    table.sort(matches)
+    return matches
+end
+
+local function getRegisteredChoices(player, npc, fightKey)
+    local choices = {}
+    for _, content in ipairs(
+        xi.battlefield.contentsByZone[player:getZoneID()] or {})
+    do
+        if
+            content.customEntryFight == fightKey and
+            content:isValidEntry(player, npc) and
+            content:checkRequirements(player, npc, true) and
+            not player:battlefieldAtCapacity(content.battlefieldId)
+        then
+            choices[#choices + 1] = content
+        end
+    end
+    table.sort(choices, function(left, right)
+        return left.customEntryOrder < right.customEntryOrder
+    end)
+    return choices
+end
+htbf.getRegisteredChoices = getRegisteredChoices
+
+local function showTierMenu(player, npc, fightKey)
+    local fight = catalog.fights[fightKey]
+    local choices = getRegisteredChoices(player, npc, fightKey)
+    if #choices == 0 then
+        player:printToPlayer(
+            '[HTBF] No Legendary tiers are currently available for this fight.',
+            xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    local options = {}
+    for _, content in ipairs(choices) do
+        local selected = content
+        options[#options + 1] =
+        {
+            selected.customEntryLabel,
+            function(p)
+                if not selected:directEntry(p, npc) then
+                    p:printToPlayer(
+                        '[HTBF] Entry failed; your gem was not intentionally consumed.',
+                        xi.msg.channel.SYSTEM_3)
+                end
+            end,
+        }
+    end
+    options[#options + 1] = { 'Cancel', function() end }
+
+    local label = fight and fight.label or fightKey
+    player:customMenu({
+        title = 'Legendary: ' .. label,
+        options = options,
+    })
+end
+
+local function showFightMenu(player, npc, fightKeys)
+    if #fightKeys == 1 then
+        showTierMenu(player, npc, fightKeys[1])
+        return
+    end
+
+    local options = {}
+    for _, fightKey in ipairs(fightKeys) do
+        local key = fightKey
+        local fight = catalog.fights[key]
+        options[#options + 1] =
+        {
+            fight.label,
+            function(p)
+                p:timer(50, function(pp) showTierMenu(pp, npc, key) end)
+            end,
+        }
+    end
+    options[#options + 1] = { 'Cancel', function() end }
+    player:customMenu({ title = 'Choose Legendary fight', options = options })
+end
+
+-- Dynamic hook: Battlefield.onEntryTrigger consults this at interaction time,
+-- so shared retail NPC handlers do not need to be replaced or load-order aware.
+if xi.battlefield and not xi.battlefield._htbfNamedEntryPatched then
+    xi.battlefield._htbfNamedEntryPatched = true
+    local previousCustomEntry = xi.battlefield.customEntryTrigger
+    xi.battlefield.customEntryTrigger = function(player, npc)
+        local fightKeys = htbf.getMatchingFightKeys(player, npc)
+        if #fightKeys == 0 then
+            return previousCustomEntry and
+                previousCustomEntry(player, npc) or false
+        end
+
+        local canEnter, missing = htbf.accessCheck(player)
+        if not canEnter then
+            player:printToPlayer(
+                '[HTBF] Legendary entry requirements are incomplete:',
+                xi.msg.channel.SYSTEM_3)
+            for _, requirement in ipairs(missing) do
+                player:printToPlayer(
+                    '[HTBF]   - ' .. requirement, xi.msg.channel.SYSTEM_3)
+            end
+            return true
+        end
+
+        showFightMenu(player, npc, fightKeys)
+        return true
+    end
+end
+
 -- ---------------------------------------------------------------------------
 -- Let players field Trusts inside HTBF battlefields.
 -- The engine gates battlefield trust summons on
@@ -224,22 +357,27 @@ if xi.battlefield and xi.battlefield.getBattlefieldOptions and not xi.battlefiel
             -- A Phantom Gem is an explicit HTBF intent. Remove the retail rows
             -- on this same entrance so a client DAT label can never route that
             -- gem holder into a mission battlefield with a coincident index.
-            local hasHTBFGem = false
+            local matchedBaseIds = {}
+            local broadFallback = false
             for _, fight in pairs(catalog.fights) do
-                local matches = fight.entryNpc == npc:getName()
-                if not matches and fight.entryNpcs then
-                    matches = utils.contains(npc:getName(), fight.entryNpcs)
-                end
-                if matches and player:hasKeyItem(fight.gem) then
-                    hasHTBFGem = true
-                    break
+                if
+                    fightMatchesEntrance(
+                        fight, player:getZoneID(), npc:getName()) and
+                    player:hasKeyItem(fight.gem)
+                then
+                    if fight.reuseBaseId then
+                        matchedBaseIds[fight.reuseBaseId] = true
+                    else
+                        broadFallback = true
+                    end
                 end
             end
-            if hasHTBFGem then
+            if broadFallback or next(matchedBaseIds) then
                 for _, content in ipairs(xi.battlefield.contentsByZone[player:getZoneID()] or {}) do
                     if
                         not content.partyKeyItem and
-                        content:isValidEntry(player, npc)
+                        content:isValidEntry(player, npc) and
+                        (broadFallback or matchedBaseIds[content.battlefieldId])
                     then
                         options = utils.mask.setBit(options, content.index, false)
                     end
@@ -290,6 +428,10 @@ function htbf.register(fightKey, tier, variant)
         -- the registrant.
         partyKeyItem     = f.gem,
     })
+    content.customEntryFight = fightKey
+    content.customEntryLabel = isFinalTest and 'Final Proving' or
+        string.format('Tier %s', scale.name)
+    content.customEntryOrder = isFinalTest and 4 or tier
 
     -- ACCESS GATE (see top): only a master of the entering job who holds every
     -- NM affinity may enter. checkRequirements calls entryRequirement LAST, so
@@ -528,19 +670,39 @@ function htbf.register(fightKey, tier, variant)
     -- f.entryPosByArea, do the warp ourselves right after the player is inserted.
     -- Chain any base onBattlefieldEnter so multi-phase fights keep their setup.
     if f.entryPosByArea then
+        local function warpToStagingPosition(player, battlefield)
+            if not battlefield then
+                return
+            end
+
+            local area = battlefield:getArea()
+            local entryPos = f.entryPosByArea[area]
+            if entryPos then
+                local ok, err = pcall(function()
+                    player:setPos(entryPos[1], entryPos[2], entryPos[3], entryPos[4] or 0)
+                end)
+                if not ok then
+                    print(string.format('[HTBF] %s tier %d: staging warp failed for area %d (%s)',
+                        tostring(fightKey), tier, area, tostring(err)))
+                end
+            else
+                print(string.format('[HTBF] %s tier %d: no staging position for area %d',
+                    tostring(fightKey), tier, area))
+            end
+        end
+
         local baseEnter = rawget(content, 'onBattlefieldEnter')
         function content:onBattlefieldEnter(player, battlefield)
             Battlefield.onBattlefieldEnter(self, player, battlefield)
             if baseEnter then pcall(function() baseEnter(self, player, battlefield) end) end
-            local entryPos = f.entryPosByArea[battlefield:getArea()]
-            if entryPos then
-                pcall(function()
-                    player:setPos(entryPos[1], entryPos[2], entryPos[3], entryPos[4] or 0)
-                end)
-            else
-                print(string.format('[HTBF] %s tier %d: no staging position for area %d',
-                    tostring(fightKey), tier, battlefield:getArea()))
-            end
+            warpToStagingPosition(player, battlefield)
+        end
+
+        -- Reassert after either the retail event finishes or direct named-menu
+        -- entry completes. Custom battlefield IDs have no client DAT position.
+        function content:onEntryComplete(player, npc)
+            Battlefield.onEntryComplete(self, player, npc)
+            warpToStagingPosition(player, player:getBattlefield())
         end
     end
 
