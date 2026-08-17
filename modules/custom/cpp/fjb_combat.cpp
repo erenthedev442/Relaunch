@@ -21,6 +21,7 @@
 #include "map/entities/petentity.h"
 #include "map/enums/chat_message_type.h"
 #include "map/items.h"
+#include "map/items/item_equipment.h"
 #include "map/packets/s2c/0x017_chat_std.h"
 
 #include <algorithm>
