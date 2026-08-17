@@ -9,6 +9,7 @@ require('scripts/globals/magicburst')
 require('scripts/globals/magic')
 require('scripts/globals/spells/damage_spell')
 local standardProgression = require('modules/custom/lua/standard_ws_tuning_catalog')
+local bstJugOverhaul = require('modules/custom/lua/BstJugPetOverhaul')
 -----------------------------------
 xi = xi or {}
 xi.mobskills = xi.mobskills or {}
@@ -97,7 +98,7 @@ xi.mobskills.applyJugEcosystemMatchupDamage = function(mob, target, damage)
     return damage
 end
 
-local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLanded)
+local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLanded, isPhysical)
     if mob:getLocalVar('fellowApplied') == 1 then
         -- Magus AoE nukes trade coverage for power. The role marks
         -- Thunderstrike for quarter damage while leaving single-target and
@@ -139,6 +140,17 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
     damage = xi.mobskills.applyJugEcosystemMatchupDamage(mob, target, damage)
 
     local multiplier = standardProgression.getPetDamageMultiplier(master, target)
+    if
+        isPhysical and
+        mob:isJugPet() and
+        master:getMainJob() == xi.job.BST
+    then
+        -- Physical Ready investment belongs on the completed stock hit, after
+        -- accuracy/pDIF/target defense and before the companion cap. This makes
+        -- Pet: Attack, Accuracy, Attributes, TP Bonus and Beast Affinity define
+        -- endgame burst without relying on a jug weapon setter alone.
+        multiplier = multiplier * bstJugOverhaul.getReadyInvestmentMultiplier(master, false)
+    end
     local cap = standardProgression.setPetDamageCap
         and standardProgression.setPetDamageCap(mob, master)
         or standardProgression.DAMAGE_CAP
@@ -862,7 +874,7 @@ xi.mobskills.mobRangedMove = function(mob, target, skill, action, skillParams)
     ----------------------------------
     totalDamage = resolveMissMessage(skill, hitsLanded, hitsYaegasumi, hitsAnticipated, hitsAbsorbed, shadowsAbsorbed, params.primaryMessage, totalDamage)
     totalDamage = applyPlayerCompanionScaling(
-        mob, target, skill, totalDamage, hitsLanded)
+        mob, target, skill, totalDamage, hitsLanded, true)
 
     -- Mob only gets TP for hitting the initial target. AOE hits do not count.
     xi.mobskills.calculateSkillTPReturn(damage, mob, skill, target, params.attackType, hitsLanded)
@@ -1097,7 +1109,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, action, skillParams)
     ----------------------------------
     totalDamage = resolveMissMessage(skill, hitsLanded, hitsYaegasumi, hitsAnticipated, hitsAbsorbed, shadowsAbsorbed, params.primaryMessage, totalDamage)
     totalDamage = applyPlayerCompanionScaling(
-        mob, target, skill, totalDamage, hitsLanded)
+        mob, target, skill, totalDamage, hitsLanded, true)
 
     ----------------------------------
     -- Handle TP Returns

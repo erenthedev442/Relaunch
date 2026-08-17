@@ -13,7 +13,9 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    params.baseDamage     = 100
+    -- Use the jug's physical weapon floor so this Ready benefits from the
+    -- same BST investment and companion progression as other physical moves.
+    params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 1
     params.fTP            = { 1.0, 1.0, 1.0 }
     params.attackType     = xi.attackType.PHYSICAL

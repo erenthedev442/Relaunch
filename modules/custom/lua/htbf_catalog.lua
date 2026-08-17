@@ -279,14 +279,23 @@ catalog.tierLoot =
 -- its own file (one table per fight) -- tune individual fights there.
 catalog.fightLoot = require('modules/custom/lua/htbf_loot')
 
--- Server-side staging positions for custom battlefield IDs. Each point is
--- roughly 30 yalms from the first enemy so players can buff before engaging.
--- Coordinates are keyed by battlefield area; they are not entrance-NPC warps.
+-- Server-side staging positions for custom battlefield IDs. The six elemental
+-- cloisters share the same three arena layouts. These are verified walkable
+-- points beside each arena's internal Protocrystal, translated for areas 2/3.
 local avatarEntryPos =
 {
-    [1] = {  503.0,  41.0, -397.0, 0 },
-    [2] = {   23.0, -19.0,    3.0, 0 },
-    [3] = { -377.0, -79.0,  483.0, 0 },
+    [1] = {  497.6078,  55.5905, -434.2727, 154 },
+    [2] = {   17.6858,  -4.4115,  -34.3137, 154 },
+    [3] = { -382.3442, -64.4185,  445.6693, 154 },
+}
+
+-- Titan's verified point is one yalm farther forward than Ifrit's. Preserve
+-- that exact safe placement and translate it against Titan's own Protocrystals.
+local titanEntryPos =
+{
+    [1] = {  496.9633,  55.5569, -433.3694, 156 },
+    [2] = {   17.0843,  -4.4421,  -33.3584, 156 },
+    [3] = { -382.9837, -64.4591,  446.6106, 156 },
 }
 
 -- Proven walkable points on each La'Loff arena platform. The previous points
@@ -369,7 +378,7 @@ catalog.fights =
         zone = xi.zone.CLOISTER_OF_TREMORS, entryNpc = 'EP_Entrance', exitNpc = 'Earth_Protocrystal',
         gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4030,
         mobs = { 'Titan_Prime_TBE' }, label = 'Trial by Earth',
-        difficulty = 'avatar', rewardClass = 'simple', entryPosByArea = avatarEntryPos,
+        difficulty = 'avatar', rewardClass = 'simple', entryPosByArea = titanEntryPos,
     },
     trial_by_lightning =
     {
@@ -399,9 +408,11 @@ catalog.fights =
         difficulty = 'standard', rewardClass = 'standard',
         entryPosByArea =
         {
-            [1] = { -605.0, 81.7, -29.0, 0 },
-            [2] = {   -1.4,  1.5, -29.4, 0 },
-            [3] = {  595.8, -78.3, -28.6, 0 },
+            -- Safe staging point beside each arena's Spatial Displacement.
+            -- Areas 2/3 are translated copies of the same Monarch Linn arena.
+            [1] = { -526.2602,  80.1184, -0.3888, 128 },
+            [2] = {   73.7848,   0.5194, -0.3308, 128 },
+            [3] = {  673.5318, -79.8806, -0.2078, 128 },
         },
     },
     warriors_path =

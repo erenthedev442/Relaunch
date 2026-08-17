@@ -156,7 +156,10 @@ local function archetypeRule(weaponType, index)
         great_axe_armor             = {},
         scythe_resource             = { maxHpp = 60 - ((index - 1) % 3) * 5 },
         polearm_aerial              = { petAlive = true, minTp = 1200 + ((index - 1) % 3) * 200 },
-        katana_shadows              = { shadows = true },
+        -- Katana pilgrimage credit is the exact native-WS killing blow. The
+        -- previous copy-image requirement proved unreliable at death-event
+        -- time even when the player visibly retained an Utsusemi shadow.
+        katana_shadows              = {},
         great_katana_skillchain     = { minTp = 1800 + ((index - 1) % 3) * 200 },
         club_support                = { maxHpp = 80 - ((index - 1) % 3) * 5 },
         staff_magic                 = { maxMpp = 60 - ((index - 1) % 3) * 5 },
@@ -173,13 +176,6 @@ function C.archetypePass(attacker, target, rule, tp)
         local pet = attacker:getPet()
         return pet ~= nil and pet:getHP() > 0
     end
-    local function hasCopyImage()
-        return attacker:hasStatusEffect(xi.effect.COPY_IMAGE)
-            or attacker:hasStatusEffect(xi.effect.COPY_IMAGE_2)
-            or attacker:hasStatusEffect(xi.effect.COPY_IMAGE_3)
-            or attacker:hasStatusEffect(xi.effect.COPY_IMAGE_4)
-    end
-
     if rule.minTp and tp < rule.minTp then return false end
     if rule.behind and not attacker:isBehind(target, 48) then return false end
     if rule.maxHpp and attacker:getHPP() > rule.maxHpp then return false end
@@ -189,7 +185,6 @@ function C.archetypePass(attacker, target, rule, tp)
     if rule.petOrBerserk and not livingPet() and not attacker:hasStatusEffect(xi.effect.BERSERK) then
         return false
     end
-    if rule.shadows and not hasCopyImage() then return false end
     return true
 end
 

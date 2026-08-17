@@ -88,10 +88,18 @@ describe('BST jug investment progression', function()
             magical[modId] = value
         end
         physical[xi.mod.PET_ATK_DEF] = 750
+        physical[xi.mod.PET_ACC_EVA] = 750
+        local physicalWithoutAccuracy = {}
+        for modId, value in pairs(physical) do
+            physicalWithoutAccuracy[modId] = value
+        end
+        physicalWithoutAccuracy[xi.mod.PET_ACC_EVA] = 0
         magical[xi.mod.PET_MAB_MDB] = 750
 
         assert(overhaul.getReadyInvestmentMultiplier(
-            makeMaster(physical), false) == 4.4375)
+            makeMaster(physical), false) == 6.7)
+        assert(overhaul.getReadyInvestmentMultiplier(
+            makeMaster(physicalWithoutAccuracy), false) == 5.75)
         assert(overhaul.getReadyInvestmentMultiplier(
             makeMaster(physical), true) == 3.75)
         assert(overhaul.getReadyInvestmentMultiplier(
@@ -105,6 +113,7 @@ describe('BST jug investment progression', function()
         {
             [xi.mod.PET_BEAST_AFF] = 900,
             [xi.mod.PET_ATK_DEF] = 9000,
+            [xi.mod.PET_ACC_EVA] = 9000,
             [xi.mod.PET_MAB_MDB] = 9000,
             [xi.mod.PET_ATTR_BONUS] = 9000,
             [xi.mod.PET_TP_BONUS] = 9000,
@@ -119,7 +128,7 @@ describe('BST jug investment progression', function()
         }
 
         assert(overhaul.getReadyInvestmentMultiplier(
-            makeMaster(maxed), false) == 12)
+            makeMaster(maxed), false) == 20)
         assert(overhaul.getReadyInvestmentMultiplier(
             makeMaster(maxed), true) == 12)
         assert(overhaul.getReadyInvestmentMultiplier(
@@ -139,31 +148,33 @@ describe('BST jug investment progression', function()
         {
             [xi.mod.PET_BEAST_AFF] = 100,
             [xi.mod.PET_ATK_DEF] = 3000,
+            [xi.mod.PET_ACC_EVA] = 3000,
             [xi.mod.PET_ATTR_BONUS] = 3000,
             [xi.mod.PET_TP_BONUS] = 3000,
         }
         local primeMaster = makeMaster(maxed, 21730, 2100)
         local remaMaster = makeMaster(maxed, 21751, 2100) -- Aymur
-        local target = makeTarget(xi.ecosystem.PLANTOID)
+        local target = makeTarget(xi.ecosystem.BEAST)
         local primeJug = makeJug(primeMaster, xi.ecosystem.VERMIN)
         local remaJug = makeJug(remaMaster, xi.ecosystem.VERMIN)
-        local investedStock = math.floor(
-            1200 * overhaul.getReadyInvestmentMultiplier(primeMaster, false))
+        local stockDamage = 1200
         local primeMatched = xi.mobskills.applyJugEcosystemMatchupDamage(
-            primeJug, target, investedStock)
+            primeJug, target, stockDamage)
         local remaMatched = xi.mobskills.applyJugEcosystemMatchupDamage(
-            remaJug, target, investedStock)
+            remaJug, target, stockDamage)
         local primeDamage = progression.applyMultiplier(
             primeMatched,
-            progression.getPetDamageMultiplier(primeMaster, target),
+            progression.getPetDamageMultiplier(primeMaster, target) *
+                overhaul.getReadyInvestmentMultiplier(primeMaster, false),
             progression.setPetDamageCap(primeJug, primeMaster))
         local remaDamage = progression.applyMultiplier(
             remaMatched,
-            progression.getPetDamageMultiplier(remaMaster, target),
+            progression.getPetDamageMultiplier(remaMaster, target) *
+                overhaul.getReadyInvestmentMultiplier(remaMaster, false),
             progression.setPetDamageCap(remaJug, remaMaster))
 
-        assert(remaDamage == 677160)
-        assert(primeDamage == 1009800)
+        assert(remaDamage == 752400)
+        assert(primeDamage == 1122000)
         assert(primeDamage < progression.PET_PRIME_DAMAGE_CAP)
     end)
 
@@ -172,6 +183,7 @@ describe('BST jug investment progression', function()
         {
             [xi.mod.PET_BEAST_AFF] = 100,
             [xi.mod.PET_ATK_DEF] = 3000,
+            [xi.mod.PET_ACC_EVA] = 3000,
             [xi.mod.PET_ATTR_BONUS] = 3000,
             [xi.mod.PET_TP_BONUS] = 3000,
         }

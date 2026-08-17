@@ -68,17 +68,19 @@ local CONFIG =
     flatMagicDamage  = 40,
     flatMagicDMGMult = 10,
 
-    -- Physical Ready uses getWeaponDmg(); Beast Affinity scales this floor,
-    -- while Pet: attributes, attack and TP Bonus scale the complete formula.
+    -- Physical Ready uses getWeaponDmg(). The full physical PET_* investment
+    -- is applied once after the stock hit resolves in mobskills.lua.
     flatWeaponDamage = 120,
 
     -- Ready investment converts the server's long-form pet progression into
     -- actual jug weapon/magic floors. Prestige PET + Paragon Dominion reach
     -- 3000 in each PET_* bucket; ordinary gear contributes before that cap.
-    -- At full investment the floor is ×12, while an uninvested jug remains at
-    -- ×1. This is intentionally applied before the stock Ready formula so pet
-    -- role, move fTP, target defense and ecosystem selection still matter.
-    readyInvestmentPerPoint = 11.0,
+    -- Magical Ready keeps its established ×12 maximum. Physical Ready must
+    -- overcome high-level target defense before the companion progression
+    -- multiplier applies, so a complete Prime-oriented physical build reaches
+    -- ×20 through its broader offensive pet-stat package.
+    readyInvestmentPerPoint         = 11.0,
+    physicalReadyInvestmentPerPoint = 19.0,
     readyInvestmentModCap   = 3000,
     readyInvestmentAffCap   = 100,
 
@@ -107,24 +109,38 @@ local function cappedProgress(value, cap)
     return math.min(math.max(value or 0, 0) / cap, 1.0)
 end
 
--- Physical and magical Ready floors use their matching offensive PET_* bundle.
--- Beast Affinity, Attributes and TP Bonus contribute to both paths. Accuracy
--- modifiers remain valuable for landing hits/effects but do not inflate damage.
+-- Physical and magical Ready paths use their matching offensive PET_* bundles.
+-- Physical builds additionally need Pet: Accuracy to connect against Legendary
+-- evasive targets, so it contributes to their damage progression. Multi-attack
+-- stats remain throughput choices: they produce more TP/auto-attack DPS, but
+-- do not inflate a single Ready hit.
 local function getReadyInvestmentMultiplier(master, magical)
     if master == nil then
         return 1.0
     end
 
-    local offenseMod = magical and xi.mod.PET_MAB_MDB or xi.mod.PET_ATK_DEF
+    if magical then
+        local score =
+            (
+                cappedProgress(master:getMod(xi.mod.PET_BEAST_AFF), CONFIG.readyInvestmentAffCap) +
+                cappedProgress(master:getMod(xi.mod.PET_MAB_MDB), CONFIG.readyInvestmentModCap) +
+                cappedProgress(master:getMod(xi.mod.PET_ATTR_BONUS), CONFIG.readyInvestmentModCap) +
+                cappedProgress(master:getMod(xi.mod.PET_TP_BONUS), CONFIG.readyInvestmentModCap)
+            ) / 4
+
+        return 1.0 + CONFIG.readyInvestmentPerPoint * score
+    end
+
     local score =
         (
             cappedProgress(master:getMod(xi.mod.PET_BEAST_AFF), CONFIG.readyInvestmentAffCap) +
-            cappedProgress(master:getMod(offenseMod), CONFIG.readyInvestmentModCap) +
+            cappedProgress(master:getMod(xi.mod.PET_ATK_DEF), CONFIG.readyInvestmentModCap) +
+            cappedProgress(master:getMod(xi.mod.PET_ACC_EVA), CONFIG.readyInvestmentModCap) +
             cappedProgress(master:getMod(xi.mod.PET_ATTR_BONUS), CONFIG.readyInvestmentModCap) +
             cappedProgress(master:getMod(xi.mod.PET_TP_BONUS), CONFIG.readyInvestmentModCap)
-        ) / 4
+        ) / 5
 
-    return 1.0 + CONFIG.readyInvestmentPerPoint * score
+    return 1.0 + CONFIG.physicalReadyInvestmentPerPoint * score
 end
 
 -- Exported on the module for deterministic balance tests.
@@ -206,7 +222,6 @@ local function applyEndgameScaling(master, pet)
     -- and are intentionally NOT level-scaled. All flat floors below use floorMult.
     local levelScale = math.min((master:getMainLvl() or 1) / 99, 1.0)
     local floorMult  = beastAffMult * levelScale * power
-    local physicalReadyMult = getReadyInvestmentMultiplier(master, false)
     local magicalReadyMult  = getReadyInvestmentMultiplier(master, true)
 
     local strFromMaster = math.floor(mSTR * CONFIG.masterSTRShare * w.str)
@@ -232,8 +247,10 @@ local function applyEndgameScaling(master, pet)
     pet:addMod(xi.mod.DOUBLE_ATTACK, math.floor(CONFIG.doubleAttack * levelScale * w.multi))
     pet:addMod(xi.mod.TRIPLE_ATTACK, math.floor(CONFIG.tripleAttack * levelScale * w.multi))
 
-    -- Physical Ready / AA weapon floor (setDamage writes the jug weapon's DMG).
-    local weaponDmg = math.floor(CONFIG.flatWeaponDamage * floorMult * w.weapon * physicalReadyMult)
+    -- Physical jug weapon floor. The physical investment multiplier is applied
+    -- once later in the shared Ready progression path, after pDIF, so it works
+    -- even when this setter cannot replace the native jug weapon damage.
+    local weaponDmg = math.floor(CONFIG.flatWeaponDamage * floorMult * w.weapon)
     if weaponDmg > 0 then
         pet:setDamage(weaponDmg)
     end

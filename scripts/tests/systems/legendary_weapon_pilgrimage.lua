@@ -215,9 +215,10 @@ describe('Legendary Weapon Pilgrimage integrity', function()
             local rule = entry.archetypeRule
             seen[rule.key] = true
             assert(rule.key == 'great_sword_burst_survival' or rule.key == 'great_axe_armor'
+                or rule.key == 'katana_shadows'
                 or rule.minTp or rule.behind or rule.maxHpp
                 or rule.maxMpp or rule.minDistance or rule.petAlive
-                or rule.petOrBerserk or rule.shadows)
+                or rule.petOrBerserk)
             assert(rule.minDamage == nil)
             assert(pilgrimage.archetypePass(attacker, {}, rule, state.tp))
             if rule.minTp then
@@ -242,10 +243,6 @@ describe('Legendary Weapon Pilgrimage integrity', function()
                 state.pet, state.status = false, false
                 assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
                 state.pet, state.status = true, true
-            elseif rule.shadows then
-                state.status = false
-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
-                state.status = true
             end
         end
         local count = 0

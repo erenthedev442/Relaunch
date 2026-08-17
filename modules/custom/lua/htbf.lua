@@ -130,10 +130,18 @@ local function getRegisteredChoices(player, npc, fightKey)
 end
 htbf.getRegisteredChoices = getRegisteredChoices
 
+local namedMenuLatch = '[HTBF]NamedMenuOpen'
+local namedMenuToken = '[HTBF]NamedMenuToken'
+
+local function releaseNamedMenu(player)
+    player:setLocalVar(namedMenuLatch, 0)
+end
+
 local function showTierMenu(player, npc, fightKey)
     local fight = catalog.fights[fightKey]
     local choices = getRegisteredChoices(player, npc, fightKey)
     if #choices == 0 then
+        releaseNamedMenu(player)
         player:printToPlayer(
             '[HTBF] No Legendary tiers are currently available for this fight.',
             xi.msg.channel.SYSTEM_3)
@@ -147,6 +155,7 @@ local function showTierMenu(player, npc, fightKey)
         {
             selected.customEntryLabel,
             function(p)
+                releaseNamedMenu(p)
                 if not selected:directEntry(p, npc) then
                     p:printToPlayer(
                         '[HTBF] Entry failed; your gem was not intentionally consumed.',
@@ -155,7 +164,7 @@ local function showTierMenu(player, npc, fightKey)
             end,
         }
     end
-    options[#options + 1] = { 'Cancel', function() end }
+    options[#options + 1] = { 'Cancel', releaseNamedMenu }
 
     local label = fight and fight.label or fightKey
     player:customMenu({
@@ -178,11 +187,15 @@ local function showFightMenu(player, npc, fightKeys)
         {
             fight.label,
             function(p)
-                p:timer(50, function(pp) showTierMenu(pp, npc, key) end)
+                -- HandleCustomMenu clears the old context after this callback.
+                -- Do not install the next context until that teardown has
+                -- completed, otherwise the client's next choice is sent as an
+                -- ordinary tell to _CUSTOM_MENU.
+                p:timer(500, function(pp) showTierMenu(pp, npc, key) end)
             end,
         }
     end
-    options[#options + 1] = { 'Cancel', function() end }
+    options[#options + 1] = { 'Cancel', releaseNamedMenu }
     player:customMenu({ title = 'Choose Legendary fight', options = options })
 end
 
@@ -198,8 +211,27 @@ if xi.battlefield and not xi.battlefield._htbfNamedEntryPatched then
                 previousCustomEntry(player, npc) or false
         end
 
+        -- Shared battlefield NPC sections can dispatch the same trigger more
+        -- than once. Multiple customMenu packets stack client prompts, but only
+        -- one server context survives; the remaining selections become failed
+        -- tells to _CUSTOM_MENU. Debounce centrally for every HTBF entrance.
+        if player:getLocalVar(namedMenuLatch) == 1 then
+            return true
+        end
+        player:setLocalVar(namedMenuLatch, 1)
+        local token = player:getLocalVar(namedMenuToken) + 1
+        player:setLocalVar(namedMenuToken, token)
+        player:timer(30000, function(p)
+            -- Recover if the client closes the menu without invoking Cancel,
+            -- but never let an old timeout unlock a newer menu.
+            if p:getLocalVar(namedMenuToken) == token then
+                releaseNamedMenu(p)
+            end
+        end)
+
         local canEnter, missing = htbf.accessCheck(player)
         if not canEnter then
+            releaseNamedMenu(player)
             player:printToPlayer(
                 '[HTBF] Legendary entry requirements are incomplete:',
                 xi.msg.channel.SYSTEM_3)
@@ -568,7 +600,7 @@ function htbf.register(fightKey, tier, variant)
     -- "Marks Earned (Lifetime)" leaderboard. The real retail per-fight item LOOT
     -- still goes in catalog.fights[key].loot[tier] (armoury-crate) as it is
     -- sourced from bg-wiki; this is the guaranteed completion reward on top.
-    function content:onEventFinishWin(player, csid, option, npc)
+    local function grantWinRewards(player)
         if not rew then return end
         -- Idempotency latch. On 2026-07-13 the Ark Angel HM T3 clear paid the
         -- reward FOUR times to the same player (400k gil * 4, 600 marks * 4,
@@ -643,6 +675,31 @@ function htbf.register(fightKey, tier, variant)
                     looted > 0 and (' + ' .. looted .. ' item(s)') or ''),
                 xi.msg.channel.SYSTEM_3)
         end)
+    end
+
+    -- Custom HTBF battlefield IDs have no client win-cutscene entry. Sending
+    -- event 32001 can therefore leave the player frozen after a clear. Award
+    -- first, then leave the instance and return to the hub after a short win
+    -- window instead of starting the unavailable client event.
+    function content:onBattlefieldWin(player, battlefield)
+        grantWinRewards(player)
+        player:timer(2500, function(p)
+            if p:getBattlefield() then
+                p:leaveBattlefield(1)
+            end
+            p:timer(100, function(q)
+                q:setPos(
+                    571.5259, -3.3592, 508.8601, 65,
+                    xi.zone.ABDHALJS_ISLE_PURGONORGO)
+            end)
+        end)
+    end
+
+    -- Defensive fallback for an engine path that still reaches the standard
+    -- finish callback. The battlefield-scoped latch in grantWinRewards keeps
+    -- a reward from being paid twice.
+    function content:onEventFinishWin(player, csid, option, npc)
+        grantWinRewards(player)
     end
 
     -- Armoury-crate loot. Priority: a fight's per-tier override (f.loot[tier]),

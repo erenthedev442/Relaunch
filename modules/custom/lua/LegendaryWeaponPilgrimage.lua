@@ -508,7 +508,7 @@ function P.archetypeText(rule)
     if rule.key == 'great_axe_armor' then return 'deliver the weaponskill killing blow' end
     if rule.key == 'scythe_resource' then return string.format('remain at or below %d%% HP', rule.maxHpp) end
     if rule.key == 'polearm_aerial' then return string.format('keep wyvern alive and use at %d+ TP', rule.minTp) end
-    if rule.key == 'katana_shadows' then return 'retain at least one copy-image shadow' end
+    if rule.key == 'katana_shadows' then return 'deliver the weaponskill killing blow' end
     if rule.key == 'great_katana_skillchain' then return string.format('use at %d+ TP', rule.minTp) end
     if rule.key == 'club_support' then return string.format('remain at or below %d%% HP', rule.maxHpp) end
     if rule.key == 'staff_magic' then return string.format('remain at or below %d%% MP', rule.maxMpp) end
