@@ -1,62 +1,82 @@
 -- =====================================================================
 -- jugpet_ready_moves.sql
--- Give every BST jug pet a working, thematically-correct DAMAGING Ready move.
 --
--- THE BUG (found via tools/audit_jugpet_skills.py): a jug pet's Ready/Sic
--- moves come from its pool's mob_skill_list (CMobController::MobSkill picks a
--- random valid skill from it -- the same path BstJugPetOverhaul's auto-ready
--- taps via useMobAbility()). But many Jug_* lists only reference OLD duplicate
--- skill ids that were long ago commented out of mob_skills.sql (e.g. 697
--- 'berserk', 700-706 job abilities, 756-760 'howl'). Those dangling rows are
--- deleted at boot by fix_dangling_mob_skills.sql, leaving 16 families with
--- either NO working move at all, or only self-buffs (perfect_dodge, invincible,
--- charm, howl...) -- so they could never DD on auto-ready.
+-- Final authoritative repair for lists previously polluted with arbitrary
+-- enemy mob-skill IDs. The Ready menu is defined by pet_skills; runtime lists
+-- use those rows' executable mob_skill_id values. Do not add "thematic" enemy
+-- moves here: overlapping numeric namespaces caused Courier Carrie to expose
+-- only Mega Scissors and produced unrelated commands on other families.
 --
--- THE FIX: the real, thematically-correct retail moves already exist in
--- mob_skills AND already have scripts in scripts/actions/mobskills/ -- the
--- lists just never pointed at them. Wire each broken family to its real moves
--- (mostly enemy-damage, with a flavour buff/debuff or two). Two Chapuli
--- signatures (sensilla_blades 2946, tegmina_buffet 2947) had no script engine-
--- wide; those are authored alongside this file.
---
--- petid->pool->skill_list verified live; every id below is ACTIVE in
--- mob_skills and has a mobskill script (audited). Pets melee at endgame ATT
--- (BstJugPetOverhaul), so these moves land for real, capped damage.
---
--- Idempotent (INSERT IGNORE; PK = skill_list_id+mob_skill_id). mob skill lists
--- are cached into mob data at zone load / boot, so APPLY + RESTART the map.
+-- This file runs after bst_jug_restore_ready_abilities.sql and deliberately
+-- rebuilds every list touched by the old augmentation file. Idempotent.
 -- =====================================================================
 
--- ── NONE families (had zero working Ready move) ──────────────────────
--- Jug_Fly (742): Somersault, Cursed Sphere, Drainkiss
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Fly',742,318),('Jug_Fly',742,659),('Jug_Fly',742,417);
--- Jug_Funguar (740): Dark Spore (dmg+poison), Numbing Noise (paralyze), Frightful Roar (def down)
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Funguar',740,315),('Jug_Funguar',740,517),('Jug_Funguar',740,501);
--- Jug_Apkallu (755): Wing Slap, Beak Lunge, Spinning Top
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Apkallu',755,1714),('Jug_Apkallu',755,1715),('Jug_Apkallu',755,365);
--- Jug_Pugil (756): Splash Breath, Aqua Ball, Screwdriver
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Pugil',756,451),('Jug_Pugil',756,450),('Jug_Pugil',756,452);
--- Jug_Colibri (763): Pecking Flurry, Back Heel, Helldive
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Colibri',763,1699),('Jug_Colibri',763,576),('Jug_Colibri',763,622);
--- Jug_Mosquito (2096): Proboscis (HP drain), Toxic Spit (poison)
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Mosquito',2096,1953),('Jug_Mosquito',2096,515);
--- Jug_Cactuar (739): 1000 Needles, Needleshot
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Cactuar',739,322),('Jug_Cactuar',739,321);
+DELETE FROM `mob_skill_lists`
+WHERE `skill_list_id` IN
+(
+    737, 738, 739, 740, 741, 742, 747, 755,
+    756, 757, 758, 759, 762, 763, 2096
+);
 
--- ── BUFFS-ONLY families (only self-buffs worked) ─────────────────────
--- Jug_Crab (738): Big Scissors, Spikeball, Metallic Body (keeps perfect_dodge/invincible/etc.)
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Crab',738,444),('Jug_Crab',738,789),('Jug_Crab',738,448);
--- Jug_Sheep (737): Lamb Chop, Sheep Charge, Rage (atk up)
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Sheep',737,260),('Jug_Sheep',737,262),('Jug_Sheep',737,261);
--- Jug_Beetle (741): Rhino Attack, Power Attack, Magnetite Cloud
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Beetle',741,340),('Jug_Beetle',741,3875),('Jug_Beetle',741,791);
--- Jug_Raaz (759): Sudden Lunge (dmg+stun), Tail Blow, Wild Horn
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Raaz',759,2178),('Jug_Raaz',759,366),('Jug_Raaz',759,628);
--- Jug_Acuex (762): Vampiric Lash (dmg+drain), Somersault
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Acuex',762,317),('Jug_Acuex',762,318);
--- Jug_Tulfaire (758): Tail Blow, Helldive, Blackout (blind)
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Tulfaire',758,366),('Jug_Tulfaire',758,622),('Jug_Tulfaire',758,2952);
--- Jug_Chapuli (757): Diffusion Ray plus the canonical pet_skills mappings.
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Chapuli',757,2054),('Jug_Chapuli',757,3927),('Jug_Chapuli',757,3928);
--- Jug_Coeurl (747): Charged Whisker (thunder AoE), Blaster (dmg+paralyze), Chaotic Eye (silence)
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Coeurl',747,483),('Jug_Coeurl',747,652),('Jug_Coeurl',747,653);
+INSERT INTO `mob_skill_lists` VALUES
+-- Sheep
+('Jug_Sheep',737,3857), -- Lamb Chop
+('Jug_Sheep',737,3858), -- Rage
+('Jug_Sheep',737,3859), -- Sheep Charge
+('Jug_Sheep',737,3860), -- Sheep Song
+-- Crab: Courier Carrie / Crab Familiar
+('Jug_Crab',738,3861), -- Bubble Shower
+('Jug_Crab',738,3862), -- Bubble Curtain
+('Jug_Crab',738,3863), -- Big Scissors
+('Jug_Crab',738,3864), -- Scissor Guard
+('Jug_Crab',738,3865), -- Metallic Body
+-- Cactuar
+('Jug_Cactuar',739,3866), -- Needleshot
+('Jug_Cactuar',739,3867), -- 1000 Needles
+-- Funguar
+('Jug_Funguar',740,3868), -- Frogkick
+('Jug_Funguar',740,3869), -- Spore
+('Jug_Funguar',740,3870), -- Queasyshroom
+('Jug_Funguar',740,3871), -- Numbshroom
+('Jug_Funguar',740,3872), -- Shakeshroom
+('Jug_Funguar',740,3873), -- Silence Gas
+('Jug_Funguar',740,3874), -- Dark Spore
+-- Beetle
+('Jug_Beetle',741,3875), -- Power Attack
+('Jug_Beetle',741,3876), -- Hi-Freq Field
+('Jug_Beetle',741,3877), -- Rhino Attack
+('Jug_Beetle',741,3878), -- Rhino Guard
+('Jug_Beetle',741,3879), -- Spoil
+-- Fly
+('Jug_Fly',742,3880), -- Cursed Sphere
+('Jug_Fly',742,3881), -- Venom
+('Jug_Fly',742,3938), -- Somersault
+-- Coeurl / Lynx
+('Jug_Coeurl',747,3898), -- Chaotic Eye
+('Jug_Coeurl',747,3899), -- Blaster
+('Jug_Coeurl',747,3912), -- Charged Whisker
+-- Apkallu
+('Jug_Apkallu',755,3922), -- Wing Slap
+('Jug_Apkallu',755,3923), -- Beak Lunge
+-- Pugil
+('Jug_Pugil',756,3924), -- Intimidate
+('Jug_Pugil',756,3925), -- Recoil Dive
+('Jug_Pugil',756,3926), -- Water Wall
+-- Chapuli
+('Jug_Chapuli',757,3927), -- Sensilla Blades
+('Jug_Chapuli',757,3928), -- Tegmina Buffet
+-- Tulfaire
+('Jug_Tulfaire',758,3929), -- Molting Plumage
+('Jug_Tulfaire',758,3930), -- Swooping Frenzy
+('Jug_Tulfaire',758,3933), -- Pentapeck
+-- Raaz
+('Jug_Raaz',759,3931), -- Sweeping Gouge
+('Jug_Raaz',759,3932), -- Zealous Snort
+-- Acuex
+('Jug_Acuex',762,3939), -- Foul Waters
+('Jug_Acuex',762,3940), -- Pestilent Plume
+-- Colibri
+('Jug_Colibri',763,3941), -- Pecking Flurry
+-- Mosquito
+('Jug_Mosquito',2096,3945), -- Infected Leech
+('Jug_Mosquito',2096,3946); -- Gloom Spray

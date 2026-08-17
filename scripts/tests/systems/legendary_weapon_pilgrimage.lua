@@ -200,7 +200,7 @@ describe('Legendary Weapon Pilgrimage integrity', function()
 
     it('defines an enforceable condition for every archetype profile', function()
         local seen = {}
-        local state = { tp = 3000, damage = 999999, behind = true, hpp = 0, mpp = 0, distance = 99, pet = true, status = true }
+        local state = { tp = 3000, behind = true, hpp = 0, mpp = 0, distance = 99, pet = true, status = true }
         local pet = { getHP = function() return state.pet and 1 or 0 end }
         local attacker =
         {
@@ -214,37 +214,37 @@ describe('Legendary Weapon Pilgrimage integrity', function()
         for _, entry in ipairs(pilgrimage.chains) do
             local rule = entry.archetypeRule
             seen[rule.key] = true
-            assert(rule.minTp or rule.minDamage or rule.behind or rule.maxHpp
+            assert(rule.key == 'great_sword_burst_survival' or rule.key == 'great_axe_armor'
+                or rule.minTp or rule.behind or rule.maxHpp
                 or rule.maxMpp or rule.minDistance or rule.petAlive
                 or rule.petOrBerserk or rule.shadows)
-            assert(pilgrimage.archetypePass(attacker, {}, rule, state.tp, state.damage))
+            assert(rule.minDamage == nil)
+            assert(pilgrimage.archetypePass(attacker, {}, rule, state.tp))
             if rule.minTp then
-                assert(not pilgrimage.archetypePass(attacker, {}, rule, rule.minTp - 1, state.damage))
-            elseif rule.minDamage then
-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp, rule.minDamage - 1))
+                assert(not pilgrimage.archetypePass(attacker, {}, rule, rule.minTp - 1))
             elseif rule.behind then
                 state.behind = false
-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp, state.damage))
+                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
                 state.behind = true
             elseif rule.maxHpp then
                 state.hpp = rule.maxHpp + 1
-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp, state.damage))
+                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
                 state.hpp = 0
             elseif rule.maxMpp then
                 state.mpp = rule.maxMpp + 1
-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp, state.damage))
+                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
                 state.mpp = 0
             elseif rule.minDistance then
                 state.distance = rule.minDistance - 1
-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp, state.damage))
+                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
                 state.distance = 99
             elseif rule.petAlive or rule.petOrBerserk then
                 state.pet, state.status = false, false
-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp, state.damage))
+                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
                 state.pet, state.status = true, true
             elseif rule.shadows then
                 state.status = false
-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp, state.damage))
+                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
                 state.status = true
             end
         end

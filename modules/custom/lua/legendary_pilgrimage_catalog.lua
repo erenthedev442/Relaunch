@@ -151,9 +151,9 @@ local function archetypeRule(weaponType, index)
         h2h_hit_chain               = { minTp = 1200 + ((index - 1) % 3) * 200 },
         dagger_positional           = { behind = true },
         sword_tactical              = { minTp = 1600 + ((index - 1) % 3) * 200 },
-        great_sword_burst_survival  = { minDamage = 40000 + ((index - 1) % 3) * 5000 },
+        great_sword_burst_survival  = {},
         axe_companion               = { petOrBerserk = true },
-        great_axe_armor             = { minDamage = 50000 + ((index - 1) % 3) * 5000 },
+        great_axe_armor             = {},
         scythe_resource             = { maxHpp = 60 - ((index - 1) % 3) * 5 },
         polearm_aerial              = { petAlive = true, minTp = 1200 + ((index - 1) % 3) * 200 },
         katana_shadows              = { shadows = true },
@@ -168,7 +168,7 @@ local function archetypeRule(weaponType, index)
     return rule
 end
 
-function C.archetypePass(attacker, target, rule, tp, damage, ignoreDamage)
+function C.archetypePass(attacker, target, rule, tp)
     local function livingPet()
         local pet = attacker:getPet()
         return pet ~= nil and pet:getHP() > 0
@@ -181,7 +181,6 @@ function C.archetypePass(attacker, target, rule, tp, damage, ignoreDamage)
     end
 
     if rule.minTp and tp < rule.minTp then return false end
-    if not ignoreDamage and rule.minDamage and (not damage or damage < rule.minDamage) then return false end
     if rule.behind and not attacker:isBehind(target, 48) then return false end
     if rule.maxHpp and attacker:getHPP() > rule.maxHpp then return false end
     if rule.maxMpp and attacker:getMPP() > rule.maxMpp then return false end

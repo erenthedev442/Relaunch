@@ -447,6 +447,7 @@ function Battlefield:new(data)
     obj.delayToExit      = data.delayToExit or 5
     obj.requiredItems    = data.requiredItems or {}
     obj.requiredKeyItems = data.requiredKeyItems or {}
+    obj.partyKeyItem     = data.partyKeyItem
     obj.lossEventParams  = data.lossEventParams or {}
     obj.armouryCrates    = data.armouryCrates or false
     obj.experimental     = data.experimental or false
@@ -970,7 +971,9 @@ function Battlefield.onExitTrigger(player, npc)
         local content = xi.battlefield.contents[battlefield:getID()]
         local customExit = content and rawget(content, 'onExitTrigger')
         if customExit and customExit ~= Battlefield.onExitTrigger then
-            return customExit(content, player, npc)
+            -- Battlefield exit handlers are registered with dot syntax and
+            -- follow the NPC callback signature (player, npc).
+            return customExit(player, npc)
         end
         return Battlefield:progressCutscene(32003)
     end

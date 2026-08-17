@@ -117,6 +117,11 @@ for r in inserts("mob_skill_lists.sql", "mob_skill_lists"):
 pet_skill_to_mob_skill = {}
 for r in inserts("pet_skills.sql", "pet_skills"):
     pet_skill_to_mob_skill[int(r[0])] = int(r[1])
+mob_skill_to_pet_skill = {
+    mob_skill_id: pet_skill_id
+    for pet_skill_id, mob_skill_id in pet_skill_to_mob_skill.items()
+    if mob_skill_id != 0
+}
 
 # Merge Ready-move wiring from modules/custom/sql/*.sql in deployment order so
 # the audit reflects INSERTs and the targeted DELETEs used to remove IDs from
@@ -130,6 +135,13 @@ for f in sorted(CUSTOM.glob("*.sql")):
         txt, re.IGNORECASE,
     ):
         pool_skilllist[int(pool_update.group(2))] = int(pool_update.group(1))
+    for pool_update in re.finditer(
+        r"UPDATE\s+`mob_pools`\s+SET\s+`skill_list_id`\s*=\s*(\d+)\s+"
+        r"WHERE\s+`poolid`\s+IN\s*\(([^)]*)\)\s*;",
+        txt, re.IGNORECASE,
+    ):
+        for poolid in re.findall(r"\d+", pool_update.group(2)):
+            pool_skilllist[int(poolid)] = int(pool_update.group(1))
 
     if "JOIN `pet_skills` AS p ON p.`pet_skill_id` = m.`mob_skill_id`" in txt:
         for sid, skills in list_skills.items():
@@ -154,6 +166,12 @@ for f in sorted(CUSTOM.glob("*.sql")):
             continue
 
         sid_match = re.search(r"`?skill_list_id`?\s*=\s*(\d+)", stmt, re.IGNORECASE)
+        sid_in_match = re.search(
+            r"`?skill_list_id`?\s+IN\s*\(([^)]*)\)", stmt, re.IGNORECASE)
+        if sid_in_match:
+            for sid_value in re.findall(r"\d+", sid_in_match.group(1)):
+                list_skills[int(sid_value)] = set()
+            continue
         if not sid_match:
             continue
         sid = int(sid_match.group(1))
@@ -283,11 +301,14 @@ if missing_named:
         print(f"  {nm:<22} id={e['id']:<5} anim={e['anim']:<5} -> {pets}")
 
 namespace_errors = []
+unmapped_runtime_skills = []
 for petid, data in per_pet.items():
     for mid, _, _ in data["rows"]:
         mapped = pet_skill_to_mob_skill.get(mid)
         if mapped is not None and mapped != mid:
             namespace_errors.append((petid, data["name"], data["sid"], mid, mapped))
+        elif mid not in mob_skill_to_pet_skill:
+            unmapped_runtime_skills.append((petid, data["name"], data["sid"], mid))
 
 if namespace_errors:
     print("\n" + "=" * 78)
@@ -295,3 +316,10 @@ if namespace_errors:
     print("=" * 78)
     for petid, name, sid, wrong, correct in namespace_errors:
         print(f"  pet {petid:<3} {name:<24} list={sid:<4} wrong={wrong:<4} expected mob_skill_id={correct}")
+
+if unmapped_runtime_skills:
+    print("\n" + "=" * 78)
+    print("NO READY-MENU MAPPING (runtime mob skill has no pet_skills row)")
+    print("=" * 78)
+    for petid, name, sid, mid in unmapped_runtime_skills:
+        print(f"  pet {petid:<3} {name:<24} list={sid:<4} mob_skill_id={mid}")

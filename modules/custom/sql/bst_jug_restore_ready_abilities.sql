@@ -89,17 +89,17 @@ INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_BeetleHi',2097,3878);
 INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_BeetleHi',2097,3879);
 INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_BeetleHi',2097,3955);
 
--- Toad (Brave Hero Glenn) shipped with skill_list_id=0.
+-- Retail toads Slippery Silas and Brave Hero Glenn intentionally have no
+-- Ready moves. Undo the previous Pugil/Toad assignments.
+UPDATE `mob_pools` SET `skill_list_id` = 0 WHERE `poolid` IN (4639, 7548);
+
+-- The previous Glenn workaround reused list 2098, which belongs to Balamor's
+-- melee attacks. Restore that trust list after removing the stray Jug_Toad rows.
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 2098;
 INSERT INTO `mob_skill_lists` VALUES
-('Jug_Toad',2098,3868), -- Frogkick
-('Jug_Toad',2098,3926); -- Water Wall
-UPDATE `mob_pools` SET `skill_list_id` = 2098 WHERE `poolid` = 7548;
-
--- Pugil (Slippery Silas) also shipped with no skill list. Share the complete
--- Jug_Pugil Ready kit so both the auto-Ready controller and player menu have
--- working moves.
-UPDATE `mob_pools` SET `skill_list_id` = 756 WHERE `poolid` = 4639;
+('TRUST_Balamor_Melee',2098,3614),
+('TRUST_Balamor_Melee',2098,3615),
+('TRUST_Balamor_Melee',2098,3616);
 
 -- Zealous Snort: self/master buff, not enemy target.
 UPDATE `pet_skills`

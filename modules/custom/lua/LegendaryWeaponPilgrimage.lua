@@ -215,6 +215,44 @@ local function targetEligible(player, mob, entry, chapter)
     return false
 end
 
+local function creditWeaponskillKill(mob, player, wsId)
+    if
+        not wsId or
+        wsId <= 0 or
+        player:isDead() or
+        not player:checkKillCredit(mob) or
+        mob:getLocalVar('LWP_WsCreditedPlayer') == player:getID()
+    then
+        return
+    end
+
+    local credited = false
+    for _, entry in ipairs(activeEntries(player)) do
+        local chapter = C.chapter(player, entry)
+        local requirement = entry.chapters[chapter]
+        if
+            chapter <= 3 and
+            (requirement.kind == 'ws_kills' or requirement.kind == 'named_ws_kills') and
+            wsId == entry.wsId and
+            equippedForChapter(player, entry, chapter) and
+            player:getLocalVar('LWP_SnapEntry') == entry.index and
+            player:getLocalVar('LWP_SnapTarget') == mob:getID() and
+            player:getLocalVar('LWP_SnapWS') == entry.wsId and
+            player:getLocalVar('LWP_SnapPass') == 1 and
+            targetEligible(player, mob, entry, chapter)
+        then
+            markProgress(player, entry, chapter, displayName(mob))
+            credited = true
+        end
+    end
+
+    if credited then
+        -- DEFEATED_MOB and WEAPONSKILL_USE can arrive in either order. Mark the
+        -- dead mob so both event paths cannot award the same killing blow.
+        mob:setLocalVar('LWP_WsCreditedPlayer', player:getID())
+    end
+end
+
 local function setSupportReady(player, entry, chapter, target)
     local sameTarget = player:getLocalVar('LWP_SupportEntry') == entry.index
         and player:getLocalVar('LWP_SupportChapter') == chapter
@@ -250,61 +288,18 @@ local function onDefeatedMob(mob, player, opt)
         player:setLocalVar('LWP_SupportTarget', 0)
     end
 
-    -- The engine's isWeaponSkillKill flag can be false for a multi-hit WS or
-    -- skillchain whose final action packet is resolved as a follow-up hit.
-    -- WEAPONSKILL_USE observes the completed action and records a fallback only
-    -- when that exact action already reduced this exact target to zero HP.
-    -- This is deliberately not a time window: a post-WS auto-attack cannot
-    -- inherit credit because it never sets LWP_ConfirmedWsKillTarget.
-    local confirmedKill =
-        player:getLocalVar('LWP_ConfirmedWsKillTarget') == mob:getID() and
-        player:getLocalVar('LWP_ConfirmedWsKillWS') > 0
-    local wsId = opt.weaponskillUsed
-    local wsDamage = opt.weaponskillDamage
-    if confirmedKill then
-        wsId = player:getLocalVar('LWP_ConfirmedWsKillWS')
-        wsDamage = player:getLocalVar('LWP_ConfirmedWsKillDamage')
-    end
-    player:setLocalVar('LWP_ConfirmedWsKillTarget', 0)
-    player:setLocalVar('LWP_ConfirmedWsKillWS', 0)
-    player:setLocalVar('LWP_ConfirmedWsKillDamage', 0)
-
-    if not opt.isKiller and not confirmedKill then return end
-    if not opt.isWeaponSkillKill and not confirmedKill then return end
-    if not wsId or not wsDamage or wsDamage <= 0 then return end
-    if player:isDead() or not player:checkKillCredit(mob) then return end
-
-    for _, entry in ipairs(activeEntries(player)) do
-        local chapter = C.chapter(player, entry)
-        local requirement = entry.chapters[chapter]
-        if
-            chapter <= 3 and
-            (requirement.kind == 'ws_kills' or requirement.kind == 'named_ws_kills') and
-            wsId == entry.wsId and
-            equippedForChapter(player, entry, chapter) and
-            player:getLocalVar('LWP_SnapEntry') == entry.index and
-            player:getLocalVar('LWP_SnapTarget') == mob:getID() and
-            player:getLocalVar('LWP_SnapWS') == entry.wsId and
-            player:getLocalVar('LWP_SnapPass') == 1 and
-            (not entry.archetypeRule.minDamage or
-                wsDamage >= entry.archetypeRule.minDamage) and
-            targetEligible(player, mob, entry, chapter)
-        then
-            markProgress(player, entry, chapter, displayName(mob))
-        end
-    end
+    if not opt.isKiller or not opt.isWeaponSkillKill then return end
+    creditWeaponskillKill(mob, player, opt.weaponskillUsed)
 end
 
 local function onWeaponskill(attacker, target, skill, tp, action, damage)
     if not attacker or not target or target:getObjType() ~= xi.objType.MOB then return end
     local wsId = skill:getID()
-    -- Capture only a completed weaponskill that has already killed the target.
-    -- This is consumed by onDefeatedMob as a narrowly-scoped fallback when the
-    -- core death event loses its WS attribution during multi-hit resolution.
-    if target:getHP() <= 0 and damage and damage > 0 then
-        attacker:setLocalVar('LWP_ConfirmedWsKillTarget', target:getID())
-        attacker:setLocalVar('LWP_ConfirmedWsKillWS', wsId)
-        attacker:setLocalVar('LWP_ConfirmedWsKillDamage', damage)
+    -- The core death metadata can lose attribution on multi-hit weaponskills.
+    -- A completed WS that has reduced its exact target to zero is independently
+    -- sufficient; the shared helper deduplicates this against DEFEATED_MOB.
+    if target:getHP() <= 0 then
+        creditWeaponskillKill(target, attacker, wsId)
     end
     for _, entry in ipairs(activeEntries(attacker)) do
         local chapter = C.chapter(attacker, entry)
@@ -443,7 +438,7 @@ local function snapshotKillRule(attacker, target, wsId, slot, tp)
             attacker:setLocalVar('LWP_SnapTarget', target:getID())
             attacker:setLocalVar('LWP_SnapWS', wsId)
             attacker:setLocalVar('LWP_SnapPass',
-                C.archetypePass(attacker, target, entry.archetypeRule, tp, nil, true) and 1 or 0)
+                C.archetypePass(attacker, target, entry.archetypeRule, tp) and 1 or 0)
             return
         end
     end
@@ -508,9 +503,9 @@ function P.archetypeText(rule)
     if rule.key == 'h2h_hit_chain' then return string.format('use at %d+ TP', rule.minTp) end
     if rule.key == 'dagger_positional' then return 'strike from behind' end
     if rule.key == 'sword_tactical' then return string.format('use at %d+ TP', rule.minTp) end
-    if rule.key == 'great_sword_burst_survival' then return string.format('deal at least %d WS damage', rule.minDamage) end
+    if rule.key == 'great_sword_burst_survival' then return 'deliver the weaponskill killing blow' end
     if rule.key == 'axe_companion' then return 'keep a pet alive or Berserk active' end
-    if rule.key == 'great_axe_armor' then return string.format('deal at least %d WS damage', rule.minDamage) end
+    if rule.key == 'great_axe_armor' then return 'deliver the weaponskill killing blow' end
     if rule.key == 'scythe_resource' then return string.format('remain at or below %d%% HP', rule.maxHpp) end
     if rule.key == 'polearm_aerial' then return string.format('keep wyvern alive and use at %d+ TP', rule.minTp) end
     if rule.key == 'katana_shadows' then return 'retain at least one copy-image shadow' end

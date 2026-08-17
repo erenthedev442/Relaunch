@@ -3713,11 +3713,11 @@ void BuildingCharPetAbilityTable(CCharEntity* PChar, CPetEntity* PPet, uint32 Pe
             // auto-Ready loop. Convert those back to pet ability IDs for the
             // client Ready menu; preserve legacy lists that already store a
             // pet ability ID.
-            if (auto* PPetSkill = battleutils::GetPetSkill(abilityid))
+            if (auto* PPetSkill = battleutils::GetPetSkillByMobSkill(abilityid))
             {
                 addPetAbility(PChar, PPetSkill->getID() - ABILITY_HEALING_RUBY);
             }
-            else if (auto* PPetSkill = battleutils::GetPetSkillByMobSkill(abilityid))
+            else if (auto* PPetSkill = battleutils::GetPetSkill(abilityid))
             {
                 addPetAbility(PChar, PPetSkill->getID() - ABILITY_HEALING_RUBY);
             }
