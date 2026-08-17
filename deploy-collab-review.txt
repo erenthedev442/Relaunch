@@ -1,1668 +1,531 @@
-﻿Collaborator review  2026-08-16 09:54:46
-Range: HEAD..origin/relaunch  (2 collaborator commit(s))
+﻿Collaborator review  2026-08-17 03:05:38
+Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit 32937c9d6062da5634fd52c0216632fdd4cf7cc9
+commit 10600e23b9ad4764d1653b5fd5a5290f1e0bb689
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Sun Aug 16 17:05:45 2026 +0100
+Date:   Mon Aug 17 11:03:51 2026 +0100
 
-    fix(relaunch): repair HTBF and pet readiness
+    fix(relaunch): restore battlefield and pilgrimage credit
     
-    Stabilize HTBF state, progression, exits, and affected encounter mechanics while
-    normalizing the remaining custom content ceilings. Restore jug-pet Ready menus
-    from executable skill lists and cover the new shop, Divergence, and Unity fixes.
+    Preserve HTBF menu and exit routing while making jug-pet Ready lists map to their executable moves. Credit valid multi-hit weaponskill killing blows consistently, without damage thresholds.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/modules/custom/lua/HTBF_Vendor.lua b/modules/custom/lua/HTBF_Vendor.lua
-index 785bbabb56..902532f3ee 100644
---- a/modules/custom/lua/HTBF_Vendor.lua
-+++ b/modules/custom/lua/HTBF_Vendor.lua
-@@ -64,8 +64,8 @@ local TOP_CAT_SHORT =
- -- 16-gem list would exceed both client caps (8 options / 150 bytes) and hide
- -- gems, so we drill down.
- showMenu = function(p)
--    local finalDone = (p:getCharVar(catalog.finalTest.completionVar) or 0) >= 1
--        or (p:getCharVar(catalog.finalTest.tierClearVar) or 0) >= 1
-+    local progress = catalog.progress.get(p)
-+    local finalDone = progress.finalProving
-     -- Keep both states tiny ("Final*" vs "Final Test [Done]") so Warp fits.
-     local finalLabel = finalDone and 'Final*' or 'Final'
-     local options =
-@@ -87,10 +87,10 @@ end
- -- real T3 and supplies the T3 clear flag Ambuscade already checks.
- showFinalTest = function(p)
-     local final      = catalog.finalTest
--    local finalDone  = (p:getCharVar(final.completionVar) or 0) >= 1
--        or (p:getCharVar(final.tierClearVar) or 0) >= 1
--    local clearedT1 = (p:getCharVar('HTBF_Cleared_T1') or 0) >= 1
--    local clearedT2 = (p:getCharVar('HTBF_Cleared_T2') or 0) >= 1
-+    local progress  = catalog.progress.get(p)
-+    local finalDone  = progress.finalProving
-+    local clearedT1 = progress.tier1
-+    local clearedT2 = progress.tier2
- 
-     if finalDone then
-         p:printToPlayer(
 diff --git a/modules/custom/lua/LegendaryWeaponPilgrimage.lua b/modules/custom/lua/LegendaryWeaponPilgrimage.lua
-index c3e5d29f72..337a0bb740 100644
+index 337a0bb740..f8217ec074 100644
 --- a/modules/custom/lua/LegendaryWeaponPilgrimage.lua
 +++ b/modules/custom/lua/LegendaryWeaponPilgrimage.lua
-@@ -250,8 +250,28 @@ local function onDefeatedMob(mob, player, opt)
-         player:setLocalVar('LWP_SupportTarget', 0)
-     end
- 
--    if not opt.isKiller or not opt.isWeaponSkillKill then return end
--    if not opt.weaponskillUsed or not opt.weaponskillDamage or opt.weaponskillDamage <= 0 then return end
-+    -- The engine's isWeaponSkillKill flag can be false for a multi-hit WS or
-+    -- skillchain whose final action packet is resolved as a follow-up hit.
-+    -- WEAPONSKILL_USE observes the completed action and records a fallback only
-+    -- when that exact action already reduced this exact target to zero HP.
-+    -- This is deliberately not a time window: a post-WS auto-attack cannot
-+    -- inherit credit because it never sets LWP_ConfirmedWsKillTarget.
-+    local confirmedKill =
-+        player:getLocalVar('LWP_ConfirmedWsKillTarget') == mob:getID() and
-+        player:getLocalVar('LWP_ConfirmedWsKillWS') > 0
-+    local wsId = opt.weaponskillUsed
-+    local wsDamage = opt.weaponskillDamage
-+    if confirmedKill then
-+        wsId = player:getLocalVar('LWP_ConfirmedWsKillWS')
-+        wsDamage = player:getLocalVar('LWP_ConfirmedWsKillDamage')
-+    end
-+    player:setLocalVar('LWP_ConfirmedWsKillTarget', 0)
-+    player:setLocalVar('LWP_ConfirmedWsKillWS', 0)
-+    player:setLocalVar('LWP_ConfirmedWsKillDamage', 0)
-+
-+    if not opt.isKiller and not confirmedKill then return end
-+    if not opt.isWeaponSkillKill and not confirmedKill then return end
-+    if not wsId or not wsDamage or wsDamage <= 0 then return end
-     if player:isDead() or not player:checkKillCredit(mob) then return end
- 
-     for _, entry in ipairs(activeEntries(player)) do
-@@ -260,14 +280,14 @@ local function onDefeatedMob(mob, player, opt)
-         if
-             chapter <= 3 and
-             (requirement.kind == 'ws_kills' or requirement.kind == 'named_ws_kills') and
--            opt.weaponskillUsed == entry.wsId and
-+            wsId == entry.wsId and
-             equippedForChapter(player, entry, chapter) and
-             player:getLocalVar('LWP_SnapEntry') == entry.index and
-             player:getLocalVar('LWP_SnapTarget') == mob:getID() and
-             player:getLocalVar('LWP_SnapWS') == entry.wsId and
-             player:getLocalVar('LWP_SnapPass') == 1 and
-             (not entry.archetypeRule.minDamage or
--                opt.weaponskillDamage >= entry.archetypeRule.minDamage) and
-+                wsDamage >= entry.archetypeRule.minDamage) and
-             targetEligible(player, mob, entry, chapter)
-         then
-             markProgress(player, entry, chapter, displayName(mob))
-@@ -278,6 +298,14 @@ end
- local function onWeaponskill(attacker, target, skill, tp, action, damage)
-     if not attacker or not target or target:getObjType() ~= xi.objType.MOB then return end
-     local wsId = skill:getID()
-+    -- Capture only a completed weaponskill that has already killed the target.
-+    -- This is consumed by onDefeatedMob as a narrowly-scoped fallback when the
-+    -- core death event loses its WS attribution during multi-hit resolution.
-+    if target:getHP() <= 0 and damage and damage > 0 then
-+        attacker:setLocalVar('LWP_ConfirmedWsKillTarget', target:getID())
-+        attacker:setLocalVar('LWP_ConfirmedWsKillWS', wsId)
-+        attacker:setLocalVar('LWP_ConfirmedWsKillDamage', damage)
-+    end
-     for _, entry in ipairs(activeEntries(attacker)) do
-         local chapter = C.chapter(attacker, entry)
-         local requirement = entry.chapters[chapter]
-diff --git a/modules/custom/lua/Tournament.lua b/modules/custom/lua/Tournament.lua
-index 4a3d38d202..c8121e7857 100644
---- a/modules/custom/lua/Tournament.lua
-+++ b/modules/custom/lua/Tournament.lua
-@@ -64,15 +64,15 @@ local WAVES = {
-     { label = 'Wave 1',  count = 3, level = 110, hpMult = 6,   groups = { 11355, 11356 } },
-     { label = 'Wave 2',  count = 4, level = 130, hpMult = 10,  groups = { 11357, 11358 } },
-     { label = 'Wave 3',  count = 4, level = 150, hpMult = 16,  groups = { 11359, 11360 } },
--    { label = 'Wave 4',  count = 5, level = 170, hpMult = 24,  groups = { 11361, 11362 } },
--    { label = 'Wave 5',  count = 5, level = 190, hpMult = 36,  groups = { 11363, 11364 } },
--    { label = 'Wave 6',  count = 6, level = 210, hpMult = 52,  groups = { 11365, 11366 } },
--    { label = 'Wave 7',  count = 6, level = 230, hpMult = 72,  groups = { 11367, 11368 } },
--    { label = 'Wave 8',  count = 7, level = 250, hpMult = 96,  groups = { 11368, 11369 } },
-+    { label = 'Wave 4',  count = 5, level = 150, hpMult = 24,  groups = { 11361, 11362 } },
-+    { label = 'Wave 5',  count = 5, level = 150, hpMult = 36,  groups = { 11363, 11364 } },
-+    { label = 'Wave 6',  count = 6, level = 150, hpMult = 64,  groups = { 11365, 11366 } },
-+    { label = 'Wave 7',  count = 6, level = 150, hpMult = 90,  groups = { 11367, 11368 } },
-+    { label = 'Wave 8',  count = 7, level = 150, hpMult = 120, groups = { 11368, 11369 } },
- }
- 
- -- ΓöÇΓöÇΓöÇ Wave 8 Champion mechanics ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
---- The final wave (Wave 8) has no explicit boss entity ΓÇö all 7 mobs are level-250
-+-- The final wave (Wave 8) has no explicit boss entity ΓÇö all 7 mobs are Lv150
- -- juggernauts. The FIRST mob spawned in Wave 8 (i==1, waveNum==8) is designated
- -- the "Tournament Champion" and receives the full hardcore kit. The remaining 6
- -- are left vanilla (mechanics.tick() is a safe no-op on un-attached mobs).
-diff --git a/modules/custom/lua/aeonic_maat_trials.lua b/modules/custom/lua/aeonic_maat_trials.lua
-index a61614e0cf..8cf2387971 100644
---- a/modules/custom/lua/aeonic_maat_trials.lua
-+++ b/modules/custom/lua/aeonic_maat_trials.lua
-@@ -17,7 +17,7 @@ local S = xi.msg.channel.SYSTEM_3
- local ZONE_ID = xi.zone.WAUGHROON_SHRINE
- local TEMPLATE_GROUP_ID = 12
- local TEMPLATE_ZONE_ID = 144
--local MAAT_LEVEL = 200
-+local MAAT_LEVEL = 150
- local FIGHT_LIMIT = 180
- local TICK_MS = 1000
- local ENGAGE_DIST = 15
-diff --git a/modules/custom/lua/capacity_farm_catalog.lua b/modules/custom/lua/capacity_farm_catalog.lua
-index c4b67d7f89..825d7d642b 100644
---- a/modules/custom/lua/capacity_farm_catalog.lua
-+++ b/modules/custom/lua/capacity_farm_catalog.lua
-@@ -61,8 +61,8 @@ catalog.mobName  = 'Capacity Phantom'  -- display name; also used to count/top-u
- -- every kill, so this pool consumes a stable 100 slots. Raising it substantially
- -- would still crowd out player trusts/pets under group load.
- catalog.mobCount = 100
--catalog.minLv    = 150                  -- engine rolls each spawn in [minLv, maxLv]
--catalog.maxLv    = 160
-+catalog.minLv    = 120                  -- engine rolls each spawn in [minLv, maxLv]
-+catalog.maxLv    = 150
- catalog.maxHP    = 120000
- catalog.respawnSeconds = 5              -- delay after the death/despawn sequence
- catalog.cpBonus  = 2000                 -- flat bonus Capacity Points to the killer per kill, ON TOP of
-diff --git a/modules/custom/lua/colosseum_catalog.lua b/modules/custom/lua/colosseum_catalog.lua
-index 30c26c8704..5213d9fd42 100644
---- a/modules/custom/lua/colosseum_catalog.lua
-+++ b/modules/custom/lua/colosseum_catalog.lua
-@@ -59,8 +59,8 @@ catalog.elo =
- -- REPLICA SCALING (rating -> mob stats)
- -- ============================================================
- -- Level: 99 at rating<=1000, +1 level per `levelPerRating` rating above
---- that, hard-capped at 205 (past there mob acc/eva outruns L99 gear -
---- same engine lesson as the Voidspire).
-+-- that, hard-capped at 150. Higher ratings continue to strengthen the
-+-- replica through the existing HP and combat-mod progression.
- catalog.replica =
- {
-     groupId      = 11361,  -- HL Serket group (registered in zone 210); the
-@@ -69,7 +69,7 @@ catalog.replica =
-     levelBase    = 99,
-     ratingBase   = 1000,
-     levelPerRating = 10,   -- +1 level per 10 rating above ratingBase
--    levelCap     = 205,
-+    levelCap     = 150,
- 
-     -- HP multiplier: base + (rating - 1200)/hpRatingDiv, clamped.
-     hpBase      = 3.0,
-@@ -85,9 +85,9 @@ catalog.replica =
-         { level =  99, mods = { [xi.mod.ATT] = 1100, [xi.mod.ACC] =  600, [xi.mod.STR] =  45, [xi.mod.DEX] =  45, [xi.mod.HASTE_GEAR] =  60, [xi.mod.DOUBLE_ATTACK] =  4 } },
-         { level = 120, mods = { [xi.mod.ATT] = 1900, [xi.mod.ACC] =  750, [xi.mod.STR] =  75, [xi.mod.DEX] =  75, [xi.mod.HASTE_GEAR] = 110, [xi.mod.DOUBLE_ATTACK] =  7 } },
-         { level = 140, mods = { [xi.mod.ATT] = 2400, [xi.mod.ACC] =  880, [xi.mod.STR] =  95, [xi.mod.DEX] =  95, [xi.mod.HASTE_GEAR] = 140, [xi.mod.DOUBLE_ATTACK] =  9 } },
--        { level = 160, mods = { [xi.mod.ATT] = 2900, [xi.mod.ACC] = 1000, [xi.mod.STR] = 115, [xi.mod.DEX] = 115, [xi.mod.HASTE_GEAR] = 170, [xi.mod.DOUBLE_ATTACK] = 11 } },
--        { level = 180, mods = { [xi.mod.ATT] = 3400, [xi.mod.ACC] = 1120, [xi.mod.STR] = 135, [xi.mod.DEX] = 135, [xi.mod.HASTE_GEAR] = 200, [xi.mod.DOUBLE_ATTACK] = 13 } },
--        { level = 205, mods = { [xi.mod.ATT] = 4000, [xi.mod.ACC] = 1250, [xi.mod.STR] = 160, [xi.mod.DEX] = 160, [xi.mod.HASTE_GEAR] = 230, [xi.mod.DOUBLE_ATTACK] = 15 } },
-+        -- Preserve the former high-Elo profile without exceeding the Lv150
-+        -- combat ceiling. Rating and HP multipliers still differentiate elites.
-+        { level = 150, mods = { [xi.mod.ATT] = 4000, [xi.mod.ACC] = 1250, [xi.mod.STR] = 160, [xi.mod.DEX] = 160, [xi.mod.HASTE_GEAR] = 230, [xi.mod.DOUBLE_ATTACK] = 15 } },
-     },
- 
-     -- Spawn ring around the player (yalms) - geometry-safe anywhere.
-diff --git a/modules/custom/lua/endless_tower.lua b/modules/custom/lua/endless_tower.lua
-index d276ffbb96..b0dffa847b 100644
---- a/modules/custom/lua/endless_tower.lua
-+++ b/modules/custom/lua/endless_tower.lua
-@@ -51,27 +51,27 @@ local EXIT_WARP = { zoneId = 44, x = 571.471, y = -3.360, z = 512.586, rot = 65
- -- Trash mobs and their levels/groups per 10-floor band.
- -----------------------------------
- local BANDS = {
--    { maxFloor = 10, level = 120, bossLevel = 135,
-+    { maxFloor = 10, level = 120, bossLevel = 135, trashHpMult = 1.0,
-       groups = { 11355, 11356, 11357, 11358 },
-       bossGroup = 11358, bossHp = 600000,
-       names  = { 'Tower Guardian', 'Spire Sentinel', 'Ascendant Watcher' },
-       bossName = 'Guardian of the Spire' },
--    { maxFloor = 20, level = 155, bossLevel = 170,
-+    { maxFloor = 20, level = 130, bossLevel = 140, trashHpMult = 1.25,
-       groups = { 11359, 11360, 11361, 11362 },
-       bossGroup = 11362, bossHp = 1200000,
-       names  = { 'Shadow Hulk', 'Void Sentinel', 'Abyssal Watcher' },
-       bossName = 'Shadow of the Abyss' },
--    { maxFloor = 30, level = 185, bossLevel = 205,
-+    { maxFloor = 30, level = 140, bossLevel = 145, trashHpMult = 1.50,
-       groups = { 11362, 11363, 11364, 11365 },
-       bossGroup = 11365, bossHp = 2500000,
-       names  = { 'Eternal Hulk', 'Timeless Watcher', 'Void Drake' },
-       bossName = 'The Eternal Warden' },
--    { maxFloor = 40, level = 215, bossLevel = 240,
-+    { maxFloor = 40, level = 145, bossLevel = 150, trashHpMult = 1.80,
-       groups = { 11364, 11365, 11366, 11367 },
-       bossGroup = 11367, bossHp = 4000000,
-       names  = { 'Divine Revenant', 'Apex Inquisitor', 'Celestial Hulk' },
-       bossName = 'Lord of the Void' },
--    { maxFloor = 50, level = 240, bossLevel = 250,  -- 275 wrapped past uint8 255 -> ~lv20 (weak base stats); 250 is the safe ceiling (matches the Lv250 HL/Reforge apex NMs)
-+    { maxFloor = 50, level = 150, bossLevel = 150, trashHpMult = 2.10,
-       groups = { 11366, 11367, 11368, 11369 },
-       bossGroup = 11369, bossHp = 7000000,
-       names  = { 'Pinnacle Revenant', 'Apex Guardian', 'Sovereign Watcher' },
-@@ -384,7 +384,7 @@ startFloor = function(player)
-         for _ = 1, count do
-             local groupId = band.groups[math.random(#band.groups)]
-             local name    = band.names[math.random(#band.names)]
--            local mob     = spawnTowerMob(player, groupId, name, band.level, 1.0, nil)
-+            local mob     = spawnTowerMob(player, groupId, name, band.level, band.trashHpMult, nil)
-             if mob then sess.mobsAlive[mob:getID()] = mob end
-         end
-     end
-diff --git a/modules/custom/lua/htbf.lua b/modules/custom/lua/htbf.lua
-index 415fe25960..4c656d4cea 100644
---- a/modules/custom/lua/htbf.lua
-+++ b/modules/custom/lua/htbf.lua
-@@ -73,19 +73,15 @@ function htbf.accessCheck(player)
+@@ -215,6 +215,44 @@ local function targetEligible(player, mob, entry, chapter)
+     return false
  end
  
- local function tier3Unlocked(player)
--    local final = catalog.finalTest
--    return
--        (player:getCharVar(final.completionVar) or 0) >= 1 or
--        (player:getCharVar(final.tierClearVar) or 0) >= 1
-+    return catalog.progress.get(player).tier3
- end
- 
- local function finalTestReady(player)
--    return
--        (player:getCharVar('HTBF_Cleared_T1') or 0) >= 1 and
--        (player:getCharVar('HTBF_Cleared_T2') or 0) >= 1 and
--        not tier3Unlocked(player)
-+    return catalog.progress.get(player).finalReady
- end
- 
-+htbf.progress = catalog.progress
-+
- -- ---------------------------------------------------------------------------
- -- Let players field Trusts inside HTBF battlefields.
- -- The engine gates battlefield trust summons on
-@@ -194,13 +190,11 @@ function htbf.printEntranceLegend(player, npc)
-     end
- 
-     local hasTier3 = tier3Unlocked(player)
--    for group, r in ipairs(rows) do
-+    for _, r in ipairs(rows) do
-         player:printToPlayer(string.format(
--            '[HTBF]   Group %d: %s (%s) -- %s.',
--            group,
--            r.label,
--            r.gem,
--            hasTier3 and 'Tier I, II, III' or 'Tier I, II (Tier III locked)'),
-+            '[HTBF]   Rows %d/%d/%d: %s (%s) -- Tier I/II/%s.',
-+            r.idx, r.idx + 1, r.idx + 2, r.label, r.gem,
-+            hasTier3 and 'III' or 'III locked'),
-             xi.msg.channel.SYSTEM_3)
-     end
- 
-@@ -226,6 +220,32 @@ if xi.battlefield and xi.battlefield.getBattlefieldOptions and not xi.battlefiel
-     local _origOptions = xi.battlefield.getBattlefieldOptions
-     xi.battlefield.getBattlefieldOptions = function(player, npc, trade)
-         local options = _origOptions(player, npc, trade)
-+        if not trade then
-+            -- A Phantom Gem is an explicit HTBF intent. Remove the retail rows
-+            -- on this same entrance so a client DAT label can never route that
-+            -- gem holder into a mission battlefield with a coincident index.
-+            local hasHTBFGem = false
-+            for _, fight in pairs(catalog.fights) do
-+                local matches = fight.entryNpc == npc:getName()
-+                if not matches and fight.entryNpcs then
-+                    matches = utils.contains(npc:getName(), fight.entryNpcs)
-+                end
-+                if matches and player:hasKeyItem(fight.gem) then
-+                    hasHTBFGem = true
-+                    break
-+                end
-+            end
-+            if hasHTBFGem then
-+                for _, content in ipairs(xi.battlefield.contentsByZone[player:getZoneID()] or {}) do
-+                    if
-+                        not content.partyKeyItem and
-+                        content:isValidEntry(player, npc)
-+                    then
-+                        options = utils.mask.setBit(options, content.index, false)
-+                    end
-+                end
-+            end
-+        end
-         -- Only for gem entry (no trade); printEntranceLegend no-ops on any
-         -- entrance without HTBF tiers the player qualifies for.
-         if not trade then
-@@ -265,6 +285,10 @@ function htbf.register(fightKey, tier, variant)
-         timeLimit        = f.timeLimit or utils.minutes(30),
-         canLoseExp       = false,
-         requiredKeyItems = { f.gem },   -- consumed on entry (no keep); HTBF is gem-gated
-+        -- Battlefield:onEntryEventUpdate enforces and consumes this for every
-+        -- actual entrant. The engine's requiredKeyItems consumption only covers
-+        -- the registrant.
-+        partyKeyItem     = f.gem,
-     })
- 
-     -- ACCESS GATE (see top): only a master of the entering job who holds every
-@@ -309,8 +333,10 @@ function htbf.register(fightKey, tier, variant)
-             -- event-driven fights run identically. We keep our OWN onEventFinishWin
-             -- (the reward) and chain setupBattlefield (below) for the tier scaling.
-             for _, hook in ipairs({
--                'onBattlefieldTick', 'sections', 'onExitTrigger', 'onEventFinishExit',
--                'onEventUpdate', 'onBattlefieldLoss', 'onBattlefieldRegister', 'paths',
-+                -- Retail exit/loss handlers frequently calculate from their
-+                -- retail battlefield IDs or mission variables. HTBF keeps the
-+                -- stock exit path instead of inheriting those closures.
-+                'onBattlefieldTick', 'sections', 'onEventUpdate', 'onBattlefieldRegister', 'paths',
-                 'onBattlefieldEnter',
-                 -- onEventFinishBattlefield drives the PHASE-2 spawn on multi-phase
-                 -- fights (Dawn spawns Promathia P2 here; Shadow Lord and Celestial
-@@ -349,7 +375,7 @@ function htbf.register(fightKey, tier, variant)
-         end
- 
-         if scale.lvl and scale.lvl > 1.0 then
--            mob:setMobLevel(math.min(math.floor(mob:getMainLvl() * scale.lvl), 255))
-+            mob:setMobLevel(math.min(math.floor(mob:getMainLvl() * scale.lvl), 150))
-         end
-         if (scale.hp and scale.hp > 1.0) or (scale.minHp and scale.minHp > 0) then
-             local hp = math.floor(mob:getMaxHP() * (scale.hp or 1.0))
-@@ -439,19 +465,7 @@ function htbf.register(fightKey, tier, variant)
-         if firstClear then
-             player:setCharVar(firstClearCv, 1)
-         end
--        if isFinalTest then
--            player:setCharVar(final.completionVar, 1)
--            player:setCharVar(final.tierClearVar, 1)
--        end
--        -- Per-tier clear flag: used as an entry gate for Ambuscade (must have
--        -- cleared at least one HTBF at each of T1/T2/T3). tier is the register()
--        -- arg captured in this closure -- one flag per player per tier, sticky
--        -- (never cleared).
--        pcall(function()
--            if tier and tier >= 1 and tier <= 3 then
--                player:setCharVar('HTBF_Cleared_T' .. tier, 1)
--            end
--        end)
-+        catalog.progress.recordClear(player, tier, isFinalTest)
-         -- Item loot. HTBF fights use a custom battlefieldId with NO C++ retail
-         -- treasure, and the reuse-base fights end their win in varied ways (most
-         -- on a bare setStatus(WON) that never opens an Armoury Crate), so the
-diff --git a/modules/custom/lua/htbf_catalog.lua b/modules/custom/lua/htbf_catalog.lua
-index a7caaf6a79..6b1055710b 100644
---- a/modules/custom/lua/htbf_catalog.lua
-+++ b/modules/custom/lua/htbf_catalog.lua
-@@ -18,6 +18,37 @@
- -----------------------------------
- local catalog = {}
- 
-+-- The persistent progression contract is intentionally defined beside the
-+-- battlefield data. Every consumer (entry, vendor, and Ambuscade) asks this
-+-- one API rather than reimplementing combinations of charvars.
-+catalog.progress =
-+{
-+    tierVar       = 'HTBF_Cleared_T',
-+    finalDoneVar  = 'HTBF_FinalTest_Done',
-+}
-+
-+function catalog.progress.get(player)
-+    local result =
-+    {
-+        tier1 = (player:getCharVar(catalog.progress.tierVar .. '1') or 0) >= 1,
-+        tier2 = (player:getCharVar(catalog.progress.tierVar .. '2') or 0) >= 1,
-+        tier3 = (player:getCharVar(catalog.progress.tierVar .. '3') or 0) >= 1,
-+    }
-+    result.finalProving = (player:getCharVar(catalog.progress.finalDoneVar) or 0) >= 1 or result.tier3
-+    result.finalReady = result.tier1 and result.tier2 and not result.finalProving
-+    return result
-+end
-+
-+function catalog.progress.recordClear(player, tier, isFinalProving)
-+    if tier >= 1 and tier <= 3 then
-+        player:setCharVar(catalog.progress.tierVar .. tier, 1)
-+    end
-+    if isFinalProving then
-+        player:setCharVar(catalog.progress.finalDoneVar, 1)
-+        player:setCharVar(catalog.progress.tierVar .. '3', 1)
-+    end
-+end
-+
- -- Real trusts per tier. The Adventuring Fellow is a free extra and is excluded
- -- from this count by htbf.lua.
- catalog.trustCap = { [1] = 2, [2] = 3, [3] = 4 }
-@@ -60,7 +91,7 @@ catalog.gemName =
-     [xi.ki.PUPPET_IN_PERIL_PHANTOM_GEM] = 'Puppet in Peril Phantom Gem',
-     [xi.ki.LEGACY_PHANTOM_GEM]        = 'Legacy Phantom Gem',
-     [xi.ki.SHADOW_LORD_PHANTOM_GEM]   = 'Shadow Lord Phantom Gem',
--    [xi.ki.STELLAR_FULCRUM_PHANTOM_GEM] = 'Stellar Fulcrum Phantom Gem',
-+    [xi.ki.STELLAR_FULCRUM_PHANTOM_GEM] = "Return to Delkfutt's Tower Phantom Gem",
-     [xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM] = 'Celestial Nexus Phantom Gem',
-     [xi.ki.DIVINE_PHANTOM_GEM]        = 'Divine Phantom Gem',
-     [xi.ki.PHANTOM_GEM_OF_APATHY]     = 'Phantom Gem of Apathy',
-@@ -330,7 +361,7 @@ catalog.fights =
-     {
-         zone = xi.zone.CLOISTER_OF_TREMORS, entryNpc = 'EP_Entrance', exitNpc = 'Earth_Protocrystal',
-         gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4030,
--        mobs = { 'Titan_Prime_HTBF' }, label = 'Trial by Earth',
-+        mobs = { 'Titan_Prime_TBE' }, label = 'Trial by Earth',
-         difficulty = 'avatar', rewardClass = 'simple', entryPosByArea = avatarEntryPos,
-     },
-     trial_by_lightning =
-@@ -418,7 +449,7 @@ catalog.fights =
-         -- Retail HTMBF is Omega -> Ultima only. The mission battlefield also
-         -- contains Mammets and story cutscenes, so it must not be reused here.
-         groupsForTier = function(tier)
--            local first = 16908382 + (tier - 1) * 2
-+        local first = 16908382 + (tier - 1) * 30
-             return
-             {
-                 {
-@@ -477,7 +508,7 @@ catalog.fights =
-     dawn =
-     {
-         zone = xi.zone.EMPYREAL_PARADOX, entryNpc = 'TR_Entrance', exitNpc = 'Transcendental_Radiance',
--        gem = xi.ki.DAWN_PHANTOM_GEM, baseIndex = 2, baseBattlefieldId = 4210,
-+        gem = xi.ki.DAWN_PHANTOM_GEM, baseIndex = 12, baseBattlefieldId = 4210,
-         reuseBaseId = xi.battlefield.id.DAWN, label = 'Dawn',
-         difficulty = 'epic', rewardClass = 'epic',
-         -- Promathia's mission pools have only 8k/12k HP and already carry
-@@ -528,7 +559,7 @@ catalog.fights =
-     {
-         zone = xi.zone.THRONE_ROOM, entryNpc = '_4l1',
-         exitNpcs = { '_4l2', '_4l3', '_4l4' },
--        gem = xi.ki.SHADOW_LORD_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4120,
-+        gem = xi.ki.SHADOW_LORD_PHANTOM_GEM, baseIndex = 12, baseBattlefieldId = 4120,
-         reuseBaseId = xi.battlefield.id.SHADOW_LORD_BATTLE, label = 'Shadow Lord',
-         difficulty = 'standard', rewardClass = 'standard',
-         entryPosByArea =
-@@ -542,7 +573,7 @@ catalog.fights =
-     {
-         zone = xi.zone.STELLAR_FULCRUM, entryNpc = '_4z0',
-         exitNpcs = { '_4z1', '_4z2', '_4z3' },
--        gem = xi.ki.STELLAR_FULCRUM_PHANTOM_GEM, baseIndex = 1, baseBattlefieldId = 4130,
-+        gem = xi.ki.STELLAR_FULCRUM_PHANTOM_GEM, baseIndex = 12, baseBattlefieldId = 4130,
-         reuseBaseId = xi.battlefield.id.RETURN_TO_DELKFUTTS_TOWER, label = "Return to Delkfutt's Tower",
-         difficulty = 'standard', rewardClass = 'standard',
-         entryPosByArea =
-@@ -556,7 +587,7 @@ catalog.fights =
-     {
-         zone = xi.zone.THE_CELESTIAL_NEXUS, entryNpc = '_513',
-         exitNpcs = { '_514', '_515' },
--        gem = xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM, baseIndex = 1, baseBattlefieldId = 4140,
-+        gem = xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM, baseIndex = 12, baseBattlefieldId = 4140,
-         reuseBaseId = xi.battlefield.id.CELESTIAL_NEXUS, label = 'The Celestial Nexus',
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea =
-@@ -578,7 +609,7 @@ catalog.fights =
-     {
-         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpcs = { 'qm1_1', 'qm1_2', 'qm1_3', 'qm1_4', 'qm1_5' },
-         exitNpc = 'qm2',
--        gem = xi.ki.DIVINE_PHANTOM_GEM, baseIndex = 13, baseBattlefieldId = 4150,
-+        gem = xi.ki.DIVINE_PHANTOM_GEM, baseIndex = 16, baseBattlefieldId = 4150,
-         reuseBaseId = xi.battlefield.id.DIVINE_MIGHT, maxPlayers = 18, label = 'Divine Might',
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
-@@ -591,7 +622,7 @@ catalog.fights =
-     ark_angels_1 =
-     {
-         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_1', exitNpc = 'qm2',
--        gem = xi.ki.PHANTOM_GEM_OF_APATHY, baseIndex = 10, baseBattlefieldId = 4160,
-+        gem = xi.ki.PHANTOM_GEM_OF_APATHY, baseIndex = 12, baseBattlefieldId = 4160,
-         reuseBaseId = xi.battlefield.id.ARK_ANGELS_1, label = 'Ark Angels I',
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
-@@ -599,7 +630,7 @@ catalog.fights =
-     ark_angels_2 =
-     {
-         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_2', exitNpc = 'qm2',
--        gem = xi.ki.PHANTOM_GEM_OF_COWARDICE, baseIndex = 10, baseBattlefieldId = 4170,
-+        gem = xi.ki.PHANTOM_GEM_OF_COWARDICE, baseIndex = 12, baseBattlefieldId = 4170,
-         reuseBaseId = xi.battlefield.id.ARK_ANGELS_2, label = 'Ark Angels II',
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
-@@ -607,7 +638,7 @@ catalog.fights =
-     ark_angels_3 =
-     {
-         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_3', exitNpc = 'qm2',
--        gem = xi.ki.PHANTOM_GEM_OF_ENVY, baseIndex = 10, baseBattlefieldId = 4180,
-+        gem = xi.ki.PHANTOM_GEM_OF_ENVY, baseIndex = 12, baseBattlefieldId = 4180,
-         reuseBaseId = xi.battlefield.id.ARK_ANGELS_3, label = 'Ark Angels III',
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
-@@ -615,7 +646,7 @@ catalog.fights =
-     ark_angels_4 =
-     {
-         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_4', exitNpc = 'qm2',
--        gem = xi.ki.PHANTOM_GEM_OF_ARROGANCE, baseIndex = 10, baseBattlefieldId = 4190,
-+        gem = xi.ki.PHANTOM_GEM_OF_ARROGANCE, baseIndex = 12, baseBattlefieldId = 4190,
-         reuseBaseId = xi.battlefield.id.ARK_ANGELS_4, label = 'Ark Angels IV',
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
-@@ -623,7 +654,7 @@ catalog.fights =
-     ark_angels_5 =
-     {
-         zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_5', exitNpc = 'qm2',
--        gem = xi.ki.PHANTOM_GEM_OF_RAGE, baseIndex = 10, baseBattlefieldId = 4200,
-+        gem = xi.ki.PHANTOM_GEM_OF_RAGE, baseIndex = 12, baseBattlefieldId = 4200,
-         reuseBaseId = xi.battlefield.id.ARK_ANGELS_5, label = 'Ark Angels V',
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
-diff --git a/modules/custom/lua/hunting_league_catalog.lua b/modules/custom/lua/hunting_league_catalog.lua
-index d6bce74225..9c7d8079a5 100644
---- a/modules/custom/lua/hunting_league_catalog.lua
-+++ b/modules/custom/lua/hunting_league_catalog.lua
-@@ -90,7 +90,7 @@ return
-             warpPos    = { x = -41.5941, y = 0.1103, z = 73.7704, rot = 176 },
-             mobs =
-             {
--                { name = 'Leaping_Lizzy',    label = 'Leaping Lizzy',    points = 15,  groupId = 11355, minLv = 150, maxLv = 150,
-+                { name = 'Leaping_Lizzy',    label = 'Leaping Lizzy',    points = 15,  groupId = 11355, minLv = 99, maxLv = 99,
-                   spawnPos = { x =  -56.6, y =  0.11, z =  73.8, rot =   0 },  -- T1 cluster: W
-                   hpBoost = 5,
-                   mods = {
-@@ -106,7 +106,7 @@ return
-                       [xi.mod.REGEN] = 12,
-                   },
-                 },
--                { name = 'Valkurm_Emperor',  label = 'Valkurm Emperor',  points = 15,  groupId = 11356, minLv = 150, maxLv = 150,
-+                { name = 'Valkurm_Emperor',  label = 'Valkurm Emperor',  points = 15,  groupId = 11356, minLv = 99, maxLv = 99,
-                   spawnPos = { x =  -41.6, y =  0.11, z =  58.8, rot = 128 },  -- T1 cluster: S
-                   drops = { { id = 8983, qty = 5 } },  -- Emperor Arthro's Shell (Augment Affinity: DEX/Accuracy)
-                   hpBoost = 5,
-@@ -121,7 +121,7 @@ return
-                       [xi.mod.REGEN] = 12,
-                   },
-                 },
--                { name = 'Tom_Tit_Tat',      label = 'Tom Tit Tat',      points = 15,  groupId = 11357, minLv = 150, maxLv = 150,
-+                { name = 'Tom_Tit_Tat',      label = 'Tom Tit Tat',      points = 15,  groupId = 11357, minLv = 99, maxLv = 99,
-                   spawnPos = { x =  -26.6, y =  0.11, z =  73.8, rot = 192 },  -- T1 cluster: E
-                   hpBoost = 5,
-                   mods = {
-@@ -147,7 +147,7 @@ return
-             warpPos    = { x = 40.9101, y = 0.4831, z = 132.8770, rot = 71 },
-             mobs =
-             {
--                { name = 'Roc',         label = 'Roc',         points = 28, groupId = 11358, minLv = 150, maxLv = 150,
-+                { name = 'Roc',         label = 'Roc',         points = 28, groupId = 11358, minLv = 99, maxLv = 99,
-                   spawnPos = { x =   25.9, y =  0.48, z =  132.9, rot =   0 },  -- T2 cluster: W
-                   drops = { { id = 843, qty = 5 } },  -- Giant Bird Plume (Augment Affinity: AGI/Evasion/Haste)
-                   hpBoost = 9,
-@@ -163,7 +163,7 @@ return
-                       [xi.mod.REGEN] = 24,
-                   },
-                 },
--                { name = 'Bomb_Queen',  label = 'Bomb Queen',  points = 28, groupId = 11359, minLv = 150, maxLv = 150,
-+                { name = 'Bomb_Queen',  label = 'Bomb Queen',  points = 28, groupId = 11359, minLv = 99, maxLv = 99,
-                   spawnPos = { x =   40.9, y =  0.48, z =  117.9, rot = 128 },  -- T2 cluster: S
-                   hpBoost = 9,
-                   mods = {
-@@ -180,7 +180,7 @@ return
-                       [xi.mod.REGEN] = 24,
-                   },
-                 },
--                { name = 'Aquarius',    label = 'Aquarius',    points = 28, groupId = 11360, minLv = 150, maxLv = 150,
-+                { name = 'Aquarius',    label = 'Aquarius',    points = 28, groupId = 11360, minLv = 99, maxLv = 99,
-                   spawnPos = { x =   55.9, y =  0.48, z =  132.9, rot = 192 },  -- T2 cluster: E
-                   drops = { { id = 908, qty = 5 } },  -- Adamantoise Shell (Augment Affinity: VIT/Defense)
-                   hpBoost = 9,
-@@ -210,7 +210,7 @@ return
-             warpPos    = { x = 48.6277, y = 0.8776, z = 18.8663, rot = 215 },
-             mobs =
-             {
--                { name = 'Serket',    label = 'Serket',    points = 45, groupId = 11361, minLv = 150, maxLv = 150,
-+                { name = 'Serket',    label = 'Serket',    points = 45, groupId = 11361, minLv = 99, maxLv = 99,
-                   spawnPos = { x =   33.6, y =  0.88, z =   18.9, rot =  96 },  -- T3 cluster: W
-                   drops = { { id = 1015, qty = 5 } },  -- Sand Bat Fang (Augment Affinity: Pet)
-                   hpBoost = 15,
-@@ -227,7 +227,7 @@ return
-                       [xi.mod.REGEN] = 40,
-                   },
-                 },
--                { name = 'Vrtra',     label = 'Vrtra',     points = 45, groupId = 11362, minLv = 150, maxLv = 150,
-+                { name = 'Vrtra',     label = 'Vrtra',     points = 45, groupId = 11362, minLv = 99, maxLv = 99,
-                   spawnPos = { x =   48.6, y =  0.88, z =    3.9, rot =  64 },  -- T3 cluster: S
-                   drops = { { id = 909, qty = 5 } },  -- Guivre's Skull (Augment Affinity: INT/Magic)
-                   hpBoost = 15,
-@@ -246,7 +246,7 @@ return
-                       [xi.mod.REGEN] = 40,
-                   },
-                 },
--                { name = 'Simurgh',   label = 'Simurgh',   points = 45, groupId = 11363, minLv = 150, maxLv = 150,
-+                { name = 'Simurgh',   label = 'Simurgh',   points = 45, groupId = 11363, minLv = 99, maxLv = 99,
-                   spawnPos = { x =   63.6, y =  0.88, z =   18.9, rot = 128 },  -- T3 cluster: E
-                   drops = { { id = 844, qty = 5 } },  -- Phoenix Feather (Augment Affinity: MND/Healing)
-                   -- Difficulty bump (2026-06-13, owner request): tuned a notch
-@@ -281,7 +281,7 @@ return
-             warpPos    = { x = 22.0112, y = 0.8983, z = -121.4367, rot = 126 },
-             mobs =
-             {
--                { name = 'Nidhogg',       label = 'Nidhogg',       points = 48, groupId = 11364, minLv = 150, maxLv = 150,
-+                { name = 'Nidhogg',       label = 'Nidhogg',       points = 48, groupId = 11364, minLv = 99, maxLv = 99,
-                   spawnPos = { x =    7.0, y =  0.90, z = -121.4, rot =  96 },  -- T4 cluster: W
-                   drops = { { id = 1122, qty = 5 }, { id = 10037, qty = 5 }, { id = 865, qty = 5 } },  -- Wyvern Skin (Affinity: HP/Regen) + Fafnir's Scale (Augment Sage rank 4) + Handful of Nidhogg's Scales (Augment Sage rank 2)
-                   hpBoost = 21,
-@@ -298,7 +298,7 @@ return
-                       [xi.mod.REGEN] = 70,
-                   },
-                 },
--                { name = 'King_Behemoth', label = 'King Behemoth', points = 48, groupId = 11365, minLv = 150, maxLv = 150,
-+                { name = 'King_Behemoth', label = 'King Behemoth', points = 48, groupId = 11365, minLv = 99, maxLv = 99,
-                   spawnPos = { x =   22.0, y =  0.90, z = -136.4, rot =  64 },  -- T4 cluster: S
-                   drops = { { id = 893, qty = 5 }, { id = 883, qty = 5 } },  -- Giant Femur (Affinity: STR/Attack) + Behemoth Horn (Augment Sage rank 1)
-                   hpBoost = 21,
-@@ -317,7 +317,7 @@ return
-                       [xi.mod.REGEN] = 70,
-                   },
-                 },
--                { name = 'Kirin',         label = 'Kirin',         points = 48, groupId = 11366, minLv = 150, maxLv = 150,
-+                { name = 'Kirin',         label = 'Kirin',         points = 48, groupId = 11366, minLv = 99, maxLv = 99,
-                   spawnPos = { x =   37.0, y =  0.90, z = -121.4, rot = 128 },  -- T4 cluster: E
-                   drops = { { id = 2893, qty = 5 }, { id = 10038, qty = 5 } },  -- Gargantuan Black Tiger Fang (Affinity: Skill+) + Kirin's Mane (Augment Sage rank 5)
-                   hpBoost = 21,
-@@ -348,7 +348,7 @@ return
-             warpPos    = { x = 433.8451, y = 0.1066, z = -199.3157, rot = 119 },
-             mobs =
-             {
--                { name = 'Absolute_Virtue',    label = 'Absolute Virtue',    points = 100, groupId = 11367, minLv = 150, maxLv = 150,
-+                { name = 'Absolute_Virtue',    label = 'Absolute Virtue',    points = 100, groupId = 11367, minLv = 99, maxLv = 99,
-                   spawnPos = { x =  418.8, y =  0.11, z = -199.3, rot =  96 },  -- T5 cluster: W
-                   drops = { { id = 1473, qty = 5 } },  -- HQ Scorpion Shell (Augment Affinity: WS DMG+)
-                   hpBoost = 36,
-@@ -367,7 +367,7 @@ return
-                       [xi.mod.REGEN] = 120,
-                   },
-                 },
--                { name = 'Pandemonium_Warden', label = 'Pandemonium Warden', points = 100, groupId = 11368, minLv = 150, maxLv = 150,
-+                { name = 'Pandemonium_Warden', label = 'Pandemonium Warden', points = 100, groupId = 11368, minLv = 99, maxLv = 99,
-                   spawnPos = { x =  433.8, y =  0.11, z = -214.3, rot =  64 },  -- T5 cluster: S
-                   drops = { { id = xi.item.KHIMAIRA_HORN, qty = 5 }, { id = 2372, qty = 5 } },  -- Khimaira Horn + Khimaira Mane (Augment Affinity: CHR/Charm)
-                   hpBoost = 36,
-@@ -384,7 +384,7 @@ return
-                       [xi.mod.REGEN] = 120,
-                   },
-                 },
--                { name = 'Shinryu',            label = 'Shinryu',            points = 120, groupId = 11369, minLv = 225, maxLv = 250,
-+                { name = 'Shinryu',            label = 'Shinryu',            points = 120, groupId = 11369, minLv = 150, maxLv = 150,
-                   spawnPos = { x =  448.8, y =  0.11, z = -199.3, rot = 128 },  -- T5 cluster: E
-                   drops = { { id = 1133, qty = 5 } },  -- Vial of Dragon Blood (Augment Affinity: MP/Refresh)
-                   hpBoost = 72,
-diff --git a/modules/custom/lua/invasion_catalog.lua b/modules/custom/lua/invasion_catalog.lua
-index 9d40aaa379..6769c43916 100644
---- a/modules/custom/lua/invasion_catalog.lua
-+++ b/modules/custom/lua/invasion_catalog.lua
-@@ -103,20 +103,20 @@ catalog.waves =
-         hpMult = 2.6,
-     },
-     {
--        label = 'Apex Guard', level = 155, base = 4, perDefender = 2,
-+        label = 'Apex Guard', level = 150, base = 4, perDefender = 2,
-         groups = { 11364, 11366, 11367 },
-         names  = { 'Voidsent Houndmaster', 'Voidsent Banneret', 'Voidsent Destroyer', 'Voidsent Champion' },
-         mods = { [xi.mod.ATT] = 2900, [xi.mod.ACC] = 980, [xi.mod.HASTE_GEAR] = 170, [xi.mod.DOUBLE_ATTACK] = 11 },
-         hpMult = 3.0,
-     },
-     {
--        label = 'The Warlord', level = 165, base = 3, perDefender = 1,
-+        label = 'The Warlord', level = 150, base = 3, perDefender = 1,
-         groups = { 11368, 11369 },
-         names  = { 'Voidsent Sentinel', 'Voidsent Harbinger', 'Voidsent Executioner' },
-         mods = { [xi.mod.ATT] = 3200, [xi.mod.ACC] = 1040, [xi.mod.HASTE_GEAR] = 185, [xi.mod.DOUBLE_ATTACK] = 12 },
-         hpMult = 3.5,
-         boss = {
--            name = 'Voidsent Warlord', level = 175, group = 11368,
-+            name = 'Voidsent Warlord', level = 150, group = 11368,
-             mods = { [xi.mod.ATT] = 3800, [xi.mod.ACC] = 1120, [xi.mod.HASTE_GEAR] = 210, [xi.mod.DOUBLE_ATTACK] = 14 },
-             hpMult = 8.0,
-             modelSize = 3,
-diff --git a/modules/custom/lua/raid_catalog.lua b/modules/custom/lua/raid_catalog.lua
-index 9a9ce3af2f..4809746982 100644
---- a/modules/custom/lua/raid_catalog.lua
-+++ b/modules/custom/lua/raid_catalog.lua
-@@ -47,8 +47,8 @@ catalog.addsPoolDifficulty = 'Hard'    -- stat template donor for tendrils
- catalog.boss =
- {
-     name      = 'The Star-Devourer',
--    level     = 200,
--    hpMult    = 45.0,     -- a long, phase-driven fight - not a burn check
-+    level     = 150,
-+    hpMult    = 60.0,     -- preserves raid duration at the Lv150 ceiling
-     modelSize = 3,
-     mods =
-     {
-@@ -101,12 +101,12 @@ catalog.stance =
- -- action 'fury'    : permanent ATT/haste spike.
- catalog.phases =
- {
--    { hp = 75, action = 'tendrils', count = 2, level = 170, hpMult = 1.5,
-+    { hp = 75, action = 'tendrils', count = 2, level = 150, hpMult = 2.0,
-       name = 'Starspawn Tendril', regenWhileAlive = 2000,
-       message = 'Starspawn Tendrils burst from the void - they FEED the Devourer! Kill them!' },
-     { hp = 50, action = 'dispel',   count = 4,
-       message = 'A wave of unbeing strips your protections!' },
--    { hp = 30, action = 'tendrils', count = 3, level = 180, hpMult = 1.8,
-+    { hp = 30, action = 'tendrils', count = 3, level = 150, hpMult = 2.2,
-       name = 'Starspawn Tendril', regenWhileAlive = 3500,
-       message = 'The Devourer shrieks - more tendrils erupt! Sever them!' },
-     { hp = 15, action = 'fury',     att = 2500, haste = 150,
-diff --git a/modules/custom/lua/ranperre_farm_catalog.lua b/modules/custom/lua/ranperre_farm_catalog.lua
-index 257bc0f6b8..5ad24fa715 100644
---- a/modules/custom/lua/ranperre_farm_catalog.lua
-+++ b/modules/custom/lua/ranperre_farm_catalog.lua
-@@ -48,8 +48,8 @@ catalog.mobName  = 'Capacity Phantom'
- -- 100 persistent mobs: same 511 dynamic-entity limit as Bibiki Bay; each mob
- -- reuses its targid while player trusts and pets share the remaining pool.
- catalog.mobCount = 100
--catalog.minLv    = 150
--catalog.maxLv    = 160
-+catalog.minLv    = 120
-+catalog.maxLv    = 150
- catalog.maxHP    = 120000
- catalog.respawnSeconds = 5
- catalog.cpBonus  = 2000
-diff --git a/modules/custom/lua/unity_wanted_catalog.lua b/modules/custom/lua/unity_wanted_catalog.lua
-index 677b2d1515..759346d779 100644
---- a/modules/custom/lua/unity_wanted_catalog.lua
-+++ b/modules/custom/lua/unity_wanted_catalog.lua
-@@ -244,10 +244,11 @@ return {
-           skillList = 9706, -- Vampyr kit without Eternal Damnation (doom)
-           drops = { {id=20980, name='Raicho', plus1=20981, plus1Name='Raicho +1'}, {id=27609, name='Fi Follet Cape', plus1=27610, plus1Name='Fi Follet Cape +1'} } },
-         { id=43, name='Shedu',                     label='Shedu',                  tier=3, minLv=135, maxLv=135, groupId=102,
--          -- Khimaira kit without Dreadstorm. Fulmination stays off until 37% HP
--          -- (retail Khimaira gate) so the thunder nuke is an execute window, not
--          -- a pull-to-wipe spam. Regain is also cut so TP moves cannot chain
--          -- animation-to-animation on the shared T3 450 Regain profile.
-+          -- Solo/trust-safe Khimaira kit. The execute list restores
-+          -- Fulmination below 37% HP; its Unity-only damage modifier is handled
-+          -- in the mobskill. Fossilizing Breath remains, with its Unity-only
-+          -- petrify duration capped at 10 seconds. Regain is also cut so TP
-+          -- moves cannot chain animation-to-animation on the T3 450 profile.
-           skillList = 9702,
-           lowHpSkillList = 9708,
-           lowHpThreshold = 37,
-diff --git a/modules/custom/lua/unity_wanted_mechanics.lua b/modules/custom/lua/unity_wanted_mechanics.lua
-index 1f3f3a4880..13b88dc227 100644
---- a/modules/custom/lua/unity_wanted_mechanics.lua
-+++ b/modules/custom/lua/unity_wanted_mechanics.lua
-@@ -298,6 +298,7 @@ function M.cleanup(mob)
-     if not mob then return end
- 
-     states[mob:getID()] = nil
-+    mob:setLocalVar('UW_Shedu', 0)
-     for _, name in pairs(listenerNames) do
-         pcall(function() mob:removeListener(name) end)
-     end
-@@ -349,6 +350,7 @@ function M.attach(mob, nm, owner)
-     if not mob or not profile or not owner then return end
- 
-     M.cleanup(mob)
-+    mob:setLocalVar('UW_Shedu', nm.name == 'Shedu' and 1 or 0)
-     states[mob:getID()] =
-     {
-         ownerId          = owner:getID(),
-diff --git a/modules/custom/lua/world_boss.lua b/modules/custom/lua/world_boss.lua
-index a47534d796..8d867dccf8 100644
---- a/modules/custom/lua/world_boss.lua
-+++ b/modules/custom/lua/world_boss.lua
-@@ -57,7 +57,7 @@ local RETIRED = true
- -----------------------------------
- local BOSS_ZONE_ID  = xi.zone.WEST_RONFAURE   -- 100
- local GROUP_ZONE_ID = 210   -- GM Home (where all HL mob_groups are registered)
--local BOSS_LEVEL    = 250
-+local BOSS_LEVEL    = 150
- local TICK_SECONDS  = 30
- 
- -----------------------------------
-diff --git a/modules/custom/sql/bst_jug_restore_ready_abilities.sql b/modules/custom/sql/bst_jug_restore_ready_abilities.sql
-index 9fb9a7d836..ce501631b6 100644
---- a/modules/custom/sql/bst_jug_restore_ready_abilities.sql
-+++ b/modules/custom/sql/bst_jug_restore_ready_abilities.sql
-@@ -96,6 +96,11 @@ INSERT INTO `mob_skill_lists` VALUES
- ('Jug_Toad',2098,3926); -- Water Wall
- UPDATE `mob_pools` SET `skill_list_id` = 2098 WHERE `poolid` = 7548;
- 
-+-- Pugil (Slippery Silas) also shipped with no skill list. Share the complete
-+-- Jug_Pugil Ready kit so both the auto-Ready controller and player menu have
-+-- working moves.
-+UPDATE `mob_pools` SET `skill_list_id` = 756 WHERE `poolid` = 4639;
-+
- -- Zealous Snort: self/master buff, not enemy target.
- UPDATE `pet_skills`
- SET `pet_valid_targets` = 3
-diff --git a/modules/custom/sql/dynamis_divergence.sql b/modules/custom/sql/dynamis_divergence.sql
-index 0fbbfbf1f9..8db3c4e1b7 100644
---- a/modules/custom/sql/dynamis_divergence.sql
-+++ b/modules/custom/sql/dynamis_divergence.sql
-@@ -568,6 +568,23 @@ INSERT INTO `mob_droplist` VALUES (29504, 0, 0, 1000, 9543, @UNCOMMON);
- -- Reuses zone-187 Vanguard Yagudo pools; coords from retail Dynamis-Windy stock spawns.
- -- ============================================================================
- 
-+-- Fii Pexu is a Yagudo THF. The previous group reused pool 2464 directly,
-+-- whose packet name is Maa Febi the Steadfast; the client therefore rendered
-+-- the Wave 2 boss as an unrelated NPC. Clone its correct Yagudo model/job data
-+-- into a dedicated pool with Fii Pexu's packet identity.
-+INSERT INTO `mob_pools`
-+SELECT
-+    8000, 'FiiPexuTheEternal', 'Fii Pexu the Eternal',
-+    `speciesid`, `modelid`, `mJob`, `sJob`, `cmbSkill`, `cmbDelay`, `cmbDmgMult`,
-+    `behavior`, `aggro`, `true_detection`, `links`, `mobType`, `immunity`,
-+    `name_prefix`, `flag`, `entityFlags`, `animationsub`, `hasSpellScript`,
-+    `spellList`, `namevis`, `roamflag`, `skill_list_id`, `resist_id`,
-+    `modelSize`, `modelHitboxSize`
-+FROM `mob_pools`
-+WHERE `poolid` = 2464
-+ON DUPLICATE KEY UPDATE
-+    `name` = VALUES(`name`), `packet_name` = VALUES(`packet_name`);
-+
- -- ΓöÇΓöÇ mob_groups (unchanged: retail Vanguard family pools) ΓöÇΓöÇ
- REPLACE INTO `mob_groups` VALUES (1, 4070, 296, 'EvincingIdol_WindyD', 0, 128, 29601, 35000, 1000, 0, NULL);
- REPLACE INTO `mob_groups` VALUES (2, 4183, 296, 'WindyD_Squadron_A',   0, 128, 29602,  8000,    0, 0, NULL);
-@@ -577,7 +594,7 @@ REPLACE INTO `mob_groups` VALUES (5, 3548, 296, 'WindyD_Statue',       0, 128,
- REPLACE INTO `mob_groups` VALUES (6, 4181, 296, 'WindyD_Regiment_A',   0, 128, 29603, 11000,    0, 0, NULL);
- REPLACE INTO `mob_groups` VALUES (7, 4198, 296, 'WindyD_Regiment_B',   0, 128, 29603, 11000,    0, 0, NULL);
- REPLACE INTO `mob_groups` VALUES (8, 4141, 296, 'WindyD_Regiment_C',   0, 128, 29603, 11000,    0, 0, NULL);
--REPLACE INTO `mob_groups` VALUES (9, 2464, 296, 'FiiPexuTheEternal',   0, 128, 29604, 70000, 2000, 0, NULL);
-+REPLACE INTO `mob_groups` VALUES (9, 8000, 296, 'FiiPexuTheEternal',   0, 128, 29604, 70000, 2000, 0, NULL);
- 
- -- ΓöÇΓöÇ mob_spawn_points: corridor pass ΓöÇΓöÇ
- DELETE FROM `mob_spawn_points` WHERE `mobid` BETWEEN 17989632 AND 17993727;
-diff --git a/modules/custom/sql/htbf_one_to_be_feared_spawns.sql b/modules/custom/sql/htbf_one_to_be_feared_spawns.sql
-new file mode 100644
-index 0000000000..7b7fb0b45d
---- /dev/null
-+++ b/modules/custom/sql/htbf_one_to_be_feared_spawns.sql
-@@ -0,0 +1,25 @@
-+-- Provide independent Omega/Ultima entity pools for HTBF tiers II and III.
-+-- Tier I occupies 16908382..16908411 (three arenas, ten entities each).
-+-- The registrar uses a 30-ID stride, so clone those verified rows into the
-+-- two missing ranges instead of falling through to unrelated/empty mob IDs.
-+INSERT INTO `mob_spawn_points`
-+    (`mobid`, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`)
-+SELECT `mobid` + 30, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`
-+FROM `mob_spawn_points`
-+WHERE `mobid` BETWEEN 16908382 AND 16908411
-+ON DUPLICATE KEY UPDATE
-+    `mobname` = VALUES(`mobname`), `polutils_name` = VALUES(`polutils_name`),
-+    `groupid` = VALUES(`groupid`), `minLevel` = VALUES(`minLevel`),
-+    `maxLevel` = VALUES(`maxLevel`), `pos_x` = VALUES(`pos_x`), `pos_y` = VALUES(`pos_y`),
-+    `pos_z` = VALUES(`pos_z`), `pos_rot` = VALUES(`pos_rot`);
-+
-+INSERT INTO `mob_spawn_points`
-+    (`mobid`, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`)
-+SELECT `mobid` + 60, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`
-+FROM `mob_spawn_points`
-+WHERE `mobid` BETWEEN 16908382 AND 16908411
-+ON DUPLICATE KEY UPDATE
-+    `mobname` = VALUES(`mobname`), `polutils_name` = VALUES(`polutils_name`),
-+    `groupid` = VALUES(`groupid`), `minLevel` = VALUES(`minLevel`),
-+    `maxLevel` = VALUES(`maxLevel`), `pos_x` = VALUES(`pos_x`), `pos_y` = VALUES(`pos_y`),
-+    `pos_z` = VALUES(`pos_z`), `pos_rot` = VALUES(`pos_rot`);
-diff --git a/modules/custom/sql/unity_wanted_skill_lists.sql b/modules/custom/sql/unity_wanted_skill_lists.sql
-index 022d629664..cae4d1004f 100644
---- a/modules/custom/sql/unity_wanted_skill_lists.sql
-+++ b/modules/custom/sql/unity_wanted_skill_lists.sql
-@@ -6,7 +6,8 @@
- -- Stripped (not solo-friendly):
- --   Muut              Danse Macabre (533) charm
- --   Hidhaegg          Absolute Terror (957)
----   Shedu             Dreadstorm (2025) terror; Fulmination (2028) gated to <=37% HP via list 9708
-+--   Shedu             Dreadstorm (2025) terror; Unity-only reduced Fulmination
-+--                     and 10-second Fossilizing Breath petrify remain enabled
- --   Tumult Curator    Thundris Shriek (2119) terror
- --   Grand Grenade     Self-Destruct (509) HP-scaled wipe + suicide
- --   Bambrox           Bomb Toss Suicide (592)
-@@ -28,14 +29,14 @@ REPLACE INTO `mob_skill_lists` VALUES ('UW_Hidhaegg', 9701, 1040); -- spike_flai
- REPLACE INTO `mob_skill_lists` VALUES ('UW_Hidhaegg', 9701, 1041); -- dragon_breath
- REPLACE INTO `mob_skill_lists` VALUES ('UW_Hidhaegg', 9701, 1046); -- horrid_roar_2
- 
---- 9702 Shedu (Khimaira 168 without Dreadstorm or Fulmination)
-+-- 9702 Shedu (Khimaira 168 without Dreadstorm)
- REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2022); -- tenebrous_mist
- REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2023); -- thunderstrike
- REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2024); -- tourbillion
- REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2026); -- fossilizing_breath
- REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu', 9702, 2027); -- plague_swipe
- 
---- 9708 Shedu execute window (adds Fulmination at <=37% HP, retail Khimaira gate)
-+-- 9708 Shedu execute window (adds Fulmination at <=37% HP)
- REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu_LowHP', 9708, 2022); -- tenebrous_mist
- REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu_LowHP', 9708, 2023); -- thunderstrike
- REPLACE INTO `mob_skill_lists` VALUES ('UW_Shedu_LowHP', 9708, 2024); -- tourbillion
-diff --git a/scripts/actions/mobskills/fossilizing_breath.lua b/scripts/actions/mobskills/fossilizing_breath.lua
-index 19a02ca964..fdfd42bfa5 100644
---- a/scripts/actions/mobskills/fossilizing_breath.lua
-+++ b/scripts/actions/mobskills/fossilizing_breath.lua
-@@ -13,7 +13,8 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
- end
- 
- mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
--    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.PETRIFICATION, 1, 0, 60))
-+    local duration = mob:getLocalVar('UW_Shedu') == 1 and 10 or 60
-+    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.PETRIFICATION, 1, 0, duration))
- 
-     return xi.effect.PETRIFICATION
- end
-diff --git a/scripts/actions/mobskills/fulmination.lua b/scripts/actions/mobskills/fulmination.lua
-index 457955bdcf..f00fb721a0 100644
---- a/scripts/actions/mobskills/fulmination.lua
-+++ b/scripts/actions/mobskills/fulmination.lua
-@@ -21,6 +21,9 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
-     params.shadowBehavior = xi.mobskills.shadowBehavior.WIPE_SHADOWS
- 
-     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
-+    if mob:getLocalVar('UW_Shedu') == 1 then
-+        info.damage = math.floor(info.damage / 2)
-+    end
- 
-     if xi.mobskills.processDamage(mob, target, skill, action, info) then
-         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
-diff --git a/scripts/commands/shop.lua b/scripts/commands/shop.lua
-index 4403e2d29e..b3e0443c00 100644
---- a/scripts/commands/shop.lua
-+++ b/scripts/commands/shop.lua
-@@ -392,6 +392,47 @@ local petStock =
-         { 21494, 1000 },  -- Wetlands Broth     -- utility jug
-     },
- 
-+    -- Additional Call Beast / Bestial Loyalty items. Kept on separate pages:
-+    -- a client shop window supports a maximum of 16 entries.
-+    jugsAdvanced =
-+    {
-+        { 17900, 1000 },  -- Cloudy Wheat Broth
-+        { 17903, 1000 },  -- Shadowy Broth
-+        { 21447, 1000 },  -- Crumbly Soil
-+        { 21470, 1000 },  -- Decaying Broth
-+        { 21471, 1000 },  -- Putrescent Broth
-+        { 21451, 1000 },  -- Bug-Ridden Broth
-+        { 21466, 1000 },  -- Frizzante Broth
-+        { 21467, 1000 },  -- Spumante Broth
-+        { 17912, 1000 },  -- Fizzy Broth
-+        { 21492, 1000 },  -- Insipid Broth
-+        { 21448, 1000 },  -- Pale Sap
-+        { 21438, 1000 },  -- Poisonous Broth
-+        { 21439, 1000 },  -- Venomous Broth
-+        { 21488, 1000 },  -- Pristine Sap
-+        { 21489, 1000 },  -- Truly Pristine Sap
-+        { 17913, 1000 },  -- Saline Broth
-+    },
-+
-+    jugsSpecialist =
-+    {
-+        { 21464, 1000 },  -- Rancid Broth
-+        { 21465, 1000 },  -- Pungent Broth
-+        { 17911, 1000 },  -- Salubrious Broth
-+        { 17918, 1000 },  -- Windy Greens
-+        { 17908, 1000 },  -- Shimmering Broth
-+        { 17916, 1000 },  -- Fermented Broth
-+        { 21442, 1000 },  -- Sticky Webbing
-+        { 21443, 1000 },  -- Slimy Webbing
-+        { 17915, 1000 },  -- Viscous Broth
-+        { 17910, 1000 },  -- Translucent Broth
-+        { 21472, 1000 },  -- Turpid Broth
-+        { 21473, 1000 },  -- Feculent Broth
-+        { 17914, 1000 },  -- Wispy Broth
-+        { 21468, 1000 },  -- Zestful Sap
-+        { 21469, 1000 },  -- Gassy Sap
-+    },
-+
-     food =
-     {
-         { 17016, 500 },  -- Pet Food Alpha Biscuit
-@@ -543,9 +584,11 @@ end
- showPetMenu = function(player)
-     openMenu(player, 'Shop: Beastmaster',
-     {
--        { 'Jug Pets', function(p) openStock(p, petStock.jugs) end },
--        { 'Pet Food', function(p) openStock(p, petStock.food) end },
--        { 'Back',     function(p) showMainMenu(p) end },
-+        { 'Jug Pets I',   function(p) openStock(p, petStock.jugs) end },
-+        { 'Jug Pets II',  function(p) openStock(p, petStock.jugsAdvanced) end },
-+        { 'Jug Pets III', function(p) openStock(p, petStock.jugsSpecialist) end },
-+        { 'Pet Food',     function(p) openStock(p, petStock.food) end },
-+        { 'Back',         function(p) showMainMenu(p) end },
-     })
- end
- 
-diff --git a/scripts/globals/ambuscade.lua b/scripts/globals/ambuscade.lua
-index 7370a317c3..22e42b7799 100644
---- a/scripts/globals/ambuscade.lua
-+++ b/scripts/globals/ambuscade.lua
-@@ -15,6 +15,7 @@ xi = xi or {}
- xi.ambuscade = {}
- 
- local SYS = xi.msg.channel.SYSTEM_3
-+local HTBF_PROGRESS
- 
- -- Retail-faithful Ambuscade weapon upgrade chain (Tokko->Ajja->Eletta->Kaja->Final).
- -- LAZY-loaded on first "Weapons" menu click (see showGorpaMain), NOT at globals
-@@ -585,18 +586,19 @@ end
- -- qualified host can't smuggle unqualified party members into the fight.
- local function checkAmbuscadeEntryReqs(player)
-     local kings = player:getCharVar('HNM_King_Kills') or 0
--    local t1 = player:getCharVar('HTBF_Cleared_T1') or 0
--    local t2 = player:getCharVar('HTBF_Cleared_T2') or 0
--    local t3 = player:getCharVar('HTBF_Cleared_T3') or 0
--    if kings >= 1 and t1 >= 1 and t2 >= 1 and t3 >= 1 then
-+    if not HTBF_PROGRESS then
-+        HTBF_PROGRESS = require('modules/custom/lua/htbf_catalog').progress
-+    end
-+    local progress = HTBF_PROGRESS.get(player)
-+    if kings >= 1 and progress.tier1 and progress.tier2 and progress.tier3 then
-         return true
-     end
-     -- Concise, one-line status so the player knows exactly what's missing.
-     local missing = {}
-     if kings < 1 then missing[#missing + 1] = 'HNM King kill' end
--    if t1 < 1 then missing[#missing + 1] = 'HTBF T1' end
--    if t2 < 1 then missing[#missing + 1] = 'HTBF T2' end
--    if t3 < 1 then missing[#missing + 1] = 'HTBF T3' end
-+    if not progress.tier1 then missing[#missing + 1] = 'HTBF T1' end
-+    if not progress.tier2 then missing[#missing + 1] = 'HTBF T2' end
-+    if not progress.tier3 then missing[#missing + 1] = 'HTBF T3' end
-     player:printToPlayer(
-         '[Ambuscade] Entry requires: 1 HNM King kill + 1 HTBF clear at each of T1/T2/T3.',
-         SYS)
-diff --git a/scripts/globals/battlefield.lua b/scripts/globals/battlefield.lua
-index 8c1e05321e..40ef07cf26 100644
---- a/scripts/globals/battlefield.lua
-+++ b/scripts/globals/battlefield.lua
-@@ -540,12 +540,14 @@ function Battlefield:register()
-     end
- 
-     if self.exitNpcs then
--        local exitTrigger = self.onExitTrigger and self.onExitTrigger or Battlefield.onExitTrigger
-         for _, exitNpc in ipairs(self.exitNpcs) do
-             utils.append(zoneSection, {
-                 [exitNpc] =
-                 {
--                    onTrigger = exitTrigger,
-+                    -- Shared exits can serve several battlefield IDs. Resolve
-+                    -- the active content at trigger time instead of letting the
-+                    -- last loaded script replace every other exit handler.
-+                    onTrigger = Battlefield.onExitTrigger,
-                 }
-             })
-         end
-@@ -822,6 +824,29 @@ function Battlefield:onEntryEventUpdate(player, csid, option, npc)
-         area = self.area
-     end
- 
-+    -- Party-gated battlefields (HTBF) require every member who would be
-+    -- registered to supply the same key item. Check before creating/registering
-+    -- the instance so a missing gem cannot produce a partially joined party.
-+    if self.partyKeyItem then
-+        local zone = player:getZoneID()
-+        for _, member in pairs(player:getAlliance()) do
-+            if
-+                member:getZoneID() == zone and
-+                member:getStatus() ~= xi.status.DISAPPEAR and
-+                not member:hasStatusEffect(xi.effect.BATTLEFIELD) and
-+                not member:getBattlefield() and
-+                not member:hasKeyItem(self.partyKeyItem)
-+            then
-+                player:printToPlayer(
-+                    string.format('[HTBF] %s must hold the matching Phantom Gem before the party can enter.', member:getName()),
-+                    xi.msg.channel.SYSTEM_3)
-+                player:updateEvent(xi.battlefield.returnCode.REQS_NOT_MET)
-+                player:setLocalVar('noPosUpdate', 1)
-+                return 0
-+            end
-+        end
-+    end
-+
-     local result = player:registerBattlefield(self.battlefieldId, area, player:getID(), self)
-     local status = xi.battlefield.status.OPEN
- 
-@@ -888,6 +913,12 @@ function Battlefield:onEntryEventUpdate(player, csid, option, npc)
-             then
-                 member:copyStatusEffect(effect)
-                 member:registerBattlefield(self.battlefieldId, area, player:getID(), self)
-+                -- The registrant's requiredKeyItems are consumed by the engine
-+                -- during registerBattlefield. Party members are attached later,
-+                -- so consume exactly one matching gem from each of them here.
-+                if self.partyKeyItem then
-+                    member:delKeyItem(self.partyKeyItem)
-+                end
-             end
-         end
-     end
-@@ -934,7 +965,13 @@ function Battlefield:onEventFinishWin(player, csid, option, npc)
- end
- 
- function Battlefield.onExitTrigger(player, npc)
--    if player:getBattlefield() then
-+    local battlefield = player:getBattlefield()
-+    if battlefield then
-+        local content = xi.battlefield.contents[battlefield:getID()]
-+        local customExit = content and rawget(content, 'onExitTrigger')
-+        if customExit and customExit ~= Battlefield.onExitTrigger then
-+            return customExit(content, player, npc)
-+        end
-         return Battlefield:progressCutscene(32003)
-     end
- end
-diff --git a/scripts/globals/dynamis_divergence.lua b/scripts/globals/dynamis_divergence.lua
-index d541eadda9..d5de1d615b 100644
---- a/scripts/globals/dynamis_divergence.lua
-+++ b/scripts/globals/dynamis_divergence.lua
-@@ -647,7 +647,7 @@ xi.divergence.bossMechCfgs =
-             { hp = 50, action = 'dispel', count = 2, msg = 'Evincing Idol pulses -- your blessings are banished!' },
-         },
-     },
--    -- Fii Pexu the Eternal -- Fomor immortal mega-boss. Stance + terror + drain + phases.
-+    -- Fii Pexu the Eternal -- Yagudo THF mega-boss. Stance + terror + drain + phases.
-     [17990606] =
-     {
-         name            = 'Fii Pexu the Eternal',
-@@ -659,7 +659,7 @@ xi.divergence.bossMechCfgs =
-         } },
-         drain  = { periodSec = 10, healPct = 0.25 },
-         cc     = { periodSec = 28, effect = xi.effect.TERROR, power = 1, dur = 3, msg = 'Fii Pexu\'s eternal gaze pins you in dread!' },
--        enrage = { sec = 390, att = 2750, haste = 100, msg = 'Fii Pexu the Eternal draws on the endless well of Fomor rage!' },
-+        enrage = { sec = 390, att = 2750, haste = 100, msg = 'Fii Pexu the Eternal draws on an endless well of Yagudo rage!' },
-         phases =
-         {
-             { hp = 60, action = 'fury',   att = 2200, haste = 90, msg = 'Fii Pexu shrugs off the wound and comes on faster!' },
-diff --git a/scripts/tests/systems/htbf_integrity.lua b/scripts/tests/systems/htbf_integrity.lua
-index f88e0723da..f2e9f951b0 100644
---- a/scripts/tests/systems/htbf_integrity.lua
-+++ b/scripts/tests/systems/htbf_integrity.lua
-@@ -145,13 +145,37 @@ describe('HTBF catalog integrity and balance', function()
-     end)
- 
-     it('uses dedicated HTBF enemies for the reported fights', function()
--        assert(catalog.fights.trial_by_earth.mobs[1] == 'Titan_Prime_HTBF')
-+        assert(catalog.fights.trial_by_earth.mobs[1] == 'Titan_Prime_TBE')
-         assert(catalog.fights.warriors_path.reuseBaseId == nil)
-         assert(type(catalog.fights.warriors_path.groupsForTier) == 'function')
-         assert(catalog.fights.one_to_be_feared.reuseBaseId == nil)
-         assert(type(catalog.fights.one_to_be_feared.groupsForTier) == 'function')
-     end)
- 
-+    it('uses non-overlapping Sealion tier pools and dedicated Ark menu rows', function()
-+        local feared = catalog.fights.one_to_be_feared
-+        for tier = 1, 3 do
-+            local groups = feared.groupsForTier(tier)
-+            local omega = groups[1].mobIds[1][1]
-+            local ultima = groups[2].mobIds[1][1]
-+            assert(ultima == omega + 1)
-+            if tier > 1 then
-+                assert(omega - feared.groupsForTier(tier - 1)[1].mobIds[1][1] == 30)
-+            end
-+        end
-+
-+        for index = 1, 5 do
-+            assert(catalog.fights['ark_angels_' .. index].baseIndex == 12)
-+        end
-+        assert(catalog.fights.divine_might.baseIndex == 16)
-+    end)
-+
-+    it('exposes one progression contract for final proving and tier clears', function()
-+        assert(catalog.progress.tierVar == 'HTBF_Cleared_T')
-+        assert(catalog.progress.finalDoneVar == 'HTBF_FinalTest_Done')
-+        assert(catalog.fights.trial_by_earth.mobs[1] == 'Titan_Prime_TBE')
-+    end)
-+
-     it('keeps Dawn durable without the generic epic defense wall', function()
-         local dawn = catalog.fights.dawn.tierScaleOverride
-         assert(dawn[1].minHp == 1500000)
-diff --git a/scripts/tests/systems/hunting_league_regen.lua b/scripts/tests/systems/hunting_league_regen.lua
-index 9458c766da..963801303e 100644
---- a/scripts/tests/systems/hunting_league_regen.lua
-+++ b/scripts/tests/systems/hunting_league_regen.lua
-@@ -2,6 +2,15 @@ local catalog   = require('modules/custom/lua/hunting_league_catalog')
- local mechanics = require('modules/custom/lua/mob_mechanics_library')
- 
- describe('Hunting League damage-ceiling regen balance', function()
-+    it('uses the Lv99 hunt baseline and reserves Lv150 for Shinryu', function()
-+        for _, tier in ipairs(catalog.tiers) do
-+            for _, mob in ipairs(tier.mobs) do
-+                local expected = mob.groupId == 11369 and 150 or 99
-+                assert(mob.minLv == expected and mob.maxLv == expected)
-+            end
-+        end
-+    end)
-+
-     it('uses reduced flat regen by rank', function()
-         local expectedByTier = { 12, 24, 40, 70, 120 }
- 
-diff --git a/scripts/tests/systems/unity_wanted.lua b/scripts/tests/systems/unity_wanted.lua
-index 8794ef6dd5..d8f4ae84d2 100644
---- a/scripts/tests/systems/unity_wanted.lua
-+++ b/scripts/tests/systems/unity_wanted.lua
-@@ -104,7 +104,7 @@ describe('Unity Wanted encounter invariants', function()
-         assert(t3.regain > t2.regain)
-     end)
- 
--    it('slows Shedu TP cadence and gates Fulmination to the execute window', function()
-+    it('keeps Shedu execute pressure bounded for solo/trust play', function()
-         local shedu
-         for _, nm in ipairs(catalog.nms) do
-             if nm.name == 'Shedu' then
-diff --git a/scripts/zones/Empyreal_Paradox/mobs/Promathia_2.lua b/scripts/zones/Empyreal_Paradox/mobs/Promathia_2.lua
-index 5b6ec5ff65..21826013a1 100644
---- a/scripts/zones/Empyreal_Paradox/mobs/Promathia_2.lua
-+++ b/scripts/zones/Empyreal_Paradox/mobs/Promathia_2.lua
-@@ -115,6 +115,32 @@ entity.onMobMobskillChoose = function(mob, target, skillId)
-     return tpList[math.random(#tpList)]
- end
- 
-+entity.onMobWeaponSkill = function(mob, target, skill)
-+    local battlefield = mob:getBattlefield()
-+    if not battlefield or battlefield:getLocalVar('HTBF') ~= 1 then
++local function creditWeaponskillKill(mob, player, wsId)
++    if
++        not wsId or
++        wsId <= 0 or
++        player:isDead() or
++        not player:checkKillCredit(mob) or
++        mob:getLocalVar('LWP_WsCreditedPlayer') == player:getID()
++    then
 +        return
 +    end
 +
-+    local skillId = skill:getID()
-+    if
-+        skillId == xi.mobSkill.WHEEL_OF_IMPREGNABILITY or
-+        skillId == xi.mobSkill.BASTION_OF_TWILIGHT
-+    then
-+        -- Retail's phase shield is driven by a mission-length state. In the
-+        -- repeatable HTBF it must expire even if the next HP breakpoint is not
-+        -- crossed, otherwise physical or magical jobs can be locked out.
-+        mob:timer(12000, function(mobArg)
-+            mobArg:delStatusEffect(xi.effect.PHYSICAL_SHIELD)
-+            mobArg:delStatusEffect(xi.effect.MAGIC_SHIELD)
-+        end)
-+    elseif skillId == xi.mobSkill.WINDS_OF_OBLIVION and target then
-+        -- Preserve the move while keeping its HTBF-only solo penalty bounded.
-+        target:timer(15000, function(targetArg)
-+            targetArg:delStatusEffect(xi.effect.AMNESIA)
-+        end)
++    local credited = false
++    for _, entry in ipairs(activeEntries(player)) do
++        local chapter = C.chapter(player, entry)
++        local requirement = entry.chapters[chapter]
++        if
++            chapter <= 3 and
++            (requirement.kind == 'ws_kills' or requirement.kind == 'named_ws_kills') and
++            wsId == entry.wsId and
++            equippedForChapter(player, entry, chapter) and
++            player:getLocalVar('LWP_SnapEntry') == entry.index and
++            player:getLocalVar('LWP_SnapTarget') == mob:getID() and
++            player:getLocalVar('LWP_SnapWS') == entry.wsId and
++            player:getLocalVar('LWP_SnapPass') == 1 and
++            targetEligible(player, mob, entry, chapter)
++        then
++            markProgress(player, entry, chapter, displayName(mob))
++            credited = true
++        end
++    end
++
++    if credited then
++        -- DEFEATED_MOB and WEAPONSKILL_USE can arrive in either order. Mark the
++        -- dead mob so both event paths cannot award the same killing blow.
++        mob:setLocalVar('LWP_WsCreditedPlayer', player:getID())
 +    end
 +end
 +
- entity.onMobDespawn = function(mob)
-     mob:removeListener('PROMY_SKILL_MSG')
- end
-diff --git a/scripts/zones/Sealions_Den/mobs/Cherukiki.lua b/scripts/zones/Sealions_Den/mobs/Cherukiki.lua
-index 2949d9f3b2..98fbb3aff7 100644
---- a/scripts/zones/Sealions_Den/mobs/Cherukiki.lua
-+++ b/scripts/zones/Sealions_Den/mobs/Cherukiki.lua
-@@ -43,8 +43,6 @@ entity.onMobFight = function(mob, target)
-         return
+ local function setSupportReady(player, entry, chapter, target)
+     local sameTarget = player:getLocalVar('LWP_SupportEntry') == entry.index
+         and player:getLocalVar('LWP_SupportChapter') == chapter
+@@ -250,61 +288,18 @@ local function onDefeatedMob(mob, player, opt)
+         player:setLocalVar('LWP_SupportTarget', 0)
      end
  
--    local bfID = battlefield:getArea()
+-    -- The engine's isWeaponSkillKill flag can be false for a multi-hit WS or
+-    -- skillchain whose final action packet is resolved as a follow-up hit.
+-    -- WEAPONSKILL_USE observes the completed action and records a fallback only
+-    -- when that exact action already reduced this exact target to zero HP.
+-    -- This is deliberately not a time window: a post-WS auto-attack cannot
+-    -- inherit credit because it never sets LWP_ConfirmedWsKillTarget.
+-    local confirmedKill =
+-        player:getLocalVar('LWP_ConfirmedWsKillTarget') == mob:getID() and
+-        player:getLocalVar('LWP_ConfirmedWsKillWS') > 0
+-    local wsId = opt.weaponskillUsed
+-    local wsDamage = opt.weaponskillDamage
+-    if confirmedKill then
+-        wsId = player:getLocalVar('LWP_ConfirmedWsKillWS')
+-        wsDamage = player:getLocalVar('LWP_ConfirmedWsKillDamage')
+-    end
+-    player:setLocalVar('LWP_ConfirmedWsKillTarget', 0)
+-    player:setLocalVar('LWP_ConfirmedWsKillWS', 0)
+-    player:setLocalVar('LWP_ConfirmedWsKillDamage', 0)
 -
-     local changetime = mob:getLocalVar('changetime')
-     local battletime = mob:getBattleTime()
-     if battlefield:getLocalVar('fireworks') == 1 then
-@@ -56,7 +54,11 @@ entity.onMobFight = function(mob, target)
+-    if not opt.isKiller and not confirmedKill then return end
+-    if not opt.isWeaponSkillKill and not confirmedKill then return end
+-    if not wsId or not wsDamage or wsDamage <= 0 then return end
+-    if player:isDead() or not player:checkKillCredit(mob) then return end
+-
+-    for _, entry in ipairs(activeEntries(player)) do
+-        local chapter = C.chapter(player, entry)
+-        local requirement = entry.chapters[chapter]
+-        if
+-            chapter <= 3 and
+-            (requirement.kind == 'ws_kills' or requirement.kind == 'named_ws_kills') and
+-            wsId == entry.wsId and
+-            equippedForChapter(player, entry, chapter) and
+-            player:getLocalVar('LWP_SnapEntry') == entry.index and
+-            player:getLocalVar('LWP_SnapTarget') == mob:getID() and
+-            player:getLocalVar('LWP_SnapWS') == entry.wsId and
+-            player:getLocalVar('LWP_SnapPass') == 1 and
+-            (not entry.archetypeRule.minDamage or
+-                wsDamage >= entry.archetypeRule.minDamage) and
+-            targetEligible(player, mob, entry, chapter)
+-        then
+-            markProgress(player, entry, chapter, displayName(mob))
+-        end
+-    end
++    if not opt.isKiller or not opt.isWeaponSkillKill then return end
++    creditWeaponskillKill(mob, player, opt.weaponskillUsed)
+ end
+ 
+ local function onWeaponskill(attacker, target, skill, tp, action, damage)
+     if not attacker or not target or target:getObjType() ~= xi.objType.MOB then return end
+     local wsId = skill:getID()
+-    -- Capture only a completed weaponskill that has already killed the target.
+-    -- This is consumed by onDefeatedMob as a narrowly-scoped fallback when the
+-    -- core death event loses its WS attribution during multi-hit resolution.
+-    if target:getHP() <= 0 and damage and damage > 0 then
+-        attacker:setLocalVar('LWP_ConfirmedWsKillTarget', target:getID())
+-        attacker:setLocalVar('LWP_ConfirmedWsKillWS', wsId)
+-        attacker:setLocalVar('LWP_ConfirmedWsKillDamage', damage)
++    -- The core death metadata can lose attribution on multi-hit weaponskills.
++    -- A completed WS that has reduced its exact target to zero is independently
++    -- sufficient; the shared helper deduplicates this against DEFEATED_MOB.
++    if target:getHP() <= 0 then
++        creditWeaponskillKill(target, attacker, wsId)
+     end
+     for _, entry in ipairs(activeEntries(attacker)) do
+         local chapter = C.chapter(attacker, entry)
+@@ -443,7 +438,7 @@ local function snapshotKillRule(attacker, target, wsId, slot, tp)
+             attacker:setLocalVar('LWP_SnapTarget', target:getID())
+             attacker:setLocalVar('LWP_SnapWS', wsId)
+             attacker:setLocalVar('LWP_SnapPass',
+-                C.archetypePass(attacker, target, entry.archetypeRule, tp, nil, true) and 1 or 0)
++                C.archetypePass(attacker, target, entry.archetypeRule, tp) and 1 or 0)
+             return
          end
      end
- 
--    local tenzenObj = GetMobByID(ID.mob.TENZEN + (bfID - 1))
-+    -- Cherukiki is always the third companion after Tenzen in both the
-+    -- mission and HTBF entity layouts. Resolving relative to her own ID keeps
-+    -- the healing logic inside the current HTBF tier instead of targeting the
-+    -- mission pool.
-+    local tenzenObj = GetMobByID(mob:getID() - 3)
-     if
-         tenzenObj and
-         tenzenObj:getHPP() <= 70 and
-diff --git a/scripts/zones/Sealions_Den/mobs/Tenzen.lua b/scripts/zones/Sealions_Den/mobs/Tenzen.lua
-index 97ae4cec0f..de79674922 100644
---- a/scripts/zones/Sealions_Den/mobs/Tenzen.lua
-+++ b/scripts/zones/Sealions_Den/mobs/Tenzen.lua
-@@ -54,11 +54,11 @@ local enrageMeikyo =
-     [4] = { xi.mobSkill.COSMIC_ELUCIDATION },
- }
- 
--local taruOffsets =
-+local taruVictoryOffsets =
- {
--    [ID.mob.MAKKI_CHEBUKKI] = ID.text.MAKKI_CHEBUKKI_OFFSET,
--    [ID.mob.KUKKI_CHEBUKKI] = ID.text.KUKKI_CHEBUKKI_OFFSET,
--    [ID.mob.CHERUKIKI     ] = ID.text.CHERUKIKI_OFFSET,
-+    ID.text.MAKKI_CHEBUKKI_OFFSET,
-+    ID.text.KUKKI_CHEBUKKI_OFFSET,
-+    ID.text.CHERUKIKI_OFFSET,
- }
- 
- local function setupForm(mob, newForm)
-@@ -136,6 +136,7 @@ entity.onMobSpawn = function(mob)
-     mob:setLocalVar('[Tenzen]LastWeaponskill', 0)
-     mob:setLocalVar('[Tenzen]EnrageHP', math.random(25, 30))
-     mob:setLocalVar('[Tenzen]MeikyoHP', math.random(60, 80))
-+    mob:setLocalVar('[Tenzen]Victory', 0)
+@@ -508,9 +503,9 @@ function P.archetypeText(rule)
+     if rule.key == 'h2h_hit_chain' then return string.format('use at %d+ TP', rule.minTp) end
+     if rule.key == 'dagger_positional' then return 'strike from behind' end
+     if rule.key == 'sword_tactical' then return string.format('use at %d+ TP', rule.minTp) end
+-    if rule.key == 'great_sword_burst_survival' then return string.format('deal at least %d WS damage', rule.minDamage) end
++    if rule.key == 'great_sword_burst_survival' then return 'deliver the weaponskill killing blow' end
+     if rule.key == 'axe_companion' then return 'keep a pet alive or Berserk active' end
+-    if rule.key == 'great_axe_armor' then return string.format('deal at least %d WS damage', rule.minDamage) end
++    if rule.key == 'great_axe_armor' then return 'deliver the weaponskill killing blow' end
+     if rule.key == 'scythe_resource' then return string.format('remain at or below %d%% HP', rule.maxHpp) end
+     if rule.key == 'polearm_aerial' then return string.format('keep wyvern alive and use at %d+ TP', rule.minTp) end
+     if rule.key == 'katana_shadows' then return 'retain at least one copy-image shadow' end
+diff --git a/modules/custom/lua/legendary_pilgrimage_catalog.lua b/modules/custom/lua/legendary_pilgrimage_catalog.lua
+index 90c66175fd..2932ec78a2 100644
+--- a/modules/custom/lua/legendary_pilgrimage_catalog.lua
++++ b/modules/custom/lua/legendary_pilgrimage_catalog.lua
+@@ -151,9 +151,9 @@ local function archetypeRule(weaponType, index)
+         h2h_hit_chain               = { minTp = 1200 + ((index - 1) % 3) * 200 },
+         dagger_positional           = { behind = true },
+         sword_tactical              = { minTp = 1600 + ((index - 1) % 3) * 200 },
+-        great_sword_burst_survival  = { minDamage = 40000 + ((index - 1) % 3) * 5000 },
++        great_sword_burst_survival  = {},
+         axe_companion               = { petOrBerserk = true },
+-        great_axe_armor             = { minDamage = 50000 + ((index - 1) % 3) * 5000 },
++        great_axe_armor             = {},
+         scythe_resource             = { maxHpp = 60 - ((index - 1) % 3) * 5 },
+         polearm_aerial              = { petAlive = true, minTp = 1200 + ((index - 1) % 3) * 200 },
+         katana_shadows              = { shadows = true },
+@@ -168,7 +168,7 @@ local function archetypeRule(weaponType, index)
+     return rule
  end
  
- entity.onMobEngage = function(mob, target)
-@@ -248,15 +249,26 @@ entity.onMobFight = function(mob, target)
+-function C.archetypePass(attacker, target, rule, tp, damage, ignoreDamage)
++function C.archetypePass(attacker, target, rule, tp)
+     local function livingPet()
+         local pet = attacker:getPet()
+         return pet ~= nil and pet:getHP() > 0
+@@ -181,7 +181,6 @@ function C.archetypePass(attacker, target, rule, tp, damage, ignoreDamage)
+     end
  
-     -- Win battle.
-     if mobHPP <= 15 then
-+        if mob:getLocalVar('[Tenzen]Victory') == 1 then
-+            return
-+        end
-+        mob:setLocalVar('[Tenzen]Victory', 1)
-+        mob:setAutoAttackEnabled(false)
-+        mob:setMobAbilityEnabled(false)
-+        mob:disengage()
-         mob:setAnimationSub(forms.SHEATHED)
-         mob:showText(mob, ID.text.TENZEN_MSG_OFFSET + 2)
+     if rule.minTp and tp < rule.minTp then return false end
+-    if not ignoreDamage and rule.minDamage and (not damage or damage < rule.minDamage) then return false end
+     if rule.behind and not attacker:isBehind(target, 48) then return false end
+     if rule.maxHpp and attacker:getHPP() > rule.maxHpp then return false end
+     if rule.maxMpp and attacker:getMPP() > rule.maxMpp then return false end
+diff --git a/modules/custom/sql/bst_jug_restore_ready_abilities.sql b/modules/custom/sql/bst_jug_restore_ready_abilities.sql
+index ce501631b6..d52b8bbd56 100644
+--- a/modules/custom/sql/bst_jug_restore_ready_abilities.sql
++++ b/modules/custom/sql/bst_jug_restore_ready_abilities.sql
+@@ -89,17 +89,17 @@ INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_BeetleHi',2097,3878);
+ INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_BeetleHi',2097,3879);
+ INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_BeetleHi',2097,3955);
  
-         local mobId = mob:getID()
--        for taruId = mobId + 1, mobId + 3 do
-+        local battlefield = mob:getBattlefield()
-+        if battlefield then battlefield:setLocalVar('fireworks', 1) end
-+        for offset, taruId in ipairs({ mobId + 1, mobId + 2, mobId + 3 }) do
-             local taruMob = GetMobByID(taruId)
--            local offset  = taruOffsets[taruId]
-             if taruMob then
--                taruMob:showText(taruMob, offset + 5)
-+                taruMob:setAutoAttackEnabled(false)
-+                taruMob:setMobAbilityEnabled(false)
-+                taruMob:disengage()
-+                taruMob:showText(taruMob, taruVictoryOffsets[offset] + 5)
+--- Toad (Brave Hero Glenn) shipped with skill_list_id=0.
++-- Retail toads Slippery Silas and Brave Hero Glenn intentionally have no
++-- Ready moves. Undo the previous Pugil/Toad assignments.
++UPDATE `mob_pools` SET `skill_list_id` = 0 WHERE `poolid` IN (4639, 7548);
++
++-- The previous Glenn workaround reused list 2098, which belongs to Balamor's
++-- melee attacks. Restore that trust list after removing the stray Jug_Toad rows.
+ DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 2098;
+ INSERT INTO `mob_skill_lists` VALUES
+-('Jug_Toad',2098,3868), -- Frogkick
+-('Jug_Toad',2098,3926); -- Water Wall
+-UPDATE `mob_pools` SET `skill_list_id` = 2098 WHERE `poolid` = 7548;
+-
+--- Pugil (Slippery Silas) also shipped with no skill list. Share the complete
+--- Jug_Pugil Ready kit so both the auto-Ready controller and player menu have
+--- working moves.
+-UPDATE `mob_pools` SET `skill_list_id` = 756 WHERE `poolid` = 4639;
++('TRUST_Balamor_Melee',2098,3614),
++('TRUST_Balamor_Melee',2098,3615),
++('TRUST_Balamor_Melee',2098,3616);
+ 
+ -- Zealous Snort: self/master buff, not enemy target.
+ UPDATE `pet_skills`
+diff --git a/modules/custom/sql/jugpet_ready_moves.sql b/modules/custom/sql/jugpet_ready_moves.sql
+index e329a1e304..f30dacf01e 100644
+--- a/modules/custom/sql/jugpet_ready_moves.sql
++++ b/modules/custom/sql/jugpet_ready_moves.sql
+@@ -1,62 +1,82 @@
+ -- =====================================================================
+ -- jugpet_ready_moves.sql
+--- Give every BST jug pet a working, thematically-correct DAMAGING Ready move.
+ --
+--- THE BUG (found via tools/audit_jugpet_skills.py): a jug pet's Ready/Sic
+--- moves come from its pool's mob_skill_list (CMobController::MobSkill picks a
+--- random valid skill from it -- the same path BstJugPetOverhaul's auto-ready
+--- taps via useMobAbility()). But many Jug_* lists only reference OLD duplicate
+--- skill ids that were long ago commented out of mob_skills.sql (e.g. 697
+--- 'berserk', 700-706 job abilities, 756-760 'howl'). Those dangling rows are
+--- deleted at boot by fix_dangling_mob_skills.sql, leaving 16 families with
+--- either NO working move at all, or only self-buffs (perfect_dodge, invincible,
+--- charm, howl...) -- so they could never DD on auto-ready.
++-- Final authoritative repair for lists previously polluted with arbitrary
++-- enemy mob-skill IDs. The Ready menu is defined by pet_skills; runtime lists
++-- use those rows' executable mob_skill_id values. Do not add "thematic" enemy
++-- moves here: overlapping numeric namespaces caused Courier Carrie to expose
++-- only Mega Scissors and produced unrelated commands on other families.
+ --
+--- THE FIX: the real, thematically-correct retail moves already exist in
+--- mob_skills AND already have scripts in scripts/actions/mobskills/ -- the
+--- lists just never pointed at them. Wire each broken family to its real moves
+--- (mostly enemy-damage, with a flavour buff/debuff or two). Two Chapuli
+--- signatures (sensilla_blades 2946, tegmina_buffet 2947) had no script engine-
+--- wide; those are authored alongside this file.
+---
+--- petid->pool->skill_list verified live; every id below is ACTIVE in
+--- mob_skills and has a mobskill script (audited). Pets melee at endgame ATT
+--- (BstJugPetOverhaul), so these moves land for real, capped damage.
+---
+--- Idempotent (INSERT IGNORE; PK = skill_list_id+mob_skill_id). mob skill lists
+--- are cached into mob data at zone load / boot, so APPLY + RESTART the map.
++-- This file runs after bst_jug_restore_ready_abilities.sql and deliberately
++-- rebuilds every list touched by the old augmentation file. Idempotent.
+ -- =====================================================================
+ 
+--- ΓöÇΓöÇ NONE families (had zero working Ready move) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+--- Jug_Fly (742): Somersault, Cursed Sphere, Drainkiss
+-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Fly',742,318),('Jug_Fly',742,659),('Jug_Fly',742,417);
+--- Jug_Funguar (740): Dark Spore (dmg+poison), Numbing Noise (paralyze), Frightful Roar (def down)
+-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Funguar',740,315),('Jug_Funguar',740,517),('Jug_Funguar',740,501);
+--- Jug_Apkallu (755): Wing Slap, Beak Lunge, Spinning Top
+-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Apkallu',755,1714),('Jug_Apkallu',755,1715),('Jug_Apkallu',755,365);
+--- Jug_Pugil (756): Splash Breath, Aqua Ball, Screwdriver
+-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Pugil',756,451),('Jug_Pugil',756,450),('Jug_Pugil',756,452);
+--- Jug_Colibri (763): Pecking Flurry, Back Heel, Helldive
+-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Colibri',763,1699),('Jug_Colibri',763,576),('Jug_Colibri',763,622);
+--- Jug_Mosquito (2096): Proboscis (HP drain), Toxic Spit (poison)
+-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Mosquito',2096,1953),('Jug_Mosquito',2096,515);
+--- Jug_Cactuar (739): 1000 Needles, Needleshot
+-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Cactuar',739,322),('Jug_Cactuar',739,321);
++DELETE FROM `mob_skill_lists`
++WHERE `skill_list_id` IN
++(
++    737, 738, 739, 740, 741, 742, 747, 755,
++    756, 757, 758, 759, 762, 763, 2096
++);
+ 
+--- ΓöÇΓöÇ BUFFS-ONLY families (only self-buffs worked) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+--- Jug_Crab (738): Big Scissors, Spikeball, Metallic Body (keeps perfect_dodge/invincible/etc.)
+-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Crab',738,444),('Jug_Crab',738,789),('Jug_Crab',738,448);
+--- Jug_Sheep (737): Lamb Chop, Sheep Charge, Rage (atk up)
+-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Sheep',737,260),('Jug_Sheep',737,262),('Jug_Sheep',737,261);
+--- Jug_Beetle (741): Rhino Attack, Power Attack, Magnetite Cloud
+-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Beetle',741,340),('Jug_Beetle',741,3875),('Jug_Beetle',741,791);
+--- Jug_Raaz (759): Sudden Lunge (dmg+stun), Tail Blow, Wild Horn
+-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Raaz',759,2178),('Jug_Raaz',759,366),('Jug_Raaz',759,628);
+--- Jug_Acuex (762): Vampiric Lash (dmg+drain), Somersault
+-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Acuex',762,317),('Jug_Acuex',762,318);
+--- Jug_Tulfaire (758): Tail Blow, Helldive, Blackout (blind)
+-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Tulfaire',758,366),('Jug_Tulfaire',758,622),('Jug_Tulfaire',758,2952);
+--- Jug_Chapuli (757): Diffusion Ray plus the canonical pet_skills mappings.
+-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Chapuli',757,2054),('Jug_Chapuli',757,3927),('Jug_Chapuli',757,3928);
+--- Jug_Coeurl (747): Charged Whisker (thunder AoE), Blaster (dmg+paralyze), Chaotic Eye (silence)
+-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Coeurl',747,483),('Jug_Coeurl',747,652),('Jug_Coeurl',747,653);
++INSERT INTO `mob_skill_lists` VALUES
++-- Sheep
++('Jug_Sheep',737,3857), -- Lamb Chop
++('Jug_Sheep',737,3858), -- Rage
++('Jug_Sheep',737,3859), -- Sheep Charge
++('Jug_Sheep',737,3860), -- Sheep Song
++-- Crab: Courier Carrie / Crab Familiar
++('Jug_Crab',738,3861), -- Bubble Shower
++('Jug_Crab',738,3862), -- Bubble Curtain
++('Jug_Crab',738,3863), -- Big Scissors
++('Jug_Crab',738,3864), -- Scissor Guard
++('Jug_Crab',738,3865), -- Metallic Body
++-- Cactuar
++('Jug_Cactuar',739,3866), -- Needleshot
++('Jug_Cactuar',739,3867), -- 1000 Needles
++-- Funguar
++('Jug_Funguar',740,3868), -- Frogkick
++('Jug_Funguar',740,3869), -- Spore
++('Jug_Funguar',740,3870), -- Queasyshroom
++('Jug_Funguar',740,3871), -- Numbshroom
++('Jug_Funguar',740,3872), -- Shakeshroom
++('Jug_Funguar',740,3873), -- Silence Gas
++('Jug_Funguar',740,3874), -- Dark Spore
++-- Beetle
++('Jug_Beetle',741,3875), -- Power Attack
++('Jug_Beetle',741,3876), -- Hi-Freq Field
++('Jug_Beetle',741,3877), -- Rhino Attack
++('Jug_Beetle',741,3878), -- Rhino Guard
++('Jug_Beetle',741,3879), -- Spoil
++-- Fly
++('Jug_Fly',742,3880), -- Cursed Sphere
++('Jug_Fly',742,3881), -- Venom
++('Jug_Fly',742,3938), -- Somersault
++-- Coeurl / Lynx
++('Jug_Coeurl',747,3898), -- Chaotic Eye
++('Jug_Coeurl',747,3899), -- Blaster
++('Jug_Coeurl',747,3912), -- Charged Whisker
++-- Apkallu
++('Jug_Apkallu',755,3922), -- Wing Slap
++('Jug_Apkallu',755,3923), -- Beak Lunge
++-- Pugil
++('Jug_Pugil',756,3924), -- Intimidate
++('Jug_Pugil',756,3925), -- Recoil Dive
++('Jug_Pugil',756,3926), -- Water Wall
++-- Chapuli
++('Jug_Chapuli',757,3927), -- Sensilla Blades
++('Jug_Chapuli',757,3928), -- Tegmina Buffet
++-- Tulfaire
++('Jug_Tulfaire',758,3929), -- Molting Plumage
++('Jug_Tulfaire',758,3930), -- Swooping Frenzy
++('Jug_Tulfaire',758,3933), -- Pentapeck
++-- Raaz
++('Jug_Raaz',759,3931), -- Sweeping Gouge
++('Jug_Raaz',759,3932), -- Zealous Snort
++-- Acuex
++('Jug_Acuex',762,3939), -- Foul Waters
++('Jug_Acuex',762,3940), -- Pestilent Plume
++-- Colibri
++('Jug_Colibri',763,3941), -- Pecking Flurry
++-- Mosquito
++('Jug_Mosquito',2096,3945), -- Infected Leech
++('Jug_Mosquito',2096,3946); -- Gloom Spray
+diff --git a/scripts/globals/battlefield.lua b/scripts/globals/battlefield.lua
+index 40ef07cf26..bd0b944b3c 100644
+--- a/scripts/globals/battlefield.lua
++++ b/scripts/globals/battlefield.lua
+@@ -447,6 +447,7 @@ function Battlefield:new(data)
+     obj.delayToExit      = data.delayToExit or 5
+     obj.requiredItems    = data.requiredItems or {}
+     obj.requiredKeyItems = data.requiredKeyItems or {}
++    obj.partyKeyItem     = data.partyKeyItem
+     obj.lossEventParams  = data.lossEventParams or {}
+     obj.armouryCrates    = data.armouryCrates or false
+     obj.experimental     = data.experimental or false
+@@ -970,7 +971,9 @@ function Battlefield.onExitTrigger(player, npc)
+         local content = xi.battlefield.contents[battlefield:getID()]
+         local customExit = content and rawget(content, 'onExitTrigger')
+         if customExit and customExit ~= Battlefield.onExitTrigger then
+-            return customExit(content, player, npc)
++            -- Battlefield exit handlers are registered with dot syntax and
++            -- follow the NPC callback signature (player, npc).
++            return customExit(player, npc)
+         end
+         return Battlefield:progressCutscene(32003)
+     end
+diff --git a/scripts/tests/systems/legendary_weapon_pilgrimage.lua b/scripts/tests/systems/legendary_weapon_pilgrimage.lua
+index 081bcde019..d2070bc920 100644
+--- a/scripts/tests/systems/legendary_weapon_pilgrimage.lua
++++ b/scripts/tests/systems/legendary_weapon_pilgrimage.lua
+@@ -200,7 +200,7 @@ describe('Legendary Weapon Pilgrimage integrity', function()
+ 
+     it('defines an enforceable condition for every archetype profile', function()
+         local seen = {}
+-        local state = { tp = 3000, damage = 999999, behind = true, hpp = 0, mpp = 0, distance = 99, pet = true, status = true }
++        local state = { tp = 3000, behind = true, hpp = 0, mpp = 0, distance = 99, pet = true, status = true }
+         local pet = { getHP = function() return state.pet and 1 or 0 end }
+         local attacker =
+         {
+@@ -214,37 +214,37 @@ describe('Legendary Weapon Pilgrimage integrity', function()
+         for _, entry in ipairs(pilgrimage.chains) do
+             local rule = entry.archetypeRule
+             seen[rule.key] = true
+-            assert(rule.minTp or rule.minDamage or rule.behind or rule.maxHpp
++            assert(rule.key == 'great_sword_burst_survival' or rule.key == 'great_axe_armor'
++                or rule.minTp or rule.behind or rule.maxHpp
+                 or rule.maxMpp or rule.minDistance or rule.petAlive
+                 or rule.petOrBerserk or rule.shadows)
+-            assert(pilgrimage.archetypePass(attacker, {}, rule, state.tp, state.damage))
++            assert(rule.minDamage == nil)
++            assert(pilgrimage.archetypePass(attacker, {}, rule, state.tp))
+             if rule.minTp then
+-                assert(not pilgrimage.archetypePass(attacker, {}, rule, rule.minTp - 1, state.damage))
+-            elseif rule.minDamage then
+-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp, rule.minDamage - 1))
++                assert(not pilgrimage.archetypePass(attacker, {}, rule, rule.minTp - 1))
+             elseif rule.behind then
+                 state.behind = false
+-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp, state.damage))
++                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
+                 state.behind = true
+             elseif rule.maxHpp then
+                 state.hpp = rule.maxHpp + 1
+-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp, state.damage))
++                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
+                 state.hpp = 0
+             elseif rule.maxMpp then
+                 state.mpp = rule.maxMpp + 1
+-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp, state.damage))
++                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
+                 state.mpp = 0
+             elseif rule.minDistance then
+                 state.distance = rule.minDistance - 1
+-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp, state.damage))
++                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
+                 state.distance = 99
+             elseif rule.petAlive or rule.petOrBerserk then
+                 state.pet, state.status = false, false
+-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp, state.damage))
++                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
+                 state.pet, state.status = true, true
+             elseif rule.shadows then
+                 state.status = false
+-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp, state.damage))
++                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
+                 state.status = true
              end
          end
- 
-diff --git a/src/map/utils/battleutils.cpp b/src/map/utils/battleutils.cpp
-index 7747a77db2..169490975a 100644
---- a/src/map/utils/battleutils.cpp
-+++ b/src/map/utils/battleutils.cpp
-@@ -523,6 +523,23 @@ CPetSkill* GetPetSkill(uint16 SkillID)
-     }
- }
- 
-+// Jug-pet combat lists contain executable mob-skill IDs, while the client
-+// Ready menu requires the corresponding pet-skill/ability ID. Resolve the
-+// latter from the former so the same list can drive both auto-Ready combat and
-+// the player-facing command menu.
-+CPetSkill* GetPetSkillByMobSkill(uint16 MobSkillID)
-+{
-+    for (const auto& [_, petSkill] : g_PPetSkillList)
-+    {
-+        if (petSkill->getMobSkillID() == MobSkillID)
-+        {
-+            return petSkill;
-+        }
-+    }
-+
-+    return nullptr;
-+}
-+
- /************************************************************************
-  *                                                                       *
-  *  Get Mob Skills by List Id                                            *
-diff --git a/src/map/utils/battleutils.h b/src/map/utils/battleutils.h
-index a20c1362ba..d4cd62645d 100644
---- a/src/map/utils/battleutils.h
-+++ b/src/map/utils/battleutils.h
-@@ -124,6 +124,7 @@ uint16 GetMaxSkill(uint8 rank, uint8 level);
- CWeaponSkill* GetWeaponSkill(uint16 WSkillID);
- CMobSkill*    GetMobSkill(uint16 SkillID);
- CPetSkill*    GetPetSkill(uint16 SkillID);
-+CPetSkill*    GetPetSkillByMobSkill(uint16 MobSkillID);
- 
- const std::list<CWeaponSkill*>& GetWeaponSkills(uint8 skill);
- const std::vector<uint16>&      GetMobSkillList(uint16 ListID);
 diff --git a/src/map/utils/charutils.cpp b/src/map/utils/charutils.cpp
-index d294e5cc3b..1973fdb61a 100644
+index 1973fdb61a..bcc6524dcf 100644
 --- a/src/map/utils/charutils.cpp
 +++ b/src/map/utils/charutils.cpp
-@@ -3709,7 +3709,18 @@ void BuildingCharPetAbilityTable(CCharEntity* PChar, CPetEntity* PPet, uint32 Pe
-         auto skillList{ battleutils::GetMobSkillList(PPet->m_MobSkillList) };
-         for (auto&& abilityid : skillList)
-         {
--            addPetAbility(PChar, abilityid - ABILITY_HEALING_RUBY);
-+            // Jug combat lists store executable mob skill IDs for the AI and
-+            // auto-Ready loop. Convert those back to pet ability IDs for the
-+            // client Ready menu; preserve legacy lists that already store a
-+            // pet ability ID.
-+            if (auto* PPetSkill = battleutils::GetPetSkill(abilityid))
-+            {
-+                addPetAbility(PChar, PPetSkill->getID() - ABILITY_HEALING_RUBY);
-+            }
-+            else if (auto* PPetSkill = battleutils::GetPetSkillByMobSkill(abilityid))
-+            {
-+                addPetAbility(PChar, PPetSkill->getID() - ABILITY_HEALING_RUBY);
-+            }
-         }
-     }
-     PChar->pushPacket<GP_SERV_COMMAND_COMMAND_DATA>(PChar);
-==============================================================================
-commit 16cf5c895ef905122618a1fb9e239c88232794f0
-Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Sun Aug 16 17:54:08 2026 +0100
-
-    fix(relaunch/pup): stabilize automaton progression
-    
-    Prevent pet-stat modifiers from compounding on recalculation and enforce
-    companion damage caps after automaton scaling. Make maneuver WS selection
-    predictable while bounding skillchain TP holds.
-    
-    Co-authored-by: Cursor <cursoragent@cursor.com>
-
-diff --git a/modules/custom/lua/standard_magic_tuning_catalog.lua b/modules/custom/lua/standard_magic_tuning_catalog.lua
-index 91a69ff957..d7a0566461 100644
---- a/modules/custom/lua/standard_magic_tuning_catalog.lua
-+++ b/modules/custom/lua/standard_magic_tuning_catalog.lua
-@@ -112,6 +112,12 @@ function catalog.isBlueDamageEligible(caster, target, spell, params)
- end
- 
- function catalog.getDamageCap(caster)
-+    if caster:isAutomaton() then
-+        -- Automata inherit the master's companion tier, not player REMA/Prime
-+        -- spell ceilings. This matches their physical WS and ability contract.
-+        return progression.getPetDamageCap(caster:getMaster())
-+    end
-+
-     if not caster:isPC() then
-         return catalog.DAMAGE_CAP
-     end
-diff --git a/scripts/globals/automatonweaponskills.lua b/scripts/globals/automatonweaponskills.lua
-index 8abe003270..a7ea2aaa26 100644
---- a/scripts/globals/automatonweaponskills.lua
-+++ b/scripts/globals/automatonweaponskills.lua
-@@ -8,6 +8,11 @@ local standardProgression = require('modules/custom/lua/standard_ws_tuning_catal
- xi = xi or {}
- xi.autows = xi.autows or {}
- 
-+-- Keep the Legendary automaton physical boost, but apply it before the
-+-- companion ceiling. A post-cap multiplier made the advertised 79,999 cap
-+-- land as 143,998 damage.
-+local AUTOMATON_COMBAT_MULTIPLIER = 1.8
-+
- local function applyAutomatonProgression(attacker, target, damage)
-     local master = attacker:getMaster()
-     if damage <= 0 or master == nil or not master:isPC() then
-@@ -15,9 +20,9 @@ local function applyAutomatonProgression(attacker, target, damage)
-     end
- 
-     return standardProgression.applyMultiplier(
--        damage,
-+        damage * AUTOMATON_COMBAT_MULTIPLIER,
-         standardProgression.getPetDamageMultiplier(master, target),
--        standardProgression.DAMAGE_CAP)
-+        standardProgression.getPetDamageCap(master))
- end
- 
- -- params contains: ftpMod, str_wsc, dex_wsc, vit_wsc, int_wsc, mnd_wsc, critVaries, accVaries, ignoredDefense, atkmulti, kick, accBonus, weaponType, weaponDamage
-diff --git a/scripts/tests/systems/standard_magic_tuning.lua b/scripts/tests/systems/standard_magic_tuning.lua
-index 9d636598fc..a30dae81fc 100644
---- a/scripts/tests/systems/standard_magic_tuning.lua
-+++ b/scripts/tests/systems/standard_magic_tuning.lua
-@@ -101,6 +101,28 @@ describe('Level-scaled direct magic tuning', function()
-         assert(catalog.getMagicAccuracyPenalty(caster, target) == 40)
-     end)
- 
-+    it('keeps automaton nukes on companion weapon tiers', function()
-+        local function makeAutomaton(master)
-+            return
-+            {
-+                isAutomaton = function()
-+                    return true
-+                end,
-+                isPC = function()
-+                    return false
-+                end,
-+                getMaster = function()
-+                    return master
-+                end,
-+            }
-+        end
-+
-+        assert(catalog.getDamageCap(
-+            makeAutomaton(makeCaster(99, true, xi.job.PUP, { [xi.slot.MAIN] = 1 }))) == 79999)
-+        assert(catalog.getDamageCap(
-+            makeAutomaton(makeCaster(99, true, xi.job.PUP, { [xi.slot.MAIN] = 20511 }))) == 999999)
-+    end)
-+
-     it('keeps ninjutsu in a lower progression band', function()
-         local target = makeTarget(155, 120000)
-         local katon = makeSpell(
-diff --git a/scripts/tests/systems/standard_ws_tuning.lua b/scripts/tests/systems/standard_ws_tuning.lua
-index 547ac8d46f..e3bc9afe93 100644
---- a/scripts/tests/systems/standard_ws_tuning.lua
-+++ b/scripts/tests/systems/standard_ws_tuning.lua
-@@ -104,6 +104,17 @@ describe('Level-scaled ordinary weaponskill tuning', function()
-         assert(catalog.applyMultiplier(10000, 13, 79999) == 79999)
-     end)
- 
-+    it('uses companion-only caps from the master main-hand tier', function()
-+        local standard = makePlayer({ [xi.slot.MAIN] = 1 }, 99)
-+        local ambuscade = makePlayer({ [xi.slot.MAIN] = 21621 }, 99) -- Naegling
-+        local pupMythic = makePlayer({ [xi.slot.MAIN] = 20511 }, 99) -- Kenkonken
-+
-+        assert(catalog.getPetDamageCap(standard) == catalog.DAMAGE_CAP)
-+        assert(catalog.getPetDamageCap(ambuscade) == catalog.PET_AMBU_DAMAGE_CAP)
-+        assert(catalog.getPetDamageCap(pupMythic) == catalog.PET_REMA_DAMAGE_CAP)
-+        assert(catalog.applyMultiplier(200000, 1, catalog.getPetDamageCap(pupMythic)) == 200000)
-+    end)
-+
-     it('keeps the full level-99 multiplier on low-HP farming targets', function()
-         local player = makePlayer(
-             { [xi.slot.MAIN] = { id = 1, ilvl = 119, reqLvl = 99 } }, 99, 2100)
-diff --git a/src/map/ai/controllers/automaton_controller.cpp b/src/map/ai/controllers/automaton_controller.cpp
-index c829a2c16c..25a174ac4f 100644
---- a/src/map/ai/controllers/automaton_controller.cpp
-+++ b/src/map/ai/controllers/automaton_controller.cpp
-@@ -40,6 +40,33 @@
- #include "utils/petutils.h"
- #include "utils/puppetutils.h"
- 
-+namespace
-+{
-+    constexpr timer::duration AUTOMATON_SKILLCHAIN_HOLD_MAX = 12s;
-+
-+    // Explicit retail-style priority for tied maneuver counts. Unknown future
-+    // moves retain their required-skill ordering as a safe fallback.
-+    int16 GetAutomatonWsPriority(uint16 skillId, int16 fallback)
-+    {
-+        switch (skillId)
-+        {
-+            case 2744: return 500; // Armor Shatterer
-+            case 2743: return 500; // String Shredder
-+            case 2301: return 400; // Magic Mortar
-+            case 2300: return 400; // Armor Piercer
-+            case 2299: return 400; // Bone Crusher
-+            case 2067: return 300; // Knockout
-+            case 2066: return 300; // Daze
-+            case 2065: return 300; // Cannibal Blade
-+            case 1942: return 200; // Arcuballista
-+            case 1941: return 200; // String Clipper
-+            case 1940: return 100; // Chimera Ripper
-+            case 1943: return 100; // Slapstick
-+            default:   return fallback;
-+        }
-+    }
-+}
-+
- CAutomatonController::CAutomatonController(CAutomatonEntity* PPet)
- : CPetController(PPet)
- , PAutomaton(PPet)
-@@ -1516,6 +1543,7 @@ auto CAutomatonController::TryTPMove() -> bool
-         }
- 
-         int16      currentSkill     = -1;
-+        int16      currentPriority  = -1;
-         CMobSkill* PWSkill          = nullptr;
-         int8       currentManeuvers = -1;
- 
-@@ -1554,15 +1582,37 @@ auto CAutomatonController::TryTPMove() -> bool
-             }
-         }
- 
--        if (!attemptChain || (currentManeuvers == -1 && PAutomaton->PMaster && PAutomaton->PMaster->health.tp < PAutomaton->getMod(Mod::AUTO_TP_EFFICIENCY)))
-+        const bool masterIsReady = attemptChain && PAutomaton->PMaster != nullptr &&
-+            PAutomaton->PMaster->health.tp >= PAutomaton->getMod(Mod::AUTO_TP_EFFICIENCY);
-+        if (currentManeuvers == -1 && masterIsReady)
-+        {
-+            if (m_TpHoldStarted == timer::time_point{})
-+            {
-+                m_TpHoldStarted = m_Tick;
-+            }
-+
-+            // Inhibitor/Speedloader should hold for a player skillchain, but
-+            // never suppress every WS forever when the master remains at TP.
-+            if (m_Tick < m_TpHoldStarted + AUTOMATON_SKILLCHAIN_HOLD_MAX)
-+            {
-+                return false;
-+            }
-+        }
-+        else
-+        {
-+            m_TpHoldStarted = {};
-+        }
-+
-+        if (!attemptChain || currentManeuvers == -1)
-         {
-             for (auto* PSkill : validSkills)
+@@ -3713,11 +3713,11 @@ void BuildingCharPetAbilityTable(CCharEntity* PChar, CPetEntity* PPet, uint32 Pe
+             // auto-Ready loop. Convert those back to pet ability IDs for the
+             // client Ready menu; preserve legacy lists that already store a
+             // pet ability ID.
+-            if (auto* PPetSkill = battleutils::GetPetSkill(abilityid))
++            if (auto* PPetSkill = battleutils::GetPetSkillByMobSkill(abilityid))
              {
-                 int8 maneuvers = luautils::OnAutomatonAbilityCheck(PTarget, PAutomaton, PSkill);
--                if (maneuvers > -1 && (maneuvers > currentManeuvers || (maneuvers == currentManeuvers && PSkill->getParam() > currentSkill)))
-+                int16 priority = GetAutomatonWsPriority(PSkill->getID(), PSkill->getParam());
-+                if (maneuvers > -1 && (maneuvers > currentManeuvers || (maneuvers == currentManeuvers && priority > currentPriority)))
-                 {
-                     currentManeuvers = maneuvers;
--                    currentSkill     = PSkill->getParam();
-+                    currentPriority  = priority;
-                     PWSkill          = PSkill;
-                 }
+                 addPetAbility(PChar, PPetSkill->getID() - ABILITY_HEALING_RUBY);
              }
-@@ -1579,6 +1629,7 @@ auto CAutomatonController::TryTPMove() -> bool
-             return MobSkill(PTarget->targid, PWSkill->getID(), std::nullopt);
-         }
-     }
-+    m_TpHoldStarted = {};
-     return false;
- }
+-            else if (auto* PPetSkill = battleutils::GetPetSkillByMobSkill(abilityid))
++            else if (auto* PPetSkill = battleutils::GetPetSkill(abilityid))
+             {
+                 addPetAbility(PChar, PPetSkill->getID() - ABILITY_HEALING_RUBY);
+             }
+diff --git a/tools/audit_jugpet_skills.py b/tools/audit_jugpet_skills.py
+index 79d05bbfa0..faa7d54ec2 100644
+--- a/tools/audit_jugpet_skills.py
++++ b/tools/audit_jugpet_skills.py
+@@ -117,6 +117,11 @@ for r in inserts("mob_skill_lists.sql", "mob_skill_lists"):
+ pet_skill_to_mob_skill = {}
+ for r in inserts("pet_skills.sql", "pet_skills"):
+     pet_skill_to_mob_skill[int(r[0])] = int(r[1])
++mob_skill_to_pet_skill = {
++    mob_skill_id: pet_skill_id
++    for pet_skill_id, mob_skill_id in pet_skill_to_mob_skill.items()
++    if mob_skill_id != 0
++}
  
-diff --git a/src/map/ai/controllers/automaton_controller.h b/src/map/ai/controllers/automaton_controller.h
-index d51cf7f394..eac348c7c5 100644
---- a/src/map/ai/controllers/automaton_controller.h
-+++ b/src/map/ai/controllers/automaton_controller.h
-@@ -115,6 +115,7 @@ private:
-     timer::time_point m_LastStatusTime;
-     timer::time_point m_LastRangedTime;
-     timer::time_point m_LastShieldBashTime;
-+    timer::time_point m_TpHoldStarted;
- };
+ # Merge Ready-move wiring from modules/custom/sql/*.sql in deployment order so
+ # the audit reflects INSERTs and the targeted DELETEs used to remove IDs from
+@@ -130,6 +135,13 @@ for f in sorted(CUSTOM.glob("*.sql")):
+         txt, re.IGNORECASE,
+     ):
+         pool_skilllist[int(pool_update.group(2))] = int(pool_update.group(1))
++    for pool_update in re.finditer(
++        r"UPDATE\s+`mob_pools`\s+SET\s+`skill_list_id`\s*=\s*(\d+)\s+"
++        r"WHERE\s+`poolid`\s+IN\s*\(([^)]*)\)\s*;",
++        txt, re.IGNORECASE,
++    ):
++        for poolid in re.findall(r"\d+", pool_update.group(2)):
++            pool_skilllist[int(poolid)] = int(pool_update.group(1))
  
- namespace automaton
-diff --git a/src/map/utils/battleutils.cpp b/src/map/utils/battleutils.cpp
-index 169490975a..59511023b7 100644
---- a/src/map/utils/battleutils.cpp
-+++ b/src/map/utils/battleutils.cpp
-@@ -2399,8 +2399,6 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
+     if "JOIN `pet_skills` AS p ON p.`pet_skill_id` = m.`mob_skill_id`" in txt:
+         for sid, skills in list_skills.items():
+@@ -154,6 +166,12 @@ for f in sorted(CUSTOM.glob("*.sql")):
+             continue
  
- int32 TakeWeaponskillDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage, ATTACK_TYPE attackType, DAMAGE_TYPE damageType, uint8 slot, bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier)
- {
--    damage = ApplyAutomatonDamageBonus(PAttacker, damage); // FJB: automaton DPS multiplier (weaponskills)
--
-     bool isRanged = (slot == SLOT_AMMO || slot == SLOT_RANGED);
+         sid_match = re.search(r"`?skill_list_id`?\s*=\s*(\d+)", stmt, re.IGNORECASE)
++        sid_in_match = re.search(
++            r"`?skill_list_id`?\s+IN\s*\(([^)]*)\)", stmt, re.IGNORECASE)
++        if sid_in_match:
++            for sid_value in re.findall(r"\d+", sid_in_match.group(1)):
++                list_skills[int(sid_value)] = set()
++            continue
+         if not sid_match:
+             continue
+         sid = int(sid_match.group(1))
+@@ -283,11 +301,14 @@ if missing_named:
+         print(f"  {nm:<22} id={e['id']:<5} anim={e['anim']:<5} -> {pets}")
  
-     damage = ApplyRangerDamageAdjust(PAttacker, damage, isRanged); // FJB: relaunch RNG ranged trim
-diff --git a/src/map/utils/petutils.cpp b/src/map/utils/petutils.cpp
-index 8e074e67ee..500559aeca 100644
---- a/src/map/utils/petutils.cpp
-+++ b/src/map/utils/petutils.cpp
-@@ -1250,6 +1250,12 @@ void FinalizePetStatistics(CBattleEntity* PMaster, CPetEntity* PPet)
-     // set C magic evasion, add MEVA that may have come from other sources (Automaton, Wyvern, Avatar bonus meva in their respective CalculateXStats function)
-     PPet->setModifier(Mod::MEVA, battleutils::GetMaxSkill(7, std::min<uint8>(99, PPet->GetMLevel())) + PPet->getMod(Mod::MEVA));
-     PPet->health.tp = 0;
+ namespace_errors = []
++unmapped_runtime_skills = []
+ for petid, data in per_pet.items():
+     for mid, _, _ in data["rows"]:
+         mapped = pet_skill_to_mob_skill.get(mid)
+         if mapped is not None and mapped != mid:
+             namespace_errors.append((petid, data["name"], data["sid"], mid, mapped))
++        elif mid not in mob_skill_to_pet_skill:
++            unmapped_runtime_skills.append((petid, data["name"], data["sid"], mid))
+ 
+ if namespace_errors:
+     print("\n" + "=" * 78)
+@@ -295,3 +316,10 @@ if namespace_errors:
+     print("=" * 78)
+     for petid, name, sid, wrong, correct in namespace_errors:
+         print(f"  pet {petid:<3} {name:<24} list={sid:<4} wrong={wrong:<4} expected mob_skill_id={correct}")
 +
-+    // Stat recalculation runs for living pets after level, equipment, and
-+    // attachment changes. Pet gear modifiers are additive, so reapplying them
-+    // without first removing the current set compounds HP, regen, and every
-+    // other pet stat on each recalculation.
-+    PMaster->removePetModifiers(PPet);
-     PMaster->applyPetModifiers(PPet);
-     PPet->UpdateHealth();
-     PPet->health.hp = PPet->GetMaxHP();
++if unmapped_runtime_skills:
++    print("\n" + "=" * 78)
++    print("NO READY-MENU MAPPING (runtime mob skill has no pet_skills row)")
++    print("=" * 78)
++    for petid, name, sid, mid in unmapped_runtime_skills:
++        print(f"  pet {petid:<3} {name:<24} list={sid:<4} mob_skill_id={mid}")
