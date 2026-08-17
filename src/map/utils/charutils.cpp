@@ -70,6 +70,7 @@
 #include "linkshell.h"
 #include "map_networking.h"
 #include "mob_modifier.h"
+#include "petskill.h"
 #include "recast_container.h"
 #include "roe.h"
 #include "spell.h"
