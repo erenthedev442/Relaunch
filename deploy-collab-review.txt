@@ -1,264 +1,706 @@
-﻿Collaborator review  2026-08-25 13:25:10
-Range: HEAD..origin/relaunch  (1 collaborator commit(s))
+﻿Collaborator review  2026-08-25 14:44:41
+Range: HEAD..origin/relaunch  (2 collaborator commit(s))
 
 ==============================================================================
-commit bbef99aa2657e9f3c5f5163c8ddb102ab1f12121
+commit 4aa6ac42dab670a139353a16e82b7592d609a542
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Tue Aug 25 21:23:53 2026 +0100
+Date:   Tue Aug 25 22:37:02 2026 +0100
 
-    fix(relaunch): stabilize challenge encounters and pilgrimage credit
+    feat(relaunch): centralize player travel commands
     
-    Keep Ark Angel entry safe and Maat nukes survivable while restoring Aeonic and Divergence pilgrimage completion.
+    Make !warp the discoverable travel hub while retaining direct player shortcuts for progression and content destinations.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/modules/custom/lua/LegendaryWeaponPilgrimage.lua b/modules/custom/lua/LegendaryWeaponPilgrimage.lua
-index 3a6f46145e..815f3cbd5f 100644
---- a/modules/custom/lua/LegendaryWeaponPilgrimage.lua
-+++ b/modules/custom/lua/LegendaryWeaponPilgrimage.lua
-@@ -445,11 +445,16 @@ local function snapshotKillRule(attacker, target, wsId, slot, tp)
+diff --git a/modules/custom/commands/affinitynm.lua b/modules/custom/commands/affinitynm.lua
+index 1d5b759714..2a403c8601 100644
+--- a/modules/custom/commands/affinitynm.lua
++++ b/modules/custom/commands/affinitynm.lua
+@@ -23,7 +23,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = 's',
+ }
+ 
+diff --git a/modules/custom/commands/augwarp.lua b/modules/custom/commands/augwarp.lua
+index c26363ffac..3c63078790 100644
+--- a/modules/custom/commands/augwarp.lua
++++ b/modules/custom/commands/augwarp.lua
+@@ -19,7 +19,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = 's',
+ }
+ 
+diff --git a/modules/custom/commands/capacity.lua b/modules/custom/commands/capacity.lua
+index 1c82b1f24c..ece5226fd7 100644
+--- a/modules/custom/commands/capacity.lua
++++ b/modules/custom/commands/capacity.lua
+@@ -14,7 +14,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = 's',
+ }
+ 
+diff --git a/modules/custom/commands/diwarp.lua b/modules/custom/commands/diwarp.lua
+index 1a6dac1106..f980ce7e09 100644
+--- a/modules/custom/commands/diwarp.lua
++++ b/modules/custom/commands/diwarp.lua
+@@ -9,7 +9,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = '',
+ }
+ 
+diff --git a/modules/custom/commands/expcamp.lua b/modules/custom/commands/expcamp.lua
+index b5d4e6383d..d6b0b57a0f 100644
+--- a/modules/custom/commands/expcamp.lua
++++ b/modules/custom/commands/expcamp.lua
+@@ -11,7 +11,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = 's',
+ }
+ 
+diff --git a/modules/custom/commands/henge.lua b/modules/custom/commands/henge.lua
+index 78a9b8262b..d863473419 100644
+--- a/modules/custom/commands/henge.lua
++++ b/modules/custom/commands/henge.lua
+@@ -8,7 +8,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = '',
+ }
+ 
+diff --git a/modules/custom/commands/hunt.lua b/modules/custom/commands/hunt.lua
+new file mode 100644
+index 0000000000..99e1c1838b
+--- /dev/null
++++ b/modules/custom/commands/hunt.lua
+@@ -0,0 +1,19 @@
++-----------------------------------
++-- !hunt
++-- Player shortcut to the Hunting League hub. Mirrors !warp -> Hunting League.
++-----------------------------------
++---@type TCommand
++local commandObj = {}
++
++commandObj.cmdprops =
++{
++    permission = 0,
++    parameters = '',
++}
++
++commandObj.onTrigger = function(player)
++    player:setPos(0.0000, -0.5000, -30.0000, 128, xi.zone.ESCHA_ZITAH)
++    player:printToPlayer('Warped to the Hunting League hub. Hunt well, kupo!', xi.msg.channel.SYSTEM_3)
++end
++
++return commandObj
+diff --git a/modules/custom/commands/hunt1.lua b/modules/custom/commands/hunt1.lua
+new file mode 100644
+index 0000000000..2adc576a60
+--- /dev/null
++++ b/modules/custom/commands/hunt1.lua
+@@ -0,0 +1,19 @@
++-----------------------------------
++-- !hunt1
++-- Player shortcut to Hunting League tier 1.
++-----------------------------------
++---@type TCommand
++local commandObj = {}
++
++commandObj.cmdprops =
++{
++    permission = 0,
++    parameters = '',
++}
++
++commandObj.onTrigger = function(player)
++    player:setPos(-41.5941, 0.1103, 73.7704, 176, xi.zone.ESCHA_ZITAH)
++    player:printToPlayer('Warped to Tier 1 hunt cluster. Good luck!', xi.msg.channel.SYSTEM_3)
++end
++
++return commandObj
+diff --git a/modules/custom/commands/hunt2.lua b/modules/custom/commands/hunt2.lua
+new file mode 100644
+index 0000000000..7f99cd0fcb
+--- /dev/null
++++ b/modules/custom/commands/hunt2.lua
+@@ -0,0 +1,19 @@
++-----------------------------------
++-- !hunt2
++-- Player shortcut to Hunting League tier 2.
++-----------------------------------
++---@type TCommand
++local commandObj = {}
++
++commandObj.cmdprops =
++{
++    permission = 0,
++    parameters = '',
++}
++
++commandObj.onTrigger = function(player)
++    player:setPos(40.9101, 0.4831, 132.8770, 71, xi.zone.ESCHA_ZITAH)
++    player:printToPlayer('Warped to Tier 2 hunt cluster. Good luck!', xi.msg.channel.SYSTEM_3)
++end
++
++return commandObj
+diff --git a/modules/custom/commands/hunt3.lua b/modules/custom/commands/hunt3.lua
+new file mode 100644
+index 0000000000..f4354ec676
+--- /dev/null
++++ b/modules/custom/commands/hunt3.lua
+@@ -0,0 +1,19 @@
++-----------------------------------
++-- !hunt3
++-- Player shortcut to Hunting League tier 3.
++-----------------------------------
++---@type TCommand
++local commandObj = {}
++
++commandObj.cmdprops =
++{
++    permission = 0,
++    parameters = '',
++}
++
++commandObj.onTrigger = function(player)
++    player:setPos(48.6277, 0.8776, 18.8663, 215, xi.zone.ESCHA_ZITAH)
++    player:printToPlayer('Warped to Tier 3 hunt cluster. Good luck!', xi.msg.channel.SYSTEM_3)
++end
++
++return commandObj
+diff --git a/modules/custom/commands/hunt4.lua b/modules/custom/commands/hunt4.lua
+new file mode 100644
+index 0000000000..69887cd6eb
+--- /dev/null
++++ b/modules/custom/commands/hunt4.lua
+@@ -0,0 +1,19 @@
++-----------------------------------
++-- !hunt4
++-- Player shortcut to Hunting League tier 4.
++-----------------------------------
++---@type TCommand
++local commandObj = {}
++
++commandObj.cmdprops =
++{
++    permission = 0,
++    parameters = '',
++}
++
++commandObj.onTrigger = function(player)
++    player:setPos(22.0112, 0.8983, -121.4367, 126, xi.zone.ESCHA_ZITAH)
++    player:printToPlayer('Warped to Tier 4 hunt cluster. Good luck!', xi.msg.channel.SYSTEM_3)
++end
++
++return commandObj
+diff --git a/modules/custom/commands/hunt5.lua b/modules/custom/commands/hunt5.lua
+new file mode 100644
+index 0000000000..14a4bd1934
+--- /dev/null
++++ b/modules/custom/commands/hunt5.lua
+@@ -0,0 +1,19 @@
++-----------------------------------
++-- !hunt5
++-- Player shortcut to Hunting League tier 5.
++-----------------------------------
++---@type TCommand
++local commandObj = {}
++
++commandObj.cmdprops =
++{
++    permission = 0,
++    parameters = '',
++}
++
++commandObj.onTrigger = function(player)
++    player:setPos(433.8451, 0.1066, -199.3157, 119, xi.zone.ESCHA_ZITAH)
++    player:printToPlayer('Warped to Tier 5 hunt cluster. Good luck!', xi.msg.channel.SYSTEM_3)
++end
++
++return commandObj
+diff --git a/modules/custom/commands/huntwarp.lua b/modules/custom/commands/huntwarp.lua
+index 5d54207d81..4a6e747038 100644
+--- a/modules/custom/commands/huntwarp.lua
++++ b/modules/custom/commands/huntwarp.lua
+@@ -21,7 +21,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = 's',
+ }
+ 
+diff --git a/modules/custom/commands/iwarp.lua b/modules/custom/commands/iwarp.lua
+index f4119402a7..8a91c9e5d9 100644
+--- a/modules/custom/commands/iwarp.lua
++++ b/modules/custom/commands/iwarp.lua
+@@ -8,7 +8,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = '',
+ }
+ 
+diff --git a/modules/custom/commands/leaf.lua b/modules/custom/commands/leaf.lua
+index 11d8be9d4f..b7546b1af6 100644
+--- a/modules/custom/commands/leaf.lua
++++ b/modules/custom/commands/leaf.lua
+@@ -8,7 +8,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = '',
+ }
+ 
+diff --git a/modules/custom/commands/lib.lua b/modules/custom/commands/lib.lua
+index fc59902f14..0083aeade8 100644
+--- a/modules/custom/commands/lib.lua
++++ b/modules/custom/commands/lib.lua
+@@ -1,5 +1,5 @@
+ local commandObj = {}
+-commandObj.cmdprops = { permission = 1, parameters = '' }
++commandObj.cmdprops = { permission = 0, parameters = '' }
+ commandObj.onTrigger = function(player)
+     player:setPos(521.5545, -3.0378, 544.2744, 65, xi.zone.ABDHALJS_ISLE_PURGONORGO)
+ end
+diff --git a/modules/custom/commands/maat.lua b/modules/custom/commands/maat.lua
+index a26b5cbed7..d35c95cb3f 100644
+--- a/modules/custom/commands/maat.lua
++++ b/modules/custom/commands/maat.lua
+@@ -9,7 +9,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = '',
+ }
+ 
+diff --git a/modules/custom/commands/prov1.lua b/modules/custom/commands/prov1.lua
+index cd605b4631..5c35c1ee13 100644
+--- a/modules/custom/commands/prov1.lua
++++ b/modules/custom/commands/prov1.lua
+@@ -9,7 +9,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = '',
+ }
+ 
+diff --git a/modules/custom/commands/prov2.lua b/modules/custom/commands/prov2.lua
+index 850b1c29c1..1d1c07402c 100644
+--- a/modules/custom/commands/prov2.lua
++++ b/modules/custom/commands/prov2.lua
+@@ -9,7 +9,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = '',
+ }
+ 
+diff --git a/modules/custom/commands/prov3.lua b/modules/custom/commands/prov3.lua
+index 8a97d67280..50d51470de 100644
+--- a/modules/custom/commands/prov3.lua
++++ b/modules/custom/commands/prov3.lua
+@@ -9,7 +9,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = '',
+ }
+ 
+diff --git a/modules/custom/commands/rebirth.lua b/modules/custom/commands/rebirth.lua
+new file mode 100644
+index 0000000000..a0ffc8b1d4
+--- /dev/null
++++ b/modules/custom/commands/rebirth.lua
+@@ -0,0 +1,20 @@
++-----------------------------------
++-- !rebirth
++-- Player shortcut to the Job Rebirth NPC. Mirrors !warp -> Progression Hubs.
++-----------------------------------
++---@type TCommand
++local commandObj = {}
++
++commandObj.cmdprops =
++{
++    permission = 0,
++    parameters = '',
++}
++
++local cfg = require('modules/custom/lua/job_rebirth_catalog')
++
++commandObj.onTrigger = function(player)
++    player:setPos(cfg.npcPos.x, cfg.npcPos.y, cfg.npcPos.z, cfg.npcPos.rot, cfg.npcZone)
++end
++
++return commandObj
+diff --git a/modules/custom/commands/reforged.lua b/modules/custom/commands/reforged.lua
+new file mode 100644
+index 0000000000..0fd158388d
+--- /dev/null
++++ b/modules/custom/commands/reforged.lua
+@@ -0,0 +1,19 @@
++-----------------------------------
++-- !reforged
++-- Player shortcut to the Reforge hub. Mirrors !warp -> Progression Hubs.
++-----------------------------------
++---@type TCommand
++local commandObj = {}
++
++commandObj.cmdprops =
++{
++    permission = 0,
++    parameters = '',
++}
++
++commandObj.onTrigger = function(player)
++    player:setPos(-0.66, 0.0, -3.10, 143, xi.zone.DIORAMA_ABDHALJS_GHELSBA)
++    player:printToPlayer('Warped to the Reforge hub. Reforge well, kupo!', xi.msg.channel.SYSTEM_3)
++end
++
++return commandObj
+diff --git a/modules/custom/commands/unitywarp.lua b/modules/custom/commands/unitywarp.lua
+index 67b5c33234..b2e26d55f9 100644
+--- a/modules/custom/commands/unitywarp.lua
++++ b/modules/custom/commands/unitywarp.lua
+@@ -22,7 +22,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = 's',   -- optional: a number (list index) or a name fragment
+ }
+ 
+diff --git a/modules/custom/commands/voidspire.lua b/modules/custom/commands/voidspire.lua
+index 5ffa25f3ba..c92459dff3 100644
+--- a/modules/custom/commands/voidspire.lua
++++ b/modules/custom/commands/voidspire.lua
+@@ -9,7 +9,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = '',
+ }
+ 
+diff --git a/modules/custom/commands/warp.lua b/modules/custom/commands/warp.lua
+index 65683525ca..a3bd92a49d 100644
+--- a/modules/custom/commands/warp.lua
++++ b/modules/custom/commands/warp.lua
+@@ -1,7 +1,7 @@
+ -----------------------------------
+ -- !warp
+--- Categorized player travel menu. Direct destination commands are staff-only;
+--- this is the single player-facing entry point, apart from !hub and !home.
++-- Categorized player travel menu. Direct QoL commands remain available for
++-- players who prefer them; this provides a discoverable central entry point.
+ -----------------------------------
+ ---@type TCommand
+ local commandObj = {}
+@@ -16,6 +16,8 @@ local SYS = xi.msg.channel.SYSTEM_3
+ 
+ local showRoot
+ local showActivities
++local showAscensionAltars
++local showSpecializedTravel
+ 
+ local function openMenu(player, title, options)
+     player:timer(30, function(p)
+@@ -251,6 +253,72 @@ local function showBattlefields(player)
+     })
  end
  
- local function withLowerCap(attacker, target, wsId, slot, tp, callback)
-+    -- Credit conditions must be snapshotted for every active pilgrimage WS,
-+    -- including a completed Aeonic used on its own route. The damage cap below
-+    -- remains exclusive to lower-stage weapons.
-+    snapshotKillRule(attacker, target, wsId, slot, tp)
++showAscensionAltars = function(player)
++    openMenu(player, 'Provenance: Ascension Altars', {
++        {
++            'Ascension Altar I',
++            function(p)
++                runCommand(p, 'modules/custom/commands/prov1')
++            end,
++        },
++        {
++            'Ascension Altar II',
++            function(p)
++                runCommand(p, 'modules/custom/commands/prov2')
++            end,
++        },
++        {
++            'Ascension Altar III',
++            function(p)
++                runCommand(p, 'modules/custom/commands/prov3')
++            end,
++        },
++        { 'Back', function(p) showActivities(p) end },
++    })
++end
 +
-     if not isLowerPilgrimageWs(attacker, wsId, slot) then
-         local result = callback()
-         return unpack(result, 1, result.n)
-     end
--    snapshotKillRule(attacker, target, wsId, slot, tp)
++showSpecializedTravel = function(player)
++    openMenu(player, 'Specialized Travel', {
++        {
++            'Augment Catalysts',
++            function(p)
++                runCommand(p, 'modules/custom/commands/augwarp')
++            end,
++        },
++        {
++            'Affinity NMs',
++            function(p)
++                runCommand(p, 'modules/custom/commands/affinitynm')
++            end,
++        },
++        {
++            "Hunters' Guild NMs",
++            function(p)
++                runCommand(p, 'modules/custom/commands/huntwarp')
++            end,
++        },
++        {
++            'Saved Waypoints',
++            function(p)
++                runCommand(p, 'modules/custom/commands/waypoint')
++            end,
++        },
++        {
++            'Legacy Reisenjima Henge',
++            function(p)
++                runCommand(p, 'modules/custom/commands/henge')
++            end,
++        },
++        {
++            'Leafallia Hub',
++            function(p)
++                runCommand(p, 'modules/custom/commands/leaf')
++            end,
++        },
++        { 'Back', function(p) showActivities(p) end },
++    })
++end
 +
-     local prior = attacker:getLocalVar('StandardWsDamageCap')
-     attacker:setLocalVar('StandardWsDamageCap', C.LOWER_WS_CAP)
-     local ok, result = pcall(callback)
+ local function showProgressionHubs(player)
+     openMenu(player, 'Progression Hubs', {
+         {
+@@ -301,6 +369,18 @@ showActivities = function(player)
+                 showWaveMasters(p)
+             end,
+         },
++        {
++            'Ascension Altars',
++            function(p)
++                showAscensionAltars(p)
++            end,
++        },
++        {
++            'Specialized Travel',
++            function(p)
++                showSpecializedTravel(p)
++            end,
++        },
+         { 'Back', function(p) showRoot(p) end },
+     })
+ end
+diff --git a/modules/custom/commands/wavemaster.lua b/modules/custom/commands/wavemaster.lua
+index 8212919efa..7245edbba8 100644
+--- a/modules/custom/commands/wavemaster.lua
++++ b/modules/custom/commands/wavemaster.lua
+@@ -11,7 +11,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = '',
+ }
+ 
+diff --git a/modules/custom/commands/waypoint.lua b/modules/custom/commands/waypoint.lua
+index 441e7dd08d..8f769b9ce6 100644
+--- a/modules/custom/commands/waypoint.lua
++++ b/modules/custom/commands/waypoint.lua
+@@ -23,7 +23,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = 'ss',
+ }
+ 
+diff --git a/modules/custom/commands/wm1.lua b/modules/custom/commands/wm1.lua
+index 409713d9ce..27519958d9 100644
+--- a/modules/custom/commands/wm1.lua
++++ b/modules/custom/commands/wm1.lua
+@@ -13,7 +13,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = '',
+ }
+ 
+diff --git a/modules/custom/commands/wm2.lua b/modules/custom/commands/wm2.lua
+index e96b87b1ee..66da14dc84 100644
+--- a/modules/custom/commands/wm2.lua
++++ b/modules/custom/commands/wm2.lua
+@@ -13,7 +13,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = '',
+ }
+ 
+diff --git a/modules/custom/commands/wm3.lua b/modules/custom/commands/wm3.lua
+index 7cc4c88cf1..0aebdf03f0 100644
+--- a/modules/custom/commands/wm3.lua
++++ b/modules/custom/commands/wm3.lua
+@@ -13,7 +13,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = '',
+ }
+ 
+diff --git a/modules/custom/commands/wm4.lua b/modules/custom/commands/wm4.lua
+index 65805e8374..ab41140abf 100644
+--- a/modules/custom/commands/wm4.lua
++++ b/modules/custom/commands/wm4.lua
+@@ -13,7 +13,7 @@ local commandObj = {}
+ 
+ commandObj.cmdprops =
+ {
+-    permission = 1,
++    permission = 0,
+     parameters = '',
+ }
+ 
+==============================================================================
+commit ee1ba084d3828adf106b3f0b5856788be7826ff9
+Author: Sion Roberts <siondewiroberts@gmail.com>
+Date:   Tue Aug 25 22:43:43 2026 +0100
+
+    fix(relaunch): complete Ark Angel HTBF victories
+    
+    Ensure Ark Angel boss deaths advance custom battlefields to the normal reward and exit lifecycle.
+    
+    Co-authored-by: Cursor <cursoragent@cursor.com>
+
 diff --git a/modules/custom/lua/htbf.lua b/modules/custom/lua/htbf.lua
-index 962cdfd037..8b124131eb 100644
+index 8b124131eb..20f19004f5 100644
 --- a/modules/custom/lua/htbf.lua
 +++ b/modules/custom/lua/htbf.lua
-@@ -567,7 +567,12 @@ function htbf.register(fightKey, tier, variant)
- 
-     local function scaleBattlefieldMobs(battlefield)
-         for _, mob in ipairs(battlefield:getMobs(true, true)) do
--            pcall(function() applyTierScale(mob) end)
-+            pcall(function()
-+                applyTierScale(mob)
-+                if f.passiveOnEntry then
-+                    mob:setAggressive(false)
+@@ -572,6 +572,20 @@ function htbf.register(fightKey, tier, variant)
+                 if f.passiveOnEntry then
+                     mob:setAggressive(false)
+                 end
++
++                -- The retail Ark Angel groups are reused by custom battlefield
++                -- IDs, but their group allDeath callback does not consistently
++                -- advance those instances to WON. Each separate AA battlefield
++                -- has one primary enemy, so complete it directly on that death.
++                -- The normal win lifecycle below remains responsible for every
++                -- reward, message, and exit.
++                if f.winOnPrimaryDeath then
++                    mob:addListener('DEATH', 'HTBF_PRIMARY_WIN_' .. battlefieldId, function()
++                        if battlefield:getStatus() ~= xi.battlefield.status.WON then
++                            battlefield:setStatus(xi.battlefield.status.WON)
++                        end
++                    end)
 +                end
-+            end)
+             end)
          end
      end
- 
 diff --git a/modules/custom/lua/htbf_catalog.lua b/modules/custom/lua/htbf_catalog.lua
-index bd5c33a743..056ce13bf4 100644
+index 056ce13bf4..0f5c4ae1a3 100644
 --- a/modules/custom/lua/htbf_catalog.lua
 +++ b/modules/custom/lua/htbf_catalog.lua
-@@ -644,6 +644,7 @@ catalog.fights =
-         reuseBaseId = xi.battlefield.id.ARK_ANGELS_1, label = 'Ark Angel HM',
+@@ -645,6 +645,7 @@ catalog.fights =
          difficulty = 'epic', rewardClass = 'epic',
          entryPosByArea = laLoffEntryPos,
-+        passiveOnEntry = true,
+         passiveOnEntry = true,
++        winOnPrimaryDeath = true,
      },
      ark_angels_2 =
      {
-@@ -652,6 +653,7 @@ catalog.fights =
-         reuseBaseId = xi.battlefield.id.ARK_ANGELS_2, label = 'Ark Angel TT',
+@@ -654,6 +655,7 @@ catalog.fights =
          difficulty = 'epic', rewardClass = 'epic',
          entryPosByArea = laLoffEntryPos,
-+        passiveOnEntry = true,
+         passiveOnEntry = true,
++        winOnPrimaryDeath = true,
      },
      ark_angels_3 =
      {
-@@ -660,6 +662,7 @@ catalog.fights =
-         reuseBaseId = xi.battlefield.id.ARK_ANGELS_3, label = 'Ark Angel MR',
+@@ -663,6 +665,7 @@ catalog.fights =
          difficulty = 'epic', rewardClass = 'epic',
          entryPosByArea = laLoffEntryPos,
-+        passiveOnEntry = true,
+         passiveOnEntry = true,
++        winOnPrimaryDeath = true,
      },
      ark_angels_4 =
      {
-@@ -668,6 +671,7 @@ catalog.fights =
-         reuseBaseId = xi.battlefield.id.ARK_ANGELS_4, label = 'Ark Angel EV',
+@@ -672,6 +675,7 @@ catalog.fights =
          difficulty = 'epic', rewardClass = 'epic',
          entryPosByArea = laLoffEntryPos,
-+        passiveOnEntry = true,
+         passiveOnEntry = true,
++        winOnPrimaryDeath = true,
      },
      ark_angels_5 =
      {
-@@ -676,6 +680,7 @@ catalog.fights =
-         reuseBaseId = xi.battlefield.id.ARK_ANGELS_5, label = 'Ark Angel GK',
+@@ -681,6 +685,7 @@ catalog.fights =
          difficulty = 'epic', rewardClass = 'epic',
          entryPosByArea = laLoffEntryPos,
-+        passiveOnEntry = true,
+         passiveOnEntry = true,
++        winOnPrimaryDeath = true,
      },
  }
  
-diff --git a/modules/custom/lua/legendary_pilgrimage_catalog.lua b/modules/custom/lua/legendary_pilgrimage_catalog.lua
-index 1ddf87ec28..49fb0a58fa 100644
---- a/modules/custom/lua/legendary_pilgrimage_catalog.lua
-+++ b/modules/custom/lua/legendary_pilgrimage_catalog.lua
-@@ -343,6 +343,17 @@ function C.targetIndex(requirement, name)
-     for index, target in ipairs(requirement.targets or {}) do
-         if normalize(target) == wanted then return index end
-     end
-+
-+    -- Instanced Divergence mobs have no packetName and expose internal names
-+    -- such as Disjoined_Elvaan_D. The client-visible catalog name omits the
-+    -- instance suffix, so canonicalize it only for this objective family.
-+    if requirement.tag == 'divergence_disjoined' then
-+        wanted = normalize((name or ''):gsub('_[dD]$', ''))
-+        for index, target in ipairs(requirement.targets or {}) do
-+            if normalize(target) == wanted then return index end
-+        end
-+    end
-+
-     return nil
- end
- 
-diff --git a/modules/custom/lua/maat_infamy_fight.lua b/modules/custom/lua/maat_infamy_fight.lua
-index af4161b97d..13c96b6300 100644
---- a/modules/custom/lua/maat_infamy_fight.lua
-+++ b/modules/custom/lua/maat_infamy_fight.lua
-@@ -30,6 +30,7 @@
- -- (deploy applies modules/custom/sql/*.sql). Map restart after Lua changes.
- -----------------------------------
- require('modules/module_utils')
-+require('scripts/globals/spells/damage_spell')
- require('scripts/zones/RuLude_Gardens/Zone')
- require('scripts/zones/Waughroon_Shrine/Zone')
- 
-@@ -45,6 +46,9 @@ m.COMPANION_CAP  = 2
- m.INFAMY_COST    = 150
- m.KI_NAME        = "Echo's Testimony"
- 
-+-- Echo reuses Waughroon RDM Maat (spell list 3), so every job faces T4 nukes.
-+-- Melee without Silence / Utsusemi cannot reliably stop those casts, so magic
-+-- attack stays modest and outgoing spell damage is hard-capped.
- -- Post-T4 mechanics. Private challenger fight, after Rank 4 Hunts / Divergence
- -- / Wave Master Insane and before T5 augments.
- local MAAT_MECH_CFG =
-@@ -123,24 +127,30 @@ local DROP_CHANCE   = 0.25
- -- follows that same Lv99 baseline rather than the old endgame Lv175 value.
- local MAAT_LEVEL    = 99
- local MAAT_HP       = 7000000
-+-- Spell cap is job-agnostic: WAR/DRK cannot Silence or shadow these nukes.
-+-- 1500 MATT was landing Blizzard IV around 4.5k. 400 MATT plus this ceiling
-+-- keeps T4 nukes threatening (~1.2-1.6k) without deleting melee.
-+m.SPELL_DAMAGE_CAP = 1600
- local MAAT_MODS     =
- {
-     [xi.mod.DEF]           = 2000,
-     [xi.mod.ATT]           = 8500,
-     [xi.mod.ACC]           = 2200,
-     [xi.mod.EVASION]       = 800,
--    [xi.mod.MATT]          = 1500,
-+    [xi.mod.MATT]          = 400,
-     [xi.mod.MACC]          = 1800,
-     [xi.mod.MEVA]          = 1000,
-     [xi.mod.MDEF]          = 900,
-     [xi.mod.STR]           = 450,
--    [xi.mod.INT]           = 450,
-+    [xi.mod.INT]           = 200,
-     [xi.mod.DOUBLE_ATTACK] = 18,
-     [xi.mod.TRIPLE_ATTACK] = 5,
-     [xi.mod.HASTE_GEAR]    = 300,
-     [xi.mod.REGEN]         = 120,
- }
- 
-+m.MAAT_MODS = MAAT_MODS
-+
- -- Palborough Mines side of the shrine zone line (sql/zonelines.sql 808465530).
- local PALBOROUGH_X, PALBOROUGH_Y, PALBOROUGH_Z, PALBOROUGH_R = 114.483, -41.944, -140.014, 128
- 
-@@ -393,6 +403,24 @@ local function showEchoMenu(player)
-     end)
- end
- 
-+local function capEchoSpellDamage(caster, target, spell)
-+    if not caster or caster:getLocalVar('MaatEcho') ~= 1 or not target then
-+        return super(caster, target, spell)
-+    end
-+
-+    local previousCap = target:getMod(xi.mod.RECEIVED_DAMAGE_CAP)
-+    local temporaryCap = previousCap > 0 and math.min(previousCap, m.SPELL_DAMAGE_CAP) or m.SPELL_DAMAGE_CAP
-+    target:setMod(xi.mod.RECEIVED_DAMAGE_CAP, temporaryCap)
-+    local ok, damage = pcall(super, caster, target, spell)
-+    target:setMod(xi.mod.RECEIVED_DAMAGE_CAP, previousCap)
-+
-+    if not ok then
-+        error(damage)
-+    end
-+
-+    return damage
-+end
-+
- local function installHooks()
-     if xi.trust and xi.trust.checkBattlefieldTrustCount and not xi.trust._echoTrustPatched then
-         xi.trust._echoTrustPatched = true
-@@ -548,6 +576,8 @@ m:addOverride('xi.zones.Waughroon_Shrine.Zone.onInitialize', function(zone)
-     end
- end)
- 
-+m:addOverride('xi.spells.damage.useDamageSpell', capEchoSpellDamage)
-+
- pcall(installHooks)
- 
- return m
 diff --git a/scripts/tests/systems/htbf_integrity.lua b/scripts/tests/systems/htbf_integrity.lua
-index 5d1023f02d..49d50834b6 100644
+index 49d50834b6..ad75ef6275 100644
 --- a/scripts/tests/systems/htbf_integrity.lua
 +++ b/scripts/tests/systems/htbf_integrity.lua
-@@ -218,6 +218,7 @@ describe('HTBF catalog integrity and balance', function()
-             assert(fight.entryNpc == entry.npc)
+@@ -219,6 +219,7 @@ describe('HTBF catalog integrity and balance', function()
              assert(destination.name == entry.label)
              assert(destination.zone == xi.zone.LALOFF_AMPHITHEATER)
-+            assert(fight.passiveOnEntry == true)
+             assert(fight.passiveOnEntry == true)
++            assert(fight.winOnPrimaryDeath == true)
          end
      end)
  
-diff --git a/scripts/tests/systems/legendary_weapon_pilgrimage.lua b/scripts/tests/systems/legendary_weapon_pilgrimage.lua
-index ede28e7dad..15b38c31ae 100644
---- a/scripts/tests/systems/legendary_weapon_pilgrimage.lua
-+++ b/scripts/tests/systems/legendary_weapon_pilgrimage.lua
-@@ -284,4 +284,23 @@ describe('Legendary Weapon Pilgrimage integrity', function()
-         assert(pilgrimage.TARGETS.divergence[3] == 'Disjoined Tarutaru')
-         assert(pilgrimage.TARGETS.divergence[4] == 'Disjoined Mithra')
-     end)
-+
-+    it('matches all four instanced Divergence Disjoined names', function()
-+        local requirement =
-+        {
-+            tag = 'divergence_disjoined',
-+            targets = pilgrimage.TARGETS.divergence,
-+        }
-+        local internalNames =
-+        {
-+            'Disjoined_Elvaan_D',
-+            'Disjoined_Galka_D',
-+            'Disjoined_Tarutaru_D',
-+            'Disjoined_Mithra_D',
-+        }
-+
-+        for index, name in ipairs(internalNames) do
-+            assert(pilgrimage.targetIndex(requirement, name) == index)
-+        end
-+    end)
- end)
-diff --git a/scripts/tests/systems/maats_echo_integrity.lua b/scripts/tests/systems/maats_echo_integrity.lua
-index 133b62307a..8c9a75996b 100644
---- a/scripts/tests/systems/maats_echo_integrity.lua
-+++ b/scripts/tests/systems/maats_echo_integrity.lua
-@@ -40,4 +40,10 @@ describe("Maat's Echo integrity", function()
-         assert(type(echo.registerBattlefield) == 'function')
-         assert(echo.isEchoBattlefield(nil) == false)
-     end)
-+
-+    it('keeps Echo nukes job-agnostic and below a melee-survivable ceiling', function()
-+        assert(echo.SPELL_DAMAGE_CAP == 1600)
-+        assert(echo.MAAT_MODS[xi.mod.MATT] == 400)
-+        assert(echo.MAAT_MODS[xi.mod.INT] == 200)
-+    end)
- end)
