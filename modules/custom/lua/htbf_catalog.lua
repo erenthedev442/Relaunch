@@ -645,6 +645,7 @@ catalog.fights =
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
         passiveOnEntry = true,
+        winOnPrimaryDeath = true,
     },
     ark_angels_2 =
     {
@@ -654,6 +655,7 @@ catalog.fights =
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
         passiveOnEntry = true,
+        winOnPrimaryDeath = true,
     },
     ark_angels_3 =
     {
@@ -663,6 +665,7 @@ catalog.fights =
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
         passiveOnEntry = true,
+        winOnPrimaryDeath = true,
     },
     ark_angels_4 =
     {
@@ -672,6 +675,7 @@ catalog.fights =
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
         passiveOnEntry = true,
+        winOnPrimaryDeath = true,
     },
     ark_angels_5 =
     {
@@ -681,6 +685,7 @@ catalog.fights =
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
         passiveOnEntry = true,
+        winOnPrimaryDeath = true,
     },
 }
 

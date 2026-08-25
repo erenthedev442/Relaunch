@@ -219,6 +219,7 @@ describe('HTBF catalog integrity and balance', function()
             assert(destination.name == entry.label)
             assert(destination.zone == xi.zone.LALOFF_AMPHITHEATER)
             assert(fight.passiveOnEntry == true)
+            assert(fight.winOnPrimaryDeath == true)
         end
     end)
 

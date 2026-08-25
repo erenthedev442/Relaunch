@@ -572,6 +572,20 @@ function htbf.register(fightKey, tier, variant)
                 if f.passiveOnEntry then
                     mob:setAggressive(false)
                 end
+
+                -- The retail Ark Angel groups are reused by custom battlefield
+                -- IDs, but their group allDeath callback does not consistently
+                -- advance those instances to WON. Each separate AA battlefield
+                -- has one primary enemy, so complete it directly on that death.
+                -- The normal win lifecycle below remains responsible for every
+                -- reward, message, and exit.
+                if f.winOnPrimaryDeath then
+                    mob:addListener('DEATH', 'HTBF_PRIMARY_WIN_' .. battlefieldId, function()
+                        if battlefield:getStatus() ~= xi.battlefield.status.WON then
+                            battlefield:setStatus(xi.battlefield.status.WON)
+                        end
+                    end)
+                end
             end)
         end
     end
