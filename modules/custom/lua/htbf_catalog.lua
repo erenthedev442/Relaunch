@@ -644,6 +644,7 @@ catalog.fights =
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_1, label = 'Ark Angel HM',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
+        passiveOnEntry = true,
     },
     ark_angels_2 =
     {
@@ -652,6 +653,7 @@ catalog.fights =
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_2, label = 'Ark Angel TT',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
+        passiveOnEntry = true,
     },
     ark_angels_3 =
     {
@@ -660,6 +662,7 @@ catalog.fights =
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_3, label = 'Ark Angel MR',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
+        passiveOnEntry = true,
     },
     ark_angels_4 =
     {
@@ -668,6 +671,7 @@ catalog.fights =
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_4, label = 'Ark Angel EV',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
+        passiveOnEntry = true,
     },
     ark_angels_5 =
     {
@@ -676,6 +680,7 @@ catalog.fights =
         reuseBaseId = xi.battlefield.id.ARK_ANGELS_5, label = 'Ark Angel GK',
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
+        passiveOnEntry = true,
     },
 }
 

@@ -284,4 +284,23 @@ describe('Legendary Weapon Pilgrimage integrity', function()
         assert(pilgrimage.TARGETS.divergence[3] == 'Disjoined Tarutaru')
         assert(pilgrimage.TARGETS.divergence[4] == 'Disjoined Mithra')
     end)
+
+    it('matches all four instanced Divergence Disjoined names', function()
+        local requirement =
+        {
+            tag = 'divergence_disjoined',
+            targets = pilgrimage.TARGETS.divergence,
+        }
+        local internalNames =
+        {
+            'Disjoined_Elvaan_D',
+            'Disjoined_Galka_D',
+            'Disjoined_Tarutaru_D',
+            'Disjoined_Mithra_D',
+        }
+
+        for index, name in ipairs(internalNames) do
+            assert(pilgrimage.targetIndex(requirement, name) == index)
+        end
+    end)
 end)

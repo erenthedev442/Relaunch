@@ -445,11 +445,16 @@ local function snapshotKillRule(attacker, target, wsId, slot, tp)
 end
 
 local function withLowerCap(attacker, target, wsId, slot, tp, callback)
+    -- Credit conditions must be snapshotted for every active pilgrimage WS,
+    -- including a completed Aeonic used on its own route. The damage cap below
+    -- remains exclusive to lower-stage weapons.
+    snapshotKillRule(attacker, target, wsId, slot, tp)
+
     if not isLowerPilgrimageWs(attacker, wsId, slot) then
         local result = callback()
         return unpack(result, 1, result.n)
     end
-    snapshotKillRule(attacker, target, wsId, slot, tp)
+
     local prior = attacker:getLocalVar('StandardWsDamageCap')
     attacker:setLocalVar('StandardWsDamageCap', C.LOWER_WS_CAP)
     local ok, result = pcall(callback)

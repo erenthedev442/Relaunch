@@ -30,6 +30,7 @@
 -- (deploy applies modules/custom/sql/*.sql). Map restart after Lua changes.
 -----------------------------------
 require('modules/module_utils')
+require('scripts/globals/spells/damage_spell')
 require('scripts/zones/RuLude_Gardens/Zone')
 require('scripts/zones/Waughroon_Shrine/Zone')
 
@@ -45,6 +46,9 @@ m.COMPANION_CAP  = 2
 m.INFAMY_COST    = 150
 m.KI_NAME        = "Echo's Testimony"
 
+-- Echo reuses Waughroon RDM Maat (spell list 3), so every job faces T4 nukes.
+-- Melee without Silence / Utsusemi cannot reliably stop those casts, so magic
+-- attack stays modest and outgoing spell damage is hard-capped.
 -- Post-T4 mechanics. Private challenger fight, after Rank 4 Hunts / Divergence
 -- / Wave Master Insane and before T5 augments.
 local MAAT_MECH_CFG =
@@ -123,23 +127,29 @@ local DROP_CHANCE   = 0.25
 -- follows that same Lv99 baseline rather than the old endgame Lv175 value.
 local MAAT_LEVEL    = 99
 local MAAT_HP       = 7000000
+-- Spell cap is job-agnostic: WAR/DRK cannot Silence or shadow these nukes.
+-- 1500 MATT was landing Blizzard IV around 4.5k. 400 MATT plus this ceiling
+-- keeps T4 nukes threatening (~1.2-1.6k) without deleting melee.
+m.SPELL_DAMAGE_CAP = 1600
 local MAAT_MODS     =
 {
     [xi.mod.DEF]           = 2000,
     [xi.mod.ATT]           = 8500,
     [xi.mod.ACC]           = 2200,
     [xi.mod.EVASION]       = 800,
-    [xi.mod.MATT]          = 1500,
+    [xi.mod.MATT]          = 400,
     [xi.mod.MACC]          = 1800,
     [xi.mod.MEVA]          = 1000,
     [xi.mod.MDEF]          = 900,
     [xi.mod.STR]           = 450,
-    [xi.mod.INT]           = 450,
+    [xi.mod.INT]           = 200,
     [xi.mod.DOUBLE_ATTACK] = 18,
     [xi.mod.TRIPLE_ATTACK] = 5,
     [xi.mod.HASTE_GEAR]    = 300,
     [xi.mod.REGEN]         = 120,
 }
+
+m.MAAT_MODS = MAAT_MODS
 
 -- Palborough Mines side of the shrine zone line (sql/zonelines.sql 808465530).
 local PALBOROUGH_X, PALBOROUGH_Y, PALBOROUGH_Z, PALBOROUGH_R = 114.483, -41.944, -140.014, 128
@@ -393,6 +403,24 @@ local function showEchoMenu(player)
     end)
 end
 
+local function capEchoSpellDamage(caster, target, spell)
+    if not caster or caster:getLocalVar('MaatEcho') ~= 1 or not target then
+        return super(caster, target, spell)
+    end
+
+    local previousCap = target:getMod(xi.mod.RECEIVED_DAMAGE_CAP)
+    local temporaryCap = previousCap > 0 and math.min(previousCap, m.SPELL_DAMAGE_CAP) or m.SPELL_DAMAGE_CAP
+    target:setMod(xi.mod.RECEIVED_DAMAGE_CAP, temporaryCap)
+    local ok, damage = pcall(super, caster, target, spell)
+    target:setMod(xi.mod.RECEIVED_DAMAGE_CAP, previousCap)
+
+    if not ok then
+        error(damage)
+    end
+
+    return damage
+end
+
 local function installHooks()
     if xi.trust and xi.trust.checkBattlefieldTrustCount and not xi.trust._echoTrustPatched then
         xi.trust._echoTrustPatched = true
@@ -547,6 +575,8 @@ m:addOverride('xi.zones.Waughroon_Shrine.Zone.onInitialize', function(zone)
         end)
     end
 end)
+
+m:addOverride('xi.spells.damage.useDamageSpell', capEchoSpellDamage)
 
 pcall(installHooks)
 

@@ -567,7 +567,12 @@ function htbf.register(fightKey, tier, variant)
 
     local function scaleBattlefieldMobs(battlefield)
         for _, mob in ipairs(battlefield:getMobs(true, true)) do
-            pcall(function() applyTierScale(mob) end)
+            pcall(function()
+                applyTierScale(mob)
+                if f.passiveOnEntry then
+                    mob:setAggressive(false)
+                end
+            end)
         end
     end
 

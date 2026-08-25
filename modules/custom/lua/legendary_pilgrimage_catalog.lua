@@ -343,6 +343,17 @@ function C.targetIndex(requirement, name)
     for index, target in ipairs(requirement.targets or {}) do
         if normalize(target) == wanted then return index end
     end
+
+    -- Instanced Divergence mobs have no packetName and expose internal names
+    -- such as Disjoined_Elvaan_D. The client-visible catalog name omits the
+    -- instance suffix, so canonicalize it only for this objective family.
+    if requirement.tag == 'divergence_disjoined' then
+        wanted = normalize((name or ''):gsub('_[dD]$', ''))
+        for index, target in ipairs(requirement.targets or {}) do
+            if normalize(target) == wanted then return index end
+        end
+    end
+
     return nil
 end
 
