@@ -1,710 +1,264 @@
-﻿Collaborator review  2026-08-17 15:52:29
-Range: HEAD..origin/relaunch  (2 collaborator commit(s))
+﻿Collaborator review  2026-08-25 13:25:10
+Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit 05dbc3434b22de0788b2ebd097f170ea93beefa0
+commit bbef99aa2657e9f3c5f5163c8ddb102ab1f12121
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Mon Aug 17 23:46:01 2026 +0100
+Date:   Tue Aug 25 21:23:53 2026 +0100
 
-    fix(relaunch): restore HTBF entry and physical Ready
+    fix(relaunch): stabilize challenge encounters and pilgrimage credit
     
-    Unblock Sealion Iron Gate HTBF menus, correct avatar/Savage staging, and keep named menus from stacking. Apply BST physical Ready investment after pDIF so Prime pet DPS can reach the companion ceiling, and credit Katana pilgrimages on the Metsu killing blow alone.
+    Keep Ark Angel entry safe and Maat nukes survivable while restoring Aeonic and Divergence pilgrimage completion.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/modules/custom/lua/BstJugPetOverhaul.lua b/modules/custom/lua/BstJugPetOverhaul.lua
-index 51d593b06b..f4444547fb 100644
---- a/modules/custom/lua/BstJugPetOverhaul.lua
-+++ b/modules/custom/lua/BstJugPetOverhaul.lua
-@@ -68,17 +68,19 @@ local CONFIG =
-     flatMagicDamage  = 40,
-     flatMagicDMGMult = 10,
- 
--    -- Physical Ready uses getWeaponDmg(); Beast Affinity scales this floor,
--    -- while Pet: attributes, attack and TP Bonus scale the complete formula.
-+    -- Physical Ready uses getWeaponDmg(). The full physical PET_* investment
-+    -- is applied once after the stock hit resolves in mobskills.lua.
-     flatWeaponDamage = 120,
- 
-     -- Ready investment converts the server's long-form pet progression into
-     -- actual jug weapon/magic floors. Prestige PET + Paragon Dominion reach
-     -- 3000 in each PET_* bucket; ordinary gear contributes before that cap.
--    -- At full investment the floor is ├ù12, while an uninvested jug remains at
--    -- ├ù1. This is intentionally applied before the stock Ready formula so pet
--    -- role, move fTP, target defense and ecosystem selection still matter.
--    readyInvestmentPerPoint = 11.0,
-+    -- Magical Ready keeps its established ├ù12 maximum. Physical Ready must
-+    -- overcome high-level target defense before the companion progression
-+    -- multiplier applies, so a complete Prime-oriented physical build reaches
-+    -- ├ù20 through its broader offensive pet-stat package.
-+    readyInvestmentPerPoint         = 11.0,
-+    physicalReadyInvestmentPerPoint = 19.0,
-     readyInvestmentModCap   = 3000,
-     readyInvestmentAffCap   = 100,
- 
-@@ -107,24 +109,38 @@ local function cappedProgress(value, cap)
-     return math.min(math.max(value or 0, 0) / cap, 1.0)
- end
- 
---- Physical and magical Ready floors use their matching offensive PET_* bundle.
---- Beast Affinity, Attributes and TP Bonus contribute to both paths. Accuracy
---- modifiers remain valuable for landing hits/effects but do not inflate damage.
-+-- Physical and magical Ready paths use their matching offensive PET_* bundles.
-+-- Physical builds additionally need Pet: Accuracy to connect against Legendary
-+-- evasive targets, so it contributes to their damage progression. Multi-attack
-+-- stats remain throughput choices: they produce more TP/auto-attack DPS, but
-+-- do not inflate a single Ready hit.
- local function getReadyInvestmentMultiplier(master, magical)
-     if master == nil then
-         return 1.0
-     end
- 
--    local offenseMod = magical and xi.mod.PET_MAB_MDB or xi.mod.PET_ATK_DEF
-+    if magical then
-+        local score =
-+            (
-+                cappedProgress(master:getMod(xi.mod.PET_BEAST_AFF), CONFIG.readyInvestmentAffCap) +
-+                cappedProgress(master:getMod(xi.mod.PET_MAB_MDB), CONFIG.readyInvestmentModCap) +
-+                cappedProgress(master:getMod(xi.mod.PET_ATTR_BONUS), CONFIG.readyInvestmentModCap) +
-+                cappedProgress(master:getMod(xi.mod.PET_TP_BONUS), CONFIG.readyInvestmentModCap)
-+            ) / 4
-+
-+        return 1.0 + CONFIG.readyInvestmentPerPoint * score
-+    end
-+
-     local score =
-         (
-             cappedProgress(master:getMod(xi.mod.PET_BEAST_AFF), CONFIG.readyInvestmentAffCap) +
--            cappedProgress(master:getMod(offenseMod), CONFIG.readyInvestmentModCap) +
-+            cappedProgress(master:getMod(xi.mod.PET_ATK_DEF), CONFIG.readyInvestmentModCap) +
-+            cappedProgress(master:getMod(xi.mod.PET_ACC_EVA), CONFIG.readyInvestmentModCap) +
-             cappedProgress(master:getMod(xi.mod.PET_ATTR_BONUS), CONFIG.readyInvestmentModCap) +
-             cappedProgress(master:getMod(xi.mod.PET_TP_BONUS), CONFIG.readyInvestmentModCap)
--        ) / 4
-+        ) / 5
- 
--    return 1.0 + CONFIG.readyInvestmentPerPoint * score
-+    return 1.0 + CONFIG.physicalReadyInvestmentPerPoint * score
- end
- 
- -- Exported on the module for deterministic balance tests.
-@@ -206,7 +222,6 @@ local function applyEndgameScaling(master, pet)
-     -- and are intentionally NOT level-scaled. All flat floors below use floorMult.
-     local levelScale = math.min((master:getMainLvl() or 1) / 99, 1.0)
-     local floorMult  = beastAffMult * levelScale * power
--    local physicalReadyMult = getReadyInvestmentMultiplier(master, false)
-     local magicalReadyMult  = getReadyInvestmentMultiplier(master, true)
- 
-     local strFromMaster = math.floor(mSTR * CONFIG.masterSTRShare * w.str)
-@@ -232,8 +247,10 @@ local function applyEndgameScaling(master, pet)
-     pet:addMod(xi.mod.DOUBLE_ATTACK, math.floor(CONFIG.doubleAttack * levelScale * w.multi))
-     pet:addMod(xi.mod.TRIPLE_ATTACK, math.floor(CONFIG.tripleAttack * levelScale * w.multi))
- 
--    -- Physical Ready / AA weapon floor (setDamage writes the jug weapon's DMG).
--    local weaponDmg = math.floor(CONFIG.flatWeaponDamage * floorMult * w.weapon * physicalReadyMult)
-+    -- Physical jug weapon floor. The physical investment multiplier is applied
-+    -- once later in the shared Ready progression path, after pDIF, so it works
-+    -- even when this setter cannot replace the native jug weapon damage.
-+    local weaponDmg = math.floor(CONFIG.flatWeaponDamage * floorMult * w.weapon)
-     if weaponDmg > 0 then
-         pet:setDamage(weaponDmg)
-     end
 diff --git a/modules/custom/lua/LegendaryWeaponPilgrimage.lua b/modules/custom/lua/LegendaryWeaponPilgrimage.lua
-index f8217ec074..3a6f46145e 100644
+index 3a6f46145e..815f3cbd5f 100644
 --- a/modules/custom/lua/LegendaryWeaponPilgrimage.lua
 +++ b/modules/custom/lua/LegendaryWeaponPilgrimage.lua
-@@ -508,7 +508,7 @@ function P.archetypeText(rule)
-     if rule.key == 'great_axe_armor' then return 'deliver the weaponskill killing blow' end
-     if rule.key == 'scythe_resource' then return string.format('remain at or below %d%% HP', rule.maxHpp) end
-     if rule.key == 'polearm_aerial' then return string.format('keep wyvern alive and use at %d+ TP', rule.minTp) end
--    if rule.key == 'katana_shadows' then return 'retain at least one copy-image shadow' end
-+    if rule.key == 'katana_shadows' then return 'deliver the weaponskill killing blow' end
-     if rule.key == 'great_katana_skillchain' then return string.format('use at %d+ TP', rule.minTp) end
-     if rule.key == 'club_support' then return string.format('remain at or below %d%% HP', rule.maxHpp) end
-     if rule.key == 'staff_magic' then return string.format('remain at or below %d%% MP', rule.maxMpp) end
+@@ -445,11 +445,16 @@ local function snapshotKillRule(attacker, target, wsId, slot, tp)
+ end
+ 
+ local function withLowerCap(attacker, target, wsId, slot, tp, callback)
++    -- Credit conditions must be snapshotted for every active pilgrimage WS,
++    -- including a completed Aeonic used on its own route. The damage cap below
++    -- remains exclusive to lower-stage weapons.
++    snapshotKillRule(attacker, target, wsId, slot, tp)
++
+     if not isLowerPilgrimageWs(attacker, wsId, slot) then
+         local result = callback()
+         return unpack(result, 1, result.n)
+     end
+-    snapshotKillRule(attacker, target, wsId, slot, tp)
++
+     local prior = attacker:getLocalVar('StandardWsDamageCap')
+     attacker:setLocalVar('StandardWsDamageCap', C.LOWER_WS_CAP)
+     local ok, result = pcall(callback)
 diff --git a/modules/custom/lua/htbf.lua b/modules/custom/lua/htbf.lua
-index dd4dc144d5..962cdfd037 100644
+index 962cdfd037..8b124131eb 100644
 --- a/modules/custom/lua/htbf.lua
 +++ b/modules/custom/lua/htbf.lua
-@@ -130,10 +130,18 @@ local function getRegisteredChoices(player, npc, fightKey)
- end
- htbf.getRegisteredChoices = getRegisteredChoices
+@@ -567,7 +567,12 @@ function htbf.register(fightKey, tier, variant)
  
-+local namedMenuLatch = '[HTBF]NamedMenuOpen'
-+local namedMenuToken = '[HTBF]NamedMenuToken'
-+
-+local function releaseNamedMenu(player)
-+    player:setLocalVar(namedMenuLatch, 0)
-+end
-+
- local function showTierMenu(player, npc, fightKey)
-     local fight = catalog.fights[fightKey]
-     local choices = getRegisteredChoices(player, npc, fightKey)
-     if #choices == 0 then
-+        releaseNamedMenu(player)
-         player:printToPlayer(
-             '[HTBF] No Legendary tiers are currently available for this fight.',
-             xi.msg.channel.SYSTEM_3)
-@@ -147,6 +155,7 @@ local function showTierMenu(player, npc, fightKey)
-         {
-             selected.customEntryLabel,
-             function(p)
-+                releaseNamedMenu(p)
-                 if not selected:directEntry(p, npc) then
-                     p:printToPlayer(
-                         '[HTBF] Entry failed; your gem was not intentionally consumed.',
-@@ -155,7 +164,7 @@ local function showTierMenu(player, npc, fightKey)
-             end,
-         }
-     end
--    options[#options + 1] = { 'Cancel', function() end }
-+    options[#options + 1] = { 'Cancel', releaseNamedMenu }
- 
-     local label = fight and fight.label or fightKey
-     player:customMenu({
-@@ -178,11 +187,15 @@ local function showFightMenu(player, npc, fightKeys)
-         {
-             fight.label,
-             function(p)
--                p:timer(50, function(pp) showTierMenu(pp, npc, key) end)
-+                -- HandleCustomMenu clears the old context after this callback.
-+                -- Do not install the next context until that teardown has
-+                -- completed, otherwise the client's next choice is sent as an
-+                -- ordinary tell to _CUSTOM_MENU.
-+                p:timer(500, function(pp) showTierMenu(pp, npc, key) end)
-             end,
-         }
-     end
--    options[#options + 1] = { 'Cancel', function() end }
-+    options[#options + 1] = { 'Cancel', releaseNamedMenu }
-     player:customMenu({ title = 'Choose Legendary fight', options = options })
- end
- 
-@@ -198,8 +211,27 @@ if xi.battlefield and not xi.battlefield._htbfNamedEntryPatched then
-                 previousCustomEntry(player, npc) or false
-         end
- 
-+        -- Shared battlefield NPC sections can dispatch the same trigger more
-+        -- than once. Multiple customMenu packets stack client prompts, but only
-+        -- one server context survives; the remaining selections become failed
-+        -- tells to _CUSTOM_MENU. Debounce centrally for every HTBF entrance.
-+        if player:getLocalVar(namedMenuLatch) == 1 then
-+            return true
-+        end
-+        player:setLocalVar(namedMenuLatch, 1)
-+        local token = player:getLocalVar(namedMenuToken) + 1
-+        player:setLocalVar(namedMenuToken, token)
-+        player:timer(30000, function(p)
-+            -- Recover if the client closes the menu without invoking Cancel,
-+            -- but never let an old timeout unlock a newer menu.
-+            if p:getLocalVar(namedMenuToken) == token then
-+                releaseNamedMenu(p)
-+            end
-+        end)
-+
-         local canEnter, missing = htbf.accessCheck(player)
-         if not canEnter then
-+            releaseNamedMenu(player)
-             player:printToPlayer(
-                 '[HTBF] Legendary entry requirements are incomplete:',
-                 xi.msg.channel.SYSTEM_3)
-@@ -568,7 +600,7 @@ function htbf.register(fightKey, tier, variant)
-     -- "Marks Earned (Lifetime)" leaderboard. The real retail per-fight item LOOT
-     -- still goes in catalog.fights[key].loot[tier] (armoury-crate) as it is
-     -- sourced from bg-wiki; this is the guaranteed completion reward on top.
--    function content:onEventFinishWin(player, csid, option, npc)
-+    local function grantWinRewards(player)
-         if not rew then return end
-         -- Idempotency latch. On 2026-07-13 the Ark Angel HM T3 clear paid the
-         -- reward FOUR times to the same player (400k gil * 4, 600 marks * 4,
-@@ -645,6 +677,31 @@ function htbf.register(fightKey, tier, variant)
-         end)
-     end
- 
-+    -- Custom HTBF battlefield IDs have no client win-cutscene entry. Sending
-+    -- event 32001 can therefore leave the player frozen after a clear. Award
-+    -- first, then leave the instance and return to the hub after a short win
-+    -- window instead of starting the unavailable client event.
-+    function content:onBattlefieldWin(player, battlefield)
-+        grantWinRewards(player)
-+        player:timer(2500, function(p)
-+            if p:getBattlefield() then
-+                p:leaveBattlefield(1)
-+            end
-+            p:timer(100, function(q)
-+                q:setPos(
-+                    571.5259, -3.3592, 508.8601, 65,
-+                    xi.zone.ABDHALJS_ISLE_PURGONORGO)
+     local function scaleBattlefieldMobs(battlefield)
+         for _, mob in ipairs(battlefield:getMobs(true, true)) do
+-            pcall(function() applyTierScale(mob) end)
++            pcall(function()
++                applyTierScale(mob)
++                if f.passiveOnEntry then
++                    mob:setAggressive(false)
++                end
 +            end)
-+        end)
-+    end
-+
-+    -- Defensive fallback for an engine path that still reaches the standard
-+    -- finish callback. The battlefield-scoped latch in grantWinRewards keeps
-+    -- a reward from being paid twice.
-+    function content:onEventFinishWin(player, csid, option, npc)
-+        grantWinRewards(player)
-+    end
-+
-     -- Armoury-crate loot. Priority: a fight's per-tier override (f.loot[tier]),
-     -- then its flat retail pool (catalog.fightLoot[fightKey], same pool across
-     -- tiers -- retail loot is per-fight, the tiers differ in difficulty + marks),
+         end
+     end
+ 
 diff --git a/modules/custom/lua/htbf_catalog.lua b/modules/custom/lua/htbf_catalog.lua
-index 3632c896bd..bd5c33a743 100644
+index bd5c33a743..056ce13bf4 100644
 --- a/modules/custom/lua/htbf_catalog.lua
 +++ b/modules/custom/lua/htbf_catalog.lua
-@@ -279,14 +279,23 @@ catalog.tierLoot =
- -- its own file (one table per fight) -- tune individual fights there.
- catalog.fightLoot = require('modules/custom/lua/htbf_loot')
- 
---- Server-side staging positions for custom battlefield IDs. Each point is
---- roughly 30 yalms from the first enemy so players can buff before engaging.
---- Coordinates are keyed by battlefield area; they are not entrance-NPC warps.
-+-- Server-side staging positions for custom battlefield IDs. The six elemental
-+-- cloisters share the same three arena layouts. These are verified walkable
-+-- points beside each arena's internal Protocrystal, translated for areas 2/3.
- local avatarEntryPos =
- {
--    [1] = {  503.0,  41.0, -397.0, 0 },
--    [2] = {   23.0, -19.0,    3.0, 0 },
--    [3] = { -377.0, -79.0,  483.0, 0 },
-+    [1] = {  497.6078,  55.5905, -434.2727, 154 },
-+    [2] = {   17.6858,  -4.4115,  -34.3137, 154 },
-+    [3] = { -382.3442, -64.4185,  445.6693, 154 },
-+}
-+
-+-- Titan's verified point is one yalm farther forward than Ifrit's. Preserve
-+-- that exact safe placement and translate it against Titan's own Protocrystals.
-+local titanEntryPos =
-+{
-+    [1] = {  496.9633,  55.5569, -433.3694, 156 },
-+    [2] = {   17.0843,  -4.4421,  -33.3584, 156 },
-+    [3] = { -382.9837, -64.4591,  446.6106, 156 },
+@@ -644,6 +644,7 @@ catalog.fights =
+         reuseBaseId = xi.battlefield.id.ARK_ANGELS_1, label = 'Ark Angel HM',
+         difficulty = 'epic', rewardClass = 'epic',
+         entryPosByArea = laLoffEntryPos,
++        passiveOnEntry = true,
+     },
+     ark_angels_2 =
+     {
+@@ -652,6 +653,7 @@ catalog.fights =
+         reuseBaseId = xi.battlefield.id.ARK_ANGELS_2, label = 'Ark Angel TT',
+         difficulty = 'epic', rewardClass = 'epic',
+         entryPosByArea = laLoffEntryPos,
++        passiveOnEntry = true,
+     },
+     ark_angels_3 =
+     {
+@@ -660,6 +662,7 @@ catalog.fights =
+         reuseBaseId = xi.battlefield.id.ARK_ANGELS_3, label = 'Ark Angel MR',
+         difficulty = 'epic', rewardClass = 'epic',
+         entryPosByArea = laLoffEntryPos,
++        passiveOnEntry = true,
+     },
+     ark_angels_4 =
+     {
+@@ -668,6 +671,7 @@ catalog.fights =
+         reuseBaseId = xi.battlefield.id.ARK_ANGELS_4, label = 'Ark Angel EV',
+         difficulty = 'epic', rewardClass = 'epic',
+         entryPosByArea = laLoffEntryPos,
++        passiveOnEntry = true,
+     },
+     ark_angels_5 =
+     {
+@@ -676,6 +680,7 @@ catalog.fights =
+         reuseBaseId = xi.battlefield.id.ARK_ANGELS_5, label = 'Ark Angel GK',
+         difficulty = 'epic', rewardClass = 'epic',
+         entryPosByArea = laLoffEntryPos,
++        passiveOnEntry = true,
+     },
  }
  
- -- Proven walkable points on each La'Loff arena platform. The previous points
-@@ -369,7 +378,7 @@ catalog.fights =
-         zone = xi.zone.CLOISTER_OF_TREMORS, entryNpc = 'EP_Entrance', exitNpc = 'Earth_Protocrystal',
-         gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 8, baseBattlefieldId = 4030,
-         mobs = { 'Titan_Prime_TBE' }, label = 'Trial by Earth',
--        difficulty = 'avatar', rewardClass = 'simple', entryPosByArea = avatarEntryPos,
-+        difficulty = 'avatar', rewardClass = 'simple', entryPosByArea = titanEntryPos,
-     },
-     trial_by_lightning =
-     {
-@@ -399,9 +408,11 @@ catalog.fights =
-         difficulty = 'standard', rewardClass = 'standard',
-         entryPosByArea =
-         {
--            [1] = { -605.0, 81.7, -29.0, 0 },
--            [2] = {   -1.4,  1.5, -29.4, 0 },
--            [3] = {  595.8, -78.3, -28.6, 0 },
-+            -- Safe staging point beside each arena's Spatial Displacement.
-+            -- Areas 2/3 are translated copies of the same Monarch Linn arena.
-+            [1] = { -526.2602,  80.1184, -0.3888, 128 },
-+            [2] = {   73.7848,   0.5194, -0.3308, 128 },
-+            [3] = {  673.5318, -79.8806, -0.2078, 128 },
-         },
-     },
-     warriors_path =
 diff --git a/modules/custom/lua/legendary_pilgrimage_catalog.lua b/modules/custom/lua/legendary_pilgrimage_catalog.lua
-index 2932ec78a2..1ddf87ec28 100644
+index 1ddf87ec28..49fb0a58fa 100644
 --- a/modules/custom/lua/legendary_pilgrimage_catalog.lua
 +++ b/modules/custom/lua/legendary_pilgrimage_catalog.lua
-@@ -156,7 +156,10 @@ local function archetypeRule(weaponType, index)
-         great_axe_armor             = {},
-         scythe_resource             = { maxHpp = 60 - ((index - 1) % 3) * 5 },
-         polearm_aerial              = { petAlive = true, minTp = 1200 + ((index - 1) % 3) * 200 },
--        katana_shadows              = { shadows = true },
-+        -- Katana pilgrimage credit is the exact native-WS killing blow. The
-+        -- previous copy-image requirement proved unreliable at death-event
-+        -- time even when the player visibly retained an Utsusemi shadow.
-+        katana_shadows              = {},
-         great_katana_skillchain     = { minTp = 1800 + ((index - 1) % 3) * 200 },
-         club_support                = { maxHpp = 80 - ((index - 1) % 3) * 5 },
-         staff_magic                 = { maxMpp = 60 - ((index - 1) % 3) * 5 },
-@@ -173,13 +176,6 @@ function C.archetypePass(attacker, target, rule, tp)
-         local pet = attacker:getPet()
-         return pet ~= nil and pet:getHP() > 0
+@@ -343,6 +343,17 @@ function C.targetIndex(requirement, name)
+     for index, target in ipairs(requirement.targets or {}) do
+         if normalize(target) == wanted then return index end
      end
--    local function hasCopyImage()
--        return attacker:hasStatusEffect(xi.effect.COPY_IMAGE)
--            or attacker:hasStatusEffect(xi.effect.COPY_IMAGE_2)
--            or attacker:hasStatusEffect(xi.effect.COPY_IMAGE_3)
--            or attacker:hasStatusEffect(xi.effect.COPY_IMAGE_4)
--    end
--
-     if rule.minTp and tp < rule.minTp then return false end
-     if rule.behind and not attacker:isBehind(target, 48) then return false end
-     if rule.maxHpp and attacker:getHPP() > rule.maxHpp then return false end
-@@ -189,7 +185,6 @@ function C.archetypePass(attacker, target, rule, tp)
-     if rule.petOrBerserk and not livingPet() and not attacker:hasStatusEffect(xi.effect.BERSERK) then
-         return false
-     end
--    if rule.shadows and not hasCopyImage() then return false end
-     return true
- end
- 
-diff --git a/scripts/actions/mobskills/choke_breath.lua b/scripts/actions/mobskills/choke_breath.lua
-index bb24ea6ae9..ce53152003 100644
---- a/scripts/actions/mobskills/choke_breath.lua
-+++ b/scripts/actions/mobskills/choke_breath.lua
-@@ -13,7 +13,9 @@ end
- mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
-     local params = {}
- 
--    params.baseDamage     = 100
-+    -- Use the jug's physical weapon floor so this Ready benefits from the
-+    -- same BST investment and companion progression as other physical moves.
-+    params.baseDamage     = mob:getWeaponDmg()
-     params.numHits        = 1
-     params.fTP            = { 1.0, 1.0, 1.0 }
-     params.attackType     = xi.attackType.PHYSICAL
-diff --git a/scripts/globals/mobskills.lua b/scripts/globals/mobskills.lua
-index 9b53ceda37..e1e608004c 100644
---- a/scripts/globals/mobskills.lua
-+++ b/scripts/globals/mobskills.lua
-@@ -9,6 +9,7 @@ require('scripts/globals/magicburst')
- require('scripts/globals/magic')
- require('scripts/globals/spells/damage_spell')
- local standardProgression = require('modules/custom/lua/standard_ws_tuning_catalog')
-+local bstJugOverhaul = require('modules/custom/lua/BstJugPetOverhaul')
- -----------------------------------
- xi = xi or {}
- xi.mobskills = xi.mobskills or {}
-@@ -97,7 +98,7 @@ xi.mobskills.applyJugEcosystemMatchupDamage = function(mob, target, damage)
-     return damage
- end
- 
--local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLanded)
-+local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLanded, isPhysical)
-     if mob:getLocalVar('fellowApplied') == 1 then
-         -- Magus AoE nukes trade coverage for power. The role marks
-         -- Thunderstrike for quarter damage while leaving single-target and
-@@ -139,6 +140,17 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
-     damage = xi.mobskills.applyJugEcosystemMatchupDamage(mob, target, damage)
- 
-     local multiplier = standardProgression.getPetDamageMultiplier(master, target)
-+    if
-+        isPhysical and
-+        mob:isJugPet() and
-+        master:getMainJob() == xi.job.BST
-+    then
-+        -- Physical Ready investment belongs on the completed stock hit, after
-+        -- accuracy/pDIF/target defense and before the companion cap. This makes
-+        -- Pet: Attack, Accuracy, Attributes, TP Bonus and Beast Affinity define
-+        -- endgame burst without relying on a jug weapon setter alone.
-+        multiplier = multiplier * bstJugOverhaul.getReadyInvestmentMultiplier(master, false)
-+    end
-     local cap = standardProgression.setPetDamageCap
-         and standardProgression.setPetDamageCap(mob, master)
-         or standardProgression.DAMAGE_CAP
-@@ -862,7 +874,7 @@ xi.mobskills.mobRangedMove = function(mob, target, skill, action, skillParams)
-     ----------------------------------
-     totalDamage = resolveMissMessage(skill, hitsLanded, hitsYaegasumi, hitsAnticipated, hitsAbsorbed, shadowsAbsorbed, params.primaryMessage, totalDamage)
-     totalDamage = applyPlayerCompanionScaling(
--        mob, target, skill, totalDamage, hitsLanded)
-+        mob, target, skill, totalDamage, hitsLanded, true)
- 
-     -- Mob only gets TP for hitting the initial target. AOE hits do not count.
-     xi.mobskills.calculateSkillTPReturn(damage, mob, skill, target, params.attackType, hitsLanded)
-@@ -1097,7 +1109,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, action, skillParams)
-     ----------------------------------
-     totalDamage = resolveMissMessage(skill, hitsLanded, hitsYaegasumi, hitsAnticipated, hitsAbsorbed, shadowsAbsorbed, params.primaryMessage, totalDamage)
-     totalDamage = applyPlayerCompanionScaling(
--        mob, target, skill, totalDamage, hitsLanded)
-+        mob, target, skill, totalDamage, hitsLanded, true)
- 
-     ----------------------------------
-     -- Handle TP Returns
-diff --git a/scripts/tests/systems/bst_jug_progression.lua b/scripts/tests/systems/bst_jug_progression.lua
-index adc8ea4975..44fc852a14 100644
---- a/scripts/tests/systems/bst_jug_progression.lua
-+++ b/scripts/tests/systems/bst_jug_progression.lua
-@@ -88,10 +88,18 @@ describe('BST jug investment progression', function()
-             magical[modId] = value
-         end
-         physical[xi.mod.PET_ATK_DEF] = 750
-+        physical[xi.mod.PET_ACC_EVA] = 750
-+        local physicalWithoutAccuracy = {}
-+        for modId, value in pairs(physical) do
-+            physicalWithoutAccuracy[modId] = value
++
++    -- Instanced Divergence mobs have no packetName and expose internal names
++    -- such as Disjoined_Elvaan_D. The client-visible catalog name omits the
++    -- instance suffix, so canonicalize it only for this objective family.
++    if requirement.tag == 'divergence_disjoined' then
++        wanted = normalize((name or ''):gsub('_[dD]$', ''))
++        for index, target in ipairs(requirement.targets or {}) do
++            if normalize(target) == wanted then return index end
 +        end
-+        physicalWithoutAccuracy[xi.mod.PET_ACC_EVA] = 0
-         magical[xi.mod.PET_MAB_MDB] = 750
++    end
++
+     return nil
+ end
  
-         assert(overhaul.getReadyInvestmentMultiplier(
--            makeMaster(physical), false) == 4.4375)
-+            makeMaster(physical), false) == 6.7)
-+        assert(overhaul.getReadyInvestmentMultiplier(
-+            makeMaster(physicalWithoutAccuracy), false) == 5.75)
-         assert(overhaul.getReadyInvestmentMultiplier(
-             makeMaster(physical), true) == 3.75)
-         assert(overhaul.getReadyInvestmentMultiplier(
-@@ -105,6 +113,7 @@ describe('BST jug investment progression', function()
-         {
-             [xi.mod.PET_BEAST_AFF] = 900,
-             [xi.mod.PET_ATK_DEF] = 9000,
-+            [xi.mod.PET_ACC_EVA] = 9000,
-             [xi.mod.PET_MAB_MDB] = 9000,
-             [xi.mod.PET_ATTR_BONUS] = 9000,
-             [xi.mod.PET_TP_BONUS] = 9000,
-@@ -119,7 +128,7 @@ describe('BST jug investment progression', function()
-         }
- 
-         assert(overhaul.getReadyInvestmentMultiplier(
--            makeMaster(maxed), false) == 12)
-+            makeMaster(maxed), false) == 20)
-         assert(overhaul.getReadyInvestmentMultiplier(
-             makeMaster(maxed), true) == 12)
-         assert(overhaul.getReadyInvestmentMultiplier(
-@@ -139,31 +148,33 @@ describe('BST jug investment progression', function()
-         {
-             [xi.mod.PET_BEAST_AFF] = 100,
-             [xi.mod.PET_ATK_DEF] = 3000,
-+            [xi.mod.PET_ACC_EVA] = 3000,
-             [xi.mod.PET_ATTR_BONUS] = 3000,
-             [xi.mod.PET_TP_BONUS] = 3000,
-         }
-         local primeMaster = makeMaster(maxed, 21730, 2100)
-         local remaMaster = makeMaster(maxed, 21751, 2100) -- Aymur
--        local target = makeTarget(xi.ecosystem.PLANTOID)
-+        local target = makeTarget(xi.ecosystem.BEAST)
-         local primeJug = makeJug(primeMaster, xi.ecosystem.VERMIN)
-         local remaJug = makeJug(remaMaster, xi.ecosystem.VERMIN)
--        local investedStock = math.floor(
--            1200 * overhaul.getReadyInvestmentMultiplier(primeMaster, false))
-+        local stockDamage = 1200
-         local primeMatched = xi.mobskills.applyJugEcosystemMatchupDamage(
--            primeJug, target, investedStock)
-+            primeJug, target, stockDamage)
-         local remaMatched = xi.mobskills.applyJugEcosystemMatchupDamage(
--            remaJug, target, investedStock)
-+            remaJug, target, stockDamage)
-         local primeDamage = progression.applyMultiplier(
-             primeMatched,
--            progression.getPetDamageMultiplier(primeMaster, target),
-+            progression.getPetDamageMultiplier(primeMaster, target) *
-+                overhaul.getReadyInvestmentMultiplier(primeMaster, false),
-             progression.setPetDamageCap(primeJug, primeMaster))
-         local remaDamage = progression.applyMultiplier(
-             remaMatched,
--            progression.getPetDamageMultiplier(remaMaster, target),
-+            progression.getPetDamageMultiplier(remaMaster, target) *
-+                overhaul.getReadyInvestmentMultiplier(remaMaster, false),
-             progression.setPetDamageCap(remaJug, remaMaster))
- 
--        assert(remaDamage == 677160)
--        assert(primeDamage == 1009800)
-+        assert(remaDamage == 752400)
-+        assert(primeDamage == 1122000)
-         assert(primeDamage < progression.PET_PRIME_DAMAGE_CAP)
-     end)
- 
-@@ -172,6 +183,7 @@ describe('BST jug investment progression', function()
-         {
-             [xi.mod.PET_BEAST_AFF] = 100,
-             [xi.mod.PET_ATK_DEF] = 3000,
-+            [xi.mod.PET_ACC_EVA] = 3000,
-             [xi.mod.PET_ATTR_BONUS] = 3000,
-             [xi.mod.PET_TP_BONUS] = 3000,
-         }
-diff --git a/scripts/tests/systems/legendary_weapon_pilgrimage.lua b/scripts/tests/systems/legendary_weapon_pilgrimage.lua
-index d2070bc920..ede28e7dad 100644
---- a/scripts/tests/systems/legendary_weapon_pilgrimage.lua
-+++ b/scripts/tests/systems/legendary_weapon_pilgrimage.lua
-@@ -215,9 +215,10 @@ describe('Legendary Weapon Pilgrimage integrity', function()
-             local rule = entry.archetypeRule
-             seen[rule.key] = true
-             assert(rule.key == 'great_sword_burst_survival' or rule.key == 'great_axe_armor'
-+                or rule.key == 'katana_shadows'
-                 or rule.minTp or rule.behind or rule.maxHpp
-                 or rule.maxMpp or rule.minDistance or rule.petAlive
--                or rule.petOrBerserk or rule.shadows)
-+                or rule.petOrBerserk)
-             assert(rule.minDamage == nil)
-             assert(pilgrimage.archetypePass(attacker, {}, rule, state.tp))
-             if rule.minTp then
-@@ -242,10 +243,6 @@ describe('Legendary Weapon Pilgrimage integrity', function()
-                 state.pet, state.status = false, false
-                 assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
-                 state.pet, state.status = true, true
--            elseif rule.shadows then
--                state.status = false
--                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
--                state.status = true
-             end
-         end
-         local count = 0
-diff --git a/scripts/zones/Sealions_Den/DefaultActions.lua b/scripts/zones/Sealions_Den/DefaultActions.lua
-index 986c62ae1c..8078df0ab7 100644
---- a/scripts/zones/Sealions_Den/DefaultActions.lua
-+++ b/scripts/zones/Sealions_Den/DefaultActions.lua
-@@ -1,7 +1,8 @@
--local ID = zones[xi.zone.SEALIONS_DEN]
--
- return {
--    ['_0w0']       = { messageSpecial = ID.text.IRON_GATE_LOCKED },
-+    -- _0w0 is the shared battlefield entrance for The Warrior's Path and
-+    -- One to be Feared. Battlefield registration owns its fallback behavior;
-+    -- an always-active locked-gate action can win the interaction cycle and
-+    -- prevent Legendary's named HTBF menu from opening.
-     ['Jovial_Rat'] = { event = 4 },
-     ['Sueleen']    = { event = 20 },
- }
-==============================================================================
-commit 6113348a1a57c1c74df4ebaad7aa6a38eeaaa60a
-Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Mon Aug 17 23:50:53 2026 +0100
-
-    feat(relaunch): lower Blood Pact recast to 20s native and 6s floor
-    
-    Co-authored-by: Cursor <cursoragent@cursor.com>
-
-diff --git a/modules/custom/lua/Augment_Moogle.lua b/modules/custom/lua/Augment_Moogle.lua
-index f1919e45fd..fb2bed8d0e 100644
---- a/modules/custom/lua/Augment_Moogle.lua
-+++ b/modules/custom/lua/Augment_Moogle.lua
-@@ -1721,7 +1721,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-                 [1152] = 'Defense gear ceiling is +3200.',
-                 [1157] = 'Spell Interruption Rate Down gear ceiling is +80%.',
-                 [  57] = 'Magic Critical Hit Rate gear ceiling is +100%.',
--                [ 320] = 'Blood Pact Delay I contributes up to 24s; Rage/Ward floor at 20s.',
-+                [ 320] = 'Blood Pact Delay I contributes up to 24s; Rage/Ward start at 20s and floor at 6s.',
-             }
- 
-             for _, itemId in ipairs(catalystOrder) do
-diff --git a/modules/custom/lua/bp_delay_uncap.lua b/modules/custom/lua/bp_delay_uncap.lua
-index 8bf40c69bc..090d34ccac 100644
---- a/modules/custom/lua/bp_delay_uncap.lua
-+++ b/modules/custom/lua/bp_delay_uncap.lua
-@@ -3,7 +3,7 @@
- --
- -- Makes Summoner "Blood Pact Ability Delay" gear + augments actually scale.
- --
---- THE PROBLEM: a Blood Pact's base recast is 60s. The engine
-+-- THE PROBLEM: a Blood Pact's engine recast is 60s. The C++ snapshot
- -- (src/map/entities/charentity.cpp:1834) HARD-CAPS the BP_DELAY (mod 357)
- -- reduction at 15s and the I+II total at 30s, so a SMN stacking AF/+2 gear AND
- -- the "Blood Pact ability delay" augment -- which are ALL mod 357 -- pours
-@@ -13,16 +13,17 @@
- -- THE FIX: the C++ snapshots the (capped) reduced recast into the "bpRecastTime"
- -- localvar at ability-use time; the Lua handler xi.job_utils.summoner.onUseBloodPact
- -- re-reads that localvar (summoner.lua:211) when the pact goes off and applies it
---- as the recast. We override that handler, recompute bpRecastTime with the per-mod
---- cap raised (so BP-delay gear/augments continue to count), clamp to the intended
---- 20-second floor, then delegate to the original via super().
---- Avatar's Favor stays capped at 10 (retail).
-+-- as the recast. We override that handler, recompute bpRecastTime with Relaunch's
-+-- 20s native base, raised per-mod cap, and 6s floor, then delegate via super().
-+-- Avatar's Favor stays capped at 10 (retail). Astral Conduit bypasses the floor.
- --
- -- Pure Lua override module -> needs ONE map restart to load (no C++ rebuild). Every
- -- BP script calls xi.job_utils.summoner.onUseBloodPact by full path at runtime
- -- (scripts/actions/abilities/pets/*.lua), so the override is guaranteed to intercept.
- --
---- TUNING: 20 seconds is the maximum normal BP frequency with a completed setup.
-+-- TUNING: 20 seconds is the uninvested Relaunch recast. Gear, augments and
-+-- Avatar's Favor then reduce toward a 6-second floor. Astral Conduit still
-+-- bypasses that floor so the job ability remains a true burst window.
+diff --git a/modules/custom/lua/maat_infamy_fight.lua b/modules/custom/lua/maat_infamy_fight.lua
+index af4161b97d..13c96b6300 100644
+--- a/modules/custom/lua/maat_infamy_fight.lua
++++ b/modules/custom/lua/maat_infamy_fight.lua
+@@ -30,6 +30,7 @@
+ -- (deploy applies modules/custom/sql/*.sql). Map restart after Lua changes.
  -----------------------------------
  require('modules/module_utils')
- require('scripts/globals/job_utils/summoner')
-@@ -31,12 +32,17 @@ local m = Module:new('bp_delay_uncap')
++require('scripts/globals/spells/damage_spell')
+ require('scripts/zones/RuLude_Gardens/Zone')
+ require('scripts/zones/Waughroon_Shrine/Zone')
  
- local CONFIG =
+@@ -45,6 +46,9 @@ m.COMPANION_CAP  = 2
+ m.INFAMY_COST    = 150
+ m.KI_NAME        = "Echo's Testimony"
+ 
++-- Echo reuses Waughroon RDM Maat (spell list 3), so every job faces T4 nukes.
++-- Melee without Silence / Utsusemi cannot reliably stop those casts, so magic
++-- attack stays modest and outgoing spell damage is hard-capped.
+ -- Post-T4 mechanics. Private challenger fight, after Rank 4 Hunts / Divergence
+ -- / Wave Master Insane and before T5 augments.
+ local MAAT_MECH_CFG =
+@@ -123,24 +127,30 @@ local DROP_CHANCE   = 0.25
+ -- follows that same Lv99 baseline rather than the old endgame Lv175 value.
+ local MAAT_LEVEL    = 99
+ local MAAT_HP       = 7000000
++-- Spell cap is job-agnostic: WAR/DRK cannot Silence or shadow these nukes.
++-- 1500 MATT was landing Blizzard IV around 4.5k. 400 MATT plus this ceiling
++-- keeps T4 nukes threatening (~1.2-1.6k) without deleting melee.
++m.SPELL_DAMAGE_CAP = 1600
+ local MAAT_MODS     =
  {
-+    base      = 20, -- Relaunch native Rage/Ward recast before delay gear.
-     perModCap = 24, -- was 60; engine stock is 15. Gear/augments still count past 15.
--    floor     = 20, -- maximum normal frequency: one Rage and one Ward per 20s each.
-+    floor     = 6,  -- maximum normal frequency: one Rage and one Ward per 6s each.
-     favorCap  = 10, -- Avatar's Favor reduction cap (retail). Unchanged.
+     [xi.mod.DEF]           = 2000,
+     [xi.mod.ATT]           = 8500,
+     [xi.mod.ACC]           = 2200,
+     [xi.mod.EVASION]       = 800,
+-    [xi.mod.MATT]          = 1500,
++    [xi.mod.MATT]          = 400,
+     [xi.mod.MACC]          = 1800,
+     [xi.mod.MEVA]          = 1000,
+     [xi.mod.MDEF]          = 900,
+     [xi.mod.STR]           = 450,
+-    [xi.mod.INT]           = 450,
++    [xi.mod.INT]           = 200,
+     [xi.mod.DOUBLE_ATTACK] = 18,
+     [xi.mod.TRIPLE_ATTACK] = 5,
+     [xi.mod.HASTE_GEAR]    = 300,
+     [xi.mod.REGEN]         = 120,
  }
  
- xi.job_utils.summoner.getRelaunchBloodPactRecast = function(summoner)
-+    if summoner:hasStatusEffect(xi.effect.ASTRAL_CONDUIT) then
-+        return 0
-+    end
++m.MAAT_MODS = MAAT_MODS
 +
-     local favor = 0
-     local fav   = summoner:getStatusEffect(xi.effect.AVATARS_FAVOR)
-     if fav then
-@@ -46,7 +52,7 @@ xi.job_utils.summoner.getRelaunchBloodPactRecast = function(summoner)
-     local delayI  = math.min(math.max(summoner:getMod(xi.mod.BP_DELAY), 0), CONFIG.perModCap)
-     local delayII = math.min(math.max(summoner:getMod(xi.mod.BP_DELAY_II), 0), CONFIG.perModCap)
+ -- Palborough Mines side of the shrine zone line (sql/zonelines.sql 808465530).
+ local PALBOROUGH_X, PALBOROUGH_Y, PALBOROUGH_Z, PALBOROUGH_R = 114.483, -41.944, -140.014, 128
  
--    return math.max(CONFIG.floor, 60 - delayI - delayII - favor)
-+    return math.max(CONFIG.floor, CONFIG.base - delayI - delayII - favor)
+@@ -393,6 +403,24 @@ local function showEchoMenu(player)
+     end)
  end
  
- m:addOverride('xi.job_utils.summoner.onUseBloodPact', function(target, petskill, summoner, action)
-diff --git a/scripts/tests/systems/blood_pact_delay.lua b/scripts/tests/systems/blood_pact_delay.lua
-index 7e3c8b76fe..3b872e27f9 100644
---- a/scripts/tests/systems/blood_pact_delay.lua
-+++ b/scripts/tests/systems/blood_pact_delay.lua
-@@ -1,7 +1,7 @@
- require('modules/custom/lua/bp_delay_uncap')
- 
- describe('Blood Pact delay progression', function()
--    local function makeSummoner(delayI, delayII, favorPower)
-+    local function makeSummoner(delayI, delayII, favorPower, conduit)
-         return
-         {
-             getMod = function(_, modId)
-@@ -25,32 +25,47 @@ describe('Blood Pact delay progression', function()
-                     end,
-                 }
-             end,
-+            hasStatusEffect = function(_, effectId)
-+                return conduit and effectId == xi.effect.ASTRAL_CONDUIT
-+            end,
-         }
++local function capEchoSpellDamage(caster, target, spell)
++    if not caster or caster:getLocalVar('MaatEcho') ~= 1 or not target then
++        return super(caster, target, spell)
++    end
++
++    local previousCap = target:getMod(xi.mod.RECEIVED_DAMAGE_CAP)
++    local temporaryCap = previousCap > 0 and math.min(previousCap, m.SPELL_DAMAGE_CAP) or m.SPELL_DAMAGE_CAP
++    target:setMod(xi.mod.RECEIVED_DAMAGE_CAP, temporaryCap)
++    local ok, damage = pcall(super, caster, target, spell)
++    target:setMod(xi.mod.RECEIVED_DAMAGE_CAP, previousCap)
++
++    if not ok then
++        error(damage)
++    end
++
++    return damage
++end
++
+ local function installHooks()
+     if xi.trust and xi.trust.checkBattlefieldTrustCount and not xi.trust._echoTrustPatched then
+         xi.trust._echoTrustPatched = true
+@@ -548,6 +576,8 @@ m:addOverride('xi.zones.Waughroon_Shrine.Zone.onInitialize', function(zone)
      end
+ end)
  
-+    it('uses a 20-second native recast before delay gear', function()
-+        local summoner = makeSummoner(0, 0, nil)
++m:addOverride('xi.spells.damage.useDamageSpell', capEchoSpellDamage)
 +
-+        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 20)
+ pcall(installHooks)
+ 
+ return m
+diff --git a/scripts/tests/systems/htbf_integrity.lua b/scripts/tests/systems/htbf_integrity.lua
+index 5d1023f02d..49d50834b6 100644
+--- a/scripts/tests/systems/htbf_integrity.lua
++++ b/scripts/tests/systems/htbf_integrity.lua
+@@ -218,6 +218,7 @@ describe('HTBF catalog integrity and balance', function()
+             assert(fight.entryNpc == entry.npc)
+             assert(destination.name == entry.label)
+             assert(destination.zone == xi.zone.LALOFF_AMPHITHEATER)
++            assert(fight.passiveOnEntry == true)
+         end
+     end)
+ 
+diff --git a/scripts/tests/systems/legendary_weapon_pilgrimage.lua b/scripts/tests/systems/legendary_weapon_pilgrimage.lua
+index ede28e7dad..15b38c31ae 100644
+--- a/scripts/tests/systems/legendary_weapon_pilgrimage.lua
++++ b/scripts/tests/systems/legendary_weapon_pilgrimage.lua
+@@ -284,4 +284,23 @@ describe('Legendary Weapon Pilgrimage integrity', function()
+         assert(pilgrimage.TARGETS.divergence[3] == 'Disjoined Tarutaru')
+         assert(pilgrimage.TARGETS.divergence[4] == 'Disjoined Mithra')
+     end)
++
++    it('matches all four instanced Divergence Disjoined names', function()
++        local requirement =
++        {
++            tag = 'divergence_disjoined',
++            targets = pilgrimage.TARGETS.divergence,
++        }
++        local internalNames =
++        {
++            'Disjoined_Elvaan_D',
++            'Disjoined_Galka_D',
++            'Disjoined_Tarutaru_D',
++            'Disjoined_Mithra_D',
++        }
++
++        for index, name in ipairs(internalNames) do
++            assert(pilgrimage.targetIndex(requirement, name) == index)
++        end
 +    end)
+ end)
+diff --git a/scripts/tests/systems/maats_echo_integrity.lua b/scripts/tests/systems/maats_echo_integrity.lua
+index 133b62307a..8c9a75996b 100644
+--- a/scripts/tests/systems/maats_echo_integrity.lua
++++ b/scripts/tests/systems/maats_echo_integrity.lua
+@@ -40,4 +40,10 @@ describe("Maat's Echo integrity", function()
+         assert(type(echo.registerBattlefield) == 'function')
+         assert(echo.isEchoBattlefield(nil) == false)
+     end)
 +
-     it('allows ordinary Blood Pact delay augments past the stock 15-second bucket', function()
--        local summoner = makeSummoner(20, 0, nil)
-+        local summoner = makeSummoner(8, 0, nil)
- 
--        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 40)
-+        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 12)
-     end)
- 
--    it('combines delay I, delay II and Avatars Favor', function()
--        local summoner = makeSummoner(18, 7, 10)
-+    it('combines delay I, delay II and Avatars Favor down to the 6-second floor', function()
-+        local summoner = makeSummoner(8, 3, 10)
- 
--        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 25)
-+        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 6)
-     end)
- 
--    it('enforces the 20-second maximum-frequency floor', function()
-+    it('enforces the 6-second maximum-frequency floor', function()
-         local augmented = makeSummoner(32, 7, 10)
-         local overcapped = makeSummoner(99, 99, 99)
- 
--        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(augmented) == 20)
--        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(overcapped) == 20)
-+        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(augmented) == 6)
-+        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(overcapped) == 6)
++    it('keeps Echo nukes job-agnostic and below a melee-survivable ceiling', function()
++        assert(echo.SPELL_DAMAGE_CAP == 1600)
++        assert(echo.MAAT_MODS[xi.mod.MATT] == 400)
++        assert(echo.MAAT_MODS[xi.mod.INT] == 200)
 +    end)
-+
-+    it('lets Astral Conduit ignore the normal Blood Pact floor', function()
-+        local summoner = makeSummoner(0, 0, nil, true)
-+
-+        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 0)
-     end)
- 
-     it('does not let malformed negative delay values increase recast', function()
-         local summoner = makeSummoner(-3, -3, nil)
- 
--        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 60)
-+        assert(xi.job_utils.summoner.getRelaunchBloodPactRecast(summoner) == 20)
-     end)
  end)
