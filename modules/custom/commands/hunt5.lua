@@ -1,7 +1,6 @@
 -----------------------------------
--- !leafallia
--- Warps the player to Leafallia (the relaunch hub zone).
--- Available to all players (permission 0).
+-- !hunt5
+-- Player shortcut to Hunting League tier 5.
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
@@ -13,7 +12,8 @@ commandObj.cmdprops =
 }
 
 commandObj.onTrigger = function(player)
-    player:setPos(521.5545, -3.0378, 544.2744, 65, xi.zone.ABDHALJS_ISLE_PURGONORGO)
+    player:setPos(433.8451, 0.1066, -199.3157, 119, xi.zone.ESCHA_ZITAH)
+    player:printToPlayer('Warped to Tier 5 hunt cluster. Good luck!', xi.msg.channel.SYSTEM_3)
 end
 
 return commandObj

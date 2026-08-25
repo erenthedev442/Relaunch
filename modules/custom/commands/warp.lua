@@ -1,7 +1,7 @@
 -----------------------------------
 -- !warp
--- Categorized player travel menu. Direct destination commands are staff-only;
--- this is the single player-facing entry point, apart from !hub and !home.
+-- Categorized player travel menu. Direct QoL commands remain available for
+-- players who prefer them; this provides a discoverable central entry point.
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
@@ -16,6 +16,8 @@ local SYS = xi.msg.channel.SYSTEM_3
 
 local showRoot
 local showActivities
+local showAscensionAltars
+local showSpecializedTravel
 
 local function openMenu(player, title, options)
     player:timer(30, function(p)
@@ -251,6 +253,72 @@ local function showBattlefields(player)
     })
 end
 
+showAscensionAltars = function(player)
+    openMenu(player, 'Provenance: Ascension Altars', {
+        {
+            'Ascension Altar I',
+            function(p)
+                runCommand(p, 'modules/custom/commands/prov1')
+            end,
+        },
+        {
+            'Ascension Altar II',
+            function(p)
+                runCommand(p, 'modules/custom/commands/prov2')
+            end,
+        },
+        {
+            'Ascension Altar III',
+            function(p)
+                runCommand(p, 'modules/custom/commands/prov3')
+            end,
+        },
+        { 'Back', function(p) showActivities(p) end },
+    })
+end
+
+showSpecializedTravel = function(player)
+    openMenu(player, 'Specialized Travel', {
+        {
+            'Augment Catalysts',
+            function(p)
+                runCommand(p, 'modules/custom/commands/augwarp')
+            end,
+        },
+        {
+            'Affinity NMs',
+            function(p)
+                runCommand(p, 'modules/custom/commands/affinitynm')
+            end,
+        },
+        {
+            "Hunters' Guild NMs",
+            function(p)
+                runCommand(p, 'modules/custom/commands/huntwarp')
+            end,
+        },
+        {
+            'Saved Waypoints',
+            function(p)
+                runCommand(p, 'modules/custom/commands/waypoint')
+            end,
+        },
+        {
+            'Legacy Reisenjima Henge',
+            function(p)
+                runCommand(p, 'modules/custom/commands/henge')
+            end,
+        },
+        {
+            'Leafallia Hub',
+            function(p)
+                runCommand(p, 'modules/custom/commands/leaf')
+            end,
+        },
+        { 'Back', function(p) showActivities(p) end },
+    })
+end
+
 local function showProgressionHubs(player)
     openMenu(player, 'Progression Hubs', {
         {
@@ -299,6 +367,18 @@ showActivities = function(player)
             'Wave Masters',
             function(p)
                 showWaveMasters(p)
+            end,
+        },
+        {
+            'Ascension Altars',
+            function(p)
+                showAscensionAltars(p)
+            end,
+        },
+        {
+            'Specialized Travel',
+            function(p)
+                showSpecializedTravel(p)
             end,
         },
         { 'Back', function(p) showRoot(p) end },

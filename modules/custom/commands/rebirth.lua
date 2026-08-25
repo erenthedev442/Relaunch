@@ -1,7 +1,6 @@
 -----------------------------------
--- !leafallia
--- Warps the player to Leafallia (the relaunch hub zone).
--- Available to all players (permission 0).
+-- !rebirth
+-- Player shortcut to the Job Rebirth NPC. Mirrors !warp -> Progression Hubs.
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
@@ -12,8 +11,10 @@ commandObj.cmdprops =
     parameters = '',
 }
 
+local cfg = require('modules/custom/lua/job_rebirth_catalog')
+
 commandObj.onTrigger = function(player)
-    player:setPos(521.5545, -3.0378, 544.2744, 65, xi.zone.ABDHALJS_ISLE_PURGONORGO)
+    player:setPos(cfg.npcPos.x, cfg.npcPos.y, cfg.npcPos.z, cfg.npcPos.rot, cfg.npcZone)
 end
 
 return commandObj

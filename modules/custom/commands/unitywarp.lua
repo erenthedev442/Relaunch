@@ -22,7 +22,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 1,
+    permission = 0,
     parameters = 's',   -- optional: a number (list index) or a name fragment
 }
 
