@@ -2782,11 +2782,6 @@ def service_worker():
         headers={"Cache-Control": "no-cache, no-store, must-revalidate"})
 
 
-@app.get("/legacy-reward")
-def legacy_reward_page():
-    return FileResponse(os.path.join(_static_dir, "legacy-reward.html"))
-
-
 @app.get("/c/{name}")
 def profile_page(name: str):
     # Public trophy page. Inject per-character OpenGraph meta so pasted links

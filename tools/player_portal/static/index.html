@@ -215,7 +215,6 @@ function charCard(c) {
       <a class="lnk" href="/achievements.html?charid=${c.charid}">🏆 Achievements</a>
       <a class="lnk" href="/c/${encodeURIComponent(c.name)}" target="_blank" rel="noopener">Public profile ↗</a>
       <a class="lnk" href="/profile-edit.html?charid=${c.charid}">🎨 Customize</a>
-      <a class="lnk" href="/legacy-reward" style="${c.legacyRewardClaimed ? 'color:var(--mut);text-decoration:none;' : ''}">${c.legacyRewardClaimed ? '✓ Legacy reward' : '⭐ Legacy reward'}</a>
       <button class="mini toolsBtn" data-cid="${c.charid}">Tools</button>
       <button class="mini progBtn" data-cid="${c.charid}">Progress</button>
       <button class="mini invBtn" data-cid="${c.charid}">Inventory</button>
