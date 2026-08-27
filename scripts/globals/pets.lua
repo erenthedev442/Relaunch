@@ -117,10 +117,33 @@ xi.pet.spawnPet = function(caster, petID, state, target)
             end
         elseif petID == xi.petId.ODIN then
             if target then
-                caster:petAttack(target)
-                --pet:timer(5000, function()
-                --    pet:usePetAbility(xi.jobAbility.ZANTETSUKEN, target)
-                --end)
+                -- Odin is a one-action summon: execute Zantetsuken, then let its
+                -- ability script consume Astral Flow/MP and dismiss him.
+                local pet = caster:getPet()
+                if pet then
+                    pet:timer(3000, function(petArg)
+                        local activePet = caster:getPet()
+                        if
+                            petArg and
+                            petArg:isAlive() and
+                            activePet and
+                            activePet:getID() == petArg:getID()
+                        then
+                            petArg:usePetAbility(xi.jobAbility.ZANTETSUKEN, target)
+                        end
+                    end)
+
+                    -- Safety cleanup if the target vanished or the action could
+                    -- not enter the queue. Odin must never become a persistent pet.
+                    pet:timer(10000, function(petArg)
+                        local activePet = caster:getPet()
+                        if petArg and activePet and activePet:getID() == petArg:getID() then
+                            caster:setMP(0)
+                            caster:delStatusEffect(xi.effect.ASTRAL_FLOW)
+                            caster:despawnPet()
+                        end
+                    end)
+                end
             end
         elseif petID == xi.petId.ATOMOS then
             if target then

@@ -26,6 +26,7 @@
 require('modules/module_utils')
 
 local m = Module:new('augment_affinity_migrate11')
+local nmCatalog = require('modules/custom/lua/affinity_nm_catalog')
 
 -- oldCat -> newCat
 local REMAP =
@@ -58,6 +59,7 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     end
 
     player:setCharVar('Augment_Affinities_Mig11', 1)
+    nmCatalog.migrateRegisteredClears(player)
 end)
 
 return m

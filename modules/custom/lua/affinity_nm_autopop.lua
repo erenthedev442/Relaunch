@@ -42,6 +42,9 @@ require('modules/module_utils')
 local affinityPop = Module:new('affinity_nm_autopop')
 affinityPop:setEnabled(true)
 
+local nmCatalog       = require('modules/custom/lua/affinity_nm_catalog')
+local affinityCatalog = require('modules/custom/lua/augment_affinity_catalog')
+
 -----------------------------------
 -- Tuning
 -----------------------------------
@@ -49,66 +52,15 @@ local RESPAWN_SECONDS = 30  -- repop delay after each death (matches always_popp
 local SYS             = xi.msg.channel.SYSTEM_3
 
 -----------------------------------
--- Difficulty (2026-06-30): the affinity NMs REUSE retail pools, so at their base
--- level they are trivial for geared relaunch players. Bake in a stat block, applied
--- on every spawn. TUNE HERE. Offensive mods are flat additions (setMod, idempotent);
--- HP is scaled once per fresh spawn via setMaxHP.
+-- Difficulty: all 24 NMs reuse retail pools and retain their safe retail scripts,
+-- but the canonical roster assigns an accessible Intro/Standard/Veteran/Apex
+-- profile. Offensive mods overwrite (idempotent); HP scales once per fresh spawn.
 --   * Mob combat mods are int16 -- keep each < 31000 or they wrap NEGATIVE.
 --   * HP via setMaxHP is int32, so the multiplier is the safe "tankier" lever.
---   * UNIFORM across all 24: the god-tier NMs (Kirin/AV/Proto-Omega/4 gods) may end
---     up over-tuned for the HL-rank-3 audience -- add a per-mobid override if so.
 -----------------------------------
 -- Docs: the stat block below is quoted on docs/endgame/affinity-nms.md
 -- ("Difficulty and notes") -- update that section when retuning here.
--- BIG BUMP 2026-07-06 (Duff test: "fairly easy as thf"; owner: increase difficulty).
--- HP is the primary lever (int32 -> longer fights, not one-shots); the flat combat
--- mods stay well under the int16 mob-mod cap (~31000) even stacked on base, so no
--- overflow/wrap. Uniform across all 24; add a per-mobid override later if the
--- god-tier NMs need to outclass Behemoth etc.
-local NM_HP_MULT = 12.0
-local NM_MODS =
-{
-    [xi.mod.ATT]           = 6000,
-    [xi.mod.ACC]           = 2400,
-    [xi.mod.DEF]           = 1800,
-    [xi.mod.EVA]           = 1000,
-    [xi.mod.MATT]          = 500,
-    [xi.mod.MDEF]          = 60,
-    [xi.mod.STR]           = 400,
-    [xi.mod.DEX]           = 400,
-    [xi.mod.HASTE_GEAR]    = 200,   -- ~20% (engine caps gear haste ~25%)
-    [xi.mod.DOUBLE_ATTACK] = 25,
-    [xi.mod.CRITHITRATE]   = 12,
-    [xi.mod.STORETP]       = 50,    -- more frequent TP moves = more real mechanics
-}
-
------------------------------------
--- The 24 affinity NMs grouped by zone (mobids = current affinity_nm_spawns.sql).
--- Each entry: { Zone.onInitialize override path, { mobid, ... } }.
--- Override path is a STRING, so dashes (Riverne-Site_*) are legal.
------------------------------------
-local ZONES =
-{
-    { 'xi.zones.Batallia_Downs.Zone.onInitialize',          { 17208197 } },                                       -- Behemoth
-    { 'xi.zones.Behemoths_Dominion.Zone.onInitialize',      { 17298310 } },                                       -- King Behemoth
-    { 'xi.zones.Kuftal_Tunnel.Zone.onInitialize',           { 17490823 } },                                       -- King Arthro
-    { 'xi.zones.Rolanberry_Fields.Zone.onInitialize',       { 17228680 } },                                       -- Simurgh
-    { 'xi.zones.Valley_of_Sorrows.Zone.onInitialize',       { 17302409 } },                                       -- Adamantoise
-    { 'xi.zones.The_Shrine_of_RuAvitau.Zone.onInitialize',  { 17507219 } },                                       -- Kirin (retail Shrine; 4 gods moved to Ru'Aun Gardens)
-    { 'xi.zones.Sauromugue_Champaign.Zone.onInitialize',    { 17269643 } },                                       -- Roc
-    { 'xi.zones.Cape_Teriggan.Zone.onInitialize',           { 17240974 } },                                       -- Aspidochelone
-    { 'xi.zones.Riverne-Site_B01.Zone.onInitialize',        { 16896911 } },                                       -- Ouryu
-    { 'xi.zones.The_Boyahda_Tree.Zone.onInitialize',        { 17404816 } },                                       -- Bune
-    { 'xi.zones.Riverne-Site_A01.Zone.onInitialize',        { 16901009 } },                                       -- Phoenix
-    { 'xi.zones.Dragons_Aery.Zone.onInitialize',            { 17408916, 17408917 } },                             -- Fafnir/Nidhogg
-    { 'xi.zones.Ifrits_Cauldron.Zone.onInitialize',         { 17617814 } },                                       -- Vrtra
-    { 'xi.zones.Uleguerand_Range.Zone.onInitialize',        { 16798615 } },                                       -- Tiamat
-    { 'xi.zones.Western_Altepa_Desert.Zone.onInitialize',   { 17290136 } },                                       -- King Vinegarroon
-    { 'xi.zones.King_Ranperres_Tomb.Zone.onInitialize',     { 17556377, 17556378 } },                             -- Khimaira/Cerberus
-    { 'xi.zones.RuAun_Gardens.Zone.onInitialize',           { 17310619, 17310620, 17310621, 17310622, 17310623, 17310624 } }, -- AV/Proto-Omega + Genbu/Seiryu/Byakko/Suzaku (Sky god corners)
-}
-
--- Death-time trophy grants + one-time notice for reworked-out NMs.
+-- Death-time trophy grants and 24-target collection rewards.
 -- History: 88f443b677 (2026-07-11) removed the hand-synced TROPHY table that
 -- used to duplicate a killer-only grant here, and re-homed grants in
 -- augment_affinity_grants.lua on an `xi.zones.<Zone>.Zone.onMobDeath` hook.
@@ -118,8 +70,6 @@ local ZONES =
 -- Result: for ~24h the entire affinity-hunt trophy path was dead, and no
 -- registered NM's trophy dropped. Restored here as a mob DEATH listener
 -- (which does fire), catalog-driven and fanned to the whole in-zone alliance.
-local affinityCatalog = require('modules/custom/lua/augment_affinity_catalog')
-
 -- Hand THIS in-zone alliance member the NM's registration trophy. Guarded so
 -- repeat kills / the alliance fan-out never stack duplicates.
 local function grantTrophyToMember(player, row)
@@ -140,8 +90,25 @@ end
 -- Fan the trophy to every in-zone alliance member (matches the "whole alliance"
 -- semantic the dead zone-override was trying to provide). Solo players get a
 -- one-element alliance table containing just themselves.
+local function normalizeKiller(killer)
+    if not killer then
+        return nil
+    end
+
+    if not killer:isPC() and killer:getAllegiance() == 1 then
+        killer = killer:getMaster()
+    end
+
+    if killer and killer:isPC() then
+        return killer
+    end
+
+    return nil
+end
+
 local function grantTrophy(m, killer)
-    if not killer or not killer:isPC() then return end
+    killer = normalizeKiller(killer)
+    if not killer then return end
     local row = affinityCatalog.byNm(m:getName())
     if not row or not row.trophy then return end
     local zoneId = m:getZoneID()
@@ -157,50 +124,100 @@ local function grantTrophy(m, killer)
     end
 end
 
--- One-time notice for the 13 reworked-out NMs (kill of e.g. Simurgh/Roc/Bune
--- etc. no longer registers a Sage affinity since the 2026-07-06 rework). Only
--- fires for NMs NOT in the current catalog, so it and grantTrophy are mutually
--- exclusive per kill.
-local function deathNotice(m, killer)
-    if not killer or not killer:isPC() then
+local function addMarks(player, amount)
+    player:setCharVar('HL_Points', (player:getCharVar('HL_Points') or 0) + amount)
+end
+
+local function awardFirstClear(player, entry)
+    if nmCatalog.hasClear(player, entry.index) then
+        return false
+    end
+
+    nmCatalog.grantClear(player, entry.index)
+    local profile = nmCatalog.profiles[entry.band]
+    addMarks(player, profile.firstMarks)
+
+    local total     = nmCatalog.clearCount(player)
+    local milestone = nmCatalog.milestones[total]
+    player:printToPlayer(string.format(
+        '[Affinity Hunt] FIRST CLEAR: %s! +%d Hunt Marks. Collection: %d/%d.',
+        entry.display, profile.firstMarks, total, #nmCatalog.entries), SYS)
+
+    if milestone then
+        addMarks(player, milestone.marks)
+        if milestone.title then
+            player:addTitle(milestone.title)
+        end
+        player:printToPlayer(string.format(
+            '[Affinity Hunt] %s milestone! +%d Hunt Marks%s',
+            milestone.label,
+            milestone.marks,
+            milestone.title and ' and the Master Hunter title!' or '.'), SYS)
+    end
+
+    return true
+end
+
+local function awardRepeat(player, entry)
+    local today = tonumber(os.date('!%Y%j')) or 0
+    if (player:getCharVar(nmCatalog.repeatDayVar) or 0) ~= today then
+        player:setCharVar(nmCatalog.repeatDayVar, today)
+        player:setCharVar(nmCatalog.repeatMarksVar, 0)
+    end
+
+    local earned    = player:getCharVar(nmCatalog.repeatMarksVar) or 0
+    local remaining = math.max(0, nmCatalog.repeatDailyCap - earned)
+    local profile   = nmCatalog.profiles[entry.band]
+    local reward    = math.min(profile.repeatMarks, remaining)
+    if reward <= 0 then
         return
     end
-    if affinityCatalog.byNm(m:getName()) then
-        return  -- live affinity NM: grantTrophy handles it
-    end
-    if killer:getCharVar('affinityReworkNotice') == 1 then
+
+    addMarks(player, reward)
+    player:setCharVar(nmCatalog.repeatMarksVar, earned + reward)
+    player:printToPlayer(string.format(
+        '[Affinity Hunt] Repeat clear: %s. +%d Hunt Marks (%d/%d daily).',
+        entry.display, reward, earned + reward, nmCatalog.repeatDailyCap), SYS)
+end
+
+local function grantProgress(m, killer)
+    killer = normalizeKiller(killer)
+    local entry = nmCatalog.byId(m:getID())
+    if not killer or not entry then
         return
     end
-    killer:setCharVar('affinityReworkNotice', 1)
-    killer:printToPlayer(string.format(
-        '[Affinity] %s does not register a Sage affinity -- only the 11 NMs listed at the Augment Sage do. (This notice shows once.)',
-        m:getName():gsub('_', ' ')), SYS)
+
+    local killerHadClear = nmCatalog.hasClear(killer, entry.index)
+    local alliance       = killer:getAlliance()
+    local zoneId         = m:getZoneID()
+
+    if alliance then
+        for _, member in ipairs(alliance) do
+            if member and member:getZoneID() == zoneId then
+                awardFirstClear(member, entry)
+            end
+        end
+    else
+        awardFirstClear(killer, entry)
+    end
+
+    if killerHadClear then
+        awardRepeat(killer, entry)
+    end
 end
 
 xi.affinityAutopop = xi.affinityAutopop or {}
-xi.affinityAutopop.grantTrophy = grantTrophy   -- reused by the !affinitypop command
-xi.affinityAutopop.deathNotice = deathNotice   -- reused by the !affinitypop command
+xi.affinityAutopop.grantTrophy  = grantTrophy
+xi.affinityAutopop.grantProgress = grantProgress
 
--- mobid -> proper display name. These reused-pool spawns show as "NPC" on the
+-- These reused-pool spawns show as "NPC" on the
 -- client; renameEntity sets ONLY packetName (+ flags UPDATE_NAME to push it live),
 -- it does NOT touch the entity's `name`, so mob:getName() -- which the affinity
 -- GRANT matches against -- is unchanged. Purely a display fix.
-local NAME =
-{
-    [17208197] = 'Behemoth',      [17298310] = 'King Behemoth',    [17490823] = 'King Arthro',
-    [17228680] = 'Simurgh',       [17302409] = 'Adamantoise',      [17310621] = 'Genbu',
-    [17269643] = 'Roc',           [17310622] = 'Seiryu',           [17310623] = 'Byakko',
-    [17240974] = 'Aspidochelone', [16896911] = 'Ouryu',            [17404816] = 'Bune',
-    [16901009] = 'Phoenix',       [17310624] = 'Suzaku',           [17507219] = 'Kirin',
-    [17408916] = 'Fafnir',        [17408917] = 'Nidhogg',          [17617814] = 'Vrtra',
-    [16798615] = 'Tiamat',        [17290136] = 'King Vinegarroon', [17556377] = 'Khimaira',
-    [17556378] = 'Cerberus',      [17310619] = 'Absolute Virtue',  [17310620] = 'Proto-Omega',
-}
-
 local function applyName(m)
-    local nm = NAME[m:getID()]
-    if nm then
-        m:renameEntity(nm, true)  -- silent; sets packetName only
+    local entry = nmCatalog.byId(m:getID())
+    if entry then
+        m:renameEntity(entry.display, true)  -- silent; sets packetName only
     end
 end
 xi.affinityAutopop.applyName = applyName  -- reused by the !affinitypop command
@@ -238,11 +255,17 @@ xi.affinityAutopop.openGodPortal = openGodPortal  -- reused by the !affinitypop 
 -- scaled ONCE per fresh spawn (guarded by a localVar the SPAWN listener resets), so
 -- a re-configure (e.g. !affinitypop) never compounds the multiplier.
 local function applyStats(m)
-    for modId, val in pairs(NM_MODS) do
+    local entry   = nmCatalog.byId(m:getID())
+    local profile = entry and nmCatalog.profiles[entry.band]
+    if not profile then
+        return
+    end
+
+    for modId, val in pairs(profile.mods) do
         m:setMod(modId, val)
     end
-    if NM_HP_MULT > 1.0 and m:getLocalVar('affHpScaled') == 0 then
-        local hp = math.floor(m:getMaxHP() * NM_HP_MULT)
+    if profile.hpMult > 1.0 and m:getLocalVar('affHpScaled') == 0 then
+        local hp = math.floor(m:getMaxHP() * profile.hpMult)
         if hp > 0 then
             m:setMaxHP(hp)
             m:setHP(hp)
@@ -267,15 +290,13 @@ local function configureMob(mobid)
         m:setRespawnTime(RESPAWN_SECONDS)
     end)
 
-    -- On death: registered affinity NM -> grant the trophy alliance-wide;
-    -- reworked-out NM -> one-time "no longer registers" courtesy notice.
-    -- (Split into two listeners so re-runs of !affinitypop are still idempotent
-    -- -- addListener replaces by name, so the two names must stay distinct.)
+    -- On death, grant the Sage trophy where applicable and record collection
+    -- progress for every one of the 24 NMs.
     mob:addListener('DEATH', 'AFFINITY_TROPHY', function(m, killer)
         grantTrophy(m, killer)
     end)
-    mob:addListener('DEATH', 'AFFINITY_NOTICE', function(m, killer)
-        deathNotice(m, killer)
+    mob:addListener('DEATH', 'AFFINITY_PROGRESS', function(m, killer)
+        grantProgress(m, killer)
     end)
 
     -- Fix the "NPC" display name; re-apply on every spawn (packetName resets are cheap).
@@ -317,6 +338,7 @@ local function configureMob(mobid)
     end
     return true
 end
+xi.affinityAutopop.configureMob = configureMob
 
 local function configureZone(mobids, zoneLabel)
     local up = 0
@@ -330,13 +352,27 @@ end
 -----------------------------------
 -- Register a Zone.onInitialize override per affinity zone.
 -----------------------------------
-for _, info in ipairs(ZONES) do
-    local overridePath, mobids = info[1], info[2]
+local zoneMobs = {}
+for _, entry in ipairs(nmCatalog.entries) do
+    zoneMobs[entry.zoneOverride] = zoneMobs[entry.zoneOverride] or {}
+    table.insert(zoneMobs[entry.zoneOverride], entry.mobId)
+end
+
+for overridePath, mobids in pairs(zoneMobs) do
     local zoneLabel = overridePath:match('xi%.zones%.([^.]+)%.') or overridePath
     affinityPop:addOverride(overridePath, function(zone)
         super(zone)
         pcall(configureZone, mobids, zoneLabel)
     end)
 end
+
+-- Backfill collection stamps from the 11 live Sage affinities. The Mig11 guard
+-- prevents interpreting the retired 24-category field before it is remapped.
+affinityPop:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
+    super(player, firstLogin, zoning)
+    if (player:getCharVar('Augment_Affinities_Mig11') or 0) ~= 0 then
+        nmCatalog.migrateRegisteredClears(player)
+    end
+end)
 
 return affinityPop

@@ -14,6 +14,7 @@
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
+local catalog = require('modules/custom/lua/affinity_nm_catalog')
 
 commandObj.cmdprops =
 {
@@ -21,64 +22,17 @@ commandObj.cmdprops =
     parameters = '',
 }
 
--- The 24 affinity NM mobids (current DB values; see affinity_nm_spawns.sql).
-local AFFINITY_MOBIDS =
-{
-    17208197, 17298310, 17490823, 17228680, 17302409,  -- Behemoth, K.Behemoth, K.Arthro, Simurgh, Adamantoise
-    17310621, 17269643, 17310622, 17310623, 17240974,  -- Genbu, Roc, Seiryu, Byakko, Aspidochelone
-    16896911, 17404816, 16901009, 17310624, 17507219,  -- Ouryu, Bune, Phoenix, Suzaku, Kirin
-    17408916, 17408917, 17617814, 16798615, 17290136,  -- Fafnir, Nidhogg, Vrtra, Tiamat, K.Vinegarroon
-    17556377, 17556378, 17310619, 17310620,            -- Khimaira, Cerberus, Absolute Virtue, Proto-Omega
-}
-
-local RESPAWN_SECONDS = 30
-
 commandObj.onTrigger = function(player)
     local SYS = xi.msg.channel.SYSTEM_3
     local up, missing = 0, 0
 
-    for _, mobid in ipairs(AFFINITY_MOBIDS) do
-        local mob = GetMobByID(mobid)
-        if mob then
-            -- Keep it on the short timer past death: DESPAWN listener fires
-            -- after the retail onMobDespawn, so it's the last writer.
-            mob:addListener('DESPAWN', 'AFFINITY_AUTOPOP', function(m)
-                m:setRespawnTime(RESPAWN_SECONDS)
-            end)
-            -- On death: registered affinity NM -> grant the trophy alliance-wide;
-            -- reworked-out NM -> one-time "no longer registers" notice. Mirror
-            -- of affinity_nm_autopop.configureMob (which does the same at zone
-            -- boot). Two listeners with distinct names, so a re-run replaces
-            -- each cleanly instead of stacking.
-            if xi.affinityAutopop and xi.affinityAutopop.grantTrophy then
-                mob:addListener('DEATH', 'AFFINITY_TROPHY', function(m, killer)
-                    xi.affinityAutopop.grantTrophy(m, killer)
-                end)
-            end
-            if xi.affinityAutopop and xi.affinityAutopop.deathNotice then
-                mob:addListener('DEATH', 'AFFINITY_NOTICE', function(m, killer)
-                    xi.affinityAutopop.deathNotice(m, killer)
-                end)
-            end
-            -- Fix the "NPC" display name (re-apply each spawn). Display-only.
-            if xi.affinityAutopop and xi.affinityAutopop.applyName then
-                mob:addListener('SPAWN', 'AFFINITY_NAME', function(m)
-                    xi.affinityAutopop.applyName(m)
-                end)
-                if mob:isSpawned() then xi.affinityAutopop.applyName(mob) end
-            end
-            -- Sky gods: re-open the island yellow portal their retail onMobSpawn
-            -- closes -- always-up gods otherwise lock the islands permanently.
-            if xi.affinityAutopop and xi.affinityAutopop.openGodPortal then
-                mob:addListener('SPAWN', 'AFFINITY_PORTAL', function(m)
-                    xi.affinityAutopop.openGodPortal(m)
-                end)
-                if mob:isSpawned() then xi.affinityAutopop.openGodPortal(mob) end
-            end
-            mob:setRespawnTime(RESPAWN_SECONDS)
-            if not mob:isSpawned() then
-                SpawnMob(mobid)
-            end
+    if not xi.affinityAutopop or not xi.affinityAutopop.configureMob then
+        player:printToPlayer('[Affinity] Autopop module is not loaded.', SYS)
+        return
+    end
+
+    for _, entry in ipairs(catalog.entries) do
+        if xi.affinityAutopop.configureMob(entry.mobId) then
             up = up + 1
         else
             missing = missing + 1

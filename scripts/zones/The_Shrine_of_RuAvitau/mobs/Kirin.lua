@@ -50,6 +50,13 @@ entity.onMobEngage = function(mob, target)
 end
 
 entity.onMobFight = function(mob, target)
+    -- The always-up Affinity Hunt copy is solo-with-trust progression content.
+    -- Keep Kirin's own spell/TP pressure, but do not turn it into a five-boss
+    -- encounter by summoning the four Sky Gods.
+    if mob:getLocalVar('affinityNM') == 1 then
+        return
+    end
+
     -- Check if it's time to spawn a god
     local numAdds = mob:getLocalVar('numAdds')
     if GetSystemTime() >= mob:getLocalVar('godSpawnTime') and numAdds < 4 then

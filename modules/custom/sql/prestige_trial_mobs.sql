@@ -20,21 +20,67 @@
 -- Hunters Guild, reforge NMs, GM-master arena). Provenance Watcher is native to
 -- zone 222, a fitting apex for a trial held in Provenance itself.
 --
--- These reuse STOCK mob_pools (model + skill kit) -- only the groupid/zone/HP
--- mapping is custom. spawntype 128 = SPAWNTYPE_SCRIPTED (script-popped, no
--- timer). dropid 0 = no loot (the reward is Trial progress, not items). The HP
--- column is BASE health; each boss's catalog `hpBoost` multiplies it at spawn.
+-- These reuse stock model + skill-kit data. Pools whose retail flags can hide
+-- dynamic entities are cloned below into Ascension-only pool IDs with
+-- FLAG_HIDE_NAME/FLAG_HIDE_MODEL/FLAG_HIDE_HP cleared. This avoids changing
+-- retail encounters.
+-- spawntype 128 = SPAWNTYPE_SCRIPTED (script-popped, no timer). dropid 0 = no
+-- loot (the reward is Trial progress, not items). The HP column is BASE health;
+-- each boss's catalog `hpBoost` multiplies it at spawn.
 --
 -- Per-boss stats (level 150, mods, hpBoost, cry) live in prestige_catalog.lua
 -- under trialBosses (tier 0) and trialScaling.tiers[N].roster.bosses (tier 1-4).
 -- A boss's catalog `name` MUST match its mob_groups.name below.
 --
--- Idempotent + scoped to groupIds 11370-11392 at zoneid 222 -- safe to re-run.
+-- Idempotent + scoped to groupIds 11370-11395 at zoneid 222 -- safe to re-run.
 -- Apply (live Azure server): just run "Azure - Deploy to Server.bat" -- it
 -- auto-applies any changed modules/custom/sql/*.sql and restarts xi_map for you.
 -- (Manual equivalent on the box: sudo mariadb xidb < this-file, then
 --  sudo systemctl restart xi_map. mob_groups are read at map-server boot.)
 -- ============================================================================
+
+-- Restore the eleven retail boss appearances that previously used avatar
+-- stand-ins. Clone rather than UPDATE the shared retail pools: visibility flags
+-- are safe for Provenance dynamic entities while retail behavior stays intact.
+DELETE FROM `mob_pools` WHERE `poolid` BETWEEN 30100 AND 30110;
+CREATE TEMPORARY TABLE `_prestige_retail_pools` AS
+SELECT *
+FROM `mob_pools`
+WHERE `poolid` IN
+(
+    3465, -- Sarameya
+    4694, -- Kaggen
+    4716, -- Qilin
+    2133, -- Jailer of Justice
+    2131, -- Jailer of Fortitude
+    2136, -- Jailer of Temperance
+    2287, -- Kreutzet
+    3313, -- Raja
+    2474, -- Maere
+    2973, -- Omega
+    4083  -- Ultima
+);
+
+UPDATE `_prestige_retail_pools`
+SET `poolid` =
+    CASE `poolid`
+        WHEN 3465 THEN 30100
+        WHEN 4694 THEN 30101
+        WHEN 4716 THEN 30102
+        WHEN 2133 THEN 30103
+        WHEN 2131 THEN 30104
+        WHEN 2136 THEN 30105
+        WHEN 2287 THEN 30106
+        WHEN 3313 THEN 30107
+        WHEN 2474 THEN 30108
+        WHEN 2973 THEN 30109
+        WHEN 4083 THEN 30110
+    END,
+    `entityFlags` = `entityFlags` & ~0x188,
+    `namevis` = 1;
+
+INSERT INTO `mob_pools` SELECT * FROM `_prestige_retail_pools`;
+DROP TEMPORARY TABLE `_prestige_retail_pools`;
 
 DELETE FROM `mob_groups`
  WHERE `groupid` BETWEEN 11370 AND 11395
@@ -45,36 +91,23 @@ INSERT INTO `mob_groups`
 VALUES
     -- ---- Tier 0 : The Nightmare Court (P.Lv 0-9) -------------------------
     (11370, 1027, 222, 'Diabolos', 0, 128, 0,  60000, 30000, 0, NULL),
-    (11371, 2606, 222, 'Medusa',   0, 128, 0,  55000,     0, 0, NULL),  -- (legacy spare)
     (11372, 2941, 222, 'Odin',     0, 128, 0,  70000, 10000, 0, NULL),
     (11373, 2606, 222, 'Medusa',   0, 128, 0,  55000,     0, 0, NULL),
-    -- FJB 2026-06-15: tiers 1-4 REPOOLED so they actually RENDER in Provenance.
-    -- Zone 222 loads a FIXED monster-model set; the original pools (Sarameya 3465,
-    -- Omega 2973, etc.) use models the zone doesn't carry, so the bosses spawned
-    -- INVISIBLE (still targetable/attackable, just not drawn). Remapped to fresh
-    -- AVATAR models -- avatars render in ANY zone (exactly why the tier-0 Diabolos/
-    -- Odin work), all DISTINCT, and NONE collide with NMs the other custom systems
-    -- use (Bahamut was excluded -- it's the GM-Master Bahamut, group 11412). Ultima
-    -- uses Crystal_Fetter (native to 222). Thematic: an apex "the void summons the
-    -- eidolons" Court. The pool also carries the TP kit, so each boss gains its
-    -- avatar's moveset; catalog stats/HP (the real difficulty) are unchanged and
-    -- NAMES are kept. Diabolos 1027 / Odin 2941 / Medusa 2606 are NOT reused --
-    -- they stay exclusive to the tier-0 Nightmare Court.
     -- ---- Tier 1 : The Voidwalkers (P.Lv 10-19) --------------------------
-    (11381, 1322, 222, 'Sarameya',             0, 128, 0,  95000, 10000, 0, NULL),  -- Fenrir (wolf/hound)
-    (11382, 2050, 222, 'Kaggen',               0, 128, 0,  90000, 10000, 0, NULL),  -- Ifrit (devouring flame)
-    (11383, 1473, 222, 'Qilin',                0, 128, 0,  92000, 10000, 0, NULL),  -- Garuda (tempest)
+    (11381, 30100, 222, 'Sarameya',             0, 128, 0,  95000, 10000, 0, NULL),
+    (11382, 30101, 222, 'Kaggen',               0, 128, 0,  90000, 10000, 0, NULL),
+    (11383, 30102, 222, 'Qilin',                0, 128, 0,  92000, 10000, 0, NULL),
     -- ---- Tier 2 : The Jailers (P.Lv 20-29) ------------------------------
-    (11384,   82, 222, 'Jailer_of_Justice',    0, 128, 0,  95000, 30000, 0, NULL),  -- Alexander (lawgiver)
-    (11385, 3931, 222, 'Jailer_of_Fortitude',  0, 128, 0,  92000, 30000, 0, NULL),  -- Titan (earthwall)
-    (11386, 3607, 222, 'Jailer_of_Temperance', 0, 128, 0, 105000, 30000, 0, NULL),  -- Shiva (ice/restraint)
+    (11384, 30103, 222, 'Jailer_of_Justice',    0, 128, 0,  95000, 30000, 0, NULL),
+    (11385, 30104, 222, 'Jailer_of_Fortitude',  0, 128, 0,  92000, 30000, 0, NULL),
+    (11386, 30105, 222, 'Jailer_of_Temperance', 0, 128, 0, 105000, 30000, 0, NULL),
     -- ---- Tier 3 : The Voidwalker Lords (P.Lv 30-39) ---------------------
-    (11387, 3317, 222, 'Kreutzet',             0, 128, 0, 100000, 30000, 0, NULL),  -- Ramuh (sky/storm)
-    (11388, 2402, 222, 'Raja',                 0, 128, 0, 100000, 30000, 0, NULL),  -- Leviathan (primal beast)
-    (11389, 6170, 222, 'Maere',                0, 128, 0,  98000, 30000, 0, NULL),  -- Siren (nightmare/enchantress)
+    (11387, 30106, 222, 'Kreutzet',             0, 128, 0, 100000, 30000, 0, NULL),
+    (11388, 30107, 222, 'Raja',                 0, 128, 0, 100000, 30000, 0, NULL),
+    (11389, 30108, 222, 'Maere',                0, 128, 0,  98000, 30000, 0, NULL),
     -- ---- Tier 4 : The World's End (P.Lv 40+) ----------------------------
-    (11390, 6961, 222, 'Omega',                0, 128, 0, 105000, 30000, 0, NULL),  -- Odin Prime (apex doom)
-    (11391, 5314, 222, 'Ultima',               0, 128, 0, 105000, 30000, 0, NULL),  -- Crystal_Fetter (native 222; ancient crystal weapon)
+    (11390, 30109, 222, 'Omega',                0, 128, 0, 105000, 30000, 0, NULL),
+    (11391, 30110, 222, 'Ultima',               0, 128, 0, 105000, 30000, 0, NULL),
     (11392, 4654, 222, 'Provenance_Watcher',   0, 128, 0, 110000, 30000, 0, NULL),  -- native apex (unchanged)
     -- ---- Tier 5 : The Celestial Wardens (P.Lv 60+) ----------------------
     -- Tiamat (3916), Kirin (2265), Absolute Virtue (21).  All three have

@@ -70,11 +70,9 @@ INSERT INTO `mob_groups` VALUES
  (20022,    21, 130, 'Absolute_Virtue',  900, 0, 0, 0, 0, 0, NULL),
  (20023,  3208, 130, 'Proto-Omega',      900, 0, 0, 0, 0, 0, NULL);
 
--- ---- dedicated 100% trophy droplists (21000-21023) ----
--- Each affinity NM drops ONLY its unique registration trophy, GUARANTEED
--- (dropType 0, itemRate 1000 = 100%). The trophy is the Augment-Sage registration
--- gate, so it must always drop. Item ids mirror augment_affinity_catalog.lua.
--- Isolated from retail (retail NM spawns keep their own mob_groups + dropids).
+-- ---- historical trophy droplists (21000-21023; engine ignores ids > 5000) ----
+-- Kept only as a roster/item reference. The 11 live Sage trophies and all
+-- 24 collection rewards are granted by affinity_nm_autopop.lua.
 DELETE FROM `mob_droplist` WHERE `dropId` BETWEEN 21000 AND 21023;
 INSERT INTO `mob_droplist` (`dropId`,`dropType`,`groupId`,`groupRate`,`itemId`,`itemRate`) VALUES
  (21000, 0, 0, 1000,   860, 1000),  -- Behemoth          -> Behemoth Hide
@@ -119,7 +117,7 @@ DELETE FROM `mob_spawn_points` WHERE `groupid` BETWEEN 20000 AND 20023;
 INSERT INTO `mob_spawn_points` VALUES
  (17208197, 0, 'Behemoth',         'Behemoth',          20000,  80,  80, -670.00, -23.00,  352.00, 0),
  (17298310, 0, 'King_Behemoth',    'King Behemoth',     20001,  85,  85, -267.50, -19.80,   73.70, 0),
- (17490823, 0, 'King_Arthro',      'King Arthro',       20002,  55,  55,  -27.91, -10.69, -185.26, 0),
+ (17490823, 0, 'King_Arthro',      'King Arthro',       20002,  75,  75,  -27.91, -10.69, -185.26, 0),
  (17228680, 0, 'Simurgh',          'Simurgh',           20003,  80,  80, -681.00, -31.00, -447.00, 0),
  (17302409, 0, 'Adamantoise',      'Adamantoise',       20004,  80,  80,  3.00, -0.42, 8.00, 0),
  (17310621, 0, 'Genbu',            'Genbu',             20005, 125, 125,  261.87, -70.22, 526.41, 0),

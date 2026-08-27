@@ -19,6 +19,8 @@ Checks (ERROR = fails CI; WARN = human review):
   3. CATALOG DUPLICATION (WARN): a runtime file that hardcodes a big chunk of a
      catalog's item-id set WITHOUT `require`-ing it is likely a private copy that
      will drift -- refactor it to read the catalog.
+  4. AFFINITY ROSTER (ERROR): the canonical 24-NM catalog must match its SQL
+     spawn IDs, and !affinitypop must use the shared configureMob path.
 
 Run:  python tools/validate_runtime_consumers.py            (report)
       python tools/validate_runtime_consumers.py --strict   (exit 1 on ERROR)
@@ -137,6 +139,29 @@ def check_duplication(item_ids: set[int]) -> list[str]:
     return warns
 
 
+def check_affinity_roster() -> list[str]:
+    """Keep the canonical 24-NM catalog synchronized with SQL and GM tooling."""
+    errors = []
+    catalog = _read(LUA / "affinity_nm_catalog.lua")
+    spawn_sql = _read(ROOT / "modules/custom/sql/affinity_nm_spawns.sql")
+    command = _read(CMD / "affinitypop.lua")
+
+    catalog_ids = {int(value) for value in re.findall(r"\bmobId\s*=\s*(\d+)", catalog)}
+    spawn_block = ""
+    marker = "INSERT INTO `mob_spawn_points` VALUES"
+    if marker in spawn_sql:
+        spawn_block = spawn_sql.split(marker, 1)[1].split(";", 1)[0]
+    sql_ids = {int(value) for value in re.findall(r"^\s*\(\s*(\d+)", spawn_block, re.M)}
+    if len(catalog_ids) != 24:
+        errors.append(f"[affinity-roster] catalog defines {len(catalog_ids)} unique mob IDs, expected 24")
+    if catalog_ids != sql_ids:
+        errors.append("[affinity-roster] catalog mob IDs do not match affinity_nm_spawns.sql")
+    if "affinity_nm_catalog" not in command or ".configureMob(entry.mobId)" not in command:
+        errors.append("[affinity-roster] !affinitypop does not use the canonical roster/configureMob path")
+
+    return errors
+
+
 def generate(repo_root, docs_dir=None) -> None:
     """Docgen-audit entry point (wired into tools/docgen/generate.py). Prints
     `[runtime-consumers]`-tagged findings that the site drift monitor scans, so a
@@ -149,7 +174,7 @@ def generate(repo_root, docs_dir=None) -> None:
     LUA = ROOT / "modules" / "custom" / "lua"
     CMD = ROOT / "modules" / "custom" / "commands"
     item_ids, zone_ids = load_item_ids(), load_zone_ids()
-    errs = check_broken_refs(item_ids, zone_ids)
+    errs = check_broken_refs(item_ids, zone_ids) + check_affinity_roster()
     warns = check_affinity_labels() + check_duplication(item_ids)
     for e in errs:
         print(f"[runtime-consumers] ERROR {e}")
@@ -161,7 +186,7 @@ def generate(repo_root, docs_dir=None) -> None:
 def main() -> int:
     strict = "--strict" in sys.argv
     item_ids, zone_ids = load_item_ids(), load_zone_ids()
-    errors = check_broken_refs(item_ids, zone_ids)
+    errors = check_broken_refs(item_ids, zone_ids) + check_affinity_roster()
     warns = check_affinity_labels() + check_duplication(item_ids)
 
     print(f"[validate_runtime_consumers] item ids={len(item_ids)} zones={len(zone_ids)} "
