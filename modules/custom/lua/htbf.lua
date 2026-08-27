@@ -648,28 +648,115 @@ function htbf.register(fightKey, tier, variant)
         mob:setLocalVar('HTBFScaled', 1)
     end
 
+    -- Retail battlefield group callbacks are not reliable when their groups are
+    -- reused by our custom battlefield IDs. Arm the last group that owns a
+    -- death callback directly so every HTBF reaches WON after its intended
+    -- victory target dies.
+    -- Intermediate groups keep their original callbacks (phase transitions,
+    -- add spawns, cutscenes). Groups after the victory group can be incidental
+    -- adds (for example, the Chebukki siblings in The Warrior's Path).
+    local function resolveGroupMobs(battlefield, group)
+        if group.mobIds then
+            local mobs = {}
+            for _, mobId in ipairs(group.mobIds[battlefield:getArea()] or {}) do
+                local mob = GetMobByID(mobId)
+                if mob then
+                    mobs[#mobs + 1] = mob
+                end
+            end
+
+            return mobs
+        end
+
+        -- Name-driven groups (the dedicated avatar/simple HTBFs) contain only
+        -- their fight enemies, so the battlefield roster is the group.
+        return battlefield:getMobs(true, true)
+    end
+
+    local function victoryGroupInfo()
+        for index = #(content.groups or {}), 1, -1 do
+            local group = content.groups[index]
+            if group.death or group.allDeath then
+                return group, index
+            end
+        end
+
+        return nil, nil
+    end
+
+    local function armFinalGroupVictory(battlefield)
+        local victoryGroup = victoryGroupInfo()
+        local finalMobs = victoryGroup and resolveGroupMobs(battlefield, victoryGroup) or {}
+        if #finalMobs == 0 then
+            print(string.format(
+                '[HTBF] %s tier %d: no final-group mobs found for area %d',
+                tostring(fightKey), tier, battlefield:getArea()))
+            return
+        end
+
+        local function checkVictory()
+            for _, finalMob in ipairs(finalMobs) do
+                if finalMob:isAlive() then
+                    return
+                end
+            end
+
+            local status = battlefield:getStatus()
+            if
+                status ~= xi.battlefield.status.WON and
+                status ~= xi.battlefield.status.LOST
+            then
+                battlefield:setStatus(xi.battlefield.status.WON)
+            end
+        end
+
+        for _, finalMob in ipairs(finalMobs) do
+            -- One stable listener name deliberately replaces the previous
+            -- instance's closure when a stock entity is reused by another tier.
+            finalMob:addListener('DEATH', 'HTBF_FINAL_GROUP_WIN', checkVictory)
+        end
+    end
+
     local function scaleBattlefieldMobs(battlefield)
         for _, mob in ipairs(battlefield:getMobs(true, true)) do
             pcall(function()
                 applyTierScale(mob)
+                -- Some retail pools rely on client-DAT entity names and carry
+                -- namevis=0. Custom HTBF IDs have no matching DAT row, which
+                -- makes valid enemies appear as "NPC". Unhide the name and
+                -- force an UPDATE_NAME packet using the pool's packet name.
+                local packetName = mob:getPacketName()
+                if not packetName or packetName == '' then
+                    packetName = mob:getName()
+                end
+                mob:hideName(false)
+                mob:renameEntity(packetName, true)
                 if f.passiveOnEntry then
                     mob:setAggressive(false)
                 end
+            end)
+        end
+    end
 
-                -- The retail Ark Angel groups are reused by custom battlefield
-                -- IDs, but their group allDeath callback does not consistently
-                -- advance those instances to WON. Each separate AA battlefield
-                -- has one primary enemy, so complete it directly on that death.
-                -- The normal win lifecycle below remains responsible for every
-                -- reward, message, and exit.
-                if f.winOnPrimaryDeath then
-                    mob:addListener('DEATH', 'HTBF_PRIMARY_WIN_' .. battlefieldId, function()
-                        if battlefield:getStatus() ~= xi.battlefield.status.WON then
-                            battlefield:setStatus(xi.battlefield.status.WON)
-                        end
+    local function armPhaseRechecks(battlefield)
+        local _, victoryIndex = victoryGroupInfo()
+        if not victoryIndex then
+            return
+        end
+
+        for index = 1, victoryIndex - 1 do
+            local group = content.groups[index]
+            if group.death or group.allDeath then
+                for _, phaseMob in ipairs(resolveGroupMobs(battlefield, group)) do
+                    -- Battlefield handleDeath runs before entity DEATH
+                    -- listeners, so an immediate next phase (Omega -> Ultima)
+                    -- already exists when this callback re-arms the final group.
+                    phaseMob:addListener('DEATH', 'HTBF_PHASE_REARM', function()
+                        scaleBattlefieldMobs(battlefield)
+                        armFinalGroupVictory(battlefield)
                     end)
                 end
-            end)
+            end
         end
     end
 
@@ -681,6 +768,8 @@ function htbf.register(fightKey, tier, variant)
         -- Run the base fight's own setup first (spawns/positions/etc.), then scale.
         if baseSetup then pcall(function() baseSetup(self, battlefield) end) end
         scaleBattlefieldMobs(battlefield)
+        armFinalGroupVictory(battlefield)
+        armPhaseRechecks(battlefield)
     end
 
     -- Shadow Lord, Dawn, and Celestial Nexus spawn later phases from this event.
@@ -692,6 +781,7 @@ function htbf.register(fightKey, tier, variant)
             local battlefield = player:getBattlefield()
             if battlefield then
                 scaleBattlefieldMobs(battlefield)
+                armFinalGroupVictory(battlefield)
             end
         end
     end

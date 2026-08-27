@@ -479,7 +479,7 @@ catalog.fights =
         {
             [1] = { -646.335, -231.648,  486.0, 215 },
             [2] = {   -6.354, -151.648,  126.0, 215 },
-            [3] = {  633.622,  -71.648, -233.0, 215 },
+            [3] = {  638.3754, -231.3476, 529.7620, 65 },
         },
     },
     -- One to be Feared shares Sealion's Den entrance _0w0 (base 0/1, Warrior's
@@ -533,7 +533,7 @@ catalog.fights =
         {
             [1] = { -643.105, -231.648,  486.0, 192 },
             [2] = {   -3.124, -151.648,  126.0, 192 },
-            [3] = {  636.852,  -71.648, -233.0, 192 },
+            [3] = {  638.3754, -231.3476, 529.7620, 65 },
         },
     },
     head_wind =
@@ -678,7 +678,6 @@ catalog.fights =
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
         passiveOnEntry = true,
-        winOnPrimaryDeath = true,
     },
     ark_angels_2 =
     {
@@ -688,7 +687,6 @@ catalog.fights =
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
         passiveOnEntry = true,
-        winOnPrimaryDeath = true,
     },
     ark_angels_3 =
     {
@@ -698,7 +696,6 @@ catalog.fights =
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
         passiveOnEntry = true,
-        winOnPrimaryDeath = true,
     },
     ark_angels_4 =
     {
@@ -708,7 +705,6 @@ catalog.fights =
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
         passiveOnEntry = true,
-        winOnPrimaryDeath = true,
     },
     ark_angels_5 =
     {
@@ -718,7 +714,6 @@ catalog.fights =
         difficulty = 'epic', rewardClass = 'epic',
         entryPosByArea = laLoffEntryPos,
         passiveOnEntry = true,
-        winOnPrimaryDeath = true,
     },
 }
 

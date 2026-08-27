@@ -155,7 +155,7 @@ describe('HTBF catalog integrity and balance', function()
         local feared   = catalog.fights.one_to_be_feared.entryPosByArea
         local nexus    = catalog.fights.celestial_nexus.entryPosByArea
 
-        for area = 1, 3 do
+        for area = 1, 2 do
             assert(warriors[area][2] == feared[area][2])
             assert(warriors[area][3] == feared[area][3])
             assert(warriors[area][4] == 215)
@@ -164,7 +164,12 @@ describe('HTBF catalog integrity and balance', function()
 
         assert(warriors[1][1] == -646.335 and warriors[1][2] == -231.648)
         assert(warriors[2][1] == -6.354 and warriors[2][2] == -151.648)
-        assert(warriors[3][1] == 633.622 and warriors[3][2] == -71.648)
+        for _, positions in ipairs({ warriors, feared }) do
+            assert(positions[3][1] == 638.3754)
+            assert(positions[3][2] == -231.3476)
+            assert(positions[3][3] == 529.7620)
+            assert(positions[3][4] == 65)
+        end
 
         assert(nexus[1][3] == -35.0)
         assert(nexus[2][3] == 659.5)
@@ -264,7 +269,6 @@ describe('HTBF catalog integrity and balance', function()
             assert(destination.name == entry.label)
             assert(destination.zone == xi.zone.LALOFF_AMPHITHEATER)
             assert(fight.passiveOnEntry == true)
-            assert(fight.winOnPrimaryDeath == true)
         end
     end)
 
