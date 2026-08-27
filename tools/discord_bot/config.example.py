@@ -217,3 +217,30 @@ LS_BRIDGE_POLL_SECONDS = 3
 # one shell -> one channel makes it redundant. Turn on only if you ever point
 # two shells at the same Discord channel.
 LS_BRIDGE_SHOW_LSNAME = False
+
+# ============================================================
+# RESCUE BOT  (rescue_bot.py)  -- OPTIONAL, separate gateway daemon
+# ============================================================
+# `!rescue <charname>` typed in the #rescue-me channel unsticks a player on
+# Relaunch 2.0: it clears their session and warps them to Lower Jeuno, exactly
+# like the in-game / engine offline rescue. It runs on the OVH box against
+# localhost xi_relaunch (the 1.0 Azure rescue bot is separate and untouched).
+#
+# Needs its OWN Discord application + bot token (a second gateway connection
+# can't share the token_bot token), and the token's **MESSAGE CONTENT** intent
+# must be ON (it reads the text of !rescue messages). See
+# tools/discord_bot/RESCUE-BOT-RELAUNCH-DEPLOY.md for the 5-minute setup.
+
+# REQUIRED: the rescue bot's token (Discord Developer Portal -> your app -> Bot
+# -> Reset Token -> Copy). Keep it secret -- config.py is gitignored.
+RESCUE_BOT_TOKEN = "REPLACE_ME"
+
+# REQUIRED: the #rescue-me channel ID, as an integer (no quotes). Enable
+# Developer Mode (Settings -> Advanced), right-click the channel -> Copy Channel ID.
+# The bot only listens in this one channel.
+RESCUE_CHANNEL_ID = 0
+
+# OPTIONAL: restrict who may run !rescue to holders of this role ID (string).
+# Leave "" so anyone who can type in #rescue-me may rescue (matches the 1.0 UX).
+# Right-click a role -> Copy Role ID to fill it.
+RESCUE_ALLOWED_ROLE_ID = ""
