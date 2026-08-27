@@ -1,365 +1,1211 @@
-﻿Collaborator review  2026-08-27 07:51:13
+﻿Collaborator review  2026-08-27 14:25:07
 Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit a33f519fea2b87c8986aa68dceb6af7e785b2af8
+commit c2f5477a3d419d4a16d8f4bfbe87579a05f5ec64
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Thu Aug 27 15:48:06 2026 +0100
+Date:   Thu Aug 27 22:22:36 2026 +0100
 
-    fix(relaunch): scale HTBF loot by difficulty
+    feat(relaunch): restore Affinity hunts, Ascension models, and Odin Zantetsuken
     
-    Use independent tier-aware gear rolls with Treasure Hunter support, avoid
-    Sealion's Den entity collisions, and correct the Legendary Ring client tooltip.
+    Give all 24 Affinity NMs a collection path with scaled fights, show trial bosses as their retail models, and make summoned Odin spend all MP on Zantetsuken then despawn.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/Custom DATs/Relaunch Custom DATs/README.md b/Custom DATs/Relaunch Custom DATs/README.md
-index 9af1587c0f..e8ed026a5d 100644
---- a/Custom DATs/Relaunch Custom DATs/README.md	
-+++ b/Custom DATs/Relaunch Custom DATs/README.md	
-@@ -49,7 +49,7 @@ Prefer not to touch client files? Load it as an overlay instead:
- - Retail item reused: `Reraise Ring`
- - Server item name: `Legendary Ring`
- - Purpose: the one functional Legacy migration reward (recognition for time on Legendary)
--- Server behavior: Rare/Ex, all jobs, Lv.1 ring ΓÇö EXP +100%, Capacity +100%,
-+- Server behavior: Rare/Ex, all jobs, Lv.1 ring ΓÇö EXP +300%, Capacity +300%,
-   Auto-Reraise III, Movement Speed +25%, 100% EXP retained on death, No Weakness
-   after Reraise, a permanent legendary aura, and a USE that toggles Vanish
-   (Sneak+Invisible) / Transform (costume)
-diff --git a/Custom DATs/Relaunch Custom DATs/ROM/286/73.DAT b/Custom DATs/Relaunch Custom DATs/ROM/286/73.DAT
-index 6963d37b16..722860232d 100644
-Binary files a/Custom DATs/Relaunch Custom DATs/ROM/286/73.DAT and b/Custom DATs/Relaunch Custom DATs/ROM/286/73.DAT differ
-diff --git a/Custom DATs/Relaunch Custom DATs/manifest.md b/Custom DATs/Relaunch Custom DATs/manifest.md
-index 5c6d16cf60..ad995fa016 100644
---- a/Custom DATs/Relaunch Custom DATs/manifest.md	
-+++ b/Custom DATs/Relaunch Custom DATs/manifest.md	
-@@ -33,8 +33,8 @@ Suggested player-facing text for item `26169` (matches the server-side stats in
- ```text
- Legendary Ring
- [Ring] All Races
--Experience Points Boost +100%
--Capacity Points Boost +100%
-+Experience Points Boost +300%
-+Capacity Points Boost +300%
- Auto Reraise (III) Effect
- Movement Speed +25%
- Retains all EXP on death
-diff --git a/modules/custom/lua/htbf.lua b/modules/custom/lua/htbf.lua
-index 20f19004f5..6148cdbe2f 100644
---- a/modules/custom/lua/htbf.lua
-+++ b/modules/custom/lua/htbf.lua
-@@ -12,10 +12,93 @@
- -- Loaded from scripts/battlefields/<Zone>/<key>_ht{1,2,3}.lua, so the global
- -- Battlefield class + xi.* are already available.
+diff --git a/modules/custom/commands/affinitynm.lua b/modules/custom/commands/affinitynm.lua
+index 2a403c8601..b67df75469 100644
+--- a/modules/custom/commands/affinitynm.lua
++++ b/modules/custom/commands/affinitynm.lua
+@@ -6,17 +6,16 @@
+ --   !affinitynm behemoth   -- warps by name (partial, case-insensitive)
+ --   !affinitynm melee      -- warps by affinity category (partial)
+ --
+--- Roster is read LIVE from modules/custom/lua/augment_affinity_catalog.lua so it
+--- always matches the registrable affinities. (Before 2026-07-13 this held a stale
+--- hardcoded 24-NM table from the pre-2026-07-06 stat-family scheme, so e.g.
+--- `!affinitynm dex` warped to King Arthro -- a reworked-out NM that no longer
+--- registers an affinity. Now only the live catalog NMs are listed.)
++-- The canonical roster contains all 24 collection targets. Eleven also grant a
++-- trophy for a live Augment Sage affinity; the other thirteen still advance the
++-- collection and award Hunt Marks.
+ --
+ -- Warp coords come from the affinity spawn points in
+ -- modules/custom/sql/affinity_nm_spawns.sql (mob_spawn_points, groupid 2000x).
+ -- Permission 0 (all players), like !expcamp / !henge.
  -----------------------------------
-+require('scripts/globals/combat/treasure_hunter')
-+
- local catalog = require('modules/custom/lua/htbf_catalog')
+-local catalog = require('modules/custom/lua/augment_affinity_catalog')
++local catalog         = require('modules/custom/lua/affinity_nm_catalog')
++local affinityCatalog = require('modules/custom/lua/augment_affinity_catalog')
  
- local htbf = {}
- 
-+-- Optional HTBF loot groups contain an itemId 0 whiff entry. Each real entry in
-+-- those groups gets an independent tier-scaled roll, allowing higher tiers to
-+-- improve every weapon/gear piece instead of merely paying more marks. Groups
-+-- without a whiff entry (crystals, ingots, Rem's Tales, etc.) retain their
-+-- original weighted-selection behavior.
-+local function getBattlefieldTreasureHunter(player, battlefield)
-+    local thLevel = 0
-+
-+    if battlefield then
-+        pcall(function()
-+            for _, mob in ipairs(battlefield:getMobs(true, true)) do
-+                thLevel = math.max(thLevel, mob:getTHlevel() or 0)
-+            end
-+        end)
-+    end
-+
-+    -- Dead/cleaned-up battlefield mobs are not always available on every win
-+    -- path. Falling back to the player's equipped TH still guarantees that the
-+    -- stat affects rewards; the mob value above preserves in-fight TH procs.
-+    if thLevel == 0 then
-+        pcall(function()
-+            thLevel = player:getMod(xi.mod.TREASURE_HUNTER) or 0
-+        end)
-+    end
-+
-+    return math.max(0, math.min(14, math.floor(thLevel)))
-+end
-+
-+local function applyTreasureHunter(thLevel, baseRate)
-+    local adjustedRate = baseRate
-+    if
-+        thLevel > 0 and
-+        xi.combat and
-+        xi.combat.treasureHunter and
-+        xi.combat.treasureHunter.getDropRate
-+    then
-+        local ok, result = pcall(
-+            xi.combat.treasureHunter.getDropRate,
-+            thLevel,
-+            baseRate)
-+        if ok and type(result) == 'number' then
-+            -- TH bracket conversion must never reduce the configured base rate.
-+            adjustedRate = math.max(baseRate, result)
-+        end
-+    end
-+
-+    return math.max(0, math.min(10000, adjustedRate))
-+end
-+
-+local function selectTierLoot(player, lootTable, tier, thLevel)
-+    local selected = {}
-+
-+    for _, group in ipairs(lootTable) do
-+        local optional = false
-+        for _, entry in pairs(group) do
-+            if type(entry) == 'table' and entry.itemId == 0 then
-+                optional = true
-+                break
-+            end
-+        end
-+
-+        if optional then
-+            for _, entry in pairs(group) do
-+                if type(entry) == 'table' and entry.itemId and entry.itemId ~= 0 then
-+                    local basePct = catalog.getTierGearDropRate(tier, entry.weight or 0)
-+                    local rate = applyTreasureHunter(thLevel, math.floor(basePct * 100))
-+                    if math.random(1, 10000) <= rate then
-+                        selected[#selected + 1] = entry
-+                    end
-+                end
-+            end
-+        else
-+            for _, entry in ipairs(utils.selectFromLootGroups(player, { group })) do
-+                selected[#selected + 1] = entry
-+            end
-+        end
-+    end
-+
-+    return selected
-+end
-+
- -- ---------------------------------------------------------------------------
- -- ACCESS REQUIREMENTS (owner request 2026-07-12)
- -- To enter ANY High-Tier Battlefield, on the job you are entering with you must
-@@ -665,12 +748,14 @@ function htbf.register(fightKey, tier, variant)
-         -- stock crate -> handleLootRolls path drops nothing. Roll content.loot
-         -- HERE -- the one hook that reliably fires on every fight's win (it's
-         -- where gil/marks already land) -- and give the items straight to the
--        -- player, per completion. selectFromLootGroups is the same roller the
--        -- crate uses, so htbf_loot.lua tables behave identically.
-+        -- player, per completion. Optional gear groups use independent,
-+        -- tier-scaled rolls with Treasure Hunter; guaranteed weighted groups
-+        -- retain the stock selectFromLootGroups behavior.
-         local looted = 0
-         if self.loot then
-             pcall(function()
--                for _, entry in ipairs(utils.selectFromLootGroups(player, self.loot)) do
-+                local thLevel = getBattlefieldTreasureHunter(player, bf)
-+                for _, entry in ipairs(selectTierLoot(player, self.loot, tier, thLevel)) do
-                     if entry.itemId and entry.itemId ~= 0 then
-                         if entry.itemId == xi.item.GIL then
-                             player:addGil(entry.amount or 0)
-@@ -722,9 +807,8 @@ function htbf.register(fightKey, tier, variant)
-     end
- 
-     -- Armoury-crate loot. Priority: a fight's per-tier override (f.loot[tier]),
--    -- then its flat retail pool (catalog.fightLoot[fightKey], same pool across
--    -- tiers -- retail loot is per-fight, the tiers differ in difficulty + marks),
--    -- then the modest tier-scaled default so every fight always drops a crate.
-+    -- then its flat retail pool (catalog.fightLoot[fightKey]), then the modest
-+    -- default. selectTierLoot applies tier rates and TH to optional entries.
-     local loot
-     if isFinalTest then
-         loot = catalog.tierLoot[3]
-diff --git a/modules/custom/lua/htbf_catalog.lua b/modules/custom/lua/htbf_catalog.lua
-index 0f5c4ae1a3..fe93eec299 100644
---- a/modules/custom/lua/htbf_catalog.lua
-+++ b/modules/custom/lua/htbf_catalog.lua
-@@ -238,6 +238,33 @@ catalog.tierReward =
-     },
+ ---@type TCommand
+ local commandObj = {}
+@@ -27,53 +26,23 @@ commandObj.cmdprops =
+     parameters = 's',
  }
  
-+-- Per-item base rates for optional HTBF gear groups. The source tables use
-+-- weights 50 / 80 / 120+ as rarity bands; HTBF converts those bands into an
-+-- independent roll for every listed item so harder tiers can genuinely improve
-+-- each item's chance (and can award more than one piece on a lucky clear).
-+-- Rates are percentages before Treasure Hunter.
-+catalog.tierGearDropRate =
-+{
-+    [1] = { rare = 1.0, uncommon = 2.0, common = 3.0 },
-+    [2] = { rare = 4.0, uncommon = 5.5, common = 7.0 },
-+    [3] = { rare = 8.0, uncommon = 10.0, common = 12.0 },
-+}
-+
-+function catalog.getTierGearDropRate(tier, sourceWeight)
-+    local rates = catalog.tierGearDropRate[tier]
-+    if not rates then
-+        return 0
+--- Warp coords per affinity NM, keyed by the catalog's `nm` field. If the Sage
+--- roster ever gains a NEW NM, add its coords here (from affinity_nm_spawns.sql);
+--- the command warns rather than warping to nowhere when coords are missing.
+-local WARP =
+-{
+-    ['Behemoth']         = { zone = 105, x = -670.00, y = -23.00, z =  352.00 },
+-    ['King_Behemoth']    = { zone = 127, x = -267.50, y = -19.80, z =   73.70 },
+-    ['Ouryu']            = { zone =  29, x =  618.78, y =   0.56, z = -552.23 },
+-    ['Genbu']            = { zone = 130, x =  261.87, y = -70.22, z =  526.41 },
+-    ['Byakko']           = { zone = 130, x = -419.40, y = -70.20, z =  410.96 },
+-    ['Aspidochelone']    = { zone = 113, x = -175.33, y =   7.68, z = -247.30 },
+-    ['King_Vinegarroon'] = { zone = 125, x = -239.00, y =  -0.23, z = -650.00 },
+-    ['Phoenix']          = { zone =  30, x =  685.00, y = -31.76, z = -481.00 },
+-    ['Absolute_Virtue']  = { zone = 130, x =   -6.03, y = -40.52, z = -417.21 },
+-    ['Proto-Omega']      = { zone = 130, x =    1.00, y = -38.60, z = -485.00 },
+-    ['Kirin']            = { zone = 178, x =  -68.00, y =  32.58, z =    3.50 },
+-}
+-
+--- Roster built live from the Sage catalog. index = the !affinitynm number.
+-local function buildRoster()
+-    local roster = {}
+-    for _, row in ipairs(catalog.affinities or {}) do
+-        roster[#roster + 1] =
+-        {
+-            name  = (row.nm or ''):gsub('_', ' '),
+-            key   = row.nm,
+-            label = row.label or '',
+-            zone  = row.nmZone or '?',
+-            warp  = WARP[row.nm],
+-        }
+-    end
+-    return roster
+-end
+-
+ commandObj.onTrigger = function(player, arg)
+     local SYS    = xi.msg.channel.SYSTEM_3
+-    local roster = buildRoster()
+     local entry
+ 
+     local n = tonumber(arg)
+-    if n and roster[n] then
+-        entry = roster[n]
++    if n and catalog.entries[n] then
++        entry = catalog.entries[n]
+     elseif arg and arg ~= '' then
+         local needle = string.lower(arg)
+-        for _, e in ipairs(roster) do
+-            if string.find(string.lower(e.name), needle, 1, true)
+-                or string.find(string.lower(e.label), needle, 1, true) then
++        for _, e in ipairs(catalog.entries) do
++            local profile = catalog.profiles[e.band]
++            local affinity = e.registerCat and affinityCatalog.byCat(e.registerCat)
++            if
++                string.find(string.lower(e.display), needle, 1, true) or
++                string.find(string.lower(profile.label), needle, 1, true) or
++                (affinity and string.find(string.lower(affinity.label), needle, 1, true))
++            then
+                 entry = e
+                 break
+             end
+@@ -81,20 +50,27 @@ commandObj.onTrigger = function(player, arg)
+     end
+ 
+     if not entry then
+-        player:printToPlayer('Affinity NMs -- warp with  !affinitynm <number|name>:', SYS)
+-        for i, e in ipairs(roster) do
+-            player:printToPlayer(string.format('  %2d. %-16s (%s) @ %s', i, e.name, e.label, e.zone), SYS)
++        player:printToPlayer(string.format(
++            'Affinity NM collection: %d/%d -- warp with !affinitynm <number|name>:',
++            catalog.clearCount(player), #catalog.entries), SYS)
++        for _, e in ipairs(catalog.entries) do
++            local profile  = catalog.profiles[e.band]
++            local affinity = e.registerCat and affinityCatalog.byCat(e.registerCat)
++            local purpose  = affinity and ('Sage: ' .. affinity.label) or 'Collection'
++            player:printToPlayer(string.format(
++                ' %s %2d. %-18s [%s, %s] @ %s',
++                catalog.hasClear(player, e.index) and '*' or '-',
++                e.index, e.display, profile.label, purpose, e.zone), SYS)
+         end
+         return
+     end
+ 
+-    if not entry.warp then
+-        player:printToPlayer(string.format('%s [%s] has no warp coordinates configured -- tell a GM.', entry.name, entry.label), SYS)
+-        return
+-    end
+-
+-    player:printToPlayer(string.format('Warping to %s [%s affinity] in %s, kupo!', entry.name, entry.label, entry.zone), SYS)
+-    player:setPos(entry.warp.x, entry.warp.y, entry.warp.z, 0, entry.warp.zone)
++    local profile  = catalog.profiles[entry.band]
++    local affinity = entry.registerCat and affinityCatalog.byCat(entry.registerCat)
++    player:printToPlayer(string.format(
++        'Warping to %s [%s%s] in %s, kupo!',
++        entry.display, profile.label, affinity and (', ' .. affinity.label .. ' affinity') or '', entry.zone), SYS)
++    player:setPos(entry.x, entry.y, entry.z, 0, entry.zoneId)
+ end
+ 
+ return commandObj
+diff --git a/modules/custom/commands/affinitypop.lua b/modules/custom/commands/affinitypop.lua
+index dc0f7cc50a..1ab67e1fb5 100644
+--- a/modules/custom/commands/affinitypop.lua
++++ b/modules/custom/commands/affinitypop.lua
+@@ -14,6 +14,7 @@
+ -----------------------------------
+ ---@type TCommand
+ local commandObj = {}
++local catalog = require('modules/custom/lua/affinity_nm_catalog')
+ 
+ commandObj.cmdprops =
+ {
+@@ -21,64 +22,17 @@ commandObj.cmdprops =
+     parameters = '',
+ }
+ 
+--- The 24 affinity NM mobids (current DB values; see affinity_nm_spawns.sql).
+-local AFFINITY_MOBIDS =
+-{
+-    17208197, 17298310, 17490823, 17228680, 17302409,  -- Behemoth, K.Behemoth, K.Arthro, Simurgh, Adamantoise
+-    17310621, 17269643, 17310622, 17310623, 17240974,  -- Genbu, Roc, Seiryu, Byakko, Aspidochelone
+-    16896911, 17404816, 16901009, 17310624, 17507219,  -- Ouryu, Bune, Phoenix, Suzaku, Kirin
+-    17408916, 17408917, 17617814, 16798615, 17290136,  -- Fafnir, Nidhogg, Vrtra, Tiamat, K.Vinegarroon
+-    17556377, 17556378, 17310619, 17310620,            -- Khimaira, Cerberus, Absolute Virtue, Proto-Omega
+-}
+-
+-local RESPAWN_SECONDS = 30
+-
+ commandObj.onTrigger = function(player)
+     local SYS = xi.msg.channel.SYSTEM_3
+     local up, missing = 0, 0
+ 
+-    for _, mobid in ipairs(AFFINITY_MOBIDS) do
+-        local mob = GetMobByID(mobid)
+-        if mob then
+-            -- Keep it on the short timer past death: DESPAWN listener fires
+-            -- after the retail onMobDespawn, so it's the last writer.
+-            mob:addListener('DESPAWN', 'AFFINITY_AUTOPOP', function(m)
+-                m:setRespawnTime(RESPAWN_SECONDS)
+-            end)
+-            -- On death: registered affinity NM -> grant the trophy alliance-wide;
+-            -- reworked-out NM -> one-time "no longer registers" notice. Mirror
+-            -- of affinity_nm_autopop.configureMob (which does the same at zone
+-            -- boot). Two listeners with distinct names, so a re-run replaces
+-            -- each cleanly instead of stacking.
+-            if xi.affinityAutopop and xi.affinityAutopop.grantTrophy then
+-                mob:addListener('DEATH', 'AFFINITY_TROPHY', function(m, killer)
+-                    xi.affinityAutopop.grantTrophy(m, killer)
+-                end)
+-            end
+-            if xi.affinityAutopop and xi.affinityAutopop.deathNotice then
+-                mob:addListener('DEATH', 'AFFINITY_NOTICE', function(m, killer)
+-                    xi.affinityAutopop.deathNotice(m, killer)
+-                end)
+-            end
+-            -- Fix the "NPC" display name (re-apply each spawn). Display-only.
+-            if xi.affinityAutopop and xi.affinityAutopop.applyName then
+-                mob:addListener('SPAWN', 'AFFINITY_NAME', function(m)
+-                    xi.affinityAutopop.applyName(m)
+-                end)
+-                if mob:isSpawned() then xi.affinityAutopop.applyName(mob) end
+-            end
+-            -- Sky gods: re-open the island yellow portal their retail onMobSpawn
+-            -- closes -- always-up gods otherwise lock the islands permanently.
+-            if xi.affinityAutopop and xi.affinityAutopop.openGodPortal then
+-                mob:addListener('SPAWN', 'AFFINITY_PORTAL', function(m)
+-                    xi.affinityAutopop.openGodPortal(m)
+-                end)
+-                if mob:isSpawned() then xi.affinityAutopop.openGodPortal(mob) end
+-            end
+-            mob:setRespawnTime(RESPAWN_SECONDS)
+-            if not mob:isSpawned() then
+-                SpawnMob(mobid)
+-            end
++    if not xi.affinityAutopop or not xi.affinityAutopop.configureMob then
++        player:printToPlayer('[Affinity] Autopop module is not loaded.', SYS)
++        return
 +    end
 +
-+    if sourceWeight <= 50 then
-+        return rates.rare
-+    elseif sourceWeight <= 80 then
-+        return rates.uncommon
++    for _, entry in ipairs(catalog.entries) do
++        if xi.affinityAutopop.configureMob(entry.mobId) then
+             up = up + 1
+         else
+             missing = missing + 1
+diff --git a/modules/custom/lua/affinity_nm_autopop.lua b/modules/custom/lua/affinity_nm_autopop.lua
+index 3c95a39b50..f5b4cfea95 100644
+--- a/modules/custom/lua/affinity_nm_autopop.lua
++++ b/modules/custom/lua/affinity_nm_autopop.lua
+@@ -42,6 +42,9 @@ require('modules/module_utils')
+ local affinityPop = Module:new('affinity_nm_autopop')
+ affinityPop:setEnabled(true)
+ 
++local nmCatalog       = require('modules/custom/lua/affinity_nm_catalog')
++local affinityCatalog = require('modules/custom/lua/augment_affinity_catalog')
++
+ -----------------------------------
+ -- Tuning
+ -----------------------------------
+@@ -49,66 +52,15 @@ local RESPAWN_SECONDS = 30  -- repop delay after each death (matches always_popp
+ local SYS             = xi.msg.channel.SYSTEM_3
+ 
+ -----------------------------------
+--- Difficulty (2026-06-30): the affinity NMs REUSE retail pools, so at their base
+--- level they are trivial for geared relaunch players. Bake in a stat block, applied
+--- on every spawn. TUNE HERE. Offensive mods are flat additions (setMod, idempotent);
+--- HP is scaled once per fresh spawn via setMaxHP.
++-- Difficulty: all 24 NMs reuse retail pools and retain their safe retail scripts,
++-- but the canonical roster assigns an accessible Intro/Standard/Veteran/Apex
++-- profile. Offensive mods overwrite (idempotent); HP scales once per fresh spawn.
+ --   * Mob combat mods are int16 -- keep each < 31000 or they wrap NEGATIVE.
+ --   * HP via setMaxHP is int32, so the multiplier is the safe "tankier" lever.
+---   * UNIFORM across all 24: the god-tier NMs (Kirin/AV/Proto-Omega/4 gods) may end
+---     up over-tuned for the HL-rank-3 audience -- add a per-mobid override if so.
+ -----------------------------------
+ -- Docs: the stat block below is quoted on docs/endgame/affinity-nms.md
+ -- ("Difficulty and notes") -- update that section when retuning here.
+--- BIG BUMP 2026-07-06 (Duff test: "fairly easy as thf"; owner: increase difficulty).
+--- HP is the primary lever (int32 -> longer fights, not one-shots); the flat combat
+--- mods stay well under the int16 mob-mod cap (~31000) even stacked on base, so no
+--- overflow/wrap. Uniform across all 24; add a per-mobid override later if the
+--- god-tier NMs need to outclass Behemoth etc.
+-local NM_HP_MULT = 12.0
+-local NM_MODS =
+-{
+-    [xi.mod.ATT]           = 6000,
+-    [xi.mod.ACC]           = 2400,
+-    [xi.mod.DEF]           = 1800,
+-    [xi.mod.EVA]           = 1000,
+-    [xi.mod.MATT]          = 500,
+-    [xi.mod.MDEF]          = 60,
+-    [xi.mod.STR]           = 400,
+-    [xi.mod.DEX]           = 400,
+-    [xi.mod.HASTE_GEAR]    = 200,   -- ~20% (engine caps gear haste ~25%)
+-    [xi.mod.DOUBLE_ATTACK] = 25,
+-    [xi.mod.CRITHITRATE]   = 12,
+-    [xi.mod.STORETP]       = 50,    -- more frequent TP moves = more real mechanics
+-}
+-
+------------------------------------
+--- The 24 affinity NMs grouped by zone (mobids = current affinity_nm_spawns.sql).
+--- Each entry: { Zone.onInitialize override path, { mobid, ... } }.
+--- Override path is a STRING, so dashes (Riverne-Site_*) are legal.
+------------------------------------
+-local ZONES =
+-{
+-    { 'xi.zones.Batallia_Downs.Zone.onInitialize',          { 17208197 } },                                       -- Behemoth
+-    { 'xi.zones.Behemoths_Dominion.Zone.onInitialize',      { 17298310 } },                                       -- King Behemoth
+-    { 'xi.zones.Kuftal_Tunnel.Zone.onInitialize',           { 17490823 } },                                       -- King Arthro
+-    { 'xi.zones.Rolanberry_Fields.Zone.onInitialize',       { 17228680 } },                                       -- Simurgh
+-    { 'xi.zones.Valley_of_Sorrows.Zone.onInitialize',       { 17302409 } },                                       -- Adamantoise
+-    { 'xi.zones.The_Shrine_of_RuAvitau.Zone.onInitialize',  { 17507219 } },                                       -- Kirin (retail Shrine; 4 gods moved to Ru'Aun Gardens)
+-    { 'xi.zones.Sauromugue_Champaign.Zone.onInitialize',    { 17269643 } },                                       -- Roc
+-    { 'xi.zones.Cape_Teriggan.Zone.onInitialize',           { 17240974 } },                                       -- Aspidochelone
+-    { 'xi.zones.Riverne-Site_B01.Zone.onInitialize',        { 16896911 } },                                       -- Ouryu
+-    { 'xi.zones.The_Boyahda_Tree.Zone.onInitialize',        { 17404816 } },                                       -- Bune
+-    { 'xi.zones.Riverne-Site_A01.Zone.onInitialize',        { 16901009 } },                                       -- Phoenix
+-    { 'xi.zones.Dragons_Aery.Zone.onInitialize',            { 17408916, 17408917 } },                             -- Fafnir/Nidhogg
+-    { 'xi.zones.Ifrits_Cauldron.Zone.onInitialize',         { 17617814 } },                                       -- Vrtra
+-    { 'xi.zones.Uleguerand_Range.Zone.onInitialize',        { 16798615 } },                                       -- Tiamat
+-    { 'xi.zones.Western_Altepa_Desert.Zone.onInitialize',   { 17290136 } },                                       -- King Vinegarroon
+-    { 'xi.zones.King_Ranperres_Tomb.Zone.onInitialize',     { 17556377, 17556378 } },                             -- Khimaira/Cerberus
+-    { 'xi.zones.RuAun_Gardens.Zone.onInitialize',           { 17310619, 17310620, 17310621, 17310622, 17310623, 17310624 } }, -- AV/Proto-Omega + Genbu/Seiryu/Byakko/Suzaku (Sky god corners)
+-}
+-
+--- Death-time trophy grants + one-time notice for reworked-out NMs.
++-- Death-time trophy grants and 24-target collection rewards.
+ -- History: 88f443b677 (2026-07-11) removed the hand-synced TROPHY table that
+ -- used to duplicate a killer-only grant here, and re-homed grants in
+ -- augment_affinity_grants.lua on an `xi.zones.<Zone>.Zone.onMobDeath` hook.
+@@ -118,8 +70,6 @@ local ZONES =
+ -- Result: for ~24h the entire affinity-hunt trophy path was dead, and no
+ -- registered NM's trophy dropped. Restored here as a mob DEATH listener
+ -- (which does fire), catalog-driven and fanned to the whole in-zone alliance.
+-local affinityCatalog = require('modules/custom/lua/augment_affinity_catalog')
+-
+ -- Hand THIS in-zone alliance member the NM's registration trophy. Guarded so
+ -- repeat kills / the alliance fan-out never stack duplicates.
+ local function grantTrophyToMember(player, row)
+@@ -140,8 +90,25 @@ end
+ -- Fan the trophy to every in-zone alliance member (matches the "whole alliance"
+ -- semantic the dead zone-override was trying to provide). Solo players get a
+ -- one-element alliance table containing just themselves.
++local function normalizeKiller(killer)
++    if not killer then
++        return nil
 +    end
 +
-+    return rates.common
++    if not killer:isPC() and killer:getAllegiance() == 1 then
++        killer = killer:getMaster()
++    end
++
++    if killer and killer:isPC() then
++        return killer
++    end
++
++    return nil
 +end
 +
- -- Default armoury-crate loot (the chest that spawns on a win). Override per fight
- -- with catalog.fights[key].loot[tier] for retail-exact drops. Deliberately MODEST
- -- -- tier-scaled crafting spoils, NO gear/relics -- because these battlefields are
-@@ -467,7 +494,13 @@ catalog.fights =
-         -- Retail HTMBF is Omega -> Ultima only. The mission battlefield also
-         -- contains Mammets and story cutscenes, so it must not be reused here.
-         groupsForTier = function(tier)
--        local first = 16908382 + (tier - 1) * 30
-+            local firstByTier =
-+            {
-+                [1] = 16908382,
-+                [2] = 16908500,
-+                [3] = 16908530,
-+            }
-+            local first = firstByTier[tier]
-             return
-             {
-                 {
-diff --git a/modules/custom/lua/htbf_loot.lua b/modules/custom/lua/htbf_loot.lua
-index 6da0f7092d..75811b6077 100644
---- a/modules/custom/lua/htbf_loot.lua
-+++ b/modules/custom/lua/htbf_loot.lua
-@@ -2,8 +2,8 @@
- -- htbf_loot.lua  -- retail-sourced armoury-crate loot per HTBF fight (relaunch)
- --
- -- One table per fightKey (consumed as catalog.fightLoot[fightKey] -> content.loot),
---- applied to ALL tiers of that fight: retail loot is per-fight; the I/II/III tiers
---- differ in difficulty + Hunt Marks, not drop pool.
-+-- applied to all tiers of that fight. The item roster stays per-fight, while
-+-- htbf.lua converts optional-entry rarity bands into tier-specific drop rates.
- --
- -- Format = utils.selectFromLootGroups: an array of GROUPS; each group an array of
- -- { itemId = xi.item.X, weight = N, amount = M? } (+ optional group `quantity`,
-@@ -11,9 +11,11 @@
- -- is a "drop nothing" slot (NEVER nil -- the engine logs an error on a nil id).
- --
- -- ECONOMY-CONSCIOUS (these battlefields are REPEATABLE + the server runs an AH
---- market-maker): GROUP 1 is a reliable common material/currency reward; the rare
---- GEAR sits in a whiff-heavy GROUP 2 (the 0-slot dominant at ~850) so valuable
---- items stay genuinely rare per clear. Tune any single fight here in isolation.
-+-- market-maker): GROUP 1 is a reliable common material/currency reward. Groups
-+-- containing itemId 0 are optional loot: each real entry rolls independently,
-+-- with source weights 50 / 80 / 120+ mapping to rare / uncommon / common tier
-+-- rates in htbf_catalog.lua. Treasure Hunter then improves every optional roll.
-+-- The legacy itemId 0 weight remains descriptive but is not rolled by HTBF.
- --
- -- Sourced from bg-wiki HTBF pages 2026-06-27; EVERY xi.item.* verified present in
- -- scripts/enum/item.lua. Items with no enum const were omitted (notes inline).
-diff --git a/modules/custom/sql/htbf_one_to_be_feared_spawns.sql b/modules/custom/sql/htbf_one_to_be_feared_spawns.sql
-index 7b7fb0b45d..95f48e0582 100644
---- a/modules/custom/sql/htbf_one_to_be_feared_spawns.sql
-+++ b/modules/custom/sql/htbf_one_to_be_feared_spawns.sql
-@@ -1,10 +1,15 @@
- -- Provide independent Omega/Ultima entity pools for HTBF tiers II and III.
- -- Tier I occupies 16908382..16908411 (three arenas, ten entities each).
---- The registrar uses a 30-ID stride, so clone those verified rows into the
---- two missing ranges instead of falling through to unrelated/empty mob IDs.
-+-- IDs 16908413..16908481 belong to Sealion's Den NPCs, including the Iron
-+-- Gate itself, so tiers II/III live in audited free ranges 16908500..16908559.
-+-- Remove rows created by the old +30/+60 allocation before rebuilding them.
-+DELETE FROM `mob_spawn_points`
-+WHERE `mobid` BETWEEN 16908412 AND 16908471
-+AND `mobname` IN ('Omega', 'Ultima');
-+
- INSERT INTO `mob_spawn_points`
-     (`mobid`, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`)
--SELECT `mobid` + 30, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`
-+SELECT `mobid` + 118, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`
- FROM `mob_spawn_points`
- WHERE `mobid` BETWEEN 16908382 AND 16908411
- ON DUPLICATE KEY UPDATE
-@@ -15,7 +20,7 @@ ON DUPLICATE KEY UPDATE
+ local function grantTrophy(m, killer)
+-    if not killer or not killer:isPC() then return end
++    killer = normalizeKiller(killer)
++    if not killer then return end
+     local row = affinityCatalog.byNm(m:getName())
+     if not row or not row.trophy then return end
+     local zoneId = m:getZoneID()
+@@ -157,50 +124,100 @@ local function grantTrophy(m, killer)
+     end
+ end
  
- INSERT INTO `mob_spawn_points`
-     (`mobid`, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`)
--SELECT `mobid` + 60, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`
-+SELECT `mobid` + 148, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`
- FROM `mob_spawn_points`
- WHERE `mobid` BETWEEN 16908382 AND 16908411
- ON DUPLICATE KEY UPDATE
-diff --git a/scripts/tests/systems/htbf_integrity.lua b/scripts/tests/systems/htbf_integrity.lua
-index ad75ef6275..455758ad72 100644
---- a/scripts/tests/systems/htbf_integrity.lua
-+++ b/scripts/tests/systems/htbf_integrity.lua
-@@ -89,6 +89,33 @@ describe('HTBF catalog integrity and balance', function()
-         end
+--- One-time notice for the 13 reworked-out NMs (kill of e.g. Simurgh/Roc/Bune
+--- etc. no longer registers a Sage affinity since the 2026-07-06 rework). Only
+--- fires for NMs NOT in the current catalog, so it and grantTrophy are mutually
+--- exclusive per kill.
+-local function deathNotice(m, killer)
+-    if not killer or not killer:isPC() then
+-        return
++local function addMarks(player, amount)
++    player:setCharVar('HL_Points', (player:getCharVar('HL_Points') or 0) + amount)
++end
++
++local function awardFirstClear(player, entry)
++    if nmCatalog.hasClear(player, entry.index) then
++        return false
+     end
+-    if affinityCatalog.byNm(m:getName()) then
+-        return  -- live affinity NM: grantTrophy handles it
++
++    nmCatalog.grantClear(player, entry.index)
++    local profile = nmCatalog.profiles[entry.band]
++    addMarks(player, profile.firstMarks)
++
++    local total     = nmCatalog.clearCount(player)
++    local milestone = nmCatalog.milestones[total]
++    player:printToPlayer(string.format(
++        '[Affinity Hunt] FIRST CLEAR: %s! +%d Hunt Marks. Collection: %d/%d.',
++        entry.display, profile.firstMarks, total, #nmCatalog.entries), SYS)
++
++    if milestone then
++        addMarks(player, milestone.marks)
++        if milestone.title then
++            player:addTitle(milestone.title)
++        end
++        player:printToPlayer(string.format(
++            '[Affinity Hunt] %s milestone! +%d Hunt Marks%s',
++            milestone.label,
++            milestone.marks,
++            milestone.title and ' and the Master Hunter title!' or '.'), SYS)
+     end
+-    if killer:getCharVar('affinityReworkNotice') == 1 then
++
++    return true
++end
++
++local function awardRepeat(player, entry)
++    local today = tonumber(os.date('!%Y%j')) or 0
++    if (player:getCharVar(nmCatalog.repeatDayVar) or 0) ~= today then
++        player:setCharVar(nmCatalog.repeatDayVar, today)
++        player:setCharVar(nmCatalog.repeatMarksVar, 0)
++    end
++
++    local earned    = player:getCharVar(nmCatalog.repeatMarksVar) or 0
++    local remaining = math.max(0, nmCatalog.repeatDailyCap - earned)
++    local profile   = nmCatalog.profiles[entry.band]
++    local reward    = math.min(profile.repeatMarks, remaining)
++    if reward <= 0 then
+         return
+     end
+-    killer:setCharVar('affinityReworkNotice', 1)
+-    killer:printToPlayer(string.format(
+-        '[Affinity] %s does not register a Sage affinity -- only the 11 NMs listed at the Augment Sage do. (This notice shows once.)',
+-        m:getName():gsub('_', ' ')), SYS)
++
++    addMarks(player, reward)
++    player:setCharVar(nmCatalog.repeatMarksVar, earned + reward)
++    player:printToPlayer(string.format(
++        '[Affinity Hunt] Repeat clear: %s. +%d Hunt Marks (%d/%d daily).',
++        entry.display, reward, earned + reward, nmCatalog.repeatDailyCap), SYS)
++end
++
++local function grantProgress(m, killer)
++    killer = normalizeKiller(killer)
++    local entry = nmCatalog.byId(m:getID())
++    if not killer or not entry then
++        return
++    end
++
++    local killerHadClear = nmCatalog.hasClear(killer, entry.index)
++    local alliance       = killer:getAlliance()
++    local zoneId         = m:getZoneID()
++
++    if alliance then
++        for _, member in ipairs(alliance) do
++            if member and member:getZoneID() == zoneId then
++                awardFirstClear(member, entry)
++            end
++        end
++    else
++        awardFirstClear(killer, entry)
++    end
++
++    if killerHadClear then
++        awardRepeat(killer, entry)
++    end
+ end
+ 
+ xi.affinityAutopop = xi.affinityAutopop or {}
+-xi.affinityAutopop.grantTrophy = grantTrophy   -- reused by the !affinitypop command
+-xi.affinityAutopop.deathNotice = deathNotice   -- reused by the !affinitypop command
++xi.affinityAutopop.grantTrophy  = grantTrophy
++xi.affinityAutopop.grantProgress = grantProgress
+ 
+--- mobid -> proper display name. These reused-pool spawns show as "NPC" on the
++-- These reused-pool spawns show as "NPC" on the
+ -- client; renameEntity sets ONLY packetName (+ flags UPDATE_NAME to push it live),
+ -- it does NOT touch the entity's `name`, so mob:getName() -- which the affinity
+ -- GRANT matches against -- is unchanged. Purely a display fix.
+-local NAME =
+-{
+-    [17208197] = 'Behemoth',      [17298310] = 'King Behemoth',    [17490823] = 'King Arthro',
+-    [17228680] = 'Simurgh',       [17302409] = 'Adamantoise',      [17310621] = 'Genbu',
+-    [17269643] = 'Roc',           [17310622] = 'Seiryu',           [17310623] = 'Byakko',
+-    [17240974] = 'Aspidochelone', [16896911] = 'Ouryu',            [17404816] = 'Bune',
+-    [16901009] = 'Phoenix',       [17310624] = 'Suzaku',           [17507219] = 'Kirin',
+-    [17408916] = 'Fafnir',        [17408917] = 'Nidhogg',          [17617814] = 'Vrtra',
+-    [16798615] = 'Tiamat',        [17290136] = 'King Vinegarroon', [17556377] = 'Khimaira',
+-    [17556378] = 'Cerberus',      [17310619] = 'Absolute Virtue',  [17310620] = 'Proto-Omega',
+-}
+-
+ local function applyName(m)
+-    local nm = NAME[m:getID()]
+-    if nm then
+-        m:renameEntity(nm, true)  -- silent; sets packetName only
++    local entry = nmCatalog.byId(m:getID())
++    if entry then
++        m:renameEntity(entry.display, true)  -- silent; sets packetName only
+     end
+ end
+ xi.affinityAutopop.applyName = applyName  -- reused by the !affinitypop command
+@@ -238,11 +255,17 @@ xi.affinityAutopop.openGodPortal = openGodPortal  -- reused by the !affinitypop
+ -- scaled ONCE per fresh spawn (guarded by a localVar the SPAWN listener resets), so
+ -- a re-configure (e.g. !affinitypop) never compounds the multiplier.
+ local function applyStats(m)
+-    for modId, val in pairs(NM_MODS) do
++    local entry   = nmCatalog.byId(m:getID())
++    local profile = entry and nmCatalog.profiles[entry.band]
++    if not profile then
++        return
++    end
++
++    for modId, val in pairs(profile.mods) do
+         m:setMod(modId, val)
+     end
+-    if NM_HP_MULT > 1.0 and m:getLocalVar('affHpScaled') == 0 then
+-        local hp = math.floor(m:getMaxHP() * NM_HP_MULT)
++    if profile.hpMult > 1.0 and m:getLocalVar('affHpScaled') == 0 then
++        local hp = math.floor(m:getMaxHP() * profile.hpMult)
+         if hp > 0 then
+             m:setMaxHP(hp)
+             m:setHP(hp)
+@@ -267,15 +290,13 @@ local function configureMob(mobid)
+         m:setRespawnTime(RESPAWN_SECONDS)
      end)
  
-+    it('scales optional gear rates by tier while preserving rarity bands', function()
-+        local expected =
+-    -- On death: registered affinity NM -> grant the trophy alliance-wide;
+-    -- reworked-out NM -> one-time "no longer registers" courtesy notice.
+-    -- (Split into two listeners so re-runs of !affinitypop are still idempotent
+-    -- -- addListener replaces by name, so the two names must stay distinct.)
++    -- On death, grant the Sage trophy where applicable and record collection
++    -- progress for every one of the 24 NMs.
+     mob:addListener('DEATH', 'AFFINITY_TROPHY', function(m, killer)
+         grantTrophy(m, killer)
+     end)
+-    mob:addListener('DEATH', 'AFFINITY_NOTICE', function(m, killer)
+-        deathNotice(m, killer)
++    mob:addListener('DEATH', 'AFFINITY_PROGRESS', function(m, killer)
++        grantProgress(m, killer)
+     end)
+ 
+     -- Fix the "NPC" display name; re-apply on every spawn (packetName resets are cheap).
+@@ -317,6 +338,7 @@ local function configureMob(mobid)
+     end
+     return true
+ end
++xi.affinityAutopop.configureMob = configureMob
+ 
+ local function configureZone(mobids, zoneLabel)
+     local up = 0
+@@ -330,8 +352,13 @@ end
+ -----------------------------------
+ -- Register a Zone.onInitialize override per affinity zone.
+ -----------------------------------
+-for _, info in ipairs(ZONES) do
+-    local overridePath, mobids = info[1], info[2]
++local zoneMobs = {}
++for _, entry in ipairs(nmCatalog.entries) do
++    zoneMobs[entry.zoneOverride] = zoneMobs[entry.zoneOverride] or {}
++    table.insert(zoneMobs[entry.zoneOverride], entry.mobId)
++end
++
++for overridePath, mobids in pairs(zoneMobs) do
+     local zoneLabel = overridePath:match('xi%.zones%.([^.]+)%.') or overridePath
+     affinityPop:addOverride(overridePath, function(zone)
+         super(zone)
+@@ -339,4 +366,13 @@ for _, info in ipairs(ZONES) do
+     end)
+ end
+ 
++-- Backfill collection stamps from the 11 live Sage affinities. The Mig11 guard
++-- prevents interpreting the retired 24-category field before it is remapped.
++affinityPop:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
++    super(player, firstLogin, zoning)
++    if (player:getCharVar('Augment_Affinities_Mig11') or 0) ~= 0 then
++        nmCatalog.migrateRegisteredClears(player)
++    end
++end)
++
+ return affinityPop
+diff --git a/modules/custom/lua/affinity_nm_catalog.lua b/modules/custom/lua/affinity_nm_catalog.lua
+new file mode 100644
+index 0000000000..702b90cc94
+--- /dev/null
++++ b/modules/custom/lua/affinity_nm_catalog.lua
+@@ -0,0 +1,155 @@
++-----------------------------------
++-- Canonical roster, difficulty, travel, and collection rewards for all
++-- 24 Affinity NMs. Sage registration remains owned by
++-- augment_affinity_catalog.lua; registerCat is only a cross-reference.
++-----------------------------------
++local catalog = {}
++
++catalog.clearVar       = 'Affinity_NM_Clears'
++catalog.migrationVar   = 'Affinity_NM_Clears_Mig1'
++catalog.repeatDayVar   = 'Affinity_NM_RepeatDay'
++catalog.repeatMarksVar = 'Affinity_NM_RepeatMarks'
++catalog.repeatDailyCap = 120
++
++catalog.profiles =
++{
++    intro =
++    {
++        label = 'Intro', hpMult = 8.0, firstMarks = 90, repeatMarks = 5,
++        mods =
 +        {
-+            [1] = { rare = 1.0, uncommon = 2.0,  common = 3.0 },
-+            [2] = { rare = 4.0, uncommon = 5.5,  common = 7.0 },
-+            [3] = { rare = 8.0, uncommon = 10.0, common = 12.0 },
-+        }
++            [xi.mod.ATT] = 3000, [xi.mod.ACC] = 1200, [xi.mod.DEF] = 900,
++            [xi.mod.EVA] = 500, [xi.mod.MATT] = 250, [xi.mod.MDEF] = 30,
++            [xi.mod.STR] = 200, [xi.mod.DEX] = 200, [xi.mod.HASTE_GEAR] = 100,
++            [xi.mod.DOUBLE_ATTACK] = 12, [xi.mod.CRITHITRATE] = 6, [xi.mod.STORETP] = 20,
++        },
++    },
++    standard =
++    {
++        label = 'Standard', hpMult = 9.0, firstMarks = 150, repeatMarks = 8,
++        mods =
++        {
++            [xi.mod.ATT] = 3600, [xi.mod.ACC] = 1500, [xi.mod.DEF] = 1100,
++            [xi.mod.EVA] = 650, [xi.mod.MATT] = 320, [xi.mod.MDEF] = 40,
++            [xi.mod.STR] = 250, [xi.mod.DEX] = 250, [xi.mod.HASTE_GEAR] = 140,
++            [xi.mod.DOUBLE_ATTACK] = 16, [xi.mod.CRITHITRATE] = 8, [xi.mod.STORETP] = 28,
++        },
++    },
++    veteran =
++    {
++        label = 'Veteran', hpMult = 10.0, firstMarks = 225, repeatMarks = 10,
++        mods =
++        {
++            [xi.mod.ATT] = 4200, [xi.mod.ACC] = 1800, [xi.mod.DEF] = 1350,
++            [xi.mod.EVA] = 800, [xi.mod.MATT] = 380, [xi.mod.MDEF] = 45,
++            [xi.mod.STR] = 300, [xi.mod.DEX] = 300, [xi.mod.HASTE_GEAR] = 170,
++            [xi.mod.DOUBLE_ATTACK] = 19, [xi.mod.CRITHITRATE] = 10, [xi.mod.STORETP] = 36,
++        },
++    },
++    apex =
++    {
++        label = 'Apex', hpMult = 11.0, firstMarks = 300, repeatMarks = 12,
++        mods =
++        {
++            [xi.mod.ATT] = 4800, [xi.mod.ACC] = 2000, [xi.mod.DEF] = 1500,
++            [xi.mod.EVA] = 900, [xi.mod.MATT] = 440, [xi.mod.MDEF] = 50,
++            [xi.mod.STR] = 350, [xi.mod.DEX] = 350, [xi.mod.HASTE_GEAR] = 190,
++            [xi.mod.DOUBLE_ATTACK] = 22, [xi.mod.CRITHITRATE] = 11, [xi.mod.STORETP] = 42,
++        },
++    },
++}
 +
-+        for tier = 1, 3 do
-+            local rates = catalog.tierGearDropRate[tier]
-+            assert(rates.rare == expected[tier].rare)
-+            assert(rates.uncommon == expected[tier].uncommon)
-+            assert(rates.common == expected[tier].common)
-+            assert(rates.rare < rates.uncommon)
-+            assert(rates.uncommon < rates.common)
-+            if tier > 1 then
-+                assert(rates.rare > catalog.tierGearDropRate[tier - 1].rare)
-+                assert(rates.uncommon > catalog.tierGearDropRate[tier - 1].uncommon)
-+                assert(rates.common > catalog.tierGearDropRate[tier - 1].common)
-+            end
++catalog.milestones =
++{
++    [6]  = { marks = 75,  label = 'Affinity Scout' },
++    [12] = { marks = 150, label = 'Affinity Stalker' },
++    [18] = { marks = 250, label = 'Affinity Veteran' },
++    [24] = { marks = 500, label = 'Master Hunter', title = xi.title.MASTER_HUNTER },
++}
++
++-- index is the persistent clear bit (index - 1). Keep order stable.
++catalog.entries =
++{
++    { index=1,  mobId=17208197, name='Behemoth',         display='Behemoth',         zoneId=105, zone='Batallia Downs',          zoneOverride='xi.zones.Batallia_Downs.Zone.onInitialize',         x=-670.00, y=-23.00, z=352.00,  band='intro',    registerCat=1  },
++    { index=2,  mobId=17298310, name='King_Behemoth',    display='King Behemoth',    zoneId=127, zone="Behemoth's Dominion",    zoneOverride='xi.zones.Behemoths_Dominion.Zone.onInitialize',     x=-267.50, y=-19.80, z=73.70,   band='standard', registerCat=2  },
++    { index=3,  mobId=17490823, name='King_Arthro',      display='King Arthro',      zoneId=174, zone='Kuftal Tunnel',           zoneOverride='xi.zones.Kuftal_Tunnel.Zone.onInitialize',          x=-27.91,  y=-10.69, z=-185.26, band='intro'                    },
++    { index=4,  mobId=17228680, name='Simurgh',          display='Simurgh',          zoneId=110, zone='Rolanberry Fields',       zoneOverride='xi.zones.Rolanberry_Fields.Zone.onInitialize',      x=-681.00, y=-31.00, z=-447.00, band='intro'                    },
++    { index=5,  mobId=17302409, name='Adamantoise',      display='Adamantoise',      zoneId=128, zone='Valley of Sorrows',       zoneOverride='xi.zones.Valley_of_Sorrows.Zone.onInitialize',      x=3.00,    y=-0.42,  z=8.00,    band='standard'                 },
++    { index=6,  mobId=17310621, name='Genbu',            display='Genbu',            zoneId=130, zone="Ru'Aun Gardens",          zoneOverride='xi.zones.RuAun_Gardens.Zone.onInitialize',          x=261.87,  y=-70.22, z=526.41,  band='veteran',  registerCat=4  },
++    { index=7,  mobId=17269643, name='Roc',              display='Roc',              zoneId=120, zone='Sauromugue Champaign',    zoneOverride='xi.zones.Sauromugue_Champaign.Zone.onInitialize',   x=232.00,  y=-0.01,  z=-327.00, band='intro'                    },
++    { index=8,  mobId=17310622, name='Seiryu',           display='Seiryu',           zoneId=130, zone="Ru'Aun Gardens",          zoneOverride='xi.zones.RuAun_Gardens.Zone.onInitialize',          x=580.84,  y=-70.22, z=-84.53,  band='veteran'                  },
++    { index=9,  mobId=17310623, name='Byakko',           display='Byakko',           zoneId=130, zone="Ru'Aun Gardens",          zoneOverride='xi.zones.RuAun_Gardens.Zone.onInitialize',          x=-419.40, y=-70.20, z=410.96,  band='veteran',  registerCat=5  },
++    { index=10, mobId=17240974, name='Aspidochelone',    display='Aspidochelone',    zoneId=113, zone='Cape Teriggan',           zoneOverride='xi.zones.Cape_Teriggan.Zone.onInitialize',          x=-175.33, y=7.68,   z=-247.30, band='standard', registerCat=6  },
++    { index=11, mobId=16896911, name='Ouryu',            display='Ouryu',            zoneId=29,  zone='Riverne Site B01',        zoneOverride='xi.zones.Riverne-Site_B01.Zone.onInitialize',       x=618.78,  y=0.56,   z=-552.23, band='standard', registerCat=3  },
++    { index=12, mobId=17404816, name='Bune',             display='Bune',             zoneId=153, zone='The Boyahda Tree',        zoneOverride='xi.zones.The_Boyahda_Tree.Zone.onInitialize',       x=405.43,  y=11.40,  z=-98.61,  band='intro'                    },
++    { index=13, mobId=16901009, name='Phoenix',          display='Phoenix',          zoneId=30,  zone='Riverne Site A01',        zoneOverride='xi.zones.Riverne-Site_A01.Zone.onInitialize',       x=685.00,  y=-31.76, z=-481.00, band='intro',    registerCat=8  },
++    { index=14, mobId=17310624, name='Suzaku',           display='Suzaku',           zoneId=130, zone="Ru'Aun Gardens",          zoneOverride='xi.zones.RuAun_Gardens.Zone.onInitialize',          x=-520.84, y=-70.22, z=-271.52, band='veteran'                  },
++    { index=15, mobId=17507219, name='Kirin',            display='Kirin',            zoneId=178, zone="Shrine of Ru'Avitau",     zoneOverride='xi.zones.The_Shrine_of_RuAvitau.Zone.onInitialize', x=-68.00,  y=32.58,  z=3.50,    band='apex',     registerCat=11 },
++    { index=16, mobId=17408916, name='Fafnir',           display='Fafnir',           zoneId=154, zone="Dragon's Aery",           zoneOverride='xi.zones.Dragons_Aery.Zone.onInitialize',           x=46.00,   y=6.00,   z=18.00,   band='veteran'                  },
++    { index=17, mobId=17408917, name='Nidhogg',          display='Nidhogg',          zoneId=154, zone="Dragon's Aery",           zoneOverride='xi.zones.Dragons_Aery.Zone.onInitialize',           x=46.00,   y=6.00,   z=24.00,   band='veteran'                  },
++    { index=18, mobId=17617814, name='Vrtra',            display='Vrtra',            zoneId=205, zone="Ifrit's Cauldron",        zoneOverride='xi.zones.Ifrits_Cauldron.Zone.onInitialize',        x=168.79,  y=0.90,   z=-19.83,  band='veteran'                  },
++    { index=19, mobId=16798615, name='Tiamat',           display='Tiamat',           zoneId=5,   zone='Uleguerand Range',        zoneOverride='xi.zones.Uleguerand_Range.Zone.onInitialize',       x=-242.35, y=-39.88, z=-415.62, band='veteran'                  },
++    { index=20, mobId=17290136, name='King_Vinegarroon', display='King Vinegarroon', zoneId=125, zone='Western Altepa Desert',  zoneOverride='xi.zones.Western_Altepa_Desert.Zone.onInitialize',  x=-239.00, y=-0.23,  z=-650.00, band='standard', registerCat=7  },
++    { index=21, mobId=17556377, name='Khimaira',         display='Khimaira',         zoneId=190, zone="King Ranperre's Tomb",    zoneOverride='xi.zones.King_Ranperres_Tomb.Zone.onInitialize',    x=-124.00, y=-0.50,  z=249.52,  band='standard'                 },
++    { index=22, mobId=17556378, name='Cerberus',         display='Cerberus',         zoneId=190, zone="King Ranperre's Tomb",    zoneOverride='xi.zones.King_Ranperres_Tomb.Zone.onInitialize',    x=-147.00, y=-0.50,  z=250.00,  band='standard'                 },
++    { index=23, mobId=17310619, name='Absolute_Virtue',  display='Absolute Virtue',  zoneId=130, zone="Ru'Aun Gardens",          zoneOverride='xi.zones.RuAun_Gardens.Zone.onInitialize',          x=-6.03,   y=-40.52, z=-417.21, band='apex',     registerCat=9  },
++    { index=24, mobId=17310620, name='Proto-Omega',      display='Proto-Omega',      zoneId=130, zone="Ru'Aun Gardens",          zoneOverride='xi.zones.RuAun_Gardens.Zone.onInitialize',          x=1.00,    y=-38.60, z=-485.00, band='apex',     registerCat=10 },
++}
++
++function catalog.byId(mobId)
++    for _, entry in ipairs(catalog.entries) do
++        if entry.mobId == mobId then
++            return entry
 +        end
++    end
++end
 +
-+        assert(catalog.getTierGearDropRate(1, 50) == 1.0)
-+        assert(catalog.getTierGearDropRate(2, 80) == 5.5)
-+        assert(catalog.getTierGearDropRate(3, 120) == 12.0)
-+    end)
++function catalog.byName(name)
++    for _, entry in ipairs(catalog.entries) do
++        if entry.name == name then
++            return entry
++        end
++    end
++end
 +
-     it('keeps avatar durability distributed across stats rather than HP alone', function()
-         local avatar = catalog.tierScale.avatar
++function catalog.hasClear(player, index)
++    local mask = player:getCharVar(catalog.clearVar) or 0
++    return bit.band(mask, bit.lshift(1, index - 1)) ~= 0
++end
++
++function catalog.grantClear(player, index)
++    local mask = player:getCharVar(catalog.clearVar) or 0
++    player:setCharVar(catalog.clearVar, bit.bor(mask, bit.lshift(1, index - 1)))
++end
++
++function catalog.clearCount(player)
++    local count = 0
++    for index = 1, #catalog.entries do
++        if catalog.hasClear(player, index) then
++            count = count + 1
++        end
++    end
++    return count
++end
++
++function catalog.migrateRegisteredClears(player)
++    if (player:getCharVar(catalog.migrationVar) or 0) ~= 0 then
++        return
++    end
++
++    local affinities = player:getCharVar('Augment_Affinities') or 0
++    local clears     = player:getCharVar(catalog.clearVar) or 0
++    for _, entry in ipairs(catalog.entries) do
++        if
++            entry.registerCat and
++            bit.band(affinities, bit.lshift(1, entry.registerCat - 1)) ~= 0
++        then
++            clears = bit.bor(clears, bit.lshift(1, entry.index - 1))
++        end
++    end
++
++    player:setCharVar(catalog.clearVar, clears)
++    player:setCharVar(catalog.migrationVar, 1)
++end
++
++return catalog
+diff --git a/modules/custom/lua/augment_affinity_migrate11.lua b/modules/custom/lua/augment_affinity_migrate11.lua
+index 2168aedae7..e6b513ec75 100644
+--- a/modules/custom/lua/augment_affinity_migrate11.lua
++++ b/modules/custom/lua/augment_affinity_migrate11.lua
+@@ -26,6 +26,7 @@
+ require('modules/module_utils')
  
-@@ -152,6 +179,27 @@ describe('HTBF catalog integrity and balance', function()
-         assert(type(catalog.fights.one_to_be_feared.groupsForTier) == 'function')
-     end)
+ local m = Module:new('augment_affinity_migrate11')
++local nmCatalog = require('modules/custom/lua/affinity_nm_catalog')
  
-+    it("keeps One to be Feared HTBF mobs clear of Sealion's Den NPC IDs", function()
-+        local fight = catalog.fights.one_to_be_feared
-+        local expectedFirst = { 16908382, 16908500, 16908530 }
-+        local npcFirst = 16908413
-+        local npcLast = 16908481
+ -- oldCat -> newCat
+ local REMAP =
+@@ -58,6 +59,7 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
+     end
+ 
+     player:setCharVar('Augment_Affinities_Mig11', 1)
++    nmCatalog.migrateRegisteredClears(player)
+ end)
+ 
+ return m
+diff --git a/modules/custom/sql/affinity_nm_spawns.sql b/modules/custom/sql/affinity_nm_spawns.sql
+index 5f0494b76d..365eef66a4 100644
+--- a/modules/custom/sql/affinity_nm_spawns.sql
++++ b/modules/custom/sql/affinity_nm_spawns.sql
+@@ -70,11 +70,9 @@ INSERT INTO `mob_groups` VALUES
+  (20022,    21, 130, 'Absolute_Virtue',  900, 0, 0, 0, 0, 0, NULL),
+  (20023,  3208, 130, 'Proto-Omega',      900, 0, 0, 0, 0, 0, NULL);
+ 
+--- ---- dedicated 100% trophy droplists (21000-21023) ----
+--- Each affinity NM drops ONLY its unique registration trophy, GUARANTEED
+--- (dropType 0, itemRate 1000 = 100%). The trophy is the Augment-Sage registration
+--- gate, so it must always drop. Item ids mirror augment_affinity_catalog.lua.
+--- Isolated from retail (retail NM spawns keep their own mob_groups + dropids).
++-- ---- historical trophy droplists (21000-21023; engine ignores ids > 5000) ----
++-- Kept only as a roster/item reference. The 11 live Sage trophies and all
++-- 24 collection rewards are granted by affinity_nm_autopop.lua.
+ DELETE FROM `mob_droplist` WHERE `dropId` BETWEEN 21000 AND 21023;
+ INSERT INTO `mob_droplist` (`dropId`,`dropType`,`groupId`,`groupRate`,`itemId`,`itemRate`) VALUES
+  (21000, 0, 0, 1000,   860, 1000),  -- Behemoth          -> Behemoth Hide
+@@ -119,7 +117,7 @@ DELETE FROM `mob_spawn_points` WHERE `groupid` BETWEEN 20000 AND 20023;
+ INSERT INTO `mob_spawn_points` VALUES
+  (17208197, 0, 'Behemoth',         'Behemoth',          20000,  80,  80, -670.00, -23.00,  352.00, 0),
+  (17298310, 0, 'King_Behemoth',    'King Behemoth',     20001,  85,  85, -267.50, -19.80,   73.70, 0),
+- (17490823, 0, 'King_Arthro',      'King Arthro',       20002,  55,  55,  -27.91, -10.69, -185.26, 0),
++ (17490823, 0, 'King_Arthro',      'King Arthro',       20002,  75,  75,  -27.91, -10.69, -185.26, 0),
+  (17228680, 0, 'Simurgh',          'Simurgh',           20003,  80,  80, -681.00, -31.00, -447.00, 0),
+  (17302409, 0, 'Adamantoise',      'Adamantoise',       20004,  80,  80,  3.00, -0.42, 8.00, 0),
+  (17310621, 0, 'Genbu',            'Genbu',             20005, 125, 125,  261.87, -70.22, 526.41, 0),
+diff --git a/modules/custom/sql/odin_summon.sql b/modules/custom/sql/odin_summon.sql
+new file mode 100644
+index 0000000000..e29fed39a8
+--- /dev/null
++++ b/modules/custom/sql/odin_summon.sql
+@@ -0,0 +1,14 @@
++-- Register Odin's automatic Zantetsuken as a real pet skill.
++-- pet_skill_id 670 matches xi.jobAbility.ZANTETSUKEN; mob skill 2126 supplies
++-- the retail Zantetsuken animation/skill mapping. Flags 70 = Astral Flow (2)
++-- + special (4) + Blood Pact: Rage (64).
++DELETE FROM `pet_skills` WHERE `pet_skill_id` = 670;
++INSERT INTO `pet_skills`
++    (`pet_skill_id`, `mob_skill_id`, `pet_anim_id`, `pet_skill_name`,
++     `pet_skill_aoe`, `pet_skill_radius`, `pet_skill_distance`,
++     `pet_anim_time`, `pet_prepare_time`, `pet_valid_targets`, `pet_message`,
++     `pet_skill_flag`, `pet_skill_param`, `pet_skill_finish_category`,
++     `knockback`, `primary_sc`, `secondary_sc`, `tertiary_sc`)
++VALUES
++    (670, 2126, 150, 'zantetsuken',
++     1, 10, 21, 2000, 1000, 4, 317, 70, 0, 13, 0, 0, 0, 0);
+diff --git a/modules/custom/sql/prestige_trial_mobs.sql b/modules/custom/sql/prestige_trial_mobs.sql
+index 66af833cce..eb449b57c3 100644
+--- a/modules/custom/sql/prestige_trial_mobs.sql
++++ b/modules/custom/sql/prestige_trial_mobs.sql
+@@ -20,22 +20,68 @@
+ -- Hunters Guild, reforge NMs, GM-master arena). Provenance Watcher is native to
+ -- zone 222, a fitting apex for a trial held in Provenance itself.
+ --
+--- These reuse STOCK mob_pools (model + skill kit) -- only the groupid/zone/HP
+--- mapping is custom. spawntype 128 = SPAWNTYPE_SCRIPTED (script-popped, no
+--- timer). dropid 0 = no loot (the reward is Trial progress, not items). The HP
+--- column is BASE health; each boss's catalog `hpBoost` multiplies it at spawn.
++-- These reuse stock model + skill-kit data. Pools whose retail flags can hide
++-- dynamic entities are cloned below into Ascension-only pool IDs with
++-- FLAG_HIDE_NAME/FLAG_HIDE_MODEL/FLAG_HIDE_HP cleared. This avoids changing
++-- retail encounters.
++-- spawntype 128 = SPAWNTYPE_SCRIPTED (script-popped, no timer). dropid 0 = no
++-- loot (the reward is Trial progress, not items). The HP column is BASE health;
++-- each boss's catalog `hpBoost` multiplies it at spawn.
+ --
+ -- Per-boss stats (level 150, mods, hpBoost, cry) live in prestige_catalog.lua
+ -- under trialBosses (tier 0) and trialScaling.tiers[N].roster.bosses (tier 1-4).
+ -- A boss's catalog `name` MUST match its mob_groups.name below.
+ --
+--- Idempotent + scoped to groupIds 11370-11392 at zoneid 222 -- safe to re-run.
++-- Idempotent + scoped to groupIds 11370-11395 at zoneid 222 -- safe to re-run.
+ -- Apply (live Azure server): just run "Azure - Deploy to Server.bat" -- it
+ -- auto-applies any changed modules/custom/sql/*.sql and restarts xi_map for you.
+ -- (Manual equivalent on the box: sudo mariadb xidb < this-file, then
+ --  sudo systemctl restart xi_map. mob_groups are read at map-server boot.)
+ -- ============================================================================
+ 
++-- Restore the eleven retail boss appearances that previously used avatar
++-- stand-ins. Clone rather than UPDATE the shared retail pools: visibility flags
++-- are safe for Provenance dynamic entities while retail behavior stays intact.
++DELETE FROM `mob_pools` WHERE `poolid` BETWEEN 30100 AND 30110;
++CREATE TEMPORARY TABLE `_prestige_retail_pools` AS
++SELECT *
++FROM `mob_pools`
++WHERE `poolid` IN
++(
++    3465, -- Sarameya
++    4694, -- Kaggen
++    4716, -- Qilin
++    2133, -- Jailer of Justice
++    2131, -- Jailer of Fortitude
++    2136, -- Jailer of Temperance
++    2287, -- Kreutzet
++    3313, -- Raja
++    2474, -- Maere
++    2973, -- Omega
++    4083  -- Ultima
++);
 +
-+        for tier = 1, 3 do
-+            local groups = fight.groupsForTier(tier)
-+            assert(groups[1].mobIds[1][1] == expectedFirst[tier])
++UPDATE `_prestige_retail_pools`
++SET `poolid` =
++    CASE `poolid`
++        WHEN 3465 THEN 30100
++        WHEN 4694 THEN 30101
++        WHEN 4716 THEN 30102
++        WHEN 2133 THEN 30103
++        WHEN 2131 THEN 30104
++        WHEN 2136 THEN 30105
++        WHEN 2287 THEN 30106
++        WHEN 3313 THEN 30107
++        WHEN 2474 THEN 30108
++        WHEN 2973 THEN 30109
++        WHEN 4083 THEN 30110
++    END,
++    `entityFlags` = `entityFlags` & ~0x188,
++    `namevis` = 1;
 +
-+            for _, group in ipairs(groups) do
-+                for _, areaIds in ipairs(group.mobIds) do
-+                    for _, mobId in ipairs(areaIds) do
-+                        assert(mobId < npcFirst or mobId > npcLast,
-+                            string.format('tier %d mob ID %d overlaps a Sealion NPC', tier, mobId))
-+                    end
++INSERT INTO `mob_pools` SELECT * FROM `_prestige_retail_pools`;
++DROP TEMPORARY TABLE `_prestige_retail_pools`;
++
+ DELETE FROM `mob_groups`
+  WHERE `groupid` BETWEEN 11370 AND 11395
+    AND `zoneid` = 222;
+@@ -45,36 +91,23 @@ INSERT INTO `mob_groups`
+ VALUES
+     -- ---- Tier 0 : The Nightmare Court (P.Lv 0-9) -------------------------
+     (11370, 1027, 222, 'Diabolos', 0, 128, 0,  60000, 30000, 0, NULL),
+-    (11371, 2606, 222, 'Medusa',   0, 128, 0,  55000,     0, 0, NULL),  -- (legacy spare)
+     (11372, 2941, 222, 'Odin',     0, 128, 0,  70000, 10000, 0, NULL),
+     (11373, 2606, 222, 'Medusa',   0, 128, 0,  55000,     0, 0, NULL),
+-    -- FJB 2026-06-15: tiers 1-4 REPOOLED so they actually RENDER in Provenance.
+-    -- Zone 222 loads a FIXED monster-model set; the original pools (Sarameya 3465,
+-    -- Omega 2973, etc.) use models the zone doesn't carry, so the bosses spawned
+-    -- INVISIBLE (still targetable/attackable, just not drawn). Remapped to fresh
+-    -- AVATAR models -- avatars render in ANY zone (exactly why the tier-0 Diabolos/
+-    -- Odin work), all DISTINCT, and NONE collide with NMs the other custom systems
+-    -- use (Bahamut was excluded -- it's the GM-Master Bahamut, group 11412). Ultima
+-    -- uses Crystal_Fetter (native to 222). Thematic: an apex "the void summons the
+-    -- eidolons" Court. The pool also carries the TP kit, so each boss gains its
+-    -- avatar's moveset; catalog stats/HP (the real difficulty) are unchanged and
+-    -- NAMES are kept. Diabolos 1027 / Odin 2941 / Medusa 2606 are NOT reused --
+-    -- they stay exclusive to the tier-0 Nightmare Court.
+     -- ---- Tier 1 : The Voidwalkers (P.Lv 10-19) --------------------------
+-    (11381, 1322, 222, 'Sarameya',             0, 128, 0,  95000, 10000, 0, NULL),  -- Fenrir (wolf/hound)
+-    (11382, 2050, 222, 'Kaggen',               0, 128, 0,  90000, 10000, 0, NULL),  -- Ifrit (devouring flame)
+-    (11383, 1473, 222, 'Qilin',                0, 128, 0,  92000, 10000, 0, NULL),  -- Garuda (tempest)
++    (11381, 30100, 222, 'Sarameya',             0, 128, 0,  95000, 10000, 0, NULL),
++    (11382, 30101, 222, 'Kaggen',               0, 128, 0,  90000, 10000, 0, NULL),
++    (11383, 30102, 222, 'Qilin',                0, 128, 0,  92000, 10000, 0, NULL),
+     -- ---- Tier 2 : The Jailers (P.Lv 20-29) ------------------------------
+-    (11384,   82, 222, 'Jailer_of_Justice',    0, 128, 0,  95000, 30000, 0, NULL),  -- Alexander (lawgiver)
+-    (11385, 3931, 222, 'Jailer_of_Fortitude',  0, 128, 0,  92000, 30000, 0, NULL),  -- Titan (earthwall)
+-    (11386, 3607, 222, 'Jailer_of_Temperance', 0, 128, 0, 105000, 30000, 0, NULL),  -- Shiva (ice/restraint)
++    (11384, 30103, 222, 'Jailer_of_Justice',    0, 128, 0,  95000, 30000, 0, NULL),
++    (11385, 30104, 222, 'Jailer_of_Fortitude',  0, 128, 0,  92000, 30000, 0, NULL),
++    (11386, 30105, 222, 'Jailer_of_Temperance', 0, 128, 0, 105000, 30000, 0, NULL),
+     -- ---- Tier 3 : The Voidwalker Lords (P.Lv 30-39) ---------------------
+-    (11387, 3317, 222, 'Kreutzet',             0, 128, 0, 100000, 30000, 0, NULL),  -- Ramuh (sky/storm)
+-    (11388, 2402, 222, 'Raja',                 0, 128, 0, 100000, 30000, 0, NULL),  -- Leviathan (primal beast)
+-    (11389, 6170, 222, 'Maere',                0, 128, 0,  98000, 30000, 0, NULL),  -- Siren (nightmare/enchantress)
++    (11387, 30106, 222, 'Kreutzet',             0, 128, 0, 100000, 30000, 0, NULL),
++    (11388, 30107, 222, 'Raja',                 0, 128, 0, 100000, 30000, 0, NULL),
++    (11389, 30108, 222, 'Maere',                0, 128, 0,  98000, 30000, 0, NULL),
+     -- ---- Tier 4 : The World's End (P.Lv 40+) ----------------------------
+-    (11390, 6961, 222, 'Omega',                0, 128, 0, 105000, 30000, 0, NULL),  -- Odin Prime (apex doom)
+-    (11391, 5314, 222, 'Ultima',               0, 128, 0, 105000, 30000, 0, NULL),  -- Crystal_Fetter (native 222; ancient crystal weapon)
++    (11390, 30109, 222, 'Omega',                0, 128, 0, 105000, 30000, 0, NULL),
++    (11391, 30110, 222, 'Ultima',               0, 128, 0, 105000, 30000, 0, NULL),
+     (11392, 4654, 222, 'Provenance_Watcher',   0, 128, 0, 110000, 30000, 0, NULL),  -- native apex (unchanged)
+     -- ---- Tier 5 : The Celestial Wardens (P.Lv 60+) ----------------------
+     -- Tiamat (3916), Kirin (2265), Absolute Virtue (21).  All three have
+diff --git a/scripts/actions/abilities/pets/zantetsuken.lua b/scripts/actions/abilities/pets/zantetsuken.lua
+index 4ca1255c7d..69c2efca13 100644
+--- a/scripts/actions/abilities/pets/zantetsuken.lua
++++ b/scripts/actions/abilities/pets/zantetsuken.lua
+@@ -1,64 +1,40 @@
+ -----------------------------------
+ -- Zantetsuken
+ -- Family: Odin (Player Pet)
+--- Notes: Requires Astral Flow to be active.
+--- TODO: Ability Needs captures/audit.
+--- https://wiki.ffo.jp/html/17522.html
+-
+--- Wanna bet this is made up?
++-- Odin automatically performs this once after being summoned, consumes all of
++-- the summoner's MP and Astral Flow, then despawns.
+ -----------------------------------
+ ---@type TAbilityPet
+ local abilityObject = {}
+ 
+ abilityObject.onAbilityCheck = function(player, target, ability)
+-    return xi.job_utils.summoner.canUseBloodPact(player, player:getPet(), target, ability)
++    return 0, 0
+ end
+ 
+ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
+-    local returnParam = 0
+-    local power       = summoner:getMP() / utils.clamp(summoner:getMaxMP(), 1, 9999)
+-
+-    if target:isNM() then
+-        local params = {}
+-
+-        params.baseDamage      = power
+-        params.element         = xi.element.DARK
+-        params.attackType      = xi.attackType.MAGICAL
+-        params.damageType      = xi.damageType.DARK
+-        params.shadowBehavior  = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+-        params.canMagicBurst   = true
+-        params.primaryMessage  = xi.msg.basic.USES_JA_TAKE_DAMAGE
+-
+-        local info = xi.mobskills.mobMagicalMove(pet, target, petskill, action, params)
+-
+-        if xi.mobskills.processDamage(pet, target, petskill, action, info) then
+-            target:takeDamage(info.damage, pet, info.attackType, info.damageType)
+-        end
+-
+-        returnParam = info.damage
+-    else
+-        -- Insta-kill: Highly innacurate against regular monsters.
+-        local chance = 50 * power / utils.clamp(petskill:getTotalTargets(), 1, 50)
+-
+-        if
+-            math.random(1, 100) <= chance and
+-            target:getAnimation() ~= 33
+-        then
+-            petskill:setMsg(xi.msg.basic.SKILL_ENFEEB_IS)
+-            target:takeDamage(target:getHP(), pet, xi.attackType.MAGICAL, xi.damageType.DARK,
+-                { wakeUp = true, breakBind = true, bypassGlobalHpDamageCap = true })
+-
+-            returnParam = xi.effect.KO
+-        else
+-            petskill:setMsg(xi.msg.basic.EVADES)
+-
+-            returnParam = 0
+-        end
++    local damage = 0
++    if target:getAnimation() ~= 33 then
++        local remainingHP = target:getHP()
++        damage = remainingHP > 2000000 and 1999999 or remainingHP
++        petskill:setMsg(xi.msg.basic.USES_JA_TAKE_DAMAGE)
++        damage = target:takeDamage(damage, pet, xi.attackType.MAGICAL, xi.damageType.DARK,
++            { wakeUp = true, breakBind = true, bypassGlobalHpDamageCap = true })
+     end
+ 
+-    summoner:setMP(0)
++    -- AoE processing invokes this once per target. Consume resources and
++    -- schedule dismissal exactly once, on the primary target.
++    if summoner and target:getID() == action:getPrimaryTargetID() then
++        summoner:setMP(0)
++        summoner:delStatusEffect(xi.effect.ASTRAL_FLOW)
++        pet:timer(1500, function()
++            local activePet = summoner:getPet()
++            if activePet and activePet:getID() == pet:getID() then
++                summoner:despawnPet()
++            end
++        end)
++    end
+ 
+-    return returnParam
++    return damage
+ end
+ 
+ return abilityObject
+diff --git a/scripts/globals/pets.lua b/scripts/globals/pets.lua
+index 04ed741f27..e3027fe9a4 100644
+--- a/scripts/globals/pets.lua
++++ b/scripts/globals/pets.lua
+@@ -117,10 +117,33 @@ xi.pet.spawnPet = function(caster, petID, state, target)
+             end
+         elseif petID == xi.petId.ODIN then
+             if target then
+-                caster:petAttack(target)
+-                --pet:timer(5000, function()
+-                --    pet:usePetAbility(xi.jobAbility.ZANTETSUKEN, target)
+-                --end)
++                -- Odin is a one-action summon: execute Zantetsuken, then let its
++                -- ability script consume Astral Flow/MP and dismiss him.
++                local pet = caster:getPet()
++                if pet then
++                    pet:timer(3000, function(petArg)
++                        local activePet = caster:getPet()
++                        if
++                            petArg and
++                            petArg:isAlive() and
++                            activePet and
++                            activePet:getID() == petArg:getID()
++                        then
++                            petArg:usePetAbility(xi.jobAbility.ZANTETSUKEN, target)
++                        end
++                    end)
++
++                    -- Safety cleanup if the target vanished or the action could
++                    -- not enter the queue. Odin must never become a persistent pet.
++                    pet:timer(10000, function(petArg)
++                        local activePet = caster:getPet()
++                        if petArg and activePet and activePet:getID() == petArg:getID() then
++                            caster:setMP(0)
++                            caster:delStatusEffect(xi.effect.ASTRAL_FLOW)
++                            caster:despawnPet()
++                        end
++                    end)
 +                end
+             end
+         elseif petID == xi.petId.ATOMOS then
+             if target then
+diff --git a/scripts/tests/systems/affinity_nm_integrity.lua b/scripts/tests/systems/affinity_nm_integrity.lua
+new file mode 100644
+index 0000000000..584cd0fe62
+--- /dev/null
++++ b/scripts/tests/systems/affinity_nm_integrity.lua
+@@ -0,0 +1,77 @@
++local nmCatalog       = require('modules/custom/lua/affinity_nm_catalog')
++local affinityCatalog = require('modules/custom/lua/augment_affinity_catalog')
++
++describe('Affinity NM roster and progression integrity', function()
++    it('defines 24 unique, fully routable collection targets', function()
++        assert(#nmCatalog.entries == 24)
++
++        local ids   = {}
++        local names = {}
++        for index, entry in ipairs(nmCatalog.entries) do
++            assert(entry.index == index)
++            assert(not ids[entry.mobId], 'duplicate mob ID ' .. entry.mobId)
++            assert(not names[entry.name], 'duplicate NM name ' .. entry.name)
++            assert(nmCatalog.profiles[entry.band] ~= nil)
++            assert(entry.zoneId > 0)
++            assert(type(entry.zoneOverride) == 'string' and entry.zoneOverride ~= '')
++            assert(type(entry.x) == 'number')
++            assert(type(entry.y) == 'number')
++            assert(type(entry.z) == 'number')
++            ids[entry.mobId] = true
++            names[entry.name] = true
++        end
++    end)
++
++    it('maps exactly the 11 live Sage affinities to collection targets', function()
++        local mapped = {}
++        local count  = 0
++        for _, entry in ipairs(nmCatalog.entries) do
++            if entry.registerCat then
++                local affinity = affinityCatalog.byCat(entry.registerCat)
++                assert(affinity ~= nil)
++                assert(affinity.nm == entry.name)
++                assert(not mapped[entry.registerCat])
++                mapped[entry.registerCat] = true
++                count = count + 1
++            end
++        end
++
++        assert(count == #affinityCatalog.affinities)
++        assert(count == 11)
++    end)
++
++    it('uses increasing solo-with-trust difficulty and reward bands', function()
++        local order = { 'intro', 'standard', 'veteran', 'apex' }
++        local expectedFirst = { 90, 150, 225, 300 }
++        local expectedRepeat = { 5, 8, 10, 12 }
++
++        for index, key in ipairs(order) do
++            local profile = nmCatalog.profiles[key]
++            assert(profile.firstMarks == expectedFirst[index])
++            assert(profile.repeatMarks == expectedRepeat[index])
++            if index > 1 then
++                local previous = nmCatalog.profiles[order[index - 1]]
++                assert(profile.hpMult > previous.hpMult)
++                assert(profile.mods[xi.mod.ATT] > previous.mods[xi.mod.ATT])
++                assert(profile.mods[xi.mod.ACC] > previous.mods[xi.mod.ACC])
 +            end
 +        end
 +    end)
 +
-     it('uses non-overlapping Sealion tier pools and dedicated Ark menu rows', function()
-         local feared = catalog.fights.one_to_be_feared
-         for tier = 1, 3 do
-@@ -159,9 +207,6 @@ describe('HTBF catalog integrity and balance', function()
-             local omega = groups[1].mobIds[1][1]
-             local ultima = groups[2].mobIds[1][1]
-             assert(ultima == omega + 1)
--            if tier > 1 then
--                assert(omega - feared.groupsForTier(tier - 1)[1].mobIds[1][1] == 30)
--            end
-         end
++    it('keeps one-time and repeat mark budgets bounded', function()
++        local firstTotal = 0
++        for _, entry in ipairs(nmCatalog.entries) do
++            firstTotal = firstTotal + nmCatalog.profiles[entry.band].firstMarks
++        end
++        assert(firstTotal == 4290)
++
++        local milestoneTotal = 0
++        for threshold, milestone in pairs(nmCatalog.milestones) do
++            assert(threshold == 6 or threshold == 12 or threshold == 18 or threshold == 24)
++            milestoneTotal = milestoneTotal + milestone.marks
++        end
++        assert(milestoneTotal == 975)
++        assert(nmCatalog.repeatDailyCap == 120)
++        assert(nmCatalog.milestones[24].title == xi.title.MASTER_HUNTER)
++    end)
++end)
+diff --git a/scripts/zones/The_Shrine_of_RuAvitau/mobs/Kirin.lua b/scripts/zones/The_Shrine_of_RuAvitau/mobs/Kirin.lua
+index 60292ca6cc..3355728b37 100644
+--- a/scripts/zones/The_Shrine_of_RuAvitau/mobs/Kirin.lua
++++ b/scripts/zones/The_Shrine_of_RuAvitau/mobs/Kirin.lua
+@@ -50,6 +50,13 @@ entity.onMobEngage = function(mob, target)
+ end
  
-         for index = 1, 5 do
+ entity.onMobFight = function(mob, target)
++    -- The always-up Affinity Hunt copy is solo-with-trust progression content.
++    -- Keep Kirin's own spell/TP pressure, but do not turn it into a five-boss
++    -- encounter by summoning the four Sky Gods.
++    if mob:getLocalVar('affinityNM') == 1 then
++        return
++    end
++
+     -- Check if it's time to spawn a god
+     local numAdds = mob:getLocalVar('numAdds')
+     if GetSystemTime() >= mob:getLocalVar('godSpawnTime') and numAdds < 4 then
+diff --git a/tools/validate_runtime_consumers.py b/tools/validate_runtime_consumers.py
+index 605771b8f2..ec0a7529e8 100644
+--- a/tools/validate_runtime_consumers.py
++++ b/tools/validate_runtime_consumers.py
+@@ -19,6 +19,8 @@ Checks (ERROR = fails CI; WARN = human review):
+   3. CATALOG DUPLICATION (WARN): a runtime file that hardcodes a big chunk of a
+      catalog's item-id set WITHOUT `require`-ing it is likely a private copy that
+      will drift -- refactor it to read the catalog.
++  4. AFFINITY ROSTER (ERROR): the canonical 24-NM catalog must match its SQL
++     spawn IDs, and !affinitypop must use the shared configureMob path.
+ 
+ Run:  python tools/validate_runtime_consumers.py            (report)
+       python tools/validate_runtime_consumers.py --strict   (exit 1 on ERROR)
+@@ -137,6 +139,29 @@ def check_duplication(item_ids: set[int]) -> list[str]:
+     return warns
+ 
+ 
++def check_affinity_roster() -> list[str]:
++    """Keep the canonical 24-NM catalog synchronized with SQL and GM tooling."""
++    errors = []
++    catalog = _read(LUA / "affinity_nm_catalog.lua")
++    spawn_sql = _read(ROOT / "modules/custom/sql/affinity_nm_spawns.sql")
++    command = _read(CMD / "affinitypop.lua")
++
++    catalog_ids = {int(value) for value in re.findall(r"\bmobId\s*=\s*(\d+)", catalog)}
++    spawn_block = ""
++    marker = "INSERT INTO `mob_spawn_points` VALUES"
++    if marker in spawn_sql:
++        spawn_block = spawn_sql.split(marker, 1)[1].split(";", 1)[0]
++    sql_ids = {int(value) for value in re.findall(r"^\s*\(\s*(\d+)", spawn_block, re.M)}
++    if len(catalog_ids) != 24:
++        errors.append(f"[affinity-roster] catalog defines {len(catalog_ids)} unique mob IDs, expected 24")
++    if catalog_ids != sql_ids:
++        errors.append("[affinity-roster] catalog mob IDs do not match affinity_nm_spawns.sql")
++    if "affinity_nm_catalog" not in command or ".configureMob(entry.mobId)" not in command:
++        errors.append("[affinity-roster] !affinitypop does not use the canonical roster/configureMob path")
++
++    return errors
++
++
+ def generate(repo_root, docs_dir=None) -> None:
+     """Docgen-audit entry point (wired into tools/docgen/generate.py). Prints
+     `[runtime-consumers]`-tagged findings that the site drift monitor scans, so a
+@@ -149,7 +174,7 @@ def generate(repo_root, docs_dir=None) -> None:
+     LUA = ROOT / "modules" / "custom" / "lua"
+     CMD = ROOT / "modules" / "custom" / "commands"
+     item_ids, zone_ids = load_item_ids(), load_zone_ids()
+-    errs = check_broken_refs(item_ids, zone_ids)
++    errs = check_broken_refs(item_ids, zone_ids) + check_affinity_roster()
+     warns = check_affinity_labels() + check_duplication(item_ids)
+     for e in errs:
+         print(f"[runtime-consumers] ERROR {e}")
+@@ -161,7 +186,7 @@ def generate(repo_root, docs_dir=None) -> None:
+ def main() -> int:
+     strict = "--strict" in sys.argv
+     item_ids, zone_ids = load_item_ids(), load_zone_ids()
+-    errors = check_broken_refs(item_ids, zone_ids)
++    errors = check_broken_refs(item_ids, zone_ids) + check_affinity_roster()
+     warns = check_affinity_labels() + check_duplication(item_ids)
+ 
+     print(f"[validate_runtime_consumers] item ids={len(item_ids)} zones={len(zone_ids)} "
