@@ -59,7 +59,7 @@ Rank mirrors drop band: **1 = D1 (15%)** · **2 = D2 (13%)** · **3 = D3 (11%)**
 | B | Iroha | cipher | Iratham | Reforge Abyssea [II] | 13 | 10185 | 997 |
 | B | Iron Eater | direct | Blazing Eruca | Abyssea Marks T2 | 13 | — | 917 |
 | B | Joachim | cipher | Vrtra | Hunting League Rank III | 13 | 10117 | 911 |
-| B | Klara | direct | Lord Varney | Abyssea Marks T2 | 13 | — | 948 |
+| B | Klara | direct | Quasimodo | Abyssea Marks T2 | 13 | — | 948 |
 | B | Koru-Moru | cipher | Khun | Reforge Unity [II] | 13 | 10140 | 952 |
 | B | Leonoyne | cipher | Aquarius | The Gauntlet L1 | 13 | 10163 | 974 |
 | B | Maat | direct | Sovereign Behemoth | Unity Wanted T2 | 13 | — | 933 |
@@ -96,7 +96,7 @@ Rank mirrors drop band: **1 = D1 (15%)** · **2 = D2 (13%)** · **3 = D3 (11%)**
 | A | Invincible Shield UC | direct | Vidmapire | Unity Wanted T3 | 11 | — | 954 |
 | A | Iroha II | cipher | Shedu | Unity Wanted T3 | 11 | 10186 | 1018 |
 | A | Jakoh UC | direct | Tolba | Unity Wanted T3 | 11 | — | 956 |
-| A | Kayeel-Payeel | cipher | Ketea | Abyssea Marks T2 | 11 | 10165 | 976 |
+| A | Kayeel-Payeel | direct | Sedna | Abyssea Marks T2 | 11 | — | 976 |
 | A | King of Hearts | cipher | Briareus | Abyssea Marks T1 | 11 | 10181 | 989 |
 | A | Kuyin Hathdenna | cipher | Byakko-Escha | Geas Ru'Aun T3 | 11 | 10141 | 950 |
 | A | Lilisette | cipher | Padfoot | Reforge Unity [III] | 11 | 10137 | 945 |
@@ -247,7 +247,7 @@ Rank mirrors drop band: **1 = D1 (15%)** · **2 = D2 (13%)** · **3 = D3 (11%)**
 | 2 | 10167 | Tenzen II | B | 1014 | Thu'ban | Unity Wanted T2 | 13 |  |
 | 3 | 10181 | King of Hearts | A | 989 | Briareus | Abyssea Marks T1 | 11 |  |
 | 3 | 10184 | Arciela II | A | 1017 | Itzpapalotl | Abyssea Marks T2 | 11 |  |
-| 3 | 10165 | Kayeel-Payeel | A | 976 | Ketea | Abyssea Marks T2 | 11 |  |
+| 3 | — | Kayeel-Payeel | A | 976 | Sedna | Abyssea Marks T2 | 11 |  |
 | 3 | 10164 | Maximilian | A | 975 | Dvalinn | Abyssea Marks T2 | 11 |  |
 | 3 | 10178 | Ullegore | A | 987 | Iku-Turso | Abyssea Marks T2 | 11 |  |
 | 3 | 10154 | Amchuchu | B | 969 | Apademak | Abyssea Marks T3 | 11 | NOTABLE |
@@ -305,7 +305,7 @@ Rank mirrors drop band: **1 = D1 (15%)** · **2 = D2 (13%)** · **3 = D3 (11%)**
 | 2 | Arciela | B | 965 | Eccentric Eve | Abyssea Marks T1 | 13 | No cipher item |
 | 2 | Excenmille S | B | 1004 | Toppling Tuber | Abyssea Marks T1 | 13 | Variant trust; optional collection row |
 | 2 | Iron Eater | B | 917 | Blazing Eruca | Abyssea Marks T2 | 13 | No cipher item |
-| 2 | Klara | B | 948 | Lord Varney | Abyssea Marks T2 | 13 | No cipher item; was Infamy Maat fight |
+| 2 | Klara | B | 948 | Quasimodo | Abyssea Marks T2 | 13 | Moved off Lord Varney 15-min timed spawn |
 | 2 | Prishe | B | 913 | Sirrush | Abyssea Marks T2 | 13 | No cipher item |
 | 2 | Volker | B | 903 | Maahes | Abyssea Marks T2 | 13 | No cipher item |
 | 2 | Maat UC | B | 1006 | Amarok | Abyssea Marks T3 | 13 | No cipher item |

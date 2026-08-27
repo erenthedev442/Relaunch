@@ -115,9 +115,9 @@ C.bySystem = {
         -- Toppling Tuber / Exc_S removed: spell 1004 is Void Keeper Matsui-P.
         ['shaula'] = { method = 'direct_spell_grant', itemId = 0, spellId = 1016, dropPct = 13, trustName = 'Ingrid II', nmName = 'Shaula' },
         ['blazingeruca'] = { method = 'direct_spell_grant', itemId = 0, spellId = 917, dropPct = 13, trustName = 'Iron Eater', nmName = 'Blazing_Eruca' },
-        ['ketea'] = { method = 'direct_spell_grant', itemId = 0, spellId = 976, dropPct = 11, trustName = 'Kayeel-Payeel', nmName = 'Ketea' },
+        ['sedna'] = { method = 'direct_spell_grant', itemId = 0, spellId = 976, dropPct = 11, trustName = 'Kayeel-Payeel', nmName = 'Sedna' },
         ['briareus'] = { method = 'direct_spell_grant', itemId = 0, spellId = 989, dropPct = 11, trustName = 'King of Hearts', nmName = 'Briareus' },
-        ['lordvarney'] = { method = 'direct_spell_grant', itemId = 0, spellId = 948, dropPct = 13, trustName = 'Klara', nmName = 'Lord_Varney' },
+        ['quasimodo'] = { method = 'direct_spell_grant', itemId = 0, spellId = 948, dropPct = 13, trustName = 'Klara', nmName = 'Quasimodo' },
         ['kukulkan'] = { method = 'direct_spell_grant', itemId = 0, spellId = 964, dropPct = 9, trustName = 'Lhe Lhangavo', nmName = 'Kukulkan' },
         ['amarok'] = { method = 'direct_spell_grant', itemId = 0, spellId = 1006, dropPct = 13, trustName = 'Maat UC', nmName = 'Amarok' },
         ['dvalinn'] = { method = 'direct_spell_grant', itemId = 0, spellId = 975, dropPct = 11, trustName = 'Maximilian', nmName = 'Dvalinn' },
