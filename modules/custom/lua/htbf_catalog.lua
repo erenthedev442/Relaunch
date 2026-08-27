@@ -238,6 +238,33 @@ catalog.tierReward =
     },
 }
 
+-- Per-item base rates for optional HTBF gear groups. The source tables use
+-- weights 50 / 80 / 120+ as rarity bands; HTBF converts those bands into an
+-- independent roll for every listed item so harder tiers can genuinely improve
+-- each item's chance (and can award more than one piece on a lucky clear).
+-- Rates are percentages before Treasure Hunter.
+catalog.tierGearDropRate =
+{
+    [1] = { rare = 1.0, uncommon = 2.0, common = 3.0 },
+    [2] = { rare = 4.0, uncommon = 5.5, common = 7.0 },
+    [3] = { rare = 8.0, uncommon = 10.0, common = 12.0 },
+}
+
+function catalog.getTierGearDropRate(tier, sourceWeight)
+    local rates = catalog.tierGearDropRate[tier]
+    if not rates then
+        return 0
+    end
+
+    if sourceWeight <= 50 then
+        return rates.rare
+    elseif sourceWeight <= 80 then
+        return rates.uncommon
+    end
+
+    return rates.common
+end
+
 -- Default armoury-crate loot (the chest that spawns on a win). Override per fight
 -- with catalog.fights[key].loot[tier] for retail-exact drops. Deliberately MODEST
 -- -- tier-scaled crafting spoils, NO gear/relics -- because these battlefields are
@@ -467,7 +494,13 @@ catalog.fights =
         -- Retail HTMBF is Omega -> Ultima only. The mission battlefield also
         -- contains Mammets and story cutscenes, so it must not be reused here.
         groupsForTier = function(tier)
-        local first = 16908382 + (tier - 1) * 30
+            local firstByTier =
+            {
+                [1] = 16908382,
+                [2] = 16908500,
+                [3] = 16908530,
+            }
+            local first = firstByTier[tier]
             return
             {
                 {

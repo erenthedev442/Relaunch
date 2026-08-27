@@ -89,6 +89,33 @@ describe('HTBF catalog integrity and balance', function()
         end
     end)
 
+    it('scales optional gear rates by tier while preserving rarity bands', function()
+        local expected =
+        {
+            [1] = { rare = 1.0, uncommon = 2.0,  common = 3.0 },
+            [2] = { rare = 4.0, uncommon = 5.5,  common = 7.0 },
+            [3] = { rare = 8.0, uncommon = 10.0, common = 12.0 },
+        }
+
+        for tier = 1, 3 do
+            local rates = catalog.tierGearDropRate[tier]
+            assert(rates.rare == expected[tier].rare)
+            assert(rates.uncommon == expected[tier].uncommon)
+            assert(rates.common == expected[tier].common)
+            assert(rates.rare < rates.uncommon)
+            assert(rates.uncommon < rates.common)
+            if tier > 1 then
+                assert(rates.rare > catalog.tierGearDropRate[tier - 1].rare)
+                assert(rates.uncommon > catalog.tierGearDropRate[tier - 1].uncommon)
+                assert(rates.common > catalog.tierGearDropRate[tier - 1].common)
+            end
+        end
+
+        assert(catalog.getTierGearDropRate(1, 50) == 1.0)
+        assert(catalog.getTierGearDropRate(2, 80) == 5.5)
+        assert(catalog.getTierGearDropRate(3, 120) == 12.0)
+    end)
+
     it('keeps avatar durability distributed across stats rather than HP alone', function()
         local avatar = catalog.tierScale.avatar
 
@@ -152,6 +179,27 @@ describe('HTBF catalog integrity and balance', function()
         assert(type(catalog.fights.one_to_be_feared.groupsForTier) == 'function')
     end)
 
+    it("keeps One to be Feared HTBF mobs clear of Sealion's Den NPC IDs", function()
+        local fight = catalog.fights.one_to_be_feared
+        local expectedFirst = { 16908382, 16908500, 16908530 }
+        local npcFirst = 16908413
+        local npcLast = 16908481
+
+        for tier = 1, 3 do
+            local groups = fight.groupsForTier(tier)
+            assert(groups[1].mobIds[1][1] == expectedFirst[tier])
+
+            for _, group in ipairs(groups) do
+                for _, areaIds in ipairs(group.mobIds) do
+                    for _, mobId in ipairs(areaIds) do
+                        assert(mobId < npcFirst or mobId > npcLast,
+                            string.format('tier %d mob ID %d overlaps a Sealion NPC', tier, mobId))
+                    end
+                end
+            end
+        end
+    end)
+
     it('uses non-overlapping Sealion tier pools and dedicated Ark menu rows', function()
         local feared = catalog.fights.one_to_be_feared
         for tier = 1, 3 do
@@ -159,9 +207,6 @@ describe('HTBF catalog integrity and balance', function()
             local omega = groups[1].mobIds[1][1]
             local ultima = groups[2].mobIds[1][1]
             assert(ultima == omega + 1)
-            if tier > 1 then
-                assert(omega - feared.groupsForTier(tier - 1)[1].mobIds[1][1] == 30)
-            end
         end
 
         for index = 1, 5 do

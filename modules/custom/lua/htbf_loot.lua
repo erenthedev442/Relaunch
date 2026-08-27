@@ -2,8 +2,8 @@
 -- htbf_loot.lua  -- retail-sourced armoury-crate loot per HTBF fight (relaunch)
 --
 -- One table per fightKey (consumed as catalog.fightLoot[fightKey] -> content.loot),
--- applied to ALL tiers of that fight: retail loot is per-fight; the I/II/III tiers
--- differ in difficulty + Hunt Marks, not drop pool.
+-- applied to all tiers of that fight. The item roster stays per-fight, while
+-- htbf.lua converts optional-entry rarity bands into tier-specific drop rates.
 --
 -- Format = utils.selectFromLootGroups: an array of GROUPS; each group an array of
 -- { itemId = xi.item.X, weight = N, amount = M? } (+ optional group `quantity`,
@@ -11,9 +11,11 @@
 -- is a "drop nothing" slot (NEVER nil -- the engine logs an error on a nil id).
 --
 -- ECONOMY-CONSCIOUS (these battlefields are REPEATABLE + the server runs an AH
--- market-maker): GROUP 1 is a reliable common material/currency reward; the rare
--- GEAR sits in a whiff-heavy GROUP 2 (the 0-slot dominant at ~850) so valuable
--- items stay genuinely rare per clear. Tune any single fight here in isolation.
+-- market-maker): GROUP 1 is a reliable common material/currency reward. Groups
+-- containing itemId 0 are optional loot: each real entry rolls independently,
+-- with source weights 50 / 80 / 120+ mapping to rare / uncommon / common tier
+-- rates in htbf_catalog.lua. Treasure Hunter then improves every optional roll.
+-- The legacy itemId 0 weight remains descriptive but is not rolled by HTBF.
 --
 -- Sourced from bg-wiki HTBF pages 2026-06-27; EVERY xi.item.* verified present in
 -- scripts/enum/item.lua. Items with no enum const were omitted (notes inline).

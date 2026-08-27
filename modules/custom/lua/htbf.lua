@@ -12,9 +12,92 @@
 -- Loaded from scripts/battlefields/<Zone>/<key>_ht{1,2,3}.lua, so the global
 -- Battlefield class + xi.* are already available.
 -----------------------------------
+require('scripts/globals/combat/treasure_hunter')
+
 local catalog = require('modules/custom/lua/htbf_catalog')
 
 local htbf = {}
+
+-- Optional HTBF loot groups contain an itemId 0 whiff entry. Each real entry in
+-- those groups gets an independent tier-scaled roll, allowing higher tiers to
+-- improve every weapon/gear piece instead of merely paying more marks. Groups
+-- without a whiff entry (crystals, ingots, Rem's Tales, etc.) retain their
+-- original weighted-selection behavior.
+local function getBattlefieldTreasureHunter(player, battlefield)
+    local thLevel = 0
+
+    if battlefield then
+        pcall(function()
+            for _, mob in ipairs(battlefield:getMobs(true, true)) do
+                thLevel = math.max(thLevel, mob:getTHlevel() or 0)
+            end
+        end)
+    end
+
+    -- Dead/cleaned-up battlefield mobs are not always available on every win
+    -- path. Falling back to the player's equipped TH still guarantees that the
+    -- stat affects rewards; the mob value above preserves in-fight TH procs.
+    if thLevel == 0 then
+        pcall(function()
+            thLevel = player:getMod(xi.mod.TREASURE_HUNTER) or 0
+        end)
+    end
+
+    return math.max(0, math.min(14, math.floor(thLevel)))
+end
+
+local function applyTreasureHunter(thLevel, baseRate)
+    local adjustedRate = baseRate
+    if
+        thLevel > 0 and
+        xi.combat and
+        xi.combat.treasureHunter and
+        xi.combat.treasureHunter.getDropRate
+    then
+        local ok, result = pcall(
+            xi.combat.treasureHunter.getDropRate,
+            thLevel,
+            baseRate)
+        if ok and type(result) == 'number' then
+            -- TH bracket conversion must never reduce the configured base rate.
+            adjustedRate = math.max(baseRate, result)
+        end
+    end
+
+    return math.max(0, math.min(10000, adjustedRate))
+end
+
+local function selectTierLoot(player, lootTable, tier, thLevel)
+    local selected = {}
+
+    for _, group in ipairs(lootTable) do
+        local optional = false
+        for _, entry in pairs(group) do
+            if type(entry) == 'table' and entry.itemId == 0 then
+                optional = true
+                break
+            end
+        end
+
+        if optional then
+            for _, entry in pairs(group) do
+                if type(entry) == 'table' and entry.itemId and entry.itemId ~= 0 then
+                    local basePct = catalog.getTierGearDropRate(tier, entry.weight or 0)
+                    local rate = applyTreasureHunter(thLevel, math.floor(basePct * 100))
+                    if math.random(1, 10000) <= rate then
+                        selected[#selected + 1] = entry
+                    end
+                end
+            end
+        else
+            for _, entry in ipairs(utils.selectFromLootGroups(player, { group })) do
+                selected[#selected + 1] = entry
+            end
+        end
+    end
+
+    return selected
+end
 
 -- ---------------------------------------------------------------------------
 -- ACCESS REQUIREMENTS (owner request 2026-07-12)
@@ -665,12 +748,14 @@ function htbf.register(fightKey, tier, variant)
         -- stock crate -> handleLootRolls path drops nothing. Roll content.loot
         -- HERE -- the one hook that reliably fires on every fight's win (it's
         -- where gil/marks already land) -- and give the items straight to the
-        -- player, per completion. selectFromLootGroups is the same roller the
-        -- crate uses, so htbf_loot.lua tables behave identically.
+        -- player, per completion. Optional gear groups use independent,
+        -- tier-scaled rolls with Treasure Hunter; guaranteed weighted groups
+        -- retain the stock selectFromLootGroups behavior.
         local looted = 0
         if self.loot then
             pcall(function()
-                for _, entry in ipairs(utils.selectFromLootGroups(player, self.loot)) do
+                local thLevel = getBattlefieldTreasureHunter(player, bf)
+                for _, entry in ipairs(selectTierLoot(player, self.loot, tier, thLevel)) do
                     if entry.itemId and entry.itemId ~= 0 then
                         if entry.itemId == xi.item.GIL then
                             player:addGil(entry.amount or 0)
@@ -722,9 +807,8 @@ function htbf.register(fightKey, tier, variant)
     end
 
     -- Armoury-crate loot. Priority: a fight's per-tier override (f.loot[tier]),
-    -- then its flat retail pool (catalog.fightLoot[fightKey], same pool across
-    -- tiers -- retail loot is per-fight, the tiers differ in difficulty + marks),
-    -- then the modest tier-scaled default so every fight always drops a crate.
+    -- then its flat retail pool (catalog.fightLoot[fightKey]), then the modest
+    -- default. selectTierLoot applies tier rates and TH to optional entries.
     local loot
     if isFinalTest then
         loot = catalog.tierLoot[3]

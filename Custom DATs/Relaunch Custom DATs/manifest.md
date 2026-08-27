@@ -33,8 +33,8 @@ Suggested player-facing text for item `26169` (matches the server-side stats in
 ```text
 Legendary Ring
 [Ring] All Races
-Experience Points Boost +100%
-Capacity Points Boost +100%
+Experience Points Boost +300%
+Capacity Points Boost +300%
 Auto Reraise (III) Effect
 Movement Speed +25%
 Retains all EXP on death

@@ -49,7 +49,7 @@ Prefer not to touch client files? Load it as an overlay instead:
 - Retail item reused: `Reraise Ring`
 - Server item name: `Legendary Ring`
 - Purpose: the one functional Legacy migration reward (recognition for time on Legendary)
-- Server behavior: Rare/Ex, all jobs, Lv.1 ring — EXP +100%, Capacity +100%,
+- Server behavior: Rare/Ex, all jobs, Lv.1 ring — EXP +300%, Capacity +300%,
   Auto-Reraise III, Movement Speed +25%, 100% EXP retained on death, No Weakness
   after Reraise, a permanent legendary aura, and a USE that toggles Vanish
   (Sneak+Invisible) / Transform (costume)
