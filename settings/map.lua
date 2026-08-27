@@ -294,12 +294,12 @@ xi.settings.map =
     -- Todo = other logging including anti-cheat messages
 
     -- Chat Audit[logging] settings
-    AUDIT_CHAT      = false,
+    AUDIT_CHAT      = true,
     AUDIT_SAY       = false,
     AUDIT_SHOUT     = false,
     AUDIT_TELL      = false,
     AUDIT_YELL      = false,
-    AUDIT_LINKSHELL = false,
+    AUDIT_LINKSHELL = true,
     AUDIT_UNITY     = false,
     AUDIT_PARTY     = false,
     AUDIT_BALLISTA  = false,
