@@ -34,7 +34,7 @@ return {
     [  891] = { cat =  2, tier = 0, label = 'Triple Atk' },
     [ 1521] = { cat =  2, tier = 0, label = 'Weapon Skill Acc' },
     [ 1473] = { cat =  2, tier = 0, label = 'Weapon skill damage' },
-    [  955] = { cat =  3, tier = 0, label = 'Enhances' },
+    [  955] = { cat =  3, tier = 0, label = 'Enhances "Dark Seal" (DRK)' },
     [ 2338] = { cat =  3, tier = 0, label = 'Enspell Dmg' },
     [ 2427] = { cat =  3, tier = 0, label = 'Fast Cast' },
     [ 2335] = { cat =  3, tier = 0, label = 'Helix Damage' },

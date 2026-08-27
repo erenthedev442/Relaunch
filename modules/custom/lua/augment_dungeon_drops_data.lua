@@ -54,7 +54,7 @@ return {
             [3] = { id = 909, tier = 0, cat = 3, label = 'Mag. Acc./Mag. Dmg', item = 'guivres_skull' },
             [4] = { id = 943, tier = 0, cat = 3, label = 'Mag. crit. hit dmg', item = 'pinch_of_poison_dust' },
             [5] = { id = 954, tier = 0, cat = 3, label = 'Mag. Acc. Mag.Atk.Bns', item = 'magic_pot_shard' },
-            [6] = { id = 955, tier = 0, cat = 3, label = 'Enhances', item = 'golem_shard' },
+            [6] = { id = 955, tier = 0, cat = 3, label = 'Enhances "Dark Seal" (DRK)', item = 'golem_shard' },
             [7] = { id = 1474, tier = 0, cat = 3, label = 'Magic Damage', item = 'infinity_core' },
             [8] = { id = 1606, tier = 0, cat = 3, label = 'Immunobreak Chance+', item = 'remnant_of_a_burning_memory' },
             [9] = { id = 2166, tier = 0, cat = 3, label = 'Spell Interruption Rate Down', item = 'lock_of_marid_hair' },
@@ -76,25 +76,25 @@ return {
         family = 'Survival & Defense',
         trash =
         {
-            [1] = { id = 858, tier = 0, cat = 4, label = 'Phys. dmg. taken', item = 'wolf_hide' },
+            [1] = { id = 858, tier = 0, cat = 4, label = 'Phys DT', item = 'wolf_hide' },
             [2] = { id = 881, tier = 0, cat = 4, label = 'Mag.Def.Bns', item = 'crab_shell' },
             [3] = { id = 889, tier = 0, cat = 4, label = 'Chance of successful block', item = 'beetle_shell' },
             [4] = { id = 928, tier = 0, cat = 4, label = 'DEF', item = 'pinch_of_bomb_ash' },
-            [5] = { id = 936, tier = 0, cat = 4, label = 'Magic dmg. taken', item = 'chunk_of_rock_salt' },
+            [5] = { id = 936, tier = 0, cat = 4, label = 'Magic DT', item = 'chunk_of_rock_salt' },
             [6] = { id = 1123, tier = 0, cat = 4, label = 'Damage Taken', item = 'manticore_fang' },
             [7] = { id = 1193, tier = 0, cat = 4, label = 'Breath dmg. taken', item = 'high-quality_crab_shell' },
             [8] = { id = 1470, tier = 0, cat = 4, label = 'Resist Charm', item = 'sparkling_stone' },
             [9] = { id = 1617, tier = 0, cat = 4, label = 'Evasion', item = 'flytrap_leaf' },
             [10] = { id = 1638, tier = 0, cat = 4, label = 'Occ. inc. resist to stat ailments', item = 'moblin_mask' },
-            [11] = { id = 2151, tier = 0, cat = 4, label = 'Physical Damage Taken', item = 'marid_hide' },
+            [11] = { id = 2151, tier = 0, cat = 4, label = 'Phys DT II', item = 'marid_hide' },
+            [12] = { id = 2235, tier = 0, cat = 4, label = 'Enmity', item = 'bag_of_wildgrass_seeds' },
         },
         boss =
         {
-            { id = 2235, tier = 0, cat = 4, label = 'Enmity', item = 'bag_of_wildgrass_seeds' },
             { id = 2505, tier = 0, cat = 4, label = 'Parrying rate', item = 'heavy_quadav_backplate' },
             { id = 2520, tier = 0, cat = 4, label = 'Mag. Evasion', item = 'yagudo_kote' },
             { id = 2549, tier = 0, cat = 4, label = 'All elemental resists', item = 'pinch_of_djinn_ash' },
-            { id = 2747, tier = 0, cat = 4, label = 'Magic Damage Taken', item = 'gargouille_horn' },
+            { id = 2747, tier = 0, cat = 4, label = 'Magic DT II', item = 'gargouille_horn' },
             { id = 3504, tier = 0, cat = 4, label = 'Enemy crit. hit rate', item = 'peapuk_wing' },
         },
     },
@@ -157,8 +157,6 @@ return {
             { id = 863, tier = 0, cat = 9, label = 'Treasure Hunter', item = 'coeurl_hide' },
             { id = 1607, tier = 0, cat = 9, label = 'Shield skill', item = 'remnant_of_a_bitter_memory' },
             { id = 1608, tier = 0, cat = 9, label = 'Parrying Skill', item = 'remnant_of_a_fleeting_memory' },
-            -- 1616 'Melee skill', 1663 'Ranged skill', 1889 'Magic skill'
-            -- removed with the catalog rows (all three are automaton-only mods).
             { id = 942, tier = 0, cat = 10, label = 'Cap. Point +33%', item = 'philosophers_stone' },
             { id = 2523, tier = 0, cat = 10, label = 'Exp. Point +33%', item = 'peiste_skin' },
         },
