@@ -1,706 +1,365 @@
-﻿Collaborator review  2026-08-25 14:44:41
-Range: HEAD..origin/relaunch  (2 collaborator commit(s))
+﻿Collaborator review  2026-08-27 07:51:13
+Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit 4aa6ac42dab670a139353a16e82b7592d609a542
+commit a33f519fea2b87c8986aa68dceb6af7e785b2af8
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Tue Aug 25 22:37:02 2026 +0100
+Date:   Thu Aug 27 15:48:06 2026 +0100
 
-    feat(relaunch): centralize player travel commands
+    fix(relaunch): scale HTBF loot by difficulty
     
-    Make !warp the discoverable travel hub while retaining direct player shortcuts for progression and content destinations.
+    Use independent tier-aware gear rolls with Treasure Hunter support, avoid
+    Sealion's Den entity collisions, and correct the Legendary Ring client tooltip.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/modules/custom/commands/affinitynm.lua b/modules/custom/commands/affinitynm.lua
-index 1d5b759714..2a403c8601 100644
---- a/modules/custom/commands/affinitynm.lua
-+++ b/modules/custom/commands/affinitynm.lua
-@@ -23,7 +23,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = 's',
- }
- 
-diff --git a/modules/custom/commands/augwarp.lua b/modules/custom/commands/augwarp.lua
-index c26363ffac..3c63078790 100644
---- a/modules/custom/commands/augwarp.lua
-+++ b/modules/custom/commands/augwarp.lua
-@@ -19,7 +19,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = 's',
- }
- 
-diff --git a/modules/custom/commands/capacity.lua b/modules/custom/commands/capacity.lua
-index 1c82b1f24c..ece5226fd7 100644
---- a/modules/custom/commands/capacity.lua
-+++ b/modules/custom/commands/capacity.lua
-@@ -14,7 +14,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = 's',
- }
- 
-diff --git a/modules/custom/commands/diwarp.lua b/modules/custom/commands/diwarp.lua
-index 1a6dac1106..f980ce7e09 100644
---- a/modules/custom/commands/diwarp.lua
-+++ b/modules/custom/commands/diwarp.lua
-@@ -9,7 +9,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = '',
- }
- 
-diff --git a/modules/custom/commands/expcamp.lua b/modules/custom/commands/expcamp.lua
-index b5d4e6383d..d6b0b57a0f 100644
---- a/modules/custom/commands/expcamp.lua
-+++ b/modules/custom/commands/expcamp.lua
-@@ -11,7 +11,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = 's',
- }
- 
-diff --git a/modules/custom/commands/henge.lua b/modules/custom/commands/henge.lua
-index 78a9b8262b..d863473419 100644
---- a/modules/custom/commands/henge.lua
-+++ b/modules/custom/commands/henge.lua
-@@ -8,7 +8,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = '',
- }
- 
-diff --git a/modules/custom/commands/hunt.lua b/modules/custom/commands/hunt.lua
-new file mode 100644
-index 0000000000..99e1c1838b
---- /dev/null
-+++ b/modules/custom/commands/hunt.lua
-@@ -0,0 +1,19 @@
-+-----------------------------------
-+-- !hunt
-+-- Player shortcut to the Hunting League hub. Mirrors !warp -> Hunting League.
-+-----------------------------------
-+---@type TCommand
-+local commandObj = {}
-+
-+commandObj.cmdprops =
-+{
-+    permission = 0,
-+    parameters = '',
-+}
-+
-+commandObj.onTrigger = function(player)
-+    player:setPos(0.0000, -0.5000, -30.0000, 128, xi.zone.ESCHA_ZITAH)
-+    player:printToPlayer('Warped to the Hunting League hub. Hunt well, kupo!', xi.msg.channel.SYSTEM_3)
-+end
-+
-+return commandObj
-diff --git a/modules/custom/commands/hunt1.lua b/modules/custom/commands/hunt1.lua
-new file mode 100644
-index 0000000000..2adc576a60
---- /dev/null
-+++ b/modules/custom/commands/hunt1.lua
-@@ -0,0 +1,19 @@
-+-----------------------------------
-+-- !hunt1
-+-- Player shortcut to Hunting League tier 1.
-+-----------------------------------
-+---@type TCommand
-+local commandObj = {}
-+
-+commandObj.cmdprops =
-+{
-+    permission = 0,
-+    parameters = '',
-+}
-+
-+commandObj.onTrigger = function(player)
-+    player:setPos(-41.5941, 0.1103, 73.7704, 176, xi.zone.ESCHA_ZITAH)
-+    player:printToPlayer('Warped to Tier 1 hunt cluster. Good luck!', xi.msg.channel.SYSTEM_3)
-+end
-+
-+return commandObj
-diff --git a/modules/custom/commands/hunt2.lua b/modules/custom/commands/hunt2.lua
-new file mode 100644
-index 0000000000..7f99cd0fcb
---- /dev/null
-+++ b/modules/custom/commands/hunt2.lua
-@@ -0,0 +1,19 @@
-+-----------------------------------
-+-- !hunt2
-+-- Player shortcut to Hunting League tier 2.
-+-----------------------------------
-+---@type TCommand
-+local commandObj = {}
-+
-+commandObj.cmdprops =
-+{
-+    permission = 0,
-+    parameters = '',
-+}
-+
-+commandObj.onTrigger = function(player)
-+    player:setPos(40.9101, 0.4831, 132.8770, 71, xi.zone.ESCHA_ZITAH)
-+    player:printToPlayer('Warped to Tier 2 hunt cluster. Good luck!', xi.msg.channel.SYSTEM_3)
-+end
-+
-+return commandObj
-diff --git a/modules/custom/commands/hunt3.lua b/modules/custom/commands/hunt3.lua
-new file mode 100644
-index 0000000000..f4354ec676
---- /dev/null
-+++ b/modules/custom/commands/hunt3.lua
-@@ -0,0 +1,19 @@
-+-----------------------------------
-+-- !hunt3
-+-- Player shortcut to Hunting League tier 3.
-+-----------------------------------
-+---@type TCommand
-+local commandObj = {}
-+
-+commandObj.cmdprops =
-+{
-+    permission = 0,
-+    parameters = '',
-+}
-+
-+commandObj.onTrigger = function(player)
-+    player:setPos(48.6277, 0.8776, 18.8663, 215, xi.zone.ESCHA_ZITAH)
-+    player:printToPlayer('Warped to Tier 3 hunt cluster. Good luck!', xi.msg.channel.SYSTEM_3)
-+end
-+
-+return commandObj
-diff --git a/modules/custom/commands/hunt4.lua b/modules/custom/commands/hunt4.lua
-new file mode 100644
-index 0000000000..69887cd6eb
---- /dev/null
-+++ b/modules/custom/commands/hunt4.lua
-@@ -0,0 +1,19 @@
-+-----------------------------------
-+-- !hunt4
-+-- Player shortcut to Hunting League tier 4.
-+-----------------------------------
-+---@type TCommand
-+local commandObj = {}
-+
-+commandObj.cmdprops =
-+{
-+    permission = 0,
-+    parameters = '',
-+}
-+
-+commandObj.onTrigger = function(player)
-+    player:setPos(22.0112, 0.8983, -121.4367, 126, xi.zone.ESCHA_ZITAH)
-+    player:printToPlayer('Warped to Tier 4 hunt cluster. Good luck!', xi.msg.channel.SYSTEM_3)
-+end
-+
-+return commandObj
-diff --git a/modules/custom/commands/hunt5.lua b/modules/custom/commands/hunt5.lua
-new file mode 100644
-index 0000000000..14a4bd1934
---- /dev/null
-+++ b/modules/custom/commands/hunt5.lua
-@@ -0,0 +1,19 @@
-+-----------------------------------
-+-- !hunt5
-+-- Player shortcut to Hunting League tier 5.
-+-----------------------------------
-+---@type TCommand
-+local commandObj = {}
-+
-+commandObj.cmdprops =
-+{
-+    permission = 0,
-+    parameters = '',
-+}
-+
-+commandObj.onTrigger = function(player)
-+    player:setPos(433.8451, 0.1066, -199.3157, 119, xi.zone.ESCHA_ZITAH)
-+    player:printToPlayer('Warped to Tier 5 hunt cluster. Good luck!', xi.msg.channel.SYSTEM_3)
-+end
-+
-+return commandObj
-diff --git a/modules/custom/commands/huntwarp.lua b/modules/custom/commands/huntwarp.lua
-index 5d54207d81..4a6e747038 100644
---- a/modules/custom/commands/huntwarp.lua
-+++ b/modules/custom/commands/huntwarp.lua
-@@ -21,7 +21,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = 's',
- }
- 
-diff --git a/modules/custom/commands/iwarp.lua b/modules/custom/commands/iwarp.lua
-index f4119402a7..8a91c9e5d9 100644
---- a/modules/custom/commands/iwarp.lua
-+++ b/modules/custom/commands/iwarp.lua
-@@ -8,7 +8,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = '',
- }
- 
-diff --git a/modules/custom/commands/leaf.lua b/modules/custom/commands/leaf.lua
-index 11d8be9d4f..b7546b1af6 100644
---- a/modules/custom/commands/leaf.lua
-+++ b/modules/custom/commands/leaf.lua
-@@ -8,7 +8,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = '',
- }
- 
-diff --git a/modules/custom/commands/lib.lua b/modules/custom/commands/lib.lua
-index fc59902f14..0083aeade8 100644
---- a/modules/custom/commands/lib.lua
-+++ b/modules/custom/commands/lib.lua
-@@ -1,5 +1,5 @@
- local commandObj = {}
--commandObj.cmdprops = { permission = 1, parameters = '' }
-+commandObj.cmdprops = { permission = 0, parameters = '' }
- commandObj.onTrigger = function(player)
-     player:setPos(521.5545, -3.0378, 544.2744, 65, xi.zone.ABDHALJS_ISLE_PURGONORGO)
- end
-diff --git a/modules/custom/commands/maat.lua b/modules/custom/commands/maat.lua
-index a26b5cbed7..d35c95cb3f 100644
---- a/modules/custom/commands/maat.lua
-+++ b/modules/custom/commands/maat.lua
-@@ -9,7 +9,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = '',
- }
- 
-diff --git a/modules/custom/commands/prov1.lua b/modules/custom/commands/prov1.lua
-index cd605b4631..5c35c1ee13 100644
---- a/modules/custom/commands/prov1.lua
-+++ b/modules/custom/commands/prov1.lua
-@@ -9,7 +9,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = '',
- }
- 
-diff --git a/modules/custom/commands/prov2.lua b/modules/custom/commands/prov2.lua
-index 850b1c29c1..1d1c07402c 100644
---- a/modules/custom/commands/prov2.lua
-+++ b/modules/custom/commands/prov2.lua
-@@ -9,7 +9,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = '',
- }
- 
-diff --git a/modules/custom/commands/prov3.lua b/modules/custom/commands/prov3.lua
-index 8a97d67280..50d51470de 100644
---- a/modules/custom/commands/prov3.lua
-+++ b/modules/custom/commands/prov3.lua
-@@ -9,7 +9,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = '',
- }
- 
-diff --git a/modules/custom/commands/rebirth.lua b/modules/custom/commands/rebirth.lua
-new file mode 100644
-index 0000000000..a0ffc8b1d4
---- /dev/null
-+++ b/modules/custom/commands/rebirth.lua
-@@ -0,0 +1,20 @@
-+-----------------------------------
-+-- !rebirth
-+-- Player shortcut to the Job Rebirth NPC. Mirrors !warp -> Progression Hubs.
-+-----------------------------------
-+---@type TCommand
-+local commandObj = {}
-+
-+commandObj.cmdprops =
-+{
-+    permission = 0,
-+    parameters = '',
-+}
-+
-+local cfg = require('modules/custom/lua/job_rebirth_catalog')
-+
-+commandObj.onTrigger = function(player)
-+    player:setPos(cfg.npcPos.x, cfg.npcPos.y, cfg.npcPos.z, cfg.npcPos.rot, cfg.npcZone)
-+end
-+
-+return commandObj
-diff --git a/modules/custom/commands/reforged.lua b/modules/custom/commands/reforged.lua
-new file mode 100644
-index 0000000000..0fd158388d
---- /dev/null
-+++ b/modules/custom/commands/reforged.lua
-@@ -0,0 +1,19 @@
-+-----------------------------------
-+-- !reforged
-+-- Player shortcut to the Reforge hub. Mirrors !warp -> Progression Hubs.
-+-----------------------------------
-+---@type TCommand
-+local commandObj = {}
-+
-+commandObj.cmdprops =
-+{
-+    permission = 0,
-+    parameters = '',
-+}
-+
-+commandObj.onTrigger = function(player)
-+    player:setPos(-0.66, 0.0, -3.10, 143, xi.zone.DIORAMA_ABDHALJS_GHELSBA)
-+    player:printToPlayer('Warped to the Reforge hub. Reforge well, kupo!', xi.msg.channel.SYSTEM_3)
-+end
-+
-+return commandObj
-diff --git a/modules/custom/commands/unitywarp.lua b/modules/custom/commands/unitywarp.lua
-index 67b5c33234..b2e26d55f9 100644
---- a/modules/custom/commands/unitywarp.lua
-+++ b/modules/custom/commands/unitywarp.lua
-@@ -22,7 +22,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = 's',   -- optional: a number (list index) or a name fragment
- }
- 
-diff --git a/modules/custom/commands/voidspire.lua b/modules/custom/commands/voidspire.lua
-index 5ffa25f3ba..c92459dff3 100644
---- a/modules/custom/commands/voidspire.lua
-+++ b/modules/custom/commands/voidspire.lua
-@@ -9,7 +9,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = '',
- }
- 
-diff --git a/modules/custom/commands/warp.lua b/modules/custom/commands/warp.lua
-index 65683525ca..a3bd92a49d 100644
---- a/modules/custom/commands/warp.lua
-+++ b/modules/custom/commands/warp.lua
-@@ -1,7 +1,7 @@
- -----------------------------------
- -- !warp
---- Categorized player travel menu. Direct destination commands are staff-only;
---- this is the single player-facing entry point, apart from !hub and !home.
-+-- Categorized player travel menu. Direct QoL commands remain available for
-+-- players who prefer them; this provides a discoverable central entry point.
- -----------------------------------
- ---@type TCommand
- local commandObj = {}
-@@ -16,6 +16,8 @@ local SYS = xi.msg.channel.SYSTEM_3
- 
- local showRoot
- local showActivities
-+local showAscensionAltars
-+local showSpecializedTravel
- 
- local function openMenu(player, title, options)
-     player:timer(30, function(p)
-@@ -251,6 +253,72 @@ local function showBattlefields(player)
-     })
- end
- 
-+showAscensionAltars = function(player)
-+    openMenu(player, 'Provenance: Ascension Altars', {
-+        {
-+            'Ascension Altar I',
-+            function(p)
-+                runCommand(p, 'modules/custom/commands/prov1')
-+            end,
-+        },
-+        {
-+            'Ascension Altar II',
-+            function(p)
-+                runCommand(p, 'modules/custom/commands/prov2')
-+            end,
-+        },
-+        {
-+            'Ascension Altar III',
-+            function(p)
-+                runCommand(p, 'modules/custom/commands/prov3')
-+            end,
-+        },
-+        { 'Back', function(p) showActivities(p) end },
-+    })
-+end
-+
-+showSpecializedTravel = function(player)
-+    openMenu(player, 'Specialized Travel', {
-+        {
-+            'Augment Catalysts',
-+            function(p)
-+                runCommand(p, 'modules/custom/commands/augwarp')
-+            end,
-+        },
-+        {
-+            'Affinity NMs',
-+            function(p)
-+                runCommand(p, 'modules/custom/commands/affinitynm')
-+            end,
-+        },
-+        {
-+            "Hunters' Guild NMs",
-+            function(p)
-+                runCommand(p, 'modules/custom/commands/huntwarp')
-+            end,
-+        },
-+        {
-+            'Saved Waypoints',
-+            function(p)
-+                runCommand(p, 'modules/custom/commands/waypoint')
-+            end,
-+        },
-+        {
-+            'Legacy Reisenjima Henge',
-+            function(p)
-+                runCommand(p, 'modules/custom/commands/henge')
-+            end,
-+        },
-+        {
-+            'Leafallia Hub',
-+            function(p)
-+                runCommand(p, 'modules/custom/commands/leaf')
-+            end,
-+        },
-+        { 'Back', function(p) showActivities(p) end },
-+    })
-+end
-+
- local function showProgressionHubs(player)
-     openMenu(player, 'Progression Hubs', {
-         {
-@@ -301,6 +369,18 @@ showActivities = function(player)
-                 showWaveMasters(p)
-             end,
-         },
-+        {
-+            'Ascension Altars',
-+            function(p)
-+                showAscensionAltars(p)
-+            end,
-+        },
-+        {
-+            'Specialized Travel',
-+            function(p)
-+                showSpecializedTravel(p)
-+            end,
-+        },
-         { 'Back', function(p) showRoot(p) end },
-     })
- end
-diff --git a/modules/custom/commands/wavemaster.lua b/modules/custom/commands/wavemaster.lua
-index 8212919efa..7245edbba8 100644
---- a/modules/custom/commands/wavemaster.lua
-+++ b/modules/custom/commands/wavemaster.lua
-@@ -11,7 +11,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = '',
- }
- 
-diff --git a/modules/custom/commands/waypoint.lua b/modules/custom/commands/waypoint.lua
-index 441e7dd08d..8f769b9ce6 100644
---- a/modules/custom/commands/waypoint.lua
-+++ b/modules/custom/commands/waypoint.lua
-@@ -23,7 +23,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = 'ss',
- }
- 
-diff --git a/modules/custom/commands/wm1.lua b/modules/custom/commands/wm1.lua
-index 409713d9ce..27519958d9 100644
---- a/modules/custom/commands/wm1.lua
-+++ b/modules/custom/commands/wm1.lua
-@@ -13,7 +13,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = '',
- }
- 
-diff --git a/modules/custom/commands/wm2.lua b/modules/custom/commands/wm2.lua
-index e96b87b1ee..66da14dc84 100644
---- a/modules/custom/commands/wm2.lua
-+++ b/modules/custom/commands/wm2.lua
-@@ -13,7 +13,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = '',
- }
- 
-diff --git a/modules/custom/commands/wm3.lua b/modules/custom/commands/wm3.lua
-index 7cc4c88cf1..0aebdf03f0 100644
---- a/modules/custom/commands/wm3.lua
-+++ b/modules/custom/commands/wm3.lua
-@@ -13,7 +13,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = '',
- }
- 
-diff --git a/modules/custom/commands/wm4.lua b/modules/custom/commands/wm4.lua
-index 65805e8374..ab41140abf 100644
---- a/modules/custom/commands/wm4.lua
-+++ b/modules/custom/commands/wm4.lua
-@@ -13,7 +13,7 @@ local commandObj = {}
- 
- commandObj.cmdprops =
- {
--    permission = 1,
-+    permission = 0,
-     parameters = '',
- }
- 
-==============================================================================
-commit ee1ba084d3828adf106b3f0b5856788be7826ff9
-Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Tue Aug 25 22:43:43 2026 +0100
-
-    fix(relaunch): complete Ark Angel HTBF victories
-    
-    Ensure Ark Angel boss deaths advance custom battlefields to the normal reward and exit lifecycle.
-    
-    Co-authored-by: Cursor <cursoragent@cursor.com>
-
+diff --git a/Custom DATs/Relaunch Custom DATs/README.md b/Custom DATs/Relaunch Custom DATs/README.md
+index 9af1587c0f..e8ed026a5d 100644
+--- a/Custom DATs/Relaunch Custom DATs/README.md	
++++ b/Custom DATs/Relaunch Custom DATs/README.md	
+@@ -49,7 +49,7 @@ Prefer not to touch client files? Load it as an overlay instead:
+ - Retail item reused: `Reraise Ring`
+ - Server item name: `Legendary Ring`
+ - Purpose: the one functional Legacy migration reward (recognition for time on Legendary)
+-- Server behavior: Rare/Ex, all jobs, Lv.1 ring ΓÇö EXP +100%, Capacity +100%,
++- Server behavior: Rare/Ex, all jobs, Lv.1 ring ΓÇö EXP +300%, Capacity +300%,
+   Auto-Reraise III, Movement Speed +25%, 100% EXP retained on death, No Weakness
+   after Reraise, a permanent legendary aura, and a USE that toggles Vanish
+   (Sneak+Invisible) / Transform (costume)
+diff --git a/Custom DATs/Relaunch Custom DATs/ROM/286/73.DAT b/Custom DATs/Relaunch Custom DATs/ROM/286/73.DAT
+index 6963d37b16..722860232d 100644
+Binary files a/Custom DATs/Relaunch Custom DATs/ROM/286/73.DAT and b/Custom DATs/Relaunch Custom DATs/ROM/286/73.DAT differ
+diff --git a/Custom DATs/Relaunch Custom DATs/manifest.md b/Custom DATs/Relaunch Custom DATs/manifest.md
+index 5c6d16cf60..ad995fa016 100644
+--- a/Custom DATs/Relaunch Custom DATs/manifest.md	
++++ b/Custom DATs/Relaunch Custom DATs/manifest.md	
+@@ -33,8 +33,8 @@ Suggested player-facing text for item `26169` (matches the server-side stats in
+ ```text
+ Legendary Ring
+ [Ring] All Races
+-Experience Points Boost +100%
+-Capacity Points Boost +100%
++Experience Points Boost +300%
++Capacity Points Boost +300%
+ Auto Reraise (III) Effect
+ Movement Speed +25%
+ Retains all EXP on death
 diff --git a/modules/custom/lua/htbf.lua b/modules/custom/lua/htbf.lua
-index 8b124131eb..20f19004f5 100644
+index 20f19004f5..6148cdbe2f 100644
 --- a/modules/custom/lua/htbf.lua
 +++ b/modules/custom/lua/htbf.lua
-@@ -572,6 +572,20 @@ function htbf.register(fightKey, tier, variant)
-                 if f.passiveOnEntry then
-                     mob:setAggressive(false)
-                 end
+@@ -12,10 +12,93 @@
+ -- Loaded from scripts/battlefields/<Zone>/<key>_ht{1,2,3}.lua, so the global
+ -- Battlefield class + xi.* are already available.
+ -----------------------------------
++require('scripts/globals/combat/treasure_hunter')
 +
-+                -- The retail Ark Angel groups are reused by custom battlefield
-+                -- IDs, but their group allDeath callback does not consistently
-+                -- advance those instances to WON. Each separate AA battlefield
-+                -- has one primary enemy, so complete it directly on that death.
-+                -- The normal win lifecycle below remains responsible for every
-+                -- reward, message, and exit.
-+                if f.winOnPrimaryDeath then
-+                    mob:addListener('DEATH', 'HTBF_PRIMARY_WIN_' .. battlefieldId, function()
-+                        if battlefield:getStatus() ~= xi.battlefield.status.WON then
-+                            battlefield:setStatus(xi.battlefield.status.WON)
-+                        end
-+                    end)
+ local catalog = require('modules/custom/lua/htbf_catalog')
+ 
+ local htbf = {}
+ 
++-- Optional HTBF loot groups contain an itemId 0 whiff entry. Each real entry in
++-- those groups gets an independent tier-scaled roll, allowing higher tiers to
++-- improve every weapon/gear piece instead of merely paying more marks. Groups
++-- without a whiff entry (crystals, ingots, Rem's Tales, etc.) retain their
++-- original weighted-selection behavior.
++local function getBattlefieldTreasureHunter(player, battlefield)
++    local thLevel = 0
++
++    if battlefield then
++        pcall(function()
++            for _, mob in ipairs(battlefield:getMobs(true, true)) do
++                thLevel = math.max(thLevel, mob:getTHlevel() or 0)
++            end
++        end)
++    end
++
++    -- Dead/cleaned-up battlefield mobs are not always available on every win
++    -- path. Falling back to the player's equipped TH still guarantees that the
++    -- stat affects rewards; the mob value above preserves in-fight TH procs.
++    if thLevel == 0 then
++        pcall(function()
++            thLevel = player:getMod(xi.mod.TREASURE_HUNTER) or 0
++        end)
++    end
++
++    return math.max(0, math.min(14, math.floor(thLevel)))
++end
++
++local function applyTreasureHunter(thLevel, baseRate)
++    local adjustedRate = baseRate
++    if
++        thLevel > 0 and
++        xi.combat and
++        xi.combat.treasureHunter and
++        xi.combat.treasureHunter.getDropRate
++    then
++        local ok, result = pcall(
++            xi.combat.treasureHunter.getDropRate,
++            thLevel,
++            baseRate)
++        if ok and type(result) == 'number' then
++            -- TH bracket conversion must never reduce the configured base rate.
++            adjustedRate = math.max(baseRate, result)
++        end
++    end
++
++    return math.max(0, math.min(10000, adjustedRate))
++end
++
++local function selectTierLoot(player, lootTable, tier, thLevel)
++    local selected = {}
++
++    for _, group in ipairs(lootTable) do
++        local optional = false
++        for _, entry in pairs(group) do
++            if type(entry) == 'table' and entry.itemId == 0 then
++                optional = true
++                break
++            end
++        end
++
++        if optional then
++            for _, entry in pairs(group) do
++                if type(entry) == 'table' and entry.itemId and entry.itemId ~= 0 then
++                    local basePct = catalog.getTierGearDropRate(tier, entry.weight or 0)
++                    local rate = applyTreasureHunter(thLevel, math.floor(basePct * 100))
++                    if math.random(1, 10000) <= rate then
++                        selected[#selected + 1] = entry
++                    end
 +                end
-             end)
-         end
++            end
++        else
++            for _, entry in ipairs(utils.selectFromLootGroups(player, { group })) do
++                selected[#selected + 1] = entry
++            end
++        end
++    end
++
++    return selected
++end
++
+ -- ---------------------------------------------------------------------------
+ -- ACCESS REQUIREMENTS (owner request 2026-07-12)
+ -- To enter ANY High-Tier Battlefield, on the job you are entering with you must
+@@ -665,12 +748,14 @@ function htbf.register(fightKey, tier, variant)
+         -- stock crate -> handleLootRolls path drops nothing. Roll content.loot
+         -- HERE -- the one hook that reliably fires on every fight's win (it's
+         -- where gil/marks already land) -- and give the items straight to the
+-        -- player, per completion. selectFromLootGroups is the same roller the
+-        -- crate uses, so htbf_loot.lua tables behave identically.
++        -- player, per completion. Optional gear groups use independent,
++        -- tier-scaled rolls with Treasure Hunter; guaranteed weighted groups
++        -- retain the stock selectFromLootGroups behavior.
+         local looted = 0
+         if self.loot then
+             pcall(function()
+-                for _, entry in ipairs(utils.selectFromLootGroups(player, self.loot)) do
++                local thLevel = getBattlefieldTreasureHunter(player, bf)
++                for _, entry in ipairs(selectTierLoot(player, self.loot, tier, thLevel)) do
+                     if entry.itemId and entry.itemId ~= 0 then
+                         if entry.itemId == xi.item.GIL then
+                             player:addGil(entry.amount or 0)
+@@ -722,9 +807,8 @@ function htbf.register(fightKey, tier, variant)
      end
+ 
+     -- Armoury-crate loot. Priority: a fight's per-tier override (f.loot[tier]),
+-    -- then its flat retail pool (catalog.fightLoot[fightKey], same pool across
+-    -- tiers -- retail loot is per-fight, the tiers differ in difficulty + marks),
+-    -- then the modest tier-scaled default so every fight always drops a crate.
++    -- then its flat retail pool (catalog.fightLoot[fightKey]), then the modest
++    -- default. selectTierLoot applies tier rates and TH to optional entries.
+     local loot
+     if isFinalTest then
+         loot = catalog.tierLoot[3]
 diff --git a/modules/custom/lua/htbf_catalog.lua b/modules/custom/lua/htbf_catalog.lua
-index 056ce13bf4..0f5c4ae1a3 100644
+index 0f5c4ae1a3..fe93eec299 100644
 --- a/modules/custom/lua/htbf_catalog.lua
 +++ b/modules/custom/lua/htbf_catalog.lua
-@@ -645,6 +645,7 @@ catalog.fights =
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
-         passiveOnEntry = true,
-+        winOnPrimaryDeath = true,
-     },
-     ark_angels_2 =
-     {
-@@ -654,6 +655,7 @@ catalog.fights =
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
-         passiveOnEntry = true,
-+        winOnPrimaryDeath = true,
-     },
-     ark_angels_3 =
-     {
-@@ -663,6 +665,7 @@ catalog.fights =
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
-         passiveOnEntry = true,
-+        winOnPrimaryDeath = true,
-     },
-     ark_angels_4 =
-     {
-@@ -672,6 +675,7 @@ catalog.fights =
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
-         passiveOnEntry = true,
-+        winOnPrimaryDeath = true,
-     },
-     ark_angels_5 =
-     {
-@@ -681,6 +685,7 @@ catalog.fights =
-         difficulty = 'epic', rewardClass = 'epic',
-         entryPosByArea = laLoffEntryPos,
-         passiveOnEntry = true,
-+        winOnPrimaryDeath = true,
+@@ -238,6 +238,33 @@ catalog.tierReward =
      },
  }
  
++-- Per-item base rates for optional HTBF gear groups. The source tables use
++-- weights 50 / 80 / 120+ as rarity bands; HTBF converts those bands into an
++-- independent roll for every listed item so harder tiers can genuinely improve
++-- each item's chance (and can award more than one piece on a lucky clear).
++-- Rates are percentages before Treasure Hunter.
++catalog.tierGearDropRate =
++{
++    [1] = { rare = 1.0, uncommon = 2.0, common = 3.0 },
++    [2] = { rare = 4.0, uncommon = 5.5, common = 7.0 },
++    [3] = { rare = 8.0, uncommon = 10.0, common = 12.0 },
++}
++
++function catalog.getTierGearDropRate(tier, sourceWeight)
++    local rates = catalog.tierGearDropRate[tier]
++    if not rates then
++        return 0
++    end
++
++    if sourceWeight <= 50 then
++        return rates.rare
++    elseif sourceWeight <= 80 then
++        return rates.uncommon
++    end
++
++    return rates.common
++end
++
+ -- Default armoury-crate loot (the chest that spawns on a win). Override per fight
+ -- with catalog.fights[key].loot[tier] for retail-exact drops. Deliberately MODEST
+ -- -- tier-scaled crafting spoils, NO gear/relics -- because these battlefields are
+@@ -467,7 +494,13 @@ catalog.fights =
+         -- Retail HTMBF is Omega -> Ultima only. The mission battlefield also
+         -- contains Mammets and story cutscenes, so it must not be reused here.
+         groupsForTier = function(tier)
+-        local first = 16908382 + (tier - 1) * 30
++            local firstByTier =
++            {
++                [1] = 16908382,
++                [2] = 16908500,
++                [3] = 16908530,
++            }
++            local first = firstByTier[tier]
+             return
+             {
+                 {
+diff --git a/modules/custom/lua/htbf_loot.lua b/modules/custom/lua/htbf_loot.lua
+index 6da0f7092d..75811b6077 100644
+--- a/modules/custom/lua/htbf_loot.lua
++++ b/modules/custom/lua/htbf_loot.lua
+@@ -2,8 +2,8 @@
+ -- htbf_loot.lua  -- retail-sourced armoury-crate loot per HTBF fight (relaunch)
+ --
+ -- One table per fightKey (consumed as catalog.fightLoot[fightKey] -> content.loot),
+--- applied to ALL tiers of that fight: retail loot is per-fight; the I/II/III tiers
+--- differ in difficulty + Hunt Marks, not drop pool.
++-- applied to all tiers of that fight. The item roster stays per-fight, while
++-- htbf.lua converts optional-entry rarity bands into tier-specific drop rates.
+ --
+ -- Format = utils.selectFromLootGroups: an array of GROUPS; each group an array of
+ -- { itemId = xi.item.X, weight = N, amount = M? } (+ optional group `quantity`,
+@@ -11,9 +11,11 @@
+ -- is a "drop nothing" slot (NEVER nil -- the engine logs an error on a nil id).
+ --
+ -- ECONOMY-CONSCIOUS (these battlefields are REPEATABLE + the server runs an AH
+--- market-maker): GROUP 1 is a reliable common material/currency reward; the rare
+--- GEAR sits in a whiff-heavy GROUP 2 (the 0-slot dominant at ~850) so valuable
+--- items stay genuinely rare per clear. Tune any single fight here in isolation.
++-- market-maker): GROUP 1 is a reliable common material/currency reward. Groups
++-- containing itemId 0 are optional loot: each real entry rolls independently,
++-- with source weights 50 / 80 / 120+ mapping to rare / uncommon / common tier
++-- rates in htbf_catalog.lua. Treasure Hunter then improves every optional roll.
++-- The legacy itemId 0 weight remains descriptive but is not rolled by HTBF.
+ --
+ -- Sourced from bg-wiki HTBF pages 2026-06-27; EVERY xi.item.* verified present in
+ -- scripts/enum/item.lua. Items with no enum const were omitted (notes inline).
+diff --git a/modules/custom/sql/htbf_one_to_be_feared_spawns.sql b/modules/custom/sql/htbf_one_to_be_feared_spawns.sql
+index 7b7fb0b45d..95f48e0582 100644
+--- a/modules/custom/sql/htbf_one_to_be_feared_spawns.sql
++++ b/modules/custom/sql/htbf_one_to_be_feared_spawns.sql
+@@ -1,10 +1,15 @@
+ -- Provide independent Omega/Ultima entity pools for HTBF tiers II and III.
+ -- Tier I occupies 16908382..16908411 (three arenas, ten entities each).
+--- The registrar uses a 30-ID stride, so clone those verified rows into the
+--- two missing ranges instead of falling through to unrelated/empty mob IDs.
++-- IDs 16908413..16908481 belong to Sealion's Den NPCs, including the Iron
++-- Gate itself, so tiers II/III live in audited free ranges 16908500..16908559.
++-- Remove rows created by the old +30/+60 allocation before rebuilding them.
++DELETE FROM `mob_spawn_points`
++WHERE `mobid` BETWEEN 16908412 AND 16908471
++AND `mobname` IN ('Omega', 'Ultima');
++
+ INSERT INTO `mob_spawn_points`
+     (`mobid`, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`)
+-SELECT `mobid` + 30, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`
++SELECT `mobid` + 118, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`
+ FROM `mob_spawn_points`
+ WHERE `mobid` BETWEEN 16908382 AND 16908411
+ ON DUPLICATE KEY UPDATE
+@@ -15,7 +20,7 @@ ON DUPLICATE KEY UPDATE
+ 
+ INSERT INTO `mob_spawn_points`
+     (`mobid`, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`)
+-SELECT `mobid` + 60, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`
++SELECT `mobid` + 148, `spawnslotid`, `mobname`, `polutils_name`, `groupid`, `minLevel`, `maxLevel`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`
+ FROM `mob_spawn_points`
+ WHERE `mobid` BETWEEN 16908382 AND 16908411
+ ON DUPLICATE KEY UPDATE
 diff --git a/scripts/tests/systems/htbf_integrity.lua b/scripts/tests/systems/htbf_integrity.lua
-index 49d50834b6..ad75ef6275 100644
+index ad75ef6275..455758ad72 100644
 --- a/scripts/tests/systems/htbf_integrity.lua
 +++ b/scripts/tests/systems/htbf_integrity.lua
-@@ -219,6 +219,7 @@ describe('HTBF catalog integrity and balance', function()
-             assert(destination.name == entry.label)
-             assert(destination.zone == xi.zone.LALOFF_AMPHITHEATER)
-             assert(fight.passiveOnEntry == true)
-+            assert(fight.winOnPrimaryDeath == true)
+@@ -89,6 +89,33 @@ describe('HTBF catalog integrity and balance', function()
          end
      end)
  
++    it('scales optional gear rates by tier while preserving rarity bands', function()
++        local expected =
++        {
++            [1] = { rare = 1.0, uncommon = 2.0,  common = 3.0 },
++            [2] = { rare = 4.0, uncommon = 5.5,  common = 7.0 },
++            [3] = { rare = 8.0, uncommon = 10.0, common = 12.0 },
++        }
++
++        for tier = 1, 3 do
++            local rates = catalog.tierGearDropRate[tier]
++            assert(rates.rare == expected[tier].rare)
++            assert(rates.uncommon == expected[tier].uncommon)
++            assert(rates.common == expected[tier].common)
++            assert(rates.rare < rates.uncommon)
++            assert(rates.uncommon < rates.common)
++            if tier > 1 then
++                assert(rates.rare > catalog.tierGearDropRate[tier - 1].rare)
++                assert(rates.uncommon > catalog.tierGearDropRate[tier - 1].uncommon)
++                assert(rates.common > catalog.tierGearDropRate[tier - 1].common)
++            end
++        end
++
++        assert(catalog.getTierGearDropRate(1, 50) == 1.0)
++        assert(catalog.getTierGearDropRate(2, 80) == 5.5)
++        assert(catalog.getTierGearDropRate(3, 120) == 12.0)
++    end)
++
+     it('keeps avatar durability distributed across stats rather than HP alone', function()
+         local avatar = catalog.tierScale.avatar
+ 
+@@ -152,6 +179,27 @@ describe('HTBF catalog integrity and balance', function()
+         assert(type(catalog.fights.one_to_be_feared.groupsForTier) == 'function')
+     end)
+ 
++    it("keeps One to be Feared HTBF mobs clear of Sealion's Den NPC IDs", function()
++        local fight = catalog.fights.one_to_be_feared
++        local expectedFirst = { 16908382, 16908500, 16908530 }
++        local npcFirst = 16908413
++        local npcLast = 16908481
++
++        for tier = 1, 3 do
++            local groups = fight.groupsForTier(tier)
++            assert(groups[1].mobIds[1][1] == expectedFirst[tier])
++
++            for _, group in ipairs(groups) do
++                for _, areaIds in ipairs(group.mobIds) do
++                    for _, mobId in ipairs(areaIds) do
++                        assert(mobId < npcFirst or mobId > npcLast,
++                            string.format('tier %d mob ID %d overlaps a Sealion NPC', tier, mobId))
++                    end
++                end
++            end
++        end
++    end)
++
+     it('uses non-overlapping Sealion tier pools and dedicated Ark menu rows', function()
+         local feared = catalog.fights.one_to_be_feared
+         for tier = 1, 3 do
+@@ -159,9 +207,6 @@ describe('HTBF catalog integrity and balance', function()
+             local omega = groups[1].mobIds[1][1]
+             local ultima = groups[2].mobIds[1][1]
+             assert(ultima == omega + 1)
+-            if tier > 1 then
+-                assert(omega - feared.groupsForTier(tier - 1)[1].mobIds[1][1] == 30)
+-            end
+         end
+ 
+         for index = 1, 5 do
