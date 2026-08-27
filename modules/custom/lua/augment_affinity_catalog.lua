@@ -9,16 +9,16 @@
 -- Augment_Moogle.lua; affinityMult below is legacy).
 --
 -- Bitfield layout (Augment_Affinities charvar):
---   bit 0  = Base stats                    cat 1   Behemoth          Batallia Downs
+--   bit 0  = Base stats                    cat 1   Behemoth          Behemoth's Dominion
 --   bit 1  = Melee                         cat 2   King Behemoth     Behemoth's Dominion
 --   bit 2  = Magic                         cat 3   Ouryu             Riverne Site B01
 --   bit 3  = Defense                       cat 4   Genbu             Ru'Aun Gardens
 --   bit 4  = Delays                        cat 5   Byakko            Ru'Aun Gardens
---   bit 5  = Duration                      cat 6   Aspidochelone     Cape Teriggan
+--   bit 5  = Duration                      cat 6   Aspidochelone     Valley of Sorrows
 --   bit 6  = Pets                          cat 7   King Vinegarroon  Western Altepa Desert
 --   bit 7  = Potency                       cat 8   Phoenix           Riverne Site A01
---   bit 8  = Skills                        cat 9   Absolute Virtue   Ru'Aun Gardens
---   bit 9  = Exp/Cap Points                cat 10  Proto-Omega       Ru'Aun Gardens
+--   bit 8  = Skills                        cat 9   Absolute Virtue   Al'Taieu
+--   bit 9  = Exp/Cap Points                cat 10  Proto-Omega       Sealion's Den
 --   bit 10 = Job specific niche utilities  cat 11  Kirin             Shrine of Ru'Avitau
 --
 -- Each bit = cat - 1.  augment_catalog.lua uses cat 1..11 as the key.
@@ -54,16 +54,16 @@ catalog.affinityMarkCost = 250
 -----------------------------------
 catalog.affinities =
 {
-    { cat=1,  bit=0,  label='Base stats',                   nm='Behemoth',         trophy={ id=860,   qty=1, name='Behemoth Hide'          }, nmZone='Batallia Downs'        },
+    { cat=1,  bit=0,  label='Base stats',                   nm='Behemoth',         trophy={ id=860,   qty=1, name='Behemoth Hide'          }, nmZone="Behemoth's Dominion"   },
     { cat=2,  bit=1,  label='Melee',                        nm='King_Behemoth',    trophy={ id=883,   qty=1, name='Behemoth Horn'          }, nmZone="Behemoth's Dominion"   },
     { cat=3,  bit=2,  label='Magic',                        nm='Ouryu',            trophy={ id=903,   qty=1, name='Dragon Talon'           }, nmZone='Riverne Site B01'      },
     { cat=4,  bit=3,  label='Defense',                      nm='Genbu',            trophy={ id=1404,  qty=1, name='Seal of Genbu'          }, nmZone="Ru'Aun Gardens"        },
     { cat=5,  bit=4,  label='Delays',                       nm='Byakko',           trophy={ id=1406,  qty=1, name='Seal of Byakko'         }, nmZone="Ru'Aun Gardens"        },
-    { cat=6,  bit=5,  label='Duration',                     nm='Aspidochelone',    trophy={ id=2421,  qty=1, name='Spirit Turtle Shell'    }, nmZone='Cape Teriggan'         },
+    { cat=6,  bit=5,  label='Duration',                     nm='Aspidochelone',    trophy={ id=2421,  qty=1, name='Spirit Turtle Shell'    }, nmZone='Valley of Sorrows'     },
     { cat=7,  bit=6,  label='Pets',                         nm='King_Vinegarroon', trophy={ id=1017,  qty=1, name='Scorpion Stinger'       }, nmZone='Western Altepa Desert' },
     { cat=8,  bit=7,  label='Potency',                      nm='Phoenix',          trophy={ id=844,   qty=1, name='Phoenix Feather'        }, nmZone='Riverne Site A01'      },
-    { cat=9,  bit=8,  label='Skills',                       nm='Absolute_Virtue',  trophy={ id=1567,  qty=1, name='Attestation of Virtue'  }, nmZone="Ru'Aun Gardens"        },
-    { cat=10, bit=9,  label='Exp/Cap Points',               nm='Proto-Omega',      trophy={ id=15800, qty=1, name='Omega Ring'             }, nmZone="Ru'Aun Gardens"        },
+    { cat=9,  bit=8,  label='Skills',                       nm='Absolute_Virtue',  trophy={ id=1567,  qty=1, name='Attestation of Virtue'  }, nmZone="Al'Taieu"              },
+    { cat=10, bit=9,  label='Exp/Cap Points',               nm='Proto-Omega',      trophy={ id=15800, qty=1, name='Omega Ring'             }, nmZone="Sealion's Den"         },
     { cat=11, bit=10, label='Job specific niche utilities', nm='Kirin',            trophy={ id=10038, qty=1, name="Kirin's Mane"           }, nmZone="Shrine of Ru'Avitau"   },
 }
 

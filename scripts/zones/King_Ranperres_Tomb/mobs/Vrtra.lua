@@ -78,6 +78,14 @@ entity.spawnPoints =
 }
 
 entity.onMobInitialize = function(mob)
+    -- Affinity Hunt copy reuses this name in the tomb. Leave retail wyrm
+    -- windows and spawn-point roaming on the real HNM only.
+    if mob:getID() ~= ID.mob.VRTRA then
+        mob:setMobMod(xi.mobMod.AOE_HIT_ALL, 1)
+        mob:setCarefulPathing(true)
+        return
+    end
+
     xi.mob.updateNMSpawnPoint(mob)
 
     mob:addImmunity(xi.immunity.BIND)
@@ -124,35 +132,37 @@ entity.onMobEngage = function(mob, target)
 end
 
 entity.onMobFight = function(mob, target)
-    local spawnTime = mob:getLocalVar('spawnTime')
-    local twohourTime = mob:getLocalVar('twohourTime')
-    local fifteenBlock = mob:getBattleTime() / 15
+    if mob:getID() == ID.mob.VRTRA then
+        local spawnTime = mob:getLocalVar('spawnTime')
+        local twohourTime = mob:getLocalVar('twohourTime')
+        local fifteenBlock = mob:getBattleTime() / 15
 
-    if twohourTime == 0 then
-        twohourTime = math.random(4, 6)
-        mob:setLocalVar('twohourTime', twohourTime)
-    end
+        if twohourTime == 0 then
+            twohourTime = math.random(4, 6)
+            mob:setLocalVar('twohourTime', twohourTime)
+        end
 
-    if spawnTime == 0 then
-        spawnTime = math.random(3, 5)
-        mob:setLocalVar('spawnTime', spawnTime)
-    end
+        if spawnTime == 0 then
+            spawnTime = math.random(3, 5)
+            mob:setLocalVar('spawnTime', spawnTime)
+        end
 
-    if
-        fifteenBlock > twohourTime and
-        mob:canUseAbilities()
-    then
-        mob:useMobAbility(710)
-        mob:setLocalVar('skill_tp', mob:getTP()) -- 2 hr shouldn't wipe TP
-        mob:setLocalVar('twohourTime', fifteenBlock + math.random(4, 6))
+        if
+            fifteenBlock > twohourTime and
+            mob:canUseAbilities()
+        then
+            mob:useMobAbility(710)
+            mob:setLocalVar('skill_tp', mob:getTP()) -- 2 hr shouldn't wipe TP
+            mob:setLocalVar('twohourTime', fifteenBlock + math.random(4, 6))
 
-        -- call the first pet that is not spawned, will wait for actions to finish
-    elseif
-        fifteenBlock > spawnTime and
-        xi.mob.callPets(mob, utils.shuffle(pets), callPetParams)
-    then
-        spawnTime = math.random(3, 5)
-        mob:setLocalVar('spawnTime', fifteenBlock + spawnTime)
+            -- call the first pet that is not spawned, will wait for actions to finish
+        elseif
+            fifteenBlock > spawnTime and
+            xi.mob.callPets(mob, utils.shuffle(pets), callPetParams)
+        then
+            spawnTime = math.random(3, 5)
+            mob:setLocalVar('spawnTime', fifteenBlock + spawnTime)
+        end
     end
 
     -- Vrtra draws in if you attempt to leave the room
@@ -208,6 +218,10 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
+    if mob:getID() ~= ID.mob.VRTRA then
+        return
+    end
+
     -- Set Vrtra's spawnpoint and respawn time (3-5 days)
     xi.mob.updateNMSpawnPoint(mob)
     mob:setRespawnTime(math.random(144, 240) * 1800) -- 3 to 5 days in 30 minute windows

@@ -56,7 +56,7 @@ local SYS             = xi.msg.channel.SYSTEM_3
 -- but the canonical roster assigns an accessible Intro/Standard/Veteran/Apex
 -- profile. Offensive mods overwrite (idempotent); HP scales once per fresh spawn.
 --   * Mob combat mods are int16 -- keep each < 31000 or they wrap NEGATIVE.
---   * HP via setMaxHP is int32, so the multiplier is the safe "tankier" lever.
+--   * HP is an absolute band pool (catalog.profiles.hp), not a retail multiplier.
 -----------------------------------
 -- Docs: the stat block below is quoted on docs/endgame/affinity-nms.md
 -- ("Difficulty and notes") -- update that section when retuning here.
@@ -251,9 +251,24 @@ local function openGodPortal(m)
 end
 xi.affinityAutopop.openGodPortal = openGodPortal  -- reused by the !affinitypop command
 
+local function clampAffinityControl(entity)
+    if not entity then
+        return
+    end
+
+    for effectId, maxSec in pairs(nmCatalog.ccCaps) do
+        pcall(function()
+            local effect = entity:getStatusEffect(effectId)
+            if effect and effect:getTimeRemaining() > maxSec * 1000 then
+                effect:setDuration(maxSec * 1000)
+            end
+        end)
+    end
+end
+
 -- Apply the difficulty stat block. Offensive mods overwrite (idempotent); HP is
--- scaled ONCE per fresh spawn (guarded by a localVar the SPAWN listener resets), so
--- a re-configure (e.g. !affinitypop) never compounds the multiplier.
+-- assigned ONCE per fresh spawn (guarded by a localVar the SPAWN listener resets),
+-- so a re-configure (e.g. !affinitypop) never compounds the pool.
 local function applyStats(m)
     local entry   = nmCatalog.byId(m:getID())
     local profile = entry and nmCatalog.profiles[entry.band]
@@ -261,15 +276,23 @@ local function applyStats(m)
         return
     end
 
+    -- Stay idle until a player starts the fight. !affinitynm and zone-in
+    -- land on top of these NMs, and ALWAYS_AGGRO retail scripts (Simurgh,
+    -- Roc) otherwise lock the player out of trusts / fellows / prep.
+    m:setAggressive(false)
+    m:setMobMod(xi.mobMod.ALWAYS_AGGRO, 0)
+    m:setMobMod(xi.mobMod.NO_AGGRO, 1)
+
+    -- false = keep current HP/MP so CalculateMobStats does not refill a
+    -- tiny retail body before we write the band pool.
+    m:setMobLevel(nmCatalog.level, false)
+
     for modId, val in pairs(profile.mods) do
         m:setMod(modId, val)
     end
-    if profile.hpMult > 1.0 and m:getLocalVar('affHpScaled') == 0 then
-        local hp = math.floor(m:getMaxHP() * profile.hpMult)
-        if hp > 0 then
-            m:setMaxHP(hp)
-            m:setHP(hp)
-        end
+    if profile.hp and profile.hp > 0 and m:getLocalVar('affHpScaled') == 0 then
+        m:setMaxHP(profile.hp)
+        m:setHP(profile.hp)
         m:setLocalVar('affHpScaled', 1)
     end
 end
@@ -297,6 +320,14 @@ local function configureMob(mobid)
     end)
     mob:addListener('DEATH', 'AFFINITY_PROGRESS', function(m, killer)
         grantProgress(m, killer)
+    end)
+
+    -- Keep Absolute Terror / petrify / Doom / charm on the retail kit, but
+    -- clamp lockout length so a solo player can keep acting.
+    mob:addListener('COMBAT_TICK', 'AFFINITY_CC_CAP', function(m)
+        for _, hate in ipairs(m:getEnmityList() or {}) do
+            clampAffinityControl(hate.entity)
+        end
     end)
 
     -- Fix the "NPC" display name; re-apply on every spawn (packetName resets are cheap).

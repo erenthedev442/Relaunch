@@ -199,6 +199,9 @@ end
 entity.onMobSpawn = function(mob)
     -- reset av
     mob:setAnimationSub(1)
+    if mob:getID() ~= ID.mob.ABSOLUTE_VIRTUE then
+        return
+    end
 
     if xi.av.experimental then
         mob:setDropID(0) -- No loot!
@@ -283,6 +286,10 @@ end
 
 -- TODO: make AV and JoL pets link to mobs current target when idle
 entity.onMobFight = function(mob)
+    if mob:getID() ~= ID.mob.ABSOLUTE_VIRTUE then
+        return
+    end
+
     handleDamageResists(mob) -- damage taken scales with HP
     handleSP(mob) -- AV has complex special ability logic
 

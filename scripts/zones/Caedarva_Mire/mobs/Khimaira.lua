@@ -7,6 +7,7 @@ mixins =
     require('scripts/mixins/families/khimaira'),
 }
 -----------------------------------
+local ID = zones[xi.zone.CAEDARVA_MIRE]
 ---@type TMobEntity
 local entity = {}
 
@@ -65,6 +66,15 @@ entity.spawnPoints =
 }
 
 entity.onMobInitialize = function(mob)
+    if mob:getID() ~= ID.mob.KHIMAIRA then
+        mob:addImmunity(xi.immunity.PETRIFY)
+        mob:addImmunity(xi.immunity.LIGHT_SLEEP)
+        mob:addImmunity(xi.immunity.DARK_SLEEP)
+        mob:addImmunity(xi.immunity.TERROR)
+        mob:addImmunity(xi.immunity.PLAGUE)
+        return
+    end
+
     xi.mob.updateNMSpawnPoint(mob)
 
     mob:addImmunity(xi.immunity.PETRIFY)
@@ -179,6 +189,10 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
+    if mob:getID() ~= ID.mob.KHIMAIRA then
+        return
+    end
+
     mob:setRespawnTime(math.random(48, 72) * 3600) -- 48 to 72 hours, in 1-hour increments
     xi.mob.updateNMSpawnPoint(mob)
 end

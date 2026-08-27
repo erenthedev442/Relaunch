@@ -11,11 +11,16 @@ catalog.repeatDayVar   = 'Affinity_NM_RepeatDay'
 catalog.repeatMarksVar = 'Affinity_NM_RepeatMarks'
 catalog.repeatDailyCap = 120
 
+-- All 24 copies are forced to 99. HP is an absolute pool, not a retail
+-- multiplier: i119 weaponskills cap at 79,999, so the old 60-80k bodies
+-- died in one hit. These values are a real solo-with-trusts fight.
+catalog.level = 99
+
 catalog.profiles =
 {
     intro =
     {
-        label = 'Intro', hpMult = 8.0, firstMarks = 90, repeatMarks = 5,
+        label = 'Intro', hp = 800000, firstMarks = 90, repeatMarks = 5,
         mods =
         {
             [xi.mod.ATT] = 3000, [xi.mod.ACC] = 1200, [xi.mod.DEF] = 900,
@@ -26,7 +31,7 @@ catalog.profiles =
     },
     standard =
     {
-        label = 'Standard', hpMult = 9.0, firstMarks = 150, repeatMarks = 8,
+        label = 'Standard', hp = 1200000, firstMarks = 150, repeatMarks = 8,
         mods =
         {
             [xi.mod.ATT] = 3600, [xi.mod.ACC] = 1500, [xi.mod.DEF] = 1100,
@@ -37,7 +42,7 @@ catalog.profiles =
     },
     veteran =
     {
-        label = 'Veteran', hpMult = 10.0, firstMarks = 225, repeatMarks = 10,
+        label = 'Veteran', hp = 1800000, firstMarks = 225, repeatMarks = 10,
         mods =
         {
             [xi.mod.ATT] = 4200, [xi.mod.ACC] = 1800, [xi.mod.DEF] = 1350,
@@ -48,7 +53,7 @@ catalog.profiles =
     },
     apex =
     {
-        label = 'Apex', hpMult = 11.0, firstMarks = 300, repeatMarks = 12,
+        label = 'Apex', hp = 2500000, firstMarks = 300, repeatMarks = 12,
         mods =
         {
             [xi.mod.ATT] = 4800, [xi.mod.ACC] = 2000, [xi.mod.DEF] = 1500,
@@ -57,6 +62,18 @@ catalog.profiles =
             [xi.mod.DOUBLE_ATTACK] = 22, [xi.mod.CRITHITRATE] = 11, [xi.mod.STORETP] = 42,
         },
     },
+}
+
+-- Retail skill lists stay on the pools. These only cap the lockout durations
+-- so Absolute Terror / petrify / Doom cannot freeze a solo player for 30-60s.
+catalog.ccCaps =
+{
+    [xi.effect.PETRIFICATION]         = 8,
+    [xi.effect.GRADUAL_PETRIFICATION] = 8,
+    [xi.effect.TERROR]                = 6,
+    [xi.effect.DOOM]                  = 15,
+    [xi.effect.CHARM_I]               = 8,
+    [xi.effect.CHARM_II]              = 8,
 }
 
 catalog.milestones =
@@ -70,16 +87,16 @@ catalog.milestones =
 -- index is the persistent clear bit (index - 1). Keep order stable.
 catalog.entries =
 {
-    { index=1,  mobId=17208197, name='Behemoth',         display='Behemoth',         zoneId=105, zone='Batallia Downs',          zoneOverride='xi.zones.Batallia_Downs.Zone.onInitialize',         x=-670.00, y=-23.00, z=352.00,  band='intro',    registerCat=1  },
+    { index=1,  mobId=17298309, name='Behemoth',         display='Behemoth',         zoneId=127, zone="Behemoth's Dominion",    zoneOverride='xi.zones.Behemoths_Dominion.Zone.onInitialize',     x=-277.763, y=-20.309, z=72.189, band='intro',    registerCat=1  },
     { index=2,  mobId=17298310, name='King_Behemoth',    display='King Behemoth',    zoneId=127, zone="Behemoth's Dominion",    zoneOverride='xi.zones.Behemoths_Dominion.Zone.onInitialize',     x=-267.50, y=-19.80, z=73.70,   band='standard', registerCat=2  },
-    { index=3,  mobId=17490823, name='King_Arthro',      display='King Arthro',      zoneId=174, zone='Kuftal Tunnel',           zoneOverride='xi.zones.Kuftal_Tunnel.Zone.onInitialize',          x=-27.91,  y=-10.69, z=-185.26, band='intro'                    },
+    { index=3,  mobId=17204087, name='King_Arthro',      display='King Arthro',      zoneId=104, zone='Jugner Forest',           zoneOverride='xi.zones.Jugner_Forest.Zone.onInitialize',           x=-177.8894, y=0.2285, z=434.2736, band='intro'                    },
     { index=4,  mobId=17228680, name='Simurgh',          display='Simurgh',          zoneId=110, zone='Rolanberry Fields',       zoneOverride='xi.zones.Rolanberry_Fields.Zone.onInitialize',      x=-681.00, y=-31.00, z=-447.00, band='intro'                    },
     { index=5,  mobId=17302409, name='Adamantoise',      display='Adamantoise',      zoneId=128, zone='Valley of Sorrows',       zoneOverride='xi.zones.Valley_of_Sorrows.Zone.onInitialize',      x=3.00,    y=-0.42,  z=8.00,    band='standard'                 },
     { index=6,  mobId=17310621, name='Genbu',            display='Genbu',            zoneId=130, zone="Ru'Aun Gardens",          zoneOverride='xi.zones.RuAun_Gardens.Zone.onInitialize',          x=261.87,  y=-70.22, z=526.41,  band='veteran',  registerCat=4  },
     { index=7,  mobId=17269643, name='Roc',              display='Roc',              zoneId=120, zone='Sauromugue Champaign',    zoneOverride='xi.zones.Sauromugue_Champaign.Zone.onInitialize',   x=232.00,  y=-0.01,  z=-327.00, band='intro'                    },
     { index=8,  mobId=17310622, name='Seiryu',           display='Seiryu',           zoneId=130, zone="Ru'Aun Gardens",          zoneOverride='xi.zones.RuAun_Gardens.Zone.onInitialize',          x=580.84,  y=-70.22, z=-84.53,  band='veteran'                  },
     { index=9,  mobId=17310623, name='Byakko',           display='Byakko',           zoneId=130, zone="Ru'Aun Gardens",          zoneOverride='xi.zones.RuAun_Gardens.Zone.onInitialize',          x=-419.40, y=-70.20, z=410.96,  band='veteran',  registerCat=5  },
-    { index=10, mobId=17240974, name='Aspidochelone',    display='Aspidochelone',    zoneId=113, zone='Cape Teriggan',           zoneOverride='xi.zones.Cape_Teriggan.Zone.onInitialize',          x=-175.33, y=7.68,   z=-247.30, band='standard', registerCat=6  },
+    { index=10, mobId=17302414, name='Aspidochelone',    display='Aspidochelone',    zoneId=128, zone='Valley of Sorrows',       zoneOverride='xi.zones.Valley_of_Sorrows.Zone.onInitialize',      x=19.00,   y=0.089,  z=14.00,   band='standard', registerCat=6  },
     { index=11, mobId=16896911, name='Ouryu',            display='Ouryu',            zoneId=29,  zone='Riverne Site B01',        zoneOverride='xi.zones.Riverne-Site_B01.Zone.onInitialize',       x=618.78,  y=0.56,   z=-552.23, band='standard', registerCat=3  },
     { index=12, mobId=17404816, name='Bune',             display='Bune',             zoneId=153, zone='The Boyahda Tree',        zoneOverride='xi.zones.The_Boyahda_Tree.Zone.onInitialize',       x=405.43,  y=11.40,  z=-98.61,  band='intro'                    },
     { index=13, mobId=16901009, name='Phoenix',          display='Phoenix',          zoneId=30,  zone='Riverne Site A01',        zoneOverride='xi.zones.Riverne-Site_A01.Zone.onInitialize',       x=685.00,  y=-31.76, z=-481.00, band='intro',    registerCat=8  },
@@ -87,13 +104,13 @@ catalog.entries =
     { index=15, mobId=17507219, name='Kirin',            display='Kirin',            zoneId=178, zone="Shrine of Ru'Avitau",     zoneOverride='xi.zones.The_Shrine_of_RuAvitau.Zone.onInitialize', x=-68.00,  y=32.58,  z=3.50,    band='apex',     registerCat=11 },
     { index=16, mobId=17408916, name='Fafnir',           display='Fafnir',           zoneId=154, zone="Dragon's Aery",           zoneOverride='xi.zones.Dragons_Aery.Zone.onInitialize',           x=46.00,   y=6.00,   z=18.00,   band='veteran'                  },
     { index=17, mobId=17408917, name='Nidhogg',          display='Nidhogg',          zoneId=154, zone="Dragon's Aery",           zoneOverride='xi.zones.Dragons_Aery.Zone.onInitialize',           x=46.00,   y=6.00,   z=24.00,   band='veteran'                  },
-    { index=18, mobId=17617814, name='Vrtra',            display='Vrtra',            zoneId=205, zone="Ifrit's Cauldron",        zoneOverride='xi.zones.Ifrits_Cauldron.Zone.onInitialize',        x=168.79,  y=0.90,   z=-19.83,  band='veteran'                  },
-    { index=19, mobId=16798615, name='Tiamat',           display='Tiamat',           zoneId=5,   zone='Uleguerand Range',        zoneOverride='xi.zones.Uleguerand_Range.Zone.onInitialize',       x=-242.35, y=-39.88, z=-415.62, band='veteran'                  },
+    { index=18, mobId=17556374, name='Vrtra',            display='Vrtra',            zoneId=190, zone="King Ranperre's Tomb",    zoneOverride='xi.zones.King_Ranperres_Tomb.Zone.onInitialize',    x=228.00,  y=7.134,  z=-311.00, band='veteran'                  },
+    { index=19, mobId=16806807, name='Tiamat',           display='Tiamat',           zoneId=7,   zone='Attohwa Chasm',           zoneOverride='xi.zones.Attohwa_Chasm.Zone.onInitialize',          x=-529.519, y=-5.811, z=-43.413, band='veteran'                  },
     { index=20, mobId=17290136, name='King_Vinegarroon', display='King Vinegarroon', zoneId=125, zone='Western Altepa Desert',  zoneOverride='xi.zones.Western_Altepa_Desert.Zone.onInitialize',  x=-239.00, y=-0.23,  z=-650.00, band='standard', registerCat=7  },
-    { index=21, mobId=17556377, name='Khimaira',         display='Khimaira',         zoneId=190, zone="King Ranperre's Tomb",    zoneOverride='xi.zones.King_Ranperres_Tomb.Zone.onInitialize',    x=-124.00, y=-0.50,  z=249.52,  band='standard'                 },
-    { index=22, mobId=17556378, name='Cerberus',         display='Cerberus',         zoneId=190, zone="King Ranperre's Tomb",    zoneOverride='xi.zones.King_Ranperres_Tomb.Zone.onInitialize',    x=-147.00, y=-0.50,  z=250.00,  band='standard'                 },
-    { index=23, mobId=17310619, name='Absolute_Virtue',  display='Absolute Virtue',  zoneId=130, zone="Ru'Aun Gardens",          zoneOverride='xi.zones.RuAun_Gardens.Zone.onInitialize',          x=-6.03,   y=-40.52, z=-417.21, band='apex',     registerCat=9  },
-    { index=24, mobId=17310620, name='Proto-Omega',      display='Proto-Omega',      zoneId=130, zone="Ru'Aun Gardens",          zoneOverride='xi.zones.RuAun_Gardens.Zone.onInitialize',          x=1.00,    y=-38.60, z=-485.00, band='apex',     registerCat=10 },
+    { index=21, mobId=17101721, name='Khimaira',         display='Khimaira',         zoneId=79,  zone='Caedarva Mire',           zoneOverride='xi.zones.Caedarva_Mire.Zone.onInitialize',          x=603.887, y=-16.140, z=414.765, band='standard'                 },
+    { index=22, mobId=17027994, name='Cerberus',         display='Cerberus',         zoneId=61,  zone='Mount Zhayolm',           zoneOverride='xi.zones.Mount_Zhayolm.Zone.onInitialize',          x=316.00,  y=-23.00, z=-84.00,  band='standard'                 },
+    { index=23, mobId=16913307, name='Absolute_Virtue',  display='Absolute Virtue',  zoneId=33,  zone="Al'Taieu",                zoneOverride='xi.zones.AlTaieu.Zone.onInitialize',                x=461.266, y=-1.643, z=-580.192, band='apex',     registerCat=9  },
+    { index=24, mobId=16909196, name='Proto-Omega',      display='Proto-Omega',      zoneId=32,  zone="Sealion's Den",           zoneOverride='xi.zones.Sealions_Den.Zone.onInitialize',           x=-640.00, y=-231.00, z=516.00,  band='apex',     registerCat=10 },
 }
 
 function catalog.byId(mobId)

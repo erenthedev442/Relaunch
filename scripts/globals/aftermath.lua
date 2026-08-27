@@ -726,7 +726,13 @@ xi.aftermath.addStatusEffect = function(player, tp, weaponSlot, aftermathType)
         -- Relic
         [1] = function(x)
             if id == 8 or id == 22 then
-                player:delStatusEffectsByType(xi.effectType.SPIKES)
+                -- Gungnir's aftermath supplies Shock Spikes. There is no
+                -- xi.effectType.SPIKES enum; indexing it aborted Geirskogul
+                -- before both aftermath application and damage calculation.
+                player:delStatusEffect(xi.effect.BLAZE_SPIKES)
+                player:delStatusEffect(xi.effect.ICE_SPIKES)
+                player:delStatusEffect(xi.effect.SHOCK_SPIKES)
+                player:delStatusEffect(xi.effect.DREAD_SPIKES)
             end
 
             player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration(tp), origin = player, subType = weaponSlot, subPower = tp, tier = aftermathType })

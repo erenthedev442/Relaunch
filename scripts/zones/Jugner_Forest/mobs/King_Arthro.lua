@@ -8,8 +8,17 @@ mixins =
     require('scripts/mixins/rage')
 }
 -----------------------------------
+local ID = zones[xi.zone.JUGNER_FOREST]
+
 ---@type TMobEntity
 local entity = {}
+
+-- The Affinity Hunt copy reuses this name/pool in Jugner Forest. Its mobid is
+-- not KING_ARTHRO, so knight-crab windows and roaming spawn-point updates must
+-- stay on the retail HNM only.
+local function isRetailKingArthro(mob)
+    return mob:getID() == ID.mob.KING_ARTHRO
+end
 
 entity.spawnPoints =
 {
@@ -38,9 +47,11 @@ entity.spawnPoints =
 }
 
 entity.onMobInitialize = function(mob)
-    local respawnTime = 900 + math.random(0, 6) * 1800 -- 0:15 to 3:15 spawn timer in 30 minute intervals
-    for offset = 1, 10 do
-        GetMobByID(mob:getID() - offset):setRespawnTime(respawnTime)
+    if isRetailKingArthro(mob) then
+        local respawnTime = 900 + math.random(0, 6) * 1800 -- 0:15 to 3:15 spawn timer in 30 minute intervals
+        for offset = 1, 10 do
+            GetMobByID(mob:getID() - offset):setRespawnTime(respawnTime)
+        end
     end
 
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
@@ -51,6 +62,10 @@ end
 
 entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.CANNOT_GUARD, 1)
+    if not isRetailKingArthro(mob) then
+        return
+    end
+
     local kingArthroID = mob:getID()
 
     -- Use King Arthro ID to determine Knight Crab Id's, then set their respawn to 0 so they don't spawn while KA is up
@@ -72,6 +87,10 @@ entity.onAdditionalEffect = function(mob, target, damage)
 end
 
 entity.onMobDespawn = function(mob)
+    if not isRetailKingArthro(mob) then
+        return
+    end
+
     xi.mob.updateNMSpawnPoint(mob)
 
     local kingArthroID = mob:getID()

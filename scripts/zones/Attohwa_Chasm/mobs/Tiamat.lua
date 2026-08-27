@@ -2,6 +2,7 @@
 -- Area: Attohwa Chasm
 --  Mob: Tiamat
 -----------------------------------
+local ID = zones[xi.zone.ATTOHWA_CHASM]
 ---@type TMobEntity
 local entity = {}
 
@@ -70,6 +71,10 @@ end
 entity.onMobInitialize = function(mob)
     mob:setCarefulPathing(true) -- Used for drawin
     mob:setMobMod(xi.mobMod.AOE_HIT_ALL, 1)
+
+    if mob:getID() ~= ID.mob.TIAMAT then
+        return
+    end
 
     xi.mob.updateNMSpawnPoint(mob)
     mob:setRespawnTime(math.random(144, 240) * 1800) -- 3 to 5 days in 30 minute windows
@@ -275,6 +280,10 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
+    if mob:getID() ~= ID.mob.TIAMAT then
+        return
+    end
+
     xi.mob.updateNMSpawnPoint(mob)
     mob:setRespawnTime(math.random(144, 240) * 1800) -- 3 to 5 days in 30 minute windows
 end

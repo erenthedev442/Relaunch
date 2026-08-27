@@ -18,11 +18,10 @@
 --   targids 901-924 (0x385-0x39C): free in-zone AND < 0x400.
 -- Existing retail/custom/HL spawns of these NMs are LEFT UNTOUCHED (separate ids).
 --
--- Relocations (the menu zone cannot host a static overworld spawn):
---   Genbu / Seiryu / Suzaku / Kirin : Hall of the Gods (251, empty)  -> The Shrine of Ru'Avitau (178)
---   Proto-Omega                     : Temenos (37, instanced Limbus)  -> Ru'Aun Gardens (130)
---   (augment_affinity_catalog.lua nmZone updated to match; 178 + 130 are affinity-hooked, so grants fire.)
--- Phoenix has NO mob in the DB -> a Phoenix pool (30002) is cloned from Suzaku (3816), renamed.
+-- Relocations (only when the retail zone cannot host a static overworld spawn):
+--   Proto-Omega : Temenos (37, instanced Limbus) -> Sealion's Den (32, Omega airship)
+--   Phoenix     : no retail overworld NM -> Riverne Site A01 (30), Suzaku-cloned pool 30002
+-- Sky gods stay on their Ru'Aun islands. Kirin stays in the Shrine of Ru'Avitau.
 --
 -- Idempotent + reversible: the DELETEs below + re-run.  Applied unconditionally
 -- by the deploy ledger (modules/custom/sql), so it persists across rebuilds.
@@ -45,16 +44,16 @@ DROP TEMPORARY TABLE `_phx`;
 -- The 21000-range droplist INSERT below is kept only for reference.
 DELETE FROM `mob_groups` WHERE `groupid` BETWEEN 20000 AND 20023;
 INSERT INTO `mob_groups` VALUES
- (20000,   387, 105, 'Behemoth',         900, 0, 0, 0, 0, 0, NULL),
+ (20000,   387, 127, 'Behemoth',         900, 0, 0, 0, 0, 0, NULL),
  (20001,  2255, 127, 'King_Behemoth',    900, 0, 0, 0, 0, 0, NULL),
- (20002,  2254, 174, 'King_Arthro',      900, 0, 0, 0, 0, 0, NULL),
+ (20002,  2254, 104, 'King_Arthro',      900, 0, 0, 0, 0, 0, NULL),
  (20003,  3630, 110, 'Simurgh',          900, 0, 0, 0, 0, 0, NULL),
  (20004,    44, 128, 'Adamantoise',      900, 0, 0, 0, 0, 0, NULL),
  (20005,  1491, 130, 'Genbu',            900, 0, 0, 0, 0, 0, NULL),
  (20006,  3376, 120, 'Roc',              900, 0, 0, 0, 0, 0, NULL),
  (20007,  3540, 130, 'Seiryu',           900, 0, 0, 0, 0, 0, NULL),
  (20008,   592, 130, 'Byakko',           900, 0, 0, 0, 0, 0, NULL),
- (20009,   268, 113, 'Aspidochelone',    900, 0, 0, 0, 0, 0, NULL),
+ (20009,   268, 128, 'Aspidochelone',    900, 0, 0, 0, 0, 0, NULL),
  (20010,  3070,  29, 'Ouryu',            900, 0, 0, 0, 0, 0, NULL),
  (20011,   584, 153, 'Bune',             900, 0, 0, 0, 0, 0, NULL),
  (20012, 30002,  30, 'Phoenix',          900, 0, 0, 0, 0, 0, NULL),
@@ -62,13 +61,13 @@ INSERT INTO `mob_groups` VALUES
  (20014,  2265, 178, 'Kirin',            900, 0, 0, 0, 0, 0, NULL),
  (20015,  1280, 154, 'Fafnir',           900, 0, 0, 0, 0, 0, NULL),
  (20016,  2840, 154, 'Nidhogg',          900, 0, 0, 0, 0, 0, NULL),
- (20017,  4261, 205, 'Vrtra',            900, 0, 0, 0, 0, 0, NULL),
- (20018,  3916,   5, 'Tiamat',           900, 0, 0, 0, 0, 0, NULL),
+ (20017,  4261, 190, 'Vrtra',            900, 0, 0, 0, 0, 0, NULL),
+ (20018,  3916,   7, 'Tiamat',           900, 0, 0, 0, 0, 0, NULL),
  (20019,  2262, 125, 'King_Vinegarroon', 900, 0, 0, 0, 0, 0, NULL),
- (20020,  2220, 190, 'Khimaira',         900, 0, 0, 0, 0, 0, NULL),
- (20021,   680, 190, 'Cerberus',         900, 0, 0, 0, 0, 0, NULL),
- (20022,    21, 130, 'Absolute_Virtue',  900, 0, 0, 0, 0, 0, NULL),
- (20023,  3208, 130, 'Proto-Omega',      900, 0, 0, 0, 0, 0, NULL);
+ (20020,  2220,  79, 'Khimaira',         900, 0, 0, 0, 0, 0, NULL),
+ (20021,   680,  61, 'Cerberus',         900, 0, 0, 0, 0, 0, NULL),
+ (20022,    21,  33, 'Absolute_Virtue',  900, 0, 0, 0, 0, 0, NULL),
+ (20023,  3208,  32, 'Proto-Omega',      900, 0, 0, 0, 0, 0, NULL);
 
 -- ---- historical trophy droplists (21000-21023; engine ignores ids > 5000) ----
 -- Kept only as a roster/item reference. The 11 live Sage trophies and all
@@ -115,30 +114,30 @@ INSERT INTO `mob_droplist` (`dropId`,`dropType`,`groupId`,`groupRate`,`itemId`,`
 -- zone top out at 699, so 901-924 are free AND < 0x400.
 DELETE FROM `mob_spawn_points` WHERE `groupid` BETWEEN 20000 AND 20023;
 INSERT INTO `mob_spawn_points` VALUES
- (17208197, 0, 'Behemoth',         'Behemoth',          20000,  80,  80, -670.00, -23.00,  352.00, 0),
- (17298310, 0, 'King_Behemoth',    'King Behemoth',     20001,  85,  85, -267.50, -19.80,   73.70, 0),
- (17490823, 0, 'King_Arthro',      'King Arthro',       20002,  75,  75,  -27.91, -10.69, -185.26, 0),
- (17228680, 0, 'Simurgh',          'Simurgh',           20003,  80,  80, -681.00, -31.00, -447.00, 0),
- (17302409, 0, 'Adamantoise',      'Adamantoise',       20004,  80,  80,  3.00, -0.42, 8.00, 0),
- (17310621, 0, 'Genbu',            'Genbu',             20005, 125, 125,  261.87, -70.22, 526.41, 0),
- (17269643, 0, 'Roc',              'Roc',               20006,  80,  80,  232.00, -0.01, -327.00, 0),
- (17310622, 0, 'Seiryu',           'Seiryu',            20007, 125, 125,  580.84, -70.22, -84.53, 0),
- (17310623, 0, 'Byakko',           'Byakko',            20008, 125, 125,  -419.40, -70.20, 410.96, 0),
- (17240974, 0, 'Aspidochelone',    'Aspidochelone',     20009,  85,  85, -175.33,   7.68, -247.30, 0),
+ (17298309, 0, 'Behemoth',         'Behemoth',          20000,  99,  99, -277.763, -20.309, 72.189, 127),
+ (17298310, 0, 'King_Behemoth',    'King Behemoth',     20001,  99,  99, -267.50, -19.80,   73.70, 0),
+ (17204087, 0, 'King_Arthro',      'King Arthro',       20002,  99,  99,  -177.8894, 0.2285, 434.2736, 237),
+ (17228680, 0, 'Simurgh',          'Simurgh',           20003,  99,  99, -681.00, -31.00, -447.00, 0),
+ (17302409, 0, 'Adamantoise',      'Adamantoise',       20004,  99,  99,  3.00, -0.42, 8.00, 0),
+ (17310621, 0, 'Genbu',            'Genbu',             20005,  99,  99,  261.87, -70.22, 526.41, 0),
+ (17269643, 0, 'Roc',              'Roc',               20006,  99,  99,  232.00, -0.01, -327.00, 0),
+ (17310622, 0, 'Seiryu',           'Seiryu',            20007,  99,  99,  580.84, -70.22, -84.53, 0),
+ (17310623, 0, 'Byakko',           'Byakko',            20008,  99,  99,  -419.40, -70.20, 410.96, 0),
+ (17302414, 0, 'Aspidochelone',    'Aspidochelone',     20009,  99,  99,  19.000,   0.089,  14.000, 117),
  (16896911, 0, 'Ouryu',            'Ouryu',             20010,  99,  99,  618.78,   0.56, -552.23, 0),
- (17404816, 0, 'Bune',             'Bune',              20011,  83,  83,  405.43,  11.40,  -98.61, 0),
- (16901009, 0, 'Phoenix',          'Phoenix',           20012,  90,  90,  685.00, -31.76, -481.00, 0),
- (17310624, 0, 'Suzaku',           'Suzaku',            20013, 125, 125,  -520.84, -70.22, -271.52, 0),
- (17507219, 0, 'Kirin',            'Kirin',             20014, 124, 124,  -68.00, 32.58, 3.50, 0),
- (17408916, 0, 'Fafnir',           'Fafnir',            20015,  90,  90,  46.00, 6.00, 18.00, 0),
- (17408917, 0, 'Nidhogg',          'Nidhogg',           20016,  90,  90,  46.00, 6.00, 24.00, 0),
- (17617814, 0, 'Vrtra',            'Vrtra',             20017,  95,  95,  168.79,   0.90,  -19.83, 0),
- (16798615, 0, 'Tiamat',           'Tiamat',            20018,  95,  95, -242.35, -39.88, -415.62, 0),
- (17290136, 0, 'King_Vinegarroon', 'King Vinegarroon',  20019,  80,  80,  -239.00, -0.23, -650.00, 0),
- (17556377, 0, 'Khimaira',         'Khimaira',          20020,  85,  85, -124.00,  -0.50,  249.52, 0),
- (17556378, 0, 'Cerberus',         'Cerberus',          20021,  85,  85, -147.00,  -0.50,  250.00, 0),
- (17310619, 0, 'Absolute_Virtue',  'Absolute Virtue',   20022,  92,  92,   -6.03, -40.52, -417.21, 0),
- (17310620, 0, 'Proto-Omega',      'Proto-Omega',       20023,  99,  99,    1.00, -38.60, -485.00, 0);
+ (17404816, 0, 'Bune',             'Bune',              20011,  99,  99,  405.43,  11.40,  -98.61, 0),
+ (16901009, 0, 'Phoenix',          'Phoenix',           20012,  99,  99,  685.00, -31.76, -481.00, 0),
+ (17310624, 0, 'Suzaku',           'Suzaku',            20013,  99,  99,  -520.84, -70.22, -271.52, 0),
+ (17507219, 0, 'Kirin',            'Kirin',             20014,  99,  99,  -68.00, 32.58, 3.50, 0),
+ (17408916, 0, 'Fafnir',           'Fafnir',            20015,  99,  99,  46.00, 6.00, 18.00, 0),
+ (17408917, 0, 'Nidhogg',          'Nidhogg',           20016,  99,  99,  46.00, 6.00, 24.00, 0),
+ (17556374, 0, 'Vrtra',            'Vrtra',             20017,  99,  99,  228.000,   7.134, -311.000, 17),
+ (16806807, 0, 'Tiamat',           'Tiamat',            20018,  99,  99, -529.519,  -5.811,  -43.413, 233),
+ (17290136, 0, 'King_Vinegarroon', 'King Vinegarroon',  20019,  99,  99,  -239.00, -0.23, -650.00, 0),
+ (17101721, 0, 'Khimaira',         'Khimaira',          20020,  99,  99,  603.887, -16.140, 414.765, 255),
+ (17027994, 0, 'Cerberus',         'Cerberus',          20021,  99,  99,  316.000, -23.000, -84.000, 127),
+ (16913307, 0, 'Absolute_Virtue',  'Absolute Virtue',   20022,  99,  99,  461.266,  -1.643, -580.192, 4),
+ (16909196, 0, 'Proto-Omega',      'Proto-Omega',       20023,  99,  99, -640.000, -231.000, 516.000, 191);
 
 -- ---- Suppress the RETAIL duplicates that share these spawn spots ----
 -- The affinity NM sits at (or beside) the retail NM's point, so the retail mobid
