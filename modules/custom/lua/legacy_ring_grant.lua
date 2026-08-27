@@ -20,6 +20,8 @@ local m = Module:new('legacy_ring_grant')
 
 local LEGENDARY_RING = 26169
 local CV_OWED        = 'Legacy_Ring_Grant'
+local CV_CHECKED     = 'Legacy_Name_Checked'   -- 1 = the 1.0-roster name check already ran
+local LEGACY_NAMES   = require('modules/custom/lua/legacy_names_catalog')  -- lowercased 1.0 names
 
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     -- gameLogin == 1 marks a real login; `not zoning` misfires on zone-ins
@@ -27,6 +29,18 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     local isLogin = player:getLocalVar('gameLogin') == 1
 
     super(player, firstLogin, zoning)
+
+    -- Auto-owe the ring to returning 1.0 players: on a character's FIRST real
+    -- login, if their name is on the Legendary 1.0 roster (legacy_names_catalog),
+    -- flag them owed so the grant below hands it over this same login. Runs once
+    -- per character (Legacy_Name_Checked guard), so dropping/selling the ring
+    -- later never re-grants it, and non-legacy names are never re-scanned.
+    if isLogin and player:getCharVar(CV_CHECKED) == 0 then
+        player:setCharVar(CV_CHECKED, 1)
+        if LEGACY_NAMES[string.lower(player:getName())] then
+            player:setCharVar(CV_OWED, 1)
+        end
+    end
 
     if isLogin and player:getCharVar(CV_OWED) == 1 then
         if player:hasItem(LEGENDARY_RING) then
