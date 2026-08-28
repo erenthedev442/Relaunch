@@ -415,34 +415,16 @@
       "zone": "Dragon's Aery"
     },
     {
-      "name": "Adamantoise",
-      "var": "[HNM]Adamantoise",
-      "window": "21–24 h",
-      "zone": "Valley of Sorrows"
-    },
-    {
       "name": "Spiny Spipi",
       "var": "[HNM]Spiny Spipi",
       "window": "4–6 h",
       "zone": "East Sarutabaruta"
     },
     {
-      "name": "Roc",
-      "var": "[HNM]Roc",
-      "window": "6–8 h",
-      "zone": "Sauromugue Champaign"
-    },
-    {
       "name": "Serket",
       "var": "[HNM]Serket",
       "window": "6–8 h",
       "zone": "Garlaige Citadel"
-    },
-    {
-      "name": "Simurgh",
-      "var": "[HNM]Simurgh",
-      "window": "6–8 h",
-      "zone": "Rolanberry Fields"
     },
     {
       "name": "King Arthro",
