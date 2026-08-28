@@ -2,10 +2,11 @@
 -- affinity_nm_spawns.sql
 -- Places the 24 Augment-Sage affinity NMs (augment_affinity_catalog.lua) as
 -- 15-minute (900s) NORMAL timed spawns in their menu zones, so the affinity
--- hunt is actually farmable. Each reuses the NM's real pool + a DEDICATED 100%
--- trophy droplist (21000-21023): the affinity-register trophy MUST be guaranteed,
--- and the old retail dropids did not even contain the trophy (e.g. Simurgh's
--- 2255 had no Giant Bird Plume). HP/MP=0 -> engine calculates HP/MP from level.
+-- hunt is actually farmable. Each reuses the NM's real pool and, where the repo
+-- has one, its retail dropid. The affinity-register trophy is still guaranteed
+-- from Lua because old retail dropids did not always contain that trophy (e.g.
+-- Simurgh's 2255 had no Giant Bird Plume). HP/MP=0 -> engine calculates HP/MP
+-- from level.
 --
 -- Reserved IDs:  groupid 20000-20023,  mobid = 0x1000000 | (zoneid<<12) | targid.
 --   CRITICAL: a valid mob entity id MUST include the 0x1000000 (16777216) entity
@@ -36,38 +37,53 @@ DROP TEMPORARY TABLE `_phx`;
 
 -- ---- mob_groups: respawntime=900, spawntype=0 (NORMAL timed), HP/MP=0 (calc) ----
 -- cols: groupid, poolid, zoneid, name, respawntime, spawntype, dropid, HP, MP, allegiance, content_tag
--- dropid = 0: the ENGINE droplist is intentionally NOT used. A droplist id must be
--- < MAX_DROPID (5000, itemutils.h); the dedicated trophy lists below were created at
--- 21000-21023, which GetDropList rejects ("DropID too big") so nothing ever dropped.
--- The registration trophy is instead granted in Lua on death by
--- modules/custom/lua/affinity_nm_autopop.lua (DEATH listener -> killer:addItem).
--- The 21000-range droplist INSERT below is kept only for reference.
+-- Retail dropids are used for nostalgic HNM loot (Defending Ring, Ridill,
+-- abjurations, god gear, etc.). The registration trophy is still granted in Lua
+-- on death by modules/custom/lua/affinity_nm_autopop.lua (DEATH listener ->
+-- killer:addItem). The 21000-range trophy INSERT below is kept only for
+-- reference; GetDropList rejects those ids because MAX_DROPID is 5000.
 DELETE FROM `mob_groups` WHERE `groupid` BETWEEN 20000 AND 20023;
 INSERT INTO `mob_groups` VALUES
- (20000,   387, 127, 'Behemoth',         900, 0, 0, 0, 0, 0, NULL),
- (20001,  2255, 127, 'King_Behemoth',    900, 0, 0, 0, 0, 0, NULL),
- (20002,  2254, 104, 'King_Arthro',      900, 0, 0, 0, 0, 0, NULL),
- (20003,  3630, 110, 'Simurgh',          900, 0, 0, 0, 0, 0, NULL),
- (20004,    44, 128, 'Adamantoise',      900, 0, 0, 0, 0, 0, NULL),
- (20005,  1491, 130, 'Genbu',            900, 0, 0, 0, 0, 0, NULL),
- (20006,  3376, 120, 'Roc',              900, 0, 0, 0, 0, 0, NULL),
- (20007,  3540, 130, 'Seiryu',           900, 0, 0, 0, 0, 0, NULL),
- (20008,   592, 130, 'Byakko',           900, 0, 0, 0, 0, 0, NULL),
- (20009,   268, 128, 'Aspidochelone',    900, 0, 0, 0, 0, 0, NULL),
- (20010,  3070,  29, 'Ouryu',            900, 0, 0, 0, 0, 0, NULL),
- (20011,   584, 153, 'Bune',             900, 0, 0, 0, 0, 0, NULL),
- (20012, 30002,  30, 'Phoenix',          900, 0, 0, 0, 0, 0, NULL),
- (20013,  3816, 130, 'Suzaku',           900, 0, 0, 0, 0, 0, NULL),
- (20014,  2265, 178, 'Kirin',            900, 0, 0, 0, 0, 0, NULL),
- (20015,  1280, 154, 'Fafnir',           900, 0, 0, 0, 0, 0, NULL),
- (20016,  2840, 154, 'Nidhogg',          900, 0, 0, 0, 0, 0, NULL),
- (20017,  4261, 190, 'Vrtra',            900, 0, 0, 0, 0, 0, NULL),
- (20018,  3916,   7, 'Tiamat',           900, 0, 0, 0, 0, 0, NULL),
- (20019,  2262, 125, 'King_Vinegarroon', 900, 0, 0, 0, 0, 0, NULL),
- (20020,  2220,  79, 'Khimaira',         900, 0, 0, 0, 0, 0, NULL),
- (20021,   680,  61, 'Cerberus',         900, 0, 0, 0, 0, 0, NULL),
- (20022,    21,  33, 'Absolute_Virtue',  900, 0, 0, 0, 0, 0, NULL),
- (20023,  3208,  32, 'Proto-Omega',      900, 0, 0, 0, 0, 0, NULL);
+ (20000,   387, 127, 'Behemoth',         900, 0,  251, 0, 0, 0, NULL),
+ (20001,  2255, 127, 'King_Behemoth',    900, 0, 1450, 0, 0, 0, NULL),
+ (20002,  2254, 104, 'King_Arthro',      900, 0, 1449, 0, 0, 0, NULL),
+ (20003,  3630, 110, 'Simurgh',          900, 0, 2255, 0, 0, 0, NULL),
+ (20004,    44, 128, 'Adamantoise',      900, 0,   21, 0, 0, 0, NULL),
+ (20005,  1491, 130, 'Genbu',            900, 0,  946, 0, 0, 0, NULL),
+ (20006,  3376, 120, 'Roc',              900, 0, 2112, 0, 0, 0, NULL),
+ (20007,  3540, 130, 'Seiryu',           900, 0, 2196, 0, 0, 0, NULL),
+ (20008,   592, 130, 'Byakko',           900, 0,  394, 0, 0, 0, NULL),
+ (20009,   268, 128, 'Aspidochelone',    900, 0,  183, 0, 0, 0, NULL),
+ (20010,  3070,  29, 'Ouryu',            900, 0, 1962, 0, 0, 0, NULL),
+ (20011,   584, 153, 'Bune',             900, 0,  389, 0, 0, 0, NULL),
+ (20012, 30002,  30, 'Phoenix',          900, 0, 2362, 0, 0, 0, NULL),
+ (20013,  3816, 130, 'Suzaku',           900, 0, 2362, 0, 0, 0, NULL),
+ (20014,  2265, 178, 'Kirin',            900, 0, 2819, 0, 0, 0, NULL),
+ (20015,  1280, 154, 'Fafnir',           900, 0,  805, 0, 0, 0, NULL),
+ (20016,  2840, 154, 'Nidhogg',          900, 0, 1781, 0, 0, 0, NULL),
+ (20017,  4261, 190, 'Vrtra',            900, 0, 2592, 0, 0, 0, NULL),
+ (20018,  3916,   7, 'Tiamat',           900, 0, 2416, 0, 0, 0, NULL),
+ (20019,  2262, 125, 'King_Vinegarroon', 900, 0, 1451, 0, 0, 0, NULL),
+ (20020,  2220,  79, 'Khimaira',         900, 0, 1437, 0, 0, 0, NULL),
+ (20021,   680,  61, 'Cerberus',         900, 0,  446, 0, 0, 0, NULL),
+ (20022,    21,  33, 'Absolute_Virtue',  900, 0,    3, 0, 0, 0, NULL),
+ (20023,  3208,  32, 'Proto-Omega',      900, 0, 4900, 0, 0, 0, NULL);
+
+-- Proto-Omega has no normal mob dropid in this repo (Limbus rewards are not
+-- wired as a standard corpse table), so give the Affinity HNM a small valid
+-- nostalgic table: retail Omega parts plus direct Homam pieces.
+DELETE FROM `mob_droplist` WHERE `dropId` = 4900;
+INSERT INTO `mob_droplist` (`dropId`,`dropType`,`groupId`,`groupRate`,`itemId`,`itemRate`) VALUES
+ (4900, 0, 0, 1000,  1925, 240), -- Omega's Eye
+ (4900, 0, 0, 1000,  1926, 240), -- Omega's Heart
+ (4900, 0, 0, 1000,  1927, 240), -- Omega's Foreleg
+ (4900, 0, 0, 1000,  1928, 240), -- Omega's Hind Leg
+ (4900, 0, 0, 1000,  1929, 240), -- Omega's Tail
+ (4900, 0, 0, 1000, 15240,  50), -- Homam Zucchetto
+ (4900, 0, 0, 1000, 14488,  50), -- Homam Corazza
+ (4900, 0, 0, 1000, 14905,  50), -- Homam Manopolas
+ (4900, 0, 0, 1000, 15576,  50), -- Homam Cosciales
+ (4900, 0, 0, 1000, 15661,  50); -- Homam Gambieras
 
 -- ---- historical trophy droplists (21000-21023; engine ignores ids > 5000) ----
 -- Kept only as a roster/item reference. The 11 live Sage trophies and all
