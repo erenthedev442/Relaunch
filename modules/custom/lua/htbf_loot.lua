@@ -663,14 +663,10 @@ fightLoot.divine_might =
     },
 }
 -- ── Ark Angels (5 distinct pools) ────────────────────────────────────────────
--- G1 = the fight's direct-drop Rem's Tale Chapter (Reforged Armor +1 material);
--- G2 = rare AA weapon/armor pool. Testimonial mats (Maliyakaleya Coral etc.)
--- omitted -- no enum const (modern Escha mats).
+-- Rem's Tale chapters omitted -- unused on this server (Reforge System replaced
+-- Monisette). Testimonial mats (Maliyakaleya Coral etc.) omitted -- no enum const.
 fightLoot.ark_angels_1 =
 {
-    {
-        { itemId = xi.item.COPY_OF_REMS_TALE_CHAPTER_6, weight = 70 },
-    },
     { -- BiS (ilvl 119): 7 item(s) x weight 50, whiff 650
         quantity = 1,
         { itemId = 0, weight = 650 },
@@ -690,9 +686,6 @@ fightLoot.ark_angels_1 =
 }
 fightLoot.ark_angels_2 =
 {
-    {
-        { itemId = xi.item.COPY_OF_REMS_TALE_CHAPTER_10, weight = 70 },
-    },
     { -- BiS (ilvl 119): 7 item(s) x weight 50, whiff 650
         quantity = 1,
         { itemId = 0, weight = 650 },
@@ -712,9 +705,6 @@ fightLoot.ark_angels_2 =
 }
 fightLoot.ark_angels_3 =
 {
-    {
-        { itemId = xi.item.COPY_OF_REMS_TALE_CHAPTER_8, weight = 70 },
-    },
     { -- BiS (ilvl 119): 7 item(s) x weight 50, whiff 650
         quantity = 1,
         { itemId = 0, weight = 650 },
@@ -734,9 +724,6 @@ fightLoot.ark_angels_3 =
 }
 fightLoot.ark_angels_4 =
 {
-    {
-        { itemId = xi.item.COPY_OF_REMS_TALE_CHAPTER_7, weight = 70 },
-    },
     { -- BiS (ilvl 119): 7 item(s) x weight 50, whiff 650
         quantity = 1,
         { itemId = 0, weight = 650 },
@@ -756,9 +743,6 @@ fightLoot.ark_angels_4 =
 }
 fightLoot.ark_angels_5 =
 {
-    {
-        { itemId = xi.item.COPY_OF_REMS_TALE_CHAPTER_9, weight = 70 },
-    },
     { -- BiS (ilvl 119): 7 item(s) x weight 50, whiff 650
         quantity = 1,
         { itemId = 0, weight = 650 },

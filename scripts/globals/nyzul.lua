@@ -6,6 +6,7 @@ local ID = zones[xi.zone.NYZUL_ISLE]
 xi = xi or {}
 xi.nyzul = xi.nyzul or {}
 
+-- Item IDs kept for later DAT reuse. Drops are retired; see vigilWeaponDrop.
 xi.nyzul.baseWeapons =
 {
     [xi.job.WAR] = xi.item.STURDY_AXE,
@@ -357,30 +358,10 @@ xi.nyzul.activateRuneOfTransfer = function(instance)
 end
 
 xi.nyzul.vigilWeaponDrop = function(player, mob)
-    local instance = mob:getInstance()
-
-    -- Only floor 100 Bosses to drop 1 random weapon guarenteed and 1 of the disk holders job
-    -- will not drop diskholder's weapon if anyone already has it.
-    if instance:getLocalVar('Nyzul_Current_Floor') == 100 then
-        local diskHolder = GetPlayerByID(instance:getLocalVar('diskHolder'))
-        local chars      = instance:getChars()
-
-        if diskHolder ~= nil then
-            for _, entity in pairs(chars) do
-                if not entity:hasItem(xi.nyzul.baseWeapons[diskHolder:getMainJob()]) then
-                    player:addTreasure(xi.nyzul.baseWeapons[diskHolder:getMainJob()], mob)
-
-                    break
-                end
-            end
-        end
-
-        player:addTreasure(xi.nyzul.baseWeapons[math.random(1, #xi.nyzul.baseWeapons)], mob)
-
-    -- Every NM can randomly drop a vigil weapon
-    elseif math.random(1, 100) <= 20 and xi.settings.main.ENABLE_VIGIL_DROPS then
-        player:addTreasure(xi.nyzul.baseWeapons[math.random(1, #xi.nyzul.baseWeapons)], mob)
-    end
+    -- Retired. Vigil weapons are not used by the live Mythic path, and the
+    -- item IDs are reserved for later DAT reuse. Floor 100 still grants the
+    -- Runic Key / disc progress through the existing Nyzul reward flow.
+    return
 end
 
 xi.nyzul.spawnChest = function(mob, player)

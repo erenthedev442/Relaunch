@@ -21,7 +21,7 @@ local htbf = {}
 -- Optional HTBF loot groups contain an itemId 0 whiff entry. Each real entry in
 -- those groups gets an independent tier-scaled roll, allowing higher tiers to
 -- improve every weapon/gear piece instead of merely paying more marks. Groups
--- without a whiff entry (crystals, ingots, Rem's Tales, etc.) retain their
+-- without a whiff entry (crystals, ingots, etc.) retain their
 -- original weighted-selection behavior.
 local function getBattlefieldTreasureHunter(player, battlefield)
     local thLevel = 0
