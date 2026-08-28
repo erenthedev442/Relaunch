@@ -16,7 +16,12 @@
 -- RETIRED for launch — keep in sync with modules/custom/lua/Invasion.lua.
 -----------------------------------
 local catalog   = require('modules/custom/lua/invasion_catalog')
-local LOOT_POOL = require('modules/custom/lua/invasion_loot_pool')
+local LOOT_POOL = {}
+for _, id in ipairs(require('modules/custom/lua/invasion_loot_pool')) do
+    if id ~= 26169 then -- Legendary Ring: legacy/starter grant only
+        LOOT_POOL[#LOOT_POOL + 1] = id
+    end
+end
 local LOOT_POOL_SIZE = #LOOT_POOL
 local DROP_CHANCE = 15  -- % per mob kill
 local RETIRED = true

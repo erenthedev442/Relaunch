@@ -30,12 +30,14 @@
 -- Reraise" is a guard in src/map/entities/charentity.cpp.
 --
 -- CLIENT DISPLAY: repurposes retail item 26169 (reraise_ring) -- already Lv.1,
--- all-jobs, ring-slot, Rare/Ex, USABLE (item_usable enchantment), and absent
--- from every Relaunch droplist/vendor/quest. The custom "Legendary Ring" name
--- needs the client DAT override (see "Custom DATs/Relaunch Custom DATs"); with-
--- out it the client shows the retail "Reraise Ring" name (a sensible fallback).
+-- all-jobs, ring-slot, Rare/Ex, USABLE (item_usable enchantment). The custom
+-- "Legendary Ring" name needs the client DAT override (see
+-- "Custom DATs/Relaunch Custom DATs"); without it the client shows the retail
+-- "Reraise Ring" name (a sensible fallback).
 --
--- GRANTED BY: modules/custom/lua/legacy_ring_grant.lua on login.
+-- NOT LOOT: never grant this from mobs, NMs, shops, or Gobbie Mystery Box.
+-- GRANTED BY: modules/custom/lua/legacy_ring_grant.lua and
+-- modules/custom/lua/new_char_starter_marks.lua only.
 --
 -- Apply, then RESTART the map -- item_basic / item_equipment / item_mods /
 -- item_usable are cached at boot. The charentity.cpp guard needs a REBUILD.
@@ -43,9 +45,15 @@
 -- ============================================================================
 
 -- ----- server-side name (GM commands / logging); display name is DAT-driven --
+-- flags & ~4 drops FLAG_MYSTERY_BOX so SelectDailyItem / Gobbie Box cannot roll it.
 UPDATE `item_basic`
-   SET `name` = 'legendary_ring', `sortname` = 'legendary_ring'
+   SET `name` = 'legendary_ring', `sortname` = 'legendary_ring',
+       `flags` = `flags` & ~4
  WHERE `itemid` = 26169;
+
+-- Belt-and-suspenders: strip any leftover corpse / shop rows if a live DB
+-- still has them from an older import.
+DELETE FROM `mob_droplist` WHERE `itemId` = 26169;
 
 -- ----- equip rule: Lv.1, all jobs (4194303), ring slot (24576) ---------------
 UPDATE `item_equipment`

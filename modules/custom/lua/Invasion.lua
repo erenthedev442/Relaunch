@@ -36,9 +36,10 @@ local RETIRED_MSG = 'Al Zahbi Invasion is disabled for launch.'
 -- keeps the change in one place and survives pool regeneration.
 -- EXCLUSIVE_IDS = ALL Ambuscade stages (2026-07-10; feedstock earned from Ambuscade).
 local AMBU_WPN_IDS = require('modules/custom/lua/ambuscade_weapons_catalog').EXCLUSIVE_IDS
+local RESERVED_LOOT = { [26169] = true } -- Legendary Ring: legacy/starter grant only
 local LOOT_POOL = {}
 for _, id in ipairs(require('modules/custom/lua/invasion_loot_pool')) do
-    if not AMBU_WPN_IDS[id] then LOOT_POOL[#LOOT_POOL + 1] = id end
+    if not AMBU_WPN_IDS[id] and not RESERVED_LOOT[id] then LOOT_POOL[#LOOT_POOL + 1] = id end
 end
 
 -----------------------------------
