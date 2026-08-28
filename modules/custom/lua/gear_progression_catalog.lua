@@ -237,7 +237,26 @@ catalog.gold =
 {
     weapons =
     {
-        -- HUNT-VENDOR BATCH (owner 2026-07-13): exclusive Escha/Delve weapons (flat ilvl band)
+        -- Pre-119 bridge weapons. These Adoulin HQs are intentionally also
+        -- craftable; the medal price offers an alternate Hunting League route
+        -- without bypassing the item-level 119 Ambuscade progression.
+        { id = 20538, name = "Bhakazi Sainti +1", cost = 50, jobs = 'MNK/PUP', cat = 'Hand-to-Hand' },  -- ilvl 118
+        { id = 20622, name = "Nanti Knife +1", cost = 50, jobs = 'WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC', cat = 'Daggers' },  -- ilvl 118
+        { id = 20724, name = "Dija Sword +1", cost = 50, jobs = 'WAR/PLD/DRK/RUN', cat = 'Swords' },  -- ilvl 118
+        { id = 20780, name = "Senbaak Nagan +1", cost = 50, jobs = 'PLD/DRK/RUN', cat = 'Great Swords' },  -- ilvl 118
+        { id = 20815, name = "Budliqa +1", cost = 50, jobs = 'WAR/DRK/BST/RUN', cat = 'Axes' },  -- ilvl 118
+        { id = 20875, name = "Razorfury +1", cost = 50, jobs = 'WAR', cat = 'Great Axes' },  -- ilvl 118
+        { id = 20920, name = "Lacryma Sickle +1", cost = 50, jobs = 'DRK', cat = 'Scythes' },  -- ilvl 118
+        { id = 20951, name = "Terebrokath +1", cost = 50, jobs = 'DRG', cat = 'Polearms' },  -- ilvl 118
+        { id = 21007, name = "Pamun +1", cost = 50, jobs = 'NIN', cat = 'Katana' },  -- ilvl 118
+        { id = 21042, name = "Sukezane +1", cost = 50, jobs = 'SAM', cat = 'Great Katana' },  -- ilvl 118
+        { id = 21130, name = "Sharur +1", cost = 50, jobs = 'WHM/PLD', cat = 'Clubs' },  -- ilvl 118
+        { id = 21201, name = "Atinian Staff +1", cost = 50, jobs = 'BLM/SCH/GEO', cat = 'Staves' },  -- ilvl 118
+        { id = 21203, name = "Astralwatcher", cost = 50, jobs = 'SMN', cat = 'Staves' },  -- ilvl 118
+        { id = 21240, name = "Echidna's Bow +1", cost = 50, jobs = 'RNG', cat = 'Archery' },  -- ilvl 118
+        { id = 21290, name = "Donderbuss +1", cost = 50, jobs = 'RNG/COR', cat = 'Marksmanship' },  -- ilvl 118
+
+        -- Existing exclusive Escha/Delve picks.
         { id = 21478, name = "Moros Crossbow +1", cost = 50, jobs = 'RNG', cat = 'Marksmanship' },  -- ilvl 118
         { id = 21375, name = "Magneto", cost = 50, jobs = 'PUP', cat = 'Grips' },  -- ilvl 117
     },

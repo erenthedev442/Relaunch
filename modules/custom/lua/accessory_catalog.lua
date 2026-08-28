@@ -6,7 +6,7 @@
 -- Tiers (medal currencies, same trio as Armor / Weapons NPCs):
 --   Bronze   = Beastmens Medal   (entry)
 --   Silver   = Kindreds Medal    (mid)
---   Gold     = Demons Medal      (BiS endgame)
+--   Gold     = Demons Medal      (pre-Infamy mid-tier)
 --
 -- HOW THIS FILE IS MAINTAINED:
 --   * Placement config (zoneId/zonePath/vendorPos/seals/goldExtraDrop) are
@@ -23,6 +23,10 @@
 --   HTBF / etc.) were removed. NOTE: for 181 of those this vendor was the sole
 --   TARGETED source on relaunch -- after removal they drop only from the random
 --   Invasion catch-all pool. A follow-up task tracks giving them a real source.
+-- 2026-08-28: Restocked starter rings/ears. Bronze gets the Assault stat
+--   rings. Silver gets Adoulin-craft +1s (no coalition rings). Gold gets
+--   homeless mid-tier ears/rings. Chirich/Stikini are NQ only. Null, Infamy,
+--   Unity, HTBF, Geas Fete, and coalition rings stay off this vendor.
 -----------------------------------
 local catalog = {}
 
@@ -63,7 +67,7 @@ local function emptySlots()
 end
 
 -----------------------------------
--- BRONZE TIER  (15 medals/piece) -- Delve accessories
+-- BRONZE TIER  (15 medals/piece) -- Delve accessories + Assault starter rings
 -----------------------------------
 catalog.bronze = emptySlots()
 local b = catalog.bronze
@@ -74,6 +78,13 @@ table.insert(b.neck, { id = 28401, name = 'Eddy Necklace'             , cost = 1
 table.insert(b.neck, { id = 28381, name = 'Imbodla Necklace'          , cost = 15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- Delve
 table.insert(b.neck, { id = 28403, name = 'Inquisitor Bead Necklace'  , cost = 15, jobs = 'MNK/RDM/THF/BST/RNG/NIN/DRG/COR/PUP/DNC/RUN' })  -- Delve
 table.insert(b.neck, { id = 28380, name = 'Iqabi Necklace'            , cost = 15, jobs = 'All' })  -- Delve
+
+-- ring
+table.insert(b.ring, { id = 15543, name = 'Rajas Ring'               , cost = 15, jobs = 'All' })  -- Assault DD
+table.insert(b.ring, { id = 15545, name = 'Tamas Ring'               , cost = 15, jobs = 'All' })  -- Assault mage
+table.insert(b.ring, { id = 15544, name = 'Sattva Ring'              , cost = 15, jobs = 'All' })  -- Assault tank
+table.insert(b.ring, { id = 15808, name = "Ulthalam's Ring"          , cost = 15, jobs = 'All' })  -- Assault acc/att
+table.insert(b.ring, { id = 15807, name = "Balrahn's Ring"           , cost = 15, jobs = 'All' })  -- Assault macc
 
 -- waist
 table.insert(b.waist, { id = 10829, name = 'Artful Belt'              , cost = 15, jobs = 'All' })  -- Craft (synergy)
@@ -91,17 +102,30 @@ table.insert(b.back, { id = 28643, name = 'Refraction Cape'          , cost = 15
 
 
 -----------------------------------
--- SILVER TIER  (32 medals/piece) -- Crafted HQ
+-- SILVER TIER  (32 medals/piece) -- Crafted HQ starter row
 -----------------------------------
 catalog.silver = emptySlots()
 local s = catalog.silver
 
+-- ear
+table.insert(s.ear, { id = 11057, name = 'Ghillie Earring +1'       , cost = 32, jobs = 'All' })  -- Craft acc ear
+table.insert(s.ear, { id = 11061, name = 'Evader Earring +1'        , cost = 32, jobs = 'All' })  -- Craft eva ear
+
+-- ring
+table.insert(s.ring, { id = 11059, name = 'Hajduk Ring +1'           , cost = 32, jobs = 'All' })  -- Craft ranged acc
+
 -- waist
 table.insert(s.waist, { id = 10830, name = 'Artful Belt +1'          , cost = 32, jobs = 'All' })  -- Craft (HQ synergy)
+table.insert(s.waist, { id = 10837, name = 'Phos Belt +1'            , cost = 32, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- Craft haste
+
+-- back
+table.insert(s.back, { id = 11001, name = 'Swith Cape +1'            , cost = 32, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- Craft FC
+table.insert(s.back, { id = 10997, name = 'Testudo Mantle +1'        , cost = 32, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- Craft tank
+table.insert(s.back, { id = 10999, name = 'Dauntless Mantle'         , cost = 32, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- Craft DD cape
 
 
 -----------------------------------
--- GOLD TIER  (60 medals/piece) -- Crafted BiS + high-tier Delve
+-- GOLD TIER  (60 medals/piece) -- pre-Infamy mid-tier
 -----------------------------------
 catalog.gold = emptySlots()
 local g = catalog.gold
@@ -109,16 +133,26 @@ local g = catalog.gold
 -- neck
 table.insert(g.neck, { id = 26016, name = 'Incanters Torque'         , cost = 60, jobs = 'All' })  -- Craft (synergy)
 
+-- ear
+table.insert(g.ear, { id = 28506, name = 'Andoaa Earring'           , cost = 60, jobs = 'All' })  -- Delve
+table.insert(g.ear, { id = 26081, name = 'Mache Earring +1'         , cost = 60, jobs = 'All' })  -- Craft DA ear
+table.insert(g.ear, { id = 28526, name = 'Tati Earring'             , cost = 60, jobs = 'All' })  -- Melee att ear
+table.insert(g.ear, { id = 28475, name = 'Infused Earring'          , cost = 60, jobs = 'All' })  -- Eva/regen ear
+table.insert(g.ear, { id = 11053, name = 'Choleric Earring'         , cost = 60, jobs = 'All' })  -- Magic crit ear
+table.insert(g.ear, { id = 10297, name = 'Sortiarius Earring'       , cost = 60, jobs = 'All' })  -- MAtt ear
+
+-- ring
+table.insert(g.ring, { id = 26189, name = 'Moonbeam Ring'           , cost = 60, jobs = 'WAR/THF/PLD/DRK/BST/BRD/DRG/DNC/RUN' })  -- Craft
+table.insert(g.ring, { id = 10767, name = 'Pernicious Ring'         , cost = 60, jobs = 'All' })  -- DA/STP melee
+table.insert(g.ring, { id = 26181, name = 'Chirich Ring'            , cost = 60, jobs = 'All' })  -- NQ only; +1 stays off
+table.insert(g.ring, { id = 26183, name = 'Stikini Ring'            , cost = 60, jobs = 'All' })  -- NQ only; +1 stays off
+table.insert(g.ring, { id = 10798, name = 'Eihwaz Ring'             , cost = 60, jobs = 'All' })  -- Tank HP
+table.insert(g.ring, { id = 26180, name = 'Varar Ring +1'           , cost = 60, jobs = 'All' })  -- Pet acc
+
 -- waist
 table.insert(g.waist, { id = 26340, name = 'Moonbow Belt'            , cost = 60, jobs = 'MNK/PUP' })  -- Craft
 table.insert(g.waist, { id = 26356, name = 'Skrymir Cord'            , cost = 60, jobs = 'All' })  -- Craft
 table.insert(g.waist, { id = 26360, name = 'Gerdr Belt'              , cost = 60, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- Craft
-
--- ear
-table.insert(g.ear, { id = 28506, name = 'Andoaa Earring'           , cost = 60, jobs = 'All' })  -- Delve
-
--- ring
-table.insert(g.ring, { id = 26189, name = 'Moonbeam Ring'           , cost = 60, jobs = 'WAR/THF/PLD/DRK/BST/BRD/DRG/DNC/RUN' })  -- Craft
 
 -- back
 table.insert(g.back, { id = 26268, name = 'Moonbeam Cape'           , cost = 60, jobs = 'All' })  -- Craft
