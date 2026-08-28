@@ -281,7 +281,7 @@ return
             warpPos    = { x = 22.0112, y = 0.8983, z = -121.4367, rot = 126 },
             mobs =
             {
-                { name = 'Nidhogg',       label = 'Nidhogg',       points = 48, groupId = 11364, minLv = 99, maxLv = 99,
+                { name = 'Nidhogg',       label = 'Nidhogg',       points = 75, groupId = 11364, minLv = 99, maxLv = 99,
                   spawnPos = { x =    7.0, y =  0.90, z = -121.4, rot =  96 },  -- T4 cluster: W
                   drops = { { id = 1122, qty = 5 }, { id = 10037, qty = 5 }, { id = 865, qty = 5 } },  -- Wyvern Skin (Affinity: HP/Regen) + Fafnir's Scale (Augment Sage rank 4) + Handful of Nidhogg's Scales (Augment Sage rank 2)
                   hpBoost = 21,
@@ -298,7 +298,7 @@ return
                       [xi.mod.REGEN] = 70,
                   },
                 },
-                { name = 'King_Behemoth', label = 'King Behemoth', points = 48, groupId = 11365, minLv = 99, maxLv = 99,
+                { name = 'King_Behemoth', label = 'King Behemoth', points = 75, groupId = 11365, minLv = 99, maxLv = 99,
                   spawnPos = { x =   22.0, y =  0.90, z = -136.4, rot =  64 },  -- T4 cluster: S
                   drops = { { id = 893, qty = 5 }, { id = 883, qty = 5 } },  -- Giant Femur (Affinity: STR/Attack) + Behemoth Horn (Augment Sage rank 1)
                   hpBoost = 21,
@@ -317,7 +317,7 @@ return
                       [xi.mod.REGEN] = 70,
                   },
                 },
-                { name = 'Kirin',         label = 'Kirin',         points = 48, groupId = 11366, minLv = 99, maxLv = 99,
+                { name = 'Kirin',         label = 'Kirin',         points = 75, groupId = 11366, minLv = 99, maxLv = 99,
                   spawnPos = { x =   37.0, y =  0.90, z = -121.4, rot = 128 },  -- T4 cluster: E
                   drops = { { id = 2893, qty = 5 }, { id = 10038, qty = 5 } },  -- Gargantuan Black Tiger Fang (Affinity: Skill+) + Kirin's Mane (Augment Sage rank 5)
                   hpBoost = 21,
