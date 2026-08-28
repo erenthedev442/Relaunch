@@ -36,10 +36,9 @@
  *   OnPushPacket  -> every BuildingCharAbilityTable rebuild is followed by a
  *                    COMMAND_DATA (0xAC) packet push to the client. Watching
  *                    for that opcode lets us re-apply after job/subjob/level/
- *                    merit changes that do NOT trigger a zone-in. Re-applying
- *                    only sets bitmask bits + registers a ready recast entry
- *                    (it pushes no packet), so there is no recursion back
- *                    through pushPacket.
+ *                    merit changes that do NOT trigger a zone-in. The hook
+ *                    updates that already-constructed packet in place and
+ *                    follows it with current recast data.
  *
  * The cache (charid -> ability ids) avoids a DB hit on the hot OnPushPacket
  * path. The map server runs zone logic single-threaded, so the plain
@@ -68,8 +67,11 @@
 // COMMAND_DATA (0xAC): pushed after every ability-table rebuild; also the
 // packet we push to refresh the client after a learn/unlearn.
 #include "map/packets/s2c/0x0ac_command_data.h"
+#include "map/packets/s2c/0x119_abil_recast.h"
 
 #include <algorithm>
+#include <cstddef>
+#include <cstring>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -83,16 +85,10 @@ namespace
     std::unordered_map<uint32, std::vector<uint16>> g_learnedCache;
 
     // The ability-recast packet (GP_SERV_COMMAND_ABIL_RECAST, see
-    // src/map/packets/s2c/0x119_abil_recast.cpp) carries at most 30 ability
-    // recast entries -- native job abilities AND borrowed ones combined. The
-    // 31st makes the engine drop the overflow and log "> 31 abilities ...
-    // unsupported", leaving those abilities unusable. A fully-merited/Job-Point
-    // job already has ~20-25 native abilities, so only the first few borrowed
-    // ones fit. We inject borrowed abilities only while the recast list has room
-    // and stop at this ceiling; native abilities are placed first by
-    // BuildingCharAbilityTable, so borrowed fill the remaining slots. Excess
-    // borrowed abilities stay owned in char_cross_job_abilities and re-activate
-    // automatically on a job whose native list leaves free slots.
+    // src/map/packets/s2c/0x119_abil_recast.cpp) carries at most 30 displayable
+    // recast entries. Native abilities are registered first; borrowed abilities
+    // may fill the remaining idle-timer slots, but their command-data bits are
+    // never suppressed by this presentation limit.
     constexpr std::size_t MAX_ABILITY_RECASTS = 30;
 
     // Mechanical safety gate (NOT the content curation -- that lives in
@@ -132,22 +128,20 @@ namespace
             return;
         }
 
-        // Never push the recast list past the packet ceiling (MAX_ABILITY_RECASTS).
-        // Native abilities are already present at this point, so this fills the
-        // remaining slots and skips any borrowed abilities that wouldn't fit --
-        // they stay owned and re-apply later when there's room.
-        const RecastList_t* recasts = PChar->PRecastContainer->GetRecastList(RECAST_ABILITY);
-        if (recasts != nullptr && recasts->size() >= MAX_ABILITY_RECASTS)
-        {
-            return;
-        }
-
         CAbility* PAbility = ability::GetAbility(abilityId);
 
+        // The command-data bitmask and the recast packet are independent. Always
+        // expose every purchased ability to the client so /ja can resolve it,
+        // even when the current job has filled all 30 displayable recast slots.
         charutils::addAbility(PChar, abilityId);
 
-        const Recast recastId = PAbility->getRecastId();
-        if (!PChar->PRecastContainer->Has(RECAST_ABILITY, recastId))
+        // Do not overflow the fixed-size recast packet merely to advertise an
+        // idle timer. If a full-bar ability is used, the normal action path still
+        // creates and enforces its server-side cooldown.
+        const RecastList_t* recasts = PChar->PRecastContainer->GetRecastList(RECAST_ABILITY);
+        const Recast         recastId = PAbility->getRecastId();
+        if (!PChar->PRecastContainer->Has(RECAST_ABILITY, recastId) &&
+            (recasts == nullptr || recasts->size() < MAX_ABILITY_RECASTS))
         {
             // Cross-job abilities never have a job charge entry, so the engine's
             // chargeTime/maxCharges are 0 here -> a normal single-use recast.
@@ -185,7 +179,7 @@ namespace
 
         // If the table doesn't exist yet (SQL not applied) preparedStmt returns
         // a falsy result; we simply cache an empty list and the feature is inert.
-        const auto rset = db::preparedStmt("SELECT abilityId FROM char_cross_job_abilities WHERE charid = ?", PChar->id);
+        const auto rset = db::preparedStmt("SELECT abilityId FROM char_cross_job_abilities WHERE charid = ? ORDER BY abilityId", PChar->id);
         if (rset)
         {
             while (rset->next())
@@ -382,6 +376,11 @@ class CrossJobAbilityBindingsModule : public CPPModule
 
         loadCacheFromDB(PChar);
         applyAllFromCache(PChar);
+
+        // OnCharZoneIn runs after the normal zone-in command packets were
+        // constructed. Send a fresh snapshot so the client can resolve borrowed
+        // abilities immediately after login or zoning.
+        PChar->pushPacket<GP_SERV_COMMAND_COMMAND_DATA>(PChar);
     }
 
     void OnCharZoneOut(CCharEntity* PChar) override
@@ -404,6 +403,19 @@ class CrossJobAbilityBindingsModule : public CPPModule
         if (packet->getType() == static_cast<uint16>(PacketS2C::GP_SERV_COMMAND_COMMAND_DATA))
         {
             applyAllFromCache(PChar);
+
+            // OnPushPacket receives an already-constructed packet. Re-injection
+            // alone is too late: without updating this snapshot, the client gets
+            // the pre-rebuild table and rejects /ja locally after a job change.
+            constexpr std::size_t abilitiesOffset =
+                sizeof(GP_SERV_HEADER) +
+                offsetof(GP_SERV_COMMAND_COMMAND_DATA::PacketData, CommandDataTbl) +
+                offsetof(CommandDataTbl_t, JobAbilities);
+            std::memcpy((*packet)[abilitiesOffset], PChar->m_Abilities, sizeof(PChar->m_Abilities));
+
+            // Job changes send their first recast packet before this hook runs.
+            // Queue a corrected snapshot after borrowed recasts are restored.
+            PChar->pushPacket<GP_SERV_COMMAND_ABIL_RECAST>(PChar);
         }
     }
 };
