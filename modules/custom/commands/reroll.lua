@@ -56,10 +56,10 @@ local TIER_SLICES =
 local INFAMY_CV      = 'Infamy'
 local INFAMY_BY_TIER = { 50, 100, 200, 350, 500 }
 
--- CRYSTALIZED AUGMENTS (mirror Augment_Moogle.lua). The per-slot lock bitmask
--- lives in exdata byte 13 (byte 12 stays 0 for a blank-decoding signature); a
--- crystalized slot is preserved verbatim and never re-rolled. A fresh MAX roll
--- can itself crystalize, by Augment Sage rank (Augment_Mastery 0..5).
+-- CRYSTALIZED AUGMENTS (mirror Augment_Moogle.lua). The lock bitmask lives in
+-- exdata byte 13 (byte 12 stays 0 for a blank-decoding signature). Only masks
+-- 0x00 and 0x1F are valid: a complete five-line perfect result gets one
+-- Augment Sage-rank roll to lock the whole item.
 local LOCK_MASK_BYTE = 13
 local SIG_HEAD_BYTE  = 12
 local INSCRIBABLE    = 0x20   -- ItemFlag::INSCRIBABLE (mask can't persist there)
@@ -80,7 +80,7 @@ local function crystalState(item)
     if canCrystalize and item.getExDataRaw then
         local ok, raw = pcall(function() return item:getExDataRaw() end)
         if ok and raw then
-            mask = raw[LOCK_MASK_BYTE] or 0
+            mask = bit.band(raw[LOCK_MASK_BYTE] or 0, 0x1F)
         end
     end
     return mask, canCrystalize
@@ -147,6 +147,11 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
     -- Collect occupied augment slots (each rolls independently). Crystalized
     -- slots (mask bit set) are flagged so they're preserved, not re-rolled.
     local lockMask, canCrystalize = crystalState(item)
+    local originalLockMask = lockMask
+    local clearedPartialMask = lockMask ~= 0 and lockMask ~= 0x1F
+    if clearedPartialMask then
+        lockMask = 0
+    end
     local lines = {}
     local rerollable = 0
     for augSlot = 0, 4 do
@@ -204,8 +209,13 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
                 player:printToPlayer(string.format('  %s : %d  ->  will roll %d-%d', lbl, ln.oldVal, rollFloor, slice.max), CHANNEL)
             end
         end
+        if clearedPartialMask then
+            player:printToPlayer(
+                'Legacy partial crystalization will be cleared on confirmation; current values remain the preview baseline.',
+                CHANNEL)
+        end
         if canCrystalize and (CRYSTAL_CHANCE[rank] or 0) > 0 then
-            player:printToPlayer(string.format('A max roll can crystalize (lock) at %d%% (Sage rank %d).', math.floor((CRYSTAL_CHANCE[rank] or 0) * 100), rank), CHANNEL)
+            player:printToPlayer(string.format('A complete five-line perfect result crystalizes as one item at %d%% (Sage rank %d).', math.floor((CRYSTAL_CHANCE[rank] or 0) * 100), rank), CHANNEL)
         end
         player:printToPlayer(string.format('Cost: %d Infamy (you have %d). Rank-floor protected (never below %d).', infamyCost, haveInfamy, rollFloor), CHANNEL)
         player:printToPlayer(string.format('Type  !reroll %s confirm  to gamble.', tostring(slotArg)), CHANNEL)
@@ -222,15 +232,18 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
     local isCrit     = math.random() < critChance(rank)
     local crystalPct = canCrystalize and (CRYSTAL_CHANCE[rank] or 0) or 0
 
-    -- Roll + write each line. Crystalized lines are preserved untouched; a fresh
-    -- MAX roll can itself crystalize (two-part gate: max value, then Sage-rank %).
+    -- Roll + write each line. Crystalization is evaluated once after all five
+    -- lines are known, so this command can only persist mask 0x00 or 0x1F.
     local summary     = {}
-    local crystalNews = {}
-    local newMask     = lockMask
+    local newMask     = 0
+    local allPerfect  = true
     for _, ln in ipairs(lines) do
         if ln.locked or ln.retired then
             local label = RETIRED_AUGMENTS[ln.augId] or (ln.def and ln.def.label) or ('#' .. tostring(ln.augId))
             summary[#summary + 1] = { lbl = label, old = ln.oldVal, new = ln.oldVal, locked = ln.locked, retired = ln.retired }
+            if ln.retired then
+                allPerfect = false
+            end
         else
             local hasAff  = (ln.def and ln.def.cat and affinity.hasAffinity(player, ln.def.cat)) or false
             local cap     = (ln.def and ln.def.maxBoost) and math.min(EXDATA_VALUE_MAX, ln.def.maxBoost) or EXDATA_VALUE_MAX
@@ -275,20 +288,21 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
             local b    = 2 + ln.augSlot * 2
             item:setExDataRaw({ [b] = word % 256, [b + 1] = math.floor(word / 256) })
 
-            local crystalized = false
             local canLockRoll = slotMax > 0 or (ln.def and ln.def.flatValue ~= nil)
-            if canLockRoll and r == slotMax and math.random() < crystalPct then
-                newMask     = bit.bor(newMask, bit.lshift(1, ln.augSlot))
-                crystalized = true
-                crystalNews[#crystalNews + 1] = (ln.def and ln.def.label) or ('#' .. tostring(ln.augId))
+            if not canLockRoll or r ~= slotMax then
+                allPerfect = false
             end
 
-            summary[#summary + 1] = { lbl = (ln.def and ln.def.label) or ('#' .. tostring(ln.augId)), old = ln.oldVal, new = r, crystalized = crystalized }
+            summary[#summary + 1] = { lbl = (ln.def and ln.def.label) or ('#' .. tostring(ln.augId)), old = ln.oldVal, new = r }
         end
     end
 
-    -- Persist any new crystalize locks (byte 12 kept 0 for a blank signature).
-    if newMask ~= lockMask then
+    if canCrystalize and #lines == 5 and allPerfect and math.random() < crystalPct then
+        newMask = 0x1F
+    end
+
+    -- Persist the normalized all-or-nothing mask (byte 12 stays blank).
+    if newMask ~= originalLockMask then
         item:setExDataRaw({ [SIG_HEAD_BYTE] = 0, [LOCK_MASK_BYTE] = newMask })
     end
 
@@ -309,9 +323,14 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
             player:printToPlayer(string.format('  %s : %d   (crystalized, kept)', s.lbl, s.old), CHANNEL)
         else
             local arrow = (s.new > s.old) and '^ up' or ((s.new < s.old) and 'v down' or '= same')
-            local tag   = s.crystalized and '   *** CRYSTALIZED -- locked! ***' or ''
-            player:printToPlayer(string.format('  %s : %d -> %d   (%s)%s', s.lbl, s.old, s.new, arrow, tag), CHANNEL)
+            player:printToPlayer(string.format('  %s : %d -> %d   (%s)', s.lbl, s.old, s.new, arrow), CHANNEL)
         end
+    end
+    if clearedPartialMask then
+        player:printToPlayer('  Legacy partial crystalization was cleared.', CHANNEL)
+    end
+    if newMask == 0x1F then
+        player:printToPlayer('  *** ALL FIVE PERFECT LINES CRYSTALIZED -- ITEM LOCKED! ***', CHANNEL)
     end
     player:printToPlayer('Re-equip the item to apply the new augments.', CHANNEL)
 end

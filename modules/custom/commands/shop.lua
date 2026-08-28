@@ -8,9 +8,9 @@
 -- category is RETIRED -- it now just points players at farming. Everything else
 -- delegates unchanged to the stock shop.
 --
--- (The Augment Moogle crit-guarantee token, "Maat's Cap", was previously bundled
+-- (The Augment Moogle perfect-crystalization token, "Maat's Cap", was previously bundled
 -- into every augment shop group at 10M gil. That sale is removed here too; the
--- crit-guarantee is a Maat's Challenge reward -- re-add a dedicated buy if wanted.)
+-- token is a Maat's Challenge reward -- re-add a dedicated buy if wanted.)
 local commandObj = {}
 
 commandObj.cmdprops =

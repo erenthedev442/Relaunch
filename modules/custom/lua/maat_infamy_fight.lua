@@ -260,7 +260,7 @@ function m.applyRewards(player, elapsed)
 
     if math.random() < DROP_CHANCE then
         if player:addItem(CRIT_TOKEN_ID, 1) then
-            say(player, "Maat relinquishes his Cap! Bring Maat's Cap to the Augment Moogle for a guaranteed critical augment.")
+            say(player, "Maat relinquishes his Cap! Explicitly use it at the Augment Moogle to create five perfect, fully crystalized augment slots.")
         else
             say(player, "Maat offered his Cap, but you couldn't carry it (inventory full, or you already hold one).")
         end

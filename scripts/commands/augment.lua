@@ -1,15 +1,15 @@
--- !augment <gear_item_id> <catalyst_id>[:<qty>] ...
+-- !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat]
 -- Bypass the Augment Moogle — apply augments to a gear piece in inventory.
 -- Replicates the Moogle's content-tier bands, mastery floor, affinity,
 -- critical roll, crystalize chance, 10k gil cost, and completion hooks.
 --
 -- Used by the AugmentTrade Windower addon (tools/windower/augment_trade/).
--- The addon sends: !augment <gear_id> <cat_id>:<qty> [<cat_id>:<qty> ...]
+-- The addon sends: !augment <gear_id> <cat_id>:<qty> [<cat_id>:<qty> ...] [maat]
 
 local cmdprops = {
     permission = 0,
     parameters = 'true',
-    help       = '!augment <gear_item_id> <catalyst_id>[:<qty>] ...',
+    help       = '!augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat]',
 }
 
 local catalog  = require('modules/custom/lua/augment_catalog')
@@ -39,17 +39,21 @@ local NON_AUGMENTABLE = {
 cmdprops.exec = function(player, args)
     if not args or args:match('^%s*$') then
         player:printToPlayer(
-            'Usage: !augment <gear_item_id> <catalyst_id>[:<qty>] ...',
+            'Usage: !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat]',
             xi.msg.channel.SYSTEM_3)
         return
     end
 
     local parts = {}
     for p in args:gmatch('%S+') do table.insert(parts, p) end
+    local requestedMaat = #parts > 0 and parts[#parts]:lower() == 'maat'
+    if requestedMaat then
+        table.remove(parts)
+    end
 
     if #parts < 2 then
         player:printToPlayer(
-            'Usage: !augment <gear_item_id> <catalyst_id>[:<qty>] ...',
+            'Usage: !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat]',
             xi.msg.channel.SYSTEM_3)
         return
     end
@@ -119,6 +123,12 @@ cmdprops.exec = function(player, args)
             xi.msg.channel.SYSTEM_3)
         return
     end
+    if requestedMaat and totalCatalysts ~= MAX_CATALYST_COUNT then
+        player:printToPlayer(
+            "Maat's Cap requires exactly five catalyst slots.",
+            xi.msg.channel.SYSTEM_3)
+        return
+    end
 
     local function inventoryQuantity(itemId)
         local total = 0
@@ -181,19 +191,30 @@ cmdprops.exec = function(player, args)
     end
 
     -- Roll once per trade; affinity rolls each individual slot twice.
-    local critPct       = sage.critChance[rank + 1]  or 0.0
-    local critTokenItem = player:findItem(CRIT_TOKEN_ID, 0) or player:findItem(CRIT_TOKEN_LEGACY, 0)
-    local usedCritToken = critTokenItem ~= nil
-    local isCrit        = usedCritToken or (math.random() < critPct)
+    local critPct       = sage.critChance[rank + 1] or 0.0
+    local critTokenItem = requestedMaat and
+        (player:findItem(CRIT_TOKEN_ID, 0) or player:findItem(CRIT_TOKEN_LEGACY, 0)) or nil
+    local usedCritToken = requestedMaat
+    local isCrit        = requestedMaat or (math.random() < critPct)
     local rollFloor     = math.min(slice.min + rank, slice.max)
     local crystalPct    = (xi.augmentTiers.crystalChance and xi.augmentTiers.crystalChance[rank]) or 0
     local canCrystalize = bit.band(gear:getFlag(), INSCRIBABLE) == 0
+    if requestedMaat and not critTokenItem then
+        player:printToPlayer("You do not have Maat's Cap.", xi.msg.channel.SYSTEM_3)
+        return
+    end
+    if requestedMaat and not canCrystalize then
+        player:printToPlayer(
+            "Maat's Cap cannot crystalize inscribable gear.",
+            xi.msg.channel.SYSTEM_3)
+        return
+    end
 
     -- Build augment slots
     local exAugsBySlot = {}
     local labelSummary = {}
-    local crystalNews  = {}
     local newMask      = 0
+    local allPerfect   = true
 
     for _, catId in ipairs(catalystOrder) do
         local def   = catalog[catId]
@@ -227,11 +248,9 @@ cmdprops.exec = function(player, args)
 
             rolls[#rolls + 1] = roll
             exAugsBySlot[#exAugsBySlot + 1] = { id = def.augId, value = roll }
-            local slotIndex0 = #exAugsBySlot - 1
             local canLockRoll = slotMax > 0 or def.flatValue ~= nil
-            if canCrystalize and canLockRoll and roll == slotMax and math.random() < crystalPct then
-                newMask = bit.bor(newMask, bit.lshift(1, slotIndex0))
-                crystalNews[#crystalNews + 1] = def.label
+            if not canLockRoll or roll ~= slotMax then
+                allPerfect = false
             end
         end
 
@@ -245,6 +264,18 @@ cmdprops.exec = function(player, args)
         local boostStr   = boostCap > 0
             and string.format(' [T%d boost %s/%d]', tier, table.concat(rolls, ','), boostCap) or ''
         table.insert(labelSummary, string.format('%s %s%s', def.label, valStr, boostStr))
+    end
+
+    -- One roll governs the whole item. Never create a partial lock mask.
+    if requestedMaat then
+        newMask = 0x1F
+    elseif
+        canCrystalize and
+        #exAugsBySlot == MAX_CATALYST_COUNT and
+        allPerfect and
+        math.random() < crystalPct
+    then
+        newMask = 0x1F
     end
 
     local function takeFromInventory(itemId, quantity)
@@ -306,10 +337,12 @@ cmdprops.exec = function(player, args)
         return
     end
 
+    local lockStamped = true
     if newMask ~= 0 then
         local ok, err = pcall(function()
             augmented:setExDataRaw({ [SIG_HEAD_BYTE] = 0, [LOCK_MASK_BYTE] = newMask })
         end)
+        lockStamped = ok
         if not ok then
             print(string.format('[augment] lock-mask stamp failed for %s item %d: %s',
                 player:getName(), gearId, tostring(err)))
@@ -318,9 +351,15 @@ cmdprops.exec = function(player, args)
 
     -- Charge gil and consume crit token
     player:delGil(GIL_COST)
-    if usedCritToken then
+    if usedCritToken and lockStamped then
         player:delItemAt(critTokenItem:getID(), 1, 0, critTokenItem:getSlotID())
-        player:printToPlayer("Maat's Cap consumed to force a perfect roll.", xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(
+            "Maat's Cap consumed: all five perfect augment slots are crystalized.",
+            xi.msg.channel.SYSTEM_3)
+    elseif usedCritToken then
+        player:printToPlayer(
+            "The crystalization stamp failed, so Maat's Cap was not consumed.",
+            xi.msg.channel.SYSTEM_3)
     end
 
     -- Increment augment counter + fire hooks
@@ -351,8 +390,9 @@ cmdprops.exec = function(player, args)
     if isCrit then
         player:printToPlayer('** Critical augment! ** Every catalyst rolled its tier maximum!', xi.msg.channel.SYSTEM_3)
     end
-    for _, label in ipairs(crystalNews) do
-        player:printToPlayer(string.format('%s CRYSTALIZED: [%s]', xi.icon.STAR_LARGE, label),
+    if newMask == 0x1F and lockStamped then
+        player:printToPlayer(
+            string.format('%s CRYSTALIZED: all five perfect augment slots are locked.', xi.icon.STAR_LARGE),
             xi.msg.channel.SYSTEM_3)
     end
     player:printToPlayer(

@@ -8,7 +8,7 @@
 -- TRADE FLOW:
 --   1. //at pick <catalyst_id> [qty]   add catalyst(s) to pending trade
 --   2. //at gear <gear_item_id>        set gear piece to augment
---   3. //at trade                      send !augment to server & execute
+--   3. //at trade [maat]               send !augment to server & execute
 --
 -- ALL COMMANDS  (//at or //augmenttrade):
 --   //at                    toggle window
@@ -23,7 +23,7 @@
 --   //at unpick [id]        remove catalyst (or clear all)
 --   //at gear <item_id>     set gear piece to augment
 --   //at clear              clear pending trade selection
---   //at trade              execute pending trade
+--   //at trade [maat]       execute pending trade; maat explicitly consumes Maat's Cap
 --   //at sync               re-fetch rank data from server
 -----------------------------------
 _addon.name     = 'AugmentTrade'
@@ -320,7 +320,7 @@ local function render_mine()
     -- Trade / clear row
     local can_trade = sel_gear > 0 and #sel_cats > 0
     if can_trade then
-        L[#L+1] = ' >> //at trade   to execute    //at clear   to reset'
+        L[#L+1] = ' >> //at trade [maat] execute  //at clear reset'
     else
         L[#L+1] = ' (set gear and at least one catalyst to enable //at trade)'
     end
@@ -517,13 +517,18 @@ windower.register_event('addon command', function(cmd, arg1, arg2)
             windower.add_to_chat(207, '[AugmentTrade] No gear set. Use //at gear <item_id> first.')
         elseif #sel_cats == 0 then
             windower.add_to_chat(207, '[AugmentTrade] No catalysts selected. Use //at pick <id> [qty].')
+        elseif arg1:lower() == 'maat' and sel_total_slots() ~= MAX_SLOTS then
+            windower.add_to_chat(207, "[AugmentTrade] Maat's Cap requires exactly five catalyst slots.")
         else
             local parts = { tostring(sel_gear) }
             for _, s in ipairs(sel_cats) do
                 parts[#parts+1] = s.id .. ':' .. s.qty
             end
+            if arg1:lower() == 'maat' then
+                parts[#parts+1] = 'maat'
+            end
             local full_cmd = 'input !augment ' .. table.concat(parts, ' ')
-            windower.add_to_chat(207, '[AugmentTrade] Sending: !' .. table.concat(parts, ' '))
+            windower.add_to_chat(207, '[AugmentTrade] Sending: !augment ' .. table.concat(parts, ' '))
             windower.send_command(full_cmd)
             -- Clear selection after sending; inventory + rank refresh via [AUGDONE]
             sel_cats = {}
@@ -540,6 +545,6 @@ windower.register_event('addon command', function(cmd, arg1, arg2)
         windower.add_to_chat(207, '[AugmentTrade] Commands:')
         windower.add_to_chat(207, '  //at  tab catalog/rank/mine  n  p  tier/cat/owned/avail')
         windower.add_to_chat(207, '  //at pick <id> [qty]   //at unpick [id]   //at clear')
-        windower.add_to_chat(207, '  //at gear <item_id>    //at trade         //at sync')
+        windower.add_to_chat(207, '  //at gear <item_id>    //at trade [maat]  //at sync')
     end
 end)

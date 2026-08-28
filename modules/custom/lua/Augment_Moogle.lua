@@ -9,13 +9,12 @@
 -- mapping (2047 entries, one per augmentId in sql/augments.sql).
 --
 -- CRYSTALIZED AUGMENTS (2026-07-06 -- "lock your best rolls"):
---   Re-augmenting an item now REBUILDS only its non-crystalized slots -- any
---   slot that has crystalized is preserved verbatim and its catalyst is not
---   required again. When a freshly rolled slot lands on its MAXIMUM value
---   (a perfect roll -- crit or lucky), it gets a second roll, by Augment Sage
---   rank (Augment_Mastery), to CRYSTALIZE. A crystalized slot can no longer be
---   changed or removed by normal augmenting -- only a full SCOUR (trade the
---   gear alone, or the configured scour item) strips everything and starts anew.
+--   Crystalization is item-wide and all-or-nothing. A complete five-slot item
+--   whose every line is perfect gets one Augment Sage-rank crystalization roll;
+--   success locks all five slots and failure locks none. Maat's Cap can be
+--   explicitly selected at confirmation to force five perfect, locked lines.
+--   A fully crystalized item can only be reset by a full SCOUR (trade the gear
+--   alone, or the configured scour item).
 --
 --   Crystalize chance by Augment Sage rank (Augment_Mastery 0..5):
 --     0% / 5% / 15% / 30% / 45% / 50%
@@ -48,7 +47,7 @@ local m = Module:new('augment_moogle')
 local MAX_CATALYST_COUNT = 5       -- max catalyst items per trade = the engine's 5 augment slots (each catalyst writes one line; mix types or stack one)
 local GIL_COST           = 10000   -- flat per trade
 local SCOUR_GIL_COST     = 25000   -- flat to scour (strip ALL augments incl. crystalized)
-local CRIT_TOKEN_ID      = 15194   -- Maat's Cap: guarantees a crit when held (consumed on success). Retail Rare/EX, so it renders on the client (the old custom 29000 had no client DAT).
+local CRIT_TOKEN_ID      = 15194   -- Maat's Cap: explicitly consumed to guarantee five perfect crystalized slots. Retail Rare/EX, so it renders on the client.
 local CRIT_TOKEN_LEGACY  = 29000   -- old custom 'Maat's Blessing'; still honored so pre-swap drops aren't stranded
 local LAST_RECIPE_COUNT_VAR = 'Augment_LastRecipe_Count'
 local LAST_RECIPE_ID_VAR    = 'Augment_LastRecipe_Id_'
@@ -86,7 +85,7 @@ local SCOUR_ITEM_ID = nil
 --   floor  = slice.min + sageRank       -- Sage mastery rank (0-5) raises the floor
 --   roll   = random(floor .. slice.max) -- rolled PER SLOT (each catalyst = own roll)
 --   affinity match (Sage)               -- roll twice, keep the better
---   crit (sage.critChance by rank; Maat's Cap guarantees) -- slice.max: PERFECT roll
+--   crit (sage.critChance by rank)              -- slice.max: PERFECT roll
 --   final/slot = (value + roll) * multiplier      (engine math unchanged)
 -- Tier bands never overlap, and T5's ceiling (roll 31) == the old
 -- rank5 x affinity x crit cap -- no power creep vs the previous system.
@@ -291,7 +290,7 @@ local function readCrystalState(gearItem)
     local mask = 0
     if canCrystalize and gearItem.getExDataRaw then
         local raw = gearItem:getExDataRaw()
-        mask = (raw and raw[LOCK_MASK_BYTE]) or 0
+        mask = bit.band((raw and raw[LOCK_MASK_BYTE]) or 0, 0x1F)
     end
 
     local locked = {}
@@ -379,7 +378,7 @@ end
 -- non-zero mask (preserved locks). A stamp miss must NEVER look like a failed
 -- confirm -- the item is already in inventory with its new augments.
 local function stampLockMask(player, item, itemId, mask)
-    mask = bit.band(math.floor(tonumber(mask) or 0), 0xFF)
+    mask = bit.band(math.floor(tonumber(mask) or 0), 0x1F)
     if mask == 0 then
         return true
     end
@@ -1154,17 +1153,24 @@ showConfirmMenu = function(player)
 
                 -- Re-augments preserve crystalize bits (newMask ~= 0). Stamp is
                 -- best-effort: typed addItem already applied the augment lines.
-                stampLockMask(playerArg, augmented, deliveredId, snapshot.newMask)
+                local lockStamped = stampLockMask(
+                    playerArg, augmented, deliveredId, snapshot.newMask)
 
                 saveLastRecipe(playerArg, snapshot.recipe)
                 playerArg:delGil(GIL_COST)
 
-                if snapshot.usedCritToken then
+                if snapshot.usedCritToken and lockStamped then
                     local tokenItem = playerArg:findItem(CRIT_TOKEN_ID, 0) or playerArg:findItem(CRIT_TOKEN_LEGACY, 0)
                     if tokenItem then
                         playerArg:delItemAt(tokenItem:getID(), 1, 0, tokenItem:getSlotID())
                     end
-                    playerArg:printToPlayer("Maat's Cap consumed to force a perfect roll.", xi.msg.channel.SYSTEM_3)
+                    playerArg:printToPlayer(
+                        "Maat's Cap consumed: all five perfect augment slots are crystalized.",
+                        xi.msg.channel.SYSTEM_3)
+                elseif snapshot.usedCritToken then
+                    playerArg:printToPlayer(
+                        "The crystalization stamp failed, so Maat's Cap was not consumed.",
+                        xi.msg.channel.SYSTEM_3)
                 end
 
                 local prev = playerArg:getCharVar('Augment_Count') or 0
@@ -1195,8 +1201,9 @@ showConfirmMenu = function(player)
                     playerArg:printToPlayer('Critical augment - every catalyst rolled its tier maximum!',
                         xi.msg.channel.SYSTEM_3)
                 end
-                for _, lbl in ipairs(snapshot.crystalNews or {}) do
-                    playerArg:printToPlayer(string.format('%s CRYSTALIZED: [%s] is now locked at max -- re-rolls can no longer touch it, kupo!', xi.icon.STAR_LARGE, lbl),
+                if snapshot.newMask == 0x1F and lockStamped then
+                    playerArg:printToPlayer(
+                        string.format('%s CRYSTALIZED: all five perfect augment slots are now locked, kupo!', xi.icon.STAR_LARGE),
                         xi.msg.channel.SYSTEM_3)
                 end
 
@@ -1211,6 +1218,38 @@ showConfirmMenu = function(player)
             end,
         },
     }
+
+    if st.maatEligible then
+        table.insert(options, 2,
+        {
+            "Use Maat's Cap (perfect x5)",
+            function(playerArg)
+                local pending = getState(playerArg)
+                if not pending.itemId or pending.itemId == 0 or pending.gearDelivered then
+                    clearState(playerArg)
+                    showBankMain(playerArg)
+                    return
+                end
+                if not pending.maatEligible or #pending.exAugsBySlot ~= MAX_CATALYST_COUNT then
+                    playerArg:printToPlayer(
+                        "Maat's Cap requires a complete five-slot augment, kupo!",
+                        xi.msg.channel.SYSTEM_3)
+                    showConfirmMenu(playerArg)
+                    return
+                end
+
+                for _, augment in ipairs(pending.exAugsBySlot) do
+                    augment.value = augment.maxValue
+                end
+                pending.labelSummary  = pending.maatLabelSummary
+                pending.isCrit        = true
+                pending.usedCritToken = true
+                pending.newMask       = 0x1F
+                pending.crystalNews   = {}
+                options[1][2](playerArg)
+            end,
+        })
+    end
 
     -- Keep the confirm title SHORT and fixed-length. The full per-catalyst
     -- breakdown is already printed to chat ("Catalysts accepted! Will apply:
@@ -1462,8 +1501,27 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
 
             -- Read the gear's current crystalize state up front (needed for both
             -- the scour path and the free-slot budget).
-            local _, _, lockedAugs, canCrystalize = readCrystalState(gearItemObj)
+            local lockMask, _, lockedAugs, canCrystalize = readCrystalState(gearItemObj)
             local lockedCount = #lockedAugs
+
+            -- Retire legacy per-slot locks without changing the augment values.
+            -- Return immediately so the player can deliberately choose their
+            -- next augment/reroll after the migration.
+            if lockMask ~= 0 and lockMask ~= 0x1F then
+                local ok = pcall(function()
+                    gearItemObj:setExDataRaw({ [SIG_HEAD_BYTE] = 0, [LOCK_MASK_BYTE] = 0 })
+                end)
+                if not ok then
+                    player:printToPlayer(
+                        'Could not clear the obsolete partial crystalization mask; please try again, kupo!',
+                        xi.msg.channel.SYSTEM_3)
+                    return
+                end
+                player:printToPlayer(
+                    'Obsolete partial crystalization cleared; all augment values were preserved. Retrade the item when ready, kupo!',
+                    xi.msg.channel.SYSTEM_3)
+                return
+            end
 
             -- SCOUR: either the dedicated scour item was traded, or the gear was
             -- traded ALONE and it carries crystalized augments the player wants to
@@ -1579,11 +1637,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             -- mastery rank raises the roll floor + drives the crit chance;
             -- the affinity bitfield is consulted per-augment because each
             -- selection may belong to a different category.
-            local critPct     = sage.critChance[rank + 1]  or 0.0
-            -- Maat's Cap (or a legacy Maat's Blessing) guarantees a crit; consumed after delGil on success.
-            local usedCritToken = player:findItem(CRIT_TOKEN_ID, 0) ~= nil
+            local critPct       = sage.critChance[rank + 1] or 0.0
+            local hasMaatToken  = player:findItem(CRIT_TOKEN_ID, 0) ~= nil
                 or player:findItem(CRIT_TOKEN_LEGACY, 0) ~= nil
-            local isCrit        = usedCritToken or (math.random() < critPct)
+            local isCrit        = math.random() < critPct
 
             -- Crystalize chance for THIS trade, by Augment Sage rank.
             local crystalPct = canCrystalize and (CRYSTAL_CHANCE[rank] or 0.0) or 0.0
@@ -1614,10 +1671,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             -- freshly rolled catalyst slots. The lock bitmask is built to match.
             local exAugsBySlot     = {}    -- one entry per FINAL slot, ready for addItem
             local labelSummary     = {}    -- one human-readable string per catalyst type
+            local maatLabelSummary = {}    -- same layout at each line's current-tier maximum
             local catalystsHeld    = {}
             local capWarnings      = {}    -- de-duped engine-cap warnings to show after the trade summary
             local crystalNews      = {}    -- labels that crystalized this trade
             local newMask          = 0
+            local allPerfect       = true
 
             -- Preserve crystalized slots verbatim; their mask bits carry forward.
             for _, la in ipairs(lockedAugs) do
@@ -1755,6 +1814,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                     return scaleTierRoll(raw, boostCap, playerTier)
                 end
                 local slotMax   = scaleRoll(slice.max)   -- the achievable "perfect" (crystalize) value this tier
+                local maatMax   = slotMax
                 local rolls     = {}
                 if def.tierValue or def.flatValue then
                     -- Single-line augments (Treasure Hunter, All songs, ...):
@@ -1770,6 +1830,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                     -- when it matches its final T5 form).
                     local target = def.flatValue or (def.tierValue * playerTier)
                     slotMax = (def.flatValue or (def.tierValue * #TIER_SLICES)) - base
+                    maatMax = target - base
                     for _ = 1, count do
                         table.insert(rolls, target - base)
                     end
@@ -1790,22 +1851,16 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 -- the preserved crystalized slots). The engine sums each slot's
                 -- modValue, so N catalysts deliver N x (base + boost) * mult.
                 --
-                -- CRYSTALIZE (two-part, per the design post):
-                --   (1) the slot must roll its MAXIMUM value (slotMax, > 0), then
-                --   (2) a second roll at the Sage-rank crystalize chance locks it.
-                -- A crystalized slot's bit is set in newMask so it's preserved on
-                -- future re-rolls until scoured.
                 for _, r in ipairs(rolls) do
                     table.insert(exAugsBySlot, {
-                        id    = def.augId,
-                        value = r,
-                        cat   = def.cat,
+                        id       = def.augId,
+                        value    = r,
+                        maxValue = maatMax,
+                        cat      = def.cat,
                     })
-                    local slotIndex0 = #exAugsBySlot - 1
                     local canLockRoll = slotMax > 0 or def.flatValue ~= nil
-                    if canLockRoll and r == slotMax and math.random() < crystalPct then
-                        newMask = bit.bor(newMask, bit.lshift(1, slotIndex0))
-                        table.insert(crystalNews, def.label)
+                    if not canLockRoll or r ~= slotMax then
+                        allPerfect = false
                     end
                 end
 
@@ -1834,6 +1889,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
 
                 local label = string.format('%s%s%s', def.label, valStr, rollStr)
                 table.insert(labelSummary, label)
+
+                local maatPerSlot = math.floor((base + maatMax) * mult / disp + 0.5)
+                local maatTotal = maatPerSlot * count
+                local maatValStr = count > 1
+                    and string.format('  ->  %d x%d = %d total', maatPerSlot, count, maatTotal)
+                    or  string.format('  ->  %d', maatTotal)
+                table.insert(maatLabelSummary, string.format(
+                    '%s%s  [T%d perfect %d/%d%s]',
+                    def.label, maatValStr, playerTier, maatMax,
+                    (def.tierValue or def.flatValue) and maatMax or boostCap,
+                    hasAff and ' +affinity' or ''))
                 table.insert(catalystsHeld, { id = itemId, qty = count })
 
                 -- Surface any engine-cap warning for this augId, once
@@ -1841,6 +1907,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 -- same type were used.
                 local capMsg = CAPPED_MOD_AUGS[def.augId]
                 if capMsg then capWarnings[capMsg] = true end
+            end
+
+            -- Crystalization is one item-wide roll. Partial masks are never
+            -- created: a complete perfect item locks all five slots or none.
+            if
+                canCrystalize and
+                #exAugsBySlot == MAX_CATALYST_COUNT and
+                allPerfect and
+                math.random() < crystalPct
+            then
+                newMask = 0x1F
             end
 
             -- Clear any previous pending session
@@ -1870,7 +1947,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 bankConsumed  = false,
                 gearDelivered = false,
                 isCrit        = isCrit,          -- for the confirm screen
-                usedCritToken = usedCritToken,   -- consume Maat's Blessing on success
+                usedCritToken = false,           -- set only by explicit Maat confirmation
+                maatEligible  = hasMaatToken and canCrystalize and #exAugsBySlot == MAX_CATALYST_COUNT,
+                maatLabelSummary = maatLabelSummary,
                 newMask       = newMask,         -- lock bitmask to stamp on the rebuilt item
                 crystalNews   = crystalNews,     -- crystalized labels to announce
             }
