@@ -36,6 +36,9 @@ local SYS   = xi.msg.channel.SYSTEM_3
 -- pays 10%. DROP_RATE_MULTIPLIER is 1.0 on the box (verified 2026-07-11 —
 -- the committed docs table saying 3x was a stale Legendary-era import), so
 -- the effective rate is exactly 10% across the board.
+-- 2026-08-29 (owner): that 10% is PER PLAYER. Each in-zone alliance member
+-- within 100 yalms gets an independent roll and banks their own success.
+-- Previously only the claimer rolled, so a duo saw one 5-10% chance to share.
 local DROP_RATE     = 10
 local FALLBACK_RATE = 10
 
@@ -128,27 +131,37 @@ end
 
 m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSkillKill)
     super(mob, player, isKiller, isWeaponSkillKill)
-    -- onMobDeathEx fires once per alliance member; isKiller marks the killing blow,
-    -- so we drop ONCE per kill (not per member). Non-killer members return silently
-    -- (they'd flood the trace); every real player kill logs exactly one line below.
-    if not isKiller or player == nil then return end
+    -- onMobDeathEx fires once per alliance member in zone. Each member gets an
+    -- independent 10% roll into their own augmenter bank. The treasure-pool
+    -- hint is armed once, on the claimer, so respawns cannot stack listeners.
+    if player == nil then return end
 
-    -- Announce RETAIL-DROPLIST catalysts (player request 2026-07-12: a plain
-    -- "You find a raptor skin" gives no clue the skin is a catalyst). The
-    -- engine fires a TREASUREPOOL listener per pooled item right after this
-    -- hook (mobentity.cpp: OnMobDeath at L749 runs before DropItems at L784),
-    -- so arm a per-kill listener here and label any catalog item that lands
-    -- in the pool. removeListener first so respawns can't stack duplicates.
-    mob:removeListener('CATALYST_POOL_HINT')
-    mob:addListener('TREASUREPOOL', 'CATALYST_POOL_HINT', function(mobArg, poolChar, poolItemId)
-        local lbl = catalystLabel(poolItemId)
-        if lbl then
-            local iname = itemNameFor(poolItemId)
-            poolChar:printToPlayer(string.format(
-                '[Augments] Catalyst in the treasure pool: %s (%s).',
-                iname or ('item ' .. poolItemId), lbl), SYS)
-        end
+    if isKiller then
+        -- Announce RETAIL-DROPLIST catalysts (player request 2026-07-12: a plain
+        -- "You find a raptor skin" gives no clue the skin is a catalyst). The
+        -- engine fires a TREASUREPOOL listener per pooled item right after this
+        -- hook (mobentity.cpp: OnMobDeath at L749 runs before DropItems at L784),
+        -- so arm a per-kill listener here and label any catalog item that lands
+        -- in the pool. removeListener first so respawns can't stack duplicates.
+        mob:removeListener('CATALYST_POOL_HINT')
+        mob:addListener('TREASUREPOOL', 'CATALYST_POOL_HINT', function(mobArg, poolChar, poolItemId)
+            local lbl = catalystLabel(poolItemId)
+            if lbl then
+                local iname = itemNameFor(poolItemId)
+                poolChar:printToPlayer(string.format(
+                    '[Augments] Catalyst in the treasure pool: %s (%s).',
+                    iname or ('item ' .. poolItemId), lbl), SYS)
+            end
+        end)
+    end
+
+    local distOk, dist = pcall(function()
+        return player:checkDistance(mob)
     end)
+    if distOk and type(dist) == 'number' and dist > 100 then
+        dbg(string.format('%s -> skip: %s out of range (%.1f)', mob:getName() or '?', player:getName(), dist))
+        return
+    end
 
     local mname = mob:getName() or '?'
     if mob:isNM() then dbg(mname .. ' -> skip: NM (catalysts never drop from NMs)'); return end

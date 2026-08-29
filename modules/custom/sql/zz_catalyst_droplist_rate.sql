@@ -18,6 +18,9 @@
 -- DROP_RATE_MULTIPLIER is 1.0 in settings/map.lua on the box (verified
 -- 2026-07-11), so the effective retail rate is exactly 10% (Treasure Hunter
 -- still adds on top -- engine behaviour).
+-- 2026-08-29: that 10% is per in-range alliance member, not one shared roll.
+-- Engine also floors catalog-catalyst droplist rolls at 10% per player so a
+-- Rare 5% row (Manticore Fang) still pays 10% each.
 --
 -- The item-id list mirrors augment_catalog.lua (143 catalysts). Regenerate the
 -- list after catalog changes: the ids below are every key with an augId field.

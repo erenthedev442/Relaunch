@@ -20,7 +20,7 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local duration     = 30
+    local duration     = 120
     local returnEffect = xi.effect.BLINDNESS
 
     local resist = xi.combat.magicHitRate.calculateResistRate(caster, target, spell:getSpellGroup(), xi.skill.BLUE_MAGIC, 0, spell:getElement(), xi.mod.INT, xi.effect.BLINDNESS, 0)
@@ -28,8 +28,8 @@ spellObject.onSpellCast = function(caster, target, spell)
 
         spell:setMsg(xi.msg.basic.MAGIC_TP_REDUCE) -- this doesn't seem to do much
         target:delTP(100)
-        local actionOne = target:addStatusEffect(xi.effect.BLINDNESS, { power = 10, duration = duration * resist, origin = caster })
-        local actionTwo = target:addStatusEffect(xi.effect.BIND, { power = 1, duration = duration * resist, origin = caster })
+        local actionOne = target:addStatusEffect(xi.effect.BLINDNESS, { power = 40, duration = duration * resist, origin = caster })
+        local actionTwo = target:addStatusEffect(xi.effect.BIND, { power = 50, duration = duration * resist, origin = caster })
 
         -- Gaze move
         if target:isFacing(caster) and caster:isFacing(target) then

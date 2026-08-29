@@ -25,8 +25,12 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.damageType = xi.damageType.THUNDER
     params.diff       = 0
     params.skillType  = xi.skill.BLUE_MAGIC
-    params.hpMod      = 2
-    params.lvlMod     = 0
+    local blueSkill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
+    local baseDamage = caster:getHP() / 3 + 4 * blueSkill + 6 * caster:getStat(xi.mod.VIT)
+    local blueSkill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
+    local baseDamage = caster:getHP() / 3 + 4 * blueSkill + 6 * caster:getStat(xi.mod.VIT)
+    params.hpMod = caster:getHP() / baseDamage
+    params.lvlMod = 0
     params.isConal    = true
 
     return xi.spells.blue.useBreathSpell(caster, target, spell, params)

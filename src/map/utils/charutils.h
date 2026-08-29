@@ -39,6 +39,7 @@ class CPetEntity;
 class CMobEntity;
 class CMeritPoints;
 class CAbility;
+class CBaseEntity;
 
 /**
  * @enum EMobDifficulty
@@ -104,7 +105,9 @@ void DelExperiencePoints(CCharEntity* PChar, float retainpct, uint16 forcedXpLos
 void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob);
 void DistributeGil(CCharEntity* PChar, CMobEntity* PMob);
 void DistributeItem(CCharEntity* PChar, CBaseEntity* PEntity, uint16 itemid, uint16 droprate);
+bool IsAugmentCatalyst(uint16 itemid);
 bool StoreAugmentCatalystDrop(CCharEntity* PChar, uint16 itemid);
+void StoreAugmentCatalystDropForAlliance(CCharEntity* PChar, CBaseEntity* PEntity, uint16 itemid, uint16 dropRatePer10000);
 void AddExperiencePoints(bool expFromRaise, bool awardRegionPoints, bool fromScripts, CCharEntity* PChar, CBaseEntity* PMob, uint32 exp, EMobDifficulty mobCheck = EMobDifficulty::TooWeak, bool isexpchain = false);
 
 uint16 AddCapacityBonus(CCharEntity* PChar, uint16 capacityPoints);

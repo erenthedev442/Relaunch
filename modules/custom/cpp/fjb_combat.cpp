@@ -86,9 +86,10 @@ bool IsPlayerControlled(CBattleEntity* PAttacker)
 
 int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
 {
-    constexpr int32 PRIME_ABSOLUTE_DAMAGE_CAP     = 1999999;
-    constexpr int32 COMPANION_ABSOLUTE_DAMAGE_CAP = 1499999;
-    constexpr int32 FELLOW_ABSOLUTE_DAMAGE_CAP    = 99999;
+    constexpr int32 PRIME_ABSOLUTE_DAMAGE_CAP      = 1999999;
+    constexpr int32 BLUE_SPELL_ABSOLUTE_DAMAGE_CAP = 1749999;
+    constexpr int32 COMPANION_ABSOLUTE_DAMAGE_CAP  = 1499999;
+    constexpr int32 FELLOW_ABSOLUTE_DAMAGE_CAP     = 99999;
 
     if (PAttacker == nullptr)
     {
@@ -197,6 +198,23 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
     if (effectiveCap > 0 && primeCap > effectiveCap)
     {
         effectiveCap = std::min(primeCap, PRIME_ABSOLUTE_DAMAGE_CAP);
+    }
+
+    // Native BLU Lua scopes this value around each takeSpellDamage call and
+    // restores it immediately afterward. It acts as either a restrictive
+    // weapon-tier ceiling or the narrowly authorized Prime raised ceiling.
+    const auto blueSpellCap = static_cast<int32>(PAttacker->GetLocalVar("BlueSpellDamageCap"));
+    if (blueSpellCap > 0)
+    {
+        const auto boundedBlueCap = std::min(blueSpellCap, BLUE_SPELL_ABSOLUTE_DAMAGE_CAP);
+        if (effectiveCap <= 0 || boundedBlueCap < effectiveCap)
+        {
+            effectiveCap = boundedBlueCap;
+        }
+        else if (blueSpellCap == BLUE_SPELL_ABSOLUTE_DAMAGE_CAP)
+        {
+            effectiveCap = BLUE_SPELL_ABSOLUTE_DAMAGE_CAP;
+        }
     }
 
     // These synchronous WS windows are restrictive ceilings. Apply them after

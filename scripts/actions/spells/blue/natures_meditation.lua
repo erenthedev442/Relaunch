@@ -19,9 +19,9 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 90)
+    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 180)
 
-    if not caster:addStatusEffect(xi.effect.ATTACK_BOOST, { power = 20, duration = duration, origin = caster }) then
+    if not caster:addStatusEffect(xi.effect.ATTACK_BOOST, { power = 40, duration = duration, origin = caster }) then
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
     end
 

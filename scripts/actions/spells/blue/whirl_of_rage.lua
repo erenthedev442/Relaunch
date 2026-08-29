@@ -28,17 +28,17 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.scattr     = xi.skillchainType.SCISSION
     params.scattr2    = xi.skillchainType.DETONATION
     params.numhits    = 1
-    params.multiplier = 3.0
-    params.tp150      = 3.5
-    params.tp300      = 4.0
-    params.azuretp    = 4.25
-    params.duppercap  = 83
-    params.str_wsc    = 0.3
+    params.multiplier = 4.5
+    params.tp150      = 4.5
+    params.tp300      = 4.5
+    params.azuretp    = 4.5
+    params.duppercap  = 100
+    params.str_wsc    = 0.4
     params.dex_wsc    = 0.0
     params.vit_wsc    = 0.0
     params.agi_wsc    = 0.0
     params.int_wsc    = 0.0
-    params.mnd_wsc    = 0.3
+    params.mnd_wsc    = 0.4
     params.chr_wsc    = 0.0
 
     -- Handle damage.

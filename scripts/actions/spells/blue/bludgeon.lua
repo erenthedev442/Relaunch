@@ -34,18 +34,18 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.damageType = xi.damageType.HTH
     params.scattr = xi.skillchainType.LIQUEFACTION
     params.numhits = 3
-    params.multiplier = 1.0
-    params.tp150 = 1.0
-    params.tp300 = 1.0
-    params.azuretp = 1.0
-    params.duppercap = 21
+    params.multiplier = 2.5
+    params.tp150 = 2.5
+    params.tp300 = 2.5
+    params.azuretp = 2.5
+    params.duppercap = 100
     params.str_wsc = 0.0
     params.dex_wsc = 0.0
     params.vit_wsc = 0.0
     params.agi_wsc = 0.0
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
-    params.chr_wsc = 0.3
+    params.chr_wsc = 0.8
 
     return xi.spells.blue.usePhysicalSpell(caster, target, spell, params)
 end

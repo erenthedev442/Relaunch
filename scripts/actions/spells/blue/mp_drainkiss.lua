@@ -25,9 +25,17 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.attackType = xi.attackType.MAGICAL
     params.attribute = xi.mod.INT
     params.skillType = xi.skill.BLUE_MAGIC
-    params.dmgMultiplier = 3.5
+    local blueSkill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
+    local skillBase = math.max(math.floor(blueSkill * 0.11), 1)
+    local baseDamage = 500 + 2 * blueSkill + 3 * caster:getStat(xi.mod.INT)
+    params.attribute = xi.mod.INT
+    local blueSkill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
+    local skillBase = math.max(math.floor(blueSkill * 0.11), 1)
+    local baseDamage = 500 + 2 * blueSkill + 3 * caster:getStat(xi.mod.INT)
+    params.attribute = xi.mod.INT
+    params.dmgMultiplier = baseDamage / skillBase
 
-    return xi.spells.blue.useDrainSpell(caster, target, spell, params, 165, true)
+    return xi.spells.blue.useDrainSpell(caster, target, spell, params, 2000, true)
 end
 
 return spellObject

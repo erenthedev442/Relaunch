@@ -26,8 +26,12 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.damageType = xi.damageType.WIND
     params.diff       = 0 -- no stat increases magic accuracy
     params.skillType  = xi.skill.BLUE_MAGIC
-    params.hpMod      = 3
-    params.lvlMod     = 0
+    local blueSkill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
+    local baseDamage = caster:getHP() / 3 + 4 * blueSkill + 6 * caster:getStat(xi.mod.VIT)
+    local blueSkill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
+    local baseDamage = caster:getHP() / 3 + 4 * blueSkill + 6 * caster:getStat(xi.mod.VIT)
+    params.hpMod = caster:getHP() / baseDamage
+    params.lvlMod = 0
 
     return xi.spells.blue.useBreathSpell(caster, target, spell, params)
 end

@@ -22,8 +22,10 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
-    params.attackType = xi.attackType.MAGICAL
-    params.damageType = xi.damageType.FIRE
+    params.attackType       = xi.attackType.MAGICAL
+    params.damageType       = xi.damageType.FIRE
+    params.blueDamageExempt = true
+    params.blueFixedDamage  = true
     local playerHP = caster:getLocalVar('selfdestructHp')
     local damage = playerHP - 1
 

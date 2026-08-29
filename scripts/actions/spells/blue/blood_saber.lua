@@ -26,9 +26,17 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.damageType = xi.damageType.DARK
     params.diff = 0 -- no stat increases magic accuracy
     params.skillType = xi.skill.BLUE_MAGIC
-    params.dmgMultiplier = 3.5
+    local blueSkill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
+    local skillBase = math.max(math.floor(blueSkill * 0.11), 1)
+    local baseDamage = 900 + 2 * blueSkill + 3 * caster:getStat(xi.mod.INT)
+    params.attribute = xi.mod.INT
+    local blueSkill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
+    local skillBase = math.max(math.floor(blueSkill * 0.11), 1)
+    local baseDamage = 900 + 2 * blueSkill + 3 * caster:getStat(xi.mod.INT)
+    params.attribute = xi.mod.INT
+    params.dmgMultiplier = baseDamage / skillBase
 
-    return xi.spells.blue.useDrainSpell(caster, target, spell, params, 0, false)
+    return xi.spells.blue.useDrainSpell(caster, target, spell, params, 2500, false)
 end
 
 return spellObject

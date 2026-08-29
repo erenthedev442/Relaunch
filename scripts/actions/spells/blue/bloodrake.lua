@@ -28,17 +28,17 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.scattr     = xi.skillchainType.DARKNESS
     params.scattr2    = xi.skillchainType.DISTORTION
     params.numhits    = 3
-    params.multiplier = 1.0
-    params.tp150      = 1.1375
-    params.tp300      = 1.25
-    params.azuretp    = 1.5
+    params.multiplier = 2.5
+    params.tp150      = 2.5
+    params.tp300      = 2.5
+    params.azuretp    = 2.5
     params.duppercap  = 100
-    params.str_wsc    = 0.3
+    params.str_wsc    = 0.4
     params.dex_wsc    = 0.0
     params.vit_wsc    = 0.0
     params.agi_wsc    = 0.0
     params.int_wsc    = 0.0
-    params.mnd_wsc    = 0.3
+    params.mnd_wsc    = 0.4
     params.chr_wsc    = 0.0
 
     -- Handle damage and drain HP.

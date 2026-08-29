@@ -10,6 +10,14 @@ local effectObject = {}
 local PHALANX_RECEIVED_CAP = 15
 
 effectObject.onEffectGain = function(target, effect)
+    -- Barrier Tusk marks its percentage reduction as -1500 subpower.  Keeping
+    -- this separate prevents ordinary Phalanx and Phalanx-received gear from
+    -- being interpreted as percentage damage taken.
+    if effect:getSubPower() == -1500 then
+        effect:addMod(xi.mod.DMG, -1500)
+        return
+    end
+
     local received = utils.clamp(target:getMod(xi.mod.PHALANX_RECEIVED), 0, PHALANX_RECEIVED_CAP)
     effect:addMod(xi.mod.PHALANX, effect:getPower() + received)
 end

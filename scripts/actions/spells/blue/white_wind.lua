@@ -20,19 +20,13 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    -- Need to confirm increases by Divine Seal and Cure Potency equipment
-    local params = {}
-    params.minCure = math.floor(target:getMaxHP() / 7) * 2
-    params.divisor0 = 0.6666
-    params.constant0 = -45
-    params.powerThreshold1 = 0
-    params.divisor1 = 2
-    params.constant1 = 65
-    params.powerThreshold2 = 0
-    params.divisor2 = 6.5
-    params.constant2 = 144.6666
+    local skill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
+    local cure = math.min(0.65 * caster:getMaxHP() + 1.5 * skill, 4500)
+    cure = math.floor(math.min(cure, target:getMaxHP() - target:getHP()))
 
-    return xi.spells.blue.useCuringSpell(caster, target, spell, params)
+    target:addHP(cure)
+    caster:updateEnmityFromCure(target, cure)
+    return cure
 end
 
 return spellObject

@@ -42,8 +42,11 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.int_wsc = 2.0
     params.mnd_wsc = 1.0
     params.chr_wsc = 1.0
+    -- Fixed divided damage opts into safe delivery, but never weapon amplification.
+    params.blueDamageExempt = true
+    params.blueFixedDamage  = true
 
-    local damage = 1000
+    local damage = 8000
     local resist = xi.combat.magicHitRate.calculateResistRate(caster, target, spell:getSpellGroup(), xi.skill.BLUE_MAGIC, 0, xi.element.LIGHT, xi.mod.INT, 0, -50)
     if resist == 1 then
         local targets = spell:getTotalTargets()

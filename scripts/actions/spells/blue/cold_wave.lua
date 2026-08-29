@@ -26,7 +26,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.attribute = xi.mod.INT
     params.skillType = xi.skill.BLUE_MAGIC
     local tick = 3
-    local duration = 60
+    local duration = 120
     local resistThreshold = 0.5
     local resist = xi.combat.magicHitRate.calculateResistRate(caster, target, spell:getSpellGroup(), xi.skill.BLUE_MAGIC, 0, spell:getElement(), xi.mod.INT, xi.effect.FROST, 0)
 
@@ -41,8 +41,7 @@ spellObject.onSpellCast = function(caster, target, spell)
             target:delStatusEffect(xi.effect.CHOKE)
         end
 
-        local agiDown = utils.clamp(caster:getMainLvl() / 2, 0, 49)
-        local dot = utils.clamp(math.floor((agiDown - 3) / 2), 0, 23)
+        local dot = 40
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
 
         if target:addStatusEffect(params.effect, { power = dot, duration = duration * resist, origin = caster, tick = tick }) then

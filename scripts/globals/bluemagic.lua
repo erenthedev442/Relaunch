@@ -12,6 +12,8 @@ xi = xi or {}
 xi.spells = xi.spells or {}
 xi.spells.blue = xi.spells.blue or {}
 local standardMagic = require('modules/custom/lua/standard_magic_tuning_catalog')
+local blueWeaponCatalog = require('modules/custom/lua/blu_weapon_amplification_catalog')
+local bluSharedEffects = require('modules/custom/lua/blu_shared_effects')
 -----------------------------------
 
 -- The TP modifier (currently unused)
@@ -224,6 +226,92 @@ local function calculateNukeWallFactor(target, spellElement, finalDamage)
     -- We return JUST the factor based on previous nuke. This nuke only affects the next one.
     -----------------------------------
     return 1 - potency / 10000
+end
+
+local function takeBlueSpellDamage(caster, target, spell, damage, attackType, damageType, damageCap)
+    if damageCap <= 0 then
+        target:takeSpellDamage(caster, spell, damage, attackType, damageType)
+        return
+    end
+
+    local capVar   = blueWeaponCatalog.DAMAGE_CAP_LOCAL_VAR
+    local priorCap = caster:getLocalVar(capVar)
+    caster:setLocalVar(capVar, damageCap)
+
+    local ok, err = xpcall(
+        function()
+            target:takeSpellDamage(caster, spell, damage, attackType, damageType)
+        end,
+        function(message)
+            return debug.traceback(message, 2)
+        end)
+
+    local cleanupOk, cleanupErr = pcall(function()
+        caster:setLocalVar(capVar, priorCap)
+    end)
+
+    if not cleanupOk then
+        error(string.format('Blue spell damage cap cleanup failed: %s', cleanupErr), 0)
+    end
+
+    if not ok then
+        error(err, 0)
+    end
+end
+
+local function finalizeBlueDamage(caster, target, spell, damage, params, trickAttackTarget)
+    damage = math.floor(damage * xi.settings.main.BLUE_POWER)
+
+    local attackType = params.attackType or xi.attackType.NONE
+    local damageType = params.damageType or xi.damageType.NONE
+    local eligible   = standardMagic.isBlueDamageEligible(caster, target, spell, params)
+    local damageCap  = eligible and standardMagic.getDamageCap(caster) or 0
+
+    if attackType == xi.attackType.MAGICAL and not params.absorptionApplied then
+        local absorb  = xi.spells.damage.calculateAbsorption(target, spell:getElement(), true)
+        local nullify = xi.spells.damage.calculateNullification(target, spell:getElement(), true, false)
+        damage = math.floor(damage * absorb * nullify)
+        if damage < 0 then
+            takeBlueSpellDamage(caster, target, spell, damage, attackType, damageType, damageCap)
+            return damage
+        end
+    end
+
+    if eligible and damage > 0 then
+        damage = math.floor(damage * standardMagic.getDamageMultiplier(caster, target, spell))
+    end
+
+    if attackType == xi.attackType.MAGICAL then
+        damage = utils.handleOneForAll(target, damage)
+    end
+
+    damage = utils.handlePhalanx(target, damage)
+    damage = utils.handleStoneskin(target, damage)
+    damage = math.max(0, math.floor(damage))
+
+    if damageCap > 0 then
+        damage = math.min(damage, damageCap)
+    end
+
+    damage = math.min(damage, target:getHP())
+    damage = target:checkDamageCap(damage)
+
+    takeBlueSpellDamage(caster, target, spell, damage, attackType, damageType, damageCap)
+
+    if not params.skipTpGain then
+        local tpHits = params.tphitslanded or 0
+        local extraTPGained =
+            xi.combat.tp.calculateTPGainOnMagicalDamage(caster, target, damage) *
+            math.max(tpHits - 1, 0)
+        target:addTP(extraTPGained)
+    end
+
+    if not params.skipEnmity and not target:isPC() then
+        target:updateEnmityFromDamage(trickAttackTarget or caster, damage)
+    end
+
+    target:handleAfflatusMiseryDamage(damage)
+    return damage
 end
 
 -----------------------------------
@@ -461,7 +549,6 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
     end
 
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateEbullienceMultiplier(caster, spellGroup))
-    finalDamage = math.floor(finalDamage * xi.settings.main.BLUE_POWER)
 
     return xi.spells.blue.applySpellDamage(caster, target, spell, finalDamage, params, nil)
 end
@@ -481,9 +568,10 @@ xi.spells.blue.useDrainSpell = function(caster, target, spell, params, damageCap
         return 0
     end
 
-    -- Base damage
-    finalDamage = math.floor(caster:getSkillLevel(xi.skill.BLUE_MAGIC) * 0.11)
-    finalDamage = math.floor(finalDamage * params.dmgMultiplier)
+    -- Base damage. HP-drain spell contracts fold their relevant caster stat
+    -- scaling into dmgMultiplier; MP Drainkiss deliberately keeps its utility
+    -- contract on this same unmodified path.
+    finalDamage = bluSharedEffects.calculateDrainBase(caster, params)
     if damageCap > 0 then
         finalDamage = utils.clamp(finalDamage, 0, damageCap)
     end
@@ -519,7 +607,6 @@ xi.spells.blue.useDrainSpell = function(caster, target, spell, params, damageCap
 
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateEbullienceMultiplier(caster, spellGroup))
     finalDamage = math.floor(finalDamage * xi.combat.damage.calculateDamageAdjustment(target, false, true, false, false))
-    finalDamage = math.floor(finalDamage * xi.settings.main.BLUE_POWER)
 
     -- MP drain
     if mpDrain then
@@ -531,22 +618,11 @@ xi.spells.blue.useDrainSpell = function(caster, target, spell, params, damageCap
         return finalDamage
     end
 
-    -- Handle Phalanx, One for All, Stoneskin and target HP (Cant be higher than current HP)
-    finalDamage = utils.clamp(utils.handlePhalanx(target, finalDamage), 0, 131071)
-    finalDamage = utils.clamp(utils.handleOneForAll(target, finalDamage), 0, 131071)
-    finalDamage = utils.clamp(utils.handleStoneskin(target, finalDamage), -131071, 131071)
-    finalDamage = utils.clamp(finalDamage, 0, target:getHP())
-
-    -- Check if the mob has a damage cap
-    finalDamage = target:checkDamageCap(finalDamage)
-
-    target:takeSpellDamage(caster, spell, finalDamage, xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + spell:getElement())
-
-    if not target:isPC() then
-        target:updateEnmityFromDamage(caster, finalDamage)
-    end
-
-    target:handleAfflatusMiseryDamage(finalDamage)
+    params.attackType        = xi.attackType.MAGICAL
+    params.damageType        = xi.damageType.ELEMENTAL + spell:getElement()
+    params.absorptionApplied = true
+    params.skipTpGain        = true
+    finalDamage = finalizeBlueDamage(caster, target, spell, finalDamage, params, nil)
     caster:addHP(finalDamage)
 
     return finalDamage
@@ -563,10 +639,7 @@ xi.spells.blue.useBreathSpell = function(caster, target, spell, params)
     end
 
     -- Initial damage
-    local dmg = caster:getHP() / params.hpMod
-    if params.lvlMod > 0 then
-        dmg = dmg + caster:getMainLvl() / params.lvlMod
-    end
+    local dmg = bluSharedEffects.calculateBreathBase(caster, params)
 
     -- Parameters
     local spellId      = spell:getID() or 0
@@ -623,94 +696,15 @@ xi.spells.blue.useBreathSpell = function(caster, target, spell, params)
 
     dmg = math.floor(target:handleSevereDamage(dmg, false))
 
-    local standardEligible = standardMagic.isBlueDamageEligible(caster, target, spell, params)
-    if standardEligible and dmg > 0 then
-        dmg = math.floor(
-            dmg * standardMagic.getDamageMultiplier(caster, target, spell))
-    end
-
-    -- Final adjustments.
-    if dmg > 0 then
-        dmg = utils.clamp(utils.handlePhalanx(target, dmg), 0, 131071)
-        dmg = utils.clamp(utils.handleOneForAll(target, dmg), 0, 131071)
-        dmg = utils.clamp(utils.handleStoneskin(target, dmg), -131071, 131071)
-        if standardEligible then
-            dmg = math.min(dmg, standardMagic.getDamageCap(caster))
-        end
-
-        dmg = utils.clamp(dmg, 0, target:getHP())
-        dmg = target:checkDamageCap(dmg)
-    end
-
-    target:takeSpellDamage(caster, spell, dmg, attackType, damageType)
-
-    -- Handle TP
-    local tpHits        = params.tphitslanded or 0
-    local extraTPGained = xi.combat.tp.calculateTPGainOnMagicalDamage(caster, target, dmg) * math.max(tpHits - 1, 0) -- Calculate extra TP gained from multihits. takeSpellDamage accounts for one already.
-    target:addTP(extraTPGained)
-
-    -- Handle Afflatus Misery.
-    target:handleAfflatusMiseryDamage(dmg)
-
-    -- Handle Enmity.
-    target:updateEnmityFromDamage(caster, dmg)
-
-    return dmg
+    params.attackType        = attackType
+    params.damageType        = damageType
+    params.absorptionApplied = true
+    return finalizeBlueDamage(caster, target, spell, dmg, params, nil)
 end
 
 -- Apply spell damage
 xi.spells.blue.applySpellDamage = function(caster, target, spell, dmg, params, trickAttackTarget)
-    dmg                 = math.floor(dmg * xi.settings.main.BLUE_POWER)
-    local attackType    = params.attackType or xi.attackType.NONE
-    local damageType    = params.damageType or xi.damageType.NONE
-    local tpHits        = params.tphitslanded or 0
-    local extraTPGained = xi.combat.tp.calculateTPGainOnMagicalDamage(caster, target, dmg) * math.max(tpHits - 1, 0) -- Calculate extra TP gained from multihits. takeSpellDamage accounts for one already.
-    local standardEligible = standardMagic.isBlueDamageEligible(caster, target, spell, params)
-
-    if standardEligible and dmg > 0 then
-        dmg = math.floor(
-            dmg * standardMagic.getDamageMultiplier(caster, target, spell))
-    end
-
-    -- handle MDT, One For All, Liement
-    if attackType == xi.attackType.MAGICAL then
-        local absorb   = xi.spells.damage.calculateAbsorption(target, spell:getElement(), true)
-        local nullify  = xi.spells.damage.calculateNullification(target, spell:getElement(), true, false)
-        dmg            = math.floor(dmg * absorb * nullify)
-
-        if dmg < 0 then
-            target:takeSpellDamage(caster, spell, dmg, attackType, damageType)
-            target:addTP(extraTPGained)
-            -- TODO: verify Afflatus/enmity from absorb?
-            return dmg
-        end
-
-        dmg = utils.handleOneForAll(target, dmg)
-    end
-
-    dmg = utils.handlePhalanx(target, dmg)
-    dmg = utils.handleStoneskin(target, dmg)
-    if standardEligible then
-        dmg = math.min(dmg, standardMagic.getDamageCap(caster))
-    end
-
-    -- Check if the mob has a damage cap
-    dmg = target:checkDamageCap(dmg)
-
-    target:takeSpellDamage(caster, spell, dmg, attackType, damageType)
-    target:addTP(extraTPGained)
-
-    if not target:isPC() then
-        if trickAttackTarget then
-            target:updateEnmityFromDamage(trickAttackTarget, dmg)
-        else
-            target:updateEnmityFromDamage(caster, dmg)
-        end
-    end
-
-    target:handleAfflatusMiseryDamage(dmg)
-
-    return dmg
+    return finalizeBlueDamage(caster, target, spell, dmg, params, trickAttackTarget)
 end
 
 -- Get the duration of an enhancing Blue Magic spell
@@ -718,8 +712,8 @@ xi.spells.blue.calculateDurationWithDiffusion = function(caster, duration)
     if caster:hasStatusEffect(xi.effect.DIFFUSION) then
         local merits = caster:getMerit(xi.merit.DIFFUSION)
 
-        if merits > 0 then -- each merit after the first increases duration by 5%
-            duration = duration + (merits - 5) * duration / 100
+        if merits > 0 then
+            duration = bluSharedEffects.calculateDiffusionDuration(duration, merits)
         end
 
         caster:delStatusEffect(xi.effect.DIFFUSION)
@@ -733,6 +727,10 @@ xi.spells.blue.useEnfeeblingSpell = function(caster, target, spell, params)
     local spellElement = spell:getElement()
     local effect       = params.effect
     local tier         = params.tier or 0
+    local controlAllowed
+    local controlDuration
+    local controlLockout
+    local controlReason
 
     -- Early return: Out of cone.
     if
@@ -749,6 +747,15 @@ xi.spells.blue.useEnfeeblingSpell = function(caster, target, spell, params)
         (not target:isFacing(caster) or not caster:isFacing(target))
     then
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
+        return effect
+    end
+
+    controlAllowed, controlDuration, controlLockout, controlReason =
+        bluSharedEffects.preparePlayerControl(caster, target, effect, params.duration, GetSystemTime())
+    if not controlAllowed then
+        local resultMessage =
+            controlReason == 'nm_doom' and xi.msg.basic.MAGIC_COMPLETE_RESIST or xi.msg.basic.MAGIC_NO_EFFECT
+        spell:setMsg(resultMessage)
         return effect
     end
 
@@ -772,13 +779,26 @@ xi.spells.blue.useEnfeeblingSpell = function(caster, target, spell, params)
     end
 
     -- Early return: Regular resist.
-    local resist = xi.combat.magicHitRate.calculateResistRate(caster, target, 0, xi.skill.BLUE_MAGIC, 0, spellElement, xi.mod.INT, 0, 0)
+    local resist = xi.combat.magicHitRate.calculateResistRate(
+        caster, target, 0, xi.skill.BLUE_MAGIC, 0, spellElement,
+        params.attribute or xi.mod.INT, effect, 0)
     if resist < params.resistThreshold then
         spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         return effect
     end
 
-    if target:addStatusEffect(effect, { power = params.power, duration = math.floor(params.duration * resist), origin = caster, tick = params.tick }) then
+    local effectDuration = math.floor(controlDuration * resist)
+    local effectParams =
+    {
+        power    = params.power,
+        duration = effectDuration,
+        origin   = caster,
+        tick     = params.tick,
+    }
+
+    if target:addStatusEffect(effect, effectParams) then
+        bluSharedEffects.commitPlayerControl(target, effect, effectDuration, controlLockout, GetSystemTime())
+
         -- Add "Magic Burst!" message
         local _, skillchainCount = xi.magicburst.formMagicBurst(target, spellElement) -- External function. Not present in magic.lua.
 
@@ -835,25 +855,38 @@ xi.spells.blue.applyBlueAdditionalEffect = function(caster, target, params, effe
         stat = 0
     end
 
-    -- Calculate resist and early return.
-    local resist = xi.combat.magicHitRate.calculateResistRate(caster, target, 0, xi.skill.BLUE_MAGIC, 0, element, stat, 0, 0)
-
-    if resist <= 0.25 then
-        return
-    end
-
     for entry = 1, #effectTable do
         local effect   = effectTable[entry][1]
         local power    = effectTable[entry][2]
         local tick     = effectTable[entry][3]
         local duration = effectTable[entry][4]
+        local controlAllowed, controlDuration, controlLockout =
+            bluSharedEffects.preparePlayerControl(caster, target, effect, duration, GetSystemTime())
+        local resist = 0
+        if controlAllowed then
+            resist = xi.combat.magicHitRate.calculateResistRate(
+                caster, target, 0, xi.skill.BLUE_MAGIC, 0, element, stat, effect, 0)
+        end
 
         if
+            controlAllowed and
+            resist > 0.25 and
             not xi.data.statusEffect.isTargetImmune(target, effect, element) and   -- Target isn't immune.
             not xi.data.statusEffect.isTargetResistant(caster, target, effect) and -- Target didn't trigger a job trait resistance.
             not xi.data.statusEffect.isEffectNullified(target, effect, 0)          -- Target doesn't have an status effect that nullifies current. TODO: Tier.
         then
-            target:addStatusEffect(effect, { power = power, duration = math.floor(duration * resist), origin = caster, tick = tick })
+            local effectDuration = math.floor(controlDuration * resist)
+            local effectParams =
+            {
+                power    = power,
+                duration = effectDuration,
+                origin   = caster,
+                tick     = tick,
+            }
+
+            if target:addStatusEffect(effect, effectParams) then
+                bluSharedEffects.commitPlayerControl(target, effect, effectDuration, controlLockout, GetSystemTime())
+            end
         end
     end
 end

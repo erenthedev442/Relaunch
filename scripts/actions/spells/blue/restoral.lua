@@ -19,19 +19,13 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    -- Formula: base ~640 HP, soft cap ~1040 HP
-    -- BLU skill/2 additional HP, MND * 1.5, VIT * 0.5
-    local blueSkill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
-    local healing   = 320 + math.floor(blueSkill / 2) + math.floor(caster:getStat(xi.mod.MND) * 1.5) + math.floor(caster:getStat(xi.mod.VIT) * 0.5)
-    healing = math.min(healing, 1040)
+    local skill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
+    local cure = 2000 + 2.5 * skill + 5 * caster:getStat(xi.mod.MND) + 2 * caster:getStat(xi.mod.VIT)
+    cure = math.floor(math.min(cure, 5000, caster:getMaxHP() - caster:getHP()))
 
-    local diff = caster:getMaxHP() - caster:getHP()
-    if healing > diff then
-        healing = diff
-    end
-
-    caster:addHP(healing)
-    return healing
+    caster:addHP(cure)
+    caster:updateEnmityFromCure(caster, cure)
+    return cure
 end
 
 return spellObject

@@ -182,10 +182,10 @@ INSERT INTO `blue_spell_list` VALUES (707,3030,5,17,8,0,0,0,NULL); -- Retinal Gl
 INSERT INTO `blue_spell_list` VALUES (708,2930,6,24,8,0,0,0,NULL); -- Subduction
 INSERT INTO `blue_spell_list` VALUES (709,256,7,24,3,11,0,0,NULL); -- Thrashing Assault
 INSERT INTO `blue_spell_list` VALUES (710,1952,4,17,2,0,0,0,NULL); -- Erratic Flutter
-INSERT INTO `blue_spell_list` VALUES (711,256,0,0,0,0,0,0,NULL); -- Restoral
-INSERT INTO `blue_spell_list` VALUES (712,256,0,0,0,0,0,0,NULL); -- Rail Cannon
-INSERT INTO `blue_spell_list` VALUES (713,2054,0,0,0,0,0,0,NULL); -- Diffusion Ray
-INSERT INTO `blue_spell_list` VALUES (714,2073,0,0,0,9,5,0,NULL); -- Sinker Drill
+INSERT INTO `blue_spell_list` VALUES (711,256,7,0,0,0,0,0,NULL); -- Restoral
+INSERT INTO `blue_spell_list` VALUES (712,256,6,0,0,0,0,0,NULL); -- Rail Cannon
+INSERT INTO `blue_spell_list` VALUES (713,2054,6,0,0,0,0,0,NULL); -- Diffusion Ray
+INSERT INTO `blue_spell_list` VALUES (714,2073,6,0,0,9,5,0,NULL); -- Sinker Drill
 INSERT INTO `blue_spell_list` VALUES (736,629,0,0,0,0,0,0,NULL); -- Thunderbolt
 INSERT INTO `blue_spell_list` VALUES (737,807,0,0,0,0,0,0,NULL); -- Harden Shell
 INSERT INTO `blue_spell_list` VALUES (738,1305,0,0,0,0,0,0,NULL); -- Absolute Terror

@@ -19,9 +19,10 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    -- Remove one detrimental magic effect from party member target.
-    target:eraseStatusEffect(false)
-    return 0
+    local firstEffect = target:eraseStatusEffect(false)
+    local secondEffect = target:eraseStatusEffect(false)
+
+    return firstEffect ~= xi.effect.NONE and firstEffect or secondEffect
 end
 
 return spellObject

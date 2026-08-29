@@ -20,11 +20,11 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 900)
+    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 300)
 
-    caster:addStatusEffect(xi.effect.ATTACK_BOOST,    { power = 20, duration = duration, origin = caster })
-    caster:addStatusEffect(xi.effect.MAGIC_ATK_BOOST, { power = 20, duration = duration, origin = caster })
-    caster:addStatusEffect(xi.effect.AQUAVEIL,        { power = 10, duration = duration, origin = caster })
+    caster:addStatusEffect(xi.effect.ATTACK_BOOST,    { power = 40, duration = duration, origin = caster })
+    caster:addStatusEffect(xi.effect.MAGIC_ATK_BOOST, { power = 40, duration = duration, origin = caster })
+    caster:addStatusEffect(xi.effect.AQUAVEIL,        { power = 30, duration = duration, origin = caster })
 
     return xi.effect.ATTACK_BOOST
 end

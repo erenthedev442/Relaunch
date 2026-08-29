@@ -21,18 +21,8 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local power = 25
-    local duration = 90
-
-    if caster:hasStatusEffect(xi.effect.DIFFUSION) then
-        local diffMerit = caster:getMerit(xi.merit.DIFFUSION)
-
-        if diffMerit > 0 then
-            duration = duration + (duration / 100) * diffMerit
-        end
-
-        caster:delStatusEffect(xi.effect.DIFFUSION)
-    end
+    local power = 75
+    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 300)
 
     if
         target:hasStatusEffect(xi.effect.REGEN) and

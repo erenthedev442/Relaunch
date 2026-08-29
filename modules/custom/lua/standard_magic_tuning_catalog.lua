@@ -11,6 +11,7 @@
 local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
 local remaCatalog = require('modules/custom/lua/rema_ws_tier_catalog')
 local primeCatalog = require('modules/custom/lua/prime_ws_tuning_catalog')
+local blueWeaponCatalog = require('modules/custom/lua/blu_weapon_amplification_catalog')
 local catalog = {}
 
 catalog.DAMAGE_CAP             = 99999
@@ -29,7 +30,8 @@ catalog.MULTIPLIERS =
     elementalLow  = { fresh = 4.00, mastered =  7.00, baseFresh = 200, baseMastered =  350 },
     ninjutsu      = { fresh = 5.00, mastered =  8.00, baseFresh = 250, baseMastered =  450 },
     divine        = { fresh = 5.00, mastered =  9.00, baseFresh = 300, baseMastered =  550 },
-    blue          = { fresh = 6.00, mastered = 10.00, baseFresh =   0, baseMastered =    0 },
+    -- Native BLU uses blueWeaponCatalog instead of this generic progression.
+    blue          = { fresh = 1.00, mastered =  1.00, baseFresh =   0, baseMastered =    0 },
 }
 
 local remaWeaponIds = {}
@@ -105,10 +107,13 @@ end
 function catalog.isBlueDamageEligible(caster, target, spell, params)
     return
         validCasterAndTarget(caster, target) and
+        caster:isPC() and
+        caster:getMainJob() == xi.job.BLU and
         isNativeMainJobSpell(caster, spell) and
         params ~= nil and
         params.attackType ~= nil and
-        params.attackType ~= xi.attackType.NONE
+        params.attackType ~= xi.attackType.NONE and
+        params.blueDamageExempt ~= true
 end
 
 function catalog.getDamageCap(caster)
@@ -120,6 +125,10 @@ function catalog.getDamageCap(caster)
 
     if not caster:isPC() then
         return catalog.DAMAGE_CAP
+    end
+
+    if caster:getMainJob() == xi.job.BLU then
+        return blueWeaponCatalog.getDamageCap(caster)
     end
 
     local mainWeapon   = caster:getEquipID(xi.slot.MAIN)
@@ -192,6 +201,14 @@ local function getMultiplierBand(caster, spell)
 end
 
 function catalog.getDamageMultiplier(caster, target, spell)
+    if
+        caster:isPC() and
+        caster:getMainJob() == xi.job.BLU and
+        spell:getSkillType() == xi.skill.BLUE_MAGIC
+    then
+        return blueWeaponCatalog.getDamageMultiplier(caster)
+    end
+
     local player = getProgressionPlayer(caster)
     local band = getMultiplierBand(caster, spell)
     local mastery = progression.getMasteryProgress(player)

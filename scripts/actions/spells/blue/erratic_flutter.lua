@@ -21,7 +21,7 @@ end
 spellObject.onSpellCast = function(caster, target, spell)
     local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 300)
 
-    target:addStatusEffect(xi.effect.HASTE,     { power = 30, duration = duration, origin = caster })
+    target:addStatusEffect(xi.effect.HASTE,     { power = 3000, duration = duration, origin = caster })
     target:addStatusEffect(xi.effect.FAST_CAST,  { power = 15, duration = duration, origin = caster })
 
     return xi.effect.HASTE

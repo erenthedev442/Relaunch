@@ -29,17 +29,17 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.scattr     = xi.skillchainType.LIGHT
     params.scattr2    = xi.skillchainType.FRAGMENTATION
     params.numhits    = 5
-    params.multiplier = 4.0
-    params.tp150      = 4.0
-    params.tp300      = 4.0
-    params.azuretp    = 4.0
+    params.multiplier = 2.0
+    params.tp150      = 2.0
+    params.tp300      = 2.0
+    params.azuretp    = 2.0
     params.duppercap  = 100
-    params.str_wsc    = 0.25
+    params.str_wsc    = 0.4
     params.dex_wsc    = 0.0
     params.vit_wsc    = 0.0
     params.agi_wsc    = 0.0
     params.int_wsc    = 0.0
-    params.mnd_wsc    = 0.25
+    params.mnd_wsc    = 0.4
     params.chr_wsc    = 0.0
 
     -- Handle damage.

@@ -29,7 +29,12 @@ spellObject.onSpellCast = function(caster, target, spell)
         -- Gaze move
         if target:isFacing(caster) and caster:isFacing(target) then
             effect = target:dispelStatusEffect()
+            local secondEffect = target:dispelStatusEffect()
             spell:setMsg(xi.msg.basic.MAGIC_ERASE)
+            if effect == xi.effect.NONE then
+                effect = secondEffect
+            end
+
             if effect == xi.effect.NONE then
                 spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
             end

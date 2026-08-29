@@ -26,7 +26,12 @@ spellObject.onSpellCast = function(caster, target, spell)
     local resist = xi.combat.magicHitRate.calculateResistRate(caster, target, spell:getSpellGroup(), xi.skill.BLUE_MAGIC, 0, spell:getElement(), xi.mod.INT, xi.effect.NONE, 0)
     if resist >= resistThreshold then
         effect = target:dispelStatusEffect()
+        local secondEffect = target:dispelStatusEffect()
         spell:setMsg(xi.msg.basic.MAGIC_ERASE)
+        if effect == xi.effect.NONE then
+            effect = secondEffect
+        end
+
         if effect == xi.effect.NONE then
             spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
         end

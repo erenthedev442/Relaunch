@@ -86,6 +86,40 @@ describe('Global HP damage cap', function()
                 primeAbsoluteCap, maxHP - target:getHP()))
     end)
 
+    it('allows only an active BLU spell window to reach the Prime BLU cap', function()
+        local blueSpellCap = 1749999
+        player:setLocalVar('BlueSpellDamageCap', blueSpellCap)
+
+        target:takeDamage(blueSpellCap + 1, player, xi.attackType.MAGICAL, xi.damageType.FIRE)
+
+        assert(target:getHP() == maxHP - blueSpellCap,
+            string.format('Expected BLU spell cap %d, got %d damage',
+                blueSpellCap, maxHP - target:getHP()))
+    end)
+
+    it('enforces lower BLU weapon-tier caps and rejects oversized values', function()
+        player:setLocalVar('BlueSpellDamageCap', 40000)
+        target:takeDamage(damageCap, player, xi.attackType.MAGICAL, xi.damageType.FIRE)
+        assert(target:getHP() == maxHP - 40000, 'Expected the pre-119 BLU cap')
+
+        target:setHP(maxHP)
+        player:setLocalVar('BlueSpellDamageCap', 9999999)
+        target:takeDamage(1749999, player, xi.attackType.MAGICAL, xi.damageType.FIRE)
+        assert(target:getHP() == maxHP - damageCap,
+            'An invalid BLU local cap must not raise the global ceiling')
+    end)
+
+    it('returns to the global cap after the BLU spell window is cleared', function()
+        player:setLocalVar('BlueSpellDamageCap', 1749999)
+        player:setLocalVar('BlueSpellDamageCap', 0)
+
+        target:takeDamage(1749999, player, xi.attackType.MAGICAL, xi.damageType.FIRE)
+
+        assert(target:getHP() == maxHP - damageCap,
+            string.format('Expected restored global cap %d, got %d damage',
+                damageCap, maxHP - target:getHP()))
+    end)
+
     it('uses the lower AoE WS cap even during a Prime window', function()
         local wsCap = 99999
         player:setLocalVar('PrimeWsDamageCap', 1999999)

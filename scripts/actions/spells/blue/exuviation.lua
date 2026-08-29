@@ -20,19 +20,16 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local params = {}
-    params.minCure = 60
-    params.divisor0 = 0.6666
-    params.constant0 = -45
-    params.powerThreshold1 = 219
-    params.divisor1 = 2
-    params.constant1 = 65
-    params.powerThreshold2 = 459
-    params.divisor2 = 6.5
-    params.constant2 = 144.6666
-
     target:eraseStatusEffect()
-    return xi.spells.blue.useCuringSpell(caster, target, spell, params)
+    target:eraseStatusEffect()
+
+    local skill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
+    local cure = math.min(1500 + 2 * skill + 4 * caster:getStat(xi.mod.MND), 3500)
+    cure = math.min(cure, target:getMaxHP() - target:getHP())
+
+    target:addHP(cure)
+    caster:updateEnmityFromCure(target, cure)
+    return cure
 end
 
 return spellObject

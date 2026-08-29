@@ -26,6 +26,7 @@
 #include "common/utils.h"
 #include "common/vana_time.h"
 
+#include <algorithm>
 #include <array>
 #include <chrono>
 
@@ -4952,6 +4953,18 @@ void DistributeGil(CCharEntity* PChar, CMobEntity* PMob)
     }
 }
 
+bool IsAugmentCatalyst(uint16 itemid)
+{
+    sol::protected_function isCatalyst = lua["xi"]["catalystBank"]["isCatalyst"];
+    if (!isCatalyst.valid())
+    {
+        return false;
+    }
+
+    auto result = isCatalyst(itemid);
+    return result.valid() && result.get<bool>();
+}
+
 bool StoreAugmentCatalystDrop(CCharEntity* PChar, uint16 itemid)
 {
     // The Lua helper owns the catalyst catalog and returns false for normal
@@ -4975,6 +4988,40 @@ bool StoreAugmentCatalystDrop(CCharEntity* PChar, uint16 itemid)
     return false;
 }
 
+void StoreAugmentCatalystDropForAlliance(CCharEntity* PChar, CBaseEntity* PEntity, uint16 itemid, uint16 dropRatePer10000)
+{
+    // Each in-zone alliance member within 100 yalms gets an independent roll.
+    // A 10% floor matches the flat catalyst rule so Rare 5% catalog items
+    // (Manticore Fang, etc.) still pay 10% per player.
+    if (PChar == nullptr || dropRatePer10000 == 0)
+    {
+        return;
+    }
+
+    constexpr uint16 CATALYST_RATE_FLOOR = 1000; // 10% on the engine's per-10000 scale
+    const uint16     rate                = std::max(dropRatePer10000, CATALYST_RATE_FLOOR);
+    const float      multiplier          = settings::get<float>("map.DROP_RATE_MULTIPLIER");
+
+    PChar->ForAlliance([PChar, PEntity, itemid, rate, multiplier](CBattleEntity* PMember)
+    {
+        auto* PMemberChar = dynamic_cast<CCharEntity*>(PMember);
+        if (PMemberChar == nullptr || PMemberChar->getZone() != PChar->getZone())
+        {
+            return;
+        }
+
+        if (PEntity != nullptr && !isWithinDistance(PMemberChar->loc.p, PEntity->loc.p, 100.0f))
+        {
+            return;
+        }
+
+        if ((1 + xirand::GetRandomNumber(10000)) <= rate * multiplier)
+        {
+            StoreAugmentCatalystDrop(PMemberChar, itemid);
+        }
+    });
+}
+
 void DistributeItem(CCharEntity* PChar, CBaseEntity* PEntity, uint16 itemid, uint16 dropRate)
 {
     TracyZoneScoped;
@@ -4987,12 +5034,15 @@ void DistributeItem(CCharEntity* PChar, CBaseEntity* PEntity, uint16 itemid, uin
         thDropRate = thDropRateFunction(PMob->m_THLvl, thDropRate);
     }
 
+    if (IsAugmentCatalyst(itemid))
+    {
+        StoreAugmentCatalystDropForAlliance(PChar, PEntity, itemid, thDropRate);
+        return;
+    }
+
     if (thDropRate > 0 && (1 + xirand::GetRandomNumber(10000)) <= thDropRate * settings::get<float>("map.DROP_RATE_MULTIPLIER"))
     {
-        if (!StoreAugmentCatalystDrop(PChar, itemid))
-        {
-            PChar->PTreasurePool->addItem(itemid, PEntity);
-        }
+        PChar->PTreasurePool->addItem(itemid, PEntity);
     }
 }
 

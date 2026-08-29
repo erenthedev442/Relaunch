@@ -19,7 +19,7 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local multi = 1.0
+    local multi = 5.0
     if caster:hasStatusEffect(xi.effect.AZURE_LORE) then
         multi = multi + 1.50
     end
@@ -32,11 +32,11 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.skillType = xi.skill.BLUE_MAGIC
     params.effect = xi.effect.NONE
     params.multiplier = multi
-    params.tMultiplier = 3.5
+    params.tMultiplier = 3.0
     params.duppercap = 100
-    params.str_wsc = 0.2
+    params.str_wsc = 0.4
     params.dex_wsc = 0.0
-    params.vit_wsc = 0.2
+    params.vit_wsc = 0.4
     params.agi_wsc = 0.0
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0

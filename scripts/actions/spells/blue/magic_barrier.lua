@@ -20,7 +20,7 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local blueSkill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
-    local power     = blueSkill
+    local power     = math.min(2 * blueSkill, 1200)
     local duration  = xi.spells.blue.calculateDurationWithDiffusion(caster, 300)
 
     if not caster:addStatusEffect(xi.effect.MAGIC_SHIELD, { power = power, duration = duration, origin = caster }) then

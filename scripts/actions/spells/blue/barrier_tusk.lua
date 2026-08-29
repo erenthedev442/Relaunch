@@ -21,7 +21,7 @@ end
 spellObject.onSpellCast = function(caster, target, spell)
     local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 180)
 
-    if not target:addStatusEffect(xi.effect.PHALANX, { power = 15, duration = duration, origin = caster }) then
+    if not target:addStatusEffect(xi.effect.PHALANX, { power = 0, duration = duration, origin = caster, subPower = -1500 }) then
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
     end
 

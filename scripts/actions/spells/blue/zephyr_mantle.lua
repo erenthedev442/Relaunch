@@ -21,7 +21,7 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local power = 4
+    local power = 8
     local tick = 0
     local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 300)
 

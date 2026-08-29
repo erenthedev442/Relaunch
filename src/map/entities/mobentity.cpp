@@ -1016,6 +1016,14 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                 itemDropRate = thDropRateFunction(m_THLvl, itemDropRate);
             }
 
+            // Catalog catalysts roll independently for every in-range alliance
+            // member (10% floor). Normal items still use one shared pool roll.
+            if (charutils::IsAugmentCatalyst(item.ItemID))
+            {
+                charutils::StoreAugmentCatalystDropForAlliance(PChar, this, item.ItemID, itemDropRate);
+                return;
+            }
+
             if (itemDropRate > 0 && (1 + xirand::GetRandomNumber(10000)) <= itemDropRate * settings::get<float>("map.DROP_RATE_MULTIPLIER"))
             {
                 AddItemToPool(item.ItemID);

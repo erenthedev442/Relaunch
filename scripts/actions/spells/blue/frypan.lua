@@ -34,17 +34,17 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.damageType = xi.damageType.BLUNT
     params.scattr     = xi.skillchainType.IMPACTION
     params.numhits    = 1
-    params.multiplier = 1.78
-    params.tp150      = 1.78
-    params.tp300      = 1.78
-    params.azuretp    = 1.78
-    params.duppercap  = 75
-    params.str_wsc    = 0.2
+    params.multiplier = 4.5
+    params.tp150      = 4.5
+    params.tp300      = 4.5
+    params.azuretp    = 4.5
+    params.duppercap  = 100
+    params.str_wsc    = 0.4
     params.dex_wsc    = 0.0
     params.vit_wsc    = 0.0
     params.agi_wsc    = 0.0
     params.int_wsc    = 0.0
-    params.mnd_wsc    = 0.2
+    params.mnd_wsc    = 0.4
     params.chr_wsc    = 0.0
 
     -- Handle damage.

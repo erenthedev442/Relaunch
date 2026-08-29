@@ -25,15 +25,15 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.attackType  = xi.attackType.MAGICAL
     params.damageType  = xi.damageType.WATER
     params.attribute   = xi.mod.INT
-    params.multiplier  = 2.296875
-    params.tMultiplier = 2.0
+    params.multiplier  = 5.0
+    params.tMultiplier = 3.0
     params.duppercap   = 100
     params.str_wsc     = 0.0
     params.dex_wsc     = 0.0
     params.vit_wsc     = 0.0
     params.agi_wsc     = 0.0
     params.int_wsc     = 0.0
-    params.mnd_wsc     = 0.3
+    params.mnd_wsc     = 0.8
     params.chr_wsc     = 0.0
 
     -- Handle damage.
