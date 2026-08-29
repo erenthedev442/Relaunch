@@ -14,7 +14,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 5,
+    permission = 4,
     parameters = 'ss',
 }
 
