@@ -1,11 +1,11 @@
 -----------------------------------
 -- Spell: Fantod
--- Enhances attack and magic attack. Effect is stackable (up to 10 times)
+-- Enhances attack and magic attack. Effect is stackable (up to 5 times)
 -- Spell cost: 12 MP
--- Monster Type: Lizards
+-- Monster Type: Birds
 -- Spell Type: Magical (Fire)
--- Blue Magic Points: 2
--- Stat Bonus: Store TP
+-- Blue Magic Points: 1
+-- Stat Bonus: HP-10, DEX+2, AGI+2; creates Store TP
 -- Level: 85
 -- Casting Time: 0.5 seconds
 -- Recast Time: 10 seconds
@@ -15,20 +15,24 @@
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
-    -- DISABLED 2026-06-20 (owner request): block every cast of Fantod. Its
-    -- stackable Attack+ / Mag.Atk.+ boost (up to 10x) was too strong. Returning a
-    -- non-zero message from the casting check aborts the cast cleanly (no MP /
-    -- recast spent), same pattern as pyric_bulwark.lua. The spell stays learnable
-    -- + in spell_list; it just can't be cast. To re-enable, restore `return 0`.
-    -- onSpellCast below is now unreachable, kept for an easy revert.
-    return xi.msg.basic.MAGIC_CANNOT_BE_CAST
+    return 0
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 180)
+    local function stackEffect(effect)
+        local currentEffect = caster:getStatusEffect(effect)
+        local power = currentEffect and math.min(currentEffect:getPower() + 5, 25) or 5
 
-    caster:addStatusEffect(xi.effect.ATTACK_BOOST,    { power = 5,  duration = duration, origin = caster })
-    caster:addStatusEffect(xi.effect.MAGIC_ATK_BOOST, { power = 5,  duration = duration, origin = caster })
+        if currentEffect then
+            caster:delStatusEffectSilent(effect)
+        end
+
+        caster:addStatusEffect(effect, { power = power, duration = duration, origin = caster })
+    end
+
+    stackEffect(xi.effect.ATTACK_BOOST)
+    stackEffect(xi.effect.MAGIC_ATK_BOOST)
 
     return xi.effect.ATTACK_BOOST
 end

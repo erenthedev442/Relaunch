@@ -1,4 +1,5 @@
 local catalog = require('modules/custom/lua/blu_weapon_amplification_catalog')
+local spellPower = require('modules/custom/lua/blu_spell_power_catalog')
 local standardMagic = require('modules/custom/lua/standard_magic_tuning_catalog')
 
 describe('BLU main-hand weapon amplification', function()
@@ -64,9 +65,9 @@ describe('BLU main-hand weapon amplification', function()
             { 20688, 119, 'MYTHIC',    15,  999999 },
             { 20689, 119, 'EMPYREAN',  15,  999999 },
             { 20685, 119, 'RELIC',     10,  999999 },
-            { 21621, 119, 'AMBUSCADE',  1,   99999 },
-            { 20705, 119, 'ITEM_119',   1,   79999 },
-            { 20731, 115, 'PRE_119',    1,   40000 },
+            { 21621, 119, 'AMBUSCADE',  3,   99999 },
+            { 20705, 119, 'ITEM_119',   3,   79999 },
+            { 20731, 115, 'PRE_119',    3,   40000 },
         }
 
         for _, case in ipairs(cases) do
@@ -86,9 +87,9 @@ describe('BLU main-hand weapon amplification', function()
             { 20688, 15,  999999 },
             { 20689, 15,  999999 },
             { 20685, 10,  999999 },
-            { 21621,  1,   99999 },
-            { 20705,  1,   79999 },
-            { 20731,  1,   40000 },
+            { 21621,  3,   99999 },
+            { 20705,  3,   79999 },
+            { 20731,  3,   40000 },
         })
         do
             local caster = makeCaster(case[1], case[1] == 20731 and 115 or 119)
@@ -105,5 +106,29 @@ describe('BLU main-hand weapon amplification', function()
         assert(not standardMagic.isBlueDamageEligible(
             makeCaster(20685, 119), target, spell,
             { attackType = xi.attackType.MAGICAL, blueDamageExempt = true }))
+    end)
+
+    it('scales spell budgets from 3x baseline to 5x premium damage', function()
+        local function makeSpell(id, mpCost)
+            return
+            {
+                getID = function()
+                    return id
+                end,
+                getMPCost = function()
+                    return mpCost
+                end,
+            }
+        end
+
+        assert(spellPower.getDamageMultiplier(makeSpell(577, 5)) == 1)
+        assert(spellPower.getDamageMultiplier(makeSpell(689, 60)) == 1.2)
+        assert(spellPower.getDamageMultiplier(makeSpell(709, 119)) == 1.5)
+        assert(spellPower.getDamageMultiplier(makeSpell(724, 175)) == 5 / 3)
+        assert(spellPower.getDamageMultiplier(makeSpell(720, 116)) == 5 / 3)
+
+        local baselineWeapon = catalog.getDamageMultiplier(makeCaster(20705, 119))
+        assert(baselineWeapon == 3)
+        assert(baselineWeapon * spellPower.getDamageMultiplier(makeSpell(720, 116)) == 5)
     end)
 end)

@@ -15,11 +15,7 @@
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
-    -- Legendary: Mortal Ray (Blue Magic, spell 686) is disabled — it cannot be
-    -- cast. Returning a non-zero message aborts the cast (no MP/recast spent).
-    -- The Taurus-family mob TP move (MORTAL_RAY_1) is a separate skill and is
-    -- unaffected. To re-enable, restore `return 0`.
-    return xi.msg.basic.MAGIC_CANNOT_CAST
+    return 0
 end
 
 spellObject.onSpellCast = function(caster, target, spell)

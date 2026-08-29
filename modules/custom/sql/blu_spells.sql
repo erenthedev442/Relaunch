@@ -23,7 +23,7 @@
 --   mysql -u root xidb < modules/custom/sql/blu_spells.sql
 --   (or via /lua reload in-game after applying the SQL)
 --
--- Safe to re-apply (INSERT IGNORE is idempotent).
+-- Safe to re-apply; the upsert repairs stale rows in existing databases.
 -- ============================================================================
 
 SET @ELEMENT_NONE   = 0;
@@ -56,7 +56,7 @@ SET @SKILL_BLUE     = 43;
 -- Animations 918-937 are reserved for these new spells;
 -- if the client has no matching entry the spell still fires, just no VFX.
 
-INSERT IGNORE INTO `spell_list`
+INSERT INTO `spell_list`
     (`spellid`, `name`, `jobs`,
      `group`, `family`, `element`, `zonemisc`,
      `validTargets`, `skill`,
@@ -183,4 +183,112 @@ VALUES
 (753, 'tearing_gust',
  0x00000000000000000000000000000063000000000000,
  3, 0, @ELEMENT_WIND, 0, 4, @SKILL_BLUE,
- 202, 3000, 30000, 2, 0, 937, 2000, 1, 0, 1.00, 0, 0, 16, 100, 100, 'SOA');
+ 202, 3000, 30000, 2, 0, 937, 2000, 1, 0, 1.00, 0, 0, 16, 100, 100, 'SOA')
+ON DUPLICATE KEY UPDATE
+    `name`              = VALUES(`name`),
+    `jobs`              = VALUES(`jobs`),
+    `group`             = VALUES(`group`),
+    `family`            = VALUES(`family`),
+    `element`           = VALUES(`element`),
+    `zonemisc`          = VALUES(`zonemisc`),
+    `validTargets`      = VALUES(`validTargets`),
+    `skill`             = VALUES(`skill`),
+    `mpCost`            = VALUES(`mpCost`),
+    `castTime`          = VALUES(`castTime`),
+    `recastTime`        = VALUES(`recastTime`),
+    `message`           = VALUES(`message`),
+    `magicBurstMessage` = VALUES(`magicBurstMessage`),
+    `animation`         = VALUES(`animation`),
+    `animationTime`     = VALUES(`animationTime`),
+    `AOE`               = VALUES(`AOE`),
+    `base`              = VALUES(`base`),
+    `multiplier`        = VALUES(`multiplier`),
+    `CE`                = VALUES(`CE`),
+    `VE`                = VALUES(`VE`),
+    `requirements`      = VALUES(`requirements`),
+    `spell_range`       = VALUES(`spell_range`),
+    `radius`            = VALUES(`radius`),
+    `content_tag`       = VALUES(`content_tag`);
+
+DELETE FROM `blue_spell_list`
+WHERE `spellid` IN
+(
+    715, 716, 717, 719, 720, 721, 722, 723, 724, 725, 726, 727, 728,
+    744, 745, 746, 747, 748, 749, 750, 751, 752, 753
+);
+
+INSERT INTO `blue_spell_list`
+    (`spellid`, `mob_skill_id`, `set_points`, `trait_category`,
+     `trait_category_weight`, `primary_sc`, `secondary_sc`, `tertiary_sc`,
+     `knockback`)
+VALUES
+    (715, 3063, 4, 0, 0, 0, 0, 0, NULL),
+    (716, 3099, 4, 0, 0, 0, 0, 0, NULL),
+    (717, 3931, 4, 0, 0, 0, 0, 0, NULL),
+    (719, 2735, 8, 0, 0, 0, 0, 0, NULL),
+    (720, 2737, 8, 0, 0, 0, 0, 0, NULL),
+    (721, 2739, 8, 0, 0, 0, 0, 0, NULL),
+    (722, 2741, 8, 0, 0, 0, 0, 0, NULL),
+    (723, 2991, 4, 0, 0, 0, 0, 0, NULL),
+    (724, 3153, 6, 0, 0, 0, 0, 0, NULL),
+    (725, 2736, 8, 0, 0, 0, 0, 0, NULL),
+    (726, 2738, 8, 0, 0, 0, 0, 0, NULL),
+    (727, 2740, 8, 0, 0, 0, 0, 0, NULL),
+    (728, 2742, 8, 0, 0, 0, 0, 0, NULL),
+    (744, 3005, 5, 0, 0, 0, 0, 0, NULL),
+    (745, 3014, 5, 0, 0, 0, 0, 0, NULL),
+    (746, 3020, 4, 0, 0, 0, 0, 0, NULL),
+    (747, 3059, 5, 0, 0, 0, 0, 0, NULL),
+    (748, 3072, 5, 0, 0, 0, 0, 0, NULL),
+    (749, 3137, 4, 0, 0, 0, 0, 0, NULL),
+    (750, 2667, 9, 0, 0, 0, 0, 0, NULL),
+    (751, 3304, 5, 0, 0, 0, 0, 0, NULL),
+    (752, 3372, 5, 0, 0, 0, 0, 0, NULL),
+    (753, 3363, 5, 0, 0, 0, 0, 0, NULL);
+
+DELETE FROM `blue_spell_mods`
+WHERE `spellId` IN
+(
+    715, 716, 717, 719, 720, 721, 722, 723, 724, 725, 726, 727, 728,
+    744, 745, 746, 747, 748, 749, 750, 751, 752, 753
+);
+
+INSERT INTO `blue_spell_mods` (`spellId`, `modid`, `value`)
+VALUES
+    (715, 11, 8),
+    (716, 13, 2),
+    (717, 10, 2),
+    (719, 8, 4),
+    (720, 12, 4),
+    (721, 5, 30),
+    (721, 9, 8),
+    (722, 5, 30),
+    (722, 10, 8),
+    (723, 2, 50),
+    (723, 10, 6),
+    (723, 12, -3),
+    (724, 11, 4),
+    (725, 2, 40),
+    (725, 8, 4),
+    (725, 9, 4),
+    (725, 11, 4),
+    (726, 5, 30),
+    (726, 13, 8),
+    (727, 11, 4),
+    (728, 5, 30),
+    (728, 10, 4),
+    (728, 12, 4),
+    (728, 13, 4),
+    (744, 11, 2),
+    (745, 2, 5),
+    (745, 13, 2),
+    (746, 8, 2),
+    (747, 10, 3),
+    (748, 11, 4),
+    (749, 8, 2),
+    (749, 12, 2),
+    (750, 2, 5),
+    (750, 8, 1),
+    (751, 13, 3),
+    (752, 10, 2),
+    (753, 11, 3);

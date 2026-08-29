@@ -916,37 +916,48 @@ INSERT INTO `blue_spell_mods` VALUES (707,12,3); -- INT+3
 -- ----------------------------
 -- Subduction
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (708,0,0); --
+INSERT INTO `blue_spell_mods` VALUES (708,5,25); -- MP+25
+INSERT INTO `blue_spell_mods` VALUES (708,10,6); -- VIT+6
+INSERT INTO `blue_spell_mods` VALUES (708,12,6); -- INT+6
 
 -- ----------------------------
 --  Thrashing Assault
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (709,0,0); --
+INSERT INTO `blue_spell_mods` VALUES (709,2,20); -- HP+20
+INSERT INTO `blue_spell_mods` VALUES (709,9,8); -- DEX+8
 
 -- ----------------------------
 -- Erratic Flutter
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (710,0,0); --
+INSERT INTO `blue_spell_mods` VALUES (710,2,15); -- HP+15
+INSERT INTO `blue_spell_mods` VALUES (710,5,15); -- MP+15
+INSERT INTO `blue_spell_mods` VALUES (710,11,5); -- AGI+5
+INSERT INTO `blue_spell_mods` VALUES (710,14,5); -- CHR+5
 
 -- ----------------------------
  -- Restoral
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (711,0,0); --
+INSERT INTO `blue_spell_mods` VALUES (711,2,15); -- HP+15
+INSERT INTO `blue_spell_mods` VALUES (711,5,15); -- MP+15
 
 -- ----------------------------
  -- Rail Cannon
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (712,0,0); --
+INSERT INTO `blue_spell_mods` VALUES (712,12,6); -- INT+6
+INSERT INTO `blue_spell_mods` VALUES (712,13,6); -- MND+6
 
 -- ----------------------------
  -- Diffusion Ray
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (713,0,0); --
+INSERT INTO `blue_spell_mods` VALUES (713,8,5); -- STR+5
+INSERT INTO `blue_spell_mods` VALUES (713,10,7); -- VIT+7
 
 -- ----------------------------
  -- Sinker Drill
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (714,0,0); --
+INSERT INTO `blue_spell_mods` VALUES (714,8,4); -- STR+4
+INSERT INTO `blue_spell_mods` VALUES (714,9,4); -- DEX+4
+INSERT INTO `blue_spell_mods` VALUES (714,10,4); -- VIT+4
 
 -- ----------------------------
 -- Thunderbolt
@@ -991,39 +1002,53 @@ INSERT INTO `blue_spell_mods` VALUES (743,0,0); --
 -- ----------------------------
 -- Droning Whirlwind
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (744,0,0); --
+INSERT INTO `blue_spell_mods` VALUES (744,11,2); -- AGI+2
 
 -- ----------------------------
 -- Carcharian Verve
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (745,0,0); --
+INSERT INTO `blue_spell_mods` VALUES (745,2,5); -- HP+5
+INSERT INTO `blue_spell_mods` VALUES (745,13,2); -- MND+2
 
 -- ----------------------------
 -- Blistering Roar
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (746,0,0); --
+INSERT INTO `blue_spell_mods` VALUES (746,8,2); -- STR+2
 
 
 -- ----------------------------
 -- Blue Magic net-new spells 715-753
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (715,0,0); -- Molting Plumage
-INSERT INTO `blue_spell_mods` VALUES (716,0,0); -- Nectarous Deluge
-INSERT INTO `blue_spell_mods` VALUES (717,0,0); -- Sweeping Gouge
-INSERT INTO `blue_spell_mods` VALUES (719,0,0); -- Searing Tempest
-INSERT INTO `blue_spell_mods` VALUES (720,0,0); -- Spectral Floe
-INSERT INTO `blue_spell_mods` VALUES (721,0,0); -- Anvil Lightning
-INSERT INTO `blue_spell_mods` VALUES (722,0,0); -- Entomb
-INSERT INTO `blue_spell_mods` VALUES (723,0,0); -- Saurian Slide
-INSERT INTO `blue_spell_mods` VALUES (724,0,0); -- Palling Salvo
-INSERT INTO `blue_spell_mods` VALUES (725,0,0); -- Blinding Fulgor
-INSERT INTO `blue_spell_mods` VALUES (726,0,0); -- Scouring Spate
-INSERT INTO `blue_spell_mods` VALUES (727,0,0); -- Silent Storm
-INSERT INTO `blue_spell_mods` VALUES (728,0,0); -- Tenebral Crush
-INSERT INTO `blue_spell_mods` VALUES (747,0,0); -- Uproot
-INSERT INTO `blue_spell_mods` VALUES (748,0,0); -- Crashing Thunder
-INSERT INTO `blue_spell_mods` VALUES (749,0,0); -- Polar Roar
-INSERT INTO `blue_spell_mods` VALUES (750,0,0); -- Mighty Guard
-INSERT INTO `blue_spell_mods` VALUES (751,0,0); -- Cruel Joke
-INSERT INTO `blue_spell_mods` VALUES (752,0,0); -- Cesspool
-INSERT INTO `blue_spell_mods` VALUES (753,0,0); -- Tearing Gust
+INSERT INTO `blue_spell_mods` VALUES (715,11,8); -- Molting Plumage: AGI+8
+INSERT INTO `blue_spell_mods` VALUES (716,13,2); -- Nectarous Deluge: MND+2
+INSERT INTO `blue_spell_mods` VALUES (717,10,2); -- Sweeping Gouge: VIT+2
+INSERT INTO `blue_spell_mods` VALUES (719,8,4); -- Searing Tempest: STR+4
+INSERT INTO `blue_spell_mods` VALUES (720,12,4); -- Spectral Floe: INT+4
+INSERT INTO `blue_spell_mods` VALUES (721,5,30); -- Anvil Lightning: MP+30
+INSERT INTO `blue_spell_mods` VALUES (721,9,8); -- Anvil Lightning: DEX+8
+INSERT INTO `blue_spell_mods` VALUES (722,5,30); -- Entomb: MP+30
+INSERT INTO `blue_spell_mods` VALUES (722,10,8); -- Entomb: VIT+8
+INSERT INTO `blue_spell_mods` VALUES (723,2,50); -- Saurian Slide: HP+50
+INSERT INTO `blue_spell_mods` VALUES (723,10,6); -- Saurian Slide: VIT+6
+INSERT INTO `blue_spell_mods` VALUES (723,12,-3); -- Saurian Slide: INT-3
+INSERT INTO `blue_spell_mods` VALUES (724,11,4); -- Palling Salvo: AGI+4
+INSERT INTO `blue_spell_mods` VALUES (725,2,40); -- Blinding Fulgor: HP+40
+INSERT INTO `blue_spell_mods` VALUES (725,8,4); -- Blinding Fulgor: STR+4
+INSERT INTO `blue_spell_mods` VALUES (725,9,4); -- Blinding Fulgor: DEX+4
+INSERT INTO `blue_spell_mods` VALUES (725,11,4); -- Blinding Fulgor: AGI+4
+INSERT INTO `blue_spell_mods` VALUES (726,5,30); -- Scouring Spate: MP+30
+INSERT INTO `blue_spell_mods` VALUES (726,13,8); -- Scouring Spate: MND+8
+INSERT INTO `blue_spell_mods` VALUES (727,11,4); -- Silent Storm: AGI+4
+INSERT INTO `blue_spell_mods` VALUES (728,5,30); -- Tenebral Crush: MP+30
+INSERT INTO `blue_spell_mods` VALUES (728,10,4); -- Tenebral Crush: VIT+4
+INSERT INTO `blue_spell_mods` VALUES (728,12,4); -- Tenebral Crush: INT+4
+INSERT INTO `blue_spell_mods` VALUES (728,13,4); -- Tenebral Crush: MND+4
+INSERT INTO `blue_spell_mods` VALUES (747,10,3); -- Uproot: VIT+3
+INSERT INTO `blue_spell_mods` VALUES (748,11,4); -- Crashing Thunder: AGI+4
+INSERT INTO `blue_spell_mods` VALUES (749,8,2); -- Polar Roar: STR+2
+INSERT INTO `blue_spell_mods` VALUES (749,12,2); -- Polar Roar: INT+2
+INSERT INTO `blue_spell_mods` VALUES (750,2,5); -- Mighty Guard: HP+5
+INSERT INTO `blue_spell_mods` VALUES (750,8,1); -- Mighty Guard: STR+1
+INSERT INTO `blue_spell_mods` VALUES (751,13,3); -- Cruel Joke: MND+3
+INSERT INTO `blue_spell_mods` VALUES (752,10,2); -- Cesspool: VIT+2
+INSERT INTO `blue_spell_mods` VALUES (753,11,3); -- Tearing Gust: AGI+3

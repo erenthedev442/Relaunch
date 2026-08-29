@@ -72,6 +72,19 @@ xi.combat.damage.calculateDamageAdjustment = function(target, isPhysical, isMagi
      -- Uncapped damage modifiers. Cap is 100% both ways anyway, just in case.
     targetDamageTaken = utils.clamp(targetDamageTaken + physicalDamageTakenUncapped + magicDamageTakenUncapped + rangedDamageTakenUncapped + breathDamageTakenUncapped, 0, 2)
 
+    -- Player-cast Pyric Bulwark marks its shield with subPower 255. Consume that
+    -- shield only after its modifiers have protected this physical damage event.
+    if isPhysical then
+        local physicalShield = target:getStatusEffect(xi.effect.PHYSICAL_SHIELD)
+        if
+            physicalShield and
+            physicalShield:getPower() == 1 and
+            physicalShield:getSubPower() == 255
+        then
+            target:delStatusEffectSilent(xi.effect.PHYSICAL_SHIELD)
+        end
+    end
+
     return targetDamageTaken
 end
 

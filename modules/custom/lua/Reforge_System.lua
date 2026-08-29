@@ -96,6 +96,38 @@ local function balanceTriplet(player)
         getMarks(player, 'empy'))
 end
 
+-- Each single-occupancy station owns exactly one dynamic NM and records the
+-- player who popped it. Keeping the owner beside the entity reference lets the
+-- death/zone-out hooks remove that encounter before it can retarget a bystander.
+local function releaseStationMob(station, mob)
+    if station.activeMob == mob then
+        station.activeMob = nil
+        station.ownerName = nil
+    end
+end
+
+local function despawnOwnedMob(player)
+    local playerName = player:getName()
+    local removed = false
+
+    for _, station in ipairs(catalog.stations) do
+        local mob = station.activeMob
+        if mob and station.ownerName == playerName then
+            local ok, mobId = pcall(function() return mob:getID() end)
+            if ok and mobId then
+                pcall(function() mechanics.cleanup(mob) end)
+                releaseStationMob(station, mob)
+                DespawnMob(mobId)
+                removed = true
+            else
+                releaseStationMob(station, mob)
+            end
+        end
+    end
+
+    return removed
+end
+
 -----------------------------------
 -- Helpers
 -----------------------------------
@@ -454,6 +486,7 @@ buildSourceNMMenu = function(player, srcDef, station)
                         return
                     end
                     station.activeMob = nil
+                    station.ownerName = nil
                 end
 
                 local mPos = station.mobSpawnPos
@@ -524,7 +557,7 @@ buildSourceNMMenu = function(player, srcDef, station)
                             -- (idempotent + pcall-safe in the library).
                             mechanics.cleanup(roamMob)
                             -- Free the station so it can be re-popped immediately.
-                            station.activeMob = nil
+                            releaseStationMob(station, roamMob)
                             DespawnMob(roamMob:getID())
                         end
                     end,
@@ -554,7 +587,7 @@ buildSourceNMMenu = function(player, srcDef, station)
                         mechanics.cleanup(deadMob)
                         -- Free the station the instant its NM dies so the next
                         -- party can pop here without waiting on the corpse.
-                        station.activeMob = nil
+                        releaseStationMob(station, deadMob)
                         if not killer then return end
                         rollLootDrop(killer, srcDef, md.label)
                         awardCurrency(killer, srcDef, md)
@@ -583,6 +616,7 @@ buildSourceNMMenu = function(player, srcDef, station)
                 end
                 -- Mark this station occupied. Cleared in onMobDeath / idle-despawn.
                 station.activeMob = mob
+                station.ownerName = p:getName()
                 mob:setSpawn(mPos.x, mPos.y, mPos.z, mPos.rot)
                 mob:spawn()
 
@@ -790,6 +824,28 @@ m:addOverride(catalog.huntZonePath .. '.Zone.onInitialize', function(zone)
         onTrigger  = function(p) p:timer(50, function(pp) buildVendorMain(pp) end) end,
     })
     utils.unused(Vendor)
+end)
+
+-- An encounter belongs to the player who popped it. Remove it immediately if
+-- that owner leaves the hub or dies, rather than allowing it to select another
+-- nearby player after its original target disappears.
+m:addOverride(catalog.huntZonePath .. '.Zone.onZoneOut', function(player, ...)
+    pcall(super, player, ...)
+    despawnOwnedMob(player)
+end)
+
+m:addOverride('xi.player.onPlayerDeath', function(player, ...)
+    local cs = super(player, ...)
+    if
+        player:getZoneID() == catalog.huntZoneId and
+        despawnOwnedMob(player)
+    then
+        player:printToPlayer(
+            '[Reforge] Owner down - your NM has been despawned.',
+            xi.msg.channel.SYSTEM_3)
+    end
+
+    return cs
 end)
 
 return m

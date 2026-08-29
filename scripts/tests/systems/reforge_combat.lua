@@ -172,4 +172,32 @@ describe('Reforge combat catalog', function()
 
         assert(catalog.mechCfgs[11409].stance == nil)
     end)
+
+    it('defines eight independent stations with a separated second camp', function()
+        local seen = {}
+        assert(#catalog.stations == 8)
+
+        for _, station in ipairs(catalog.stations) do
+            assert(not seen[station.id])
+            seen[station.id] = true
+            assert(station.spawnerPos and station.mobSpawnPos)
+
+            if station.id >= 4 then
+                local dx = station.mobSpawnPos.x - station.spawnerPos.x
+                local dz = station.mobSpawnPos.z - station.spawnerPos.z
+                local spawnOffset = math.sqrt(dx * dx + dz * dz)
+                assert(spawnOffset >= 9.5 and spawnOffset <= 10.5)
+            end
+        end
+
+        for first = 4, 8 do
+            for second = first + 1, 8 do
+                local a = catalog.stations[first].mobSpawnPos
+                local b = catalog.stations[second].mobSpawnPos
+                local dx = a.x - b.x
+                local dz = a.z - b.z
+                assert(math.sqrt(dx * dx + dz * dz) >= 50)
+            end
+        end
+    end)
 end)

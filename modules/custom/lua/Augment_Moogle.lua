@@ -1,6 +1,7 @@
 -----------------------------------
 -- Augment_Moogle.lua
--- Trade 1 equipment piece + 1-5 catalyst items.
+-- Trade 1 equipment piece + 1-5 catalyst items. Most catalyst types stack;
+-- fixed single-line types (such as Treasure Hunter) use exactly one item.
 -- Each catalyst maps 1:1 to a specific augmentId via augment_catalog.lua.
 -- Costs 10,000 gil per successful augmentation (flat, regardless of how many
 -- augments are applied in the trade).
@@ -671,7 +672,7 @@ local function printBankHelp(player)
         '[ Arcane Augmenter ] Catalyst drops are stored here automatically and never take inventory slots.',
         xi.msg.channel.SYSTEM_3)
     player:printToPlayer(
-        '  Choose "Build an augment", select up to 5 stored catalysts, then trade one equipment item.',
+        '  Choose "Build an augment", select up to 5 stored catalysts, then trade one equipment item. Treasure Hunter and other fixed lines use one catalyst only.',
         xi.msg.channel.SYSTEM_3)
     player:printToPlayer(string.format(
         '  Catalysts are consumed only when you confirm. Augmentation cost: %d gil.',
@@ -1351,6 +1352,100 @@ showScourMenu = function(player)
     player:timer(30, function(p) p:customMenu(menu) end)
 end
 
+-- Fixed-value augments such as Treasure Hunter intentionally occupy exactly
+-- one slot. When a player trades a stack, offer to keep one rather than
+-- treating the entire trade as an opaque error.
+local function confirmSingleLineTrade(player, context)
+    local def         = context.def
+    local keptValue   = def.flatValue or (def.tierValue * context.playerTier)
+    local excessCount = context.count - 1
+    local menu =
+    {
+        title = string.format('Oops, kupo! %s is one slot only.', def.label),
+        options =
+        {
+            {
+                string.format('Yes - apply 1 (+%d)', keptValue),
+                function(p)
+                    if p:getGil() < GIL_COST then
+                        p:printToPlayer(
+                            string.format('You need %d gil to augment, kupo! Gear and catalysts returned.', GIL_COST),
+                            xi.msg.channel.SYSTEM_3)
+                        return
+                    end
+
+                    -- Complete the original trade, then return only the
+                    -- surplus physical catalysts. Bank catalysts are not
+                    -- consumed until the later final confirmation.
+                    p:tradeComplete()
+                    if not context.bankMode and excessCount > 0 then
+                        local refunded = p:addItem({ id = context.itemId, quantity = excessCount })
+                        if not refunded then
+                            p:addItem({ id = context.gearId, quantity = 1 })
+                            p:addItem({ id = context.itemId, quantity = context.count })
+                            p:printToPlayer(
+                                'Could not return the extra catalysts; your gear and all catalysts were returned. Free an inventory slot and try again, kupo!',
+                                xi.msg.channel.SYSTEM_3)
+                            return
+                        end
+                    end
+
+                    local exAugsBySlot = {}
+                    local newMask = 0
+                    for _, locked in ipairs(context.lockedAugs) do
+                        table.insert(exAugsBySlot, { id = locked.id, value = locked.value, cat = nil })
+                        newMask = bit.bor(newMask, bit.lshift(1, #exAugsBySlot - 1))
+                    end
+                    table.insert(exAugsBySlot,
+                    {
+                        id       = def.augId,
+                        value    = keptValue - def.base,
+                        maxValue = keptValue - def.base,
+                        cat      = def.cat,
+                    })
+
+                    playerState[p:getName()] =
+                    {
+                        itemId        = context.gearId,
+                        exAugsBySlot  = exAugsBySlot,
+                        labelSummary  = { string.format('%s  ->  %d', def.label, keptValue) },
+                        catalystsHeld = context.bankMode and {} or { { id = context.itemId, qty = 1 } },
+                        bankCatalysts = context.bankMode and { { id = context.itemId, qty = 1 } } or nil,
+                        bankConsumed  = false,
+                        gearDelivered = false,
+                        isCrit        = false,
+                        usedCritToken = false,
+                        maatEligible  = false,
+                        maatLabelSummary = {},
+                        newMask       = newMask,
+                        crystalNews   = {},
+                    }
+                    if context.bankMode then
+                        clearBankSelection(p)
+                    end
+
+                    p:printToPlayer(string.format(
+                        '[Arcane Augmenter] %s +%d staged; %d extra catalyst%s returned, kupo!',
+                        def.label, keptValue, excessCount, excessCount == 1 and '' or 's'),
+                        xi.msg.channel.SYSTEM_3)
+                    showConfirmMenu(p)
+                end,
+            },
+            {
+                'No - return everything',
+                function(p)
+                    p:printToPlayer('Gear and all catalysts returned unchanged, kupo!', xi.msg.channel.SYSTEM_3)
+                end,
+            },
+        },
+        onCancelled = function(p)
+            p:printToPlayer('Augmentation cancelled; gear and catalysts returned unchanged, kupo!', xi.msg.channel.SYSTEM_3)
+        end,
+    }
+
+    player:timer(30, function(p) p:customMenu(menu) end)
+end
+
 -----------------------------------
 -- Module override
 -----------------------------------
@@ -1615,6 +1710,19 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                     if (catalystCounts[itemId] or 0) > 1 then
                         local shownVal = def2.flatValue or (def2.tierValue * playerTier)
                         local suffix   = def2.flatValue and '' or ' at your Augment Tier'
+                        if #catalystOrder == 1 then
+                            confirmSingleLineTrade(player,
+                            {
+                                def        = def2,
+                                itemId     = itemId,
+                                count      = catalystCounts[itemId],
+                                gearId     = gearId,
+                                lockedAugs = lockedAugs,
+                                playerTier = playerTier,
+                                bankMode   = bankMode,
+                            })
+                            return
+                        end
                         player:printToPlayer(string.format(
                             '[%s] is single-line (+%d%s) -- trade a SINGLE catalyst, kupo!',
                             def2.label, shownVal, suffix),

@@ -69,12 +69,14 @@ describe('BLU shared effect helpers', function()
         local allowed, duration, lockout =
             sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 30, 100)
 
-        assert(allowed and duration == 3 and lockout == 12)
+        assert(allowed and duration == 5 and lockout == 12)
         sharedEffects.commitPlayerControl(target, xi.effect.STUN, duration, lockout, 100)
 
         allowed = sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 30, 114)
         assert(not allowed)
-        allowed = sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 30, 115)
+        allowed = sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 30, 116)
+        assert(not allowed)
+        allowed = sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 30, 117)
         assert(allowed)
     end)
 

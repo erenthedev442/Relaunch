@@ -2,10 +2,10 @@
 -- Spell: Pyric Bulwark
 -- Creates a barrier that absorbs physical damage (one hit)
 -- Spell cost: 50 MP
--- Monster Type: Dragons
+-- Monster Type: Lizards (Hydra)
 -- Spell Type: Magical (Ice)
--- Blue Magic Points: 4
--- Stat Bonus: VIT+3
+-- Blue Magic Points: 0 (Unbridled Learning spell)
+-- Stat Bonus: None
 -- Level: 98
 -- Casting Time: 1.5 seconds
 -- Recast Time: 30 seconds
@@ -16,20 +16,20 @@
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
-    -- DISABLED 2026-06-20 (owner request): block every cast of Pyric Bulwark.
-    -- Its absorb-physical-hits barrier trivialized melee content. Returning a
-    -- non-zero message from the casting check aborts the cast cleanly (no MP /
-    -- recast spent), same pattern as arise.lua's living-target block. The spell
-    -- stays learnable + in spell_list; it just can't be cast. To re-enable,
-    -- restore `return 0`. onSpellCast below is now unreachable, kept for an easy
-    -- revert.
-    return xi.msg.basic.MAGIC_CANNOT_BE_CAST
+    return 0
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 300)
 
-    if not caster:addStatusEffect(xi.effect.PHYSICAL_SHIELD, { power = 1, duration = duration, origin = caster }) then
+    if not caster:addStatusEffect(xi.effect.PHYSICAL_SHIELD,
+    {
+        power    = 1,
+        subPower = 255, -- Pyric Bulwark marker: consume after one physical damage event.
+        duration = duration,
+        origin   = caster,
+    })
+    then
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
     end
 

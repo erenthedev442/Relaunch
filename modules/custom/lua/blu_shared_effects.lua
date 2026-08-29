@@ -4,7 +4,7 @@ local controlRules =
 {
     [xi.effect.STUN] =
     {
-        duration = 3,
+        duration = 5,
         lockout  = 12,
     },
     [xi.effect.TERROR] =

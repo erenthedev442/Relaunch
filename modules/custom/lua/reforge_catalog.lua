@@ -61,7 +61,8 @@ catalog.vendorPos  = { x = 0.0, y = 0.0, z = 0.0, rot = 128 }
 -- the NPCs and route each spawner to its own mob position. Keep `id` unique.
 --
 -- COORDINATES: spawnerPos values are LIVE-VERIFIED !pos readings from zone 43
--- (2026-07-07). mobSpawnPos is where the NM actually appears.
+-- (stations 1-3 on 2026-07-07, stations 4-8 on 2026-08-29).
+-- mobSpawnPos is where the NM actually appears.
 --   Station 1 -- short -Z nudge (hub is open; players report this one fine).
 --   Station 2 -- was +3 Z into a wall corner; oversized models (Seiryu etc.)
 --                stacked the spawner and instantly swung. Spawn toward the
@@ -78,6 +79,13 @@ catalog.stations =
     { id = 2, spawnerPos = { x =  16.64, y = -0.54, z =  52.22, rot = 193 }, mobSpawnPos = { x =   7.00, y = -0.54, z =  45.00, rot = 193 } },
     -- Station 3 -- far field (Path); NM inland of the posts.
     { id = 3, spawnerPos = { x = -26.16, y =  0.28, z =  94.49, rot =   9 }, mobSpawnPos = { x = -18.00, y =  0.28, z =  85.00, rot =   9 } },
+    -- Stations 4-8 -- second camp. NMs appear ~10 yalms in front of each
+    -- live-verified spawner position, with 55+ yalms between adjacent arenas.
+    { id = 4, spawnerPos = { x = -177.8304, y = -9.5338, z = 130.8604, rot =  22 }, mobSpawnPos = { x = -172.6894, y = -9.5338, z = 122.2831, rot =  22 } },
+    { id = 5, spawnerPos = { x =  -97.7796, y = -10.6459, z = 129.2578, rot = 103 }, mobSpawnPos = { x =  -92.0239, y = -10.6459, z = 137.4358, rot = 103 } },
+    { id = 6, spawnerPos = { x = -102.6235, y = -10.0218, z =  76.0994, rot = 172 }, mobSpawnPos = { x = -111.4426, y = -10.0218, z =  80.8134, rot = 172 } },
+    { id = 7, spawnerPos = { x = -116.3222, y = -10.0000, z =  22.8616, rot = 211 }, mobSpawnPos = { x = -125.2538, y = -10.0000, z =  18.3655, rot = 211 } },
+    { id = 8, spawnerPos = { x = -168.8672, y = -10.1399, z =  60.9496, rot = 247 }, mobSpawnPos = { x = -171.0583, y = -10.1399, z =  51.1926, rot = 247 } },
 }
 
 -- Un-engaged despawn: a popped NM that nobody engages within this many

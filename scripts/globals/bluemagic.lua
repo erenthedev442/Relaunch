@@ -13,6 +13,7 @@ xi.spells = xi.spells or {}
 xi.spells.blue = xi.spells.blue or {}
 local standardMagic = require('modules/custom/lua/standard_magic_tuning_catalog')
 local blueWeaponCatalog = require('modules/custom/lua/blu_weapon_amplification_catalog')
+local bluSpellPower = require('modules/custom/lua/blu_spell_power_catalog')
 local bluSharedEffects = require('modules/custom/lua/blu_shared_effects')
 -----------------------------------
 
@@ -278,7 +279,10 @@ local function finalizeBlueDamage(caster, target, spell, damage, params, trickAt
     end
 
     if eligible and damage > 0 then
-        damage = math.floor(damage * standardMagic.getDamageMultiplier(caster, target, spell))
+        damage = math.floor(
+            damage *
+            standardMagic.getDamageMultiplier(caster, target, spell) *
+            bluSpellPower.getDamageMultiplier(spell))
     end
 
     if attackType == xi.attackType.MAGICAL then
