@@ -80,9 +80,8 @@ COMBAT_SKILLS = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 25, 26, 27}
 # NPC or event gear that no player can obtain or use; listing them just pollutes
 # the database with nonsense scores ("Judge's Cape 1100 DPS"). Excluded by id AND
 # by name prefix, so every variant is caught even if a re-import shifts ids.
-#   - Judge* : the Ballista referee NPC's gear + fishing bait. Also hard-deleted
-#              from the DB by modules/custom/sql/zz_remove_judge_items.sql; this
-#              keeps them out of the Finder even if that delete isn't re-applied.
+#   - Judge* : Ballista referee NPC gear + fishing bait. In-game for GM grant;
+#              kept out of the Finder here so they do not score as player BiS.
 # Add more ids / prefixes here as you spot NPC-only junk in the Finder.
 # ---------------------------------------------------------------------------
 EXCLUDED_ITEM_IDS = frozenset({

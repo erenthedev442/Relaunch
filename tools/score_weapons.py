@@ -34,8 +34,7 @@ OBTAINABLE_ELSEWHERE = (frozenset(_json.loads(_excl_path.read_text(encoding='utf
 
 # NPC-only / non-player junk to keep OUT of the scored vendor catalogs. Mirror
 # of the list in tools/docgen/generators/gear_finder.py and the sibling scorers
-# score_armor.py / score_accessories.py (and the DB purge in
-# modules/custom/sql/zz_remove_judge_items.sql). Excluded by id AND name prefix
+# score_armor.py / score_accessories.py. Excluded by id AND name prefix
 # at load time so a re-import can't slip them back in. Keep these copies in sync.
 EXCLUDED_ITEM_IDS = frozenset({
     12332, 12523, 12551, 12679, 12807, 12935, 13074, 13215, 13358, 13505,

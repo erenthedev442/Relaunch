@@ -1,37 +1,88 @@
 -- =====================================================================
 -- zz_remove_judge_items.sql
--- Purge the 19 stock "Judge" items from the server. These are the Ballista
--- referee ("Judge") NPC's gear + fishing bait — NPC/event items that are NOT
--- player-obtainable (no mob_droplist rows, aH = 0, several EX/Rare), but they
--- happen to be equippable so the gear scorer was listing them in the Gear
--- Finder with nonsense scores (e.g. "Judge's Cape 1100 DPS").
 --
--- They are STOCK rows in sql/item_basic.sql, so we DON'T edit that tracked
--- file (merge-safety). Instead this override DELETEs them, applied AFTER the
--- stock import. Re-runnable (DELETE is idempotent); re-apply after any full
--- DB re-import of the stock item data.
+-- Was a purge (Judge rows deleted so Gear Finder stopped scoring NPC gear).
+-- Neutralized 2026-08-29: restore the stock Judge definitions so GM !additem
+-- / !giveitem work again and already-granted copies stay valid after restart.
 --
--- Item IDs (name):
---   12332 judges_shield   12523 judges_helm     12551 judges_cuirass
---   12679 judges_gauntlets 12807 judges_cuisses  12935 judges_greaves
---   13074 judges_gorget   13215 judges_belt      13358 judges_earring
---   13505 judges_ring     13606 judges_cape      16622 judges_sword
---   17004 judge_minnow    17012 judges_rod       17174 judges_bow
---   17326 judges_arrow    17406 judges_lure      17644 judges_sword
---   19325 judge_fly
---
--- Effect: gone from the game (map reload drops them) AND from the Gear Finder
--- after the next docs regen (the scorers read the live DB).
---
--- Apply: mariadb xidb < modules/custom/sql/zz_remove_judge_items.sql
---        then RESTART the map server. Run refresh-site.bat to update the
---        Gear Finder docs page.
+-- Gear Finder still hides these via EXCLUDED_ITEM_IDS / 'judge' name prefix.
+-- Idempotent: INSERT IGNORE. Does not touch char_inventory.
 -- =====================================================================
 
-DELETE FROM `item_basic`     WHERE `itemid` IN (12332,12523,12551,12679,12807,12935,13074,13215,13358,13505,13606,16622,17004,17012,17174,17326,17406,17644,19325);
-DELETE FROM `item_equipment` WHERE `itemId` IN (12332,12523,12551,12679,12807,12935,13074,13215,13358,13505,13606,16622,17004,17012,17174,17326,17406,17644,19325);
-DELETE FROM `item_weapon`    WHERE `itemId` IN (12332,12523,12551,12679,12807,12935,13074,13215,13358,13505,13606,16622,17004,17012,17174,17326,17406,17644,19325);
-DELETE FROM `item_mods`      WHERE `itemId` IN (12332,12523,12551,12679,12807,12935,13074,13215,13358,13505,13606,16622,17004,17012,17174,17326,17406,17644,19325);
-DELETE FROM `item_mods_pet`  WHERE `itemId` IN (12332,12523,12551,12679,12807,12935,13074,13215,13358,13505,13606,16622,17004,17012,17174,17326,17406,17644,19325);
-DELETE FROM `item_latents`   WHERE `itemId` IN (12332,12523,12551,12679,12807,12935,13074,13215,13358,13505,13606,16622,17004,17012,17174,17326,17406,17644,19325);
-DELETE FROM `item_usable`    WHERE `itemId` IN (12332,12523,12551,12679,12807,12935,13074,13215,13358,13505,13606,16622,17004,17012,17174,17326,17406,17644,19325);
+INSERT IGNORE INTO `item_basic`
+    (`itemid`, `subid`, `name`, `sortname`, `name_jp`, `type`, `stackSize`, `flags`, `aH`, `BaseSell`)
+VALUES
+    (12332, 0, 'judges_shield',    'judges_shield',    'ジャッジシールド',   6,  1,  2050, 0,  72),
+    (12523, 0, 'judges_helm',      'judges_helm',      'ジャッジヘルム',     6,  1,  2050, 0,  58),
+    (12551, 0, 'judges_cuirass',   'judges_cuirass',   'ジャッジキュイラス', 6,  1,  2050, 0, 165),
+    (12679, 0, 'judges_gauntlets', 'judges_gauntlets', 'ジャッジガントレ',   6,  1,  2050, 0,  68),
+    (12807, 0, 'judges_cuisses',   'judges_cuisses',   'ジャッジクウィス',   6,  1,  2050, 0,  97),
+    (12935, 0, 'judges_greaves',   'judges_greaves',   'ジャッジグリーヴ',   6,  1,  2050, 0,  65),
+    (13074, 0, 'judges_gorget',    'judges_gorget',    'ジャッジゴルゲット', 6,  1,  2050, 0,  58),
+    (13215, 0, 'judges_belt',      'judges_belt',      'ジャッジベルト',     6,  1,  2050, 0,  64),
+    (13358, 0, 'judges_earring',   'judges_earring',   'ジャッジピアス',     6,  1,  2050, 0,  40),
+    (13505, 0, 'judges_ring',      'judges_ring',      'ジャッジリング',     6,  1,  2050, 0,  61),
+    (13606, 0, 'judges_cape',      'judges_cape',      'ジャッジケープ',     6,  1,  2050, 0, 131),
+    (16622, 0, 'judges_sword',     'judges_sword',     'ジャッジソード',     7,  1, 63554, 0,   0),
+    (17004, 0, 'judge_minnow',     'judge_minnow',     'ジャッジミノー',     7,  1,  2050, 0,  60),
+    (17012, 0, 'judges_rod',       'judges_rod',       'ジャッジロッド',     7,  1,  2050, 0,  64),
+    (17174, 0, 'judges_bow',       'judges_bow',       'ジャッジボウ',       7,  1, 63586, 0,   0),
+    (17326, 0, 'judges_arrow',     'judges_arrow',     'ジャッジアロー',     7, 99, 30786, 0,   0),
+    (17406, 0, 'judges_lure',      'judges_lure',      'ジャッジルアー',     7,  1,  2050, 0,  50),
+    (17644, 0, 'judges_sword',     'judges_sword',     'ジャッジソード',     7,  1, 63554, 0,   0),
+    (19325, 0, 'judge_fly',        'judge_fly',        'ジャッジフライ',     7,  1, 63554, 0,   0);
+
+INSERT IGNORE INTO `item_equipment` VALUES
+    (12332, 'judges_shield',    1, 0, 4194303,  22, 3, 0,     2, 0, 0, 0),
+    (12523, 'judges_helm',      1, 0, 4194303,  30, 0, 0,    16, 0, 0, 0),
+    (12551, 'judges_cuirass',   1, 0, 4194303,  30, 0, 0,    32, 0, 0, 0),
+    (12679, 'judges_gauntlets', 1, 0, 4194303,  30, 0, 0,    64, 0, 0, 0),
+    (12807, 'judges_cuisses',   1, 0, 4194303,  30, 0, 0,   128, 0, 0, 0),
+    (12935, 'judges_greaves',   1, 0, 4194303,  30, 0, 0,   256, 0, 0, 0),
+    (13074, 'judges_gorget',    1, 0, 4194303,   0, 0, 0,   512, 0, 0, 0),
+    (13215, 'judges_belt',      1, 0, 4194303,   0, 0, 0,  1024, 0, 0, 0),
+    (13358, 'judges_earring',   1, 0, 4194303,   0, 0, 0,  6144, 0, 0, 0),
+    (13505, 'judges_ring',      1, 0, 4194303,   0, 0, 0, 24576, 0, 0, 0),
+    (13606, 'judges_cape',      1, 0, 4194303,   0, 0, 0, 32768, 0, 0, 0),
+    (16622, 'judges_sword',     1, 0, 4194303, 308, 0, 0,     1, 0, 0, 0),
+    (17004, 'judge_minnow',     1, 0, 4194303,   0, 0, 0,     8, 0, 0, 0),
+    (17012, 'judges_rod',       1, 0, 4194303,  11, 0, 0,     4, 0, 0, 0),
+    (17174, 'judges_bow',       1, 0, 4194303,  40, 0, 0,     4, 0, 0, 0),
+    (17326, 'judges_arrow',     1, 0, 4194303,   0, 0, 0,     8, 0, 0, 0),
+    (17406, 'judges_lure',      1, 0, 4194303,   0, 0, 0,     8, 0, 0, 0),
+    (17644, 'judges_sword',     1, 0, 4194303, 390, 0, 0,     3, 0, 0, 0),
+    (19325, 'judge_fly',        1, 0, 4194303,   0, 0, 0,     8, 0, 0, 0);
+
+INSERT IGNORE INTO `item_weapon` VALUES
+    (16622, 'judges_sword',  4, 0, 0, 0, 0, 2, 1, 999,  99, 0),
+    (17004, 'judge_minnow', 48, 0, 0, 0, 0, 0, 1, 240,   0, 0),
+    (17012, 'judges_rod',    48, 0, 0, 0, 0, 0, 1, 240,   0, 0),
+    (17174, 'judges_bow',    25, 4, 0, 0, 0, 1, 1, 540, 100, 0),
+    (17326, 'judges_arrow',  25, 0, 0, 0, 0, 1, 1, 120, 100, 0),
+    (17406, 'judges_lure',   48, 0, 0, 0, 0, 0, 1, 240,   0, 0),
+    (17644, 'judges_sword',   3, 0, 0, 0, 0, 2, 1, 240,   0, 0),
+    (19325, 'judge_fly',     48, 0, 0, 0, 0, 0, 1, 240,   0, 0);
+
+INSERT IGNORE INTO `item_mods` VALUES
+    (12332, 1, 50),
+    (12523, 1, 50),
+    (12551, 1, 70),
+    (12679, 1, 50),
+    (12807, 1, 60),
+    (12935, 1, 50),
+    (13074, 1, 30),
+    (13215, 1, 40),
+    (13358, 1, 20),
+    (13505, 1, 20),
+    (13505, 387, -10000),
+    (13505, 388, -10000),
+    (13505, 389, -10000),
+    (13505, 390, -10000),
+    (13606, 1, 30),
+    (13606, 8, 9999),
+    (13606, 9, 9999),
+    (13606, 10, 9999),
+    (13606, 11, 9999),
+    (13606, 12, 9999),
+    (13606, 13, 9999),
+    (13606, 14, 9999);
