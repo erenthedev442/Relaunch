@@ -1,40 +1,427 @@
-﻿Collaborator review  2026-08-29 14:12:59
+﻿Collaborator review  2026-08-29 14:44:01
 Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit 3703b327d4c19c5e7d7218445bb7cd4e4fce23e1
+commit 1fd52d6eb72a53bb3fa4aae7c9f30996ecf13500
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Sat Aug 29 22:11:13 2026 +0100
+Date:   Sat Aug 29 22:32:02 2026 +0100
 
-    fix(relaunch): mark getHighestJobLevel const so the chat gate compiles
+    feat(relaunch): reset Kraken Club to farm-only numbered drops
     
-    MSVC rejected the new level-10 chat check because the helper took a const player pointer and the getter was not const.
+    Wipe existing clubs and close AH/Invasion sources so the first new drop is LEG0001. Keep Up in Arms at level 60 with a 2% roll, give Lord of Onzozo 5%, and announce each stamped club server-wide.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/src/map/entities/charentity.cpp b/src/map/entities/charentity.cpp
-index 57cd7451ae..8a59e65772 100644
---- a/src/map/entities/charentity.cpp
-+++ b/src/map/entities/charentity.cpp
-@@ -2584,7 +2584,7 @@ earth_time::time_point CCharEntity::GetTimeCreated()
-     return earth_time::time_point::min();
+diff --git a/modules/custom/cpp/kraken_club.cpp b/modules/custom/cpp/kraken_club.cpp
+new file mode 100644
+index 0000000000..127c7573df
+--- /dev/null
++++ b/modules/custom/cpp/kraken_club.cpp
+@@ -0,0 +1,70 @@
++#include "modules/custom/cpp/kraken_club.h"
++
++#include "common/database.h"
++#include "common/ipc_structs.h"
++#include "common/logging.h"
++#include "map/entities/charentity.h"
++#include "map/ipc_client.h"
++#include "map/items/item.h"
++
++#include <format>
++
++namespace krakenclub
++{
++auto stampNewItem(CCharEntity* PChar, CItem* PItem) -> uint32
++{
++    if (PChar == nullptr || PItem == nullptr || PItem->getID() != ItemId || !PItem->getSignature().empty())
++    {
++        return 0;
++    }
++
++    uint32 serial = 0;
++    db::transaction([&]()
++                    {
++                        if (!db::preparedStmt(
++                                "INSERT INTO kraken_club_serials (charid, charname) VALUES (?, ?)",
++                                PChar->id,
++                                PChar->getName()))
++                        {
++                            return;
++                        }
++
++                        if (const auto rset = db::preparedStmt("SELECT LAST_INSERT_ID() AS serial"); rset && rset->next())
++                        {
++                            serial = rset->get<uint32>("serial");
++                        }
++                    });
++
++    if (serial == 0)
++    {
++        ShowErrorFmt("Kraken Club: failed to allocate a serial for {}", PChar->getName());
++        return 0;
++    }
++
++    PItem->setSignature(std::format("LEG{:04d}", serial));
++    return serial;
++}
++
++void releaseSerial(const uint32 serial)
++{
++    if (serial != 0)
++    {
++        db::preparedStmt("DELETE FROM kraken_club_serials WHERE serial = ?", serial);
++    }
++}
++
++void announce(CCharEntity* PChar, const std::string& signature)
++{
++    if (PChar == nullptr || signature.empty())
++    {
++        return;
++    }
++
++    message::send(ipc::ChatMessageServerMessage{
++        .senderId    = PChar->id,
++        .senderName  = "Relaunch",
++        .message     = std::format("Congratulations to {} on obtaining Kraken Club {}!", PChar->getName(), signature),
++        .messageType = MESSAGE_SYSTEM_3,
++    });
++}
++} // namespace krakenclub
+diff --git a/modules/custom/cpp/kraken_club.h b/modules/custom/cpp/kraken_club.h
+new file mode 100644
+index 0000000000..87aeef82e3
+--- /dev/null
++++ b/modules/custom/cpp/kraken_club.h
+@@ -0,0 +1,23 @@
++#pragma once
++
++#include "common/cbasetypes.h"
++
++#include <string>
++
++class CCharEntity;
++class CItem;
++
++namespace krakenclub
++{
++inline constexpr uint16 ItemId = 17440;
++
++// Assigns the next persistent LEG serial to a newly-created Kraken Club.
++// Returns zero if the serial could not be allocated; callers must fail closed.
++auto stampNewItem(CCharEntity* PChar, CItem* PItem) -> uint32;
++
++// Removes an unused serial after an item insertion failure.
++void releaseSerial(uint32 serial);
++
++// Congratulates the recipient across every map server.
++void announce(CCharEntity* PChar, const std::string& signature);
++} // namespace krakenclub
+diff --git a/modules/custom/lua/invasion_loot_pool.lua b/modules/custom/lua/invasion_loot_pool.lua
+index 0556f89855..f5befd3104 100644
+--- a/modules/custom/lua/invasion_loot_pool.lua
++++ b/modules/custom/lua/invasion_loot_pool.lua
+@@ -355,7 +355,7 @@ return {
+     17371, 17372, 17373, 17374, 17375, 17376, 17377, 17378, 17379, 17380, 17381, 17382, 17383, 17384, 17385, 17386, 17387, 17388, 17389, 17390,
+     17391, 17392, 17393, 17394, 17395, 17396, 17397, 17398, 17399, 17400, 17401, 17402, 17403, 17404, 17405, 17407, 17408, 17409, 17410, 17411,
+     17412, 17413, 17414, 17415, 17416, 17417, 17418, 17419, 17420, 17421, 17422, 17423, 17424, 17425, 17426, 17427, 17428, 17429, 17430, 17431,
+-    17432, 17433, 17434, 17435, 17436, 17437, 17438, 17439, 17440, 17441, 17442, 17443, 17444, 17445, 17446, 17447, 17448, 17449, 17450, 17451,
++    17432, 17433, 17434, 17435, 17436, 17437, 17438, 17439, 17441, 17442, 17443, 17444, 17445, 17446, 17447, 17448, 17449, 17450, 17451,
+     17452, 17453, 17454, 17455, 17456, 17457, 17458, 17459, 17460, 17461, 17462, 17463, 17464, 17465, 17466, 17467, 17468, 17469, 17470, 17471,
+     17472, 17473, 17474, 17475, 17476, 17477, 17478, 17479, 17480, 17481, 17482, 17483, 17484, 17485, 17486, 17487, 17488, 17489, 17490, 17491,
+     17492, 17493, 17494, 17495, 17496, 17497, 17498, 17499, 17500, 17501, 17502, 17503, 17504, 17505, 17506, 17507, 17508, 17509, 17510, 17511,
+diff --git a/modules/custom/sql/zz_kraken_club_relaunch.sql b/modules/custom/sql/zz_kraken_club_relaunch.sql
+new file mode 100644
+index 0000000000..e84f6214dc
+--- /dev/null
++++ b/modules/custom/sql/zz_kraken_club_relaunch.sql
+@@ -0,0 +1,117 @@
++-- Relaunch Kraken Club reset and acquisition policy.
++--
++-- The wipe is guarded by a migration marker: it runs exactly once on an
++-- existing database, while the source and auction restrictions are safe to
++-- re-apply on every deploy.  Deploy applies custom SQL while xi_map is stopped,
++-- preventing logged-in inventory state from writing deleted clubs back.
++
++CREATE TABLE IF NOT EXISTS `relaunch_migrations` (
++    `name`       varchar(100) NOT NULL,
++    `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
++    PRIMARY KEY (`name`)
++) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
++
++CREATE TABLE IF NOT EXISTS `kraken_club_serials` (
++    `serial`      int(10) unsigned NOT NULL AUTO_INCREMENT,
++    `charid`      int(10) unsigned NOT NULL,
++    `charname`    varchar(15) NOT NULL,
++    `acquired_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
++    PRIMARY KEY (`serial`),
++    KEY `charid` (`charid`)
++) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
++
++SET @wipe_kraken_clubs = (
++    SELECT COUNT(*) = 0
++    FROM `relaunch_migrations`
++    WHERE `name` = '2026-08-29-kraken-club-reset'
++);
++
++-- Remove equipped references before deleting their inventory slots.
++DELETE ce
++FROM `char_equip` AS ce
++INNER JOIN `char_inventory` AS ci
++    ON ci.`charid` = ce.`charid`
++   AND ci.`location` = ce.`containerid`
++   AND ci.`slot` = ce.`slotid`
++WHERE @wipe_kraken_clubs = 1
++  AND ci.`itemId` = 17440;
++
++-- Saved equipment sets store item IDs directly.
++UPDATE `char_equip_saved`
++SET
++    `main`   = IF(`main`   = 17440, 0, `main`),
++    `sub`    = IF(`sub`    = 17440, 0, `sub`),
++    `ranged` = IF(`ranged` = 17440, 0, `ranged`),
++    `ammo`   = IF(`ammo`   = 17440, 0, `ammo`),
++    `head`   = IF(`head`   = 17440, 0, `head`),
++    `body`   = IF(`body`   = 17440, 0, `body`),
++    `hands`  = IF(`hands`  = 17440, 0, `hands`),
++    `legs`   = IF(`legs`   = 17440, 0, `legs`),
++    `feet`   = IF(`feet`   = 17440, 0, `feet`),
++    `neck`   = IF(`neck`   = 17440, 0, `neck`),
++    `waist`  = IF(`waist`  = 17440, 0, `waist`),
++    `ear1`   = IF(`ear1`   = 17440, 0, `ear1`),
++    `ear2`   = IF(`ear2`   = 17440, 0, `ear2`),
++    `ring1`  = IF(`ring1`  = 17440, 0, `ring1`),
++    `ring2`  = IF(`ring2`  = 17440, 0, `ring2`),
++    `back`   = IF(`back`   = 17440, 0, `back`)
++WHERE @wipe_kraken_clubs = 1
++  AND 17440 IN (
++      `main`, `sub`, `ranged`, `ammo`, `head`, `body`, `hands`, `legs`,
++      `feet`, `neck`, `waist`, `ear1`, `ear2`, `ring1`, `ring2`, `back`
++  );
++
++DELETE FROM `char_inventory`
++WHERE @wipe_kraken_clubs = 1
++  AND `itemId` = 17440;
++
++UPDATE `char_look`
++SET
++    `main`   = IF(`main`   = 17440, 0, `main`),
++    `sub`    = IF(`sub`    = 17440, 0, `sub`),
++    `ranged` = IF(`ranged` = 17440, 0, `ranged`)
++WHERE @wipe_kraken_clubs = 1
++  AND 17440 IN (`main`, `sub`, `ranged`);
++
++UPDATE `char_style`
++SET
++    `main`   = IF(`main`   = 17440, 0, `main`),
++    `sub`    = IF(`sub`    = 17440, 0, `sub`),
++    `ranged` = IF(`ranged` = 17440, 0, `ranged`)
++WHERE @wipe_kraken_clubs = 1
++  AND 17440 IN (`main`, `sub`, `ranged`);
++
++DELETE FROM `delivery_box`
++WHERE @wipe_kraken_clubs = 1
++  AND (`itemid` = 17440 OR `itemsubid` = 17440);
++
++DELETE FROM `auction_house`
++WHERE @wipe_kraken_clubs = 1
++  AND `itemid` = 17440;
++
++-- Clear any pre-release serial ledger only as part of the one-time clean slate.
++DELETE FROM `kraken_club_serials`
++WHERE @wipe_kraken_clubs = 1;
++
++INSERT IGNORE INTO `relaunch_migrations` (`name`)
++VALUES ('2026-08-29-kraken-club-reset');
++
++-- Kraken Club may be traded directly, but cannot be listed on the AH.
++UPDATE `item_basic`
++SET `aH` = 0,
++    -- Inscribable makes the LEG serial visible/reloadable; NoAuction blocks listings.
++    `flags` = `flags` | 32 | 64
++WHERE `itemid` = 17440;
++
++DELETE FROM `auction_house_items`
++WHERE `itemid` = 17440;
++
++-- Lord of Onzozo: exactly one Kraken Club roll at 5%.
++DELETE FROM `mob_droplist`
++WHERE `dropId` = 1536
++  AND `itemId` IN (18852, 17440);
++
++INSERT INTO `mob_droplist`
++    (`dropId`, `dropType`, `groupId`, `groupRate`, `itemId`, `itemRate`)
++VALUES
++    (1536, 0, 0, 1000, 17440, 50);
+diff --git a/modules/init.txt b/modules/init.txt
+index a88c52d2ea..be85431b75 100644
+--- a/modules/init.txt
++++ b/modules/init.txt
+@@ -48,4 +48,5 @@ custom/cpp/auto_spend_bindings.cpp
+ custom/cpp/augment_catalyst_bank_bindings.cpp
+ custom/cpp/cross_job_ability_bindings.cpp
+ custom/cpp/fjb_entity_bindings.cpp
+-custom/cpp/fjb_combat.cpp
+\ No newline at end of file
++custom/cpp/fjb_combat.cpp
++custom/cpp/kraken_club.cpp
+\ No newline at end of file
+diff --git a/scripts/battlefields/Waughroon_Shrine/up_in_arms.lua b/scripts/battlefields/Waughroon_Shrine/up_in_arms.lua
+index f8a85b57ff..972e845bfc 100644
+--- a/scripts/battlefields/Waughroon_Shrine/up_in_arms.lua
++++ b/scripts/battlefields/Waughroon_Shrine/up_in_arms.lua
+@@ -16,6 +16,12 @@ local content = Battlefield:new({
+     entryNpc         = 'BC_Entrance',
+     exitNpc          = 'Burning_Circle',
+     requiredItems    = { xi.item.MOON_ORB, wearMessage = waughroonID.text.A_CRACK_HAS_FORMED, wornMessage = waughroonID.text.ORB_IS_CRACKED },
++    armouryCrates    =
++    {
++        waughroonID.mob.FEE + 1,
++        waughroonID.mob.FEE + 3,
++        waughroonID.mob.FEE + 5,
++    },
+ })
+ 
+ content:addEssentialMobs({ 'Fee' })
+@@ -80,13 +86,10 @@ content.loot =
+         { itemId = xi.item.VILE_ELIXIR_P1,      weight =   200 },
+     },
+ 
+-    -- This drop rate is not a mistake
+-    -- https://www.ffxiah.com/forum/topic/54987/up-in-arms-bcnm/2/#3648004
+-    -- Thorny noted only 3 drops out of 17,000 runs. Extremely rare.
+-    -- BG Wiki States its also "signficantly rarer" than UR. (.1%)
++    -- Relaunch: meaningful alternative to the 5% Lord of Onzozo source.
+     {
+-        { itemId = xi.item.NONE,                weight =  9999 },
+-        { itemId = xi.item.KRAKEN_CLUB,         weight =     1 },
++        { itemId = xi.item.NONE,                weight =  9800 },
++        { itemId = xi.item.KRAKEN_CLUB,         weight =   200 },
+     },
  }
  
--uint8 CCharEntity::getHighestJobLevel()
-+uint8 CCharEntity::getHighestJobLevel() const
- {
-     uint8 maxJobLevel = 0;
+diff --git a/scripts/tests/systems/kraken_club.lua b/scripts/tests/systems/kraken_club.lua
+new file mode 100644
+index 0000000000..8cbbb88c0b
+--- /dev/null
++++ b/scripts/tests/systems/kraken_club.lua
+@@ -0,0 +1,39 @@
++describe('Kraken Club acquisition', function()
++    local content = require('scripts/battlefields/Waughroon_Shrine/up_in_arms')
++    local invasionLoot = require('modules/custom/lua/invasion_loot_pool')
++
++    it('keeps Up in Arms retail entry and level restrictions', function()
++        assert(content.zoneId == xi.zone.WAUGHROON_SHRINE)
++        assert(content.battlefieldId == xi.battlefield.id.UP_IN_ARMS)
++        assert(content.maxPlayers == 3)
++        assert(content.levelCap == 60)
++        assert(content.timeLimit == utils.minutes(15))
++        assert(content.requiredItems[1] == xi.item.MOON_ORB)
++        assert(content.groups[1].mobs[1] == 'Fee')
++        assert(content.groups[1].allDeath ~= nil)
++        assert(#content.armouryCrates == 3)
++        assert(content.armouryCrates[1] == zones[xi.zone.WAUGHROON_SHRINE].mob.FEE + 1)
++    end)
++
++    it('sets the Up in Arms Kraken Club roll to exactly two percent', function()
++        local group = content.loot[#content.loot]
++        local total = 0
++        local clubWeight = 0
++
++        for _, entry in ipairs(group) do
++            total = total + entry.weight
++            if entry.itemId == xi.item.KRAKEN_CLUB then
++                clubWeight = entry.weight
++            end
++        end
++
++        assert(total == 10000)
++        assert(clubWeight == 200)
++    end)
++
++    it('does not allow Invasion to create another Kraken Club source', function()
++        for _, itemId in ipairs(invasionLoot) do
++            assert(itemId ~= xi.item.KRAKEN_CLUB)
++        end
++    end)
++end)
+diff --git a/scripts/zones/Waughroon_Shrine/IDs.lua b/scripts/zones/Waughroon_Shrine/IDs.lua
+index c59f8c8d51..2c655e0630 100644
+--- a/scripts/zones/Waughroon_Shrine/IDs.lua
++++ b/scripts/zones/Waughroon_Shrine/IDs.lua
+@@ -56,6 +56,7 @@ zones[xi.zone.WAUGHROON_SHRINE] =
+     mob =
+     {
+         ATORI_TUTORI      = GetFirstID('Atori-Tutori_qm'),
++        FEE               = GetFirstID('Fee'),
+         FLAYER_FRANZ      = GetFirstID('Flayer_Franz'),
+         GAKI              = GetFirstID('Gaki'),
+         KUJHU_GRANITESKIN = GetFirstID('KuJhu_Graniteskin'),
+diff --git a/src/map/utils/charutils.cpp b/src/map/utils/charutils.cpp
+index 4e9a028c8d..9f4e1c0bf3 100644
+--- a/src/map/utils/charutils.cpp
++++ b/src/map/utils/charutils.cpp
+@@ -26,6 +26,8 @@
+ #include "common/utils.h"
+ #include "common/vana_time.h"
  
-diff --git a/src/map/entities/charentity.h b/src/map/entities/charentity.h
-index 150e6a7a73..a46a452f68 100644
---- a/src/map/entities/charentity.h
-+++ b/src/map/entities/charentity.h
-@@ -707,7 +707,7 @@ public:
++#include "modules/custom/cpp/kraken_club.h"
++
+ #include <algorithm>
+ #include <array>
+ #include <chrono>
+@@ -1757,10 +1759,22 @@ auto AddItem(CCharEntity* PChar, uint8 LocationID, std::unique_ptr<CItem> PItem,
+         return ERROR_SLOTID;
+     }
  
-     earth_time::time_point GetTimeCreated();
++    uint32 krakenSerial = 0;
++    if (PItem->getID() == krakenclub::ItemId && PItem->getSignature().empty())
++    {
++        krakenSerial = krakenclub::stampNewItem(PChar, PItem.get());
++        if (krakenSerial == 0)
++        {
++            // Never create an unnumbered Kraken Club.
++            return ERROR_SLOTID;
++        }
++    }
++
+     auto* PStorage = PChar->getStorage(LocationID);
+     uint8 SlotID   = PStorage->InsertItem(std::move(PItem));
+     if (SlotID == ERROR_SLOTID)
+     {
++        krakenclub::releaseSerial(krakenSerial);
+         ShowDebug("AddItem: Location %i is full", LocationID);
+         return SlotID;
+     }
+@@ -1782,12 +1796,18 @@ auto AddItem(CCharEntity* PChar, uint8 LocationID, std::unique_ptr<CItem> PItem,
+     {
+         ShowError("AddItem: Cannot insert item to database");
+         PStorage->RemoveItem(SlotID);
++        krakenclub::releaseSerial(krakenSerial);
+         return ERROR_SLOTID;
+     }
  
--    uint8 getHighestJobLevel();
-+    uint8 getHighestJobLevel() const;
+     PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PInserted, static_cast<CONTAINER_ID>(LocationID), SlotID);
+     PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
  
-     bool isInTriggerArea(uint32 triggerAreaId);
-     void onTriggerAreaEnter(uint32 tiggerAreaId);
++    if (krakenSerial != 0)
++    {
++        krakenclub::announce(PChar, PInserted->getSignature());
++    }
++
+     return SlotID;
+ }
+ 
+diff --git a/tools/ah_market_maker.py b/tools/ah_market_maker.py
+index c5235af184..aa0db51fcd 100644
+--- a/tools/ah_market_maker.py
++++ b/tools/ah_market_maker.py
+@@ -232,7 +232,7 @@ def process_item(cur, item, commit):
+ # Aliases: e = item_equipment, b = item_basic. ~4,368 items match after the
+ # HQ exclusion (~1,322 +N pieces dropped).
+ GEAR_FROM = "item_equipment e JOIN item_basic b ON b.itemid = e.itemId"
+-GEAR_WHERE = ("e.ilevel = 0 AND b.aH <> 0 "
++GEAR_WHERE = ("e.ilevel = 0 AND b.aH <> 0 AND e.itemId <> 17440 "
+               "AND (b.flags & 64) = 0 AND (b.flags & 16384) = 0 "
+               "AND b.name NOT REGEXP '[+][0-9]+$'")
+ 
