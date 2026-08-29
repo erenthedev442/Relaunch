@@ -1,103 +1,61 @@
-﻿Collaborator review  2026-08-28 09:53:16
+﻿Collaborator review  2026-08-28 17:53:46
 Range: HEAD..origin/relaunch  (1 collaborator commit(s))
 
 ==============================================================================
-commit 2ecb68384073d16ece2b287a65b1233e938895c6
+commit 858968c7c958d8b92ec64da5fe54f467e53edc40
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Fri Aug 28 16:52:58 2026 +0100
+Date:   Sat Aug 29 01:50:35 2026 +0100
 
-    fix(relaunch): stop Legendary Ring from appearing as random loot
+    fix(relaunch): stop Sparks vendors from selling equipment
     
-    The old Reraise Ring flag still let Gobbie Mystery Box roll it, and the Invasion dump still listed it. The ring should only come from the starter and Legacy grants.
+    Western Adoulin was still fulfilling Lv.1-39 gear and Capacity Ring. Block those categories so no Sparks NPC can sell gear.
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/modules/custom/commands/invasion.lua b/modules/custom/commands/invasion.lua
-index ffbd594960..0365d4cc46 100644
---- a/modules/custom/commands/invasion.lua
-+++ b/modules/custom/commands/invasion.lua
-@@ -16,7 +16,12 @@
- -- RETIRED for launch ΓÇö keep in sync with modules/custom/lua/Invasion.lua.
- -----------------------------------
- local catalog   = require('modules/custom/lua/invasion_catalog')
--local LOOT_POOL = require('modules/custom/lua/invasion_loot_pool')
-+local LOOT_POOL = {}
-+for _, id in ipairs(require('modules/custom/lua/invasion_loot_pool')) do
-+    if id ~= 26169 then -- Legendary Ring: legacy/starter grant only
-+        LOOT_POOL[#LOOT_POOL + 1] = id
-+    end
-+end
- local LOOT_POOL_SIZE = #LOOT_POOL
- local DROP_CHANCE = 15  -- % per mob kill
- local RETIRED = true
-diff --git a/modules/custom/lua/Invasion.lua b/modules/custom/lua/Invasion.lua
-index b838933237..5ce5587562 100644
---- a/modules/custom/lua/Invasion.lua
-+++ b/modules/custom/lua/Invasion.lua
-@@ -36,9 +36,10 @@ local RETIRED_MSG = 'Al Zahbi Invasion is disabled for launch.'
- -- keeps the change in one place and survives pool regeneration.
- -- EXCLUSIVE_IDS = ALL Ambuscade stages (2026-07-10; feedstock earned from Ambuscade).
- local AMBU_WPN_IDS = require('modules/custom/lua/ambuscade_weapons_catalog').EXCLUSIVE_IDS
-+local RESERVED_LOOT = { [26169] = true } -- Legendary Ring: legacy/starter grant only
- local LOOT_POOL = {}
- for _, id in ipairs(require('modules/custom/lua/invasion_loot_pool')) do
--    if not AMBU_WPN_IDS[id] then LOOT_POOL[#LOOT_POOL + 1] = id end
-+    if not AMBU_WPN_IDS[id] and not RESERVED_LOOT[id] then LOOT_POOL[#LOOT_POOL + 1] = id end
- end
+diff --git a/scripts/globals/sparkshop.lua b/scripts/globals/sparkshop.lua
+index d1801c978b..736dba2ed9 100644
+--- a/scripts/globals/sparkshop.lua
++++ b/scripts/globals/sparkshop.lua
+@@ -24,7 +24,6 @@ local optionToItem =
+         [ 9] = { cost = 15000, id =  4071 }, -- Copy of Rem's Tale, chapter 8
+         [10] = { cost = 15000, id =  4072 }, -- Copy of Rem's Tale, chapter 9
+         [11] = { cost = 15000, id =  4073 }, -- Copy of Rem's Tale, chapter 10
+-        [12] = { cost =  5000, id = 28546 }, -- Capacity Ring
+         [13] = { cost = 10000, id =  9009 }, -- Etched Memory
+     },
  
- -----------------------------------
-diff --git a/modules/custom/lua/invasion_loot_pool.lua b/modules/custom/lua/invasion_loot_pool.lua
-index cde5575b28..0556f89855 100644
---- a/modules/custom/lua/invasion_loot_pool.lua
-+++ b/modules/custom/lua/invasion_loot_pool.lua
-@@ -653,7 +653,7 @@ return {
-     26023, 26026, 26027, 26028, 26029, 26030, 26031, 26032, 26033, 26034, 26035, 26036, 26037, 26038, 26039, 26040, 26041, 26042, 26043, 26078,
-     26079, 26080, 26081, 26082, 26083, 26084, 26085, 26086, 26087, 26088, 26089, 26090, 26091, 26092, 26093, 26094, 26095, 26096, 26097, 26098,
-     26099, 26100, 26101, 26102, 26103, 26104, 26105, 26106, 26107, 26108, 26109, 26110, 26111, 26112, 26113, 26114, 26115, 26116, 26117, 26118,
--    26119, 26120, 26160, 26161, 26162, 26163, 26164, 26165, 26166, 26167, 26168, 26169, 26170, 26171, 26172, 26173, 26174, 26175, 26176, 26177,
-+    26119, 26120, 26160, 26161, 26162, 26163, 26164, 26165, 26166, 26167, 26168, 26170, 26171, 26172, 26173, 26174, 26175, 26176, 26177,  -- 26169 (Legendary Ring) excluded: legacy heirloom, not loot
-     26178, 26179, 26180, 26181, 26182, 26183, 26184, 26185, 26186, 26187, 26188, 26189, 26190, 26191, 26192, 26193, 26194, 26195, 26196, 26197,
-     26198, 26199, 26200, 26201, 26202, 26203, 26204, 26205, 26206, 26207, 26208, 26209, 26210, 26211, 26212, 26213, 26214, 26215, 26216, 26217,
-     26218, 26219, 26220, 26221, 26222, 26223, 26224, 26225, 26226, 26227, 26228, 26229, 26230, 26231, 26232, 26233, 26234, 26235, 26236, 26240,
-diff --git a/modules/custom/sql/legendary_ring.sql b/modules/custom/sql/legendary_ring.sql
-index 058ad7a501..2902db01f9 100644
---- a/modules/custom/sql/legendary_ring.sql
-+++ b/modules/custom/sql/legendary_ring.sql
-@@ -30,12 +30,14 @@
- -- Reraise" is a guard in src/map/entities/charentity.cpp.
- --
- -- CLIENT DISPLAY: repurposes retail item 26169 (reraise_ring) -- already Lv.1,
---- all-jobs, ring-slot, Rare/Ex, USABLE (item_usable enchantment), and absent
---- from every Relaunch droplist/vendor/quest. The custom "Legendary Ring" name
---- needs the client DAT override (see "Custom DATs/Relaunch Custom DATs"); with-
---- out it the client shows the retail "Reraise Ring" name (a sensible fallback).
-+-- all-jobs, ring-slot, Rare/Ex, USABLE (item_usable enchantment). The custom
-+-- "Legendary Ring" name needs the client DAT override (see
-+-- "Custom DATs/Relaunch Custom DATs"); without it the client shows the retail
-+-- "Reraise Ring" name (a sensible fallback).
- --
---- GRANTED BY: modules/custom/lua/legacy_ring_grant.lua on login.
-+-- NOT LOOT: never grant this from mobs, NMs, shops, or Gobbie Mystery Box.
-+-- GRANTED BY: modules/custom/lua/legacy_ring_grant.lua and
-+-- modules/custom/lua/new_char_starter_marks.lua only.
- --
- -- Apply, then RESTART the map -- item_basic / item_equipment / item_mods /
- -- item_usable are cached at boot. The charentity.cpp guard needs a REBUILD.
-@@ -43,10 +45,16 @@
- -- ============================================================================
+@@ -336,19 +335,17 @@ function xi.sparkshop.onEventUpdate(player, csid, option, npc)
+     local category = bit.band(option, 0xFF)
+     local selection = bit.rshift(option, 16)
  
- -- ----- server-side name (GM commands / logging); display name is DAT-driven --
-+-- flags & ~4 drops FLAG_MYSTERY_BOX so SelectDailyItem / Gobbie Box cannot roll it.
- UPDATE `item_basic`
--   SET `name` = 'legendary_ring', `sortname` = 'legendary_ring'
-+   SET `name` = 'legendary_ring', `sortname` = 'legendary_ring',
-+       `flags` = `flags` & ~4
-  WHERE `itemid` = 26169;
+-    -- Relaunch: no skill tomes (2), no Lv.40+ gear (7-10), no A.M.A.N. voucher
+-    -- currency/provisions (20/30). Lv.1-39 gear (3-6) and Items/Trusts remain.
++    -- Relaunch: no skill tomes (2), equipment (3-10), or A.M.A.N. voucher
++    -- currency/provisions (20/30). Only non-equipment Items and Trusts remain.
+     if category == 2 then
+         player:updateEvent(sparks, 0, 0, 0, 0, remainingLimit)
+         player:printToPlayer('[Sparks] Skill-increasing tomes are no longer sold here.', xi.msg.channel.SYSTEM_3)
+         return
+     end
  
-+-- Belt-and-suspenders: strip any leftover corpse / shop rows if a live DB
-+-- still has them from an older import.
-+DELETE FROM `mob_droplist` WHERE `itemId` = 26169;
-+
- -- ----- equip rule: Lv.1, all jobs (4194303), ring slot (24576) ---------------
- UPDATE `item_equipment`
-    SET `name` = 'legendary_ring', `level` = 1, `ilevel` = 0, `jobs` = 4194303, `slot` = 24576
+-    if category >= 7 and category <= 10 then
++    if category >= 3 and category <= 10 then
+         player:updateEvent(sparks, 0, 0, 0, 0, remainingLimit)
+-        player:printToPlayer(
+-            '[Sparks] Level 40+ gear is no longer sold here. Farm Hunting League medals at Escha - Zi\'Tah for gear.',
+-            xi.msg.channel.SYSTEM_3)
++        player:printToPlayer('[Sparks] Equipment is no longer sold here.', xi.msg.channel.SYSTEM_3)
+         return
+     end
+ 
+@@ -366,8 +363,8 @@ function xi.sparkshop.onEventUpdate(player, csid, option, npc)
+         qty = requestedQty
+     end
+ 
+-    -- Sparks item purchases (Items, Lv.1-39 gear, Trust ciphers).
+-    if (category >= 1 and category <= 6) or category == 12 then
++    -- Sparks item purchases (non-equipment Items and Trust ciphers).
++    if category == 1 or category == 12 then
+         local itemCategory = optionToItem[category]
+         local item         = itemCategory and itemCategory[selection]
+ 
