@@ -291,6 +291,10 @@ xi.settings.map =
     -- Minimum time between uses of yell command (in seconds).
     YELL_COOLDOWN = 30,
 
+    -- Minimum highest job level before say/shout/yell/linkshell/etc. (0 = disabled).
+    -- Party chat and tells stay available below this level.
+    MIN_CHAT_LEVEL = 0,
+
     -- Prevent players from sending tells to hidden GMs. You will still receive them from other GMs.
     BLOCK_TELL_TO_HIDDEN_GM = false,
 

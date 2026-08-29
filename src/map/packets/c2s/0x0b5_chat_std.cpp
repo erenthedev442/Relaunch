@@ -79,6 +79,22 @@ const auto auditUnity = [](Scheduler& scheduler, CCharEntity* PChar, const std::
     }
 };
 
+const auto isBelowMinChatLevel = [](const CCharEntity* PChar) -> bool
+{
+    if (PChar->m_GMlevel > 0)
+    {
+        return false;
+    }
+
+    const auto minLevel = settings::get<uint8>("map.MIN_CHAT_LEVEL");
+    if (minLevel == 0)
+    {
+        return false;
+    }
+
+    return PChar->getHighestJobLevel() < minLevel;
+};
+
 const auto auditLinkshell = [](Scheduler& scheduler, CCharEntity* PChar, CLinkshell* PLinkshell, const std::string& rawMessage)
 {
     if (settings::get<bool>("map.AUDIT_CHAT") && settings::get<uint8>("map.AUDIT_LINKSHELL"))
@@ -160,8 +176,21 @@ void GP_CLI_COMMAND_CHAT_STD::process(MapSession* PSession, CCharEntity* PChar) 
         return;
     }
 
+    const auto chatKind = static_cast<GP_CLI_COMMAND_CHAT_STD_KIND>(this->Kind);
+
+    // Low-level characters may only use party chat here; tells use GP_CLI_COMMAND_CHAT_NAME.
+    if (chatKind != GP_CLI_COMMAND_CHAT_STD_KIND::Party && isBelowMinChatLevel(PChar))
+    {
+        const auto minLevel = settings::get<uint8>("map.MIN_CHAT_LEVEL");
+        PChar->pushPacket<GP_SERV_COMMAND_CHAT_STD>(
+            PChar,
+            MESSAGE_SYSTEM_1,
+            std::format("Chat is locked until level {}. You can still use /party and tells.", minLevel));
+        return;
+    }
+
     // Now handle every other chat type
-    switch (static_cast<GP_CLI_COMMAND_CHAT_STD_KIND>(this->Kind))
+    switch (chatKind)
     {
         case GP_CLI_COMMAND_CHAT_STD_KIND::Say:
         {
