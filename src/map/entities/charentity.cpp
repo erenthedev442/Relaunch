@@ -2584,7 +2584,7 @@ earth_time::time_point CCharEntity::GetTimeCreated()
     return earth_time::time_point::min();
 }
 
-uint8 CCharEntity::getHighestJobLevel()
+uint8 CCharEntity::getHighestJobLevel() const
 {
     uint8 maxJobLevel = 0;
 

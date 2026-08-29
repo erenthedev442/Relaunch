@@ -707,7 +707,7 @@ public:
 
     earth_time::time_point GetTimeCreated();
 
-    uint8 getHighestJobLevel();
+    uint8 getHighestJobLevel() const;
 
     bool isInTriggerArea(uint32 triggerAreaId);
     void onTriggerAreaEnter(uint32 tiggerAreaId);
