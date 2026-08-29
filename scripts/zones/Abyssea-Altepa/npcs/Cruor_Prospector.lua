@@ -141,7 +141,11 @@ entity.onEventFinish = function(player, csid, option, npc)
     local cruorTotal = player:getCurrency('cruor')
 
     if itemCategory == xi.abyssea.itemType.ITEM then
-        local itemData = prospectorItems[itemCategory][itemSelected]
+        local itemData = prospectorItems[itemCategory] and prospectorItems[itemCategory][itemSelected]
+        if not itemData or xi.shop.blockEquipmentPurchase(player, itemData[1]) then
+            return
+        end
+
         local itemQty = itemData[1] ~= xi.item.FORBIDDEN_KEY and 1 or bit.rshift(option, 24)
         local itemCost = itemData[2] * itemQty
 

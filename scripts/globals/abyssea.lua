@@ -4,6 +4,7 @@
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
 require('scripts/globals/extravaganza')
+require('scripts/globals/shop')
 -----------------------------------
 xi = xi or {}
 xi.abyssea = xi.abyssea or {}
@@ -655,7 +656,11 @@ xi.abyssea.visionsCruorProspectorOnEventFinish = function(player, csid, option, 
     local cruorTotal = player:getCurrency('cruor')
 
     if itemCategory == itemType.ITEM then
-        local itemData = prospectorItems[itemCategory][itemSelected]
+        local itemData = prospectorItems[itemCategory] and prospectorItems[itemCategory][itemSelected]
+        if not itemData or xi.shop.blockEquipmentPurchase(player, itemData[1]) then
+            return
+        end
+
         local itemQty = itemData[1] ~= xi.item.FORBIDDEN_KEY and 1 or bit.rshift(option, 24)
         local itemCost = itemData[2] * itemQty
 

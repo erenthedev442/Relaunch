@@ -6,6 +6,41 @@ require('scripts/globals/conquest')
 xi = xi or {}
 xi.shop = xi.shop or {}
 -----------------------------------
+-- True for weapons, armor, accessories, and grips. Ammo stays buyable.
+xi.shop.isEquipment = function(itemId)
+    local item = GetItemByID(itemId)
+    if not item then
+        return false
+    end
+
+    local ah = item:getAHCat()
+    if ah == xi.itemAHCategory.AMMUNITION then
+        return false
+    end
+
+    if
+        ah >= xi.itemAHCategory.H2H and
+        ah <= xi.itemAHCategory.BACK
+    then
+        return true
+    end
+
+    if ah == xi.itemAHCategory.GRIPS then
+        return true
+    end
+
+    return item:isType(xi.itemType.ARMOR) or item:isType(xi.itemType.WEAPON)
+end
+
+xi.shop.blockEquipmentPurchase = function(player, itemId)
+    if xi.shop.isEquipment(itemId) then
+        player:printToPlayer('[Shop] Equipment is not sold here.', xi.msg.channel.SYSTEM_3)
+        return true
+    end
+
+    return false
+end
+
 local marketsID    = zones[xi.zone.BASTOK_MARKETS]
 local metalworksID = zones[xi.zone.METALWORKS]
 local minesID      = zones[xi.zone.BASTOK_MINES]
@@ -728,45 +763,8 @@ xi.shop.curioVendorMoogleStock =
         { xi.item.PSOXJA_CHEST_KEY,      2500, xi.ki.RHAPSODY_IN_WHITE },
     },
 
-    [xi.shop.curio.equipment] =
-    {
-        { xi.item.ENIF_CORAZZA,       30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.ADHARA_MANTEEL,     30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.MURZIM_CORAZZA,     30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.SHEDIR_MANTEEL,     30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.SORTIARIUS_EARRING, 30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.ENIF_MANOPOLAS,     30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.ADHARA_GAGES,       30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.MURZIM_MANOPOLAS,   30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.SHEDIR_GAGES,       30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.ENIF_COSCIALES,     30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.ADHARA_SERAWEELS,   30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.MURZIM_COSCIALES,   30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.SHEDIR_SERAWEELS,   30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.ENIF_GAMBIERAS,     30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.ADHARA_CRACKOWS,    30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.MURZIM_GAMBIERAS,   30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.SHEDIR_CRACKOWS,    30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.ENIF_ZUCCHETTO,     30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.ADHARA_TURBAN,      30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.MURZIM_ZUCCHETTO,   30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.SHEDIR_TURBAN,      30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.PATENTIA_SASH,      30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.PRODIGIOUS_MANTLE,  30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.ALGIDUS_CAPE,       30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.HOMAM_CORAZZA,      10000, xi.ki.RHAPSODY_IN_WHITE },
-        { xi.item.NASHIRA_MANTEEL,    10000, xi.ki.RHAPSODY_IN_WHITE },
-        { xi.item.HOMAM_MANOPOLAS,    10000, xi.ki.RHAPSODY_IN_WHITE },
-        { xi.item.NASHIRA_GAGES,      10000, xi.ki.RHAPSODY_IN_WHITE },
-        { xi.item.HOMAM_ZUCCHETTO,    10000, xi.ki.RHAPSODY_IN_WHITE },
-        { xi.item.NASHIRA_TURBAN,     10000, xi.ki.RHAPSODY_IN_WHITE },
-        { xi.item.HOMAM_COSCIALES,    10000, xi.ki.RHAPSODY_IN_WHITE },
-        { xi.item.NASHIRA_SERAWEELS,  10000, xi.ki.RHAPSODY_IN_WHITE },
-        { xi.item.HOMAM_GAMBIERAS,    10000, xi.ki.RHAPSODY_IN_WHITE },
-        { xi.item.NASHIRA_CRACKOWS,   10000, xi.ki.RHAPSODY_IN_WHITE },
-        { xi.item.PSILOMENE,          30000, xi.ki.RHAPSODY_IN_UMBER },
-        { xi.item.POTENS_GRIP,        30000, xi.ki.RHAPSODY_IN_UMBER },
-    },
+    -- Relaunch: Curio Vendor equipment page emptied (Homam/Nashira/Enif sets).
+    [xi.shop.curio.equipment] = {},
 }
 
 -----------------------------------

@@ -54,7 +54,7 @@ return {
             [3] = { id = 909, tier = 0, cat = 3, label = 'Mag. Acc./Mag. Dmg', item = 'guivres_skull' },
             [4] = { id = 943, tier = 0, cat = 3, label = 'Mag. crit. hit dmg', item = 'pinch_of_poison_dust' },
             [5] = { id = 954, tier = 0, cat = 3, label = 'Mag. Acc. Mag.Atk.Bns', item = 'magic_pot_shard' },
-            [6] = { id = 955, tier = 0, cat = 3, label = 'Enhances "Dark Seal" (DRK)', item = 'golem_shard' },
+            [6] = { id = 955, tier = 0, cat = 3, label = 'Enhances Dark Seal (DRK)', item = 'golem_shard' },
             [7] = { id = 1474, tier = 0, cat = 3, label = 'Magic Damage', item = 'infinity_core' },
             [8] = { id = 1606, tier = 0, cat = 3, label = 'Immunobreak Chance+', item = 'remnant_of_a_burning_memory' },
             [9] = { id = 2166, tier = 0, cat = 3, label = 'Spell Interruption Rate Down', item = 'lock_of_marid_hair' },

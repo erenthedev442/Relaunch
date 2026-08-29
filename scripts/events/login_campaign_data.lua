@@ -41,11 +41,7 @@ local prizes =
         ['items'] =
         {
             xi.item.MOG_KUPON_I_S1,  -- Mog Kupon I-S1
-            xi.item.EUDAEMON_BLADE,  -- Eudaemon Blade
-            xi.item.EUDAEMON_CAPE,  -- Eudaemon Cape
-            xi.item.EUDAEMON_RING,  -- Eudaemon Ring
-            xi.item.EUDAEMON_SASH,  -- Eudaemon Sash
-            xi.item.EUDAEMON_SHIELD,  -- Eudaemon Shield
+            -- Relaunch: Eudaemon gear removed from Greeter Moogle.
             xi.item.DRILL_CALAMARY, -- Drill Calamary
             xi.item.DWARF_PUGIL, -- Dwarf Pugil
             xi.item.ASTRAL_CUBE,  -- Astral Cube
@@ -81,7 +77,7 @@ local prizes =
             -- 10178, -- Cipher: Ullegore
             -- 10179, -- Cipher: Teodor
             -- 10183, -- Cipher: Darrcuiln
-            xi.item.EXCALIPOOR, -- Excalipoor
+            -- Relaunch: Excalipoor removed from Greeter Moogle.
             xi.item.PIECE_OF_COPSE_CANDY,  -- Copse Candy
         },
     },
@@ -96,8 +92,7 @@ local prizes =
             xi.item.MOUNT_CRAB, -- ♪Crab
             xi.item.MOUNT_BEETLE, -- ♪Beetle
             -- TODO: The other mounts
-            xi.item.CUMULUS_MASQUE, -- Cumulus Masque
-            xi.item.BLIZZARD_BRAND, -- Blizzard Brand
+            -- Relaunch: Cumulus Masque / Blizzard Brand removed from Greeter Moogle.
             -- 25658, -- Wyrm. Masque +1
             -- 25757, -- Wyrmking Suit +1
             -- 5854,  -- Frayed Pouch (B)
@@ -157,8 +152,7 @@ local prizes =
         ['items'] =
         {
             -- 6499,  -- Patio Design Plans
-            xi.item.FACILITY_RING, -- Facility Ring
-            xi.item.CALIBER_RING, -- Caliber Ring
+            -- Relaunch: Facility / Caliber rings removed from Greeter Moogle.
             -- 6486,  -- Frayed Sack (Pel)
             -- 6487,  -- Frayed Sack (Fer)
             -- 6488,  -- Frayed Sack (Tau)

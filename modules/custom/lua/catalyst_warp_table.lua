@@ -77,7 +77,7 @@ return {
     [947] = { item='Jar Of Firesand', label='Daken', cat=11, tier=0, zone=151, zoneName='Castle Oztroja', x=-176.321, y=0.200, z=26.728, mob='Bastion Bats', lvl=18, rate=100 },
     [952] = { item='Bag Of Poison Flour', label='Cure potency', cat=8, tier=0, zone=192, zoneName='Inner Horutoto Ruins', x=-207.757, y=0.500, z=-108.930, mob='Goblin Gambler', lvl=20, rate=100 },
     [954] = { item='Magic Pot Shard', label='Mag. Acc. Mag.Atk.Bns', cat=3, tier=0, zone=195, zoneName='The Eldieme Necropolis', x=-422.890, y=7.889, z=500.012, mob='Blood Soul', lvl=50, rate=100 },
-    [955] = { item='Golem Shard', label='Enhances', cat=3, tier=0, zone=106, zoneName='North Gustaberg', x=278.357, y=-0.247, z=273.979, mob='Amber Quadav', lvl=3, rate=100 },
+    [955] = { item='Golem Shard', label='Enhances Dark Seal (DRK)', cat=3, tier=0, zone=106, zoneName='North Gustaberg', x=278.357, y=-0.247, z=273.979, mob='Amber Quadav', lvl=3, rate=100 },
     [959] = { item='Dahlia', label='Pet DEF', cat=7, tier=0, zone=114, zoneName='Eastern Altepa Desert', x=76.870, y=-11.282, z=287.906, mob='Antican Faber', lvl=35, rate=100 },
     [1116] = { item='Manticore Hide', label='Rng.Acc. Rng.Atk', cat=2, tier=0, zone=114, zoneName='Eastern Altepa Desert', x=-223.508, y=-7.196, z=118.673, mob='Lesser Manticore', lvl=47, rate=100 },
     [1119] = { item='Tonberry Coat', label='Conserve MP', cat=8, tier=0, zone=159, zoneName='Temple of Uggalepih', x=218.000, y=-0.008, z=-19.000, mob='Tonberry Cutter', lvl=51, rate=100 },

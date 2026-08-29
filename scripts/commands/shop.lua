@@ -476,7 +476,11 @@ end
 
 local function openStock(player, items)
     player:timer(30, function(p)
+        -- Retail city shops strip equipment in disable_retail_gear_shops.lua.
+        -- !shop is an intentional Relaunch vendor and must keep its gear pages.
+        p:setLocalVar('[ShopAllowGear]', 1)
         xi.shop.general(p, items)
+        p:setLocalVar('[ShopAllowGear]', 0)
     end)
 end
 

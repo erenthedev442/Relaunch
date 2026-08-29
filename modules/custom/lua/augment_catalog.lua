@@ -90,7 +90,7 @@ return {
     [2335] = { augId = 2044, base = 1,   mult = 15,  disp = 1,    cat = 3, tier = 0, label = 'Helix Damage',          maxBoost = 7 },
     [2531] = { augId = 2045, base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Spikes Dmg',            maxBoost = 9 },
     [1606] = { augId = 2048, base = 1,   mult = 1,   disp = 1,    cat = 3, tier = 0, label = 'Immunobreak Chance+',   maxBoost = 31 },
-    [955] = { augId = 1370, base = 1,   mult = 10,  disp = 1,    cat = 3, tier = 0, label = 'Enhances "Dark Seal" (DRK)', maxBoost = 7 },
+    [955] = { augId = 1370, base = 1,   mult = 10,  disp = 1,    cat = 3, tier = 0, label = 'Enhances Dark Seal (DRK)', maxBoost = 7 },
 
     -- ── cat 4: Defense ──────────────────────────────────────────────────────────
     [928]  = { augId = 1152, base = 1,   mult = 10,  disp = 1,    cat = 4,  tier = 0, label = 'DEF' },

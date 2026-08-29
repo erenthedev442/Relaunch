@@ -124,6 +124,7 @@ FORCED_CATALYST = {
 # the augments.sql comment is technically correct but not what players call it.
 LABEL_OVERRIDE = {
     896: 'Enspell Dmg',   # vs the stock "Sword Enhancement Spell Damage"
+    1370: 'Enhances Dark Seal (DRK)',  # embedded quotes corrupt customMenu
     # augId 343's comment -- "Drain" and "Aspir" Potency +1 -- STARTS with a quote,
     # so clean_label() strips from the first " to end-of-string -> empty -> the
     # generic 'Augment' fallback. It is the ONLY quote-first comment in augments.sql
