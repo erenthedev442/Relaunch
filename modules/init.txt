@@ -49,3 +49,4 @@ custom/cpp/augment_catalyst_bank_bindings.cpp
 custom/cpp/cross_job_ability_bindings.cpp
 custom/cpp/fjb_entity_bindings.cpp
 custom/cpp/fjb_combat.cpp
+custom/cpp/kraken_club.cpp

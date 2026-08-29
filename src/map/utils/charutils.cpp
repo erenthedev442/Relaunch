@@ -26,6 +26,8 @@
 #include "common/utils.h"
 #include "common/vana_time.h"
 
+#include "modules/custom/cpp/kraken_club.h"
+
 #include <algorithm>
 #include <array>
 #include <chrono>
@@ -1757,10 +1759,22 @@ auto AddItem(CCharEntity* PChar, uint8 LocationID, std::unique_ptr<CItem> PItem,
         return ERROR_SLOTID;
     }
 
+    uint32 krakenSerial = 0;
+    if (PItem->getID() == krakenclub::ItemId && PItem->getSignature().empty())
+    {
+        krakenSerial = krakenclub::stampNewItem(PChar, PItem.get());
+        if (krakenSerial == 0)
+        {
+            // Never create an unnumbered Kraken Club.
+            return ERROR_SLOTID;
+        }
+    }
+
     auto* PStorage = PChar->getStorage(LocationID);
     uint8 SlotID   = PStorage->InsertItem(std::move(PItem));
     if (SlotID == ERROR_SLOTID)
     {
+        krakenclub::releaseSerial(krakenSerial);
         ShowDebug("AddItem: Location %i is full", LocationID);
         return SlotID;
     }
@@ -1782,11 +1796,17 @@ auto AddItem(CCharEntity* PChar, uint8 LocationID, std::unique_ptr<CItem> PItem,
     {
         ShowError("AddItem: Cannot insert item to database");
         PStorage->RemoveItem(SlotID);
+        krakenclub::releaseSerial(krakenSerial);
         return ERROR_SLOTID;
     }
 
     PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PInserted, static_cast<CONTAINER_ID>(LocationID), SlotID);
     PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
+
+    if (krakenSerial != 0)
+    {
+        krakenclub::announce(PChar, PInserted->getSignature());
+    }
 
     return SlotID;
 }

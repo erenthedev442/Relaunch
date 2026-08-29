@@ -232,7 +232,7 @@ def process_item(cur, item, commit):
 # Aliases: e = item_equipment, b = item_basic. ~4,368 items match after the
 # HQ exclusion (~1,322 +N pieces dropped).
 GEAR_FROM = "item_equipment e JOIN item_basic b ON b.itemid = e.itemId"
-GEAR_WHERE = ("e.ilevel = 0 AND b.aH <> 0 "
+GEAR_WHERE = ("e.ilevel = 0 AND b.aH <> 0 AND e.itemId <> 17440 "
               "AND (b.flags & 64) = 0 AND (b.flags & 16384) = 0 "
               "AND b.name NOT REGEXP '[+][0-9]+$'")
 

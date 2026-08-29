@@ -16,6 +16,12 @@ local content = Battlefield:new({
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
     requiredItems    = { xi.item.MOON_ORB, wearMessage = waughroonID.text.A_CRACK_HAS_FORMED, wornMessage = waughroonID.text.ORB_IS_CRACKED },
+    armouryCrates    =
+    {
+        waughroonID.mob.FEE + 1,
+        waughroonID.mob.FEE + 3,
+        waughroonID.mob.FEE + 5,
+    },
 })
 
 content:addEssentialMobs({ 'Fee' })
@@ -80,13 +86,10 @@ content.loot =
         { itemId = xi.item.VILE_ELIXIR_P1,      weight =   200 },
     },
 
-    -- This drop rate is not a mistake
-    -- https://www.ffxiah.com/forum/topic/54987/up-in-arms-bcnm/2/#3648004
-    -- Thorny noted only 3 drops out of 17,000 runs. Extremely rare.
-    -- BG Wiki States its also "signficantly rarer" than UR. (.1%)
+    -- Relaunch: meaningful alternative to the 5% Lord of Onzozo source.
     {
-        { itemId = xi.item.NONE,                weight =  9999 },
-        { itemId = xi.item.KRAKEN_CLUB,         weight =     1 },
+        { itemId = xi.item.NONE,                weight =  9800 },
+        { itemId = xi.item.KRAKEN_CLUB,         weight =   200 },
     },
 }
 

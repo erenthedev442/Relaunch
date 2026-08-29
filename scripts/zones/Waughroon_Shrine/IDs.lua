@@ -56,6 +56,7 @@ zones[xi.zone.WAUGHROON_SHRINE] =
     mob =
     {
         ATORI_TUTORI      = GetFirstID('Atori-Tutori_qm'),
+        FEE               = GetFirstID('Fee'),
         FLAYER_FRANZ      = GetFirstID('Flayer_Franz'),
         GAKI              = GetFirstID('Gaki'),
         KUJHU_GRANITESKIN = GetFirstID('KuJhu_Graniteskin'),
