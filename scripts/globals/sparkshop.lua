@@ -24,7 +24,6 @@ local optionToItem =
         [ 9] = { cost = 15000, id =  4071 }, -- Copy of Rem's Tale, chapter 8
         [10] = { cost = 15000, id =  4072 }, -- Copy of Rem's Tale, chapter 9
         [11] = { cost = 15000, id =  4073 }, -- Copy of Rem's Tale, chapter 10
-        [12] = { cost =  5000, id = 28546 }, -- Capacity Ring
         [13] = { cost = 10000, id =  9009 }, -- Etched Memory
     },
 
@@ -336,19 +335,17 @@ function xi.sparkshop.onEventUpdate(player, csid, option, npc)
     local category = bit.band(option, 0xFF)
     local selection = bit.rshift(option, 16)
 
-    -- Relaunch: no skill tomes (2), no Lv.40+ gear (7-10), no A.M.A.N. voucher
-    -- currency/provisions (20/30). Lv.1-39 gear (3-6) and Items/Trusts remain.
+    -- Relaunch: no skill tomes (2), equipment (3-10), or A.M.A.N. voucher
+    -- currency/provisions (20/30). Only non-equipment Items and Trusts remain.
     if category == 2 then
         player:updateEvent(sparks, 0, 0, 0, 0, remainingLimit)
         player:printToPlayer('[Sparks] Skill-increasing tomes are no longer sold here.', xi.msg.channel.SYSTEM_3)
         return
     end
 
-    if category >= 7 and category <= 10 then
+    if category >= 3 and category <= 10 then
         player:updateEvent(sparks, 0, 0, 0, 0, remainingLimit)
-        player:printToPlayer(
-            '[Sparks] Level 40+ gear is no longer sold here. Farm Hunting League medals at Escha - Zi\'Tah for gear.',
-            xi.msg.channel.SYSTEM_3)
+        player:printToPlayer('[Sparks] Equipment is no longer sold here.', xi.msg.channel.SYSTEM_3)
         return
     end
 
@@ -366,8 +363,8 @@ function xi.sparkshop.onEventUpdate(player, csid, option, npc)
         qty = requestedQty
     end
 
-    -- Sparks item purchases (Items, Lv.1-39 gear, Trust ciphers).
-    if (category >= 1 and category <= 6) or category == 12 then
+    -- Sparks item purchases (non-equipment Items and Trust ciphers).
+    if category == 1 or category == 12 then
         local itemCategory = optionToItem[category]
         local item         = itemCategory and itemCategory[selection]
 
