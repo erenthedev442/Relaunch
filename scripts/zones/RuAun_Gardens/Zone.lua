@@ -81,6 +81,15 @@ zoneObject.onInitialize = function(zone)
 
     xi.treasure.initZone(zone)
     xi.conquest.setRegionalConquestOverseers(zone:getRegionID())
+
+    -- Hunt Guild Empy T2: force the doll camp even if Despot is still a leftover lottery row.
+    local despot = GetMobByID(ID.mob.DESPOT)
+    if despot then
+        despot:setSpawn(-0.100, -42.000, -291.000)
+        if not despot:isSpawned() then
+            SpawnMob(ID.mob.DESPOT)
+        end
+    end
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranking, isConquestAlliance)

@@ -10,7 +10,7 @@
 return {
     -- AF Hunters' Guild -- Wyrm Circuit
     { key = 'tarasque',        label = 'Tarasque',           guild = 'AF',    tier = 1, zone = 205, zoneName = 'Ifrits Cauldron',        x =  118.000, y =  19.000, z =  163.000, rot = 250 },
-    { key = 'capricornus',     label = 'Capricornus',        guild = 'AF',    tier = 2, zone = 104, zoneName = 'Jugner Forest',          x =  240.000, y =  -5.000, z =   40.000, rot = 128 },
+    { key = 'capricornus',     label = 'Capricornus',        guild = 'AF',    tier = 2, zone = 104, zoneName = 'Jugner Forest',          x =  240.000, y =   0.000, z =   40.000, rot = 128 },
     { key = 'charybdis',       label = 'Charybdis',          guild = 'AF',    tier = 3, zone = 176, zoneName = 'Sea Serpent Grotto',     x = -152.000, y =  48.000, z = -328.000, rot = 127 },
     { key = 'tiamat',          label = 'Tiamat',             guild = 'AF',    tier = 4, zone =   7, zoneName = 'Attohwa Chasm',          x = -529.519, y =  -5.811, z =  -43.413, rot = 233 },
     { key = 'fafnir',          label = 'Fafnir',             guild = 'AF',    tier = 5, zone = 154, zoneName = "Dragon's Aery",          x =   78.000, y =   6.000, z =   39.000, rot = 127 },

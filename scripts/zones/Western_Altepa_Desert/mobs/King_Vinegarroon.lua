@@ -2,6 +2,7 @@
 -- Area: Western Altepa Desert
 --   NM: King Vinegarroon
 -----------------------------------
+local ID = zones[xi.zone.WESTERN_ALTEPA_DESERT]
 ---@type TMobEntity
 local entity = {}
 
@@ -70,8 +71,12 @@ local function mobRegen(mob)
 end
 
 entity.onMobInitialize = function(mob)
-    xi.mob.updateNMSpawnPoint(mob)
-    mob:setRespawnTime(75600) -- Opens 21 hours after being defeated, or despawning.
+    -- Affinity Hunt copy reuses this name in the desert. Leave the 21h
+    -- window and roam table on the real HNM only -- same bug as Simurgh/Roc.
+    if mob:getID() == ID.mob.KING_VINEGARROON then
+        xi.mob.updateNMSpawnPoint(mob)
+        mob:setRespawnTime(75600) -- Opens 21 hours after being defeated, or despawning.
+    end
 
     mob:addImmunity(xi.immunity.SILENCE)
     mob:addImmunity(xi.immunity.PETRIFY)
@@ -176,6 +181,10 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
+    if mob:getID() ~= ID.mob.KING_VINEGARROON then
+        return
+    end
+
     xi.mob.updateNMSpawnPoint(mob)
     mob:setRespawnTime(75600) -- Opens 21 hours after being defeated, or despawning.
 end

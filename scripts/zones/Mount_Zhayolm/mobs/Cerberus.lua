@@ -2,6 +2,7 @@
 -- Area: Mount Zhayolm
 --   NM: Cerberus
 -----------------------------------
+local ID = zones[xi.zone.MOUNT_ZHAYOLM]
 ---@type TMobEntity
 local entity = {}
 
@@ -69,6 +70,11 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
+    -- Affinity Hunt copy reuses this name. Leave the 48-72h window on retail.
+    if mob:getID() ~= ID.mob.CERBERUS then
+        return
+    end
+
     mob:setRespawnTime(math.random(48, 72) * 3600) -- 48 - 72 hours with 1 hour windows
 end
 

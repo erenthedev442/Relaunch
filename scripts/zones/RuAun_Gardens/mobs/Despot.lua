@@ -54,6 +54,8 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
+    local camp = entity.spawnPoints[1]
+    mob:setPos(camp.x, camp.y, camp.z)
     mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 150)
 
     -- Ensure default state.

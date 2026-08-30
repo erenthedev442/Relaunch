@@ -12,6 +12,18 @@ zoneObject.onInitialize = function(zone)
 
     GetNPCByID(ID.npc.QM2 + math.random(0, 5)):setLocalVar('Quest[2][70]Option', 1) -- Determine which QM is active today for THF AF2
     xi.voidwalker.zoneOnInit(zone)
+
+    -- Affinity Roc: retail HNM timer used to skip the boot TrySpawn.
+    -- Pin and force the camp even if that leftover registration is still live.
+    if ID.mob.ROC then
+        local roc = GetMobByID(ID.mob.ROC)
+        if roc then
+            roc:setSpawn(232.000, -0.010, -327.000)
+            if not roc:isSpawned() then
+                SpawnMob(ID.mob.ROC)
+            end
+        end
+    end
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

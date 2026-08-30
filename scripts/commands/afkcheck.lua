@@ -4,6 +4,7 @@
 --     : with some very simple but randomized questions.
 --     : If the target doesn't respond with a correct answer
 --     : within 30 seconds, they will be set to 0hp.
+--     : A late click after death/raise cannot pass the check.
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
@@ -13,6 +14,18 @@ commandObj.cmdprops =
     permission = 5,
     parameters = ''
 }
+
+local CAPTCHA_IDLE    = 0
+local CAPTCHA_PENDING = 1
+local CAPTCHA_FAILED  = 2
+
+local function failCheck(playerArg, reason)
+    playerArg:setLocalVar('CAPTCHA', CAPTCHA_FAILED)
+    playerArg:printToPlayer(reason, xi.msg.channel.NS_SAY)
+    if playerArg:isAlive() then
+        playerArg:setHP(0)
+    end
+end
 
 commandObj.onTrigger = function(player)
     -- Validate target
@@ -25,6 +38,7 @@ commandObj.onTrigger = function(player)
 
     if target:getObjType() ~= xi.objType.PC then
         player:printToPlayer('Invalid target')
+        return
     end
 
     -- Generate options
@@ -37,8 +51,15 @@ commandObj.onTrigger = function(player)
         {
             string.format('%2i + %2i = %2i', a, b, c),
             function(playerArg)
+                -- Timeout already failed this check. The GMTELL box can survive
+                -- death + Legendary Ring raise; do not let a late click pass.
+                if playerArg:getLocalVar('CAPTCHA') ~= CAPTCHA_PENDING then
+                    playerArg:printToPlayer('AFK Check already expired', xi.msg.channel.NS_SAY)
+                    return
+                end
+
                 playerArg:printToPlayer('AFK Check passed', xi.msg.channel.NS_SAY)
-                playerArg:setLocalVar('CAPTCHA', 0)
+                playerArg:setLocalVar('CAPTCHA', CAPTCHA_IDLE)
             end,
         }
     end
@@ -57,8 +78,7 @@ commandObj.onTrigger = function(player)
         {
             string.format('%2i + %2i = %2i', a, b, c),
             function(playerArg)
-                playerArg:printToPlayer('AFK Check failed', xi.msg.channel.NS_SAY)
-                playerArg:setHP(0)
+                failCheck(playerArg, 'AFK Check failed')
             end,
         }
     end
@@ -75,20 +95,22 @@ commandObj.onTrigger = function(player)
     {
         title = 'AFK Check: Please pick true statement (30s)',
         onStart = function(playerArg)
-            playerArg:setLocalVar('CAPTCHA', 1)
+            playerArg:setLocalVar('CAPTCHA', CAPTCHA_PENDING)
         end,
 
         options = options,
         onCancelled = function(playerArg)
-            playerArg:printToPlayer('AFK Check failed!', xi.msg.channel.NS_SAY)
+            if playerArg:getLocalVar('CAPTCHA') == CAPTCHA_PENDING then
+                failCheck(playerArg, 'AFK Check failed!')
+            end
         end,
     }
     target:customMenu(menu)
 
     -- Add timer
     target:timer(30000, function(playerArg)
-        if playerArg:getLocalVar('CAPTCHA') == 1 then
-            playerArg:setHP(0)
+        if playerArg:getLocalVar('CAPTCHA') == CAPTCHA_PENDING then
+            failCheck(playerArg, 'AFK Check failed (timed out)')
         end
     end)
 end

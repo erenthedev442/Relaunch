@@ -1,15 +1,12 @@
--- =====================================================================
--- zz_remove_judge_items.sql
+-- Restore stock Judge item definitions (helm 12523, etc.).
 --
--- Was a purge (Judge rows deleted so Gear Finder stopped scoring NPC gear).
--- Neutralized 2026-08-29: restore the stock Judge definitions so GM !additem
--- / !giveitem work again and already-granted copies stay valid after restart.
+-- The old purge deleted these from the live DB. The restore lived in
+-- modules/custom/sql/zz_remove_judge_items.sql, which light deploy does
+-- not apply (only sql\zz_*.sql). !additem then fails silently because
+-- the map item cache has no row for 12523.
 --
--- Light deploy applies sql\zz_*.sql only. The live restore is
--- sql/zz_restore_judge_items.sql. This copy stays for full custom-SQL deploys.
--- Gear Finder still hides these via EXCLUDED_ITEM_IDS / 'judge' name prefix.
 -- Idempotent: INSERT IGNORE. Does not touch char_inventory.
--- =====================================================================
+-- Map restart required after import.
 
 INSERT IGNORE INTO `item_basic`
     (`itemid`, `subid`, `name`, `sortname`, `name_jp`, `type`, `stackSize`, `flags`, `aH`, `BaseSell`)

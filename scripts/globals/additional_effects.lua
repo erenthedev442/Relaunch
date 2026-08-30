@@ -532,22 +532,6 @@ end
 -- Options: requiredItem, specialAction, customSubEffect, customMsgID, customMsgParam
 -- Add new entries here: ['NM_Name'] = { requiredItem = xi.item.ITEM_ID, specialAction = function() }
 xi.additionalEffect.nmSpecificConfigs = {
-    ['Brigandish_Blade'] = {
-        requiredItem = xi.item.BUCCANEERS_KNIFE,
-        specialAction = function(defender)
-            -- If Brigandish Blade has damage immunity (at 1% HP), remove it
-            if defender:getMod(xi.mod.UDMGPHYS) == -10000 then
-                -- Remove all damage immunities
-                defender:setMod(xi.mod.UDMGPHYS, 0)
-                defender:setMod(xi.mod.UDMGRANGE, 0)
-                defender:setMod(xi.mod.UDMGMAGIC, 0)
-                defender:setMod(xi.mod.UDMGBREATH, 0)
-
-                defender:setLocalVar('killable', 1)
-                defender:setUnkillable(false)
-            end
-        end,
-    },
     ['Seiryu'] = {
         requiredItem = xi.item.ZEPHYR,
         specialAction = function(defender)

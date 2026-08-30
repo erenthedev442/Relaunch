@@ -26,6 +26,8 @@ describe('Affinity NM roster and progression integrity', function()
         local homes =
         {
             Behemoth         = { zone = xi.zone.BEHEMOTHS_DOMINION,    mobId = 17298309 },
+            Simurgh          = { zone = xi.zone.ROLANBERRY_FIELDS,     mobId = 17228680 },
+            Roc              = { zone = xi.zone.SAUROMUGUE_CHAMPAIGN,  mobId = 17269643 },
             King_Arthro      = { zone = xi.zone.JUGNER_FOREST,         mobId = 17204087 },
             Aspidochelone    = { zone = xi.zone.VALLEY_OF_SORROWS,     mobId = 17302414 },
             Vrtra            = { zone = xi.zone.KING_RANPERRES_TOMB,   mobId = 17556374 },
@@ -103,5 +105,62 @@ describe('Affinity NM roster and progression integrity', function()
         assert(milestoneTotal == 975)
         assert(nmCatalog.repeatDailyCap == 120)
         assert(nmCatalog.milestones[24].title == xi.title.MASTER_HUNTER)
+    end)
+
+    it('keeps Simurgh and Roc on the affinity warp camps instead of retail HNM windows', function()
+        local function readFile(path)
+            local file = assert(io.open(path, 'r'))
+            local text = file:read('*a')
+            file:close()
+            return text
+        end
+
+        local sql = readFile('sql/zz_affinity_hnm_camps.sql')
+
+        local simurgh = readFile('scripts/zones/Rolanberry_Fields/mobs/Simurgh.lua')
+        local simZone = readFile('scripts/zones/Rolanberry_Fields/Zone.lua')
+        local sim     = nmCatalog.byName('Simurgh')
+        assert(sim ~= nil)
+        assert(sim.mobId == 17228680)
+        assert(sim.x == -681.00 and sim.y == -31.00 and sim.z == -447.00)
+        assert(simurgh:find('setSpawn(-681.000, -31.000, -447.000)', 1, true))
+        assert(simurgh:find('setRespawnTime(30)', 1, true))
+        assert(not simurgh:find('math.random(3600, 7200)', 1, true))
+        assert(simZone:find('SpawnMob(ID.mob.SIMURGH)', 1, true))
+        assert(sql:find('17228680', 1, true))
+
+        local roc     = readFile('scripts/zones/Sauromugue_Champaign/mobs/Roc.lua')
+        local rocZone = readFile('scripts/zones/Sauromugue_Champaign/Zone.lua')
+        local rocEntry = nmCatalog.byName('Roc')
+        assert(rocEntry ~= nil)
+        assert(rocEntry.mobId == 17269643)
+        assert(rocEntry.x == 232.00 and rocEntry.y == -0.01 and rocEntry.z == -327.00)
+        assert(roc:find('setSpawn(232.000, -0.010, -327.000)', 1, true))
+        assert(roc:find('setRespawnTime(30)', 1, true))
+        assert(not roc:find('math.random(3600, 7200)', 1, true))
+        assert(rocZone:find('SpawnMob(ID.mob.ROC)', 1, true))
+        assert(sql:find('17269643', 1, true))
+    end)
+
+    it('keeps affinity King Vinegarroon and Cerberus off retail HNM windows', function()
+        local function readFile(path)
+            local file = assert(io.open(path, 'r'))
+            local text = file:read('*a')
+            file:close()
+            return text
+        end
+
+        local kv = readFile('scripts/zones/Western_Altepa_Desert/mobs/King_Vinegarroon.lua')
+        assert(kv:find('ID.mob.KING_VINEGARROON', 1, true))
+        assert(kv:find("mob:getID() == ID.mob.KING_VINEGARROON", 1, true))
+        assert(kv:find("mob:getID() ~= ID.mob.KING_VINEGARROON", 1, true))
+
+        local cerberus = readFile('scripts/zones/Mount_Zhayolm/mobs/Cerberus.lua')
+        assert(cerberus:find("mob:getID() ~= ID.mob.CERBERUS", 1, true))
+
+        for _, name in ipairs({ 'Tiamat', 'Vrtra', 'Khimaira', 'King_Arthro' }) do
+            local entry = nmCatalog.byName(name)
+            assert(entry ~= nil, 'missing ' .. name)
+        end
     end)
 end)

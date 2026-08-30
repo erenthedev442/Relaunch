@@ -47,6 +47,9 @@ describe('BLU shared effect helpers', function()
 
                 return 0
             end,
+            getName = function()
+                return options.name or 'Leaping_Lizzy'
+            end,
             getLocalVar = function(_, name)
                 return localVars[name] or 0
             end,
@@ -167,48 +170,68 @@ describe('BLU shared effect helpers', function()
         for _, name in ipairs({ 'blank_gaze', 'geist_wall' }) do
             assert(readSpell(name):find('usesStockSubjobBehavior', 1, true))
         end
+
+        local headButt = readSpell('head_butt')
+        assert(headButt:find('applyBlueAdditionalEffect', 1, true))
+        assert(not headButt:find('if damage <= 0', 1, true))
     end)
 
-    it('gives trash packs 25-second hard control without a lockout', function()
+    it('gives Head Butt stun a guaranteed 5-second window with no lockout', function()
         local caster = makeCaster()
         local target = makeTarget()
         local allowed, duration, lockout, _, fixedDuration =
             sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 30, 100)
 
-        assert(allowed and duration == 25 and lockout == nil and fixedDuration)
+        assert(allowed and duration == 5 and lockout == nil and fixedDuration)
         sharedEffects.commitPlayerControl(target, xi.effect.STUN, duration, lockout, 100)
 
         allowed = sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 30, 114)
         assert(allowed)
     end)
 
-    it('keeps short resisted profiles and lockouts on impossible-to-gauge targets', function()
+    it('gives terror and petrify a full 25 seconds on trash, Apex, and NMs', function()
         local caster = makeCaster()
-        local target = makeTarget({ isNm = true })
-        local allowed, duration, lockout, _, fixedDuration =
-            sharedEffects.preparePlayerControl(caster, target, xi.effect.TERROR, 1, 100)
-        assert(allowed and duration == 5 and lockout == 20 and not fixedDuration)
-
-        allowed, duration, lockout, _, fixedDuration =
-            sharedEffects.preparePlayerControl(caster, target, xi.effect.PETRIFICATION, 60, 100)
-        assert(allowed and duration == 8 and lockout == 30 and not fixedDuration)
-
-        for _, specialTarget in ipairs(
+        for _, target in ipairs(
         {
+            makeTarget(),
+            makeTarget({ name = 'Apex_Poxhound' }),
+            makeTarget({ isNm = true }),
             makeTarget({ isBattlefield = true }),
             makeTarget({ checkAsNm = true }),
         })
         do
+            local allowed, duration, lockout, _, fixedDuration =
+                sharedEffects.preparePlayerControl(caster, target, xi.effect.TERROR, 1, 100)
+            assert(allowed and duration == 25 and lockout == nil and fixedDuration)
+
             allowed, duration, lockout, _, fixedDuration =
-                sharedEffects.preparePlayerControl(caster, specialTarget, xi.effect.STUN, 30, 100)
-            assert(allowed and duration == 5 and lockout == 12 and not fixedDuration)
+                sharedEffects.preparePlayerControl(caster, target, xi.effect.PETRIFICATION, 60, 100)
+            assert(allowed and duration == 25 and lockout == nil and fixedDuration)
+
+            allowed, duration, lockout, _, fixedDuration =
+                sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 30, 100)
+            assert(allowed and duration == 5 and lockout == nil and fixedDuration)
         end
 
-        sharedEffects.commitPlayerControl(target, xi.effect.TERROR, 5, 20, 100)
-        allowed = sharedEffects.preparePlayerControl(caster, target, xi.effect.TERROR, 1, 124)
-        assert(not allowed)
-        allowed = sharedEffects.preparePlayerControl(caster, target, xi.effect.TERROR, 1, 125)
+        assert(sharedEffects.isApexMob(makeTarget({ name = 'Apex_Poxhound' })))
+        assert(not sharedEffects.isApexMob(makeTarget({ name = 'Leaping_Lizzy' })))
+    end)
+
+    it('does not lock out a second terror or petrify after the first lands', function()
+        local caster = makeCaster()
+        local target = makeTarget({ isNm = true })
+        sharedEffects.commitPlayerControl(target, xi.effect.TERROR, 25, nil, 100)
+
+        local allowed = sharedEffects.preparePlayerControl(caster, target, xi.effect.TERROR, 1, 101)
         assert(allowed)
+        allowed = sharedEffects.preparePlayerControl(caster, target, xi.effect.PETRIFICATION, 60, 101)
+        assert(allowed)
+    end)
+
+    it('clamps main-job BLU magic resist to a full hit', function()
+        assert(sharedEffects.clampMagicResist(makeCaster(), 0.125) == 1)
+        assert(sharedEffects.clampMagicResist(makeCaster(true, xi.job.WAR), 0.125) == 0.125)
+        assert(sharedEffects.clampMagicResist(makeCaster(false), 0.125) == 0.125)
     end)
 
     it('leaves sleep, subjob BLU, and mob-cast BLU durations unchanged', function()

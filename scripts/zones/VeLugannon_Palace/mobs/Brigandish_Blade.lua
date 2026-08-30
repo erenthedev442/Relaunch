@@ -28,27 +28,12 @@ end
 entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.STORETP, 60)
     mob:setMod(xi.mod.UDMGMAGIC, -1250)
-    mob:setUnkillable(true)
-    mob:setLocalVar('killable', 0)
     mob:setLocalVar('defaultAttack', mob:getMod(xi.mod.ATT))
 end
 
 entity.onMobFight = function(mob, target)
-    local killable = mob:getLocalVar('killable')
     -- Gains significantly increased damage as HP decreases.
-    local hp = mob:getHPP()
-    local power = (100 - hp) * 5
-
-    if
-        mob:getHPP() == 1 and
-        mob:getMod(xi.mod.UDMGPHYS) == 0 and
-        killable == 0
-    then
-        mob:setMod(xi.mod.UDMGPHYS, -10000)
-        mob:setMod(xi.mod.UDMGRANGE, -10000)
-        mob:setMod(xi.mod.UDMGMAGIC, -10000)
-        mob:setMod(xi.mod.UDMGBREATH, -10000)
-    end
+    local power = (100 - mob:getHPP()) * 5
 
     mob:setMod(xi.mod.ATT, mob:getLocalVar('defaultAttack') + power)
 end

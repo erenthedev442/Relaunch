@@ -353,6 +353,11 @@ local function configureMob(mobid)
         m:setLocalVar('affinityNM', 1)
         m:setLocalVar('affHpScaled', 0)
         m:setMobMod(xi.mobMod.IDLE_DESPAWN, 0)
+        local camp = nmCatalog.byId(m:getID())
+        if camp then
+            m:setSpawn(camp.x, camp.y, camp.z, 0)
+            m:setPos(camp.x, camp.y, camp.z, 0)
+        end
         applyStats(m)
     end)
     if mob:isSpawned() then mob:setLocalVar('affinityNM', 1); applyStats(mob) end
@@ -363,6 +368,18 @@ local function configureMob(mobid)
     -- 2026-07-06: gods self-despawn / ~47s repop delay). Force it off. No-op for
     -- the other 22 NMs, which don't set it.
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 0)
+
+    -- Retail HNM scripts (Simurgh, Roc, kings) call updateNMSpawnPoint in
+    -- onMobInitialize / onMobDespawn. That shuffles the replica off the
+    -- !affinitynm camp. Pin every spawn to the catalog warp.
+    local entry = nmCatalog.byId(mobid)
+    if entry then
+        mob:setSpawn(entry.x, entry.y, entry.z, 0)
+        if mob:isSpawned() then
+            mob:setPos(entry.x, entry.y, entry.z, 0)
+        end
+    end
+
     mob:setRespawnTime(RESPAWN_SECONDS)
     if not mob:isSpawned() then
         SpawnMob(mobid)

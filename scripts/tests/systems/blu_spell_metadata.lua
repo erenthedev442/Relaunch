@@ -77,14 +77,14 @@ describe('BLU spell metadata integrity', function()
     it('keeps premium spell costs and safe SOA animations intact', function()
         local premiumAnimations =
         {
-            [719] = 921,
-            [720] = 721, -- Ice Break; 922 is Trust dismiss and hides the caster
-            [721] = 923,
-            [722] = 924,
-            [725] = 927,
-            [726] = 928,
-            [727] = 929,
-            [728] = 930,
+            [719] = 673, -- Self-Destruct
+            [720] = 721, -- Ice Break
+            [721] = 697, -- Blitzstrahl
+            [722] = 631, -- Sandspin
+            [725] = 741, -- Actinic Burst
+            [726] = 690, -- Maelstrom
+            [727] = 695, -- Mysterious Light
+            [728] = 661, -- Blood Saber
         }
 
         for id, animation in pairs(premiumAnimations) do
@@ -92,7 +92,11 @@ describe('BLU spell metadata integrity', function()
             assert(spellRows[id].animation == animation, string.format('spell %u has unsafe animation', id))
         end
 
-        assert(spellRows[749].animation == 933, 'Polar Roar must not use the Warp animation')
+        assert(spellRows[749].animation == 688, 'Polar Roar must use Frost Breath, not Warp')
+        assert(spellRows[724].animation == 704, 'Palling Salvo must use Eyes On Me')
+        assert(spellRows[750].animation == 654, 'Mighty Guard must use Cocoon')
+        assert(spellRows[717].animation == 698, 'Sweeping Gouge must use Sickle Slash')
+        assert(spellRows[723].animation == 692, 'Saurian Slide must use Uppercut')
     end)
 
     it('keeps Tenebral Crush on the same INT payload as Spectral Floe', function()

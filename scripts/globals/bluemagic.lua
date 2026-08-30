@@ -576,9 +576,9 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
     -- Final D value
     local finalDamage    = (initialD + wsc) * (params.multiplier + azureBonus + correlationMultiplier) + statBonus
 
-    finalDamage = math.floor(finalDamage * xi.combat.magicHitRate.calculateResistRate(
+    finalDamage = math.floor(finalDamage * bluSharedEffects.clampMagicResist(caster, xi.combat.magicHitRate.calculateResistRate(
         caster, target, spellGroup, skillType, 0, spellElement,
-        params.attribute, 0, standardMacc))
+        params.attribute, 0, standardMacc)))
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateElementalStaffBonus(caster, spellElement))
     finalDamage = math.floor(finalDamage * xi.combat.damage.magicalElementSDT(target, spellElement))
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateDayAndWeather(caster, spellElement, false))
@@ -643,7 +643,7 @@ xi.spells.blue.useDrainSpell = function(caster, target, spell, params, damageCap
     local skillType          = xi.skill.BLUE_MAGIC
     local _, skillchainCount = xi.magicburst.formMagicBurst(target, spellElement) -- External function. Not present in magic.lua.
 
-    finalDamage = math.floor(finalDamage * xi.combat.magicHitRate.calculateResistRate(caster, target, spellGroup, skillType, 0, spellElement, params.attribute, 0, 0))
+    finalDamage = math.floor(finalDamage * bluSharedEffects.clampMagicResist(caster, xi.combat.magicHitRate.calculateResistRate(caster, target, spellGroup, skillType, 0, spellElement, params.attribute, 0, 0)))
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateElementalStaffBonus(caster, spellElement))
     finalDamage = math.floor(finalDamage * xi.combat.damage.magicalElementSDT(target, spellElement))
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateDayAndWeather(caster, spellElement, false))
@@ -741,7 +741,7 @@ xi.spells.blue.useBreathSpell = function(caster, target, spell, params)
     local targetMagicDamageAdjustment = xi.combat.damage.calculateDamageAdjustment(target, false, false, false, true)
     local elementalStaffBonus         = xi.spells.damage.calculateElementalStaffBonus(caster, spellElement)
     local elementalAffinityBonus      = xi.spells.damage.calculateElementalAffinityBonus(caster, spellElement)
-    local resistTier                  = xi.combat.magicHitRate.calculateResistRate(caster, target, spellFamily, xi.skill.BLUE_MAGIC, 0, spellElement, 0, 0, 0)
+    local resistTier                  = bluSharedEffects.clampMagicResist(caster, xi.combat.magicHitRate.calculateResistRate(caster, target, spellFamily, xi.skill.BLUE_MAGIC, 0, spellElement, 0, 0, 0))
     local additionalResistTier        = xi.spells.damage.calculateAdditionalResistTier(caster, target, spellElement)
     local elementalSDT                = xi.combat.damage.magicalElementSDT(target, spellElement)
     local dayAndWeather               = xi.spells.damage.calculateDayAndWeather(caster, spellElement, false)
@@ -760,7 +760,9 @@ xi.spells.blue.useBreathSpell = function(caster, target, spell, params)
     dmg = math.floor(dmg * elementalStaffBonus)
     dmg = math.floor(dmg * elementalAffinityBonus)
     dmg = math.floor(dmg * resistTier)
-    dmg = math.floor(dmg * additionalResistTier)
+    if not bluSharedEffects.usesUnresistedMagic(caster) then
+        dmg = math.floor(dmg * additionalResistTier)
+    end
     dmg = math.floor(dmg * elementalSDT)
     dmg = math.floor(dmg * dayAndWeather)
     dmg = math.floor(dmg * magicBonusDiff)
@@ -769,7 +771,9 @@ xi.spells.blue.useBreathSpell = function(caster, target, spell, params)
     dmg = math.floor(dmg * ninjutsuMultiplier)
     dmg = math.floor(dmg * scarletDeliriumMultiplier)
     dmg = math.floor(dmg * areaOfEffectResistance)
-    dmg = math.floor(dmg * calculateNukeWallFactor(target, spellElement, dmg))
+    if not bluSharedEffects.usesUnresistedMagic(caster) then
+        dmg = math.floor(dmg * calculateNukeWallFactor(target, spellElement, dmg))
+    end
 
     -- Handle Magic Absorb message and HP recovery.
     if dmg < 0 then
@@ -873,7 +877,10 @@ xi.spells.blue.useEnfeeblingSpell = function(caster, target, spell, params)
     end
 
     -- Early return: Trait nullification trigger.
-    if xi.data.statusEffect.isTargetResistant(caster, target, effect) then
+    if
+        not bluSharedEffects.usesUnresistedMagic(caster) and
+        xi.data.statusEffect.isTargetResistant(caster, target, effect)
+    then
         spell:setModifier(xi.msg.actionModifier.RESIST)
         spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         return effect
@@ -887,10 +894,10 @@ xi.spells.blue.useEnfeeblingSpell = function(caster, target, spell, params)
 
     -- Early return: Regular resist.
     local stockSubjob = bluSharedEffects.usesStockSubjobBehavior(caster)
-    local resist = xi.combat.magicHitRate.calculateResistRate(
+    local resist = bluSharedEffects.clampMagicResist(caster, xi.combat.magicHitRate.calculateResistRate(
         caster, target, 0, xi.skill.BLUE_MAGIC, 0, spellElement,
         stockSubjob and xi.mod.INT or params.attribute or xi.mod.INT,
-        stockSubjob and 0 or effect, 0)
+        stockSubjob and 0 or effect, 0))
     if resist < params.resistThreshold then
         spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         return effect
@@ -981,16 +988,19 @@ xi.spells.blue.applyBlueAdditionalEffect = function(caster, target, params, effe
             bluSharedEffects.preparePlayerControl(caster, target, effect, duration, GetSystemTime())
         local resist = stockResist
         if controlAllowed and not stockSubjob then
-            resist = xi.combat.magicHitRate.calculateResistRate(
-                caster, target, 0, xi.skill.BLUE_MAGIC, 0, element, stat, effect, 0)
+            resist = bluSharedEffects.clampMagicResist(caster, xi.combat.magicHitRate.calculateResistRate(
+                caster, target, 0, xi.skill.BLUE_MAGIC, 0, element, stat, effect, 0))
         end
 
         if
             controlAllowed and
             resist > 0.25 and
-            not xi.data.statusEffect.isTargetImmune(target, effect, element) and   -- Target isn't immune.
-            not xi.data.statusEffect.isTargetResistant(caster, target, effect) and -- Target didn't trigger a job trait resistance.
-            not xi.data.statusEffect.isEffectNullified(target, effect, 0)          -- Target doesn't have an status effect that nullifies current. TODO: Tier.
+            not xi.data.statusEffect.isTargetImmune(target, effect, element) and
+            (
+                bluSharedEffects.usesUnresistedMagic(caster) or
+                not xi.data.statusEffect.isTargetResistant(caster, target, effect)
+            ) and
+            not xi.data.statusEffect.isEffectNullified(target, effect, 0)
         then
             local effectDuration = fixedControlDuration and controlDuration or math.floor(controlDuration * resist)
             local effectParams =

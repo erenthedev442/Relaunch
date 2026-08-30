@@ -11,6 +11,18 @@ zoneObject.onInitialize = function(zone)
 
     -- A Chocobo Riding Game finish line
     zone:registerCylindricalTriggerArea(1, 218.533, 484.50, 20)
+
+    -- Affinity Simurgh: retail HNM timer used to skip the boot TrySpawn.
+    -- Pin and force the camp even if that leftover registration is still live.
+    if ID.mob.SIMURGH then
+        local simurgh = GetMobByID(ID.mob.SIMURGH)
+        if simurgh then
+            simurgh:setSpawn(-681.000, -31.000, -447.000)
+            if not simurgh:isSpawned() then
+                SpawnMob(ID.mob.SIMURGH)
+            end
+        end
+    end
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

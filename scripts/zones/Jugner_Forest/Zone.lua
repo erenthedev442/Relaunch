@@ -3,6 +3,8 @@
 -----------------------------------
 require('scripts/missions/amk/helpers')
 -----------------------------------
+local ID = zones[xi.zone.JUGNER_FOREST]
+-----------------------------------
 ---@type TZone
 local zoneObject = {}
 
@@ -14,6 +16,15 @@ zoneObject.onInitialize = function(zone)
     xi.helm.initZone(zone, xi.helmType.LOGGING)
 
     xi.voidwalker.zoneOnInit(zone)
+
+    -- Hunt Guild AF T2: force the visible camp even if this used to be a 0,0,0 Voidwalker row.
+    local capricornus = GetMobByID(ID.mob.CAPRICORNUS)
+    if capricornus then
+        capricornus:setSpawn(240.000, 0.000, 40.000)
+        if not capricornus:isSpawned() then
+            SpawnMob(ID.mob.CAPRICORNUS)
+        end
+    end
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

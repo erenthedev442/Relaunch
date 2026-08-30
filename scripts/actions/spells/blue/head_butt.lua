@@ -43,11 +43,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     -- Handle damage.
     local damage = xi.spells.blue.usePhysicalSpell(caster, target, spell, params)
 
-    if damage <= 0 then
-        return damage
-    end
-
-    -- Handle status effects.
+    -- Stun is guaranteed for main-job BLU even if the physical hit misses.
     local effectTable =
     {
         [1] = { xi.effect.STUN, 1, 0, 5 },

@@ -34,6 +34,10 @@
 -- and Jugner Capricornus (Voidwalker /heal hide). Those scripts now
 -- camp at the Hunt warp on the same 30-minute timer.
 --
+-- C++ LoadMOBList skips any mob_spawn_points row at 0,0,0. Lottery Despot
+-- and Voidwalker Capricornus used that placeholder, so they never entered
+-- the zone even after spawntype=0. Park those two on the Hunt camps below.
+--
 -- Side effects to acknowledge:
 --   * Vanilla CoP / Zilart BCNMs that gate off these HNM mob_groups
 --     will see a respawning NM in the open zone instead of (or in
@@ -110,3 +114,14 @@ UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` = 127 AND `groupid` =  9;   -- Behemoth       (Behemoth's Dominion)
 UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` =   5 AND `groupid` = 40;   -- Jormungand     (Uleguerand Range)
+
+-- Park leftover 0,0,0 placeholders on the Hunt camps so LoadMOBList creates them.
+UPDATE `mob_spawn_points`
+   SET `pos_x` = -0.100, `pos_y` = -42.000, `pos_z` = -291.000, `pos_rot` = 114, `spawnslotid` = 0
+ WHERE `mobname` = 'Despot'
+   AND ((`mobid` >> 12) & 0xFFF) = 130;
+
+UPDATE `mob_spawn_points`
+   SET `pos_x` = 240.000, `pos_y` = 0.000, `pos_z` = 40.000, `pos_rot` = 128, `spawnslotid` = 0
+ WHERE `mobname` = 'Capricornus'
+   AND ((`mobid` >> 12) & 0xFFF) = 104;

@@ -55,36 +55,22 @@ local stockSubjobDrainCaps =
     [570] = 0,
 }
 
-local controlRules =
-{
-    [xi.effect.STUN] =
-    {
-        duration = 5,
-        lockout  = 12,
-    },
-    [xi.effect.TERROR] =
-    {
-        duration = 5,
-        lockout  = 20,
-    },
-    [xi.effect.PETRIFICATION] =
-    {
-        duration = 8,
-        lockout  = 30,
-    },
-}
-
-local TRASH_CONTROL_DURATION = 25
+-- Main-job BLU control: stun is always 5s. Terror / petrify are a full 25s
+-- on trash, Apex, and NMs. No reapplication lockout.
+local STUN_DURATION            = 5
+local HARD_CONTROL_DURATION    = 25
 
 local function getControlLockoutVar(effect)
     return string.format('[BLU]ControlLockout:%u', effect)
 end
 
-local function checksAsImpossibleToGauge(target)
-    return
-        target:isNM() or
-        target:isMobType(xi.mobType.BATTLEFIELD) or
-        target:getMobMod(xi.mobMod.CHECK_AS_NM) > 0
+bluSharedEffects.isApexMob = function(target)
+    if not target or not target.getName then
+        return false
+    end
+
+    local name = target:getName() or ''
+    return name:find('^[Aa]pex[_%s%-]') ~= nil
 end
 
 bluSharedEffects.isMainJob = function(caster)
@@ -158,6 +144,18 @@ bluSharedEffects.calculateDiffusionDuration = function(duration, meritValue)
     return duration + durationBonus * duration / 100
 end
 
+bluSharedEffects.usesUnresistedMagic = function(caster)
+    return caster:isPC() and bluSharedEffects.isMainJob(caster)
+end
+
+bluSharedEffects.clampMagicResist = function(caster, resist)
+    if bluSharedEffects.usesUnresistedMagic(caster) then
+        return 1
+    end
+
+    return resist
+end
+
 bluSharedEffects.preparePlayerControl = function(caster, target, effect, duration, now)
     if not caster:isPC() then
         return true, duration, nil, nil, false
@@ -173,24 +171,18 @@ bluSharedEffects.preparePlayerControl = function(caster, target, effect, duratio
         return false, duration, nil, 'nm_doom', false
     end
 
-    local rule = controlRules[effect]
-    if not rule then
-        return true, duration, nil, nil, false
+    if effect == xi.effect.STUN then
+        return true, STUN_DURATION, nil, nil, true
     end
 
-    -- Cleave packs get a reliable control window and no reapplication lockout.
-    -- NMs, battlefield mobs, and CHECK_AS_NM targets retain the short,
-    -- resist-scaled control profiles below.
-    if not checksAsImpossibleToGauge(target) then
-        return true, TRASH_CONTROL_DURATION, nil, nil, true
+    if
+        effect == xi.effect.TERROR or
+        effect == xi.effect.PETRIFICATION
+    then
+        return true, HARD_CONTROL_DURATION, nil, nil, true
     end
 
-    local lockoutVar = getControlLockoutVar(effect)
-    if target:getLocalVar(lockoutVar) > now then
-        return false, duration, nil, 'lockout', false
-    end
-
-    return true, rule.duration, rule.lockout, nil, false
+    return true, duration, nil, nil, false
 end
 
 bluSharedEffects.commitPlayerControl = function(target, effect, duration, lockout, now)
