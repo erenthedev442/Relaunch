@@ -78,11 +78,11 @@ void GP_CLI_COMMAND_MYROOM_JOB::process(MapSession* PSession, CCharEntity* PChar
         // If removing RemoveAllEquipment, please add a charutils::CheckUnarmedItem(PChar) if main hand is empty.
         puppetutils::LoadAutomaton(PChar);
 
-        if (this->MainJobIndex == JOB_BLU)
+        if (this->MainJobIndex == JOB_BLU && prevjob != JOB_BLU)
         {
             blueutils::LoadSetSpells(PChar);
         }
-        else if (prevjob == JOB_BLU)
+        else if (prevjob == JOB_BLU && PChar->GetSJob() != JOB_BLU)
         {
             blueutils::UnequipAllBlueSpells(PChar);
         }
@@ -108,11 +108,11 @@ void GP_CLI_COMMAND_MYROOM_JOB::process(MapSession* PSession, CCharEntity* PChar
         charutils::CheckEquipLogic(PChar, SCRIPT_CHANGESJOB, prevsjob);
         puppetutils::LoadAutomaton(PChar);
 
-        if (this->SupportJobIndex == JOB_BLU)
+        if (this->SupportJobIndex == JOB_BLU && PChar->GetMJob() != JOB_BLU)
         {
             blueutils::LoadSetSpells(PChar);
         }
-        else if (prevsjob == JOB_BLU)
+        else if (prevsjob == JOB_BLU && PChar->GetMJob() != JOB_BLU)
         {
             blueutils::UnequipAllBlueSpells(PChar);
         }
@@ -138,8 +138,8 @@ void GP_CLI_COMMAND_MYROOM_JOB::process(MapSession* PSession, CCharEntity* PChar
 
     jobpointutils::RefreshGiftMods(PChar);
     charutils::BuildingCharSkillsTable(PChar);
-    charutils::CalculateStats(PChar);
     charutils::BuildingCharTraitsTable(PChar);
+    charutils::CalculateStats(PChar);
     // A support-job change must not leave equipment authorized by the old
     // support job in place. Equipment eligibility is main-job-only.
     charutils::CheckValidEquipment(PChar);

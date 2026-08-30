@@ -9,7 +9,7 @@
 -- Level: 99
 -- Casting Time: 1 second
 -- Recast Time: 45 seconds
--- Combos: None
+-- Combos: Conserve MP
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

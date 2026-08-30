@@ -10,7 +10,7 @@
 -- Casting Time: 3 seconds
 -- Recast Time: 32 seconds
 -- Magic Bursts on: Reverberation, Distortion, and Darkness
--- Combos: Clear Mind
+-- Combos: Conserve MP
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

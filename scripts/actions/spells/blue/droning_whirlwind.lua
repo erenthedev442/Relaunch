@@ -9,7 +9,7 @@
 -- Level: 99
 -- Casting Time: 1.5 seconds
 -- Recast Time: 22 seconds
--- Combos: Magic Attack Bonus
+-- Combos: None (Unbridled Learning)
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

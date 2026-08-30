@@ -10,7 +10,7 @@
 -- Casting Time: 5.5 seconds
 -- Recast Time: 70 seconds
 -- Magic Bursts on: Compression, Gravitation, and Darkness
--- Combos: None
+-- Combos: Gilfinder, Treasure Hunter
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

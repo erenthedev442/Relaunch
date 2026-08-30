@@ -43,13 +43,20 @@
 namespace blueutils
 {
 
-void SetBlueSpell(CCharEntity* PChar, CBlueSpell* PSpell, uint8 slotIndex, bool addingSpell)
+void SetBlueSpell(CCharEntity* PChar, CBlueSpell* PSpell, uint8 slotIndex, bool addingSpell, bool persist)
 {
     // sanity check
     if (slotIndex < 20)
     {
         if (PSpell)
         {
+            if (addingSpell && (PSpell->getRequirements() & SPELLREQ_UNBRIDLED_LEARNING))
+            {
+                ShowWarning("SetBlueSpell: Player %s tried to set Unbridled spell ID %u",
+                            PChar->getName(), static_cast<uint16>(PSpell->getID()));
+                return;
+            }
+
             // Blue spells in SetBlueSpells must be 0x200 ofsetted so it's 1 byte per spell.
             if (PChar->m_SetBlueSpells[slotIndex] != 0)
             {
@@ -70,7 +77,10 @@ void SetBlueSpell(CCharEntity* PChar, CBlueSpell* PSpell, uint8 slotIndex, bool 
                     ShowWarning("SetBlueSpell: Player %s trying to set spell ID %u they don't have! ", PChar->getName(), spellID);
                 }
             }
-            SaveSetSpells(PChar);
+            if (persist)
+            {
+                SaveSetSpells(PChar);
+            }
         }
     }
 }
@@ -203,7 +213,10 @@ void UnequipAllBlueSpells(CCharEntity* PChar)
         {
             CBlueSpell* PSpell = (CBlueSpell*)spell::GetSpell(static_cast<SpellID>(m_SetBlueSpell + 0x200));
             m_SetBlueSpell     = 0;
-            PChar->delModifiers(&PSpell->modList);
+            if (PSpell)
+            {
+                PChar->delModifiers(&PSpell->modList);
+            }
         }
     }
     charutils::BuildingCharTraitsTable(PChar);
@@ -211,7 +224,6 @@ void UnequipAllBlueSpells(CCharEntity* PChar)
     PChar->pushPacket<GP_SERV_COMMAND_CLISTATUS>(PChar);
     charutils::CalculateStats(PChar);
     PChar->UpdateHealth();
-    SaveSetSpells(PChar);
     PChar->updatemask |= UPDATE_HP;
 }
 
@@ -249,7 +261,7 @@ void CompactSpells(CCharEntity* PChar)
     }
 }
 
-void CheckSpellLevels(CCharEntity* PChar)
+void CheckSpellLevels(CCharEntity* PChar, bool persist)
 {
     uint8 level = 0;
     if (PChar->GetMJob() == JOB_BLU)
@@ -270,7 +282,7 @@ void CheckSpellLevels(CCharEntity* PChar)
                 CBlueSpell* PSpell = (CBlueSpell*)spell::GetSpell(static_cast<SpellID>(PChar->m_SetBlueSpells[slot] + 0x200));
                 if (PSpell && level < PSpell->getJob(JOB_BLU))
                 {
-                    SetBlueSpell(PChar, PSpell, slot, false);
+                    SetBlueSpell(PChar, PSpell, slot, false, persist);
                 }
             }
         }
@@ -351,6 +363,23 @@ void LoadSetSpells(CCharEntity* PChar)
 
     if (PChar->GetMJob() == JOB_BLU || PChar->GetSJob() == JOB_BLU)
     {
+        // This function can be reached repeatedly during job changes and test
+        // setup. Remove the currently loaded spell mods before reloading so
+        // they cannot stack.
+        for (unsigned char& m_SetBlueSpell : PChar->m_SetBlueSpells)
+        {
+            if (m_SetBlueSpell != 0)
+            {
+                if (auto* PSpell = dynamic_cast<CBlueSpell*>(
+                        spell::GetSpell(static_cast<SpellID>(m_SetBlueSpell + 0x200))))
+                {
+                    PChar->delModifiers(&PSpell->modList);
+                }
+
+                m_SetBlueSpell = 0;
+            }
+        }
+
         auto rset = db::preparedStmt("SELECT set_blue_spells FROM chars WHERE charid = ? LIMIT 1", PChar->id);
         if (rset && rset->rowsCount() && rset->next())
         {
@@ -362,7 +391,7 @@ void LoadSetSpells(CCharEntity* PChar)
             if (m_SetBlueSpell != 0)
             {
                 CBlueSpell* PSpell = (CBlueSpell*)spell::GetSpell(static_cast<SpellID>(m_SetBlueSpell + 0x200));
-                if (PSpell == nullptr)
+                if (PSpell == nullptr || (PSpell->getRequirements() & SPELLREQ_UNBRIDLED_LEARNING))
                 {
                     m_SetBlueSpell = 0;
                 }
@@ -372,13 +401,13 @@ void LoadSetSpells(CCharEntity* PChar)
                 }
             }
         }
-        ValidateBlueSpells(PChar);
+        ValidateBlueSpells(PChar, PChar->GetMJob() == JOB_BLU);
     }
 }
 
-void ValidateBlueSpells(CCharEntity* PChar)
+void ValidateBlueSpells(CCharEntity* PChar, bool persist)
 {
-    CheckSpellLevels(PChar);
+    CheckSpellLevels(PChar, persist);
 
     uint8 maxSetPoints  = GetTotalBlueMagicPoints(PChar);
     uint8 currentPoints = 0;
@@ -388,9 +417,13 @@ void ValidateBlueSpells(CCharEntity* PChar)
         if (PChar->m_SetBlueSpells[slot] != 0)
         {
             CBlueSpell* PSpell = (CBlueSpell*)spell::GetSpell(static_cast<SpellID>(PChar->m_SetBlueSpells[slot] + 0x200));
-            if (currentPoints + PSpell->getSetPoints() > maxSetPoints)
+            if (PSpell == nullptr || (PSpell->getRequirements() & SPELLREQ_UNBRIDLED_LEARNING))
             {
-                SetBlueSpell(PChar, PSpell, slot, false);
+                PChar->m_SetBlueSpells[slot] = 0;
+            }
+            else if (currentPoints + PSpell->getSetPoints() > maxSetPoints)
+            {
+                SetBlueSpell(PChar, PSpell, slot, false, persist);
             }
             else
             {
@@ -407,11 +440,18 @@ void ValidateBlueSpells(CCharEntity* PChar)
     {
         if (PChar->m_SetBlueSpells[slot] != 0)
         {
-            SetBlueSpell(PChar, (CBlueSpell*)spell::GetSpell(static_cast<SpellID>(PChar->m_SetBlueSpells[slot] + 0x200)), slot, false);
+            SetBlueSpell(PChar,
+                         (CBlueSpell*)spell::GetSpell(static_cast<SpellID>(PChar->m_SetBlueSpells[slot] + 0x200)),
+                         slot,
+                         false,
+                         persist);
         }
     }
 
-    SaveSetSpells(PChar);
+    if (persist)
+    {
+        SaveSetSpells(PChar);
+    }
 }
 
 // Adds Blue Traits based on spells set
@@ -426,7 +466,30 @@ void CalculateTraits(CCharEntity* PChar)
     TraitList_t*           PTraitsList = traits::GetTraits(JOB_BLU);
     std::map<uint8, uint8> points;
     std::vector<CTrait*>   traitsToAdd;
-    auto                   traitTierBonus = PChar->getMod(Mod::BLUE_JOB_TRAIT_BONUS);
+    auto                   traitTierBonus = std::clamp<int16>(PChar->getMod(Mod::BLUE_JOB_TRAIT_BONUS), 0, 2);
+
+    auto isSameBluTrait = [](CBlueTrait* PBluTraitA, CBlueTrait* PBluTraitB) -> bool
+    {
+        if (PBluTraitA->getCategory() != PBluTraitB->getCategory())
+        {
+            return false;
+        }
+
+        if (PBluTraitA->getMod() == PBluTraitB->getMod())
+        {
+            return PBluTraitA->getID() == PBluTraitB->getID();
+        }
+
+        // Retail replacement families use different trait and modifier IDs.
+        const bool isDoubleTriple =
+            (PBluTraitA->getMod() == Mod::DOUBLE_ATTACK && PBluTraitB->getMod() == Mod::TRIPLE_ATTACK) ||
+            (PBluTraitA->getMod() == Mod::TRIPLE_ATTACK && PBluTraitB->getMod() == Mod::DOUBLE_ATTACK);
+        const bool isGilTreasure =
+            (PBluTraitA->getMod() == Mod::GILFINDER && PBluTraitB->getMod() == Mod::TREASURE_HUNTER) ||
+            (PBluTraitA->getMod() == Mod::TREASURE_HUNTER && PBluTraitB->getMod() == Mod::GILFINDER);
+
+        return isDoubleTriple || isGilTreasure;
+    };
 
     for (unsigned char m_SetBlueSpell : PChar->m_SetBlueSpells)
     {
@@ -440,7 +503,11 @@ void CalculateTraits(CCharEntity* PChar)
                 uint8                            weight   = PSpell->getTraitWeight();
                 std::map<uint8, uint8>::iterator iter     = points.find(category);
 
-                if (iter != points.end())
+                if (category == 0 || weight == 0)
+                {
+                    continue;
+                }
+                else if (iter != points.end())
                 {
                     iter->second += weight;
                 }
@@ -472,8 +539,8 @@ void CalculateTraits(CCharEntity* PChar)
                     {
                         auto currentTrait = *it;
 
-                        // Same trait ID, trait mod, and is weaker than new trait
-                        if (currentTrait->getID() == PTrait->getID() && currentTrait->getRank() <= PTrait->getRank() && currentTrait->getMod() == PTrait->getMod())
+                        if (isSameBluTrait((CBlueTrait*)currentTrait, PTrait) &&
+                            currentTrait->getRank() <= PTrait->getRank())
                         {
                             // Erase lower tier trait
                             it = traitsToAdd.erase(it);
@@ -492,50 +559,6 @@ void CalculateTraits(CCharEntity* PChar)
 
     std::vector<CTrait*> upgradedTraits;
 
-    auto isSameBluTrait = [](CBlueTrait* PBluTraitA, CBlueTrait* PBluTraitB) -> bool
-    {
-        if (PBluTraitA->getCategory() != PBluTraitB->getCategory())
-        {
-            return false;
-        }
-
-        // Edge case
-        // Double Attack upgrades to Triple Attack
-        // Gilfinder upgrades to Treasure Hunter
-        if (PBluTraitA->getMod() != PBluTraitB->getMod())
-        {
-            if (PBluTraitA->getMod() == Mod::DOUBLE_ATTACK && PBluTraitB->getMod() == Mod::TRIPLE_ATTACK)
-            {
-                return true;
-            }
-
-            if (PBluTraitA->getMod() == Mod::TRIPLE_ATTACK && PBluTraitB->getMod() == Mod::DOUBLE_ATTACK)
-            {
-                return true;
-            }
-
-            if (PBluTraitA->getMod() == Mod::GILFINDER && PBluTraitB->getMod() == Mod::TREASURE_HUNTER)
-            {
-                return true;
-            }
-
-            if (PBluTraitA->getMod() == Mod::TREASURE_HUNTER && PBluTraitB->getMod() == Mod::GILFINDER)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        // Must be after mod ID check due to edge case. They have different trait IDs. "Gilfinder" and "Treasure hunter" etc are different in the menus
-        if (PBluTraitA->getID() != PBluTraitB->getID())
-        {
-            return false;
-        }
-
-        return true;
-    };
-
     // Search for higher tier bonuses to boost them before we check if existing traits are stronger
     if (traitTierBonus > 0)
     {
@@ -545,13 +568,23 @@ void CalculateTraits(CCharEntity* PChar)
             auto        newRank      = currentTrait->getRank() + traitTierBonus;
             CBlueTrait* newTrait     = nullptr;
 
+            // These retail families are explicitly unaffected by Job Trait
+            // Bonus gifts.
+            const auto category = currentTrait->getCategory();
+            if (category == 14 || category == 24 || category == 28)
+            {
+                ++it;
+                continue;
+            }
+
             for (auto& i : *PTraitsList)
             {
                 if (i->getLevel() == 0)
                 {
                     CBlueTrait* PTrait = (CBlueTrait*)i;
 
-                    if (isSameBluTrait(PTrait, currentTrait) && newRank >= PTrait->getRank())
+                    if (isSameBluTrait(PTrait, currentTrait) && newRank >= PTrait->getRank() &&
+                        (newTrait == nullptr || PTrait->getRank() > newTrait->getRank()))
                     {
                         newTrait = PTrait;
                     }
@@ -614,6 +647,7 @@ void CalculateTraits(CCharEntity* PChar)
                 if (PExistingTrait->getRank() < PTrait->getRank())
                 {
                     PChar->delModifier(PExistingTrait->getMod(), PExistingTrait->getValue());
+                    charutils::delTrait(PChar, PExistingTrait->getID());
                     it = PChar->TraitList.erase(it);
                     continue;
                 }

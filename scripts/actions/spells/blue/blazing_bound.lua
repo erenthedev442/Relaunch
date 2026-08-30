@@ -10,7 +10,7 @@
 -- Casting Time: 6 seconds
 -- Recast Time: 30 seconds
 -- Magic Bursts on: Liquefaction, Fusion, and Light
--- Combos: Magic Attack Bonus
+-- Combos: Dual Wield
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

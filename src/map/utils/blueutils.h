@@ -34,18 +34,18 @@
 namespace blueutils
 {
 
-void  SetBlueSpell(CCharEntity* PChar, CBlueSpell* PSpell, uint8 slotIndex, bool addingSpell);
+void  SetBlueSpell(CCharEntity* PChar, CBlueSpell* PSpell, uint8 slotIndex, bool addingSpell, bool persist = true);
 bool  HasEnoughSetPoints(CCharEntity* PChar, CBlueSpell* PSpellToAdd, uint8 slotToPut);
 void  TryLearningSpells(CCharEntity* PChar, CMobEntity* PMob);
 void  UnequipAllBlueSpells(CCharEntity* PChar);
 bool  IsSpellSet(CCharEntity* PChar, CBlueSpell* PSpell);
 void  CompactSpells(CCharEntity* PChar);
-void  CheckSpellLevels(CCharEntity* PChar);
+void  CheckSpellLevels(CCharEntity* PChar, bool persist = true);
 uint8 GetTotalSlots(CCharEntity* PChar);
 uint8 GetTotalBlueMagicPoints(CCharEntity* PChar);
 void  SaveSetSpells(CCharEntity* PChar);
 void  LoadSetSpells(CCharEntity* PChar);
-void  ValidateBlueSpells(CCharEntity* PChar);
+void  ValidateBlueSpells(CCharEntity* PChar, bool persist = true);
 void  CalculateTraits(CCharEntity* PChar);
 
 }; // namespace blueutils

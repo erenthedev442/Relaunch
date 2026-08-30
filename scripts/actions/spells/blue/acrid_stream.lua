@@ -10,7 +10,7 @@
 -- Casting Time: 4 seconds
 -- Recast Time: 23 seconds
 -- Magic Bursts on: Reverberation, Distortion, and Darkness
--- Combos: Magic Attack Bonus
+-- Combos: Double Attack, Triple Attack
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

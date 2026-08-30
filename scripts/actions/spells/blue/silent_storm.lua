@@ -9,7 +9,7 @@
 -- Level: 99
 -- Casting Time: 5 seconds
 -- Recast Time: 60 seconds
--- Combos: None
+-- Combos: Evasion Bonus
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

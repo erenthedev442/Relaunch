@@ -10,7 +10,7 @@
 -- Casting Time: 0.5 seconds
 -- Recast Time: 22 seconds
 -- Skillchain Element(s): Distortion/Liquefaction
--- Combos: None
+-- Combos: Dual Wield
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

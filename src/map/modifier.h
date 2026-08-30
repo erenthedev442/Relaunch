@@ -682,7 +682,7 @@ enum class Mod
     // Blue Mage
     BLUE_POINTS             = 309,  // Tracks extra blue points
     BLUE_LEARN_CHANCE       = 945,  // Additional chance to learn blue magic
-    BLUE_JOB_TRAIT_BONUS    = 1058, // TODO: Increases job traits gained from equipped blue magic (percent)
+    BLUE_JOB_TRAIT_BONUS    = 1058, // Trait tiers added to traits gained from equipped blue magic
     BLUE_MAGIC_EFFECT       = 1059, // TODO: Bonus to Attribute Value of spell (percent)
     ENHANCES_BURST_AFFINITY = 1139, // Increases WSC bonus on spells cast with Burst Affinity (percent)
     ENHANCES_CHAIN_AFFINITY = 1140, // TODO: Increases WSC bonus on spells cast with Chain Affinity (base damage +)

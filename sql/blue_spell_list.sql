@@ -171,21 +171,36 @@ INSERT INTO `blue_spell_list` VALUES (696,2201,5,21,1,0,0,0,NULL); -- Orcish Cou
 INSERT INTO `blue_spell_list` VALUES (697,1824,4,28,1,9,0,0,NULL); -- Amorphic Spikes
 INSERT INTO `blue_spell_list` VALUES (698,644,2,22,1,0,0,0,NULL); -- Wind breath
 INSERT INTO `blue_spell_list` VALUES (699,253,2,25,1,10,4,0,NULL); -- Barbed Crescent
+-- Normalize the legacy quarter-scale trait weights to the retail values shown
+-- by the client.  Auto Refresh already uses its retail variable weights.
+UPDATE `blue_spell_list`
+SET `trait_category_weight` = `trait_category_weight` * 4
+WHERE `spellid` < 700
+  AND `trait_category` NOT IN (0, 14, 23, 27, 28);
+UPDATE `blue_spell_list`
+SET `trait_category_weight` = 6
+WHERE `spellid` < 700
+  AND `trait_category` IN (23, 27, 28);
+UPDATE `blue_spell_list`
+SET `trait_category_weight` = 0
+WHERE `spellid` < 700
+  AND `trait_category` = 0;
+
 INSERT INTO `blue_spell_list` VALUES (700,2945,6,16,8,0,0,0,NULL); -- Natures Meditation
-INSERT INTO `blue_spell_list` VALUES (701,2950,4,18,8,0,0,0,NULL); -- Tempestuous Upheaval
+INSERT INTO `blue_spell_list` VALUES (701,2950,6,18,8,0,0,0,NULL); -- Tempestuous Upheaval
 INSERT INTO `blue_spell_list` VALUES (702,2958,6,13,8,0,0,0,NULL); -- Rending Deluge
-INSERT INTO `blue_spell_list` VALUES (703,2967,4,8,8,0,0,0,NULL); -- Embalming Earth
-INSERT INTO `blue_spell_list` VALUES (704,2970,4,23,8,9,0,0,NULL); -- Paralyzing Triad
+INSERT INTO `blue_spell_list` VALUES (703,2967,6,8,8,0,0,0,NULL); -- Embalming Earth
+INSERT INTO `blue_spell_list` VALUES (704,2970,6,23,8,9,0,0,NULL); -- Paralyzing Triad
 INSERT INTO `blue_spell_list` VALUES (705,2974,4,29,8,0,0,0,NULL); -- Foul Waters
-INSERT INTO `blue_spell_list` VALUES (706,2988,2,15,8,12,0,0,NULL); -- Glutinous Dart
+INSERT INTO `blue_spell_list` VALUES (706,2988,2,15,4,12,0,0,NULL); -- Glutinous Dart
 INSERT INTO `blue_spell_list` VALUES (707,3030,5,17,8,0,0,0,NULL); -- Retinal Glare
-INSERT INTO `blue_spell_list` VALUES (708,2930,6,24,8,0,0,0,NULL); -- Subduction
-INSERT INTO `blue_spell_list` VALUES (709,3974,5,24,3,11,0,0,NULL); -- Thrashing Assault
-INSERT INTO `blue_spell_list` VALUES (710,1952,5,17,2,0,0,0,NULL); -- Erratic Flutter
-INSERT INTO `blue_spell_list` VALUES (711,2041,5,0,0,0,0,0,NULL); -- Restoral
-INSERT INTO `blue_spell_list` VALUES (712,2040,5,0,0,0,0,0,NULL); -- Rail Cannon
-INSERT INTO `blue_spell_list` VALUES (713,2054,5,0,0,0,0,0,NULL); -- Diffusion Ray
-INSERT INTO `blue_spell_list` VALUES (714,2073,5,0,0,9,5,0,NULL); -- Sinker Drill
+INSERT INTO `blue_spell_list` VALUES (708,2930,6,6,8,0,0,0,NULL); -- Subduction
+INSERT INTO `blue_spell_list` VALUES (709,3974,7,24,8,11,0,0,NULL); -- Thrashing Assault
+INSERT INTO `blue_spell_list` VALUES (710,1952,6,22,8,0,0,0,NULL); -- Erratic Flutter
+INSERT INTO `blue_spell_list` VALUES (711,2041,7,15,8,0,0,0,NULL); -- Restoral
+INSERT INTO `blue_spell_list` VALUES (712,2040,6,27,8,0,0,0,NULL); -- Rail Cannon
+INSERT INTO `blue_spell_list` VALUES (713,2054,6,20,8,0,0,0,NULL); -- Diffusion Ray
+INSERT INTO `blue_spell_list` VALUES (714,2073,6,32,8,9,5,0,NULL); -- Sinker Drill
 INSERT INTO `blue_spell_list` VALUES (736,629,0,0,0,0,0,0,NULL); -- Thunderbolt
 INSERT INTO `blue_spell_list` VALUES (737,807,0,0,0,0,0,0,NULL); -- Harden Shell
 INSERT INTO `blue_spell_list` VALUES (738,1305,0,0,0,0,0,0,NULL); -- Absolute Terror
@@ -194,29 +209,29 @@ INSERT INTO `blue_spell_list` VALUES (740,2024,0,0,0,13,12,0,NULL); -- Tourbilli
 INSERT INTO `blue_spell_list` VALUES (741,1831,0,0,0,0,0,0,NULL); -- Pyric Bulwark
 INSERT INTO `blue_spell_list` VALUES (742,2118,0,0,0,14,9,0,NULL); -- Bilgestorm
 INSERT INTO `blue_spell_list` VALUES (743,2106,0,0,0,14,10,0,NULL); -- Bloodrake
-INSERT INTO `blue_spell_list` VALUES (744,3005,5,0,0,0,0,0,NULL); -- Droning Whirlwind
-INSERT INTO `blue_spell_list` VALUES (745,3014,5,0,0,0,0,0,NULL); -- Carcharian Verve
-INSERT INTO `blue_spell_list` VALUES (746,3020,4,0,0,0,0,0,NULL); -- Blistering Roar
+INSERT INTO `blue_spell_list` VALUES (744,3005,0,0,0,0,0,0,NULL); -- Droning Whirlwind (Unbridled)
+INSERT INTO `blue_spell_list` VALUES (745,3014,0,0,0,0,0,0,NULL); -- Carcharian Verve (Unbridled)
+INSERT INTO `blue_spell_list` VALUES (746,3020,0,0,0,0,0,0,NULL); -- Blistering Roar (Unbridled)
 
 
 -- Blue Magic net-new spells 715-753 (see spell_list.sql)
-INSERT INTO `blue_spell_list` VALUES (715,3063,4,0,0,0,0,0,NULL); -- Molting Plumage
-INSERT INTO `blue_spell_list` VALUES (716,3099,4,0,0,0,0,0,NULL); -- Nectarous Deluge
-INSERT INTO `blue_spell_list` VALUES (717,3931,4,0,0,0,0,0,NULL); -- Sweeping Gouge
-INSERT INTO `blue_spell_list` VALUES (719,2735,8,0,0,0,0,0,NULL); -- Searing Tempest
-INSERT INTO `blue_spell_list` VALUES (720,2737,8,0,0,0,0,0,NULL); -- Spectral Floe
-INSERT INTO `blue_spell_list` VALUES (721,2739,8,0,0,0,0,0,NULL); -- Anvil Lightning
-INSERT INTO `blue_spell_list` VALUES (722,2741,8,0,0,0,0,0,NULL); -- Entomb
-INSERT INTO `blue_spell_list` VALUES (723,2991,4,0,0,0,0,0,NULL); -- Saurian Slide
-INSERT INTO `blue_spell_list` VALUES (724,3153,6,0,0,0,0,0,NULL); -- Palling Salvo
-INSERT INTO `blue_spell_list` VALUES (725,2736,8,0,0,0,0,0,NULL); -- Blinding Fulgor
-INSERT INTO `blue_spell_list` VALUES (726,2738,8,0,0,0,0,0,NULL); -- Scouring Spate
-INSERT INTO `blue_spell_list` VALUES (727,2740,8,0,0,0,0,0,NULL); -- Silent Storm
-INSERT INTO `blue_spell_list` VALUES (728,2742,8,0,0,0,0,0,NULL); -- Tenebral Crush
-INSERT INTO `blue_spell_list` VALUES (747,3059,5,0,0,0,0,0,NULL); -- Uproot
-INSERT INTO `blue_spell_list` VALUES (748,3072,5,0,0,0,0,0,NULL); -- Crashing Thunder
-INSERT INTO `blue_spell_list` VALUES (749,3137,4,0,0,0,0,0,NULL); -- Polar Roar
-INSERT INTO `blue_spell_list` VALUES (750,2667,9,0,0,0,0,0,NULL); -- Mighty Guard
-INSERT INTO `blue_spell_list` VALUES (751,3304,5,0,0,0,0,0,NULL); -- Cruel Joke
-INSERT INTO `blue_spell_list` VALUES (752,3372,5,0,0,0,0,0,NULL); -- Cesspool
-INSERT INTO `blue_spell_list` VALUES (753,3363,5,0,0,0,0,0,NULL); -- Tearing Gust
+INSERT INTO `blue_spell_list` VALUES (715,3063,6,25,8,0,0,0,NULL); -- Molting Plumage
+INSERT INTO `blue_spell_list` VALUES (716,3099,6,1,8,0,0,0,NULL); -- Nectarous Deluge
+INSERT INTO `blue_spell_list` VALUES (717,3931,6,3,8,0,0,0,NULL); -- Sweeping Gouge
+INSERT INTO `blue_spell_list` VALUES (719,2735,8,8,8,0,0,0,NULL); -- Searing Tempest
+INSERT INTO `blue_spell_list` VALUES (720,2737,8,6,8,0,0,0,NULL); -- Spectral Floe
+INSERT INTO `blue_spell_list` VALUES (721,2739,8,16,8,0,0,0,NULL); -- Anvil Lightning
+INSERT INTO `blue_spell_list` VALUES (722,2741,8,11,8,0,0,0,NULL); -- Entomb
+INSERT INTO `blue_spell_list` VALUES (723,2991,7,33,8,0,0,0,NULL); -- Saurian Slide
+INSERT INTO `blue_spell_list` VALUES (724,3153,7,34,8,0,0,0,NULL); -- Palling Salvo
+INSERT INTO `blue_spell_list` VALUES (725,2736,8,31,8,0,0,0,NULL); -- Blinding Fulgor
+INSERT INTO `blue_spell_list` VALUES (726,2738,8,13,8,0,0,0,NULL); -- Scouring Spate
+INSERT INTO `blue_spell_list` VALUES (727,2740,8,18,8,0,0,0,NULL); -- Silent Storm
+INSERT INTO `blue_spell_list` VALUES (728,2742,8,30,8,0,0,0,NULL); -- Tenebral Crush
+INSERT INTO `blue_spell_list` VALUES (747,3059,0,0,0,0,0,0,NULL); -- Uproot (Unbridled)
+INSERT INTO `blue_spell_list` VALUES (748,3072,0,0,0,0,0,0,NULL); -- Crashing Thunder (Unbridled)
+INSERT INTO `blue_spell_list` VALUES (749,3137,0,0,0,0,0,0,NULL); -- Polar Roar (Unbridled)
+INSERT INTO `blue_spell_list` VALUES (750,2667,0,0,0,0,0,0,NULL); -- Mighty Guard (Unbridled)
+INSERT INTO `blue_spell_list` VALUES (751,3304,0,0,0,0,0,0,NULL); -- Cruel Joke (Unbridled)
+INSERT INTO `blue_spell_list` VALUES (752,3372,0,0,0,0,0,0,NULL); -- Cesspool (Unbridled)
+INSERT INTO `blue_spell_list` VALUES (753,3363,0,0,0,0,0,0,NULL); -- Tearing Gust (Unbridled)

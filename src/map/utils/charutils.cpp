@@ -1862,11 +1862,11 @@ void UpdateSubJob(CCharEntity* PChar)
 {
     jobpointutils::RefreshGiftMods(PChar);
     charutils::BuildingCharSkillsTable(PChar);
+    charutils::BuildingCharTraitsTable(PChar);
     charutils::CalculateStats(PChar);
     charutils::CheckValidEquipment(PChar);
     PChar->PRecastContainer->ChangeJob();
     charutils::BuildingCharAbilityTable(PChar);
-    charutils::BuildingCharTraitsTable(PChar);
 
     PChar->UpdateHealth();
     PChar->health.hp = PChar->GetMaxHP();

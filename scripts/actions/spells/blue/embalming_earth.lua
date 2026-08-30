@@ -10,7 +10,7 @@
 -- Casting Time: 4.5 seconds
 -- Recast Time: 24 seconds
 -- Magic Bursts on: Scission, Gravitation, and Darkness
--- Combos: Clear Mind
+-- Combos: Attack Bonus
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

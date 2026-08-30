@@ -10,7 +10,7 @@
 -- Casting Time: 2 seconds
 -- Recast Time: 42.5 seconds
 -- Skillchain Element(s): Liquefaction, Scission
--- Combos: Sillchain Bonus
+-- Combos: Skillchain Bonus
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

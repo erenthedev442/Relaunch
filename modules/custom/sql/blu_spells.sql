@@ -19,9 +19,10 @@
 -- Spell scripts live in:
 --   scripts/actions/spells/blue/<name>.lua   (copied from Calvin)
 --
--- Apply without server restart (Lua hot-reload handles script pickup):
+-- For an existing database, apply this spell overlay and the canonical trait
+-- migration together, then perform a full map rebuild/restart:
 --   mysql -u root xidb < modules/custom/sql/blu_spells.sql
---   (or via /lua reload in-game after applying the SQL)
+--   mysql -u root xidb < modules/custom/sql/blu_trait_correctness.sql
 --
 -- Safe to re-apply; the upsert repairs stale rows in existing databases.
 -- ============================================================================
@@ -138,7 +139,7 @@ VALUES
 (744, 'droning_whirlwind',
  0x00000000000000000000000000000063000000000000,
  3, 0, @ELEMENT_WIND, 0, 4, @SKILL_BLUE,
- 224, 1500, 22000, 2, 0, 695, 2000, 1, 0, 1.00, 0, 0, 0, 100, 100, 'SOA'), -- Mysterious Light
+ 224, 1500, 22000, 2, 0, 695, 2000, 1, 0, 1.00, 0, 0, 16, 100, 100, 'SOA'), -- Mysterious Light
 
 (745, 'carcharian_verve',
  0x00000000000000000000000000000063000000000000,
@@ -223,29 +224,29 @@ INSERT INTO `blue_spell_list`
      `trait_category_weight`, `primary_sc`, `secondary_sc`, `tertiary_sc`,
      `knockback`)
 VALUES
-    (715, 3063, 4, 0, 0, 0, 0, 0, NULL),
-    (716, 3099, 4, 0, 0, 0, 0, 0, NULL),
-    (717, 3931, 4, 0, 0, 0, 0, 0, NULL),
-    (719, 2735, 8, 0, 0, 0, 0, 0, NULL),
-    (720, 2737, 8, 0, 0, 0, 0, 0, NULL),
-    (721, 2739, 8, 0, 0, 0, 0, 0, NULL),
-    (722, 2741, 8, 0, 0, 0, 0, 0, NULL),
-    (723, 2991, 4, 0, 0, 0, 0, 0, NULL),
-    (724, 3153, 6, 0, 0, 0, 0, 0, NULL),
-    (725, 2736, 8, 0, 0, 0, 0, 0, NULL),
-    (726, 2738, 8, 0, 0, 0, 0, 0, NULL),
-    (727, 2740, 8, 0, 0, 0, 0, 0, NULL),
-    (728, 2742, 8, 0, 0, 0, 0, 0, NULL),
-    (744, 3005, 5, 0, 0, 0, 0, 0, NULL),
-    (745, 3014, 5, 0, 0, 0, 0, 0, NULL),
-    (746, 3020, 4, 0, 0, 0, 0, 0, NULL),
-    (747, 3059, 5, 0, 0, 0, 0, 0, NULL),
-    (748, 3072, 5, 0, 0, 0, 0, 0, NULL),
-    (749, 3137, 4, 0, 0, 0, 0, 0, NULL),
-    (750, 2667, 9, 0, 0, 0, 0, 0, NULL),
-    (751, 3304, 5, 0, 0, 0, 0, 0, NULL),
-    (752, 3372, 5, 0, 0, 0, 0, 0, NULL),
-    (753, 3363, 5, 0, 0, 0, 0, 0, NULL);
+    (715, 3063, 6, 25, 8, 0, 0, 0, NULL),
+    (716, 3099, 6, 1, 8, 0, 0, 0, NULL),
+    (717, 3931, 6, 3, 8, 0, 0, 0, NULL),
+    (719, 2735, 8, 8, 8, 0, 0, 0, NULL),
+    (720, 2737, 8, 6, 8, 0, 0, 0, NULL),
+    (721, 2739, 8, 16, 8, 0, 0, 0, NULL),
+    (722, 2741, 8, 11, 8, 0, 0, 0, NULL),
+    (723, 2991, 7, 33, 8, 0, 0, 0, NULL),
+    (724, 3153, 7, 34, 8, 0, 0, 0, NULL),
+    (725, 2736, 8, 31, 8, 0, 0, 0, NULL),
+    (726, 2738, 8, 13, 8, 0, 0, 0, NULL),
+    (727, 2740, 8, 18, 8, 0, 0, 0, NULL),
+    (728, 2742, 8, 30, 8, 0, 0, 0, NULL),
+    (744, 3005, 0, 0, 0, 0, 0, 0, NULL),
+    (745, 3014, 0, 0, 0, 0, 0, 0, NULL),
+    (746, 3020, 0, 0, 0, 0, 0, 0, NULL),
+    (747, 3059, 0, 0, 0, 0, 0, 0, NULL),
+    (748, 3072, 0, 0, 0, 0, 0, 0, NULL),
+    (749, 3137, 0, 0, 0, 0, 0, 0, NULL),
+    (750, 2667, 0, 0, 0, 0, 0, 0, NULL),
+    (751, 3304, 0, 0, 0, 0, 0, 0, NULL),
+    (752, 3372, 0, 0, 0, 0, 0, 0, NULL),
+    (753, 3363, 0, 0, 0, 0, 0, 0, NULL);
 
 DELETE FROM `blue_spell_mods`
 WHERE `spellId` IN
@@ -279,17 +280,4 @@ VALUES
     (728, 5, 30),
     (728, 10, 4),
     (728, 12, 4),
-    (728, 13, 4),
-    (744, 11, 2),
-    (745, 2, 5),
-    (745, 13, 2),
-    (746, 8, 2),
-    (747, 10, 3),
-    (748, 11, 4),
-    (749, 8, 2),
-    (749, 12, 2),
-    (750, 2, 5),
-    (750, 8, 1),
-    (751, 13, 3),
-    (752, 10, 2),
-    (753, 11, 3);
+    (728, 13, 4);

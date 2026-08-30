@@ -6904,11 +6904,11 @@ void CLuaBaseEntity::changeJob(uint8 newJob)
         luautils::CheckForGearSet(PChar); // check for gear set on gear change
         jobpointutils::RefreshGiftMods(PChar);
         charutils::BuildingCharSkillsTable(PChar);
+        charutils::BuildingCharTraitsTable(PChar);
         charutils::CalculateStats(PChar);
         charutils::CheckValidEquipment(PChar);
         PChar->PRecastContainer->ChangeJob();
         charutils::BuildingCharAbilityTable(PChar);
-        charutils::BuildingCharTraitsTable(PChar);
 
         // clang-format off
         PChar->ForParty([](CBattleEntity* PMember)
@@ -7034,20 +7034,22 @@ void CLuaBaseEntity::changesJob(uint8 subJob)
     }
 
     auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+    auto  previousSubJob = PChar->GetSJob();
 
     PChar->jobs.unlocked |= (1 << subJob);
     PChar->SetSJob(subJob);
-    charutils::UpdateSubJob(PChar);
+    PChar->SetSLevel(PChar->jobs.job[PChar->GetSJob()]);
 
-    if (subJob == JOB_BLU)
+    if (subJob == JOB_BLU && PChar->GetMJob() != JOB_BLU && previousSubJob != JOB_BLU)
     {
         blueutils::LoadSetSpells(PChar);
     }
-    else
+    else if (previousSubJob == JOB_BLU && PChar->GetMJob() != JOB_BLU)
     {
         blueutils::UnequipAllBlueSpells(PChar);
     }
 
+    charutils::UpdateSubJob(PChar);
     puppetutils::LoadAutomaton(PChar);
 }
 

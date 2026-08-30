@@ -1002,18 +1002,17 @@ INSERT INTO `blue_spell_mods` VALUES (743,0,0); --
 -- ----------------------------
 -- Droning Whirlwind
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (744,11,2); -- AGI+2
+-- Unbridled-only: cannot be equipped and grants no set modifiers.
 
 -- ----------------------------
 -- Carcharian Verve
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (745,2,5); -- HP+5
-INSERT INTO `blue_spell_mods` VALUES (745,13,2); -- MND+2
+-- Unbridled-only: cannot be equipped and grants no set modifiers.
 
 -- ----------------------------
 -- Blistering Roar
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (746,8,2); -- STR+2
+-- Unbridled-only: cannot be equipped and grants no set modifiers.
 
 
 -- ----------------------------
@@ -1043,12 +1042,4 @@ INSERT INTO `blue_spell_mods` VALUES (728,5,30); -- Tenebral Crush: MP+30
 INSERT INTO `blue_spell_mods` VALUES (728,10,4); -- Tenebral Crush: VIT+4
 INSERT INTO `blue_spell_mods` VALUES (728,12,4); -- Tenebral Crush: INT+4
 INSERT INTO `blue_spell_mods` VALUES (728,13,4); -- Tenebral Crush: MND+4
-INSERT INTO `blue_spell_mods` VALUES (747,10,3); -- Uproot: VIT+3
-INSERT INTO `blue_spell_mods` VALUES (748,11,4); -- Crashing Thunder: AGI+4
-INSERT INTO `blue_spell_mods` VALUES (749,8,2); -- Polar Roar: STR+2
-INSERT INTO `blue_spell_mods` VALUES (749,12,2); -- Polar Roar: INT+2
-INSERT INTO `blue_spell_mods` VALUES (750,2,5); -- Mighty Guard: HP+5
-INSERT INTO `blue_spell_mods` VALUES (750,8,1); -- Mighty Guard: STR+1
-INSERT INTO `blue_spell_mods` VALUES (751,13,3); -- Cruel Joke: MND+3
-INSERT INTO `blue_spell_mods` VALUES (752,10,2); -- Cesspool: VIT+2
-INSERT INTO `blue_spell_mods` VALUES (753,11,3); -- Tearing Gust: AGI+3
+-- Spells 747-753 are Unbridled-only and grant no equip modifiers.

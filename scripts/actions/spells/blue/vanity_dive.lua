@@ -10,7 +10,7 @@
 -- Casting Time: 0.5 seconds
 -- Recast Time: 40 seconds
 -- Skillchain Element(s): Scission
--- Combos: None
+-- Combos: Accuracy Bonus
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

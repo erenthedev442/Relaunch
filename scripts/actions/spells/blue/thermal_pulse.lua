@@ -10,7 +10,7 @@
 -- Casting Time: 5.5 seconds
 -- Recast Time: 70 seconds
 -- Magic Bursts on: None
--- Combos: Attck Bonus
+-- Combos: Attack Bonus
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

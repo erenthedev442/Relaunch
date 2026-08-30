@@ -10,7 +10,7 @@
 -- Casting Time: 0.5 seconds
 -- Recast Time: 55 seconds
 -- Skillchain Element(s): Gravitation/Transfixion
--- Combos: None
+-- Combos: Skillchain Bonus
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

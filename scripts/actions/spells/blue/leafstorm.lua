@@ -10,7 +10,7 @@
 -- Casting Time: 7 seconds
 -- Recast Time: 62 seconds
 -- Magic Bursts on: Detonation, Fragmentation, and Light
--- Combos: Magic Attack Bonus
+-- Combos: Magic Burst Bonus
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
