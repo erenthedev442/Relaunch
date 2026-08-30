@@ -35,7 +35,12 @@ xi.settings.map =
     GLOBAL_HP_DAMAGE_CAP = 999999,
 
     -- Minimal number of 0x3A packets which uses for detect lightluggage (set 0 for disable)
-    LIGHTLUGGAGE_BLOCK = 4,
+    -- Kept at 0: the "will be removed from server" -> charutils::ForceLogout path has a
+    -- recurring ACCESS_VIOLATION crash (dangling-entity). Disabling detection is the
+    -- standing mitigation until ForceLogout is hardened. Reverting to a game deploy on
+    -- 2026-08-29 reset this to the default 4 and a player (Owa) tripping it crash-looped
+    -- the map -- committing 0 so a deploy can't silently re-enable the crash again.
+    LIGHTLUGGAGE_BLOCK = 0,
 
     -- Enable or disable leaking item extdata to client when moving items out of an inventory container into another one
     -- Retail leaks extdata on move, which is useful for edge cases such as weapon skill points
