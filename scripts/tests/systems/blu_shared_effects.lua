@@ -1,11 +1,17 @@
 local sharedEffects = require('modules/custom/lua/blu_shared_effects')
 
 describe('BLU shared effect helpers', function()
-    local function makeCaster(isPlayer)
+    local function makeCaster(isPlayer, mainJob, subJob)
         return
         {
             isPC = function()
                 return isPlayer ~= false
+            end,
+            getMainJob = function()
+                return mainJob or xi.job.BLU
+            end,
+            getSubJob = function()
+                return subJob or (mainJob and mainJob ~= xi.job.BLU and xi.job.BLU or xi.job.WAR)
             end,
             getHP = function()
                 return 3000
@@ -23,18 +29,38 @@ describe('BLU shared effect helpers', function()
         }
     end
 
-    local function makeTarget(isNm)
+    local function makeTarget(options)
+        options = type(options) == 'table' and options or { isNm = options == true }
         local localVars = {}
         return
         {
             isNM = function()
-                return isNm == true
+                return options.isNm == true
+            end,
+            isMobType = function(_, mobType)
+                return mobType == xi.mobType.BATTLEFIELD and options.isBattlefield == true
+            end,
+            getMobMod = function(_, mobMod)
+                if mobMod == xi.mobMod.CHECK_AS_NM and options.checkAsNm then
+                    return 1
+                end
+
+                return 0
             end,
             getLocalVar = function(_, name)
                 return localVars[name] or 0
             end,
             setLocalVar = function(_, name, value)
                 localVars[name] = value
+            end,
+        }
+    end
+
+    local function makeSpell(id)
+        return
+        {
+            getID = function()
+                return id
             end,
         }
     end
@@ -50,6 +76,10 @@ describe('BLU shared effect helpers', function()
 
         assert(sharedEffects.calculateBreathBase(caster, {}) == expected)
         assert(sharedEffects.calculateBreathBase(caster, { breathMultiplier = 0.5 }) == expected * 0.5)
+
+        local subjobCaster = makeCaster(true, xi.job.WAR)
+        assert(sharedEffects.calculateBreathBase(
+            subjobCaster, { hpMod = 10, lvlMod = 1.25 }) == 3000 / 10 + 99 / 1.25)
     end)
 
     it('honors coefficient-provided drain bases without changing their path', function()
@@ -63,37 +93,139 @@ describe('BLU shared effect helpers', function()
         }) == intendedBase)
     end)
 
-    it('caps player hard control and starts lockout after the applied effect', function()
+    it('restores every retuned subjob-level parameter contract only for /BLU', function()
+        local distinguishingValues =
+        {
+            [513] = { 'power', 6 },       [519] = { 'duppercap', 27 },
+            [521] = { 'dmgMultiplier', 3.5 }, [522] = { 'multiplier', 1.625 },
+            [524] = { 'int_wsc', 0.2 },   [527] = { 'azuretp', 2.53125 },
+            [529] = { 'chr_wsc', 0.3 },   [532] = { 'multiplier', 1.5625 },
+            [534] = { 'chr_wsc', 0.3 },   [536] = { 'hpMod', 10 },
+            [537] = { 'duration', 60 },   [539] = { 'duppercap', 41 },
+            [541] = { 'dmgMultiplier', 3.5 }, [542] = { 'dmgMultiplier', 5 },
+            [543] = { 'duppercap', 45 },  [544] = { 'multiplier', 1.5 },
+            [545] = { 'dex_wsc', 0.5 },   [551] = { 'multiplier', 1.125 },
+            [555] = { 'hpMod', 6 },       [567] = { 'tp300', 2 },
+            [569] = { 'multiplier', 1.125 }, [570] = { 'dmgMultiplier', 3 },
+            [572] = { 'power', 9 },       [575] = { 'duration', 3 },
+            [577] = { 'duppercap', 9 },   [582] = { 'power', 1 },
+            [584] = { 'duration', 60 },   [587] = { 'multiplier', 1.4375 },
+            [594] = { 'str_wsc', 0.35 },  [596] = { 'duppercap', 37 },
+            [597] = { 'duppercap', 11 },  [599] = { 'multiplier', 1.75 },
+            [603] = { 'multiplier', 1.84 }, [606] = { 'duration', 30 },
+            [618] = { 'multiplier', 1.375 }, [620] = { 'str_wsc', 0.3 },
+            [622] = { 'duppercap', 33 },  [623] = { 'azuretp', 2.375 },
+            [626] = { 'multiplier', 1.625 }, [638] = { 'agi_wsc', 0.3 },
+        }
+
+        local subjobCaster = makeCaster(true, xi.job.WAR)
+        for id, expected in pairs(distinguishingValues) do
+            local params = { [expected[1]] = -1 }
+            sharedEffects.applyStockSubjobParams(subjobCaster, makeSpell(id), params)
+            assert(params[expected[1]] == expected[2], string.format('stock mismatch for spell %u', id))
+        end
+
+        local mainParams = { multiplier = 4.5 }
+        sharedEffects.applyStockSubjobParams(makeCaster(), makeSpell(519), mainParams)
+        assert(mainParams.multiplier == 4.5)
+
+        local mobParams = { multiplier = 4.5 }
+        sharedEffects.applyStockSubjobParams(makeCaster(false, xi.job.WAR), makeSpell(519), mobParams)
+        assert(mobParams.multiplier == 4.5)
+
+        local nonBlueParams = { multiplier = 4.5 }
+        sharedEffects.applyStockSubjobParams(
+            makeCaster(true, xi.job.WAR, xi.job.RDM), makeSpell(519), nonBlueParams)
+        assert(nonBlueParams.multiplier == 4.5)
+    end)
+
+    it('restores stock drain caps only for /BLU', function()
+        local subjobCaster = makeCaster(true, xi.job.WAR)
+        assert(sharedEffects.getDrainCap(subjobCaster, makeSpell(521), 2000) == 165)
+        assert(sharedEffects.getDrainCap(subjobCaster, makeSpell(541), 2500) == 0)
+        assert(sharedEffects.getDrainCap(makeCaster(), makeSpell(521), 2000) == 2000)
+    end)
+
+    it('keeps subjob-only branches on low-level heals, buffs, and dispels', function()
+        local function readSpell(name)
+            local file = assert(io.open('scripts/actions/spells/blue/' .. name .. '.lua', 'r'))
+            local source = file:read('*a')
+            file:close()
+            return source
+        end
+
+        for _, name in ipairs({ 'pollen', 'wild_carrot', 'healing_breeze' }) do
+            local source = readSpell(name)
+            assert(source:find('usesStockSubjobBehavior', 1, true))
+            assert(source:find('useCuringSpell', 1, true))
+        end
+
+        for _, name in ipairs({ 'metallic_body', 'cocoon', 'refueling' }) do
+            assert(readSpell(name):find('usesStockSubjobBehavior', 1, true))
+        end
+
+        for _, name in ipairs({ 'blank_gaze', 'geist_wall' }) do
+            assert(readSpell(name):find('usesStockSubjobBehavior', 1, true))
+        end
+    end)
+
+    it('gives trash packs 25-second hard control without a lockout', function()
         local caster = makeCaster()
         local target = makeTarget()
-        local allowed, duration, lockout =
+        local allowed, duration, lockout, _, fixedDuration =
             sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 30, 100)
 
-        assert(allowed and duration == 5 and lockout == 12)
+        assert(allowed and duration == 25 and lockout == nil and fixedDuration)
         sharedEffects.commitPlayerControl(target, xi.effect.STUN, duration, lockout, 100)
 
         allowed = sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 30, 114)
-        assert(not allowed)
-        allowed = sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 30, 116)
-        assert(not allowed)
-        allowed = sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 30, 117)
         assert(allowed)
     end)
 
-    it('applies each control profile and exempts mob-cast BLU', function()
+    it('keeps short resisted profiles and lockouts on impossible-to-gauge targets', function()
+        local caster = makeCaster()
+        local target = makeTarget({ isNm = true })
+        local allowed, duration, lockout, _, fixedDuration =
+            sharedEffects.preparePlayerControl(caster, target, xi.effect.TERROR, 1, 100)
+        assert(allowed and duration == 5 and lockout == 20 and not fixedDuration)
+
+        allowed, duration, lockout, _, fixedDuration =
+            sharedEffects.preparePlayerControl(caster, target, xi.effect.PETRIFICATION, 60, 100)
+        assert(allowed and duration == 8 and lockout == 30 and not fixedDuration)
+
+        for _, specialTarget in ipairs(
+        {
+            makeTarget({ isBattlefield = true }),
+            makeTarget({ checkAsNm = true }),
+        })
+        do
+            allowed, duration, lockout, _, fixedDuration =
+                sharedEffects.preparePlayerControl(caster, specialTarget, xi.effect.STUN, 30, 100)
+            assert(allowed and duration == 5 and lockout == 12 and not fixedDuration)
+        end
+
+        sharedEffects.commitPlayerControl(target, xi.effect.TERROR, 5, 20, 100)
+        allowed = sharedEffects.preparePlayerControl(caster, target, xi.effect.TERROR, 1, 124)
+        assert(not allowed)
+        allowed = sharedEffects.preparePlayerControl(caster, target, xi.effect.TERROR, 1, 125)
+        assert(allowed)
+    end)
+
+    it('leaves sleep, subjob BLU, and mob-cast BLU durations unchanged', function()
         local caster = makeCaster()
         local target = makeTarget()
-        local allowed, duration, lockout =
-            sharedEffects.preparePlayerControl(caster, target, xi.effect.TERROR, 1, 100)
-        assert(allowed and duration == 5 and lockout == 20)
+        local allowed, duration, lockout, _, fixedDuration =
+            sharedEffects.preparePlayerControl(caster, target, xi.effect.SLEEP_I, 60, 100)
+        assert(allowed and duration == 60 and lockout == nil and not fixedDuration)
 
-        allowed, duration, lockout =
-            sharedEffects.preparePlayerControl(caster, target, xi.effect.PETRIFICATION, 60, 100)
-        assert(allowed and duration == 8 and lockout == 30)
+        allowed, duration, lockout, _, fixedDuration =
+            sharedEffects.preparePlayerControl(
+                makeCaster(true, xi.job.WAR), target, xi.effect.STUN, 5, 100)
+        assert(allowed and duration == 5 and lockout == nil and not fixedDuration)
 
-        allowed, duration, lockout =
+        allowed, duration, lockout, _, fixedDuration =
             sharedEffects.preparePlayerControl(makeCaster(false), target, xi.effect.STUN, 17, 100)
-        assert(allowed and duration == 17 and lockout == nil)
+        assert(allowed and duration == 17 and lockout == nil and not fixedDuration)
     end)
 
     it('makes player BLU Doom ineffective against NMs', function()

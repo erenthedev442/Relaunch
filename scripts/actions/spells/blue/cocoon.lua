@@ -22,7 +22,12 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local power = 75 -- 75%
-    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 180)
+    local baseDuration = 180
+    if xi.spells.blue.usesStockSubjobBehavior(caster) then
+        power = 50
+        baseDuration = 90
+    end
+    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, baseDuration)
 
     if not target:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = power, duration = duration, origin = caster }) then
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)

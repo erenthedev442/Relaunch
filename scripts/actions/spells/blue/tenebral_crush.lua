@@ -27,12 +27,14 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.multiplier  = 6.5
     params.tMultiplier = 3.0
     params.duppercap   = 100
+    -- Same INT payload as Spectral Floe. The stock VIT/INT/MND split made this
+    -- 8-point dark nuke much weaker than the rest of the suite on an INT BLU.
     params.str_wsc     = 0.0
     params.dex_wsc     = 0.0
-    params.vit_wsc     = 0.27
+    params.vit_wsc     = 0.0
     params.agi_wsc     = 0.0
-    params.int_wsc     = 0.27
-    params.mnd_wsc     = 0.26
+    params.int_wsc     = 0.8
+    params.mnd_wsc     = 0.0
     params.chr_wsc     = 0.0
 
     -- Handle damage.

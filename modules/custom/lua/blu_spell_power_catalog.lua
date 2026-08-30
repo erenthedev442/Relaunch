@@ -1,7 +1,7 @@
 -----------------------------------
 -- BLU spell-cost damage premiums.
 --
--- The weapon catalog supplies the ordinary-geared 3x baseline. This catalog
+-- The weapon catalog supplies the ordinary-geared 9x baseline. This catalog
 -- makes expensive and high-set-point spells scale above that baseline once,
 -- without changing each spell's stock stat, resist, or MAB relationships.
 -----------------------------------

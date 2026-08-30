@@ -20,6 +20,21 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
+    if xi.spells.blue.usesStockSubjobBehavior(caster) then
+        return xi.spells.blue.useCuringSpell(caster, target, spell,
+        {
+            minCure         = 14,
+            divisor0        = 1,
+            constant0       = -6,
+            powerThreshold1 = 59,
+            divisor1        = 2,
+            constant1       = 9,
+            powerThreshold2 = 99,
+            divisor2        = 57,
+            constant2       = 33.125,
+        })
+    end
+
     local skill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
     local cure = math.min(900 + 2 * skill + 4 * caster:getStat(xi.mod.MND), 2400)
     cure = math.min(cure, target:getMaxHP() - target:getHP())

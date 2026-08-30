@@ -29,7 +29,11 @@ spellObject.onSpellCast = function(caster, target, spell)
         -- Gaze move
         if target:isFacing(caster) and caster:isFacing(target) then
             effect = target:dispelStatusEffect()
-            local secondEffect = target:dispelStatusEffect()
+            local secondEffect = xi.effect.NONE
+            if not xi.spells.blue.usesStockSubjobBehavior(caster) then
+                secondEffect = target:dispelStatusEffect()
+            end
+
             spell:setMsg(xi.msg.basic.MAGIC_ERASE)
             if effect == xi.effect.NONE then
                 effect = secondEffect

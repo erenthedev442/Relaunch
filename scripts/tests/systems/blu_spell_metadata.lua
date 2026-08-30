@@ -78,7 +78,7 @@ describe('BLU spell metadata integrity', function()
         local premiumAnimations =
         {
             [719] = 921,
-            [720] = 922,
+            [720] = 721, -- Ice Break; 922 is Trust dismiss and hides the caster
             [721] = 923,
             [722] = 924,
             [725] = 927,
@@ -93,6 +93,17 @@ describe('BLU spell metadata integrity', function()
         end
 
         assert(spellRows[749].animation == 933, 'Polar Roar must not use the Warp animation')
+    end)
+
+    it('keeps Tenebral Crush on the same INT payload as Spectral Floe', function()
+        local floe = readFile('scripts/actions/spells/blue/spectral_floe.lua')
+        local tenebral = readFile('scripts/actions/spells/blue/tenebral_crush.lua')
+
+        assert(floe:match('int_wsc%s*=%s*0%.8'), 'Spectral Floe must stay 0.8 INT')
+        assert(tenebral:match('int_wsc%s*=%s*0%.8'), 'Tenebral Crush must use 0.8 INT')
+        assert(tenebral:match('vit_wsc%s*=%s*0%.0'), 'Tenebral Crush must not split onto VIT')
+        assert(tenebral:match('mnd_wsc%s*=%s*0%.0'), 'Tenebral Crush must not split onto MND')
+        assert(tenebral:match('multiplier%s*=%s*6%.5'), 'Tenebral Crush multiplier must match the 8-point suite')
     end)
 
     it('uses real learn skills and passive modifiers for repaired spells', function()

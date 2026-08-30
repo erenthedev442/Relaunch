@@ -9,14 +9,15 @@ catalog.DAMAGE_CAP_LOCAL_VAR = 'BlueSpellDamageCap'
 
 catalog.TIERS =
 {
-    PRIME     = { multiplier = 35, cap = 1749999 },
-    AEONIC    = { multiplier = 20, cap =  999999 },
-    MYTHIC    = { multiplier = 15, cap =  999999 },
-    EMPYREAN  = { multiplier = 15, cap =  999999 },
-    RELIC     = { multiplier = 10, cap =  999999 },
-    AMBUSCADE = { multiplier =  3, cap =   99999 },
-    ITEM_119  = { multiplier =  3, cap =   79999 },
-    PRE_119   = { multiplier =  3, cap =   40000 },
+    -- Second server-wide BLU pass: 3x the previous output and ceilings.
+    PRIME     = { multiplier = 105, cap = 5249997 },
+    AEONIC    = { multiplier =  60, cap = 2999997 },
+    MYTHIC    = { multiplier =  45, cap = 2999997 },
+    EMPYREAN  = { multiplier =  45, cap = 2999997 },
+    RELIC     = { multiplier =  30, cap = 2999997 },
+    AMBUSCADE = { multiplier =   9, cap =  299997 },
+    ITEM_119  = { multiplier =   9, cap =  239997 },
+    PRE_119   = { multiplier =   9, cap =  120000 },
 }
 
 catalog.WEAPON_TIERS =

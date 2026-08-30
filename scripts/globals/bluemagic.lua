@@ -260,7 +260,50 @@ local function takeBlueSpellDamage(caster, target, spell, damage, attackType, da
     end
 end
 
+local function finalizeStockSubjobDamage(caster, target, spell, damage, params, trickAttackTarget)
+    damage = math.floor(damage * xi.settings.main.BLUE_POWER)
+
+    local attackType = params.attackType or xi.attackType.NONE
+    local damageType = params.damageType or xi.damageType.NONE
+    local tpHits = params.tphitslanded or 0
+    local extraTPGained =
+        xi.combat.tp.calculateTPGainOnMagicalDamage(caster, target, damage) *
+        math.max(tpHits - 1, 0)
+
+    if attackType == xi.attackType.MAGICAL then
+        local absorb  = xi.spells.damage.calculateAbsorption(target, spell:getElement(), true)
+        local nullify = xi.spells.damage.calculateNullification(target, spell:getElement(), true, false)
+        damage = math.floor(damage * absorb * nullify)
+
+        if damage < 0 then
+            target:takeSpellDamage(caster, spell, damage, attackType, damageType)
+            target:addTP(extraTPGained)
+            return damage
+        end
+
+        damage = utils.handleOneForAll(target, damage)
+    end
+
+    damage = utils.handlePhalanx(target, damage)
+    damage = utils.handleStoneskin(target, damage)
+    damage = target:checkDamageCap(damage)
+
+    target:takeSpellDamage(caster, spell, damage, attackType, damageType)
+    target:addTP(extraTPGained)
+
+    if not target:isPC() then
+        target:updateEnmityFromDamage(trickAttackTarget or caster, damage)
+    end
+
+    target:handleAfflatusMiseryDamage(damage)
+    return damage
+end
+
 local function finalizeBlueDamage(caster, target, spell, damage, params, trickAttackTarget)
+    if bluSharedEffects.usesStockSubjobBehavior(caster) then
+        return finalizeStockSubjobDamage(caster, target, spell, damage, params, trickAttackTarget)
+    end
+
     damage = math.floor(damage * xi.settings.main.BLUE_POWER)
 
     local attackType = params.attackType or xi.attackType.NONE
@@ -322,8 +365,12 @@ end
 -- Global functions
 -----------------------------------
 
+xi.spells.blue.isMainJob = bluSharedEffects.isMainJob
+xi.spells.blue.usesStockSubjobBehavior = bluSharedEffects.usesStockSubjobBehavior
+
 -- Get the damage for a physical Blue Magic spell
 xi.spells.blue.usePhysicalSpell = function(caster, target, spell, params)
+    bluSharedEffects.applyStockSubjobParams(caster, spell, params)
     spell:setCritical(false)
 
     -----------------------
@@ -475,6 +522,7 @@ end
 
 -- Get the damage for a magical Blue Magic spell. Called from spell scripts.
 xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
+    bluSharedEffects.applyStockSubjobParams(caster, spell, params)
     -- In individual magical spells, don't use params.effect for the added effect
     -- This would affect the resistance check for damage here
     -- We just want that to affect the resistance check for the added effect
@@ -554,11 +602,19 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
 
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateEbullienceMultiplier(caster, spellGroup))
 
+    -- The stock pipeline applied BLUE_POWER here and again in applySpellDamage.
+    -- Preserve that legacy contract for /BLU even if the setting changes from 1.
+    if bluSharedEffects.usesStockSubjobBehavior(caster) then
+        finalDamage = math.floor(finalDamage * xi.settings.main.BLUE_POWER)
+    end
+
     return xi.spells.blue.applySpellDamage(caster, target, spell, finalDamage, params, nil)
 end
 
 -- Spell script Helper function.
 xi.spells.blue.useDrainSpell = function(caster, target, spell, params, damageCap, mpDrain)
+    bluSharedEffects.applyStockSubjobParams(caster, spell, params)
+    damageCap = bluSharedEffects.getDrainCap(caster, spell, damageCap)
     local finalDamage = 0
 
     -- Early returns
@@ -612,6 +668,11 @@ xi.spells.blue.useDrainSpell = function(caster, target, spell, params, damageCap
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateEbullienceMultiplier(caster, spellGroup))
     finalDamage = math.floor(finalDamage * xi.combat.damage.calculateDamageAdjustment(target, false, true, false, false))
 
+    local stockSubjob = bluSharedEffects.usesStockSubjobBehavior(caster)
+    if stockSubjob then
+        finalDamage = math.floor(finalDamage * xi.settings.main.BLUE_POWER)
+    end
+
     -- MP drain
     if mpDrain then
         finalDamage = utils.clamp(finalDamage, 0, target:getMP())
@@ -619,6 +680,25 @@ xi.spells.blue.useDrainSpell = function(caster, target, spell, params, damageCap
         target:delMP(finalDamage)
         caster:addMP(finalDamage)
 
+        return finalDamage
+    end
+
+    if stockSubjob then
+        finalDamage = utils.clamp(utils.handlePhalanx(target, finalDamage), 0, 131071)
+        finalDamage = utils.clamp(utils.handleOneForAll(target, finalDamage), 0, 131071)
+        finalDamage = utils.clamp(utils.handleStoneskin(target, finalDamage), -131071, 131071)
+        finalDamage = utils.clamp(finalDamage, 0, target:getHP())
+        finalDamage = target:checkDamageCap(finalDamage)
+
+        target:takeSpellDamage(
+            caster, spell, finalDamage, xi.attackType.MAGICAL,
+            xi.damageType.ELEMENTAL + spell:getElement())
+        if not target:isPC() then
+            target:updateEnmityFromDamage(caster, finalDamage)
+        end
+
+        target:handleAfflatusMiseryDamage(finalDamage)
+        caster:addHP(finalDamage)
         return finalDamage
     end
 
@@ -634,6 +714,7 @@ end
 
 -- Breath-type blue magic spells.
 xi.spells.blue.useBreathSpell = function(caster, target, spell, params)
+    bluSharedEffects.applyStockSubjobParams(caster, spell, params)
     -- Early return.
     if
         params.isConal and               -- Conal breath spells
@@ -700,6 +781,26 @@ xi.spells.blue.useBreathSpell = function(caster, target, spell, params)
 
     dmg = math.floor(target:handleSevereDamage(dmg, false))
 
+    if bluSharedEffects.usesStockSubjobBehavior(caster) then
+        if dmg > 0 then
+            dmg = utils.clamp(utils.handlePhalanx(target, dmg), 0, 131071)
+            dmg = utils.clamp(utils.handleOneForAll(target, dmg), 0, 131071)
+            dmg = utils.clamp(utils.handleStoneskin(target, dmg), -131071, 131071)
+            dmg = utils.clamp(dmg, 0, target:getHP())
+            dmg = target:checkDamageCap(dmg)
+        end
+
+        target:takeSpellDamage(caster, spell, dmg, attackType, damageType)
+        local tpHits = params.tphitslanded or 0
+        local extraTPGained =
+            xi.combat.tp.calculateTPGainOnMagicalDamage(caster, target, dmg) *
+            math.max(tpHits - 1, 0)
+        target:addTP(extraTPGained)
+        target:handleAfflatusMiseryDamage(dmg)
+        target:updateEnmityFromDamage(caster, dmg)
+        return dmg
+    end
+
     params.attackType        = attackType
     params.damageType        = damageType
     params.absorptionApplied = true
@@ -728,6 +829,7 @@ end
 
 -- Perform an enfeebling Blue Magic spell
 xi.spells.blue.useEnfeeblingSpell = function(caster, target, spell, params)
+    bluSharedEffects.applyStockSubjobParams(caster, spell, params)
     local spellElement = spell:getElement()
     local effect       = params.effect
     local tier         = params.tier or 0
@@ -735,6 +837,7 @@ xi.spells.blue.useEnfeeblingSpell = function(caster, target, spell, params)
     local controlDuration
     local controlLockout
     local controlReason
+    local fixedControlDuration
 
     -- Early return: Out of cone.
     if
@@ -754,7 +857,7 @@ xi.spells.blue.useEnfeeblingSpell = function(caster, target, spell, params)
         return effect
     end
 
-    controlAllowed, controlDuration, controlLockout, controlReason =
+    controlAllowed, controlDuration, controlLockout, controlReason, fixedControlDuration =
         bluSharedEffects.preparePlayerControl(caster, target, effect, params.duration, GetSystemTime())
     if not controlAllowed then
         local resultMessage =
@@ -783,15 +886,17 @@ xi.spells.blue.useEnfeeblingSpell = function(caster, target, spell, params)
     end
 
     -- Early return: Regular resist.
+    local stockSubjob = bluSharedEffects.usesStockSubjobBehavior(caster)
     local resist = xi.combat.magicHitRate.calculateResistRate(
         caster, target, 0, xi.skill.BLUE_MAGIC, 0, spellElement,
-        params.attribute or xi.mod.INT, effect, 0)
+        stockSubjob and xi.mod.INT or params.attribute or xi.mod.INT,
+        stockSubjob and 0 or effect, 0)
     if resist < params.resistThreshold then
         spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         return effect
     end
 
-    local effectDuration = math.floor(controlDuration * resist)
+    local effectDuration = fixedControlDuration and controlDuration or math.floor(controlDuration * resist)
     local effectParams =
     {
         power    = params.power,
@@ -859,15 +964,23 @@ xi.spells.blue.applyBlueAdditionalEffect = function(caster, target, params, effe
         stat = 0
     end
 
+    local stockSubjob = bluSharedEffects.usesStockSubjobBehavior(caster)
+    local stockResist = 0
+    if stockSubjob then
+        -- Pre-retune additional effects shared one general BLU resistance roll.
+        stockResist = xi.combat.magicHitRate.calculateResistRate(
+            caster, target, 0, xi.skill.BLUE_MAGIC, 0, element, stat, 0, 0)
+    end
+
     for entry = 1, #effectTable do
         local effect   = effectTable[entry][1]
         local power    = effectTable[entry][2]
         local tick     = effectTable[entry][3]
         local duration = effectTable[entry][4]
-        local controlAllowed, controlDuration, controlLockout =
+        local controlAllowed, controlDuration, controlLockout, _, fixedControlDuration =
             bluSharedEffects.preparePlayerControl(caster, target, effect, duration, GetSystemTime())
-        local resist = 0
-        if controlAllowed then
+        local resist = stockResist
+        if controlAllowed and not stockSubjob then
             resist = xi.combat.magicHitRate.calculateResistRate(
                 caster, target, 0, xi.skill.BLUE_MAGIC, 0, element, stat, effect, 0)
         end
@@ -879,7 +992,7 @@ xi.spells.blue.applyBlueAdditionalEffect = function(caster, target, params, effe
             not xi.data.statusEffect.isTargetResistant(caster, target, effect) and -- Target didn't trigger a job trait resistance.
             not xi.data.statusEffect.isEffectNullified(target, effect, 0)          -- Target doesn't have an status effect that nullifies current. TODO: Tier.
         then
-            local effectDuration = math.floor(controlDuration * resist)
+            local effectDuration = fixedControlDuration and controlDuration or math.floor(controlDuration * resist)
             local effectParams =
             {
                 power    = power,

@@ -5,8 +5,9 @@
 -- starter trusts, all quests/missions, maps, outpost warps, homepoints, survival guides, wardrobe
 -- sizes, and automaton parts -- everything the old "Unlocker" GM-Home NPC used
 -- to hand out on demand. The NPC is gone (owner request 2026-06-25); the grant
--- now runs once via xi.player.onGameIn (firstLogin), deferred a few seconds so
--- it doesn't hitch the zone-in. Paid Void Keeper trusts are still withheld.
+-- now runs once via xi.player.onGameIn (firstLogin), sliced across ticks so
+-- the 2s inactivity watchdog cannot kill xi_map. Paid Void Keeper trusts
+-- are still withheld.
 -----------------------------------
 require('modules/module_utils')
 
@@ -110,11 +111,69 @@ local function stripMobOnlySpells(player)
     end
 end
 
-local function giveAllSpells(player)
-    for i = 1, 1024 do
+-- C++ MAX_SPELL_ID is 1024 and exclusive. The old 1..1024 loop called
+-- hasSpell(1024) (OOB on bitset<1024>) and GetSpell(1024) (watchdog log).
+local MAX_PLAYER_SPELL_ID = 1023
+
+-- Inactivity watchdog kills xi_map if one tick exceeds 2000ms. First-login
+-- used to grant every spell/quest/mission/KI in one timer callback; addKeyItem
+-- also UPDATE chars.keyitems on every KI. Slice the work across ticks.
+local STEP_GAP_MS    = 250
+local SPELL_BATCH    = 64
+local QUEST_BATCH    = 25
+local KEY_ITEM_BATCH = 15
+local MISSION_BATCH  = 12
+
+local function isValidPlayer(player)
+    return player ~= nil and player:isPC()
+end
+
+local function runJobs(player, jobs, index)
+    if not isValidPlayer(player) then
+        return
+    end
+
+    local job = jobs[index]
+    if not job then
+        return
+    end
+
+    pcall(job, player)
+
+    if jobs[index + 1] then
+        player:timer(STEP_GAP_MS, function(nextPlayer)
+            runJobs(nextPlayer, jobs, index + 1)
+        end)
+    end
+end
+
+local function startJobs(player, delayMs, jobs)
+    if not jobs or #jobs == 0 then
+        return
+    end
+
+    player:timer(delayMs, function(nextPlayer)
+        runJobs(nextPlayer, jobs, 1)
+    end)
+end
+
+local function appendRangeJobs(jobs, firstIdx, lastIdx, batchSize, makeJob)
+    local startIdx = firstIdx
+    while startIdx <= lastIdx do
+        local stopIdx = math.min(startIdx + batchSize - 1, lastIdx)
+        local fromIdx, toIdx = startIdx, stopIdx
+        jobs[#jobs + 1] = function(player)
+            makeJob(player, fromIdx, toIdx)
+        end
+        startIdx = stopIdx + 1
+    end
+end
+
+local function giveSpellRange(player, fromId, toId)
+    for spellId = fromId, toId do
         pcall(function()
-            if shouldGrantSpell(i) and not player:hasSpell(i) then
-                player:addSpell(i, { silentLog = true })
+            if shouldGrantSpell(spellId) and not player:hasSpell(spellId) then
+                player:addSpell(spellId, { silentLog = true })
             end
         end)
     end
@@ -136,90 +195,153 @@ local function giveStarterTrusts(player)
     end
 end
 
-local function completeAllMissions(player)
-    -- San d'Oria (log_id 0)
-    for i = 0, 23 do pcall(function() player:addMission(0, i) player:completeMission(0, i) end) end
-    player:setRank(10)
-    -- Bastok (log_id 1)
-    for i = 0, 23 do pcall(function() player:addMission(1, i) player:completeMission(1, i) end) end
-    -- Windurst (log_id 2)
-    for i = 0, 23 do pcall(function() player:addMission(2, i) player:completeMission(2, i) end) end
-    -- Rise of the Zilart (log_id 3) — final mission THE_LAST_VERSE = 31
-    for i = 0, 31 do pcall(function() player:addMission(3, i) player:completeMission(3, i) end) end
-    -- Chains of Promathia (log_id 6) — completeMission resets CoP current to 0; push current to
-    -- THE_LAST_VERSE=850 instead so every earlier mission reads as complete.
-    player:addMission(6, 850)
-    -- Treasures of Aht Urhgan (log_id 4) — final = ETERNAL_MERCENARY = 47.
-    -- Like CoP/SoA above, completeMission resets ToAU current to 0. That trips
-    -- Rytaal's gate (getCurrentMission(TOAU) <= IMMORTAL_SENTRIES=1 -> "authorized
-    -- mercenaries of level 50 or above" reject), locking Assault out entirely.
-    -- Push current past PRESIDENT_SALAHEEM(2) so the mercenary content unlocks.
-    for i = 0, 47 do pcall(function() player:addMission(4, i) player:completeMission(4, i) end) end
-    player:addMission(4, 47)
-    -- Wings of the Goddess (log_id 5)
-    for i = 0, 53 do pcall(function() player:addMission(5, i) player:completeMission(5, i) end) end
-    -- A Crystalline Prophecy (log_id 9) — final = A_CRYSTALLINE_PROPHECY_FIN = 11
-    for i = 0, 11 do pcall(function() player:addMission(9, i) player:completeMission(9, i) end) end
-    -- A Moogle Kupo d'Etat (log_id 10) — final = A_MOOGLE_KUPO_DETAT_FIN = 14
-    for i = 0, 14 do pcall(function() player:addMission(10, i) player:completeMission(10, i) end) end
-    -- A Shantotto Ascension (log_id 11) — final = A_SHANTOTTO_ASCENSION_FIN = 14
-    for i = 0, 14 do pcall(function() player:addMission(11, i) player:completeMission(11, i) end) end
-    -- The Voracious Resurgence (log_id 14) — final = EPILOGUE = 46
-    for i = 0, 46 do pcall(function() player:addMission(14, i) player:completeMission(14, i) end) end
-    -- Seekers of Adoulin (log_id 12) — ids >=64 need current pushed past the last (130)
-    local missionSOA = {
-        0,1,3,5,6,7,8,9,11,12,13,14,15,16,17,18,19,20,21,23,26,27,29,
-        30,31,34,35,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,
-        55,56,57,58,59,61,62,63,66,67,69,70,71,72,73,74,75,76,77,78,79,
-        80,81,82,84,85,86,87,88,89,90,91,92,93,94,95,96,98,99,100,101,
-        102,103,104,105,107,108,109,110,111,112,113,114,116,117,118,120,
-        121,123,125,129,
-    }
-    for _, id in ipairs(missionSOA) do
-        pcall(function() player:addMission(12, id) player:completeMission(12, id) end)
+local function grantMissionRange(player, logId, fromId, toId)
+    for missionId = fromId, toId do
+        pcall(function()
+            player:addMission(logId, missionId)
+            player:completeMission(logId, missionId)
+        end)
     end
-    player:addMission(12, 130)
-    -- Rhapsodies of Vana'diel (log_id 13) — same current-pointer fix; push to 227
-    local missionROV = {
-        0,2,3,4,6,10,12,18,20,22,26,28,30,32,34,36,40,42,44,46,48,50,
-        52,54,56,60,62,64,66,68,70,72,78,80,83,86,92,94,96,98,100,102,
-        103,104,106,108,110,114,116,118,120,122,124,126,130,132,136,142,
-        144,146,150,152,154,155,156,158,160,161,162,164,166,170,172,174,
-        178,180,184,188,190,192,194,196,198,200,202,206,210,212,216,218,
-        220,222,224,226,
-    }
-    for _, id in ipairs(missionROV) do
-        pcall(function() player:addMission(13, id) player:completeMission(13, id) end)
-    end
-    player:addMission(13, 227)
-    -- Mirror the Mission Moogle charvar so it won't prompt existing chars who got this path
-    player:setCharVar('MissionClearanceReceived', 1)
 end
 
-local function completeAllQuests(player)
-    local count = 0
+local function grantMissionList(player, logId, missionIds, fromIdx, toIdx)
+    for i = fromIdx, toIdx do
+        local missionId = missionIds[i]
+        pcall(function()
+            player:addMission(logId, missionId)
+            player:completeMission(logId, missionId)
+        end)
+    end
+end
+
+local function appendMissionRangeJobs(jobs, logId, lastId)
+    appendRangeJobs(jobs, 0, lastId, MISSION_BATCH, function(player, fromId, toId)
+        grantMissionRange(player, logId, fromId, toId)
+    end)
+end
+
+local function appendMissionListJobs(jobs, logId, missionIds)
+    appendRangeJobs(jobs, 1, #missionIds, MISSION_BATCH, function(player, fromIdx, toIdx)
+        grantMissionList(player, logId, missionIds, fromIdx, toIdx)
+    end)
+end
+
+local missionSOA =
+{
+    0,1,3,5,6,7,8,9,11,12,13,14,15,16,17,18,19,20,21,23,26,27,29,
+    30,31,34,35,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,
+    55,56,57,58,59,61,62,63,66,67,69,70,71,72,73,74,75,76,77,78,79,
+    80,81,82,84,85,86,87,88,89,90,91,92,93,94,95,96,98,99,100,101,
+    102,103,104,105,107,108,109,110,111,112,113,114,116,117,118,120,
+    121,123,125,129,
+}
+
+local missionROV =
+{
+    0,2,3,4,6,10,12,18,20,22,26,28,30,32,34,36,40,42,44,46,48,50,
+    52,54,56,60,62,64,66,68,70,72,78,80,83,86,92,94,96,98,100,102,
+    103,104,106,108,110,114,116,118,120,122,124,126,130,132,136,142,
+    144,146,150,152,154,155,156,158,160,161,162,164,166,170,172,174,
+    178,180,184,188,190,192,194,196,198,200,202,206,210,212,216,218,
+    220,222,224,226,
+}
+
+local function appendMissionJobs(jobs)
+    -- San d'Oria / Bastok / Windurst / RoZ / CoP / ToAU / WotG / ACP / AMK / ASA / TVR / SoA / RoV
+    appendMissionRangeJobs(jobs, 0, 23)
+    jobs[#jobs + 1] = function(player)
+        player:setRank(10)
+    end
+    appendMissionRangeJobs(jobs, 1, 23)
+    appendMissionRangeJobs(jobs, 2, 23)
+    appendMissionRangeJobs(jobs, 3, 31)
+    -- completeMission resets CoP current to 0; THE_LAST_VERSE=850 marks earlier complete.
+    jobs[#jobs + 1] = function(player)
+        pcall(function() player:addMission(6, 850) end)
+    end
+    -- completeMission resets ToAU current to 0 and locks Assault; push to ETERNAL_MERCENARY.
+    appendMissionRangeJobs(jobs, 4, 47)
+    jobs[#jobs + 1] = function(player)
+        pcall(function() player:addMission(4, 47) end)
+    end
+    appendMissionRangeJobs(jobs, 5, 53)
+    appendMissionRangeJobs(jobs, 9, 11)
+    appendMissionRangeJobs(jobs, 10, 14)
+    appendMissionRangeJobs(jobs, 11, 14)
+    appendMissionRangeJobs(jobs, 14, 46)
+    appendMissionListJobs(jobs, 12, missionSOA)
+    jobs[#jobs + 1] = function(player)
+        pcall(function() player:addMission(12, 130) end)
+    end
+    appendMissionListJobs(jobs, 13, missionROV)
+    jobs[#jobs + 1] = function(player)
+        pcall(function() player:addMission(13, 227) end)
+        player:setCharVar('MissionClearanceReceived', 1)
+    end
+end
+
+local questEntries = nil
+
+local function getQuestEntries()
+    if questEntries then
+        return questEntries
+    end
+
+    questEntries = {}
     for logId, areaKey in pairs(xi.quest.area) do
         if logId >= 0 then
             local areaQuests = xi.quest.id[areaKey]
             if areaQuests then
                 for _, questId in pairs(areaQuests) do
-                    pcall(function()
-                        player:addQuest(logId, questId)
-                        player:completeQuest(logId, questId)
-                        count = count + 1
-                    end)
+                    questEntries[#questEntries + 1] = { logId, questId }
                 end
             end
         end
     end
+
+    return questEntries
 end
 
-local function giveAllKeyItems(player)
+local function appendQuestJobs(jobs)
+    local entries = getQuestEntries()
+    appendRangeJobs(jobs, 1, #entries, QUEST_BATCH, function(player, fromIdx, toIdx)
+        for i = fromIdx, toIdx do
+            local entry = entries[i]
+            pcall(function()
+                player:addQuest(entry[1], entry[2])
+                player:completeQuest(entry[1], entry[2])
+            end)
+        end
+    end)
+end
+
+local keyItemIds = nil
+
+local function getKeyItemIds()
+    if keyItemIds then
+        return keyItemIds
+    end
+
+    keyItemIds = {}
     for _, kiId in pairs(xi.ki) do
-        if not player:hasKeyItem(kiId) then
-            pcall(function() player:addKeyItem(kiId) end)
+        if type(kiId) == 'number' then
+            keyItemIds[#keyItemIds + 1] = kiId
         end
     end
+
+    return keyItemIds
+end
+
+local function appendKeyItemJobs(jobs)
+    local items = getKeyItemIds()
+    appendRangeJobs(jobs, 1, #items, KEY_ITEM_BATCH, function(player, fromIdx, toIdx)
+        for i = fromIdx, toIdx do
+            local kiId = items[i]
+            if not player:hasKeyItem(kiId) then
+                pcall(function() player:addKeyItem(kiId) end)
+            end
+        end
+    end)
 end
 
 local function giveAllOutpostWarps(player)
@@ -268,23 +390,7 @@ local function giveAllAttachments(player)
     end
 end
 
-local function giveEverything(player)
-    player:setLevelCap(99)
-    player:printToPlayer('Level cap raised to 99, kupo!', 0, 'Unlocker')
-    player:unlockJob(0)
-    player:printToPlayer('Subjob unlocked, kupo!', 0, 'Unlocker')
-    giveAllWeaponSkills(player)
-    giveAllSpells(player)
-    capAllSkills(player)
-    giveStarterTrusts(player)
-    completeAllQuests(player)
-    completeAllMissions(player)
-    giveAllKeyItems(player)
-    giveAllOutpostWarps(player)
-    giveAllHomepoints(player)
-    giveAllSurvivalGuides(player)
-    bumpWardrobeSizes(player)
-    giveAllAttachments(player)
+local function finishSetup(player)
     local SYS = xi.msg.channel.SYSTEM_3
     player:printToPlayer('[ Setup Complete ]', SYS)
     player:printToPlayer('Spells, weapon skills & job abilities', SYS)
@@ -292,15 +398,92 @@ local function giveEverything(player)
     player:printToPlayer('All quests & missions completed', SYS)
     player:printToPlayer('All key items, maps, homepoints, survival guides & outpost warps', SYS)
     player:printToPlayer('Full wardrobes & automaton parts', SYS)
-    -- Starter accolades so new players can immediately try Unity Wanted Tier 1
     player:addCurrency('unity_accolades', 500)
     player:printToPlayer('Starter Unity Accolades granted (Unity Wanted Board in Library)', SYS)
     player:printToPlayer('Welcome! Type !help to get started.', SYS)
 end
 
+local function buildFirstLoginJobs()
+    local jobs = {}
+
+    jobs[#jobs + 1] = function(player)
+        player:setLevelCap(99)
+        player:printToPlayer('Level cap raised to 99, kupo!', 0, 'Unlocker')
+        player:unlockJob(0)
+        player:printToPlayer('Subjob unlocked, kupo!', 0, 'Unlocker')
+        giveAllWeaponSkills(player)
+    end
+
+    appendRangeJobs(jobs, 1, MAX_PLAYER_SPELL_ID, SPELL_BATCH, giveSpellRange)
+
+    jobs[#jobs + 1] = function(player)
+        capAllSkills(player)
+        giveStarterTrusts(player)
+    end
+
+    appendQuestJobs(jobs)
+    appendMissionJobs(jobs)
+    appendKeyItemJobs(jobs)
+
+    jobs[#jobs + 1] = function(player)
+        giveAllOutpostWarps(player)
+        giveAllHomepoints(player)
+    end
+    jobs[#jobs + 1] = function(player)
+        giveAllSurvivalGuides(player)
+        bumpWardrobeSizes(player)
+        giveAllAttachments(player)
+    end
+
+    jobs[#jobs + 1] = function(player)
+        stripMobOnlySpells(player)
+        stripNonStarterTrusts(player)
+        giveStarterTrusts(player)
+        if player:getCurrentMission(xi.mission.log_id.TOAU) <= xi.mission.id.toau.PRESIDENT_SALAHEEM then
+            player:addMission(xi.mission.log_id.TOAU, xi.mission.id.toau.ETERNAL_MERCENARY)
+        end
+        finishSetup(player)
+    end
+
+    return jobs
+end
+
+local function buildMaintenanceJobs(player)
+    local jobs = {}
+
+    if (player:getCharVar('AutoMissions_Done') or 0) == 0 then
+        player:setCharVar('AutoMissions_Done', 1)
+        appendMissionJobs(jobs)
+    end
+
+    if (player:getCharVar('ToAUMissionFix') or 0) == 0 then
+        player:setCharVar('ToAUMissionFix', 1)
+        jobs[#jobs + 1] = function(p)
+            if p:getCurrentMission(xi.mission.log_id.TOAU) <= xi.mission.id.toau.PRESIDENT_SALAHEEM then
+                p:addMission(xi.mission.log_id.TOAU, xi.mission.id.toau.ETERNAL_MERCENARY)
+            end
+        end
+    end
+
+    if (player:getCharVar('MobSpellGrantFix') or 0) == 0 then
+        player:setCharVar('MobSpellGrantFix', 1)
+        jobs[#jobs + 1] = stripMobOnlySpells
+    end
+
+    if (player:getCharVar('TrustRosterFix') or 0) == 0 then
+        player:setCharVar('TrustRosterFix', 1)
+        jobs[#jobs + 1] = function(p)
+            stripNonStarterTrusts(p)
+            giveStarterTrusts(p)
+        end
+    end
+
+    return jobs
+end
+
 -----------------------------------
--- Auto-grant once, at character creation (first login). Deferred ~3s so the
--- heavy synchronous grant (all quests/spells/trusts) doesn't hitch the zone-in.
+-- Auto-grant once, at character creation (first login). Work is sliced across
+-- ticks so the 2s inactivity watchdog cannot kill xi_map mid-setup.
 -- gameLogin==1 + firstLogin gates a real first login (see reference_ongamein_
 -- login_detection); the charvar makes it idempotent.
 -----------------------------------
@@ -310,38 +493,14 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
 
     if isLogin and firstLogin and (player:getCharVar('AutoUnlock_Done') or 0) == 0 then
         player:setCharVar('AutoUnlock_Done', 1)
-        player:printToPlayer('Setting up your new character -- one moment, kupo!', 0, 'Unlocker')
-        player:timer(3000, function(p) giveEverything(p) end)
-    elseif isLogin and (player:getCharVar('AutoMissions_Done') or 0) == 0 then
-        -- Backfill missions for existing chars that were set up before missions were auto-granted.
         player:setCharVar('AutoMissions_Done', 1)
-        player:timer(3000, function(p) completeAllMissions(p) end)
-    end
-
-    -- One-time ToAU current-mission backfill. Chars set up before the ToAU fix
-    -- above were left at getCurrentMission(TOAU)=0, which locks them out of
-    -- Assault (Rytaal's "authorized mercenaries" reject). Runs on any login,
-    -- independent of AutoMissions_Done, so already-set-up chars self-heal.
-    if isLogin and (player:getCharVar('ToAUMissionFix') or 0) == 0 then
         player:setCharVar('ToAUMissionFix', 1)
-        if player:getCurrentMission(xi.mission.log_id.TOAU) <= xi.mission.id.toau.PRESIDENT_SALAHEEM then
-            player:addMission(xi.mission.log_id.TOAU, xi.mission.id.toau.ETERNAL_MERCENARY)
-        end
-    end
-
-    -- One-time strip of mob-only spells wrongly bulk-granted before the filter.
-    if isLogin and (player:getCharVar('MobSpellGrantFix') or 0) == 0 then
         player:setCharVar('MobSpellGrantFix', 1)
-        player:timer(4000, function(p) stripMobOnlySpells(p) end)
-    end
-
-    -- One-time strip of bulk-granted trusts (old giveAllTrusts + spell loop).
-    if isLogin and (player:getCharVar('TrustRosterFix') or 0) == 0 then
         player:setCharVar('TrustRosterFix', 1)
-        player:timer(4500, function(p)
-            stripNonStarterTrusts(p)
-            giveStarterTrusts(p)
-        end)
+        player:printToPlayer('Setting up your new character -- one moment, kupo!', 0, 'Unlocker')
+        startJobs(player, 3000, buildFirstLoginJobs())
+    elseif isLogin then
+        startJobs(player, 3000, buildMaintenanceJobs(player))
     end
 end)
 

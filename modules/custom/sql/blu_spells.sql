@@ -53,8 +53,9 @@ SET @SKILL_BLUE     = 43;
 -- requirements: 0 = none, 16 = Unbridled Learning
 -- AOE:          0 = single-target, 1 = area-of-effect
 -- message:      2 = damage taken, 230 = self enchantment
--- Animations 918-937 are reserved for these new spells;
--- if the client has no matching entry the spell still fires, just no VFX.
+-- Animations 918-937 were reserved for these new spells, but 921/922 collide
+-- with Trust spawn/dismiss on this client (922 hides the caster until zone).
+-- Spectral Floe uses Ice Break (721) instead.
 
 INSERT INTO `spell_list`
     (`spellid`, `name`, `jobs`,
@@ -91,7 +92,7 @@ VALUES
 (720, 'spectral_floe',
  0x00000000000000000000000000000063000000000000,
  3, 0, @ELEMENT_ICE, 0, 4, @SKILL_BLUE,
- 116, 5000, 60000, 2, 0, 922, 2000, 1, 0, 1.00, 0, 0, 0, 100, 100, 'SOA'),
+ 116, 5000, 60000, 2, 0, 721, 2000, 1, 0, 1.00, 0, 0, 0, 100, 100, 'SOA'),
 
 (721, 'anvil_lightning',
  0x00000000000000000000000000000063000000000000,

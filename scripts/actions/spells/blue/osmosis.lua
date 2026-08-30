@@ -30,10 +30,6 @@ spellObject.onSpellCast = function(caster, target, spell)
     local skillBase = math.max(math.floor(blueSkill * 0.11), 1)
     local baseDamage = 1500 + 3 * blueSkill + 4 * caster:getStat(xi.mod.INT)
     params.attribute = xi.mod.INT
-    local blueSkill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
-    local skillBase = math.max(math.floor(blueSkill * 0.11), 1)
-    local baseDamage = 1500 + 3 * blueSkill + 4 * caster:getStat(xi.mod.INT)
-    params.attribute = xi.mod.INT
     params.dmgMultiplier = baseDamage / skillBase
 
     local damage = xi.spells.blue.useDrainSpell(caster, target, spell, params, 4000, false)

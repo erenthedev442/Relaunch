@@ -60,14 +60,14 @@ describe('BLU main-hand weapon amplification', function()
     it('classifies every named BLU weapon tier exactly', function()
         local cases =
         {
-            { 21646, 119, 'PRIME',     35, 1749999 },
-            { 20695, 119, 'AEONIC',    20,  999999 },
-            { 20688, 119, 'MYTHIC',    15,  999999 },
-            { 20689, 119, 'EMPYREAN',  15,  999999 },
-            { 20685, 119, 'RELIC',     10,  999999 },
-            { 21621, 119, 'AMBUSCADE',  3,   99999 },
-            { 20705, 119, 'ITEM_119',   3,   79999 },
-            { 20731, 115, 'PRE_119',    3,   40000 },
+            { 21646, 119, 'PRIME',     105, 5249997 },
+            { 20695, 119, 'AEONIC',     60, 2999997 },
+            { 20688, 119, 'MYTHIC',     45, 2999997 },
+            { 20689, 119, 'EMPYREAN',   45, 2999997 },
+            { 20685, 119, 'RELIC',      30, 2999997 },
+            { 21621, 119, 'AMBUSCADE',   9,  299997 },
+            { 20705, 119, 'ITEM_119',    9,  239997 },
+            { 20731, 115, 'PRE_119',     9,  120000 },
         }
 
         for _, case in ipairs(cases) do
@@ -82,14 +82,14 @@ describe('BLU main-hand weapon amplification', function()
     it('replaces generic BLU progression with exact weapon ratios and caps', function()
         for _, case in ipairs(
         {
-            { 21646, 35, 1749999 },
-            { 20695, 20,  999999 },
-            { 20688, 15,  999999 },
-            { 20689, 15,  999999 },
-            { 20685, 10,  999999 },
-            { 21621,  3,   99999 },
-            { 20705,  3,   79999 },
-            { 20731,  3,   40000 },
+            { 21646, 105, 5249997 },
+            { 20695,  60, 2999997 },
+            { 20688,  45, 2999997 },
+            { 20689,  45, 2999997 },
+            { 20685,  30, 2999997 },
+            { 21621,   9,  299997 },
+            { 20705,   9,  239997 },
+            { 20731,   9,  120000 },
         })
         do
             local caster = makeCaster(case[1], case[1] == 20731 and 115 or 119)
@@ -108,7 +108,7 @@ describe('BLU main-hand weapon amplification', function()
             { attackType = xi.attackType.MAGICAL, blueDamageExempt = true }))
     end)
 
-    it('scales spell budgets from 3x baseline to 5x premium damage', function()
+    it('scales spell budgets from 9x baseline to 15x premium damage', function()
         local function makeSpell(id, mpCost)
             return
             {
@@ -126,9 +126,10 @@ describe('BLU main-hand weapon amplification', function()
         assert(spellPower.getDamageMultiplier(makeSpell(709, 119)) == 1.5)
         assert(spellPower.getDamageMultiplier(makeSpell(724, 175)) == 5 / 3)
         assert(spellPower.getDamageMultiplier(makeSpell(720, 116)) == 5 / 3)
+        assert(spellPower.getDamageMultiplier(makeSpell(728, 116)) == 5 / 3)
 
         local baselineWeapon = catalog.getDamageMultiplier(makeCaster(20705, 119))
-        assert(baselineWeapon == 3)
-        assert(baselineWeapon * spellPower.getDamageMultiplier(makeSpell(720, 116)) == 5)
+        assert(baselineWeapon == 9)
+        assert(baselineWeapon * spellPower.getDamageMultiplier(makeSpell(720, 116)) == 15)
     end)
 end)

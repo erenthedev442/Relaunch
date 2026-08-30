@@ -22,6 +22,10 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local power = 1500 -- 15%
+    if xi.spells.blue.usesStockSubjobBehavior(caster) then
+        power = 1000
+    end
+
     local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 300)
 
     if not target:addStatusEffect(xi.effect.HASTE, { power = power, duration = duration, origin = caster }) then
