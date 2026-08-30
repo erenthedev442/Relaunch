@@ -5,7 +5,14 @@
 ---@type TMobEntity
 local entity = {}
 
+-- Hunt Guild Empy T3: stationary 30-minute camp at !huntwarp steam_cleaner.
+entity.spawnPoints =
+{
+    { x = 317.000, y = -1.000, z = 361.000 }
+}
+
 entity.onMobInitialize = function(mob)
+    xi.mob.updateNMSpawnPoint(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
 
     mob:addImmunity(xi.immunity.DARK_SLEEP)
@@ -22,7 +29,7 @@ entity.onAdditionalEffect = function(mob, target, damage)
 end
 
 entity.onMobDespawn = function(mob)
-    SetServerVariable('[POP]SteamCleaner', GetSystemTime() + math.random(7200, 14400))
+    xi.mob.updateNMSpawnPoint(mob)
 end
 
 return entity

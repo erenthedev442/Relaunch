@@ -2,39 +2,18 @@
 -- Area: RuAun Gardens
 --   NM: Despot
 -----------------------------------
-local ID = zones[xi.zone.RUAUN_GARDENS]
------------------------------------
 ---@type TMobEntity
 local entity = {}
 
+-- Hunt Guild Empy T2: stationary 30-minute camp at !huntwarp despot.
 entity.spawnPoints =
 {
     { x = -0.100, y = -42.000, z = -291.000 }
 }
 
-entity.phList =
-{
-    [ID.mob.DESPOT - 16] = ID.mob.DESPOT,
-    [ID.mob.DESPOT - 15] = ID.mob.DESPOT,
-    [ID.mob.DESPOT - 14] = ID.mob.DESPOT,
-    [ID.mob.DESPOT - 13] = ID.mob.DESPOT,
-    [ID.mob.DESPOT - 12] = ID.mob.DESPOT,
-    [ID.mob.DESPOT - 11] = ID.mob.DESPOT,
-    [ID.mob.DESPOT - 10] = ID.mob.DESPOT,
-    [ID.mob.DESPOT - 9 ] = ID.mob.DESPOT,
-    [ID.mob.DESPOT - 8 ] = ID.mob.DESPOT,
-    [ID.mob.DESPOT - 7 ] = ID.mob.DESPOT,
-    [ID.mob.DESPOT - 6 ] = ID.mob.DESPOT,
-    [ID.mob.DESPOT - 5 ] = ID.mob.DESPOT,
-    [ID.mob.DESPOT - 4 ] = ID.mob.DESPOT,
-    [ID.mob.DESPOT - 3 ] = ID.mob.DESPOT,
-    [ID.mob.DESPOT - 2 ] = ID.mob.DESPOT,
-    [ID.mob.DESPOT - 1 ] = ID.mob.DESPOT,
-}
-
 entity.onMobInitialize = function(mob)
+    xi.mob.updateNMSpawnPoint(mob)
     mob:setBaseSpeed(45) -- Note: setBaseSpeed() also updates the animation speed to match.
-    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
     mob:setMobMod(xi.mobMod.GIL_MIN, 18000)
     mob:setMobMod(xi.mobMod.GIL_MAX, 18000)
     mob:setMobMod(xi.mobMod.MUG_GIL, 3250)
@@ -81,40 +60,10 @@ entity.onMobSpawn = function(mob)
     mob:setAutoAttackEnabled(true)
     mob:setLocalVar('panzerfaustCounter', 0)
     mob:setLocalVar('panzerfaustMax', 0)
+end
 
-    -- Early return: No zone object.
-    local zone = mob:getZone()
-    if not zone then
-        return
-    end
-
-    -- Early return: No placeholder ID.
-    local ph = GetMobByID(zone:getLocalVar('DespotPlaceholderID'))
-    if not ph then
-        return
-    end
-
-    -- Handle position.
-    local pos = ph:getPos()
-    mob:setPos(pos.x, pos.y, pos.z, pos.r)
-
-    -- Handle enmity/claim.
-    local killerId = ph:getLocalVar('killer')
-    if killerId == 0 then
-        return
-    end
-
-    local killer = GetPlayerByID(killerId)
-    if not killer then
-        return
-    end
-
-    if
-        not killer:isEngaged() and
-        killer:checkDistance(mob) <= 50
-    then
-        mob:updateClaim(killer)
-    end
+entity.onMobDespawn = function(mob)
+    xi.mob.updateNMSpawnPoint(mob)
 end
 
 entity.onMobMobskillChoose = function(mob, target)

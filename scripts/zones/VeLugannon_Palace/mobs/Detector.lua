@@ -7,18 +7,6 @@ local ID = zones[xi.zone.VELUGANNON_PALACE]
 ---@type TMobEntity
 local entity = {}
 
-local detectorPHTable =
-{
-    ID.mob.STEAM_CLEANER - 26, -- E Lower Chamber
-    ID.mob.STEAM_CLEANER - 24, -- E Lower Chamber
-    ID.mob.STEAM_CLEANER - 22, -- W Lower Chamber
-    ID.mob.STEAM_CLEANER - 20, -- W Lower Chamber
-    ID.mob.STEAM_CLEANER - 18, -- NE Lower Chamber
-    ID.mob.STEAM_CLEANER - 16, -- NE Lower Chamber
-    ID.mob.STEAM_CLEANER - 14, -- NW Lower Chamber
-    ID.mob.STEAM_CLEANER - 12, -- NW Lower Chamber
-}
-
 -- Individual paths for each detector
 local detectorPaths =
 {
@@ -269,43 +257,9 @@ local detectorPaths =
     },
 }
 
+-- Steam Cleaner is a 30-minute Hunt Guild camp. Detectors only summon Caretakers.
 local getMobToSpawn = function(detector)
-    local detectorID   = detector:getID()
-    local caretaker    = GetMobByID(detectorID + 1)
-    local steamCleaner = GetMobByID(ID.mob.STEAM_CLEANER)
-
-    -- Early return: Detector isn't able to spawn Steam Cleaner.
-    if not utils.contains(detectorID, detectorPHTable) then
-        return caretaker
-    end
-
-    -- Early return: Steam cleaner can't spawn.
-    if
-        not steamCleaner or
-        steamCleaner:isSpawned()
-    then
-        return caretaker
-    end
-
-    -- Early return: Luck check failed.
-    if math.random(1, 100) <= 90 then
-        return caretaker
-    end
-
-    -- Early return: Too soon to spawn Steam Cleaner.
-    if GetSystemTime() < GetServerVariable('[POP]SteamCleaner') then
-        return caretaker
-    end
-
-    -- Early return: Steam Cleaner is already being summoned.
-    if steamCleaner:getLocalVar('midSummon') == 1 then
-        return caretaker
-    end
-
-    -- From this point on, this detector can pop Steam Cleaner.
-    steamCleaner:setLocalVar('midSummon', 1)
-
-    return steamCleaner
+    return GetMobByID(detector:getID() + 1)
 end
 
 entity.onMobSpawn = function(mob)
@@ -401,13 +355,7 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
-    local steamCleaner = GetMobByID(ID.mob.STEAM_CLEANER)
-
     mob:resetLocalVars()
-    -- Ensure Steam Cleaner can be summoned again
-    if steamCleaner then
-        steamCleaner:setLocalVar('midSummon', 0)
-    end
 end
 
 return entity

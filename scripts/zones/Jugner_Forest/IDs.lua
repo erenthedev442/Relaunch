@@ -67,6 +67,7 @@ zones[xi.zone.JUGNER_FOREST] =
         METEORMAULER       = GetFirstID('Meteormauler_Zhagtegg'),
         PANZER_PERCIVAL    = GetTableOfIDs('Panzer_Percival'), -- 2 NMs
         SUPPLESPINE_MUJWUJ = GetFirstID('Supplespine_Mujwuj'),
+        CAPRICORNUS        = GetFirstID('Capricornus'), -- Hunt Guild AF T2 camp (not Voidwalker)
 
         VOIDWALKER =
         {
@@ -84,7 +85,6 @@ zones[xi.zone.JUGNER_FOREST] =
 
             [xi.keyItem.COLORFUL_ABYSSITE] =
             {
-                17203687, -- Capricornus
                 17203686, -- Yacumama
             },
 

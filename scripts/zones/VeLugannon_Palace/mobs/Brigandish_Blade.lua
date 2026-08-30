@@ -7,9 +7,15 @@ local ID = zones[xi.zone.VELUGANNON_PALACE]
 ---@type TMobEntity
 local entity = {}
 
+-- Hunt Guild Empy T4: stationary 30-minute camp at !huntwarp brigandish_blade.
+entity.spawnPoints =
+{
+    { x = -1.000, y = -1.000, z = -283.000 }
+}
+
 entity.onMobInitialize = function(mob)
+    xi.mob.updateNMSpawnPoint(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
-    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
     mob:setMobMod(xi.mobMod.GIL_MIN, 18000)
     mob:setMobMod(xi.mobMod.GIL_MAX, 18000)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
@@ -53,6 +59,10 @@ end
 
 entity.onMobDeath = function(mob, player, optParams)
     GetNPCByID(ID.npc.QM3):setLocalVar('PillarCharged', 1)
+end
+
+entity.onMobDespawn = function(mob)
+    xi.mob.updateNMSpawnPoint(mob)
 end
 
 return entity

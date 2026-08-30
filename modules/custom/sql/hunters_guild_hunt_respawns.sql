@@ -28,6 +28,12 @@
 -- are now flipped to NORMAL too, so they reliably reappear every 30 min
 -- like the rest rather than rolling a placeholder.
 --
+-- SQL alone is not enough for four hunt camps that still had retail pop
+-- scripts: Despot (Groundskeeper lottery), Steam Cleaner (Detector
+-- summon + 2-4h lock), Brigandish Blade (Curtana ??? + idle despawn),
+-- and Jugner Capricornus (Voidwalker /heal hide). Those scripts now
+-- camp at the Hunt warp on the same 30-minute timer.
+--
 -- Side effects to acknowledge:
 --   * Vanilla CoP / Zilart BCNMs that gate off these HNM mob_groups
 --     will see a respawning NM in the open zone instead of (or in

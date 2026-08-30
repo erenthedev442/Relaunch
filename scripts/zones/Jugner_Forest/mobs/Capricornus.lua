@@ -1,29 +1,29 @@
 -----------------------------------
---  Mob: Capricornus
+-- Area: Jugner Forest
+--   NM: Capricornus
+-- Hunt Guild AF T2: visible 30-minute camp at !huntwarp capricornus.
+-- Other-zone Capricornus copies stay Voidwalker /heal pops.
 -----------------------------------
 mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
 ---@type TMobEntity
 local entity = {}
 
-entity.onMobInitialize = function(mob)
-    xi.voidwalker.onMobInitialize(mob)
-end
+entity.spawnPoints =
+{
+    { x = 240.000, y = -5.000, z = 40.000 }
+}
 
-entity.onMobSpawn = function(mob)
-    xi.voidwalker.onMobSpawn(mob)
+entity.onMobInitialize = function(mob)
+    xi.mob.updateNMSpawnPoint(mob)
 end
 
 entity.onMobFight = function(mob, target)
-    xi.voidwalker.onMobFight(mob, target)
-end
-
-entity.onMobDisengage = function(mob)
-    xi.voidwalker.onMobDisengage(mob)
+    xi.voidwalker.applyCombatBehavior(mob)
 end
 
 entity.onMobDespawn = function(mob)
-    xi.voidwalker.onMobDespawn(mob)
+    xi.mob.updateNMSpawnPoint(mob)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
