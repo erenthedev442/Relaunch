@@ -3,6 +3,7 @@ require('scripts/globals/weaponskills')
 require('scripts/globals/magicburst')
 require('scripts/globals/magic')
 local standardProgression = require('modules/custom/lua/standard_ws_tuning_catalog')
+local levelingHpCap = require('modules/custom/lua/leveling_hp_cap')
 
 -- TODO: Consolidate this with weaponskills
 xi = xi or {}
@@ -14,10 +15,13 @@ xi.autows.applyAutomatonProgression = function(attacker, target, damage)
         return damage
     end
 
-    return standardProgression.applyMultiplier(
+    local scaled = standardProgression.applyMultiplier(
         damage,
         standardProgression.getPetDamageMultiplier(master, target),
         standardProgression.setPetDamageCap(attacker, master))
+
+    -- Pre-99: one TP move cannot take more than 33% of the mob's max HP.
+    return levelingHpCap.apply(master:getMainLvl(), target, scaled)
 end
 
 -- params contains: ftpMod, str_wsc, dex_wsc, vit_wsc, int_wsc, mnd_wsc, critVaries, accVaries, ignoredDefense, atkmulti, kick, accBonus, weaponType, weaponDamage

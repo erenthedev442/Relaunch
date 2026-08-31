@@ -15,6 +15,7 @@ local standardMagic = require('modules/custom/lua/standard_magic_tuning_catalog'
 local blueWeaponCatalog = require('modules/custom/lua/blu_weapon_amplification_catalog')
 local bluSpellPower = require('modules/custom/lua/blu_spell_power_catalog')
 local bluSharedEffects = require('modules/custom/lua/blu_shared_effects')
+local levelingHpCap = require('modules/custom/lua/leveling_hp_cap')
 -----------------------------------
 
 -- The TP modifier (currently unused)
@@ -286,6 +287,7 @@ local function finalizeStockSubjobDamage(caster, target, spell, damage, params, 
 
     damage = utils.handlePhalanx(target, damage)
     damage = utils.handleStoneskin(target, damage)
+    damage = levelingHpCap.apply(caster:getMainLvl(), target, damage)
     damage = target:checkDamageCap(damage)
 
     target:takeSpellDamage(caster, spell, damage, attackType, damageType)
@@ -341,6 +343,7 @@ local function finalizeBlueDamage(caster, target, spell, damage, params, trickAt
     end
 
     damage = math.min(damage, target:getHP())
+    damage = levelingHpCap.apply(caster:getMainLvl(), target, damage)
     damage = target:checkDamageCap(damage)
 
     takeBlueSpellDamage(caster, target, spell, damage, attackType, damageType, damageCap)
@@ -688,6 +691,7 @@ xi.spells.blue.useDrainSpell = function(caster, target, spell, params, damageCap
         finalDamage = utils.clamp(utils.handleOneForAll(target, finalDamage), 0, 131071)
         finalDamage = utils.clamp(utils.handleStoneskin(target, finalDamage), -131071, 131071)
         finalDamage = utils.clamp(finalDamage, 0, target:getHP())
+        finalDamage = levelingHpCap.apply(caster:getMainLvl(), target, finalDamage)
         finalDamage = target:checkDamageCap(finalDamage)
 
         target:takeSpellDamage(
@@ -791,6 +795,7 @@ xi.spells.blue.useBreathSpell = function(caster, target, spell, params)
             dmg = utils.clamp(utils.handleOneForAll(target, dmg), 0, 131071)
             dmg = utils.clamp(utils.handleStoneskin(target, dmg), -131071, 131071)
             dmg = utils.clamp(dmg, 0, target:getHP())
+            dmg = levelingHpCap.apply(caster:getMainLvl(), target, dmg)
             dmg = target:checkDamageCap(dmg)
         end
 

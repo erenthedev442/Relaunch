@@ -54,6 +54,28 @@ describe('Automaton companion progression', function()
         assert(xi.autows.applyAutomatonProgression(automaton, target, 100000) == 79999)
     end)
 
+    it('clamps sub-99 TP moves to 33% of the mob max HP', function()
+        local master = makeMaster(1, 0)
+        master.getMainLvl = function()
+            return 50
+        end
+        local automaton = makeAutomaton(master)
+        local levelingTarget =
+        {
+            isMob = function()
+                return true
+            end,
+            getMainLvl = function()
+                return 50
+            end,
+            getMaxHP = function()
+                return 10000
+            end,
+        }
+
+        assert(xi.autows.applyAutomatonProgression(automaton, levelingTarget, 100000) == 3300)
+    end)
+
     it('uses the master weapon tier for the cap', function()
         local automaton = makeAutomaton(makeMaster(20511, 2100)) -- Kenkonken
 

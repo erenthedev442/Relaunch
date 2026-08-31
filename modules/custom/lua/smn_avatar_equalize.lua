@@ -26,6 +26,7 @@ require('scripts/globals/summon')
 
 local m = Module:new('smn_avatar_equalize')
 local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
+local levelingHpCap = require('modules/custom/lua/leveling_hp_cap')
 
 local MIN_REAL_DAMAGE = 10
 xi.summon.avatarProgression = xi.summon.avatarProgression or {}
@@ -62,9 +63,9 @@ local function getDamageProfile(mob, target, skill)
     end
 
     -- Match BST/DRG/PUP companion leveling: sub-99 pets cannot chunk more
-    -- than 40% of the target's max HP in one hit (stops leveling blitzes).
+    -- than 33% of the target's max HP in one hit (Legendary leveling clamp).
     if master and master:getMainLvl() < progression.ENDGAME_PLAYER_LEVEL then
-        cap = math.min(cap, math.floor(target:getMaxHP() * 0.40))
+        cap = math.min(cap, math.floor(target:getMaxHP() * levelingHpCap.FRACTION))
     end
 
     return multiplier, cap

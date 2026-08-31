@@ -10,6 +10,7 @@ require('scripts/globals/magic')
 require('scripts/globals/spells/damage_spell')
 local standardProgression = require('modules/custom/lua/standard_ws_tuning_catalog')
 local bstJugOverhaul = require('modules/custom/lua/BstJugPetOverhaul')
+local levelingHpCap = require('modules/custom/lua/leveling_hp_cap')
 -----------------------------------
 xi = xi or {}
 xi.mobskills = xi.mobskills or {}
@@ -160,7 +161,7 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
     end
 
     if master:getMainLvl() < standardProgression.ENDGAME_PLAYER_LEVEL then
-        cap = math.min(cap, math.floor(target:getMaxHP() * 0.40))
+        cap = math.min(cap, math.floor(target:getMaxHP() * levelingHpCap.FRACTION))
     end
 
     return target:checkDamageCap(
