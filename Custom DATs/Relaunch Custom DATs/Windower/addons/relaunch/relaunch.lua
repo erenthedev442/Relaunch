@@ -50,6 +50,10 @@ local INSERTS = {
     [23876] = { donor = 23859, name = 'Track Pants'    },  -- Legs (donor: Arrogance Brais)
     [23877] = { donor = 23831, name = 'Track Shoes'    },  -- Feet (donor: Emerald Crackows)
     [23878] = { donor = 24213, name = 'Legend Sweater' },  -- Body sweater (donor: Arrogance Jacket)
+    [19968] = { donor = 20753, name = 'Epeolatry'      },  -- 99
+    [19969] = { donor = 20753, name = 'Epeolatry'      },  -- 119 I
+    [19970] = { donor = 21070, name = 'Idris'          },  -- 99
+    [19971] = { donor = 21070, name = 'Idris'          },  -- 119 I
 }
 
 local applied = { rename = 0, insert = 0, skipped = 0 }

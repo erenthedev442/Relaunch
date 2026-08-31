@@ -1,5 +1,8 @@
 -- Idris / Exudation live-database repair.
 -- Idempotent so deploys can apply it to existing characters and fresh DBs.
+--
+-- GEO+10 (mod 961) is 119 III only. Lower Idris stages are owned by
+-- zz_epeo_idris_ladder.sql.
 
 INSERT INTO `weapon_skills`
     VALUES (175,'exudation',0x00000000000000000000000000000000000000000000,11,0,0,91,2000,3,1,0,14,12,0,1,0)
@@ -10,8 +13,6 @@ ON DUPLICATE KEY UPDATE
     `animation` = VALUES(`animation`);
 
 INSERT INTO `item_mods` VALUES
-    (21070,5,100),
-    (21070,961,10),
     (21080,5,100),
     (21080,28,40),
     (21080,30,40),

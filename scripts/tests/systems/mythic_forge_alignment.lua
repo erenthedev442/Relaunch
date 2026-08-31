@@ -16,21 +16,11 @@ describe('Mythic Forge identifier alignment', function()
     end)
 
     it('maps forged damage mythics to REMA MYTHIC entries', function()
-        local singleStep =
-        {
-            [21685] = 'Epeolatry',
-            [21080] = 'Idris',
-        }
-
         for _, forged in ipairs(forge.weapons) do
             local entry = rema.BY_ITEM_ID[forged.id]
-            if singleStep[forged.id] then
-                assert(entry == nil)
-            else
-                assert(entry ~= nil, string.format('Missing REMA entry for %s', forged.name))
-                assert(entry.family == 'MYTHIC')
-                assert(entry.name == forged.name)
-            end
+            assert(entry ~= nil, string.format('Missing REMA entry for %s', forged.name))
+            assert(entry.family == 'MYTHIC')
+            assert(entry.name == forged.name)
         end
     end)
 end)

@@ -54,6 +54,17 @@ describe('Legendary Weapon Pilgrimage integrity', function()
         end
     end)
 
+    it('binds Epeolatry and Idris chapters to 99 / 119 I / 119 II', function()
+        local epeo = pilgrimage.byFinalId[21685]
+        local idris = pilgrimage.byFinalId[21080]
+        assert(epeo and epeo.family == 'mythic' and not epeo.singleStep)
+        assert(epeo.stages[1] == 19968 and epeo.stages[2] == 19969 and epeo.stages[3] == 20753)
+        assert(epeo.wsId == rema.BY_ITEM_ID[21685].wsId)
+        assert(idris and idris.family == 'mythic' and not idris.singleStep)
+        assert(idris.stages[1] == 19970 and idris.stages[2] == 19971 and idris.stages[3] == 21070)
+        assert(idris.wsId == rema.BY_ITEM_ID[21080].wsId)
+    end)
+
     it('binds chapters to lower, 119 I, and 119 II stages', function()
         for _, entry in ipairs(pilgrimage.chains) do
             if entry.family == 'aeonic' then

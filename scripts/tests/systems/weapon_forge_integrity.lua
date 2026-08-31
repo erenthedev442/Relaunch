@@ -105,6 +105,48 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(not ok and reason == 'grouped')
     end)
 
+    it('unlocks Relic first, then Empyrean or Mythic, then Aeonic, then Prime', function()
+        local vars = {}
+        local items = {}
+        local player = {}
+        function player:getCharVar(name) return vars[name] or 0 end
+        function player:getItemCount(id) return items[id] or 0 end
+
+        assert(gates.pathUnlocked(player, 'relic'))
+        assert(not gates.pathUnlocked(player, 'empyrean'))
+        assert(not gates.pathUnlocked(player, 'mythic'))
+        assert(not gates.pathUnlocked(player, 'aeonic'))
+        assert(not gates.pathUnlocked(player, 'prime'))
+
+        vars.WF_Relic_Final = 1
+        assert(gates.pathUnlocked(player, 'empyrean'))
+        assert(gates.pathUnlocked(player, 'mythic'))
+        assert(not gates.pathUnlocked(player, 'aeonic'))
+
+        items[19805] = 1 -- Verethragna base: Empyrean started, Mythic waits
+        assert(gates.pathUnlocked(player, 'empyrean'))
+        assert(not gates.pathUnlocked(player, 'mythic'))
+
+        vars.WF_Empyrean_Final = 1
+        items[19805] = 0
+        assert(gates.pathUnlocked(player, 'mythic'))
+        assert(not gates.pathUnlocked(player, 'aeonic'))
+
+        items[19819] = 1 -- Conqueror base: Mythic started, Empyrean already done
+        assert(gates.pathUnlocked(player, 'empyrean'))
+        assert(gates.pathUnlocked(player, 'mythic'))
+        assert(not gates.pathUnlocked(player, 'aeonic'))
+
+        vars.WF_Mythic_Final = 1
+        items[19819] = 0
+        assert(gates.pathUnlocked(player, 'aeonic'))
+        assert(not gates.pathUnlocked(player, 'prime'))
+
+        vars.WF_Aeonic_Final = 1
+        assert(gates.pathUnlocked(player, 'prime'))
+        assert(gates.PATH_LOCKED_MSG:find('long way to go', 1, true))
+    end)
+
     it('places Aeonic after completed Relic, Empyrean, and Mythic paths', function()
         local vars = {}
         local player = {}
@@ -304,6 +346,37 @@ describe('Weapon Forge catalog and gate integrity', function()
         vars = { WF_Empyrean_Final = 1, GM_Wave_Clears = 63 }
         ok = gates.checkGate(player, 'empyrean', 2)
         assert(ok)
+    end)
+
+    it('uses a full four-step mythic ladder for Epeolatry and Idris', function()
+        local epeo, idris, conqueror
+        for _, chain in ipairs(catalog.mythicChains) do
+            if chain.name == 'Epeolatry' then epeo = chain end
+            if chain.name == 'Idris' then idris = chain end
+            if chain.name == 'Conqueror' then conqueror = chain end
+        end
+
+        assert(epeo and not epeo.singleStep and epeo.issueBase ~= false)
+        assert(epeo.base == 19968 and epeo.s1 == 19969 and epeo.s2 == 20753 and epeo.s3 == 21685)
+        assert(idris and not idris.singleStep and idris.issueBase ~= false)
+        assert(idris.base == 19970 and idris.s1 == 19971 and idris.s2 == 21070 and idris.s3 == 21080)
+
+        local function holder(id)
+            return { getItemCount = function(_, itemId) return id ~= nil and itemId == id and 1 or 0 end }
+        end
+
+        assert(catalog.heldStage(holder(nil), epeo) == 0)
+        assert(catalog.heldStage(holder(19968), epeo) == 1)
+        assert(catalog.heldStage(holder(19969), epeo) == 2)
+        assert(catalog.heldStage(holder(20753), epeo) == 3)
+        assert(catalog.heldStage(holder(21685), epeo) == 4)
+        assert(catalog.heldStage(holder(19970), idris) == 1)
+        assert(catalog.heldStage(holder(19971), idris) == 2)
+        assert(catalog.heldStage(holder(21070), idris) == 3)
+        assert(catalog.heldStage(holder(21080), idris) == 4)
+
+        assert(conqueror and not conqueror.singleStep)
+        assert(catalog.heldStage(holder(20838), conqueror) == 3)
     end)
 
     it('places the linear Wave Master clears on the weapon ladder', function()

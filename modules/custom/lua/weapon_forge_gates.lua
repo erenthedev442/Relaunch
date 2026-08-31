@@ -17,10 +17,70 @@
 --   fromStage 2 = "Stage II -> Stage III" (about to enter Stage III)
 -----------------------------------
 local M = {}
+local catalog = require('modules/custom/lua/weapon_forge_catalog')
 local abysseaProgress = require('modules/custom/lua/abyssea_marks_progress')
 local unityProgress = require('modules/custom/lua/unity_wanted_progress')
 local waveProgress = require('modules/custom/lua/game_master_progress')
 local aeonicMaat = require('modules/custom/lua/aeonic_maat_catalog')
+
+-- Shown when a player opens a family they have not unlocked yet.
+-- Relic is the first path; Empyrean or Mythic after Relic; the other after
+-- that first of the two is finished; Aeonic after both; Prime after Aeonic.
+M.PATH_LOCKED_MSG = "You've got a long way to go before you're able to start this path!"
+
+local function hasFinal(player, family)
+    return (player:getCharVar('WF_' .. family .. '_Final') or 0) == 1
+end
+
+local function chainItemIds(chain)
+    return { chain.base, chain.s1, chain.s2, chain.s3 }
+end
+
+local function familyStarted(player, chains)
+    if not player.getItemCount then
+        return false
+    end
+    for _, chain in ipairs(chains) do
+        for _, itemId in ipairs(chainItemIds(chain)) do
+            if itemId and itemId > 0 and player:getItemCount(itemId) > 0 then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+-- True when this family is already complete or the player is allowed to
+-- obtain its starter. Stage gates (Unity, Nyzul, rebirth, …) still apply.
+function M.pathUnlocked(player, category)
+    if category == 'relic' then
+        return true
+    end
+    if category == 'empyrean' then
+        if hasFinal(player, 'Empyrean') or familyStarted(player, catalog.empyreanChains) then
+            return true
+        end
+        return hasFinal(player, 'Relic') and not familyStarted(player, catalog.mythicChains)
+    end
+    if category == 'mythic' then
+        if hasFinal(player, 'Mythic') or familyStarted(player, catalog.mythicChains) then
+            return true
+        end
+        return hasFinal(player, 'Relic') and not familyStarted(player, catalog.empyreanChains)
+    end
+    if category == 'aeonic' then
+        if hasFinal(player, 'Aeonic') or (player:getCharVar('LWP_AeonicActive') or 0) > 0 then
+            return true
+        end
+        return hasFinal(player, 'Relic')
+            and hasFinal(player, 'Empyrean')
+            and hasFinal(player, 'Mythic')
+    end
+    if category == 'prime' then
+        return hasFinal(player, 'Aeonic')
+    end
+    return true
+end
 
 -- ── Reusable check closures (per-job scans and all-trials) ─────────────────
 

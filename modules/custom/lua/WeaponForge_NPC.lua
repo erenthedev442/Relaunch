@@ -126,6 +126,14 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         return false
     end
 
+    local function requirePath(player, category)
+        if GATES.pathUnlocked(player, category) then
+            return true
+        end
+        player:printToPlayer('[Weapon Forge] ' .. GATES.PATH_LOCKED_MSG, xi.msg.channel.SYSTEM_3)
+        return false
+    end
+
     local function checkPilgrimage(player, finalId, throughChapter)
         local entry = pilgrimage.byFinalId[finalId]
         if not entry then
@@ -162,6 +170,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         -- Owner spec 2026-07-13: new progression gates enforced BEFORE any
         -- inventory / currency / mark inspection so a locked player never
         -- sees "you have 24 of 25 marks" -- they see the actual blocker.
+        if not requirePath(player, 'aeonic') then return false end
         if not checkGate(player, 'aeonic', fromStage, chain) then return false end
         if not checkPilgrimage(player, chain.aeonic.s3.id, fromStage + 1) then return false end
         local ae       = chain.aeonic
@@ -263,6 +272,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         -- checked explicitly so this route always enforces Aeonic completion.
         -- STAGE_GATES.prime[2] additionally enforces Ragnarok before the final
         -- upgrade, then the existing HL_Tier + all-trials + gil checks run.
+        if not requirePath(player, 'prime') then return false end
         if not checkGate(player, 'prime', 0) then return false end
         if not checkGate(player, 'prime', fromStage) then return false end
         if fromStage == 2 then
@@ -583,9 +593,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local FM       = catalog.forgeMats
     local NEW_CATS =
     {
+        { key = 'relic',    label = 'Relic',    chains = catalog.relicChains,    costs = catalog.relicCosts,    base = catalog.relicBase    },
         { key = 'empyrean', label = 'Empyrean', chains = catalog.empyreanChains, costs = catalog.empyreanCosts, base = catalog.empyreanBase },
         { key = 'mythic',   label = 'Mythic',   chains = catalog.mythicChains,   costs = catalog.mythicCosts,   base = catalog.mythicBase   },
-        { key = 'relic',    label = 'Relic',    chains = catalog.relicChains,    costs = catalog.relicCosts,    base = catalog.relicBase    },
     }
     local STAGE_LBL = { [0] = 'not started', [1] = 'base', [2] = '119 I', [3] = '119 II', [4] = '119 III (complete)' }
     local showForgeRoot  -- forward decl (assigned below; referenced by showNewCat)
@@ -670,12 +680,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     end
 
     -- Held stage: 0 none, 1 base, 2 s1(119I), 3 s2(119II), 4 s3(119III/done).
+    -- singleStep Ergon chains are resolved in catalog.heldStage so the shared
+    -- starter id cannot report as 119 II.
     local function heldStage(player, chain)
-        if player:getItemCount(chain.s3) > 0 then return 4 end
-        if player:getItemCount(chain.s2) > 0 then return 3 end
-        if player:getItemCount(chain.s1) > 0 then return 2 end
-        if player:getItemCount(chain.base) > 0 then return 1 end
-        return 0
+        return catalog.heldStage(player, chain)
+    end
+
+    local function nextStageLabel(chain, k)
+        if chain.singleStep and k >= 1 then
+            return STAGE_LBL[4]
+        end
+        return STAGE_LBL[k + 1]
     end
 
     local function doNewForge(player, def, chain)
@@ -683,6 +698,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         local k = heldStage(player, chain)
         if k == 4 then
             player:printToPlayer(string.format('[Weapon Forge] Your %s is already fully forged, kupo!', chain.name), S)
+            return
+        end
+        if k == 0 and not requirePath(player, def.key) then
             return
         end
         -- Owner spec 2026-07-13. NEW_CATS held-stage indexing:
@@ -699,6 +717,13 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end
         local fromId, toId, step
         if k == 0 then
+            -- Epeolatry / Idris have no 99-base item ID. Do not issue the 119.
+            if chain.issueBase == false then
+                player:printToPlayer(string.format(
+                    '[Weapon Forge] %s has no 99-base item. The forge will not issue the 119 as a starter.',
+                    chain.name), S)
+                return
+            end
             step, toId = def.base, chain.base          -- issue the base weapon
         elseif chain.singleStep then
             -- Retail 2-step mythics (Epeolatry, Idris): the DB only has base +
@@ -769,7 +794,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end
         -- RARE pre-check before anything is consumed.
         if player:hasItem(toId) then
-            player:printToPlayer(string.format('[Weapon Forge] You already hold the %s stage — it is RARE, so a second cannot be forged.', STAGE_LBL[k + 1]), S)
+            player:printToPlayer(string.format('[Weapon Forge] You already hold the %s stage — it is RARE, so a second cannot be forged.', nextStageLabel(chain, k)), S)
             return
         end
         for _, req in ipairs(reqs) do req.take(player) end
@@ -779,12 +804,11 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer('[Weapon Forge] ERROR: the forge consumed your materials but could not hand over the weapon — contact a GM with this message.', S)
             return
         end
-        player:printToPlayer(string.format('[Weapon Forge] Your %s advances to %s!', chain.name, STAGE_LBL[k + 1]), S)
-        -- Stage III (final Empyrean / Mythic / Relic) completion flag. Read by
-        -- the Prime Stage I preflight; `def.key` is one of 'empyrean',
-        -- 'mythic', 'relic'. STAGE_LBL[4] = '119 III (complete)' so k+1 == 4
-        -- is the final stage.
-        if k + 1 == 4 and def and def.key then
+        player:printToPlayer(string.format('[Weapon Forge] Your %s advances to %s!', chain.name, nextStageLabel(chain, k)), S)
+        -- Final Empyrean / Mythic / Relic completion flag. Read by the Prime
+        -- Stage I preflight. singleStep Ergon jumps base -> 119 III while
+        -- held-stage is still 1, so key off the item handed over, not k+1.
+        if toId == chain.s3 and def and def.key then
             player:setCharVar('WF_' .. def.key:sub(1,1):upper() .. def.key:sub(2) .. '_Final', 1)
         end
     end
@@ -794,6 +818,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         local k = heldStage(player, chain)
         player:printToPlayer(string.format('[%s] %s (%s) -- you hold: %s', def.label, chain.name, chain.jobs, STAGE_LBL[k]), S)
         if k == 4 then return end
+        if k == 0 and chain.issueBase == false then
+            player:printToPlayer(string.format(
+                '  No 99-base ID exists for %s. Bring the 119 to forge 119 III (combined mythic cost + pilgrimage).',
+                chain.name), S)
+            return
+        end
         -- singleStep chains (Epeolatry, Idris): quote the combined cost + label
         -- the target as "119 III" directly rather than the intermediate stages
         -- that don't exist for these two weapons.
@@ -823,8 +853,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         printNewRecipe(player, def, chain)
         local opts = {}
         if k < 4 then
-            local verb = (k == 0) and ('Obtain base ' .. chain.name) or ('Forge -> ' .. STAGE_LBL[k + 1])
-            opts[#opts + 1] = { verb, function(p) doNewForge(p, def, chain); showNewWeapon(p, def, chain) end }
+            if not (k == 0 and chain.issueBase == false) then
+                local verb = (k == 0) and ('Obtain base ' .. chain.name) or ('Forge -> ' .. nextStageLabel(chain, k))
+                opts[#opts + 1] = { verb, function(p) doNewForge(p, def, chain); showNewWeapon(p, def, chain) end }
+            end
         end
         opts[#opts + 1] = { 'Show recipe again', function(p) printNewRecipe(p, def, chain); showNewWeapon(p, def, chain) end }
         opts[#opts + 1] = { 'Back', function(p) showNewCat(p, def, 1) end }
@@ -839,6 +871,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local CAT_PAGE = 5
     showNewCat = function(player, def, page)
         page = page or 1
+        if not requirePath(player, def.key) then
+            showForgeRoot(player)
+            return
+        end
         if def.key == 'relic' and page == 1 then
             player:printToPlayer(
                 '[Weapon Forge] Relic 119 II->III accepts either 500 hundred-tier Dynamis currency '
@@ -885,6 +921,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local function issueAeonicBase(player, chain)
         local S = xi.msg.channel.SYSTEM_3
         local cost = catalog.aeonicBase
+        if not requirePath(player, 'aeonic') then return false end
         if not checkGate(player, 'aeonic', 0) then return false end
 
         local rank = math.max(1, player:getCharVar('HL_Tier'))
@@ -957,6 +994,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     end
 
     showAeonicCategory = function(player, page)
+        if not requirePath(player, 'aeonic') then
+            showForgeRoot(player)
+            return
+        end
         page = page or 1
         local pages = math.ceil(#catalog.chains / CAT_PAGE)
         page = math.max(1, math.min(page, pages))
@@ -982,24 +1023,23 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     end
 
     showForgeRoot = function(player)
-        local opts = {
-            { 'Bag upgrades', function(p) showUpgrades(p) end },
-            { 'Pilgrimages', function(p)
-                if xi.legendaryPilgrimage and xi.legendaryPilgrimage.showForgeMenu then
-                    xi.legendaryPilgrimage.showForgeMenu(p, showForgeRoot)
-                else
-                    p:printToPlayer('[Weapon Forge] Pilgrimage service is temporarily unavailable.', xi.msg.channel.SYSTEM_3)
-                    showForgeRoot(p)
-                end
-            end },
-            { string.format('Aeonic (%d)', #catalog.chains),
-                function(p) showAeonicCategory(p, 1) end },
-        }
+        local opts = {}
         for _, def in ipairs(NEW_CATS) do
             local d = def
             opts[#opts + 1] = { string.format('%s (%d)', def.label, #def.chains),
                 function(p) showNewCat(p, d, 1) end }
         end
+        opts[#opts + 1] = { string.format('Aeonic (%d)', #catalog.chains),
+            function(p) showAeonicCategory(p, 1) end }
+        opts[#opts + 1] = { 'Bag upgrades', function(p) showUpgrades(p) end }
+        opts[#opts + 1] = { 'Pilgrimages', function(p)
+            if xi.legendaryPilgrimage and xi.legendaryPilgrimage.showForgeMenu then
+                xi.legendaryPilgrimage.showForgeMenu(p, showForgeRoot)
+            else
+                p:printToPlayer('[Weapon Forge] Pilgrimage service is temporarily unavailable.', xi.msg.channel.SYSTEM_3)
+                showForgeRoot(p)
+            end
+        end }
         opts[#opts + 1] = { 'Not today.', function() end }
         sendMenu(player, 'Weapon Forge', opts)
     end

@@ -51,11 +51,16 @@ local pilgrimageCatalog = require('modules/custom/lua/legendary_pilgrimage_catal
     local met, total = 0, 0
     player:printToPlayer('[Forge Gates] Progression toward every Weapon Forge stage gate:', SYS)
     for _, cat in ipairs(cats) do
+        local pathOpen = GATES.pathUnlocked(player, cat)
+        player:printToPlayer(string.format(
+            '  %s path [%s]%s',
+            label(cat),
+            pathOpen and '✓' or '✗',
+            pathOpen and '' or (' ' .. GATES.PATH_LOCKED_MSG)), SYS)
         local rows = GATES.STAGE_GATES[cat]
         if not rows or (rows[0] == nil and rows[1] == nil and rows[2] == nil) then
-            player:printToPlayer(string.format('  %s: no new gates (existing checks only).', label(cat)), SYS)
+            player:printToPlayer('    no extra stage gates (path lock + existing checks only).', SYS)
         else
-            player:printToPlayer(string.format('  %s', label(cat)), SYS)
             for i = 0, 2 do
                 local gate = rows[i]
                 if gate then
