@@ -3,6 +3,8 @@
 -- Spell ID: 1004 | Pool ID: 6004 (client menu: Excenmille (S))
 -- Seasonal spell 1003 R0s outside campaign DAT — this overlays Exc_S.
 -- Safe summon kit; retune NIN identity only after summon is stable.
+-- Do not renameEntity / printToPlayer as 'Matsui-P' — that name is the
+-- seasonal 1003 DAT string and R0s the client on the spawn packet.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -16,8 +18,6 @@ spellObject.onSpellCast = function(caster, target, spell)
 end
 
 spellObject.onMobSpawn = function(mob)
-    mob:renameEntity('Matsui-P', true)
-
     local master = mob:getMaster()
     local lvl = mob:getMainLvl()
     local upgraded = math.max(1, master:getCharVar('TrustUpgraded') or 1)
@@ -48,7 +48,7 @@ spellObject.onMobSpawn = function(mob)
 
     mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 2000)
 
-    master:printToPlayer('Matsui-P reporting. Try to keep up.', xi.msg.channel.PARTY, 'Matsui-P')
+    master:printToPlayer('Matsui-P reporting. Try to keep up.', xi.msg.channel.PARTY, 'Excenmille_S')
 end
 
 spellObject.onMobDespawn = function(mob)
