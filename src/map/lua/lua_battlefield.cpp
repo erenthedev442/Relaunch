@@ -143,6 +143,12 @@ sol::table CLuaBattlefield::getMobs(bool required, bool adds)
         m_PLuaBattlefield->ForEachRequiredEnemy(
         [&](CMobEntity* PMob)
         {
+            // Win/loot Lua (HTBF TH scan) can run after a mob was already
+            // destroyed. Do not hand Lua a wrapper around a freed pointer.
+            if (!CBaseEntity::IsEntityAlive(PMob))
+            {
+                return;
+            }
             table.add(CLuaBaseEntity(PMob));
         });
         // clang-format on
@@ -154,6 +160,10 @@ sol::table CLuaBattlefield::getMobs(bool required, bool adds)
         m_PLuaBattlefield->ForEachAdditionalEnemy(
         [&](CMobEntity* PMob)
         {
+            if (!CBaseEntity::IsEntityAlive(PMob))
+            {
+                return;
+            }
             table.add(CLuaBaseEntity(PMob));
         });
         // clang-format on

@@ -12263,6 +12263,10 @@ uint16 CLuaBaseEntity::copyConfrontationEffect(uint16 targetID)
 
 auto CLuaBaseEntity::getBattlefield() const -> CBattlefield*
 {
+    // Timers/closures (HTBF win warp, leave hooks) keep this wrapper after
+    // logout/zone/cleanup. Unguarded deref is a live ACCESS_VIOLATION.
+    FJB_REQUIRE_ALIVE(nullptr);
+
     return m_PBaseEntity->PBattlefield;
 }
 
@@ -12275,6 +12279,8 @@ auto CLuaBaseEntity::getBattlefield() const -> CBattlefield*
 
 auto CLuaBaseEntity::getBattlefieldID() const -> int32
 {
+    FJB_REQUIRE_ALIVE(-1);
+
     return m_PBaseEntity->PBattlefield ? m_PBaseEntity->PBattlefield->GetID() : -1;
 }
 
@@ -12428,6 +12434,8 @@ auto CLuaBaseEntity::enterBattlefield(const sol::object& area) const -> bool
 
 auto CLuaBaseEntity::leaveBattlefield(const uint8 leavecode) const -> bool
 {
+    FJB_REQUIRE_ALIVE(false);
+
     if (m_PBaseEntity->loc.zone == nullptr)
     {
         ShowError("CLuaBaseEntity::leaveBattlefield() - loc.zone was null for %s", m_PBaseEntity->getName());
@@ -12452,6 +12460,8 @@ auto CLuaBaseEntity::leaveBattlefield(const uint8 leavecode) const -> bool
 
 auto CLuaBaseEntity::isInDynamis() const -> bool
 {
+    FJB_REQUIRE_ALIVE(false);
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
@@ -12470,6 +12480,8 @@ auto CLuaBaseEntity::isInDynamis() const -> bool
 
 void CLuaBaseEntity::setEnteredBattlefield(const bool entered) const
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
@@ -12492,6 +12504,8 @@ void CLuaBaseEntity::setEnteredBattlefield(const bool entered) const
 
 auto CLuaBaseEntity::hasEnteredBattlefield() const -> bool
 {
+    FJB_REQUIRE_ALIVE(false);
+
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
@@ -19498,6 +19512,8 @@ bool CLuaBaseEntity::itemDespoiled()
 
 int16 CLuaBaseEntity::getTHlevel()
 {
+    FJB_REQUIRE_ALIVE(0);
+
     if (m_PBaseEntity->objtype == TYPE_MOB)
     {
         CMobEntity* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
