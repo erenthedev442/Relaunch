@@ -1,861 +1,575 @@
-﻿Collaborator review  2026-08-31 07:04:14
-Range: HEAD..origin/relaunch  (1 collaborator commit(s))
+﻿Collaborator review  2026-08-31 12:23:08
+Range: HEAD..origin/relaunch  (2 collaborator commit(s))
 
 ==============================================================================
-commit 322fc4ba807aa92d2d151f03736d1a9ae12be581
+commit 2c3a6c142d969e1f430043332644d72555acb57f
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Mon Aug 31 15:03:01 2026 +0100
+Date:   Mon Aug 31 20:17:31 2026 +0100
 
-    feat(relaunch): give Epeolatry and Idris a four-step mythic ladder
+    fix(relaunch): skip Lua battlefield calls on dead entities
     
-    Unused IDs 19968-19971 become 99 and 119 I so pilgrimage chapters bind to the right stage instead of the finished 119.
+    Timers and win/leave hooks were touching freed players or mobs, which crashed xi_map with ACCESS_VIOLATION (lua_checkstack / 08F33F7).
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/Custom DATs/Relaunch Custom DATs/Windower/addons/relaunch/relaunch.lua b/Custom DATs/Relaunch Custom DATs/Windower/addons/relaunch/relaunch.lua
-index 9fd340d853..7023ec845a 100644
---- a/Custom DATs/Relaunch Custom DATs/Windower/addons/relaunch/relaunch.lua	
-+++ b/Custom DATs/Relaunch Custom DATs/Windower/addons/relaunch/relaunch.lua	
-@@ -50,6 +50,10 @@ local INSERTS = {
-     [23876] = { donor = 23859, name = 'Track Pants'    },  -- Legs (donor: Arrogance Brais)
-     [23877] = { donor = 23831, name = 'Track Shoes'    },  -- Feet (donor: Emerald Crackows)
-     [23878] = { donor = 24213, name = 'Legend Sweater' },  -- Body sweater (donor: Arrogance Jacket)
-+    [19968] = { donor = 20753, name = 'Epeolatry'      },  -- 99
-+    [19969] = { donor = 20753, name = 'Epeolatry'      },  -- 119 I
-+    [19970] = { donor = 21070, name = 'Idris'          },  -- 99
-+    [19971] = { donor = 21070, name = 'Idris'          },  -- 119 I
+diff --git a/src/map/lua/lua_baseentity.cpp b/src/map/lua/lua_baseentity.cpp
+index aae0d57a6b..9bd6ba22db 100644
+--- a/src/map/lua/lua_baseentity.cpp
++++ b/src/map/lua/lua_baseentity.cpp
+@@ -12263,6 +12263,10 @@ uint16 CLuaBaseEntity::copyConfrontationEffect(uint16 targetID)
+ 
+ auto CLuaBaseEntity::getBattlefield() const -> CBattlefield*
+ {
++    // Timers/closures (HTBF win warp, leave hooks) keep this wrapper after
++    // logout/zone/cleanup. Unguarded deref is a live ACCESS_VIOLATION.
++    FJB_REQUIRE_ALIVE(nullptr);
++
+     return m_PBaseEntity->PBattlefield;
  }
  
- local applied = { rename = 0, insert = 0, skipped = 0 }
-diff --git a/modules/custom/commands/forgegates.lua b/modules/custom/commands/forgegates.lua
-index 9b02cedd16..8bb406f847 100644
---- a/modules/custom/commands/forgegates.lua
-+++ b/modules/custom/commands/forgegates.lua
-@@ -51,11 +51,16 @@ local pilgrimageCatalog = require('modules/custom/lua/legendary_pilgrimage_catal
-     local met, total = 0, 0
-     player:printToPlayer('[Forge Gates] Progression toward every Weapon Forge stage gate:', SYS)
-     for _, cat in ipairs(cats) do
-+        local pathOpen = GATES.pathUnlocked(player, cat)
-+        player:printToPlayer(string.format(
-+            '  %s path [%s]%s',
-+            label(cat),
-+            pathOpen and 'Γ£ô' or 'Γ£ù',
-+            pathOpen and '' or (' ' .. GATES.PATH_LOCKED_MSG)), SYS)
-         local rows = GATES.STAGE_GATES[cat]
-         if not rows or (rows[0] == nil and rows[1] == nil and rows[2] == nil) then
--            player:printToPlayer(string.format('  %s: no new gates (existing checks only).', label(cat)), SYS)
-+            player:printToPlayer('    no extra stage gates (path lock + existing checks only).', SYS)
-         else
--            player:printToPlayer(string.format('  %s', label(cat)), SYS)
-             for i = 0, 2 do
-                 local gate = rows[i]
-                 if gate then
-diff --git a/modules/custom/lua/WeaponForge_NPC.lua b/modules/custom/lua/WeaponForge_NPC.lua
-index e696fa2ff0..e6742be91b 100644
---- a/modules/custom/lua/WeaponForge_NPC.lua
-+++ b/modules/custom/lua/WeaponForge_NPC.lua
-@@ -126,6 +126,14 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-         return false
-     end
+@@ -12275,6 +12279,8 @@ auto CLuaBaseEntity::getBattlefield() const -> CBattlefield*
  
-+    local function requirePath(player, category)
-+        if GATES.pathUnlocked(player, category) then
-+            return true
-+        end
-+        player:printToPlayer('[Weapon Forge] ' .. GATES.PATH_LOCKED_MSG, xi.msg.channel.SYSTEM_3)
-+        return false
-+    end
+ auto CLuaBaseEntity::getBattlefieldID() const -> int32
+ {
++    FJB_REQUIRE_ALIVE(-1);
 +
-     local function checkPilgrimage(player, finalId, throughChapter)
-         local entry = pilgrimage.byFinalId[finalId]
-         if not entry then
-@@ -162,6 +170,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-         -- Owner spec 2026-07-13: new progression gates enforced BEFORE any
-         -- inventory / currency / mark inspection so a locked player never
-         -- sees "you have 24 of 25 marks" -- they see the actual blocker.
-+        if not requirePath(player, 'aeonic') then return false end
-         if not checkGate(player, 'aeonic', fromStage, chain) then return false end
-         if not checkPilgrimage(player, chain.aeonic.s3.id, fromStage + 1) then return false end
-         local ae       = chain.aeonic
-@@ -263,6 +272,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-         -- checked explicitly so this route always enforces Aeonic completion.
-         -- STAGE_GATES.prime[2] additionally enforces Ragnarok before the final
-         -- upgrade, then the existing HL_Tier + all-trials + gil checks run.
-+        if not requirePath(player, 'prime') then return false end
-         if not checkGate(player, 'prime', 0) then return false end
-         if not checkGate(player, 'prime', fromStage) then return false end
-         if fromStage == 2 then
-@@ -583,9 +593,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-     local FM       = catalog.forgeMats
-     local NEW_CATS =
+     return m_PBaseEntity->PBattlefield ? m_PBaseEntity->PBattlefield->GetID() : -1;
+ }
+ 
+@@ -12428,6 +12434,8 @@ auto CLuaBaseEntity::enterBattlefield(const sol::object& area) const -> bool
+ 
+ auto CLuaBaseEntity::leaveBattlefield(const uint8 leavecode) const -> bool
+ {
++    FJB_REQUIRE_ALIVE(false);
++
+     if (m_PBaseEntity->loc.zone == nullptr)
      {
-+        { key = 'relic',    label = 'Relic',    chains = catalog.relicChains,    costs = catalog.relicCosts,    base = catalog.relicBase    },
-         { key = 'empyrean', label = 'Empyrean', chains = catalog.empyreanChains, costs = catalog.empyreanCosts, base = catalog.empyreanBase },
-         { key = 'mythic',   label = 'Mythic',   chains = catalog.mythicChains,   costs = catalog.mythicCosts,   base = catalog.mythicBase   },
--        { key = 'relic',    label = 'Relic',    chains = catalog.relicChains,    costs = catalog.relicCosts,    base = catalog.relicBase    },
-     }
-     local STAGE_LBL = { [0] = 'not started', [1] = 'base', [2] = '119 I', [3] = '119 II', [4] = '119 III (complete)' }
-     local showForgeRoot  -- forward decl (assigned below; referenced by showNewCat)
-@@ -670,12 +680,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-     end
+         ShowError("CLuaBaseEntity::leaveBattlefield() - loc.zone was null for %s", m_PBaseEntity->getName());
+@@ -12452,6 +12460,8 @@ auto CLuaBaseEntity::leaveBattlefield(const uint8 leavecode) const -> bool
  
-     -- Held stage: 0 none, 1 base, 2 s1(119I), 3 s2(119II), 4 s3(119III/done).
-+    -- singleStep Ergon chains are resolved in catalog.heldStage so the shared
-+    -- starter id cannot report as 119 II.
-     local function heldStage(player, chain)
--        if player:getItemCount(chain.s3) > 0 then return 4 end
--        if player:getItemCount(chain.s2) > 0 then return 3 end
--        if player:getItemCount(chain.s1) > 0 then return 2 end
--        if player:getItemCount(chain.base) > 0 then return 1 end
--        return 0
-+        return catalog.heldStage(player, chain)
-+    end
+ auto CLuaBaseEntity::isInDynamis() const -> bool
+ {
++    FJB_REQUIRE_ALIVE(false);
 +
-+    local function nextStageLabel(chain, k)
-+        if chain.singleStep and k >= 1 then
-+            return STAGE_LBL[4]
-+        end
-+        return STAGE_LBL[k + 1]
+     if (m_PBaseEntity->objtype == TYPE_NPC)
+     {
+         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
+@@ -12470,6 +12480,8 @@ auto CLuaBaseEntity::isInDynamis() const -> bool
+ 
+ void CLuaBaseEntity::setEnteredBattlefield(const bool entered) const
+ {
++    FJB_REQUIRE_ALIVE_VOID();
++
+     if (m_PBaseEntity->objtype != TYPE_PC)
+     {
+         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
+@@ -12492,6 +12504,8 @@ void CLuaBaseEntity::setEnteredBattlefield(const bool entered) const
+ 
+ auto CLuaBaseEntity::hasEnteredBattlefield() const -> bool
+ {
++    FJB_REQUIRE_ALIVE(false);
++
+     if (m_PBaseEntity->objtype != TYPE_PC)
+     {
+         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
+@@ -19498,6 +19512,8 @@ bool CLuaBaseEntity::itemDespoiled()
+ 
+ int16 CLuaBaseEntity::getTHlevel()
+ {
++    FJB_REQUIRE_ALIVE(0);
++
+     if (m_PBaseEntity->objtype == TYPE_MOB)
+     {
+         CMobEntity* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
+diff --git a/src/map/lua/lua_battlefield.cpp b/src/map/lua/lua_battlefield.cpp
+index 5f8d56edb1..ad773de944 100644
+--- a/src/map/lua/lua_battlefield.cpp
++++ b/src/map/lua/lua_battlefield.cpp
+@@ -143,6 +143,12 @@ sol::table CLuaBattlefield::getMobs(bool required, bool adds)
+         m_PLuaBattlefield->ForEachRequiredEnemy(
+         [&](CMobEntity* PMob)
+         {
++            // Win/loot Lua (HTBF TH scan) can run after a mob was already
++            // destroyed. Do not hand Lua a wrapper around a freed pointer.
++            if (!CBaseEntity::IsEntityAlive(PMob))
++            {
++                return;
++            }
+             table.add(CLuaBaseEntity(PMob));
+         });
+         // clang-format on
+@@ -154,6 +160,10 @@ sol::table CLuaBattlefield::getMobs(bool required, bool adds)
+         m_PLuaBattlefield->ForEachAdditionalEnemy(
+         [&](CMobEntity* PMob)
+         {
++            if (!CBaseEntity::IsEntityAlive(PMob))
++            {
++                return;
++            }
+             table.add(CLuaBaseEntity(PMob));
+         });
+         // clang-format on
+==============================================================================
+commit 5aa7e2ee4ce3e40a035a0d1fdb4f5a417498aede
+Author: Sion Roberts <siondewiroberts@gmail.com>
+Date:   Mon Aug 31 20:20:27 2026 +0100
+
+    fix(relaunch): restore HTBF loot, correct Epeo/Idris, unstick deploy fetch
+    
+    Win rewards used a nil self and skipped loot plus the hub warp. Epeolatry is RUN-only with a real 119 I step; GEO+10 stays on Idris 119 III. Deploy fails instead of hanging on a GitHub password prompt. Casino menus unlock when they land. VPS crash-report helper added.
+    
+    Co-authored-by: Cursor <cursoragent@cursor.com>
+
+diff --git a/deploy-relaunch.ps1 b/deploy-relaunch.ps1
+index 4092445f4c..827ab4074e 100644
+--- a/deploy-relaunch.ps1
++++ b/deploy-relaunch.ps1
+@@ -33,6 +33,9 @@
+ # vps-rebuild just pushed), so it publishes even if the build fell back.
+ # =====================================================================
+ $ErrorActionPreference = 'Continue'
++# Never hang deploy on "Username for https://github.com". A failed fetch is
++# reported below; GCM must not block waiting for a password box.
++$env:GIT_TERMINAL_PROMPT = '0'
+ $root     = 'C:\server'
+ $rebuild  = Join-Path $root 'vps-rebuild.ps1'
+ $docsTask = 'Relaunch-DocsRefresh'
+@@ -64,12 +67,19 @@ Say '============================================================' 'Cyan'
+ $MyEmails   = @('rknutz@gmail.com','richardknutzjr@hotmail.com')
+ $reviewFile = Join-Path $root 'deploy-collab-review.txt'
+ try {
+-    git -C $root fetch origin relaunch --quiet 2>$null
++    $fetchOut = git -C $root fetch origin relaunch 2>&1
++    $fetchOk  = ($LASTEXITCODE -eq 0)
+     $US = [char]0x1f
++    if (-not $fetchOk) {
++        Say '  Incoming: GitHub fetch FAILED -- cannot see new commits (not an empty branch).' 'Yellow'
++        $errLine = @($fetchOut | ForEach-Object { "$_" } | Where-Object { $_.Trim() } | Select-Object -First 2)
++        if ($errLine) { Say ('  ' + ($errLine -join ' | ')) 'DarkYellow' }
++        Say '  Store a ghp_ PAT for richardknutzjr (Password box, not the website login) or switch origin to SSH.' 'DarkYellow'
++    }
+     $incoming = @(git -C $root log 'HEAD..origin/relaunch' --format='%ae' 2>$null)
+-    if (-not $incoming -or $incoming.Count -eq 0) {
+-        Say '  Incoming: nothing new since your live code (or offline -- fetch skipped).' 'Gray'
+-    } else {
++    if ($fetchOk -and (-not $incoming -or $incoming.Count -eq 0)) {
++        Say '  Incoming: nothing new. Live already matches origin/relaunch.' 'Gray'
++    } elseif ($fetchOk) {
+         $mineCount  = @($incoming | Where-Object { $MyEmails -contains $_ }).Count
+         $otherCount = $incoming.Count - $mineCount
+         Say ('  Incoming this deploy: {0} commit(s) -- {1} yours, {2} from other collaborators.' -f $incoming.Count, $mineCount, $otherCount) 'Cyan'
+diff --git a/modules/custom/lua/Casino.lua b/modules/custom/lua/Casino.lua
+index 8db5041842..e111d787a6 100644
+--- a/modules/custom/lua/Casino.lua
++++ b/modules/custom/lua/Casino.lua
+@@ -58,9 +58,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
+     -- The menu round-trips title + the clicked label through a 128-byte buffer
+     -- (client matches the full string on click) -- keep labels short or a click
+     -- silently no-ops. Send is deferred a tick so result messages land first.
++    -- Lift the in-flight guard HERE (when the menu actually lands), not in
++    -- settle. Slots already cleared it via openBets; High-Low / Roulette /
++    -- Dice re-show their pick screen without openBets, so a leftover lock
++    -- made the next click a silent no-op.
+     local function show(player)
+         local snap = { title = menu.title, options = menu.options }
+-        player:timer(30, function(p) p:customMenu(snap) end)
++        local pid  = player:getID()
++        player:timer(30, function(p)
++            betting[pid] = nil
++            p:customMenu(snap)
++        end)
      end
  
-     local function doNewForge(player, def, chain)
-@@ -685,6 +700,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-             player:printToPlayer(string.format('[Weapon Forge] Your %s is already fully forged, kupo!', chain.name), S)
-             return
+     local function header(player)
+@@ -72,6 +80,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
+     local function takeBet(player, bet)
+         local pid = player:getID()
+         if betting[pid] then
++            player:printToPlayer('[Casino] Easy -- wait for the next hand.', S)
+             return false
          end
-+        if k == 0 and not requirePath(player, def.key) then
-+            return
-+        end
-         -- Owner spec 2026-07-13. NEW_CATS held-stage indexing:
-         --   k=0 -> issue base (no widget gate; the widget starts at "Base")
-         --   k=1 -> base -> 119 I  == widget "Base -> Stage I"      -> STAGE_GATES[0]
-@@ -699,6 +717,13 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
+         if player:getGil() < bet then
+diff --git a/modules/custom/lua/htbf.lua b/modules/custom/lua/htbf.lua
+index 4cc6233c10..994ca25be6 100644
+--- a/modules/custom/lua/htbf.lua
++++ b/modules/custom/lua/htbf.lua
+@@ -832,30 +832,26 @@ function htbf.register(fightKey, tier, variant)
+             player:setCharVar(firstClearCv, 1)
          end
-         local fromId, toId, step
-         if k == 0 then
-+            -- Epeolatry / Idris have no 99-base item ID. Do not issue the 119.
-+            if chain.issueBase == false then
-+                player:printToPlayer(string.format(
-+                    '[Weapon Forge] %s has no 99-base item. The forge will not issue the 119 as a starter.',
-+                    chain.name), S)
+         catalog.progress.recordClear(player, tier, isFinalTest)
+-        -- Item loot. HTBF fights use a custom battlefieldId with NO C++ retail
+-        -- treasure, and the reuse-base fights end their win in varied ways (most
+-        -- on a bare setStatus(WON) that never opens an Armoury Crate), so the
+-        -- stock crate -> handleLootRolls path drops nothing. Roll content.loot
+-        -- HERE -- the one hook that reliably fires on every fight's win (it's
+-        -- where gil/marks already land) -- and give the items straight to the
+-        -- player, per completion. Optional gear groups use independent,
+-        -- tier-scaled rolls with Treasure Hunter; guaranteed weighted groups
+-        -- retain the stock selectFromLootGroups behavior.
++        -- Item loot. grantWinRewards is a local function, not a colon method --
++        -- never use `self` here (that was a nil global and aborted the hub warp).
++        -- HTBF IDs have no C++ retail treasure; reuse-base wins often skip the
++        -- Armoury Crate. Roll content.loot on this hook so every clear pays.
+         local looted = 0
+-        if self.loot then
+-            pcall(function()
+-                local thLevel = getBattlefieldTreasureHunter(player, bf)
+-                for _, entry in ipairs(selectTierLoot(player, self.loot, tier, thLevel)) do
+-                    if entry.itemId and entry.itemId ~= 0 then
+-                        if entry.itemId == xi.item.GIL then
+-                            player:addGil(entry.amount or 0)
+-                        elseif npcUtil.giveItem(player, {{ entry.itemId, entry.amount or 1 }}) then
+-                            looted = looted + 1
+-                        end
++        pcall(function()
++            if not content.loot then
 +                return
 +            end
-             step, toId = def.base, chain.base          -- issue the base weapon
-         elseif chain.singleStep then
-             -- Retail 2-step mythics (Epeolatry, Idris): the DB only has base +
-@@ -769,7 +794,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-         end
-         -- RARE pre-check before anything is consumed.
-         if player:hasItem(toId) then
--            player:printToPlayer(string.format('[Weapon Forge] You already hold the %s stage ΓÇö it is RARE, so a second cannot be forged.', STAGE_LBL[k + 1]), S)
-+            player:printToPlayer(string.format('[Weapon Forge] You already hold the %s stage ΓÇö it is RARE, so a second cannot be forged.', nextStageLabel(chain, k)), S)
-             return
-         end
-         for _, req in ipairs(reqs) do req.take(player) end
-@@ -779,12 +804,11 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-             player:printToPlayer('[Weapon Forge] ERROR: the forge consumed your materials but could not hand over the weapon ΓÇö contact a GM with this message.', S)
-             return
-         end
--        player:printToPlayer(string.format('[Weapon Forge] Your %s advances to %s!', chain.name, STAGE_LBL[k + 1]), S)
--        -- Stage III (final Empyrean / Mythic / Relic) completion flag. Read by
--        -- the Prime Stage I preflight; `def.key` is one of 'empyrean',
--        -- 'mythic', 'relic'. STAGE_LBL[4] = '119 III (complete)' so k+1 == 4
--        -- is the final stage.
--        if k + 1 == 4 and def and def.key then
-+        player:printToPlayer(string.format('[Weapon Forge] Your %s advances to %s!', chain.name, nextStageLabel(chain, k)), S)
-+        -- Final Empyrean / Mythic / Relic completion flag. Read by the Prime
-+        -- Stage I preflight. singleStep Ergon jumps base -> 119 III while
-+        -- held-stage is still 1, so key off the item handed over, not k+1.
-+        if toId == chain.s3 and def and def.key then
-             player:setCharVar('WF_' .. def.key:sub(1,1):upper() .. def.key:sub(2) .. '_Final', 1)
-         end
-     end
-@@ -794,6 +818,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-         local k = heldStage(player, chain)
-         player:printToPlayer(string.format('[%s] %s (%s) -- you hold: %s', def.label, chain.name, chain.jobs, STAGE_LBL[k]), S)
-         if k == 4 then return end
-+        if k == 0 and chain.issueBase == false then
-+            player:printToPlayer(string.format(
-+                '  No 99-base ID exists for %s. Bring the 119 to forge 119 III (combined mythic cost + pilgrimage).',
-+                chain.name), S)
-+            return
-+        end
-         -- singleStep chains (Epeolatry, Idris): quote the combined cost + label
-         -- the target as "119 III" directly rather than the intermediate stages
-         -- that don't exist for these two weapons.
-@@ -823,8 +853,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-         printNewRecipe(player, def, chain)
-         local opts = {}
-         if k < 4 then
--            local verb = (k == 0) and ('Obtain base ' .. chain.name) or ('Forge -> ' .. STAGE_LBL[k + 1])
--            opts[#opts + 1] = { verb, function(p) doNewForge(p, def, chain); showNewWeapon(p, def, chain) end }
-+            if not (k == 0 and chain.issueBase == false) then
-+                local verb = (k == 0) and ('Obtain base ' .. chain.name) or ('Forge -> ' .. nextStageLabel(chain, k))
-+                opts[#opts + 1] = { verb, function(p) doNewForge(p, def, chain); showNewWeapon(p, def, chain) end }
++            local thLevel = getBattlefieldTreasureHunter(player, bf)
++            for _, entry in ipairs(selectTierLoot(player, content.loot, tier, thLevel)) do
++                if entry.itemId and entry.itemId ~= 0 then
++                    if entry.itemId == xi.item.GIL then
++                        player:addGil(entry.amount or 0)
++                    elseif npcUtil.giveItem(player, {{ entry.itemId, entry.amount or 1 }}) then
++                        looted = looted + 1
+                     end
+                 end
+-            end)
+-        end
 +            end
-         end
-         opts[#opts + 1] = { 'Show recipe again', function(p) printNewRecipe(p, def, chain); showNewWeapon(p, def, chain) end }
-         opts[#opts + 1] = { 'Back', function(p) showNewCat(p, def, 1) end }
-@@ -839,6 +871,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-     local CAT_PAGE = 5
-     showNewCat = function(player, def, page)
-         page = page or 1
-+        if not requirePath(player, def.key) then
-+            showForgeRoot(player)
-+            return
-+        end
-         if def.key == 'relic' and page == 1 then
-             player:printToPlayer(
-                 '[Weapon Forge] Relic 119 II->III accepts either 500 hundred-tier Dynamis currency '
-@@ -885,6 +921,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-     local function issueAeonicBase(player, chain)
-         local S = xi.msg.channel.SYSTEM_3
-         local cost = catalog.aeonicBase
-+        if not requirePath(player, 'aeonic') then return false end
-         if not checkGate(player, 'aeonic', 0) then return false end
- 
-         local rank = math.max(1, player:getCharVar('HL_Tier'))
-@@ -957,6 +994,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
++        end)
+         pcall(function()
+             if isFinalTest then
+                 player:printToPlayer(
+@@ -876,7 +872,7 @@ function htbf.register(fightKey, tier, variant)
+     -- first, then leave the instance and return to the hub after a short win
+     -- window instead of starting the unavailable client event.
+     function content:onBattlefieldWin(player, battlefield)
+-        grantWinRewards(player)
++        pcall(grantWinRewards, player)
+         player:timer(2500, function(p)
+             if p:getBattlefield() then
+                 p:leaveBattlefield(1)
+@@ -893,7 +889,7 @@ function htbf.register(fightKey, tier, variant)
+     -- finish callback. The battlefield-scoped latch in grantWinRewards keeps
+     -- a reward from being paid twice.
+     function content:onEventFinishWin(player, csid, option, npc)
+-        grantWinRewards(player)
++        pcall(grantWinRewards, player)
      end
  
-     showAeonicCategory = function(player, page)
-+        if not requirePath(player, 'aeonic') then
-+            showForgeRoot(player)
-+            return
-+        end
-         page = page or 1
-         local pages = math.ceil(#catalog.chains / CAT_PAGE)
-         page = math.max(1, math.min(page, pages))
-@@ -982,24 +1023,23 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-     end
- 
-     showForgeRoot = function(player)
--        local opts = {
--            { 'Bag upgrades', function(p) showUpgrades(p) end },
--            { 'Pilgrimages', function(p)
--                if xi.legendaryPilgrimage and xi.legendaryPilgrimage.showForgeMenu then
--                    xi.legendaryPilgrimage.showForgeMenu(p, showForgeRoot)
--                else
--                    p:printToPlayer('[Weapon Forge] Pilgrimage service is temporarily unavailable.', xi.msg.channel.SYSTEM_3)
--                    showForgeRoot(p)
--                end
--            end },
--            { string.format('Aeonic (%d)', #catalog.chains),
--                function(p) showAeonicCategory(p, 1) end },
--        }
-+        local opts = {}
-         for _, def in ipairs(NEW_CATS) do
-             local d = def
-             opts[#opts + 1] = { string.format('%s (%d)', def.label, #def.chains),
-                 function(p) showNewCat(p, d, 1) end }
-         end
-+        opts[#opts + 1] = { string.format('Aeonic (%d)', #catalog.chains),
-+            function(p) showAeonicCategory(p, 1) end }
-+        opts[#opts + 1] = { 'Bag upgrades', function(p) showUpgrades(p) end }
-+        opts[#opts + 1] = { 'Pilgrimages', function(p)
-+            if xi.legendaryPilgrimage and xi.legendaryPilgrimage.showForgeMenu then
-+                xi.legendaryPilgrimage.showForgeMenu(p, showForgeRoot)
-+            else
-+                p:printToPlayer('[Weapon Forge] Pilgrimage service is temporarily unavailable.', xi.msg.channel.SYSTEM_3)
-+                showForgeRoot(p)
-+            end
-+        end }
-         opts[#opts + 1] = { 'Not today.', function() end }
-         sendMenu(player, 'Weapon Forge', opts)
-     end
-diff --git a/modules/custom/lua/invasion_loot_pool.lua b/modules/custom/lua/invasion_loot_pool.lua
-index f5befd3104..06c57cabce 100644
---- a/modules/custom/lua/invasion_loot_pool.lua
-+++ b/modules/custom/lua/invasion_loot_pool.lua
-@@ -479,7 +479,7 @@ return {
-     19890, 19891, 19892, 19893, 19894, 19895, 19896, 19897, 19898, 19899, 19900, 19901, 19902, 19903, 19904, 19905, 19906, 19907, 19908, 19909,
-     19910, 19911, 19912, 19913, 19914, 19915, 19916, 19917, 19918, 19919, 19920, 19921, 19922, 19923, 19924, 19925, 19926, 19927, 19928, 19929,
-     19930, 19931, 19932, 19933, 19934, 19935, 19936, 19937, 19938, 19939, 19940, 19941, 19942, 19943, 19944, 19945, 19946, 19947, 19948, 19949,
--    19950, 19951, 19952, 19953, 19954, 19955, 19956, 19957, 19958, 19959, 19960, 19961, 19962, 19963, 19964, 19965, 19966, 19967, 20480, 20481,
-+    19950, 19951, 19952, 19953, 19954, 19955, 19956, 19957, 19958, 19959, 19960, 19961, 19962, 19963, 19964, 19965, 19966, 19967, 20480, 20481,  -- 19968-19971 (Epeo/Idris 99 + 119 I) excluded: custom forge starters, not loot
-     20482, 20483, 20484, 20485, 20486, 20487, 20505, 20506, 20507, 20508, 20509, 20510, 20511, 20512, 20514, 20515, 20516, 20517, 20518, 20519,
-     20520, 20521, 20522, 20523, 20524, 20525, 20526, 20527, 20528, 20529, 20530, 20531, 20532, 20533, 20534, 20535, 20536, 20537, 20538, 20539,
-     20540, 20541, 20542, 20543, 20544, 20545, 20546, 20547, 20548, 20549, 20550, 20551, 20552, 20553, 20554, 20555, 20556, 20557, 20558, 20559,
+     -- Armoury-crate loot. Priority: a fight's per-tier override (f.loot[tier]),
 diff --git a/modules/custom/lua/weapon_forge_catalog.lua b/modules/custom/lua/weapon_forge_catalog.lua
-index de23e50ad9..10bcd3b7ec 100644
+index 10bcd3b7ec..b53d94613a 100644
 --- a/modules/custom/lua/weapon_forge_catalog.lua
 +++ b/modules/custom/lua/weapon_forge_catalog.lua
-@@ -384,20 +384,15 @@ catalog.mythicChains =
-     { type = 'Staff', jobs = 'SCH', name = 'Tupsimati', base = 19838, s1 = 21137, s2 = 21138, s3 = 22061 },
+@@ -385,8 +385,9 @@ catalog.mythicChains =
      { type = 'Archery', jobs = 'RNG', name = 'Gastraphetes', base = 19829, s1 = 21247, s2 = 21266, s3 = 22139 },
      { type = 'Marksmanship', jobs = 'COR', name = 'Death Penalty', base = 19835, s1 = 21263, s2 = 21268, s3 = 22141 },
--    -- Owner call 2026-07-13: promote Epeolatry (GS/WAR-DRK) and Idris (Club/GEO)
--    -- into the Mythic category. Retail these are 2-step upgrades (base -> 119 III
--    -- direct, no +1/+2 stages), and the DB only carries 2 item IDs each. Marked
--    -- singleStep so WeaponForge_NPC skips the missing intermediates and charges
--    -- the SUM of all three mythic tier costs in one payment (see mythicCostsSum
--    -- below). s1/s2 duplicate the base id so the stage-detection loop still
--    -- reports "has base = ready to forge" without special-casing every helper.
--    { type = 'Great Sword', jobs = 'WAR/DRK', name = 'Epeolatry', base = 20753, s1 = 20753, s2 = 20753, s3 = 21685, singleStep = true },
--    { type = 'Club',        jobs = 'GEO',     name = 'Idris',     base = 21070, s1 = 21070, s2 = 21070, s3 = 21080, singleStep = true },
-+    -- Custom 99 / 119 I IDs in the unused 19968-20479 hole. Client DATs clone
-+    -- looks from 20753 / 21070. Same three mythicCosts steps as Conqueror.
-+    { type = 'Great Sword', jobs = 'WAR/DRK', name = 'Epeolatry', base = 19968, s1 = 19969, s2 = 20753, s3 = 21685 },
-+    { type = 'Club',        jobs = 'GEO',     name = 'Idris',     base = 19970, s1 = 19971, s2 = 21070, s3 = 21080 },
+     -- Custom 99 / 119 I IDs in the unused 19968-20479 hole. Client DATs clone
+-    -- looks from 20753 / 21070. Same three mythicCosts steps as Conqueror.
+-    { type = 'Great Sword', jobs = 'WAR/DRK', name = 'Epeolatry', base = 19968, s1 = 19969, s2 = 20753, s3 = 21685 },
++    -- looks from 20753 / 21070; 119 I damage sits below those 119 II donors.
++    -- Same three mythicCosts steps as Conqueror.
++    { type = 'Great Sword', jobs = 'RUN', name = 'Epeolatry', base = 19968, s1 = 19969, s2 = 20753, s3 = 21685 },
+     { type = 'Club',        jobs = 'GEO',     name = 'Idris',     base = 19970, s1 = 19971, s2 = 21070, s3 = 21080 },
  }
  
---- Combined single-step cost: SUM of all three mythicCosts entries. Used only by
---- singleStep chains (Epeolatry, Idris) so their total investment matches the
---- other mythics; only the ceremony changes (one big payment, not three).
-+-- Combined cost of all three mythicCosts entries. Kept for pilgrimage/forge
-+-- tests that assert total mythic investment. Live Epeo/Idris now use the
-+-- three-step mythicCosts table like every other mythic.
- catalog.mythicCostsSum =
- {
-     hlRank = 5,          -- highest gate wins
-@@ -446,6 +441,31 @@ for _, chain in ipairs(catalog.relicChains) do
- end
- 
- 
-+-- Held stage: 0 none, 1 base, 2 s1 (119 I), 3 s2 (119 II), 4 s3 (119 III).
-+-- singleStep Ergon chains reuse one item id for base/s1/s2. That id is the
-+-- attunement starter, not 119 II ΓÇö never collapse it to stage 3.
-+function catalog.heldStage(player, chain)
-+    if player:getItemCount(chain.s3) > 0 then
-+        return 4
-+    end
-+    if chain.singleStep then
-+        if player:getItemCount(chain.base) > 0 then
-+            return 1
-+        end
-+        return 0
-+    end
-+    if player:getItemCount(chain.s2) > 0 then
-+        return 3
-+    end
-+    if player:getItemCount(chain.s1) > 0 then
-+        return 2
-+    end
-+    if player:getItemCount(chain.base) > 0 then
-+        return 1
-+    end
-+    return 0
-+end
-+
- -- ===================================================================
- -- LOOKUP TABLES (keyed by item id for fast inventory scanning)
- -- ===================================================================
-diff --git a/modules/custom/lua/weapon_forge_gates.lua b/modules/custom/lua/weapon_forge_gates.lua
-index 2522f6e52f..490d83feeb 100644
---- a/modules/custom/lua/weapon_forge_gates.lua
-+++ b/modules/custom/lua/weapon_forge_gates.lua
-@@ -17,11 +17,71 @@
- --   fromStage 2 = "Stage II -> Stage III" (about to enter Stage III)
- -----------------------------------
- local M = {}
-+local catalog = require('modules/custom/lua/weapon_forge_catalog')
- local abysseaProgress = require('modules/custom/lua/abyssea_marks_progress')
- local unityProgress = require('modules/custom/lua/unity_wanted_progress')
- local waveProgress = require('modules/custom/lua/game_master_progress')
- local aeonicMaat = require('modules/custom/lua/aeonic_maat_catalog')
- 
-+-- Shown when a player opens a family they have not unlocked yet.
-+-- Relic is the first path; Empyrean or Mythic after Relic; the other after
-+-- that first of the two is finished; Aeonic after both; Prime after Aeonic.
-+M.PATH_LOCKED_MSG = "You've got a long way to go before you're able to start this path!"
-+
-+local function hasFinal(player, family)
-+    return (player:getCharVar('WF_' .. family .. '_Final') or 0) == 1
-+end
-+
-+local function chainItemIds(chain)
-+    return { chain.base, chain.s1, chain.s2, chain.s3 }
-+end
-+
-+local function familyStarted(player, chains)
-+    if not player.getItemCount then
-+        return false
-+    end
-+    for _, chain in ipairs(chains) do
-+        for _, itemId in ipairs(chainItemIds(chain)) do
-+            if itemId and itemId > 0 and player:getItemCount(itemId) > 0 then
-+                return true
-+            end
-+        end
-+    end
-+    return false
-+end
-+
-+-- True when this family is already complete or the player is allowed to
-+-- obtain its starter. Stage gates (Unity, Nyzul, rebirth, ΓÇª) still apply.
-+function M.pathUnlocked(player, category)
-+    if category == 'relic' then
-+        return true
-+    end
-+    if category == 'empyrean' then
-+        if hasFinal(player, 'Empyrean') or familyStarted(player, catalog.empyreanChains) then
-+            return true
-+        end
-+        return hasFinal(player, 'Relic') and not familyStarted(player, catalog.mythicChains)
-+    end
-+    if category == 'mythic' then
-+        if hasFinal(player, 'Mythic') or familyStarted(player, catalog.mythicChains) then
-+            return true
-+        end
-+        return hasFinal(player, 'Relic') and not familyStarted(player, catalog.empyreanChains)
-+    end
-+    if category == 'aeonic' then
-+        if hasFinal(player, 'Aeonic') or (player:getCharVar('LWP_AeonicActive') or 0) > 0 then
-+            return true
-+        end
-+        return hasFinal(player, 'Relic')
-+            and hasFinal(player, 'Empyrean')
-+            and hasFinal(player, 'Mythic')
-+    end
-+    if category == 'prime' then
-+        return hasFinal(player, 'Aeonic')
-+    end
-+    return true
-+end
-+
- -- ΓöÇΓöÇ Reusable check closures (per-job scans and all-trials) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
- 
- local function anyRebirthCap50()
 diff --git a/modules/custom/sql/idris_exudation.sql b/modules/custom/sql/idris_exudation.sql
-index b22e87900f..e067193b3a 100644
+index e067193b3a..cc20d799ae 100644
 --- a/modules/custom/sql/idris_exudation.sql
 +++ b/modules/custom/sql/idris_exudation.sql
-@@ -1,5 +1,8 @@
- -- Idris / Exudation live-database repair.
- -- Idempotent so deploys can apply it to existing characters and fresh DBs.
-+--
-+-- GEO+10 (mod 961) is 119 III only. Lower Idris stages are owned by
-+-- zz_epeo_idris_ladder.sql.
- 
- INSERT INTO `weapon_skills`
-     VALUES (175,'exudation',0x00000000000000000000000000000000000000000000,11,0,0,91,2000,3,1,0,14,12,0,1,0)
-@@ -10,8 +13,6 @@ ON DUPLICATE KEY UPDATE
+@@ -12,6 +12,10 @@ ON DUPLICATE KEY UPDATE
+     `skilllevel` = VALUES(`skilllevel`),
      `animation` = VALUES(`animation`);
  
++-- Never leave GEO+10 on the lower Idris stages, even if item_mods.sql
++-- is re-applied after the ladder file.
++DELETE FROM `item_mods` WHERE `itemId` IN (19970, 19971, 21070) AND `modId` = 961;
++
  INSERT INTO `item_mods` VALUES
--    (21070,5,100),
--    (21070,961,10),
      (21080,5,100),
      (21080,28,40),
-     (21080,30,40),
 diff --git a/modules/custom/sql/zz_epeo_idris_ladder.sql b/modules/custom/sql/zz_epeo_idris_ladder.sql
-new file mode 100644
-index 0000000000..6031a9518b
---- /dev/null
+index 6031a9518b..05f60a7d24 100644
+--- a/modules/custom/sql/zz_epeo_idris_ladder.sql
 +++ b/modules/custom/sql/zz_epeo_idris_ladder.sql
-@@ -0,0 +1,81 @@
-+-- ============================================================================
-+-- zz_epeo_idris_ladder.sql
-+--
-+-- Real 99 / 119 I IDs for Epeolatry and Idris (empty retail hole 19968-19971).
-+-- Client DATs clone looks from 20753 / 21070. Server jobs match the forge:
-+-- Epeo WAR/DRK, Idris GEO.
-+--
-+-- Ladder:
-+--   Epeolatry  19968 (99) -> 19969 (119 I) -> 20753 (119) -> 21685 (119 III)
-+--   Idris      19970 (99) -> 19971 (119 I) -> 21070 (119) -> 21080 (119 III)
-+--
-+-- Native WS is on every stage so pilgrimage chapters work while equipped,
-+-- same as Conqueror / Yagrush. GEO+10 stays on Idris 119 III only.
-+-- Idempotent. Restart xi_map after apply (item tables are cached at boot).
-+-- ============================================================================
+@@ -3,7 +3,7 @@
+ --
+ -- Real 99 / 119 I IDs for Epeolatry and Idris (empty retail hole 19968-19971).
+ -- Client DATs clone looks from 20753 / 21070. Server jobs match the forge:
+--- Epeo WAR/DRK, Idris GEO.
++-- Epeo RUN only, Idris GEO.
+ --
+ -- Ladder:
+ --   Epeolatry  19968 (99) -> 19969 (119 I) -> 20753 (119) -> 21685 (119 III)
+@@ -11,6 +11,7 @@
+ --
+ -- Native WS is on every stage so pilgrimage chapters work while equipped,
+ -- same as Conqueror / Yagrush. GEO+10 stays on Idris 119 III only.
++-- 119 I sits between 99 and 119 II (not a clone of the 119 numbers).
+ -- Idempotent. Restart xi_map after apply (item tables are cached at boot).
+ -- ============================================================================
+ 
+@@ -32,23 +33,23 @@ INSERT INTO `item_weapon`
+     (`itemId`, `name`, `skill`, `subskill`, `ilvl_skill`, `ilvl_parry`, `ilvl_macc`, `dmgType`, `hit`, `delay`, `dmg`, `unlock_points`)
+ VALUES
+     (19968, 'epeolatry', 4,  0,   0,   0,   0, 2, 1, 489, 154, 0),
+-    (19969, 'epeolatry', 4,  0, 242, 242, 215, 2, 1, 489, 243, 0),
++    (19969, 'epeolatry', 4,  0, 242, 242, 215, 2, 1, 489, 199, 0),
+     (19970, 'idris',    11,  0,   0,   0,   0, 3, 1, 280,  80, 0),
+-    (19971, 'idris',    11,  0, 242, 242, 228, 3, 1, 280, 139, 0);
++    (19971, 'idris',    11,  0, 242, 242, 228, 3, 1, 280, 110, 0);
+ 
+--- jobs: WAR+DRK = 33, GEO = 1048576
++-- jobs: RUN = 2097152, GEO = 1048576
+ -- MId 706 / 707 match the 119 donors so the DAT-cloned looks resolve
+ DELETE FROM `item_equipment` WHERE `itemId` IN (19968, 19969, 19970, 19971);
+ INSERT INTO `item_equipment`
+     (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`, `shieldSize`, `scriptType`, `slot`, `rslot`, `rslotlook`, `su_level`)
+ VALUES
+-    (19968, 'epeolatry', 99,   0,      33, 706, 0, 0, 1, 0, 0, 0),
+-    (19969, 'epeolatry', 99, 119,      33, 706, 0, 0, 1, 0, 0, 0),
++    (19968, 'epeolatry', 99,   0, 2097152, 706, 0, 0, 1, 0, 0, 0),
++    (19969, 'epeolatry', 99, 119, 2097152, 706, 0, 0, 1, 0, 0, 0),
+     (19970, 'idris',     99,   0, 1048576, 707, 0, 0, 3, 0, 0, 0),
+     (19971, 'idris',     99, 119, 1048576, 707, 0, 0, 3, 0, 0, 0);
+ 
+--- Existing 119 / 119 III were RUN-only (2097152). Forge path is WAR/DRK.
+-UPDATE `item_equipment` SET `jobs` = 33 WHERE `itemId` IN (20753, 21685);
++-- 33 was WAR+THF (a bad WAR/DRK mask). Keep every Epeo stage RUN-only.
++UPDATE `item_equipment` SET `jobs` = 2097152 WHERE `itemId` IN (19968, 19969, 20753, 21685);
+ 
+ DELETE FROM `item_mods` WHERE `itemId` IN (19968, 19969, 19970, 19971, 20753, 21070);
+ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
+@@ -68,14 +69,14 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
+     (19970,   5,  50),   -- MP
+     (19970, 256,  31),   -- AFTERMATH (mage mythic)
+     (19970, 355, 175),   -- ADDS_WEAPONSKILL Exudation
+-    -- Idris 119 I
+-    (19971,   5, 100),
+-    (19971,  28,  25),   -- MATT
+-    (19971,  30,  25),   -- MACC
++    -- Idris 119 I (below 21070: less MP, no mage package, no GEO+10)
++    (19971,   5,  75),
+     (19971, 256,  31),
+-    (19971, 311, 155),   -- MAGIC_DAMAGE
+     (19971, 355, 175),
+-    -- Idris 119: keep MP, add WS, drop GEO+10 (that stays on 21080)
++    -- Idris 119 II: MP + WS. No GEO+10 (that stays on 21080).
+     (21070,   5, 100),
+     (21070, 256,  31),
+     (21070, 355, 175);
 +
-+-- Rare/Ex equippable weapon:
-+-- NOAUCTION|CANEQUIP|NOSALE|NODELIVERY|EX|RARE = 64+2048+4096+8192+16384+32768 = 63552
-+-- type 7 = weapon
-+
-+DELETE FROM `item_basic` WHERE `itemid` IN (19968, 19969, 19970, 19971);
-+INSERT INTO `item_basic`
-+    (`itemid`, `subid`, `name`, `sortname`, `name_jp`, `type`, `stackSize`, `flags`, `aH`, `BaseSell`)
-+VALUES
-+    (19968, 0, 'epeolatry', 'epeolatry', 'πé¿πâöπé¬πâ⌐πâêπâ¬πâ╝', 7, 1, 63552, 0, 0),
-+    (19969, 0, 'epeolatry', 'epeolatry', 'πé¿πâöπé¬πâ⌐πâêπâ¬πâ╝', 7, 1, 63552, 0, 0),
-+    (19970, 0, 'idris',     'idris',     'πéñπâëπâ¬πé╣',       7, 1, 63552, 0, 0),
-+    (19971, 0, 'idris',     'idris',     'πéñπâëπâ¬πé╣',       7, 1, 63552, 0, 0);
-+
-+DELETE FROM `item_weapon` WHERE `itemId` IN (19968, 19969, 19970, 19971);
-+INSERT INTO `item_weapon`
-+    (`itemId`, `name`, `skill`, `subskill`, `ilvl_skill`, `ilvl_parry`, `ilvl_macc`, `dmgType`, `hit`, `delay`, `dmg`, `unlock_points`)
-+VALUES
-+    (19968, 'epeolatry', 4,  0,   0,   0,   0, 2, 1, 489, 154, 0),
-+    (19969, 'epeolatry', 4,  0, 242, 242, 215, 2, 1, 489, 243, 0),
-+    (19970, 'idris',    11,  0,   0,   0,   0, 3, 1, 280,  80, 0),
-+    (19971, 'idris',    11,  0, 242, 242, 228, 3, 1, 280, 139, 0);
-+
-+-- jobs: WAR+DRK = 33, GEO = 1048576
-+-- MId 706 / 707 match the 119 donors so the DAT-cloned looks resolve
-+DELETE FROM `item_equipment` WHERE `itemId` IN (19968, 19969, 19970, 19971);
-+INSERT INTO `item_equipment`
-+    (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`, `shieldSize`, `scriptType`, `slot`, `rslot`, `rslotlook`, `su_level`)
-+VALUES
-+    (19968, 'epeolatry', 99,   0,      33, 706, 0, 0, 1, 0, 0, 0),
-+    (19969, 'epeolatry', 99, 119,      33, 706, 0, 0, 1, 0, 0, 0),
-+    (19970, 'idris',     99,   0, 1048576, 707, 0, 0, 3, 0, 0, 0),
-+    (19971, 'idris',     99, 119, 1048576, 707, 0, 0, 3, 0, 0, 0);
-+
-+-- Existing 119 / 119 III were RUN-only (2097152). Forge path is WAR/DRK.
-+UPDATE `item_equipment` SET `jobs` = 33 WHERE `itemId` IN (20753, 21685);
-+
-+DELETE FROM `item_mods` WHERE `itemId` IN (19968, 19969, 19970, 19971, 20753, 21070);
-+INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
-+    -- Epeolatry 99
-+    (19968,  27,  18),   -- ENMITY
-+    (19968, 256,  39),   -- AFTERMATH (mythic)
-+    (19968, 355,  61),   -- ADDS_WEAPONSKILL Dimidiation
-+    -- Epeolatry 119 I
-+    (19969,  27,  18),
-+    (19969, 256,  39),
-+    (19969, 355,  61),
-+    -- Epeolatry 119 (was unmodded; grant WS so Chapter III can be worn)
-+    (20753,  27,  18),
-+    (20753, 256,  39),
-+    (20753, 355,  61),
-+    -- Idris 99
-+    (19970,   5,  50),   -- MP
-+    (19970, 256,  31),   -- AFTERMATH (mage mythic)
-+    (19970, 355, 175),   -- ADDS_WEAPONSKILL Exudation
-+    -- Idris 119 I
-+    (19971,   5, 100),
-+    (19971,  28,  25),   -- MATT
-+    (19971,  30,  25),   -- MACC
-+    (19971, 256,  31),
-+    (19971, 311, 155),   -- MAGIC_DAMAGE
-+    (19971, 355, 175),
-+    -- Idris 119: keep MP, add WS, drop GEO+10 (that stays on 21080)
-+    (21070,   5, 100),
-+    (21070, 256,  31),
-+    (21070, 355, 175);
-diff --git a/modules/custom/sql/zz_purge_epeo_idris.sql b/modules/custom/sql/zz_purge_epeo_idris.sql
++-- Belt-and-suspenders: retail item_mods.sql used to put GEO+10 on 21070.
++DELETE FROM `item_mods` WHERE `itemId` IN (19970, 19971, 21070) AND `modId` = 961;
+diff --git a/ops/Relaunch - Crash Reports.bat b/ops/Relaunch - Crash Reports.bat
 new file mode 100644
-index 0000000000..1296260953
+index 0000000000..24639bc544
 --- /dev/null
-+++ b/modules/custom/sql/zz_purge_epeo_idris.sql
-@@ -0,0 +1,155 @@
-+-- ---------------------------------------------------------------------------
-+-- One-time wipe of every Epeolatry / Idris copy.
-+--
-+-- Retail has no 99-base IDs. The forge was issuing the 119s (20753 / 21070)
-+-- as starters. Remove every copy, including 119 III, from inventories, saved
-+-- sets, looks, delivery, and the AH.
-+--
-+-- Apply with xi_map STOPPED. A logged-in client can write the item back on
-+-- logout if the map still has it in memory.
-+--
-+-- Re-run: DELETE FROM relaunch_migrations WHERE name = '2026-08-31-epeo-idris-purge';
-+-- ---------------------------------------------------------------------------
++++ b/ops/Relaunch - Crash Reports.bat	
+@@ -0,0 +1,7 @@
++@echo off
++title Relaunch - Crash Reports
++echo === Five newest crash reports (double-click on the VPS) ===
++echo.
++powershell -NoProfile -ExecutionPolicy Bypass -File "C:\server\ops\crash-reports.ps1"
++echo.
++pause
+diff --git a/ops/VPS-GITHUB-DEPLOY.md b/ops/VPS-GITHUB-DEPLOY.md
+new file mode 100644
+index 0000000000..7d167715ec
+--- /dev/null
++++ b/ops/VPS-GITHUB-DEPLOY.md
+@@ -0,0 +1,88 @@
++# VPS GitHub deploy (C:\server)
 +
-+CREATE TABLE IF NOT EXISTS `relaunch_migrations` (
-+    `name`       varchar(100) NOT NULL,
-+    `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-+    PRIMARY KEY (`name`)
-+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
++Use this the next time **Relaunch - Deploy** says
++`Incoming: nothing new since your live code (or offline -- fetch skipped)`
++or hangs on `Username for 'https://github.com':`.
 +
-+CREATE TABLE IF NOT EXISTS `relaunch_epeo_idris_purge_log` (
-+    `id`         int(10) unsigned NOT NULL AUTO_INCREMENT,
-+    `charid`     int(10) unsigned NOT NULL DEFAULT 0,
-+    `charname`   varchar(15) DEFAULT NULL,
-+    `itemId`     smallint(5) unsigned NOT NULL,
-+    `source`     varchar(24) NOT NULL,
-+    `location`   smallint(5) unsigned DEFAULT NULL,
-+    `slot`       smallint(5) unsigned DEFAULT NULL,
-+    `purged_at`  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-+    PRIMARY KEY (`id`),
-+    KEY `charid` (`charid`)
-+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
++## What that message actually means
 +
-+SET @purge_epeo_idris = (
-+    SELECT COUNT(*) = 0
-+    FROM `relaunch_migrations`
-+    WHERE `name` = '2026-08-31-epeo-idris-purge'
-+);
++Deploy only counts commits it can **fetch from `origin`**.
++If GitHub auth fails, that line is empty even when GitHub has new commits.
 +
-+-- 19968/19969 Epeolatry 99 / 119 I, 20753 Epeolatry 119, 21685 119 III
-+-- 19970/19971 Idris 99 / 119 I,     21070 Idris 119,     21080 119 III
-+INSERT INTO `relaunch_epeo_idris_purge_log` (`charid`, `charname`, `itemId`, `source`, `location`, `slot`)
-+SELECT ci.`charid`, c.`charname`, ci.`itemId`, 'inventory', ci.`location`, ci.`slot`
-+  FROM `char_inventory` AS ci
-+  LEFT JOIN `chars` AS c ON c.`charid` = ci.`charid`
-+ WHERE @purge_epeo_idris = 1
-+   AND ci.`itemId` IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080);
++This PC (`C:\Projects\Relaunch`) can push. The VPS uses HTTPS `origin`
++and Git Credential Manager. GitHub **rejects your website password** for
++`git fetch` / `git push`. The password box must be a **`ghp_ΓÇª` PAT**, not
++the login password.
 +
-+INSERT INTO `relaunch_epeo_idris_purge_log` (`charid`, `charname`, `itemId`, `source`, `location`, `slot`)
-+SELECT db.`charid`, db.`charname`, db.`itemid`, 'delivery', db.`box`, db.`slot`
-+  FROM `delivery_box` AS db
-+ WHERE @purge_epeo_idris = 1
-+   AND (db.`itemid` IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080)
-+        OR db.`itemsubid` IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080));
++## At the Username / Password prompt
 +
-+INSERT INTO `relaunch_epeo_idris_purge_log` (`charid`, `charname`, `itemId`, `source`, `location`, `slot`)
-+SELECT ah.`seller`, ah.`seller_name`, ah.`itemid`, 'auction', NULL, NULL
-+  FROM `auction_house` AS ah
-+ WHERE @purge_epeo_idris = 1
-+   AND ah.`itemid` IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080);
++- **Username:** `richardknutzjr`
++- **Password:** the full classic PAT (`repo` scope). It must start with `ghp_`.
 +
-+DELETE ce
-+  FROM `char_equip` AS ce
-+ INNER JOIN `char_inventory` AS ci
-+    ON ci.`charid` = ce.`charid`
-+   AND ci.`location` = ce.`containerid`
-+   AND ci.`slot` = ce.`slotid`
-+ WHERE @purge_epeo_idris = 1
-+   AND ci.`itemId` IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080);
++That is valid. A website password produces:
++`Password authentication is not supported` / `Invalid username or token`.
 +
-+UPDATE `char_equip_saved`
-+   SET `main`   = IF(`main`   IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `main`),
-+       `sub`    = IF(`sub`    IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `sub`),
-+       `ranged` = IF(`ranged` IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `ranged`),
-+       `ammo`   = IF(`ammo`   IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `ammo`),
-+       `head`   = IF(`head`   IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `head`),
-+       `body`   = IF(`body`   IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `body`),
-+       `hands`  = IF(`hands`  IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `hands`),
-+       `legs`   = IF(`legs`   IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `legs`),
-+       `feet`   = IF(`feet`   IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `feet`),
-+       `neck`   = IF(`neck`   IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `neck`),
-+       `waist`  = IF(`waist`  IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `waist`),
-+       `ear1`   = IF(`ear1`   IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `ear1`),
-+       `ear2`   = IF(`ear2`   IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `ear2`),
-+       `ring1`  = IF(`ring1`  IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `ring1`),
-+       `ring2`  = IF(`ring2`  IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `ring2`),
-+       `back`   = IF(`back`   IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `back`)
-+ WHERE @purge_epeo_idris = 1
-+   AND (19968 IN (`main`, `sub`, `ranged`, `ammo`, `head`, `body`, `hands`, `legs`, `feet`, `neck`, `waist`, `ear1`, `ear2`, `ring1`, `ring2`, `back`)
-+     OR 19969 IN (`main`, `sub`, `ranged`, `ammo`, `head`, `body`, `hands`, `legs`, `feet`, `neck`, `waist`, `ear1`, `ear2`, `ring1`, `ring2`, `back`)
-+     OR 19970 IN (`main`, `sub`, `ranged`, `ammo`, `head`, `body`, `hands`, `legs`, `feet`, `neck`, `waist`, `ear1`, `ear2`, `ring1`, `ring2`, `back`)
-+     OR 19971 IN (`main`, `sub`, `ranged`, `ammo`, `head`, `body`, `hands`, `legs`, `feet`, `neck`, `waist`, `ear1`, `ear2`, `ring1`, `ring2`, `back`)
-+     OR 20753 IN (`main`, `sub`, `ranged`, `ammo`, `head`, `body`, `hands`, `legs`, `feet`, `neck`, `waist`, `ear1`, `ear2`, `ring1`, `ring2`, `back`)
-+     OR 21685 IN (`main`, `sub`, `ranged`, `ammo`, `head`, `body`, `hands`, `legs`, `feet`, `neck`, `waist`, `ear1`, `ear2`, `ring1`, `ring2`, `back`)
-+     OR 21070 IN (`main`, `sub`, `ranged`, `ammo`, `head`, `body`, `hands`, `legs`, `feet`, `neck`, `waist`, `ear1`, `ear2`, `ring1`, `ring2`, `back`)
-+     OR 21080 IN (`main`, `sub`, `ranged`, `ammo`, `head`, `body`, `hands`, `legs`, `feet`, `neck`, `waist`, `ear1`, `ear2`, `ring1`, `ring2`, `back`));
++## One-shot fetch if `origin` is broken
 +
-+DELETE FROM `char_inventory`
-+ WHERE @purge_epeo_idris = 1
-+   AND `itemId` IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080);
++On the VPS, in `C:\server` (do not screenshot the token):
 +
-+UPDATE `char_look`
-+   SET `main`   = IF(`main`   IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `main`),
-+       `sub`    = IF(`sub`    IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `sub`),
-+       `ranged` = IF(`ranged` IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `ranged`)
-+ WHERE @purge_epeo_idris = 1
-+   AND (19968 IN (`main`, `sub`, `ranged`)
-+     OR 19969 IN (`main`, `sub`, `ranged`)
-+     OR 19970 IN (`main`, `sub`, `ranged`)
-+     OR 19971 IN (`main`, `sub`, `ranged`)
-+     OR 20753 IN (`main`, `sub`, `ranged`)
-+     OR 21685 IN (`main`, `sub`, `ranged`)
-+     OR 21070 IN (`main`, `sub`, `ranged`)
-+     OR 21080 IN (`main`, `sub`, `ranged`));
++```powershell
++git -c credential.helper= fetch https://richardknutzjr:ghp_TOKEN@github.com/richardknutzjr/Relaunch.git relaunch
++git log --oneline HEAD..FETCH_HEAD
++git rebase FETCH_HEAD
++```
 +
-+UPDATE `char_style`
-+   SET `main`   = IF(`main`   IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `main`),
-+       `sub`    = IF(`sub`    IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `sub`),
-+       `ranged` = IF(`ranged` IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080), 0, `ranged`)
-+ WHERE @purge_epeo_idris = 1
-+   AND (19968 IN (`main`, `sub`, `ranged`)
-+     OR 19969 IN (`main`, `sub`, `ranged`)
-+     OR 19970 IN (`main`, `sub`, `ranged`)
-+     OR 19971 IN (`main`, `sub`, `ranged`)
-+     OR 20753 IN (`main`, `sub`, `ranged`)
-+     OR 21685 IN (`main`, `sub`, `ranged`)
-+     OR 21070 IN (`main`, `sub`, `ranged`)
-+     OR 21080 IN (`main`, `sub`, `ranged`));
++`-c credential.helper=` skips the popup.
 +
-+DELETE FROM `delivery_box`
-+ WHERE @purge_epeo_idris = 1
-+   AND (`itemid` IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080)
-+        OR `itemsubid` IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080));
++If rebase conflicts on **`settings/map.lua`**, keep the VPS live file:
 +
-+DELETE FROM `auction_house`
-+ WHERE @purge_epeo_idris = 1
-+   AND `itemid` IN (19968, 19969, 19970, 19971, 20753, 21685, 21070, 21080);
++```powershell
++git checkout --theirs settings/map.lua
++git add settings/map.lua
++git -c core.editor=true rebase --continue
++```
 +
-+-- Pilgrimage indexes: relic(14) + empyrean(14) + mythic Epeo(21) / Idris(22) = 49 / 50.
-+UPDATE `char_vars`
-+   SET `value` = 0
-+ WHERE @purge_epeo_idris = 1
-+   AND `varname` IN ('LWP_Active1', 'LWP_Active2')
-+   AND `value` IN (49, 50);
++Then **Relaunch - Deploy** ΓåÆ **Y**.
++`Incoming: nothing new` is OK if `git log --oneline -8` already shows the
++GitHub commits (e.g. `6d6b0e36c2`). Rebuild will say fetch failed and
++**build on-disk code**.
 +
-+DELETE FROM `char_vars`
-+ WHERE @purge_epeo_idris = 1
-+   AND `varname` IN (
-+       'LWP_49_C1', 'LWP_49_C2', 'LWP_49_C3',
-+       'LWP_49_M1', 'LWP_49_M2', 'LWP_49_M3',
-+       'LWP_50_C1', 'LWP_50_C2', 'LWP_50_C3',
-+       'LWP_50_M1', 'LWP_50_M2', 'LWP_50_M3'
-+   );
++A failed `git fetch origin` **wipes `FETCH_HEAD`**. Do not run `origin`
++until rebase has finished.
 +
-+INSERT IGNORE INTO `relaunch_migrations` (`name`)
-+VALUES ('2026-08-31-epeo-idris-purge');
-diff --git a/scripts/enum/item.lua b/scripts/enum/item.lua
-index e6ed8765ba..67e65c3cbf 100644
---- a/scripts/enum/item.lua
-+++ b/scripts/enum/item.lua
-@@ -8952,6 +8952,10 @@ xi.item =
-     KENKONKEN_99_II                     = 19965,
-     TERPSICHORE_99_II                   = 19966,
-     TUPSIMATI_99_II                     = 19967,
-+    EPEOLATRY_99                        = 19968,
-+    EPEOLATRY_119                       = 19969,
-+    IDRIS_99                            = 19970,
-+    IDRIS_119                           = 19971,
-     SPHARAI_119                         = 20480,
-     SPHARAI_119_II                      = 20481,
-     GLANZFAUST_119                      = 20482,
-@@ -9084,6 +9088,7 @@ xi.item =
-     BURAMENKAH                          = 20738,
-     RAGNAROK_119                        = 20745,
-     RAGNAROK_119_II                     = 20746,
-+    EPEOLATRY                           = 20753,
-     SOULCLEAVER                         = 20756,
-     FORESHOCK_SWORD                     = 20757,
-     MACBAIN                             = 20759,
-@@ -9219,6 +9224,7 @@ xi.item =
-     MJOLLNIR_119_II                     = 21061,
-     YAGRUSH_119                         = 21062,
-     YAGRUSH_119_II                      = 21063,
-+    IDRIS                               = 21070,
-     GADA                                = 21072,
-     IZCALLI                             = 21073,
-     KUPO_ROD                            = 21074,
-diff --git a/scripts/tests/systems/legendary_weapon_pilgrimage.lua b/scripts/tests/systems/legendary_weapon_pilgrimage.lua
-index 15b38c31ae..8f3f5d2026 100644
---- a/scripts/tests/systems/legendary_weapon_pilgrimage.lua
-+++ b/scripts/tests/systems/legendary_weapon_pilgrimage.lua
-@@ -54,6 +54,17 @@ describe('Legendary Weapon Pilgrimage integrity', function()
-         end
-     end)
- 
-+    it('binds Epeolatry and Idris chapters to 99 / 119 I / 119 II', function()
-+        local epeo = pilgrimage.byFinalId[21685]
-+        local idris = pilgrimage.byFinalId[21080]
-+        assert(epeo and epeo.family == 'mythic' and not epeo.singleStep)
-+        assert(epeo.stages[1] == 19968 and epeo.stages[2] == 19969 and epeo.stages[3] == 20753)
-+        assert(epeo.wsId == rema.BY_ITEM_ID[21685].wsId)
-+        assert(idris and idris.family == 'mythic' and not idris.singleStep)
-+        assert(idris.stages[1] == 19970 and idris.stages[2] == 19971 and idris.stages[3] == 21070)
-+        assert(idris.wsId == rema.BY_ITEM_ID[21080].wsId)
-+    end)
++## Lasting fix (do this so you are not repeating the workaround)
 +
-     it('binds chapters to lower, 119 I, and 119 II stages', function()
-         for _, entry in ipairs(pilgrimage.chains) do
-             if entry.family == 'aeonic' then
-diff --git a/scripts/tests/systems/mythic_forge_alignment.lua b/scripts/tests/systems/mythic_forge_alignment.lua
-index 13fdbcbddf..64d26cd0fc 100644
---- a/scripts/tests/systems/mythic_forge_alignment.lua
-+++ b/scripts/tests/systems/mythic_forge_alignment.lua
-@@ -16,21 +16,11 @@ describe('Mythic Forge identifier alignment', function()
-     end)
- 
-     it('maps forged damage mythics to REMA MYTHIC entries', function()
--        local singleStep =
--        {
--            [21685] = 'Epeolatry',
--            [21080] = 'Idris',
--        }
--
-         for _, forged in ipairs(forge.weapons) do
-             local entry = rema.BY_ITEM_ID[forged.id]
--            if singleStep[forged.id] then
--                assert(entry == nil)
--            else
--                assert(entry ~= nil, string.format('Missing REMA entry for %s', forged.name))
--                assert(entry.family == 'MYTHIC')
--                assert(entry.name == forged.name)
--            end
-+            assert(entry ~= nil, string.format('Missing REMA entry for %s', forged.name))
-+            assert(entry.family == 'MYTHIC')
-+            assert(entry.name == forged.name)
-         end
-     end)
- end)
++**SSH deploy key (preferred)**
++
++```powershell
++ssh-keygen -t ed25519 -C "vps-relaunch" -f $env:USERPROFILE\.ssh\id_ed25519 -N ""
++Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub
++```
++
++Repo ΓåÆ Settings ΓåÆ Deploy keys ΓåÆ add the `.pub` line, **Allow write access**.
++
++```powershell
++cd C:\server
++ssh -o StrictHostKeyChecking=accept-new git@github.com
++git remote set-url origin git@github.com:richardknutzjr/Relaunch.git
++git fetch origin relaunch
++```
++
++**Or HTTPS + PAT stored once** (after GCM stops asking, or disable it):
++
++```powershell
++git config --global credential.helper "store --file C:/Users/Administrator/.git-credentials"
++Set-Content C:\Users\Administrator\.git-credentials "https://richardknutzjr:ghp_NEW_TOKEN@github.com"
++git fetch origin relaunch
++```
++
++Revoke any PAT that appeared in a screenshot or terminal history.
++
++## After deploy, confirm it was this code
++
++```powershell
++git -C C:\server log --oneline -8
++```
++
++You want the commits you just pushed. Watch for `build OK - new binaries in place`.
++C++ / `blueutils` changes need that full rebuild, not a light deploy.
+diff --git a/ops/crash-reports.ps1 b/ops/crash-reports.ps1
+new file mode 100644
+index 0000000000..70ee5dd2e6
+--- /dev/null
++++ b/ops/crash-reports.ps1
+@@ -0,0 +1,48 @@
++# Newest Wheaty crash reports + supervisor deaths. Run from the VPS.
++$ErrorActionPreference = 'Continue'
++$root = 'C:\server'
++$dmp  = Join-Path $root 'dmp'
++$sup  = Join-Path $root 'relaunch-supervisor.log'
++$map  = Join-Path $root 'log\map-server.log'
++
++Write-Host ''
++Write-Host '=== Supervisor (last 8 start / hang / kill lines) ===' -ForegroundColor Cyan
++if (Test-Path $sup) {
++    Select-String -Path $sup -Pattern 'Starting xi_|HUNG|force kill|Supervisor starting' |
++        Select-Object -Last 8 |
++        ForEach-Object { $_.Line }
++} else {
++    Write-Host "(no $sup)"
++}
++
++Write-Host ''
++Write-Host '=== Top 5 crash reports (C:\server\dmp) ===' -ForegroundColor Cyan
++$reports = @(Get-ChildItem (Join-Path $dmp '*.log') -ErrorAction SilentlyContinue |
++    Sort-Object LastWriteTime -Descending |
++    Select-Object -First 5)
++if (-not $reports) {
++    Write-Host '(no Wheaty .log files ΓÇö process may have hung without a dump)'
++} else {
++    $n = 0
++    foreach ($f in $reports) {
++        $n++
++        Write-Host ''
++        Write-Host ("---- {0}  {1}  {2} ----" -f $n, $f.LastWriteTime.ToString('yyyy-MM-dd HH:mm:ss'), $f.Name) -ForegroundColor Yellow
++        $lines = Get-Content $f.FullName -TotalCount 80
++        $keep = $lines | Where-Object {
++            $_ -match 'CRASH|Exception code|Assertion|Watchdog|Faulting|\.cpp|\.h:|\.lua:'
++        }
++        if ($keep) { $keep | Select-Object -First 12 } else { $lines | Select-Object -First 15 }
++    }
++}
++
++Write-Host ''
++Write-Host '=== Last 5 map errors (watchdog / Lua / fatal) ===' -ForegroundColor Cyan
++if (Test-Path $map) {
++    Select-String -Path $map -Pattern 'INACTIVITY WATCHDOG|luautils::|Fatal|std::terminate|!!! CRASH' |
++        Select-Object -Last 5 |
++        ForEach-Object { $_.Line.Trim() }
++} else {
++    Write-Host "(no $map)"
++}
++Write-Host ''
+diff --git a/ops/vps-rebuild.ps1 b/ops/vps-rebuild.ps1
+index b9c00621ff..1b56635744 100644
+--- a/ops/vps-rebuild.ps1
++++ b/ops/vps-rebuild.ps1
+@@ -32,6 +32,7 @@
+ # (that was Azure-box infra).
+ # =====================================================================
+ $ErrorActionPreference = 'Continue'
++$env:GIT_TERMINAL_PROMPT = '0'   # fail fetch/push instead of hanging on Username:
+ $root   = 'C:\server'
+ $branch = 'relaunch'
+ $mysql  = 'C:\Program Files\MariaDB 10.6\bin\mysql.exe'
 diff --git a/scripts/tests/systems/weapon_forge_integrity.lua b/scripts/tests/systems/weapon_forge_integrity.lua
-index 09730ac2ac..0fa70d9c52 100644
+index 0fa70d9c52..db5ae6c9ee 100644
 --- a/scripts/tests/systems/weapon_forge_integrity.lua
 +++ b/scripts/tests/systems/weapon_forge_integrity.lua
-@@ -105,6 +105,48 @@ describe('Weapon Forge catalog and gate integrity', function()
-         assert(not ok and reason == 'grouped')
-     end)
+@@ -357,6 +357,7 @@ describe('Weapon Forge catalog and gate integrity', function()
+         end
  
-+    it('unlocks Relic first, then Empyrean or Mythic, then Aeonic, then Prime', function()
-+        local vars = {}
-+        local items = {}
-+        local player = {}
-+        function player:getCharVar(name) return vars[name] or 0 end
-+        function player:getItemCount(id) return items[id] or 0 end
-+
-+        assert(gates.pathUnlocked(player, 'relic'))
-+        assert(not gates.pathUnlocked(player, 'empyrean'))
-+        assert(not gates.pathUnlocked(player, 'mythic'))
-+        assert(not gates.pathUnlocked(player, 'aeonic'))
-+        assert(not gates.pathUnlocked(player, 'prime'))
-+
-+        vars.WF_Relic_Final = 1
-+        assert(gates.pathUnlocked(player, 'empyrean'))
-+        assert(gates.pathUnlocked(player, 'mythic'))
-+        assert(not gates.pathUnlocked(player, 'aeonic'))
-+
-+        items[19805] = 1 -- Verethragna base: Empyrean started, Mythic waits
-+        assert(gates.pathUnlocked(player, 'empyrean'))
-+        assert(not gates.pathUnlocked(player, 'mythic'))
-+
-+        vars.WF_Empyrean_Final = 1
-+        items[19805] = 0
-+        assert(gates.pathUnlocked(player, 'mythic'))
-+        assert(not gates.pathUnlocked(player, 'aeonic'))
-+
-+        items[19819] = 1 -- Conqueror base: Mythic started, Empyrean already done
-+        assert(gates.pathUnlocked(player, 'empyrean'))
-+        assert(gates.pathUnlocked(player, 'mythic'))
-+        assert(not gates.pathUnlocked(player, 'aeonic'))
-+
-+        vars.WF_Mythic_Final = 1
-+        items[19819] = 0
-+        assert(gates.pathUnlocked(player, 'aeonic'))
-+        assert(not gates.pathUnlocked(player, 'prime'))
-+
-+        vars.WF_Aeonic_Final = 1
-+        assert(gates.pathUnlocked(player, 'prime'))
-+        assert(gates.PATH_LOCKED_MSG:find('long way to go', 1, true))
-+    end)
-+
-     it('places Aeonic after completed Relic, Empyrean, and Mythic paths', function()
-         local vars = {}
-         local player = {}
-@@ -306,6 +348,37 @@ describe('Weapon Forge catalog and gate integrity', function()
-         assert(ok)
-     end)
+         assert(epeo and not epeo.singleStep and epeo.issueBase ~= false)
++        assert(epeo.jobs == 'RUN')
+         assert(epeo.base == 19968 and epeo.s1 == 19969 and epeo.s2 == 20753 and epeo.s3 == 21685)
+         assert(idris and not idris.singleStep and idris.issueBase ~= false)
+         assert(idris.base == 19970 and idris.s1 == 19971 and idris.s2 == 21070 and idris.s3 == 21080)
+diff --git a/sql/item_mods.sql b/sql/item_mods.sql
+index 8cceda725c..5aede98eea 100644
+--- a/sql/item_mods.sql
++++ b/sql/item_mods.sql
+@@ -43674,7 +43674,7 @@ INSERT INTO `item_mods` VALUES (21079,355,173); -- ADDS_WEAPONSKILL: 173
  
-+    it('uses a full four-step mythic ladder for Epeolatry and Idris', function()
-+        local epeo, idris, conqueror
-+        for _, chain in ipairs(catalog.mythicChains) do
-+            if chain.name == 'Epeolatry' then epeo = chain end
-+            if chain.name == 'Idris' then idris = chain end
-+            if chain.name == 'Conqueror' then conqueror = chain end
-+        end
-+
-+        assert(epeo and not epeo.singleStep and epeo.issueBase ~= false)
-+        assert(epeo.base == 19968 and epeo.s1 == 19969 and epeo.s2 == 20753 and epeo.s3 == 21685)
-+        assert(idris and not idris.singleStep and idris.issueBase ~= false)
-+        assert(idris.base == 19970 and idris.s1 == 19971 and idris.s2 == 21070 and idris.s3 == 21080)
-+
-+        local function holder(id)
-+            return { getItemCount = function(_, itemId) return id ~= nil and itemId == id and 1 or 0 end }
-+        end
-+
-+        assert(catalog.heldStage(holder(nil), epeo) == 0)
-+        assert(catalog.heldStage(holder(19968), epeo) == 1)
-+        assert(catalog.heldStage(holder(19969), epeo) == 2)
-+        assert(catalog.heldStage(holder(20753), epeo) == 3)
-+        assert(catalog.heldStage(holder(21685), epeo) == 4)
-+        assert(catalog.heldStage(holder(19970), idris) == 1)
-+        assert(catalog.heldStage(holder(19971), idris) == 2)
-+        assert(catalog.heldStage(holder(21070), idris) == 3)
-+        assert(catalog.heldStage(holder(21080), idris) == 4)
-+
-+        assert(conqueror and not conqueror.singleStep)
-+        assert(catalog.heldStage(holder(20838), conqueror) == 3)
-+    end)
-+
-     it('places the linear Wave Master clears on the weapon ladder', function()
-         local vars = {}
-         local player = {}
+ -- Idris / Idris 119 II
+ INSERT INTO `item_mods` VALUES (21070,5,100);    -- MP: 100
+-INSERT INTO `item_mods` VALUES (21070,961,10);   -- GEOMANCY_BONUS: 10
++-- GEO+10 (mod 961) is Idris 119 III (21080) only. 21070 is the 119 II step.
+ INSERT INTO `item_mods` VALUES (21080,5,100);    -- MP: 100
+ INSERT INTO `item_mods` VALUES (21080,28,40);    -- MATT: 40
+ INSERT INTO `item_mods` VALUES (21080,30,40);    -- MACC: 40
+diff --git a/vps-rebuild.ps1 b/vps-rebuild.ps1
+index b256d9f3ba..97945ff054 100644
+--- a/vps-rebuild.ps1
++++ b/vps-rebuild.ps1
+@@ -32,6 +32,7 @@
+ # (that was Azure-box infra).
+ # =====================================================================
+ $ErrorActionPreference = 'Continue'
++$env:GIT_TERMINAL_PROMPT = '0'   # fail fetch/push instead of hanging on Username:
+ $root   = 'C:\server'
+ $branch = 'relaunch'
+ $mysql  = 'C:\Program Files\MariaDB 10.6\bin\mysql.exe'
