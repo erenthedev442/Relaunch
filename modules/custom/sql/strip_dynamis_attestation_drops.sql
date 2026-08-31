@@ -23,6 +23,8 @@
 --
 -- Idempotent: DELETE only, scoped to the five NM dropIds + attestation
 -- itemIds. Safe to re-run.
+-- Consolation 100-piece rolls live in hydra_corps_beaucedine_currency.sql
+-- (this file does not touch those itemIds).
 -- =====================================================================
 
 -- 559 Dagourmarche / 1211 Goublefaupe / 1672 Mildaunegeux /

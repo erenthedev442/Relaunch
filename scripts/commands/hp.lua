@@ -7,7 +7,8 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 5,
+    -- GM1: !hp 0 only (kill self / cursor target). GM5+: any amount.
+    permission = 1,
     parameters = 'is'
 }
 
@@ -39,6 +40,9 @@ commandObj.onTrigger = function(player, hp, target)
         return
     elseif hp < 0 then
         error(player, 'Invalid amount.')
+        return
+    elseif player:getGMLevel() < 5 and hp ~= 0 then
+        error(player, 'GM1 can only use !hp 0.')
         return
     end
 
