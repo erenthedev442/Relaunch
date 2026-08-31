@@ -71,7 +71,10 @@ if(MSVC)
             /GR # Enable RTTI
         )
     else()
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /INCREMENTAL:NO /LTCG /OPT:REF /OPT:ICF")
+        # /DEBUG:FULL writes xi_map.pdb. Release defaults to /DEBUG:NONE, so
+        # Wheaty dumps printed empty () even after CMAKE_MSVC_DEBUG_INFORMATION_FORMAT.
+        # Keep /OPT:REF /OPT:ICF after /DEBUG so the linker still strips unused code.
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /INCREMENTAL:NO /LTCG /DEBUG:FULL /OPT:REF /OPT:ICF")
         list(APPEND FLAGS_AND_DEFINES
             /Oi # Generate Intrinsic Functions
             /GL # Whole Program Optimization
@@ -111,6 +114,11 @@ function(set_target_output_directory target)
         RUNTIME_OUTPUT_DIRECTORY_TSAN "${CMAKE_SOURCE_DIR}"
         RUNTIME_OUTPUT_DIRECTORY_MSAN "${CMAKE_SOURCE_DIR}"
         RUNTIME_OUTPUT_DIRECTORY_LSAN "${CMAKE_SOURCE_DIR}"
+        PDB_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}"
+        PDB_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}"
+        PDB_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}"
+        PDB_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_SOURCE_DIR}"
+        PDB_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_SOURCE_DIR}"
     )
 endfunction()
 

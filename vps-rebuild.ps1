@@ -209,6 +209,22 @@ $buildOk = ($LASTEXITCODE -eq 0)
 if ($buildOk) {
   Say '   build OK - new binaries in place.' 'Green'
   foreach($e in $exes){ Remove-Item "$root\$e.bak" -Force -EA SilentlyContinue }
+  # Wheaty only names frames if xi_map.pdb sits next to the live exe and matches
+  # that compile. Release used to emit no PDB at all (empty () dumps).
+  $mapPdb = Join-Path $root 'xi_map.pdb'
+  if (-not (Test-Path $mapPdb)) {
+    $found = Get-ChildItem (Join-Path $root 'build') -Recurse -Filter 'xi_map.pdb' -EA SilentlyContinue | Select-Object -First 1
+    if ($found) {
+      Copy-Item $found.FullName $mapPdb -Force
+      Say ("   copied xi_map.pdb from " + $found.DirectoryName)
+    }
+  }
+  if (Test-Path $mapPdb) {
+    $pdbInfo = Get-Item $mapPdb
+    Say ("   xi_map.pdb present ({0:n0} bytes, {1})" -f $pdbInfo.Length, $pdbInfo.LastWriteTime) 'Green'
+  } else {
+    Say '   WARNING: xi_map.pdb was not produced - next Wheaty dump will still have empty ().' 'Yellow'
+  }
 } else {
   Say '   BUILD FAILED - restoring previous binaries from *.bak.' 'Red'
   foreach($e in $exes){ if(Test-Path "$root\$e.bak"){ Copy-Item "$root\$e.bak" "$root\$e" -Force -EA SilentlyContinue } }
