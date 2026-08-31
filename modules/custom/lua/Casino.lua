@@ -58,9 +58,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     -- The menu round-trips title + the clicked label through a 128-byte buffer
     -- (client matches the full string on click) -- keep labels short or a click
     -- silently no-ops. Send is deferred a tick so result messages land first.
+    -- Lift the in-flight guard HERE (when the menu actually lands), not in
+    -- settle. Slots already cleared it via openBets; High-Low / Roulette /
+    -- Dice re-show their pick screen without openBets, so a leftover lock
+    -- made the next click a silent no-op.
     local function show(player)
         local snap = { title = menu.title, options = menu.options }
-        player:timer(30, function(p) p:customMenu(snap) end)
+        local pid  = player:getID()
+        player:timer(30, function(p)
+            betting[pid] = nil
+            p:customMenu(snap)
+        end)
     end
 
     local function header(player)
@@ -72,6 +80,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local function takeBet(player, bet)
         local pid = player:getID()
         if betting[pid] then
+            player:printToPlayer('[Casino] Easy -- wait for the next hand.', S)
             return false
         end
         if player:getGil() < bet then

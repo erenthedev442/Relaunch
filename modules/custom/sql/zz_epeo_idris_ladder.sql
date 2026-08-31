@@ -3,7 +3,7 @@
 --
 -- Real 99 / 119 I IDs for Epeolatry and Idris (empty retail hole 19968-19971).
 -- Client DATs clone looks from 20753 / 21070. Server jobs match the forge:
--- Epeo WAR/DRK, Idris GEO.
+-- Epeo RUN only, Idris GEO.
 --
 -- Ladder:
 --   Epeolatry  19968 (99) -> 19969 (119 I) -> 20753 (119) -> 21685 (119 III)
@@ -11,6 +11,7 @@
 --
 -- Native WS is on every stage so pilgrimage chapters work while equipped,
 -- same as Conqueror / Yagrush. GEO+10 stays on Idris 119 III only.
+-- 119 I sits between 99 and 119 II (not a clone of the 119 numbers).
 -- Idempotent. Restart xi_map after apply (item tables are cached at boot).
 -- ============================================================================
 
@@ -32,23 +33,23 @@ INSERT INTO `item_weapon`
     (`itemId`, `name`, `skill`, `subskill`, `ilvl_skill`, `ilvl_parry`, `ilvl_macc`, `dmgType`, `hit`, `delay`, `dmg`, `unlock_points`)
 VALUES
     (19968, 'epeolatry', 4,  0,   0,   0,   0, 2, 1, 489, 154, 0),
-    (19969, 'epeolatry', 4,  0, 242, 242, 215, 2, 1, 489, 243, 0),
+    (19969, 'epeolatry', 4,  0, 242, 242, 215, 2, 1, 489, 199, 0),
     (19970, 'idris',    11,  0,   0,   0,   0, 3, 1, 280,  80, 0),
-    (19971, 'idris',    11,  0, 242, 242, 228, 3, 1, 280, 139, 0);
+    (19971, 'idris',    11,  0, 242, 242, 228, 3, 1, 280, 110, 0);
 
--- jobs: WAR+DRK = 33, GEO = 1048576
+-- jobs: RUN = 2097152, GEO = 1048576
 -- MId 706 / 707 match the 119 donors so the DAT-cloned looks resolve
 DELETE FROM `item_equipment` WHERE `itemId` IN (19968, 19969, 19970, 19971);
 INSERT INTO `item_equipment`
     (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`, `shieldSize`, `scriptType`, `slot`, `rslot`, `rslotlook`, `su_level`)
 VALUES
-    (19968, 'epeolatry', 99,   0,      33, 706, 0, 0, 1, 0, 0, 0),
-    (19969, 'epeolatry', 99, 119,      33, 706, 0, 0, 1, 0, 0, 0),
+    (19968, 'epeolatry', 99,   0, 2097152, 706, 0, 0, 1, 0, 0, 0),
+    (19969, 'epeolatry', 99, 119, 2097152, 706, 0, 0, 1, 0, 0, 0),
     (19970, 'idris',     99,   0, 1048576, 707, 0, 0, 3, 0, 0, 0),
     (19971, 'idris',     99, 119, 1048576, 707, 0, 0, 3, 0, 0, 0);
 
--- Existing 119 / 119 III were RUN-only (2097152). Forge path is WAR/DRK.
-UPDATE `item_equipment` SET `jobs` = 33 WHERE `itemId` IN (20753, 21685);
+-- 33 was WAR+THF (a bad WAR/DRK mask). Keep every Epeo stage RUN-only.
+UPDATE `item_equipment` SET `jobs` = 2097152 WHERE `itemId` IN (19968, 19969, 20753, 21685);
 
 DELETE FROM `item_mods` WHERE `itemId` IN (19968, 19969, 19970, 19971, 20753, 21070);
 INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
@@ -68,14 +69,14 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
     (19970,   5,  50),   -- MP
     (19970, 256,  31),   -- AFTERMATH (mage mythic)
     (19970, 355, 175),   -- ADDS_WEAPONSKILL Exudation
-    -- Idris 119 I
-    (19971,   5, 100),
-    (19971,  28,  25),   -- MATT
-    (19971,  30,  25),   -- MACC
+    -- Idris 119 I (below 21070: less MP, no mage package, no GEO+10)
+    (19971,   5,  75),
     (19971, 256,  31),
-    (19971, 311, 155),   -- MAGIC_DAMAGE
     (19971, 355, 175),
-    -- Idris 119: keep MP, add WS, drop GEO+10 (that stays on 21080)
+    -- Idris 119 II: MP + WS. No GEO+10 (that stays on 21080).
     (21070,   5, 100),
     (21070, 256,  31),
     (21070, 355, 175);
+
+-- Belt-and-suspenders: retail item_mods.sql used to put GEO+10 on 21070.
+DELETE FROM `item_mods` WHERE `itemId` IN (19970, 19971, 21070) AND `modId` = 961;

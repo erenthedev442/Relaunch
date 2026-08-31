@@ -832,30 +832,26 @@ function htbf.register(fightKey, tier, variant)
             player:setCharVar(firstClearCv, 1)
         end
         catalog.progress.recordClear(player, tier, isFinalTest)
-        -- Item loot. HTBF fights use a custom battlefieldId with NO C++ retail
-        -- treasure, and the reuse-base fights end their win in varied ways (most
-        -- on a bare setStatus(WON) that never opens an Armoury Crate), so the
-        -- stock crate -> handleLootRolls path drops nothing. Roll content.loot
-        -- HERE -- the one hook that reliably fires on every fight's win (it's
-        -- where gil/marks already land) -- and give the items straight to the
-        -- player, per completion. Optional gear groups use independent,
-        -- tier-scaled rolls with Treasure Hunter; guaranteed weighted groups
-        -- retain the stock selectFromLootGroups behavior.
+        -- Item loot. grantWinRewards is a local function, not a colon method --
+        -- never use `self` here (that was a nil global and aborted the hub warp).
+        -- HTBF IDs have no C++ retail treasure; reuse-base wins often skip the
+        -- Armoury Crate. Roll content.loot on this hook so every clear pays.
         local looted = 0
-        if self.loot then
-            pcall(function()
-                local thLevel = getBattlefieldTreasureHunter(player, bf)
-                for _, entry in ipairs(selectTierLoot(player, self.loot, tier, thLevel)) do
-                    if entry.itemId and entry.itemId ~= 0 then
-                        if entry.itemId == xi.item.GIL then
-                            player:addGil(entry.amount or 0)
-                        elseif npcUtil.giveItem(player, {{ entry.itemId, entry.amount or 1 }}) then
-                            looted = looted + 1
-                        end
+        pcall(function()
+            if not content.loot then
+                return
+            end
+            local thLevel = getBattlefieldTreasureHunter(player, bf)
+            for _, entry in ipairs(selectTierLoot(player, content.loot, tier, thLevel)) do
+                if entry.itemId and entry.itemId ~= 0 then
+                    if entry.itemId == xi.item.GIL then
+                        player:addGil(entry.amount or 0)
+                    elseif npcUtil.giveItem(player, {{ entry.itemId, entry.amount or 1 }}) then
+                        looted = looted + 1
                     end
                 end
-            end)
-        end
+            end
+        end)
         pcall(function()
             if isFinalTest then
                 player:printToPlayer(
@@ -876,7 +872,7 @@ function htbf.register(fightKey, tier, variant)
     -- first, then leave the instance and return to the hub after a short win
     -- window instead of starting the unavailable client event.
     function content:onBattlefieldWin(player, battlefield)
-        grantWinRewards(player)
+        pcall(grantWinRewards, player)
         player:timer(2500, function(p)
             if p:getBattlefield() then
                 p:leaveBattlefield(1)
@@ -893,7 +889,7 @@ function htbf.register(fightKey, tier, variant)
     -- finish callback. The battlefield-scoped latch in grantWinRewards keeps
     -- a reward from being paid twice.
     function content:onEventFinishWin(player, csid, option, npc)
-        grantWinRewards(player)
+        pcall(grantWinRewards, player)
     end
 
     -- Armoury-crate loot. Priority: a fight's per-tier override (f.loot[tier]),

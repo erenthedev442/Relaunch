@@ -43674,7 +43674,7 @@ INSERT INTO `item_mods` VALUES (21079,355,173); -- ADDS_WEAPONSKILL: 173
 
 -- Idris / Idris 119 II
 INSERT INTO `item_mods` VALUES (21070,5,100);    -- MP: 100
-INSERT INTO `item_mods` VALUES (21070,961,10);   -- GEOMANCY_BONUS: 10
+-- GEO+10 (mod 961) is Idris 119 III (21080) only. 21070 is the 119 II step.
 INSERT INTO `item_mods` VALUES (21080,5,100);    -- MP: 100
 INSERT INTO `item_mods` VALUES (21080,28,40);    -- MATT: 40
 INSERT INTO `item_mods` VALUES (21080,30,40);    -- MACC: 40

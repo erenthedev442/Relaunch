@@ -33,6 +33,9 @@
 # vps-rebuild just pushed), so it publishes even if the build fell back.
 # =====================================================================
 $ErrorActionPreference = 'Continue'
+# Never hang deploy on "Username for https://github.com". A failed fetch is
+# reported below; GCM must not block waiting for a password box.
+$env:GIT_TERMINAL_PROMPT = '0'
 $root     = 'C:\server'
 $rebuild  = Join-Path $root 'vps-rebuild.ps1'
 $docsTask = 'Relaunch-DocsRefresh'
@@ -64,12 +67,19 @@ Say '============================================================' 'Cyan'
 $MyEmails   = @('rknutz@gmail.com','richardknutzjr@hotmail.com')
 $reviewFile = Join-Path $root 'deploy-collab-review.txt'
 try {
-    git -C $root fetch origin relaunch --quiet 2>$null
+    $fetchOut = git -C $root fetch origin relaunch 2>&1
+    $fetchOk  = ($LASTEXITCODE -eq 0)
     $US = [char]0x1f
+    if (-not $fetchOk) {
+        Say '  Incoming: GitHub fetch FAILED -- cannot see new commits (not an empty branch).' 'Yellow'
+        $errLine = @($fetchOut | ForEach-Object { "$_" } | Where-Object { $_.Trim() } | Select-Object -First 2)
+        if ($errLine) { Say ('  ' + ($errLine -join ' | ')) 'DarkYellow' }
+        Say '  Store a ghp_ PAT for richardknutzjr (Password box, not the website login) or switch origin to SSH.' 'DarkYellow'
+    }
     $incoming = @(git -C $root log 'HEAD..origin/relaunch' --format='%ae' 2>$null)
-    if (-not $incoming -or $incoming.Count -eq 0) {
-        Say '  Incoming: nothing new since your live code (or offline -- fetch skipped).' 'Gray'
-    } else {
+    if ($fetchOk -and (-not $incoming -or $incoming.Count -eq 0)) {
+        Say '  Incoming: nothing new. Live already matches origin/relaunch.' 'Gray'
+    } elseif ($fetchOk) {
         $mineCount  = @($incoming | Where-Object { $MyEmails -contains $_ }).Count
         $otherCount = $incoming.Count - $mineCount
         Say ('  Incoming this deploy: {0} commit(s) -- {1} yours, {2} from other collaborators.' -f $incoming.Count, $mineCount, $otherCount) 'Cyan'

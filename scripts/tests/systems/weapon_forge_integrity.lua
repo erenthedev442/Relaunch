@@ -357,6 +357,7 @@ describe('Weapon Forge catalog and gate integrity', function()
         end
 
         assert(epeo and not epeo.singleStep and epeo.issueBase ~= false)
+        assert(epeo.jobs == 'RUN')
         assert(epeo.base == 19968 and epeo.s1 == 19969 and epeo.s2 == 20753 and epeo.s3 == 21685)
         assert(idris and not idris.singleStep and idris.issueBase ~= false)
         assert(idris.base == 19970 and idris.s1 == 19971 and idris.s2 == 21070 and idris.s3 == 21080)

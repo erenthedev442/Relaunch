@@ -385,8 +385,9 @@ catalog.mythicChains =
     { type = 'Archery', jobs = 'RNG', name = 'Gastraphetes', base = 19829, s1 = 21247, s2 = 21266, s3 = 22139 },
     { type = 'Marksmanship', jobs = 'COR', name = 'Death Penalty', base = 19835, s1 = 21263, s2 = 21268, s3 = 22141 },
     -- Custom 99 / 119 I IDs in the unused 19968-20479 hole. Client DATs clone
-    -- looks from 20753 / 21070. Same three mythicCosts steps as Conqueror.
-    { type = 'Great Sword', jobs = 'WAR/DRK', name = 'Epeolatry', base = 19968, s1 = 19969, s2 = 20753, s3 = 21685 },
+    -- looks from 20753 / 21070; 119 I damage sits below those 119 II donors.
+    -- Same three mythicCosts steps as Conqueror.
+    { type = 'Great Sword', jobs = 'RUN', name = 'Epeolatry', base = 19968, s1 = 19969, s2 = 20753, s3 = 21685 },
     { type = 'Club',        jobs = 'GEO',     name = 'Idris',     base = 19970, s1 = 19971, s2 = 21070, s3 = 21080 },
 }
 

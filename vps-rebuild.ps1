@@ -32,6 +32,7 @@
 # (that was Azure-box infra).
 # =====================================================================
 $ErrorActionPreference = 'Continue'
+$env:GIT_TERMINAL_PROMPT = '0'   # fail fetch/push instead of hanging on Username:
 $root   = 'C:\server'
 $branch = 'relaunch'
 $mysql  = 'C:\Program Files\MariaDB 10.6\bin\mysql.exe'
