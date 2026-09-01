@@ -105,6 +105,30 @@ end
 windower.add_to_chat(207, ('[relaunch] resource overrides: %d renamed, %d inserted, %d skipped'):format(
     applied.rename, applied.insert, applied.skipped))
 
+-- Seasonal /ma "Matsui-P" (spell 1003) R0s the client. Rewrite to Exc_S (1004)
+-- before the DAT lookup. Also catch /matsui-p as a bare command.
+local function isMatsuiCast(text)
+    local t = (text or ''):lower():gsub('^%s+', '')
+    t = t:gsub('^/+', '/')
+    if t:match('^/matsui') then
+        return true
+    end
+    if t:match('^/ma%s') or t:match('^/magic%s') then
+        return t:find('matsui', 1, true) ~= nil
+    end
+    return false
+end
+
+windower.register_event('outgoing text', function(original, modified)
+    local text = modified or original
+    if not isMatsuiCast(text) then
+        return
+    end
+    local target = text:match('(<[^>]+>)') or '<me>'
+    windower.add_to_chat(207, '[relaunch] /ma "Matsui-P" crashes. Using Excenmille (S).')
+    return '/ma "Excenmille (S)" ' .. target
+end)
+
 -- ── Commands ───────────────────────────────────────────────────────────
 -- `//relaunch check <name>`  print what Windower now resolves for that name
 -- `//relaunch show <id>`     print the current res.items entry for that id

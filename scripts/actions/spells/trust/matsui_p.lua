@@ -1,10 +1,9 @@
 -----------------------------------
 -- Trust: Matsui-P
--- Spell ID: 1004 | Pool ID: 6004 (client menu: Excenmille (S))
--- Seasonal spell 1003 R0s outside campaign DAT — this overlays Exc_S.
--- Safe summon kit; retune NIN identity only after summon is stable.
--- Do not renameEntity / printToPlayer as 'Matsui-P' — that name is the
--- seasonal 1003 DAT string and R0s the client on the spawn packet.
+-- Spell ID: 1004 | Pool ID: 6004
+-- Menu / DAT: Excenmille (S). Nametag: matsui-p (Lua overlay).
+-- Do not /ma "Matsui-P" — that is seasonal spell 1003 and R0s the client.
+-- Do not renameEntity to the retail string 'Matsui-P' (same DAT key).
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -18,7 +17,14 @@ spellObject.onSpellCast = function(caster, target, spell)
 end
 
 spellObject.onMobSpawn = function(mob)
+    -- Overlay only. Must run before CTrustEntity::Spawn sends 0x67.
+    mob:renameEntity('matsui-p', true)
+
     local master = mob:getMaster()
+    if not master then
+        return
+    end
+
     local lvl = mob:getMainLvl()
     local upgraded = math.max(1, master:getCharVar('TrustUpgraded') or 1)
     local power = lvl * upgraded
@@ -48,7 +54,7 @@ spellObject.onMobSpawn = function(mob)
 
     mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 2000)
 
-    master:printToPlayer('Matsui-P reporting. Try to keep up.', xi.msg.channel.PARTY, 'Excenmille_S')
+    master:printToPlayer('matsui-p reporting. Try to keep up.', xi.msg.channel.PARTY, 'matsui-p')
 end
 
 spellObject.onMobDespawn = function(mob)

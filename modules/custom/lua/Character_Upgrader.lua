@@ -27,6 +27,7 @@ local MEAT_SPELL      = (xi.magic and xi.magic.spell and xi.magic.spell.EXCENMIL
 local CORVUS_SPELL    = (xi.magic and xi.magic.spell and xi.magic.spell.CURILLA) or 902
 local CORNELIA_SPELL  = (xi.trust and xi.trust.VOID_KEEPER_SPELL and xi.trust.VOID_KEEPER_SPELL.CORNELIA) or 1002
 local MATSUI_P_SPELL  = (xi.trust and xi.trust.VOID_KEEPER_SPELL and xi.trust.VOID_KEEPER_SPELL.MATSUI_P) or 1004
+local MATSUI_SEASONAL = (xi.trust and xi.trust.DISABLED_SPELL and xi.trust.DISABLED_SPELL.MATSUI_SEASONAL) or 1003
 local ALDO_SPELL      = (xi.magic and xi.magic.spell and xi.magic.spell.ALDO) or 930
 local ALDO_UC_SPELL   = (xi.magic and xi.magic.spell and xi.magic.spell.ALDO_UC) or 1007
 
@@ -36,7 +37,8 @@ local EXCLUDED_SPELLS =
     [MEAT_SPELL]     = true,
     [CORVUS_SPELL]   = true,
     [CORNELIA_SPELL] = true,
-    [MATSUI_P_SPELL] = true,
+    [MATSUI_P_SPELL]  = true,
+    [MATSUI_SEASONAL] = true,
     [ALDO_SPELL]     = true,
     [ALDO_UC_SPELL]  = true,
 }
@@ -522,6 +524,7 @@ m:addOverride('xi.commands.addalltrusts.onTrigger', function(player, target)
             for _, id in ipairs(spellList) do
                 if id ~= SKOLL_SPELL and id ~= MEAT_SPELL and id ~= CORVUS_SPELL
                     and id ~= CORNELIA_SPELL and id ~= MATSUI_P_SPELL
+                    and id ~= MATSUI_SEASONAL
                     and id ~= ALDO_SPELL and id ~= ALDO_UC_SPELL
                     and not spellGrant.mobOnlySpells[id] then
                     filtered[#filtered + 1] = id

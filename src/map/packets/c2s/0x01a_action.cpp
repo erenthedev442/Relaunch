@@ -263,7 +263,13 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
             };
             // clang-format on
 
-            const auto spellId = static_cast<SpellID>(this->CastMagic.SpellId);
+            auto spellId = static_cast<SpellID>(this->CastMagic.SpellId);
+            // Seasonal Matsui-P (1003) R0s the client DAT. Treat it as Exc_S / 1004
+            // if the packet still arrives (macro leftover, injected, etc.).
+            if (static_cast<uint16_t>(spellId) == 1003)
+            {
+                spellId = static_cast<SpellID>(1004);
+            }
             if (!spell::GetSpell(spellId))
             {
                 ShowWarningFmt("GP_CLI_COMMAND_ACTION: {} sent invalid spell ID {} — dropping packet", PChar->getName(), static_cast<uint16_t>(this->CastMagic.SpellId));

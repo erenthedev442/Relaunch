@@ -80,10 +80,10 @@ local TRUSTS =
         gilCost               = 50000000,
         requireFullCollection = true,
         bindLabel             = 'Bind Matsui-P',
-        boundMsg              = 'Matsui-P is already bound to your service. Cast "Excenmille (S)" from your Trust menu.',
+        boundMsg              = 'Matsui-P is already bound to your service. Cast "Excenmille (S)" from your Trust menu — do not /ma "Matsui-P".',
         sealMsgs              = {
             'Matsui-P cracks his knuckles. The cap is his problem now.',
-            'Look for "Excenmille (S)" in your Trust menu -- casting it calls Matsui-P.',
+            'Look for "Excenmille (S)" in your Trust menu -- that summons him as matsui-p. Do not /ma "Matsui-P".',
         },
     },
 }

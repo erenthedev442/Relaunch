@@ -293,9 +293,10 @@ xi.trust.VOID_KEEPER_SPELL =
 -- Temporarily retired / not yet unlockable (stripped on login; grant blocked).
 xi.trust.DISABLED_SPELL =
 {
-    ALDO      = 930,  -- retail Aldo / Locke slot
-    ALDO_UC   = 1007,
-    FUJITO_PD = 1020, -- implemented; waiting on unlock placement
+    ALDO            = 930,  -- retail Aldo / Locke slot
+    ALDO_UC         = 1007,
+    FUJITO_PD       = 1020, -- implemented; waiting on unlock placement
+    MATSUI_SEASONAL = 1003, -- campaign DAT; /ma "Matsui-P" R0s. Use 1004 / Exc_S.
 }
 
 local blockedCipherSpells =
@@ -405,6 +406,21 @@ xi.trust.canCast = function(caster, spell, notAllowedTrustIds)
     -- Trusts must be enabled in settings
     if xi.settings.main.ENABLE_TRUST_CASTING == 0 then
         return xi.msg.basic.TRUST_NO_CAST_TRUST
+    end
+
+    -- Seasonal Matsui-P (1003) R0s the client. Never let it through, even for GMs.
+    local disabled = xi.trust.DISABLED_SPELL
+    if disabled then
+        local sid = spell:getID()
+        for _, id in pairs(disabled) do
+            if sid == id then
+                if sid == disabled.MATSUI_SEASONAL then
+                    caster:printToPlayer('Cast "Excenmille (S)" — /ma "Matsui-P" crashes the client.', xi.msg.channel.SYSTEM_3)
+                end
+
+                return xi.msg.basic.TRUST_NO_CAST_TRUST
+            end
+        end
     end
 
     -- GMs can do what they want (as long as ENABLE_TRUST_CASTING is enabled)

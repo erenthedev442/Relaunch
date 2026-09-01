@@ -11,13 +11,14 @@
 --   Matsui back on 1003 (the "known-good" restore) reintroduced that crash.
 --
 -- WHY THIS POOL SHAPE
---   Exc_S spell DAT is year-round safe. Look uses Makki's permanent trust
---   model (0x0000220C) + SAM/BLM display job + simple Final Exam skill kit.
+--   Exc_S spell DAT + Exc_S look (0x00008508) are year-round safe. SAM/BLM
+--   + Final Exam kit is server-side only. The menu still says Excenmille (S).
 --
--- DO NOT send packet_name / renameEntity 'Matsui-P'
---   That string is bound to seasonal spell 1003. The client looks it up in
---   campaign DATs when the trust spawn packet arrives and R0s — exactly as
---   he is about to appear. Keep the retail-safe Exc_S packet name.
+-- NAMETAG
+--   packet_name stays Excenmille_S so the first spawn packet uses a DAT the
+--   client has. Lua then renameEntity('matsui-p') — same overlay Meat/Gemma
+--   use. Do NOT send the retail string 'Matsui-P': that is spell 1003's
+--   campaign DAT key and R0s the client on the 0x67 trust-name packet.
 --
 -- APPLYING
 --   1) Apply this file (deploy recurses modules/custom/sql/**/*.sql)
@@ -104,11 +105,11 @@ REPLACE INTO mob_pools
      spellList, namevis, roamflag, skill_list_id, resist_id,
      modelSize, modelHitboxSize)
 VALUES
-    -- Makki year-round look 0x0000220C; SAM/BLM; Great Katana; Final Exam kit.
-    -- packet_name MUST stay Excenmille_S (slot 1004 DAT). Matsui-P R0s on spawn.
-    (6004, 'matsui_p', 'Excenmille_S', 297, UNHEX('0000220C00000000000000000000000000000000'),
+    -- Retail Exc_S look 0x00008508 (year-round). packet_name MUST stay
+    -- Excenmille_S so the spawn/0x67 DAT key is safe. Nametag is Lua overlay.
+    (6004, 'matsui_p', 'Excenmille_S', 293, UNHEX('00008508000000000000000000000000000000'),
      12, 4, 25, 240, 300,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,
      6004, 0, 0, 6004, 153,
-     2, 11);
+     0, 12);

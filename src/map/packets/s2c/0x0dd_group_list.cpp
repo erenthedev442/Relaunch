@@ -101,9 +101,10 @@ GP_SERV_COMMAND_GROUP_LIST::GP_SERV_COMMAND_GROUP_LIST(const CTrustEntity* PTrus
     packet.sjob_no      = PTrust->GetSJob();
     packet.sjob_lv      = PTrust->GetSLevel();
 
-    const auto nameSize       = std::min<size_t>(PTrust->getName().size(), sizeof(packet.Name));
+    const auto& displayName   = !PTrust->packetName.empty() ? PTrust->packetName : PTrust->getName();
+    const auto  nameSize      = std::min<size_t>(displayName.size(), sizeof(packet.Name));
     const auto packetNameSize = roundUpToNearestFour(static_cast<uint32_t>(nameSize)) + 4; // Always 4 bytes of padding after name
-    std::memcpy(packet.Name, PTrust->packetName.c_str(), nameSize);
+    std::memcpy(packet.Name, displayName.c_str(), nameSize);
 
     // Resize packets to match name length + the 4 bytes of padding the client expects.
     // Header + struct - max name size + effective packet name size
