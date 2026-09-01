@@ -34,6 +34,11 @@ auto GP_CLI_COMMAND_ITEM_STACK::validate(MapSession* PSession, const CCharEntity
 void GP_CLI_COMMAND_ITEM_STACK::process(MapSession* PSession, CCharEntity* PChar) const
 {
     CItemContainer* PItemContainer = PChar->getStorage(this->Category);
+    if (PItemContainer == nullptr)
+    {
+        ShowWarning("ITEM_STACK: %s invalid container %u", PChar->getName(), this->Category);
+        return;
+    }
 
     const uint8 size = PItemContainer->GetSize();
 
@@ -53,8 +58,9 @@ void GP_CLI_COMMAND_ITEM_STACK::process(MapSession* PSession, CCharEntity* PChar
     for (uint8 slotId = 1; slotId <= size; ++slotId)
     {
         const CItem* PItem = PItemContainer->GetItem(slotId);
-        // Skip items that are invalid, locked, reserved or already meeting stack size.
+        // Skip items that are invalid, busy/locked, reserved or already meeting stack size.
         if (!PItem ||
+            PItem->isBusy() ||
             PItem->getReserve() > 0 ||
             PItem->isSubType(ITEM_LOCKED) ||
             PItem->getQuantity() >= PItem->getStackSize())
@@ -66,9 +72,10 @@ void GP_CLI_COMMAND_ITEM_STACK::process(MapSession* PSession, CCharEntity* PChar
         {
             const CItem* PItem2 = PItemContainer->GetItem(slotID2);
 
-            // Skip items that are invalid, not matching, locked, reserved or already meeting stack size.
+            // Skip items that are invalid, not matching, busy/locked, reserved or already meeting stack size.
             if (!PItem2 ||
                 PItem2->getID() != PItem->getID() ||
+                PItem2->isBusy() ||
                 PItem2->getReserve() > 0 ||
                 PItem2->isSubType(ITEM_LOCKED) ||
                 PItem2->getQuantity() >= PItem2->getStackSize())
@@ -88,10 +95,25 @@ void GP_CLI_COMMAND_ITEM_STACK::process(MapSession* PSession, CCharEntity* PChar
                 moveQty = PItem2->getQuantity();
             }
 
-            if (moveQty > 0)
+            if (moveQty == 0)
             {
-                charutils::UpdateItem(PChar, static_cast<uint8>(PItemContainer->GetID()), slotId, moveQty);
-                charutils::UpdateItem(PChar, static_cast<uint8>(PItemContainer->GetID()), slotID2, -static_cast<int32>(moveQty));
+                continue;
+            }
+
+            const auto containerId = static_cast<uint8>(PItemContainer->GetID());
+            // Destination first. If that write is refused, do not drain the source
+            // or the stack is silently deleted.
+            if (charutils::UpdateItem(PChar, containerId, slotId, static_cast<int32>(moveQty)) == 0)
+            {
+                continue;
+            }
+
+            charutils::UpdateItem(PChar, containerId, slotID2, -static_cast<int32>(moveQty));
+
+            PItem = PItemContainer->GetItem(slotId);
+            if (!PItem || PItem->getQuantity() >= PItem->getStackSize())
+            {
+                break;
             }
         }
     }

@@ -218,8 +218,12 @@ struct State final
 {
     void reset()
     {
-        connection = getConnection();
+        // Statements hold a back-pointer into Connection. Destroy them first.
+        // Replacing connection first leaves cached statements dangling; the
+        // MariaDB connector then ACCESS_VIOLATIONs on executeUpdate instead of
+        // throwing a catchable SQLException (see Wheaty dump 31-8 18:35:31).
         lazyPreparedStatements.clear();
+        connection = getConnection();
     }
 
     std::unique_ptr<sql::Connection>                                         connection;
@@ -670,12 +674,19 @@ auto preparedStmt(const std::string& rawQuery, Args&&... args) -> std::unique_pt
         {
             const auto operation = [&]() -> std::unique_ptr<db::detail::ResultSetWrapper>
             {
-                // If we don't have it, lazily make it
-                // cppcheck-suppress stlFindInsert
-                if (state.lazyPreparedStatements.find(rawQuery) == state.lazyPreparedStatements.end())
+                if (!state.connection || state.connection->isClosed())
                 {
-                    // cppcheck-suppress stlFindInsert
-                    state.lazyPreparedStatements[rawQuery] = std::unique_ptr<sql::PreparedStatement>(state.connection->prepareStatement(rawQuery.c_str()));
+                    throw std::runtime_error("Lost connection");
+                }
+
+                auto& stmt = state.lazyPreparedStatements[rawQuery];
+                if (!stmt)
+                {
+                    stmt.reset(state.connection->prepareStatement(rawQuery.c_str()));
+                }
+                if (!stmt)
+                {
+                    throw std::runtime_error("Lost connection");
                 }
 
                 DebugSQLFmt("preparedStmt: {}", rawQuery);
@@ -686,7 +697,6 @@ auto preparedStmt(const std::string& rawQuery, Args&&... args) -> std::unique_pt
                 // All blobs are stored here so they can be kept alive until the query is executed.
                 std::vector<std::shared_ptr<BlobWrapper>> blobs;
 
-                const auto& stmt = state.lazyPreparedStatements[rawQuery];
                 db::detail::binder(stmt, counter, blobs, std::forward<Args>(args)...);
                 const auto queryTimer = detail::timer(rawQuery);
 
