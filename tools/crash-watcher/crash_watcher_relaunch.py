@@ -231,10 +231,71 @@ def format_report(info: dict[str, str], map_lines: list[str], sup_lines: list[st
     return "\n".join(lines)
 
 
+def self_test(tmpdir: Path) -> int:
+    """Prove sidecar + Wheaty fallback both name players. Does not post."""
+    wheaty = tmpdir / "xi_map.exe_1-9_2-47-8.log"
+    sidecar = tmpdir / "xi_map.exe_1-9_2-47-8.context.txt"
+    snapshot = (
+        "Snapshot: 2026/09/01 02:47:08\n"
+        "Players / instances:\n"
+        "  Zone Dynamis-Bastok_[D] [295] — 2 instance copy/copies\n"
+        "    [0] instance 29500 dynamis_bastok_d: Alice (123)\n"
+        "    [1] instance 29500 dynamis_bastok_d: Carol (789)\n"
+        "Recent instance events:\n"
+        "  2026/09/01 02:46:01  Loading instance 29500 for Carol (789)\n"
+    )
+    sidecar.write_text(snapshot, encoding="utf-8")
+    wheaty.write_text(
+        "Exception code: 0xC0000005 ACCESS_VIOLATION\n"
+        "Time of crash: 2026/09/01 02:47:08\n"
+        "Git SHA: deadbeef\n"
+        "Git Commit Subject: test\n"
+        "Process Uptime: 6 hours\n"
+        'm_zoneName = "Dynamis-Bastok_[D]"\n'
+        "CZoneInstance::ZoneServer (zone_instance.cpp, line 505)\n"
+        "=====================================================\n"
+        "=== Flight recorder ===\n"
+        + snapshot
+        + "=====================================================\n",
+        encoding="utf-8",
+    )
+
+    info = parse_wheaty(wheaty)
+    from_sidecar = load_context(wheaty)
+    sidecar.unlink()
+    from_log = load_context(wheaty)
+    msg = format_report(info, [], [], from_sidecar)
+
+    checks = [
+        (info.get("Exception code", "").startswith("0xC0000005"), "exception"),
+        (info.get("zone") == "Dynamis-Bastok_[D]", "zone"),
+        ("zone_instance.cpp:505" in info.get("frame", ""), "frame"),
+        ("Alice (123)" in from_sidecar, "sidecar Alice"),
+        ("Carol (789)" in from_sidecar, "sidecar Carol"),
+        ("Alice (123)" in from_log, "log fallback Alice"),
+        ("**Players / instances**" in msg, "discord section"),
+        ("Alice (123)" in msg, "discord Alice"),
+    ]
+    failed = [name for ok, name in checks if not ok]
+    if failed:
+        print(f"[crash-watcher] self-test FAILED: {', '.join(failed)}")
+        return 1
+    print("[crash-watcher] self-test OK — sidecar, Wheaty fallback, and Discord text all name Alice/Carol")
+    print(msg)
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", action="store_true", help="Post a test message and exit")
+    parser.add_argument("--self-test", action="store_true",
+                        help="Parse a fake dump locally; do not post to Discord")
     args = parser.parse_args()
+
+    if args.self_test:
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            return self_test(Path(tmp))
 
     if args.test:
         post(":white_check_mark: **Crash watcher test** — if you can read this, "

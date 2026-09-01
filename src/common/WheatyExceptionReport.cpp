@@ -385,9 +385,36 @@ LONG WINAPI WheatyExceptionReport::WheatyUnhandledExceptionFilter(
         Log(_T("Git Date: %s"), version::GetGitDate());
         Log(_T("====================================================="));
 
+#ifdef UNICODE
+        char sidecarPath[MAX_PATH]{};
+        WideCharToMultiByte(CP_ACP, 0, m_szLogFileName, -1, sidecarPath, MAX_PATH, nullptr, nullptr);
+        crash_snapshot::WriteSidecar(sidecarPath);
+#else
         crash_snapshot::WriteSidecar(m_szLogFileName);
+#endif
+        // Wheaty::Log only keeps 1024 bytes per call — write one line at a time
+        // so the in-dump fallback is complete if the sidecar write fails.
         Log(_T("=== Flight recorder ==="));
-        Log(_T("%s"), crash_snapshot::Copy().c_str());
+        {
+            const auto snapshot = crash_snapshot::Copy();
+            std::string line;
+            for (const char ch : snapshot)
+            {
+                if (ch == '\n')
+                {
+                    Log(_T("%s"), line.c_str());
+                    line.clear();
+                }
+                else if (ch != '\r')
+                {
+                    line.push_back(ch);
+                }
+            }
+            if (!line.empty())
+            {
+                Log(_T("%s"), line.c_str());
+            }
+        }
         Log(_T("====================================================="));
 
         Log(_T("=== Backtrace ==="));

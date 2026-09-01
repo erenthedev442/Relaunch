@@ -22,6 +22,7 @@
 #include "luautils.h"
 
 #include <common/application.h>
+#include <common/crash_snapshot.h>
 #include <common/filewatcher.h>
 #include <common/ipc.h>
 #include <common/logging.h>
@@ -74,6 +75,7 @@
 #include "ability.h"
 #include "action/action.h"
 #include "battlefield.h"
+#include "crash_context.h"
 #include "conquest_system.h"
 #include "daily_system.h"
 #include "fishingcontest.h"
@@ -341,6 +343,11 @@ void init(IPP mapIPP, bool isRunningInCI)
     // This binding specifically exists to forcefully crash the server.
     // clang-format off
         lua.set_function("ForceCrash", []() { crash(); });
+        lua.set_function("GetCrashSnapshot", []()
+        {
+            crash_context::Refresh();
+            return crash_snapshot::Copy();
+        });
     // clang-format on
 
     // clang-format off
