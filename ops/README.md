@@ -27,6 +27,7 @@ and in this repo. **No laptop is involved.** Code comes from GitHub
 | Restart Map | Kill xi_map; supervisor relaunches it |
 | Map Logs / Other Logs | Tail map / connect+world+search logs |
 | Clear Sessions | `DELETE FROM accounts_sessions` (fixes "already logged in") |
+| **Troll Check** | Read-only sweep vs `tools/troll-watch/watchlist.json` (IPs, logins, remake patterns). Does not ban. |
 | Deploy | git pull + apply zz_ SQL + restart (Lua/SQL, no C++ build) |
 | **Rebuild** | git pull (optional) → stop → SQL → **C++ rebuild** (vcvars64 + cmake/Ninja) → restart. Backs up `xi_*.exe`→`.bak` and restores on build failure. |
 | Push to GitHub | Commit + push `C:\server` to `origin/relaunch` (run in RDP) |

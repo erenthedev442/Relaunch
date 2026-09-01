@@ -1,0 +1,192 @@
+{
+  "updated": "2026-09-01",
+  "notes": [
+    "Source of truth for troll IPs, logins, names, and watch patterns.",
+    "Read-only checks: tools/troll-watch/check_trolls.ps1 (VPS) or ops/Relaunch - Troll Check.bat.",
+    "Never firewall 185.124.0.99 — that is the GM home IP. A troll only used it as a LOGIN STRING.",
+    "Never lock Katrrine accid 1075. Name collision only.",
+    "Gaspard on login zogen is a real player. Gaspar (no D) was the squat.",
+    "Do not treat NordVPN / PacketHub brand alone as proof. Exact IPs + same-session overlap are the signal."
+  ],
+  "never_touch": {
+    "account_ids": [1075],
+    "logins": ["katrrine"],
+    "char_names": ["Katrrine", "Duda", "Sara", "Sofia", "Thanos"],
+    "ips_never_firewall": ["185.124.0.99"],
+    "reasons": {
+      "1075": "Katrrine — 39h play on 24.242.157.37, not a troll IP. Name collision with slur remakes.",
+      "185.124.0.99": "GM home IP (Eren / Kirin). Troll account 1245 used this STRING as the login, never connected from it.",
+      "Duda/Sara/Sofia/Thanos": "Normal Reforge players. Do not treat as suspects from crash logs.",
+      "zogen/Gaspard": "Real player. The squat was Gaspar on login gaspard (1122)."
+    }
+  },
+  "clusters": [
+    {
+      "id": "brazil_vtal",
+      "label": "Brazil remake / slur wave (V.tal AS7738 + VPN hops)",
+      "status": "banned",
+      "banned_on": "2026-09-01",
+      "accounts": [
+        {"id": 1061, "login": "1234"},
+        {"id": 1074, "login": "penis"},
+        {"id": 1077, "login": "penis1"},
+        {"id": 1106, "login": "bro"},
+        {"id": 1107, "login": "niqqer"},
+        {"id": 1115, "login": "erenisretarded"},
+        {"id": 1118, "login": "erenisjewretard"},
+        {"id": 1119, "login": "retarderenjew"},
+        {"id": 1120, "login": "jamestajew"},
+        {"id": 1122, "login": "gaspard"},
+        {"id": 1124, "login": "isuckdonkeys"},
+        {"id": 1128, "login": "hexedmagic"},
+        {"id": 1129, "login": "warrior"},
+        {"id": 1130, "login": "starwarssucked"},
+        {"id": 1181, "login": "12345678910"},
+        {"id": 1182, "login": "garvnigga"},
+        {"id": 1245, "login": "185.124.0.99", "note": "login is GM IP string, not that IP"},
+        {"id": 1256, "login": "2"},
+        {"id": null, "login": "legendaryass"},
+        {"id": 1330, "login": "420blazeit", "char": "Bigbangow", "charid": 448}
+      ],
+      "characters": [
+        "Mildfordhaven",
+        "Nicholas",
+        "Bro",
+        "Niqqer",
+        "Gaspar",
+        "Dequan",
+        "Cummies",
+        "Erenisretardjew",
+        "Erenisjewretard",
+        "Erenisaniqqer",
+        "Garvauniqqa",
+        "Abysseaenjoyer",
+        "Hexedmagic",
+        "War",
+        "Drknotty",
+        "Xio",
+        "Bigbangow"
+      ],
+      "ips_exact": [
+        "69.1.199.233",
+        "187.40.229.77",
+        "187.40.229.2",
+        "187.40.229.172",
+        "187.40.228.105",
+        "187.13.128.38",
+        "187.13.192.178",
+        "187.15.134.38",
+        "186.247.35.98",
+        "186.247.35.146",
+        "186.247.188.37",
+        "92.119.18.189",
+        "84.247.42.254",
+        "84.247.41.188",
+        "209.46.1.7"
+      ],
+      "ip_prefixes": [
+        {"prefix": "186.247.", "tag": "brazil_vtal"},
+        {"prefix": "187.13.", "tag": "brazil_vtal"},
+        {"prefix": "187.40.", "tag": "brazil_vtal"},
+        {"prefix": "187.15.", "tag": "brazil_vtal"},
+        {"prefix": "69.1.199.", "tag": "atlanta_first_wave"},
+        {"prefix": "92.119.18.", "tag": "clouvider_packethub_atlanta"},
+        {"prefix": "84.247.", "tag": "nord_hydra_uk"},
+        {"prefix": "209.46.1.", "tag": "niqqer_ip"}
+      ],
+      "patterns": [
+        "slur / taunt remake names",
+        "numeric throwaway logins (2, 1234, 12345678910)",
+        "IP-as-login (copied GM public IP as username)",
+        "character named after geolocated town of stolen IP (Mildfordhaven)",
+        "same V.tal IP across remakes within hours",
+        "VPN hop first, then Brazil home ISP"
+      ]
+    },
+    {
+      "id": "bankai_nordvpn",
+      "label": "Bankai spy cluster (NordVPN PacketHub 66.179.156.*)",
+      "status": "banned",
+      "banned_on": "2026-09-01",
+      "accounts": [
+        {"id": 1204, "login": "bankai", "char": "Bankai", "charid": 261},
+        {"id": 1327, "login": "bankai2", "char": "Chatgpt", "charid": 445},
+        {"id": 1329, "login": "bankai3", "char": "Iminyourwalls", "charid": 447},
+        {"id": 1332, "login": "erenisapenis", "char": "Boobookitty", "charid": 449}
+      ],
+      "characters": ["Bankai", "Chatgpt", "Iminyourwalls", "Boobookitty"],
+      "ips_exact": [
+        "66.179.156.117",
+        "66.179.156.27",
+        "66.179.156.49",
+        "66.179.156.48",
+        "66.179.156.115"
+      ],
+      "ip_prefixes": [
+        {"prefix": "66.179.156.", "tag": "nordvpn_packethub_bankai", "caution": "shared VPN block — exact IP + login overlap is the proof, not the /24 alone"}
+      ],
+      "patterns": [
+        "login family bankai / bankai2 / bankai3",
+        "joke alt names (Chatgpt, Iminyourwalls)",
+        "same exact VPN IP on main + alts the same morning",
+        "almost no real play (Bankai ~28 min over 4 days, SMN 4)",
+        "starter-grant camouflage (rank 10, 300k gil, skills 5000, 737 spells) with 0 fame",
+        "client version 302606 vs expected 302602 on the alts",
+        "NOT the Brazil V.tal wave — VPN brand overlap with Mildfordhaven Atlanta hop only"
+      ]
+    },
+    {
+      "id": "prale_digit_trio",
+      "label": "Prale / Namers / Haha — digit-login trio (watch, not proven troll)",
+      "status": "watch",
+      "accounts": [
+        {"id": null, "login": "123456789", "char": "Prale"},
+        {"id": null, "login": "12345678", "char": "Namers"},
+        {"id": null, "login": "1234567890", "char": "Haha"}
+      ],
+      "characters": ["Prale", "Namers", "Haha"],
+      "ips_exact": [
+        "123.172.151.139",
+        "185.254.241.15",
+        "185.254.241.16",
+        "51.79.235.136"
+      ],
+      "ip_prefixes": [
+        {"prefix": "123.172.151.", "tag": "prale_china"},
+        {"prefix": "185.254.241.", "tag": "prale_vpn"},
+        {"prefix": "51.79.235.", "tag": "prale_ovh"},
+        {"prefix": "87.76.206.", "tag": "prale_hop"}
+      ],
+      "patterns": [
+        "three accounts in ~8 minutes (30 Aug 22:24–22:32)",
+        "logins are only long digit strings — do NOT treat substring 1234 as Brazil",
+        "same IP hop set across the three",
+        "different country / names from the slur wave — recheck, do not auto-ban"
+      ]
+    },
+    {
+      "id": "pucca_watch",
+      "label": "Pucca — probably unrelated (Japan home ISP)",
+      "status": "watch",
+      "accounts": [
+        {"id": 1328, "login": "pucca", "char": "Pucca", "charid": 446}
+      ],
+      "characters": ["Pucca"],
+      "ips_exact": ["106.176.200.24"],
+      "ip_prefixes": [],
+      "patterns": [
+        "account ID is only +1 after bankai2 — weak after a downtime rush",
+        "KDDI Japan home IP, not NordVPN",
+        "was in zone 44 same time as Bankai cluster (island hangout)",
+        "leave alone unless a later IP/name tie appears"
+      ]
+    }
+  ],
+  "name_regex": "mildford|milford|haven|nicholas|cummies|gaspar|dequan|migger|niqqer|nigger|penis|erenis|retard|jamestajew|donkeys|isuck|bankai|chatgpt|iminyourwalls|garvnigga|garvauniqqa|abysseaenjoyer|drknotty|hexedmagic|legendaryass|boobookitty|bigbangow|blazeit",
+  "login_regex": "mildford|milford|haven|nicholas|cummies|gaspar|dequan|migger|niqqer|nigger|penis|erenis|retard|jamestajew|donkeys|isuck|bankai|chatgpt|iminyourwalls|garvnigga|12345678910|legendaryass|hexedmagic|420blazeit|erenisapenis",
+  "exact_login_or_char": ["bro", "war", "warrior", "2", "1234", "pucca", "prale", "namers", "haha", "420blazeit"],
+  "style_flags": [
+    {"id": "ip_as_login", "sql": "a.login REGEXP '^[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}$'"},
+    {"id": "short_numeric_login", "sql": "a.login REGEXP '^[0-9]{1,6}$'", "note": "flags 2 / 1234. Longer digit logins are the Prale watch trio, not auto-Brazil."}
+  ]
+}
