@@ -8,6 +8,8 @@ set(COMMON_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/cbasetypes.h
     ${CMAKE_CURRENT_SOURCE_DIR}/console_service.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/console_service.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/crash_snapshot.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/crash_snapshot.h
     ${CMAKE_CURRENT_SOURCE_DIR}/database.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/database.h
     ${CMAKE_CURRENT_SOURCE_DIR}/debug.h

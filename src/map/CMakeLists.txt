@@ -55,6 +55,8 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/conquest_data.h
     ${CMAKE_CURRENT_SOURCE_DIR}/conquest_system.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/conquest_system.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/crash_context.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/crash_context.h
     ${CMAKE_CURRENT_SOURCE_DIR}/daily_system.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/daily_system.h
     ${CMAKE_CURRENT_SOURCE_DIR}/enmity_container.cpp

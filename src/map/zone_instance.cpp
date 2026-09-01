@@ -22,6 +22,7 @@
 #include "zone_instance.h"
 #include "ai/ai_container.h"
 #include "common/logging.h"
+#include "crash_context.h"
 #include "common/timer.h"
 #include "entities/charentity.h"
 #include "lua/luautils.h"
@@ -781,5 +782,6 @@ CInstance* CZoneInstance::CreateInstance(uint32 instanceid)
 
     m_InstanceList.emplace_back(std::make_unique<CInstance>(scheduler_, config_, this, instanceid));
     ShowInfoFmt("[CZoneInstance] Created instance {} in {} ({} live copies)", instanceid, getName(), m_InstanceList.size());
+    crash_context::Note(fmt::format("Created instance {} in {} ({} live copies)", instanceid, getName(), m_InstanceList.size()));
     return m_InstanceList.back().get();
 }

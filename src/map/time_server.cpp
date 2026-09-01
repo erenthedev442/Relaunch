@@ -24,6 +24,7 @@
 #include "common/logging.h"
 #include "common/vana_time.h"
 
+#include "crash_context.h"
 #include "daily_system.h"
 #include "entities/charentity.h"
 #include "latent_effect_container.h"
@@ -178,6 +179,7 @@ auto time_server(Scheduler& scheduler, MapConfig config) -> Task<void>
     luautils::OnTimeServerTick();
     luautils::TryReloadFilewatchList();
     moduleutils::OnTimeServerTick();
+    crash_context::Refresh();
 
     TracyFrameMark;
 }

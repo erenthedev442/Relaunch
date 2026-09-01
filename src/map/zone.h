@@ -43,6 +43,7 @@
 #include <list>
 #include <map>
 #include <memory>
+#include <string>
 #include <unordered_map>
 
 //
@@ -660,6 +661,7 @@ public:
     virtual bool IsZoneEmpty();
 
     virtual void ForEachChar(const std::function<void(CCharEntity*)>& func);
+    virtual void AppendCrashOccupancy(std::string& out);
     virtual void ForEachCharInstance(CBaseEntity* PEntity, const std::function<void(CCharEntity*)>& func);
     virtual void ForEachMob(const std::function<void(CMobEntity*)>& func);
     virtual void ForEachMobInstance(CBaseEntity* PEntity, const std::function<void(CMobEntity*)>& func);

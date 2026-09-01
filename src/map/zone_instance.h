@@ -67,6 +67,7 @@ public:
     bool         IsZoneEmpty() override;
 
     void ForEachChar(const std::function<void(CCharEntity*)>& func) override;
+    void AppendCrashOccupancy(std::string& out) override;
     void ForEachCharInstance(CBaseEntity* PEntity, const std::function<void(CCharEntity*)>& func) override;
     void ForEachMob(const std::function<void(CMobEntity*)>& func) override;
     void ForEachMobInstance(CBaseEntity* PEntity, const std::function<void(CMobEntity*)>& func) override;

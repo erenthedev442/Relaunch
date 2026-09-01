@@ -13,6 +13,7 @@
 #include <string>
 
 #include "cbasetypes.h"
+#include "crash_snapshot.h"
 #include "logging.h"
 #include "utils.h"
 #include "timer.h"
@@ -382,6 +383,11 @@ LONG WINAPI WheatyExceptionReport::WheatyUnhandledExceptionFilter(
         Log(_T("Git Commit Subject: %s"), version::GetGitCommitSubject());
         Log(_T("Git SHA: %s"), version::GetGitSha());
         Log(_T("Git Date: %s"), version::GetGitDate());
+        Log(_T("====================================================="));
+
+        crash_snapshot::WriteSidecar(m_szLogFileName);
+        Log(_T("=== Flight recorder ==="));
+        Log(_T("%s"), crash_snapshot::Copy().c_str());
         Log(_T("====================================================="));
 
         Log(_T("=== Backtrace ==="));
