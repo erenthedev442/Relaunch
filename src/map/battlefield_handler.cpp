@@ -31,6 +31,9 @@
 
 #include "entities/battleentity.h"
 #include "entities/charentity.h"
+#include "entities/mobentity.h"
+#include "entities/petentity.h"
+#include "entities/trustentity.h"
 
 #include "lua/luautils.h"
 
@@ -71,6 +74,25 @@ void CBattlefieldHandler::HandleBattlefields(timer::time_point tick)
             if (PBattlefield->Cleanup(tick, false))
             {
                 ShowDebug("[CBattlefieldHandler]HandleBattlefields cleaned up Battlefield %s", PBattlefield->GetName().c_str());
+
+                // Defense-in-depth: before this CBattlefield is freed, null PBattlefield
+                // on ANY zone entity still pointing at it, so nothing dereferences freed
+                // battlefield memory on the next tick (e.g. an ex-charmed-pet mob still in
+                // m_mobList -- see the CZoneEntities::ZoneServer use-after-free). Cleanup()
+                // only sweeps the battlefield's own tracked lists; this catches the rest.
+                m_PZone->ForEachMob([&](CMobEntity* PZoneMob) {
+                    if (PZoneMob->PBattlefield == PBattlefield) { PZoneMob->PBattlefield = nullptr; }
+                });
+                m_PZone->ForEachPet([&](CPetEntity* PZonePet) {
+                    if (PZonePet->PBattlefield == PBattlefield) { PZonePet->PBattlefield = nullptr; }
+                });
+                m_PZone->ForEachTrust([&](CTrustEntity* PZoneTrust) {
+                    if (PZoneTrust->PBattlefield == PBattlefield) { PZoneTrust->PBattlefield = nullptr; }
+                });
+                m_PZone->ForEachChar([&](CCharEntity* PZoneChar) {
+                    if (PZoneChar->PBattlefield == PBattlefield) { PZoneChar->PBattlefield = nullptr; }
+                });
+
                 it = m_Battlefields.erase(it);
                 continue;
             }

@@ -1563,6 +1563,15 @@ void DetachPet(CBattleEntity* PMaster)
     {
         CMobEntity* PMob = static_cast<CMobEntity*>(PPet);
 
+        // The charmed mob is leaving its master's control. If it was taken into a
+        // battlefield (CBattlefield::InsertEntity recurses into pets and sets
+        // PMob->PBattlefield), nothing else nulls that pointer here -- the mob is in
+        // none of Cleanup()'s tracked lists. A later battlefield free then leaves this
+        // mob (still in the zone's m_mobList) pointing at freed memory, and the next
+        // zone tick crashes at zone_entities.cpp CZoneEntities::ZoneServer (dereferences
+        // PMob->PBattlefield). Sever the link now.
+        PMob->PBattlefield = nullptr;
+
         if (!PMob->isDead())
         {
             PMob->PAI->Disengage();
