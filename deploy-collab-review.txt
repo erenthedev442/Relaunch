@@ -1,575 +1,925 @@
-﻿Collaborator review  2026-08-31 12:23:08
-Range: HEAD..origin/relaunch  (2 collaborator commit(s))
+﻿Collaborator review  2026-09-01 03:16:16
+Range: HEAD..origin/relaunch  (4 collaborator commit(s))
 
 ==============================================================================
-commit 2c3a6c142d969e1f430043332644d72555acb57f
+commit 33ee5ac3da8b2d136ee7717da270e7ba72241e30
 Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Mon Aug 31 20:17:31 2026 +0100
+Date:   Tue Sep 1 01:56:23 2026 +0100
 
-    fix(relaunch): skip Lua battlefield calls on dead entities
+    chore(relaunch): keep relic/Epeo/Idris client DATs in the repo
     
-    Timers and win/leave hooks were touching freed players or mobs, which crashed xi_map with ACCESS_VIOLATION (lua_checkstack / 08F33F7).
+    The Downloads folder and the Ring/Track Suit pack were easy to mix up. Canonical overlay is Custom DATs/Legendary-Relic-Weapon-DATs (ROM 118/108 and 0/6).
     
     Co-authored-by: Cursor <cursoragent@cursor.com>
 
-diff --git a/src/map/lua/lua_baseentity.cpp b/src/map/lua/lua_baseentity.cpp
-index aae0d57a6b..9bd6ba22db 100644
---- a/src/map/lua/lua_baseentity.cpp
-+++ b/src/map/lua/lua_baseentity.cpp
-@@ -12263,6 +12263,10 @@ uint16 CLuaBaseEntity::copyConfrontationEffect(uint16 targetID)
- 
- auto CLuaBaseEntity::getBattlefield() const -> CBattlefield*
- {
-+    // Timers/closures (HTBF win warp, leave hooks) keep this wrapper after
-+    // logout/zone/cleanup. Unguarded deref is a live ACCESS_VIOLATION.
-+    FJB_REQUIRE_ALIVE(nullptr);
-+
-     return m_PBaseEntity->PBattlefield;
- }
- 
-@@ -12275,6 +12279,8 @@ auto CLuaBaseEntity::getBattlefield() const -> CBattlefield*
- 
- auto CLuaBaseEntity::getBattlefieldID() const -> int32
- {
-+    FJB_REQUIRE_ALIVE(-1);
-+
-     return m_PBaseEntity->PBattlefield ? m_PBaseEntity->PBattlefield->GetID() : -1;
- }
- 
-@@ -12428,6 +12434,8 @@ auto CLuaBaseEntity::enterBattlefield(const sol::object& area) const -> bool
- 
- auto CLuaBaseEntity::leaveBattlefield(const uint8 leavecode) const -> bool
- {
-+    FJB_REQUIRE_ALIVE(false);
-+
-     if (m_PBaseEntity->loc.zone == nullptr)
-     {
-         ShowError("CLuaBaseEntity::leaveBattlefield() - loc.zone was null for %s", m_PBaseEntity->getName());
-@@ -12452,6 +12460,8 @@ auto CLuaBaseEntity::leaveBattlefield(const uint8 leavecode) const -> bool
- 
- auto CLuaBaseEntity::isInDynamis() const -> bool
- {
-+    FJB_REQUIRE_ALIVE(false);
-+
-     if (m_PBaseEntity->objtype == TYPE_NPC)
-     {
-         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
-@@ -12470,6 +12480,8 @@ auto CLuaBaseEntity::isInDynamis() const -> bool
- 
- void CLuaBaseEntity::setEnteredBattlefield(const bool entered) const
- {
-+    FJB_REQUIRE_ALIVE_VOID();
-+
-     if (m_PBaseEntity->objtype != TYPE_PC)
-     {
-         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-@@ -12492,6 +12504,8 @@ void CLuaBaseEntity::setEnteredBattlefield(const bool entered) const
- 
- auto CLuaBaseEntity::hasEnteredBattlefield() const -> bool
- {
-+    FJB_REQUIRE_ALIVE(false);
-+
-     if (m_PBaseEntity->objtype != TYPE_PC)
-     {
-         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-@@ -19498,6 +19512,8 @@ bool CLuaBaseEntity::itemDespoiled()
- 
- int16 CLuaBaseEntity::getTHlevel()
- {
-+    FJB_REQUIRE_ALIVE(0);
-+
-     if (m_PBaseEntity->objtype == TYPE_MOB)
-     {
-         CMobEntity* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
-diff --git a/src/map/lua/lua_battlefield.cpp b/src/map/lua/lua_battlefield.cpp
-index 5f8d56edb1..ad773de944 100644
---- a/src/map/lua/lua_battlefield.cpp
-+++ b/src/map/lua/lua_battlefield.cpp
-@@ -143,6 +143,12 @@ sol::table CLuaBattlefield::getMobs(bool required, bool adds)
-         m_PLuaBattlefield->ForEachRequiredEnemy(
-         [&](CMobEntity* PMob)
-         {
-+            // Win/loot Lua (HTBF TH scan) can run after a mob was already
-+            // destroyed. Do not hand Lua a wrapper around a freed pointer.
-+            if (!CBaseEntity::IsEntityAlive(PMob))
-+            {
-+                return;
-+            }
-             table.add(CLuaBaseEntity(PMob));
-         });
-         // clang-format on
-@@ -154,6 +160,10 @@ sol::table CLuaBattlefield::getMobs(bool required, bool adds)
-         m_PLuaBattlefield->ForEachAdditionalEnemy(
-         [&](CMobEntity* PMob)
-         {
-+            if (!CBaseEntity::IsEntityAlive(PMob))
-+            {
-+                return;
-+            }
-             table.add(CLuaBaseEntity(PMob));
-         });
-         // clang-format on
-==============================================================================
-commit 5aa7e2ee4ce3e40a035a0d1fdb4f5a417498aede
-Author: Sion Roberts <siondewiroberts@gmail.com>
-Date:   Mon Aug 31 20:20:27 2026 +0100
-
-    fix(relaunch): restore HTBF loot, correct Epeo/Idris, unstick deploy fetch
-    
-    Win rewards used a nil self and skipped loot plus the hub warp. Epeolatry is RUN-only with a real 119 I step; GEO+10 stays on Idris 119 III. Deploy fails instead of hanging on a GitHub password prompt. Casino menus unlock when they land. VPS crash-report helper added.
-    
-    Co-authored-by: Cursor <cursoragent@cursor.com>
-
-diff --git a/deploy-relaunch.ps1 b/deploy-relaunch.ps1
-index 4092445f4c..827ab4074e 100644
---- a/deploy-relaunch.ps1
-+++ b/deploy-relaunch.ps1
-@@ -33,6 +33,9 @@
- # vps-rebuild just pushed), so it publishes even if the build fell back.
- # =====================================================================
- $ErrorActionPreference = 'Continue'
-+# Never hang deploy on "Username for https://github.com". A failed fetch is
-+# reported below; GCM must not block waiting for a password box.
-+$env:GIT_TERMINAL_PROMPT = '0'
- $root     = 'C:\server'
- $rebuild  = Join-Path $root 'vps-rebuild.ps1'
- $docsTask = 'Relaunch-DocsRefresh'
-@@ -64,12 +67,19 @@ Say '============================================================' 'Cyan'
- $MyEmails   = @('rknutz@gmail.com','richardknutzjr@hotmail.com')
- $reviewFile = Join-Path $root 'deploy-collab-review.txt'
- try {
--    git -C $root fetch origin relaunch --quiet 2>$null
-+    $fetchOut = git -C $root fetch origin relaunch 2>&1
-+    $fetchOk  = ($LASTEXITCODE -eq 0)
-     $US = [char]0x1f
-+    if (-not $fetchOk) {
-+        Say '  Incoming: GitHub fetch FAILED -- cannot see new commits (not an empty branch).' 'Yellow'
-+        $errLine = @($fetchOut | ForEach-Object { "$_" } | Where-Object { $_.Trim() } | Select-Object -First 2)
-+        if ($errLine) { Say ('  ' + ($errLine -join ' | ')) 'DarkYellow' }
-+        Say '  Store a ghp_ PAT for richardknutzjr (Password box, not the website login) or switch origin to SSH.' 'DarkYellow'
-+    }
-     $incoming = @(git -C $root log 'HEAD..origin/relaunch' --format='%ae' 2>$null)
--    if (-not $incoming -or $incoming.Count -eq 0) {
--        Say '  Incoming: nothing new since your live code (or offline -- fetch skipped).' 'Gray'
--    } else {
-+    if ($fetchOk -and (-not $incoming -or $incoming.Count -eq 0)) {
-+        Say '  Incoming: nothing new. Live already matches origin/relaunch.' 'Gray'
-+    } elseif ($fetchOk) {
-         $mineCount  = @($incoming | Where-Object { $MyEmails -contains $_ }).Count
-         $otherCount = $incoming.Count - $mineCount
-         Say ('  Incoming this deploy: {0} commit(s) -- {1} yours, {2} from other collaborators.' -f $incoming.Count, $mineCount, $otherCount) 'Cyan'
-diff --git a/modules/custom/lua/Casino.lua b/modules/custom/lua/Casino.lua
-index 8db5041842..e111d787a6 100644
---- a/modules/custom/lua/Casino.lua
-+++ b/modules/custom/lua/Casino.lua
-@@ -58,9 +58,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-     -- The menu round-trips title + the clicked label through a 128-byte buffer
-     -- (client matches the full string on click) -- keep labels short or a click
-     -- silently no-ops. Send is deferred a tick so result messages land first.
-+    -- Lift the in-flight guard HERE (when the menu actually lands), not in
-+    -- settle. Slots already cleared it via openBets; High-Low / Roulette /
-+    -- Dice re-show their pick screen without openBets, so a leftover lock
-+    -- made the next click a silent no-op.
-     local function show(player)
-         local snap = { title = menu.title, options = menu.options }
--        player:timer(30, function(p) p:customMenu(snap) end)
-+        local pid  = player:getID()
-+        player:timer(30, function(p)
-+            betting[pid] = nil
-+            p:customMenu(snap)
-+        end)
-     end
- 
-     local function header(player)
-@@ -72,6 +80,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
-     local function takeBet(player, bet)
-         local pid = player:getID()
-         if betting[pid] then
-+            player:printToPlayer('[Casino] Easy -- wait for the next hand.', S)
-             return false
-         end
-         if player:getGil() < bet then
-diff --git a/modules/custom/lua/htbf.lua b/modules/custom/lua/htbf.lua
-index 4cc6233c10..994ca25be6 100644
---- a/modules/custom/lua/htbf.lua
-+++ b/modules/custom/lua/htbf.lua
-@@ -832,30 +832,26 @@ function htbf.register(fightKey, tier, variant)
-             player:setCharVar(firstClearCv, 1)
-         end
-         catalog.progress.recordClear(player, tier, isFinalTest)
--        -- Item loot. HTBF fights use a custom battlefieldId with NO C++ retail
--        -- treasure, and the reuse-base fights end their win in varied ways (most
--        -- on a bare setStatus(WON) that never opens an Armoury Crate), so the
--        -- stock crate -> handleLootRolls path drops nothing. Roll content.loot
--        -- HERE -- the one hook that reliably fires on every fight's win (it's
--        -- where gil/marks already land) -- and give the items straight to the
--        -- player, per completion. Optional gear groups use independent,
--        -- tier-scaled rolls with Treasure Hunter; guaranteed weighted groups
--        -- retain the stock selectFromLootGroups behavior.
-+        -- Item loot. grantWinRewards is a local function, not a colon method --
-+        -- never use `self` here (that was a nil global and aborted the hub warp).
-+        -- HTBF IDs have no C++ retail treasure; reuse-base wins often skip the
-+        -- Armoury Crate. Roll content.loot on this hook so every clear pays.
-         local looted = 0
--        if self.loot then
--            pcall(function()
--                local thLevel = getBattlefieldTreasureHunter(player, bf)
--                for _, entry in ipairs(selectTierLoot(player, self.loot, tier, thLevel)) do
--                    if entry.itemId and entry.itemId ~= 0 then
--                        if entry.itemId == xi.item.GIL then
--                            player:addGil(entry.amount or 0)
--                        elseif npcUtil.giveItem(player, {{ entry.itemId, entry.amount or 1 }}) then
--                            looted = looted + 1
--                        end
-+        pcall(function()
-+            if not content.loot then
-+                return
-+            end
-+            local thLevel = getBattlefieldTreasureHunter(player, bf)
-+            for _, entry in ipairs(selectTierLoot(player, content.loot, tier, thLevel)) do
-+                if entry.itemId and entry.itemId ~= 0 then
-+                    if entry.itemId == xi.item.GIL then
-+                        player:addGil(entry.amount or 0)
-+                    elseif npcUtil.giveItem(player, {{ entry.itemId, entry.amount or 1 }}) then
-+                        looted = looted + 1
-                     end
-                 end
--            end)
--        end
-+            end
-+        end)
-         pcall(function()
-             if isFinalTest then
-                 player:printToPlayer(
-@@ -876,7 +872,7 @@ function htbf.register(fightKey, tier, variant)
-     -- first, then leave the instance and return to the hub after a short win
-     -- window instead of starting the unavailable client event.
-     function content:onBattlefieldWin(player, battlefield)
--        grantWinRewards(player)
-+        pcall(grantWinRewards, player)
-         player:timer(2500, function(p)
-             if p:getBattlefield() then
-                 p:leaveBattlefield(1)
-@@ -893,7 +889,7 @@ function htbf.register(fightKey, tier, variant)
-     -- finish callback. The battlefield-scoped latch in grantWinRewards keeps
-     -- a reward from being paid twice.
-     function content:onEventFinishWin(player, csid, option, npc)
--        grantWinRewards(player)
-+        pcall(grantWinRewards, player)
-     end
- 
-     -- Armoury-crate loot. Priority: a fight's per-tier override (f.loot[tier]),
-diff --git a/modules/custom/lua/weapon_forge_catalog.lua b/modules/custom/lua/weapon_forge_catalog.lua
-index 10bcd3b7ec..b53d94613a 100644
---- a/modules/custom/lua/weapon_forge_catalog.lua
-+++ b/modules/custom/lua/weapon_forge_catalog.lua
-@@ -385,8 +385,9 @@ catalog.mythicChains =
-     { type = 'Archery', jobs = 'RNG', name = 'Gastraphetes', base = 19829, s1 = 21247, s2 = 21266, s3 = 22139 },
-     { type = 'Marksmanship', jobs = 'COR', name = 'Death Penalty', base = 19835, s1 = 21263, s2 = 21268, s3 = 22141 },
-     -- Custom 99 / 119 I IDs in the unused 19968-20479 hole. Client DATs clone
--    -- looks from 20753 / 21070. Same three mythicCosts steps as Conqueror.
--    { type = 'Great Sword', jobs = 'WAR/DRK', name = 'Epeolatry', base = 19968, s1 = 19969, s2 = 20753, s3 = 21685 },
-+    -- looks from 20753 / 21070; 119 I damage sits below those 119 II donors.
-+    -- Same three mythicCosts steps as Conqueror.
-+    { type = 'Great Sword', jobs = 'RUN', name = 'Epeolatry', base = 19968, s1 = 19969, s2 = 20753, s3 = 21685 },
-     { type = 'Club',        jobs = 'GEO',     name = 'Idris',     base = 19970, s1 = 19971, s2 = 21070, s3 = 21080 },
- }
- 
-diff --git a/modules/custom/sql/idris_exudation.sql b/modules/custom/sql/idris_exudation.sql
-index e067193b3a..cc20d799ae 100644
---- a/modules/custom/sql/idris_exudation.sql
-+++ b/modules/custom/sql/idris_exudation.sql
-@@ -12,6 +12,10 @@ ON DUPLICATE KEY UPDATE
-     `skilllevel` = VALUES(`skilllevel`),
-     `animation` = VALUES(`animation`);
- 
-+-- Never leave GEO+10 on the lower Idris stages, even if item_mods.sql
-+-- is re-applied after the ladder file.
-+DELETE FROM `item_mods` WHERE `itemId` IN (19970, 19971, 21070) AND `modId` = 961;
-+
- INSERT INTO `item_mods` VALUES
-     (21080,5,100),
-     (21080,28,40),
-diff --git a/modules/custom/sql/zz_epeo_idris_ladder.sql b/modules/custom/sql/zz_epeo_idris_ladder.sql
-index 6031a9518b..05f60a7d24 100644
---- a/modules/custom/sql/zz_epeo_idris_ladder.sql
-+++ b/modules/custom/sql/zz_epeo_idris_ladder.sql
-@@ -3,7 +3,7 @@
- --
- -- Real 99 / 119 I IDs for Epeolatry and Idris (empty retail hole 19968-19971).
- -- Client DATs clone looks from 20753 / 21070. Server jobs match the forge:
---- Epeo WAR/DRK, Idris GEO.
-+-- Epeo RUN only, Idris GEO.
- --
- -- Ladder:
- --   Epeolatry  19968 (99) -> 19969 (119 I) -> 20753 (119) -> 21685 (119 III)
-@@ -11,6 +11,7 @@
- --
- -- Native WS is on every stage so pilgrimage chapters work while equipped,
- -- same as Conqueror / Yagrush. GEO+10 stays on Idris 119 III only.
-+-- 119 I sits between 99 and 119 II (not a clone of the 119 numbers).
- -- Idempotent. Restart xi_map after apply (item tables are cached at boot).
- -- ============================================================================
- 
-@@ -32,23 +33,23 @@ INSERT INTO `item_weapon`
-     (`itemId`, `name`, `skill`, `subskill`, `ilvl_skill`, `ilvl_parry`, `ilvl_macc`, `dmgType`, `hit`, `delay`, `dmg`, `unlock_points`)
- VALUES
-     (19968, 'epeolatry', 4,  0,   0,   0,   0, 2, 1, 489, 154, 0),
--    (19969, 'epeolatry', 4,  0, 242, 242, 215, 2, 1, 489, 243, 0),
-+    (19969, 'epeolatry', 4,  0, 242, 242, 215, 2, 1, 489, 199, 0),
-     (19970, 'idris',    11,  0,   0,   0,   0, 3, 1, 280,  80, 0),
--    (19971, 'idris',    11,  0, 242, 242, 228, 3, 1, 280, 139, 0);
-+    (19971, 'idris',    11,  0, 242, 242, 228, 3, 1, 280, 110, 0);
- 
---- jobs: WAR+DRK = 33, GEO = 1048576
-+-- jobs: RUN = 2097152, GEO = 1048576
- -- MId 706 / 707 match the 119 donors so the DAT-cloned looks resolve
- DELETE FROM `item_equipment` WHERE `itemId` IN (19968, 19969, 19970, 19971);
- INSERT INTO `item_equipment`
-     (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId`, `shieldSize`, `scriptType`, `slot`, `rslot`, `rslotlook`, `su_level`)
- VALUES
--    (19968, 'epeolatry', 99,   0,      33, 706, 0, 0, 1, 0, 0, 0),
--    (19969, 'epeolatry', 99, 119,      33, 706, 0, 0, 1, 0, 0, 0),
-+    (19968, 'epeolatry', 99,   0, 2097152, 706, 0, 0, 1, 0, 0, 0),
-+    (19969, 'epeolatry', 99, 119, 2097152, 706, 0, 0, 1, 0, 0, 0),
-     (19970, 'idris',     99,   0, 1048576, 707, 0, 0, 3, 0, 0, 0),
-     (19971, 'idris',     99, 119, 1048576, 707, 0, 0, 3, 0, 0, 0);
- 
---- Existing 119 / 119 III were RUN-only (2097152). Forge path is WAR/DRK.
--UPDATE `item_equipment` SET `jobs` = 33 WHERE `itemId` IN (20753, 21685);
-+-- 33 was WAR+THF (a bad WAR/DRK mask). Keep every Epeo stage RUN-only.
-+UPDATE `item_equipment` SET `jobs` = 2097152 WHERE `itemId` IN (19968, 19969, 20753, 21685);
- 
- DELETE FROM `item_mods` WHERE `itemId` IN (19968, 19969, 19970, 19971, 20753, 21070);
- INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
-@@ -68,14 +69,14 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
-     (19970,   5,  50),   -- MP
-     (19970, 256,  31),   -- AFTERMATH (mage mythic)
-     (19970, 355, 175),   -- ADDS_WEAPONSKILL Exudation
--    -- Idris 119 I
--    (19971,   5, 100),
--    (19971,  28,  25),   -- MATT
--    (19971,  30,  25),   -- MACC
-+    -- Idris 119 I (below 21070: less MP, no mage package, no GEO+10)
-+    (19971,   5,  75),
-     (19971, 256,  31),
--    (19971, 311, 155),   -- MAGIC_DAMAGE
-     (19971, 355, 175),
--    -- Idris 119: keep MP, add WS, drop GEO+10 (that stays on 21080)
-+    -- Idris 119 II: MP + WS. No GEO+10 (that stays on 21080).
-     (21070,   5, 100),
-     (21070, 256,  31),
-     (21070, 355, 175);
-+
-+-- Belt-and-suspenders: retail item_mods.sql used to put GEO+10 on 21070.
-+DELETE FROM `item_mods` WHERE `itemId` IN (19970, 19971, 21070) AND `modId` = 961;
-diff --git a/ops/Relaunch - Crash Reports.bat b/ops/Relaunch - Crash Reports.bat
+diff --git a/Custom DATs/Legendary-Relic-Weapon-DATs/README.txt b/Custom DATs/Legendary-Relic-Weapon-DATs/README.txt
 new file mode 100644
-index 0000000000..24639bc544
+index 0000000000..6f92d26cc2
 --- /dev/null
-+++ b/ops/Relaunch - Crash Reports.bat	
-@@ -0,0 +1,7 @@
-+@echo off
-+title Relaunch - Crash Reports
-+echo === Five newest crash reports (double-click on the VPS) ===
-+echo.
-+powershell -NoProfile -ExecutionPolicy Bypass -File "C:\server\ops\crash-reports.ps1"
-+echo.
-+pause
-diff --git a/ops/VPS-GITHUB-DEPLOY.md b/ops/VPS-GITHUB-DEPLOY.md
++++ b/Custom DATs/Legendary-Relic-Weapon-DATs/README.txt	
+@@ -0,0 +1,72 @@
++Legendary Relic Weapon DATs
++===========================
++
++CANONICAL COPY: this folder in the Relaunch repo
++  Custom DATs\Legendary-Relic-Weapon-DATs\
++
++Do not treat C:\Users\Sion\Downloads\Legendary-Relic-Weapon-DATs as source
++of truth (and do not use the 29 Aug zip ΓÇö that pack has no Epeo/Idris).
++
++This pack is SEPARATE from Custom DATs\Relaunch Custom DATs
++(Legendary Ring + Track Suit). XIPivot needs BOTH overlays.
++
++These client files do two jobs:
++
++1) Extra jobs on the listed relic lines (same as before)
++2) New unused-ID records for Epeolatry / Idris 99 and 119 I
++
++Files
++-----
++ROM\118\108.DAT   English weapons
++ROM\0\6.DAT       base / Japanese weapons
++
++New items (empty retail hole 19968-20479)
++-----------------------------------------
++19968  Epeolatry   99      RUN       cloned look from 20753, DMG 154, no ilvl
++19969  Epeolatry   119 I   RUN       cloned look from 20753, DMG 199 (below 20753's 243)
++19970  Idris       99      GEO       cloned look from 21070, DMG 80, no ilvl
++19971  Idris       119 I   GEO       cloned look from 21070, DMG 110 (below 21070's 139), no GEO+10
++
++Also patched so every Epeo stage stays RUN-only:
++20753  Epeolatry   119     RUN
++21685  Epeolatry   119 III RUN
++
++Idris 21070 / 21080 were already GEO.
++21070 examine no longer lists Geomancy +10 (that line stays on 21080 only).
++
++Intended ladder (server SQL still needed)
++-----------------------------------------
++Epeolatry:  19968 -> 19969 -> 20753 -> 21685
++Idris:      19970 -> 19971 -> 21070 -> 21080
++
++Relic extra jobs (unchanged)
++----------------------------
++Mandau       +DNC   18270, 18271, 18638, 18652, 18666, 19747, 19840, 20555, 20556, 20583
++Excalibur    +BLU   18276, 18277, 18639, 18653, 18667, 19748, 19841, 20645, 20646, 20685
++Spharai      +PUP   18264, 18265, 18637, 18651, 18665, 19746, 19839, 20480, 20481, 20509
++Ragnarok     +RUN   18282, 18283, 18640, 18654, 18668, 19749, 19842, 20745, 20746, 21683
++Mjollnir     +GEO   18324, 18325, 18647, 18661, 18675, 19756, 19849, 21060, 21061, 21077
++Claustrum    +SCH   18330, 18331, 18648, 18662, 18676, 19757, 19850, 21135, 21136, 22060
++Annihilator  +COR   18336, 18337, 18649, 18663, 18677, 19758, 19851, 21260, 21261, 21267, 22140
++
++Installation
++------------
++XIPivot (preferred): add this folder as an overlay (keep ROM\118 and ROM\0).
++Also keep "Relaunch Custom DATs" enabled for Ring + Track Suit.
++
++Or copy into the client:
++1. Exit FINAL FANTASY XI and PlayOnline.
++2. BACK UP the original DAT files before installing:
++   C:\Program Files (x86)\PlayOnline\SquareEnix\FINAL FANTASY XI\ROM\118\108.DAT
++   C:\Program Files (x86)\PlayOnline\SquareEnix\FINAL FANTASY XI\ROM\0\6.DAT
++3. Copy the included ROM folder into:
++   C:\Program Files (x86)\PlayOnline\SquareEnix\FINAL FANTASY XI
++   and allow only these two matching DAT paths to be replaced.
++
++WARNING: Keep your backups. PlayOnline/FFXI updates may overwrite these files
++or re-version the item DATs. After a client update, run _rebuild.ps1 to
++regenerate this pack from the new retail files.
++
++The DAT pack is visual only (name, icon, examine text, client job mask).
++Server item_weapon / item_equipment / the Weapon Forge catalog still have
++to issue 19968-19971 before anyone can hold them.
+diff --git a/Custom DATs/Legendary-Relic-Weapon-DATs/ROM/0/6.DAT b/Custom DATs/Legendary-Relic-Weapon-DATs/ROM/0/6.DAT
 new file mode 100644
-index 0000000000..7d167715ec
---- /dev/null
-+++ b/ops/VPS-GITHUB-DEPLOY.md
-@@ -0,0 +1,88 @@
-+# VPS GitHub deploy (C:\server)
-+
-+Use this the next time **Relaunch - Deploy** says
-+`Incoming: nothing new since your live code (or offline -- fetch skipped)`
-+or hangs on `Username for 'https://github.com':`.
-+
-+## What that message actually means
-+
-+Deploy only counts commits it can **fetch from `origin`**.
-+If GitHub auth fails, that line is empty even when GitHub has new commits.
-+
-+This PC (`C:\Projects\Relaunch`) can push. The VPS uses HTTPS `origin`
-+and Git Credential Manager. GitHub **rejects your website password** for
-+`git fetch` / `git push`. The password box must be a **`ghp_ΓÇª` PAT**, not
-+the login password.
-+
-+## At the Username / Password prompt
-+
-+- **Username:** `richardknutzjr`
-+- **Password:** the full classic PAT (`repo` scope). It must start with `ghp_`.
-+
-+That is valid. A website password produces:
-+`Password authentication is not supported` / `Invalid username or token`.
-+
-+## One-shot fetch if `origin` is broken
-+
-+On the VPS, in `C:\server` (do not screenshot the token):
-+
-+```powershell
-+git -c credential.helper= fetch https://richardknutzjr:ghp_TOKEN@github.com/richardknutzjr/Relaunch.git relaunch
-+git log --oneline HEAD..FETCH_HEAD
-+git rebase FETCH_HEAD
-+```
-+
-+`-c credential.helper=` skips the popup.
-+
-+If rebase conflicts on **`settings/map.lua`**, keep the VPS live file:
-+
-+```powershell
-+git checkout --theirs settings/map.lua
-+git add settings/map.lua
-+git -c core.editor=true rebase --continue
-+```
-+
-+Then **Relaunch - Deploy** ΓåÆ **Y**.
-+`Incoming: nothing new` is OK if `git log --oneline -8` already shows the
-+GitHub commits (e.g. `6d6b0e36c2`). Rebuild will say fetch failed and
-+**build on-disk code**.
-+
-+A failed `git fetch origin` **wipes `FETCH_HEAD`**. Do not run `origin`
-+until rebase has finished.
-+
-+## Lasting fix (do this so you are not repeating the workaround)
-+
-+**SSH deploy key (preferred)**
-+
-+```powershell
-+ssh-keygen -t ed25519 -C "vps-relaunch" -f $env:USERPROFILE\.ssh\id_ed25519 -N ""
-+Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub
-+```
-+
-+Repo ΓåÆ Settings ΓåÆ Deploy keys ΓåÆ add the `.pub` line, **Allow write access**.
-+
-+```powershell
-+cd C:\server
-+ssh -o StrictHostKeyChecking=accept-new git@github.com
-+git remote set-url origin git@github.com:richardknutzjr/Relaunch.git
-+git fetch origin relaunch
-+```
-+
-+**Or HTTPS + PAT stored once** (after GCM stops asking, or disable it):
-+
-+```powershell
-+git config --global credential.helper "store --file C:/Users/Administrator/.git-credentials"
-+Set-Content C:\Users\Administrator\.git-credentials "https://richardknutzjr:ghp_NEW_TOKEN@github.com"
-+git fetch origin relaunch
-+```
-+
-+Revoke any PAT that appeared in a screenshot or terminal history.
-+
-+## After deploy, confirm it was this code
-+
-+```powershell
-+git -C C:\server log --oneline -8
-+```
-+
-+You want the commits you just pushed. Watch for `build OK - new binaries in place`.
-+C++ / `blueutils` changes need that full rebuild, not a light deploy.
-diff --git a/ops/crash-reports.ps1 b/ops/crash-reports.ps1
+index 0000000000..e54c263cd4
+Binary files /dev/null and b/Custom DATs/Legendary-Relic-Weapon-DATs/ROM/0/6.DAT differ
+diff --git a/Custom DATs/Legendary-Relic-Weapon-DATs/ROM/118/108.DAT b/Custom DATs/Legendary-Relic-Weapon-DATs/ROM/118/108.DAT
 new file mode 100644
-index 0000000000..70ee5dd2e6
+index 0000000000..0f6e927a75
+Binary files /dev/null and b/Custom DATs/Legendary-Relic-Weapon-DATs/ROM/118/108.DAT differ
+diff --git a/Custom DATs/Legendary-Relic-Weapon-DATs/_rebuild.ps1 b/Custom DATs/Legendary-Relic-Weapon-DATs/_rebuild.ps1
+new file mode 100644
+index 0000000000..5214d4b227
 --- /dev/null
-+++ b/ops/crash-reports.ps1
-@@ -0,0 +1,48 @@
-+# Newest Wheaty crash reports + supervisor deaths. Run from the VPS.
-+$ErrorActionPreference = 'Continue'
-+$root = 'C:\server'
-+$dmp  = Join-Path $root 'dmp'
-+$sup  = Join-Path $root 'relaunch-supervisor.log'
-+$map  = Join-Path $root 'log\map-server.log'
++++ b/Custom DATs/Legendary-Relic-Weapon-DATs/_rebuild.ps1	
+@@ -0,0 +1,208 @@
++$ErrorActionPreference = 'Stop'
 +
-+Write-Host ''
-+Write-Host '=== Supervisor (last 8 start / hang / kill lines) ===' -ForegroundColor Cyan
-+if (Test-Path $sup) {
-+    Select-String -Path $sup -Pattern 'Starting xi_|HUNG|force kill|Supervisor starting' |
-+        Select-Object -Last 8 |
-+        ForEach-Object { $_.Line }
-+} else {
-+    Write-Host "(no $sup)"
++$package    = $PSScriptRoot
++$ffxi       = 'C:\Program Files (x86)\PlayOnline\SquareEnix\FINAL FANTASY XI'
++$recordSize = 0xC00
++$firstId    = 0x4000
++
++$sources = [ordered]@{
++    'ROM\118\108.DAT' = Join-Path $ffxi 'ROM\118\108.DAT'
++    'ROM\0\6.DAT'     = Join-Path $ffxi 'ROM\0\6.DAT'
 +}
 +
-+Write-Host ''
-+Write-Host '=== Top 5 crash reports (C:\server\dmp) ===' -ForegroundColor Cyan
-+$reports = @(Get-ChildItem (Join-Path $dmp '*.log') -ErrorAction SilentlyContinue |
-+    Sort-Object LastWriteTime -Descending |
-+    Select-Object -First 5)
-+if (-not $reports) {
-+    Write-Host '(no Wheaty .log files ΓÇö process may have hung without a dump)'
-+} else {
-+    $n = 0
-+    foreach ($f in $reports) {
-+        $n++
-+        Write-Host ''
-+        Write-Host ("---- {0}  {1}  {2} ----" -f $n, $f.LastWriteTime.ToString('yyyy-MM-dd HH:mm:ss'), $f.Name) -ForegroundColor Yellow
-+        $lines = Get-Content $f.FullName -TotalCount 80
-+        $keep = $lines | Where-Object {
-+            $_ -match 'CRASH|Exception code|Assertion|Watchdog|Faulting|\.cpp|\.h:|\.lua:'
++$relicGroups = @(
++    @{ Bit = [uint32]0x00080000; IDs = @(18270,18271,18638,18652,18666,19747,19840,20555,20556,20583) }
++    @{ Bit = [uint32]0x00010000; IDs = @(18276,18277,18639,18653,18667,19748,19841,20645,20646,20685) }
++    @{ Bit = [uint32]0x00040000; IDs = @(18264,18265,18637,18651,18665,19746,19839,20480,20481,20509) }
++    @{ Bit = [uint32]0x00400000; IDs = @(18282,18283,18640,18654,18668,19749,19842,20745,20746,21683) }
++    @{ Bit = [uint32]0x00200000; IDs = @(18324,18325,18647,18661,18675,19756,19849,21060,21061,21077) }
++    @{ Bit = [uint32]0x00100000; IDs = @(18330,18331,18648,18662,18676,19757,19850,21135,21136,22060) }
++    @{ Bit = [uint32]0x00020000; IDs = @(18336,18337,18649,18663,18677,19758,19851,21260,21261,21267,22140) }
++)
++
++function Ror5([byte]$b) {
++    [byte]((($b -shr 5) -bor (($b -band 0x1F) -shl 3)) -band 0xFF)
++}
++function Rol5([byte]$b) {
++    [byte](((($b -shl 5) -band 0xFF) -bor ($b -shr 3)) -band 0xFF)
++}
++
++function Decode-Id([byte[]]$file, [int]$id) {
++    $off = ($id - $firstId) * $recordSize
++    $dec = New-Object byte[] $recordSize
++    for ($i = 0; $i -lt $recordSize; $i++) { $dec[$i] = Ror5 $file[$off + $i] }
++    ,$dec
++}
++
++function Poke-U16($arr, [int]$off, [uint16]$value) {
++    $b = [BitConverter]::GetBytes($value)
++    $arr[$off]     = $b[0]
++    $arr[$off + 1] = $b[1]
++}
++function Poke-U32($arr, [int]$off, [uint32]$value) {
++    $b = [BitConverter]::GetBytes($value)
++    $arr[$off]     = $b[0]
++    $arr[$off + 1] = $b[1]
++    $arr[$off + 2] = $b[2]
++    $arr[$off + 3] = $b[3]
++}
++
++function Find-Dmg([byte[]]$arr) {
++    for ($i = 0x80; $i -lt 0x200; $i++) {
++        if ($arr[$i] -eq 0x44 -and $arr[$i+1] -eq 0x4D -and $arr[$i+2] -eq 0x47 -and $arr[$i+3] -eq 0x3A) {
++            return $i
 +        }
-+        if ($keep) { $keep | Select-Object -First 12 } else { $lines | Select-Object -First 15 }
++    }
++    return -1
++}
++
++function Replace-Digits($arr, [int]$from, [int]$to, [string]$old, [string]$new) {
++    $oldB = [Text.Encoding]::ASCII.GetBytes($old)
++    $newB = [Text.Encoding]::ASCII.GetBytes($new)
++    $hits = 0
++    for ($i = $from; $i -le ($to - $oldB.Length); $i++) {
++        $ok = $true
++        for ($j = 0; $j -lt $oldB.Length; $j++) {
++            if ($arr[$i + $j] -ne $oldB[$j]) { $ok = $false; break }
++        }
++        if ($ok) {
++            for ($j = 0; $j -lt $oldB.Length; $j++) {
++                $arr[$i + $j] = if ($j -lt $newB.Length) { $newB[$j] } else { [byte]0x20 }
++            }
++            $hits++
++        }
++    }
++    $hits
++}
++
++$epeo99Desc = "DMG:154 Delay:489`nEnmity+18`n`"Dimidiation`"`nAftermath: Increases accuracy and attack`nOccasionally attacks twice or thrice"
++$epeo119IDesc = "DMG:199 Delay:489`nGreat Sword skill +242`nParrying skill +242`nMagic Accuracy skill +215`nEnmity+18`n`"Dimidiation`"`nAftermath: Increases accuracy and attack`nOccasionally attacks twice or thrice"
++$idris99Desc = "DMG:80 Delay:280`n`"Exudation`"`nAftermath: Increases Magic Accuracy and `"Magic Atk. Bonus`"`nOccasionally attacks twice or thrice"
++$idris119IDesc = "DMG:110 Delay:280`nClub skill +242`nParrying skill +242`nMagic Accuracy skill +228`n`"Exudation`"`nAftermath: Increases Magic Accuracy and `"Magic Atk. Bonus`"`nOccasionally attacks twice or thrice"
++$idris119Desc = "DMG:139 Delay:280`nMagic Accuracy+25`n`"Magic Atk. Bonus`"+25`nMagic Damage+155`nClub skill +242`nParrying skill +242`nMagic Accuracy skill +228`nLuopan: Damage taken -25%`n`"Exudation`"`nAftermath: Increases Magic Accuracy and `"Magic Atk. Bonus`"`nOccasionally attacks twice or thrice"
++
++$RUN     = [uint32]0x00400000
++$GEO     = [uint32]0x00200000
++
++New-Item -ItemType Directory -Force -Path (Join-Path $package 'ROM\118') | Out-Null
++New-Item -ItemType Directory -Force -Path (Join-Path $package 'ROM\0') | Out-Null
++
++$report = New-Object System.Collections.Generic.List[string]
++
++foreach ($rel in $sources.GetEnumerator()) {
++    $src = Get-Item -LiteralPath $rel.Value
++    $file = [IO.File]::ReadAllBytes($src.FullName)
++    if (($file.Length % $recordSize) -ne 0) { throw "Unexpected size $($file.Length) for $($rel.Key)" }
++    $isEnglish = $rel.Key -like '*118*'
++
++    foreach ($g in $relicGroups) {
++        foreach ($id in $g.IDs) {
++            $dec = Decode-Id $file $id
++            $jobs = [BitConverter]::ToUInt32($dec, 0x14) -bor $g.Bit
++            Poke-U32 $dec 0x14 $jobs
++            $off = ($id - $firstId) * $recordSize
++            for ($i = 0; $i -lt $recordSize; $i++) { $file[$off + $i] = Rol5 $dec[$i] }
++        }
++    }
++
++    $clones = @(
++        @{ Donor = 20753; NewId = 19968; Jobs = $RUN; Dmg = [uint16]154; Ilvl = [byte]0;   EnDesc = $epeo99Desc;    JpOld = '243'; JpNew = '154' }
++        @{ Donor = 20753; NewId = 19969; Jobs = $RUN; Dmg = [uint16]199; Ilvl = [byte]119; EnDesc = $epeo119IDesc;  JpOld = '243'; JpNew = '199' }
++        @{ Donor = 21070; NewId = 19970; Jobs = $GEO;     Dmg = [uint16]80;  Ilvl = [byte]0;   EnDesc = $idris99Desc;   JpOld = '139'; JpNew = '80' }
++        @{ Donor = 21070; NewId = 19971; Jobs = $GEO;     Dmg = [uint16]110; Ilvl = [byte]119; EnDesc = $idris119IDesc; JpOld = '139'; JpNew = '110' }
++    )
++
++    foreach ($c in $clones) {
++        $dec = Decode-Id $file $c.Donor
++        Poke-U32 $dec 0 $c.NewId
++        Poke-U32 $dec 0x14 $c.Jobs
++        Poke-U16 $dec 0x1C $c.Dmg
++        $dec[0x32] = $c.Ilvl
++        if ($isEnglish -and $c.EnDesc) {
++            $descOff = Find-Dmg $dec
++            if ($descOff -lt 0) { throw "No DMG: on donor $($c.Donor)" }
++            $text = [Text.Encoding]::ASCII.GetBytes($c.EnDesc)
++            if (($descOff + $text.Length + 1) -gt 0x280) { throw 'EN desc too long' }
++            for ($i = $descOff; $i -lt 0x280; $i++) { $dec[$i] = 0 }
++            [Buffer]::BlockCopy($text, 0, $dec, $descOff, $text.Length)
++        }
++        if (-not $isEnglish -and $c.JpOld) {
++            $hits = Replace-Digits $dec 0x80 0x280 $c.JpOld $c.JpNew
++            if ($hits -lt 1) { throw "JP $($c.NewId): '$($c.JpOld)' not found" }
++        }
++        if (-not $isEnglish -and $c.Donor -eq 21070) {
++            $null = Replace-Digits $dec 0x80 0x280 '+10' '   '
++        }
++        $null = Replace-Digits $dec 0x80 0x280 ([string]$c.Donor) ([string]$c.NewId)
++        $off = ($c.NewId - $firstId) * $recordSize
++        for ($i = 0; $i -lt $recordSize; $i++) { $file[$off + $i] = Rol5 $dec[$i] }
++    }
++
++    foreach ($id in 20753, 21685) {
++        $dec = Decode-Id $file $id
++        Poke-U32 $dec 0x14 $RUN
++        $off = ($id - $firstId) * $recordSize
++        for ($i = 0; $i -lt $recordSize; $i++) { $file[$off + $i] = Rol5 $dec[$i] }
++    }
++
++    # 21070 is retail 119: strip GEO+10 so only 119 III (21080) advertises it.
++    $dec = Decode-Id $file 21070
++    if ($isEnglish) {
++        $descOff = Find-Dmg $dec
++        if ($descOff -lt 0) { throw 'No DMG: on 21070' }
++        $text = [Text.Encoding]::ASCII.GetBytes($idris119Desc)
++        if (($descOff + $text.Length + 1) -gt 0x280) { throw '21070 EN desc too long' }
++        for ($i = $descOff; $i -lt 0x280; $i++) { $dec[$i] = 0 }
++        [Buffer]::BlockCopy($text, 0, $dec, $descOff, $text.Length)
++    } else {
++        $hits = Replace-Digits $dec 0x80 0x280 '+10' '   '
++        if ($hits -lt 1) { throw 'JP 21070: +10 (Geomancy) not found' }
++    }
++    $off = (21070 - $firstId) * $recordSize
++    for ($i = 0; $i -lt $recordSize; $i++) { $file[$off + $i] = Rol5 $dec[$i] }
++
++    $out = Join-Path $package $rel.Key
++    [IO.File]::WriteAllBytes($out, $file)
++    $hash = (Get-FileHash -LiteralPath $out -Algorithm SHA256).Hash.ToLowerInvariant()
++    $srcHash = (Get-FileHash -LiteralPath $src.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
++    if ($hash -eq $srcHash) { throw "$($rel.Key) hash matches source - nothing was written" }
++    $report.Add(('{0}  {1} bytes  sha256={2}' -f $rel.Key, $file.Length, $hash))
++}
++
++$en = [IO.File]::ReadAllBytes((Join-Path $package 'ROM\118\108.DAT'))
++$checks = @(
++    @{ Id = 19968; Jobs = $RUN; Dmg = 154; Ilvl = 0;   Name = 'Epeolatry'; Needle = 'DMG:154' }
++    @{ Id = 19969; Jobs = $RUN; Dmg = 199; Ilvl = 119; Name = 'Epeolatry'; Needle = 'DMG:199' }
++    @{ Id = 19970; Jobs = $GEO;     Dmg = 80;  Ilvl = 0;   Name = 'Idris';     Needle = 'DMG:80' }
++    @{ Id = 19971; Jobs = $GEO;     Dmg = 110; Ilvl = 119; Name = 'Idris';     Needle = 'DMG:110'; Forbid = 'Geomancy' }
++    @{ Id = 20753; Jobs = $RUN; Dmg = 243; Ilvl = 119; Name = 'Epeolatry' }
++    @{ Id = 21070; Jobs = $GEO;     Dmg = 139; Ilvl = 119; Name = 'Idris';     Needle = 'DMG:139'; Forbid = 'Geomancy' }
++    @{ Id = 21080; Jobs = $GEO;     Dmg = 175; Ilvl = 119; Name = 'Idris';     Needle = 'Geomancy' }
++    @{ Id = 21685; Jobs = $RUN; Dmg = 305; Ilvl = 119; Name = 'Epeolatry' }
++)
++foreach ($c in $checks) {
++    $dec = Decode-Id $en $c.Id
++    $idField = [BitConverter]::ToUInt32($dec, 0)
++    if ($idField -ne $c.Id) { throw "ID field $idField != $($c.Id)" }
++    $jobs = [BitConverter]::ToUInt32($dec, 0x14)
++    if ($jobs -ne $c.Jobs) { throw ("jobs mismatch id {0}: 0x{1:X8}" -f $c.Id, $jobs) }
++    $dmg = [BitConverter]::ToUInt16($dec, 0x1C)
++    if ($dmg -ne $c.Dmg) { throw "dmg mismatch id $($c.Id) got $dmg" }
++    if ($dec[0x32] -ne $c.Ilvl) { throw "ilvl mismatch id $($c.Id)" }
++    $name = [Text.Encoding]::ASCII.GetString($dec, 0x80, 24).Split([char]0)[0]
++    if (-not $name.StartsWith($c.Name)) { throw "name mismatch id $($c.Id): '$name'" }
++    $text = [Text.Encoding]::ASCII.GetString($dec, 0x80, 0x200)
++    if ($c.Needle) {
++        if ($text.IndexOf($c.Needle) -lt 0) { throw "missing $($c.Needle) on $($c.Id)" }
++    }
++    if ($c.Forbid -and $text.IndexOf($c.Forbid) -ge 0) {
++        throw "forbidden '$($c.Forbid)' still on $($c.Id)"
++    }
++}
++$mandau = Decode-Id $en 18270
++if (([BitConverter]::ToUInt32($mandau, 0x14) -band [uint32]0x00080000) -eq 0) {
++    throw 'Mandau DNC bit missing'
++}
++
++Write-Output 'OK'
++$report | ForEach-Object { Write-Output $_ }
+diff --git a/Custom DATs/Relaunch Custom DATs/README.md b/Custom DATs/Relaunch Custom DATs/README.md
+index e8ed026a5d..1a9b0a2c8b 100644
+--- a/Custom DATs/Relaunch Custom DATs/README.md	
++++ b/Custom DATs/Relaunch Custom DATs/README.md	
+@@ -29,6 +29,11 @@ Prefer not to touch client files? Load it as an overlay instead:
+ 3. Enable the overlay in XIPivot.
+ 4. Restart the game client.
+ 
++This pack is Ring + Track Suit only. Epeolatry / Idris / extra relic jobs
++live in `Custom DATs/Legendary-Relic-Weapon-DATs/` (`ROM/118/108.DAT` and
++`ROM/0/6.DAT`). Enable that folder in XIPivot as a second overlay or the
++new Epeo/Idris IDs stay WAR/THF leftovers.
++
+ ## Current Overrides
+ 
+ ### Legendary Track Suit (cosmetic set)
+==============================================================================
+commit 7bb6380b5a9d2db3415100d65f7ea1022d69cd33
+Author: Sion Roberts <siondewiroberts@gmail.com>
+Date:   Tue Sep 1 03:18:20 2026 +0100
+
+    fix(relaunch): stop map ACCESS_VIOLATION on stale SQL during inventory sort
+    
+    Destroy cached prepared statements before reconnecting, and skip busy stacks so a sort after a failed trade cannot crash xi_map.
+    
+    Co-authored-by: Cursor <cursoragent@cursor.com>
+
+diff --git a/src/common/database.h b/src/common/database.h
+index 68d9a45c6e..aa5a313deb 100644
+--- a/src/common/database.h
++++ b/src/common/database.h
+@@ -218,8 +218,12 @@ struct State final
+ {
+     void reset()
+     {
+-        connection = getConnection();
++        // Statements hold a back-pointer into Connection. Destroy them first.
++        // Replacing connection first leaves cached statements dangling; the
++        // MariaDB connector then ACCESS_VIOLATIONs on executeUpdate instead of
++        // throwing a catchable SQLException (see Wheaty dump 31-8 18:35:31).
+         lazyPreparedStatements.clear();
++        connection = getConnection();
+     }
+ 
+     std::unique_ptr<sql::Connection>                                         connection;
+@@ -670,12 +674,19 @@ auto preparedStmt(const std::string& rawQuery, Args&&... args) -> std::unique_pt
+         {
+             const auto operation = [&]() -> std::unique_ptr<db::detail::ResultSetWrapper>
+             {
+-                // If we don't have it, lazily make it
+-                // cppcheck-suppress stlFindInsert
+-                if (state.lazyPreparedStatements.find(rawQuery) == state.lazyPreparedStatements.end())
++                if (!state.connection || state.connection->isClosed())
++                {
++                    throw std::runtime_error("Lost connection");
++                }
++
++                auto& stmt = state.lazyPreparedStatements[rawQuery];
++                if (!stmt)
++                {
++                    stmt.reset(state.connection->prepareStatement(rawQuery.c_str()));
++                }
++                if (!stmt)
+                 {
+-                    // cppcheck-suppress stlFindInsert
+-                    state.lazyPreparedStatements[rawQuery] = std::unique_ptr<sql::PreparedStatement>(state.connection->prepareStatement(rawQuery.c_str()));
++                    throw std::runtime_error("Lost connection");
+                 }
+ 
+                 DebugSQLFmt("preparedStmt: {}", rawQuery);
+@@ -686,7 +697,6 @@ auto preparedStmt(const std::string& rawQuery, Args&&... args) -> std::unique_pt
+                 // All blobs are stored here so they can be kept alive until the query is executed.
+                 std::vector<std::shared_ptr<BlobWrapper>> blobs;
+ 
+-                const auto& stmt = state.lazyPreparedStatements[rawQuery];
+                 db::detail::binder(stmt, counter, blobs, std::forward<Args>(args)...);
+                 const auto queryTimer = detail::timer(rawQuery);
+ 
+diff --git a/src/map/packets/c2s/0x03a_item_stack.cpp b/src/map/packets/c2s/0x03a_item_stack.cpp
+index 8204819785..516ae6d1cf 100644
+--- a/src/map/packets/c2s/0x03a_item_stack.cpp
++++ b/src/map/packets/c2s/0x03a_item_stack.cpp
+@@ -34,6 +34,11 @@ auto GP_CLI_COMMAND_ITEM_STACK::validate(MapSession* PSession, const CCharEntity
+ void GP_CLI_COMMAND_ITEM_STACK::process(MapSession* PSession, CCharEntity* PChar) const
+ {
+     CItemContainer* PItemContainer = PChar->getStorage(this->Category);
++    if (PItemContainer == nullptr)
++    {
++        ShowWarning("ITEM_STACK: %s invalid container %u", PChar->getName(), this->Category);
++        return;
++    }
+ 
+     const uint8 size = PItemContainer->GetSize();
+ 
+@@ -53,8 +58,9 @@ void GP_CLI_COMMAND_ITEM_STACK::process(MapSession* PSession, CCharEntity* PChar
+     for (uint8 slotId = 1; slotId <= size; ++slotId)
+     {
+         const CItem* PItem = PItemContainer->GetItem(slotId);
+-        // Skip items that are invalid, locked, reserved or already meeting stack size.
++        // Skip items that are invalid, busy/locked, reserved or already meeting stack size.
+         if (!PItem ||
++            PItem->isBusy() ||
+             PItem->getReserve() > 0 ||
+             PItem->isSubType(ITEM_LOCKED) ||
+             PItem->getQuantity() >= PItem->getStackSize())
+@@ -66,9 +72,10 @@ void GP_CLI_COMMAND_ITEM_STACK::process(MapSession* PSession, CCharEntity* PChar
+         {
+             const CItem* PItem2 = PItemContainer->GetItem(slotID2);
+ 
+-            // Skip items that are invalid, not matching, locked, reserved or already meeting stack size.
++            // Skip items that are invalid, not matching, busy/locked, reserved or already meeting stack size.
+             if (!PItem2 ||
+                 PItem2->getID() != PItem->getID() ||
++                PItem2->isBusy() ||
+                 PItem2->getReserve() > 0 ||
+                 PItem2->isSubType(ITEM_LOCKED) ||
+                 PItem2->getQuantity() >= PItem2->getStackSize())
+@@ -88,10 +95,25 @@ void GP_CLI_COMMAND_ITEM_STACK::process(MapSession* PSession, CCharEntity* PChar
+                 moveQty = PItem2->getQuantity();
+             }
+ 
+-            if (moveQty > 0)
++            if (moveQty == 0)
++            {
++                continue;
++            }
++
++            const auto containerId = static_cast<uint8>(PItemContainer->GetID());
++            // Destination first. If that write is refused, do not drain the source
++            // or the stack is silently deleted.
++            if (charutils::UpdateItem(PChar, containerId, slotId, static_cast<int32>(moveQty)) == 0)
++            {
++                continue;
++            }
++
++            charutils::UpdateItem(PChar, containerId, slotID2, -static_cast<int32>(moveQty));
++
++            PItem = PItemContainer->GetItem(slotId);
++            if (!PItem || PItem->getQuantity() >= PItem->getStackSize())
+             {
+-                charutils::UpdateItem(PChar, static_cast<uint8>(PItemContainer->GetID()), slotId, moveQty);
+-                charutils::UpdateItem(PChar, static_cast<uint8>(PItemContainer->GetID()), slotID2, -static_cast<int32>(moveQty));
++                break;
+             }
+         }
+     }
+==============================================================================
+commit 8b5441a4f0c0ad45bba08cc7ece69c7e56fbf30f
+Author: Sion Roberts <siondewiroberts@gmail.com>
+Date:   Tue Sep 1 10:35:35 2026 +0100
+
+    fix(relaunch): stop zone-tick UAF when Reforge dynamic NMs despawn
+    
+    Keep the BCNM leftover-pointer sweep and DetachPet null from 413ac ΓÇö those
+    are valid on real battlefields. They do not run in Diorama and do not cover
+    DE_Aello_S1. Erase disappearing dynamics from the live mob list immediately
+    and skip stale PBattlefield on the zone tick walk.
+    
+    Co-authored-by: Cursor <cursoragent@cursor.com>
+
+diff --git a/src/map/battlefield_handler.cpp b/src/map/battlefield_handler.cpp
+index 1acb4e3eec..ce6c318da7 100644
+--- a/src/map/battlefield_handler.cpp
++++ b/src/map/battlefield_handler.cpp
+@@ -32,6 +32,7 @@
+ #include "entities/battleentity.h"
+ #include "entities/charentity.h"
+ #include "entities/mobentity.h"
++#include "entities/npcentity.h"
+ #include "entities/petentity.h"
+ #include "entities/trustentity.h"
+ 
+@@ -75,23 +76,22 @@ void CBattlefieldHandler::HandleBattlefields(timer::time_point tick)
+             {
+                 ShowDebug("[CBattlefieldHandler]HandleBattlefields cleaned up Battlefield %s", PBattlefield->GetName().c_str());
+ 
+-                // Defense-in-depth: before this CBattlefield is freed, null PBattlefield
+-                // on ANY zone entity still pointing at it, so nothing dereferences freed
+-                // battlefield memory on the next tick (e.g. an ex-charmed-pet mob still in
+-                // m_mobList -- see the CZoneEntities::ZoneServer use-after-free). Cleanup()
+-                // only sweeps the battlefield's own tracked lists; this catches the rest.
+-                m_PZone->ForEachMob([&](CMobEntity* PZoneMob) {
+-                    if (PZoneMob->PBattlefield == PBattlefield) { PZoneMob->PBattlefield = nullptr; }
+-                });
+-                m_PZone->ForEachPet([&](CPetEntity* PZonePet) {
+-                    if (PZonePet->PBattlefield == PBattlefield) { PZonePet->PBattlefield = nullptr; }
+-                });
+-                m_PZone->ForEachTrust([&](CTrustEntity* PZoneTrust) {
+-                    if (PZoneTrust->PBattlefield == PBattlefield) { PZoneTrust->PBattlefield = nullptr; }
+-                });
+-                m_PZone->ForEachChar([&](CCharEntity* PZoneChar) {
+-                    if (PZoneChar->PBattlefield == PBattlefield) { PZoneChar->PBattlefield = nullptr; }
+-                });
++                // Cleanup() only nulls entities on its own lists. Null leftovers
++                // here so the unique_ptr erase below cannot leave a stale
++                // PBattlefield on a zone mob/pet/trust/npc/char.
++                auto clearIfMatch = [PBattlefield](CBaseEntity* PEntity)
++                {
++                    if (PEntity && PEntity->PBattlefield == PBattlefield)
++                    {
++                        PEntity->PBattlefield = nullptr;
++                    }
++                };
++                m_PZone->ForEachMob([&](CMobEntity* PZoneMob) { clearIfMatch(PZoneMob); });
++                m_PZone->ForEachAlly([&](CMobEntity* PZoneAlly) { clearIfMatch(PZoneAlly); });
++                m_PZone->ForEachPet([&](CPetEntity* PZonePet) { clearIfMatch(PZonePet); });
++                m_PZone->ForEachTrust([&](CTrustEntity* PZoneTrust) { clearIfMatch(PZoneTrust); });
++                m_PZone->ForEachNpc([&](CNpcEntity* PZoneNpc) { clearIfMatch(PZoneNpc); });
++                m_PZone->ForEachChar([&](CCharEntity* PZoneChar) { clearIfMatch(PZoneChar); });
+ 
+                 it = m_Battlefields.erase(it);
+                 continue;
+@@ -300,6 +300,24 @@ bool CBattlefieldHandler::RemoveFromBattlefield(CBaseEntity* PEntity, CBattlefie
+     return PBattlefield ? PBattlefield->RemoveEntity(PEntity, leavecode) : false;
+ }
+ 
++bool CBattlefieldHandler::Contains(const CBattlefield* PBattlefield) const
++{
++    if (!PBattlefield)
++    {
++        return false;
++    }
++
++    for (const auto& [area, battlefield] : m_Battlefields)
++    {
++        if (battlefield.get() == PBattlefield)
++        {
++            return true;
++        }
++    }
++
++    return false;
++}
++
+ bool CBattlefieldHandler::IsRegistered(CCharEntity* PChar)
+ {
+     for (const auto& [area, battlefield] : m_Battlefields)
+diff --git a/src/map/battlefield_handler.h b/src/map/battlefield_handler.h
+index 55f1376c87..ab5b7d4346 100644
+--- a/src/map/battlefield_handler.h
++++ b/src/map/battlefield_handler.h
+@@ -61,6 +61,7 @@ public:
+     CBattlefield* GetBattlefieldByInitiator(uint32 charID);
+     uint8         RegisterBattlefield(CCharEntity* PChar, const BattlefieldRegistration& registration); // attempts to register or load battlefield, returns BATTLEFIELD_RETURN_CODE
+     bool          RemoveFromBattlefield(CBaseEntity* PEntity, CBattlefield* PBattlefield = nullptr, uint8 leavecode = 3);
++    bool          Contains(const CBattlefield* PBattlefield) const; // true if this handler still owns the pointer
+     bool          IsRegistered(CCharEntity* PChar);
+     bool          ReachedMaxCapacity(int battlefieldId = -1) const;
+     uint8         MaxBattlefieldAreas() const;
+diff --git a/src/map/utils/petutils.cpp b/src/map/utils/petutils.cpp
+index c24c35956f..954713ede2 100644
+--- a/src/map/utils/petutils.cpp
++++ b/src/map/utils/petutils.cpp
+@@ -1563,13 +1563,9 @@ void DetachPet(CBattleEntity* PMaster)
+     {
+         CMobEntity* PMob = static_cast<CMobEntity*>(PPet);
+ 
+-        // The charmed mob is leaving its master's control. If it was taken into a
+-        // battlefield (CBattlefield::InsertEntity recurses into pets and sets
+-        // PMob->PBattlefield), nothing else nulls that pointer here -- the mob is in
+-        // none of Cleanup()'s tracked lists. A later battlefield free then leaves this
+-        // mob (still in the zone's m_mobList) pointing at freed memory, and the next
+-        // zone tick crashes at zone_entities.cpp CZoneEntities::ZoneServer (dereferences
+-        // PMob->PBattlefield). Sever the link now.
++        // Charm ended: this mob is no longer the master's pet. Drop any
++        // battlefield pointer InsertEntity copied onto it so a later BCNM
++        // free cannot leave a stale CBattlefield* on a wild mob.
+         PMob->PBattlefield = nullptr;
+ 
+         if (!PMob->isDead())
+diff --git a/src/map/zone_entities.cpp b/src/map/zone_entities.cpp
+index 012a04c1b9..b5d7d01845 100644
+--- a/src/map/zone_entities.cpp
++++ b/src/map/zone_entities.cpp
+@@ -77,6 +77,28 @@ constexpr auto CHARACTER_SYNC_ALLI_SIGNIFICANCE       = 10000U;
+ constexpr auto PERSIST_CHECK_CHARACTERS               = 20U;
+ constexpr auto INTERMEDIATE_CONTAINER_RESERVE_SIZE    = 16U;
+ 
++// Pull a disappearing dynamic entity out of the live zone list immediately so
++// the next ZoneServer walk cannot dereference a pointer we are about to
++// destroy(). Targid reuse is still delayed (60s) via m_dynamicTargIdsToDelete.
++void detachForDelete(EntityList_t& list, CBaseEntity* PEntity, std::vector<std::pair<uint16, timer::time_point>>& delayedTargIds)
++{
++    if (!PEntity)
++    {
++        return;
++    }
++
++    if (auto itr = list.find(PEntity->targid); itr != list.end() && itr->second == PEntity)
++    {
++        list.erase(itr);
++        delayedTargIds.emplace_back(PEntity->targid, timer::now());
 +    }
 +}
 +
-+Write-Host ''
-+Write-Host '=== Last 5 map errors (watchdog / Lua / fatal) ===' -ForegroundColor Cyan
-+if (Test-Path $map) {
-+    Select-String -Path $map -Pattern 'INACTIVITY WATCHDOG|luautils::|Fatal|std::terminate|!!! CRASH' |
-+        Select-Object -Last 5 |
-+        ForEach-Object { $_.Line.Trim() }
-+} else {
-+    Write-Host "(no $map)"
++bool battlefieldStillOwned(CZone* PZone, CBattlefield* PBattlefield)
++{
++    return PZone && PZone->m_BattlefieldHandler && PZone->m_BattlefieldHandler->Contains(PBattlefield);
 +}
-+Write-Host ''
-diff --git a/ops/vps-rebuild.ps1 b/ops/vps-rebuild.ps1
-index b9c00621ff..1b56635744 100644
---- a/ops/vps-rebuild.ps1
-+++ b/ops/vps-rebuild.ps1
-@@ -32,6 +32,7 @@
- # (that was Azure-box infra).
- # =====================================================================
- $ErrorActionPreference = 'Continue'
-+$env:GIT_TERMINAL_PROMPT = '0'   # fail fetch/push instead of hanging on Username:
- $root   = 'C:\server'
- $branch = 'relaunch'
- $mysql  = 'C:\Program Files\MariaDB 10.6\bin\mysql.exe'
-diff --git a/scripts/tests/systems/weapon_forge_integrity.lua b/scripts/tests/systems/weapon_forge_integrity.lua
-index 0fa70d9c52..db5ae6c9ee 100644
---- a/scripts/tests/systems/weapon_forge_integrity.lua
-+++ b/scripts/tests/systems/weapon_forge_integrity.lua
-@@ -357,6 +357,7 @@ describe('Weapon Forge catalog and gate integrity', function()
-         end
++
+ inline bool isWithinVerticalDistance(CBaseEntity* source, CBaseEntity* target)
+ {
+     const float verticalDistance = target->loc.p.y - source->loc.p.y - VERTICAL_RENDER_DISTANCE_OFFSET;
+@@ -1690,6 +1712,7 @@ auto CZoneEntities::mobTick(CMobEntity* PMob, timer::time_point tick) -> Task<vo
+         // is always safe (no-op on an already-empty list).
+         PMob->PEnmityContainer->Clear();
  
-         assert(epeo and not epeo.singleStep and epeo.issueBase ~= false)
-+        assert(epeo.jobs == 'RUN')
-         assert(epeo.base == 19968 and epeo.s1 == 19969 and epeo.s2 == 20753 and epeo.s3 == 21685)
-         assert(idris and not idris.singleStep and idris.issueBase ~= false)
-         assert(idris.base == 19970 and idris.s1 == 19971 and idris.s2 == 21070 and idris.s3 == 21080)
-diff --git a/sql/item_mods.sql b/sql/item_mods.sql
-index 8cceda725c..5aede98eea 100644
---- a/sql/item_mods.sql
-+++ b/sql/item_mods.sql
-@@ -43674,7 +43674,7 @@ INSERT INTO `item_mods` VALUES (21079,355,173); -- ADDS_WEAPONSKILL: 173
++        detachForDelete(m_mobList, PMob, m_dynamicTargIdsToDelete);
+         m_mobsToDelete.emplace_back(PMob);
+         co_return;
+     }
+@@ -1753,6 +1776,7 @@ auto CZoneEntities::npcTick(CNpcEntity* PNpc, timer::time_point tick) -> Task<vo
+             }
+         }
  
- -- Idris / Idris 119 II
- INSERT INTO `item_mods` VALUES (21070,5,100);    -- MP: 100
--INSERT INTO `item_mods` VALUES (21070,961,10);   -- GEOMANCY_BONUS: 10
-+-- GEO+10 (mod 961) is Idris 119 III (21080) only. 21070 is the 119 II step.
- INSERT INTO `item_mods` VALUES (21080,5,100);    -- MP: 100
- INSERT INTO `item_mods` VALUES (21080,28,40);    -- MATT: 40
- INSERT INTO `item_mods` VALUES (21080,30,40);    -- MACC: 40
-diff --git a/vps-rebuild.ps1 b/vps-rebuild.ps1
-index b256d9f3ba..97945ff054 100644
---- a/vps-rebuild.ps1
-+++ b/vps-rebuild.ps1
-@@ -32,6 +32,7 @@
- # (that was Azure-box infra).
- # =====================================================================
- $ErrorActionPreference = 'Continue'
-+$env:GIT_TERMINAL_PROMPT = '0'   # fail fetch/push instead of hanging on Username:
- $root   = 'C:\server'
- $branch = 'relaunch'
- $mysql  = 'C:\Program Files\MariaDB 10.6\bin\mysql.exe'
++        detachForDelete(m_npcList, PNpc, m_dynamicTargIdsToDelete);
+         m_npcsToDelete.emplace_back(PNpc);
+         co_return;
+     }
+@@ -1784,6 +1808,7 @@ auto CZoneEntities::petTick(CPetEntity* PPet, timer::time_point tick) -> Task<vo
+         // no mob notoriety container holds a dangling pointer after destroy().
+         PPet->PEnmityContainer->Clear();
+ 
++        detachForDelete(m_petList, PPet, m_dynamicTargIdsToDelete);
+         m_petsToDelete.emplace_back(PPet);
+         co_return;
+     }
+@@ -1836,6 +1861,7 @@ auto CZoneEntities::trustTick(CTrustEntity* PTrust, timer::time_point tick) -> T
+         // FJB: same UAF guard ΓÇö clear trust's enmity before freeing.
+         PTrust->PEnmityContainer->Clear();
+ 
++        detachForDelete(m_trustList, PTrust, m_dynamicTargIdsToDelete);
+         m_trustsToDelete.emplace_back(PTrust);
+         co_return;
+     }
+@@ -1895,11 +1921,29 @@ auto CZoneEntities::ZoneServer(timer::time_point tick) -> Task<void>
+                     continue;
+                 }
+ 
+-                if (PMob->PBattlefield && PMob->PBattlefield->CanCleanup())
++                // Dynamic NMs (Reforge / Hunting League) are erased from
++                // m_mobList as soon as they DISAPPEAR. Skip any leftover.
++                if (PMob->status == STATUS_TYPE::DISAPPEAR)
+                 {
+                     continue;
+                 }
+ 
++                if (CBattlefield* PBattlefield = PMob->PBattlefield)
++                {
++                    // Stale pointer: battlefield already unique_ptr-erased.
++                    // Null it so later ticks do not retry CanCleanup().
++                    if (!battlefieldStillOwned(m_zone, PBattlefield))
++                    {
++                        PMob->PBattlefield = nullptr;
++                        continue;
++                    }
++
++                    if (PBattlefield->CanCleanup())
++                    {
++                        continue;
++                    }
++                }
++
+                 add(mobTick(PMob, tick));
+             }
+         });
+@@ -1975,44 +2019,28 @@ auto CZoneEntities::ZoneServer(timer::time_point tick) -> Task<void>
+     // Cleanup logic
+     //
+ 
+-    for (const auto* PMob : m_mobsToDelete)
++    for (auto* PMob : m_mobsToDelete)
+     {
+-        if (auto itr = m_mobList.find(PMob->targid); itr != m_mobList.end())
+-        {
+-            m_mobList.erase(itr);
+-            m_dynamicTargIdsToDelete.emplace_back(PMob->targid, timer::now());
+-            destroy(PMob);
+-        }
++        detachForDelete(m_mobList, PMob, m_dynamicTargIdsToDelete);
++        destroy(PMob);
+     }
+ 
+-    for (const auto* PNpc : m_npcsToDelete)
++    for (auto* PNpc : m_npcsToDelete)
+     {
+-        if (auto itr = m_npcList.find(PNpc->targid); itr != m_npcList.end())
+-        {
+-            m_npcList.erase(itr);
+-            m_dynamicTargIdsToDelete.emplace_back(PNpc->targid, timer::now());
+-            destroy(PNpc);
+-        }
++        detachForDelete(m_npcList, PNpc, m_dynamicTargIdsToDelete);
++        destroy(PNpc);
+     }
+ 
+-    for (const auto* PPet : m_petsToDelete)
++    for (auto* PPet : m_petsToDelete)
+     {
+-        if (auto itr = m_petList.find(PPet->targid); itr != m_petList.end())
+-        {
+-            m_petList.erase(itr);
+-            m_dynamicTargIdsToDelete.emplace_back(PPet->targid, timer::now());
+-            destroy(PPet);
+-        }
++        detachForDelete(m_petList, PPet, m_dynamicTargIdsToDelete);
++        destroy(PPet);
+     }
+ 
+-    for (const auto* PTrust : m_trustsToDelete)
++    for (auto* PTrust : m_trustsToDelete)
+     {
+-        if (auto itr = m_trustList.find(PTrust->targid); itr != m_trustList.end())
+-        {
+-            m_trustList.erase(itr);
+-            m_dynamicTargIdsToDelete.emplace_back(PTrust->targid, timer::now());
+-            destroy(PTrust);
+-        }
++        detachForDelete(m_trustList, PTrust, m_dynamicTargIdsToDelete);
++        destroy(PTrust);
+     }
+ 
+     // Forcibly insert a yield here, so we allow other tasks (other zone ticks, etc.) to be
+==============================================================================
+commit 7e18f50e2659b02f72829f31d67d6f6ae8ece02e
+Author: Sion Roberts <siondewiroberts@gmail.com>
+Date:   Tue Sep 1 11:10:54 2026 +0100
+
+    fix(relaunch): stop map ACCESS_VIOLATION when a second Dynamis [D] instance opens
+    
+    Snapshot instance pointers before co_await so CreateInstance realloc cannot dangle the ZoneServer range-for (02:47 Dynamis-Bastok_[D]).
+    
+    Co-authored-by: Cursor <cursoragent@cursor.com>
+
+diff --git a/modules/custom/lua/Dynamis_Divergence.lua b/modules/custom/lua/Dynamis_Divergence.lua
+index 6c009d13cc..b8a4c59679 100644
+--- a/modules/custom/lua/Dynamis_Divergence.lua
++++ b/modules/custom/lua/Dynamis_Divergence.lua
+@@ -76,12 +76,14 @@ local function enter(player, portal, opt)
+         player:printToPlayer(string.format(
+             '[Divergence] The rift to %s opens (paid %d %s Marks, %d remain). Good luck, kupo!',
+             portal.label, ENTRY_COST.qty, opt.short, remaining), xi.msg.channel.SYSTEM_3)
++        print(string.format('[Divergence] %s joining existing instance %d (%s)', player:getName(), portal.instanceId, portal.label))
+         xi.divergence.joinPlayer(player, partyInst, { entryPos = portal.entryPos })
+         return
+     end
+ 
+     player:printToPlayer(string.format('[Divergence] The rift to %s opens (paid %d %s Marks, %d remain). Good luck, kupo!',
+         portal.label, ENTRY_COST.qty, opt.short, remaining), xi.msg.channel.SYSTEM_3)
++    print(string.format('[Divergence] %s creating instance %d (%s)', player:getName(), portal.instanceId, portal.label))
+     player:createInstance(portal.instanceId)
+ end
+ 
+diff --git a/src/map/utils/instanceutils.cpp b/src/map/utils/instanceutils.cpp
+index e825a4eade..60b45d9cc6 100644
+--- a/src/map/utils/instanceutils.cpp
++++ b/src/map/utils/instanceutils.cpp
+@@ -26,6 +26,7 @@
+ 
+ #include "lua/luautils.h"
+ 
++#include "entities/charentity.h"
+ #include "instance_loader.h"
+ #include "map_engine.h"
+ #include "zoneutils.h"
+@@ -174,6 +175,7 @@ auto CheckInstance(Scheduler& scheduler, MapConfig config) -> Task<void>
+ 
+     LoadQueue.pop();
+ 
++    ShowInfoFmt("[CZoneInstance] Loading instance {} for {} ({})", instanceId, PRequester->getName(), PRequester->id);
+     auto loader = std::make_unique<CInstanceLoader>(instanceId, PRequester);
+     loader->LoadInstance();
+ }
+diff --git a/src/map/zone_instance.cpp b/src/map/zone_instance.cpp
+index 3da8ff53ca..9b21640dcb 100644
+--- a/src/map/zone_instance.cpp
++++ b/src/map/zone_instance.cpp
+@@ -21,6 +21,7 @@
+ 
+ #include "zone_instance.h"
+ #include "ai/ai_container.h"
++#include "common/logging.h"
+ #include "common/timer.h"
+ #include "entities/charentity.h"
+ #include "lua/luautils.h"
+@@ -28,6 +29,8 @@
+ #include "utils/charutils.h"
+ #include "utils/zoneutils.h"
+ 
++#include <algorithm>
++
+ CZoneInstance::CZoneInstance(Scheduler& scheduler, MapConfig config, ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, uint8 levelRestriction)
+ : CZone(scheduler, config, ZoneID, RegionID, ContinentID, levelRestriction)
+ {
+@@ -498,30 +501,61 @@ auto CZoneInstance::ZoneServer(timer::time_point tick) -> Task<void>
+         co_await CZone::ZoneServer(tick);
+     }
+ 
++    // Snapshot raw pointers before any await. CheckInstance -> CreateInstance
++    // can emplace_back (and realloc) m_InstanceList while an instance tick is
++    // yielded ΓÇö CZoneEntities::ZoneServer explicitly yields so other zone /
++    // time_server work can run. A range-for reference into the vector is then
++    // a dangling unique_ptr (02:47 Dynamis-Bastok_[D] ACCESS_VIOLATION).
++    std::vector<CInstance*> instances;
++    instances.reserve(m_InstanceList.size());
++    for (const auto& inst : m_InstanceList)
++    {
++        if (inst)
++        {
++            instances.push_back(inst.get());
++        }
++    }
++
+     std::vector<CInstance*> instancesToRemove;
+-    for (const auto& PInstance : m_InstanceList)
++    for (CInstance* PInstance : instances)
+     {
++        if (!ContainsInstance(PInstance))
++        {
++            continue;
++        }
++
+         co_await PInstance->ZoneServer(tick);
++
++        if (!ContainsInstance(PInstance))
++        {
++            continue;
++        }
++
+         PInstance->CheckTime(tick);
+ 
+         if ((PInstance->Failed() || PInstance->Completed()) && PInstance->CharListEmpty())
+         {
+-            instancesToRemove.push_back(PInstance.get());
++            instancesToRemove.push_back(PInstance);
+         }
+     }
+ 
+-    for (const auto& PInstance : instancesToRemove)
++    for (CInstance* PInstance : instancesToRemove)
+     {
+-        ShowDebug("[CZoneInstance] ZoneServer cleaned up Instance %s", PInstance->GetName());
++        auto it = std::find_if(
++            m_InstanceList.begin(),
++            m_InstanceList.end(),
++            [PInstance](const auto& el)
++            {
++                return el.get() == PInstance;
++            });
++
++        if (it == m_InstanceList.end())
++        {
++            continue;
++        }
+ 
+-        m_InstanceList.erase(
+-            std::find_if(
+-                m_InstanceList.begin(),
+-                m_InstanceList.end(),
+-                [&PInstance](const auto& el)
+-                {
+-                    return el.get() == PInstance;
+-                }));
++        ShowDebug("[CZoneInstance] ZoneServer cleaned up Instance %s", PInstance->GetName());
++        m_InstanceList.erase(it);
+     }
+ }
+ 
+@@ -722,10 +756,30 @@ void CZoneInstance::ForEachAllyInstance(CBaseEntity* PEntity, const std::functio
+     }
+ }
+ 
++bool CZoneInstance::ContainsInstance(const CInstance* PInstance) const
++{
++    if (PInstance == nullptr)
++    {
++        return false;
++    }
++
++    return std::any_of(m_InstanceList.begin(), m_InstanceList.end(), [PInstance](const auto& inst)
++                       { return inst.get() == PInstance; });
++}
++
+ CInstance* CZoneInstance::CreateInstance(uint32 instanceid)
+ {
+     TracyZoneScoped;
+ 
++    // Grow before insert so a second concurrent [D] copy is less likely to
++    // realloc under a yielded ZoneServer. The snapshot in ZoneServer is the
++    // actual UAF fix; this just keeps the common 2ΓÇô4 copy case cheap.
++    if (m_InstanceList.capacity() < 8)
++    {
++        m_InstanceList.reserve(8);
++    }
++
+     m_InstanceList.emplace_back(std::make_unique<CInstance>(scheduler_, config_, this, instanceid));
++    ShowInfoFmt("[CZoneInstance] Created instance {} in {} ({} live copies)", instanceid, getName(), m_InstanceList.size());
+     return m_InstanceList.back().get();
+ }
+diff --git a/src/map/zone_instance.h b/src/map/zone_instance.h
+index a481f2ff89..19880c60be 100644
+--- a/src/map/zone_instance.h
++++ b/src/map/zone_instance.h
+@@ -86,6 +86,7 @@ public:
+ 
+ private:
+     bool IsHybrid();
++    bool ContainsInstance(const CInstance* PInstance) const;
+ 
+     typedef std::vector<std::unique_ptr<CInstance>> instanceList_t;
+ 
