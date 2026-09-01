@@ -39,13 +39,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     target:addStatusEffect(xi.effect.ATTACK_BOOST, { power = atkBoost, duration = duration, origin = caster })
     target:addStatusEffect(xi.effect.MAGIC_ATK_BOOST, { power = mabBoost, duration = duration, origin = caster })
 
-    local skill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
-    local cure = math.min(1800 + 2.4 * skill + 5 * caster:getStat(xi.mod.MND), 4500)
-    cure = math.floor(math.min(cure, target:getMaxHP() - target:getHP()))
-
-    target:addHP(cure)
-    caster:updateEnmityFromCure(target, cure)
-    return cure
+    return xi.spells.blue.applyBlueCure(caster, target, { base = 80, scale = 1.70 })
 end
 
 return spellObject

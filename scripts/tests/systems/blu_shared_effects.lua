@@ -259,4 +259,50 @@ describe('BLU shared effect helpers', function()
         allowed = sharedEffects.preparePlayerControl(makeCaster(false), makeTarget(true), xi.effect.DOOM, 60, 100)
         assert(allowed)
     end)
+
+    it('bands elemental matchup to resist / neutral / weak', function()
+        assert(sharedEffects.getElementMatchupFromSDT(0.5) == sharedEffects.ELEMENT_RESIST)
+        assert(sharedEffects.getElementMatchupFromSDT(1) == sharedEffects.ELEMENT_NEUTRAL)
+        assert(sharedEffects.getElementMatchupFromSDT(1.5) == sharedEffects.ELEMENT_WEAK)
+        assert(sharedEffects.getElementMatchupFromSDT(nil) == sharedEffects.ELEMENT_NEUTRAL)
+    end)
+
+    it('scales investment heals with skill, MND, and cure potency', function()
+        local function makeHealCaster(skill, mnd, potency, maxHP)
+            return
+            {
+                getSkillLevel = function()
+                    return skill
+                end,
+                getStat = function(_, stat)
+                    return stat == xi.mod.MND and mnd or 0
+                end,
+                getMod = function(_, mod)
+                    if mod == xi.mod.CURE_POTENCY then
+                        return potency
+                    end
+
+                    return 0
+                end,
+                getMaxHP = function()
+                    return maxHP or 1500
+                end,
+            }
+        end
+
+        local fresh = makeHealCaster(320, 90, 0, 1500)
+        local geared = makeHealCaster(500, 280, 40, 7000)
+        local missing = { getMod = function() return 0 end }
+
+        local pollenFresh  = sharedEffects.calculateBlueCure(fresh, missing, { base = 0, scale = 1.0 })
+        local pollenGeared = sharedEffects.calculateBlueCure(geared, missing, { base = 0, scale = 1.0 })
+        assert(pollenFresh >= 150 and pollenFresh <= 250)
+        assert(pollenGeared >= 750 and pollenGeared <= 950)
+
+        local windFresh = sharedEffects.calculateBlueCure(fresh, missing, { base = 60, scale = 1.55, hp = 0.05 })
+        local windGeared = sharedEffects.calculateBlueCure(geared, missing, { base = 60, scale = 1.55, hp = 0.05 })
+        assert(windFresh >= 350 and windFresh <= 550)
+        assert(windGeared >= 1400 and windGeared <= 2000)
+        assert(windGeared < 4500)
+    end)
 end)

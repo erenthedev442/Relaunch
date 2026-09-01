@@ -324,10 +324,10 @@ local function finalizeBlueDamage(caster, target, spell, damage, params, trickAt
     end
 
     if eligible and damage > 0 then
-        damage = math.floor(
-            damage *
-            standardMagic.getDamageMultiplier(caster, target, spell) *
-            bluSpellPower.getDamageMultiplier(spell))
+        local weapon  = standardMagic.getDamageMultiplier(caster, target, spell)
+        local scaled  = bluSpellPower.getEffectiveWeaponMultiplier(weapon, spell)
+        local premium = bluSpellPower.getDamageMultiplier(spell)
+        damage = math.floor(damage * scaled * premium)
     end
 
     if attackType == xi.attackType.MAGICAL then
@@ -370,6 +370,8 @@ end
 
 xi.spells.blue.isMainJob = bluSharedEffects.isMainJob
 xi.spells.blue.usesStockSubjobBehavior = bluSharedEffects.usesStockSubjobBehavior
+xi.spells.blue.calculateBlueCure = bluSharedEffects.calculateBlueCure
+xi.spells.blue.applyBlueCure = bluSharedEffects.applyBlueCure
 
 -- Get the damage for a physical Blue Magic spell
 xi.spells.blue.usePhysicalSpell = function(caster, target, spell, params)
@@ -583,7 +585,7 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
         caster, target, spellGroup, skillType, 0, spellElement,
         params.attribute, 0, standardMacc)))
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateElementalStaffBonus(caster, spellElement))
-    finalDamage = math.floor(finalDamage * xi.combat.damage.magicalElementSDT(target, spellElement))
+    finalDamage = math.floor(finalDamage * bluSharedEffects.getElementalDamageFactor(caster, target, spellElement))
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateDayAndWeather(caster, spellElement, false))
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateMagicBonusDiff(caster, target, spellId, skillType, spellElement, 0))
 
@@ -648,7 +650,7 @@ xi.spells.blue.useDrainSpell = function(caster, target, spell, params, damageCap
 
     finalDamage = math.floor(finalDamage * bluSharedEffects.clampMagicResist(caster, xi.combat.magicHitRate.calculateResistRate(caster, target, spellGroup, skillType, 0, spellElement, params.attribute, 0, 0)))
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateElementalStaffBonus(caster, spellElement))
-    finalDamage = math.floor(finalDamage * xi.combat.damage.magicalElementSDT(target, spellElement))
+    finalDamage = math.floor(finalDamage * bluSharedEffects.getElementalDamageFactor(caster, target, spellElement))
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateDayAndWeather(caster, spellElement, false))
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateMagicBonusDiff(caster, target, spellId, skillType, spellElement, 0))
 
@@ -767,7 +769,7 @@ xi.spells.blue.useBreathSpell = function(caster, target, spell, params)
     if not bluSharedEffects.usesUnresistedMagic(caster) then
         dmg = math.floor(dmg * additionalResistTier)
     end
-    dmg = math.floor(dmg * elementalSDT)
+    dmg = math.floor(dmg * bluSharedEffects.getElementalDamageFactor(caster, target, spellElement, elementalSDT))
     dmg = math.floor(dmg * dayAndWeather)
     dmg = math.floor(dmg * magicBonusDiff)
     dmg = math.floor(dmg * skillTypeMultiplier)

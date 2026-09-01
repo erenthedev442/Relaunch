@@ -20,13 +20,7 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local skill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
-    local cure = math.min(0.65 * caster:getMaxHP() + 1.5 * skill, 4500)
-    cure = math.floor(math.min(cure, target:getMaxHP() - target:getHP()))
-
-    target:addHP(cure)
-    caster:updateEnmityFromCure(target, cure)
-    return cure
+    return xi.spells.blue.applyBlueCure(caster, target, { base = 60, scale = 1.55, hp = 0.05 })
 end
 
 return spellObject

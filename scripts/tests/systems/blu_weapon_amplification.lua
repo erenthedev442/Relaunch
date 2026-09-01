@@ -132,4 +132,36 @@ describe('BLU main-hand weapon amplification', function()
         assert(baselineWeapon == 9)
         assert(baselineWeapon * spellPower.getDamageMultiplier(makeSpell(720, 116)) == 15)
     end)
+
+    it('gives cheap spells a slice of weapon amp and 8-point spells the full boost', function()
+        local function makeSpell(id, mpCost)
+            return
+            {
+                getID = function()
+                    return id
+                end,
+                getMPCost = function()
+                    return mpCost
+                end,
+            }
+        end
+
+        local footKick = makeSpell(577, 5)
+        local darkOrb  = makeSpell(689, 60)
+        local assault  = makeSpell(709, 119)
+        local tempest  = makeSpell(720, 116)
+        local salvo    = makeSpell(724, 175)
+
+        assert(spellPower.getSpellFactor(footKick) == spellPower.FACTOR_CHEAP)
+        assert(spellPower.getSpellFactor(darkOrb) == spellPower.FACTOR_MID)
+        assert(spellPower.getSpellFactor(assault) == spellPower.FACTOR_HIGH)
+        assert(spellPower.getSpellFactor(tempest) == spellPower.FACTOR_FULL)
+        assert(spellPower.getSpellFactor(salvo) == spellPower.FACTOR_FULL)
+
+        local tizona = 45
+        assert(spellPower.getEffectiveWeaponMultiplier(tizona, footKick) == 1 + 44 * 0.06)
+        assert(spellPower.getEffectiveWeaponMultiplier(tizona, tempest) == 45)
+        assert(spellPower.getEffectiveWeaponMultiplier(9, footKick) == 1 + 8 * 0.06)
+        assert(spellPower.getEffectiveWeaponMultiplier(9, tempest) * spellPower.getDamageMultiplier(tempest) == 15)
+    end)
 end)

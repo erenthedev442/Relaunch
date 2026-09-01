@@ -156,6 +156,82 @@ bluSharedEffects.clampMagicResist = function(caster, resist)
     return resist
 end
 
+-- Main-job BLU elemental damage: weak 1.25, neutral 1.00, resist / same 0.10.
+-- /BLU and non-PC casters keep stock SDT. Absorb stays on the absorb path.
+bluSharedEffects.ELEMENT_WEAK     = 1.25
+bluSharedEffects.ELEMENT_NEUTRAL  = 1.00
+bluSharedEffects.ELEMENT_RESIST   = 0.10
+
+bluSharedEffects.getElementMatchupFromSDT = function(sdt)
+    if not sdt then
+        return bluSharedEffects.ELEMENT_NEUTRAL
+    end
+
+    if sdt < 1 then
+        return bluSharedEffects.ELEMENT_RESIST
+    elseif sdt > 1 then
+        return bluSharedEffects.ELEMENT_WEAK
+    end
+
+    return bluSharedEffects.ELEMENT_NEUTRAL
+end
+
+bluSharedEffects.getElementMatchup = function(target, spellElement)
+    if
+        not spellElement or
+        spellElement < xi.element.FIRE or
+        spellElement > xi.element.DARK
+    then
+        return bluSharedEffects.ELEMENT_NEUTRAL
+    end
+
+    return bluSharedEffects.getElementMatchupFromSDT(xi.combat.damage.magicalElementSDT(target, spellElement))
+end
+
+bluSharedEffects.getElementalDamageFactor = function(caster, target, spellElement, stockSDT)
+    if bluSharedEffects.usesUnresistedMagic(caster) then
+        return bluSharedEffects.getElementMatchup(target, spellElement)
+    end
+
+    return stockSDT or xi.combat.damage.magicalElementSDT(target, spellElement)
+end
+
+-- Investment heals: skill, MND, and Cure Potency. No giant flat 900.
+bluSharedEffects.calculateBlueCure = function(caster, target, params)
+    params = params or {}
+    local skill    = caster:getSkillLevel(xi.skill.BLUE_MAGIC) or 0
+    local mnd      = caster:getStat(xi.mod.MND) or 0
+    local potency  = ((caster:getMod(xi.mod.CURE_POTENCY) or 0) + (caster:getMod(xi.mod.CURE_POTENCY_II) or 0)) / 100
+    potency        = math.max(0, math.min(potency, 0.80))
+    local received = 0
+    if target and target.getMod then
+        received = (target:getMod(xi.mod.CURE_POTENCY_RCVD) or 0) / 100
+    end
+
+    local heal = (params.base or 0) +
+        (params.skill or 0.30) * skill * (params.scale or 1) +
+        (params.mnd or 1.50) * mnd * (params.scale or 1)
+
+    if (params.hp or 0) > 0 then
+        heal = heal + caster:getMaxHP() * params.hp
+    end
+
+    heal = heal * (1 + potency) * (1 + received)
+    if params.cap then
+        heal = math.min(heal, params.cap)
+    end
+
+    return math.max(0, math.floor(heal))
+end
+
+bluSharedEffects.applyBlueCure = function(caster, target, params)
+    local missing = target:getMaxHP() - target:getHP()
+    local cure    = math.min(bluSharedEffects.calculateBlueCure(caster, target, params), missing)
+    target:addHP(cure)
+    caster:updateEnmityFromCure(target, cure)
+    return cure
+end
+
 bluSharedEffects.preparePlayerControl = function(caster, target, effect, duration, now)
     if not caster:isPC() then
         return true, duration, nil, nil, false

@@ -23,13 +23,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     target:eraseStatusEffect()
     target:eraseStatusEffect()
 
-    local skill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
-    local cure = math.min(1500 + 2 * skill + 4 * caster:getStat(xi.mod.MND), 3500)
-    cure = math.min(cure, target:getMaxHP() - target:getHP())
-
-    target:addHP(cure)
-    caster:updateEnmityFromCure(target, cure)
-    return cure
+    return xi.spells.blue.applyBlueCure(caster, target, { base = 40, scale = 1.20 })
 end
 
 return spellObject
