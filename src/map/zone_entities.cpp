@@ -1889,7 +1889,10 @@ auto CZoneEntities::charTick(CCharEntity* PChar, timer::time_point tick) -> Task
 
         co_await PChar->PAI->Tick(tick);
 
-        if (PChar->PTreasurePool)
+        // PAI::Tick can process a zone-out that removes this (or another)
+        // character from a shared pool. Only the remaining tick owner
+        // should walk the lot list, and only if they are still a member.
+        if (PChar->PTreasurePool && PChar->PTreasurePool->isTickOwner(PChar))
         {
             PChar->PTreasurePool->checkItems(tick);
         }

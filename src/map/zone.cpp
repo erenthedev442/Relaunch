@@ -1276,9 +1276,12 @@ void CZone::CharZoneOut(CCharEntity* PChar)
         PChar->PTreasurePool->delMember(PChar);
     }
 
-    // If zone-wide treasure pool but no players in zone then destroy current pool and create new pool
-    // this prevents loot from staying in zone pool after the last player leaves the zone
-    if (m_TreasurePool && m_TreasurePool->getPoolType() == TreasurePoolType::Zone && m_zoneEntities->CharListEmpty())
+    // Recycle a zone-wide pool only when nobody is still a member.
+    // Instanced zones (Dynamis [D]) keep players on CInstance lists, so
+    // m_zoneEntities->CharListEmpty() is true even while other copies are
+    // still using this pool. Destroying it there UAFed checkTreasureItem
+    // (Dynamis-San_dOria_[D], 2026-09-01 09:30).
+    if (m_TreasurePool && m_TreasurePool->getPoolType() == TreasurePoolType::Zone && m_TreasurePool->memberCount() == 0)
     {
         destroy(m_TreasurePool);
         m_TreasurePool = new CTreasurePool(TreasurePoolType::Zone);

@@ -23,6 +23,8 @@
 #include "common/timer.h"
 #include "roe.h"
 
+#include <algorithm>
+
 #include "packets/s2c/0x0d2_trophy_list.h"
 #include "packets/s2c/0x0d3_trophy_solution.h"
 
@@ -73,9 +75,34 @@ auto CTreasurePool::memberCount() const -> size_t
     return m_Members.size();
 }
 
-bool CTreasurePool::isMember(const CCharEntity* PChar)
+bool CTreasurePool::isMember(const CCharEntity* PChar) const
 {
-    return std::find(m_Members.begin(), m_Members.end(), PChar) != m_Members.end();
+    return PChar != nullptr && std::find(m_Members.begin(), m_Members.end(), PChar) != m_Members.end();
+}
+
+bool CTreasurePool::isLiveMember(const CCharEntity* PChar) const
+{
+    return isMember(PChar);
+}
+
+bool CTreasurePool::isTickOwner(const CCharEntity* PChar) const
+{
+    if (PChar == nullptr)
+    {
+        return false;
+    }
+
+    // One member ticks a shared pool. Stops every Dynamis [D] copy walking
+    // the same list, and skips anyone already removed by CharZoneOut.
+    for (auto* member : m_Members)
+    {
+        if (member != nullptr)
+        {
+            return member == PChar;
+        }
+    }
+
+    return false;
 }
 
 void CTreasurePool::addMember(CCharEntity* PChar)
@@ -114,25 +141,17 @@ void CTreasurePool::delMember(CCharEntity* PChar)
         return;
     }
 
-    // if(m_TreasurePoolType != TREASUREPOOL_ZONE)
-    // Zone drops e.g. Dynamis DO NOT remove previous lot info. Everything else does.
-    // ^ TODO: verify what happens when a winner leaves zone
-    for (int i = 0; i < 10; i++)
+    // Always drop this character's lots. Also drop entries whose member
+    // pointer is already gone — leftover Dynamis lotters were a UAF.
+    for (int i = 0; i < TREASUREPOOL_SIZE; ++i)
     {
-        if (!m_PoolItems[i].Lotters.empty())
-        {
-            auto lotterIterator = m_PoolItems[i].Lotters.begin();
-            while (lotterIterator != m_PoolItems[i].Lotters.end())
-            {
-                // remove their lot info
-                if (LotInfo* info = &(*lotterIterator); PChar->id == info->member->id)
-                {
-                    lotterIterator = m_PoolItems[i].Lotters.erase(lotterIterator);
-                    continue;
-                }
-                ++lotterIterator;
-            }
-        }
+        auto& lotters = m_PoolItems[i].Lotters;
+        lotters.erase(std::remove_if(lotters.begin(), lotters.end(),
+                                     [PChar](const LotInfo& info)
+                                     {
+                                         return info.member == nullptr || info.member == PChar;
+                                     }),
+                      lotters.end());
     }
 
     auto memberToDelete = std::find(m_Members.begin(), m_Members.end(), PChar);
@@ -184,6 +203,10 @@ uint8 CTreasurePool::addItem(uint16 ItemID, CBaseEntity* PEntity)
 
         for (const auto& member : m_Members)
         {
+            if (!isLiveMember(member))
+            {
+                continue;
+            }
             // Someone doesn't have the rare item
             if (!charutils::HasItem(member, PNewItem->getID()))
             {
@@ -266,6 +289,10 @@ uint8 CTreasurePool::addItem(uint16 ItemID, CBaseEntity* PEntity)
 
     for (const auto& member : m_Members)
     {
+        if (!isLiveMember(member))
+        {
+            continue;
+        }
         // Issue RoE event for loot item and issue treasure pool packet
         roeutils::event(ROE_EVENT::ROE_LOOTITEM, member, RoeDatagram("itemid", m_PoolItems[FreeSlotID].ID));
         member->pushPacket<GP_SERV_COMMAND_TROPHY_LIST>(&m_PoolItems[FreeSlotID], PEntity, false);
@@ -360,7 +387,7 @@ void CTreasurePool::lotItem(CCharEntity* PChar, uint8 SlotID, uint16 Lot)
     uint16       highestLot    = 0;
     for (const LotInfo& lotInfo : m_PoolItems[SlotID].Lotters)
     {
-        if (lotInfo.lot > highestLot)
+        if (isLiveMember(lotInfo.member) && lotInfo.lot > highestLot)
         {
             highestLotter = lotInfo.member;
             highestLot    = lotInfo.lot;
@@ -370,7 +397,10 @@ void CTreasurePool::lotItem(CCharEntity* PChar, uint8 SlotID, uint16 Lot)
     // Player lots Item for XXX message
     for (const auto& member : m_Members)
     {
-        member->pushPacket<GP_SERV_COMMAND_TROPHY_SOLUTION>(highestLotter, highestLot, PChar, SlotID, Lot);
+        if (isLiveMember(member))
+        {
+            member->pushPacket<GP_SERV_COMMAND_TROPHY_SOLUTION>(highestLotter, highestLot, PChar, SlotID, Lot);
+        }
     }
 
     // if all lotters have lotted, evaluate immediately.
@@ -401,7 +431,7 @@ void CTreasurePool::passItem(CCharEntity* PChar, uint8 SlotID)
     // if this member has lotted on this item previously, set their lot to 0.
     for (auto& Lotter : m_PoolItems[SlotID].Lotters)
     {
-        if (Lotter.member->id == PChar->id)
+        if (Lotter.member != nullptr && Lotter.member->id == PChar->id)
         {
             Lotter.lot      = 0;
             hasLottedBefore = true;
@@ -419,7 +449,7 @@ void CTreasurePool::passItem(CCharEntity* PChar, uint8 SlotID)
     uint16       highestLot    = 0;
     for (const LotInfo& lotInfo : m_PoolItems[SlotID].Lotters)
     {
-        if (lotInfo.lot > highestLot)
+        if (isLiveMember(lotInfo.member) && lotInfo.lot > highestLot)
         {
             highestLotter = lotInfo.member;
             highestLot    = lotInfo.lot;
@@ -430,7 +460,10 @@ void CTreasurePool::passItem(CCharEntity* PChar, uint8 SlotID)
     // Player lots Item for XXX message
     for (const auto& member : m_Members)
     {
-        member->pushPacket<GP_SERV_COMMAND_TROPHY_SOLUTION>(highestLotter, highestLot, PChar, SlotID, PassedLot);
+        if (isLiveMember(member))
+        {
+            member->pushPacket<GP_SERV_COMMAND_TROPHY_SOLUTION>(highestLotter, highestLot, PChar, SlotID, PassedLot);
+        }
     }
 
     // if all lotters have lotted, evaluate immediately.
@@ -449,7 +482,7 @@ bool CTreasurePool::hasLottedItem(CCharEntity* PChar, uint8 SlotID)
 
     for (const auto& lotter : m_PoolItems[SlotID].Lotters)
     {
-        if (lotter.member->id == PChar->id)
+        if (lotter.member != nullptr && lotter.member->id == PChar->id)
         {
             return true;
         }
@@ -467,7 +500,7 @@ bool CTreasurePool::hasPassedItem(CCharEntity* PChar, uint8 SlotID)
 
     for (auto& lotter : m_PoolItems[SlotID].Lotters)
     {
-        if (lotter.member->id == PChar->id)
+        if (lotter.member != nullptr && lotter.member->id == PChar->id)
         {
             return lotter.lot == 0;
         }
@@ -493,20 +526,28 @@ void CTreasurePool::checkItems(timer::time_point tick)
 
 void CTreasurePool::checkTreasureItem(timer::time_point tick, uint8 SlotID)
 {
-    if (m_PoolItems[SlotID].ID == 0)
+    if (SlotID >= TREASUREPOOL_SIZE || m_PoolItems[SlotID].ID == 0)
     {
         return;
     }
 
+    const bool soleMemberCanTake = memberCount() == 1 && isLiveMember(m_Members[0]) &&
+                                   m_Members[0]->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0;
+
     if ((tick - m_PoolItems[SlotID].TimeStamp) > treasure_livetime ||
-        (memberCount() == 1 && m_Members[0]->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0) ||
+        soleMemberCanTake ||
         m_PoolItems[SlotID].Lotters.size() == memberCount())
     {
-        // Find item's highest lotter
+        // Find item's highest lotter who is still in the pool
         LotInfo highestInfo;
+        auto    lotters = m_PoolItems[SlotID].Lotters;
 
-        for (auto curInfo : m_PoolItems[SlotID].Lotters)
+        for (auto curInfo : lotters)
         {
+            if (!isLiveMember(curInfo.member))
+            {
+                continue;
+            }
             if (curInfo.lot > highestInfo.lot)
             {
                 highestInfo = curInfo;
@@ -514,7 +555,7 @@ void CTreasurePool::checkTreasureItem(timer::time_point tick, uint8 SlotID)
         }
 
         // Check to see if we have any lotters (excluding anyone who passed)
-        if (highestInfo.member != nullptr && highestInfo.lot != 0)
+        if (isLiveMember(highestInfo.member) && highestInfo.lot != 0)
         {
             if (highestInfo.member->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0)
             {
@@ -540,6 +581,11 @@ void CTreasurePool::checkTreasureItem(timer::time_point tick, uint8 SlotID)
             std::vector<CCharEntity*> candidates;
             for (auto& member : m_Members)
             {
+                if (!isLiveMember(member))
+                {
+                    continue;
+                }
+
                 if (charutils::HasItem(member, m_PoolItems[SlotID].ID) && xi::items::lookup(m_PoolItems[SlotID].ID)->hasFlag(ItemFlag::Rare))
                 {
                     continue;
@@ -584,7 +630,10 @@ void CTreasurePool::treasureWon(CCharEntity* winner, uint8 SlotID)
 
     for (const auto& member : m_Members)
     {
-        member->pushPacket<GP_SERV_COMMAND_TROPHY_SOLUTION>(winner, SlotID, 0, GP_TROPHY_SOLUTION_STATE::Win);
+        if (isLiveMember(member))
+        {
+            member->pushPacket<GP_SERV_COMMAND_TROPHY_SOLUTION>(winner, SlotID, 0, GP_TROPHY_SOLUTION_STATE::Win);
+        }
     }
     m_count--;
 
@@ -604,7 +653,10 @@ void CTreasurePool::treasureError(CCharEntity* winner, uint8 SlotID)
 
     for (const auto& member : m_Members)
     {
-        member->pushPacket<GP_SERV_COMMAND_TROPHY_SOLUTION>(winner, SlotID, -1, GP_TROPHY_SOLUTION_STATE::WinError);
+        if (isLiveMember(member))
+        {
+            member->pushPacket<GP_SERV_COMMAND_TROPHY_SOLUTION>(winner, SlotID, -1, GP_TROPHY_SOLUTION_STATE::WinError);
+        }
     }
     m_count--;
 
@@ -624,7 +676,10 @@ void CTreasurePool::treasureLost(uint8 SlotID)
 
     for (const auto& member : m_Members)
     {
-        member->pushPacket<GP_SERV_COMMAND_TROPHY_SOLUTION>(SlotID, GP_TROPHY_SOLUTION_STATE::WinError);
+        if (isLiveMember(member))
+        {
+            member->pushPacket<GP_SERV_COMMAND_TROPHY_SOLUTION>(SlotID, GP_TROPHY_SOLUTION_STATE::WinError);
+        }
     }
     m_count--;
 

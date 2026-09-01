@@ -87,7 +87,9 @@ public:
     void addMember(CCharEntity* PChar);
     void delMember(CCharEntity* PChar);
     auto getMembers() const -> const std::vector<CCharEntity*>&;
-    bool isMember(const CCharEntity* PChar);
+    bool isMember(const CCharEntity* PChar) const;
+    bool isLiveMember(const CCharEntity* PChar) const;
+    bool isTickOwner(const CCharEntity* PChar) const;
     auto memberCount() const -> size_t;
 
     void updatePool(CCharEntity* PChar);
