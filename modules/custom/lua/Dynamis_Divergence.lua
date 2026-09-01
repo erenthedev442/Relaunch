@@ -76,12 +76,14 @@ local function enter(player, portal, opt)
         player:printToPlayer(string.format(
             '[Divergence] The rift to %s opens (paid %d %s Marks, %d remain). Good luck, kupo!',
             portal.label, ENTRY_COST.qty, opt.short, remaining), xi.msg.channel.SYSTEM_3)
+        print(string.format('[Divergence] %s joining existing instance %d (%s)', player:getName(), portal.instanceId, portal.label))
         xi.divergence.joinPlayer(player, partyInst, { entryPos = portal.entryPos })
         return
     end
 
     player:printToPlayer(string.format('[Divergence] The rift to %s opens (paid %d %s Marks, %d remain). Good luck, kupo!',
         portal.label, ENTRY_COST.qty, opt.short, remaining), xi.msg.channel.SYSTEM_3)
+    print(string.format('[Divergence] %s creating instance %d (%s)', player:getName(), portal.instanceId, portal.label))
     player:createInstance(portal.instanceId)
 end
 

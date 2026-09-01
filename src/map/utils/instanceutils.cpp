@@ -26,6 +26,7 @@
 
 #include "lua/luautils.h"
 
+#include "entities/charentity.h"
 #include "instance_loader.h"
 #include "map_engine.h"
 #include "zoneutils.h"
@@ -174,6 +175,7 @@ auto CheckInstance(Scheduler& scheduler, MapConfig config) -> Task<void>
 
     LoadQueue.pop();
 
+    ShowInfoFmt("[CZoneInstance] Loading instance {} for {} ({})", instanceId, PRequester->getName(), PRequester->id);
     auto loader = std::make_unique<CInstanceLoader>(instanceId, PRequester);
     loader->LoadInstance();
 }

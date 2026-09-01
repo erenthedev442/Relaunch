@@ -86,6 +86,7 @@ public:
 
 private:
     bool IsHybrid();
+    bool ContainsInstance(const CInstance* PInstance) const;
 
     typedef std::vector<std::unique_ptr<CInstance>> instanceList_t;
 

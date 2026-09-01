@@ -21,12 +21,15 @@
 
 #include "zone_instance.h"
 #include "ai/ai_container.h"
+#include "common/logging.h"
 #include "common/timer.h"
 #include "entities/charentity.h"
 #include "lua/luautils.h"
 #include "status_effect_container.h"
 #include "utils/charutils.h"
 #include "utils/zoneutils.h"
+
+#include <algorithm>
 
 CZoneInstance::CZoneInstance(Scheduler& scheduler, MapConfig config, ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, uint8 levelRestriction)
 : CZone(scheduler, config, ZoneID, RegionID, ContinentID, levelRestriction)
@@ -498,30 +501,61 @@ auto CZoneInstance::ZoneServer(timer::time_point tick) -> Task<void>
         co_await CZone::ZoneServer(tick);
     }
 
-    std::vector<CInstance*> instancesToRemove;
-    for (const auto& PInstance : m_InstanceList)
+    // Snapshot raw pointers before any await. CheckInstance -> CreateInstance
+    // can emplace_back (and realloc) m_InstanceList while an instance tick is
+    // yielded — CZoneEntities::ZoneServer explicitly yields so other zone /
+    // time_server work can run. A range-for reference into the vector is then
+    // a dangling unique_ptr (02:47 Dynamis-Bastok_[D] ACCESS_VIOLATION).
+    std::vector<CInstance*> instances;
+    instances.reserve(m_InstanceList.size());
+    for (const auto& inst : m_InstanceList)
     {
+        if (inst)
+        {
+            instances.push_back(inst.get());
+        }
+    }
+
+    std::vector<CInstance*> instancesToRemove;
+    for (CInstance* PInstance : instances)
+    {
+        if (!ContainsInstance(PInstance))
+        {
+            continue;
+        }
+
         co_await PInstance->ZoneServer(tick);
+
+        if (!ContainsInstance(PInstance))
+        {
+            continue;
+        }
+
         PInstance->CheckTime(tick);
 
         if ((PInstance->Failed() || PInstance->Completed()) && PInstance->CharListEmpty())
         {
-            instancesToRemove.push_back(PInstance.get());
+            instancesToRemove.push_back(PInstance);
         }
     }
 
-    for (const auto& PInstance : instancesToRemove)
+    for (CInstance* PInstance : instancesToRemove)
     {
-        ShowDebug("[CZoneInstance] ZoneServer cleaned up Instance %s", PInstance->GetName());
+        auto it = std::find_if(
+            m_InstanceList.begin(),
+            m_InstanceList.end(),
+            [PInstance](const auto& el)
+            {
+                return el.get() == PInstance;
+            });
 
-        m_InstanceList.erase(
-            std::find_if(
-                m_InstanceList.begin(),
-                m_InstanceList.end(),
-                [&PInstance](const auto& el)
-                {
-                    return el.get() == PInstance;
-                }));
+        if (it == m_InstanceList.end())
+        {
+            continue;
+        }
+
+        ShowDebug("[CZoneInstance] ZoneServer cleaned up Instance %s", PInstance->GetName());
+        m_InstanceList.erase(it);
     }
 }
 
@@ -722,10 +756,30 @@ void CZoneInstance::ForEachAllyInstance(CBaseEntity* PEntity, const std::functio
     }
 }
 
+bool CZoneInstance::ContainsInstance(const CInstance* PInstance) const
+{
+    if (PInstance == nullptr)
+    {
+        return false;
+    }
+
+    return std::any_of(m_InstanceList.begin(), m_InstanceList.end(), [PInstance](const auto& inst)
+                       { return inst.get() == PInstance; });
+}
+
 CInstance* CZoneInstance::CreateInstance(uint32 instanceid)
 {
     TracyZoneScoped;
 
+    // Grow before insert so a second concurrent [D] copy is less likely to
+    // realloc under a yielded ZoneServer. The snapshot in ZoneServer is the
+    // actual UAF fix; this just keeps the common 2–4 copy case cheap.
+    if (m_InstanceList.capacity() < 8)
+    {
+        m_InstanceList.reserve(8);
+    }
+
     m_InstanceList.emplace_back(std::make_unique<CInstance>(scheduler_, config_, this, instanceid));
+    ShowInfoFmt("[CZoneInstance] Created instance {} in {} ({} live copies)", instanceid, getName(), m_InstanceList.size());
     return m_InstanceList.back().get();
 }
