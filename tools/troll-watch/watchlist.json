@@ -27,10 +27,14 @@
       "status": "banned",
       "banned_on": "2026-09-01",
       "accounts": [
+        {"id": 1036, "login": "claude", "note": "squatted Spyro; char deleted 2026-09-01"},
         {"id": 1061, "login": "1234"},
-        {"id": 1074, "login": "penis"},
+        {"id": 1068, "login": "12345", "note": "squatted Phatdood; char deleted 2026-09-01"},
+        {"id": 1074, "login": "penis", "note": "squatted Xio; char deleted 2026-09-01"},
         {"id": 1077, "login": "penis1"},
+        {"id": 1085, "login": "password", "note": "squatted Pokoton; char deleted 2026-09-01"},
         {"id": 1106, "login": "bro"},
+        {"id": 1146, "login": "bro2", "note": "Drunk deleted 2026-09-01"},
         {"id": 1107, "login": "niqqer"},
         {"id": 1115, "login": "erenisretarded"},
         {"id": 1118, "login": "erenisjewretard"},
@@ -52,6 +56,7 @@
         "Mildfordhaven",
         "Nicholas",
         "Bro",
+        "Drunk",
         "Niqqer",
         "Gaspar",
         "Dequan",
@@ -69,6 +74,10 @@
       ],
       "ips_exact": [
         "69.1.199.233",
+        "108.160.120.67",
+        "108.160.120.40",
+        "129.222.78.130",
+        "98.97.80.43",
         "187.40.229.77",
         "187.40.229.2",
         "187.40.229.172",
@@ -165,6 +174,27 @@
       ]
     },
     {
+      "id": "kahz_ririn",
+      "label": "Kahz / Shigu — old GM (Windows user Ririn). Access removed 2026-09-01.",
+      "status": "removed",
+      "removed_on": "2026-09-01",
+      "accounts": [
+        {"id": 1000, "login": "ririn", "note": "wiped in late-Aug char wipe; not on live"}
+      ],
+      "characters": ["Ririn", "Itsurboy", "Smashurbatty", "Enko", "Eir", "Rirint", "Ririntwo"],
+      "windows_user": "Ririn",
+      "ips_exact": [
+        "109.146.153.213",
+        "109.180.255.228"
+      ],
+      "ip_prefixes": [],
+      "patterns": [
+        "BT UK home. Same IP on RDP and game.",
+        "Windows user deleted 2026-09-01. Do not recreate.",
+        "See HISTORY.md"
+      ]
+    },
+    {
       "id": "pucca_watch",
       "label": "Pucca — probably unrelated (Japan home ISP)",
       "status": "watch",
@@ -184,7 +214,7 @@
   ],
   "name_regex": "mildford|milford|haven|nicholas|cummies|gaspar|dequan|migger|niqqer|nigger|penis|erenis|retard|jamestajew|donkeys|isuck|bankai|chatgpt|iminyourwalls|garvnigga|garvauniqqa|abysseaenjoyer|drknotty|hexedmagic|legendaryass|boobookitty|bigbangow|blazeit",
   "login_regex": "mildford|milford|haven|nicholas|cummies|gaspar|dequan|migger|niqqer|nigger|penis|erenis|retard|jamestajew|donkeys|isuck|bankai|chatgpt|iminyourwalls|garvnigga|12345678910|legendaryass|hexedmagic|420blazeit|erenisapenis",
-  "exact_login_or_char": ["bro", "war", "warrior", "2", "1234", "pucca", "prale", "namers", "haha", "420blazeit"],
+  "exact_login_or_char": ["bro", "bro2", "drunk", "war", "warrior", "2", "1234", "pucca", "prale", "namers", "haha", "420blazeit"],
   "style_flags": [
     {"id": "ip_as_login", "sql": "a.login REGEXP '^[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}$'"},
     {"id": "short_numeric_login", "sql": "a.login REGEXP '^[0-9]{1,6}$'", "note": "flags 2 / 1234. Longer digit logins are the Prale watch trio, not auto-Brazil."}

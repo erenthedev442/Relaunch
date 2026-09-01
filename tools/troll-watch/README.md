@@ -3,6 +3,8 @@
 Log of IPs, usernames, and remake patterns from the 2026-08 / 2026-09 waves.
 The file to edit is **`watchlist.json`**. The check is read-only.
 
+**Richard:** start with **[HISTORY.md](HISTORY.md)** — Bro/High IPs, Kahz/Ririn RDP removal, name-squat deletes, and the live firewall list.
+
 ## Run a check (VPS)
 
 Desktop: **Relaunch - Troll Check**
