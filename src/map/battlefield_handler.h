@@ -61,6 +61,7 @@ public:
     CBattlefield* GetBattlefieldByInitiator(uint32 charID);
     uint8         RegisterBattlefield(CCharEntity* PChar, const BattlefieldRegistration& registration); // attempts to register or load battlefield, returns BATTLEFIELD_RETURN_CODE
     bool          RemoveFromBattlefield(CBaseEntity* PEntity, CBattlefield* PBattlefield = nullptr, uint8 leavecode = 3);
+    bool          Contains(const CBattlefield* PBattlefield) const; // true if this handler still owns the pointer
     bool          IsRegistered(CCharEntity* PChar);
     bool          ReachedMaxCapacity(int battlefieldId = -1) const;
     uint8         MaxBattlefieldAreas() const;

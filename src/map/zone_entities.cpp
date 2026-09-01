@@ -77,6 +77,28 @@ constexpr auto CHARACTER_SYNC_ALLI_SIGNIFICANCE       = 10000U;
 constexpr auto PERSIST_CHECK_CHARACTERS               = 20U;
 constexpr auto INTERMEDIATE_CONTAINER_RESERVE_SIZE    = 16U;
 
+// Pull a disappearing dynamic entity out of the live zone list immediately so
+// the next ZoneServer walk cannot dereference a pointer we are about to
+// destroy(). Targid reuse is still delayed (60s) via m_dynamicTargIdsToDelete.
+void detachForDelete(EntityList_t& list, CBaseEntity* PEntity, std::vector<std::pair<uint16, timer::time_point>>& delayedTargIds)
+{
+    if (!PEntity)
+    {
+        return;
+    }
+
+    if (auto itr = list.find(PEntity->targid); itr != list.end() && itr->second == PEntity)
+    {
+        list.erase(itr);
+        delayedTargIds.emplace_back(PEntity->targid, timer::now());
+    }
+}
+
+bool battlefieldStillOwned(CZone* PZone, CBattlefield* PBattlefield)
+{
+    return PZone && PZone->m_BattlefieldHandler && PZone->m_BattlefieldHandler->Contains(PBattlefield);
+}
+
 inline bool isWithinVerticalDistance(CBaseEntity* source, CBaseEntity* target)
 {
     const float verticalDistance = target->loc.p.y - source->loc.p.y - VERTICAL_RENDER_DISTANCE_OFFSET;
@@ -1690,6 +1712,7 @@ auto CZoneEntities::mobTick(CMobEntity* PMob, timer::time_point tick) -> Task<vo
         // is always safe (no-op on an already-empty list).
         PMob->PEnmityContainer->Clear();
 
+        detachForDelete(m_mobList, PMob, m_dynamicTargIdsToDelete);
         m_mobsToDelete.emplace_back(PMob);
         co_return;
     }
@@ -1753,6 +1776,7 @@ auto CZoneEntities::npcTick(CNpcEntity* PNpc, timer::time_point tick) -> Task<vo
             }
         }
 
+        detachForDelete(m_npcList, PNpc, m_dynamicTargIdsToDelete);
         m_npcsToDelete.emplace_back(PNpc);
         co_return;
     }
@@ -1784,6 +1808,7 @@ auto CZoneEntities::petTick(CPetEntity* PPet, timer::time_point tick) -> Task<vo
         // no mob notoriety container holds a dangling pointer after destroy().
         PPet->PEnmityContainer->Clear();
 
+        detachForDelete(m_petList, PPet, m_dynamicTargIdsToDelete);
         m_petsToDelete.emplace_back(PPet);
         co_return;
     }
@@ -1836,6 +1861,7 @@ auto CZoneEntities::trustTick(CTrustEntity* PTrust, timer::time_point tick) -> T
         // FJB: same UAF guard — clear trust's enmity before freeing.
         PTrust->PEnmityContainer->Clear();
 
+        detachForDelete(m_trustList, PTrust, m_dynamicTargIdsToDelete);
         m_trustsToDelete.emplace_back(PTrust);
         co_return;
     }
@@ -1895,9 +1921,27 @@ auto CZoneEntities::ZoneServer(timer::time_point tick) -> Task<void>
                     continue;
                 }
 
-                if (PMob->PBattlefield && PMob->PBattlefield->CanCleanup())
+                // Dynamic NMs (Reforge / Hunting League) are erased from
+                // m_mobList as soon as they DISAPPEAR. Skip any leftover.
+                if (PMob->status == STATUS_TYPE::DISAPPEAR)
                 {
                     continue;
+                }
+
+                if (CBattlefield* PBattlefield = PMob->PBattlefield)
+                {
+                    // Stale pointer: battlefield already unique_ptr-erased.
+                    // Null it so later ticks do not retry CanCleanup().
+                    if (!battlefieldStillOwned(m_zone, PBattlefield))
+                    {
+                        PMob->PBattlefield = nullptr;
+                        continue;
+                    }
+
+                    if (PBattlefield->CanCleanup())
+                    {
+                        continue;
+                    }
                 }
 
                 add(mobTick(PMob, tick));
@@ -1975,44 +2019,28 @@ auto CZoneEntities::ZoneServer(timer::time_point tick) -> Task<void>
     // Cleanup logic
     //
 
-    for (const auto* PMob : m_mobsToDelete)
+    for (auto* PMob : m_mobsToDelete)
     {
-        if (auto itr = m_mobList.find(PMob->targid); itr != m_mobList.end())
-        {
-            m_mobList.erase(itr);
-            m_dynamicTargIdsToDelete.emplace_back(PMob->targid, timer::now());
-            destroy(PMob);
-        }
+        detachForDelete(m_mobList, PMob, m_dynamicTargIdsToDelete);
+        destroy(PMob);
     }
 
-    for (const auto* PNpc : m_npcsToDelete)
+    for (auto* PNpc : m_npcsToDelete)
     {
-        if (auto itr = m_npcList.find(PNpc->targid); itr != m_npcList.end())
-        {
-            m_npcList.erase(itr);
-            m_dynamicTargIdsToDelete.emplace_back(PNpc->targid, timer::now());
-            destroy(PNpc);
-        }
+        detachForDelete(m_npcList, PNpc, m_dynamicTargIdsToDelete);
+        destroy(PNpc);
     }
 
-    for (const auto* PPet : m_petsToDelete)
+    for (auto* PPet : m_petsToDelete)
     {
-        if (auto itr = m_petList.find(PPet->targid); itr != m_petList.end())
-        {
-            m_petList.erase(itr);
-            m_dynamicTargIdsToDelete.emplace_back(PPet->targid, timer::now());
-            destroy(PPet);
-        }
+        detachForDelete(m_petList, PPet, m_dynamicTargIdsToDelete);
+        destroy(PPet);
     }
 
-    for (const auto* PTrust : m_trustsToDelete)
+    for (auto* PTrust : m_trustsToDelete)
     {
-        if (auto itr = m_trustList.find(PTrust->targid); itr != m_trustList.end())
-        {
-            m_trustList.erase(itr);
-            m_dynamicTargIdsToDelete.emplace_back(PTrust->targid, timer::now());
-            destroy(PTrust);
-        }
+        detachForDelete(m_trustList, PTrust, m_dynamicTargIdsToDelete);
+        destroy(PTrust);
     }
 
     // Forcibly insert a yield here, so we allow other tasks (other zone ticks, etc.) to be

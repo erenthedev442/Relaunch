@@ -32,6 +32,7 @@
 #include "entities/battleentity.h"
 #include "entities/charentity.h"
 #include "entities/mobentity.h"
+#include "entities/npcentity.h"
 #include "entities/petentity.h"
 #include "entities/trustentity.h"
 
@@ -75,23 +76,22 @@ void CBattlefieldHandler::HandleBattlefields(timer::time_point tick)
             {
                 ShowDebug("[CBattlefieldHandler]HandleBattlefields cleaned up Battlefield %s", PBattlefield->GetName().c_str());
 
-                // Defense-in-depth: before this CBattlefield is freed, null PBattlefield
-                // on ANY zone entity still pointing at it, so nothing dereferences freed
-                // battlefield memory on the next tick (e.g. an ex-charmed-pet mob still in
-                // m_mobList -- see the CZoneEntities::ZoneServer use-after-free). Cleanup()
-                // only sweeps the battlefield's own tracked lists; this catches the rest.
-                m_PZone->ForEachMob([&](CMobEntity* PZoneMob) {
-                    if (PZoneMob->PBattlefield == PBattlefield) { PZoneMob->PBattlefield = nullptr; }
-                });
-                m_PZone->ForEachPet([&](CPetEntity* PZonePet) {
-                    if (PZonePet->PBattlefield == PBattlefield) { PZonePet->PBattlefield = nullptr; }
-                });
-                m_PZone->ForEachTrust([&](CTrustEntity* PZoneTrust) {
-                    if (PZoneTrust->PBattlefield == PBattlefield) { PZoneTrust->PBattlefield = nullptr; }
-                });
-                m_PZone->ForEachChar([&](CCharEntity* PZoneChar) {
-                    if (PZoneChar->PBattlefield == PBattlefield) { PZoneChar->PBattlefield = nullptr; }
-                });
+                // Cleanup() only nulls entities on its own lists. Null leftovers
+                // here so the unique_ptr erase below cannot leave a stale
+                // PBattlefield on a zone mob/pet/trust/npc/char.
+                auto clearIfMatch = [PBattlefield](CBaseEntity* PEntity)
+                {
+                    if (PEntity && PEntity->PBattlefield == PBattlefield)
+                    {
+                        PEntity->PBattlefield = nullptr;
+                    }
+                };
+                m_PZone->ForEachMob([&](CMobEntity* PZoneMob) { clearIfMatch(PZoneMob); });
+                m_PZone->ForEachAlly([&](CMobEntity* PZoneAlly) { clearIfMatch(PZoneAlly); });
+                m_PZone->ForEachPet([&](CPetEntity* PZonePet) { clearIfMatch(PZonePet); });
+                m_PZone->ForEachTrust([&](CTrustEntity* PZoneTrust) { clearIfMatch(PZoneTrust); });
+                m_PZone->ForEachNpc([&](CNpcEntity* PZoneNpc) { clearIfMatch(PZoneNpc); });
+                m_PZone->ForEachChar([&](CCharEntity* PZoneChar) { clearIfMatch(PZoneChar); });
 
                 it = m_Battlefields.erase(it);
                 continue;
@@ -298,6 +298,24 @@ bool CBattlefieldHandler::RemoveFromBattlefield(CBaseEntity* PEntity, CBattlefie
 {
     PBattlefield = PBattlefield ? PBattlefield : GetBattlefield(PEntity);
     return PBattlefield ? PBattlefield->RemoveEntity(PEntity, leavecode) : false;
+}
+
+bool CBattlefieldHandler::Contains(const CBattlefield* PBattlefield) const
+{
+    if (!PBattlefield)
+    {
+        return false;
+    }
+
+    for (const auto& [area, battlefield] : m_Battlefields)
+    {
+        if (battlefield.get() == PBattlefield)
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 bool CBattlefieldHandler::IsRegistered(CCharEntity* PChar)
