@@ -29,6 +29,11 @@ Prefer not to touch client files? Load it as an overlay instead:
 3. Enable the overlay in XIPivot.
 4. Restart the game client.
 
+This pack is Ring + Track Suit only. Epeolatry / Idris / extra relic jobs
+live in `Custom DATs/Legendary-Relic-Weapon-DATs/` (`ROM/118/108.DAT` and
+`ROM/0/6.DAT`). Enable that folder in XIPivot as a second overlay or the
+new Epeo/Idris IDs stay WAR/THF leftovers.
+
 ## Current Overrides
 
 ### Legendary Track Suit (cosmetic set)
