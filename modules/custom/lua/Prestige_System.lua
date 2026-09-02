@@ -915,7 +915,8 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             onMobDeath = function(deadMob, killer, optParams)
                 mechanics.cleanup(deadMob)
                 summonedTrial[pid] = nil
-                if killer and not idleDespawned then
+                local noCredit = idleDespawned or deadMob:getLocalVar('PrestigeNoCredit') == 1
+                if killer and not noCredit then
                     m.onLegendKill(killer, gid)
                     -- Tier-gated augment catalyst (soft gating): Prestige trial
                     -- bosses (the Tier-3 augment gate is Prestige Lv15) drop
@@ -999,7 +1000,7 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             mechanics.attach(mob, mechCfg)
         end
 
-        summonedTrial[pid] = { alive = true, label = boss.label, gid = gid }
+        summonedTrial[pid] = { alive = true, label = boss.label, gid = gid, mob = mob }
 
         -- Summon announcements: the summoner flavor ("You have summoned X.
         -- Survive." + the boss cry + the Court line) AND the server-wide
@@ -1046,6 +1047,10 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             pcall(function() inZone = player:getZone():getID() == 222 end)
             if not inZone then
                 summonedTrial[pid] = nil
+                pcall(function()
+                    mob:setLocalVar('PrestigeNoCredit', 1)
+                    if mob:getHP() > 0 then mob:setHP(0) end
+                end)
                 return
             end
 
@@ -1247,6 +1252,45 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
         end,
     })
     utils.unused(Altar3)
+end)
+
+local function releaseSummonedTrial(pid)
+    local tbl = xi._prestige_summonedTrial
+    if not tbl then
+        return nil
+    end
+
+    local active = tbl[pid]
+    if not active then
+        return nil
+    end
+
+    tbl[pid] = nil
+    if active.mob then
+        pcall(function()
+            active.mob:setLocalVar('PrestigeNoCredit', 1)
+            if active.mob:getHP() > 0 then
+                active.mob:setHP(0)
+            end
+        end)
+    end
+
+    return active
+end
+
+m:addOverride('xi.player.onPlayerDeath', function(player, ...)
+    super(player, ...)
+    local active = releaseSummonedTrial(player:getID())
+    if active then
+        player:printToPlayer(string.format(
+            '[Ascension] %s withdraws as you fall. Rise again and face the Trial.',
+            active.label or 'The Trial'), xi.msg.channel.SYSTEM_3)
+    end
+end)
+
+m:addOverride(cfg.zonePath .. '.Zone.onZoneOut', function(player, ...)
+    pcall(super, player, ...)
+    releaseSummonedTrial(player:getID())
 end)
 
 -----------------------------------

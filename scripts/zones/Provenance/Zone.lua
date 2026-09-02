@@ -24,6 +24,9 @@ end
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
+zoneObject.onZoneOut = function(player)
+end
+
 zoneObject.onEventUpdate = function(player, csid, option, npc)
 end
 

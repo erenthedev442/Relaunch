@@ -261,9 +261,13 @@ local function buildShopMenu(player, items, currency, page, backFn)
                     return
                 end
                 pp:delCurrency(currency, cost)
-                pp:addItem(item[1], 1)
-                pp:printToPlayer(string.format('[Ambuscade] Received %s. Balance: %d.',
-                    item[2], pp:getCurrency(currency)), SYS)
+                if pp:addItem({ id = item[1], quantity = 1, silent = true }) then
+                    pp:printToPlayer(string.format('[Ambuscade] Received %s. Balance: %d.',
+                        item[2], pp:getCurrency(currency)), SYS)
+                else
+                    pp:addCurrency(currency, cost)
+                    pp:printToPlayer('[Ambuscade] Could not add the item. Hallmarks were not taken.', SYS)
+                end
                 buildShopMenu(pp, items, currency, page, backFn)
             end,
         }
@@ -520,9 +524,15 @@ xi.ambuscade.onTradeGorpaMasorpa = function(player, npc, trade)
     for gearId, up in pairs(UPGRADES) do
         if trade:hasItemQty(gearId, 1) then
             if npcUtil.tradeHasExactly(trade, { gearId, { up.mat, up.qty } }) then
-                if npcUtil.giveItem(player, up.result) then
+                if player:hasItem(up.result) then
+                    player:printToPlayer('[Ambuscade] You already own that Rare piece (check inventory, wardrobes, and storage).', SYS)
+                elseif player:getFreeSlotsCount() < 1 then
+                    player:printToPlayer('[Ambuscade] Inventory full.', SYS)
+                elseif player:addItem({ id = up.result, quantity = 1, silent = true }) then
                     player:confirmTrade()
                     player:printToPlayer('[Ambuscade] A fine piece -- wear it with pride!', SYS)
+                else
+                    player:printToPlayer('[Ambuscade] Could not add the piece. Trade was not taken.', SYS)
                 end
             else
                 local matName = up.mat == 9270 and 'Abdhaljs Metal' or 'Abdhaljs Fiber'

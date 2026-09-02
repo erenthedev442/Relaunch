@@ -17,6 +17,7 @@
 -----------------------------------
 require('modules/module_utils')
 local catalog    = require('modules/custom/lua/reforge_catalog')
+local gendered   = require('modules/custom/lua/gendered_armor')
 local hg         = require('modules/custom/lua/hunters_guild')
 local wh         = require('modules/custom/lua/weekly_hunts')
 -- Hardcore NM mechanics engine (stance dance / AoE / adds / drain / doom /
@@ -178,7 +179,7 @@ local function rollLootDrop(player, srcDef, mobLabel)
         return
     end
 
-    local itemId    = pool[math.random(#pool)]  -- pools are base-tier ids
+    local itemId    = gendered.resolve(player, pool[math.random(#pool)])
     local addedItem = player:addItem({ id = itemId, quantity = 1 })
     local rawName   = addedItem and addedItem:getName() or string.format('item %d', itemId)
     local itemName  = toDisplayName(rawName)
@@ -346,15 +347,16 @@ buildUpgradeMenu = function(player, jobDef, setKey, slotKey, tiers)
         local toId   = tiers[tierIdx]
         if fromId and toId and fromId > 0 and toId > 0 then
             local cost     = tierCosts[tierIdx]
-            local has      = player:hasItem(fromId)
+            local has      = gendered.has(player, fromId)
             local canPay   = getMarks(player, setKey) >= cost
-            local ownsNext = player:hasItem(toId) -- RARE: can't hold a second
+            local ownsNext = gendered.has(player, toId) -- RARE: can't hold a second
             local flag     = (has and canPay and not ownsNext) and '' or ' *'
 
             table.insert(options, {
                 string.format('To %s [%d %s]%s', tierLabels[tierIdx], cost, cur.currencyShort, flag),
                 function(p)
-                    if not p:hasItem(fromId) then
+                    local fromHeld = gendered.ownedId(p, fromId)
+                    if not fromHeld then
                         p:printToPlayer(
                             string.format('You need the %s piece first, kupo!', tierLabels[tierIdx - 1]),
                             xi.msg.channel.SYSTEM_3)
@@ -364,7 +366,8 @@ buildUpgradeMenu = function(player, jobDef, setKey, slotKey, tiers)
                     -- RARE pre-check: the engine refuses a second copy, and
                     -- charging first ate the player's marks AND base piece
                     -- (Jbae, 2026-07-12). Refuse before anything is spent.
-                    if p:hasItem(toId) then
+                    local toGive = gendered.resolve(p, toId)
+                    if p:hasItem(toGive) then
                         p:printToPlayer(
                             string.format('You already own the %s piece -- it is RARE, so you cannot hold another, kupo!',
                                 tierLabels[tierIdx]),
@@ -386,12 +389,12 @@ buildUpgradeMenu = function(player, jobDef, setKey, slotKey, tiers)
                     end
 
                     spendMarks(p, setKey, cost)
-                    p:delItem(fromId, 1)
-                    if not p:addItem({ id = toId, quantity = 1 }) then
+                    p:delItem(fromHeld, 1)
+                    if not p:addItem({ id = toGive, quantity = 1 }) then
                         -- Grant failed anyway (race, storage-slip, etc.):
                         -- roll the whole transaction back.
                         spendMarks(p, setKey, -cost)
-                        p:addItem({ id = fromId, quantity = 1 })
+                        p:addItem({ id = fromHeld, quantity = 1 })
                         p:printToPlayer(
                             string.format('The upgrade failed -- your %s and %s piece were returned, kupo!',
                                 cur.currencyName, tierLabels[tierIdx - 1]),

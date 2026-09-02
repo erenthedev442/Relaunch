@@ -75,9 +75,10 @@ auto PetSkillDistanceCheck(CCharEntity* PChar, CBaseEntity* PTarget, const CAbil
     else if (PPetSkill->getMobSkillID() > 0)
     {
         // Jug pet skills:
-        // 1 - PC must be within 4y + hitboxes from pet
+        // 1 - PC must be within 15y + hitboxes from pet (4y was too tight once
+        //     the pet was on the far side of a large target)
         // 2 - Pet must be within skill range + hitboxes from enemy (if skill targets enemy)
-        if (distance(PChar->loc.p, PPet->loc.p) > 4.0f + PChar->modelHitboxSize + PPet->modelHitboxSize)
+        if (distance(PChar->loc.p, PPet->loc.p) > 15.0f + PChar->modelHitboxSize + PPet->modelHitboxSize)
         {
             PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::TargetOutOfRange);
             return false;

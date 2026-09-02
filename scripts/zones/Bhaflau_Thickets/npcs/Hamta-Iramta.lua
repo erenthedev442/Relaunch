@@ -3,6 +3,8 @@
 --  NPC: Hamta-Iramta
 -- Type: Alzadaal Undersea Ruins
 -- !pos -459.942 -20.048 -4.999 52
+-- Cutscenes 134-136 lock the client when the CS DAT is missing. Warp in/out
+-- immediately instead of starting those events.
 -----------------------------------
 local ID = zones[xi.zone.BHAFLAU_THICKETS]
 -----------------------------------
@@ -10,11 +12,15 @@ local ID = zones[xi.zone.BHAFLAU_THICKETS]
 local entity = {}
 
 local function isOutsideAlzadaal(player)
-    if player:getYPos() <= -16.01 then
-        return true
-    end
+    return player:getYPos() <= -16.01
+end
 
-    return false
+local function enterRuins(player)
+    player:setPos(-115, -4, -620, 253, xi.zone.ALZADAAL_UNDERSEA_RUINS)
+end
+
+local function leaveRuins(player)
+    player:setPos(-401.065, -9.633, 19.995, 0, 52)
 end
 
 entity.onTrade = function(player, npc, trade)
@@ -24,7 +30,7 @@ entity.onTrade = function(player, npc, trade)
         trade:hasItemQty(xi.item.IMPERIAL_SILVER_PIECE, 1)
     then
         player:tradeComplete()
-        player:startEvent(135)
+        enterRuins(player)
     end
 end
 
@@ -32,18 +38,11 @@ entity.onTrigger = function(player, npc)
     if isOutsideAlzadaal(player) then
         if player:hasKeyItem(xi.ki.CAPTAIN_WILDCAT_BADGE) then
             player:messageSpecial(ID.text.YOU_HAVE_A_BADGE, xi.ki.CAPTAIN_WILDCAT_BADGE)
-            player:startEvent(135)
-        else
-            player:startEvent(134)
         end
-    else
-        player:startEvent(136)
-    end
-end
 
-entity.onEventFinish = function(player, csid, option, npc)
-    if csid == 135 then
-        player:setPos(-115, -4, -620, 253, xi.zone.ALZADAAL_UNDERSEA_RUINS)
+        enterRuins(player)
+    else
+        leaveRuins(player)
     end
 end
 

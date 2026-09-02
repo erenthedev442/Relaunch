@@ -203,19 +203,26 @@ def main():
     name_to_id, dup_names, id_to_name = parse_item_basic(ITEM_BASIC)
     equip = parse_item_equipment(ITEM_EQUIPMENT)
 
-    # Bucket names by tier suffix -> { base_name : id }
+    # Bucket names by tier suffix -> { base_name : [(name, id), ...] }.
+    # Maxixi (and any other gender-split set) shares one internal name across
+    # two IDs; name_to_id only keeps the last row, so iterate id_to_name and
+    # pair sorted IDs (male/lower with male/lower).
     plus3 = {}
     plus4 = {}
-    for name, item_id in name_to_id.items():
+    for item_id, name in id_to_name.items():
         m = TIER_RE.search(name)
         if not m:
             continue
         tier = m.group(1)
         base = name[: m.start()]  # strip the _+N suffix
         if tier == '3':
-            plus3[base] = (name, item_id)
+            plus3.setdefault(base, []).append((name, item_id))
         elif tier == '4':
-            plus4[base] = (name, item_id)
+            plus4.setdefault(base, []).append((name, item_id))
+
+    for bucket in (plus3, plus4):
+        for base in bucket:
+            bucket[base].sort(key=lambda row: row[1])
 
     # Diagnostics accumulators (printed to stderr, not into the .lua).
     anomalies = []
@@ -282,11 +289,15 @@ def main():
                     f'{base}: +3 slot {s3} != +4 slot {s4} (ids {id3}/{id4})')
 
     # ---- name-paired pass ----
-    for base, (n3, id3) in plus3.items():
-        if base not in plus4:
+    for base, p3list in plus3.items():
+        p4list = plus4.get(base)
+        if not p4list:
             continue  # dead-end +3 (reported later against reforge_catalog)
-        n4, id4 = plus4[base]
-        build_entry(id3, id4, n4, base)
+        if len(p3list) != len(p4list):
+            anomalies.append(
+                f'{base}: {len(p3list)} +3 ids vs {len(p4list)} +4 ids; pairing by sorted index')
+        for (n3, id3), (n4, id4) in zip(p3list, p4list):
+            build_entry(id3, id4, n4, base)
 
     # ---- manual overrides (name-pairing missed these) ----
     for id3, id4 in OVERRIDES.items():
@@ -331,8 +342,8 @@ def main():
         sys.stderr.write(s + '\n')
 
     err(f'Wrote {OUT_LUA} with {len(entries)} entries.')
-    err(f'  +3 names in item_basic: {len(plus3)}')
-    err(f'  +4 names in item_basic: {len(plus4)}')
+    err(f'  +3 names in item_basic: {len(plus3)} ({sum(len(v) for v in plus3.values())} ids)')
+    err(f'  +4 names in item_basic: {len(plus4)} ({sum(len(v) for v in plus4.values())} ids)')
     err(f'  paired but non-armor slot (skipped): {skipped["nonarmor"]}')
     err(f'  paired but +4 missing from item_equipment: {len(unmapped_slot)}')
     if multijob:

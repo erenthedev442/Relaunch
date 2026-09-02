@@ -899,7 +899,8 @@ catalog.pieces[xi.job.PUP] =
 }
 
 -- ---------- DNC  --  Maxixi (AF) / Horos (Relic) / Maculele (Empyrean) ----------
--- AF uses male variant (27681); female variant (27682) omitted.
+-- Maxixi is gender-split (male = listed ID, female = ID+1). Grants and
+-- upgrades resolve through gendered_armor.lua. Horos / Maculele are unisex.
 catalog.pieces[xi.job.DNC] =
 {
     af = -- Maxixi
@@ -1138,7 +1139,7 @@ catalog.mechCfgs[11406] = {
 -- Padfoot [Lv200] - mid-tier: AoE + drain + nuke
 catalog.mechCfgs[11405] = {
     name  = 'Padfoot',
-    aoe   = { periodSec = 12, dmgPct = 22, msg = 'unleashes Spectral Howl across the area!' },
+    aoe   = { periodSec = 12, dmgPct = 22, noEnmity = true, msg = 'unleashes Spectral Howl across the area!' },
     drain = { periodSec = 9,  healPct = 0.25 },
     phases = {
         { hp = 40, action = 'nuke',  dmgPct = 38, msg = 'channels Dark Maw!' },

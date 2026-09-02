@@ -5052,7 +5052,7 @@ INSERT INTO `item_weapon` VALUES (22140,'annihilator',26,1,269,0,0,1,1,582,143,0
 INSERT INTO `item_weapon` VALUES (22141,'death_penalty',26,1,269,0,0,1,1,480,101,0);      -- DMG:101 Delay:480
 INSERT INTO `item_weapon` VALUES (22142,'armageddon',26,1,269,0,0,1,1,582,143,0);         -- DMG:143 Delay:582
 INSERT INTO `item_weapon` VALUES (22143,'fomalhaut',26,1,269,0,0,1,1,600,167,0);          -- DMG:167 Delay:600
-INSERT INTO `item_weapon` VALUES (22144,'voluspa_gun',26,0,215,0,0,1,1,600,113,0);
+INSERT INTO `item_weapon` VALUES (22144,'voluspa_gun',26,1,215,0,0,1,1,600,113,0);
 INSERT INTO `item_weapon` VALUES (22145,'artemiss_bow_+2',25,4,269,0,0,1,1,540,276,0);
 INSERT INTO `item_weapon` VALUES (22146,'ethereal_bow',25,0,0,0,0,1,1,540,1,0);           -- TODO: Not implemented
 INSERT INTO `item_weapon` VALUES (22147,'scouts_crossbow',26,0,242,0,0,1,1,288,126,0); -- DMG:126 Delay:288

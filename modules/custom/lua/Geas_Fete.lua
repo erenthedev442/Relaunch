@@ -1076,6 +1076,193 @@ local function clearSoloFailEffects(mob)
     end
 end
 
+-- After the pop claim, these NMs must not sight/hear bystanders. If the
+-- popper dies, they stand still for 30s so the owner (or their alliance)
+-- can reclaim; then they fade with no kill credit.
+local GEAS_FETE_RECLAIM_SECONDS = 30
+
+local function resolvePc(entity)
+    if not entity then
+        return nil
+    end
+    local objType
+    pcall(function() objType = entity:getObjType() end)
+    if objType == xi.objType.PC then
+        return entity
+    end
+    if objType == xi.objType.PET or objType == xi.objType.TRUST or objType == xi.objType.FELLOW then
+        local master
+        pcall(function() master = entity:getMaster() end)
+        if master then
+            local masterType
+            pcall(function() masterType = master:getObjType() end)
+            if masterType == xi.objType.PC then
+                return master
+            end
+        end
+    end
+    return nil
+end
+
+local function isLivingGeasAlly(mob, entity)
+    local pc = resolvePc(entity)
+    if not pc then
+        return false
+    end
+    local ownerId = mob:getLocalVar('GeasFeteOwnerId')
+    local alive, sameZone = false, false
+    pcall(function()
+        alive    = pc:isAlive() and pc:getHP() > 0
+        sameZone = pc:getZoneID() == mob:getZoneID()
+    end)
+    if not alive or not sameZone then
+        return false
+    end
+    if pc:getID() == ownerId then
+        return true
+    end
+    local owner
+    pcall(function() owner = GetPlayerByID(ownerId) end)
+    if not owner then
+        return false
+    end
+    local allied = false
+    pcall(function()
+        for _, member in ipairs(owner:getAlliance() or {}) do
+            if member and member:getID() == pc:getID() then
+                allied = true
+                break
+            end
+        end
+    end)
+    return allied
+end
+
+local function enmityEntities(mob)
+    local list = {}
+    pcall(function()
+        for _, hate in ipairs(mob:getEnmityList() or {}) do
+            if hate.entity then
+                list[#list + 1] = hate.entity
+            end
+        end
+    end)
+    return list
+end
+
+local function dropNonAllyEnmity(mob)
+    for _, entity in ipairs(enmityEntities(mob)) do
+        if not isLivingGeasAlly(mob, entity) then
+            pcall(function() mob:resetEnmity(entity) end)
+            pcall(function() mob:clearEnmityForEntity(entity) end)
+        end
+    end
+end
+
+local function clearAllEnmity(mob)
+    for _, entity in ipairs(enmityEntities(mob)) do
+        pcall(function() mob:resetEnmity(entity) end)
+        pcall(function() mob:clearEnmityForEntity(entity) end)
+    end
+    pcall(function() mob:disengage() end)
+end
+
+local function despawnGeasFeteNoCredit(mob)
+    if not mob then
+        return
+    end
+    pcall(function()
+        if mob:getHP() <= 0 or not mob:isSpawned() then
+            return
+        end
+        mob:setLocalVar('GeasFeteNoCredit', 1)
+        mechanics.cleanup(mob)
+        mob:setHP(0)
+    end)
+end
+
+local function armGeasFeteOwnerWatch(mob, ownerId)
+    local function tick(watchMob)
+        if not watchMob then
+            return
+        end
+        local hp, spawned = 0, false
+        local ok = pcall(function()
+            hp      = watchMob:getHP()
+            spawned = watchMob:isSpawned()
+        end)
+        if not ok or hp <= 0 or not spawned then
+            return
+        end
+        if watchMob:getLocalVar('GeasFeteNoCredit') == 1 then
+            return
+        end
+
+        pcall(function()
+            watchMob:setMobMod(xi.mobMod.NO_AGGRO, 1)
+            watchMob:setMobMod(xi.mobMod.NO_LINK, 1)
+            watchMob:setAggressive(false)
+        end)
+
+        local owner
+        pcall(function() owner = GetPlayerByID(ownerId) end)
+        local ownerDown = true
+        if owner then
+            pcall(function()
+                ownerDown = owner:getHP() <= 0 or owner:getZoneID() ~= watchMob:getZoneID()
+            end)
+        end
+
+        local alliedFight = false
+        pcall(function()
+            alliedFight = watchMob:isEngaged() and isLivingGeasAlly(watchMob, watchMob:getTarget())
+        end)
+
+        local wasDown   = watchMob:getLocalVar('GeasFeteOwnerDown') == 1
+        local despawnAt = watchMob:getLocalVar('GeasFeteDespawnAt')
+
+        -- Rising edge (owner just died / zoned): drop ALL hate so cure-enmity
+        -- or a nearby ally does not become the new chase target.
+        if ownerDown and not wasDown then
+            watchMob:setLocalVar('GeasFeteOwnerDown', 1)
+            watchMob:setLocalVar('GeasFeteDespawnAt', os.time() + GEAS_FETE_RECLAIM_SECONDS)
+            clearAllEnmity(watchMob)
+            alliedFight = false
+            despawnAt   = watchMob:getLocalVar('GeasFeteDespawnAt')
+            if owner then
+                pcall(function()
+                    owner:printToPlayer(
+                        '[Geas Fete] The encounter will fade in 30 seconds if you do not reclaim.',
+                        S)
+                end)
+            end
+        elseif not ownerDown and wasDown then
+            watchMob:setLocalVar('GeasFeteOwnerDown', 0)
+        elseif ownerDown and wasDown and despawnAt == 0 and not alliedFight then
+            watchMob:setLocalVar('GeasFeteDespawnAt', os.time() + GEAS_FETE_RECLAIM_SECONDS)
+            clearAllEnmity(watchMob)
+            despawnAt = watchMob:getLocalVar('GeasFeteDespawnAt')
+        end
+
+        despawnAt = watchMob:getLocalVar('GeasFeteDespawnAt')
+        if despawnAt > 0 then
+            if alliedFight then
+                watchMob:setLocalVar('GeasFeteDespawnAt', 0)
+            elseif os.time() >= despawnAt then
+                despawnGeasFeteNoCredit(watchMob)
+                return
+            else
+                dropNonAllyEnmity(watchMob)
+            end
+        else
+            dropNonAllyEnmity(watchMob)
+        end
+
+        watchMob:timer(1000, tick)
+    end
+    mob:timer(1000, tick)
+end
+
 -- ===================================================================
 -- NM SPAWN
 -- ===================================================================
@@ -1121,8 +1308,11 @@ local function spawnNM(player, zone, zoneId, def, campNpc)
             -- LSB new signature: onMobDeath(mob, player, optParams). Reward
             -- every credited alliance member; guard only against nil players.
             onMobDeath = function(mob, killer, optParams)
-                if killer == nil then return end
                 mechanics.cleanup(mob)
+                if mob:getLocalVar('GeasFeteNoCredit') == 1 then
+                    return
+                end
+                if killer == nil then return end
                 local cur = defCapture.currency or 0
                 local silt = SILT_BY_TIER[defCapture.tier] or 0
                 if cur > 0 then
@@ -1152,7 +1342,28 @@ local function spawnNM(player, zone, zoneId, def, campNpc)
                 end
             end,
 
+            onMobEngage = function(engMob, target)
+                if not isLivingGeasAlly(engMob, target) then
+                    dropNonAllyEnmity(engMob)
+                    pcall(function() engMob:disengage() end)
+                    return
+                end
+                engMob:setLocalVar('GeasFeteDespawnAt', 0)
+            end,
+
+            onMobRoam = function(roamMob)
+                local untilTime = roamMob:getLocalVar('GeasFeteDespawnAt')
+                if untilTime > 0 and os.time() >= untilTime then
+                    despawnGeasFeteNoCredit(roamMob)
+                end
+            end,
+
             onMobFight = function(fightMob, target)
+                if not isLivingGeasAlly(fightMob, target) then
+                    dropNonAllyEnmity(fightMob)
+                    pcall(function() fightMob:disengage() end)
+                    return
+                end
                 clearSoloFailEffects(fightMob)
                 mechanics.tick(fightMob, target)
             end,
@@ -1175,6 +1386,12 @@ local function spawnNM(player, zone, zoneId, def, campNpc)
             -- Some Escha Warder pools ship with FLAG_UNTARGETABLE (0x800) baked
             -- into mob_pools.entityFlags. A direct Geas pop must unseal them.
             mob:setUntargetable(false)
+            -- Lock aggro to the pop claim: sight/hearing stay on the insert
+            -- so CalculateMobStats does not warn, but NO_AGGRO stops the NM
+            -- from chasing anyone except the popper we feed into updateEnmity.
+            mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
+            mob:setMobMod(xi.mobMod.NO_LINK, 1)
+            mob:setAggressive(false)
             local scaledFor = applyDifficulty(mob, def, player)
             local mechBase = MECHANIC_TUNING[def.difficulty or def.tier] or MECHANIC_TUNING[1]
             local mechCfg = {}
@@ -1182,6 +1399,8 @@ local function spawnNM(player, zone, zoneId, def, campNpc)
             mechCfg.name = 'Geas Fete: ' .. (def.label or def.name)
             mechanics.attach(mob, mechCfg)
             mob:updateClaim(player)
+            pcall(function() mob:updateEnmity(player) end)
+            armGeasFeteOwnerWatch(mob, player:getID())
             return mob:isSpawned(), scaledFor
         end)
 

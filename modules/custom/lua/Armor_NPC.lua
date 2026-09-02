@@ -24,7 +24,8 @@
 -- To add gear: edit armor_catalog.lua only.
 -----------------------------------
 require('modules/module_utils')
-local catalog = require('modules/custom/lua/armor_catalog')
+local catalog  = require('modules/custom/lua/armor_catalog')
+local gendered = require('modules/custom/lua/gendered_armor')
 
 local _zoneName = catalog.zonePath:match('xi%.zones%.(.+)')
 require(string.format('scripts/zones/%s/Zone', _zoneName))
@@ -61,7 +62,7 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
         player:timer(50, function(p)
             p:createShop(count)
             for i = 1, count do
-                p:addShopItem(items[offset + i].id, items[offset + i].cost)
+                p:addShopItem(gendered.resolve(p, items[offset + i].id), items[offset + i].cost)
             end
             p:setShopCurrency(sealDef.id)
             p:sendMenu(xi.menuType.SHOP)

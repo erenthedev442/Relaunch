@@ -255,7 +255,11 @@ local function aoePulse(mob, aoeCfg, st, target)
         pcall(function()
             local dmg = math.floor(p:getMaxHP() * (aoeCfg.dmgPct or 20) / 100)
             if dmg > 0 then
-                p:takeDamage(dmg, mob, xi.attackType.SPECIAL, xi.damageType.ELEMENTAL)
+                if aoeCfg.noEnmity then
+                    p:takeDamage(dmg)
+                else
+                    p:takeDamage(dmg, mob, xi.attackType.SPECIAL, xi.damageType.ELEMENTAL)
+                end
                 if st and st.damageMessages then
                     p:printToPlayer(
                         string.format('[%s] Scripted shockwave hits you for %d damage.',

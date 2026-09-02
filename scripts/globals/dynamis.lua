@@ -936,6 +936,13 @@ xi.dynamis.hourglassAndCurrencyExchangeNPCOnTrade = function(player, npc, trade)
     -- Zero this out, just in case
     player:setLocalVar('currencyExchange', 0)
 
+    -- Bulk singles/hundreds. The goblin CS only accepts exactly
+    -- CURRENCY_EXCHANGE_RATE (10) pieces; anything else used to close
+    -- silently. See dynamis_currency_exchange.lua.
+    if require('modules/custom/lua/dynamis_currency_exchange').tryExchange(player, npc, trade) then
+        return
+    end
+
     if player:hasKeyItem(xi.ki.VIAL_OF_SHROUDED_SAND) then
         -- buy prismatic hourglass
         if

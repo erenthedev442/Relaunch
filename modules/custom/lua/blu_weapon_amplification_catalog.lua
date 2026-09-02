@@ -15,7 +15,7 @@ catalog.TIERS =
     MYTHIC    = { multiplier =  45, cap = 2999997 },
     EMPYREAN  = { multiplier =  45, cap = 2999997 },
     RELIC     = { multiplier =  30, cap = 2999997 },
-    AMBUSCADE = { multiplier =   9, cap =  299997 },
+    AMBUSCADE = { multiplier =   9, cap =   99999 },
     ITEM_119  = { multiplier =   9, cap =  239997 },
     PRE_119   = { multiplier =   9, cap =  120000 },
 }

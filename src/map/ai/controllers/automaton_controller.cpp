@@ -31,6 +31,7 @@
 #include "entities/trustentity.h"
 #include "enums/automaton.h"
 #include "lua/luautils.h"
+#include "mob_modifier.h"
 #include "mob_spell_container.h"
 #include "mobskill.h"
 #include "recast_container.h"
@@ -293,10 +294,20 @@ auto CAutomatonController::DoCombatTick(timer::time_point tick) -> Task<void>
 
 void CAutomatonController::Move()
 {
-    if ((shouldStandBack() && !isWithinDistance(PAutomaton->loc.p, PTarget->loc.p, 15.0f)) ||
-        (PAutomaton->health.mp < 8 && PAutomaton->health.maxmp > 8))
+    // Ranged mode (standback heads / Animator): keep standback and stop at 15'
+    // so the puppet closes to that mark and uses RA there. The old >15' check
+    // cleared standback and sent them into melee.
+    // Hybrid (Sharpshot frame, no standback): this path is skipped -- they
+    // run to melee. TryRangedAttack still fires RA on the Sharpshot frame.
+    // Low-MP casters still drop standback so they can melee.
+    if (PAutomaton->health.mp < 8 && PAutomaton->health.maxmp > 8)
     {
         PAutomaton->m_Behavior &= ~BEHAVIOR_STANDBACK;
+    }
+    else if (shouldStandBack())
+    {
+        PAutomaton->m_Behavior |= BEHAVIOR_STANDBACK;
+        PAutomaton->setMobMod(MOBMOD_STANDBACK_RANGE, 15);
     }
 
     CPetController::Move();

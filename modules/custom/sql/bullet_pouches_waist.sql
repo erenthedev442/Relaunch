@@ -50,12 +50,14 @@ INSERT INTO `item_mods` (`itemId`,`modId`,`value`) VALUES
     (26347,  24, 30), (26347,  26, 30), (26347, 305, 100),   -- Eradicating: RATT 30, RACC 30
     (26349,  26, 35), (26349,  30, 35), (26349, 305, 100);   -- Devastating: RACC 35, MACC 35
 
--- ----- 5. de-register the "usable" identity so they are PURE WAIST GEAR --------
---   These 6 items (4 bullet pouches + chrono quiver + quelling bolt quiver) were
---   ALSO in item_usable (use -> 99-stack, 1h reuse) WHILE being waist gear -- the
---   dual registration is what made pouches/quivers "hit or miss" (client vs server
---   disagree on equip-vs-use). Worn infinite-ammo is the design, and the ammo
---   itself is now buyable in !shop, so the usable dispenser is redundant. Drop it
---   -> one clean identity, no cooldown. (To restore the usable dispensers instead,
---   remove these items from item_equipment/item_mods and re-add item_usable rows.)
-DELETE FROM `item_usable` WHERE `itemid` IN (26345, 26346, 26347, 26348, 26349, 26350);
+-- ----- 5. keep the usable dispenser (use -> 99 matching bullets) ---------------
+--   These four pouches are dual-purpose: waist gear (Recycle + stats) AND a
+--   usable box that unpacks one stack. An earlier pass deleted item_usable so
+--   !shop pouches were "unable to use". Restore the rows; scripts/items/*_bullet_pouch.lua
+--   already handle onItemUse.
+DELETE FROM `item_usable` WHERE `itemid` IN (26347, 26348, 26349, 26350);
+INSERT INTO `item_usable` VALUES
+    (26347,'eradicating_bullet_pouch',1,2,0,0,1,10,3600,0),
+    (26348,'living_bullet_pouch',1,2,0,0,1,10,3600,0),
+    (26349,'devastating_bullet_pouch',1,2,0,0,1,10,3600,0),
+    (26350,'chrono_bullet_pouch',1,2,0,0,1,10,3600,0);

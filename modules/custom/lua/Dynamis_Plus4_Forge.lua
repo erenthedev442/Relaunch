@@ -26,6 +26,7 @@ require('scripts/zones/Southern_San_dOria/Zone')
 
 local plus4map = require('modules/custom/lua/reforge_plus4_map')
 local reforgeCatalog = require('modules/custom/lua/reforge_catalog')
+local gendered = require('modules/custom/lua/gendered_armor')
 
 local m = Module:new('dynamis_plus4_forge')
 
@@ -131,7 +132,8 @@ m:addOverride('xi.zones.Southern_San_dOria.Zone.onInitialize', function(zone)
 
         -- RARE pre-check: giveItem would refuse a second +4 AFTER the trade
         -- and materials were consumed. Refuse before anything is spent.
-        if player:hasItem(entry.result) then
+        local resultId = gendered.resolve(player, entry.result)
+        if player:hasItem(resultId) then
             player:printToPlayer(string.format(
                 '[+4 Forge] You already own %s +4 -- it is RARE, so a second cannot be forged, kupo!',
                 entry.name), SYS)
@@ -163,7 +165,7 @@ m:addOverride('xi.zones.Southern_San_dOria.Zone.onInitialize', function(zone)
 
         -- Consume the traded +3 piece (and traded materials) and hand back the +4.
         player:confirmTrade()
-        npcUtil.giveItem(player, entry.result)
+        npcUtil.giveItem(player, resultId)
         player:printToPlayer(string.format('[+4 Forge] %s reforged to +4! Kupo!', entry.name), SYS)
     end
 

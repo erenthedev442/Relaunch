@@ -13,7 +13,9 @@
 -- The session is tied to the player who started it:
 --   - If the player leaves the zone, the session ends and live mobs
 --     get despawned.
---   - If the player dies, the session ends (with no completion bonus).
+--   - If the owner dies alone, the session ends (no completion bonus).
+--     A living party member in range can finish the current wave. If that
+--     was the last wave, they still get credit.
 --   - Talking to the Game Master mid-session aborts cleanly.
 --
 -- Mob data comes from modules/custom/lua/game_master_catalog.lua.
@@ -672,12 +674,47 @@ end)
 -- interfering - that's the LSB override system's job.
 m:addOverride('xi.player.onPlayerDeath', function(player, ...)
     super(player, ...)
-    if getSession(player) then
-        player:printToPlayer(
-            '[Game Master] Owner down - session aborted, waves despawned.',
-            xi.msg.channel.SYSTEM_3)
-        endSession(player, false)
+    local sess = getSession(player)
+    if not sess then
+        return
     end
+
+    local stillAlive = false
+    for _ in pairs(sess.mobsAlive or {}) do
+        stillAlive = true
+        break
+    end
+
+    if sess.waveIndex >= sess.wavesTotal then
+        if not stillAlive and (sess.pendingSpawns or 0) == 0 then
+            endSession(player, true)
+            return
+        end
+
+        local partyStillFighting = false
+        for _, member in ipairs(eligibleRecipients(player)) do
+            if member:getID() ~= player:getID() then
+                local hp = 0
+                pcall(function() hp = member:getHP() end)
+                if hp > 0 then
+                    partyStillFighting = true
+                    break
+                end
+            end
+        end
+
+        if partyStillFighting then
+            player:printToPlayer(
+                '[Game Master] You fell. Your party can still finish the last wave.',
+                xi.msg.channel.SYSTEM_3)
+            return
+        end
+    end
+
+    player:printToPlayer(
+        '[Game Master] Owner down - session aborted, waves despawned.',
+        xi.msg.channel.SYSTEM_3)
+    endSession(player, false)
 end)
 
 -----------------------------------
