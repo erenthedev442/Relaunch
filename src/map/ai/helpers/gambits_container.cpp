@@ -522,6 +522,44 @@ auto CGambitsContainer::Tick(timer::time_point tick) -> Task<void>
             continue;
         }
 
+        // Entrust Indi must land on the master (one COLURE per entity). The
+        // gambit predicate is STATUS ENTRUST on SELF, so the resolved target
+        // is the caster. Apply this before Cast in *both* the pre-resolved
+        // path and the fallback -- otherwise Indi-Frailty overwrites her Fury
+        // and the master never gets GEO_ATTACK_BOOST.
+        auto applyEntrustRetarget = [&](CBattleEntity*& actionTarget, Maybe<SpellID> spell_id) -> bool
+        {
+            auto* PMaster = static_cast<CCharEntity*>(POwner->PMaster);
+            actionTarget  = PMaster;
+            if (
+                PMaster &&
+                spell_id.has_value() &&
+                PMaster->GetMJob() == JOB_GEO &&
+                spell_id.value() == SpellID::Indi_Languor)
+            {
+                CBattleEntity* tankTarget = nullptr;
+                PMaster->ForPartyWithTrusts(
+                    [&](CBattleEntity* PMember)
+                    {
+                        if (tankTarget != nullptr || PMember == nullptr || PMember->isDead())
+                        {
+                            return;
+                        }
+                        auto job = PMember->GetMJob();
+                        if (job == JOB_PLD || job == JOB_RUN || job == JOB_NIN)
+                        {
+                            tankTarget = PMember;
+                        }
+                    });
+                if (tankTarget == nullptr)
+                {
+                    return false;
+                }
+                actionTarget = tankTarget;
+            }
+            return actionTarget != nullptr;
+        };
+
         // Execute actions that passed the pre-checks. Use resolvedSpells for spells where available.
         bool executedAnyAction = false;
         for (size_t i = 0; i < gambit.actions.size(); ++i)
@@ -543,8 +581,15 @@ auto CGambitsContainer::Tick(timer::time_point tick) -> Task<void>
                 // Use the pre resolved spell if present, otherwise fall back
                 if (resolvedSpells[i].has_value())
                 {
-                    controller->Cast(target->targid, resolvedSpells[i].value());
-                    executedAnyAction = true;
+                    if (action.select == G_SELECT::ENTRUSTED && !applyEntrustRetarget(target, resolvedSpells[i]))
+                    {
+                        continue;
+                    }
+                    if (target != nullptr)
+                    {
+                        controller->Cast(target->targid, resolvedSpells[i].value());
+                        executedAnyAction = true;
+                    }
                 }
                 else
                 {
@@ -581,35 +626,7 @@ auto CGambitsContainer::Tick(timer::time_point tick) -> Task<void>
                     {
                         auto* PMaster  = static_cast<CCharEntity*>(POwner->PMaster);
                         auto  spell_id = POwner->SpellContainer->GetBestEntrustedSpell(PMaster);
-                        target         = PMaster;
-                        // Sylvie UC / GEO master: Indi-Languor goes on first PLD/RUN/NIN.
-                        if (
-                            PMaster &&
-                            spell_id.has_value() &&
-                            PMaster->GetMJob() == JOB_GEO &&
-                            spell_id.value() == SpellID::Indi_Languor)
-                        {
-                            CBattleEntity* tankTarget = nullptr;
-                            PMaster->ForPartyWithTrusts(
-                                [&](CBattleEntity* PMember)
-                                {
-                                    if (tankTarget != nullptr || PMember == nullptr || PMember->isDead())
-                                    {
-                                        return;
-                                    }
-                                    auto job = PMember->GetMJob();
-                                    if (job == JOB_PLD || job == JOB_RUN || job == JOB_NIN)
-                                    {
-                                        tankTarget = PMember;
-                                    }
-                                });
-                            if (tankTarget == nullptr)
-                            {
-                                break;
-                            }
-                            target = tankTarget;
-                        }
-                        if (spell_id.has_value() && target != nullptr)
+                        if (spell_id.has_value() && applyEntrustRetarget(target, spell_id))
                         {
                             controller->Cast(target->targid, spell_id.value());
                             executedAnyAction = true;

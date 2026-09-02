@@ -64,6 +64,7 @@ local function listEffects(target, player)
             effectCount = effectCount + 1
             local effectName = getEffectName(effect)
             local power = effect:getPower()
+            local subType = effect:getSubType()
             local subPower = effect:getSubPower()
             local timeRemaining = effect:getTimeRemaining()
             local tick = effect:getTick()
@@ -75,6 +76,10 @@ local function listEffects(target, player)
             local details = {}
             if power > 0 then
                 table.insert(details, string.format('Power: %d', power))
+            end
+
+            if subType and subType > 0 then
+                table.insert(details, string.format('SubType: %d', subType))
             end
 
             if subPower > 0 and subPower ~= power then

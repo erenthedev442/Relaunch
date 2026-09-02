@@ -595,24 +595,24 @@ INSERT INTO `status_effects` VALUES (535,'valiance',@FLAG_DEATH | @FLAG_ON_ZONE 
 INSERT INTO `status_effects` VALUES (536,'gambit',@FLAG_ERASABLE | @FLAG_DEATH | @FLAG_NO_CANCEL,0,0,2,0,0,0,0,0,NULL);
 INSERT INTO `status_effects` VALUES (537,'liement',@FLAG_DEATH | @FLAG_ON_ZONE | @FLAG_ON_JOBCHANGE,0,0,0,0,0,0,0,0,NULL);
 INSERT INTO `status_effects` VALUES (538,'one_for_all',@FLAG_DEATH | @FLAG_ON_ZONE | @FLAG_ON_JOBCHANGE,0,0,0,0,0,0,0,0,NULL);
-INSERT INTO `status_effects` VALUES (539,'geo_regen',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,7,0,0,NULL);
+INSERT INTO `status_effects` VALUES (539,'geo_regen',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,7,0,90,NULL);
 INSERT INTO `status_effects` VALUES (540,'geo_poison',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,6,0,0,NULL);
-INSERT INTO `status_effects` VALUES (541,'geo_refresh',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,7,0,0,NULL);
-INSERT INTO `status_effects` VALUES (542,'geo_str_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,1,0,0,NULL);
-INSERT INTO `status_effects` VALUES (543,'geo_dex_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,5,0,0,NULL);
-INSERT INTO `status_effects` VALUES (544,'geo_vit_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,4,0,0,NULL);
-INSERT INTO `status_effects` VALUES (545,'geo_agi_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,3,0,0,NULL);
-INSERT INTO `status_effects` VALUES (546,'geo_int_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,2,0,0,NULL);
-INSERT INTO `status_effects` VALUES (547,'geo_mnd_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,6,0,0,NULL);
-INSERT INTO `status_effects` VALUES (548,'geo_chr_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,7,0,0,NULL);
-INSERT INTO `status_effects` VALUES (549,'geo_attack_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,1,0,0,NULL);
-INSERT INTO `status_effects` VALUES (550,'geo_defense_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,4,0,0,NULL);
-INSERT INTO `status_effects` VALUES (551,'geo_magic_atk_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,2,0,0,NULL);
-INSERT INTO `status_effects` VALUES (552,'geo_magic_def_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,6,0,0,NULL);
-INSERT INTO `status_effects` VALUES (553,'geo_accuracy_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,5,0,0,NULL);
-INSERT INTO `status_effects` VALUES (554,'geo_evasion_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,3,0,0,NULL);
-INSERT INTO `status_effects` VALUES (555,'geo_magic_acc_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,8,0,0,NULL);
-INSERT INTO `status_effects` VALUES (556,'geo_magic_evasion_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,7,0,0,NULL);
+INSERT INTO `status_effects` VALUES (541,'geo_refresh',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,7,0,90,NULL);
+INSERT INTO `status_effects` VALUES (542,'geo_str_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,1,0,90,NULL);
+INSERT INTO `status_effects` VALUES (543,'geo_dex_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,5,0,90,NULL);
+INSERT INTO `status_effects` VALUES (544,'geo_vit_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,4,0,90,NULL);
+INSERT INTO `status_effects` VALUES (545,'geo_agi_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,3,0,90,NULL);
+INSERT INTO `status_effects` VALUES (546,'geo_int_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,2,0,90,NULL);
+INSERT INTO `status_effects` VALUES (547,'geo_mnd_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,6,0,90,NULL);
+INSERT INTO `status_effects` VALUES (548,'geo_chr_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,7,0,90,NULL);
+INSERT INTO `status_effects` VALUES (549,'geo_attack_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,1,0,90,NULL);
+INSERT INTO `status_effects` VALUES (550,'geo_defense_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,4,0,90,NULL);
+INSERT INTO `status_effects` VALUES (551,'geo_magic_atk_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,2,0,90,NULL);
+INSERT INTO `status_effects` VALUES (552,'geo_magic_def_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,6,0,90,NULL);
+INSERT INTO `status_effects` VALUES (553,'geo_accuracy_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,5,0,90,NULL);
+INSERT INTO `status_effects` VALUES (554,'geo_evasion_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,3,0,90,NULL);
+INSERT INTO `status_effects` VALUES (555,'geo_magic_acc_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,8,0,90,NULL);
+INSERT INTO `status_effects` VALUES (556,'geo_magic_evasion_boost',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,7,0,90,NULL);
 INSERT INTO `status_effects` VALUES (557,'geo_attack_down',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,6,0,0,NULL);
 INSERT INTO `status_effects` VALUES (558,'geo_defense_down',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,3,0,0,NULL);
 INSERT INTO `status_effects` VALUES (559,'geo_magic_atk_down',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,1,0,0,NULL);
@@ -636,7 +636,7 @@ INSERT INTO `status_effects` VALUES (576,'doubt',@FLAG_DEATH | @FLAG_NO_CANCEL,0
 INSERT INTO `status_effects` VALUES (577,'cait_siths_favor',@FLAG_DEATH | @FLAG_ON_ZONE | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,0,0,0,NULL);
 INSERT INTO `status_effects` VALUES (578,'fishy_intuition',@FLAG_DEATH | @FLAG_ON_ZONE | @FLAG_NO_CANCEL,0,0,0,0,0,0,0,0,NULL);
 INSERT INTO `status_effects` VALUES (579,'commitment',@FLAG_NO_CANCEL,0,0,0,0,0,0,0,0,NULL);
-INSERT INTO `status_effects` VALUES (580,'geo_haste',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,3,0,0,NULL);
+INSERT INTO `status_effects` VALUES (580,'geo_haste',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,3,0,90,NULL);
 INSERT INTO `status_effects` VALUES (581,'flurry_ii',@FLAG_DEATH | @FLAG_ON_JOBCHANGE,0,0,0,0,0,0,0,0,NULL);
 INSERT INTO `status_effects` VALUES (582,'contradance',@FLAG_DISPELABLE | @FLAG_DEATH | @FLAG_ON_ZONE | @FLAG_ON_JOBCHANGE,0,0,0,0,0,0,0,0,NULL); -- TODO: flags need review
 INSERT INTO `status_effects` VALUES (583,'apogee',@FLAG_DISPELABLE | @FLAG_DEATH | @FLAG_ON_ZONE | @FLAG_BLOODPACT | @FLAG_NO_CANCEL,0,0,0,0,0,0,0,0,NULL);
@@ -668,7 +668,7 @@ INSERT INTO `status_effects` VALUES (608,'negate_virus',@FLAG_DISPELABLE | @FLAG
 INSERT INTO `status_effects` VALUES (609,'negate_curse',@FLAG_DISPELABLE | @FLAG_DEATH | @FLAG_ON_ZONE,0,0,0,0,0,0,0,0,NULL);
 INSERT INTO `status_effects` VALUES (610,'negate_charm',@FLAG_DISPELABLE | @FLAG_DEATH | @FLAG_ON_ZONE,0,0,0,0,0,0,0,0,NULL);
 INSERT INTO `status_effects` VALUES (611,'magic_evasion_boost_ii',@FLAG_DEATH,0,0,0,0,0,0,0,0,NULL);
-INSERT INTO `status_effects` VALUES (612,'colure_active',@FLAG_ON_ZONE | @FLAG_LOGOUT | @FLAG_NO_CANCEL,0,0,3,0,0,0,0,0,NULL);
+INSERT INTO `status_effects` VALUES (612,'colure_active',@FLAG_ON_ZONE | @FLAG_LOGOUT | @FLAG_NO_CANCEL,0,0,3,0,0,0,0,90,NULL);
 INSERT INTO `status_effects` VALUES (613,'mumors_radiance',@FLAG_DEATH | @FLAG_ON_ZONE | @FLAG_ON_JOBCHANGE,0,0,0,0,0,0,0,0,NULL); -- TODO: flags need review
 INSERT INTO `status_effects` VALUES (614,'ullegores_gloom',@FLAG_DEATH | @FLAG_NO_CANCEL | @FLAG_HIDE_TIMER,0,0,0,0,0,0,0,0,NULL); -- TODO: flags need review
 INSERT INTO `status_effects` VALUES (615,'boost_ii',@FLAG_ATTACK | @FLAG_EMPATHY | @FLAG_DEATH | @FLAG_ON_JOBCHANGE,0,0,0,0,0,0,0,0,NULL); -- TODO: flags need review

@@ -1872,6 +1872,47 @@ void CStatusEffectContainer::CheckEffectsExpiry(timer::time_point tick)
     DeleteStatusEffects();
 }
 
+// Aura tick effects last longer than one colure tick so the status-bar
+// icon does not vanish in the gap between HandleAura refreshes.
+constexpr timer::duration AuraTickDuration = 12s;
+
+static void ApplyOrRefreshAuraEffect(CBattleEntity* PTarget, CStatusEffect* PStatusEffect)
+{
+    CStatusEffect* PEffect = PTarget->StatusEffectContainer->GetStatusEffect(static_cast<EFFECT>(PStatusEffect->GetSubID()));
+
+    if (PEffect && (PEffect->GetEffectFlags() & EFFECTFLAG_ALWAYS_EXPIRING) != 0)
+    {
+        PEffect->SetStartTime(timer::now());
+
+        // Effect updated, probably from Ecliptic Attrition
+        // Update status effect with new potency.
+        // Take care to design your "owning" effects such as the EFFECT::EFFECT_COLURE_ACTIVE to control the subpower, rather than the resulting effect ticking down.
+        // Otherwise odd things may happen
+        if (PEffect->GetPower() != PStatusEffect->GetSubPower())
+        {
+            luautils::OnEffectLose(PTarget, PEffect);
+            PEffect->SetPower(PStatusEffect->GetSubPower());
+            luautils::OnEffectGain(PTarget, PEffect);
+        }
+
+        if (PTarget->objtype == TYPE_PC)
+        {
+            PTarget->StatusEffectContainer->UpdateStatusIcons();
+        }
+    }
+    else
+    {
+        PEffect = new CStatusEffect(static_cast<EFFECT>(PStatusEffect->GetSubID()), // Effect ID
+                                    PStatusEffect->GetSubID(),                      // Effect Icon (Associated with ID)
+                                    PStatusEffect->GetSubPower(),                   // Power
+                                    3s,                                             // Tick
+                                    AuraTickDuration);                              // Duration
+        PEffect->AddEffectFlag(EFFECTFLAG_NO_LOSS_MESSAGE);
+        PEffect->AddEffectFlag(EFFECTFLAG_ALWAYS_EXPIRING);
+        PTarget->StatusEffectContainer->AddStatusEffect(PEffect, EffectNotice::Silent);
+    }
+}
+
 void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
 {
     TracyZoneScoped;
@@ -1885,7 +1926,16 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
         PEntity = PEntity->PMaster;
     }
 
-    float aura_range = 6.0f + (PEntity->getMod(Mod::AURA_SIZE) / 100.0f); // Adding to this mod should be the value you want * 100
+    // Luopans inherit Widened Compass from the GEO (AURA_SIZE on master).
+    // Trust colures live on the trust — use the trust's own range so Sylvie
+    // can cover the summoner without rewriting the player's GEO mods.
+    CBattleEntity* rangeSource = m_POwner;
+    if (m_POwner->objtype == TYPE_PET && m_POwner->PMaster)
+    {
+        rangeSource = m_POwner->PMaster;
+    }
+
+    float aura_range = 6.0f + (rangeSource->getMod(Mod::AURA_SIZE) / 100.0f); // Adding to this mod should be the value you want * 100
 
     if (PEntity->objtype == TYPE_PC)
     {
@@ -1902,34 +1952,7 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
                     distance(m_POwner->loc.p, PMember->loc.p) <= aura_range + PMember->modelHitboxSize &&
                     !PMember->isDead())
                 {
-                    CStatusEffect* PEffect = PMember->StatusEffectContainer->GetStatusEffect(static_cast<EFFECT>(PStatusEffect->GetSubID()));
-
-                    if (PEffect && (PEffect->GetEffectFlags() & EFFECTFLAG_ALWAYS_EXPIRING) != 0)
-                    {
-                        PEffect->SetStartTime(timer::now());
-
-                        // Effect updated, probably from Ecliptic Attrition
-                        // Update status effect with new potency.
-                        // Take care to design your "owning" effects such as the EFFECT::EFFECT_COLURE_ACTIVE to control the subpower, rather than the resulting effect ticking down.
-                        // Otherwise odd things may happen
-                        if (PEffect->GetPower() != PStatusEffect->GetSubPower())
-                        {
-                            luautils::OnEffectLose(PMember, PEffect);
-                            PEffect->SetPower(PStatusEffect->GetSubPower());
-                            luautils::OnEffectGain(PMember, PEffect);
-                        }
-                    }
-                    else
-                    {
-                        PEffect = new CStatusEffect(static_cast<EFFECT>(PStatusEffect->GetSubID()), // Effect ID
-                                                    PStatusEffect->GetSubID(),                      // Effect Icon (Associated with ID)
-                                                    PStatusEffect->GetSubPower(),                   // Power
-                                                    3s,                                              // Tick
-                                                    4s);                                             // Duration
-                        PEffect->AddEffectFlag(EFFECTFLAG_NO_LOSS_MESSAGE);
-                        PEffect->AddEffectFlag(EFFECTFLAG_ALWAYS_EXPIRING);
-                        PMember->StatusEffectContainer->AddStatusEffect(PEffect, EffectNotice::Silent);
-                    }
+                    ApplyOrRefreshAuraEffect(PMember, PStatusEffect);
                 }
             });
             // clang-format on
@@ -1952,34 +1975,7 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
                     PTarget->objtype != TYPE_TRUST && PEntity->loc.zone->GetID() == PTarget->loc.zone->GetID() && distance(m_POwner->loc.p, PTarget->loc.p) <= aura_range + PTarget->modelHitboxSize &&
                     !PTarget->isDead())
                 {
-                    CStatusEffect* PEffect = PTarget->StatusEffectContainer->GetStatusEffect(static_cast<EFFECT>(PStatusEffect->GetSubID()));
-
-                    if (PEffect && (PEffect->GetEffectFlags() & EFFECTFLAG_ALWAYS_EXPIRING) != 0)
-                    {
-                        PEffect->SetStartTime(timer::now());
-
-                        // Effect updated, probably from Ecliptic Attrition
-                        // Update status effect with new potency.
-                        // Take care to design your "owning" effects such as the EFFECT::EFFECT_COLURE_ACTIVE to control the subpower, rather than the resulting effect ticking down.
-                        // Otherwise odd things may happen
-                        if (PEffect->GetPower() != PStatusEffect->GetSubPower())
-                        {
-                            luautils::OnEffectLose(PTarget, PEffect);
-                            PEffect->SetPower(PStatusEffect->GetSubPower());
-                            luautils::OnEffectGain(PTarget, PEffect);
-                        }
-                    }
-                    else
-                    {
-                        PEffect = new CStatusEffect(static_cast<EFFECT>(PStatusEffect->GetSubID()), // Effect ID
-                                                    PStatusEffect->GetSubID(),                      // Effect Icon (Associated with ID)
-                                                    PStatusEffect->GetSubPower(),                   // Power
-                                                    3s,                                             // Tick
-                                                    4s);                                            // Duration
-                        PEffect->AddEffectFlag(EFFECTFLAG_NO_LOSS_MESSAGE);
-                        PEffect->AddEffectFlag(EFFECTFLAG_ALWAYS_EXPIRING);
-                        PTarget->StatusEffectContainer->AddStatusEffect(PEffect, EffectNotice::Silent);
-                    }
+                    ApplyOrRefreshAuraEffect(PTarget, PStatusEffect);
                 }
             }
         }
@@ -1997,34 +1993,7 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
                     PEntity->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(m_POwner->loc.p, PMember->loc.p) <= aura_range + PMember->modelHitboxSize &&
                     !PMember->isDead())
                 {
-                    CStatusEffect* PEffect = PMember->StatusEffectContainer->GetStatusEffect(static_cast<EFFECT>(PStatusEffect->GetSubID()));
-
-                    if (PEffect && (PEffect->GetEffectFlags() & EFFECTFLAG_ALWAYS_EXPIRING) != 0)
-                    {
-                        PEffect->SetStartTime(timer::now());
-
-                        // Effect updated, probably from Ecliptic Attrition
-                        // Update status effect with new potency.
-                        // Take care to design your "owning" effects such as the EFFECT::EFFECT_COLURE_ACTIVE to control the subpower, rather than the resulting effect ticking down.
-                        // Otherwise odd things may happen
-                        if (PEffect->GetPower() != PStatusEffect->GetSubPower())
-                        {
-                            luautils::OnEffectLose(PMember, PEffect);
-                            PEffect->SetPower(PStatusEffect->GetSubPower());
-                            luautils::OnEffectGain(PMember, PEffect);
-                        }
-                    }
-                    else
-                    {
-                        PEffect = new CStatusEffect(static_cast<EFFECT>(PStatusEffect->GetSubID()), // Effect ID
-                                                    PStatusEffect->GetSubID(),                      // Effect Icon (Associated with ID)
-                                                    PStatusEffect->GetSubPower(),                   // Power
-                                                    3s,                                              // Tick
-                                                    4s);                                             // Duration
-                        PEffect->AddEffectFlag(EFFECTFLAG_NO_LOSS_MESSAGE);
-                        PEffect->AddEffectFlag(EFFECTFLAG_ALWAYS_EXPIRING);
-                        PMember->StatusEffectContainer->AddStatusEffect(PEffect, EffectNotice::Silent);
-                    }
+                    ApplyOrRefreshAuraEffect(PMember, PStatusEffect);
                 }
             });
             // clang-format on
@@ -2042,34 +2011,7 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
                     PEntity->loc.zone->GetID() == PTarget->loc.zone->GetID() && distance(m_POwner->loc.p, PTarget->loc.p) <= aura_range + PTarget->modelHitboxSize &&
                     !PTarget->isDead())
                 {
-                    CStatusEffect* PEffect = PTarget->StatusEffectContainer->GetStatusEffect(static_cast<EFFECT>(PStatusEffect->GetSubID()));
-
-                    if (PEffect && (PEffect->GetEffectFlags() & EFFECTFLAG_ALWAYS_EXPIRING) != 0)
-                    {
-                        PEffect->SetStartTime(timer::now());
-
-                        // Effect updated, probably from Ecliptic Attrition
-                        // Update status effect with new potency.
-                        // Take care to design your "owning" effects such as the EFFECT::EFFECT_COLURE_ACTIVE to control the subpower, rather than the resulting effect ticking down.
-                        // Otherwise odd things may happen
-                        if (PEffect->GetPower() != PStatusEffect->GetSubPower())
-                        {
-                            luautils::OnEffectLose(PTarget, PEffect);
-                            PEffect->SetPower(PStatusEffect->GetSubPower());
-                            luautils::OnEffectGain(PTarget, PEffect);
-                        }
-                    }
-                    else
-                    {
-                        PEffect = new CStatusEffect(static_cast<EFFECT>(PStatusEffect->GetSubID()), // Effect ID
-                                                    PStatusEffect->GetSubID(),                      // Effect Icon (Associated with ID)
-                                                    PStatusEffect->GetSubPower(),                   // Power
-                                                    3s,                                             // Tick
-                                                    4s);                                            // Duration
-                        PEffect->AddEffectFlag(EFFECTFLAG_NO_LOSS_MESSAGE);
-                        PEffect->AddEffectFlag(EFFECTFLAG_ALWAYS_EXPIRING);
-                        PTarget->StatusEffectContainer->AddStatusEffect(PEffect, EffectNotice::Silent);
-                    }
+                    ApplyOrRefreshAuraEffect(PTarget, PStatusEffect);
                 }
             }
         }
