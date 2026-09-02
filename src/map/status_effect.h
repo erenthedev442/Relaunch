@@ -752,11 +752,22 @@ enum EFFECT : uint16
     EFFECT_TOMAHAWK            = 805, // Silent status effect inflicted by a Warrior using the "Tomahawk" job ability
     EFFECT_NUKE_WALL           = 806, // Custom effect for NM type mobs only. Applied by elemental magic damage sources
 
+    // Element-specific Helix DoTs. Must stay below MAX_EFFECTID or AddStatusEffect
+    // rejects the ID and only the opening nuke lands.
+    EFFECT_HELIX_FIRE      = 807,
+    EFFECT_HELIX_ICE       = 808,
+    EFFECT_HELIX_WIND      = 809,
+    EFFECT_HELIX_EARTH     = 810,
+    EFFECT_HELIX_WATER     = 811,
+    EFFECT_HELIX_LIGHTNING = 812,
+    EFFECT_HELIX_LIGHT     = 813,
+    EFFECT_HELIX_DARK      = 814,
+
     // 789
-    // 807-1022
+    // 815-1022
     // EFFECT_PLACEHOLDER           = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };
-#define MAX_EFFECTID 807 // 768 real + 39 custom
+#define MAX_EFFECTID 815 // 768 real + 39 custom + 8 element helixes
 DECLARE_FORMAT_AS_UNDERLYING(EFFECT);
 
 /************************************************************************

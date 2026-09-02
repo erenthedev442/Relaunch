@@ -460,6 +460,7 @@ bool CStatusEffectContainer::AddStatusEffect(CStatusEffect* PStatusEffect, Effec
     if (statusId >= MAX_EFFECTID)
     {
         ShowWarning("status_effect_container::AddStatusEffect statusId given is OVER limit %d", statusId);
+        destroy(PStatusEffect);
         return false;
     }
 

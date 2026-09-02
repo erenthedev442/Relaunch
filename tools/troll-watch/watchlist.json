@@ -50,7 +50,10 @@
         {"id": 1245, "login": "185.124.0.99", "note": "login is GM IP string, not that IP"},
         {"id": 1256, "login": "2"},
         {"id": null, "login": "legendaryass"},
-        {"id": 1330, "login": "420blazeit", "char": "Bigbangow", "charid": 448}
+        {"id": 1330, "login": "420blazeit", "char": "Bigbangow", "charid": 448},
+        {"id": 1335, "login": "c", "char": "Destroyer", "note": "letter-wave 2026-09-02; banned"},
+        {"id": 1336, "login": "d", "char": "Lsb", "note": "letter-wave 2026-09-02; banned"},
+        {"id": 1337, "login": "e", "note": "empty letter remake; banned with e-z 2026-09-02"}
       ],
       "characters": [
         "Mildfordhaven",
@@ -70,7 +73,9 @@
         "War",
         "Drknotty",
         "Xio",
-        "Bigbangow"
+        "Bigbangow",
+        "Destroyer",
+        "Lsb"
       ],
       "ips_exact": [
         "69.1.199.233",
@@ -87,6 +92,8 @@
         "187.15.134.38",
         "186.247.35.98",
         "186.247.35.146",
+        "186.247.35.178",
+        "186.247.35.180",
         "186.247.188.37",
         "92.119.18.189",
         "84.247.42.254",

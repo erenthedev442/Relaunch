@@ -425,6 +425,11 @@ endDomainInvasion = function(zone, zoneCfg, zoneId, reason)
         broadcast(everyone[1], string.format(
             '[Domain Invasion] The assault on %s fizzles — no defenders remained.',
             zoneCfg.label))
+
+    elseif reason == 'error' then
+        broadcast(everyone[1], string.format(
+            '[Domain Invasion] The assault on %s failed to materialize — invaders could not find ground.',
+            zoneCfg.label))
     end
 end
 
@@ -470,11 +475,20 @@ local function checkClock(player)
     -- Deadline check for an active invasion in THIS player's zone.
     local st = states[zoneId]
     if st then
+        local zone = player:getZone()
         if os.time() > st.endsAt then
-            local zone = player:getZone()
             for _, zc in ipairs(catalog.zones) do
                 if zc.zoneId == zoneId then
                     endDomainInvasion(zone, zc, zoneId, 'timeout')
+                    break
+                end
+            end
+        elseif st.wave == 0 and os.time() >= st.startedAt + (catalog.musterDelaySec or 0) then
+            -- player:timer on the announcer dies if they zone; the zone clock
+            -- must still start wave 1 so Ru'Aun cannot stall after the call-out.
+            for _, zc in ipairs(catalog.zones) do
+                if zc.zoneId == zoneId then
+                    nextWave(zone, zc, zoneId)
                     break
                 end
             end

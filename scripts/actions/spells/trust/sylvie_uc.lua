@@ -4,7 +4,7 @@
 -- GEO/WHM. S-tier CORE buffer — Indi + Entrust job logic lives in C++
 -- (GetBestIndiSpell / GetBestEntrustedSpell). No AA / no enemy casts.
 -- Regain 50, DT -25%, Indi duration +180s (6 min total). Geomancy+3 @99.
--- Haste master + melee DDs. Nott for MP. Follows party (default pathing).
+-- Haste master + melee DDs. Nott for MP. Sticks to summoner so Indi covers them.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -90,9 +90,25 @@ spellObject.onMobSpawn = function(mob)
         mob:addMod(xi.mod.GEOMANCY_BONUS, 3)
     end
 
-    -- No melee / no enemy magic. Follows party lineup (default trust pathing).
+    -- No melee / no enemy magic. Stay on the summoner (Indi aura is ~6' around her).
+    -- MID_RANGE used to park her 6' from the *enemy*, so the bubble missed the player.
     mob:setAutoAttackEnabled(false)
-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
+    mob:setLocalVar('TrustFollowMaster', 1)
+    -- Casters / ranged never melee-swing; without this she never engages and never Indis.
+    mob:setLocalVar('TrustEngageWithMaster', 1)
+
+    -- Bubble first: yellow-cure gambits used to starve Indi for the whole fight.
+    if mob:getMainLvl() >= 20 then
+        mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.COLURE_ACTIVE }, { ai.r.MA, ai.s.BEST_INDI, xi.magic.spellFamily.NONE })
+    end
+
+    -- Entrust Indi (incl. GEO → Indi-Languor on first PLD/RUN/NIN via C++).
+    -- Below 93, entrusted spells still resolve; full kit opens at Indi-Haste (93).
+    if mob:getMainLvl() >= 76 then -- Indi-Frailty / Entrust utility band
+        mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.ENTRUST }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.ENTRUST })
+        mob:addGambit(ai.t.SELF, { ai.c.STATUS, xi.effect.ENTRUST }, { ai.r.MA, ai.s.ENTRUSTED, xi.magic.spellFamily.INDI_BUFF })
+    end
 
     -- Triage / -na / Erase / yellow cures.
     mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 25 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
@@ -110,18 +126,6 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.PARTY, { ai.c.STATUS_FLAG, xi.effectFlag.ERASABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
     mob:addGambit(ai.t.SELF, { ai.c.STATUS_FLAG, xi.effectFlag.ERASABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.ERASE })
     mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 75 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
-
-    -- Self Indi (job/hit-rate logic in C++ GetBestIndiSpell).
-    if mob:getMainLvl() >= 20 then
-        mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.COLURE_ACTIVE }, { ai.r.MA, ai.s.BEST_INDI, xi.magic.spellFamily.NONE })
-    end
-
-    -- Entrust Indi (incl. GEO → Indi-Languor on first PLD/RUN/NIN via C++).
-    -- Below 93, entrusted spells still resolve; full kit opens at Indi-Haste (93).
-    if mob:getMainLvl() >= 76 then -- Indi-Frailty / Entrust utility band
-        mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.ENTRUST }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.ENTRUST })
-        mob:addGambit(ai.t.SELF, { ai.c.STATUS, xi.effect.ENTRUST }, { ai.r.MA, ai.s.ENTRUSTED, xi.magic.spellFamily.INDI_BUFF })
-    end
 
     -- Haste summoner regardless of job; melee DDs via tick.
     mob:addGambit(ai.t.MASTER, { ai.c.NOT_STATUS, xi.effect.HASTE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.HASTE })

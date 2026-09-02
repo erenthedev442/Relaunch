@@ -110,11 +110,18 @@ catalog.zones =
         zone   = 'Escha_RuAun',
         zoneId = 289,
         label  = "Escha - Ru'Aun",
-        -- Portal #8 provides a stable, isolated Ru'Aun battlefield.
-        rallyPos   = { x = 0.0, y = -40.5, z = 465.5, rot = 128 },
+        -- Large y=-70 garden floor at map H-10 / Portal #10, north of
+        -- !voidspire (entry plaza at z=-463). Portal #8 (0, -40.5, 465.5)
+        -- is a tiny peak: the 18-28' spawn ring misses the mesh, every
+        -- insert fails, and the assault dies silently after the call-out.
+        -- Stay off the Raid sentinels (177-193, 513) and GM #1 (259, 509).
+        rallyPos   = { x = 220.0, y = -70.02, z = 511.0, rot = 0 },
         spawnPoints =
         {
-            { x = 0.0, y = -40.5, z = 465.5 },
+            { x = 200.0, y = -70.02, z = 511.0 },
+            { x = 220.0, y = -70.02, z = 511.0 },
+            { x = 240.0, y = -70.02, z = 511.0 },
+            { x = 185.0, y = -71.85, z = 513.5 },
         },
 
         waves =

@@ -174,6 +174,12 @@ describe('HTBF catalog integrity and balance', function()
         assert(nexus[1][3] == -35.0)
         assert(nexus[2][3] == 659.5)
         assert(nexus[3][3] == -680.2)
+
+        -- Shadow Lord: on the throne-room floor, not 33' south of the mesh.
+        local sl = catalog.fights.shadow_lord.entryPosByArea
+        assert(sl[1][1] == -443.0 and sl[1][2] == -167.2 and sl[1][3] == -239.0 and sl[1][4] == 127)
+        assert(sl[2][1] == -763.0 and sl[2][2] == -407.2 and sl[2][3] == -479.0 and sl[2][4] == 127)
+        assert(sl[3][1] == -1082.8 and sl[3][2] == -647.2 and sl[3][3] == -719.0 and sl[3][4] == 127)
     end)
 
     it('uses dedicated HTBF enemies for the reported fights', function()

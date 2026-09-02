@@ -177,48 +177,60 @@ auto CTrustController::DoCombatTick(timer::time_point tick) -> Task<void>
 
             int16 movementDistance = PTrust->getMobMod(MOBMOD_TRUST_DISTANCE);
 
-            switch (movementDistance)
+            // Aura / GEO trusts (Sylvie): stay on the summoner so the Indi
+            // bubble (~6') actually covers them. MID_RANGE parks 6' from the
+            // *enemy*, which left melee players on the far side of the mob
+            // outside the colure. 2.0' + PathOutToDistance's ±2.5 window
+            // means she only repaths if farther than ~4.5' from the master.
+            if (PTrust->GetLocalVar("TrustFollowMaster") == 1)
             {
-                case TRUST_MOVEMENT_TYPE::NO_MOVE:
+                PathOutToDistance(PMaster, 2.0f);
+            }
+            else
+            {
+                switch (movementDistance)
                 {
-                    if (currentDistanceToMaster > CastingDistance)
+                    case TRUST_MOVEMENT_TYPE::NO_MOVE:
                     {
-                        PathOutToDistance(PTarget, 9.0f);
-                    }
-                    else if (currentDistanceToTarget > CastingDistance)
-                    {
-                        PathOutToDistance(PTarget, 9.0f);
-                    }
-                    break;
-                }
-                case TRUST_MOVEMENT_TYPE::MELEE:
-                {
-                    std::unique_ptr<CBasicPacket> err;
-                    if (!PTrust->CanAttack(PTarget, err) && PTrust->GetSpeed() > 0)
-                    {
-                        if (currentDistanceToTarget > RoamDistance)
+                        if (currentDistanceToMaster > CastingDistance)
                         {
-                            if (currentDistanceToTarget < RoamDistance * 3.0f &&
-                                PTrust->PAI->PathFind->PathAround(PTarget->loc.p, RoamDistance, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+                            PathOutToDistance(PTarget, 9.0f);
+                        }
+                        else if (currentDistanceToTarget > CastingDistance)
+                        {
+                            PathOutToDistance(PTarget, 9.0f);
+                        }
+                        break;
+                    }
+                    case TRUST_MOVEMENT_TYPE::MELEE:
+                    {
+                        std::unique_ptr<CBasicPacket> err;
+                        if (!PTrust->CanAttack(PTarget, err) && PTrust->GetSpeed() > 0)
+                        {
+                            if (currentDistanceToTarget > RoamDistance)
                             {
-                                PTrust->PAI->PathFind->FollowPath(m_Tick);
-                            }
-                            else if (PTrust->GetSpeed() > 0)
-                            {
-                                PTrust->PAI->PathFind->StepTo(PTarget->loc.p, true);
+                                if (currentDistanceToTarget < RoamDistance * 3.0f &&
+                                    PTrust->PAI->PathFind->PathAround(PTarget->loc.p, RoamDistance, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+                                {
+                                    PTrust->PAI->PathFind->FollowPath(m_Tick);
+                                }
+                                else if (PTrust->GetSpeed() > 0)
+                                {
+                                    PTrust->PAI->PathFind->StepTo(PTarget->loc.p, true);
+                                }
                             }
                         }
+                        break;
                     }
-                    break;
-                }
-                case TRUST_MOVEMENT_TYPE::MID_RANGE:
-                    [[fallthrough]];
-                case TRUST_MOVEMENT_TYPE::LONG_RANGE:
-                    [[fallthrough]];
-                default: // Using the positive-non-zero movementDistance mobMod value
-                {
-                    PathOutToDistance(PTarget, static_cast<float>(movementDistance));
-                    break;
+                    case TRUST_MOVEMENT_TYPE::MID_RANGE:
+                        [[fallthrough]];
+                    case TRUST_MOVEMENT_TYPE::LONG_RANGE:
+                        [[fallthrough]];
+                    default: // Using the positive-non-zero movementDistance mobMod value
+                    {
+                        PathOutToDistance(PTarget, static_cast<float>(movementDistance));
+                        break;
+                    }
                 }
             }
 
@@ -264,6 +276,14 @@ auto CTrustController::DoRoamTick(timer::time_point tick) -> Task<void>
             trustEngageCondition = PMaster->GetBattleTarget() && masterMeleeSwing;
             break;
         }
+    }
+
+    // GEO / support trusts (Sylvie): engage when the master does, even if they
+    // never melee-swing (casters / ranged). Otherwise gambits never tick and
+    // Indi never goes up. TrustNoEngage still wins below.
+    if (POwner->GetLocalVar("TrustEngageWithMaster") == 1 && PMaster->GetBattleTarget())
+    {
+        trustEngageCondition = true;
     }
 
     // Passive trusts (Kupofried): never auto-engage — stay on roam follow.

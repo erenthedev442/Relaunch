@@ -613,11 +613,15 @@ catalog.fights =
         gem = xi.ki.SHADOW_LORD_PHANTOM_GEM, baseIndex = 12, baseBattlefieldId = 4120,
         reuseBaseId = xi.battlefield.id.SHADOW_LORD_BATTLE, label = 'Shadow Lord',
         difficulty = 'standard', rewardClass = 'standard',
+        -- Staging must sit on the throne-room floor, east of the boss, facing him.
+        -- The old Z-33 points (same X as the spawn, 33' south) drop the player
+        -- off the mesh into the gray void while Shadow Lord stays on the island.
+        -- Coords match Where Two Paths Converge's proven on-floor starts.
         entryPosByArea =
         {
-            [1] = {  -464.5, -167.2, -273.0, 0 },
-            [2] = {  -784.8, -407.2, -513.0, 0 },
-            [3] = { -1104.6, -647.2, -753.0, 0 },
+            [1] = {  -443.0, -167.2, -239.0, 127 },
+            [2] = {  -763.0, -407.2, -479.0, 127 },
+            [3] = { -1082.8, -647.2, -719.0, 127 },
         },
     },
     stellar_fulcrum =

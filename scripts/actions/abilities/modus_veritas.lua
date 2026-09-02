@@ -12,8 +12,32 @@ abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
+local HELIX_EFFECTS =
+{
+    xi.effect.HELIX,
+    xi.effect.HELIX_FIRE,
+    xi.effect.HELIX_ICE,
+    xi.effect.HELIX_WIND,
+    xi.effect.HELIX_EARTH,
+    xi.effect.HELIX_WATER,
+    xi.effect.HELIX_LIGHTNING,
+    xi.effect.HELIX_LIGHT,
+    xi.effect.HELIX_DARK,
+}
+
+local function getHelixEffect(target)
+    for _, effectId in ipairs(HELIX_EFFECTS) do
+        local effect = target:getStatusEffect(effectId)
+        if effect then
+            return effect
+        end
+    end
+
+    return nil
+end
+
 abilityObject.onUseAbility = function(player, target, ability)
-    local helix = target:getStatusEffect(xi.effect.HELIX)
+    local helix = getHelixEffect(target)
 
     if helix ~= nil then
         local mvPower = helix:getSubPower()
