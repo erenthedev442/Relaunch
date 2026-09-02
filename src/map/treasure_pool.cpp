@@ -50,6 +50,39 @@ CTreasurePool::CTreasurePool(const TreasurePoolType PoolType)
     m_Members.reserve(static_cast<std::size_t>(PoolType));
 }
 
+CTreasurePool::~CTreasurePool()
+{
+    // A pool must never outlive the pointers back to it. Every character holds its
+    // pool as a raw CCharEntity::PTreasurePool, and ~CCharEntity reaches through
+    // that pointer to call delMember(), so a pool freed while anyone still points
+    // here leaves a use-after-free that fires much later -- on that player's logout
+    // (crash 2026-09-02 00:25, delMember reading a member pointer out of freed
+    // storage) or on the next charTick (crash 2026-09-01 09:30, checkTreasureItem).
+    //
+    // Call sites are supposed to empty the pool before destroying it, and the ones
+    // we know about now do. This makes it a guarantee of the class instead of a rule
+    // every present and future call site has to remember -- CZone::~CZone in
+    // particular destroys its pool with no member check at all.
+    std::size_t stillAttached = 0;
+    for (auto* PMember : m_Members)
+    {
+        if (PMember != nullptr && PMember->PTreasurePool == this)
+        {
+            PMember->PTreasurePool = nullptr;
+            ++stillAttached;
+        }
+    }
+
+    if (stillAttached != 0)
+    {
+        ShowWarningFmt("CTreasurePool::~CTreasurePool() - destroyed with {} member(s) still attached; "
+                       "their pool pointers were cleared to avoid a use-after-free.",
+                       stillAttached);
+    }
+
+    m_Members.clear();
+}
+
 auto CTreasurePool::getPoolType() const -> TreasurePoolType
 {
     return m_TreasurePoolType;
@@ -154,10 +187,14 @@ void CTreasurePool::delMember(CCharEntity* PChar)
                       lotters.end());
     }
 
+    // Clear the back-pointer unconditionally: we already know it pointed at this
+    // pool (checked above), so leaving it set when the member list somehow does not
+    // contain PChar would strand exactly the dangling pointer this guards against.
+    PChar->PTreasurePool = nullptr;
+
     auto memberToDelete = std::find(m_Members.begin(), m_Members.end(), PChar);
     if (memberToDelete != m_Members.end())
     {
-        PChar->PTreasurePool = nullptr;
         m_Members.erase(memberToDelete);
     }
 
@@ -431,7 +468,7 @@ void CTreasurePool::passItem(CCharEntity* PChar, uint8 SlotID)
     // if this member has lotted on this item previously, set their lot to 0.
     for (auto& Lotter : m_PoolItems[SlotID].Lotters)
     {
-        if (Lotter.member != nullptr && Lotter.member->id == PChar->id)
+        if (Lotter.member == PChar)
         {
             Lotter.lot      = 0;
             hasLottedBefore = true;
@@ -482,7 +519,7 @@ bool CTreasurePool::hasLottedItem(CCharEntity* PChar, uint8 SlotID)
 
     for (const auto& lotter : m_PoolItems[SlotID].Lotters)
     {
-        if (lotter.member != nullptr && lotter.member->id == PChar->id)
+        if (lotter.member == PChar)
         {
             return true;
         }
@@ -500,7 +537,7 @@ bool CTreasurePool::hasPassedItem(CCharEntity* PChar, uint8 SlotID)
 
     for (auto& lotter : m_PoolItems[SlotID].Lotters)
     {
-        if (lotter.member != nullptr && lotter.member->id == PChar->id)
+        if (lotter.member == PChar)
         {
             return lotter.lot == 0;
         }

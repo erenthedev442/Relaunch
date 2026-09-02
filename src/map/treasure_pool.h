@@ -73,6 +73,7 @@ class CTreasurePool
 {
 public:
     CTreasurePool(TreasurePoolType PoolType);
+    ~CTreasurePool();
 
     auto getPoolType() const -> TreasurePoolType;
 
