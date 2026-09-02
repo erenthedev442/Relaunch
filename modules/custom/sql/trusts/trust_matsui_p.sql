@@ -22,7 +22,7 @@
 --
 -- APPLYING
 --   1) Apply this file (deploy recurses modules/custom/sql/**/*.sql)
---   2) RESTART THE MAP SERVER (LoadTrustList is boot-only)
+--   2) RESTART THE MAP SERVER (LoadTrustList / LoadMobSpellList are boot-only)
 -- =====================================================================
 
 -- ---- 1. Overwrite spell slot 1004 ------------------------------------
@@ -79,16 +79,24 @@ DELETE FROM char_spells WHERE spellid = 1003;
 DELETE FROM char_vars WHERE varname = 'TrustEarned_1003';
 
 -- ---- 2. Spell / WS lists on pool 6004 --------------------------------
-DELETE FROM mob_spell_lists WHERE spell_list_id = 6004;
+-- SPELL LIST ID IS 4004, NOT 6004 -- deliberate, do not "tidy" it back.
+--   LoadMobSpellList() reads `WHERE spell_list_id < MAX_MOBSPELLLIST_ID`. That bound was
+--   5000, so list 6004 never loaded, m_SpellListContainer stayed null, and the first
+--   MA/SPECIFIC gambit in matsui_p.lua dereferenced it -> map ACCESS_VIOLATION every time
+--   a player summoned Matsui-P (crash 2026-09-01 06:56:29, spell.cpp:828). The bound is
+--   now 65535 and the deref is guarded, but 4004 keeps this trust working on any binary,
+--   including one built before that change. Skill lists have no such bound, so the
+--   mob_skill_lists id below stays 6004.
+DELETE FROM mob_spell_lists WHERE spell_list_id IN (4004, 6004);
 INSERT INTO mob_spell_lists
     (spell_list_name, spell_list_id, spell_id, min_level, max_level)
 VALUES
-    ('matsui_p', 6004, 144,  12, 255),
-    ('matsui_p', 6004, 145,  30, 255),
-    ('matsui_p', 6004, 146,  55, 255),
-    ('matsui_p', 6004, 147,  80, 255),
-    ('matsui_p', 6004, 148,  99, 255),
-    ('matsui_p', 6004, 849, 100, 255);
+    ('matsui_p', 4004, 144,  12, 255),
+    ('matsui_p', 4004, 145,  30, 255),
+    ('matsui_p', 4004, 146,  55, 255),
+    ('matsui_p', 4004, 147,  80, 255),
+    ('matsui_p', 4004, 148,  99, 255),
+    ('matsui_p', 4004, 849, 100, 255);
 
 DELETE FROM mob_skill_lists WHERE skill_list_id = 6004;
 INSERT INTO mob_skill_lists (skill_list_name, skill_list_id, mob_skill_id)
@@ -111,5 +119,5 @@ VALUES
      12, 4, 25, 240, 300,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,
-     6004, 0, 0, 6004, 153,
+     4004, 0, 0, 6004, 153,
      0, 12);

@@ -1440,6 +1440,13 @@ void RecalculateSpellContainer(CMobEntity* PMob)
     // clear spell list
     PMob->SpellContainer->ClearSpells();
 
+    // SetSpellList() reaches here with whatever GetMobSpellList() returned, which is
+    // null for an id that never loaded -- GetAvailableSpells() guards, this path did not.
+    if (PMob->m_SpellListContainer == nullptr)
+    {
+        return;
+    }
+
     // insert the rest of the spells
     for (std::vector<MobSpell_t>::iterator it = PMob->m_SpellListContainer->m_spellList.begin(); it != PMob->m_SpellListContainer->m_spellList.end(); ++it)
     {

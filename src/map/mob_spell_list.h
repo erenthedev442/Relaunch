@@ -27,7 +27,11 @@
 
 #include "spell.h"
 
-#define MAX_MOBSPELLLIST_ID 5000
+// Upper bound for spell_list_id rows LoadMobSpellList() will read. Custom content on
+// this server numbers a trust's spell/skill lists to match its mob_pools poolid (6xxx),
+// so the old 5000 bound silently dropped those lists at boot and left the mob with a
+// null m_SpellListContainer (crashed the map via spell::CanUseSpell -- Matsui-P, 2026-09-01).
+#define MAX_MOBSPELLLIST_ID 65535
 
 typedef struct
 {

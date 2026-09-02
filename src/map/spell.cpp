@@ -824,12 +824,22 @@ bool CanUseSpell(CBattleEntity* PCaster, CSpell* spell)
                 return true;
             }
 
-            // Ensure pet or trust is level appropriate
-            if (PCaster->GetMLevel() < static_cast<CMobEntity*>(PCaster)->m_SpellListContainer->GetSpellMinLevel(spell->getID()))
+            // Ensure pet or trust is level appropriate.
+            // A pool can point at a spell_list_id that never loaded (out of range, or no
+            // matching spell_list rows), leaving m_SpellListContainer null -- degrade to
+            // "cannot cast" instead of dereferencing it and taking the whole map down.
+            if (const auto* PSpellList = static_cast<CMobEntity*>(PCaster)->m_SpellListContainer)
             {
-                return false;
+                if (PCaster->GetMLevel() < PSpellList->GetSpellMinLevel(spell->getID()))
+                {
+                    return false;
+                }
+                return true;
             }
-            return true;
+
+            ShowWarningFmt("spell::CanUseSpell: {} ({}) has no spell list container, refusing spell {}",
+                           PCaster->getName(), PCaster->id, static_cast<uint16>(spell->getID()));
+            return false;
 
         default:
             break;
