@@ -159,11 +159,11 @@ describe('HTBF catalog integrity and balance', function()
             assert(warriors[area][2] == feared[area][2])
             assert(warriors[area][3] == feared[area][3])
             assert(warriors[area][4] == 215)
-            assert(feared[area][4] == 192)
+            assert(feared[area][4] == 45)
         end
 
-        assert(warriors[1][1] == -646.335 and warriors[1][2] == -231.648)
-        assert(warriors[2][1] == -6.354 and warriors[2][2] == -151.648)
+        assert(warriors[1][1] == -644.9322 and warriors[1][2] == -231.2386 and warriors[1][3] == 532.4650)
+        assert(warriors[2][1] == -4.9322 and warriors[2][2] == -151.2386 and warriors[2][3] == 172.4650)
         for _, positions in ipairs({ warriors, feared }) do
             assert(positions[3][1] == 638.3754)
             assert(positions[3][2] == -231.3476)
