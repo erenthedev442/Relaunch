@@ -126,6 +126,35 @@ CZoneEntities::CZoneEntities(Scheduler& scheduler, MapConfig config, CZone* zone
 
 CZoneEntities::~CZoneEntities()
 {
+    // Zone teardown destroy()'d mobs/pets without Clear(), which left
+    // dangling PEnmityOwner pointers on anyone still holding hate. Die()
+    // then crashed in notoriety set erase. Unlink first while the live
+    // registry still names these entities; Clear() is a no-op if empty.
+    auto clearEnmity = [](CBaseEntity* PEntity)
+    {
+        if (auto* PMob = dynamic_cast<CMobEntity*>(PEntity); PMob && PMob->PEnmityContainer)
+        {
+            PMob->PEnmityContainer->Clear();
+        }
+    };
+
+    for (auto ally : m_allyList)
+    {
+        clearEnmity(ally.second);
+    }
+    for (auto mob : m_mobList)
+    {
+        clearEnmity(mob.second);
+    }
+    for (auto pet : m_petList)
+    {
+        clearEnmity(pet.second);
+    }
+    for (auto trust : m_trustList)
+    {
+        clearEnmity(trust.second);
+    }
+
     for (auto ally : m_allyList)
     {
         destroy(ally.second);

@@ -26,6 +26,7 @@
 #include "ai/ai_container.h"
 #include "alliance.h"
 #include "enmity_container.h"
+#include "entities/baseentity.h"
 #include "entities/battleentity.h"
 #include "entities/charentity.h"
 #include "entities/mobentity.h"
@@ -52,6 +53,24 @@ CEnmityContainer::~CEnmityContainer()
     Clear();
 }
 
+// Pets/trusts/instance entities can leave a non-null dangling PEnmityOwner
+// after they are destroy()'d. hasEnmity() already skips those with
+// IsEntityAlive (pointer-value registry lookup). Clear() did not — Die()
+// then walked a freed std::set and heap-checked on erase (2026-09-02 09:53
+// C0000374). Living owners still unlink exactly as before.
+static void UnlinkHolderFromOwner(CBattleEntity* POwner, CMobEntity* PHolder)
+{
+    if (POwner == nullptr || PHolder == nullptr || POwner->PNotorietyContainer == nullptr)
+    {
+        return;
+    }
+    if (!CBaseEntity::IsEntityAlive(POwner))
+    {
+        return;
+    }
+    POwner->PNotorietyContainer->remove(PHolder);
+}
+
 /************************************************************************
  *                                                                       *
  *  Clear Enmity List                                                    *
@@ -69,10 +88,7 @@ void CEnmityContainer::Clear(uint32 EntityID)
             if (const auto& maybeEntityObj = m_EnmityList.find(listEntry.first); maybeEntityObj != m_EnmityList.end())
             {
                 auto entry = maybeEntityObj->second;
-                if (entry.PEnmityOwner && m_EnmityHolder)
-                {
-                    entry.PEnmityOwner->PNotorietyContainer->remove(m_EnmityHolder);
-                }
+                UnlinkHolderFromOwner(entry.PEnmityOwner, m_EnmityHolder);
             }
         }
         m_EnmityList.clear();
@@ -83,10 +99,7 @@ void CEnmityContainer::Clear(uint32 EntityID)
         if (const auto& maybeEntityObj = m_EnmityList.find(EntityID); maybeEntityObj != m_EnmityList.end())
         {
             auto entry = maybeEntityObj->second;
-            if (entry.PEnmityOwner && m_EnmityHolder)
-            {
-                entry.PEnmityOwner->PNotorietyContainer->remove(m_EnmityHolder);
-            }
+            UnlinkHolderFromOwner(entry.PEnmityOwner, m_EnmityHolder);
         }
         m_EnmityList.erase(EntityID);
     }
