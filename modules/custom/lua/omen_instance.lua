@@ -25,6 +25,10 @@ local catalog = require('modules/custom/lua/omen_catalog')
 local runtime = package.loaded['modules/custom/lua/omen_instance']
 if type(runtime) ~= 'table' then runtime = {} end
 
+-- Same DE_ zone-cache collision as dungeon_instance.lua: unique script names
+-- per copy, and death Lua uses the mob's live instance.
+runtime.copySeq = tonumber(runtime.copySeq) or 0
+
 -----------------------------------
 -- Small helpers
 -----------------------------------
@@ -438,11 +442,13 @@ runtime.create = function()
     -- Mob spawning
     -----------------------------------
     local function spawnOmenMob(instance, params)
+        local copySeq = instance:getLocalVar('OmenCopySeq')
         local mob = instance:insertDynamicEntity({
             objtype              = xi.objType.MOB,
             groupId              = params.groupId,
             groupZoneId          = catalog.zoneId,
-            name                 = params.name,
+            name                 = string.format('%s_c%u', params.name, copySeq),
+            packetName           = params.name,
             x                    = params.x,
             y                    = params.y,
             z                    = params.z,
@@ -454,7 +460,11 @@ runtime.create = function()
             releaseIdOnDisappear = true,
 
             onMobDeath = function(deadMob, player, optParams)
-                instanceObject.onOmenMobDeath(instance, deadMob, player, optParams)
+                local live = deadMob:getInstance()
+                if not live then
+                    return
+                end
+                instanceObject.onOmenMobDeath(live, deadMob, player, optParams)
             end,
         })
 
@@ -1174,6 +1184,8 @@ runtime.create = function()
     -- Engine hooks
     -----------------------------------
     instanceObject.onInstanceCreated = function(instance)
+        runtime.copySeq = runtime.copySeq + 1
+        instance:setLocalVar('OmenCopySeq', runtime.copySeq)
         instance:setLocalVar('OmenLimitMs', catalog.time.start * 1000)
         math.randomseed(os.time() + instance:getID())
         spawnFloor(instance, 1)

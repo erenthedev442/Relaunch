@@ -22,6 +22,15 @@ local DUNGEON_LEASH = 55
 local runtime = package.loaded['modules/custom/lua/dungeon_instance']
 if type(runtime) ~= 'table' then runtime = {} end
 
+-- insertDynamicEntity caches onMobDeath at xi.zones[zone].mobs[DE_name].
+-- Two copies of the same dungeon share those names, so the last spawn
+-- overwrites the callback and the captured CInstance*. The next kill then
+-- decrements the wrong copy (Kaz 2026-09-02: counter hit 0 with trash left)
+-- or UAFs in getLocalVar after that copy is destroyed (08:20 map crash).
+-- Per-copy script names keep the cache slots apart; death Lua also trusts
+-- deadMob:getInstance(), never the spawn closure's instance pointer.
+runtime.copySeq = tonumber(runtime.copySeq) or 0
+
 local function forEachPlayer(instance, fn)
     for _, player in ipairs(instance:getChars()) do
         fn(player)
@@ -157,11 +166,13 @@ runtime.create = function(dungeonKey)
     -- Spawns roster slot `index` into the instance; returns the mob (or nil).
     spawnDungeonMob = function(instance, index)
         local def = dungeon.mobs[index]
+        local copySeq = instance:getLocalVar('DungeonCopySeq')
         local mob = instance:insertDynamicEntity({
             objtype              = xi.objType.MOB,
             groupId              = def.groupId,
             groupZoneId          = dungeon.zoneId,
-            name                 = def.name,
+            name                 = string.format('%s_c%u', def.name, copySeq),
+            packetName           = def.name,
             x                    = def.x,
             y                    = def.y,
             z                    = def.z,
@@ -178,14 +189,20 @@ runtime.create = function(dungeonKey)
 
             onMobDeath = function(deadMob, player, optParams)
                 mechanics.cleanup(deadMob)
-                onDungeonMobDeath(instance, deadMob)
+                -- Never use the spawn-time `instance` upvalue. The zone-wide
+                -- DE_ cache may be running another copy's closure.
+                local live = deadMob:getInstance()
+                if not live then
+                    return
+                end
+                onDungeonMobDeath(live, deadMob)
                 -- Catalyst payouts (Augmentation Dungeons only; acts on the
                 -- optParams.isKiller dispatch, no-op otherwise). Pass the roster
                 -- index + boss flag straight from this closure -- the
                 -- DungeonMobIndex localvar does NOT survive on these dynamic
                 -- mobs (reads 0 at death), so relying on it dropped nothing.
-                augmentDrops.onDungeonMobDeath(dungeonKey, instance, deadMob, player, optParams, index, index == bossIndex)
-                progressionDrops.onDungeonMobDeath(dungeonKey, instance, deadMob, player, optParams, index, index == bossIndex)
+                augmentDrops.onDungeonMobDeath(dungeonKey, live, deadMob, player, optParams, index, index == bossIndex)
+                progressionDrops.onDungeonMobDeath(dungeonKey, live, deadMob, player, optParams, index, index == bossIndex)
             end,
         })
 
@@ -231,6 +248,9 @@ runtime.create = function(dungeonKey)
     end
 
     instanceObject.onInstanceCreated = function(instance)
+        runtime.copySeq = runtime.copySeq + 1
+        instance:setLocalVar('DungeonCopySeq', runtime.copySeq)
+
         local spawned = 0
 
         -- Spawn TRASH ONLY (slots 1 .. bossIndex-1). The boss is withheld until

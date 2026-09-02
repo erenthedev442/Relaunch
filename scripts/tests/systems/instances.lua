@@ -46,6 +46,11 @@ describe('Instances', function()
 
         assert(firstCopy ~= secondCopy)
         assert(firstCopy.onInstanceCreated ~= secondCopy.onInstanceCreated)
+        -- Copies also need distinct DE_ script names. The engine caches
+        -- onMobDeath at xi.zones[zone].mobs[DE_name]; colliding names made
+        -- the last spawn steal every copy's death callback (wrong remaining
+        -- count, then getLocalVar UAF after that copy was destroyed).
+        assert(type(dungeonRuntime.copySeq) == 'number')
     end)
 
     it('loads the private Unity Wanted trial without replacing the Escha board', function()

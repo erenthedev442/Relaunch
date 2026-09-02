@@ -9,7 +9,9 @@ local catalog = require('modules/custom/lua/unity_wanted_catalog')
 local mechanics = require('modules/custom/lua/unity_wanted_mechanics')
 local trustDrops = require('modules/custom/lua/trust_cipher_drops')
 
-local runtime = {}
+local runtime = package.loaded['modules/custom/lua/unity_wanted_instance_runtime']
+if type(runtime) ~= 'table' then runtime = {} end
+runtime.copySeq = tonumber(runtime.copySeq) or 0
 
 runtime.config =
 {
@@ -184,7 +186,11 @@ local function awardPlayer(player, nm)
     end)
 end
 
-local instanceObject = {}
+local instanceObject = runtime.instanceObject
+if type(instanceObject) ~= 'table' then
+    instanceObject = {}
+end
+runtime.instanceObject = instanceObject
 
 instanceObject.onInstanceCreatedCallback = function(player, instance)
     if not instance then
@@ -245,11 +251,14 @@ instanceObject.onInstanceCreated = function(instance)
     end
 
     local pos = runtime.config.mobPos
+    runtime.copySeq = runtime.copySeq + 1
+    instance:setLocalVar('UWICopySeq', runtime.copySeq)
     local mob = instance:insertDynamicEntity({
         objtype              = xi.objType.MOB,
         groupId              = nm.groupId,
         groupZoneId          = catalog.huntZoneId,
-        name                 = nm.name,
+        name                 = string.format('%s_c%u', nm.name, runtime.copySeq),
+        packetName           = nm.name,
         x                    = pos.x,
         y                    = pos.y,
         z                    = pos.z,
@@ -262,18 +271,22 @@ instanceObject.onInstanceCreated = function(instance)
         releaseIdOnDisappear = true,
 
         onMobDeath = function(deadMob)
+            local live = deadMob:getInstance()
+            if not live then
+                return
+            end
             if deadMob:getLocalVar('UWI_DeathHandled') ~= 0 then
                 return
             end
 
             deadMob:setLocalVar('UWI_DeathHandled', 1)
-            forEachPlayer(instance, function(player)
+            forEachPlayer(live, function(player)
                 awardPlayer(player, nm)
             end)
 
-            local elapsed = instance:getLocalVar('UWI_ElapsedMs')
-            instance:setLocalVar('UWI_KickAtMs', elapsed + runtime.config.completionDelay * 1000)
-            instance:complete()
+            local elapsed = live:getLocalVar('UWI_ElapsedMs')
+            live:setLocalVar('UWI_KickAtMs', elapsed + runtime.config.completionDelay * 1000)
+            live:complete()
         end,
     })
 
