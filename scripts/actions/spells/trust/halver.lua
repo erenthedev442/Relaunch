@@ -67,6 +67,15 @@ spellObject.onMobSpawn = function(mob)
         tankGambits = {}
     end
 
+    -- Enmity hooks stay registered for the whole summon. COMBAT_TICK used
+    -- to call enableTankEnmity here, which added another COMBAT_TICK while
+    -- that list was being walked and crashed the map (Corvinos / Valkurm).
+    xi.trust.enableTankEnmity(mob, {
+        profile      = 'steady',
+        listenerName = 'HALVER_TANK_ENMITY',
+        activeVar    = 'HalverTankMode',
+    })
+
     local function enterTankMode(mobArg)
         clearTankGambits(mobArg)
 
@@ -80,16 +89,10 @@ spellObject.onMobSpawn = function(mob)
         -- Flash more frequently while tanking.
         tankGambits[#tankGambits + 1] = mobArg:addGambit(
             ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.FLASH }, 30)
-
-        xi.trust.enableTankEnmity(mobArg, {
-            profile      = 'steady',
-            listenerName = 'HALVER_TANK_ENMITY',
-        })
     end
 
     local function leaveTankMode(mobArg)
         clearTankGambits(mobArg)
-        mobArg:removeListener('HALVER_TANK_ENMITY')
     end
 
     mob:setLocalVar('HalverTankMode', 2) -- force first sync
@@ -110,15 +113,21 @@ spellObject.onMobSpawn = function(mob)
     end)
 end
 
-spellObject.onMobDespawn = function(mob)
-    mob:removeListener('HALVER_TANK_ENMITY')
+local function removeHalverListeners(mob)
     mob:removeListener('HALVER_TANK_MODE')
+    mob:removeListener('HALVER_TANK_ENMITY_ABILITY')
+    mob:removeListener('HALVER_TANK_ENMITY_MAGIC')
+    mob:removeListener('HALVER_TANK_ENMITY_WS')
+    mob:removeListener('HALVER_TANK_ENMITY_TICK')
+end
+
+spellObject.onMobDespawn = function(mob)
+    removeHalverListeners(mob)
     xi.trust.message(mob, xi.trust.messageOffset.DESPAWN)
 end
 
 spellObject.onMobDeath = function(mob)
-    mob:removeListener('HALVER_TANK_ENMITY')
-    mob:removeListener('HALVER_TANK_MODE')
+    removeHalverListeners(mob)
     xi.trust.message(mob, xi.trust.messageOffset.DEATH)
 end
 

@@ -43,6 +43,13 @@ class CAIEventHandler
         }
     };
 
+    struct PendingAdd
+    {
+        std::string   eventName;
+        sol::function luaFunc;
+        std::string   identifier;
+    };
+
 public:
     void addListener(const std::string& eventName, const sol::function& luaFunc, const std::string& identifier);
     void removeListener(const std::string& identifier);
@@ -68,6 +75,11 @@ public:
             auto& listeners = it->second;
             for (auto& event : listeners)
             {
+                if (!event.luaFunc_.valid())
+                {
+                    continue;
+                }
+
                 auto result = event.luaFunc_(std::forward<Args>(args)...);
                 if (!result.valid())
                 {
@@ -78,7 +90,14 @@ public:
         }
         --triggerDepth_;
 
-        // Process deferred removals
+        // Adds and removes from inside a listener must wait until the walk
+        // finishes. Halver tank-mode used to add COMBAT_TICK while COMBAT_TICK
+        // was iterating and took the map down (2026-09-03 05:54).
+        if (triggerDepth_ != 0)
+        {
+            return;
+        }
+
         if (!eventsToRemove_.empty())
         {
             for (const auto& identifier : eventsToRemove_)
@@ -86,6 +105,16 @@ public:
                 removeFromAllListeners(identifier);
             }
             eventsToRemove_.clear();
+        }
+
+        if (!eventsToAdd_.empty())
+        {
+            auto pending = std::move(eventsToAdd_);
+            eventsToAdd_.clear();
+            for (auto& add : pending)
+            {
+                addListener(add.eventName, add.luaFunc, add.identifier);
+            }
         }
     }
 
@@ -97,4 +126,5 @@ private:
     // TODO: Use string_view and is_transparent unordered_map + string_hash, etc.
     std::unordered_map<std::string, std::vector<AIEvent>> eventListeners_;
     std::vector<std::string>                              eventsToRemove_;
+    std::vector<PendingAdd>                               eventsToAdd_;
 };

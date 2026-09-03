@@ -633,6 +633,11 @@ xi.trust.enableTankEnmity = function(mob, options)
     local forceRetarget = opt('forceRetarget')
     local includeParty  = opt('includeParty')
     local listenerName  = options.listenerName or ('TRUST_TANK_ENMITY_' .. tostring(mob:getID()))
+    local activeVar     = options.activeVar
+
+    local function isActive(tank)
+        return not activeVar or tank:getLocalVar(activeVar) == 1
+    end
 
     local function spikeTarget(tank, target, ce, ve)
         if not target or target:isDead() or target:getID() == tank:getID() then
@@ -666,18 +671,34 @@ xi.trust.enableTankEnmity = function(mob, options)
     end
 
     mob:addListener('ABILITY_USE', listenerName .. '_ABILITY', function(tank, target)
+        if not isActive(tank) then
+            return
+        end
+
         spikeTarget(tank, resolveActionTarget(tank, target), actionCE, actionVE)
     end)
 
     mob:addListener('MAGIC_USE', listenerName .. '_MAGIC', function(tank, target)
+        if not isActive(tank) then
+            return
+        end
+
         spikeTarget(tank, resolveActionTarget(tank, target), actionCE, actionVE)
     end)
 
     mob:addListener('WEAPONSKILL_USE', listenerName .. '_WS', function(tank, target)
+        if not isActive(tank) then
+            return
+        end
+
         spikeTarget(tank, resolveActionTarget(tank, target), actionCE, actionVE)
     end)
 
     mob:addListener('COMBAT_TICK', listenerName .. '_TICK', function(tank)
+        if not isActive(tank) then
+            return
+        end
+
         local now     = GetSystemTime()
         local nextUse = tank:getLocalVar(listenerName .. '_NEXT')
 

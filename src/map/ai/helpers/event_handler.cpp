@@ -27,6 +27,13 @@ void CAIEventHandler::addListener(const std::string& eventName, const sol::funct
     TracyZoneString(eventName);
     TracyZoneString(identifier);
 
+    // Adding during triggerListener reallocates the vector being walked.
+    if (triggerDepth_ > 0)
+    {
+        eventsToAdd_.push_back({ eventName, luaFunc, identifier });
+        return;
+    }
+
     // Remove entries with same identifier (if they exist)
     removeFromAllListeners(identifier);
 
