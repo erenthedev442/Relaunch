@@ -20,6 +20,7 @@
 --   7          bonus treasure floor (chance detour from 3 or 5 exits)
 -----------------------------------
 local catalog = require('modules/custom/lua/omen_catalog')
+local partyHpScale = require('modules/custom/lua/party_hp_scale')
 
 -- Hot-reloadable (same pattern as dungeon_instance.lua).
 local runtime = package.loaded['modules/custom/lua/omen_instance']
@@ -480,6 +481,7 @@ runtime.create = function()
         mob:setMobMod(xi.mobMod.NO_MOVE, 0)
         mob:setMaxHP(params.hp)
         mob:setHP(params.hp)
+        partyHpScale.afterCustomHp(mob, instance)
 
         attachTrackingListeners(mob, instance)
 
@@ -1233,6 +1235,8 @@ runtime.create = function()
             return
         end
 
+        partyHpScale.maybeResyncInstance(instance)
+
         player:printToPlayer(
             string.format('[Omen] The trial begins. You have %d minutes -- ethereal ingresses grant more.',
                 catalog.time.start / 60),
@@ -1241,6 +1245,7 @@ runtime.create = function()
 
     instanceObject.onInstanceTimeUpdate = function(instance, elapsed)
         instance:setLocalVar('OmenElapsedMs', elapsed)
+        partyHpScale.maybeResyncInstance(instance)
 
         if instance:completed() then
             local remaining = instance:getLocalVar('OmenKickAt') - math.floor(elapsed / 1000)

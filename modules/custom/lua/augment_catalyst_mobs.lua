@@ -162,6 +162,6 @@ return {
     ['Addled_Tumor'] = 849,  -- Elemental Magic Recast Delay (T0, Addled Tumor L36)
     ['Seether'] = 1133,  -- Pet Regen (T1, Seether L28)
     ['Spinous_Pugil'] = 1122,  -- HP recovered while healing (T1, Spinous_Pugil L29)
-    ['Spunkie'] = 1452,  -- Avatar Blood Pact Dmg (T1, Spunkie L28)
+    ['Spunkie'] = 1626,  -- Avatar Blood Pact Dmg (T1, Spunkie L28)
     ['Yuhtunga_Mandragora'] = 768,  -- Pet Mag.Def.Bns (T1, Yuhtunga_Mandragora L29)
 }

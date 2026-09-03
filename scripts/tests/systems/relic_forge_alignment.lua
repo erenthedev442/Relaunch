@@ -55,4 +55,36 @@ describe('Relic Forge identifier alignment', function()
         assert(forge.repeatPlutonCost == 500)
         assert(forge.plutonId == 4059)
     end)
+
+    it('grants Yoichi\'s Quiver with final Yoichinoyumi and no other relic companions', function()
+        assert.same({ 26343 }, forge.companionsFor(22129))
+
+        for _, relic in ipairs(forge.weapons) do
+            if relic.id ~= 22129 then
+                assert.same({}, forge.companionsFor(relic.id), relic.name)
+            end
+        end
+
+        local player =
+        {
+            quiver = 0,
+            getItemCount = function(self, itemId)
+                return itemId == 26343 and self.quiver or 0
+            end,
+        }
+
+        assert(forge.companionSlotNeed(player, 22129) == 1)
+        assert(forge.grantSlotNeed(player, 22129, false) == 2)
+        assert(forge.grantSlotNeed(player, 22129, true) == 1)
+
+        player.quiver = 1
+        assert(forge.companionSlotNeed(player, 22129) == 0)
+        assert(forge.grantSlotNeed(player, 22129, false) == 1)
+        assert(forge.grantSlotNeed(player, 22129, true) == 1)
+    end)
+
+    it('refuses Yoichi Arrows from the bow script', function()
+        local bow = require('scripts/items/yoichinoyumi')
+        assert(bow.onItemCheck() == xi.msg.basic.ITEM_UNABLE_TO_USE)
+    end)
 end)

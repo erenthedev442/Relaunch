@@ -673,6 +673,7 @@ buildSourceNMMenu = function(player, srcDef, station)
                     mob:setMaxHP(newMax)
                     mob:setHP(newMax)
                 end
+                require('modules/custom/lua/party_hp_scale').afterCustomHp(mob, p)
 
                 -- Attach hardcore mechanics AFTER spawn() + stat/HP setup so
                 -- the library records the correct starting HP. Reforge NMs keep

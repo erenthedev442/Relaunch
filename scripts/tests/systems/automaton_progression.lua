@@ -73,13 +73,14 @@ describe('Automaton companion progression', function()
             end,
         }
 
-        assert(xi.autows.applyAutomatonProgression(automaton, levelingTarget, 100000) == 3300)
+        assert(xi.autows.applyAutomatonProgression(automaton, levelingTarget, 100000) == 3333)
     end)
 
     it('uses the master weapon tier for the cap', function()
         local automaton = makeAutomaton(makeMaster(20511, 2100)) -- Kenkonken
 
         assert(xi.autows.applyAutomatonProgression(automaton, target, 100000) == 999999)
+        assert(progression.getPetDamageCap(makeMaster(20484, 2100)) == 99999) -- Kenkonken 119 I
         local primeAutomaton = makeAutomaton(makeMaster(21535, 2100)) -- Varga Purnikawa
         assert(xi.autows.applyAutomatonProgression(primeAutomaton, target, 100000) == 1499999)
         assert(primeAutomaton:getLocalVar('CompanionDamageCap') == 1499999)

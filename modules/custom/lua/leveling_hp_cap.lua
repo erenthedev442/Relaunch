@@ -1,12 +1,12 @@
 -----------------------------------
 -- Legendary-style leveling HP clamp.
 -- While the acting player (or pet master) is below 99, a single outgoing hit
--- against a mob cannot exceed FRACTION of that mob's max HP. At 99+ this is
+-- against a mob cannot exceed one third of that mob's max HP. At 99+ this is
 -- a no-op so existing BLU / companion progression deals full damage.
 -----------------------------------
 local cap = {}
 
-cap.FRACTION       = 0.33
+cap.FRACTION       = 1 / 3
 cap.ENDGAME_LEVEL  = 99
 
 function cap.apply(sourceLevel, target, damage)

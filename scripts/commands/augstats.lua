@@ -78,10 +78,16 @@ commandObj.onTrigger = function(player)
         local slice = xi.augmentTiers.slices[tier]
         local nxt   = xi.augmentTiers.nextUnlock(tier)
         if slice then
+            local sageRank = player:getCharVar('Augment_Mastery') or 0
+            local ceilingNote = ''
+            if xi.augmentTiers.trueMaxAllowed and not xi.augmentTiers.trueMaxAllowed(tier, sageRank) then
+                ceilingNote = '  |  true max needs Sage 5'
+            end
             player:printToPlayer(string.format(
-                '  Augment Tier: %d/5  (rolls %d-%d of 31)%s',
+                '  Augment Tier: %d/5  (rolls %d-%d of 31)%s%s',
                 tier, slice.min, slice.max,
-                nxt and ('  |  next: ' .. nxt) or '  |  MAX'),
+                nxt and ('  |  next: ' .. nxt) or '  |  MAX',
+                ceilingNote),
                 xi.msg.channel.SYSTEM_3)
         else
             player:printToPlayer(string.format(

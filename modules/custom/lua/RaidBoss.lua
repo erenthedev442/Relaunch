@@ -149,6 +149,7 @@ local function spawnTendrils(boss, phase)
                 add:setMaxHP(newMax)
                 add:setHP(newMax)
             end
+            require('modules/custom/lua/party_hp_scale').afterCustomHp(add, boss.getTarget and boss:getTarget())
             state.addsAlive[add:getID()] = add
         end
     end
@@ -366,6 +367,7 @@ local function popRaid(player)
     local newMax = math.floor(boss:getMaxHP() * b.hpMult)
     boss:setMaxHP(newMax)
     boss:setHP(newMax)
+    require('modules/custom/lua/party_hp_scale').afterCustomHp(boss, player)
     pcall(function() boss:setModelSize(b.modelSize or 3) end)
     boss:updateClaim(player)
     boss:addEnmity(player, 1, 1)

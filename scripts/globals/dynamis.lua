@@ -1134,4 +1134,7 @@ xi.dynamis.mobInfo = function(mob)
     mob:setMobMod(xi.mobMod.GIL_MAX, -1)
     mob:setMobMod(xi.mobMod.MUG_GIL, -1)
     mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 150)
+    -- Mark for party HP scale. Apply waits for ENGAGE so we use the
+    -- fighter's alliance in-zone, never the whole Dynamis population.
+    require('modules/custom/lua/party_hp_scale').prepare(mob)
 end

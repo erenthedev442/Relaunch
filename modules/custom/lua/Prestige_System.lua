@@ -981,6 +981,7 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             mob:setMaxHP(newMax)
             mob:setHP(newMax)
         end
+        require('modules/custom/lua/party_hp_scale').afterCustomHp(mob, player)
 
         -- Attach the highest mechanics package at or below the current level.
         -- Empowerment-only tiers (P80/P90) inherit the P60 Wardens mechanics

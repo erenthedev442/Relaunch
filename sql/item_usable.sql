@@ -2977,10 +2977,8 @@ INSERT INTO `item_usable` VALUES (22049,'citrullus_mallet',1,1,0,0,1,30,3600,0);
 INSERT INTO `item_usable` VALUES (22051,'lycopodium_mallet',1,1,0,0,1,30,3600,0); -- TODO: verify animation
 INSERT INTO `item_usable` VALUES (22069,'hapy_staff',1,1,0,0,1,30,3600,0); -- TODO: verify animation
 INSERT INTO `item_usable` VALUES (22101,'pandits_staff',1,1,0,0,1,10,72000,0); -- TODO: verify animation
-INSERT INTO `item_usable` VALUES (22115,'yoichinoyumi',1,2,55,0,1,10,3600,0);
 INSERT INTO `item_usable` VALUES (22116,'gandiva',1,2,55,0,1,10,3600,0);
 INSERT INTO `item_usable` VALUES (22117,'fail-not',1,2,55,0,1,10,3600,0);
-INSERT INTO `item_usable` VALUES (22129,'yoichinoyumi',1,1,55,0,1,10,3600,0);
 INSERT INTO `item_usable` VALUES (22130,'gandiva',1,1,55,0,1,10,3600,0);
 INSERT INTO `item_usable` VALUES (22131,'fail-not',1,1,55,0,1,10,3600,0);
 INSERT INTO `item_usable` VALUES (22132,'artemiss_bow_+1',1,8,0,0,1,30,72000,0); -- TODO: verify animation

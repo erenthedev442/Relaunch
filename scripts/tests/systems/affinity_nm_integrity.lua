@@ -44,6 +44,11 @@ describe('Affinity NM roster and progression integrity', function()
             assert(entry.zoneId == home.zone, name .. ' zone')
             assert(entry.mobId == home.mobId, name .. ' mobId')
         end
+
+        -- Lobby cave, not the One to be Feared / Warrior's Path airship.
+        local proto = nmCatalog.byName('Proto-Omega')
+        assert(proto.x == 600.00 and proto.y == 130.36 and proto.z == 780.00)
+        assert(proto.y > 100, 'Proto-Omega must not sit on the airship deck')
     end)
 
     it('maps exactly the 11 live Sage affinities to collection targets', function()

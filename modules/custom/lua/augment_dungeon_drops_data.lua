@@ -120,7 +120,7 @@ return {
         {
             { id = 1133, tier = 0, cat = 7, label = 'Pet Regen', item = 'vial_of_dragon_blood' },
             { id = 1156, tier = 0, cat = 7, label = 'Avatar perpetuation cost', item = 'crawler_calculus' },
-            { id = 1452, tier = 0, cat = 7, label = 'Avatar Blood Pact Dmg', item = 'ordelle_bronzepiece' },
+            { id = 1626, tier = 0, cat = 7, label = 'Avatar Blood Pact Dmg', item = 'bottle_of_avatar_blood' },
             { id = 1518, tier = 0, cat = 7, label = 'Pet Mag.Acc. Mag.Atk.Bns', item = 'colossal_skull' },
             { id = 2153, tier = 0, cat = 7, label = 'Pet Phy. Dmg. Taken', item = 'qiqirn_sandbag' },
             { id = 2163, tier = 0, cat = 7, label = 'Pet Magic Damage', item = 'imp_wing' },

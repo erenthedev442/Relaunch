@@ -13,10 +13,10 @@ describe('Legendary leveling HP cap', function()
         }
     end
 
-    it('clamps sub-99 hits to 33% of mob max HP', function()
+    it('clamps sub-99 hits to one third of mob max HP', function()
         local target = makeTarget(10000)
-        assert(levelingHpCap.apply(50, target, 9000) == 3300)
-        assert(levelingHpCap.apply(98, target, 3300) == 3300)
+        assert(levelingHpCap.apply(50, target, 9000) == 3333)
+        assert(levelingHpCap.apply(98, target, 3333) == 3333)
         assert(levelingHpCap.apply(1, target, 100) == 100)
     end)
 

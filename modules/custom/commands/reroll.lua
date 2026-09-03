@@ -253,11 +253,15 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
             -- tiers reroll to the SAME value on low-ceiling stats.
             local function scaleRoll(raw)
                 if xi.augmentTiers and xi.augmentTiers.scaleRoll then
-                    return xi.augmentTiers.scaleRoll(raw, cap, tier)
+                    return xi.augmentTiers.scaleRoll(raw, cap, tier, rank)
                 end
                 local scaled = math.floor(raw * cap / EXDATA_VALUE_MAX + 0.5)
-                if tier < #TIER_SLICES and cap > 0 then
-                    scaled = math.min(scaled, cap - 1)
+                if (not xi.augmentTiers or not xi.augmentTiers.trueMaxAllowed or
+                    not xi.augmentTiers.trueMaxAllowed(tier, rank)) and cap > 0
+                then
+                    local soft = xi.augmentTiers and xi.augmentTiers.softCeiling and
+                        xi.augmentTiers.softCeiling(cap) or math.max(0, cap - 1)
+                    scaled = math.min(scaled, soft)
                 end
                 return math.max(0, scaled)
             end
@@ -268,10 +272,12 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
                 -- Tier-fixed / flat augments reroll deterministically, matching
                 -- the Moogle's encoding and crystalize rules.
                 local tvBase = ln.def.base or 0
-                local target = ln.def.flatValue or (ln.def.tierValue * tier)
-                local final  = ln.def.flatValue or (ln.def.tierValue * #TIER_SLICES)
+                local target = ln.def.flatValue or
+                    (xi.augmentTiers.tierFixedValue and
+                        xi.augmentTiers.tierFixedValue(ln.def.tierValue, tier, rank) or
+                        (ln.def.tierValue * tier))
                 r       = target - tvBase
-                slotMax = final - tvBase
+                slotMax = r
             else
                 r = math.random(rollFloor, slice.max)
                 if hasAff then

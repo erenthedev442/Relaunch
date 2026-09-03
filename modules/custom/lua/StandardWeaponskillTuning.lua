@@ -49,6 +49,16 @@ for itemId, entry in pairs(remaCatalog.BY_ITEM_ID) do
     end
 end
 
+for itemId, info in pairs(catalog.REMA_PATH or {}) do
+    if
+        not info.final and
+        info.slot == xi.slot.MAIN and
+        premiumMainhandAoECaps[itemId] == nil
+    then
+        premiumMainhandAoECaps[itemId] = catalog.REMA_PRE_III_DAMAGE_CAP
+    end
+end
+
 for _, entry in pairs(primeCatalog.PRIME_WS_TUNING) do
     if entry.slot == xi.slot.MAIN then
         premiumMainhandAoECaps[entry.itemId] = primeCatalog.AOE_DAMAGE_CAP
@@ -97,6 +107,22 @@ xi.standardWsTuning.withStandardEffects = function(
     -- native WS may later break that soft ceiling via Ambuscade's 10% boost.
     if ambuCatalog.isFinalWeapon(attacker:getEquipID(slot), slot) then
         damageCap = math.max(damageCap, ambuCatalog.DAMAGE_CAP)
+    end
+
+    -- Pre-119 III REMA matches Ambuscade (99,999). The native WS is 149,999
+    -- until the 119 III weapon is complete. Finished 119 III ordinary WS
+    -- still gets the 99,999 floor so Sequence is never worse than Naegling.
+    local remaInfo = catalog.getRemaPathInfo(attacker:getEquipID(slot))
+    if remaInfo then
+        if
+            not remaInfo.final and
+            remaInfo.wsId == wsId and
+            remaInfo.slot == slot
+        then
+            damageCap = math.max(damageCap, catalog.REMA_PRE_III_NATIVE_WS_CAP)
+        else
+            damageCap = math.max(damageCap, catalog.REMA_PRE_III_DAMAGE_CAP)
+        end
     end
 
     local premiumAoECap  = getPremiumAoECap(attacker)

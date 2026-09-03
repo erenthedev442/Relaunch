@@ -1322,8 +1322,14 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     finalDamage = utils.handlePhalanx(target, finalDamage)
     finalDamage = utils.handleOneForAll(target, finalDamage)
     finalDamage = utils.handleStoneskin(target, finalDamage)
-    if standardEligible then
-        finalDamage = math.min(finalDamage, standardMagic.getDamageCap(caster))
+    if
+        caster:isPC() or
+        (caster.isAutomaton and caster:isAutomaton())
+    then
+        -- 33% leveling clamp, 40k/79,999/99,999/999,999 ladder, AoE WS cap,
+        -- and main-BLM vs RDM / /BLM / /SCH identity. Applies even when the
+        -- cast is not catalog-eligible (/BLM Stonega or /SCH Stone on WAR).
+        finalDamage = standardMagic.applyPlayerOutgoingLimits(caster, target, spell, finalDamage)
     end
 
     -- Handle final adjustments. Most are located in core. TODO: Decide if we want core handling this.

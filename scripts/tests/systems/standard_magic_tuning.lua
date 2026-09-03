@@ -1,7 +1,7 @@
 local catalog = require('modules/custom/lua/standard_magic_tuning_catalog')
 
 describe('Level-scaled direct magic tuning', function()
-    local function makeCaster(level, isPlayer, mainJob, equipment, spentJobPoints)
+    local function makeCaster(level, isPlayer, mainJob, equipment, spentJobPoints, itemLevel, subJob)
         equipment = equipment or {}
         return
         {
@@ -17,8 +17,34 @@ describe('Level-scaled direct magic tuning', function()
             getMainJob = function()
                 return mainJob or xi.job.BLM
             end,
+            getSubJob = function()
+                return subJob or xi.job.NONE
+            end,
             getEquipID = function(_, slot)
-                return equipment[slot] or 0
+                local entry = equipment[slot]
+                if type(entry) == 'table' then
+                    return entry.id or 0
+                end
+
+                return entry or 0
+            end,
+            getEquippedItem = function(_, slot)
+                local entry = equipment[slot]
+                if entry == nil or entry == 0 then
+                    return nil
+                end
+
+                local id = type(entry) == 'table' and entry.id or entry
+                local ilvl = type(entry) == 'table' and entry.ilvl or itemLevel or 0
+                return
+                {
+                    getILvl = function()
+                        return ilvl
+                    end,
+                    getID = function()
+                        return id
+                    end,
+                }
             end,
             getSpentJobPoints = function()
                 return spentJobPoints or 0
@@ -26,7 +52,7 @@ describe('Level-scaled direct magic tuning', function()
         }
     end
 
-    local function makeTarget(level, maxHp, isMob)
+    local function makeTarget(level, maxHp, isMob, id)
         return
         {
             isMob = function()
@@ -38,10 +64,13 @@ describe('Level-scaled direct magic tuning', function()
             getMaxHP = function()
                 return maxHp
             end,
+            getID = function()
+                return id or 1
+            end,
         }
     end
 
-    local function makeSpell(id, skill, level, nativeJob)
+    local function makeSpell(id, skill, level, nativeJob, isAoE, primaryTargetId)
         return
         {
             getID = function()
@@ -57,6 +86,12 @@ describe('Level-scaled direct magic tuning', function()
 
                 return level or 99
             end,
+            isAoE = function()
+                return isAoE and 1 or 0
+            end,
+            getPrimaryTargetID = function()
+                return primaryTargetId or 0
+            end,
         }
     end
 
@@ -66,9 +101,10 @@ describe('Level-scaled direct magic tuning', function()
         local highTierSpell = makeSpell(
             xi.magic.spell.FIRE_V, xi.skill.ELEMENTAL_MAGIC, 86)
 
-        assert(catalog.DAMAGE_CAP == 99999)
+        assert(catalog.DAMAGE_CAP == 79999)
+        assert(catalog.NON_ITEM_LEVEL_119_CAP == 40000)
         assert(catalog.getDamageMultiplier(caster, target, highTierSpell) == 8)
-        assert(catalog.getBaseStockBonus(caster, target, highTierSpell) == 600)
+        assert(catalog.getBaseStockBonus(caster, target, highTierSpell) == 0)
         assert(catalog.getMagicAccuracyPenalty(caster, target) == 0)
         assert(catalog.getDamageMultiplier(
             caster, target,
@@ -82,13 +118,13 @@ describe('Level-scaled direct magic tuning', function()
 
         caster = makeCaster(99, true, xi.job.BLM, {}, 2100)
         assert(catalog.getDamageMultiplier(caster, target, highTierSpell) == 13)
-        assert(catalog.getBaseStockBonus(caster, target, highTierSpell) == 1050)
+        assert(catalog.getBaseStockBonus(caster, target, highTierSpell) == 0)
         assert((100 + catalog.getBaseStockBonus(caster, target, highTierSpell)) *
-            catalog.getDamageMultiplier(caster, target, highTierSpell) == 14950)
+            catalog.getDamageMultiplier(caster, target, highTierSpell) == 800)
         assert((3200 + catalog.getBaseStockBonus(caster, target, highTierSpell)) *
-            catalog.getDamageMultiplier(caster, target, highTierSpell) == 55250)
+            catalog.getDamageMultiplier(caster, target, highTierSpell) == 41600)
         assert((6500 + catalog.getBaseStockBonus(caster, target, highTierSpell)) *
-            catalog.getDamageMultiplier(caster, target, highTierSpell) == 98150)
+            catalog.getDamageMultiplier(caster, target, highTierSpell) == 84500)
         assert(catalog.getDamageMultiplier(
             caster, makeTarget(76, 8000), highTierSpell) == 13)
 
@@ -234,16 +270,123 @@ describe('Level-scaled direct magic tuning', function()
 
         assert(catalog.isDirectSpellEligible(automaton, target, spell))
         assert(catalog.getDamageMultiplier(automaton, target, spell) == 8)
-        assert(catalog.getBaseStockBonus(automaton, target, spell) == 600)
+        assert(catalog.getBaseStockBonus(automaton, target, spell) == 0)
     end)
 
-    it('raises cast caps for equipped final REMA and Prime weapons', function()
-        assert(catalog.getDamageCap(makeCaster(99)) == 99999)
+    it('raises cast caps along the ordinary 40k / 79,999 / 99,999 / 999,999 ladder', function()
+        assert(catalog.getDamageCap(makeCaster(99)) == 40000)
+        assert(catalog.getDamageCap(makeCaster(
+            99, true, xi.job.BLM, { [xi.slot.MAIN] = { id = 1, ilvl = 119 } })) == 79999)
+        assert(catalog.getDamageCap(makeCaster(
+            99, true, xi.job.BLM, { [xi.slot.MAIN] = 22086 })) == 99999)
+        assert(catalog.getDamageCap(makeCaster(
+            99, true, xi.job.BLM, { [xi.slot.MAIN] = 21139 })) == 99999)
         assert(catalog.getDamageCap(makeCaster(
             99, true, xi.job.BLM,
             { [xi.slot.MAIN] = 22062 })) == 999999)
         assert(catalog.getDamageCap(makeCaster(
             99, true, xi.job.BLM,
-            { [xi.slot.MAIN] = 22106 })) == 1999999)
+            { [xi.slot.MAIN] = 22106 })) == 999999)
+    end)
+
+    it('keeps RDM and subjob elemental far below main BLM', function()
+        local fireV = makeSpell(
+            xi.magic.spell.FIRE_V, xi.skill.ELEMENTAL_MAGIC, 86, xi.job.BLM)
+        local rdmFire = makeSpell(
+            xi.magic.spell.FIRE_IV, xi.skill.ELEMENTAL_MAGIC, 73, xi.job.RDM)
+
+        assert(catalog.getCasterPowerFactor(makeCaster(99, true, xi.job.BLM), fireV) == 1.00)
+        assert(catalog.getCasterPowerFactor(makeCaster(99, true, xi.job.RDM), rdmFire) == 0.35)
+        assert(catalog.getCasterPowerFactor(makeCaster(99, true, xi.job.WAR), fireV) == 0.20)
+        assert(catalog.getCasterPowerFactor(makeCaster(99, true, xi.job.SAM), fireV) == 0.20)
+    end)
+
+    it('keeps SCH at 0.90 and treats /SCH like /BLM', function()
+        local target = makeTarget(50, 9000)
+        local schFireIV = makeSpell(
+            xi.magic.spell.FIRE_IV, xi.skill.ELEMENTAL_MAGIC, 73, xi.job.SCH)
+        local schFireV = makeSpell(
+            xi.magic.spell.FIRE_V, xi.skill.ELEMENTAL_MAGIC, 91, xi.job.SCH)
+        local firaga = makeSpell(
+            xi.magic.spell.FIRAGA, xi.skill.ELEMENTAL_MAGIC, 28, xi.job.BLM)
+        local flare = makeSpell(
+            xi.magic.spell.FLARE, xi.skill.ELEMENTAL_MAGIC, 60, xi.job.BLM)
+        local stone = makeSpell(
+            xi.magic.spell.STONE, xi.skill.ELEMENTAL_MAGIC, 4, xi.job.SCH)
+        local helix = makeSpell(
+            xi.magic.spell.GEOHELIX, xi.skill.ELEMENTAL_MAGIC, 18, xi.job.SCH)
+
+        assert(catalog.getCasterPowerFactor(
+            makeCaster(99, true, xi.job.SCH), schFireIV) == 0.90)
+        assert(catalog.getCasterPowerFactor(
+            makeCaster(99, true, xi.job.SCH), schFireV) == 0.90)
+        assert(catalog.getCasterPowerFactor(
+            makeCaster(99, true, xi.job.SCH), firaga) == 0.20)
+        assert(catalog.getCasterPowerFactor(
+            makeCaster(99, true, xi.job.SCH), flare) == 0.20)
+        assert(catalog.getCasterPowerFactor(
+            makeCaster(50, true, xi.job.WAR, {}, 0, 0, xi.job.SCH), stone) == 0.20)
+        assert(catalog.getCasterPowerFactor(
+            makeCaster(50, true, xi.job.WHM, {}, 0, 0, xi.job.SCH), stone) == 0.20)
+        assert(catalog.getCasterPowerFactor(
+            makeCaster(50, true, xi.job.NIN, {}, 0, 0, xi.job.SCH), helix) == 0.20)
+        assert(not catalog.isDirectSpellEligible(
+            makeCaster(50, true, xi.job.WAR, {}, 0, 0, xi.job.SCH), target, stone))
+        assert(not catalog.isDirectSpellEligible(
+            makeCaster(99, true, xi.job.SCH), target, firaga))
+        assert(catalog.applyPlayerOutgoingLimits(
+            makeCaster(50, true, xi.job.WAR, {}, 0, 0, xi.job.SCH),
+            target, stone, 8000) == 1600)
+    end)
+
+    it('caps AoE nukes to the weaponskill AoE ceiling', function()
+        local firega = makeSpell(
+            xi.magic.spell.FIRAGA, xi.skill.ELEMENTAL_MAGIC, 28, xi.job.BLM, true)
+        local stone = makeSpell(
+            xi.magic.spell.STONE, xi.skill.ELEMENTAL_MAGIC, 1, xi.job.BLM, false)
+
+        assert(catalog.getAoEDamageCap(makeCaster(99), stone) == nil)
+        assert(catalog.getAoEDamageCap(makeCaster(99), firega) == 40000)
+        assert(catalog.getAoEDamageCap(makeCaster(
+            99, true, xi.job.BLM, { [xi.slot.MAIN] = { id = 1, ilvl = 119 } }), firega) == 79999)
+        assert(catalog.getAoEDamageCap(makeCaster(
+            99, true, xi.job.BLM, { [xi.slot.MAIN] = 22086 }), firega) == 99999)
+        assert(catalog.getAoEDamageCap(makeCaster(
+            99, true, xi.job.BLM, { [xi.slot.MAIN] = 21139 }), firega) == 99999)
+        assert(catalog.getAoEDamageCap(makeCaster(
+            99, true, xi.job.BLM, { [xi.slot.MAIN] = 22062 }), firega) == 149999)
+        assert(catalog.getAoEDamageCap(makeCaster(
+            99, true, xi.job.BLM, { [xi.slot.MAIN] = 22106 }), firega) == 199999)
+        assert(catalog.getOutgoingDamageCap(makeCaster(
+            99, true, xi.job.BLM, { [xi.slot.MAIN] = 22062 }), firega) == 149999)
+    end)
+
+    it('keeps the aimed-at AoE target on the single-target ceiling', function()
+        local caster = makeCaster(
+            99, true, xi.job.BLM, { [xi.slot.MAIN] = 22062 })
+        local primary = makeTarget(99, 500000, true, 100)
+        local splash = makeTarget(99, 500000, true, 200)
+        local firega = makeSpell(
+            xi.magic.spell.FIRAGA, xi.skill.ELEMENTAL_MAGIC, 28, xi.job.BLM, true, 100)
+
+        assert(catalog.isAoESplashTarget(firega, primary) == false)
+        assert(catalog.isAoESplashTarget(firega, splash) == true)
+        assert(catalog.getOutgoingDamageCap(caster, firega, primary) == 999999)
+        assert(catalog.getOutgoingDamageCap(caster, firega, splash) == 149999)
+        assert(catalog.applyPlayerOutgoingLimits(caster, primary, firega, 200000) == 200000)
+        assert(catalog.applyPlayerOutgoingLimits(caster, splash, firega, 200000) == 149999)
+    end)
+
+    it('clamps leveling nukes to one third of mob HP after the job factor', function()
+        local caster = makeCaster(50)
+        local target = makeTarget(50, 9000)
+        local stone = makeSpell(
+            xi.magic.spell.STONE, xi.skill.ELEMENTAL_MAGIC, 1, xi.job.BLM)
+
+        assert(catalog.applyPlayerOutgoingLimits(caster, target, stone, 8000) == 3000)
+        assert(catalog.applyPlayerOutgoingLimits(
+            makeCaster(99), makeTarget(10, 3000), stone, 40000) == 40000)
+        assert(catalog.applyPlayerOutgoingLimits(
+            makeCaster(99, true, xi.job.WAR), target, stone, 8000) == 1600)
     end)
 end)

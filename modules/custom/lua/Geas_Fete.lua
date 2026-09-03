@@ -45,7 +45,7 @@ require('scripts/zones/Reisenjima/Zone')  -- for the redirect signpost override
 local m = Module:new('geas_fete')
 local S = xi.msg.channel.SYSTEM_3
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
-local abysseaBalance = require('modules/custom/lua/abyssea_marks_balance')
+local partyHpScale = require('modules/custom/lua/party_hp_scale')
 
 -- Public namespace for cross-module reads. Populated below with roster sizes:
 --   uniqueNmCount    = full catalog (T1-T4), Warden / !geas progress
@@ -966,34 +966,13 @@ local MECHANIC_TUNING =
     },
 }
 
-local function realPlayerScale(player)
-    local count = 1
-    local ok, party = pcall(function() return player:getParty() end)
-    if ok and party then
-        local seen = {}
-        count = 0
-        for _, member in ipairs(party) do
-            local memberOk, isPc = pcall(function() return member:isPC() end)
-            if memberOk and isPc and member:getZoneID() == player:getZoneID() then
-                local id = member:getID()
-                if not seen[id] then
-                    seen[id] = true
-                    count = count + 1
-                end
-            end
-        end
-        count = math.max(1, count)
-    end
-    return abysseaBalance.hpScale(count), count
-end
-
 local function applyDifficulty(mob, def, player)
     local t = TIER_TUNING[def.difficulty or def.tier] or TIER_TUNING[1]
     mob:setMobLevel(t.level, false)
-    local hpScale, pcCount = realPlayerScale(player)
-    local hp = math.floor(t.hp * hpScale)
-    mob:setMaxHP(hp)
-    mob:setHP(hp)
+    mob:setMaxHP(t.hp)
+    mob:setHP(t.hp)
+    partyHpScale.afterCustomHp(mob, player)
+    local pcCount = partyHpScale.countFromPlayer(player)
     -- Solo roster fights must make forward progress. Stock pool modifiers can
     -- include passive regeneration, so explicitly remove it after level setup.
     mob:setMod(xi.mod.REGEN, 0)

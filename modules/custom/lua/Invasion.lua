@@ -36,7 +36,12 @@ local RETIRED_MSG = 'Al Zahbi Invasion is disabled for launch.'
 -- keeps the change in one place and survives pool regeneration.
 -- EXCLUSIVE_IDS = ALL Ambuscade stages (2026-07-10; feedstock earned from Ambuscade).
 local AMBU_WPN_IDS = require('modules/custom/lua/ambuscade_weapons_catalog').EXCLUSIVE_IDS
-local RESERVED_LOOT = { [26169] = true } -- Legendary Ring: legacy/starter grant only
+local RESERVED_LOOT =
+{
+    [26169] = true, -- Legendary Ring: legacy/starter grant only
+    [21299] = true, -- Yoichi's Arrow: Yoichi's Quiver only
+    [26343] = true, -- Yoichi's Quiver: granted with final Yoichinoyumi
+}
 local LOOT_POOL = {}
 for _, id in ipairs(require('modules/custom/lua/invasion_loot_pool')) do
     if not AMBU_WPN_IDS[id] and not RESERVED_LOOT[id] then LOOT_POOL[#LOOT_POOL + 1] = id end
@@ -358,6 +363,7 @@ local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
             mob:setMaxHP(newMax)
             mob:setHP(newMax)
         end
+        require('modules/custom/lua/party_hp_scale').afterCustomHp(mob, anchor)
         if opts.modelSize then
             pcall(function() mob:setModelSize(opts.modelSize) end)
         end

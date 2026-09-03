@@ -81,6 +81,7 @@ FORCED_CATALYST = {
     # its own item instead of double-booking 921). value/mult come from the
     # zz_augment_rebalance.sql override (value=1, mult=1, matching MND).
     516: 921,    # INT -> Bottle of Ahriman Tears
+    369: 1626,  # Avatar Blood Pact Dmg -> Bottle of Avatar Blood (not 1452 bronze)
     # Flat weapon Dmg+ (top tier), restored 2026-06-20 (owner request). Pinned so the
     # generator emits them; value rebalanced to +1..32/slot in zz_augment_rebalance.sql
     # (stock +97 is absurd stacked across 5 slots).
@@ -395,7 +396,7 @@ EXCLUDED_ITEMS = {
     # 2026-06-20 so the removal is clean (not a swap). Each was only ever used by its
     # now-removed augment, so banning them frees nothing into other augments.
     1016, 2013, 2014, 2015, 2229, 2365, 843, 866, 1155, 1157,
-    1455, 1456, 1466, 1469, 1517, 1618, 1626, 1650, 1700, 1703,
+    1452, 1455, 1456, 1466, 1469, 1517, 1618, 1650, 1700, 1703,
     1704, 1719, 1852, 1855, 1871, 1875, 1885, 1899, 1900, 2175,
     2488, 2849, 2851, 2859, 3503,
     # Treasure Hunter catalyst (item 1844) -- banned with its augment (augId 147,

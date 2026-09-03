@@ -580,6 +580,16 @@ float CBattleEntity::GetMeleeRange(const CBattleEntity* target) const
     return modelHitboxSize + 2.0f + target->modelHitboxSize;
 }
 
+float CBattleEntity::GetTrustActionRange(float baseRange, const CBattleEntity* target) const
+{
+    if (target == nullptr)
+    {
+        return baseRange;
+    }
+
+    return baseRange + modelHitboxSize + target->modelHitboxSize + 3.0f;
+}
+
 float CBattleEntity::GetRangedAttackRange()
 {
     return 25.0f;
@@ -2220,10 +2230,15 @@ void CBattleEntity::addPetModifier(Mod type, PetModType petmod, int16 amount)
     TracyZoneScoped;
     m_petMod[petmod][type] += amount;
 
-    if (PPet && petutils::CheckPetModType(PPet, petmod))
+    if (PPet && CBaseEntity::IsEntityAlive(PPet) && petutils::CheckPetModType(PPet, petmod))
     {
         PPet->addModifier(type, amount);
-        static_cast<CPetEntity*>(PPet)->recordAppliedMasterPetModifier(type, amount);
+        // Charmed world mobs are PPet but not CPetEntity. PetModType::All
+        // still applies the live modifier; the master-pet ledger is pet-only.
+        if (auto* pet = dynamic_cast<CPetEntity*>(PPet))
+        {
+            pet->recordAppliedMasterPetModifier(type, amount);
+        }
         PPet->UpdateHealth();
     }
 }
@@ -2234,11 +2249,14 @@ void CBattleEntity::setPetModifier(Mod type, PetModType petmod, int16 amount)
     const int16 previousAmount = m_petMod[petmod][type];
     m_petMod[petmod][type] = amount;
 
-    if (PPet && petutils::CheckPetModType(PPet, petmod))
+    if (PPet && CBaseEntity::IsEntityAlive(PPet) && petutils::CheckPetModType(PPet, petmod))
     {
         const int16 difference = amount - previousAmount;
         PPet->addModifier(type, difference);
-        static_cast<CPetEntity*>(PPet)->recordAppliedMasterPetModifier(type, difference);
+        if (auto* pet = dynamic_cast<CPetEntity*>(PPet))
+        {
+            pet->recordAppliedMasterPetModifier(type, difference);
+        }
         PPet->UpdateHealth();
     }
 }
@@ -2248,10 +2266,13 @@ void CBattleEntity::delPetModifier(Mod type, PetModType petmod, int16 amount)
     TracyZoneScoped;
     m_petMod[petmod][type] -= amount;
 
-    if (PPet && petutils::CheckPetModType(PPet, petmod))
+    if (PPet && CBaseEntity::IsEntityAlive(PPet) && petutils::CheckPetModType(PPet, petmod))
     {
         PPet->delModifier(type, amount);
-        static_cast<CPetEntity*>(PPet)->recordAppliedMasterPetModifier(type, -amount);
+        if (auto* pet = dynamic_cast<CPetEntity*>(PPet))
+        {
+            pet->recordAppliedMasterPetModifier(type, -amount);
+        }
         PPet->UpdateHealth();
     }
 }
@@ -2951,8 +2972,16 @@ void CBattleEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
     // They should find targets around the mob regardless of where any specific entity is
     const bool isSelfCenteredAoE = PSkill->getAoe() == static_cast<uint8>(AOE_RADIUS::ATTACKER);
 
-    // For non-self-centered skills, check if the primary target is within range
-    if (!isSelfCenteredAoE && !PAI->TargetFind->isWithinRange(&PTarget->loc.p, distance))
+    // For non-self-centered skills, check if the primary target is within range.
+    // Trusts used the raw skill distance (no hitboxes), so large bosses
+    // constantly interrupted with "too far away".
+    float skillRange = distance;
+    if (objtype == TYPE_TRUST)
+    {
+        skillRange = GetTrustActionRange(distance, PTarget);
+    }
+
+    if (!isSelfCenteredAoE && !PAI->TargetFind->isWithinRange(&PTarget->loc.p, skillRange))
     {
         ActionInterrupts::MobSkillOutOfRange(this, PTarget);
         return;

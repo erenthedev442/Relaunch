@@ -105,6 +105,21 @@ end
 windower.add_to_chat(207, ('[relaunch] resource overrides: %d renamed, %d inserted, %d skipped'):format(
     applied.rename, applied.insert, applied.skipped))
 
+-- Each Windower addon has its own res.items. Push the same names into GearSwap.
+local function inject_gearswap()
+    windower.send_command('lua i GearSwap require legendary_res')
+    windower.send_command('wait 0.2; lua i GearSwap legendary_apply_resources')
+end
+
+windower.register_event('load', function()
+    windower.send_command('wait 1; lua i GearSwap require legendary_res')
+    windower.send_command('wait 12; lua i GearSwap require legendary_res')
+end)
+
+windower.register_event('login', function()
+    windower.send_command('wait 2; lua i GearSwap require legendary_res')
+end)
+
 -- Seasonal /ma "Matsui-P" (spell 1003) R0s the client. Rewrite to Exc_S (1004)
 -- before the DAT lookup. Also catch /matsui-p as a bare command.
 local function isMatsuiCast(text)
@@ -160,7 +175,10 @@ windower.register_event('addon command', function(cmd, ...)
         else
             windower.add_to_chat(207, ('[relaunch] id %d has no res.items entry'):format(id))
         end
+    elseif cmd == 'inject' then
+        inject_gearswap()
+        windower.add_to_chat(207, '[relaunch] injected names into GearSwap. Idle once, or //gs r if a set still fails.')
     else
-        windower.add_to_chat(207, '[relaunch] commands: check <name> | show <id>')
+        windower.add_to_chat(207, '[relaunch] commands: check <name> | show <id> | inject')
     end
 end)

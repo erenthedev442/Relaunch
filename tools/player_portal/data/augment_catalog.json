@@ -1291,7 +1291,7 @@
 "max": 32
 },
 {
-"itemId": 1452,
+"itemId": 1626,
 "augId": 369,
 "label": "Avatar Blood Pact Dmg",
 "cat": 7,
@@ -1300,8 +1300,8 @@
 "mult": 1,
 "disp": 1,
 "maxBoost": 11,
-"item": "O. Bronzepiece",
-"img": "https://www.bg-wiki.com/images/4/48/O._Bronzepiece_description.png",
+"item": "Avatar Blood",
+"img": "",
 "min": 1,
 "max": 12
 },

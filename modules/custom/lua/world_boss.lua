@@ -37,6 +37,7 @@ require('modules/module_utils')
 require('scripts/zones/West_Ronfaure/Zone')
 
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
+local partyHpScale = require('modules/custom/lua/party_hp_scale')
 
 local m = Module:new('world_boss')
 
@@ -417,6 +418,7 @@ local function spawnBoss(zone, bossData, bossIdx, savedHP)
     local spawnHP = (savedHP and savedHP > 0 and savedHP < bossData.hp) and savedHP or bossData.hp
     mob:setMaxHP(bossData.hp)
     mob:setHP(spawnHP)
+    partyHpScale.afterCustomHp(mob)
 
     -- Attach hardcore mechanics AFTER stats/HP are set (library requirement).
     -- Each boss index maps to a distinct full-kit identity in BOSS_MECH.
@@ -487,7 +489,7 @@ m:addOverride('xi.zones.West_Ronfaure.Zone.onZoneIn', function(player, prevZone)
         -- Sync HP to server_var so a restart can restore it.
         if xi._wb and xi._wb.boss then
             pcall(function()
-                local hp = xi._wb.boss:getHP()
+                local hp = partyHpScale.catalogCurrentHp(xi._wb.boss)
                 if hp > 0 then svSet('HP', hp) end
             end)
         end

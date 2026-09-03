@@ -7,6 +7,10 @@ require('scripts/globals/dynamis')
 g_mixins = g_mixins or {}
 
 g_mixins.dynamis_dreamland = function(dynamisDreamlandMob)
+    dynamisDreamlandMob:addListener('SPAWN', 'PARTY_HP_SCALE_PREPARE', function(mob)
+        require('modules/custom/lua/party_hp_scale').prepare(mob)
+    end)
+
     local procTimes =
     {
         weaponskill =

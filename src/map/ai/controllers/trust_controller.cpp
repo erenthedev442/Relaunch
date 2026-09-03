@@ -204,20 +204,24 @@ auto CTrustController::DoCombatTick(timer::time_point tick) -> Task<void>
                     }
                     case TRUST_MOVEMENT_TYPE::MELEE:
                     {
-                        std::unique_ptr<CBasicPacket> err;
-                        if (!PTrust->CanAttack(PTarget, err) && PTrust->GetSpeed() > 0)
+                        // CanAttack is true at hitboxes+2'. On large bosses that
+                        // left trusts parked on the outer edge so WS/JA clipped
+                        // out of range. Stick 1.5' inside melee range instead,
+                        // and PathAround using the real melee radius (the old
+                        // 6' cap never fired on big hitboxes).
+                        const float meleeRange = PTrust->GetMeleeRange(PTarget);
+                        const float stickRange = std::max(1.25f, meleeRange - 1.5f);
+                        if (currentDistanceToTarget > stickRange && PTrust->GetSpeed() > 0)
                         {
-                            if (currentDistanceToTarget > RoamDistance)
+                            const float pathAroundLimit = std::max(RoamDistance * 3.0f, meleeRange + 4.0f);
+                            if (currentDistanceToTarget < pathAroundLimit &&
+                                PTrust->PAI->PathFind->PathAround(PTarget->loc.p, stickRange, PATHFLAG_RUN | PATHFLAG_WALLHACK))
                             {
-                                if (currentDistanceToTarget < RoamDistance * 3.0f &&
-                                    PTrust->PAI->PathFind->PathAround(PTarget->loc.p, RoamDistance, PATHFLAG_RUN | PATHFLAG_WALLHACK))
-                                {
-                                    PTrust->PAI->PathFind->FollowPath(m_Tick);
-                                }
-                                else if (PTrust->GetSpeed() > 0)
-                                {
-                                    PTrust->PAI->PathFind->StepTo(PTarget->loc.p, true);
-                                }
+                                PTrust->PAI->PathFind->FollowPath(m_Tick);
+                            }
+                            else
+                            {
+                                PTrust->PAI->PathFind->StepTo(PTarget->loc.p, true);
                             }
                         }
                         break;
@@ -402,6 +406,10 @@ void CTrustController::PathOutToDistance(CBattleEntity* PTarget, float amount)
 
     float      currentDistanceToTarget = distance(POwner->loc.p, PTarget->loc.p);
     position_t target_position         = POwner->loc.p;
+    // Combat parks (MID_RANGE 6' / LONG_RANGE 12') sit one yalm closer with
+    // a tighter window so WS range 5' still connects. Follow-master (2') is left alone.
+    const float parkAmount = amount >= 3.0f ? amount - 1.0f : amount;
+    const float parkWindow = amount >= 3.0f ? 1.5f : 2.5f;
 
     if (GetTopEnmity() == POwner)
     {
@@ -413,7 +421,7 @@ void CTrustController::PathOutToDistance(CBattleEntity* PTarget, float amount)
     }
 
     // Invalidate position and pick new one (limit: every 3s)
-    if ((currentDistanceToTarget < amount - 2.5f || currentDistanceToTarget > amount + 2.5f || !POwner->PAI->PathFind->ValidPosition(POwner->loc.p)) &&
+    if ((currentDistanceToTarget < parkAmount - parkWindow || currentDistanceToTarget > parkAmount + parkWindow || !POwner->PAI->PathFind->ValidPosition(POwner->loc.p)) &&
         m_Tick - m_LastRepositionTime > 3s && !m_InTransit)
     {
         std::vector<position_t> positions(5);
@@ -421,9 +429,9 @@ void CTrustController::PathOutToDistance(CBattleEntity* PTarget, float amount)
         {
             int        random_angle       = xirand::GetRandomNumber(256);
             position_t potential_position = {
-                PTarget->loc.p.x - (cosf(rotationToRadian(random_angle)) * amount),
+                PTarget->loc.p.x - (cosf(rotationToRadian(random_angle)) * parkAmount),
                 PTarget->loc.p.y,
-                PTarget->loc.p.z + (sinf(rotationToRadian(random_angle)) * amount),
+                PTarget->loc.p.z + (sinf(rotationToRadian(random_angle)) * parkAmount),
                 0,
                 0,
             };

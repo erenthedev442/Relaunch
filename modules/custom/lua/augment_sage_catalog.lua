@@ -101,6 +101,8 @@ catalog.ranks =
 --   * critPct    = catalog.critChance[Augment_Mastery + 1]
 --       crit = a PERFECT roll (tier band max), once per trade
 --   * affinity (augment_affinity_catalog) = roll twice, keep the better
+--   * rank 5 unlocks the last 20% of the augment ceiling (T5 + Sage 5).
+--     Ranks 0-4 stay at 80% of true max; they do not change the band.
 -- catalog.masteryMult is RETIRED from the Moogle math (kept only so old
 -- readers don't nil-error; do not tune it expecting an effect).
 --

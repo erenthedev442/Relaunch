@@ -2,7 +2,7 @@
 -- Fell Cleave
 -- Great Axe weapon skill
 -- Skill Level: 300
--- Delivers an area attack. Radius varies with TP.
+-- Delivers a 360-degree area attack around the user. Radius varies with TP.
 -- Aligned with the Breeze Gorget, Thunder Gorget & Soil Gorget.
 -- Aligned with the Breeze Belt, Thunder Belt & Soil Belt.
 -- Element: None

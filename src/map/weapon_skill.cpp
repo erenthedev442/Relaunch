@@ -53,7 +53,11 @@ void CWeaponSkill::setType(uint8 type)
 
 bool CWeaponSkill::isAoE() const
 {
-    return m_AOE == 2;
+    // Player weapon_skills.aoe:
+    //   0/1 = single target
+    //   2   = circular AoE around the aimed-at target
+    //   3   = circular AoE around the attacker (360 degrees)
+    return m_AOE == 2 || m_AOE == 3;
 }
 
 bool CWeaponSkill::mainOnly() const

@@ -86,7 +86,7 @@ return {
     [ 2640] = { cat =  6, tier = 0, label = 'Helix Effect Duration' },
     [ 2641] = { cat =  6, tier = 0, label = 'Indi Effect Duration' },
     [ 2711] = { cat =  6, tier = 0, label = 'Meditate Effect Duration' },
-    [ 1452] = { cat =  7, tier = 0, label = 'Avatar Blood Pact Dmg' },
+    [ 1626] = { cat =  7, tier = 0, label = 'Avatar Blood Pact Dmg' },
     [ 1156] = { cat =  7, tier = 0, label = 'Avatar perpetuation cost' },
     [ 2518] = { cat =  7, tier = 0, label = 'Beast Affinity' },
     [  852] = { cat =  7, tier = 0, label = 'Blood Boon' },

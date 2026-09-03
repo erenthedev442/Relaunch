@@ -366,6 +366,18 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
         player:printToPlayer(string.format(
             '  Roll floor: +%d within your tier band | Crit chance: %.0f%%',
             rank, crit * 100), xi.msg.channel.SYSTEM_3)
+        local tierNow = xi.augmentTiers and xi.augmentTiers.tierOf(player) or 0
+        if xi.augmentTiers and xi.augmentTiers.trueMaxAllowed and
+            xi.augmentTiers.trueMaxAllowed(tierNow, rank)
+        then
+            player:printToPlayer(
+                '  Ceiling: 100% (Augment Tier 5 + Sage 5).',
+                xi.msg.channel.SYSTEM_3)
+        else
+            player:printToPlayer(
+                '  Ceiling: 80% of max. Sage 5 + Augment Tier 5 unlocks the last 20%.',
+                xi.msg.channel.SYSTEM_3)
+        end
         player:printToPlayer(string.format(
             '  Lifetime augments: %d | Affinities unlocked: %d/%d',
             count, unlocked, #affinity.affinities), xi.msg.channel.SYSTEM_3)

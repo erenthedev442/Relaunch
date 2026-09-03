@@ -138,6 +138,7 @@ local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
             mob:setMaxHP(newMax)
             mob:setHP(newMax)
         end
+        require('modules/custom/lua/party_hp_scale').afterCustomHp(mob, anchor)
         if opts.modelSize then
             pcall(function() mob:setModelSize(opts.modelSize) end)
         end

@@ -280,6 +280,7 @@ local function spawnMob(zone, zoneCfg, zoneId, anchor, def, level, mods, hpMult,
             mob:setMaxHP(newMax)
             mob:setHP(newMax)
         end
+        require('modules/custom/lua/party_hp_scale').afterCustomHp(mob, anchor)
         if opts.modelSize then
             mob:setModelSize(opts.modelSize)
         end

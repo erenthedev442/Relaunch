@@ -110,6 +110,8 @@ describe('Level-scaled ordinary weaponskill tuning', function()
 
     it('uses companion-only caps from the master main-hand tier', function()
         assert(catalog.DAMAGE_CAP == 79999)
+        assert(catalog.REMA_PRE_III_DAMAGE_CAP == 99999)
+        assert(catalog.REMA_PRE_III_NATIVE_WS_CAP == 149999)
         assert(catalog.PET_AMBU_DAMAGE_CAP == 99999)
         assert(catalog.PET_REMA_DAMAGE_CAP == 999999)
         assert(catalog.PET_PRIME_DAMAGE_CAP == 1499999)
@@ -120,6 +122,7 @@ describe('Level-scaled ordinary weaponskill tuning', function()
 
         local standard = makePlayer({ [xi.slot.MAIN] = 1 }, 99)
         local ambuscade = makePlayer({ [xi.slot.MAIN] = 21621 }, 99) -- Naegling
+        local pupMythic119I = makePlayer({ [xi.slot.MAIN] = 20484 }, 99) -- Kenkonken 119 I
         local pupMythic = makePlayer({ [xi.slot.MAIN] = 20511 }, 99) -- Kenkonken
         local pupPrime = makePlayer(
             { [xi.slot.MAIN] = 21535 }, 99, 2100, xi.job.PUP) -- Varga Purnikawa
@@ -134,6 +137,9 @@ describe('Level-scaled ordinary weaponskill tuning', function()
 
         assert(catalog.getPetDamageCap(standard) == catalog.DAMAGE_CAP)
         assert(catalog.getPetDamageCap(ambuscade) == catalog.PET_AMBU_DAMAGE_CAP)
+        assert(catalog.getPetDamageCap(pupMythic119I) == catalog.PET_AMBU_DAMAGE_CAP)
+        assert(catalog.getRemaPathInfo(20484).final == false)
+        assert(catalog.getRemaPathInfo(20511).final == true)
         assert(catalog.getPetDamageCap(pupMythic) == catalog.PET_REMA_DAMAGE_CAP)
         assert(catalog.getPetDamageCap(pupPrime) == catalog.PET_PRIME_DAMAGE_CAP)
         assert(catalog.getPetDamageCap(bstPrime) == catalog.PET_PRIME_DAMAGE_CAP)
@@ -272,6 +278,33 @@ describe('Level-scaled ordinary weaponskill tuning', function()
             function()
                 assert(player:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 8000)
                 assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 99999)
+            end)
+    end)
+
+    it('keeps pre-119 III REMA at the Ambuscade floor and native WS at 149,999', function()
+        local target = makeTarget(150, 1000000)
+        local excalibur119I = makePlayer({ [xi.slot.MAIN] = 20645 }, 99)
+        local sequence = makePlayer({ [xi.slot.MAIN] = 20695 }, 99)
+
+        xi.standardWsTuning.withStandardEffects(
+            excalibur119I, target, xi.weaponskill.SAVAGE_BLADE, xi.slot.MAIN,
+            {}, false,
+            function()
+                assert(excalibur119I:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 99999)
+            end)
+
+        xi.standardWsTuning.withStandardEffects(
+            excalibur119I, target, xi.weaponskill.KNIGHTS_OF_ROUND, xi.slot.MAIN,
+            {}, false,
+            function()
+                assert(excalibur119I:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 149999)
+            end)
+
+        xi.standardWsTuning.withStandardEffects(
+            sequence, target, xi.weaponskill.SAVAGE_BLADE, xi.slot.MAIN,
+            {}, false,
+            function()
+                assert(sequence:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 99999)
             end)
     end)
 

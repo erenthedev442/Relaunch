@@ -297,6 +297,7 @@ local function spawnTowerMob(owner, groupId, name, level, hpMult, extraMods)
             mob:setMaxHP(newMax)
             mob:setHP(newMax)
         end
+        require('modules/custom/lua/party_hp_scale').afterCustomHp(mob, owner)
         mob:addEnmity(owner, 30000, 30000)
     end
     return mob
@@ -367,6 +368,7 @@ startFloor = function(player)
             mob:setModelSize(3)
             mob:setMaxHP(bossHp)
             mob:setHP(bossHp)
+            require('modules/custom/lua/party_hp_scale').afterCustomHp(mob, player)
             -- Attach floor-specific hardcore mechanics (stance/AoE/drain/doom/
             -- enrage). The config is keyed by boss floor number; early floors get a
             -- light kit, floor 50 gets the full hardcore suite. No-ops on any floor

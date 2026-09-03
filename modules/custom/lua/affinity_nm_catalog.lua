@@ -110,7 +110,7 @@ catalog.entries =
     { index=21, mobId=17101721, name='Khimaira',         display='Khimaira',         zoneId=79,  zone='Caedarva Mire',           zoneOverride='xi.zones.Caedarva_Mire.Zone.onInitialize',          x=603.887, y=-16.140, z=414.765, band='standard'                 },
     { index=22, mobId=17027994, name='Cerberus',         display='Cerberus',         zoneId=61,  zone='Mount Zhayolm',           zoneOverride='xi.zones.Mount_Zhayolm.Zone.onInitialize',          x=316.00,  y=-23.00, z=-84.00,  band='standard'                 },
     { index=23, mobId=16913307, name='Absolute_Virtue',  display='Absolute Virtue',  zoneId=33,  zone="Al'Taieu",                zoneOverride='xi.zones.AlTaieu.Zone.onInitialize',                x=461.266, y=-1.643, z=-580.192, band='apex',     registerCat=9  },
-    { index=24, mobId=16909196, name='Proto-Omega',      display='Proto-Omega',      zoneId=32,  zone="Sealion's Den",           zoneOverride='xi.zones.Sealions_Den.Zone.onInitialize',           x=-640.00, y=-231.00, z=516.00,  band='apex',     registerCat=10 },
+    { index=24, mobId=16909196, name='Proto-Omega',      display='Proto-Omega',      zoneId=32,  zone="Sealion's Den",           zoneOverride='xi.zones.Sealions_Den.Zone.onInitialize',           x=600.00,  y=130.36,  z=780.00,  band='apex',     registerCat=10 },
 }
 
 function catalog.byId(mobId)

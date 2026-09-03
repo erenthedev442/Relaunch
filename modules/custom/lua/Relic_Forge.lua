@@ -73,16 +73,26 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 xi.msg.channel.SYSTEM_3)
             return
         end
-        if player:getFreeSlotsCount() == 0 then
-            player:printToPlayer('[Relic Forge] Free an inventory slot first, kupo!', xi.msg.channel.SYSTEM_3)
-            return
-        end
         -- RARE pre-check: the engine refuses a second copy, and consuming
-        -- first would eat the currency with nothing granted.
+        -- first would eat the currency with nothing granted. Players who
+        -- already hold the final bow can still receive a missing companion
+        -- (Yoichi's Quiver) without paying again.
         if player:hasItem(relic.id) then
+            if relicCatalog.companionSlotNeed(player, relic.id) > 0 then
+                if player:getFreeSlotsCount() < relicCatalog.companionSlotNeed(player, relic.id) then
+                    player:printToPlayer('[Relic Forge] Free an inventory slot first, kupo!', xi.msg.channel.SYSTEM_3)
+                    return
+                end
+                relicCatalog.grantCompanions(player, relic.id, 'Relic Forge')
+                return
+            end
             player:printToPlayer(string.format(
                 '[Relic Forge] You already hold %s -- it is RARE, so a second cannot be forged, kupo!',
                 relic.name), xi.msg.channel.SYSTEM_3)
+            return
+        end
+        if player:getFreeSlotsCount() < relicCatalog.grantSlotNeed(player, relic.id, false) then
+            player:printToPlayer('[Relic Forge] Free an inventory slot first, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
         if player:getItemCount(relic.currency) < FORGE_COST then
@@ -116,6 +126,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer('[Relic Forge] The forging failed -- your currency and Plutons have been returned, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
+        relicCatalog.grantCompanions(player, relic.id, 'Relic Forge')
         player:printToPlayer(string.format(
             '[Relic Forge] %s, forged from the spoils of Dynamis! Kupo!', relic.name),
             xi.msg.channel.SYSTEM_3)

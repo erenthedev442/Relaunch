@@ -33,6 +33,8 @@ UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0 WHERE `zoneid` = 1
 UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0 WHERE `zoneid` = 108 AND `groupid` =  27; -- Stray Mary         (Konschtat Highlands)
 UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0 WHERE `zoneid` = 111 AND `groupid` =  24; -- Nue                (Beaucedine Glacier)
 UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0 WHERE `zoneid` = 111 AND `groupid` =  31; -- Gargantua          (Beaucedine Glacier)
+-- Koenigstiger is also the RNG AF3 ??? pop. Lua (qm7 + mob script) now lets
+-- anyone spawn it and disables idle-despawn so this 30-min window stays up.
 UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0 WHERE `zoneid` = 112 AND `groupid` =  29; -- Koenigstiger       (Xarcabard)
 UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0 WHERE `zoneid` = 113 AND `groupid` =  38; -- Stolas             (Cape Teriggan)
 UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0 WHERE `zoneid` = 113 AND `groupid` =  27; -- Kreutzet           (Cape Teriggan)

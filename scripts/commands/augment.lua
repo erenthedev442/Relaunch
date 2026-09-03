@@ -230,10 +230,9 @@ cmdprops.exec = function(player, args)
         for _ = 1, count do
             local roll
             if def.tierValue or def.flatValue then
-                local target = def.flatValue or (def.tierValue * tier)
-                local final  = def.flatValue or (def.tierValue * #xi.augmentTiers.slices)
+                local target = def.flatValue or xi.augmentTiers.tierFixedValue(def.tierValue, tier, rank)
                 roll    = target - base
-                slotMax = final - base
+                slotMax = roll
             else
                 local raw = math.random(rollFloor, slice.max)
                 if hasAffinity then
@@ -242,8 +241,8 @@ cmdprops.exec = function(player, args)
                 if isCrit then
                     raw = slice.max
                 end
-                roll    = xi.augmentTiers.scaleRoll(raw, boostCap, tier)
-                slotMax = xi.augmentTiers.scaleRoll(slice.max, boostCap, tier)
+                roll    = xi.augmentTiers.scaleRoll(raw, boostCap, tier, rank)
+                slotMax = xi.augmentTiers.scaleRoll(slice.max, boostCap, tier, rank)
             end
 
             rolls[#rolls + 1] = roll

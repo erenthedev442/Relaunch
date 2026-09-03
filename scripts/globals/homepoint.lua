@@ -12,9 +12,9 @@ local homepointData =
     [  3] = { group = 1, fee = 1, dest = {     -178,       4,      71,   0, xi.zone.NORTHERN_SAN_DORIA     } }, -- Northern San d'Oria #1
     [  4] = { group = 1, fee = 1, dest = {       10,    -0.2,      95,   0, xi.zone.NORTHERN_SAN_DORIA     } }, -- Northern San d'Oria #2
     [  5] = { group = 1, fee = 1, dest = {       70,    -0.2,      10,   0, xi.zone.NORTHERN_SAN_DORIA     } }, -- Northern San d'Oria #3
-    [  6] = { group = 1, fee = 1, dest = {      -38,      -4,     -63,   0, xi.zone.PORT_SAN_DORIA         } }, -- Port San d'Oria #1
-    [  7] = { group = 1, fee = 1, dest = {       48,     -12,    -105,   0, xi.zone.PORT_SAN_DORIA         } }, -- Port San d'Oria #2
-    [  8] = { group = 1, fee = 1, dest = {       -6,     -13,    -150,   0, xi.zone.PORT_SAN_DORIA         } }, -- Port San d'Oria #3
+    [  6] = { group = 1, fee = 1, dest = {   -66.00,   -4.00, -103.00, 160, xi.zone.PORT_SAN_DORIA         } }, -- Port San d'Oria #1 (beside H-10 crystal, not inside it)
+    [  7] = { group = 1, fee = 1, dest = {    50.00,  -12.00, -103.00,   0, xi.zone.PORT_SAN_DORIA         } }, -- Port San d'Oria #2
+    [  8] = { group = 1, fee = 1, dest = {    -6.00,  -13.00, -148.00,   0, xi.zone.PORT_SAN_DORIA         } }, -- Port San d'Oria #3
     [  9] = { group = 2, fee = 1, dest = {       39,       0,     -43,   0, xi.zone.BASTOK_MINES           } }, -- Bastok Mines #1
     [ 10] = { group = 2, fee = 1, dest = {      118,       1,     -58,   0, xi.zone.BASTOK_MINES           } }, -- Bastok Mines #2
     [ 11] = { group = 2, fee = 1, dest = {     -342,     -10,    -154,   0, xi.zone.BASTOK_MARKETS         } }, -- Bastok Markets #1

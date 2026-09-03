@@ -297,6 +297,7 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
             mob:setMaxHP(newMax)
             mob:setHP(newMax)
         end
+        require('modules/custom/lua/party_hp_scale').afterCustomHp(mob, owner)
 
         local mechCfg = diffDef.mechanics
         if mechCfg then

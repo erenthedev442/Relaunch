@@ -382,6 +382,10 @@ public:
     bool          IsDualWielding();
     uint32        GetWeaponDelay(bool tp);                          // returns delay of combined weapons
     float         GetMeleeRange(const CBattleEntity* Target) const; // returns the distance considered to be within melee range of the entity
+    // Trust WS / JA / mobskill reach: skill distance + both hitboxes + a
+    // small pad. Melee AI parks at hitboxes+2' and mid-range kits sit 6'
+    // from the mob origin, which is past many skill distances on large bosses.
+    float         GetTrustActionRange(float baseRange, const CBattleEntity* target) const;
     virtual float GetRangedAttackRange();                           // returns the maximum valid distance for a ranged attack
     int16         GetRangedWeaponDelay(bool forTPCalc);             // returns delay of ranged weapon + ammo where applicable
     int16         GetAmmoDelay();                                   // returns delay of ammo (for cooldown between shots)

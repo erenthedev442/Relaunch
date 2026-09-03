@@ -1643,7 +1643,8 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
         // TODO: revise parameters
         if (PWeaponSkill->isAoE())
         {
-            PAI->TargetFind->findWithinArea(PBattleTarget, AOE_RADIUS::TARGET, PWeaponSkill->getRadius(), FINDFLAGS_NONE, TARGET_NONE);
+            const auto radiusType = PWeaponSkill->getAoe() == 3 ? AOE_RADIUS::ATTACKER : AOE_RADIUS::TARGET;
+            PAI->TargetFind->findWithinArea(PBattleTarget, radiusType, PWeaponSkill->getRadius(), FINDFLAGS_NONE, TARGET_NONE);
         }
         else
         {
@@ -1671,10 +1672,11 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
             actionResult.resolution = ActionResolution::Hit;
             actionResult.animation  = PWeaponSkill->getAnimationId();
 
-            // Scope the lower damage ceiling to this complete AoE WS target,
-            // including any skillchain it produces.
+            // Splash hits of an AoE WS use the lower ceiling, including any
+            // skillchain they produce. The aimed-at target keeps the normal
+            // single-target weaponskill cap so the WS is still full ST damage.
             const auto priorAoEWsCap = GetLocalVar("AoEWsDamageCap");
-            if (PWeaponSkill->isAoE())
+            if (PWeaponSkill->isAoE() && !primary)
             {
                 const auto* PDamageWeapon = getEquip(damslot);
                 const auto  aoeWsCap =
@@ -1797,7 +1799,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                 }
             }
 
-            if (PWeaponSkill->isAoE())
+            if (PWeaponSkill->isAoE() && !primary)
             {
                 SetLocalVar("AoEWsDamageCap", priorAoEWsCap);
             }
@@ -2588,7 +2590,7 @@ uint8 CCharEntity::getHighestJobLevel() const
 {
     uint8 maxJobLevel = 0;
 
-    for (uint8 jobId = 0; jobId < MAX_JOBTYPE; jobId++)
+    for (uint8 jobId = 1; jobId < MAX_JOBTYPE; jobId++)
     {
         if (jobs.job[jobId] > maxJobLevel)
         {

@@ -209,16 +209,29 @@ void CJobPoints::AddJobPoints(uint8 jobID, uint16 amount)
     LoadJobPoints();
 }
 
-void CJobPoints::DelJobPoints(const uint8 jobID, int16 amount)
+void CJobPoints::DelJobPoints(const uint8 jobID, uint16 amount)
 {
-    const int16 currentAmount = GetJobPointsByJob(jobID);
-    amount                    = std::clamp<int16>(amount, -500, 500);
+    if (jobID == 0 || jobID > 22)
+    {
+        ShowDebug("Attempt to adjust job points for an invalid job for (%s).", m_PChar->getName());
+        return;
+    }
+
+    if (amount == 0)
+    {
+        return;
+    }
+
+    const uint16 currentAmount = GetJobPointsByJob(jobID);
     if (currentAmount < amount)
     {
         ShowDebugFmt("Attempt to reduce job points below 0 for ({}).", m_PChar->getName());
         return;
     }
 
+    // Do not clamp to 500. Retail's held-JP cap used to be 500, but this
+    // server allows map.MAX_JOB_POINTS (2100). The old clamp let Convert ALL
+    // pay gil for the full stack and only remove 500, so players kept JP.
     db::preparedStmt("UPDATE char_job_points SET job_points=? WHERE charid=? AND jobid=?",
                      currentAmount - amount,
                      m_PChar->id,

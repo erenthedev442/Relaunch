@@ -48,9 +48,7 @@ B.tiers =
 }
 
 function B.hpScale(realPlayers)
-    if realPlayers >= 3 then return 2.10 end
-    if realPlayers == 2 then return 1.55 end
-    return 1.00
+    return require('modules/custom/lua/party_hp_scale').multiplier(realPlayers)
 end
 
 function B.expectedMinutes(tier, realPlayers, perPlayerDpsPerMinute)

@@ -15,6 +15,7 @@
 require('scripts/globals/combat/treasure_hunter')
 
 local catalog = require('modules/custom/lua/htbf_catalog')
+local partyHpScale = require('modules/custom/lua/party_hp_scale')
 
 local htbf = {}
 
@@ -640,6 +641,18 @@ function htbf.register(fightKey, tier, variant)
             mob:setMaxHP(hp)
             mob:setHP(hp)
         end
+        local player
+        local bf = mob.getBattlefield and mob:getBattlefield()
+        if bf and bf.getPlayers then
+            local ok, players = pcall(function() return bf:getPlayers() end)
+            if ok and players then
+                for _, member in pairs(players) do
+                    player = member
+                    break
+                end
+            end
+        end
+        partyHpScale.afterCustomHp(mob, player)
         if scale.att  and scale.att  > 0 then mob:addMod(xi.mod.ATT,  scale.att)  end
         if scale.def  and scale.def  > 0 then mob:addMod(xi.mod.DEF,  scale.def)  end
         if scale.macc and scale.macc > 0 then mob:addMod(xi.mod.MACC, scale.macc) end

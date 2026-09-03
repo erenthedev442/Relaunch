@@ -221,6 +221,7 @@ local function spawnFloorMob(owner, mobDef, level, mods, maxHP, floor)
         for modId, val in pairs(mods) do mob:setMod(modId, val) end  -- AFTER spawn()
         mob:setMaxHP(maxHP)
         mob:setHP(maxHP)
+        require('modules/custom/lua/party_hp_scale').afterCustomHp(mob, owner)
         mob:updateClaim(owner)                 -- owner gets claim + kill credit
         mob:addEnmity(owner, 30000, 30000)     -- pursue the owner immediately
 

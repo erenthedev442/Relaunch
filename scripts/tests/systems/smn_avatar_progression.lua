@@ -93,6 +93,8 @@ describe('SMN avatar Blood Pact progression', function()
         assert(avatarProgression.scaleDamage(
             makeAvatar(makeMaster(22086)), target, singleTargetSkill, 1000000) == 99999)
         assert(avatarProgression.scaleDamage(
+            makeAvatar(makeMaster(21141)), target, singleTargetSkill, 1000000) == 99999)
+        assert(avatarProgression.scaleDamage(
             makeAvatar(makeMaster(22063)), target, singleTargetSkill, 1000000) == 999999)
         assert(avatarProgression.scaleDamage(
             makeAvatar(makeMaster(22106)), target, singleTargetSkill, 1000000) == 1499999)

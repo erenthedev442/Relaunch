@@ -8,6 +8,7 @@
 local catalog = require('modules/custom/lua/unity_wanted_catalog')
 local mechanics = require('modules/custom/lua/unity_wanted_mechanics')
 local trustDrops = require('modules/custom/lua/trust_cipher_drops')
+local partyHpScale = require('modules/custom/lua/party_hp_scale')
 
 local runtime = package.loaded['modules/custom/lua/unity_wanted_instance_runtime']
 if type(runtime) ~= 'table' then runtime = {} end
@@ -299,6 +300,7 @@ instanceObject.onInstanceCreated = function(instance)
     mob:setSpawn(pos.x, pos.y, pos.z, pos.rot)
     mob:spawn()
     mechanics.applyDifficulty(mob, nm, catalog.difficulty)
+    partyHpScale.afterCustomHp(mob, instance)
 
     local mechanicOwner
     forEachPlayer(instance, function(player)
@@ -310,6 +312,7 @@ end
 
 instanceObject.afterInstanceRegister = function(player)
     local instance = player:getInstance()
+    partyHpScale.maybeResyncInstance(instance)
     local nm = instance and nmById[instance:getLocalVar('UWI_NM')]
     if nm then
         player:printToPlayer(
@@ -324,6 +327,7 @@ end
 
 instanceObject.onInstanceTimeUpdate = function(instance, elapsed)
     instance:setLocalVar('UWI_ElapsedMs', elapsed)
+    partyHpScale.maybeResyncInstance(instance)
 
     if instance:completed() then
         if elapsed >= instance:getLocalVar('UWI_KickAtMs') then

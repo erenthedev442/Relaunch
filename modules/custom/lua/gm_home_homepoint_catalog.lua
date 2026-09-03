@@ -46,9 +46,9 @@ catalog.regions =
             { label = 'Northern 2', zone = xi.zone.NORTHERN_SAN_DORIA, x =    10.0,  y =   -0.2, z =   95.0,  r =   0 }, -- hp 4
             { label = 'Northern 3', zone = xi.zone.NORTHERN_SAN_DORIA, x =    70.0,  y =   -0.2, z =   10.0,  r =   0 }, -- hp 5
             { label = 'Northern 4', zone = xi.zone.NORTHERN_SAN_DORIA, x =  -132.0,  y =   12.0, z =  194.0,  r = 170 }, -- hp 98
-            { label = 'Port 1',     zone = xi.zone.PORT_SAN_DORIA,     x =   -38.0,  y =   -4.0, z =  -63.0,  r =   0 }, -- hp 6
-            { label = 'Port 2',     zone = xi.zone.PORT_SAN_DORIA,     x =    48.0,  y =  -12.0, z = -105.0,  r =   0 }, -- hp 7
-            { label = 'Port 3',     zone = xi.zone.PORT_SAN_DORIA,     x =    -6.0,  y =  -13.0, z = -150.0,  r =   0 }, -- hp 8
+            { label = 'Port 1',     zone = xi.zone.PORT_SAN_DORIA,     x =   -66.0,  y =   -4.0, z = -103.0,  r = 160 }, -- hp 6
+            { label = 'Port 2',     zone = xi.zone.PORT_SAN_DORIA,     x =    50.0,  y =  -12.0, z = -103.0,  r =   0 }, -- hp 7
+            { label = 'Port 3',     zone = xi.zone.PORT_SAN_DORIA,     x =    -6.0,  y =  -13.0, z = -148.0,  r =   0 }, -- hp 8
         },
     },
     {

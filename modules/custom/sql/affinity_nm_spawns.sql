@@ -20,7 +20,11 @@
 -- Existing retail/custom/HL spawns of these NMs are LEFT UNTOUCHED (separate ids).
 --
 -- Relocations (only when the retail zone cannot host a static overworld spawn):
---   Proto-Omega : Temenos (37, instanced Limbus) -> Sealion's Den (32, Omega airship)
+--   Proto-Omega : Temenos (37, instanced Limbus) -> Sealion's Den (32, lobby cave)
+--     Do NOT park him on the airship (Y=-231). One to be Feared / Warrior's Path
+--     copies sit on that deck; the overworld NM then renders as an untargetable
+--     ghost beside Omega. Lobby is 600/130/780, between the Tavnazian zoneline
+--     (600/130/797) and the Iron Gate (612/132/774).
 --   Phoenix     : no retail overworld NM -> Riverne Site A01 (30), Suzaku-cloned pool 30002
 -- Sky gods stay on their Ru'Aun islands. Kirin stays in the Shrine of Ru'Avitau.
 --
@@ -153,7 +157,7 @@ INSERT INTO `mob_spawn_points` VALUES
  (17101721, 0, 'Khimaira',         'Khimaira',          20020,  99,  99,  603.887, -16.140, 414.765, 255),
  (17027994, 0, 'Cerberus',         'Cerberus',          20021,  99,  99,  316.000, -23.000, -84.000, 127),
  (16913307, 0, 'Absolute_Virtue',  'Absolute Virtue',   20022,  99,  99,  461.266,  -1.643, -580.192, 4),
- (16909196, 0, 'Proto-Omega',      'Proto-Omega',       20023,  99,  99, -640.000, -231.000, 516.000, 191);
+ (16909196, 0, 'Proto-Omega',      'Proto-Omega',       20023,  99,  99, 600.000, 130.360, 780.000, 64);
 
 -- ---- Suppress the RETAIL duplicates that share these spawn spots ----
 -- The affinity NM sits at (or beside) the retail NM's point, so the retail mobid

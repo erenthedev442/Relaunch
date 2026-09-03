@@ -31,6 +31,11 @@
 --   wipe the mask -- so crystalize is DISABLED on Inscribable gear and the
 --   player is told.
 --
+--   Inscribed serials (Kraken Club LEG####, etc.) MUST be copied onto the
+--   rebuilt item. addItem of a blank Kraken Club allocates a new serial and
+--   world-announces it (charutils::AddItem). addHeldGear carries the original
+--   signature through confirm / scour / cancel.
+--
 -- Zone: GM Home (zone 210)
 -----------------------------------
 require('modules/module_utils')
@@ -87,9 +92,11 @@ local SCOUR_ITEM_ID = nil
 --   roll   = random(floor .. slice.max) -- rolled PER SLOT (each catalyst = own roll)
 --   affinity match (Sage)               -- roll twice, keep the better
 --   crit (sage.critChance by rank)              -- slice.max: PERFECT roll
+--   sage < 5                          -- applied ceiling is 80% of the true cap
+--   sage 5 + T5                       -- unlocks the last 20% (true max)
 --   final/slot = (value + roll) * multiplier      (engine math unchanged)
--- Tier bands never overlap, and T5's ceiling (roll 31) == the old
--- rank5 x affinity x crit cap -- no power creep vs the previous system.
+-- Tier bands never overlap. T5 content opens the top band; Sage 5 is
+-- what actually receives the last 20% of that ceiling.
 -- The crit is rolled once per trade and applies to all slots that trade
 -- (one big "Critical augment!" message). Affinity is per-augment, since
 -- each selection may have a different `cat`.
@@ -189,16 +196,44 @@ local function augmentTier(player)
     return math.min(tier, #TIER_SLICES)
 end
 
--- Scale the raw 0..31 roll into an augment's own boost ceiling. Reserve the
--- actual ceiling for T5: rounded scaling previously let low-ceiling augments
--- (notably maxBoost 1-2) reach their final value at T4.
-local function scaleTierRoll(raw, boostCap, tier)
+-- Scale the raw 0..31 roll into an augment's own boost ceiling.
+-- True max (100%) requires Augment Tier 5 AND Sage rank 5. Everyone else
+-- is capped at 80% so T5 content without Sage 5 sits at "almost max"
+-- (same idea as reserving the last step of tiny maxBoost stats).
+local SAGE_TRUE_MAX_RANK = 5
+local SOFT_CEILING_RATIO = 0.80
+
+local function trueMaxAllowed(tier, sageRank)
+    return (tier or 0) >= #TIER_SLICES and (sageRank or 0) >= SAGE_TRUE_MAX_RANK
+end
+
+local function softCeiling(boostCap)
+    if (boostCap or 0) <= 0 then
+        return 0
+    end
+    local cap = math.floor(boostCap * SOFT_CEILING_RATIO)
+    if cap >= boostCap then
+        cap = boostCap - 1
+    end
+    return math.max(0, cap)
+end
+
+local function scaleTierRoll(raw, boostCap, tier, sageRank)
     boostCap = math.max(0, math.min(31, boostCap or 31))
     local scaled = math.floor(raw * boostCap / 31 + 0.5)
-    if tier < #TIER_SLICES and boostCap > 0 then
-        scaled = math.min(scaled, boostCap - 1)
+    if not trueMaxAllowed(tier, sageRank) and boostCap > 0 then
+        scaled = math.min(scaled, softCeiling(boostCap))
     end
     return math.max(0, scaled)
+end
+
+-- Deterministic tierValue lines (All songs, etc.). Same 80% tax until Sage 5.
+local function tierFixedValue(step, playerTier, sageRank)
+    local raw = (step or 0) * (playerTier or 0)
+    if trueMaxAllowed(playerTier, sageRank) then
+        return raw
+    end
+    return math.min(raw, math.floor((step or 0) * #TIER_SLICES * SOFT_CEILING_RATIO))
 end
 
 -- Evaluate the pre-realignment ladder once, before the new Insane requirement
@@ -236,7 +271,11 @@ xi.augmentTiers =
     slices     = TIER_SLICES,
     gates      = TIER_GATES,
     nextUnlock = nextUnlock,
-    scaleRoll  = scaleTierRoll,
+    scaleRoll         = scaleTierRoll,
+    trueMaxAllowed    = trueMaxAllowed,
+    softCeiling       = softCeiling,
+    tierFixedValue    = tierFixedValue,
+    SAGE_TRUE_MAX_RANK = SAGE_TRUE_MAX_RANK,
     crystalChance = CRYSTAL_CHANCE,
 }
 
@@ -308,6 +347,7 @@ end
 -- Per-player state
 -- playerState[charName] = {
 --   itemId        = gear item ID held by the moogle
+--   signature     = original inscription (Kraken Club LEG####, etc.)
 --   exAugsBySlot  = { {id, value, cat}, ... }   (one entry per FINAL slot;
 --                   passed straight to addItem.exdata.augments -- locked slots
 --                   first, then freshly rolled slots)
@@ -329,6 +369,7 @@ local function getState(player)
     if not playerState[key] then
         playerState[key] = {
             itemId        = 0,
+            signature     = '',
             exAugsBySlot  = {},
             labelSummary  = {},
             catalystsHeld = {},
@@ -340,6 +381,34 @@ end
 
 local function clearState(player)
     playerState[player:getName()] = nil
+end
+
+local function readSignature(item)
+    if not item or not item.getSignature then
+        return ''
+    end
+    local ok, sig = pcall(function()
+        return item:getSignature()
+    end)
+    if ok and type(sig) == 'string' then
+        return sig
+    end
+    return ''
+end
+
+-- Rebuild held gear without dropping inscriptions. A blank Kraken Club
+-- addItem stamps a new LEG serial and announces it as a fresh drop.
+local function addHeldGear(player, itemId, signature, extra)
+    local payload = { id = itemId, quantity = 1 }
+    if extra then
+        for key, value in pairs(extra) do
+            payload[key] = value
+        end
+    end
+    if signature and signature ~= '' then
+        payload.signature = signature
+    end
+    return player:addItem(payload)
 end
 
 local function refundBankCatalysts(player, st)
@@ -359,7 +428,7 @@ local function returnAll(player)
 
     -- Never re-grant the base item once addItem already handed back the gear.
     if st.itemId ~= 0 and not st.gearDelivered then
-        player:addItem({ id = st.itemId, quantity = 1 })
+        addHeldGear(player, st.itemId, st.signature)
     end
     for _, cat in ipairs(st.catalystsHeld or {}) do
         player:addItem({ id = cat.id, quantity = cat.qty })
@@ -381,6 +450,12 @@ end
 local function stampLockMask(player, item, itemId, mask)
     mask = bit.band(math.floor(tonumber(mask) or 0), 0x1F)
     if mask == 0 then
+        return true
+    end
+    -- Signature bytes are the lock-mask home. Writing them on an
+    -- inscribed Kraken Club blanks LEG#### and the next rebuild mints
+    -- a new serial. Crystalize is already disabled on Inscribable gear.
+    if readSignature(item) ~= '' then
         return true
     end
 
@@ -707,6 +782,15 @@ showBankItems = function(player, categoryId, page, mode)
             table.insert(available, entry)
         end
     end
+    -- Retired currency (Ordelle Bronzepiece, etc.) can be withdrawn/browsed
+    -- but must not appear as a build catalyst.
+    if mode ~= 'build' then
+        for _, entry in ipairs(bank.retiredWithdrawEntries()) do
+            if entry.cat == categoryId and (balances[entry.itemId] or 0) > 0 then
+                table.insert(available, entry)
+            end
+        end
+    end
 
     local pageSize = 2
     local maxPage  = math.max(1, math.ceil(#available / pageSize))
@@ -878,6 +962,17 @@ showBankCategories = function(player, page, mode)
             if amount > 0 then
                 total = total + amount
                 types = types + 1
+            end
+        end
+        if mode ~= 'build' then
+            for _, entry in ipairs(bank.retiredWithdrawEntries()) do
+                if entry.cat == categoryId then
+                    local amount = balances[entry.itemId] or 0
+                    if amount > 0 then
+                        total = total + amount
+                        types = types + 1
+                    end
+                end
             end
         end
         if types > 0 then
@@ -1120,8 +1215,7 @@ showConfirmMenu = function(player)
                 end
 
                 local deliveredId = st2.itemId
-                local augmented = playerArg:addItem({
-                    id     = deliveredId,
+                local augmented = addHeldGear(playerArg, deliveredId, st2.signature, {
                     exdata =
                     {
                         augmentKind    = xi.augment.kind.HAS_AUGMENTS,
@@ -1309,7 +1403,8 @@ showScourMenu = function(player)
                     return
                 end
                 -- Re-add the gear with NO exdata: a blank, un-augmented item.
-                local stripped = playerArg:addItem({ id = st2.itemId })
+                -- Keep the original inscription so Kraken Club does not re-serial.
+                local stripped = addHeldGear(playerArg, st2.itemId, st2.signature)
                 if not stripped then
                     returnAll(playerArg)
                     playerArg:printToPlayer('Scour failed - gear returned, no gil charged, kupo!', xi.msg.channel.SYSTEM_3)
@@ -1317,10 +1412,14 @@ showScourMenu = function(player)
                 end
                 st2.gearDelivered = true
                 st2.itemId        = 0
-                -- Belt-and-suspenders: zero the lock mask byte too.
-                pcall(function()
-                    stripped:setExDataRaw({ [SIG_HEAD_BYTE] = 0, [LOCK_MASK_BYTE] = 0 })
-                end)
+                -- Zero the lock mask only. Do not touch signature bytes on
+                -- inscribed gear -- that would blank LEG#### and the next
+                -- addItem would mint a new Kraken serial.
+                if not st2.signature or st2.signature == '' then
+                    pcall(function()
+                        stripped:setExDataRaw({ [SIG_HEAD_BYTE] = 0, [LOCK_MASK_BYTE] = 0 })
+                    end)
+                end
 
                 playerArg:delGil(SCOUR_GIL_COST)
                 playerArg:printToPlayer('Scoured! All augments -- crystalized or not -- are gone. Start anew, kupo!', xi.msg.channel.SYSTEM_3)
@@ -1357,7 +1456,7 @@ end
 -- treating the entire trade as an opaque error.
 local function confirmSingleLineTrade(player, context)
     local def         = context.def
-    local keptValue   = def.flatValue or (def.tierValue * context.playerTier)
+    local keptValue   = def.flatValue or tierFixedValue(def.tierValue, context.playerTier, context.sageRank)
     local excessCount = context.count - 1
     local menu =
     {
@@ -1381,7 +1480,7 @@ local function confirmSingleLineTrade(player, context)
                     if not context.bankMode and excessCount > 0 then
                         local refunded = p:addItem({ id = context.itemId, quantity = excessCount })
                         if not refunded then
-                            p:addItem({ id = context.gearId, quantity = 1 })
+                            addHeldGear(p, context.gearId, context.signature)
                             p:addItem({ id = context.itemId, quantity = context.count })
                             p:printToPlayer(
                                 'Could not return the extra catalysts; your gear and all catalysts were returned. Free an inventory slot and try again, kupo!',
@@ -1407,6 +1506,7 @@ local function confirmSingleLineTrade(player, context)
                     playerState[p:getName()] =
                     {
                         itemId        = context.gearId,
+                        signature     = context.signature or '',
                         exAugsBySlot  = exAugsBySlot,
                         labelSummary  = { string.format('%s  ->  %d', def.label, keptValue) },
                         catalystsHeld = context.bankMode and {} or { { id = context.itemId, qty = 1 } },
@@ -1633,6 +1733,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 playerState[player:getName()] =
                 {
                     itemId        = gearId,
+                    signature     = readSignature(gearItemObj),
                     exAugsBySlot  = {},
                     labelSummary  = {},
                     catalystsHeld = {},
@@ -1708,7 +1809,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 -- their written value on every gear piece.
                 if def2 and (def2.tierValue or def2.flatValue) then
                     if (catalystCounts[itemId] or 0) > 1 then
-                        local shownVal = def2.flatValue or (def2.tierValue * playerTier)
+                        local shownVal = def2.flatValue or tierFixedValue(def2.tierValue, playerTier, rank)
                         local suffix   = def2.flatValue and '' or ' at your Augment Tier'
                         if #catalystOrder == 1 then
                             confirmSingleLineTrade(player,
@@ -1717,8 +1818,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                                 itemId     = itemId,
                                 count      = catalystCounts[itemId],
                                 gearId     = gearId,
+                                signature  = readSignature(gearItemObj),
                                 lockedAugs = lockedAugs,
                                 playerTier = playerTier,
+                                sageRank   = rank,
                                 bankMode   = bankMode,
                             })
                             return
@@ -1919,25 +2022,22 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 -- augments (maxBoost == EXDATA_VALUE_MAX = 31) scale 1:1 -> unchanged.
                 local boostCap  = def.maxBoost and math.min(EXDATA_VALUE_MAX, def.maxBoost) or EXDATA_VALUE_MAX
                 local function scaleRoll(raw)
-                    return scaleTierRoll(raw, boostCap, playerTier)
+                    return scaleTierRoll(raw, boostCap, playerTier, rank)
                 end
                 local slotMax   = scaleRoll(slice.max)   -- the achievable "perfect" (crystalize) value this tier
                 local maatMax   = slotMax
                 local rolls     = {}
                 if def.tierValue or def.flatValue then
                     -- Single-line augments (Treasure Hunter, All songs, ...):
-                    --   tierValue -> value = tierValue * playerTier
-                    --                (Treasure Hunter used this pre-2026-07-19;
-                    --                 All songs still does; grows with tier)
+                    --   tierValue -> value = tierValue * playerTier, then the
+                    --                same Sage-5 80% tax as rolled lines
                     --   flatValue -> value = flatValue (constant across tiers)
                     -- Both encode the written boost as (target - base) so the
                     -- engine's (base + boost) renders exactly `target`.
-                    -- Deterministic: no roll, affinity, or crit. Both are
-                    -- always crystalize-eligible (a flatValue line is
-                    -- already at its cap; a tierValue line becomes eligible
-                    -- when it matches its final T5 form).
-                    local target = def.flatValue or (def.tierValue * playerTier)
-                    slotMax = (def.flatValue or (def.tierValue * #TIER_SLICES)) - base
+                    -- Deterministic: no roll, affinity, or crit. Crystalize
+                    -- against the Sage-gated target, not the theoretical T5 max.
+                    local target = def.flatValue or tierFixedValue(def.tierValue, playerTier, rank)
+                    slotMax = target - base
                     maatMax = target - base
                     for _ = 1, count do
                         table.insert(rolls, target - base)
@@ -2048,6 +2148,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             playerState[player:getName()] =
             {
                 itemId        = gearId,
+                signature     = readSignature(gearItemObj),
                 exAugsBySlot  = exAugsBySlot,    -- {id,value,cat} per FINAL slot (locked first)
                 labelSummary  = labelSummary,    -- one string per catalyst type
                 catalystsHeld = bankMode and {} or catalystsHeld,

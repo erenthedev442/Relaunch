@@ -26,6 +26,7 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m       = Module:new('weapon_forge_npc')
 local catalog = require('modules/custom/lua/weapon_forge_catalog')
+local relicCatalog = require('modules/custom/lua/relic_forge_catalog')
 local itemCurrency = require('modules/custom/lua/hl_seal_currency')
 local pilgrimage = require('modules/custom/lua/legendary_pilgrimage_catalog')
 local mastery = require('modules/custom/lua/weapon_mastery_catalog')
@@ -697,6 +698,15 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         local S = xi.msg.channel.SYSTEM_3
         local k = heldStage(player, chain)
         if k == 4 then
+            local extras = relicCatalog.companionSlotNeed(player, chain.s3)
+            if extras > 0 then
+                if player:getFreeSlotsCount() < extras then
+                    player:printToPlayer('[Weapon Forge] Free an inventory slot before forging.', S)
+                    return
+                end
+                relicCatalog.grantCompanions(player, chain.s3, 'Weapon Forge')
+                return
+            end
             player:printToPlayer(string.format('[Weapon Forge] Your %s is already fully forged, kupo!', chain.name), S)
             return
         end
@@ -788,7 +798,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer('[Weapon Forge] You no longer have the weapon to forge.', S)
             return
         end
-        if player:getFreeSlotsCount() == 0 then
+        if player:getFreeSlotsCount() < relicCatalog.grantSlotNeed(player, toId, fromId ~= nil) then
             player:printToPlayer('[Weapon Forge] Free an inventory slot before forging.', S)
             return
         end
@@ -805,6 +815,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return
         end
         player:printToPlayer(string.format('[Weapon Forge] Your %s advances to %s!', chain.name, nextStageLabel(chain, k)), S)
+        relicCatalog.grantCompanions(player, toId, 'Weapon Forge')
         -- Final Empyrean / Mythic / Relic completion flag. Read by the Prime
         -- Stage I preflight. singleStep Ergon jumps base -> 119 III while
         -- held-stage is still 1, so key off the item handed over, not k+1.

@@ -6,32 +6,76 @@
 -- Blue Magic (physical, magical, and breath), and player-automaton nukes are
 -- eligible. Helix nukes and Kaustra are included so SCH DoT/2hr keep pace with
 -- endgame elemental. Drains and enfeebles remain untouched.
+--
+-- Outgoing elemental / BLU / ninjutsu / divine damage also uses the ordinary
+-- weaponskill rules: 33% of mob HP while below 99, the 40k / 79,999 / 99,999 /
+-- 999,999 ceiling, pre-119 III REMA matching Ambuscade at 99,999, and the AoE
+-- WS cap on splash hits of -ga / other multi-target casts. The mob the spell
+-- was aimed at uses the single-target ceiling so an AoE nuke is still a
+-- full single-target spell.
+-- Main BLM is the nuke identity. SCH native nukes are 0.90 of that. RDM,
+-- /BLM, and /SCH are much weaker so people cannot level every job by
+-- subbing a nuker and spamming Stone / Stonega / Helix.
 -----------------------------------
 
 local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
 local remaCatalog = require('modules/custom/lua/rema_ws_tier_catalog')
 local primeCatalog = require('modules/custom/lua/prime_ws_tuning_catalog')
+local ambuCatalog = require('modules/custom/lua/ambuscade_ws_tuning_catalog')
 local blueWeaponCatalog = require('modules/custom/lua/blu_weapon_amplification_catalog')
-local catalog = {}
+local levelingHpCap = require('modules/custom/lua/leveling_hp_cap')
 
-catalog.DAMAGE_CAP             = 99999
+-- FileWatcher dofile's this module and discards the return value, so a
+-- `local catalog = {}` would leave package.loaded on the map-start table
+-- (no applyPlayerOutgoingLimits) while damage_spell.lua already calls it
+-- -> every nuke errors and lands 0. Mutate the cached table in place.
+local CATALOG_KEY = 'modules/custom/lua/standard_magic_tuning_catalog'
+local catalog = package.loaded[CATALOG_KEY]
+if type(catalog) ~= 'table' then
+    catalog = {}
+end
+package.loaded[CATALOG_KEY] = catalog
+
+-- Same ladder as ordinary weaponskills: no-119 / 119 / Ambu / REMA-Prime.
+catalog.NON_ITEM_LEVEL_119_CAP = 40000
+catalog.DAMAGE_CAP             = 79999
+catalog.AMBU_DAMAGE_CAP        = 99999
 catalog.REMA_DAMAGE_CAP        = 999999
-catalog.PRIME_DAMAGE_CAP       = 1999999
+catalog.PRIME_DAMAGE_CAP       = 999999
 catalog.FULL_POWER_LEVEL_RATIO = 0.70
 catalog.MIN_SPELL_FACTOR       = 0.15
 
+-- Matches the AoE weaponskill ceiling (charentity.cpp + StandardWeaponskillTuning).
+catalog.AOE_PRE_119_CAP = 40000
+catalog.AOE_ITEM_119_CAP = 79999
+
+-- Main-job identity. A spell that is not native on the current main job
+-- (learned only from /BLM or /SCH, or a BLM-only nuke on SCH/BLM) uses
+-- SUBJOB_POWER. That is the leveling-cheese gate: WAR/BLM Stonega and
+-- WAR/SCH Stone / Helix are both 0.20, not the main-job factor.
+catalog.SUBJOB_POWER = 0.20
+catalog.MAIN_JOB_POWER =
+{
+    [xi.job.BLM] = 1.00,
+    [xi.job.SCH] = 0.90,
+    [xi.job.GEO] = 0.65,
+    [xi.job.RDM] = 0.35,
+    [xi.job.WHM] = 1.00,
+    [xi.job.NIN] = 1.00,
+    [xi.job.PLD] = 0.55,
+}
+
 catalog.MULTIPLIERS =
 {
-    -- base* raises spell base damage before normal modifiers and the progression
-    -- multiplier. It is deliberately small so MAB, INT, affinity, MACC/resists,
-    -- weather and burst still determine whether a cast reaches the 50-99k range.
-    elementalHigh = { fresh = 8.00, mastered = 13.00, baseFresh = 600, baseMastered = 1050 },
-    elementalMid  = { fresh = 6.00, mastered = 10.00, baseFresh = 400, baseMastered =  700 },
-    elementalLow  = { fresh = 4.00, mastered =  7.00, baseFresh = 200, baseMastered =  350 },
-    ninjutsu      = { fresh = 5.00, mastered =  8.00, baseFresh = 250, baseMastered =  450 },
-    divine        = { fresh = 5.00, mastered =  9.00, baseFresh = 300, baseMastered =  550 },
+    -- No free flat base. Stock INT, Magic Damage, MAB, affinity, weather and
+    -- burst stay on the normal path; the multiplier only scales that result.
+    elementalHigh = { fresh = 8.00, mastered = 13.00, baseFresh = 0, baseMastered = 0 },
+    elementalMid  = { fresh = 6.00, mastered = 10.00, baseFresh = 0, baseMastered = 0 },
+    elementalLow  = { fresh = 4.00, mastered =  7.00, baseFresh = 0, baseMastered = 0 },
+    ninjutsu      = { fresh = 5.00, mastered =  8.00, baseFresh = 0, baseMastered = 0 },
+    divine        = { fresh = 5.00, mastered =  9.00, baseFresh = 0, baseMastered = 0 },
     -- Native BLU uses blueWeaponCatalog instead of this generic progression.
-    blue          = { fresh = 1.00, mastered =  1.00, baseFresh =   0, baseMastered =    0 },
+    blue          = { fresh = 1.00, mastered =  1.00, baseFresh = 0, baseMastered = 0 },
 }
 
 local remaWeaponIds = {}
@@ -73,6 +117,8 @@ local function validCasterAndTarget(caster, target)
         target:isMob()
 end
 
+-- LSB maps "job cannot use this spell" to 255. Treat that as missing, not
+-- as a real learn level, so a 99+ main can never look "native" on /BLM or /SCH.
 local function isNativeMainJobSpell(caster, spell)
     if caster:isAutomaton() then
         return true
@@ -82,6 +128,7 @@ local function isNativeMainJobSpell(caster, spell)
     return
         spellLevel ~= nil and
         spellLevel > 0 and
+        spellLevel < 255 and
         spellLevel <= caster:getMainLvl()
 end
 
@@ -116,6 +163,19 @@ function catalog.isBlueDamageEligible(caster, target, spell, params)
         params.blueDamageExempt ~= true
 end
 
+local function getMainHandILvl(caster)
+    if not caster.getEquippedItem then
+        return 0
+    end
+
+    local weapon = caster:getEquippedItem(xi.slot.MAIN)
+    if weapon == nil or not weapon.getILvl then
+        return 0
+    end
+
+    return weapon:getILvl() or 0
+end
+
 function catalog.getDamageCap(caster)
     if caster:isAutomaton() then
         -- Automata inherit the master's companion tier, not player REMA/Prime
@@ -142,7 +202,178 @@ function catalog.getDamageCap(caster)
         return progression.getPlayerRemaDamageCap(caster, catalog.REMA_DAMAGE_CAP)
     end
 
-    return catalog.DAMAGE_CAP
+    if
+        progression.isRemaPathWeapon(mainWeapon) or
+        progression.isRemaPathWeapon(rangedWeapon)
+    then
+        return catalog.AMBU_DAMAGE_CAP
+    end
+
+    if
+        ambuCatalog.isFinalWeapon(mainWeapon, xi.slot.MAIN) or
+        ambuCatalog.isFinalWeapon(rangedWeapon, xi.slot.RANGED)
+    then
+        return catalog.AMBU_DAMAGE_CAP
+    end
+
+    if getMainHandILvl(caster) >= 119 then
+        return catalog.DAMAGE_CAP
+    end
+
+    return catalog.NON_ITEM_LEVEL_119_CAP
+end
+
+function catalog.getAoEDamageCap(caster, spell)
+    if not spell or not spell.isAoE or spell:isAoE() == 0 then
+        return nil
+    end
+
+    if caster.isAutomaton and caster:isAutomaton() then
+        return catalog.getDamageCap(caster)
+    end
+
+    if not caster:isPC() then
+        return catalog.AOE_PRE_119_CAP
+    end
+
+    local mainWeapon = caster:getEquipID(xi.slot.MAIN)
+    if primeWeaponIds[mainWeapon] then
+        return primeCatalog.AOE_DAMAGE_CAP
+    end
+
+    if remaWeaponIds[mainWeapon] then
+        return remaCatalog.AOE_DAMAGE_CAP
+    end
+
+    if progression.isRemaPathWeapon(mainWeapon) then
+        return catalog.AMBU_DAMAGE_CAP
+    end
+
+    if ambuCatalog.isFinalWeapon(mainWeapon, xi.slot.MAIN) then
+        return ambuCatalog.AOE_DAMAGE_CAP
+    end
+
+    if getMainHandILvl(caster) >= 119 then
+        return catalog.AOE_ITEM_119_CAP
+    end
+
+    return catalog.AOE_PRE_119_CAP
+end
+
+-- True for every extra mob an AoE spell tags. The aimed-at target is false
+-- so it keeps the single-target ceiling. Missing primary-id data fails closed
+-- (treat as splash) so old callers still see the AoE cap.
+function catalog.isAoESplashTarget(spell, target)
+    if not spell or not spell.isAoE or spell:isAoE() == 0 then
+        return false
+    end
+
+    if
+        target and
+        target.getID and
+        spell.getPrimaryTargetID
+    then
+        local primaryId = spell:getPrimaryTargetID()
+        if type(primaryId) == 'number' and primaryId > 0 then
+            return target:getID() ~= primaryId
+        end
+    end
+
+    return true
+end
+
+function catalog.getOutgoingDamageCap(caster, spell, target)
+    local single = catalog.getDamageCap(caster)
+    if catalog.isAoESplashTarget(spell, target) then
+        local aoe = catalog.getAoEDamageCap(caster, spell)
+        if aoe and aoe > 0 then
+            return math.min(single, aoe)
+        end
+    end
+
+    return single
+end
+
+function catalog.getCasterPowerFactor(caster, spell)
+    if
+        not caster or
+        not spell or
+        (caster.isAutomaton and caster:isAutomaton()) or
+        not caster.isPC or
+        not caster:isPC()
+    then
+        return 1.00
+    end
+
+    local skill = spell:getSkillType()
+    if skill == xi.skill.BLUE_MAGIC then
+        return 1.00
+    end
+
+    local mainJob = caster:getMainJob()
+    if not isNativeMainJobSpell(caster, spell) then
+        return catalog.SUBJOB_POWER
+    end
+
+    if skill == xi.skill.NINJUTSU then
+        return mainJob == xi.job.NIN and 1.00 or catalog.SUBJOB_POWER
+    end
+
+    if skill == xi.skill.DIVINE_MAGIC then
+        return catalog.MAIN_JOB_POWER[mainJob] or 0.40
+    end
+
+    return catalog.MAIN_JOB_POWER[mainJob] or 0.40
+end
+
+local function isOutgoingLimitedSpell(spell)
+    if not spell or not spell.getSkillType then
+        return false
+    end
+
+    local skill = spell:getSkillType()
+    if
+        skill == xi.skill.ELEMENTAL_MAGIC or
+        skill == xi.skill.DIVINE_MAGIC or
+        skill == xi.skill.NINJUTSU or
+        skill == xi.skill.BLUE_MAGIC
+    then
+        return true
+    end
+
+    local spellId = spell.getID and spell:getID() or 0
+    return spellId == xi.magic.spell.KAUSTRA or isHelix(spellId)
+end
+
+function catalog.applyPlayerOutgoingLimits(caster, target, spell, damage)
+    if type(damage) ~= 'number' or damage <= 0 then
+        return damage
+    end
+
+    if
+        not caster or
+        not target or
+        not isOutgoingLimitedSpell(spell) or
+        (not (caster.isPC and caster:isPC()) and
+            not (caster.isAutomaton and caster:isAutomaton()))
+    then
+        return damage
+    end
+
+    if caster:isPC() then
+        damage = math.floor(damage * catalog.getCasterPowerFactor(caster, spell) + 1e-6)
+    end
+
+    local source = caster:isPC() and caster or caster:getMaster()
+    local sourceLevel = source and source.getMainLvl and source:getMainLvl() or 0
+    damage = levelingHpCap.apply(sourceLevel, target, damage)
+
+    local cap = catalog.getOutgoingDamageCap(caster, spell, target)
+    if cap and cap > 0 then
+        damage = math.min(damage, cap)
+    end
+
+    return damage
 end
 
 function catalog.getSpellProgressionFactor(caster, spell)

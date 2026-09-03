@@ -235,6 +235,7 @@ local function spawnApexBoss(owner, tier)
         hp = math.min(hp, 2000000000)
         mob:setMaxHP(hp)
         mob:setHP(hp)
+        require('modules/custom/lua/party_hp_scale').afterCustomHp(mob, owner)
 
         -- Engage after a short delay so the owner can move off warp-in.
         owner:timer(4000, function(p)

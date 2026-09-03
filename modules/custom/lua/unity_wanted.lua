@@ -230,6 +230,7 @@ local function spawnWantedNm(player, nm, pos)
     -- Dynamic entities do not load retail per-NM scripts. Apply the shared
     -- tier profile and the mark's telegraphed encounter mechanics explicitly.
     mechanics.applyDifficulty(mob, nm, catalog.difficulty)
+    require('modules/custom/lua/party_hp_scale').afterCustomHp(mob, player)
     mechanics.attach(mob, nm, player)
 
     -- Grace period: spawn pre-claimed to the paying player with the NM's

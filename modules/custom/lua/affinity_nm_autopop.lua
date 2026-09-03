@@ -294,6 +294,7 @@ local function applyStats(m)
         m:setMaxHP(profile.hp)
         m:setHP(profile.hp)
         m:setLocalVar('affHpScaled', 1)
+        require('modules/custom/lua/party_hp_scale').afterCustomHp(m)
     end
 end
 xi.affinityAutopop.applyStats = applyStats  -- reused by the !affinitypop command

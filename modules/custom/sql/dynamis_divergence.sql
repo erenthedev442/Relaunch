@@ -1136,3 +1136,9 @@ INSERT INTO `mob_droplist` VALUES (29705, 0, 0, 1000, 9541, @COMMON);
 UPDATE `zone_settings` SET `zonetype` = `zonetype` | 256
 WHERE `zoneid` IN (294, 295, 296, 297) AND (`zonetype` & 256) = 0;
 
+-- Clear MISC_TREASURE (0x0100). All four [D] zones inherited a zone-wide
+-- treasure pool from stock Dynamis misc; instances share that CZone object, so
+-- every concurrent run saw (and could lot) each other's drops.
+UPDATE `zone_settings` SET `misc` = `misc` & ~256
+WHERE `zoneid` IN (294, 295, 296, 297) AND (`misc` & 256) <> 0;
+

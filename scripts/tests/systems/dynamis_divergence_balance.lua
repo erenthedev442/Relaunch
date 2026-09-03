@@ -55,6 +55,14 @@ describe('Dynamis Divergence T3 solo balance', function()
         assert(xi.divergence.bossMechCfgs[windurst.megaBoss] ~= nil)
     end)
 
+    it('names the exit city from the instance entry zone', function()
+        assert(xi.divergence.exitCityName(instances[1].config) == "San d'Oria")
+        assert(xi.divergence.exitCityName(instances[2].config) == 'Bastok')
+        assert(xi.divergence.exitCityName(instances[3].config) == 'Windurst')
+        assert(xi.divergence.exitCityName(instances[4].config) == 'Jeuno')
+        assert(xi.divergence.exitCityName({ exitZone = 0 }) == 'the entrance')
+    end)
+
     it('never treats a preloaded but unspawned boss as defeated', function()
         local originalGetMobByID = GetMobByID
         local vars = {}

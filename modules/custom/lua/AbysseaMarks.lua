@@ -12,6 +12,7 @@ local m = Module:new('AbysseaMarks')
 local encounterCatalog = require('modules/custom/lua/abyssea_marks_catalog')
 local encounterRuntime = require('modules/custom/lua/abyssea_marks_mechanics')
 local encounterBalance = require('modules/custom/lua/abyssea_marks_balance')
+local partyHpScale = require('modules/custom/lua/party_hp_scale')
 local rosterProgress = require('modules/custom/lua/abyssea_marks_progress')
 local trustDrops = require('modules/custom/lua/trust_cipher_drops')
 
@@ -29,7 +30,7 @@ local MARKS_DAMAGE_CAP = 6000
 -- Per zone tier: mark cost + rewards, then the common pacing block applied at
 -- pop.  Individual difficulty comes from abyssea_marks_catalog.lua.
 --   level   is applied with setMobLevel before the overlay
---   maxHP   flat HP override (setMaxHP)
+--   maxHP   authored HP pool (party_hp_scale.setCatalogHp)
 --   att / def / matt           melee attack / defense / magic attack added
 --   acc / eva / macc / meva     accuracy / evasion / magic acc / magic eva added
 --   weaponDmg  flat main-hand damage added to melee and physical TP moves
@@ -62,26 +63,8 @@ for zoneId, cfg in pairs(zoneConfig) do
         string.format('Abyssea HP contract drift in zone %d', zoneId))
 end
 
-local function realPlayerScale(player)
-    local count = 1
-    local ok, party = pcall(function() return player:getParty() end)
-    if ok and party then
-        local seen = {}
-        count = 0
-        for _, member in ipairs(party) do
-            local memberOk, isPc = pcall(function() return member:isPC() end)
-            if memberOk and isPc and member:getZoneID() == player:getZoneID() then
-                local id = member:getID()
-                if not seen[id] then
-                    seen[id] = true
-                    count = count + 1
-                end
-            end
-        end
-        count = math.max(1, count)
-    end
-
-    return encounterBalance.hpScale(count), count
+local function realPlayerCount(player)
+    return partyHpScale.countFromPlayer(player)
 end
 
 local function logicalCopyIsSpawned(mobId, nmName)
@@ -137,10 +120,9 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     -- Normalize level before applying the custom pacing block. setMobLevel
     -- recalculates retail base stats, so it must precede HP and additive mods.
     spawned:setMobLevel(cfg.level, false)
-    local hpScale, pcCount = realPlayerScale(p)
-    local scaledHP = math.floor(cfg.maxHP * hpScale)
-    spawned:setMaxHP(scaledHP)
-    spawned:setHP(scaledHP)
+    local pcCount = realPlayerCount(p)
+    partyHpScale.setCatalogHp(spawned, cfg.maxHP)
+    partyHpScale.afterCustomHp(spawned, p)
     spawned:addMod(xi.mod.ATT,  cfg.att)
     spawned:addMod(xi.mod.DEF,  cfg.def)
     spawned:addMod(xi.mod.MATT, cfg.matt)

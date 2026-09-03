@@ -66,6 +66,7 @@ describe('BLU main-hand weapon amplification', function()
             { 20689, 119, 'EMPYREAN',   45, 2999997 },
             { 20685, 119, 'RELIC',      30, 2999997 },
             { 21621, 119, 'AMBUSCADE',   9,   99999 },
+            { 20651, 119, 'ITEM_119',    9,  239997 }, -- Tizona 119 I: floor 99,999, keep 119 cap
             { 20705, 119, 'ITEM_119',    9,  239997 },
             { 20731, 115, 'PRE_119',     9,  120000 },
         }

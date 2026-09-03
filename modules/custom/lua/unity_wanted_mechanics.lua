@@ -6,6 +6,7 @@
 -- retaining its native family skill/spell lists from mob_pools.
 -----------------------------------
 local M = {}
+local partyHpScale = require('modules/custom/lua/party_hp_scale')
 
 local profiles =
 {
@@ -325,8 +326,7 @@ function M.applyDifficulty(mob, nm, difficulty)
 
     mob:setUntargetable(false)
     if d.hp then
-        mob:setMaxHP(d.hp)
-        mob:setHP(d.hp)
+        partyHpScale.setCatalogHp(mob, d.hp)
     end
     if d.att     then mob:addMod(xi.mod.ATT,           d.att)  end
     if d.acc     then mob:addMod(xi.mod.ACC,           d.acc)  end

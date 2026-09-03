@@ -5,6 +5,7 @@ local catalog           = require('modules/custom/lua/dungeon_catalog')
 local augmentDrops      = require('modules/custom/lua/augment_dungeon_drops')
 local progressionDrops  = require('modules/custom/lua/progression_dungeon_rewards')
 local mechanics         = require('modules/custom/lua/mob_mechanics_library')
+local partyHpScale      = require('modules/custom/lua/party_hp_scale')
 
 -- Zoning leash (world units): a player more than this far from EVERY roster
 -- anchor is heading for a wall / zone line -- crossing one drops them from the
@@ -224,6 +225,7 @@ runtime.create = function(dungeonKey)
         local scaledHP = math.floor(mob:getMaxHP() * (def.hpScale or dungeon.hpScale))
         mob:setMaxHP(scaledHP)
         mob:setHP(scaledHP)
+        partyHpScale.afterCustomHp(mob, instance)
 
         -- Attach mob_mechanics_library config: boss gets the rich bossMechCfg
         -- (stance / AoE / CC / drain / phases / doom / enrage); trash gets a
@@ -310,6 +312,8 @@ runtime.create = function(dungeonKey)
             return
         end
 
+        partyHpScale.maybeResyncInstance(instance)
+
         player:printToPlayer(
             string.format('[Dungeon] Private %s opened. Clear all %d guardians within %d minutes -- the boss emerges once they fall.',
                 dungeon.label, instance:getLocalVar('DungeonMobsRemaining'), catalog.runTimeMinutes),
@@ -321,6 +325,7 @@ runtime.create = function(dungeonKey)
 
     instanceObject.onInstanceTimeUpdate = function(instance, elapsed)
         instance:setLocalVar('DungeonElapsedMs', elapsed)
+        partyHpScale.maybeResyncInstance(instance)
 
         -- Zoning leash: while the run is live, pull back anyone who has wandered
         -- more than DUNGEON_LEASH units from EVERY roster anchor (heading for a

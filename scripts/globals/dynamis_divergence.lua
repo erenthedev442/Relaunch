@@ -24,12 +24,28 @@ xi.divergence = xi.divergence or {}
 -- describe -- attach + engine-tick + no-cleanup covers the same ground here
 -- (attach re-inits state on every run, so stale mid-fight state can't survive).
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
+local partyHpScale = require('modules/custom/lua/party_hp_scale')
 
 local TIME_CAP_MIN  = 120
 local STATUE_EXTEND = 1
 local BOSS_EXTEND   = 30
 local MEGA_EXTEND   = 15
 local EXIT_DELAY_MS = 8000
+
+-- Player-facing city names for the zone the run actually returns to.
+-- Each [D] instance already has its own exitZone; the old messages always
+-- said San d'Oria even when Jeuno/Bastok/Windurst sent you home.
+local EXIT_CITY_NAME =
+{
+    [xi.zone.SOUTHERN_SAN_DORIA] = "San d'Oria",
+    [xi.zone.BASTOK_MINES]       = 'Bastok',
+    [xi.zone.WINDURST_WALLS]     = 'Windurst',
+    [xi.zone.RULUDE_GARDENS]     = 'Jeuno',
+}
+
+xi.divergence.exitCityName = function(cfg)
+    return (cfg and EXIT_CITY_NAME[cfg.exitZone]) or 'the entrance'
+end
 
 -- Superior Lv5 (Dynamis Divergence) weapons -- their retail home. On EVERY
 -- Mega-Boss kill, SU5_DROPS_PER_KILL random weapon(s) from this pool land in
@@ -130,6 +146,7 @@ local function attachBoss(instance, mobId)
     local mob = GetMobByID(mobId, instance)
     if mob then
         applyStats(mob, cfg.stats)
+        partyHpScale.afterCustomHp(mob, instance)
         mechanics.attach(mob, cfg)
     end
 end
@@ -234,13 +251,21 @@ end
 -----------------------------------
 -- Lifecycle -- called from each zone's instances/<name>.lua
 -----------------------------------
+local function spawnScaledMob(mobId, instance)
+    local mob = SpawnMob(mobId, instance)
+    if mob then
+        partyHpScale.afterCustomHp(mob, instance)
+    end
+    return mob
+end
+
 xi.divergence.onInstanceCreated = function(instance, cfg)
     instance:setLocalVar('divWave', 1)
     for _, mobId in ipairs(cfg.wave1Mobs) do
-        SpawnMob(mobId, instance)
+        spawnScaledMob(mobId, instance)
     end
     for _, mobId in ipairs(cfg.statues) do
-        SpawnMob(mobId, instance)
+        spawnScaledMob(mobId, instance)
     end
     spawnBoss(instance, cfg.midBoss, 'Mid')
 end
@@ -249,6 +274,7 @@ xi.divergence.placePlayer = function(player, instance, cfg)
     player:setInstance(instance)
     local p = cfg.entryPos
     player:setPos(p[1], p[2], p[3], p[4], instance:getZone():getID())
+    partyHpScale.maybeResyncInstance(instance)
 end
 
 -- If a party member is already inside a live [D] run, join that copy instead of
@@ -286,6 +312,8 @@ xi.divergence.startCountdown = function(player)
 end
 
 xi.divergence.onInstanceTimeUpdate = function(instance, elapsed, cfg)
+    partyHpScale.maybeResyncInstance(instance)
+
     -- Hard time limit (rolled here so extensions are a one-liner).
     if instance:getTimeLimit() * 60 - elapsed / 1000 <= 0 then
         instance:fail()
@@ -315,7 +343,7 @@ xi.divergence.onInstanceTimeUpdate = function(instance, elapsed, cfg)
             instance:setLocalVar('divWave', 2)
             extendTime(instance, BOSS_EXTEND, elapsed)
             for _, mobId in ipairs(cfg.wave2Mobs) do
-                SpawnMob(mobId, instance)
+                spawnScaledMob(mobId, instance)
             end
             if not spawnBoss(instance, cfg.megaBoss, 'Mega') then
                 return
@@ -331,7 +359,7 @@ xi.divergence.onInstanceTimeUpdate = function(instance, elapsed, cfg)
                 -- Wave 3: the Disjoined NM at the elemental circle. Mega victory
                 -- grants a final buffer so solo/trust teams can attempt the capstone.
                 for _, mobId in ipairs(cfg.wave3Mobs or {}) do
-                    SpawnMob(mobId, instance)
+                    spawnScaledMob(mobId, instance)
                 end
                 if not spawnBoss(instance, cfg.disjoined, 'Disjoined') then
                     return
@@ -405,7 +433,7 @@ xi.divergence.onInstanceComplete = function(instance, cfg)
             end
             p:printToPlayer("[Divergence] City of the Day! Bonus spoils: 1 Demon's Medal + 2 Kindred's Medals.", xi.msg.channel.SYSTEM_3)
         end
-        p:printToPlayer('[Divergence] Victory! Returning you to San d\'Oria...', xi.msg.channel.SYSTEM_3)
+        p:printToPlayer(string.format('[Divergence] Victory! Returning you to %s...', xi.divergence.exitCityName(cfg)), xi.msg.channel.SYSTEM_3)
         p:timer(EXIT_DELAY_MS, function(pp)
             local e = cfg.exitPos
             pp:setPos(e[1], e[2], e[3], e[4], cfg.exitZone)
@@ -415,7 +443,7 @@ end
 
 xi.divergence.onInstanceFailure = function(instance, cfg)
     for _, p in pairs(instance:getChars()) do
-        p:printToPlayer('[Divergence] Time expired. Returning you to San d\'Oria...', xi.msg.channel.SYSTEM_3)
+        p:printToPlayer(string.format('[Divergence] Time expired. Returning you to %s...', xi.divergence.exitCityName(cfg)), xi.msg.channel.SYSTEM_3)
         p:timer(5000, function(pp)
             local e = cfg.exitPos
             pp:setPos(e[1], e[2], e[3], e[4], cfg.exitZone)

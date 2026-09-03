@@ -7,6 +7,14 @@ local itemNames = require('modules/custom/lua/augment_item_names')
 local M = {}
 local S = xi.msg.channel.SYSTEM_3
 
+-- Former catalysts that must stay withdrawable as ordinary items after they
+-- leave augment_catalog. isCatalyst stays false so Dynamis addTreasure /
+-- droplist paths treat them as shared currency again.
+local RETIRED_WITHDRAW =
+{
+    [1452] = { label = 'Ordelle Bronzepiece (currency)', cat = 7 },
+}
+
 local function readableItemName(itemId)
     local name = itemNames[itemId] or string.format('catalyst_%d', itemId)
     name = name:gsub('_', ' ')
@@ -17,6 +25,26 @@ end
 
 function M.isCatalyst(itemId)
     return catalog[itemId] ~= nil
+end
+
+function M.isWithdrawable(itemId)
+    return catalog[itemId] ~= nil or RETIRED_WITHDRAW[itemId] ~= nil
+end
+
+function M.retiredWithdrawEntries()
+    local entries = {}
+    for itemId, info in pairs(RETIRED_WITHDRAW) do
+        table.insert(entries,
+        {
+            itemId = itemId,
+            label  = info.label,
+            cat    = info.cat,
+        })
+    end
+    table.sort(entries, function(left, right)
+        return left.itemId < right.itemId
+    end)
+    return entries
 end
 
 function M.itemName(itemId)
@@ -100,7 +128,7 @@ end
 -- inventory grant fails so balances cannot be lost.
 function M.withdraw(player, itemId, quantity, silent)
     quantity = math.floor(tonumber(quantity) or 0)
-    if player == nil or not catalog[itemId] or quantity < 1 then
+    if player == nil or not M.isWithdrawable(itemId) or quantity < 1 then
         return false, 0
     end
 

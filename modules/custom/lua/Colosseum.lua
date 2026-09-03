@@ -398,7 +398,8 @@ local function startDuel(player, opp)
             mob:setMaxHP(newMax)
             mob:setHP(newMax)
         end
-        -- Wear the champion's face: PC-look model by race (shared map
+        require('modules/custom/lua/party_hp_scale').afterCustomHp(mob, p)
+        -- Wear the champion's face: PC-look model by race (shared map)
         -- with the Player Trust system). Cosmetic - pcall'd because
         -- model packets on dynamic mobs are the least-proven part.
         local model = raceModels[race]

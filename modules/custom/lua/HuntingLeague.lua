@@ -914,6 +914,7 @@ local function insertSpawnerNPC(zone)
                         mob:setMaxHP(newMax)
                         mob:setHP(newMax)
                     end
+                    require('modules/custom/lua/party_hp_scale').afterCustomHp(mob, playerArg)
 
                     -- Spawn the NM already aggroed onto the player who popped it,
                     -- so it engages immediately instead of idling at the pop point

@@ -318,7 +318,11 @@ bool CAbilityState::CanUseAbility()
 
         if (PTarget && m_PEntity->IsValidTarget(PTarget->targid, PAbility->getValidTarget(), errMsg))
         {
-            if (m_PEntity != PTarget && distance(m_PEntity->loc.p, PTarget->loc.p) > PAbility->getRange() + m_PEntity->modelHitboxSize + PTarget->modelHitboxSize)
+            const auto* PBattleTarget = dynamic_cast<CBattleEntity*>(PTarget);
+            const float abilityRange  = (m_PEntity->objtype == TYPE_TRUST && PBattleTarget != nullptr)
+                                            ? m_PEntity->GetTrustActionRange(PAbility->getRange(), PBattleTarget)
+                                            : PAbility->getRange() + m_PEntity->modelHitboxSize + PTarget->modelHitboxSize;
+            if (m_PEntity != PTarget && distance(m_PEntity->loc.p, PTarget->loc.p) > abilityRange)
             {
                 cancelAbility = true;
             }

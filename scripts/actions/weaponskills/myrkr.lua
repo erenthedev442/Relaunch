@@ -1,5 +1,7 @@
 -----------------------------------
 -- Myrkr
+-- Restores MP. Also removes Erase- and Waltz-class ailments
+-- (Silence, Addle, Plague, Para, Bio, stat-downs, etc.).
 -----------------------------------
 ---@type TWeaponSkill
 local weaponskillObject = {}
@@ -13,6 +15,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local mpRestore = math.min(
         player:getMaxMP() - mpBefore,
         math.floor(ftpmp * player:getMaxMP()))
+
+    -- Self-cleanse. Damsel Memento / Benediction-lite: every Erasable and
+    -- Waltzable debuff. Does not touch Doom, Terror, Amnesia, or Petrify.
+    player:delStatusEffectsByFlag(xi.effectFlag.ERASABLE, false)
+    player:delStatusEffectsByFlag(xi.effectFlag.WALTZABLE, false)
 
     if xi.legendaryPilgrimage and xi.legendaryPilgrimage.onSupportWs then
         pcall(function()

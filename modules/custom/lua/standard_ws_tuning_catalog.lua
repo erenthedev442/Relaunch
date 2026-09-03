@@ -6,12 +6,22 @@
 -- TP, WSD and multi-attacks all retain their full proportional value.
 -----------------------------------
 
-local catalog = {}
+-- FileWatcher dofile's this module and discards the return, so mutate the
+-- cached table in place (same pitfall as standard_magic_tuning_catalog).
+local KEY = 'modules/custom/lua/standard_ws_tuning_catalog'
+local catalog = package.loaded[KEY]
+if type(catalog) ~= 'table' then
+    catalog = {}
+end
+package.loaded[KEY] = catalog
 
 catalog.DAMAGE_MULTIPLIER_LOCAL_VAR = 'StandardWsDamageMultiplier'
 catalog.DAMAGE_CAP_LOCAL_VAR        = 'StandardWsDamageCap'
 catalog.DAMAGE_CAP                  = 79999
 catalog.NON_ITEM_LEVEL_119_CAP      = 40000
+-- Pre-119 III REMA (99 / 119 I / 119 II) must never sit below Ambuscade.
+catalog.REMA_PRE_III_DAMAGE_CAP     = 99999
+catalog.REMA_PRE_III_NATIVE_WS_CAP  = 149999
 catalog.TARGET_HP_FRACTION          = 0.30 -- retained for Fellow progression caps
 catalog.ENDGAME_PLAYER_LEVEL        = 99
 catalog.MASTER_JOB_POINTS           = 2100
@@ -92,17 +102,86 @@ local function isAmbuFinalWeapon(itemId)
     return info ~= nil and info.stage == 5
 end
 
+local remaPathByItem = {}
+
+local function registerRemaPath(itemId, info)
+    if itemId and itemId > 0 then
+        remaPathByItem[itemId] = info
+    end
+end
+
+local function buildRemaPathLookup()
+    remaPathByItem = {}
+    local okRema, rema = pcall(require, 'modules/custom/lua/rema_ws_tier_catalog')
+    local okForge, forge = pcall(require, 'modules/custom/lua/weapon_forge_catalog')
+    if not okRema or not rema or not rema.BY_ITEM_ID or not okForge or not forge then
+        catalog.REMA_PATH = remaPathByItem
+        return
+    end
+
+    local function addChain(chain)
+        local final = rema.BY_ITEM_ID[chain.s3]
+        if not final then
+            return
+        end
+
+        local info =
+        {
+            wsId  = final.wsId,
+            slot  = final.slot,
+            final = false,
+        }
+        registerRemaPath(chain.base, info)
+        registerRemaPath(chain.s1, info)
+        registerRemaPath(chain.s2, info)
+        registerRemaPath(chain.s3,
+        {
+            wsId  = final.wsId,
+            slot  = final.slot,
+            final = true,
+        })
+    end
+
+    for _, chain in ipairs(forge.relicChains or {}) do
+        addChain(chain)
+    end
+    for _, chain in ipairs(forge.empyreanChains or {}) do
+        addChain(chain)
+    end
+    for _, chain in ipairs(forge.mythicChains or {}) do
+        addChain(chain)
+    end
+    for itemId, entry in pairs(rema.BY_ITEM_ID) do
+        if remaPathByItem[itemId] == nil then
+            registerRemaPath(itemId,
+            {
+                wsId  = entry.wsId,
+                slot  = entry.slot,
+                final = true,
+            })
+        end
+    end
+
+    catalog.REMA_PATH = remaPathByItem
+end
+
+buildRemaPathLookup()
+
+function catalog.getRemaPathInfo(itemId)
+    if not itemId or itemId == 0 then
+        return nil
+    end
+
+    return remaPathByItem[itemId]
+end
+
+function catalog.isRemaPathWeapon(itemId)
+    return catalog.getRemaPathInfo(itemId) ~= nil
+end
+
 local function isRemaFinalWeapon(itemId)
-    if itemId == 0 then
-        return false
-    end
-
-    local ok, rema = pcall(require, 'modules/custom/lua/rema_ws_tier_catalog')
-    if not ok or not rema or not rema.BY_ITEM_ID then
-        return false
-    end
-
-    return rema.BY_ITEM_ID[itemId] ~= nil
+    local info = catalog.getRemaPathInfo(itemId)
+    return info ~= nil and info.final == true
 end
 
 local function isPrimeFinalWeapon(itemId)
@@ -143,6 +222,10 @@ function catalog.getPetDamageCap(player)
 
     if isRemaFinalWeapon(itemId) then
         return catalog.PET_REMA_DAMAGE_CAP
+    end
+
+    if catalog.isRemaPathWeapon(itemId) then
+        return catalog.PET_AMBU_DAMAGE_CAP
     end
 
     if isAmbuFinalWeapon(itemId) then
@@ -289,7 +372,7 @@ function catalog.getPetDamageMultiplier(player, target)
         end
     elseif isRemaFinalWeapon(itemId) then
         mult = mult * catalog.PET_REMA_MULTIPLIER_BONUS
-    elseif isAmbuFinalWeapon(itemId) then
+    elseif catalog.isRemaPathWeapon(itemId) or isAmbuFinalWeapon(itemId) then
         mult = mult * catalog.PET_AMBU_MULTIPLIER_BONUS
     end
 

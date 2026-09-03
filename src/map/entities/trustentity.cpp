@@ -213,12 +213,13 @@ void CTrustEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& act
     int16 tp = state.GetSpentTP();
     tp       = battleutils::CalculateWeaponSkillTP(this, PWeaponSkill, tp);
 
-    if (distance(loc.p, PBattleTarget->loc.p) <= PWeaponSkill->getRange() + PBattleTarget->modelHitboxSize + modelHitboxSize)
+    if (distance(loc.p, PBattleTarget->loc.p) <= GetTrustActionRange(PWeaponSkill->getRange(), PBattleTarget))
     {
         PAI->TargetFind->reset();
         if (PWeaponSkill->isAoE())
         {
-            PAI->TargetFind->findWithinArea(PBattleTarget, AOE_RADIUS::TARGET, PWeaponSkill->getRadius(), FINDFLAGS_NONE, TARGET_NONE);
+            const auto radiusType = PWeaponSkill->getAoe() == 3 ? AOE_RADIUS::ATTACKER : AOE_RADIUS::TARGET;
+            PAI->TargetFind->findWithinArea(PBattleTarget, radiusType, PWeaponSkill->getRadius(), FINDFLAGS_NONE, TARGET_NONE);
         }
         else
         {

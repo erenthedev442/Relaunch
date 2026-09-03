@@ -157,7 +157,9 @@ catalog.spellTraits =
     { id = 'macc',     name = 'Magic Acc',     desc = 'Spells land more often (+20 Magic Acc).',     mods = { { xi.mod.MACC, 20 } } },
     { id = 'regain',   name = 'Regain',        desc = 'Auto-regain TP (+2%/tick).',                  mods = { { xi.mod.REGAIN, 20 } } },
     { id = 'enhdur',   name = 'Enh Duration',  desc = 'Enhancing magic lasts longer (+20%).',        mods = { { xi.mod.ENH_MAGIC_DURATION, 20 } } },
-    { id = 'focus',    name = 'Focus',         desc = 'Resist spell interruption (-20% rate).',      mods = { { xi.mod.SPELLINTERRUPT, -20 } } },
+    -- SPELLINTERRUPT is SIRD: interrupt chance is (100 - mod) / 100.
+    -- Positive values reduce interrupts. -20 was raising the rate instead.
+    { id = 'focus',    name = 'Focus',         desc = 'Resist spell interruption (+20% SIRD).',     mods = { { xi.mod.SPELLINTERRUPT, 20 } } },
 }
 
 return catalog

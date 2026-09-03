@@ -7,7 +7,9 @@
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 240)
+    -- Mastery Sigil rotation target: stay up on the 30-min window instead of
+    -- vanishing after 4 minutes as a quest-only idle despawn.
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 0)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
 end

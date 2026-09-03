@@ -155,7 +155,10 @@ return {
     [852]  = { augId = 233,  base = 1,   mult = 1,   disp = 1,    cat = 7, tier = 0, label = 'Blood Boon' },
     [1156] = { augId = 321,  base = 1,   mult = 1,   disp = 1,    cat = 7, tier = 0, label = 'Avatar perpetuation cost' },
     [3543] = { augId = 339,  base = 1,   mult = 5,   disp = 1,    cat = 7, tier = 0, label = 'Elemental Siphon' },
-    [1452] = { augId = 369,  base = 1,   mult = 1,   disp = 1,    cat = 7, tier = 0, label = 'Avatar Blood Pact Dmg', maxBoost = 11 },
+    -- 1626 (Bottle of Avatar Blood) replaced 1452 (Ordelle Bronzepiece) so
+    -- Dynamis Orc bronze stays shared-pool relic currency, not a per-player
+    -- catalyst. Banked 1452 remains withdrawable via augment_catalyst_bank.
+    [1626] = { augId = 369,  base = 1,   mult = 1,   disp = 1,    cat = 7, tier = 0, label = 'Avatar Blood Pact Dmg', maxBoost = 11 },
     [2153] = { augId = 1246, base = 3,   mult = 30,  disp = 100,  cat = 7, tier = 0, label = 'Pet Phy. Dmg. Taken' },
     [2518] = { augId = 2100, base = 5,   mult = 1,   disp = 1,    cat = 7, tier = 0, label = 'Beast Affinity',        maxBoost = 31 },
 

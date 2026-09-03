@@ -3,6 +3,7 @@
 -----------------------------------
 
 local ambuscade = require('modules/custom/lua/ambuscade_weapons_catalog')
+local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
 local catalog = {}
 
 catalog.DAMAGE_CAP_LOCAL_VAR = 'BlueSpellDamageCap'
@@ -60,7 +61,13 @@ end
 
 function catalog.getDamageCap(caster)
     local _, tier = catalog.classify(caster)
-    return tier.cap
+    local cap = tier.cap
+    local info = progression.getRemaPathInfo(caster:getEquipID(xi.slot.MAIN) or 0)
+    if info and not info.final then
+        cap = math.max(cap, progression.REMA_PRE_III_DAMAGE_CAP)
+    end
+
+    return cap
 end
 
 return catalog

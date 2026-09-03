@@ -30,6 +30,7 @@
 require('modules/module_utils')
 
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
+local partyHpScale = require('modules/custom/lua/party_hp_scale')
 
 local m = Module:new('tournament')
 
@@ -288,9 +289,10 @@ startWaveForTeam = function(teamName, waveNum)
     local zone = GetZone(ARENA_ZONE)
     if not zone then return end
 
-    -- Scale mob HP with team size so larger teams still have a challenge
+    -- Wave catalog hpMult is the 1-player baseline. Team size uses the
+    -- shared party HP curve (1 / 1.7 / 2.4 / 3.2 / 4.1 / 5.0).
     local teamSize = count(sess.alive)
-    local hpScale  = cfg.hpMult * math.max(1, teamSize * 0.6)
+    local hpScale  = cfg.hpMult
 
     -- Notify members
     for pname in pairs(sess.alive) do
@@ -348,6 +350,8 @@ startWaveForTeam = function(teamName, waveNum)
             local newMax = math.floor(mob:getMaxHP() * hpScale)
             mob:setMaxHP(newMax)
             mob:setHP(newMax)
+            partyHpScale.prepare(mob)
+            partyHpScale.apply(mob, math.max(1, teamSize))
             -- Wave 8, first mob spawned (i==1) is the Tournament Champion.
             -- Attach the full hardcore kit AFTER spawn + HP setup so the library
             -- reads the correct max HP. The other 6 Wave-8 mobs and ALL mobs in

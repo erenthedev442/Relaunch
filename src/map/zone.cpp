@@ -1103,8 +1103,11 @@ void CZone::CharZoneIn(CCharEntity* PChar)
 
     PChar->ReloadPartyInc();
 
-    // Zone-wide treasure pool takes precendence over all others
-    if (m_TreasurePool && m_TreasurePool->getPoolType() == TreasurePoolType::Zone)
+    // Zone-wide treasure pool takes precedence over all others, except inside
+    // a CInstance. Instances share the CZone object while isolating entities;
+    // attaching every run to m_TreasurePool leaks loot messages and lots
+    // across Dynamis-Divergence / dungeon instances.
+    if (m_TreasurePool && m_TreasurePool->getPoolType() == TreasurePoolType::Zone && PChar->PInstance == nullptr)
     {
         PChar->PTreasurePool = m_TreasurePool;
         PChar->PTreasurePool->addMember(PChar);

@@ -18,6 +18,10 @@ g_mixins = g_mixins or {}
 local BLOCK_GEAR_DROPS = true
 
 g_mixins.dynamis_beastmen = function(dynamisBeastmenMob)
+    dynamisBeastmenMob:addListener('SPAWN', 'PARTY_HP_SCALE_PREPARE', function(mob)
+        require('modules/custom/lua/party_hp_scale').prepare(mob)
+    end)
+
     if BLOCK_GEAR_DROPS then
         -- setDropID(0) => no droplist roll at death. Runs each spawn so it's set
         -- well before the death-time drop roll. Currency (addTreasure) is unaffected.

@@ -36,4 +36,16 @@ describe('Kraken Club acquisition', function()
             assert(itemId ~= xi.item.KRAKEN_CLUB)
         end
     end)
+
+    it('rebuilds inscribed gear through addHeldGear so augmenting cannot mint a new serial', function()
+        local file = assert(io.open('modules/custom/lua/Augment_Moogle.lua', 'r'))
+        local text = file:read('*a')
+        file:close()
+
+        assert(text:find('local function addHeldGear', 1, true))
+        assert(text:find('payload.signature', 1, true))
+        assert(not text:find('addItem({ id = st.itemId', 1, true))
+        assert(not text:find('addItem({ id = st2.itemId', 1, true))
+        assert(not text:find('id     = deliveredId', 1, true))
+    end)
 end)

@@ -1006,6 +1006,16 @@ void CParty::ReloadPartyMembers(CCharEntity* PChar)
     }
 }
 
+namespace
+{
+// Party/alliance treasure pools follow zone AND instance. Same zone + different
+// CInstance (Dynamis-Divergence, dungeons) must not share a pool.
+bool sameTreasureScope(const CCharEntity* a, const CCharEntity* b)
+{
+    return a != nullptr && b != nullptr && a->getZone() == b->getZone() && a->PInstance == b->PInstance;
+}
+} // namespace
+
 // update treasure pool for specified character
 void CParty::ReloadTreasurePool(CCharEntity* PChar)
 {
@@ -1031,7 +1041,7 @@ void CParty::ReloadTreasurePool(CCharEntity* PChar)
                 {
                     CCharEntity* PPartyMember = (CCharEntity*)PChar->PParty->m_PAlliance->partyList.at(a)->members.at(i);
 
-                    if (PPartyMember != PChar && PPartyMember->PTreasurePool != nullptr && PPartyMember->getZone() == PChar->getZone())
+                    if (PPartyMember != PChar && PPartyMember->PTreasurePool != nullptr && sameTreasureScope(PPartyMember, PChar))
                     {
                         if (PChar->PTreasurePool != nullptr)
                         {
@@ -1051,7 +1061,7 @@ void CParty::ReloadTreasurePool(CCharEntity* PChar)
             {
                 CCharEntity* PPartyMember = (CCharEntity*)member;
 
-                if (PPartyMember != PChar && PPartyMember->PTreasurePool != nullptr && PPartyMember->getZone() == PChar->getZone())
+                if (PPartyMember != PChar && PPartyMember->PTreasurePool != nullptr && sameTreasureScope(PPartyMember, PChar))
                 {
                     if (PChar->PTreasurePool != nullptr)
                     {

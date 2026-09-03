@@ -448,10 +448,10 @@ local petStock =
     },
 }
 
--- Reforged armor (FREE claim): pulls each job's ilvl-109 AF/Relic/Empy BASE pieces
--- live from modules/custom/lua/reforge_catalog, so this stays in sync with the
--- Reforge system's own data. catalog.buildJobLootPool(job, setKey) returns a set's
--- base item IDs for one job.
+-- Reforged armor (FREE claim): each job's ilvl-109 AF/Relic/Empy BASE pieces
+-- from modules/custom/lua/reforge_catalog. Missing 109 pieces can be claimed
+-- again after a drop. A slot that already has +1/+2/+3 is left alone so
+-- upgrading does not mint a second base.
 local reforgeCatalog
 do
     local ok, cat = pcall(require, 'modules/custom/lua/reforge_catalog')
@@ -459,6 +459,7 @@ do
         reforgeCatalog = cat
     end
 end
+local genderedArmor = require('modules/custom/lua/gendered_armor')
 
 local showMainMenu
 local showEquipmentMenu
@@ -484,6 +485,16 @@ local function openStock(player, items)
     end)
 end
 
+local function ownsReforgeSlot(player, slot)
+    for _, itemId in ipairs(slot) do
+        if itemId and itemId > 0 and genderedArmor.has(player, itemId) then
+            return true
+        end
+    end
+
+    return false
+end
+
 local function claimReforgeSet(player, setKey)
     local H = xi.msg.channel.SYSTEM_3
     if not reforgeCatalog then
@@ -492,50 +503,41 @@ local function claimReforgeSet(player, setKey)
     end
 
     local job = player:getMainJob()
-    if not reforgeCatalog.pieces[job] then
+    local jobPieces = reforgeCatalog.pieces[job]
+    if not jobPieces then
         player:printToPlayer('Your current main job has no reforged set configured yet.', H)
         return
     end
 
-    local setLabels  = { af = 'Artifact (AF)', relic = 'Relic', empy = 'Empyrean' }
-    local setBits    = { af = 1, relic = 2, empy = 4 }
-    local claimedVar = 'ReforgeClaimed_' .. tostring(job)
-    local claimed    = player:getCharVar(claimedVar)
-    local toGrant    = setKey == 'all' and { 'af', 'relic', 'empy' } or { setKey }
-    local granted, owned, already, failed = 0, 0, 0, 0
-    local newBits = 0
+    local setLabels = { af = 'Artifact (AF)', relic = 'Relic', empy = 'Empyrean' }
+    local toGrant   = setKey == 'all' and { 'af', 'relic', 'empy' } or { setKey }
+    local granted, owned, failed = 0, 0, 0
 
     for _, key in ipairs(toGrant) do
-        local setBit = setBits[key]
-        if bit.band(claimed, setBit) ~= 0 then
-            already = already + 1
-        else
-            local setFailed = false
-            for _, itemId in ipairs(reforgeCatalog.buildJobLootPool(job, key)) do
-                if player:hasItem(itemId) then
-                    owned = owned + 1
-                elseif player:addItem(itemId) then
-                    granted = granted + 1
-                else
-                    failed = failed + 1
-                    setFailed = true
+        local set = jobPieces[key]
+        if set then
+            for _, slot in pairs(set) do
+                local baseId = slot[1]
+                if baseId and baseId > 0 then
+                    if ownsReforgeSlot(player, slot) then
+                        owned = owned + 1
+                    else
+                        local giveId = genderedArmor.resolve(player, baseId)
+                        if player:addItem(giveId) then
+                            granted = granted + 1
+                        else
+                            failed = failed + 1
+                        end
+                    end
                 end
-            end
-
-            if not setFailed then
-                newBits = bit.bor(newBits, setBit)
             end
         end
     end
 
-    if newBits ~= 0 then
-        player:setCharVar(claimedVar, bit.bor(claimed, newBits))
-    end
-
     local label = setKey == 'all' and 'All reforged sets' or (setLabels[setKey] .. ' set')
     player:printToPlayer(string.format(
-        '[Reforge] %s -- %d granted, %d already owned%s.',
-        label, granted, owned, already > 0 and string.format(', %d set(s) already claimed', already) or ''), H)
+        '[Reforge] %s -- %d granted, %d already owned.',
+        label, granted, owned), H)
     if failed > 0 then
         player:printToPlayer(string.format(
             '  %d piece(s) could not be added -- free inventory space and try again.', failed), H)
