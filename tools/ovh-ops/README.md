@@ -47,7 +47,7 @@ Three layers, because no single one sees every way xi_map can die.
 
 | Scheduled Task | Schedule | Script | Purpose |
 |---|---|---|---|
-| `Relaunch-CrashWatcher` | every 1 min | `run_crash_watcher_relaunch.ps1` -> `tools/crash-watcher/crash_watcher_relaunch.py` | fast Discord post of a new Wheaty report |
+| `Relaunch-CrashWatcher` | every 1 min | `run_crash_watcher_relaunch.ps1` -> `tools/crash-watcher/crash_watcher_relaunch.py` | fast Discord post of a new Wheaty report or supervisor hang-kill |
 | `Relaunch-CrashTriage` | every 10 min | `run_crash_triage_relaunch.ps1` -> `triage_dump.ps1` | slow cdb post-mortem + SILENT DEATH alerts |
 
 **Ask "why did the server go down":**

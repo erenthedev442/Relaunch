@@ -1,6 +1,7 @@
 # Relaunch crash watcher -> Discord #crash-report webhook. Runs every 1 min via
 # the "Relaunch-CrashWatcher" scheduled task. Posts a short Wheaty + map-log
-# summary when a new file appears in C:\server\dmp.
+# summary when a new file appears in C:\server\dmp, or a hang-kill from the
+# supervisor log (those produce no Wheaty file).
 $ErrorActionPreference = "Continue"
 try { (Get-Process -Id $PID).PriorityClass = [System.Diagnostics.ProcessPriorityClass]::Idle } catch {}
 

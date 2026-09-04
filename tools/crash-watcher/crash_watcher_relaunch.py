@@ -22,7 +22,9 @@ import json
 import os
 import re
 import sys
+import urllib.error
 import urllib.request
+from datetime import datetime, timedelta
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -47,17 +49,26 @@ INTERESTING_LOG = re.compile(
     r"Loading instance|INACTIVITY WATCHDOG|!!! CRASH|luautils::",
     re.I,
 )
+HUNG_RE = re.compile(
+    r"^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\s+HUNG xi_map confirmed \((.+)\) "
+    r"- force killing \(PID (\d+)\)",
+    re.I,
+)
+HANG_LOOKBACK = timedelta(hours=24)
 
 
-def post(content: str) -> None:
+def post(content: str) -> bool:
+    """POST to Discord. True only when Discord accepted the message.
+    Missing/invalid hook is a failure so the event is retried, not consumed.
+    Never logs the webhook URL (Discord's HTTPError includes it)."""
     if not os.path.exists(HOOK_FILE):
         print(f"[crash-watcher] missing webhook file: {HOOK_FILE}", file=sys.stderr)
-        return
+        return False
     with open(HOOK_FILE, encoding="utf-8-sig") as f:
         hook = f.read().strip()
     if not hook.startswith("https://discord.com/api/webhooks/"):
         print("[crash-watcher] webhook file is not a Discord webhook URL", file=sys.stderr)
-        return
+        return False
     if len(content) > MAX_LEN:
         content = content[:MAX_LEN] + "\n…(truncated)"
     req = urllib.request.Request(
@@ -65,7 +76,15 @@ def post(content: str) -> None:
         data=json.dumps({"content": content}).encode(),
         headers={"Content-Type": "application/json", "User-Agent": "ffxi-crash-watcher"},
     )
-    urllib.request.urlopen(req, timeout=15).read()
+    try:
+        urllib.request.urlopen(req, timeout=15).read()
+        return True
+    except urllib.error.HTTPError as exc:
+        print(f"[crash-watcher] webhook HTTP {exc.code} {exc.reason}", file=sys.stderr)
+        return False
+    except OSError as exc:
+        print(f"[crash-watcher] webhook send failed: {type(exc).__name__}", file=sys.stderr)
+        return False
 
 
 def load_state() -> dict:
@@ -194,6 +213,44 @@ def supervisor_hits(crash_time: str) -> list[str]:
     return hits[-6:]
 
 
+def parse_hangs() -> list[dict[str, str]]:
+    hangs: list[dict[str, str]] = []
+    for raw in tail_text(SUP_LOG, 400_000).splitlines():
+        m = HUNG_RE.match(raw.strip())
+        if not m:
+            continue
+        hangs.append({
+            "key": m.group(1),
+            "time": m.group(1),
+            "reason": m.group(2),
+            "pid": m.group(3),
+        })
+    return hangs
+
+
+def format_hang(hang: dict[str, str], map_lines: list[str], sup_lines: list[str]) -> str:
+    lines = [
+        "**xi_map HUNG** — supervisor force-killed it (no Wheaty dump)",
+        f"Time: {hang['time']}",
+        f"Reason: {hang['reason']}",
+        f"PID: {hang['pid']}",
+    ]
+    if map_lines:
+        lines.append("")
+        lines.append("**Map log near hang**")
+        lines.append("```")
+        lines.extend(map_lines)
+        lines.append("```")
+    else:
+        lines.append("_No matching map-log lines in the last few minutes._")
+    if sup_lines:
+        lines.append("**Supervisor**")
+        lines.append("```")
+        lines.extend(sup_lines)
+        lines.append("```")
+    return "\n".join(lines)
+
+
 def format_report(info: dict[str, str], map_lines: list[str], sup_lines: list[str], context: str) -> str:
     lines = [
         "**xi_map crash**",
@@ -298,50 +355,117 @@ def main() -> int:
             return self_test(Path(tmp))
 
     if args.test:
-        post(":white_check_mark: **Crash watcher test** — if you can read this, "
-             "#crash-report is wired. New Wheaty dumps will post a short summary here.")
-        print("[crash-watcher] test post sent")
-        return 0
+        ok = post(":white_check_mark: **Crash watcher test** — if you can read this, "
+                  "#crash-report is wired. New Wheaty dumps and supervisor hang-kills "
+                  "will post a short summary here.")
+        if ok:
+            print("[crash-watcher] test post sent")
+            return 0
+        print("[crash-watcher] test post failed", file=sys.stderr)
+        return 1
 
     reports = list_reports()
-    names = [p.name for p in reports]
+    by_name = {p.name: p for p in reports}
+    names = list(by_name)
     state = load_state()
     seen = set(state.get("seen", []))
     armed = bool(state.get("armed"))
+    failed = False
+    posted_any = False
+    pending_dumps: list[str] = []
 
     if not armed:
         state["seen"] = names
-        state["armed"] = True
-        save_state(state)
-        post(":white_check_mark: **Crash watcher armed** — new `C:\\server\\dmp` "
-             f"reports will post here. {len(names)} existing dump(s) ignored.")
-        print(f"[crash-watcher] armed, ignored {len(names)} existing reports")
-        return 0
-
-    new_files = [p for p in reports if p.name not in seen]
-    if not new_files:
-        print("[crash-watcher] no new reports")
-        return 0
-
-    for path in new_files:
-        info = parse_wheaty(path)
-        crash_time = info.get("Time of crash", "")
-        msg = format_report(
-            info,
-            nearby_log_lines(crash_time),
-            supervisor_hits(crash_time),
-            load_context(path),
+        armed_msg = (
+            ":white_check_mark: **Crash watcher armed** — new `C:\\server\\dmp` "
+            f"reports and supervisor hang-kills will post here. {len(names)} existing dump(s) ignored."
         )
-        try:
-            post(msg)
-            print(f"[crash-watcher] posted {path.name}")
-        except Exception as e:
-            print(f"[crash-watcher] post failed for {path.name}: {e}", file=sys.stderr)
+        if post(armed_msg):
+            state["armed"] = True
+            posted_any = True
+            print(f"[crash-watcher] armed, ignored {len(names)} existing reports")
+        else:
+            failed = True
+            print("[crash-watcher] armed ping failed; existing dumps stay ignored, will retry",
+                  file=sys.stderr)
+        save_state(state)
+        if failed:
             return 1
-        seen.add(path.name)
+    else:
+        pending_dumps = [n for n in state.get("pending_dumps", []) if n in by_name]
+        for n in names:
+            if n not in seen and n not in pending_dumps:
+                pending_dumps.append(n)
+        still_pending: list[str] = []
+        for name in pending_dumps:
+            path = by_name[name]
+            info = parse_wheaty(path)
+            crash_time = info.get("Time of crash", "")
+            msg = format_report(
+                info,
+                nearby_log_lines(crash_time),
+                supervisor_hits(crash_time),
+                load_context(path),
+            )
+            if post(msg):
+                seen.add(name)
+                posted_any = True
+                print(f"[crash-watcher] posted {name}")
+            else:
+                still_pending.append(name)
+                failed = True
+                print(f"[crash-watcher] post failed for {name}; will retry", file=sys.stderr)
+        state["seen"] = sorted(seen)
+        state["pending_dumps"] = still_pending
 
-    state["seen"] = sorted(seen)
+    hangs = parse_hangs()
+    hang_keys = {h["key"] for h in hangs}
+    hangs_seen = set(state.get("hangs_seen", []))
+    pending_hangs = [k for k in state.get("pending_hangs", []) if k in hang_keys]
+    if not state.get("hangs_armed"):
+        cutoff = datetime.now() - HANG_LOOKBACK
+        for hang in hangs:
+            try:
+                when = datetime.strptime(hang["time"], "%Y-%m-%d %H:%M:%S")
+            except ValueError:
+                hangs_seen.add(hang["key"])
+                continue
+            if when >= cutoff:
+                if hang["key"] not in pending_hangs:
+                    pending_hangs.append(hang["key"])
+            else:
+                hangs_seen.add(hang["key"])
+        state["hangs_armed"] = True
+    else:
+        for hang in hangs:
+            if hang["key"] not in hangs_seen and hang["key"] not in pending_hangs:
+                pending_hangs.append(hang["key"])
+
+    hang_by_key = {h["key"]: h for h in hangs}
+    still_hangs: list[str] = []
+    for key in pending_hangs:
+        hang = hang_by_key[key]
+        msg = format_hang(
+            hang,
+            nearby_log_lines(hang["time"]),
+            supervisor_hits(hang["time"]),
+        )
+        if post(msg):
+            hangs_seen.add(key)
+            posted_any = True
+            print(f"[crash-watcher] posted hang {key}")
+        else:
+            still_hangs.append(key)
+            failed = True
+            print(f"[crash-watcher] hang post failed for {key}; will retry", file=sys.stderr)
+    state["hangs_seen"] = sorted(hangs_seen)
+    state["pending_hangs"] = still_hangs
     save_state(state)
+
+    if failed:
+        return 1
+    if not posted_any:
+        print("[crash-watcher] no new reports")
     return 0
 
 

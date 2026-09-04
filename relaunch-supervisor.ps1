@@ -40,7 +40,7 @@ $MapHungStrikesToKill   = 3    # consecutive unhealthy samples (~16s apart) befo
 # loop): CPU is NOT frozen, so the rule above misses it, but the log goes silent (the
 # tick never completes) and CPU stays pegged. Kill only when BOTH hold, so a healthy
 # server -- idle (moderate CPU) or busy (logs often, never silent this long) -- is safe.
-$MapLogHardCeilingSec   = 1800 # log silence past this (30 min; healthy max ~17 min) is abnormal
+$MapLogHardCeilingSec   = 300  # pegged+silent this long = spin hang (was 1800). Healthy idle can be quiet 17 min but is NOT pegged.
 $MapCpuPeggedMs         = 3000 # > this CPU-ms over the window (~50%+ of one core) == spinning, not idle
 
 function Log($m) {

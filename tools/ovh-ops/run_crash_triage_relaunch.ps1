@@ -39,15 +39,21 @@ function Log([string]$m) {
 }
 
 function Post([string]$content) {
-    if (-not (Test-Path $hookFile)) { Log 'no .crash_webhook -- not posting'; return }
+    if (-not (Test-Path $hookFile)) { Log 'no .crash_webhook -- not posting'; return $false }
     $hook = (Get-Content $hookFile -Raw).Trim()
-    if ($hook -notmatch '^https://discord\.com/api/webhooks/') { Log 'webhook file is not a Discord URL'; return }
+    if ($hook -notmatch '^https://discord\.com/api/webhooks/') { Log 'webhook file is not a Discord URL'; return $false }
     if ($content.Length -gt 1900) { $content = $content.Substring(0, 1900) + "`n...(truncated)" }
     try {
         Invoke-RestMethod -Uri $hook -Method Post -TimeoutSec 20 `
             -ContentType 'application/json' `
             -Body ([Text.Encoding]::UTF8.GetBytes((@{ content = $content } | ConvertTo-Json -Compress))) | Out-Null
-    } catch { Log "post failed: $($_.Exception.Message)" }
+        return $true
+    } catch {
+        $code = $null
+        if ($_.Exception.Response) { $code = [int]$_.Exception.Response.StatusCode }
+        if ($code) { Log "post failed: HTTP $code" } else { Log "post failed: $($_.Exception.GetType().Name)" }
+        return $false
+    }
 }
 
 $state = @{ seen = @(); silent = @(); armed = $false }
@@ -129,14 +135,17 @@ if (-not $state.armed) {
             '```',
             "Full output: ``$($r.Triage)``"
         ) | Where-Object { $_ -ne $null }
-        Post ($msg -join "`n")
-        Log "posted triage for $($r.Dump): $($r.Blamed)"
-        $state.seen += $r.Dump
+        if (Post ($msg -join "`n")) {
+            Log "posted triage for $($r.Dump): $($r.Blamed)"
+            $state.seen += $r.Dump
+        } else {
+            Log "triage post failed for $($r.Dump) -- will retry next poll"
+        }
     }
 
     foreach ($s in $silentNow) {
         if ($state.silent -contains $s) { continue }
-        Post (@(
+        $ok = Post (@(
             '**xi_map SILENT DEATH** — no crash dump was produced',
             "Restarted by the supervisor at **$s**.",
             'No Wheaty report, no inactivity-watchdog line, no supervisor force-kill:',
@@ -144,8 +153,12 @@ if (-not $state.armed) {
             'kill from outside). Check `C:\server\dmp\wer\` for a kernel-written dump and',
             'run `crash_report.ps1 -Hours 24 -Context 10` for the map log around it.'
         ) -join "`n")
-        Log "posted SILENT DEATH at $s"
-        $state.silent += $s
+        if ($ok) {
+            Log "posted SILENT DEATH at $s"
+            $state.silent += $s
+        } else {
+            Log "silent-death post failed for $s -- will retry next poll"
+        }
     }
 }
 

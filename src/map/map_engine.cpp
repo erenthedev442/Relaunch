@@ -23,6 +23,7 @@
 
 #include "common/blowfish.h"
 #include "common/console_service.h"
+#include "common/crash_snapshot.h"
 #include "common/database.h"
 #include "common/debug.h"
 #include "common/ipp.h"
@@ -37,6 +38,7 @@
 
 #include "ability.h"
 #include "daily_system.h"
+#include "map_constants.h"
 #include "ipc_client.h"
 #include "job_points.h"
 #include "latent_effect_container.h"
@@ -74,9 +76,12 @@
 #include "utils/trustutils.h"
 #include "utils/zoneutils.h"
 
+#include <chrono>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <ctime>
+#include <fstream>
 #include <thread>
 
 #ifdef _WIN32
@@ -294,6 +299,52 @@ auto MapEngine::watchdogUpdater() -> Task<void>
     }
 }
 
+namespace
+{
+    void writeWatchdogHangReport(const std::string& backtrace, std::chrono::milliseconds stalledMs)
+    {
+        const auto now = std::chrono::system_clock::now();
+        const auto t   = std::chrono::system_clock::to_time_t(now);
+        std::tm    tm{};
+#ifdef _WIN32
+        localtime_s(&tm, &t);
+#else
+        localtime_r(&t, &tm);
+#endif
+        char when[32]{};
+        std::strftime(when, sizeof(when), "%Y/%m/%d %H:%M:%S", &tm);
+        char name[128]{};
+        std::snprintf(name, sizeof(name), "dmp/xi_map.exe_hang_%u-%u_%u-%u-%u.log",
+                      static_cast<unsigned>(tm.tm_mon + 1),
+                      static_cast<unsigned>(tm.tm_mday),
+                      static_cast<unsigned>(tm.tm_hour),
+                      static_cast<unsigned>(tm.tm_min),
+                      static_cast<unsigned>(tm.tm_sec));
+
+        std::ofstream out(name, std::ios::out | std::ios::trunc);
+        if (out)
+        {
+            out << "=====================================================\n"
+                << "!!! HANG !!!\n"
+                << "Exception code: HANG (main tick stalled)\n"
+                << "Time of crash: " << when << "\n"
+                << "Git SHA: " << version::GetGitSha() << "\n"
+                << "Git Commit Subject: " << version::GetGitCommitSubject() << "\n"
+                << "Git Branch: " << version::GetGitBranch() << "\n"
+                << "Process Name: xi_map\n"
+                << "Process Uptime: stalled " << stalledMs.count() << "ms\n"
+                << "Full crash report: " << name << "\n\n"
+                << backtrace
+                << "=====================================================\n"
+                << "=== Flight recorder ===\n"
+                << crash_snapshot::Copy()
+                << "=====================================================\n";
+        }
+
+        crash_snapshot::WriteSidecar(name);
+    }
+} // namespace
+
 auto MapEngine::watchdogWatcher() -> Task<void>
 {
     auto period = settings::get<uint32>("main.INACTIVITY_WATCHDOG_PERIOD");
@@ -307,42 +358,60 @@ auto MapEngine::watchdogWatcher() -> Task<void>
     const auto periodMs = (period > 0) ? std::chrono::milliseconds(period) : 2000ms;
 
     watchdogLastUpdate_ = timer::now();
+    bool        loggedStall    = false;
+    std::string stallBacktrace;
 
     // Run "forever"
     while (!scheduler_.closeRequested())
     {
         const auto lastUpdate = watchdogLastUpdate_.load();
-        if ((timer::now() - lastUpdate) >= periodMs)
+        const auto stalledFor = timer::now() - lastUpdate;
+        if (stalledFor >= periodMs)
         {
             if (debug::isRunningUnderDebugger())
             {
-                ShowCritical("!!! INACTIVITY WATCHDOG HAS TRIGGERED !!!");
-                ShowCriticalFmt("Process main tick has taken {}ms or more.", period);
-                ShowCritical("Detaching watchdog thread, it will not fire again until restart.");
-                break;
+                if (!loggedStall)
+                {
+                    ShowCritical("!!! INACTIVITY WATCHDOG HAS TRIGGERED !!!");
+                    ShowCriticalFmt("Process main tick has taken {}ms or more.", period);
+                    ShowCritical("Debugger attached — watchdog will not kill. Fix the stall or continue.");
+                    loggedStall = true;
+                }
             }
             else if (!settings::get<bool>("main.DISABLE_INACTIVITY_WATCHDOG"))
             {
-                std::string outputStr = "!!! INACTIVITY WATCHDOG HAS TRIGGERED !!!\n\n";
-
-                outputStr += fmt::format("Process main tick has taken {}ms or more.\n", period);
-                outputStr += fmt::format("Backtrace Messages:\n\n");
-
-                const auto backtrace = logging::GetBacktrace();
-                for (const auto& line : backtrace)
+                if (!loggedStall)
                 {
-                    outputStr += fmt::format("    {}\n", line);
+                    std::string outputStr = "!!! INACTIVITY WATCHDOG HAS TRIGGERED !!!\n\n";
+                    outputStr += fmt::format("Process main tick has taken {}ms or more.\n", period);
+                    outputStr += fmt::format("Will exit if still stalled after {}ms.\n",
+                                            std::chrono::duration_cast<std::chrono::milliseconds>(kWatchdogKillAfter).count());
+                    outputStr += fmt::format("Backtrace Messages:\n\n");
+
+                    const auto backtrace = logging::GetBacktrace();
+                    for (const auto& line : backtrace)
+                    {
+                        outputStr += fmt::format("    {}\n", line);
+                    }
+
+                    stallBacktrace = outputStr;
+                    ShowCritical(outputStr);
+                    loggedStall = true;
                 }
 
-                outputStr += "\nKilling Process!!!\n";
-
-                ShowCritical(outputStr);
-
-                // Allow some time for logging to flush
-                std::this_thread::sleep_for(200ms);
-
-                throw std::runtime_error("Watchdog thread time exceeded. Killing process.");
+                if (stalledFor >= kWatchdogKillAfter)
+                {
+                    const auto stalledMs = std::chrono::duration_cast<std::chrono::milliseconds>(stalledFor);
+                    writeWatchdogHangReport(stallBacktrace, stalledMs);
+                    std::this_thread::sleep_for(200ms);
+                    std::_Exit(1);
+                }
             }
+        }
+        else
+        {
+            loggedStall    = false;
+            stallBacktrace.clear();
         }
 
         co_await scheduler_.yieldFor(periodMs);

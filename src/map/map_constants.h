@@ -55,6 +55,12 @@ static constexpr auto kSpawnHandlerWindow   = kSpawnHandlerInterval / 2;
 // If the main loop is more than 200ms behind, we're in trouble.
 static constexpr auto kMainThreadBacklogThreshold = 200ms;
 
+// Watchdog logs a stall at INACTIVITY_WATCHDOG_PERIOD (2s). A throw from that
+// detached worker coroutine is swallowed by Asio and also ends the watcher —
+// after that a true spin hangs until the supervisor 30-min rule. Kill only
+// after the main tick stays silent this long, so a 2s DB blip can recover.
+static constexpr auto kWatchdogKillAfter = 15s;
+
 // The rate at which we cleanup timed-out and finished sessions
 static constexpr auto kSessionCleanupInterval = 5s;
 
