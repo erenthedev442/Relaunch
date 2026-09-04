@@ -15,8 +15,9 @@
 -- 999,999 ceiling, pre-119 III REMA matching Ambuscade at 99,999, and the AoE
 -- WS cap on splash hits of -ga / other multi-target casts. The mob the spell
 -- was aimed at uses the single-target ceiling so an AoE nuke is still a
--- full single-target spell. Main-job BLU splash is hard-capped at 149,999
--- even on Caliburnus (generic Prime AoE is 199,999).
+-- full single-target spell. Main-job BLU splash skips the weapon
+-- multiplier and uses the same iLvl AoE ladder as WS / -ga
+-- (40k / 79,999 / 99,999 / 149,999 / 199,999).
 -- Main BLM is the nuke identity. SCH native nukes are 0.90 of that. RDM,
 -- /BLM, and /SCH are much weaker so people cannot level every job by
 -- subbing a nuker and spamming Stone / Stonega / Helix.
@@ -261,50 +262,44 @@ function catalog.getDamageCap(caster)
     return catalog.NON_ITEM_LEVEL_119_CAP
 end
 
-local function clampBlueAoECap(caster, cap)
-    if
-        cap and
-        cap > 0 and
-        caster and
-        caster.isPC and
-        caster:isPC() and
-        caster.getMainJob and
-        caster:getMainJob() == xi.job.BLU
-    then
-        return math.min(cap, blueWeaponCatalog.AOE_DAMAGE_CAP)
-    end
-
-    return cap
-end
-
 function catalog.getAoEDamageCap(caster, spell)
     if not spell or not spell.isAoE or spell:isAoE() == 0 then
         return nil
     end
 
-    local cap
     if caster.isAutomaton and caster:isAutomaton() then
-        cap = catalog.getDamageCap(caster)
-    elseif not caster:isPC() then
-        cap = catalog.AOE_PRE_119_CAP
-    else
-        local mainWeapon = caster:getEquipID(xi.slot.MAIN)
-        if primeWeaponIds[mainWeapon] then
-            cap = primeCatalog.AOE_DAMAGE_CAP
-        elseif remaWeaponIds[mainWeapon] then
-            cap = remaCatalog.AOE_DAMAGE_CAP
-        elseif progression.isRemaPathWeapon(mainWeapon) then
-            cap = catalog.AMBU_DAMAGE_CAP
-        elseif ambuCatalog.isFinalWeapon(mainWeapon, xi.slot.MAIN) then
-            cap = ambuCatalog.AOE_DAMAGE_CAP
-        elseif getMainHandILvl(caster) >= 119 then
-            cap = catalog.AOE_ITEM_119_CAP
-        else
-            cap = catalog.AOE_PRE_119_CAP
-        end
+        -- Splash uses the shared player AoE ladder. Aimed-at automaton
+        -- nukes keep the companion single-target cap via getOutgoingDamageCap.
+        local master = caster.getMaster and caster:getMaster()
+        return progression.getPetAoEDamageCap(master)
     end
 
-    return clampBlueAoECap(caster, cap)
+    if not caster:isPC() then
+        return catalog.AOE_PRE_119_CAP
+    end
+
+    local mainWeapon = caster:getEquipID(xi.slot.MAIN)
+    if primeWeaponIds[mainWeapon] then
+        return primeCatalog.AOE_DAMAGE_CAP
+    end
+
+    if remaWeaponIds[mainWeapon] then
+        return remaCatalog.AOE_DAMAGE_CAP
+    end
+
+    if progression.isRemaPathWeapon(mainWeapon) then
+        return catalog.AMBU_DAMAGE_CAP
+    end
+
+    if ambuCatalog.isFinalWeapon(mainWeapon, xi.slot.MAIN) then
+        return ambuCatalog.AOE_DAMAGE_CAP
+    end
+
+    if getMainHandILvl(caster) >= 119 then
+        return catalog.AOE_ITEM_119_CAP
+    end
+
+    return catalog.AOE_PRE_119_CAP
 end
 
 -- True for every extra mob an AoE spell tags. The aimed-at target is false
@@ -495,6 +490,11 @@ function catalog.getDamageMultiplier(caster, target, spell)
         caster:getMainJob() == xi.job.BLU and
         spell:getSkillType() == xi.skill.BLUE_MAGIC
     then
+        -- Splash extras do not inherit the 9x-105x main-hand table.
+        if catalog.isAoESplashTarget(spell, target) then
+            return 1
+        end
+
         return blueWeaponCatalog.getDamageMultiplier(caster)
     end
 

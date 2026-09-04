@@ -151,15 +151,15 @@ describe('BLU main-hand weapon amplification', function()
             end,
         }
 
-        -- Caliburnus is also a Prime item id (199,999 generic Prime AoE).
-        -- Splash stays on the 149,999 BLU contract; primary keeps the ST cap.
+        -- Splash skips weapon amp and uses the shared iLvl AoE ladder.
         local prime = makeCaster(21646, 119)
-        assert(catalog.AOE_DAMAGE_CAP == 149999)
-        assert(standardMagic.getAoEDamageCap(prime, floe) == 149999)
+        assert(standardMagic.getAoEDamageCap(prime, floe) == 199999)
+        assert(standardMagic.getDamageMultiplier(prime, primary, floe) == 105)
+        assert(standardMagic.getDamageMultiplier(prime, splash, floe) == 1)
         assert(standardMagic.getOutgoingDamageCap(prime, floe, primary) == 999999)
-        assert(standardMagic.getOutgoingDamageCap(prime, floe, splash) == 149999)
+        assert(standardMagic.getOutgoingDamageCap(prime, floe, splash) == 199999)
         assert(standardMagic.applyPlayerOutgoingLimits(prime, primary, floe, 400000) == 400000)
-        assert(standardMagic.applyPlayerOutgoingLimits(prime, splash, floe, 400000) == 149999)
+        assert(standardMagic.applyPlayerOutgoingLimits(prime, splash, floe, 400000) == 199999)
 
         local tizona = makeCaster(20688, 119)
         assert(standardMagic.getOutgoingDamageCap(tizona, floe, primary) == 600000)
@@ -171,6 +171,13 @@ describe('BLU main-hand weapon amplification', function()
 
         local sequence = makeCaster(20695, 119)
         assert(standardMagic.getOutgoingDamageCap(sequence, floe, primary) == 750000)
+        assert(standardMagic.getOutgoingDamageCap(sequence, floe, splash) == 149999)
+
+        local item119 = makeCaster(20705, 119)
+        assert(standardMagic.getOutgoingDamageCap(item119, floe, splash) == 79999)
+
+        local pre119 = makeCaster(20731, 115)
+        assert(standardMagic.getOutgoingDamageCap(pre119, floe, splash) == 40000)
 
         local ambu = makeCaster(21621, 119)
         assert(standardMagic.getOutgoingDamageCap(ambu, floe, primary) == 99999)

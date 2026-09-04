@@ -313,7 +313,11 @@ xi.job_utils.corsair.useWildCard = function(caster, target, ability, action)
 
     local total = caster:getLocalVar('corsairRollTotal')
 
-    caster:doWildCard(target, total)
+    -- Wild Card is party AoE; TargetFind also yields trusts. doWildCard is
+    -- PC-only (recast packet). Skip non-PCs so a trust in range cannot AV.
+    if target and target:getObjType() == xi.objType.PC then
+        caster:doWildCard(target, total)
+    end
     ability:setMsg(435 + math.floor((total - 1) / 2) * 2)
     action:setAnimation(target:getID(), 132 + total - 1)
 

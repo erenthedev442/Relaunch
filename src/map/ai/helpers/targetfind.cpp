@@ -129,8 +129,10 @@ void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOE_RADIUS radiusType, 
         withPet = false;
     }
 
-    // add original target first except for self-centered moves
-    if (radiusType != AOE_RADIUS::ATTACKER || m_conal)
+    // Seed the aimed-at target except for self-centered *ally* moves
+    // (Benediction). Offensive self-centered WS (Fell Cleave, aoe=3) must
+    // still include the clicked mob or the list is empty / ally-only.
+    if (radiusType != AOE_RADIUS::ATTACKER || m_conal || (targetFlags & TARGET_ENEMY))
     {
         addEntity(PTarget, false); // pet will be added later
         m_PTarget = PTarget;
@@ -539,10 +541,10 @@ bool CTargetFind::validEntity(CBattleEntity* PTarget)
         return false;
     }
 
-    // this is first target, always add him first
-    // Exception: for self-centered AoEs, all targets must pass radius validation
-    // Conals always add the main target
-    if (m_PTarget == nullptr && (!m_selfCenteredAoE || m_conal))
+    // First target is always allowed, except ally-only self-centered buffs
+    // (those must still pass radius). Offensive self-centered WS keep the
+    // aimed-at enemy even if they sit just outside the splash radius.
+    if (m_PTarget == nullptr && (!m_selfCenteredAoE || m_conal || (m_targetFlags & TARGET_ENEMY)))
     {
         return true;
     }

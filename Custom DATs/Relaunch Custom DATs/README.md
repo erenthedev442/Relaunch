@@ -11,8 +11,8 @@ augments, or server-side balance — the server is always the source of truth.
 1. Unzip this whole folder anywhere.
 2. Double-click **`Install Relaunch DATs.bat`** and approve the admin prompt.
 3. It finds your FINAL FANTASY XI install, backs up every original file, and
-   installs ALL of the pack's overrides (Legendary Ring + Legendary Track Suit).
-   Restart the game client — done.
+   installs ALL of the pack's overrides (Legendary Ring + Legendary Track Suit +
+   Matsui-P mesh). Restart the game client — done.
 
 To revert at any time, double-click **`Uninstall Relaunch DATs.bat`** (it
 restores the original from the backup the installer made).
@@ -29,10 +29,10 @@ Prefer not to touch client files? Load it as an overlay instead:
 3. Enable the overlay in XIPivot.
 4. Restart the game client.
 
-This pack is Ring + Track Suit only. Epeolatry / Idris / extra relic jobs
-live in `Custom DATs/Legendary-Relic-Weapon-DATs/` (`ROM/118/108.DAT` and
-`ROM/0/6.DAT`). Enable that folder in XIPivot as a second overlay or the
-new Epeo/Idris IDs stay WAR/THF leftovers.
+This pack is Ring + Track Suit + Matsui-P’s year-round mesh. Epeolatry /
+Idris / extra relic jobs live in `Custom DATs/Legendary-Relic-Weapon-DATs/`
+(`ROM/118/108.DAT` and `ROM/0/6.DAT`). Enable that folder in XIPivot as a
+second overlay or the new Epeo/Idris IDs stay WAR/THF leftovers.
 
 ## Current Overrides
 
@@ -47,6 +47,14 @@ new Epeo/Idris IDs stay WAR/THF leftovers.
   (sweater textures), plus item names/tooltips in `ROM/286/73.DAT`
 - Without this pack the set still equips and works — it just shows the models'
   original colors (black/silver suit, dusty-red sweater) and blank item names
+
+### Matsui-P (Excenmille (S) overlay)
+
+- Server still summons him as spell **1004** / menu name **Excenmille (S)**
+- Look model **3121** (`0x0000310C`) — same encoding as Cornelia / Monberaux
+- Mesh: `ROM/310/13.DAT` (year-round trust model, not the campaign spell DAT)
+- Without this file an older client dump may T-pose; updated clients already have it
+- Do **not** `/ma "Matsui-P"` — that is seasonal spell 1003 and R0s the client
 
 ### Legendary Ring
 

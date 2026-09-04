@@ -6,7 +6,7 @@ local ambuscade = require('modules/custom/lua/ambuscade_weapons_catalog')
 local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
 
 -- FileWatcher dofile discards the return value. Mutate the cached table so a
--- reload cannot silently drop AOE_DAMAGE_CAP and leave the old ceilings live.
+-- reload cannot silently drop live ceilings.
 local CATALOG_KEY = 'modules/custom/lua/blu_weapon_amplification_catalog'
 local catalog = package.loaded[CATALOG_KEY]
 if type(catalog) ~= 'table' then
@@ -16,9 +16,9 @@ package.loaded[CATALOG_KEY] = catalog
 
 catalog.DAMAGE_CAP_LOCAL_VAR = 'BlueSpellDamageCap'
 
--- Locked contract: splash hits of a BLU AoE stay at or below this.
--- The aimed-at mob uses the single-target weapon ceiling.
-catalog.AOE_DAMAGE_CAP = 149999
+-- Splash skips weapon amp and uses the shared iLvl AoE ladder from
+-- standard_magic_tuning_catalog (40k / 79,999 / 99,999 / 149,999 / 199,999).
+-- The aimed-at mob uses the full multiplier and the single-target weapon cap.
 
 -- Spell ceilings only. Weaponskills keep the shared 999k REMA/Prime path.
 -- Multipliers stay so Relic needs setup to approach its cap and Aeonic

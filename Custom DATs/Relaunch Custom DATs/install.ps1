@@ -73,7 +73,13 @@ try {
     $installed = 0; $already = 0; $skipped = 0
     foreach ($o in $overrides) {
         $dst = Join-Path $target $o.Rel
-        if (-not (Test-Path $dst)) { Say "  SKIP $($o.Rel) (not in this client)" Yellow; $skipped++; continue }
+        if (-not (Test-Path $dst)) {
+            $dstDir = Split-Path $dst
+            if (-not (Test-Path $dstDir)) { New-Item -ItemType Directory -Path $dstDir -Force | Out-Null }
+            Copy-Item $o.Src $dst -Force
+            $installed++
+            continue
+        }
         $srcHash = (Get-FileHash $o.Src -Algorithm SHA1).Hash
         if ((Get-FileHash $dst -Algorithm SHA1).Hash -eq $srcHash) { $already++; continue }
         $bak = "$dst.orig"

@@ -252,6 +252,14 @@ catalog.floorMechanics =
     },
 }
 
+-- Per-mobskill incoming-damage caps. Voidspire MATT/MAGIC_DAMAGE scaling
+-- makes some family moves (Hakutaku Death Ray) one-shot at deep floors.
+-- Applied on spawn via local var; the skill script clamps before takeDamage.
+catalog.skillDamageCaps =
+{
+    Hakutaku = { DeathRay = 5000 },
+}
+
 -- Flavor banners announced the first time you cross into a new Court depth
 -- during a run (cosmetic only).
 catalog.depthBanners =

@@ -2125,6 +2125,20 @@ void LoadPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
     // set the damage type of the pet
     static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setDmgType(PPetData->m_dmgType);
 
+    // Family speed is 40 (automaton / most pets). Player base is 50, and
+    // gear pushes it higher, so the pet is left behind on any run. Luopans
+    // stay parked. Match the master's current speed at Activate.
+    if (PPet->getPetType() != PET_TYPE::LUOPAN && PMaster != nullptr)
+    {
+        const uint8 keepUp = std::max(PMaster->baseSpeed, PMaster->speed);
+        if (keepUp > PPet->baseSpeed)
+        {
+            PPet->baseSpeed      = keepUp;
+            PPet->animationSpeed = keepUp;
+            PPet->UpdateSpeed();
+        }
+    }
+
     PMaster->PPet = PPet;
 }
 

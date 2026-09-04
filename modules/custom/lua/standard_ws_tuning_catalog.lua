@@ -29,8 +29,9 @@ catalog.FRESH_99_MULTIPLIER         = 8.00
 catalog.MASTERED_99_MULTIPLIER      = 13.00
 catalog.PET_FRESH_99_MULTIPLIER     = 7.00
 catalog.PET_MASTERED_99_MULTIPLIER  = 11.00
--- BST/DRG/PUP/SMN companion caps by master mainhand tier (pets never use
--- player Prime WS ceilings).
+-- BST/DRG/PUP/SMN companion ST caps by master mainhand tier (pets never use
+-- player Prime WS ceilings). Splash AoE uses the player 40k / 80k / 99k /
+-- 149k / 199k ladder via getPetAoEDamageCap.
 catalog.PET_AMBU_DAMAGE_CAP         = 99999
 catalog.PET_REMA_DAMAGE_CAP         = 999999
 catalog.PET_PRIME_DAMAGE_CAP        = 1499999
@@ -233,6 +234,85 @@ function catalog.getPetDamageCap(player)
     end
 
     return catalog.DAMAGE_CAP
+end
+
+-- Same splash ladder as player WS / -ga magic: 40k / 79,999 / 99,999 /
+-- 149,999 / 199,999 from the master's main hand. Pet single-target ceilings
+-- stay on getPetDamageCap; splash never exceeds that ST cap.
+function catalog.getPlayerSplashDamageCap(player)
+    local itemId = getMasterMainItemId(player)
+    if isPrimeFinalWeapon(itemId) then
+        local ok, prime = pcall(require, 'modules/custom/lua/prime_ws_tuning_catalog')
+        if ok and prime and prime.AOE_DAMAGE_CAP then
+            return prime.AOE_DAMAGE_CAP
+        end
+
+        return 199999
+    end
+
+    if isRemaFinalWeapon(itemId) then
+        local ok, rema = pcall(require, 'modules/custom/lua/rema_ws_tier_catalog')
+        if ok and rema and rema.AOE_DAMAGE_CAP then
+            return rema.AOE_DAMAGE_CAP
+        end
+
+        return 149999
+    end
+
+    if catalog.isRemaPathWeapon(itemId) or isAmbuFinalWeapon(itemId) then
+        local ok, ambu = pcall(require, 'modules/custom/lua/ambuscade_ws_tuning_catalog')
+        if ok and ambu and ambu.AOE_DAMAGE_CAP then
+            return ambu.AOE_DAMAGE_CAP
+        end
+
+        return catalog.REMA_PRE_III_DAMAGE_CAP
+    end
+
+    if player and player.getEquippedItem then
+        local weapon = player:getEquippedItem(xi.slot.MAIN)
+        if weapon ~= nil and weapon.getILvl and (weapon:getILvl() or 0) >= 119 then
+            return catalog.DAMAGE_CAP
+        end
+    end
+
+    return catalog.NON_ITEM_LEVEL_119_CAP
+end
+
+function catalog.getPetAoEDamageCap(player)
+    return math.min(catalog.getPetDamageCap(player), catalog.getPlayerSplashDamageCap(player))
+end
+
+-- Extra targets of an AoE / conal pet skill. The aimed-at target is false so
+-- it keeps the companion single-target ceiling. Missing primary-id data fails
+-- closed (treat as splash) so old callers still see the splash cap.
+function catalog.isPetAoESplashHit(skill, target)
+    if skill == nil then
+        return false
+    end
+
+    local isAoE = skill.isAoE and skill:isAoE()
+    local isConal = skill.isConal and skill:isConal()
+    if not isAoE and not isConal then
+        return false
+    end
+
+    -- Spells report isAoE as 0/1; pet skills report a boolean.
+    if type(isAoE) == 'number' and isAoE == 0 and not isConal then
+        return false
+    end
+
+    if
+        target and
+        target.getID and
+        skill.getPrimaryTargetID
+    then
+        local primaryId = skill:getPrimaryTargetID()
+        if type(primaryId) == 'number' and primaryId > 0 then
+            return target:getID() ~= primaryId
+        end
+    end
+
+    return true
 end
 
 function catalog.setPetDamageCap(pet, player)

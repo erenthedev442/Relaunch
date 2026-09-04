@@ -151,6 +151,18 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         assert(catalog.getPetDamageCap(drgPrime) == catalog.PET_REMA_DAMAGE_CAP)
         assert(catalog.getPetDamageMultiplier(drgPrime, makeTarget(155, 120000)) == 31.35)
         assert(catalog.applyMultiplier(200000, 1, catalog.getPetDamageCap(pupMythic)) == 200000)
+        assert(catalog.getPetAoEDamageCap(standard) == catalog.DAMAGE_CAP)
+        assert(catalog.getPetAoEDamageCap(ambuscade) == catalog.PET_AMBU_DAMAGE_CAP)
+        assert(catalog.getPetAoEDamageCap(pupMythic119I) == catalog.PET_AMBU_DAMAGE_CAP)
+        assert(catalog.getPetAoEDamageCap(pupMythic) == 149999)
+        assert(catalog.getPetAoEDamageCap(pupPrime) == 199999)
+        assert(catalog.getPetAoEDamageCap(bstPrime) == 199999)
+        assert(catalog.getPetAoEDamageCap(smnPrime) == 199999)
+        assert(catalog.getPetAoEDamageCap(mismatchedPupPrime) == catalog.DAMAGE_CAP)
+        assert(catalog.getPetAoEDamageCap(drgPrime) == 199999)
+        assert(catalog.getPetAoEDamageCap(makePlayer(
+            { [xi.slot.MAIN] = { id = 1, ilvl = 1, reqLvl = 1 } }, 99)) ==
+            catalog.NON_ITEM_LEVEL_119_CAP)
     end)
 
     it('refreshes a live pet cap from the currently equipped main hand', function()

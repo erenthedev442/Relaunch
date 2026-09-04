@@ -22,6 +22,12 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 
+    -- Voidspire Hakutaku: MATT/MAGIC_DAMAGE scaling pushed this past 8k.
+    local voidCap = mob:getLocalVar('VoidspireDeathRayCap')
+    if voidCap > 0 then
+        info.damage = math.min(info.damage, voidCap)
+    end
+
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
     end

@@ -40,16 +40,28 @@ commandObj.onTrigger = function(player)
     local lrot     = leader:getRotPos()
     local lzone    = leader:getZoneID()
 
+    local inst = leader:getInstance()
     local warped = 0
     for _, member in ipairs(player:getParty()) do
         if member and member:getID() ~= leaderID then
-            -- Mirror !bring: cross-zone gets setPos with zone arg, same-zone gets plain snap.
-            if member:getZoneID() ~= lzone then
-                member:setPos(lx, ly, lz, lrot, lzone)
-            else
-                member:setPos(lx, ly, lz, lrot)
+            local blocked = inst and
+                lzone == xi.zone.MAQUETTE_ABDHALJS_LEGION_B and
+                xi.ambuscade and
+                xi.ambuscade.canEnter and
+                not xi.ambuscade.canEnter(member)
+            if not blocked then
+                if inst then
+                    member:setInstance(inst)
+                end
+                -- Mirror !bring: cross-zone gets setPos with zone arg, same-zone
+                -- gets a plain snap. Instanced zones still need the zone arg.
+                if member:getZoneID() ~= lzone or inst then
+                    member:setPos(lx, ly, lz, lrot, lzone)
+                else
+                    member:setPos(lx, ly, lz, lrot)
+                end
+                warped = warped + 1
             end
-            warped = warped + 1
         end
     end
 

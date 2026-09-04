@@ -5148,7 +5148,7 @@ INSERT INTO `item_weapon` VALUES (22291,'voluspa_bullet',26,0,0,0,0,1,1,240,270,
 INSERT INTO `item_weapon` VALUES (22292,'date_shuriken',27,3,242,0,0,1,1,192,125,0); -- ilvl_skill 242 (Throwing) per BG-Wiki; shipped 0 upstream unlike Seki/Togakushi peers
 INSERT INTO `item_weapon` VALUES (22293,'hauksbok_arrow',25,0,0,0,0,1,1,90,110,0);
 INSERT INTO `item_weapon` VALUES (22294,'hauksbok_bolt',26,0,0,0,0,1,1,192,156,0);
-INSERT INTO `item_weapon` VALUES (22295,'hauksbok_bullet',26,0,0,0,0,1,1,240,300,0);
+INSERT INTO `item_weapon` VALUES (22295,'hauksbok_bullet',26,1,0,0,0,1,1,240,300,0);
 INSERT INTO `item_weapon` VALUES (22296,'voluspa_tathlum',0,0,0,0,0,1,1,999,0,0);
 INSERT INTO `item_weapon` VALUES (22297,'aurgelmir_orb',0,0,0,0,0,1,1,999,0,0);
 INSERT INTO `item_weapon` VALUES (22298,'aurgelmir_orb_+1',0,0,0,0,0,1,1,999,0,0);

@@ -323,7 +323,13 @@ local function finalizeBlueDamage(caster, target, spell, damage, params, trickAt
         end
     end
 
-    if eligible and damage > 0 then
+    -- Weapon amp and spell-tax premiums are for the aimed-at mob only.
+    -- Splash keeps the stock BLU formula, then the shared AoE ceiling.
+    if
+        eligible and
+        damage > 0 and
+        not standardMagic.isAoESplashTarget(spell, target)
+    then
         local weapon  = standardMagic.getDamageMultiplier(caster, target, spell)
         local scaled  = bluSpellPower.getEffectiveWeaponMultiplier(weapon, spell)
         local premium = bluSpellPower.getDamageMultiplier(spell)

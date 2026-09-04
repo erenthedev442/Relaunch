@@ -155,9 +155,11 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
     local cap = standardProgression.setPetDamageCap
         and standardProgression.setPetDamageCap(mob, master)
         or standardProgression.DAMAGE_CAP
-    if skill:isAoE() or skill:isConal() then
-        multiplier = 1 + (multiplier - 1) * 0.50
-        cap = math.floor(cap * 0.50)
+    if
+        standardProgression.isPetAoESplashHit and
+        standardProgression.isPetAoESplashHit(skill, target)
+    then
+        cap = standardProgression.getPetAoEDamageCap(master)
     end
 
     if master:getMainLvl() < standardProgression.ENDGAME_PLAYER_LEVEL then

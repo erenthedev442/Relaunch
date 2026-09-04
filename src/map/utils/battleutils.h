@@ -209,6 +209,8 @@ uint16 getBarrageShotCount(CBattleEntity* PBattleEntity);
 uint8 getStoreTPbonusFromMerit(CBattleEntity* PEntity);
 
 void ClaimMob(CBattleEntity* PDefender, CBattleEntity* PAttacker, bool passing = false);
+uint8 GetExpContributorLevel(CBattleEntity* PEntity);
+void RecordHighestPlayerLevel(CMobEntity* PMob, CBattleEntity* PEntity);
 void DirtyExp(CBattleEntity* PDefender, CBattleEntity* PAttacker);
 void RelinquishClaim(CCharEntity* PDefender);
 

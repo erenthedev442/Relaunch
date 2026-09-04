@@ -2284,10 +2284,7 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
                     ((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(taChar, damage);
                 }
 
-                if (((CMobEntity*)PDefender)->m_HiPCLvl < PAttacker->GetMLevel())
-                {
-                    ((CMobEntity*)PDefender)->m_HiPCLvl = PAttacker->GetMLevel();
-                }
+                RecordHighestPlayerLevel(static_cast<CMobEntity*>(PDefender), PAttacker);
 
                 // if the mob is charmed by player
                 if (PDefender->PMaster != nullptr && PDefender->PMaster->objtype == TYPE_PC)
@@ -2491,10 +2488,7 @@ int32 TakeWeaponskillDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, 
                         ->loc.zone->UpdateEntityPacket(PDefender, ENTITY_UPDATE, UPDATE_COMBAT);
                 }
 
-                if (((CMobEntity*)PDefender)->m_HiPCLvl < PAttacker->GetMLevel())
-                {
-                    ((CMobEntity*)PDefender)->m_HiPCLvl = PAttacker->GetMLevel();
-                }
+                RecordHighestPlayerLevel(static_cast<CMobEntity*>(PDefender), PAttacker);
 
                 break;
 
@@ -4763,6 +4757,42 @@ void ClaimMob(CBattleEntity* PDefender, CBattleEntity* PAttacker, bool passing)
     }
 }
 
+uint8 GetExpContributorLevel(CBattleEntity* PEntity)
+{
+    if (PEntity == nullptr)
+    {
+        return 0;
+    }
+
+    if (PEntity->objtype == TYPE_PC)
+    {
+        return PEntity->GetMLevel();
+    }
+
+    // i119 automatons / jugs / avatars must not stamp a 119 "player" onto
+    // the mob. EXP and drops use 1-99 only; a 119 vs a worm is Too Weak.
+    if (PEntity->PMaster != nullptr && PEntity->PMaster->objtype == TYPE_PC)
+    {
+        return PEntity->PMaster->GetMLevel();
+    }
+
+    return 0;
+}
+
+void RecordHighestPlayerLevel(CMobEntity* PMob, CBattleEntity* PEntity)
+{
+    if (PMob == nullptr)
+    {
+        return;
+    }
+
+    const uint8 level = GetExpContributorLevel(PEntity);
+    if (level > PMob->m_HiPCLvl)
+    {
+        PMob->m_HiPCLvl = level;
+    }
+}
+
 void DirtyExp(CBattleEntity* PDefender, CBattleEntity* PAttacker)
 {
     if (PDefender->objtype == TYPE_MOB)
@@ -5528,6 +5558,11 @@ void DrawIn(CBattleEntity* PTarget, const position_t pos, const float offset, co
 
 void DoWildCardToEntity(CCharEntity* PCaster, CCharEntity* PTarget, const uint8 roll)
 {
+    if (PCaster == nullptr || PTarget == nullptr)
+    {
+        return;
+    }
+
     // No matter the roll, all basic abilities are reset
     PTarget->PRecastContainer->ResetAbilities();
 

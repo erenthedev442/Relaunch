@@ -135,15 +135,10 @@ VALUES
 DELETE FROM mob_skill_lists WHERE skill_list_id = 6004;
 INSERT INTO mob_skill_lists (skill_list_name, skill_list_id, mob_skill_id)
 VALUES
-    ('matsui_p', 6004, 128), -- Blade: Rin
-    ('matsui_p', 6004, 129), -- Blade: Retsu
-    ('matsui_p', 6004, 133), -- Blade: Ei
-    ('matsui_p', 6004, 134), -- Blade: Jin
-    ('matsui_p', 6004, 135), -- Blade: Ten
-    ('matsui_p', 6004, 136), -- Blade: Ku
-    ('matsui_p', 6004, 138), -- Blade: Kamu
-    ('matsui_p', 6004, 140), -- Blade: Hi
-    ('matsui_p', 6004, 141); -- Blade: Shun
+    ('matsui_p', 6004, 137), -- Blade: Metsu (Darkness / Fragmentation)
+    ('matsui_p', 6004, 138), -- Blade: Kamu  (Fragmentation / Compression)
+    ('matsui_p', 6004, 140), -- Blade: Hi    (Darkness / Gravitation)
+    ('matsui_p', 6004, 141); -- Blade: Shun  (Fusion / Impaction)
 
 -- ---- 3. Pool 6004 = Matsui-P (model 3121 + NIN/BLM) -------------------
 REPLACE INTO mob_pools

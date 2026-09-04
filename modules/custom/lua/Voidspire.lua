@@ -218,6 +218,10 @@ local function spawnFloorMob(owner, mobDef, level, mods, maxHP, floor)
         mob:setSpawn(mx, py, mz, rot)
         mob:spawn()
         mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)        -- no CP/JP farm
+        local skillCaps = catalog.skillDamageCaps and catalog.skillDamageCaps[mobDef.name]
+        if skillCaps and skillCaps.DeathRay then
+            mob:setLocalVar('VoidspireDeathRayCap', skillCaps.DeathRay)
+        end
         for modId, val in pairs(mods) do mob:setMod(modId, val) end  -- AFTER spawn()
         mob:setMaxHP(maxHP)
         mob:setHP(maxHP)

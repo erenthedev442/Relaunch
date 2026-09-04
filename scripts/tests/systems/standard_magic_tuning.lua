@@ -164,6 +164,15 @@ describe('Level-scaled direct magic tuning', function()
             makeAutomaton(makeCaster(99, true, xi.job.PUP, { [xi.slot.MAIN] = 20511 }))) == 999999)
         assert(catalog.getDamageCap(
             makeAutomaton(makeCaster(99, true, xi.job.PUP, { [xi.slot.MAIN] = 21535 }))) == 1499999)
+
+        local firega = makeSpell(
+            xi.magic.spell.FIRAGA, xi.skill.ELEMENTAL_MAGIC, 28, xi.job.BLM, true)
+        assert(catalog.getAoEDamageCap(
+            makeAutomaton(makeCaster(99, true, xi.job.PUP, { [xi.slot.MAIN] = 1 })), firega) == 40000)
+        assert(catalog.getAoEDamageCap(
+            makeAutomaton(makeCaster(99, true, xi.job.PUP, { [xi.slot.MAIN] = 20511 })), firega) == 149999)
+        assert(catalog.getAoEDamageCap(
+            makeAutomaton(makeCaster(99, true, xi.job.PUP, { [xi.slot.MAIN] = 21535 })), firega) == 199999)
     end)
 
     it('uses lower player caps for companion main jobs only', function()
@@ -377,17 +386,23 @@ describe('Level-scaled direct magic tuning', function()
         assert(catalog.applyPlayerOutgoingLimits(caster, splash, firega, 200000) == 149999)
     end)
 
-    it('caps BLU AoE splash at 149999 while the aimed-at mob keeps the ST ceiling', function()
+    it('caps BLU AoE splash to the shared iLvl ladder while the aimed-at mob keeps the ST ceiling', function()
         local prime = makeCaster(99, true, xi.job.BLU, { [xi.slot.MAIN] = 21646 })
+        local item119 = makeCaster(
+            99, true, xi.job.BLU, { [xi.slot.MAIN] = { id = 1, ilvl = 119 } })
+        local pre119 = makeCaster(
+            99, true, xi.job.BLU, { [xi.slot.MAIN] = { id = 1, ilvl = 1 } })
         local primary = makeTarget(99, 5000000, true, 100)
         local splash = makeTarget(99, 5000000, true, 200)
         local floe = makeSpell(
             xi.magic.spell.SPECTRAL_FLOE, xi.skill.BLUE_MAGIC, 99, xi.job.BLU, true, 100)
 
         assert(catalog.getOutgoingDamageCap(prime, floe, primary) == 999999)
-        assert(catalog.getOutgoingDamageCap(prime, floe, splash) == 149999)
+        assert(catalog.getOutgoingDamageCap(prime, floe, splash) == 199999)
+        assert(catalog.getOutgoingDamageCap(item119, floe, splash) == 79999)
+        assert(catalog.getOutgoingDamageCap(pre119, floe, splash) == 40000)
         assert(catalog.applyPlayerOutgoingLimits(prime, primary, floe, 400000) == 400000)
-        assert(catalog.applyPlayerOutgoingLimits(prime, splash, floe, 400000) == 149999)
+        assert(catalog.applyPlayerOutgoingLimits(prime, splash, floe, 400000) == 199999)
     end)
 
     it('clamps leveling nukes to one third of mob HP after the job factor', function()

@@ -627,7 +627,13 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         if step.relicCurrency and chain.currency then
             if step.highTierAlt and chain.highCurrency then
                 local lowQty  = step.relicCurrency
-                local highQty = step.highTierAlt
+                local rate    = xi.settings.main.CURRENCY_EXCHANGE_RATE or 10
+                if rate < 1 then
+                    rate = 10
+                end
+                -- Always charge the mid-tier equivalent. highTierAlt=5 was
+                -- leftover retail 100:1 math; this box exchanges at 10:1.
+                local highQty = math.max(1, math.floor(lowQty / rate))
                 list[#list + 1] =
                 {
                     have = function(p) return p:getItemCount(chain.currency) end,
@@ -887,9 +893,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return
         end
         if def.key == 'relic' and page == 1 then
+            local rate = xi.settings.main.CURRENCY_EXCHANGE_RATE or 10
+            if rate < 1 then
+                rate = 10
+            end
+            local highQty = math.max(1, math.floor(500 / rate))
             player:printToPlayer(
-                '[Weapon Forge] Relic 119 II->III accepts either 500 hundred-tier Dynamis currency '
-                .. 'OR 5 ten-thousand bills per weapon (same total value).',
+                string.format(
+                    '[Weapon Forge] Relic 119 II->III accepts either 500 hundred-tier Dynamis currency '
+                    .. 'OR %d ten-thousand-tier (1 per %d mid-tier).',
+                    highQty,
+                    rate),
                 xi.msg.channel.SYSTEM_3)
         end
         local n     = #def.chains

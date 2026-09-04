@@ -469,10 +469,21 @@ xi.trust.canCast = function(caster, spell, notAllowedTrustIds)
         return -1
     end
 
-    -- Trusts cannot be summoned if you have hate
+    -- Trusts cannot be summoned if you have hate.
+    -- hasEnmity() also scans mob battle-targets by targid across every
+    -- instance copy in the zone. Dynamis [D] reuses targid 1, so another
+    -- party's fight (or a leftover target on a recycled mob) can false-hit
+    -- a player who just zoned in. Require real notoriety or being engaged.
     if caster:hasEnmity() then
-        caster:messageSystem(xi.msg.system.TRUST_NO_ENMITY)
-        return -1
+        local realHate = caster:isEngaged()
+        if not realHate then
+            local list = caster:getNotorietyList()
+            realHate = list ~= nil and #list > 0
+        end
+        if realHate then
+            caster:messageSystem(xi.msg.system.TRUST_NO_ENMITY)
+            return -1
+        end
     end
 
     -- Check party for trusts

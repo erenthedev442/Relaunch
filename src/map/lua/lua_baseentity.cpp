@@ -14842,13 +14842,29 @@ void CLuaBaseEntity::fold()
 
 void CLuaBaseEntity::doWildCard(CLuaBaseEntity* PEntity, uint8 total)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
         return;
     }
 
-    battleutils::DoWildCardToEntity(static_cast<CCharEntity*>(m_PBaseEntity), static_cast<CCharEntity*>(PEntity->m_PBaseEntity), total);
+    // Party AoE includes trusts (CTrustEntity). static_cast + pushPacket AVs.
+    if (!PEntity || !PEntity->m_PBaseEntity || !CBaseEntity::IsEntityAlive(PEntity->m_PBaseEntity))
+    {
+        ShowWarning("doWildCard: invalid or dead target from %s.", m_PBaseEntity->getName());
+        return;
+    }
+
+    auto* PCaster = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+    auto* PTarget = dynamic_cast<CCharEntity*>(PEntity->m_PBaseEntity);
+    if (PCaster == nullptr || PTarget == nullptr)
+    {
+        return;
+    }
+
+    battleutils::DoWildCardToEntity(PCaster, PTarget, total);
 }
 
 /************************************************************************

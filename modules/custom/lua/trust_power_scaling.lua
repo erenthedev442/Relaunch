@@ -357,6 +357,15 @@ function xi.trustPowerApply(mob, master, spellId)
     applyCaps(mob, entry)
     safeInjectKit(mob, entry.injectKit)
 
+    -- addMod(MP) after spawn raises max MP but leaves current MP on the
+    -- pre-scale pool. Fill so MPP gambits (Aspir etc.) do not fire on summon.
+    pcall(function()
+        local maxMP = mob:getMaxMP()
+        if maxMP > 0 then
+            mob:setMP(maxMP)
+        end
+    end)
+
     mob:setLocalVar('TrustPowerScaled', 1)
 end
 

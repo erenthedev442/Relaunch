@@ -189,27 +189,25 @@ void CAutomatonController::setMagicCooldowns()
 }
 
 // Determines standback behavior for the Automaton.
-// Animators override all behavior, Valor Edge frame will always enter melee, followed
-// by ranged head types defaulting to ranged behavior.
+// Valoredge always closes to melee (it has no ranged attack). Animator P II
+// is the only animator that forces range -- the basic / +1 / Turbo / P
+// animators do not. Sharpshot / caster heads stand back; melee heads on a
+// Sharpshot frame (WAR head + RNG body) close and still fire RA.
 auto CAutomatonController::shouldStandBack() const -> bool
 {
-    const CBattleEntity* PMaster = PAutomaton->PMaster;
-
-    if (PMaster)
-    {
-        CItemWeapon* animator = dynamic_cast<CItemWeapon*>(PMaster->m_Weapons[SLOT_RANGED]);
-
-        if (animator &&
-            (animator->getSubSkillType() == SUBSKILLTYPE::SUBSKILL_ANIMATOR ||
-             animator->getSubSkillType() == SUBSKILLTYPE::SUBSKILL_ANIMATOR_II))
-        {
-            return true;
-        }
-    }
-
     if (PAutomaton->getFrame() == AutomatonFrame::Valoredge)
     {
         return false;
+    }
+
+    const CBattleEntity* PMaster = PAutomaton->PMaster;
+    if (PMaster)
+    {
+        CItemWeapon* animator = dynamic_cast<CItemWeapon*>(PMaster->m_Weapons[SLOT_RANGED]);
+        if (animator && animator->getSubSkillType() == SUBSKILLTYPE::SUBSKILL_ANIMATOR_II)
+        {
+            return true;
+        }
     }
 
     switch (PAutomaton->getHead())
@@ -294,17 +292,18 @@ auto CAutomatonController::DoCombatTick(timer::time_point tick) -> Task<void>
 
 void CAutomatonController::Move()
 {
-    // Ranged mode (standback heads / Animator): keep standback and stop at 15'
-    // so the puppet closes to that mark and uses RA there. The old >15' check
-    // cleared standback and sent them into melee.
-    // Hybrid (Sharpshot frame, no standback): this path is skipped -- they
-    // run to melee. TryRangedAttack still fires RA on the Sharpshot frame.
-    // Low-MP casters still drop standback so they can melee.
-    if (PAutomaton->health.mp < 8 && PAutomaton->health.maxmp > 8)
+    // Ranged mode (standback heads / Animator P II): stop at 15' and RA.
+    // Hybrid (Sharpshot frame + melee head): no standback -- they run in.
+    // TryRangedAttack still fires RA on the Sharpshot frame.
+    // Low-MP casters drop standback so they can melee.
+    // Always clear the flag when standback is off: it used to stick after
+    // Activate / unequipping an animator, which is why taking the Animator
+    // off did not fix Deploy.
+    if ((PAutomaton->health.mp < 8 && PAutomaton->health.maxmp > 8) || !shouldStandBack())
     {
         PAutomaton->m_Behavior &= ~BEHAVIOR_STANDBACK;
     }
-    else if (shouldStandBack())
+    else
     {
         PAutomaton->m_Behavior |= BEHAVIOR_STANDBACK;
         PAutomaton->setMobMod(MOBMOD_STANDBACK_RANGE, 15);

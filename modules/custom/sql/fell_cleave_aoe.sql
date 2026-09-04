@@ -13,6 +13,8 @@
 -- aoe=3 keeps the same radius but centers it on the player.
 -- weapon_skills is cached at map boot, so this needs a map restart.
 -- The C++ isAoE()/radius-type change must ship with this UPDATE.
+-- Player/trust WS findWithinArea must pass TARGET_ENEMY or aoe=3 is
+-- treated as an ally-only self-centered buff and deals 0 damage.
 -- ============================================================================
 
 UPDATE `weapon_skills`

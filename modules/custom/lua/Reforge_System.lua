@@ -604,6 +604,17 @@ buildSourceNMMenu = function(player, srcDef, station)
                             partySize     = killer:getPartySize() or 1,
                             secondsToKill = os.time() - spawnedAt,
                         })
+                        local okHades, hades = pcall(require, 'modules/custom/lua/hades_daily')
+                        if okHades and hades and hades.fireCustomKill then
+                            pcall(function()
+                                hades.fireCustomKill(killer, {
+                                    system = 'reforge',
+                                    name   = md.name,
+                                    label  = md.label,
+                                    setKey = srcDef.setKey,
+                                })
+                            end)
+                        end
                         -- Use catalog md.name (not Genbu_S1 spawn name).
                         pcall(function()
                             trustDrops.tryAward(killer, md.name, 'reforge')

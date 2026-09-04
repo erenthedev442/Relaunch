@@ -437,10 +437,7 @@ void CEnmityContainer::UpdateEnmityFromDamage(CBattleEntity* PEntity, int32 Dama
 
         UpdateEnmity(PEntity, CE, VE);
 
-        if (m_EnmityHolder->m_HiPCLvl < PEntity->GetMLevel())
-        {
-            m_EnmityHolder->m_HiPCLvl = PEntity->GetMLevel();
-        }
+        battleutils::RecordHighestPlayerLevel(m_EnmityHolder, PEntity);
     }
 }
 

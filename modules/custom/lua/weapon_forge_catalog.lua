@@ -336,7 +336,9 @@ catalog.relicCosts =
 {
     { hlRank = 5, divergenceWins = 1, relicCurrency = 50 },                                  -- base -> 119 I
     { hlRank = 5, divergenceWins = 2, relicCurrency = 100, pluton = 200 },                    -- 119 I -> II
-    { hlRank = 5, divergenceWins = 4, relicCurrency = 500, highTierAlt = 5, pluton = 500,
+    -- highTierAlt qty must equal relicCurrency / CURRENCY_EXCHANGE_RATE.
+    -- This server is 10:1 (not retail 100:1), so 500 silvers == 50 golds.
+    { hlRank = 5, divergenceWins = 4, relicCurrency = 500, highTierAlt = 50, pluton = 500,
         marks = 1000 },                                                                       -- 119 II -> III
 }
 -- Base provision (forge issues the base; retail NM drops are WIP).

@@ -567,25 +567,107 @@ end
 
 -- ─── Ambuscade Tome ───────────────────────────────────────────────────────────
 
+-- Party-rift reservation. createInstance is async: until the host finishes
+-- zoning, member:getInstance() is still nil. Two tome clicks in that window
+-- each called createInstance, so a 2-box got two solo copies (solo Gallantry,
+-- Seal ignored). First click now claims the party key; everyone else waits
+-- or is pulled in when the host's callback fires.
+local pendingRifts = {}
+
+local function isPc(entity)
+    return entity and entity.getObjType and entity:getObjType() == xi.objType.PC
+end
+
+local function liveAmbuscade(inst)
+    if not inst then
+        return false
+    end
+    local ok, live = pcall(function()
+        return inst:getZone():getID() == xi.zone.MAQUETTE_ABDHALJS_LEGION_B and
+            not inst:completed() and
+            not inst:failed()
+    end)
+    return ok and live
+end
+
+local function partyPcs(player)
+    local members = {}
+    local seen = {}
+    local function add(member)
+        if not isPc(member) then
+            return
+        end
+        local id = member:getID()
+        if seen[id] then
+            return
+        end
+        seen[id] = true
+        members[#members + 1] = member
+    end
+    add(player)
+    for _, member in pairs(player:getParty() or {}) do
+        add(member)
+    end
+    return members
+end
+
+local function partyKey(player)
+    local ids = {}
+    for _, member in ipairs(partyPcs(player)) do
+        ids[#ids + 1] = member:getID()
+    end
+    table.sort(ids)
+    if #ids <= 1 then
+        return nil
+    end
+    return table.concat(ids, ':')
+end
+
 -- If a party member is already inside a live Ambuscade instance, return it so
 -- the player JOINS that battle instead of getting a private copy. Without this
 -- every party member got their own instance (visible-but-untargetable "ghosts"
 -- of each other) and numChars was always 1, making Gallantry unobtainable.
 local function findPartyAmbuscade(player)
-    for _, member in pairs(player:getParty()) do
+    local key = partyKey(player)
+    local rift = key and pendingRifts[key]
+    if rift and liveAmbuscade(rift.instance) then
+        return rift.instance
+    end
+
+    for _, member in ipairs(partyPcs(player)) do
         if member:getID() ~= player:getID() then
             local inst = member:getInstance()
-            if
-                inst and
-                inst:getZone():getID() == xi.zone.MAQUETTE_ABDHALJS_LEGION_B and
-                not inst:completed() and
-                not inst:failed()
-            then
+            if liveAmbuscade(inst) then
                 return inst
             end
         end
     end
     return nil
+end
+
+local function noteHeldSeal(player)
+    if player:getItemCount(SEAL_ITEM) > 0 then
+        player:printToPlayer(
+            '[Ambuscade] Seal held -- a party clear consumes one and triples Gallantry. Do not use the item.',
+            SYS)
+    end
+end
+
+local function admitToAmbuscade(player, instance, message)
+    if not liveAmbuscade(instance) then
+        return false
+    end
+    local current = player:getInstance()
+    if current and current == instance then
+        return true
+    end
+    player:setInstance(instance)
+    player:setPos(137, 12.5, -137, 32, xi.zone.MAQUETTE_ABDHALJS_LEGION_B)
+    if message then
+        player:printToPlayer(message, SYS)
+    end
+    noteHeldSeal(player)
+    return true
 end
 
 -- ENTRY GATE: requires proof of endgame combat readiness before Ambuscade
@@ -626,18 +708,93 @@ local function enterAmbuscade(player, diffOption)
     local partyInst = findPartyAmbuscade(player)
     if partyInst then
         -- setInstance registers the char on the instance (numChars now counts
-        -- them for Gallantry); the difficulty picked here is ignored — the
+        -- them for Gallantry); the difficulty picked here is ignored -- the
         -- battle already runs at its creator's difficulty.
-        player:setInstance(partyInst)
-        player:setPos(137, 12.5, -137, 32, xi.zone.MAQUETTE_ABDHALJS_LEGION_B)
-        player:printToPlayer('[Ambuscade] Joining your party\'s battle already in progress!', SYS)
+        admitToAmbuscade(player, partyInst, '[Ambuscade] Joining your party\'s battle already in progress!')
         return
+    end
+
+    local key = partyKey(player)
+    if key then
+        local rift = pendingRifts[key]
+        if rift and not liveAmbuscade(rift.instance) then
+            rift.queued[player:getID()] = true
+            player:printToPlayer(
+                '[Ambuscade] Your party is opening the rift. You will be pulled in when it is ready.',
+                SYS)
+            return
+        end
+
+        pendingRifts[key] =
+        {
+            hostId  = player:getID(),
+            queued  = {},
+            created = GetSystemTime and GetSystemTime() or os.time(),
+        }
+        player:timer(90000, function()
+            local pending = pendingRifts[key]
+            if pending and not liveAmbuscade(pending.instance) then
+                pendingRifts[key] = nil
+            end
+        end)
     end
 
     player:setCharVar('Ambuscade_Difficulty', diffOption)
     player:createInstance(30000)
     player:printToPlayer(string.format('[Ambuscade] Entering %s. Good luck!', DIFF_NAME[diffOption]), SYS)
+    if key then
+        player:printToPlayer('[Ambuscade] Party members in Mhaura will be pulled into this battle.', SYS)
+    end
+    noteHeldSeal(player)
 end
+
+-- Called from the instance script after the host is placed. Flushes anyone
+-- who clicked during the load window and pulls other party members still
+-- standing in Mhaura (so a 2-box does not have to wait for "finished
+-- downloading data" before the second tome click).
+xi.ambuscade.onHostInstanceReady = function(player, instance)
+    if not player or not liveAmbuscade(instance) then
+        return
+    end
+
+    local key = partyKey(player)
+    local rift = key and pendingRifts[key]
+    if rift then
+        rift.instance = instance
+    end
+
+    for _, member in ipairs(partyPcs(player)) do
+        if member:getID() ~= player:getID() then
+            local queued = rift and rift.queued[member:getID()]
+            local atTome = false
+            if member:getZoneID() == xi.zone.MHAURA then
+                local ok, dist = pcall(function()
+                    local dx = member:getXPos() + 28.030
+                    local dz = member:getZPos() - 52.279
+                    return math.sqrt(dx * dx + dz * dz)
+                end)
+                atTome = ok and dist <= 20
+            end
+            if queued or atTome then
+                if checkAmbuscadeEntryReqs(member) then
+                    admitToAmbuscade(
+                        member,
+                        instance,
+                        '[Ambuscade] Your party opened the rift -- you have been pulled in!')
+                end
+            end
+        end
+    end
+
+    if key then
+        player:timer(30000, function()
+            pendingRifts[key] = nil
+        end)
+    end
+end
+
+xi.ambuscade.canEnter = checkAmbuscadeEntryReqs
+xi.ambuscade.admitToInstance = admitToAmbuscade
 
 local INTENSE_DIFFS =
 {

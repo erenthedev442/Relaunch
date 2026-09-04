@@ -2439,6 +2439,10 @@ void CBattleEntity::Spawn()
     CBaseEntity::Spawn();
     m_OwnerID.clean();
     setBattleID(0);
+    // Instance mobs are reused. A leftover battle target from the previous
+    // copy (usually targid 1) would make the next first player look hated
+    // even though this spawn has an empty enmity list.
+    SetBattleTargetID(0);
 }
 
 void CBattleEntity::Die()
@@ -4145,22 +4149,25 @@ bool CBattleEntity::hasEnmityEXPENSIVE() const
 
     bool isTargeted = false;
 
-    // TODO: this is bad but because of how super tanking is implemented there's not much we can do without a larger refactor
+    // Super-tanking: a mob can be swinging at you without you sitting in
+    // notoriety. Only look at THIS instance (or the public hybrid floor).
+    // ForEachMob walks every Dynamis [D] / Omen / HL copy, and those copies
+    // reuse targid 1 for the first player -- so another party's fight, or a
+    // leftover battle target after Spawn(), looks like you have hate.
     if (loc.zone)
     {
-        loc.zone->ForEachMob([&](CMobEntity* PMob)
-                             {
-                                 if (!PMob->isAlive())
-                                 {
-                                     return;
-                                 }
-                                 // Account for charmed mobs attacking normal mobs, etc
-                                 if (PMob->GetBattleTargetID() == targid && PMob->allegiance != allegiance)
-                                 {
-                                     isTargeted = true;
-                                     return;
-                                 }
-                             });
+        loc.zone->ForEachMobInstance(const_cast<CBattleEntity*>(this), [&](CMobEntity* PMob)
+                                     {
+                                         if (!PMob->isAlive() || !PMob->PAI || !PMob->PAI->IsEngaged())
+                                         {
+                                             return;
+                                         }
+                                         if (PMob->GetBattleTargetID() == targid && PMob->allegiance != allegiance)
+                                         {
+                                             isTargeted = true;
+                                             return;
+                                         }
+                                     });
     }
 
     return isTargeted;

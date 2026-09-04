@@ -16,7 +16,15 @@
 --   fromStage 1 = "Stage I -> Stage II"  (about to enter Stage II)
 --   fromStage 2 = "Stage II -> Stage III" (about to enter Stage III)
 -----------------------------------
-local M = {}
+-- FileWatcher dofile discards the return value. Mutate the cached table
+-- so path unlocks stay live without a map restart.
+local KEY = 'modules/custom/lua/weapon_forge_gates'
+local M = package.loaded[KEY]
+if type(M) ~= 'table' then
+    M = {}
+end
+package.loaded[KEY] = M
+
 local catalog = require('modules/custom/lua/weapon_forge_catalog')
 local abysseaProgress = require('modules/custom/lua/abyssea_marks_progress')
 local unityProgress = require('modules/custom/lua/unity_wanted_progress')
@@ -24,8 +32,9 @@ local waveProgress = require('modules/custom/lua/game_master_progress')
 local aeonicMaat = require('modules/custom/lua/aeonic_maat_catalog')
 
 -- Shown when a player opens a family they have not unlocked yet.
--- Relic is the first path; Empyrean or Mythic after Relic; the other after
--- that first of the two is finished; Aeonic after both; Prime after Aeonic.
+-- Relic is the first path. Empyrean and Mythic both open after Relic.
+-- Aeonic opens after Relic plus a finished Empyrean or Mythic. Prime
+-- after Aeonic.
 M.PATH_LOCKED_MSG = "You've got a long way to go before you're able to start this path!"
 
 local function hasFinal(player, family)
@@ -57,24 +66,21 @@ function M.pathUnlocked(player, category)
         return true
     end
     if category == 'empyrean' then
-        if hasFinal(player, 'Empyrean') or familyStarted(player, catalog.empyreanChains) then
-            return true
-        end
-        return hasFinal(player, 'Relic') and not familyStarted(player, catalog.mythicChains)
+        return hasFinal(player, 'Relic')
+            or hasFinal(player, 'Empyrean')
+            or familyStarted(player, catalog.empyreanChains)
     end
     if category == 'mythic' then
-        if hasFinal(player, 'Mythic') or familyStarted(player, catalog.mythicChains) then
-            return true
-        end
-        return hasFinal(player, 'Relic') and not familyStarted(player, catalog.empyreanChains)
+        return hasFinal(player, 'Relic')
+            or hasFinal(player, 'Mythic')
+            or familyStarted(player, catalog.mythicChains)
     end
     if category == 'aeonic' then
         if hasFinal(player, 'Aeonic') or (player:getCharVar('LWP_AeonicActive') or 0) > 0 then
             return true
         end
         return hasFinal(player, 'Relic')
-            and hasFinal(player, 'Empyrean')
-            and hasFinal(player, 'Mythic')
+            and (hasFinal(player, 'Empyrean') or hasFinal(player, 'Mythic'))
     end
     if category == 'prime' then
         return hasFinal(player, 'Aeonic')
@@ -201,11 +207,11 @@ M.STAGE_GATES =
     {
         [0] =
         {
-            label = 'Final Relic + Empyrean + Mythic forged, and 50 rebirths on one job',
+            label = 'Final Relic and a final Empyrean or Mythic forged, and 50 rebirths on one job',
             check = function(p)
                 return (p:getCharVar('WF_Relic_Final') or 0) == 1
-                    and (p:getCharVar('WF_Empyrean_Final') or 0) == 1
-                    and (p:getCharVar('WF_Mythic_Final') or 0) == 1
+                    and ((p:getCharVar('WF_Empyrean_Final') or 0) == 1
+                        or (p:getCharVar('WF_Mythic_Final') or 0) == 1)
                     and anyRebirthCap50()(p)
             end,
         },

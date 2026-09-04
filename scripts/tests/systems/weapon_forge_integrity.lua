@@ -105,7 +105,7 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(not ok and reason == 'grouped')
     end)
 
-    it('unlocks Relic first, then Empyrean or Mythic, then Aeonic, then Prime', function()
+    it('unlocks Relic first, then Empyrean and Mythic together, then Aeonic after either', function()
         local vars = {}
         local items = {}
         local player = {}
@@ -123,19 +123,21 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(gates.pathUnlocked(player, 'mythic'))
         assert(not gates.pathUnlocked(player, 'aeonic'))
 
-        items[19805] = 1 -- Verethragna base: Empyrean started, Mythic waits
+        items[19805] = 1 -- Verethragna base: Empyrean started, Mythic stays open
         assert(gates.pathUnlocked(player, 'empyrean'))
-        assert(not gates.pathUnlocked(player, 'mythic'))
+        assert(gates.pathUnlocked(player, 'mythic'))
+        assert(not gates.pathUnlocked(player, 'aeonic'))
 
         vars.WF_Empyrean_Final = 1
         items[19805] = 0
         assert(gates.pathUnlocked(player, 'mythic'))
-        assert(not gates.pathUnlocked(player, 'aeonic'))
+        assert(gates.pathUnlocked(player, 'aeonic'))
+        assert(not gates.pathUnlocked(player, 'prime'))
 
-        items[19819] = 1 -- Conqueror base: Mythic started, Empyrean already done
+        items[19819] = 1 -- Conqueror base: Mythic started after Empyrean is done
         assert(gates.pathUnlocked(player, 'empyrean'))
         assert(gates.pathUnlocked(player, 'mythic'))
-        assert(not gates.pathUnlocked(player, 'aeonic'))
+        assert(gates.pathUnlocked(player, 'aeonic'))
 
         vars.WF_Mythic_Final = 1
         items[19819] = 0
@@ -147,7 +149,7 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(gates.PATH_LOCKED_MSG:find('long way to go', 1, true))
     end)
 
-    it('places Aeonic after completed Relic, Empyrean, and Mythic paths', function()
+    it('places Aeonic after Relic plus a finished Empyrean or Mythic', function()
         local vars = {}
         local player = {}
         function player:getCharVar(name) return vars[name] or 0 end
@@ -155,9 +157,12 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(not gates.checkGate(player, 'aeonic', 0))
         vars.WF_Relic_Final = 1
         vars.WF_Empyrean_Final = 1
-        vars.WF_Mythic_Final = 1
         assert(not gates.checkGate(player, 'aeonic', 0))
         vars.Rebirth_Count_1 = 50
+        assert(gates.checkGate(player, 'aeonic', 0))
+
+        vars.WF_Empyrean_Final = 0
+        vars.WF_Mythic_Final = 1
         assert(gates.checkGate(player, 'aeonic', 0))
     end)
 
@@ -287,7 +292,7 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(catalog.relicCosts[2].relicCurrency == 100)
         assert(catalog.relicCosts[2].pluton == 200)
         assert(catalog.relicCosts[3].relicCurrency == 500)
-        assert(catalog.relicCosts[3].highTierAlt == 5)
+        assert(catalog.relicCosts[3].highTierAlt == 50)
         assert(catalog.relicCosts[3].pluton == 500)
         assert(catalog.relicCosts[3].marks == 1000)
         assert(catalog.relicBase.byne == nil)

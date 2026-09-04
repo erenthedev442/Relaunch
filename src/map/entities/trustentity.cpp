@@ -219,7 +219,7 @@ void CTrustEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& act
         if (PWeaponSkill->isAoE())
         {
             const auto radiusType = PWeaponSkill->getAoe() == 3 ? AOE_RADIUS::ATTACKER : AOE_RADIUS::TARGET;
-            PAI->TargetFind->findWithinArea(PBattleTarget, radiusType, PWeaponSkill->getRadius(), FINDFLAGS_NONE, TARGET_NONE);
+            PAI->TargetFind->findWithinArea(PBattleTarget, radiusType, PWeaponSkill->getRadius(), FINDFLAGS_NONE, TARGET_ENEMY);
         }
         else
         {

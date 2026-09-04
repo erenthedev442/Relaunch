@@ -17,7 +17,7 @@ local C = {}
 C.DEFAULT_CAP         = 40000
 C.MATSUI_CAP          = 99999 -- Void Keeper capstone: WS floor ~80k, crits up to 99,999
 C.SHANTOTTO_II_MB_CAP = 79999
-C.MATSUI_SOFT_BAND    = { 80000, 86000 }
+C.MATSUI_SOFT_BAND    = { 90000, 98000 }
 C.MATSUI_SOFTCLAMP_SCALE = 16000 -- tighter than default 40k so crits often reach 99k
 
 -- Per-tier hard caps (override DEFAULT_CAP unless entry.cap is set).
@@ -240,7 +240,7 @@ C.trusts =
         bypassLevelingPortion  = true,
         softclampScale         = C.MATSUI_SOFTCLAMP_SCALE,
         injectKit              = false,
-    }), -- Matsui-P: only trust that skips pre-99 HP% clamp; 80k WS, crits to 99,999
+    }), -- Matsui-P: only trust that skips pre-99 HP% clamp; ~90k WS, crits to 99,999
 
     ------------------------------------------------------------------
     -- Implemented but not grantable yet (DISABLED_SPELL)

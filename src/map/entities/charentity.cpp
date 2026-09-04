@@ -1644,7 +1644,9 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
         if (PWeaponSkill->isAoE())
         {
             const auto radiusType = PWeaponSkill->getAoe() == 3 ? AOE_RADIUS::ATTACKER : AOE_RADIUS::TARGET;
-            PAI->TargetFind->findWithinArea(PBattleTarget, radiusType, PWeaponSkill->getRadius(), FINDFLAGS_NONE, TARGET_NONE);
+            // TARGET_ENEMY is required for aoe=3. TARGET_NONE + self-centered
+            // is the Benediction path and rejects every hostile (0 damage).
+            PAI->TargetFind->findWithinArea(PBattleTarget, radiusType, PWeaponSkill->getRadius(), FINDFLAGS_NONE, TARGET_ENEMY);
         }
         else
         {

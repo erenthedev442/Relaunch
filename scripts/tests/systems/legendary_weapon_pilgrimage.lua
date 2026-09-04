@@ -156,7 +156,7 @@ describe('Legendary Weapon Pilgrimage integrity', function()
 
     it('preserves all previous non-mark costs and currencies', function()
         assert(forge.relicCosts[3].relicCurrency == 500)
-        assert(forge.relicCosts[3].highTierAlt == 5 and forge.relicCosts[3].pluton == 500)
+        assert(forge.relicCosts[3].highTierAlt == 50 and forge.relicCosts[3].pluton == 500)
         assert(forge.empyreanCosts[3].boulder == 3000 and forge.empyreanCosts[3].beastcoin == 50)
         assert(forge.mythicCosts[3].gold == 5 and forge.mythicCosts[3].beitetsu == 10000)
         assert(forge.mythicCostsSum.standing == 4000 and forge.mythicCostsSum.beitetsu == 10300)

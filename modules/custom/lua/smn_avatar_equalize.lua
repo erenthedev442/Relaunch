@@ -57,9 +57,8 @@ local function getDamageProfile(mob, target, skill)
     local master = mob:getMaster()
     local multiplier = progression.getPetDamageMultiplier(master, target)
     local cap = progression.setPetDamageCap(mob, master)
-    if skill:isAoE() or skill:isConal() then
-        multiplier = 1 + (multiplier - 1) * 0.50
-        cap = math.floor(cap * 0.50)
+    if progression.isPetAoESplashHit(skill, target) then
+        cap = progression.getPetAoEDamageCap(master)
     end
 
     -- Match BST/DRG/PUP companion leveling: sub-99 pets cannot chunk more

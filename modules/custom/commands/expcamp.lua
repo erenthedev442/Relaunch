@@ -16,33 +16,33 @@ commandObj.cmdprops =
 }
 
 -- { label, zone, x, y, z, rot } -- index = the !expcamp number.
--- Camp packs (extra spawns, band levels, HP curve, half-respawn) live in
--- modules/custom/sql/expcamp_camps.sql. Bhaflau drops on the Colibri pack,
--- not the zone origin.
+-- Camp packs (relocated in-zone IDs, band levels, HP, half-respawn) live in
+-- modules/custom/sql/expcamp_camps.sql. New high-targid inserts are not used
+-- -- those slots show as NPC / Moogle on stock clients.
 local camps =
 {
-    { '10-25 La Theine Plateau',     xi.zone.LA_THEINE_PLATEAU,      774.35,  29.00,  -18.57, 224 },
-    { '10-25 Konschtat Highlands',   xi.zone.KONSCHTAT_HIGHLANDS,   -223.00,  71.07,  828.00,  32 },
-    { '10-25 Tahrongi Canyon',       xi.zone.TAHRONGI_CANYON,       -160.00,  47.25,  647.11, 192 },
-    { '15-30 Valkurm Dunes',         xi.zone.VALKURM_DUNES,          137.90,  -7.50,   97.00, 162 },
-    { '25-40 Qufim Island',          xi.zone.QUFIM_ISLAND,          -251.98, -19.96,  298.21,  64 },
-    { '30-45 Yuhtunga Jungle',       xi.zone.YUHTUNGA_JUNGLE,       -239.51,   0.00, -402.77,  64 },
-    { '35-50 Yhoator Jungle',        xi.zone.YHOATOR_JUNGLE,         197.82,   0.00,  -81.82, 160 },
-    { "45-60 Crawler's Nest",        xi.zone.CRAWLERS_NEST,          364.00, -32.20,  -22.03,  64 },
-    { '45-60 Gustav Tunnel',         xi.zone.GUSTAV_TUNNEL,          296.68, -40.42,   64.68,  96 },
-    { '50-60 Kuftal Tunnel',         xi.zone.KUFTAL_TUNNEL,          -16.84, -20.47, -237.00,   0 },
-    { '50-60 Western Altepa Desert', xi.zone.WESTERN_ALTEPA_DESERT,  419.33,  -3.12,   11.68,  32 },
-    { '60-75 The Boyahda Tree',      xi.zone.THE_BOYAHDA_TREE,        88.00, -15.00, -217.00,   0 },
-    { '75-85 Bhaflau Thickets',      xi.zone.BHAFLAU_THICKETS,         8.00, -24.00,  140.00, 128 },
-    { '75-85 Mount Zhayolm',         xi.zone.MOUNT_ZHAYOLM,          658.48, -27.4748, 314.4547, 102 },
-    { '80-85 Misareaux Coast',       xi.zone.MISAREAUX_COAST,        488.4478, -22.1281, 260.9005, 180 },
-    { '80-90 Caedarva Mire',         xi.zone.CAEDARVA_MIRE,          282.7048, -4.1514, -703.4025, 153 },
-    { '85-95 Ceizak Battlegrounds',  xi.zone.CEIZAK_BATTLEGROUNDS,  332.8839,   0.3897,  136.2704,  69 },
-    { '90-99 Yorcia Weald',          xi.zone.YORCIA_WEALD,          -183.76,   1.54,   69.93,  29 },
-    { '90-99 Marjami Ravine',        xi.zone.MARJAMI_RAVINE,          367.30, -59.27,  145.73,  36 },
-    { '90-99 North Gustaberg [S]',   xi.zone.NORTH_GUSTABERG_S,     -547.5531, 39.7761, 434.5975, 117 },
-    { '95-99 Foret de Hennetiel',    xi.zone.FORET_DE_HENNETIEL,    -420.14,  -6.17,  181.50, 249 },
-    { '95-99 Kamihr Drifts',         xi.zone.KAMIHR_DRIFTS,          210.00,  20.30,  315.00, 192 },
+    { '10-25 La Theine Plateau',     xi.zone.LA_THEINE_PLATEAU,      656.9457,  31.6260,  108.5068,  47 },
+    { '10-25 Konschtat Highlands',   xi.zone.KONSCHTAT_HIGHLANDS,   -260.5458,  67.3785,  797.6899,  69 },
+    { '10-25 Tahrongi Canyon',       xi.zone.TAHRONGI_CANYON,       -158.2538,  32.0502,  444.5488, 165 },
+    { '15-30 Valkurm Dunes',         xi.zone.VALKURM_DUNES,         -738.0605,  -6.1496,  153.7633, 189 },
+    { '25-40 Qufim Island',          xi.zone.QUFIM_ISLAND,           230.1152, -19.5029,  382.9870, 254 },
+    { '30-45 Yuhtunga Jungle',       xi.zone.YUHTUNGA_JUNGLE,       -239.5560,   0.3452, -368.9259,  67 },
+    { '35-50 Yhoator Jungle',        xi.zone.YHOATOR_JUNGLE,         221.8787,   0.4050, -131.5556, 157 },
+    { "45-60 Crawler's Nest",        xi.zone.CRAWLERS_NEST,         -197.5995,  -0.2526,  203.6516, 163 },
+    { '45-60 Gustav Tunnel',         xi.zone.GUSTAV_TUNNEL,          -71.8600, -10.4545, -164.8775,  63 },
+    { '50-60 Kuftal Tunnel',         xi.zone.KUFTAL_TUNNEL,          -16.84,   -20.47,   -237.00,     0 },
+    { '50-60 Western Altepa Desert', xi.zone.WESTERN_ALTEPA_DESERT,  406.0418,   0.0847,   70.1115, 191 },
+    { '60-75 The Boyahda Tree',      xi.zone.THE_BOYAHDA_TREE,        40.4716, -18.2355, -159.3638, 154 },
+    { '75-85 Bhaflau Thickets',      xi.zone.BHAFLAU_THICKETS,         8.00,   -24.00,    140.00,   128 },
+    { '75-85 Mount Zhayolm',         xi.zone.MOUNT_ZHAYOLM,          595.1096, -23.5038,  226.0535,  72 },
+    { '80-85 Misareaux Coast',       xi.zone.MISAREAUX_COAST,        488.4478, -22.1281,  260.9005, 180 },
+    { '80-90 Caedarva Mire',         xi.zone.CAEDARVA_MIRE,          231.1413,   0.5000, -548.0793, 128 },
+    { '85-95 Ceizak Battlegrounds',  xi.zone.CEIZAK_BATTLEGROUNDS,   328.3083,   0.5443,   72.6138,  67 },
+    { '90-99 Yorcia Weald',          xi.zone.YORCIA_WEALD,           398.3880,   0.0000,  446.1991, 224 },
+    { '90-99 Marjami Ravine',        xi.zone.MARJAMI_RAVINE,         368.9198, -59.0928,  141.0159,   5 },
+    { '90-99 North Gustaberg [S]',   xi.zone.NORTH_GUSTABERG_S,     -547.5531,  39.7761,  434.5975, 117 },
+    { '95-99 Foret de Hennetiel',    xi.zone.FORET_DE_HENNETIEL,    -185.5345,  -2.1250,  548.4019,  47 },
+    { '95-99 Kamihr Drifts',         xi.zone.KAMIHR_DRIFTS,          210.00,    20.30,    315.00,   192 },
 }
 
 commandObj.onTrigger = function(player, arg)

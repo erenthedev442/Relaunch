@@ -845,6 +845,16 @@ function htbf.register(fightKey, tier, variant)
             player:setCharVar(firstClearCv, 1)
         end
         catalog.progress.recordClear(player, tier, isFinalTest)
+        pcall(function()
+            local okHades, hades = pcall(require, 'modules/custom/lua/hades_daily')
+            if okHades and hades and hades.fire then
+                hades.fire(player, 'battlefield', {
+                    kind     = 'htbf',
+                    fightKey = fightKey,
+                    tier     = tier,
+                })
+            end
+        end)
         -- Item loot. grantWinRewards is a local function, not a colon method --
         -- never use `self` here (that was a nil global and aborted the hub warp).
         -- HTBF IDs have no C++ retail treasure; reuse-base wins often skip the

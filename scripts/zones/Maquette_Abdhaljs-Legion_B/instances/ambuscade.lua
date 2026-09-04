@@ -188,6 +188,9 @@ instanceObject.onInstanceCreatedCallback = function(player, instance)
     instance:setProgress(diff)
     player:setInstance(instance)
     player:setPos(137, 12.5, -137, 32, instance:getZone():getID())
+    if xi.ambuscade and xi.ambuscade.onHostInstanceReady then
+        xi.ambuscade.onHostInstanceReady(player, instance)
+    end
 end
 
 instanceObject.afterInstanceRegister = function(player)

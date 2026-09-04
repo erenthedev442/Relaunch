@@ -199,21 +199,19 @@ describe('BST jug investment progression', function()
             progression.setPetDamageCap(jug, master)) == 1499999)
     end)
 
-    it('retains the companion AoE reduction at maximum investment', function()
+    it('caps jug AoE splash to the player ladder at maximum investment', function()
         local master = makeMaster({}, 21730, 2100)
         local target = makeTarget(xi.ecosystem.PLANTOID)
         local jug = makeJug(master, xi.ecosystem.VERMIN)
         local fullMultiplier = progression.getPetDamageMultiplier(master, target)
-        local aoeMultiplier = 1 + (fullMultiplier - 1) * 0.50
-        local aoeCap = math.floor(
-            progression.setPetDamageCap(jug, master) * 0.50)
+        local aoeCap = progression.getPetAoEDamageCap(master)
         local matched = xi.mobskills.applyJugEcosystemMatchupDamage(
             jug, target, 24000)
 
-        assert(aoeMultiplier == 23.875)
-        assert(aoeCap == 749999)
+        assert(fullMultiplier == 46.75)
+        assert(aoeCap == 199999)
         assert(progression.applyMultiplier(
-            matched, aoeMultiplier, aoeCap) == 749999)
+            matched, fullMultiplier, aoeCap) == 199999)
     end)
 
     it('does not grant BST progression from another jobs Prime weapon', function()

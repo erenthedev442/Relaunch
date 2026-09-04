@@ -121,23 +121,43 @@ describe('SMN avatar Blood Pact progression', function()
         assert(avatar:getLocalVar('CompanionDamageCap') == 1499999)
     end)
 
-    it('halves AoE progression and preserves the sub-99 target-HP safeguard', function()
-        local aoeSkill =
-        {
-            isAoE = function()
-                return true
-            end,
-            isConal = function()
-                return false
-            end,
-        }
+    it('caps avatar AoE splash to the player ladder and keeps the aimed-at target at the companion ST cap', function()
+        local function makeAoESkill(primaryId)
+            return
+            {
+                isAoE = function()
+                    return true
+                end,
+                isConal = function()
+                    return false
+                end,
+                getPrimaryTargetID = function()
+                    return primaryId
+                end,
+            }
+        end
+
+        local function makeIdTarget(id, level, maxHp)
+            local target = makeTarget(level, maxHp)
+            target.getID = function()
+                return id
+            end
+
+            return target
+        end
+
+        local skill = makeAoESkill(100)
+        local primary = makeIdTarget(100)
+        local splash = makeIdTarget(200)
         local opashoroAvatar = makeAvatar(makeMaster(22106))
         local levelingAvatar = makeAvatar(makeMaster(1, 50, 0))
 
+        assert(avatarProgression.scaleDamage(opashoroAvatar, primary, skill, 100) == 4675)
+        assert(avatarProgression.scaleDamage(opashoroAvatar, splash, skill, 100) == 4675)
         assert(avatarProgression.scaleDamage(
-            opashoroAvatar, makeTarget(), aoeSkill, 100) == 2387)
+            opashoroAvatar, primary, skill, 1000000) == 1499999)
         assert(avatarProgression.scaleDamage(
-            opashoroAvatar, makeTarget(), aoeSkill, 1000000) == 749999)
+            opashoroAvatar, splash, skill, 1000000) == 199999)
         assert(avatarProgression.scaleDamage(
             levelingAvatar, makeTarget(50, 1000), singleTargetSkill, 1000) == 400)
     end)

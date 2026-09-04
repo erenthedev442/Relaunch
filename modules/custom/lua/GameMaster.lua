@@ -113,6 +113,8 @@ end
 local showStartMenu
 local startWave
 local endSession
+local queueNextWave
+local waveIsLive
 
 
 -----------------------------------
@@ -198,8 +200,32 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
         isAggroable          = true,
         releaseIdOnDisappear = true,
 
-        onMobDeath = function(deadMob, killer)
+        onMobDeath = function(deadMob, killer, optParams)
+            -- The engine calls this once per alliance member in zone
+            -- (luautils::OnMobDeath ForAlliance). A 6-box party therefore
+            -- used to count 6 kills, pay 6x marks, and queue 6 next-wave
+            -- timers. The extras walk off the roster ("Wave 8 of 8" then
+            -- "roster is invalid") and leave prior gods alive because
+            -- startWave resets mobsAlive. Only the killing blow -- or a
+            -- no-player kill (trust / DoT / setHP) -- may advance.
+            optParams = optParams or {}
+            -- isKiller is false for every alliance member except the one
+            -- who landed the blow. nil means the caller omitted optParams
+            -- (still count once via GM_Counted).
+            if killer and optParams.isKiller == false then
+                return
+            end
+            if not killer and optParams.noKiller == false then
+                return
+            end
+            if deadMob.getLocalVar and deadMob:getLocalVar('GM_Counted') == 1 then
+                return
+            end
+            if deadMob.setLocalVar then
+                deadMob:setLocalVar('GM_Counted', 1)
+            end
             mechanics.cleanup(deadMob)
+
             -- Look up the OWNER's session, not the killer's. If a
             -- friend nukes the mob the owner's wave still advances.
             local sess = sessions[ownerName]
@@ -249,12 +275,7 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
                 if sess.waveIndex >= sess.wavesTotal then
                     endSession(resolved, true)
                 else
-                    resolved:printToPlayer(
-                        string.format('[Game Master] Wave %d cleared! Next wave in %d seconds...',
-                            sess.waveIndex, catalog.difficulties[sess.difficulty].waveDelay),
-                        xi.msg.channel.SYSTEM_3)
-                    resolved:timer(catalog.difficulties[sess.difficulty].waveDelay * 1000,
-                        function(p) startWave(p) end)
+                    queueNextWave(resolved, sess)
                 end
             end
         end,
@@ -331,6 +352,35 @@ end
 -- Wave + session lifecycle
 -----------------------------------
 
+waveIsLive = function(sess)
+    if (sess.pendingSpawns or 0) > 0 then
+        return true
+    end
+    for _ in pairs(sess.mobsAlive or {}) do
+        return true
+    end
+    return false
+end
+
+-- One timer per clear. Alliance onMobDeath used to queue six of these.
+queueNextWave = function(player, sess)
+    if not sess or sess.nextWaveQueued then
+        return
+    end
+    sess.nextWaveQueued = true
+    player:printToPlayer(
+        string.format('[Game Master] Wave %d cleared! Next wave in %d seconds...',
+            sess.waveIndex, catalog.difficulties[sess.difficulty].waveDelay),
+        xi.msg.channel.SYSTEM_3)
+    player:timer(catalog.difficulties[sess.difficulty].waveDelay * 1000, function(p)
+        local s = getSession(p)
+        if s then
+            s.nextWaveQueued = false
+        end
+        startWave(p)
+    end)
+end
+
 startWave = function(player)
     local sess = getSession(player)
     if not sess then return end
@@ -338,6 +388,12 @@ startWave = function(player)
     -- Safety: if player zoned away, end the session.
     if player:getZoneID() ~= sess.zoneId then
         endSession(player, false)
+        return
+    end
+
+    -- Extra alliance-death timers must not start a new wave on top of a
+    -- live one, and must not walk off the end of the roster.
+    if sess.waveIndex >= sess.wavesTotal or waveIsLive(sess) then
         return
     end
 
@@ -418,12 +474,7 @@ startWave = function(player)
                     if s.waveIndex >= s.wavesTotal then
                         endSession(resolved, true)
                     else
-                        resolved:printToPlayer(
-                            string.format('[Game Master] Wave %d cleared! Next wave in %d seconds...',
-                                s.waveIndex, catalog.difficulties[s.difficulty].waveDelay),
-                            xi.msg.channel.SYSTEM_3)
-                        resolved:timer(catalog.difficulties[s.difficulty].waveDelay * 1000,
-                            function(p2) startWave(p2) end)
+                        queueNextWave(resolved, s)
                     end
                 end
             end)
@@ -477,6 +528,15 @@ endSession = function(player, completed)
             end
 
             wh.fire(recipient, 'gm_wave_clear', { difficulty = sess.difficulty })
+            local okHades, hades = pcall(require, 'modules/custom/lua/hades_daily')
+            if okHades and hades and hades.fire then
+                pcall(function()
+                    hades.fire(recipient, 'battlefield', {
+                        kind       = 'wavemaster',
+                        difficulty = sess.difficulty,
+                    })
+                end)
+            end
             local waveTotalCv = recipient:getCharVar('Wave_Clears_Total') or 0
             recipient:setCharVar('Wave_Clears_Total', waveTotalCv + 1)
             ach.onWaveClear(recipient)

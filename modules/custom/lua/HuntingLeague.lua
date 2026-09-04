@@ -818,6 +818,19 @@ local function insertSpawnerNPC(zone)
                                 secondsToKill = os.time() - spawnedAt,
                             })
 
+                            local okHades, hades = pcall(require, 'modules/custom/lua/hades_daily')
+                            if okHades and hades and hades.fireCustomKill then
+                                pcall(function()
+                                    hades.fireCustomKill(killer, {
+                                        system  = 'hl',
+                                        name    = md.name,
+                                        label   = md.label,
+                                        groupId = md.groupId,
+                                        tier    = td.tier,
+                                    })
+                                end)
+                            end
+
                             -- Personal achievement milestones (first kills,
                             -- kill-count thresholds, lifetime mark thresholds).
                             ach.onHLKill(killer, td.tier)
