@@ -28,7 +28,8 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap);
 // to a per-hit random % of that mob's max HP. Band comes from spawn localVars
 // TrustLevelingPortionBpsMin/Max (catalog tier: C 8–10%, B 10–15%, A 10–18%,
 // S 10–20%). Lua may pre-stamp TrustLevelingPortionBps so display and HP share
-// one roll. No-op for masters at 99+, Adventuring Fellow, non-trusts, non-mobs.
+// one roll. No-op for masters at 99+, Adventuring Fellow, TrustBypassLevelingHpPortion
+// (Matsui-P only), non-trusts, non-mobs.
 int32 ApplyTrustLevelingHpPortionCap(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage);
 
 // Master 99+: softclamp trust WS/nuke overshoots into a per-hit soft target

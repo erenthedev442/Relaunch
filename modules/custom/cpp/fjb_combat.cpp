@@ -128,7 +128,7 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
     }
 
     // Hard default for all alter egos. Lua sets EncounterOutgoingDamageCap to
-    // raise exceptions (Matsui-P 79999) or EncounterOutgoingDamageCapMB for
+    // raise exceptions (Matsui-P 99999) or EncounterOutgoingDamageCapMB for
     // Shantotto II / Matsui-P magic bursts. Without a localVar, trusts must
     // never inherit the global 999999 PC ceiling.
     if (PAttacker->objtype == TYPE_TRUST)
@@ -266,6 +266,12 @@ int32 ApplyTrustLevelingHpPortionCap(CBattleEntity* PAttacker, CBattleEntity* PD
         return damage;
     }
 
+    // Matsui-P only: Void Keeper capstone may exceed the pre-99 % of mob HP clamp.
+    if (PAttacker->GetLocalVar("TrustBypassLevelingHpPortion") == 1)
+    {
+        return damage;
+    }
+
     CBattleEntity* PMaster = PAttacker->PMaster;
     if (PMaster == nullptr || PMaster->GetMLevel() >= 99)
     {
@@ -300,7 +306,26 @@ int32 ApplyTrustLevelingHpPortionCap(CBattleEntity* PAttacker, CBattleEntity* PD
 
     const float portion    = static_cast<float>(portionBps) / 10000.0f;
     const int32 portionCap = std::max(1, static_cast<int32>(maxHp * portion));
-    return std::min(damage, portionCap);
+    const int32 currentHp  = PDefender->health.hp;
+
+    // Same sliver rule as the player leveling HP cap: do not leave 1–2 HP
+    // after floored % hits, and do not shrink a finishing hit to leftover HP.
+    if (currentHp > 0 && currentHp <= portionCap)
+    {
+        return damage;
+    }
+
+    const int32 capped = std::min(damage, portionCap);
+    if (currentHp > 0)
+    {
+        const int32 leftover = currentHp - capped;
+        if (leftover > 0 && leftover * 100 < maxHp)
+        {
+            return std::max(capped, currentHp);
+        }
+    }
+
+    return capped;
 }
 
 int32 ApplyTrustEndgameSoftClamp(CBattleEntity* PAttacker, int32 damage)
@@ -348,10 +373,17 @@ int32 ApplyTrustEndgameSoftClamp(CBattleEntity* PAttacker, int32 damage)
         hardCap = softTarget;
     }
 
+    float scale = SOFTCLAMP_SCALE;
+    const int32 stampedScale = static_cast<int32>(PAttacker->GetLocalVar("TrustSoftclampScale"));
+    if (stampedScale > 0)
+    {
+        scale = static_cast<float>(stampedScale);
+    }
+
     const float overshoot = static_cast<float>(damage - softTarget);
     const float room      = static_cast<float>(hardCap - softTarget);
     const float compressed =
-        static_cast<float>(softTarget) + room * (1.0f - std::exp(-overshoot / SOFTCLAMP_SCALE));
+        static_cast<float>(softTarget) + room * (1.0f - std::exp(-overshoot / scale));
 
     // Tiny jitter so soft-band-top hits are not identical every time.
     const float jitter = xirand::GetRandomNumber(0.97f, 1.03f);

@@ -60,11 +60,11 @@ describe('BLU main-hand weapon amplification', function()
     it('classifies every named BLU weapon tier exactly', function()
         local cases =
         {
-            { 21646, 119, 'PRIME',     105, 5249997 },
-            { 20695, 119, 'AEONIC',     60, 2999997 },
-            { 20688, 119, 'MYTHIC',     45, 2999997 },
-            { 20689, 119, 'EMPYREAN',   45, 2999997 },
-            { 20685, 119, 'RELIC',      30, 2999997 },
+            { 21646, 119, 'PRIME',     105, 999999 },
+            { 20695, 119, 'AEONIC',     60, 750000 },
+            { 20688, 119, 'MYTHIC',     45, 600000 },
+            { 20689, 119, 'EMPYREAN',   45, 600000 },
+            { 20685, 119, 'RELIC',      30, 400000 },
             { 21621, 119, 'AMBUSCADE',   9,   99999 },
             { 20651, 119, 'ITEM_119',    9,  239997 }, -- Tizona 119 I: floor 99,999, keep 119 cap
             { 20705, 119, 'ITEM_119',    9,  239997 },
@@ -83,11 +83,11 @@ describe('BLU main-hand weapon amplification', function()
     it('replaces generic BLU progression with exact weapon ratios and caps', function()
         for _, case in ipairs(
         {
-            { 21646, 105, 5249997 },
-            { 20695,  60, 2999997 },
-            { 20688,  45, 2999997 },
-            { 20689,  45, 2999997 },
-            { 20685,  30, 2999997 },
+            { 21646, 105, 999999 },
+            { 20695,  60, 750000 },
+            { 20688,  45, 600000 },
+            { 20689,  45, 600000 },
+            { 20685,  30, 400000 },
             { 21621,   9,   99999 },
             { 20705,   9,  239997 },
             { 20731,   9,  120000 },
@@ -97,6 +97,84 @@ describe('BLU main-hand weapon amplification', function()
             assert(standardMagic.getDamageMultiplier(caster, target, spell) == case[2])
             assert(standardMagic.getDamageCap(caster) == case[3])
         end
+    end)
+
+    it('keeps the aimed-at BLU AoE target on the single-target ceiling', function()
+        local floe =
+        {
+            getID = function()
+                return 720
+            end,
+            getSkillType = function()
+                return xi.skill.BLUE_MAGIC
+            end,
+            getLevel = function(_, jobId)
+                return jobId == xi.job.BLU and 99 or 255
+            end,
+            isAoE = function()
+                return 1
+            end,
+            getPrimaryTargetID = function()
+                return 100
+            end,
+        }
+
+        local primary =
+        {
+            isMob = function()
+                return true
+            end,
+            getMainLvl = function()
+                return 99
+            end,
+            getMaxHP = function()
+                return 5000000
+            end,
+            getID = function()
+                return 100
+            end,
+        }
+
+        local splash =
+        {
+            isMob = function()
+                return true
+            end,
+            getMainLvl = function()
+                return 99
+            end,
+            getMaxHP = function()
+                return 5000000
+            end,
+            getID = function()
+                return 200
+            end,
+        }
+
+        -- Caliburnus is also a Prime item id (199,999 generic Prime AoE).
+        -- Splash stays on the 149,999 BLU contract; primary keeps the ST cap.
+        local prime = makeCaster(21646, 119)
+        assert(catalog.AOE_DAMAGE_CAP == 149999)
+        assert(standardMagic.getAoEDamageCap(prime, floe) == 149999)
+        assert(standardMagic.getOutgoingDamageCap(prime, floe, primary) == 999999)
+        assert(standardMagic.getOutgoingDamageCap(prime, floe, splash) == 149999)
+        assert(standardMagic.applyPlayerOutgoingLimits(prime, primary, floe, 400000) == 400000)
+        assert(standardMagic.applyPlayerOutgoingLimits(prime, splash, floe, 400000) == 149999)
+
+        local tizona = makeCaster(20688, 119)
+        assert(standardMagic.getOutgoingDamageCap(tizona, floe, primary) == 600000)
+        assert(standardMagic.getOutgoingDamageCap(tizona, floe, splash) == 149999)
+
+        local excalibur = makeCaster(20685, 119)
+        assert(standardMagic.getOutgoingDamageCap(excalibur, floe, primary) == 400000)
+        assert(standardMagic.applyPlayerOutgoingLimits(excalibur, primary, floe, 500000) == 400000)
+
+        local sequence = makeCaster(20695, 119)
+        assert(standardMagic.getOutgoingDamageCap(sequence, floe, primary) == 750000)
+
+        local ambu = makeCaster(21621, 119)
+        assert(standardMagic.getOutgoingDamageCap(ambu, floe, primary) == 99999)
+        assert(standardMagic.getOutgoingDamageCap(ambu, floe, splash) == 99999)
     end)
 
     it('requires native main-job BLU and honors explicit exemptions', function()

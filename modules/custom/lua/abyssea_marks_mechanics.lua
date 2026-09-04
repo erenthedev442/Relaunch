@@ -396,10 +396,12 @@ local function pressureTick(mob, state, stamp)
 
     state.pressureStacks = stacks + 1
     state.pressureAt = stamp + (state.cfg.pressureStepSec or 30)
+    -- Attack and magic power only. Gear haste was +0.25%/step and could
+    -- survive a Lua-reload cleanup miss; leftover haste on a reused NM
+    -- entity is what players were reading as Hundred Fists.
     pcall(function()
         mob:addMod(xi.mod.ATT,  175 * tier)
         mob:addMod(xi.mod.MATT, 55  * tier)
-        mob:addMod(xi.mod.HASTE_GEAR, 25)
     end)
 end
 
@@ -689,9 +691,8 @@ function M.cleanup(mob)
         local pressure = state.pressureStacks or 0
         if pressure > 0 then
             pcall(function()
-                mob:addMod(xi.mod.ATT,        -(175 * tier * pressure))
-                mob:addMod(xi.mod.MATT,       -(55  * tier * pressure))
-                mob:addMod(xi.mod.HASTE_GEAR, -(25 * pressure))
+                mob:addMod(xi.mod.ATT,  -(175 * tier * pressure))
+                mob:addMod(xi.mod.MATT, -(55  * tier * pressure))
             end)
         end
     end

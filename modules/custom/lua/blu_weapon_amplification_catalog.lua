@@ -4,21 +4,35 @@
 
 local ambuscade = require('modules/custom/lua/ambuscade_weapons_catalog')
 local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
-local catalog = {}
+
+-- FileWatcher dofile discards the return value. Mutate the cached table so a
+-- reload cannot silently drop AOE_DAMAGE_CAP and leave the old ceilings live.
+local CATALOG_KEY = 'modules/custom/lua/blu_weapon_amplification_catalog'
+local catalog = package.loaded[CATALOG_KEY]
+if type(catalog) ~= 'table' then
+    catalog = {}
+end
+package.loaded[CATALOG_KEY] = catalog
 
 catalog.DAMAGE_CAP_LOCAL_VAR = 'BlueSpellDamageCap'
 
+-- Locked contract: splash hits of a BLU AoE stay at or below this.
+-- The aimed-at mob uses the single-target weapon ceiling.
+catalog.AOE_DAMAGE_CAP = 149999
+
+-- Spell ceilings only. Weaponskills keep the shared 999k REMA/Prime path.
+-- Multipliers stay so Relic needs setup to approach its cap and Aeonic
+-- lands closer to its cap on a normal set.
 catalog.TIERS =
 {
-    -- Second server-wide BLU pass: 3x the previous output and ceilings.
-    PRIME     = { multiplier = 105, cap = 5249997 },
-    AEONIC    = { multiplier =  60, cap = 2999997 },
-    MYTHIC    = { multiplier =  45, cap = 2999997 },
-    EMPYREAN  = { multiplier =  45, cap = 2999997 },
-    RELIC     = { multiplier =  30, cap = 2999997 },
-    AMBUSCADE = { multiplier =   9, cap =   99999 },
-    ITEM_119  = { multiplier =   9, cap =  239997 },
-    PRE_119   = { multiplier =   9, cap =  120000 },
+    PRIME     = { multiplier = 105, cap = 999999 },
+    AEONIC    = { multiplier =  60, cap = 750000 },
+    MYTHIC    = { multiplier =  45, cap = 600000 },
+    EMPYREAN  = { multiplier =  45, cap = 600000 },
+    RELIC     = { multiplier =  30, cap = 400000 },
+    AMBUSCADE = { multiplier =   9, cap =  99999 },
+    ITEM_119  = { multiplier =   9, cap = 239997 },
+    PRE_119   = { multiplier =   9, cap = 120000 },
 }
 
 catalog.WEAPON_TIERS =

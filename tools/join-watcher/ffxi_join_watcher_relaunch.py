@@ -18,7 +18,7 @@ are the two things that made the original Azure/Linux-only:
 
 Feeds (unchanged from the Azure original):
   JOINS  (-> JOIN_WEBHOOK file, e.g. #player-logins):
-    - new characters (chars.charid rises)        "New character: Name"
+    - new characters (new live charid)           "New character: Name"
     - logins         (accounts_sessions diff)    "Name logged in - N online"
   ACHIEVEMENTS  (-> ACH_WEBHOOK file, optional -- feed self-disables if the
     file is absent):
@@ -39,6 +39,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -75,15 +76,17 @@ def sql(query: str) -> list[list[str]]:
     return [["" if v is None else str(v) for v in row] for row in rows]
 
 
-def post(hook_file: str, content: str) -> None:
-    """POST one message to a webhook. Missing hook file = feed disabled, skip."""
+def post(hook_file: str, content: str) -> bool:
+    """POST one message to a webhook. Missing hook file = feed disabled, skip.
+    Returns True when there is nothing to send or Discord accepted the post.
+    Never logs the webhook URL (Discord's HTTPError includes it)."""
     if not os.path.exists(hook_file):
-        return
+        return True
     # utf-8-sig: tolerate a BOM (Notepad / a Windows pipe writing the secret).
     with open(hook_file, encoding="utf-8-sig") as f:
         hook = f.read().strip()
     if not hook:
-        return
+        return True
     if len(content) > MAX_LEN:
         content = content[:MAX_LEN] + "\n…(truncated)"
     req = urllib.request.Request(
@@ -91,7 +94,15 @@ def post(hook_file: str, content: str) -> None:
         data=json.dumps({"content": content}).encode(),
         headers={"Content-Type": "application/json", "User-Agent": "ffxi-join-watcher"},
     )
-    urllib.request.urlopen(req, timeout=10).read()
+    try:
+        urllib.request.urlopen(req, timeout=10).read()
+        return True
+    except urllib.error.HTTPError as exc:
+        print(f"[join-watcher] webhook HTTP {exc.code} {exc.reason}", file=sys.stderr)
+        return False
+    except OSError as exc:
+        print(f"[join-watcher] webhook send failed: {type(exc).__name__}", file=sys.stderr)
+        return False
 
 
 # ---------------------------------------------------------------------------
@@ -138,10 +149,18 @@ def load_hl_tier_names() -> dict[int, str]:
 # ---------------------------------------------------------------------------
 
 def joins_feed(state: dict) -> list[str]:
-    """New characters / logins. Mutates state; returns messages."""
+    """New characters / logins. Mutates state; returns messages.
+
+    New characters are any live charid (accid > 0) not already in seen_chars.
+    The old max_char water mark missed creates when Discord rejected a post:
+    state was saved first, so the id was marked seen and never retried.
+    Logins kept working because those are a session-set diff every minute.
+    """
     bootstrap = "max_acc" not in state
 
-    max_acc  = int(sql("SELECT COALESCE(MAX(id), 0) FROM accounts")[0][0])
+    max_acc = int(sql("SELECT COALESCE(MAX(id), 0) FROM accounts")[0][0])
+    char_rows = sql("SELECT charid, charname, accid FROM chars")
+    live = {int(r[0]): r[1] for r in char_rows if int(r[2] or 0) > 0}
     max_char = int(sql("SELECT COALESCE(MAX(charid), 0) FROM chars")[0][0])
     online_rows = sql(
         "SELECT c.charid, c.charname FROM accounts_sessions s "
@@ -149,21 +168,29 @@ def joins_feed(state: dict) -> list[str]:
     )
     online = {int(r[0]): r[1] for r in online_rows}
 
+    if "seen_chars" in state:
+        seen = {int(x) for x in state.get("seen_chars", [])}
+    else:
+        # First run after this field exists: do not dump every current character.
+        seen = set(live.keys())
+
     events: list[str] = []
     if not bootstrap:
         # New-account posts stay DISABLED (login names are semi-sensitive);
         # max_acc is still tracked so re-enabling later won't backlog-spam.
-        if max_char > state["max_char"]:
-            for row in sql(f"SELECT charname FROM chars WHERE charid > {state['max_char']} ORDER BY charid"):
-                events.append(f":mage: New character: **{row[0]}**")
+        for cid, name in sorted(live.items()):
+            if cid not in seen:
+                events.append(f":mage: New character: **{name}**")
         prev = set(state.get("online", []))
         for cid, name in sorted(online.items()):
             if cid not in prev:
                 events.append(f":green_circle: **{name}** logged in — {len(online)} online")
 
-    state["max_acc"]  = max_acc
+    seen |= set(live.keys())
+    state["max_acc"] = max_acc
     state["max_char"] = max_char
-    state["online"]   = list(online)
+    state["seen_chars"] = sorted(seen)
+    state["online"] = list(online)
 
     if bootstrap:
         post(HOOK_JOINS, ":white_check_mark: **Join watcher armed** — new characters "
@@ -259,16 +286,24 @@ def main() -> int:
                 state = json.load(f)
 
         join_events = joins_feed(state)
-        ach_events  = achievements_feed(state)
+        ach_events = achievements_feed(state)
+
+        pending_joins = list(state.get("pending_joins") or []) + join_events
+        pending_ach = list(state.get("pending_ach") or []) + ach_events
+        if pending_joins and post(HOOK_JOINS, "\n".join(pending_joins)):
+            pending_joins = []
+        if pending_ach and post(HOOK_ACH, "\n".join(pending_ach)):
+            pending_ach = []
+        state["pending_joins"] = pending_joins
+        state["pending_ach"] = pending_ach
 
         os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
         with open(STATE_FILE, "w", encoding="utf-8") as f:
             json.dump(state, f)
 
-        if join_events:
-            post(HOOK_JOINS, "\n".join(join_events))
-        if ach_events:
-            post(HOOK_ACH, "\n".join(ach_events))
+        if pending_joins or pending_ach:
+            print("[join-watcher] Discord post failed; will retry next minute.", file=sys.stderr)
+            return 1
         return 0
     finally:
         try:

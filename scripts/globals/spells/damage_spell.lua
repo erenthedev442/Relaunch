@@ -124,7 +124,7 @@ local pTable =
     [xi.magic.spell.COMET         ] = { xi.mod.INT,    0,  552,    2,  700, 700,    2,    2,    2,    2,    2,    2,    2 }, -- I value unknown. Guesstimate used.
     [xi.magic.spell.DEATH         ] = {          0,    0,   32,    0,   32,   0,    0,    0,    0,    0,    0,    0,    0 },
 
-    -- Dia as nuke.
+    -- Dia token opening hit (DoT / defense down are the real payload).
     [xi.magic.spell.DIA           ] = { xi.mod.MND,    0,    1,    1,    1,   1,    0,    0,    0,    0,    0,    0,    0 },
     [xi.magic.spell.DIA_II        ] = { xi.mod.MND,    0,    4,    1,    4,   2,    0,    0,    0,    0,    0,    0,    0 },
     [xi.magic.spell.DIA_III       ] = { xi.mod.MND,    0,   16,    1,   16,   4,    0,    0,    0,    0,    0,    0,    0 },
@@ -137,7 +137,7 @@ local pTable =
     [xi.magic.spell.DIAGA_IV      ] = { xi.mod.MND,    0,  128,    1,  128,  16,    0,    0,    0,    0,    0,    0,    0 },
     [xi.magic.spell.DIAGA_V       ] = { xi.mod.MND,    0,  512,    1,  512,  32,    0,    0,    0,    0,    0,    0,    0 },
 
-    -- Bio as nuke.
+    -- Bio token opening hit (DoT / attack down are the real payload).
     [xi.magic.spell.BIO           ] = { xi.mod.INT,    0,   10,    1,   10,   5,    0,    0,    0,    0,    0,    0,    0 },
     [xi.magic.spell.BIO_II        ] = { xi.mod.INT,    0,   50,    1,   50,  10,    0,    0,    0,    0,    0,    0,    0 },
     [xi.magic.spell.BIO_III       ] = { xi.mod.INT,    0,  100,  1.5,  100,  21,    0,    0,    0,    0,    0,    0,    0 },
@@ -481,6 +481,11 @@ xi.spells.damage.calculateBaseDamage = function(caster, target, spellId, spellGr
         (spellId >= xi.magic.spell.GEOHELIX_II and spellId <= xi.magic.spell.LUMINOHELIX_II)
     then
         spellDamage = spellDamage + caster:getMod(xi.mod.HELIX_EFFECT)
+
+    -- Dia / Diaga / Bio: token opening hit. Gear MAGIC_DAMAGE is for nukes;
+    -- the DoT and defense / attack down stay the payload.
+    elseif standardMagic.isTokenInitialSpellId(spellId) then
+        spellDamage = math.max(0, baseSpellDamage + statDiffBonus)
 
     -- Kaustra (Tabula Rasa 2hr nuke). Retail base:
     --   floor(floor(0.067 * Lv) * (37 + floor(0.67 * dINT) + stratagemBonus))

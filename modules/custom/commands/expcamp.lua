@@ -16,8 +16,9 @@ commandObj.cmdprops =
 }
 
 -- { label, zone, x, y, z, rot } -- index = the !expcamp number.
--- Coords copied verbatim from the retired ExpCamp_Moogle.lua. One Aht Urhgan
--- camp (13 Bhaflau) still drops at the zone default (0,0,0); refine with !pos.
+-- Camp packs (extra spawns, band levels, HP curve, half-respawn) live in
+-- modules/custom/sql/expcamp_camps.sql. Bhaflau drops on the Colibri pack,
+-- not the zone origin.
 local camps =
 {
     { '10-25 La Theine Plateau',     xi.zone.LA_THEINE_PLATEAU,      774.35,  29.00,  -18.57, 224 },
@@ -32,7 +33,7 @@ local camps =
     { '50-60 Kuftal Tunnel',         xi.zone.KUFTAL_TUNNEL,          -16.84, -20.47, -237.00,   0 },
     { '50-60 Western Altepa Desert', xi.zone.WESTERN_ALTEPA_DESERT,  419.33,  -3.12,   11.68,  32 },
     { '60-75 The Boyahda Tree',      xi.zone.THE_BOYAHDA_TREE,        88.00, -15.00, -217.00,   0 },
-    { '75-85 Bhaflau Thickets',      xi.zone.BHAFLAU_THICKETS,         0.00,   0.00,    0.00, 128 },
+    { '75-85 Bhaflau Thickets',      xi.zone.BHAFLAU_THICKETS,         8.00, -24.00,  140.00, 128 },
     { '75-85 Mount Zhayolm',         xi.zone.MOUNT_ZHAYOLM,          658.48, -27.4748, 314.4547, 102 },
     { '80-85 Misareaux Coast',       xi.zone.MISAREAUX_COAST,        488.4478, -22.1281, 260.9005, 180 },
     { '80-90 Caedarva Mire',         xi.zone.CAEDARVA_MIRE,          282.7048, -4.1514, -703.4025, 153 },

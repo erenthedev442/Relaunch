@@ -1,7 +1,7 @@
 local levelingHpCap = require('modules/custom/lua/leveling_hp_cap')
 
 describe('Legendary leveling HP cap', function()
-    local function makeTarget(maxHp, isMob)
+    local function makeTarget(maxHp, isMob, currentHp)
         return
         {
             isMob = function()
@@ -9,6 +9,9 @@ describe('Legendary leveling HP cap', function()
             end,
             getMaxHP = function()
                 return maxHp
+            end,
+            getHP = function()
+                return currentHp or maxHp
             end,
         }
     end
@@ -31,5 +34,12 @@ describe('Legendary leveling HP cap', function()
         assert(levelingHpCap.apply(50, makeTarget(10000), -500) == -500)
         assert(levelingHpCap.apply(50, makeTarget(10000), 0) == 0)
         assert(levelingHpCap.apply(50, nil, 9000) == 9000)
+    end)
+
+    it('finishes a sliver leftover instead of leaving the bar at 1%', function()
+        -- 3 * floor(10000/3) = 9999, so a third hit would have left 1 HP.
+        assert(levelingHpCap.apply(50, makeTarget(10000, true, 3334), 9000) == 3334)
+        assert(levelingHpCap.apply(50, makeTarget(10000, true, 5), 3333) == 3333)
+        assert(levelingHpCap.apply(50, makeTarget(10000, true, 5000), 9000) == 3333)
     end)
 end)

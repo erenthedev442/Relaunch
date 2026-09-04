@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-01",
+  "updated": "2026-09-03",
   "notes": [
     "Source of truth for troll IPs, logins, names, and watch patterns.",
     "Read-only checks: tools/troll-watch/check_trolls.ps1 (VPS) or ops/Relaunch - Troll Check.bat.",
@@ -202,6 +202,38 @@
       ]
     },
     {
+      "id": "cornholio_cluster",
+      "label": "cornholio / itchybutwhole — troll names, IP hopping (Sep 2026)",
+      "status": "banned",
+      "banned_on": "2026-09-03",
+      "accounts": [
+        {"id": 1371, "login": "itchybutwhole", "note": "never logged in; deleted 2026-09-03"},
+        {"id": 1372, "login": "cornholio", "char": "Craigcrankmyhog"},
+        {"id": 1373, "login": "cornholio2", "char": "Jayfromtacobell", "note": "also Jaytacobellcle"},
+        {"id": 1379, "login": "cornholioo", "char": "Billynobeaches"}
+      ],
+      "characters": [
+        "Craigcrankmahog",
+        "Craigcrankmyhog",
+        "Jayfromtacobell",
+        "Jaytacobellcle",
+        "Billynobeaches"
+      ],
+      "ips_exact": [
+        "89.46.62.142",
+        "37.120.138.189",
+        "176.113.72.93"
+      ],
+      "ip_prefixes": [],
+      "patterns": [
+        "itchybutwhole registered 43 min before cornholio wave",
+        "cornholio / cornholio2 / cornholioo login family",
+        "VPN hop then stable IP 89.46.62.142",
+        "troll character names (Craigcrank*, Jayfromtacobell, Billynobeaches)",
+        "no overlap with Bro/High or Bankai IPs — new cluster"
+      ]
+    },
+    {
       "id": "pucca_watch",
       "label": "Pucca — probably unrelated (Japan home ISP)",
       "status": "watch",
@@ -219,8 +251,8 @@
       ]
     }
   ],
-  "name_regex": "mildford|milford|haven|nicholas|cummies|gaspar|dequan|migger|niqqer|nigger|penis|erenis|retard|jamestajew|donkeys|isuck|bankai|chatgpt|iminyourwalls|garvnigga|garvauniqqa|abysseaenjoyer|drknotty|hexedmagic|legendaryass|boobookitty|bigbangow|blazeit",
-  "login_regex": "mildford|milford|haven|nicholas|cummies|gaspar|dequan|migger|niqqer|nigger|penis|erenis|retard|jamestajew|donkeys|isuck|bankai|chatgpt|iminyourwalls|garvnigga|12345678910|legendaryass|hexedmagic|420blazeit|erenisapenis",
+  "name_regex": "mildford|milford|haven|nicholas|cummies|gaspar|dequan|migger|niqqer|nigger|penis|erenis|retard|jamestajew|donkeys|isuck|bankai|chatgpt|iminyourwalls|garvnigga|garvauniqqa|abysseaenjoyer|drknotty|hexedmagic|legendaryass|boobookitty|bigbangow|blazeit|cornholio|itchybut|crankmyhog|crankmahog|jayfromtaco|billynobeach",
+  "login_regex": "mildford|milford|haven|nicholas|cummies|gaspar|dequan|migger|niqqer|nigger|penis|erenis|retard|jamestajew|donkeys|isuck|bankai|chatgpt|iminyourwalls|garvnigga|12345678910|legendaryass|hexedmagic|420blazeit|erenisapenis|cornholio|itchybut",
   "exact_login_or_char": ["bro", "bro2", "drunk", "war", "warrior", "2", "1234", "pucca", "prale", "namers", "haha", "420blazeit"],
   "style_flags": [
     {"id": "ip_as_login", "sql": "a.login REGEXP '^[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}$'"},

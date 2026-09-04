@@ -3,7 +3,8 @@
 -- Lets players spend Hunt Marks to pop Abyssea ??? NMs
 -- when they lack the normal pop key items.
 -- The NM's killer earns Gil + Infamy with multipliers for
--- partying with real players and fighting without trusts.
+-- Infamy still rewards a real party and a no-trust clear. Gil is one pot
+-- per kill (no-trust bonus only), split across in-zone alliance members.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/globals/abyssea')
@@ -85,6 +86,31 @@ local function logicalCopyIsSpawned(mobId, nmName)
     return false
 end
 
+-- Marks NMs reuse the same entity across pops. Spawn() only clears status
+-- effects that have a non-zero duration, and setMobLevel(..., false) skips
+-- that wipe entirely. A leftover Hundred Fists (or a weapon delay that was
+-- rewritten mid-fight) therefore comes back on the next pop as a 1-second
+-- swing -- Muscaliet's retail 240 delay is 4.0s; Hundred Fists is 25% of
+-- that. Reset the swing before the overlay so every marks pop starts clean.
+local function resetMarksSwing(mob)
+    pcall(function()
+        mob:delStatusEffectsByFlag(xi.effectFlag.DEATH, true)
+        mob:delStatusEffectSilent(xi.effect.HUNDRED_FISTS)
+        mob:delStatusEffectSilent(xi.effect.HASTE)
+        mob:delStatusEffectSilent(xi.effect.HASTE_SAMBA)
+        mob:delStatusEffectSilent(xi.effect.HASTE_SAMBA_HASTE)
+        local baseDelay = mob:getBaseDelay()
+        if type(baseDelay) == 'number' and baseDelay >= 60 and baseDelay <= 800 then
+            mob:setDelay(baseDelay)
+        end
+        mob:setMod(xi.mod.HASTE_MAGIC, 0)
+        mob:setMod(xi.mod.HASTE_ABILITY, 0)
+        mob:setMod(xi.mod.TWOHAND_HASTE_ABILITY, 0)
+        mob:setMod(xi.mod.DELAY, 0)
+        mob:setMod(xi.mod.DELAYP, 0)
+    end)
+end
+
 local function spawnViaMark(p, mobId, cost, nmName, cfg)
     local cur = p:getCharVar(MARKS_CV) or 0
     if cur < cost then
@@ -117,9 +143,10 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     mob:setSpawn(dx, dy, dz)
     local spawned = SpawnMob(mobId)
 
-    -- Normalize level before applying the custom pacing block. setMobLevel
-    -- recalculates retail base stats, so it must precede HP and additive mods.
-    spawned:setMobLevel(cfg.level, false)
+    -- recover=true so leftover Hundred Fists / Haste (duration > 0) die
+    -- before the overlay. Catalog HP is applied immediately after.
+    spawned:setMobLevel(cfg.level, true)
+    resetMarksSwing(spawned)
     local pcCount = realPlayerCount(p)
     partyHpScale.setCatalogHp(spawned, cfg.maxHP)
     partyHpScale.afterCustomHp(spawned, p)
@@ -203,8 +230,8 @@ end
 -- Tuning knobs, hoisted so tools/docgen can read the LIVE values via
 -- lua_const() instead of mirroring them (the docgen previously hardcoded
 -- 2.0 / 1.5 in abyssea_nms.py — same drift pattern as elsewhere).
-local PARTY_MULT = 2.0    -- >=2 real PCs in party -> Gil/Infamy x this
-local TRUST_MULT = 1.5    -- 0 trusts in party    -> Gil/Infamy x this
+local PARTY_MULT = 2.0    -- >=2 real PCs -> Infamy/Cruor x this (not gil)
+local TRUST_MULT = 1.5    -- 0 trusts     -> Infamy/Cruor/Gil pot x this
 
 -- One complete zone roster opens the next Atma progression step. The shared
 -- progress module also uses the original 136-NM totals for the first-Empyrean
@@ -329,6 +356,30 @@ local function calcMultipliers(player)
     return partyMult, trustMult
 end
 
+local function countInZoneAlliancePCs(player)
+    local count = 0
+    local ok, alliance = pcall(function()
+        return player:getAlliance()
+    end)
+
+    if ok and alliance then
+        local zoneId = player:getZoneID()
+        for _, member in ipairs(alliance) do
+            if
+                member and
+                member.getObjType and
+                member:getObjType() == xi.objType.PC and
+                member.getZoneID and
+                member:getZoneID() == zoneId
+            then
+                count = count + 1
+            end
+        end
+    end
+
+    return math.max(1, count)
+end
+
 -- ============================================================
 -- ??? marks-pop hook  (xi.abyssea.marksPopHook)
 -- Registered as a HOOK, not an addOverride: the stock
@@ -382,11 +433,11 @@ end
 -- xi.mob.onMobDeathEx calls this at the end (call baked into
 -- mobs.lua), so a Lua-sync reload of mobs.lua can't clobber it.
 -- The core calls this once per in-zone alliance/party member (ForAlliance in
--- luautils OnMobDeath), so it awards Gil + Infamy + Cruor to EACH of them on a
--- marks-popped NM kill, with multipliers for:
+-- luautils OnMobDeath). Infamy and Cruor are still paid to each member, with:
 --   x2.0  - 2+ real players in party
 --   x1.5  - no trusts in party
--- Multipliers stack (solo no-trust = x1.5, party no-trust = x3).
+-- Gil is one shared pot (base * no-trust bonus only), split across the
+-- in-zone alliance so six characters cannot withdraw six full T3 payouts.
 -- ============================================================
 xi.mob.marksRewardHook = function(mob, player, isKiller, isWeaponSkillKill)
     -- The core fans OnMobDeath out with ForAlliance and calls onMobDeathEx -> this
@@ -412,9 +463,10 @@ xi.mob.marksRewardHook = function(mob, player, isKiller, isWeaponSkillKill)
     pcall(function()
         local partyMult, trustMult = calcMultipliers(player)
         local totalMult = partyMult * trustMult
+        local gilShares = countInZoneAlliancePCs(player)
 
         local infamyEarned = math.floor(infamyBase * totalMult)
-        local gilEarned    = math.floor(gilBase    * totalMult)
+        local gilEarned    = encounterBalance.gilPayout(gilBase, trustMult, gilShares)
         local cruorEarned  = math.floor(cruorBase  * totalMult)
 
         -- Award to THIS member (engine already calls us once per in-zone member).
@@ -432,8 +484,11 @@ xi.mob.marksRewardHook = function(mob, player, isKiller, isWeaponSkillKill)
         if cruorEarned  > 0 then table.insert(parts, string.format('+%d Cruor', cruorEarned))    end
 
         local bonusParts = {}
-        if partyMult > 1.0 then table.insert(bonusParts, 'party')     end
+        if partyMult > 1.0 then table.insert(bonusParts, 'party infamy') end
         if trustMult > 1.0 then table.insert(bonusParts, 'no trusts') end
+        if gilShares > 1 then
+            table.insert(bonusParts, string.format('gil split %d ways', gilShares))
+        end
 
         local msg = string.format('[Abyssea] %s', table.concat(parts, ', '))
         if #bonusParts > 0 then

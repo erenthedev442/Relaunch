@@ -337,7 +337,6 @@ local function finalizeBlueDamage(caster, target, spell, damage, params, trickAt
     damage = utils.handlePhalanx(target, damage)
     damage = utils.handleStoneskin(target, damage)
     damage = math.max(0, math.floor(damage))
-    damage = math.min(damage, target:getHP())
     damage = standardMagic.applyPlayerOutgoingLimits(caster, target, spell, damage)
     damage = target:checkDamageCap(damage)
 
@@ -687,7 +686,6 @@ xi.spells.blue.useDrainSpell = function(caster, target, spell, params, damageCap
         finalDamage = utils.clamp(utils.handlePhalanx(target, finalDamage), 0, 131071)
         finalDamage = utils.clamp(utils.handleOneForAll(target, finalDamage), 0, 131071)
         finalDamage = utils.clamp(utils.handleStoneskin(target, finalDamage), -131071, 131071)
-        finalDamage = utils.clamp(finalDamage, 0, target:getHP())
         finalDamage = standardMagic.applyPlayerOutgoingLimits(caster, target, spell, finalDamage)
         finalDamage = target:checkDamageCap(finalDamage)
 
@@ -791,7 +789,6 @@ xi.spells.blue.useBreathSpell = function(caster, target, spell, params)
             dmg = utils.clamp(utils.handlePhalanx(target, dmg), 0, 131071)
             dmg = utils.clamp(utils.handleOneForAll(target, dmg), 0, 131071)
             dmg = utils.clamp(utils.handleStoneskin(target, dmg), -131071, 131071)
-            dmg = utils.clamp(dmg, 0, target:getHP())
             dmg = standardMagic.applyPlayerOutgoingLimits(caster, target, spell, dmg)
             dmg = target:checkDamageCap(dmg)
         end
@@ -864,7 +861,7 @@ xi.spells.blue.useEnfeeblingSpell = function(caster, target, spell, params)
     end
 
     controlAllowed, controlDuration, controlLockout, controlReason, fixedControlDuration =
-        bluSharedEffects.preparePlayerControl(caster, target, effect, params.duration, GetSystemTime())
+        bluSharedEffects.preparePlayerControl(caster, target, effect, params.duration, GetSystemTime(), spell:getID())
     if not controlAllowed then
         local resultMessage =
             controlReason == 'nm_doom' and xi.msg.basic.MAGIC_COMPLETE_RESIST or xi.msg.basic.MAGIC_NO_EFFECT
@@ -965,7 +962,7 @@ xi.spells.blue.useCuringSpell = function(caster, target, spell, params)
     return final
 end
 
-xi.spells.blue.applyBlueAdditionalEffect = function(caster, target, params, effectTable)
+xi.spells.blue.applyBlueAdditionalEffect = function(caster, target, params, effectTable, spell)
     -- Sanitize parameters.
     local element = params.damageType and params.damageType - 5 or 0
     local stat    = params.attribute and params.attribute or xi.mod.INT
@@ -975,6 +972,7 @@ xi.spells.blue.applyBlueAdditionalEffect = function(caster, target, params, effe
 
     local stockSubjob = bluSharedEffects.usesStockSubjobBehavior(caster)
     local stockResist = 0
+    local spellId     = spell and spell.getID and spell:getID() or params.spellId
     if stockSubjob then
         -- Pre-retune additional effects shared one general BLU resistance roll.
         stockResist = xi.combat.magicHitRate.calculateResistRate(
@@ -987,7 +985,7 @@ xi.spells.blue.applyBlueAdditionalEffect = function(caster, target, params, effe
         local tick     = effectTable[entry][3]
         local duration = effectTable[entry][4]
         local controlAllowed, controlDuration, controlLockout, _, fixedControlDuration =
-            bluSharedEffects.preparePlayerControl(caster, target, effect, duration, GetSystemTime())
+            bluSharedEffects.preparePlayerControl(caster, target, effect, duration, GetSystemTime(), spellId)
         local resist = stockResist
         if controlAllowed and not stockSubjob then
             resist = bluSharedEffects.clampMagicResist(caster, xi.combat.magicHitRate.calculateResistRate(

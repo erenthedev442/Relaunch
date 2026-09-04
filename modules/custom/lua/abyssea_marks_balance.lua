@@ -51,6 +51,18 @@ function B.hpScale(realPlayers)
     return require('modules/custom/lua/party_hp_scale').multiplier(realPlayers)
 end
 
+-- Gil is one pot per kill. The no-trust bonus can grow the pot; extra
+-- PCs do not. The pot is then split across in-zone alliance members so a
+-- 6-box and a solo extract the same total gil from Orthrus.
+function B.gilPayout(gilBase, trustMult, shareCount)
+    if type(gilBase) ~= 'number' or gilBase <= 0 then
+        return 0
+    end
+
+    local shares = math.max(1, math.floor(shareCount or 1))
+    return math.floor(gilBase * (trustMult or 1) / shares)
+end
+
 function B.expectedMinutes(tier, realPlayers, perPlayerDpsPerMinute)
     local cfg = B.tiers[tier]
     if not cfg or not perPlayerDpsPerMinute or perPlayerDpsPerMinute <= 0 then

@@ -249,7 +249,8 @@ end
 
 -- Leveling HP-portion bands (basis points of mob max HP), by catalog tier.
 -- Per-hit ceiling — multi-hit AA (DA/TA) stacks on top, so S stays below the
--- old 18–30% band so a TA round can't delete a mob outright vs Matsui-P pace.
+-- old 18–30% band so a TA round can't delete a mob outright. Matsui-P is the
+-- sole exception (TrustBypassLevelingHpPortion).
 local LEVELING_PORTION_BPS =
 {
     C = { 800,  1000 }, -- weaker:  8–10%
@@ -296,6 +297,9 @@ local function applyCaps(mob, entry)
     mob:setLocalVar('TrustSoftBandMin', soft[1])
     mob:setLocalVar('TrustSoftBandMax', soft[2])
     mob:setLocalVar('TrustDdRole', DD_ROLES[entry.role] and 1 or 0)
+    -- Only Matsui-P stamps this. Every other trust keeps the pre-99 HP% clamp.
+    mob:setLocalVar('TrustBypassLevelingHpPortion', entry.bypassLevelingPortion and 1 or 0)
+    mob:setLocalVar('TrustSoftclampScale', entry.softclampScale or 0)
 end
 
 local function safeInjectKit(mob, kitName)

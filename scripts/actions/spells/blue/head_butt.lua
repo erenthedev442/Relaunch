@@ -49,7 +49,7 @@ spellObject.onSpellCast = function(caster, target, spell)
         [1] = { xi.effect.STUN, 1, 0, 5 },
     }
 
-    xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)
+    xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable, spell)
 
     return damage
 end

@@ -1708,7 +1708,13 @@ xi.mobskills.processDamage = function(actor, target, skill, action, info)
 
                 -- DD-role safety net: leftover custom MS (Peacebreaker, etc.) still
                 -- can't reach soft bands via getWeaponDmg alone — floor to median.
-                if actor:getLocalVar('TrustDdRole') == 1 then
+                -- Matsui-P skips this floor while leveling so an 80k 99-band
+                -- cannot one-shot dunes after his HP% bypass.
+                local masterForFloor = actor:getMaster()
+                local skipSoftFloor = actor:getLocalVar('TrustBypassLevelingHpPortion') == 1
+                    and masterForFloor
+                    and masterForFloor:getMainLvl() < 99
+                if actor:getLocalVar('TrustDdRole') == 1 and not skipSoftFloor then
                     local softMin = actor:getLocalVar('TrustSoftBandMin')
                     local softMax = actor:getLocalVar('TrustSoftBandMax')
                     if softMin > 0 and softMax >= softMin and info.damage > 0 and info.damage < softMin then
@@ -1722,7 +1728,8 @@ xi.mobskills.processDamage = function(actor, target, skill, action, info)
             if
                 master and
                 master:getMainLvl() < 99 and
-                target:getObjType() == xi.objType.MOB
+                target:getObjType() == xi.objType.MOB and
+                actor:getLocalVar('TrustBypassLevelingHpPortion') ~= 1
             then
                 -- Tier band stamped at spawn (C 8–10%, B 10–15%, A 10–18%, S 10–20%).
                 local bandMin = actor:getLocalVar('TrustLevelingPortionBpsMin')
@@ -1734,9 +1741,18 @@ xi.mobskills.processDamage = function(actor, target, skill, action, info)
 
                 local portionBps = math.random(bandMin, bandMax)
                 actor:setLocalVar('TrustLevelingPortionBps', portionBps)
-                local portionCap = math.max(1, math.floor(target:getMaxHP() * (portionBps / 10000)))
-                if info.damage > portionCap then
-                    info.damage = portionCap
+                local maxHp = target:getMaxHP()
+                local portionCap = math.max(1, math.floor(maxHp * (portionBps / 10000)))
+                local currentHp = target:getHP()
+                if currentHp > 0 and currentHp <= portionCap then
+                    -- Finishing range: keep the hit so the combat log is not "5".
+                elseif info.damage > portionCap then
+                    local leftover = currentHp - portionCap
+                    if leftover > 0 and leftover * 100 < maxHp then
+                        info.damage = math.max(portionCap, currentHp)
+                    else
+                        info.damage = portionCap
+                    end
                 end
             end
         end

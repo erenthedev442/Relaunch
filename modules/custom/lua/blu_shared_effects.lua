@@ -1,4 +1,11 @@
-local bluSharedEffects = {}
+-- FileWatcher dofile discards the return value. Mutate the cached table so a
+-- reload cannot silently drop the custom-NM disable contract.
+local CATALOG_KEY = 'modules/custom/lua/blu_shared_effects'
+local bluSharedEffects = package.loaded[CATALOG_KEY]
+if type(bluSharedEffects) ~= 'table' then
+    bluSharedEffects = {}
+end
+package.loaded[CATALOG_KEY] = bluSharedEffects
 
 -- Parameters changed by 8a23b88cd2 for spells available at the /BLU level
 -- cap.  A player using BLU as a subjob receives these pre-retune values; main
@@ -55,10 +62,53 @@ local stockSubjobDrainCaps =
     [570] = 0,
 }
 
--- Main-job BLU control: stun is always 5s. Terror / petrify are a full 25s
--- on trash, Apex, and NMs. No reapplication lockout.
-local STUN_DURATION            = 5
-local HARD_CONTROL_DURATION    = 25
+-- Main-job BLU control: stun is always 5s on ordinary targets. Terror /
+-- petrify are a full 25s on trash and overworld NMs. No reapplication lockout.
+-- Custom-content NMs (Geas Fete, Abyssea, HTBF, Apex, and other marked
+-- events) ignore every disabling BLU effect except Head Butt, which is a
+-- guaranteed 3s stun.
+local STUN_DURATION              = 5
+local CUSTOM_NM_HEAD_BUTT_STUN   = 3
+local HARD_CONTROL_DURATION      = 25
+
+local disablingEffects =
+{
+    [xi.effect.STUN]                  = true,
+    [xi.effect.TERROR]                = true,
+    [xi.effect.PETRIFICATION]         = true,
+    [xi.effect.GRADUAL_PETRIFICATION] = true,
+    [xi.effect.SLEEP_I]               = true,
+    [xi.effect.SLEEP_II]              = true,
+    [xi.effect.BIND]                  = true,
+    [xi.effect.CHARM_I]               = true,
+    [xi.effect.CHARM_II]              = true,
+    [xi.effect.AMNESIA]               = true,
+}
+
+local customContentZones =
+{
+    [xi.zone.ABYSSEA_KONSCHTAT]      = true,
+    [xi.zone.ABYSSEA_TAHRONGI]       = true,
+    [xi.zone.ABYSSEA_LA_THEINE]      = true,
+    [xi.zone.ABYSSEA_ATTOHWA]        = true,
+    [xi.zone.ABYSSEA_MISAREAUX]      = true,
+    [xi.zone.ABYSSEA_VUNKERL]        = true,
+    [xi.zone.ABYSSEA_ALTEPA]         = true,
+    [xi.zone.ABYSSEA_GRAUBERG]       = true,
+    [xi.zone.ABYSSEA_ULEGUERAND]     = true,
+    [xi.zone.ABYSSEA_EMPYREAL_PARADOX] = true,
+    [xi.zone.REISENJIMA]             = true,
+    [xi.zone.REISENJIMA_HENGE]       = true,
+    [xi.zone.REISENJIMA_SANCTORIUM]  = true,
+}
+
+local customContentVars =
+{
+    'GeasFeteMobSkillDamageCap',
+    'GeasFeteOwnerId',
+    'HTBFScaled',
+    'OWS_EXCLUDE',
+}
 
 local function getControlLockoutVar(effect)
     return string.format('[BLU]ControlLockout:%u', effect)
@@ -71,6 +121,63 @@ bluSharedEffects.isApexMob = function(target)
 
     local name = target:getName() or ''
     return name:find('^[Aa]pex[_%s%-]') ~= nil
+end
+
+bluSharedEffects.isDisablingControl = function(effect)
+    return disablingEffects[effect] == true
+end
+
+-- Geas Fete, Abyssea NMs, HTBF, Apex, Voidspire/Gauntlet/Invasion-style
+-- pops (NO_CAPACITY_POINTS / CHECK_AS_NM / battlefield), and other marked
+-- custom events. Ordinary overworld NMs stay off this list.
+bluSharedEffects.isCustomContentNm = function(target)
+    if not target then
+        return false
+    end
+
+    if target.isMob and not target:isMob() then
+        return false
+    end
+
+    if bluSharedEffects.isApexMob(target) then
+        return true
+    end
+
+    if target.getLocalVar then
+        for i = 1, #customContentVars do
+            if (target:getLocalVar(customContentVars[i]) or 0) > 0 then
+                return true
+            end
+        end
+    end
+
+    if
+        target.getMobMod and
+        (
+            (target:getMobMod(xi.mobMod.CHECK_AS_NM) or 0) > 0 or
+            (target:getMobMod(xi.mobMod.NO_CAPACITY_POINTS) or 0) > 0
+        )
+    then
+        return true
+    end
+
+    if
+        target.isMobType and
+        target:isMobType(xi.mobType.BATTLEFIELD)
+    then
+        return true
+    end
+
+    if
+        target.isNM and
+        target:isNM() and
+        target.getZoneID and
+        customContentZones[target:getZoneID()]
+    then
+        return true
+    end
+
+    return false
 end
 
 bluSharedEffects.isMainJob = function(caster)
@@ -232,7 +339,7 @@ bluSharedEffects.applyBlueCure = function(caster, target, params)
     return cure
 end
 
-bluSharedEffects.preparePlayerControl = function(caster, target, effect, duration, now)
+bluSharedEffects.preparePlayerControl = function(caster, target, effect, duration, now, spellId)
     if not caster:isPC() then
         return true, duration, nil, nil, false
     end
@@ -245,6 +352,20 @@ bluSharedEffects.preparePlayerControl = function(caster, target, effect, duratio
 
     if effect == xi.effect.DOOM and target:isNM() then
         return false, duration, nil, 'nm_doom', false
+    end
+
+    if
+        bluSharedEffects.isDisablingControl(effect) and
+        bluSharedEffects.isCustomContentNm(target)
+    then
+        if
+            effect == xi.effect.STUN and
+            spellId == xi.magic.spell.HEAD_BUTT
+        then
+            return true, CUSTOM_NM_HEAD_BUTT_STUN, nil, nil, true
+        end
+
+        return false, duration, nil, 'custom_nm_disable', false
     end
 
     if effect == xi.effect.STUN then

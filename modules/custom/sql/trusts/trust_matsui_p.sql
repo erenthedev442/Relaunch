@@ -11,8 +11,10 @@
 --   Matsui back on 1003 (the "known-good" restore) reintroduced that crash.
 --
 -- WHY THIS POOL SHAPE
---   Exc_S spell DAT + Exc_S look (0x00008508) are year-round safe. SAM/BLM
---   + Final Exam kit is server-side only. The menu still says Excenmille (S).
+--   Spell / packet stay Exc_S (1004 / Excenmille_S). Look is retail Matsui
+--   model 3121 (0x0000310C, same encoding as Cornelia 3119 / Monberaux 3120).
+--   That mesh lives in year-round ROM/310/13.DAT (shipped in Custom DATs).
+--   Kit is his retail NIN/BLM year-round moves — no campaign-only skills.
 --
 -- NAMETAG
 --   packet_name stays Excenmille_S so the first spawn packet uses a DAT the
@@ -91,20 +93,59 @@ DELETE FROM mob_spell_lists WHERE spell_list_id IN (4004, 6004);
 INSERT INTO mob_spell_lists
     (spell_list_name, spell_list_id, spell_id, min_level, max_level)
 VALUES
-    ('matsui_p', 4004, 144,  12, 255),
-    ('matsui_p', 4004, 145,  30, 255),
-    ('matsui_p', 4004, 146,  55, 255),
-    ('matsui_p', 4004, 147,  80, 255),
-    ('matsui_p', 4004, 148,  99, 255),
-    ('matsui_p', 4004, 849, 100, 255);
+    -- Elemental ninjutsu Ichi / Ni / San (year-round). Retail MBs San then T1.
+    ('matsui_p', 4004, 320,  15, 255), -- katon_ichi
+    ('matsui_p', 4004, 321,  40, 255), -- katon_ni
+    ('matsui_p', 4004, 322,  73, 255), -- katon_san
+    ('matsui_p', 4004, 323,  15, 255), -- hyoton_ichi
+    ('matsui_p', 4004, 324,  40, 255), -- hyoton_ni
+    ('matsui_p', 4004, 325,  73, 255), -- hyoton_san
+    ('matsui_p', 4004, 326,  15, 255), -- huton_ichi
+    ('matsui_p', 4004, 327,  40, 255), -- huton_ni
+    ('matsui_p', 4004, 328,  73, 255), -- huton_san
+    ('matsui_p', 4004, 329,  15, 255), -- doton_ichi
+    ('matsui_p', 4004, 330,  40, 255), -- doton_ni
+    ('matsui_p', 4004, 331,  73, 255), -- doton_san
+    ('matsui_p', 4004, 332,  15, 255), -- raiton_ichi
+    ('matsui_p', 4004, 333,  40, 255), -- raiton_ni
+    ('matsui_p', 4004, 334,  73, 255), -- raiton_san
+    ('matsui_p', 4004, 335,  15, 255), -- suiton_ichi
+    ('matsui_p', 4004, 336,  40, 255), -- suiton_ni
+    ('matsui_p', 4004, 337,  73, 255), -- suiton_san
+    ('matsui_p', 4004, 338,  12, 255), -- utsusemi_ichi
+    ('matsui_p', 4004, 339,  37, 255), -- utsusemi_ni
+    ('matsui_p', 4004, 340,  73, 255), -- utsusemi_san
+    ('matsui_p', 4004, 319,  78, 255), -- aisha_ichi
+    ('matsui_p', 4004, 507,  85, 255), -- myoshu_ichi
+    ('matsui_p', 4004, 508,  83, 255), -- yurin_ichi
+    ('matsui_p', 4004, 509,  93, 255), -- kakka_ichi
+    ('matsui_p', 4004, 510,  88, 255), -- migawari_ichi
+    -- T1 elemental nukes + Burn / Aspir / Stun (year-round BLM sub).
+    ('matsui_p', 4004, 144,  12, 255), -- fire
+    ('matsui_p', 4004, 149,  12, 255), -- blizzard
+    ('matsui_p', 4004, 154,  12, 255), -- aero
+    ('matsui_p', 4004, 159,  12, 255), -- stone
+    ('matsui_p', 4004, 164,  12, 255), -- thunder
+    ('matsui_p', 4004, 169,  12, 255), -- water
+    ('matsui_p', 4004, 235,  24, 255), -- burn
+    ('matsui_p', 4004, 247,  25, 255), -- aspir
+    ('matsui_p', 4004, 248,  83, 255), -- aspir_ii
+    ('matsui_p', 4004, 252,  37, 255); -- stun
 
 DELETE FROM mob_skill_lists WHERE skill_list_id = 6004;
 INSERT INTO mob_skill_lists (skill_list_name, skill_list_id, mob_skill_id)
-VALUES ('matsui_p', 6004, 3740),
-       ('matsui_p', 6004, 3743),
-       ('matsui_p', 6004, 202);
+VALUES
+    ('matsui_p', 6004, 128), -- Blade: Rin
+    ('matsui_p', 6004, 129), -- Blade: Retsu
+    ('matsui_p', 6004, 133), -- Blade: Ei
+    ('matsui_p', 6004, 134), -- Blade: Jin
+    ('matsui_p', 6004, 135), -- Blade: Ten
+    ('matsui_p', 6004, 136), -- Blade: Ku
+    ('matsui_p', 6004, 138), -- Blade: Kamu
+    ('matsui_p', 6004, 140), -- Blade: Hi
+    ('matsui_p', 6004, 141); -- Blade: Shun
 
--- ---- 3. Pool 6004 = Matsui-P (safe look + SAM) -----------------------
+-- ---- 3. Pool 6004 = Matsui-P (model 3121 + NIN/BLM) -------------------
 REPLACE INTO mob_pools
     (poolid, name,       packet_name, speciesid, modelid,
      mJob, sJob, cmbSkill, cmbDelay, cmbDmgMult,
@@ -113,10 +154,10 @@ REPLACE INTO mob_pools
      spellList, namevis, roamflag, skill_list_id, resist_id,
      modelSize, modelHitboxSize)
 VALUES
-    -- Retail Exc_S look 0x00008508 (year-round). packet_name MUST stay
+    -- Look 0x0000310C = model 3121 (Matsui-P). packet_name MUST stay
     -- Excenmille_S so the spawn/0x67 DAT key is safe. Nametag is Lua overlay.
-    (6004, 'matsui_p', 'Excenmille_S', 293, UNHEX('00008508000000000000000000000000000000'),
-     12, 4, 25, 240, 300,
+    (6004, 'matsui_p', 'Excenmille_S', 297, UNHEX('0000310C00000000000000000000000000000000'),
+     13, 4, 9, 195, 300,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,
      4004, 0, 0, 6004, 153,

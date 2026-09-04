@@ -1068,7 +1068,16 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
         }
     }
 
-    return addHP(-amount);
+    // addHP returns HP actually removed. A killing blow on a 5 HP leftover
+    // would then show "5" in the combat log even when the hit was 30k.
+    // Report the post-cap hit instead so overkill is visible and the mob dies.
+    int32 applied = addHP(-amount);
+    if (amount > 0 && health.hp <= 0)
+    {
+        return amount;
+    }
+
+    return applied;
 }
 
 uint16 CBattleEntity::STR()

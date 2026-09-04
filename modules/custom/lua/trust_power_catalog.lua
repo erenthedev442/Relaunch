@@ -15,9 +15,10 @@
 local C = {}
 
 C.DEFAULT_CAP         = 40000
-C.MATSUI_CAP          = 79999 -- Void Keeper capstone: frequent 40–50k, spikes to 79,999
+C.MATSUI_CAP          = 99999 -- Void Keeper capstone: WS floor ~80k, crits up to 99,999
 C.SHANTOTTO_II_MB_CAP = 79999
-C.MATSUI_SOFT_BAND    = { 40000, 50000 }
+C.MATSUI_SOFT_BAND    = { 80000, 86000 }
+C.MATSUI_SOFTCLAMP_SCALE = 16000 -- tighter than default 40k so crits often reach 99k
 
 -- Per-tier hard caps (override DEFAULT_CAP unless entry.cap is set).
 C.TIER_HARD_CAP =
@@ -60,20 +61,24 @@ C.STYLE =
     support    = { matt = 0.70, mdmg = 0.55, mbb = 0.40, fc = 0.85, macc = 0.85 },
 }
 
--- spellId -> { role, tier, style?, cap?, mbCap?, softBand?, injectKit?, meleeChip? }
+-- spellId -> { role, tier, style?, cap?, mbCap?, softBand?, injectKit?, meleeChip?,
+--              bypassLevelingPortion?, softclampScale? }
 -- meleeChip: fraction of tier melee package for healers/buffers who still AA/WS
 -- (e.g. Ferreous Randgrith). Does not change cure/support package.
+-- bypassLevelingPortion: only Matsui-P — skip the pre-99 % of mob HP clamp.
 local function e(role, tier, opts)
     opts = opts or {}
     return {
-        role      = role,
-        tier      = tier,
-        style     = opts.style or 'standard',
-        cap       = opts.cap,
-        mbCap     = opts.mbCap,
-        softBand  = opts.softBand,
-        injectKit = opts.injectKit,
-        meleeChip = opts.meleeChip,
+        role                   = role,
+        tier                   = tier,
+        style                  = opts.style or 'standard',
+        cap                    = opts.cap,
+        mbCap                  = opts.mbCap,
+        softBand               = opts.softBand,
+        injectKit              = opts.injectKit,
+        meleeChip              = opts.meleeChip,
+        bypassLevelingPortion  = opts.bypassLevelingPortion,
+        softclampScale         = opts.softclampScale,
     }
 end
 
@@ -228,12 +233,14 @@ C.trusts =
     [902] = e('ranged_dd', 'A', { style = 'weaponskill', injectKit = false }), -- Corvus
     [1002]= e('aura',      'S', { style = 'support',     injectKit = false }), -- Cornelia (incorporeal Haste/Acc/RAcc/MAcc)
     [1004]= e('hybrid',    'S', {
-        style     = 'apex',
-        cap       = C.MATSUI_CAP,
-        mbCap     = C.MATSUI_CAP,
-        softBand  = C.MATSUI_SOFT_BAND,
-        injectKit = false,
-    }), -- Matsui-P on Exc_S slot (Void Keeper: soft 40–50k, hard 79,999)
+        style                  = 'apex',
+        cap                    = C.MATSUI_CAP,
+        mbCap                  = C.MATSUI_CAP,
+        softBand               = C.MATSUI_SOFT_BAND,
+        bypassLevelingPortion  = true,
+        softclampScale         = C.MATSUI_SOFTCLAMP_SCALE,
+        injectKit              = false,
+    }), -- Matsui-P: only trust that skips pre-99 HP% clamp; 80k WS, crits to 99,999
 
     ------------------------------------------------------------------
     -- Implemented but not grantable yet (DISABLED_SPELL)

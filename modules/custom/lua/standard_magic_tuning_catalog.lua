@@ -5,14 +5,18 @@
 -- by spell family and tier. Direct elemental/divine/ninjutsu casts, damaging
 -- Blue Magic (physical, magical, and breath), and player-automaton nukes are
 -- eligible. Helix nukes and Kaustra are included so SCH DoT/2hr keep pace with
--- endgame elemental. Drains and enfeebles remain untouched.
+-- endgame elemental. Drains stay untouched. Dia / Diaga / Bio keep their DoT
+-- and defense / attack down; the opening hit is a token (no gear Magic
+-- Damage) and still respects the 33% leveling HP clamp so they cannot
+-- one-shot while leveling.
 --
 -- Outgoing elemental / BLU / ninjutsu / divine damage also uses the ordinary
 -- weaponskill rules: 33% of mob HP while below 99, the 40k / 79,999 / 99,999 /
 -- 999,999 ceiling, pre-119 III REMA matching Ambuscade at 99,999, and the AoE
 -- WS cap on splash hits of -ga / other multi-target casts. The mob the spell
 -- was aimed at uses the single-target ceiling so an AoE nuke is still a
--- full single-target spell.
+-- full single-target spell. Main-job BLU splash is hard-capped at 149,999
+-- even on Caliburnus (generic Prime AoE is 199,999).
 -- Main BLM is the nuke identity. SCH native nukes are 0.90 of that. RDM,
 -- /BLM, and /SCH are much weaker so people cannot level every job by
 -- subbing a nuker and spamming Stone / Stonega / Helix.
@@ -101,6 +105,40 @@ local function isHelix(spellId)
         spellId <= xi.magic.spell.LUMINOHELIX) or
         (spellId >= xi.magic.spell.GEOHELIX_II and
         spellId <= xi.magic.spell.LUMINOHELIX_II)
+end
+
+-- Dia / Diaga / Bio go through useDamageSpell for a token opening hit.
+-- Gear Magic Damage is for nukes; these spells must not inherit it.
+local tokenInitialSpellIds =
+{
+    [xi.magic.spell.DIA]       = true,
+    [xi.magic.spell.DIA_II]    = true,
+    [xi.magic.spell.DIA_III]   = true,
+    [xi.magic.spell.DIA_IV]    = true,
+    [xi.magic.spell.DIA_V]     = true,
+    [xi.magic.spell.DIAGA]     = true,
+    [xi.magic.spell.DIAGA_II]  = true,
+    [xi.magic.spell.DIAGA_III] = true,
+    [xi.magic.spell.DIAGA_IV]  = true,
+    [xi.magic.spell.DIAGA_V]   = true,
+    [xi.magic.spell.BIO]       = true,
+    [xi.magic.spell.BIO_II]    = true,
+    [xi.magic.spell.BIO_III]   = true,
+    [xi.magic.spell.BIO_IV]    = true,
+    [xi.magic.spell.BIO_V]     = true,
+}
+
+function catalog.isTokenInitialSpellId(spellId)
+    return tokenInitialSpellIds[spellId] == true
+end
+
+function catalog.isTokenInitialSpell(spell)
+    if not spell then
+        return false
+    end
+
+    local spellId = spell.getID and spell:getID() or spell
+    return catalog.isTokenInitialSpellId(spellId)
 end
 
 local function validCasterAndTarget(caster, target)
@@ -223,41 +261,50 @@ function catalog.getDamageCap(caster)
     return catalog.NON_ITEM_LEVEL_119_CAP
 end
 
+local function clampBlueAoECap(caster, cap)
+    if
+        cap and
+        cap > 0 and
+        caster and
+        caster.isPC and
+        caster:isPC() and
+        caster.getMainJob and
+        caster:getMainJob() == xi.job.BLU
+    then
+        return math.min(cap, blueWeaponCatalog.AOE_DAMAGE_CAP)
+    end
+
+    return cap
+end
+
 function catalog.getAoEDamageCap(caster, spell)
     if not spell or not spell.isAoE or spell:isAoE() == 0 then
         return nil
     end
 
+    local cap
     if caster.isAutomaton and caster:isAutomaton() then
-        return catalog.getDamageCap(caster)
+        cap = catalog.getDamageCap(caster)
+    elseif not caster:isPC() then
+        cap = catalog.AOE_PRE_119_CAP
+    else
+        local mainWeapon = caster:getEquipID(xi.slot.MAIN)
+        if primeWeaponIds[mainWeapon] then
+            cap = primeCatalog.AOE_DAMAGE_CAP
+        elseif remaWeaponIds[mainWeapon] then
+            cap = remaCatalog.AOE_DAMAGE_CAP
+        elseif progression.isRemaPathWeapon(mainWeapon) then
+            cap = catalog.AMBU_DAMAGE_CAP
+        elseif ambuCatalog.isFinalWeapon(mainWeapon, xi.slot.MAIN) then
+            cap = ambuCatalog.AOE_DAMAGE_CAP
+        elseif getMainHandILvl(caster) >= 119 then
+            cap = catalog.AOE_ITEM_119_CAP
+        else
+            cap = catalog.AOE_PRE_119_CAP
+        end
     end
 
-    if not caster:isPC() then
-        return catalog.AOE_PRE_119_CAP
-    end
-
-    local mainWeapon = caster:getEquipID(xi.slot.MAIN)
-    if primeWeaponIds[mainWeapon] then
-        return primeCatalog.AOE_DAMAGE_CAP
-    end
-
-    if remaWeaponIds[mainWeapon] then
-        return remaCatalog.AOE_DAMAGE_CAP
-    end
-
-    if progression.isRemaPathWeapon(mainWeapon) then
-        return catalog.AMBU_DAMAGE_CAP
-    end
-
-    if ambuCatalog.isFinalWeapon(mainWeapon, xi.slot.MAIN) then
-        return ambuCatalog.AOE_DAMAGE_CAP
-    end
-
-    if getMainHandILvl(caster) >= 119 then
-        return catalog.AOE_ITEM_119_CAP
-    end
-
-    return catalog.AOE_PRE_119_CAP
+    return clampBlueAoECap(caster, cap)
 end
 
 -- True for every extra mob an AoE spell tags. The aimed-at target is false
@@ -353,10 +400,21 @@ function catalog.applyPlayerOutgoingLimits(caster, target, spell, damage)
     if
         not caster or
         not target or
-        not isOutgoingLimitedSpell(spell) or
         (not (caster.isPC and caster:isPC()) and
             not (caster.isAutomaton and caster:isAutomaton()))
     then
+        return damage
+    end
+
+    -- Token Dia / Diaga / Bio: leveling clamp only. No job-nuke factor and
+    -- no REMA ceiling — those are for real damage spells.
+    if catalog.isTokenInitialSpell(spell) then
+        local source = caster:isPC() and caster or caster:getMaster()
+        local sourceLevel = source and source.getMainLvl and source:getMainLvl() or 0
+        return levelingHpCap.apply(sourceLevel, target, damage)
+    end
+
+    if not isOutgoingLimitedSpell(spell) then
         return damage
     end
 

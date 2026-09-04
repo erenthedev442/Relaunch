@@ -377,6 +377,19 @@ describe('Level-scaled direct magic tuning', function()
         assert(catalog.applyPlayerOutgoingLimits(caster, splash, firega, 200000) == 149999)
     end)
 
+    it('caps BLU AoE splash at 149999 while the aimed-at mob keeps the ST ceiling', function()
+        local prime = makeCaster(99, true, xi.job.BLU, { [xi.slot.MAIN] = 21646 })
+        local primary = makeTarget(99, 5000000, true, 100)
+        local splash = makeTarget(99, 5000000, true, 200)
+        local floe = makeSpell(
+            xi.magic.spell.SPECTRAL_FLOE, xi.skill.BLUE_MAGIC, 99, xi.job.BLU, true, 100)
+
+        assert(catalog.getOutgoingDamageCap(prime, floe, primary) == 999999)
+        assert(catalog.getOutgoingDamageCap(prime, floe, splash) == 149999)
+        assert(catalog.applyPlayerOutgoingLimits(prime, primary, floe, 400000) == 400000)
+        assert(catalog.applyPlayerOutgoingLimits(prime, splash, floe, 400000) == 149999)
+    end)
+
     it('clamps leveling nukes to one third of mob HP after the job factor', function()
         local caster = makeCaster(50)
         local target = makeTarget(50, 9000)
@@ -388,5 +401,35 @@ describe('Level-scaled direct magic tuning', function()
             makeCaster(99), makeTarget(10, 3000), stone, 40000) == 40000)
         assert(catalog.applyPlayerOutgoingLimits(
             makeCaster(99, true, xi.job.WAR), target, stone, 8000) == 1600)
+    end)
+
+    it('treats Dia / Diaga / Bio opening hits as tokens, not nukes', function()
+        local dia = makeSpell(
+            xi.magic.spell.DIA, xi.skill.ENFEEBLING_MAGIC, 1, xi.job.WHM)
+        local diaga = makeSpell(
+            xi.magic.spell.DIAGA_II, xi.skill.ENFEEBLING_MAGIC, 31, xi.job.WHM)
+        local bio = makeSpell(
+            xi.magic.spell.BIO_II, xi.skill.DARK_MAGIC, 35, xi.job.BLM)
+
+        assert(catalog.isTokenInitialSpell(dia))
+        assert(catalog.isTokenInitialSpell(diaga))
+        assert(catalog.isTokenInitialSpellId(xi.magic.spell.BIO_V))
+        assert(not catalog.isTokenInitialSpell(
+            makeSpell(xi.magic.spell.STONE, xi.skill.ELEMENTAL_MAGIC, 1)))
+        assert(not catalog.isTokenInitialSpell(
+            makeSpell(xi.magic.spell.BANISH, xi.skill.DIVINE_MAGIC, 5)))
+        assert(not catalog.isTokenInitialSpell(
+            makeSpell(xi.magic.spell.KAUSTRA, xi.skill.DARK_MAGIC, 5)))
+
+        -- 33% leveling clamp, no RDM/WHM job-nuke factor (RDM nuke path
+        -- would have been 8000 * 0.35 = 2800).
+        assert(catalog.applyPlayerOutgoingLimits(
+            makeCaster(50, true, xi.job.RDM), makeTarget(50, 9000), dia, 8000) == 3000)
+        assert(catalog.applyPlayerOutgoingLimits(
+            makeCaster(50), makeTarget(50, 9000), bio, 8000) == 3000)
+        assert(catalog.applyPlayerOutgoingLimits(
+            makeCaster(50, true, xi.job.WHM), makeTarget(50, 9000), diaga, 8000) == 3000)
+        assert(catalog.applyPlayerOutgoingLimits(
+            makeCaster(99, true, xi.job.WHM), makeTarget(10, 3000), dia, 8000) == 8000)
     end)
 end)

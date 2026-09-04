@@ -31,9 +31,12 @@ describe('BLU shared effect helpers', function()
 
     local function makeTarget(options)
         options = type(options) == 'table' and options or { isNm = options == true }
-        local localVars = {}
+        local localVars = options.localVars or {}
         return
         {
+            isMob = function()
+                return options.isMob ~= false
+            end,
             isNM = function()
                 return options.isNm == true
             end,
@@ -45,7 +48,14 @@ describe('BLU shared effect helpers', function()
                     return 1
                 end
 
+                if mobMod == xi.mobMod.NO_CAPACITY_POINTS and options.noCapacity then
+                    return 1
+                end
+
                 return 0
+            end,
+            getZoneID = function()
+                return options.zoneId or 0
             end,
             getName = function()
                 return options.name or 'Leaping_Lizzy'
@@ -173,6 +183,7 @@ describe('BLU shared effect helpers', function()
 
         local headButt = readSpell('head_butt')
         assert(headButt:find('applyBlueAdditionalEffect', 1, true))
+        assert(headButt:find('effectTable, spell', 1, true))
         assert(not headButt:find('if damage <= 0', 1, true))
     end)
 
@@ -189,15 +200,12 @@ describe('BLU shared effect helpers', function()
         assert(allowed)
     end)
 
-    it('gives terror and petrify a full 25 seconds on trash, Apex, and NMs', function()
+    it('gives terror and petrify a full 25 seconds on trash and overworld NMs', function()
         local caster = makeCaster()
         for _, target in ipairs(
         {
             makeTarget(),
-            makeTarget({ name = 'Apex_Poxhound' }),
             makeTarget({ isNm = true }),
-            makeTarget({ isBattlefield = true }),
-            makeTarget({ checkAsNm = true }),
         })
         do
             local allowed, duration, lockout, _, fixedDuration =
@@ -215,6 +223,43 @@ describe('BLU shared effect helpers', function()
 
         assert(sharedEffects.isApexMob(makeTarget({ name = 'Apex_Poxhound' })))
         assert(not sharedEffects.isApexMob(makeTarget({ name = 'Leaping_Lizzy' })))
+    end)
+
+    it('blocks disabling BLU effects on custom-content NMs except Head Butt', function()
+        local caster = makeCaster()
+        local customTargets =
+        {
+            makeTarget({ name = 'Apex_Poxhound' }),
+            makeTarget({ isNm = true, zoneId = xi.zone.ABYSSEA_KONSCHTAT }),
+            makeTarget({ isNm = true, zoneId = xi.zone.REISENJIMA }),
+            makeTarget({ isBattlefield = true }),
+            makeTarget({ checkAsNm = true }),
+            makeTarget({ noCapacity = true }),
+            makeTarget({ localVars = { GeasFeteOwnerId = 42 } }),
+            makeTarget({ localVars = { HTBFScaled = 1 } }),
+        }
+
+        for _, target in ipairs(customTargets) do
+            assert(sharedEffects.isCustomContentNm(target))
+
+            local allowed, duration, _, reason, fixedDuration =
+                sharedEffects.preparePlayerControl(caster, target, xi.effect.TERROR, 25, 100)
+            assert(not allowed and reason == 'custom_nm_disable')
+
+            allowed, _, _, reason =
+                sharedEffects.preparePlayerControl(caster, target, xi.effect.PETRIFICATION, 60, 100)
+            assert(not allowed and reason == 'custom_nm_disable')
+
+            allowed, _, _, reason =
+                sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 5, 100, xi.magic.spell.ANVIL_LIGHTNING)
+            assert(not allowed and reason == 'custom_nm_disable')
+
+            allowed, duration, _, reason, fixedDuration =
+                sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 5, 100, xi.magic.spell.HEAD_BUTT)
+            assert(allowed and duration == 3 and reason == nil and fixedDuration)
+        end
+
+        assert(not sharedEffects.isCustomContentNm(makeTarget({ isNm = true })))
     end)
 
     it('does not lock out a second terror or petrify after the first lands', function()

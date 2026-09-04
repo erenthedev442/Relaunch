@@ -128,6 +128,16 @@ There is **no** in-game IP-ban table. The connect server does not check IP allow
 
 A new BT / Starlink / V.tal address will **not** be blocked until someone adds it.
 
+**cornholio cluster (added 3 Sep 2026):**
+
+```
+89.46.62.142
+37.120.138.189
+176.113.72.93
+```
+
+Rule names `Block cornholio <ip>`. Accounts `itchybutwhole`, `cornholio`, `cornholio2`, `cornholioo` **deleted** from live DB.
+
 ---
 
 ## 4. Other clusters (already in watchlist.json)

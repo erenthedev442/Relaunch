@@ -307,4 +307,68 @@ describe('Abyssea marks encounter lifecycle', function()
         GetPlayerByID = originalGetPlayerByID
         assert(ok, err)
     end)
+
+    it('does not stack gear haste when pressure ticks', function()
+        local originalGetPlayerByID = GetPlayerByID
+        local listeners = {}
+        local hasteAdds = 0
+        local attAdds = 0
+
+        local player = {}
+        function player:getID() return 1004 end
+        function player:getHP() return 1000 end
+        function player:getMaxHP() return 1000 end
+        function player:getHPP() return 100 end
+        function player:getParty() return { self } end
+        function player:getZoneID() return 15 end
+        function player:isPC() return true end
+        function player:printToPlayer() end
+        function player:getCharVar() return 0 end
+        function player:setCharVar() end
+        function player:getXPos() return 0 end
+        function player:getZPos() return 0 end
+
+        local mob = {}
+        function mob:getID() return 3004 end
+        function mob:getName() return 'Pressure_Test_Mob' end
+        function mob:getZoneID() return 15 end
+        function mob:getHPP() return 100 end
+        function mob:getHP() return 10000 end
+        function mob:getMaxHP() return 10000 end
+        function mob:addMod(modId, amount)
+            if modId == xi.mod.HASTE_GEAR then
+                hasteAdds = hasteAdds + amount
+            elseif modId == xi.mod.ATT then
+                attAdds = attAdds + amount
+            end
+        end
+        function mob:addListener(_, id, callback) listeners[id] = callback end
+        function mob:removeListener(id) listeners[id] = nil end
+
+        local ok, err = xpcall(function()
+            GetPlayerByID = function(id)
+                return id == player:getID() and player or nil
+            end
+
+            runtime.attach(mob,
+                {
+                    tier = 1, label = 'Test',
+                    signature = nil, phases = {},
+                    firstSignatureSec = 999, pressureSec = 0, pressureStepSec = 1,
+                },
+                player)
+
+            listeners.ABY_MARKS_COMBAT(mob)
+            listeners.ABY_MARKS_COMBAT(mob)
+            assert(attAdds == 175)
+            assert(hasteAdds == 0)
+
+            runtime.cleanup(mob)
+            assert(attAdds == 0)
+            assert(hasteAdds == 0)
+        end, debug.traceback)
+
+        GetPlayerByID = originalGetPlayerByID
+        assert(ok, err)
+    end)
 end)

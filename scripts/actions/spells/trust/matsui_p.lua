@@ -2,6 +2,7 @@
 -- Trust: Matsui-P
 -- Spell ID: 1004 | Pool ID: 6004
 -- Menu / DAT: Excenmille (S). Nametag: matsui-p (Lua overlay).
+-- Look: model 3121 (ROM/310/13.DAT). NIN/BLM year-round kit.
 -- Do not /ma "Matsui-P" — that is seasonal spell 1003 and R0s the client.
 -- Do not renameEntity to the retail string 'Matsui-P' (same DAT key).
 -----------------------------------
@@ -39,20 +40,34 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.MACC, power)
     mob:addMod(xi.mod.HASTE_MAGIC, 1500)
     mob:addMod(xi.mod.FASTCAST, 80)
-    mob:addMod(xi.mod.CRITHITRATE, 15 + math.floor(power / 15))
+    mob:addMod(xi.mod.CRITHITRATE, 32 + math.floor(power / 12))
     mob:addMod(xi.mod.STORETP, math.floor(power / 6))
     mob:addMod(xi.mod.ALL_WSDMG_ALL_HITS, 50 + math.floor(power / 8))
     mob:addMod(xi.mod.MAGIC_DAMAGE, math.floor(power * 0.75))
     mob:addMod(xi.mod.MAGIC_BURST_BONUS_UNCAPPED, 40)
+    mob:addMod(xi.mod.DUAL_WIELD, 15)
+    mob:addMod(xi.mod.UTSUSEMI_BONUS, 1)
 
-    mob:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
-    mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 60)
+    -- Shadows / Migawari first, then interrupt, then self-buffs, then MB / T1.
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.MIGAWARI }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.MIGAWARI_ICHI })
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.COPY_IMAGE }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.UTSUSEMI })
     mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
     mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
-    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.HASSO }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.HASSO })
-    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.MEDITATE }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.MEDITATE })
+    mob:addGambit(ai.t.SELF, { ai.c.HPP_LT, 40 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.MANA_WALL })
+    mob:addGambit(ai.t.SELF, { ai.c.MPP_LT, 30 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.ASPIR })
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.INNIN }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.INNIN })
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.FUTAE }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.FUTAE })
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.STORE_TP }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.KAKKA_ICHI })
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.SUBTLE_BLOW_PLUS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.MYOSHU_ICHI })
+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.BURN }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.BURN }, 60)
+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.INHIBIT_TP }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.YURIN_ICHI }, 60)
+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.ATTACK_DOWN }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.AISHA_ICHI }, 60)
+    mob:addGambit(ai.t.TARGET, { ai.c.MB_AVAILABLE, 0 }, { ai.r.MA, ai.s.MB_ELEMENT, xi.magic.spellFamily.NONE })
+    mob:addGambit(ai.t.TARGET, { ai.c.NOT_SC_AVAILABLE, 0 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.NONE }, 60)
 
+    -- Retail opens Light/Darkness for the player; hold TP a bit, then highest Blade.
     mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 2000)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MELEE)
 
     master:printToPlayer('matsui-p reporting. Try to keep up.', xi.msg.channel.PARTY, 'matsui-p')
 end
