@@ -2130,7 +2130,7 @@ void LoadPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
     // stay parked. Match the master's current speed at Activate.
     if (PPet->getPetType() != PET_TYPE::LUOPAN && PMaster != nullptr)
     {
-        const uint8 keepUp = std::max(PMaster->baseSpeed, PMaster->speed);
+        const uint8 keepUp = std::max(PMaster->baseSpeed, PMaster->GetSpeed());
         if (keepUp > PPet->baseSpeed)
         {
             PPet->baseSpeed      = keepUp;
