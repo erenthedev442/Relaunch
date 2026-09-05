@@ -133,9 +133,9 @@ xi.settings.map =
     -- Player movement speed limit (travel QoL)
     SPEED_LIMIT = 250,
 
-    -- In-combat player speed. Retail-like so mobs can catch kiting.
-    COMBAT_SPEED = 50,
-    COMBAT_SPEED_LIMIT = 80,
+    -- In-combat player speed. Dropped from travel QoL so mobs can catch kiting.
+    COMBAT_SPEED = 100,
+    COMBAT_SPEED_LIMIT = 130,
 
     -- Mount speed, expressed as player speed. Can surpass speed limit.
     MOUNT_SPEED = 200,
@@ -306,7 +306,7 @@ xi.settings.map =
     AUDIT_CHAT      = true,
     AUDIT_SAY       = false,
     AUDIT_SHOUT     = false,
-    AUDIT_TELL      = false,
+    AUDIT_TELL      = true,
     AUDIT_YELL      = false,
     AUDIT_LINKSHELL = true,
     AUDIT_UNITY     = false,

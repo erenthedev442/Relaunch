@@ -1,7 +1,7 @@
 -----------------------------------
 -- Party-size HP scale for custom content only.
 --
--- Solo + trusts stays 1.0x (trusts are not PCs). A 6-box is 5.0x.
+-- Solo + trusts stays 1.0x (trusts are not PCs). A 6-box is 4.0x.
 -- Open-world trash / EXP / CP farms are not marked and are never touched.
 -- Solo-lock fights (Gauntlet, Maat, Job Mastery) are not wired in.
 --
@@ -28,11 +28,11 @@ xi.party_hp_scale = scale
 scale.CURVE =
 {
     [1] = 1.0,
-    [2] = 1.7,
-    [3] = 2.4,
-    [4] = 3.2,
-    [5] = 4.1,
-    [6] = 5.0,
+    [2] = 1.5,
+    [3] = 2.1,
+    [4] = 2.7,
+    [5] = 3.3,
+    [6] = 4.0,
 }
 
 local LV_MARK    = 'PartyHpScale'

@@ -29,6 +29,38 @@ local SPEED_EFFECTS =
     xi.effect.HASTE_SAMBA_HASTE,
 }
 
+-- Snapshot SQL cmbDelay before Spawn()/setMobLevel. Those two can rewrite
+-- m_delay on a virgin entity; resetDelay() only copies m_baseDelay, which is
+-- not always the value we just read. Cache once, then pin every lock.
+function M.rememberSqlDelay(mob)
+    if not mob then
+        return 0
+    end
+
+    local cached = 0
+    pcall(function()
+        cached = mob:getLocalVar('[MarksDelay]') or 0
+    end)
+    if cached >= 40 and cached <= 999 then
+        return cached
+    end
+
+    local delay = 0
+    pcall(function()
+        if mob.getBaseDelay then
+            delay = mob:getBaseDelay() or 0
+        end
+    end)
+    if delay >= 40 and delay <= 999 then
+        pcall(function()
+            mob:setLocalVar('[MarksDelay]', delay)
+        end)
+        return delay
+    end
+
+    return 0
+end
+
 function M.lockSwing(mob, fullWipe)
     if not mob then return end
 
@@ -44,17 +76,16 @@ function M.lockSwing(mob, fullWipe)
             mob:delStatusEffectSilent(effect)
         end)
     end
+    local delay = M.rememberSqlDelay(mob)
     pcall(function()
         if mob.resetDelay then
             mob:resetDelay()
-        else
-            local delay = mob:getLocalVar('[MarksDelay]')
-            if delay < 40 and mob.getBaseDelay then
-                delay = mob:getBaseDelay() or 0
-            end
-            if delay >= 40 and delay <= 999 and mob.setDelay then
-                mob:setDelay(delay)
-            end
+        end
+        -- resetDelay() copies m_baseDelay. A first-after-restart pop can have
+        -- a stale/wrong m_delay even when m_baseDelay is the SQL snapshot, so
+        -- always write the cached cmbDelay afterwards.
+        if delay >= 40 and delay <= 999 and mob.setDelay then
+            mob:setDelay(delay)
         end
     end)
     pcall(function()
@@ -66,25 +97,6 @@ function M.lockSwing(mob, fullWipe)
         local haste = mob.getLocalVar and mob:getLocalVar('[MarksHaste]') or 0
         mob:setMod(xi.mod.HASTE_GEAR, haste)
     end)
-    pcall(function()
-        if not mob.getBaseDelay then return end
-        local delay = mob:getBaseDelay()
-        if type(delay) == 'number' and delay >= 40 and delay <= 999 then
-            mob:setLocalVar('[MarksDelay]', delay)
-        end
-    end)
-end
-
-local function swingNeedsLock(mob)
-    local ok, needs = pcall(function()
-        for _, effect in ipairs(SPEED_EFFECTS) do
-            if mob:hasStatusEffect(effect) then
-                return true
-            end
-        end
-        return false
-    end)
-    return ok and needs
 end
 
 local POSITIONAL_KINDS =
@@ -98,6 +110,7 @@ local POSITIONAL_KINDS =
 }
 
 local HOLD_GRACE_SEC = 2
+local WIPE_GRACE_SEC = 10
 local BURST_SCALE_BY_TIER = { [1] = 1.00, [2] = 0.75, [3] = 0.50 }
 local CONTROL_LIMITS =
 {
@@ -148,6 +161,12 @@ local function partyPCs(owner)
     end
 
     add(owner)
+    local okAlliance, alliance = pcall(function() return owner:getAlliance() end)
+    if okAlliance and type(alliance) == 'table' then
+        for _, member in ipairs(alliance) do
+            add(member)
+        end
+    end
     local ok, party = pcall(function() return owner:getParty() end)
     if ok and party then
         for _, member in ipairs(party) do
@@ -158,11 +177,10 @@ local function partyPCs(owner)
     return result
 end
 
-local function announce(mob, state, message)
-    if not message then return end
-
-    local owner = ownerFor(state)
-    if not owner then return end
+local function announceTo(owner, mob, state, message)
+    if not owner or not message then
+        return
+    end
 
     local prefix = string.format('[Abyssea: %s] ', state.cfg.label or safeName(mob):gsub('_', ' '))
     for _, player in ipairs(partyPCs(owner)) do
@@ -171,6 +189,101 @@ local function announce(mob, state, message)
                 player:printToPlayer(prefix .. message, xi.msg.channel.SYSTEM_1)
             end
         end)
+    end
+end
+
+local function announce(mob, state, message)
+    announceTo(ownerFor(state), mob, state, message)
+end
+
+local function fighterAlive(player, zoneId)
+    if not player then
+        return false
+    end
+
+    local hp = 0
+    pcall(function() hp = player:getHP() or 0 end)
+    if hp <= 0 then
+        return false
+    end
+
+    local alive = true
+    pcall(function()
+        if player.isAlive then
+            alive = player:isAlive()
+        end
+    end)
+    if not alive then
+        return false
+    end
+
+    local z
+    pcall(function() z = player:getZoneID() end)
+    return z == zoneId
+end
+
+local function rememberFighters(mob, state)
+    state.fighters = state.fighters or {}
+    if state.ownerId then
+        state.fighters[state.ownerId] = true
+    end
+
+    local owner = ownerEntity(state)
+    if owner then
+        for _, player in ipairs(partyPCs(owner)) do
+            state.fighters[player:getID()] = true
+        end
+    end
+
+    pcall(function()
+        for _, hate in ipairs(mob:getEnmityList() or {}) do
+            local ent = hate.entity
+            if ent and ent.isPC and ent:isPC() then
+                state.fighters[ent:getID()] = true
+            end
+        end
+    end)
+end
+
+local function anyFighterAlive(mob, state)
+    local zoneId = mob:getZoneID()
+    for id in pairs(state.fighters or {}) do
+        local player
+        pcall(function() player = GetPlayerByID(id) end)
+        if fighterAlive(player, zoneId) then
+            return true
+        end
+    end
+
+    return false
+end
+
+local function despawnOnWipe(mob, state)
+    announceTo(ownerEntity(state), mob, state, 'Your party has fallen. The NM fades back into the abyss.')
+    local mobId = mob:getID()
+    M.cleanup(mob)
+    pcall(function()
+        DespawnMob(mobId)
+    end)
+end
+
+local function wipeTick(mob, state, stamp)
+    rememberFighters(mob, state)
+    if anyFighterAlive(mob, state) then
+        state.wipeAt = nil
+        return
+    end
+
+    local grace = state.cfg.wipeGraceSec
+    if grace == nil then
+        grace = WIPE_GRACE_SEC
+    end
+    if not state.wipeAt then
+        state.wipeAt = stamp + grace
+        return
+    end
+    if stamp >= state.wipeAt then
+        despawnOnWipe(mob, state)
     end
 end
 
@@ -540,9 +653,10 @@ local function combatTick(mob)
     pressureTick(mob, state, stamp)
     clampNativeControl(state)
     enforceFloor(mob, state)
-    if swingNeedsLock(mob) then
-        M.lockSwing(mob)
-    end
+    -- Re-pin every tick. First-after-restart pops can rewrite delay after
+    -- ENGAGE / onMobEngage, and that rewrite is not always a haste effect.
+    M.lockSwing(mob)
+    wipeTick(mob, state, stamp)
 end
 
 local function damageTaken(mob, amount, attacker, attackType)

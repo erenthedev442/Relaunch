@@ -290,7 +290,7 @@ startWaveForTeam = function(teamName, waveNum)
     if not zone then return end
 
     -- Wave catalog hpMult is the 1-player baseline. Team size uses the
-    -- shared party HP curve (1 / 1.7 / 2.4 / 3.2 / 4.1 / 5.0).
+    -- shared party HP curve (1 / 1.5 / 2.1 / 2.7 / 3.3 / 4.0).
     local teamSize = count(sess.alive)
     local hpScale  = cfg.hpMult
 

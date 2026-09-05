@@ -15,8 +15,8 @@
 -- 999,999 ceiling, pre-119 III REMA matching Ambuscade at 99,999, and the AoE
 -- WS cap on splash hits of -ga / other multi-target casts. The mob the spell
 -- was aimed at uses the single-target ceiling so an AoE nuke is still a
--- full single-target spell. Main-job BLU splash skips the weapon
--- multiplier and uses the same iLvl AoE ladder as WS / -ga
+-- full single-target spell. Main-job BLU splash uses the same weapon
+-- multiplier as the aimed-at mob, then the shared iLvl AoE ladder
 -- (40k / 79,999 / 99,999 / 149,999 / 199,999).
 -- Main BLM is the nuke identity. SCH native nukes are 0.90 of that. RDM,
 -- /BLM, and /SCH are much weaker so people cannot level every job by
@@ -490,11 +490,6 @@ function catalog.getDamageMultiplier(caster, target, spell)
         caster:getMainJob() == xi.job.BLU and
         spell:getSkillType() == xi.skill.BLUE_MAGIC
     then
-        -- Splash extras do not inherit the 9x-105x main-hand table.
-        if catalog.isAoESplashTarget(spell, target) then
-            return 1
-        end
-
         return blueWeaponCatalog.getDamageMultiplier(caster)
     end
 

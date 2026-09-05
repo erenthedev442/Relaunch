@@ -633,6 +633,8 @@ buildSourceNMMenu = function(player, srcDef, station)
                 station.ownerName = p:getName()
                 mob:setSpawn(mPos.x, mPos.y, mPos.z, mPos.rot)
                 mob:spawn()
+                mob:setLocalVar('ReforgeNM', 1)
+                require('modules/custom/lua/blu_shared_effects').hardenAgainstStunLock(mob)
 
                 -- [DIAG 2026-07-09, RESOLVED 2026-07-11] The "all NMs pop at /
                 -- occupancy reports Spawner 3" bug was the shared-closure case:

@@ -375,6 +375,7 @@ describe('Abyssea marks encounter lifecycle', function()
     it('strips leftover Hundred Fists and pins SQL delay plus overlay haste', function()
         local effects = { [xi.effect.HUNDRED_FISTS] = true }
         local delayReset = 0
+        local pinned = 0
         local mods = {}
         local vars = { ['[MarksHaste]'] = 1000, ['[MarksDelay]'] = 240 }
 
@@ -383,8 +384,8 @@ describe('Abyssea marks encounter lifecycle', function()
         function mob:delStatusEffectSilent(effect) effects[effect] = nil end
         function mob:delStatusEffectsByFlag() end
         function mob:resetDelay() delayReset = delayReset + 1 end
-        function mob:getBaseDelay() return 240 end
-        function mob:setDelay() end
+        function mob:getBaseDelay() return 999 end
+        function mob:setDelay(value) pinned = value end
         function mob:getLocalVar(name) return vars[name] or 0 end
         function mob:setLocalVar(name, value) vars[name] = value end
         function mob:setMod(modId, value) mods[modId] = value end
@@ -392,8 +393,99 @@ describe('Abyssea marks encounter lifecycle', function()
         runtime.lockSwing(mob, true)
         assert(effects[xi.effect.HUNDRED_FISTS] == nil)
         assert(delayReset == 1)
+        assert(pinned == 240)
         assert(mods[xi.mod.HASTE_GEAR] == 1000)
         assert(mods[xi.mod.HASTE_MAGIC] == 0)
         assert(vars['[MarksDelay]'] == 240)
+    end)
+
+    it('snapshots SQL delay before spawn and reuses it after getBaseDelay changes', function()
+        local vars = {}
+        local pinned = 0
+        local mob = {}
+        function mob:getLocalVar(name) return vars[name] or 0 end
+        function mob:setLocalVar(name, value) vars[name] = value end
+        function mob:getBaseDelay() return 240 end
+        function mob:resetDelay() end
+        function mob:setDelay(value) pinned = value end
+        function mob:setMod() end
+        function mob:delStatusEffectSilent() end
+
+        assert(runtime.rememberSqlDelay(mob) == 240)
+        assert(vars['[MarksDelay]'] == 240)
+
+        function mob:getBaseDelay() return 80 end
+        runtime.lockSwing(mob)
+        assert(pinned == 240)
+        assert(vars['[MarksDelay]'] == 240)
+    end)
+
+    it('despawns after a party wipe and not while a real PC still stands', function()
+        local originalGetPlayerByID = GetPlayerByID
+        local originalDespawnMob = DespawnMob
+        local listeners = {}
+        local despawned = 0
+        local notices = 0
+        local hp = 1000
+
+        local player = {}
+        function player:getID() return 1005 end
+        function player:getHP() return hp end
+        function player:getMaxHP() return 1000 end
+        function player:getHPP() return hp > 0 and 100 or 0 end
+        function player:getParty() return { self } end
+        function player:getZoneID() return 15 end
+        function player:isPC() return true end
+        function player:printToPlayer() notices = notices + 1 end
+        function player:getCharVar() return 0 end
+        function player:setCharVar() end
+        function player:getXPos() return 0 end
+        function player:getZPos() return 0 end
+
+        local mob = {}
+        function mob:getID() return 3005 end
+        function mob:getName() return 'Wipe_Test_Mob' end
+        function mob:getZoneID() return 15 end
+        function mob:getHPP() return 80 end
+        function mob:getHP() return 8000 end
+        function mob:getMaxHP() return 10000 end
+        function mob:getEnmityList() return {} end
+        function mob:addListener(_, id, callback) listeners[id] = callback end
+        function mob:removeListener(id) listeners[id] = nil end
+
+        local ok, err = xpcall(function()
+            GetPlayerByID = function(id)
+                return id == player:getID() and player or nil
+            end
+            DespawnMob = function(id)
+                if id == mob:getID() then
+                    despawned = despawned + 1
+                end
+            end
+
+            runtime.attach(mob,
+                {
+                    tier = 1, label = 'Test',
+                    signature = nil, phases = {},
+                    firstSignatureSec = 999, pressureSec = 720,
+                    wipeGraceSec = 0,
+                },
+                player)
+
+            listeners.ABY_MARKS_COMBAT(mob)
+            assert(runtime.getState(mob) ~= nil)
+            assert(despawned == 0)
+
+            hp = 0
+            listeners.ABY_MARKS_COMBAT(mob)
+            listeners.ABY_MARKS_COMBAT(mob)
+            assert(despawned == 1)
+            assert(notices > 0)
+            assert(runtime.getState(mob) == nil)
+        end, debug.traceback)
+
+        GetPlayerByID = originalGetPlayerByID
+        DespawnMob = originalDespawnMob
+        assert(ok, err)
     end)
 end)

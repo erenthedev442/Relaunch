@@ -47,6 +47,7 @@ local waveProgress = require('modules/custom/lua/game_master_progress')
 local wh       = require('modules/custom/lua/weekly_hunts')
 local bank     = require('modules/custom/lua/augment_catalyst_bank')
 local itemNames = require('modules/custom/lua/augment_item_names')
+local tradeGuard = require('modules/custom/lua/augment_trade_guard')
 -----------------------------------
 local m = Module:new('augment_moogle')
 
@@ -1565,6 +1566,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         widescan   =  1,
 
         onTrigger = function(player, npc)
+            tradeGuard.arm(player)
             local st = getState(player)
             if st.itemId ~= 0 or st.gearDelivered or st.bankConsumed then
                 if st.gearDelivered then
@@ -1592,6 +1594,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end,
 
         onTrade = function(player, npc, trade)
+            tradeGuard.arm(player)
             local gearId         = nil
             local gearItemObj    = nil   -- CLuaItem for the gear (for crystalize state)
             local catalystCounts = {}    -- itemId -> total count (sums across slots + stack qty)

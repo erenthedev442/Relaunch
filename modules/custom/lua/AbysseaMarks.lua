@@ -90,13 +90,11 @@ local function logicalCopyIsSpawned(mobId, nmName)
     return false
 end
 
--- Marks NMs reuse the same entity across pops. Spawn() and setMobLevel(recover)
--- only clear status effects that have a non-zero duration, so a duration-0
--- Hundred Fists survives both. CalculateMobStats only resetDelay()s MNK, so a
--- leftover setDelay() on Muscaliet (WAR, cmbDelay 240 = 4.0s) also comes back.
--- Trusts / fellows / a second PC do not scale delay; they just make leftover
--- state obvious because the NM lives long enough to swing. Pin the SQL delay
--- and strip speed buffs on pop, engage, and any later combat tick that sees them.
+-- Marks NMs reuse the same entity across pops, but the fast-swing bug also
+-- hits the FIRST pop after a map restart (Adamastor / Chloris / Muscaliet).
+-- Spawn() + setMobLevel() can rewrite m_delay on a virgin weapon; resetDelay()
+-- alone is not enough if that rewrite happens after the first lock. Snapshot
+-- SQL cmbDelay before SpawnMob, then pin it on pop, engage, and every tick.
 local function resetMarksSwing(mob, clearTimers)
     if clearTimers then
         pcall(function()
@@ -138,6 +136,9 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     local dy = p:getYPos()
     local dz = p:getZPos() + math.sin(2 * math.pi - rad) * dist
     mob:setSpawn(dx, dy, dz)
+    -- Read cmbDelay from the unloaded entity. Spawn()/setMobLevel can rewrite
+    -- weapon delay; this snapshot is the value we pin for the whole fight.
+    encounterRuntime.rememberSqlDelay(mob)
     local spawned = SpawnMob(mobId)
 
     -- recover=true so leftover Hundred Fists / Haste (duration > 0) die

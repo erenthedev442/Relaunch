@@ -66,9 +66,9 @@ describe('BLU main-hand weapon amplification', function()
             { 20689, 119, 'EMPYREAN',   45, 600000 },
             { 20685, 119, 'RELIC',      30, 400000 },
             { 21621, 119, 'AMBUSCADE',   9,   99999 },
-            { 20651, 119, 'ITEM_119',    9,  239997 }, -- Tizona 119 I: floor 99,999, keep 119 cap
-            { 20705, 119, 'ITEM_119',    9,  239997 },
-            { 20731, 115, 'PRE_119',     9,  120000 },
+            { 20651, 119, 'ITEM_119',    9,   99999 }, -- Tizona 119 I: REMA pre-III floor
+            { 20705, 119, 'ITEM_119',    9,   79999 },
+            { 20731, 115, 'PRE_119',     9,   40000 },
         }
 
         for _, case in ipairs(cases) do
@@ -89,8 +89,8 @@ describe('BLU main-hand weapon amplification', function()
             { 20689,  45, 600000 },
             { 20685,  30, 400000 },
             { 21621,   9,   99999 },
-            { 20705,   9,  239997 },
-            { 20731,   9,  120000 },
+            { 20705,   9,   79999 },
+            { 20731,   9,   40000 },
         })
         do
             local caster = makeCaster(case[1], case[1] == 20731 and 115 or 119)
@@ -151,11 +151,11 @@ describe('BLU main-hand weapon amplification', function()
             end,
         }
 
-        -- Splash skips weapon amp and uses the shared iLvl AoE ladder.
+        -- Splash uses the same weapon amp, then the shared iLvl AoE ladder.
         local prime = makeCaster(21646, 119)
         assert(standardMagic.getAoEDamageCap(prime, floe) == 199999)
         assert(standardMagic.getDamageMultiplier(prime, primary, floe) == 105)
-        assert(standardMagic.getDamageMultiplier(prime, splash, floe) == 1)
+        assert(standardMagic.getDamageMultiplier(prime, splash, floe) == 105)
         assert(standardMagic.getOutgoingDamageCap(prime, floe, primary) == 999999)
         assert(standardMagic.getOutgoingDamageCap(prime, floe, splash) == 199999)
         assert(standardMagic.applyPlayerOutgoingLimits(prime, primary, floe, 400000) == 400000)
@@ -174,7 +174,9 @@ describe('BLU main-hand weapon amplification', function()
         assert(standardMagic.getOutgoingDamageCap(sequence, floe, splash) == 149999)
 
         local item119 = makeCaster(20705, 119)
+        assert(standardMagic.getOutgoingDamageCap(item119, floe, primary) == 79999)
         assert(standardMagic.getOutgoingDamageCap(item119, floe, splash) == 79999)
+        assert(standardMagic.applyPlayerOutgoingLimits(item119, primary, floe, 125745) == 79999)
 
         local pre119 = makeCaster(20731, 115)
         assert(standardMagic.getOutgoingDamageCap(pre119, floe, splash) == 40000)

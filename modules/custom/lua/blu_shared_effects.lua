@@ -100,6 +100,7 @@ local customContentZones =
     [xi.zone.REISENJIMA]             = true,
     [xi.zone.REISENJIMA_HENGE]       = true,
     [xi.zone.REISENJIMA_SANCTORIUM]  = true,
+    [xi.zone.PROVENANCE]             = true,
 }
 
 local customContentVars =
@@ -108,6 +109,8 @@ local customContentVars =
     'GeasFeteOwnerId',
     'HTBFScaled',
     'OWS_EXCLUDE',
+    'PrestigeTrial',
+    'ReforgeNM',
 }
 
 local function getControlLockoutVar(effect)
@@ -125,6 +128,39 @@ end
 
 bluSharedEffects.isDisablingControl = function(effect)
     return disablingEffects[effect] == true
+end
+
+-- Ascension (Provenance) and Reforge NMs cannot be stun-locked. Head Butt's
+-- custom-NM 3s stun is enough to chain-lock these fights.
+bluSharedEffects.isStunLockImmuneNm = function(target)
+    if not target then
+        return false
+    end
+
+    if target.getLocalVar then
+        if (target:getLocalVar('PrestigeTrial') or 0) > 0 then
+            return true
+        end
+        if (target:getLocalVar('ReforgeNM') or 0) > 0 then
+            return true
+        end
+    end
+
+    return
+        target.isNM and
+        target:isNM() and
+        target.getZoneID and
+        target:getZoneID() == xi.zone.PROVENANCE
+end
+
+bluSharedEffects.hardenAgainstStunLock = function(mob)
+    if not mob then
+        return
+    end
+
+    pcall(function()
+        mob:addImmunity(xi.immunity.STUN)
+    end)
 end
 
 -- Geas Fete, Abyssea NMs, HTBF, Apex, Voidspire/Gauntlet/Invasion-style
@@ -358,6 +394,10 @@ bluSharedEffects.preparePlayerControl = function(caster, target, effect, duratio
         bluSharedEffects.isDisablingControl(effect) and
         bluSharedEffects.isCustomContentNm(target)
     then
+        if bluSharedEffects.isStunLockImmuneNm(target) then
+            return false, duration, nil, 'stun_lock_immune', false
+        end
+
         if
             effect == xi.effect.STUN and
             spellId == xi.magic.spell.HEAD_BUTT

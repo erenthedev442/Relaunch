@@ -940,6 +940,8 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
 
         mob:setSpawn(sp.x, sp.y, sp.z, sp.rot)
         mob:spawn()
+        mob:setLocalVar('PrestigeTrial', 1)
+        require('modules/custom/lua/blu_shared_effects').hardenAgainstStunLock(mob)
         -- Capacity/Job Points INTENTIONALLY enabled (2026-06-14): single-target
         -- trial boss -> a deliberate, difficulty-scaled JP source. (Was
         -- NO_CAPACITY_POINTS=1; multi-mob wave/add systems still set the flag.)

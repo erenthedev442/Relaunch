@@ -262,6 +262,29 @@ describe('BLU shared effect helpers', function()
         assert(not sharedEffects.isCustomContentNm(makeTarget({ isNm = true })))
     end)
 
+    it('blocks all BLU stun including Head Butt on Ascension and Reforge NMs', function()
+        local caster = makeCaster()
+        local immuneTargets =
+        {
+            makeTarget({ localVars = { PrestigeTrial = 1 } }),
+            makeTarget({ localVars = { ReforgeNM = 1 } }),
+            makeTarget({ isNm = true, zoneId = xi.zone.PROVENANCE }),
+        }
+
+        for _, target in ipairs(immuneTargets) do
+            assert(sharedEffects.isCustomContentNm(target))
+            assert(sharedEffects.isStunLockImmuneNm(target))
+
+            local allowed, _, _, reason =
+                sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 5, 100, xi.magic.spell.HEAD_BUTT)
+            assert(not allowed and reason == 'stun_lock_immune')
+
+            allowed, _, _, reason =
+                sharedEffects.preparePlayerControl(caster, target, xi.effect.STUN, 5, 100, xi.magic.spell.ANVIL_LIGHTNING)
+            assert(not allowed and reason == 'stun_lock_immune')
+        end
+    end)
+
     it('does not lock out a second terror or petrify after the first lands', function()
         local caster = makeCaster()
         local target = makeTarget({ isNm = true })

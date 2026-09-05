@@ -1,5 +1,8 @@
 -- !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat]
--- Bypass the Augment Moogle — apply augments to a gear piece in inventory.
+-- Apply augments to a gear piece in inventory. Server-enforced: must be
+-- within 6 yalms of the live Arcane Augmenter and have talked to / traded
+-- him in the last 3 minutes (see augment_trade_guard.lua). The addon UI
+-- is not trusted.
 -- Catalysts are spent from the Arcane Augmenter bank (same store as the NPC),
 -- not from the player's inventory. Gear and Maat's Cap still come from bag 0.
 --
@@ -20,6 +23,7 @@ local sage     = require('modules/custom/lua/augment_sage_catalog')
 local affinity = require('modules/custom/lua/augment_affinity_catalog')
 local bank     = require('modules/custom/lua/augment_catalyst_bank')
 local wh       = require('modules/custom/lua/weekly_hunts')
+local guard    = require('modules/custom/lua/augment_trade_guard')
 
 local MAX_CATALYST_COUNT = 5
 local GIL_COST           = 10000
@@ -33,6 +37,50 @@ local INSCRIBABLE    = 0x20
 local LAST_RECIPE_COUNT_VAR = 'Augment_LastRecipe_Count'
 local LAST_RECIPE_ID_VAR    = 'Augment_LastRecipe_Id_'
 local LAST_RECIPE_QTY_VAR   = 'Augment_LastRecipe_Qty_'
+
+local function readSignature(item)
+    if not item or not item.getSignature then
+        return ''
+    end
+    local ok, sig = pcall(function()
+        return item:getSignature()
+    end)
+    if ok and type(sig) == 'string' then
+        return sig
+    end
+    return ''
+end
+
+local function addHeldGear(player, itemId, signature, extra)
+    local payload = { id = itemId, quantity = 1 }
+    if extra then
+        for key, value in pairs(extra) do
+            payload[key] = value
+        end
+    end
+    if signature and signature ~= '' then
+        payload.signature = signature
+    end
+    return player:addItem(payload)
+end
+
+local function takeMaatCap(player, token)
+    if not token then
+        token = player:findItem(CRIT_TOKEN_ID, 0) or player:findItem(CRIT_TOKEN_LEGACY, 0)
+    end
+    if not token then
+        return false, nil
+    end
+    local tokenId = token:getID()
+    if player:delItemAt(tokenId, 1, 0, token:getSlotID()) then
+        return true, tokenId
+    end
+    token = player:findItem(CRIT_TOKEN_ID, 0) or player:findItem(CRIT_TOKEN_LEGACY, 0)
+    if token and player:delItemAt(token:getID(), 1, 0, token:getSlotID()) then
+        return true, token:getID()
+    end
+    return false, nil
+end
 
 local NON_AUGMENTABLE = {
     [18987]=true,[19007]=true,[19076]=true,[19096]=true,
@@ -59,6 +107,12 @@ commandObj.onTrigger = function(player, args)
         player:printToPlayer(
             'Usage: !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat]',
             xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    local deny = guard.denyReason(player)
+    if deny then
+        player:printToPlayer(deny, xi.msg.channel.SYSTEM_3)
         return
     end
 
@@ -102,14 +156,17 @@ commandObj.onTrigger = function(player, args)
         local raw          = parts[i]
         local catStr, qStr = raw:match('^(%d+):?(%d*)$')
         local catId        = tonumber(catStr)
-        local qty          = tonumber(qStr)
-        if not qty or qty < 1 then qty = 1 end
+        local qty          = 1
+        if qStr and qStr ~= '' then
+            qty = tonumber(qStr)
+        end
 
-        if not catId then
+        if not catId or not qty or qty ~= math.floor(qty) or qty < 1 or qty > MAX_CATALYST_COUNT then
             player:printToPlayer('Invalid catalyst: ' .. raw, xi.msg.channel.SYSTEM_3)
             return
         end
-        if not catalog[catId] then
+        local def = catalog[catId]
+        if not def or not def.augId then
             player:printToPlayer('Unknown catalyst ID ' .. catId .. ' (not in augment catalog).', xi.msg.channel.SYSTEM_3)
             return
         end
@@ -119,12 +176,16 @@ commandObj.onTrigger = function(player, args)
         end
         catalystCounts[catId] = catalystCounts[catId] + qty
         totalCatalysts         = totalCatalysts + qty
+        if totalCatalysts > MAX_CATALYST_COUNT then
+            player:printToPlayer(
+                string.format('Max %d catalysts per trade (you specified %d).', MAX_CATALYST_COUNT, totalCatalysts),
+                xi.msg.channel.SYSTEM_3)
+            return
+        end
     end
 
-    if totalCatalysts > MAX_CATALYST_COUNT then
-        player:printToPlayer(
-            string.format('Max %d catalysts per trade (you specified %d).', MAX_CATALYST_COUNT, totalCatalysts),
-            xi.msg.channel.SYSTEM_3)
+    if totalCatalysts < 1 then
+        player:printToPlayer('You must specify at least one catalyst.', xi.msg.channel.SYSTEM_3)
         return
     end
     if requestedMaat and totalCatalysts ~= MAX_CATALYST_COUNT then
@@ -200,7 +261,6 @@ commandObj.onTrigger = function(player, args)
     local critPct       = sage.critChance[rank + 1] or 0.0
     local critTokenItem = requestedMaat and
         (player:findItem(CRIT_TOKEN_ID, 0) or player:findItem(CRIT_TOKEN_LEGACY, 0)) or nil
-    local usedCritToken = requestedMaat
     local isCrit        = requestedMaat or (math.random() < critPct)
     local rollFloor     = math.min(slice.min + rank, slice.max)
     local crystalPct    = (xi.augmentTiers.crystalChance and xi.augmentTiers.crystalChance[rank]) or 0
@@ -271,10 +331,15 @@ commandObj.onTrigger = function(player, args)
         table.insert(labelSummary, string.format('%s %s%s', def.label, valStr, boostStr))
     end
 
+    if #exAugsBySlot ~= totalCatalysts then
+        player:printToPlayer('Augmentation cancelled: catalyst slot count mismatch.', xi.msg.channel.SYSTEM_3)
+        return
+    end
+
     -- One roll governs the whole item. Never create a partial lock mask.
-    if requestedMaat then
-        newMask = 0x1F
-    elseif
+    -- Maat crystalize is armed only after the cap is actually taken below.
+    if
+        not requestedMaat and
         canCrystalize and
         #exAugsBySlot == MAX_CATALYST_COUNT and
         allPerfect and
@@ -283,30 +348,63 @@ commandObj.onTrigger = function(player, args)
         newMask = 0x1F
     end
 
-    -- Consume the exact base gear, then banked catalysts (atomic).
-    if not player:delItemAt(gearId, 1, 0, gear:getSlotID()) then
-        player:printToPlayer('The selected gear moved; augmentation cancelled.', xi.msg.channel.SYSTEM_3)
-        return
-    end
-    if not bank.consume(player, bankRequests) then
-        player:addItem({ id = gearId, quantity = 1 })
-        player:printToPlayer('Stored catalyst consumption failed; gear was returned.', xi.msg.channel.SYSTEM_3)
-        return
-    end
-
-    -- Add augmented gear
-    local augmented = player:addItem({
-        id     = gearId,
-        exdata = {
+    local signature = readSignature(gear)
+    local extra =
+    {
+        exdata =
+        {
             augmentKind    = xi.augment.kind.HAS_AUGMENTS,
             augmentSubKind = xi.augment.subKind.STANDARD,
             augments       = exAugsBySlot,
         },
-    })
+    }
 
+    -- Charge gil first so a later failure can refund it. Materials are
+    -- taken next; bank.consume is a single DB transaction.
+    if not player:delGil(GIL_COST) then
+        player:printToPlayer(
+            string.format('Need %d gil (you have %d).', GIL_COST, player:getGil()),
+            xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    if not player:delItemAt(gearId, 1, 0, gear:getSlotID()) then
+        player:addGil(GIL_COST)
+        player:printToPlayer('The selected gear moved; augmentation cancelled.', xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    local tookMaat = false
+    local maatId   = nil
+    if requestedMaat then
+        tookMaat, maatId = takeMaatCap(player, critTokenItem)
+        if not tookMaat then
+            addHeldGear(player, gearId, signature)
+            player:addGil(GIL_COST)
+            player:printToPlayer("Maat's Cap moved; augmentation cancelled and gear returned.", xi.msg.channel.SYSTEM_3)
+            return
+        end
+        newMask = 0x1F
+    end
+
+    if not bank.consume(player, bankRequests) then
+        addHeldGear(player, gearId, signature)
+        if tookMaat and maatId then
+            player:addItem({ id = maatId, quantity = 1 })
+        end
+        player:addGil(GIL_COST)
+        player:printToPlayer('Stored catalyst consumption failed; items were returned.', xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    local augmented = addHeldGear(player, gearId, signature, extra)
     if not augmented then
-        player:addItem({ id = gearId, quantity = 1 })
+        addHeldGear(player, gearId, signature)
         bank.refund(player, bankRequests)
+        if tookMaat and maatId then
+            player:addItem({ id = maatId, quantity = 1 })
+        end
+        player:addGil(GIL_COST)
         player:printToPlayer('Augmentation failed - items returned, no gil charged.', xi.msg.channel.SYSTEM_3)
         return
     end
@@ -320,17 +418,18 @@ commandObj.onTrigger = function(player, args)
         if not ok then
             print(string.format('[augment] lock-mask stamp failed for %s item %d: %s',
                 player:getName(), gearId, tostring(err)))
+            if tookMaat and maatId then
+                player:addItem({ id = maatId, quantity = 1 })
+                tookMaat = false
+            end
         end
     end
 
-    -- Charge gil and consume crit token
-    player:delGil(GIL_COST)
-    if usedCritToken and lockStamped then
-        player:delItemAt(critTokenItem:getID(), 1, 0, critTokenItem:getSlotID())
+    if tookMaat then
         player:printToPlayer(
             "Maat's Cap consumed: all five perfect augment slots are crystalized.",
             xi.msg.channel.SYSTEM_3)
-    elseif usedCritToken then
+    elseif requestedMaat then
         player:printToPlayer(
             "The crystalization stamp failed, so Maat's Cap was not consumed.",
             xi.msg.channel.SYSTEM_3)

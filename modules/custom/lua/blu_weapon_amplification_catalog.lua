@@ -16,9 +16,9 @@ package.loaded[CATALOG_KEY] = catalog
 
 catalog.DAMAGE_CAP_LOCAL_VAR = 'BlueSpellDamageCap'
 
--- Splash skips weapon amp and uses the shared iLvl AoE ladder from
--- standard_magic_tuning_catalog (40k / 79,999 / 99,999 / 149,999 / 199,999).
--- The aimed-at mob uses the full multiplier and the single-target weapon cap.
+-- Splash uses the same weapon multiplier as the aimed-at mob, then the
+-- shared iLvl AoE ladder (40k / 79,999 / 99,999 / 149,999 / 199,999).
+-- The aimed-at mob keeps the single-target weapon cap.
 
 -- Spell ceilings only. Weaponskills keep the shared 999k REMA/Prime path.
 -- Multipliers stay so Relic needs setup to approach its cap and Aeonic
@@ -31,8 +31,10 @@ catalog.TIERS =
     EMPYREAN  = { multiplier =  45, cap = 600000 },
     RELIC     = { multiplier =  30, cap = 400000 },
     AMBUSCADE = { multiplier =   9, cap =  99999 },
-    ITEM_119  = { multiplier =   9, cap = 239997 },
-    PRE_119   = { multiplier =   9, cap = 120000 },
+    -- Same 40k / 79,999 ladder as ordinary WS and non-BLU magic. A generic
+    -- iLvl 119 must not out-cap Ambuscade or sit at 3x 79,999.
+    ITEM_119  = { multiplier =   9, cap =  79999 },
+    PRE_119   = { multiplier =   9, cap =  40000 },
 }
 
 catalog.WEAPON_TIERS =

@@ -134,9 +134,9 @@ xi.settings.map =
     -- (must be >= BASE_SPEED or the base gets clamped down -- see battleentity.cpp:407)
     SPEED_LIMIT = 150,
 
-    -- In-combat player speed. Retail-like so mobs can catch kiting.
-    COMBAT_SPEED = 50,
-    COMBAT_SPEED_LIMIT = 80,
+    -- In-combat player speed. Dropped from travel QoL so mobs can catch kiting.
+    COMBAT_SPEED = 100,
+    COMBAT_SPEED_LIMIT = 130,
 
     -- Mount speed, expressed as player speed. Can surpass speed limit.
     MOUNT_SPEED = 80,
