@@ -578,16 +578,33 @@ local function isPc(entity)
     return entity and entity.getObjType and entity:getObjType() == xi.objType.PC
 end
 
+local AMBUSCADE_INSTANCE_ID = 30000
+
 local function liveAmbuscade(inst)
     if not inst then
         return false
     end
-    local ok, live = pcall(function()
-        return inst:getZone():getID() == xi.zone.MAQUETTE_ABDHALJS_LEGION_B and
-            not inst:completed() and
-            not inst:failed()
+    -- Do not call inst:getZone():getID(). Empty / tearing-down copies can
+    -- wrap a null CZone* and CLuaZone::getID ACCESS_VIOLATIONs through pcall
+    -- (Katryna/Lyvia Tome clicks, 2026-09-04 23:46 and 2026-09-05 07:40/08:09).
+    local ok, id = pcall(function()
+        return inst:getID()
     end)
-    return ok and live
+    if not ok or id ~= AMBUSCADE_INSTANCE_ID then
+        return false
+    end
+    local okStatus, dead = pcall(function()
+        return inst:completed() or inst:failed()
+    end)
+    return okStatus and not dead
+end
+
+local function clearRiftForInstance(instance)
+    for key, rift in pairs(pendingRifts) do
+        if rift and rift.instance == instance then
+            pendingRifts[key] = nil
+        end
+    end
 end
 
 local function partyPcs(player)
@@ -740,7 +757,7 @@ local function enterAmbuscade(player, diffOption)
     end
 
     player:setCharVar('Ambuscade_Difficulty', diffOption)
-    player:createInstance(30000)
+    player:createInstance(AMBUSCADE_INSTANCE_ID)
     player:printToPlayer(string.format('[Ambuscade] Entering %s. Good luck!', DIFF_NAME[diffOption]), SYS)
     if key then
         player:printToPlayer('[Ambuscade] Party members in Mhaura will be pulled into this battle.', SYS)
@@ -946,6 +963,7 @@ local function scheduleWarpToMhaura(player)
 end
 
 xi.ambuscade.onInstanceComplete = function(instance)
+    clearRiftForInstance(instance)
     -- Belt-and-braces idempotency: rewards are paid at most once per instance,
     -- even if complete() somehow fires again (the time-update loop used to
     -- re-trigger it every second and spam +HM to the monthly cap).
@@ -1025,6 +1043,7 @@ xi.ambuscade.onInstanceComplete = function(instance)
 end
 
 xi.ambuscade.onInstanceFailure = function(instance)
+    clearRiftForInstance(instance)
     local chars = instance:getChars()
     for _, player in pairs(chars) do
         player:printToPlayer('[Ambuscade] Time limit reached. Your effort is not forgotten.', SYS)

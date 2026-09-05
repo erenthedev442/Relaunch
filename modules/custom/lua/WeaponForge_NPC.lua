@@ -144,8 +144,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         for chapter = 1, throughChapter do
             if not pilgrimage.done(player, entry, chapter) then
                 player:printToPlayer(string.format(
-                    '[Weapon Forge] Complete %s Pilgrimage Chapter %s first.',
-                    entry.name, ({ 'I', 'II', 'III' })[chapter]), xi.msg.channel.SYSTEM_3)
+                    '[Weapon Forge] Complete %s first.',
+                    pilgrimage.chapterPrefix(entry, chapter)), xi.msg.channel.SYSTEM_3)
                 return false
             end
         end

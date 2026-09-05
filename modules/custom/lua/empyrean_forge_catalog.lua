@@ -30,9 +30,9 @@ C.weapons[#C.weapons + 1] =
 
 C.weapons[#C.weapons + 1] =
 {
-    id   = 21398,
-    name = 'Marsyas',
-    info = 'Aeonic wind instrument. Jobs: BRD.',
+    id   = 18839,
+    name = 'Daurdabla',
+    info = 'Empyrean harp. Jobs: BRD.',
 }
 
 return C

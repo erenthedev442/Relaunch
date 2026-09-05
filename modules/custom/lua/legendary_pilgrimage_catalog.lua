@@ -3,6 +3,8 @@
 --
 -- Data-only definitions for the 78 three-chapter weapon pilgrimages.  Targets
 -- are existing server content; no objective depends on a fictional encounter.
+-- Combat chapters credit the native-WS killing blow. Extra conditions are
+-- player-controlled (TP / pet / Berserk), not HP%, MP%, positional, or distance.
 -----------------------------------
 local forge = require('modules/custom/lua/weapon_forge_catalog')
 local rema  = require('modules/custom/lua/rema_ws_tier_catalog')
@@ -116,6 +118,61 @@ local function normalize(name)
 end
 C.normalizeName = normalize
 
+-- Player-facing WS names. Enum keys become "Coronach", "Tachi: Kaiten",
+-- "Blade: Metsu", "Chant du Cygne", "King's Justice", etc.
+local APOSTROPHE_WORD =
+{
+    ASCETICS = "Ascetic's",
+    RUDRAS = "Rudra's",
+    UKKOS = "Ukko's",
+    CAMLANNS = "Camlann's",
+    JISHNUS = "Jishnu's",
+    KINGS = "King's",
+}
+
+local function titleCaseWs(key)
+    local first = true
+    return (key:lower():gsub('_', ' '):gsub('(%S+)', function(word)
+        local upper = word:upper()
+        if APOSTROPHE_WORD[upper] then
+            first = false
+            return APOSTROPHE_WORD[upper]
+        end
+        if not first and (word == 'of' or word == 'du' or word == 'the') then
+            return word
+        end
+        first = false
+        return word:sub(1, 1):upper() .. word:sub(2)
+    end))
+end
+
+local function formatWsKey(key)
+    local tachi = key:match('^TACHI_(.+)$')
+    if tachi then
+        return 'Tachi: ' .. titleCaseWs(tachi)
+    end
+    local blade = key:match('^BLADE_(.+)$')
+    if blade then
+        return 'Blade: ' .. titleCaseWs(blade)
+    end
+    return titleCaseWs(key)
+end
+
+local wsNamesById = {}
+for key, id in pairs(xi.weaponskill) do
+    if type(key) == 'string' and type(id) == 'number' then
+        wsNamesById[id] = formatWsKey(key)
+    end
+end
+
+function C.wsDisplayName(wsId)
+    return wsNamesById[wsId] or ('WS ' .. tostring(wsId))
+end
+
+function C.chapterPrefix(entry, chapter)
+    return string.format('%s chp %d', entry.name, chapter)
+end
+
 local function rotated(source, first, count)
     local out = {}
     for offset = 0, count - 1 do
@@ -144,27 +201,27 @@ local function objective(kind, count, targets, distinct, extra)
     return value
 end
 
-local function archetypeRule(weaponType, index)
+-- Archetype extras must be player-controlled and checkable at WS time.
+-- HP%, MP%, rear positional, and distance were dropped: they fail on
+-- turning NMs, draw-in, resists, and DoT/trust last hits.
+local function archetypeRule(weaponType, _)
     local key = C.ARCHETYPES[weaponType]
     local rules =
     {
-        h2h_hit_chain               = { minTp = 1200 + ((index - 1) % 3) * 200 },
-        dagger_positional           = { behind = true },
-        sword_tactical              = { minTp = 1600 + ((index - 1) % 3) * 200 },
+        h2h_hit_chain               = { minTp = 1500 },
+        dagger_positional           = { minTp = 1500 },
+        sword_tactical              = { minTp = 1500 },
         great_sword_burst_survival  = {},
         axe_companion               = { petOrBerserk = true },
         great_axe_armor             = {},
-        scythe_resource             = { maxHpp = 60 - ((index - 1) % 3) * 5 },
-        polearm_aerial              = { petAlive = true, minTp = 1200 + ((index - 1) % 3) * 200 },
-        -- Katana pilgrimage credit is the exact native-WS killing blow. The
-        -- previous copy-image requirement proved unreliable at death-event
-        -- time even when the player visibly retained an Utsusemi shadow.
+        scythe_resource             = { minTp = 1500 },
+        polearm_aerial              = { petAlive = true },
         katana_shadows              = {},
-        great_katana_skillchain     = { minTp = 1800 + ((index - 1) % 3) * 200 },
-        club_support                = { maxHpp = 80 - ((index - 1) % 3) * 5 },
-        staff_magic                 = { maxMpp = 60 - ((index - 1) % 3) * 5 },
-        bow_distance                = { minDistance = 14 + ((index - 1) % 3) * 2 },
-        gun_tactical                = { minDistance = 10 + ((index - 1) % 3) * 2, minTp = 1200 + ((index - 1) % 3) * 200 },
+        great_katana_skillchain     = { minTp = 1500 },
+        club_support                = { minTp = 1500 },
+        staff_magic                 = { minTp = 1500 },
+        bow_distance                = { minTp = 1500 },
+        gun_tactical                = { minTp = 1500 },
     }
     local rule = rules[key]
     rule.key = key
@@ -202,7 +259,7 @@ local function add(family, source, index, stages, finalId)
         archetype   = C.ARCHETYPES[source.type],
         archetypeRule = archetypeRule(source.type, index),
         wsId        = ws.wsId,
-        wsName      = ws.name,
+        wsName      = family == 'prime' and ws.name or C.wsDisplayName(ws.wsId),
         slot        = ws.slot,
         stages      = stages,
         finalId     = finalId,
@@ -224,9 +281,7 @@ local function add(family, source, index, stages, finalId)
     elseif family == 'empyrean' then
         local utility = C.UTILITY_WS[entry.wsId]
         local function supportObjective(count, targets, distinct, tag)
-            local values = utility == 'dagan'
-                and { utility = utility, hpBelow = 35, restore = 1500, tag = tag }
-                or { utility = utility, mpBelow = 10, restore = 900, tag = tag }
+            local values = { utility = utility, tag = tag }
             return objective('support_ws', count, targets, distinct, values)
         end
         entry.chapters =
@@ -355,6 +410,95 @@ function C.targetIndex(requirement, name)
     end
 
     return nil
+end
+
+function C.equipText(entry, chapter)
+    if entry.family == 'aeonic' then
+        return 'any ' .. entry.weaponType
+    elseif entry.singleStep or (chapter == 1 and entry.family ~= 'prime') then
+        return entry.name
+    elseif entry.family == 'prime' and chapter <= 2 then
+        return 'Ajja'
+    elseif chapter == 2 then
+        return entry.name .. ' 119 I'
+    end
+
+    return entry.name .. ' 119 II'
+end
+
+function C.archetypeHint(rule)
+    if not rule then return '' end
+    if rule.petOrBerserk then return 'with a pet alive or Berserk on' end
+    if rule.petAlive and rule.minTp then
+        return string.format('wyvern alive, at %d+ TP', rule.minTp)
+    end
+    if rule.petAlive then return 'with your wyvern alive' end
+    if rule.behind then return 'from behind' end
+    if rule.maxHpp then return string.format('at %d%% HP or less', rule.maxHpp) end
+    if rule.maxMpp then return string.format('at %d%% MP or less', rule.maxMpp) end
+    if rule.minDistance and rule.minTp then
+        return string.format('from %d+ yalms at %d+ TP', rule.minDistance, rule.minTp)
+    end
+    if rule.minDistance then return string.format('from %d+ yalms', rule.minDistance) end
+    if rule.minTp then return string.format('at %d+ TP', rule.minTp) end
+    return ''
+end
+
+local function familyList(requirement)
+    local names = {}
+    for _, ecosystem in ipairs(requirement.ecosystems or {}) do
+        names[#names + 1] = C.ECOLOGY_NAMES[ecosystem] or tostring(ecosystem)
+    end
+    if #names == 0 then return 'listed families' end
+    return table.concat(names, '/')
+end
+
+local function targetKindText(entry, requirement)
+    local tag = requirement.tag
+    if tag == 'magian_family' then
+        return string.format('Lv%d+ %s', requirement.minLevel, familyList(requirement))
+    elseif tag == 'abyssea_ecology' then
+        return familyList(requirement) .. ' in Abyssea'
+    elseif tag == 'job_mastery' then
+        return 'an NM as ' .. entry.jobs
+    elseif tag == 'unity_nm' then
+        return 'a listed Unity NM (each once)'
+    elseif tag == 'divergence_disjoined' then
+        return 'each listed Disjoined NM'
+    elseif tag == 'abyssea_nm' or tag == 'abyssea_support' then
+        return requirement.distinct and 'a listed Abyssea NM (each once)' or 'a listed Abyssea NM'
+    elseif tag == 'signature_material_nm' then
+        return requirement.targets and #requirement.targets == 1 and requirement.targets[1] or 'the listed NM'
+    elseif tag == 'geas_t3' then
+        return 'a listed Geas Fete T3 NM (each once)'
+    elseif tag == 'geas_t4' then
+        return 'a listed Geas Fete T4 NM (each once)'
+    elseif tag == 'elite' or tag == 'imperial_final_targets' then
+        return requirement.distinct and 'a listed NM (each once)' or 'a listed NM'
+    end
+    return 'a listed target'
+end
+
+function C.howToText(entry, chapter)
+    local r = entry.chapters[chapter]
+    local equip = C.equipText(entry, chapter)
+    local ws = entry.wsName
+    if r.utility == 'dagan' then
+        return string.format('Equip %s. Use Dagan on that NM, then defeat it.', equip)
+    elseif r.utility == 'myrkr' then
+        return string.format('Equip %s. Use Myrkr on that NM, then defeat it.', equip)
+    elseif r.utility == 'atonement' then
+        return string.format('Equip %s. Land Atonement, then defeat that NM.', equip)
+    elseif r.kind == 'nyzul_objectives' then
+        return string.format('Equip %s. Clear a Nyzul floor with Eliminate Specified Enemy.', equip)
+    end
+
+    local target = targetKindText(entry, r)
+    if entry.family == 'aeonic' then
+        return string.format('%s killing blow on %s.', ws, target)
+    end
+
+    return string.format('Equip %s. %s killing blow on %s.', equip, ws, target)
 end
 
 return C

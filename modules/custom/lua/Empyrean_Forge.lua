@@ -2,7 +2,7 @@
 -- Empyrean repeat forge
 --
 -- Completing one Empyrean through the full Weapon Forge path unlocks direct
--- repeat forging of final Empyrean equipment and Marsyas for Boulders only.
+-- repeat forging of final Empyrean weapons plus Ochain and Daurdabla.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')

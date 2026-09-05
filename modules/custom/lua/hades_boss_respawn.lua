@@ -14,6 +14,13 @@ local catalog = require('modules/custom/lua/hades_catalog')
 
 local m = Module:new('hades_boss_respawn')
 
+-- Slot 3 is Abyssea Marks now. This list is leftover QoL for the old
+-- starter-zone lottery NMs -- do not force-spawn catalog.bosses.
+local spawnList = catalog.respawnBosses
+if type(spawnList) ~= 'table' then
+    spawnList = {}
+end
+
 local RESPAWN_SECONDS = 1800
 
 local function applyTimer(mob)
@@ -58,7 +65,7 @@ local function resolveMobId(boss)
     return nil
 end
 
-for _, boss in ipairs(catalog.bosses) do
+for _, boss in ipairs(spawnList) do
     local mobPath = string.format('scripts/zones/%s/mobs/%s', boss.zone, boss.name)
     pcall(require, mobPath)
     pcall(require, string.format('scripts/zones/%s/Zone', boss.zone))
@@ -82,7 +89,7 @@ for _, boss in ipairs(catalog.bosses) do
 end
 
 local zoneTargets = {}
-for _, boss in ipairs(catalog.bosses) do
+for _, boss in ipairs(spawnList) do
     zoneTargets[boss.zone] = zoneTargets[boss.zone] or {}
     table.insert(zoneTargets[boss.zone], boss)
 end
@@ -106,7 +113,7 @@ for zone, bosses in pairs(zoneTargets) do
 end
 
 print(string.format(
-    '[hades_boss_respawn] 30-min timed spawn armed for %d Hades world bosses',
-    #catalog.bosses))
+    '[hades_boss_respawn] 30-min timed spawn armed for %d leftover lottery NMs',
+    #spawnList))
 
 return m

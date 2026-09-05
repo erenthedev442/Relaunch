@@ -25,7 +25,7 @@ local camps =
     { '10-25 Konschtat Highlands',   xi.zone.KONSCHTAT_HIGHLANDS,   -260.5458,  67.3785,  797.6899,  69 },
     { '10-25 Tahrongi Canyon',       xi.zone.TAHRONGI_CANYON,       -158.2538,  32.0502,  444.5488, 165 },
     { '15-30 Valkurm Dunes',         xi.zone.VALKURM_DUNES,         -738.0605,  -6.1496,  153.7633, 189 },
-    { '25-40 Qufim Island',          xi.zone.QUFIM_ISLAND,           230.1152, -19.5029,  382.9870, 254 },
+    { '25-40 Qufim Island',          xi.zone.QUFIM_ISLAND,          -205.6910, -19.9166,  322.5492, 126 },
     { '30-45 Yuhtunga Jungle',       xi.zone.YUHTUNGA_JUNGLE,       -239.5560,   0.3452, -368.9259,  67 },
     { '35-50 Yhoator Jungle',        xi.zone.YHOATOR_JUNGLE,         221.8787,   0.4050, -131.5556, 157 },
     { "45-60 Crawler's Nest",        xi.zone.CRAWLERS_NEST,         -197.5995,  -0.2526,  203.6516, 163 },
@@ -45,6 +45,35 @@ local camps =
     { '95-99 Kamihr Drifts',         xi.zone.KAMIHR_DRIFTS,          210.00,    20.30,    315.00,   192 },
 }
 
+-- Camp 5 pack (Giant Ranger / Hunter) lives on these retail IDs.
+-- Relocate them when this file loads and when someone warps in, so
+-- FileWatcher can move the ring without a map restart.
+local qufimPack =
+{
+    { id = 17293631, x = -191.691, y = -19.917, z = 322.549, rot = 0 },
+    { id = 17293635, x = -195.792, y = -19.917, z = 332.448, rot = 32 },
+    { id = 17293632, x = -205.691, y = -19.917, z = 336.549, rot = 64 },
+    { id = 17293636, x = -215.590, y = -19.917, z = 332.448, rot = 96 },
+    { id = 17293637, x = -219.691, y = -19.917, z = 322.549, rot = 128 },
+    { id = 17293638, x = -215.590, y = -19.917, z = 312.650, rot = 160 },
+    { id = 17293634, x = -205.691, y = -19.917, z = 308.549, rot = 192 },
+    { id = 17293633, x = -195.792, y = -19.917, z = 312.650, rot = 224 },
+}
+
+local function relocateQufimPack()
+    for _, p in ipairs(qufimPack) do
+        local mob = GetMobByID(p.id)
+        if mob then
+            pcall(function()
+                mob:setSpawn(p.x, p.y, p.z, p.rot)
+                mob:setPos(p.x, p.y, p.z, p.rot)
+            end)
+        end
+    end
+end
+
+pcall(relocateQufimPack)
+
 commandObj.onTrigger = function(player, arg)
     local n    = tonumber(arg)
     local camp = n and camps[n] or nil
@@ -57,6 +86,11 @@ commandObj.onTrigger = function(player, arg)
     end
     player:printToPlayer(string.format('Warping to %s, kupo!', camp[1]), xi.msg.channel.SYSTEM_3)
     player:setPos(camp[3], camp[4], camp[5], camp[6], camp[2])
+    if n == 5 then
+        player:timer(1500, function()
+            relocateQufimPack()
+        end)
+    end
 end
 
 return commandObj

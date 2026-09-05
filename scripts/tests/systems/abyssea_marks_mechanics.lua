@@ -371,4 +371,29 @@ describe('Abyssea marks encounter lifecycle', function()
         GetPlayerByID = originalGetPlayerByID
         assert(ok, err)
     end)
+
+    it('strips leftover Hundred Fists and pins SQL delay plus overlay haste', function()
+        local effects = { [xi.effect.HUNDRED_FISTS] = true }
+        local delayReset = 0
+        local mods = {}
+        local vars = { ['[MarksHaste]'] = 1000, ['[MarksDelay]'] = 240 }
+
+        local mob = {}
+        function mob:hasStatusEffect(effect) return effects[effect] == true end
+        function mob:delStatusEffectSilent(effect) effects[effect] = nil end
+        function mob:delStatusEffectsByFlag() end
+        function mob:resetDelay() delayReset = delayReset + 1 end
+        function mob:getBaseDelay() return 240 end
+        function mob:setDelay() end
+        function mob:getLocalVar(name) return vars[name] or 0 end
+        function mob:setLocalVar(name, value) vars[name] = value end
+        function mob:setMod(modId, value) mods[modId] = value end
+
+        runtime.lockSwing(mob, true)
+        assert(effects[xi.effect.HUNDRED_FISTS] == nil)
+        assert(delayReset == 1)
+        assert(mods[xi.mod.HASTE_GEAR] == 1000)
+        assert(mods[xi.mod.HASTE_MAGIC] == 0)
+        assert(vars['[MarksDelay]'] == 240)
+    end)
 end)

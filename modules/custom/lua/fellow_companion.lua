@@ -105,7 +105,10 @@ local CONFIG =
         Sorcery   = { { xi.mod.MATT, 3 }, { xi.mod.MACC, 3 } },
         Celerity  = { { xi.mod.HASTE_GEAR, 25 } },                          -- 2500 = 25%
         Warding   = { { xi.mod.DMGPHYS, -15 }, { xi.mod.DMGMAGIC, -15 } },  -- -15% at rank 100
-        Vigor     = { { xi.mod.REGEN, 1 } },
+        -- 2.5 HP/tick per point (250 at the 100 cap). Do NOT run this through
+        -- fellowPowerProgress -- that curve is 0.005-0.10 for the first half
+        -- of the build, so floor(pts * power) was 0 even at the cap.
+        Vigor     = { { xi.mod.REGEN, 2.5 } },
     },
     statOrder = { 'STR', 'DEX', 'VIT', 'AGI', 'INT', 'MND',
                   'Ferocity', 'Critical', 'Frenzy', 'Onslaught', 'Sorcery', 'Celerity', 'Warding', 'Vigor' },
@@ -636,6 +639,19 @@ end
 -- ════════════════════════════ Stat application ══════════════════════════════
 local scheduleCombatLoop -- fwd
 
+-- Allocate-stat -> addMod amount. Damage/mitigation tracks stay on the early
+-- power curve. Regen/refresh are 1-per-point sustain: floor(pts * 0.005) is 0
+-- at the 100 cap, which is why maxed Vigor looked like it did nothing.
+local function allocatedModAmount(modId, perPoint, pts, masterPower)
+    if (pts or 0) <= 0 then
+        return 0
+    end
+    if modId == xi.mod.REGEN or modId == xi.mod.REFRESH then
+        return math.floor(perPoint * pts)
+    end
+    return math.floor(perPoint * pts * (masterPower or 0))
+end
+
 -- Layer the Fellow's full stat block + chosen name onto a freshly-spawned pet.
 -- Guarded so it runs once per spawned entity.
 local function applyFellow(p, pet)
@@ -660,7 +676,7 @@ local function applyFellow(p, pet)
         local pts = getStatPts(p, stat)
         if pts > 0 then
             for _, mv in ipairs(mods) do
-                pet:addMod(mv[1], math.floor(mv[2] * pts * masterPower))
+                pet:addMod(mv[1], allocatedModAmount(mv[1], mv[2], pts, masterPower))
             end
         end
     end
@@ -2024,6 +2040,7 @@ xi.fellow.status      = function(p) statusReport(p) end
 xi.fellow.getTrust    = function(p) return getFellowTrust(p) end
 xi.fellow.addXp       = function(p, n) addXp(p, n) end
 xi.fellow.grantPoints = function(p, n) ensureBorn(p); setN(p, V.points, getPoints(p) + math.max(0, n)) end
+xi.fellow.allocatedModAmount = allocatedModAmount
 
 -- Diagnostic (!fellow debug): dump the LIVE Fellow's ACTUAL mods, read straight off
 -- the spawned pet. Spend a point (it applies instantly while the Fellow is out) and
@@ -2090,7 +2107,7 @@ xi.fellow.audit = function(p)
         local pts = getStatPts(p, stat)
         if pts > 0 then
             for _, mv in ipairs(mods) do
-                add(mv[1], math.floor(mv[2] * pts * masterPower), stat .. 'x' .. pts)
+                add(mv[1], allocatedModAmount(mv[1], mv[2], pts, masterPower), stat .. 'x' .. pts)
             end
         end
     end

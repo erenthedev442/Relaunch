@@ -41,12 +41,15 @@ end
 -- Same board for the whole UTC day. Cache it so every mob death does
 -- not rebuild five closures.
 local cachedDayId
+local cachedRev
 local cachedQuests
 
 local function todaysQuests()
     local dayId = currentDayId()
-    if cachedDayId ~= dayId or not cachedQuests then
+    local rev   = catalog.boardRev or 0
+    if cachedDayId ~= dayId or cachedRev ~= rev or not cachedQuests then
         cachedDayId  = dayId
+        cachedRev    = rev
         cachedQuests = catalog.todaysQuests(dayId)
     end
     return cachedQuests
@@ -455,7 +458,32 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
             superFamily = mob:getSuperFamily() or 0
         end)
         if superFamily > 0 then
-            hades.fire(player, 'family_kill', { superFamily = superFamily })
+            -- Capped players farming lv10 fish: CheckMob vs HiPCLvl is Too Weak,
+            -- so checkKillCredit is false and the family slot does not move.
+            if player.checkKillCredit and player:checkKillCredit(mob) then
+                hades.fire(player, 'family_kill', { superFamily = superFamily })
+            else
+                pcall(function()
+                    if (player:getLocalVar('HD_WeakFam') or 0) ~= 0 then
+                        return
+                    end
+                    if not ensureDay(player) then
+                        return
+                    end
+                    local quest = todaysQuests()[1]
+                    if
+                        quest and
+                        quest.eventType == 'family_kill' and
+                        quest.matches and
+                        quest.matches({ superFamily = superFamily })
+                    then
+                        player:setLocalVar('HD_WeakFam', 1)
+                        player:printToPlayer(
+                            '[Hades] Too weak. That family only counts when the kill yields experience.',
+                            S)
+                    end
+                end)
+            end
         end
 
         hades.fire(player, 'boss_kill', {

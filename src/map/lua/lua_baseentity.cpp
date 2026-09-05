@@ -18207,6 +18207,30 @@ void CLuaBaseEntity::setDelay(uint16 delay)
 }
 
 /************************************************************************
+ *  Function: resetDelay()
+ *  Purpose : Restore a mob's main-hand delay to the SQL cmbDelay snapshot
+ *            (m_baseDelay). setDelay() only rewrites m_delay; CalculateMobStats
+ *            only calls resetDelay() for MNK, so a leftover rewrite on a
+ *            WAR NM such as Muscaliet survives setMobLevel.
+ *  Example : mob:resetDelay()
+ ************************************************************************/
+
+void CLuaBaseEntity::resetDelay()
+{
+    if (!(m_PBaseEntity->objtype & TYPE_MOB))
+    {
+        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        return;
+    }
+
+    auto* PMobEntity = static_cast<CMobEntity*>(m_PBaseEntity);
+    if (auto* PItemWeapon = dynamic_cast<CItemWeapon*>(PMobEntity->m_Weapons[SLOT_MAIN]))
+    {
+        PItemWeapon->resetDelay();
+    }
+}
+
+/************************************************************************
  *  Function: setDamage()
  *  Purpose : Override default damage settings for a Mob
  *  Example : mob:setDamage(40)
@@ -20926,6 +20950,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("isAggroable", CLuaBaseEntity::isAggroable);
 
     SOL_REGISTER("setDelay", CLuaBaseEntity::setDelay);
+    SOL_REGISTER("resetDelay", CLuaBaseEntity::resetDelay);
     SOL_REGISTER("setDamage", CLuaBaseEntity::setDamage);
     SOL_REGISTER("getSpellListId", CLuaBaseEntity::getSpellListId);
     SOL_REGISTER("hasSpellList", CLuaBaseEntity::hasSpellList);

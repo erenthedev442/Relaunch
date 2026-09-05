@@ -95,6 +95,7 @@ catalog.bronze =
         { id = 20771, name = "Camaraderie Claymore", cost = 12, jobs = 'PLD/DRK/RUN', cat = 'Great Swords' },  -- ilvl 109
         { id = 20633, name = "Camaraderie Dagger", cost = 12, jobs = 'THF/BRD/DNC', cat = 'Daggers' },  -- ilvl 109
         { id = 21285, name = "Camaraderie Gun", cost = 12, jobs = 'RNG/COR', cat = 'Marksmanship' },  -- ilvl 109
+        { id = 21408, name = "Camaraderie Harp", cost = 12, jobs = 'BRD', cat = 'Instruments' },  -- lv 99 string
         { id = 21003, name = "Camaraderie Katana", cost = 12, jobs = 'NIN', cat = 'Katana' },  -- ilvl 109
         { id = 20545, name = "Camaraderie Knuckles", cost = 12, jobs = 'MNK/PUP', cat = 'Hand-to-Hand' },  -- ilvl 109
         { id = 20960, name = "Camaraderie Lance", cost = 12, jobs = 'DRG', cat = 'Polearms' },  -- ilvl 109
@@ -140,6 +141,7 @@ catalog.bronze =
         { id = 20547, name = "Forefront Cesti", cost = 12, jobs = 'MNK/PUP', cat = 'Hand-to-Hand' },  -- ilvl 106
         { id = 20777, name = "Forefront Claymore", cost = 12, jobs = 'PLD/DRK/RUN', cat = 'Great Swords' },  -- ilvl 106
         { id = 20635, name = "Forefront Dagger", cost = 12, jobs = 'THF/BRD/DNC', cat = 'Daggers' },  -- ilvl 106
+        { id = 21409, name = "Forefront Flute", cost = 12, jobs = 'BRD', cat = 'Instruments' },  -- lv 99 wind
         { id = 21287, name = "Forefront Gun", cost = 12, jobs = 'RNG/COR', cat = 'Marksmanship' },  -- ilvl 106
         { id = 20871, name = "Forefront Labrys", cost = 12, jobs = 'WAR', cat = 'Great Axes' },  -- ilvl 106
         { id = 20962, name = "Forefront Lance", cost = 12, jobs = 'DRG', cat = 'Polearms' },  -- ilvl 106

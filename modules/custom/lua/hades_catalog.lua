@@ -6,7 +6,17 @@
 -- if and only if all five are cleared. Relic voucher price is locked at
 -- 2100 (two perfect weeks) so later shop prices can be set from that.
 -----------------------------------
-local catalog = {}
+-- FileWatcher dofile discards the return. Mutate the cached table so
+-- board changes go live without a map restart.
+local CATALOG_KEY = 'modules/custom/lua/hades_catalog'
+local catalog = package.loaded[CATALOG_KEY]
+if type(catalog) ~= 'table' then
+    catalog = {}
+end
+package.loaded[CATALOG_KEY] = catalog
+
+-- Bump when slot lists change so hades_daily drops its same-day cache.
+catalog.boardRev = 3
 
 catalog.currencyName = 'Soul Shards'
 catalog.currencyCv   = 'Hades_Shards'
@@ -335,13 +345,10 @@ catalog.deliveries =
     },
 }
 
--- Slot 3: curated outdoor NMs a typical 99 can kill with trusts.
--- Home zone only. Forced to a flat 30-minute timed spawn (see
--- hades_boss_respawns.sql + hades_boss_respawn.lua) so they are not lottery.
--- Home-zone NMs only. Do not list anything custom_HNM_system owns
--- (Serket 6-8h, King Arthro 8-10h + knight-crab window + Affinity copy),
--- or multi-copy gimmicks (Padfoot's 5 sheep). Those fight live content.
-catalog.bosses =
+-- Slot 3 used to force-spawn starter-zone lottery NMs on a 30-minute
+-- timer. Those timers stay as leftover QoL (see hades_boss_respawn.lua).
+-- Do not add Abyssea / custom_HNM_system names here.
+catalog.respawnBosses =
 {
     { name = 'Jaggedy-Eared_Jack', zone = 'West_Ronfaure',        zoneId = xi.zone.WEST_RONFAURE,        groupId = 25, label = 'Jaggedy-Eared Jack' },
     { name = 'Fungus_Beetle',      zone = 'West_Ronfaure',        zoneId = xi.zone.WEST_RONFAURE,        groupId = 23, label = 'Fungus Beetle' },
@@ -357,6 +364,28 @@ catalog.bosses =
     { name = 'Skewer_Sam',         zone = 'Garlaige_Citadel',     zoneId = xi.zone.GARLAIGE_CITADEL,     groupId = 14, label = 'Skewer Sam' },
     { name = 'Tumbling_Truffle',   zone = 'La_Theine_Plateau',    zoneId = xi.zone.LA_THEINE_PLATEAU,    groupId = 40, label = 'Tumbling Truffle' },
     { name = 'Bomb_Queen',         zone = 'Ifrits_Cauldron',      zoneId = xi.zone.IFRITS_CAULDRON,      groupId = 25, label = 'Bomb Queen' },
+}
+
+-- Slot 3: high-level open-world NMs a 99 + trusts can kill.
+-- Hunter's Guild T1-T3 camps already sit on a 30-minute timer
+-- (!huntwarp). Skip Abyssea Marks (too hard), custom_HNM windows
+-- (Fafnir / kings / Serket), ToAU/Zilart land kings (Tiamat,
+-- Cerberus, Khimaira, Bahamut, Jormungand), weather-gated
+-- Vinegarroon, and Carmine Dobsonfly's 10-pack.
+-- Adoulin named NMs are yggrete-shard ??? pops / reives, not
+-- walk-up camps -- do not list them here.
+catalog.bosses =
+{
+    { name = 'Tarasque',          zoneId = xi.zone.IFRITS_CAULDRON,        label = 'Tarasque' },
+    { name = 'Capricornus',       zoneId = xi.zone.JUGNER_FOREST,          label = 'Capricornus' },
+    { name = 'Charybdis',         zoneId = xi.zone.SEA_SERPENT_GROTTO,     label = 'Charybdis' },
+    { name = 'Cactrot_Rapido',    zoneId = xi.zone.EASTERN_ALTEPA_DESERT,  label = 'Cactrot Rapido' },
+    { name = 'Lord_of_Onzozo',    zoneId = xi.zone.LABYRINTH_OF_ONZOZO,    label = 'Lord of Onzozo' },
+    { name = 'Faust',             zoneId = xi.zone.THE_SHRINE_OF_RUAVITAU, label = 'Faust' },
+    { name = 'Despot',            zoneId = xi.zone.RUAUN_GARDENS,          label = 'Despot' },
+    { name = 'Steam_Cleaner',     zoneId = xi.zone.VELUGANNON_PALACE,      label = 'Steam Cleaner' },
+    { name = 'Bune',              zoneId = xi.zone.GUSTAV_TUNNEL,          label = 'Bune' },
+    { name = 'Brigandish_Blade',  zoneId = xi.zone.VELUGANNON_PALACE,      label = 'Brigandish Blade' },
 }
 
 -- Slot 4: entry HTBFs (tier I is enough) or Wave Master Easy/Normal.
@@ -376,20 +405,22 @@ catalog.battlefields =
     { kind = 'wavemaster', difficulty = 'Normal',     label = 'Wave Master: Normal' },
 }
 
--- Slot 5: custom NM a 3-player 99 group can handle.
--- Hunting League Rank I-II and Reforge I-II only. No T3+, no Empy, no gods.
+-- Slot 5: 3 real PCs. Hunting League III-IV and Reforge III-IV.
+-- Skip HL V gods (AV / PW / Shinryu) and Reforge V apex NMs.
 catalog.customNms =
 {
-    { system = 'hl',      name = 'Leaping_Lizzy',   groupId = 11355, label = 'Leaping Lizzy (HL I)' },
-    { system = 'hl',      name = 'Valkurm_Emperor', groupId = 11356, label = 'Valkurm Emperor (HL I)' },
-    { system = 'hl',      name = 'Tom_Tit_Tat',     groupId = 11357, label = 'Tom Tit Tat (HL I)' },
-    { system = 'hl',      name = 'Roc',             groupId = 11358, label = 'Roc (HL II)' },
-    { system = 'hl',      name = 'Bomb_Queen',      groupId = 11359, label = 'Bomb Queen (HL II)' },
-    { system = 'hl',      name = 'Aquarius',        groupId = 11360, label = 'Aquarius (HL II)' },
-    { system = 'reforge', name = 'Genbu',           setKey = 'af',    label = 'Genbu (Reforge I)' },
-    { system = 'reforge', name = 'Suzaku',          setKey = 'af',    label = 'Suzaku (Reforge II)' },
-    { system = 'reforge', name = 'Bukhis',          setKey = 'relic', label = 'Bukhis (Reforge I)' },
-    { system = 'reforge', name = 'Khun',            setKey = 'relic', label = 'Khun (Reforge II)' },
+    { system = 'hl',      name = 'Serket',         groupId = 11361, label = 'Serket (HL III)' },
+    { system = 'hl',      name = 'Vrtra',          groupId = 11362, label = 'Vrtra (HL III)' },
+    { system = 'hl',      name = 'Simurgh',        groupId = 11363, label = 'Simurgh (HL III)' },
+    { system = 'hl',      name = 'Nidhogg',        groupId = 11364, label = 'Nidhogg (HL IV)' },
+    { system = 'hl',      name = 'King_Behemoth',  groupId = 11365, label = 'King Behemoth (HL IV)' },
+    { system = 'hl',      name = 'Kirin',          groupId = 11366, label = 'Kirin (HL IV)' },
+    { system = 'reforge', name = 'Seiryu',         setKey = 'af',    label = 'Seiryu (Reforge III)' },
+    { system = 'reforge', name = 'Byakko',         setKey = 'af',    label = 'Byakko (Reforge IV)' },
+    { system = 'reforge', name = 'Padfoot',        setKey = 'relic', label = 'Padfoot (Reforge III)' },
+    { system = 'reforge', name = 'Glavoid',        setKey = 'relic', label = 'Glavoid (Reforge IV)' },
+    { system = 'reforge', name = 'Briareus',       setKey = 'empy',  label = 'Briareus (Reforge III)' },
+    { system = 'reforge', name = 'Itzpapalotl',    setKey = 'empy',  label = 'Itzpapalotl (Reforge IV)' },
 }
 
 local function familyQuest(entry)
@@ -435,7 +466,7 @@ local function bossQuest(entry)
         target      = 1,
         label       = string.format('Hunt %s', entry.label),
         description = string.format(
-            'Defeat %s in %s (the real one -- copies do not count).',
+            'Defeat %s in %s. 30-minute camp -- !huntwarp if you need the spot.',
             entry.label, catalog.zoneLabel(entry.zoneId)),
         matches     = function(meta)
             return meta

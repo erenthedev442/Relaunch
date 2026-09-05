@@ -70,9 +70,13 @@ end
 
 local function logicalCopyIsSpawned(mobId, nmName)
     local key = encounterCatalog.normalize(nmName)
-    -- Most flagship copies use *_OFFSET +0/+4/+8; Misareaux uses +0/+5/+10.
-    -- Looking across both layouts catches the copy selected at any of the QMs.
-    for _, offset in ipairs({ -10, -8, -5, -4, 0, 4, 5, 8, 10 }) do
+    -- Flagship copies are not on one layout: Misareaux uses +0/+5/+10, La Theine
+    -- +0/+10/+13, Tahrongi +0/+17/+20, Konschtat Kukulkan +0/+98/+101. Walk the
+    -- known offsets so a second ??? cannot pop a sibling copy of the same NM.
+    for _, offset in ipairs({
+        -101, -98, -65, -62, -20, -17, -16, -13, -10, -8, -6, -5, -4, -3,
+        0, 3, 4, 5, 6, 8, 10, 13, 16, 17, 20, 62, 65, 98, 101,
+    }) do
         local candidate = GetMobByID(mobId + offset)
         if
             candidate and
@@ -86,29 +90,22 @@ local function logicalCopyIsSpawned(mobId, nmName)
     return false
 end
 
--- Marks NMs reuse the same entity across pops. Spawn() only clears status
--- effects that have a non-zero duration, and setMobLevel(..., false) skips
--- that wipe entirely. A leftover Hundred Fists (or a weapon delay that was
--- rewritten mid-fight) therefore comes back on the next pop as a 1-second
--- swing -- Muscaliet's retail 240 delay is 4.0s; Hundred Fists is 25% of
--- that. Reset the swing before the overlay so every marks pop starts clean.
-local function resetMarksSwing(mob)
-    pcall(function()
-        mob:delStatusEffectsByFlag(xi.effectFlag.DEATH, true)
-        mob:delStatusEffectSilent(xi.effect.HUNDRED_FISTS)
-        mob:delStatusEffectSilent(xi.effect.HASTE)
-        mob:delStatusEffectSilent(xi.effect.HASTE_SAMBA)
-        mob:delStatusEffectSilent(xi.effect.HASTE_SAMBA_HASTE)
-        local baseDelay = mob:getBaseDelay()
-        if type(baseDelay) == 'number' and baseDelay >= 60 and baseDelay <= 800 then
-            mob:setDelay(baseDelay)
-        end
-        mob:setMod(xi.mod.HASTE_MAGIC, 0)
-        mob:setMod(xi.mod.HASTE_ABILITY, 0)
-        mob:setMod(xi.mod.TWOHAND_HASTE_ABILITY, 0)
-        mob:setMod(xi.mod.DELAY, 0)
-        mob:setMod(xi.mod.DELAYP, 0)
-    end)
+-- Marks NMs reuse the same entity across pops. Spawn() and setMobLevel(recover)
+-- only clear status effects that have a non-zero duration, so a duration-0
+-- Hundred Fists survives both. CalculateMobStats only resetDelay()s MNK, so a
+-- leftover setDelay() on Muscaliet (WAR, cmbDelay 240 = 4.0s) also comes back.
+-- Trusts / fellows / a second PC do not scale delay; they just make leftover
+-- state obvious because the NM lives long enough to swing. Pin the SQL delay
+-- and strip speed buffs on pop, engage, and any later combat tick that sees them.
+local function resetMarksSwing(mob, clearTimers)
+    if clearTimers then
+        pcall(function()
+            if mob.clearTimerQueue then
+                mob:clearTimerQueue()
+            end
+        end)
+    end
+    encounterRuntime.lockSwing(mob, true)
 end
 
 local function spawnViaMark(p, mobId, cost, nmName, cfg)
@@ -146,7 +143,7 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     -- recover=true so leftover Hundred Fists / Haste (duration > 0) die
     -- before the overlay. Catalog HP is applied immediately after.
     spawned:setMobLevel(cfg.level, true)
-    resetMarksSwing(spawned)
+    resetMarksSwing(spawned, true)
     local pcCount = realPlayerCount(p)
     partyHpScale.setCatalogHp(spawned, cfg.maxHP)
     partyHpScale.afterCustomHp(spawned, p)
@@ -167,7 +164,11 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     -- swings and physical TP moves such as Dead Dive and Grand Slam.
     spawned:addMod(xi.mod.MAIN_DMG_RATING, cfg.weaponDmg)
     spawned:addMod(xi.mod.DOUBLE_ATTACK, cfg.da)     -- extra swings -> a real melee threat
-    spawned:addMod(xi.mod.HASTE_GEAR,    cfg.haste)  -- faster attack round (100 = 1%)
+    -- Pin haste rather than addMod so a leftover overlay from a reused entity
+    -- cannot stack. 100 = 1% of the round.
+    spawned:setMod(xi.mod.HASTE_GEAR, cfg.haste)
+    spawned:setLocalVar('[MarksHaste]', cfg.haste)
+    resetMarksSwing(spawned)
     -- Elemental-nuke resistance: raise magic evasion vs all 8 elements so
     -- Fire/Blizzard/Thunder/etc. get resisted more often (on top of meva above).
     for _, emod in ipairs({
@@ -191,6 +192,14 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     encounterRuntime.attach(spawned, encounter, p)
     spawned:updateClaim(p)
     spawned:updateEnmity(p)  -- immediately engage after the full profile is armed
+    -- Engage listeners (trusts / fellow / a second PC hitting the NM) can
+    -- land Haste or rewrite delay after the pop overlay. Re-pin once the
+    -- entity is actually in combat.
+    pcall(function()
+        spawned:timer(1, function(mobArg)
+            encounterRuntime.lockSwing(mobArg)
+        end)
+    end)
 
     p:printToPlayer(
         string.format('[Abyssea] %d Hunt Marks spent. %s appears! (%d real PC%s)',

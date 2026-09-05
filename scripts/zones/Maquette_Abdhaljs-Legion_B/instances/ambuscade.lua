@@ -187,7 +187,7 @@ instanceObject.onInstanceCreatedCallback = function(player, instance)
     if diff < 1 or diff > 15 then diff = 10 end  -- default: Regular VE
     instance:setProgress(diff)
     player:setInstance(instance)
-    player:setPos(137, 12.5, -137, 32, instance:getZone():getID())
+    player:setPos(137, 12.5, -137, 32, xi.zone.MAQUETTE_ABDHALJS_LEGION_B)
     if xi.ambuscade and xi.ambuscade.onHostInstanceReady then
         xi.ambuscade.onHostInstanceReady(player, instance)
     end

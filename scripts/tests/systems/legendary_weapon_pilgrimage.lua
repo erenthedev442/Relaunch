@@ -101,8 +101,8 @@ describe('Legendary Weapon Pilgrimage integrity', function()
                 assert(entry.chapters[1].kind ~= 'support_ws')
             end
         end
-        assert(found.dagan.count == 8 and found.dagan.hpBelow == 35 and found.dagan.restore == 1500)
-        assert(found.myrkr.count == 8 and found.myrkr.mpBelow == 10 and found.myrkr.restore == 900)
+        assert(found.dagan.count == 8 and found.dagan.hpBelow == nil and found.dagan.restore == nil)
+        assert(found.myrkr.count == 8 and found.myrkr.mpBelow == nil and found.myrkr.restore == nil)
         assert(found.atonement.count == 8 and found.atonement.positiveDamage)
     end)
 
@@ -227,29 +227,12 @@ describe('Legendary Weapon Pilgrimage integrity', function()
             seen[rule.key] = true
             assert(rule.key == 'great_sword_burst_survival' or rule.key == 'great_axe_armor'
                 or rule.key == 'katana_shadows'
-                or rule.minTp or rule.behind or rule.maxHpp
-                or rule.maxMpp or rule.minDistance or rule.petAlive
-                or rule.petOrBerserk)
+                or rule.minTp or rule.petAlive or rule.petOrBerserk)
             assert(rule.minDamage == nil)
+            assert(rule.behind == nil and rule.maxHpp == nil and rule.maxMpp == nil and rule.minDistance == nil)
             assert(pilgrimage.archetypePass(attacker, {}, rule, state.tp))
             if rule.minTp then
                 assert(not pilgrimage.archetypePass(attacker, {}, rule, rule.minTp - 1))
-            elseif rule.behind then
-                state.behind = false
-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
-                state.behind = true
-            elseif rule.maxHpp then
-                state.hpp = rule.maxHpp + 1
-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
-                state.hpp = 0
-            elseif rule.maxMpp then
-                state.mpp = rule.maxMpp + 1
-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
-                state.mpp = 0
-            elseif rule.minDistance then
-                state.distance = rule.minDistance - 1
-                assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
-                state.distance = 99
             elseif rule.petAlive or rule.petOrBerserk then
                 state.pet, state.status = false, false
                 assert(not pilgrimage.archetypePass(attacker, {}, rule, state.tp))
@@ -312,6 +295,81 @@ describe('Legendary Weapon Pilgrimage integrity', function()
 
         for index, name in ipairs(internalNames) do
             assert(pilgrimage.targetIndex(requirement, name) == index)
+        end
+    end)
+
+    it('prints weapon-name chapter labels and real weaponskill names', function()
+        local anni = pilgrimage.byFinalId[22140]
+        assert(anni and anni.name == 'Annihilator')
+        assert(anni.wsName == 'Coronach')
+        assert(pilgrimage.chapterPrefix(anni, 1) == 'Annihilator chp 1')
+        assert(pilgrimage.equipText(anni, 1) == 'Annihilator')
+        assert(pilgrimage.howToText(anni, 1) ==
+            'Equip Annihilator. Coronach killing blow on Lv99+ Undead/Vermin/Amorph.')
+        assert(pilgrimage.archetypeHint(anni.archetypeRule) == 'at 1500+ TP')
+        assert(pilgrimage.howToText(anni, 2) ==
+            'Equip Annihilator 119 I. Coronach killing blow on a listed Unity NM (each once).')
+        assert(pilgrimage.howToText(anni, 3) ==
+            'Equip Annihilator 119 II. Coronach killing blow on each listed Disjoined NM.')
+
+        local apoc = pilgrimage.byFinalId[21808]
+        assert(apoc and apoc.wsName == 'Catastrophe')
+        assert(apoc.archetypeRule.maxHpp == nil and apoc.archetypeRule.minTp == 1500)
+        assert(pilgrimage.howToText(apoc, 1):find('Catastrophe killing blow', 1, true))
+
+        local clau = pilgrimage.byFinalId[22060]
+        assert(clau and clau.wsName == 'Gate of Tartarus')
+        assert(clau.archetypeRule.maxMpp == nil and clau.archetypeRule.minTp == 1500)
+        assert(pilgrimage.howToText(clau, 1):find('Gate of Tartarus killing blow', 1, true))
+
+        local gamb = pilgrimage.byFinalId[21079]
+        assert(gamb.wsName == 'Dagan')
+        assert(pilgrimage.howToText(gamb, 1):find('Use Dagan on that NM, then defeat it.', 1, true))
+
+        local conqu = pilgrimage.byFinalId[21757]
+        assert(conqu.wsName == "King's Justice")
+        assert(pilgrimage.howToText(conqu, 2):find('Nyzul', 1, true))
+
+        assert(pilgrimage.byFinalId[20509].wsName == 'Final Heaven')
+        assert(pilgrimage.byFinalId[21906].wsName == 'Blade: Metsu')
+        assert(pilgrimage.byFinalId[21954].wsName == 'Tachi: Kaiten')
+        assert(pilgrimage.byFinalId[20689].wsName == 'Chant du Cygne')
+        assert(pilgrimage.byFinalId[21757].wsName == "King's Justice")
+        assert(pilgrimage.byFinalId[20512].wsName == 'Victory Smite')
+        assert(pilgrimage.byFinalId[21535].wsName == 'Maru Kala')
+        assert(pilgrimage.byFinalId[21986].wsName == 'Tachi: Mumei')
+
+        -- FFXI 0x017 chat packets hard-cut at 150 bytes. The old Annihilator
+        -- status was one ~165-char line, which is why chat died at "at least 1".
+        local chatCap = 150
+        for _, entry in ipairs(pilgrimage.chains) do
+            assert(entry.wsName and entry.wsName ~= '' and not entry.wsName:find('_', 1, true),
+                string.format('%s has bad WS name %s', entry.name, tostring(entry.wsName)))
+            assert(entry.wsName ~= entry.name,
+                string.format('%s used the weapon name as its WS name', entry.name))
+            for chapter = 1, 3 do
+                local howTo = pilgrimage.howToText(entry, chapter)
+                local header = string.format('%s: %d/%d  (current)',
+                    pilgrimage.chapterPrefix(entry, chapter), 0, entry.chapters[chapter].count)
+                local hint = pilgrimage.archetypeHint(entry.chapters[chapter].archetypeRule)
+                local extra = hint ~= '' and ('Must also be ' .. hint .. '.') or ''
+                assert(howTo and howTo ~= '' and not howTo:find('exact-WS', 1, true)
+                    and not howTo:find('eligible-family', 1, true)
+                    and not howTo:find('below', 1, true),
+                    string.format('%s chp %d how-to is unclear: %s', entry.name, chapter, tostring(howTo)))
+                assert(#header <= chatCap, string.format('%s header is %d chars: %s', entry.name, #header, header))
+                assert(#howTo <= chatCap, string.format('%s how-to is %d chars: %s', entry.name, #howTo, howTo))
+                assert(#extra <= chatCap, string.format('%s hint is %d chars: %s', entry.name, #extra, extra))
+                local targets = entry.chapters[chapter].targets or {}
+                for first = 1, #targets, 4 do
+                    local names = {}
+                    for index = first, math.min(#targets, first + 3) do
+                        names[#names + 1] = targets[index]
+                    end
+                    local line = 'Targets: ' .. table.concat(names, ', ')
+                    assert(#line <= chatCap, string.format('%s target line is %d chars: %s', entry.name, #line, line))
+                end
+            end
         end
     end)
 end)

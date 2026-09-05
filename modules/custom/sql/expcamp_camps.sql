@@ -94,14 +94,14 @@ UPDATE `mob_spawn_points` SET `groupid`=20100, `minLevel`=15, `maxLevel`=30, `po
 -- ---- camp 5 Qufim  25-40  HP=950  Giant Ranger / Hunter ----
 INSERT INTO `mob_groups` VALUES (20100,1536,126,'Giant_Ranger',150,0,964,950,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (20101,1530,126,'Giant_Hunter',150,0,968,950,0,0,NULL);
-UPDATE `mob_spawn_points` SET `groupid`=20100, `minLevel`=25, `maxLevel`=40, `pos_x`=244.115, `pos_y`=-19.503, `pos_z`=382.987, `pos_rot`=0 WHERE `mobid`=17293631;
-UPDATE `mob_spawn_points` SET `groupid`=20100, `minLevel`=25, `maxLevel`=40, `pos_x`=240.014, `pos_y`=-19.503, `pos_z`=392.886, `pos_rot`=32 WHERE `mobid`=17293635;
-UPDATE `mob_spawn_points` SET `groupid`=20100, `minLevel`=25, `maxLevel`=40, `pos_x`=230.115, `pos_y`=-19.503, `pos_z`=396.987, `pos_rot`=64 WHERE `mobid`=17293632;
-UPDATE `mob_spawn_points` SET `groupid`=20100, `minLevel`=25, `maxLevel`=40, `pos_x`=220.216, `pos_y`=-19.503, `pos_z`=392.886, `pos_rot`=96 WHERE `mobid`=17293636;
-UPDATE `mob_spawn_points` SET `groupid`=20101, `minLevel`=25, `maxLevel`=40, `pos_x`=216.115, `pos_y`=-19.503, `pos_z`=382.987, `pos_rot`=128 WHERE `mobid`=17293637;
-UPDATE `mob_spawn_points` SET `groupid`=20101, `minLevel`=25, `maxLevel`=40, `pos_x`=220.216, `pos_y`=-19.503, `pos_z`=373.088, `pos_rot`=160 WHERE `mobid`=17293638;
-UPDATE `mob_spawn_points` SET `groupid`=20101, `minLevel`=25, `maxLevel`=40, `pos_x`=230.115, `pos_y`=-19.503, `pos_z`=368.987, `pos_rot`=192 WHERE `mobid`=17293634;
-UPDATE `mob_spawn_points` SET `groupid`=20101, `minLevel`=25, `maxLevel`=40, `pos_x`=240.014, `pos_y`=-19.503, `pos_z`=373.088, `pos_rot`=224 WHERE `mobid`=17293633;
+UPDATE `mob_spawn_points` SET `groupid`=20100, `minLevel`=25, `maxLevel`=40, `pos_x`=-191.691, `pos_y`=-19.917, `pos_z`=322.549, `pos_rot`=0 WHERE `mobid`=17293631;
+UPDATE `mob_spawn_points` SET `groupid`=20100, `minLevel`=25, `maxLevel`=40, `pos_x`=-195.792, `pos_y`=-19.917, `pos_z`=332.448, `pos_rot`=32 WHERE `mobid`=17293635;
+UPDATE `mob_spawn_points` SET `groupid`=20100, `minLevel`=25, `maxLevel`=40, `pos_x`=-205.691, `pos_y`=-19.917, `pos_z`=336.549, `pos_rot`=64 WHERE `mobid`=17293632;
+UPDATE `mob_spawn_points` SET `groupid`=20100, `minLevel`=25, `maxLevel`=40, `pos_x`=-215.590, `pos_y`=-19.917, `pos_z`=332.448, `pos_rot`=96 WHERE `mobid`=17293636;
+UPDATE `mob_spawn_points` SET `groupid`=20101, `minLevel`=25, `maxLevel`=40, `pos_x`=-219.691, `pos_y`=-19.917, `pos_z`=322.549, `pos_rot`=128 WHERE `mobid`=17293637;
+UPDATE `mob_spawn_points` SET `groupid`=20101, `minLevel`=25, `maxLevel`=40, `pos_x`=-215.590, `pos_y`=-19.917, `pos_z`=312.650, `pos_rot`=160 WHERE `mobid`=17293638;
+UPDATE `mob_spawn_points` SET `groupid`=20101, `minLevel`=25, `maxLevel`=40, `pos_x`=-205.691, `pos_y`=-19.917, `pos_z`=308.549, `pos_rot`=192 WHERE `mobid`=17293634;
+UPDATE `mob_spawn_points` SET `groupid`=20101, `minLevel`=25, `maxLevel`=40, `pos_x`=-195.792, `pos_y`=-19.917, `pos_z`=312.650, `pos_rot`=224 WHERE `mobid`=17293633;
 
 -- ---- camp 6 Yuhtunga  30-45  HP=1350  Young Opo-opo ----
 INSERT INTO `mob_groups` VALUES (20100,4476,123,'Young_Opo-opo',150,0,2783,1350,0,0,NULL);

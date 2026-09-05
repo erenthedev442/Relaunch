@@ -18,7 +18,74 @@ local LISTENERS =
     'ABY_MARKS_WS',
     'ABY_MARKS_DEATH',
     'ABY_MARKS_DESPAWN',
+    'ABY_MARKS_ENGAGE',
 }
+
+local SPEED_EFFECTS =
+{
+    xi.effect.HUNDRED_FISTS,
+    xi.effect.HASTE,
+    xi.effect.HASTE_SAMBA,
+    xi.effect.HASTE_SAMBA_HASTE,
+}
+
+function M.lockSwing(mob, fullWipe)
+    if not mob then return end
+
+    if fullWipe then
+        pcall(function()
+            if mob.delStatusEffectsByFlag and xi.effectFlag then
+                mob:delStatusEffectsByFlag(xi.effectFlag.DEATH, true)
+            end
+        end)
+    end
+    for _, effect in ipairs(SPEED_EFFECTS) do
+        pcall(function()
+            mob:delStatusEffectSilent(effect)
+        end)
+    end
+    pcall(function()
+        if mob.resetDelay then
+            mob:resetDelay()
+        else
+            local delay = mob:getLocalVar('[MarksDelay]')
+            if delay < 40 and mob.getBaseDelay then
+                delay = mob:getBaseDelay() or 0
+            end
+            if delay >= 40 and delay <= 999 and mob.setDelay then
+                mob:setDelay(delay)
+            end
+        end
+    end)
+    pcall(function()
+        mob:setMod(xi.mod.HASTE_MAGIC, 0)
+        mob:setMod(xi.mod.HASTE_ABILITY, 0)
+        mob:setMod(xi.mod.TWOHAND_HASTE_ABILITY, 0)
+        mob:setMod(xi.mod.DELAY, 0)
+        mob:setMod(xi.mod.DELAYP, 0)
+        local haste = mob.getLocalVar and mob:getLocalVar('[MarksHaste]') or 0
+        mob:setMod(xi.mod.HASTE_GEAR, haste)
+    end)
+    pcall(function()
+        if not mob.getBaseDelay then return end
+        local delay = mob:getBaseDelay()
+        if type(delay) == 'number' and delay >= 40 and delay <= 999 then
+            mob:setLocalVar('[MarksDelay]', delay)
+        end
+    end)
+end
+
+local function swingNeedsLock(mob)
+    local ok, needs = pcall(function()
+        for _, effect in ipairs(SPEED_EFFECTS) do
+            if mob:hasStatusEffect(effect) then
+                return true
+            end
+        end
+        return false
+    end)
+    return ok and needs
+end
 
 local POSITIONAL_KINDS =
 {
@@ -473,6 +540,9 @@ local function combatTick(mob)
     pressureTick(mob, state, stamp)
     clampNativeControl(state)
     enforceFloor(mob, state)
+    if swingNeedsLock(mob) then
+        M.lockSwing(mob)
+    end
 end
 
 local function damageTaken(mob, amount, attacker, attackType)
@@ -597,6 +667,9 @@ function M.attach(mob, cfg, owner)
 
     mob:addListener('COMBAT_TICK', LISTENERS[1], function(mobArg)
         combatTick(mobArg)
+    end)
+    mob:addListener('ENGAGE', LISTENERS[6], function(mobArg)
+        M.lockSwing(mobArg)
     end)
     mob:addListener('TAKE_DAMAGE', LISTENERS[2], function(mobArg, amount, attacker, attackType)
         damageTaken(mobArg, amount, attacker, attackType)

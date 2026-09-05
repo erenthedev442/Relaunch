@@ -190,17 +190,19 @@ describe('Weapon Forge catalog and gate integrity', function()
     end)
 
     it('requires four matching final REMA for each repeat Prime lineage', function()
-        assert(#primeRepeat.recipes == 14)
+        assert(#primeRepeat.recipes == 16)
         assert(primeRepeat.initialPrimeVar == 'WF_PrimeWeapon_Final')
         assert(primeRepeat.marks == 5000)
         assert(primeRepeat.demonsId == 9543 and primeRepeat.demons == 100)
         assert(primeRepeat.gil == 250000000)
         assert(primeRepeat.apparition.look == 2680)
 
-        for index, recipe in ipairs(primeRepeat.recipes) do
+        for index = 1, 14 do
+            local recipe = primeRepeat.recipes[index]
             assert(recipe.prime.id == catalog.chains[index].s3.id)
             assert(#recipe.relics >= 1 and #recipe.empyreans >= 1)
             assert(#recipe.mythics >= 1 and #recipe.aeonics == 1)
+            assert(primeRepeat.proofCount(recipe) == 4)
         end
 
         local greatKatana = primeRepeat.recipes[10]
@@ -230,6 +232,48 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(not primeRepeat.tradeMatches(trade, recipe))
     end)
 
+    it('proves Duban and Loughnashade with Relic, Empyrean, and Aeonic only', function()
+        local duban = primeRepeat.recipes[15]
+        local harp  = primeRepeat.recipes[16]
+        assert(duban.prime.name == 'Duban' and duban.prime.id == 26495)
+        assert(harp.prime.name == 'Loughnashade' and harp.prime.id == 22307)
+        assert(primeRepeat.proofCount(duban) == 3)
+        assert(primeRepeat.proofCount(harp) == 3)
+        assert(#duban.mythics == 0 and #harp.mythics == 0)
+        assert(duban.relics[1].id == 11927 and duban.empyreans[1].id == 11926)
+        assert(duban.aeonics[1].id == 26403)
+        assert(harp.relics[1].id == 18840 and harp.empyreans[1].id == 18839)
+        assert(harp.aeonics[1].id == 21398)
+        assert(primeRepeat.requirementText(duban):find('Mythic', 1, true) == nil)
+
+        local items =
+        {
+            [11927] = 1,
+            [11926] = 1,
+            [26403] = 1,
+        }
+        local trade = {}
+        function trade:getItemCount()
+            local count = 0
+            for _ in pairs(items) do count = count + 1 end
+            return count
+        end
+        function trade:hasItemQty(id, qty) return (items[id] or 0) >= qty end
+
+        assert(primeRepeat.tradeMatches(trade, duban))
+        assert(not primeRepeat.tradeMatches(trade, harp))
+        assert(not primeRepeat.tradeMatches(trade, primeRepeat.recipes[10]))
+
+        items[18840] = 1
+        items[18839] = 1
+        items[21398] = 1
+        items[11927] = nil
+        items[11926] = nil
+        items[26403] = nil
+        assert(primeRepeat.tradeMatches(trade, harp))
+        assert(not primeRepeat.tradeMatches(trade, duban))
+    end)
+
     it('requires the selected weapon Maat victory for every repeat Aeonic', function()
         local vars = { WF_Aeonic_Final = 1 }
         local player = {}
@@ -243,6 +287,14 @@ describe('Weapon Forge catalog and gate integrity', function()
 
         -- One weapon's Maat clear cannot authorize a different Aeonic.
         assert(not aeonicRepeat.canRepeat(player, catalog.chains[1].aeonic.s3.id))
+
+        -- Srivatsa and Marsyas have no Maat trial; first Aeonic unlock is enough.
+        assert(aeonicRepeat.canRepeat(player, 26403))
+        assert(aeonicRepeat.canRepeat(player, 21398))
+        vars.WF_Aeonic_Final = 0
+        local supportOk, supportReason = aeonicRepeat.canRepeat(player, 26403)
+        assert(not supportOk and supportReason == 'first_aeonic')
+        assert(not aeonicRepeat.canRepeat(player, 21398))
     end)
 
     it('keeps Aeonic currency time above the prior REMA paths', function()

@@ -888,6 +888,7 @@ public:
     bool isAggroable();
 
     void setDelay(uint16 delay);
+    void resetDelay();
     void setDamage(uint16 damage);
     auto getSpellListId() const -> uint16;
     auto hasSpellList() const -> bool;

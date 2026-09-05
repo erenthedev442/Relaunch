@@ -2,7 +2,8 @@
 -- Prime repeat-forge catalog
 --
 -- A repeat Prime requires the matching final Relic, Empyrean, Mythic/Ergon,
--- and Aeonic to be presented together. The four proof weapons are never
+-- and Aeonic to be presented together. Shield and instrument have no Mythic;
+-- those lineages prove Relic + Empyrean + Aeonic. The proof weapons are never
 -- consumed; they only unlock the selected repeat recipe.
 -----------------------------------
 local forge = require('modules/custom/lua/weapon_forge_catalog')
@@ -68,6 +69,30 @@ for index, chain in ipairs(forge.chains) do
     C.recipes[index] = recipe
 end
 
+-- Support Primes have no Mythic. Proof is Relic + Empyrean + Aeonic of the
+-- same slot. First-time claims stay on Prime Armory; this is the repeat path.
+C.recipes[#C.recipes + 1] =
+{
+    index      = #C.recipes + 1,
+    weaponType = 'Shield',
+    prime      = { id = 26495, name = 'Duban' },
+    relics     = { { id = 11927, name = 'Aegis' } },
+    empyreans  = { { id = 11926, name = 'Ochain' } },
+    mythics    = {},
+    aeonics    = { { id = 26403, name = 'Srivatsa' } },
+}
+
+C.recipes[#C.recipes + 1] =
+{
+    index      = #C.recipes + 1,
+    weaponType = 'Instrument',
+    prime      = { id = 22307, name = 'Loughnashade' },
+    relics     = { { id = 18840, name = 'Gjallarhorn' } },
+    empyreans  = { { id = 18839, name = 'Daurdabla' } },
+    mythics    = {},
+    aeonics    = { { id = 21398, name = 'Marsyas' } },
+}
+
 local function tradedOneOf(trade, choices)
     for _, item in ipairs(choices) do
         if trade:hasItemQty(item.id, 1) then return true end
@@ -75,12 +100,22 @@ local function tradedOneOf(trade, choices)
     return false
 end
 
+function C.proofCount(recipe)
+    return ((#recipe.relics > 0) and 1 or 0)
+        + ((#recipe.empyreans > 0) and 1 or 0)
+        + ((#recipe.mythics > 0) and 1 or 0)
+        + ((#recipe.aeonics > 0) and 1 or 0)
+end
+
 function C.tradeMatches(trade, recipe)
-    return trade:getItemCount() == 4
-        and tradedOneOf(trade, recipe.relics)
-        and tradedOneOf(trade, recipe.empyreans)
-        and tradedOneOf(trade, recipe.mythics)
-        and tradedOneOf(trade, recipe.aeonics)
+    if trade:getItemCount() ~= C.proofCount(recipe) then
+        return false
+    end
+
+    return (#recipe.relics == 0 or tradedOneOf(trade, recipe.relics))
+        and (#recipe.empyreans == 0 or tradedOneOf(trade, recipe.empyreans))
+        and (#recipe.mythics == 0 or tradedOneOf(trade, recipe.mythics))
+        and (#recipe.aeonics == 0 or tradedOneOf(trade, recipe.aeonics))
 end
 
 function C.requirementText(recipe)
@@ -90,9 +125,21 @@ function C.requirementText(recipe)
         return table.concat(result, '/')
     end
 
-    return string.format('Relic: %s | Empyrean: %s | Mythic: %s | Aeonic: %s',
-        names(recipe.relics), names(recipe.empyreans),
-        names(recipe.mythics), names(recipe.aeonics))
+    local parts = {}
+    if #recipe.relics > 0 then
+        parts[#parts + 1] = 'Relic: ' .. names(recipe.relics)
+    end
+    if #recipe.empyreans > 0 then
+        parts[#parts + 1] = 'Empyrean: ' .. names(recipe.empyreans)
+    end
+    if #recipe.mythics > 0 then
+        parts[#parts + 1] = 'Mythic: ' .. names(recipe.mythics)
+    end
+    if #recipe.aeonics > 0 then
+        parts[#parts + 1] = 'Aeonic: ' .. names(recipe.aeonics)
+    end
+
+    return table.concat(parts, ' | ')
 end
 
 return C

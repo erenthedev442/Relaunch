@@ -2,6 +2,7 @@
 -- Oggbi's Prime repeat forge
 -----------------------------------
 require('modules/module_utils')
+require('scripts/globals/player')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m        = Module:new('prime_repeat_forge')
@@ -69,7 +70,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end
         if (player:getCharVar(C.pendingVar) or 0) ~= recipe.index then
             player:printToPlayer(
-                PREFIX .. ' Present the four completed REMA of this weapon lineage before we speak of forging.',
+                PREFIX .. ' Present the completed REMA of this weapon lineage before we speak of forging.',
                 SYS)
             return
         end
@@ -118,8 +119,11 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
 
         player:setCharVar(C.pendingVar, 0)
         player:setCharVar('WF_Prime_Final', 1)
+        if recipe.prime.id == 22307 and not player:hasSpell(xi.magic.spell.ARIA_OF_PASSION) then
+            player:addSpell(xi.magic.spell.ARIA_OF_PASSION, { silentLog = true })
+        end
         player:printToPlayer(string.format(
-            PREFIX .. ' Four perfected legacies speak with one voice. Rise, %s, and prove the fifth.',
+            PREFIX .. ' The lineage is complete. Rise, %s.',
             recipe.prime.name), SYS)
     end
 
@@ -146,7 +150,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 if C.tradeMatches(trade, recipe) then
                     player:setCharVar(C.pendingVar, recipe.index)
                     player:printToPlayer(string.format(
-                        PREFIX .. ' I know these four masterworks. Their lineage leads to %s. Take them back; they have earned their rest.',
+                        PREFIX .. ' I know these masterworks. Their lineage leads to %s. Take them back; they have earned their rest.',
                         recipe.prime.name), SYS)
                     player:printToPlayer(string.format(
                         PREFIX .. ' Return with %d Reforge Marks, %d %ss, and %d gil.',
@@ -156,7 +160,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             end
 
             player:printToPlayer(
-                PREFIX .. ' These arms do not form one lineage. Bring one final Relic, Empyrean, Mythic, and Aeonic of the same weapon kind.',
+                PREFIX .. ' These arms do not form one lineage. Damage weapons need Relic, Empyrean, Mythic, and Aeonic of the same kind. Shield and instrument need Relic, Empyrean, and Aeonic.',
                 SYS)
         end,
 
@@ -165,7 +169,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             local recipe = C.recipes[pending]
             if not recipe then
                 player:printToPlayer(
-                    PREFIX .. ' I have no business with empty claims. Show me four perfected weapons of one lineage.',
+                    PREFIX .. ' I have no business with empty claims. Show me the perfected weapons of one lineage.',
                     SYS)
                 return
             end

@@ -168,6 +168,15 @@ sol::table CLuaZone::getMobs()
 
 ZONEID CLuaZone::getID()
 {
+    // A tearing-down instance can still wrap a CLuaZone with a null CZone*.
+    // Ambuscade's live-check used to call this and ACCESS_VIOLATION
+    // (Katryna/Lyvia, 2026-09-04 23:46 / 2026-09-05 07:40 / 08:09).
+    if (m_pLuaZone == nullptr)
+    {
+        ShowError("CLuaZone::getID() called on a null zone");
+        return static_cast<ZONEID>(0);
+    }
+
     return m_pLuaZone->GetID();
 }
 

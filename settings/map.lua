@@ -126,11 +126,16 @@ xi.settings.map =
     -- Enable/disable jobs other than BST and RNG having widescan
     ALL_JOBS_WIDESCAN = true,
 
-    -- Base player movement speed
+    -- Base player movement speed (travel QoL). Dropped while the player
+    -- has enmity or is engaged — see COMBAT_SPEED.
     BASE_SPEED = 150,
 
-    -- Player movement speed limit
+    -- Player movement speed limit (travel QoL)
     SPEED_LIMIT = 250,
+
+    -- In-combat player speed. Retail-like so mobs can catch kiting.
+    COMBAT_SPEED = 50,
+    COMBAT_SPEED_LIMIT = 80,
 
     -- Mount speed, expressed as player speed. Can surpass speed limit.
     MOUNT_SPEED = 200,

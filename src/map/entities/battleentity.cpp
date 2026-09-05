@@ -369,6 +369,26 @@ uint8 CBattleEntity::UpdateSpeed(bool run)
         // Gear penalties.
         int8 additiveMods = static_cast<int8>(getMod(Mod::MOVE_SPEED_STACKABLE));
 
+        // Travel QoL (BASE_SPEED 150) is out-of-combat only. Once a mob has
+        // hate — or the player has engaged — drop to retail combat speed so
+        // they cannot outrun the encounter. Mounts and GM override above
+        // are unchanged. Use the notoriety set size, not hasEnmity(): that
+        // walk can UAF on a stale pointer and UpdateSpeed is on the hot path.
+        int16 effectiveBase = baseSpeed;
+        uint8 speedLimit    = settings::get<uint8>("map.SPEED_LIMIT");
+        if (objtype == TYPE_PC)
+        {
+            const bool hasHate = PNotorietyContainer && PNotorietyContainer->size() > 0;
+            const bool engaged = PAI && PAI->IsEngaged();
+            if (hasHate || engaged)
+            {
+                const auto combatBase = settings::get<uint8>("map.COMBAT_SPEED");
+                const auto combatCap  = settings::get<uint8>("map.COMBAT_SPEED_LIMIT");
+                effectiveBase = combatBase > 0 ? combatBase : 50;
+                speedLimit    = combatCap > 0 ? combatCap : 80;
+            }
+        }
+
         // Gravity and Curse. They seem additive to each other and the sum seems to be multiplicative.
         float weightFactor = std::clamp<float>(1.0f - static_cast<float>(getMod(Mod::MOVE_SPEED_WEIGHT_PENALTY)) / 100.0f, 0.1f, 1.0f);
 
@@ -394,7 +414,7 @@ uint8 CBattleEntity::UpdateSpeed(bool run)
 
         // We have all the modifiers needed. Calculate final speed.
         // This MUST BE DONE IN THIS ORDER. Using int8 data type, we use that to floor.
-        outputSpeed = baseSpeed + additiveMods;
+        outputSpeed = effectiveBase + additiveMods;
         outputSpeed = outputSpeed * weightFactor;
         outputSpeed = outputSpeed * fleeFactor;
         outputSpeed = outputSpeed * cheerFactor;
@@ -405,10 +425,10 @@ uint8 CBattleEntity::UpdateSpeed(bool run)
             outputSpeed = outputSpeed + mazurkaQuickeningEffect;
         }
 
-        // Set cap if a PC (Default 80).
+        // Set cap if a PC (travel SPEED_LIMIT, or COMBAT_SPEED_LIMIT in hate).
         if (objtype == TYPE_PC)
         {
-            outputSpeed = std::clamp<int16>(outputSpeed, 0, settings::get<uint8>("map.SPEED_LIMIT"));
+            outputSpeed = std::clamp<int16>(outputSpeed, 0, speedLimit);
         }
 
         if (run && outputSpeed > 0)

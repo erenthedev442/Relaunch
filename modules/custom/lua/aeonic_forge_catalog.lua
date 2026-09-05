@@ -22,9 +22,29 @@ for _, chain in ipairs(weaponForge.chains) do
     }
 end
 
+-- Shield and instrument have no WS pilgrimage or Maat trial. Same
+-- first-Aeonic unlock as the damage repeats; Relic/Empyrean already treat
+-- Aegis/Ochain and Gjallarhorn/Daurdabla this way.
+C.weapons[#C.weapons + 1] =
+{
+    id   = 26403,
+    name = 'Srivatsa',
+    info = 'Aeonic shield. Jobs: PLD.',
+}
+
+C.weapons[#C.weapons + 1] =
+{
+    id   = 21398,
+    name = 'Marsyas',
+    info = 'Aeonic wind instrument. Jobs: BRD.',
+}
+
 function C.canRepeat(player, finalId)
     if (player:getCharVar('WF_Aeonic_Final') or 0) ~= 1 then
         return false, 'first_aeonic'
+    end
+    if not aeonicMaat.byFinalId[finalId] then
+        return true, nil
     end
     if not aeonicMaat.isComplete(player, finalId) then
         return false, 'maat'

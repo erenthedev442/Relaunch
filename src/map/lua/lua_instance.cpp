@@ -51,6 +51,12 @@ const std::string& CLuaInstance::getName()
 
 CLuaZone CLuaInstance::getZone()
 {
+    if (m_PLuaInstance == nullptr)
+    {
+        ShowError("CLuaInstance::getZone() called on a null instance");
+        return CLuaZone(nullptr);
+    }
+
     return CLuaZone(m_PLuaInstance->GetZone());
 }
 

@@ -181,12 +181,10 @@ local function markProgress(player, entry, chapter, targetName)
     current = math.min(requirement.count, current + 1)
     player:setCharVar(progressVar, current)
     player:printToPlayer(string.format(
-        '[Pilgrimage] %s Chapter %s: %d/%d.',
-        entry.name, ({ 'I', 'II', 'III' })[chapter], current, requirement.count), SYS)
+        '%s: %d/%d',
+        C.chapterPrefix(entry, chapter), current, requirement.count), SYS)
     if current >= requirement.count then
-        player:printToPlayer(string.format(
-            '[Pilgrimage] %s Chapter %s complete.',
-            entry.name, ({ 'I', 'II', 'III' })[chapter]), SYS)
+        player:printToPlayer(C.chapterPrefix(entry, chapter) .. ' complete.', SYS)
     end
 end
 
@@ -262,7 +260,7 @@ local function setSupportReady(player, entry, chapter, target)
     player:setLocalVar('LWP_SupportTarget', target:getID())
     if not sameTarget then
         player:printToPlayer(
-            string.format('[Pilgrimage] %s support condition met; defeat %s to earn credit.',
+            string.format('%s: condition met. Defeat %s for credit.',
                 entry.name, displayName(target)), SYS)
     end
 end
@@ -348,14 +346,7 @@ function P.onSupportWs(player, target, wsId, values)
             equippedForChapter(player, entry, chapter) and
             targetIndex(requirement, combatTarget)
         then
-            local qualifies =
-                (requirement.utility == 'dagan'
-                    and values.hpBeforePct < requirement.hpBelow
-                    and values.hpRestored + values.mpRestored >= requirement.restore)
-                or
-                (requirement.utility == 'myrkr'
-                    and values.mpBeforePct < requirement.mpBelow
-                    and values.mpRestored >= requirement.restore)
+            local qualifies = requirement.utility == 'dagan' or requirement.utility == 'myrkr'
             if qualifies then
                 setSupportReady(player, entry, chapter, combatTarget)
             end
@@ -505,111 +496,55 @@ local function sendMenu(player, title, options)
 end
 
 function P.archetypeText(rule)
-    if rule.key == 'h2h_hit_chain' then return string.format('use at %d+ TP', rule.minTp) end
-    if rule.key == 'dagger_positional' then return 'strike from behind' end
-    if rule.key == 'sword_tactical' then return string.format('use at %d+ TP', rule.minTp) end
-    if rule.key == 'great_sword_burst_survival' then return 'deliver the weaponskill killing blow' end
-    if rule.key == 'axe_companion' then return 'keep a pet alive or Berserk active' end
-    if rule.key == 'great_axe_armor' then return 'deliver the weaponskill killing blow' end
-    if rule.key == 'scythe_resource' then return string.format('remain at or below %d%% HP', rule.maxHpp) end
-    if rule.key == 'polearm_aerial' then return string.format('keep wyvern alive and use at %d+ TP', rule.minTp) end
-    if rule.key == 'katana_shadows' then return 'deliver the weaponskill killing blow' end
-    if rule.key == 'great_katana_skillchain' then return string.format('use at %d+ TP', rule.minTp) end
-    if rule.key == 'club_support' then return string.format('remain at or below %d%% HP', rule.maxHpp) end
-    if rule.key == 'staff_magic' then return string.format('remain at or below %d%% MP', rule.maxMpp) end
-    if rule.key == 'bow_distance' then return string.format('fire from at least %d yalms', rule.minDistance) end
-    if rule.key == 'gun_tactical' then
-        return string.format('fire from at least %d yalms at %d+ TP', rule.minDistance, rule.minTp)
-    end
-    return 'satisfy the weapon archetype rule'
-end
-
-local function requirementText(entry, chapter)
-    local r = entry.chapters[chapter]
-    if r.utility == 'dagan' then
-        return string.format('%d distinct eligible NMs: Dagan below %d%% HP, >=%d combined restore',
-            r.count, r.hpBelow, r.restore)
-    elseif r.utility == 'myrkr' then
-        return string.format('%d distinct eligible NMs: Myrkr below %d%% MP, >=%d MP restored',
-            r.count, r.mpBelow, r.restore)
-    elseif r.utility == 'atonement' then
-        return string.format('%d distinct eligible boss fights with positive-damage Atonement', r.count)
-    elseif r.kind == 'nyzul_objectives' then
-        return string.format('%d Nyzul Eliminate Specified Enemy objective clears', r.count)
-    elseif r.tag == 'magian_family' then
-        return string.format('%d Lv%d+ eligible-family exact-WS killing blows; %s',
-            r.count, r.minLevel, P.archetypeText(entry.archetypeRule))
-    elseif r.distinct then
-        return string.format('%d distinct %s exact-WS killing blows; %s',
-            r.count, r.tag:gsub('_', ' '), P.archetypeText(entry.archetypeRule))
-    end
-    return string.format('%d %s exact-WS killing blows; %s',
-        r.count, r.tag:gsub('_', ' '), P.archetypeText(entry.archetypeRule))
-end
-
-local function requiredStageText(entry, chapter)
-    if entry.family == 'aeonic' then
-        return 'any compatible ' .. entry.weaponType .. ' weapon'
-    elseif entry.singleStep or chapter == 1 and entry.family ~= 'prime' then
-        return 'the base ' .. entry.name
-    elseif entry.family == 'prime' and chapter <= 2 then
-        return 'the 119 I Prime weapon'
-    elseif chapter == 2 then
-        return entry.name .. ' 119 I'
-    end
-
-    return entry.name .. ' 119 II'
+    return C.archetypeHint(rule)
 end
 
 local function printCurrentTargets(player, requirement)
     local targets = requirement.targets
-    local label = 'Eligible targets'
-    if not targets and requirement.ecosystems then
-        targets = {}
-        label = 'Eligible families'
-        for _, ecosystem in ipairs(requirement.ecosystems) do
-            targets[#targets + 1] = C.ECOLOGY_NAMES[ecosystem] or tostring(ecosystem)
-        end
-    end
-    if not targets then return end
+    if not targets or #targets <= 1 then return end
 
     for first = 1, #targets, 4 do
         local names = {}
         for index = first, math.min(#targets, first + 3) do
             names[#names + 1] = targets[index]
         end
-        player:printToPlayer('[Pilgrimage] ' .. label .. ': ' .. table.concat(names, ', '), SYS)
+        player:printToPlayer('Targets: ' .. table.concat(names, ', '), SYS)
     end
 end
 
 function P.showStatus(player, entry, back)
     local chapter = C.chapter(player, entry)
     if entry.singleStep then
-        player:printToPlayer(
-            '[Pilgrimage] This direct-final chain completes Chapters I, II, and III sequentially on its base weapon.',
-            SYS)
+        player:printToPlayer(entry.name .. ': all 3 chapters use the base weapon.', SYS)
     elseif entry.family == 'prime' then
-        player:printToPlayer(
-            '[Pilgrimage] Prime Chapters I and II are sequential on Ajja; Chapter III uses the 119 II weapon.',
-            SYS)
+        player:printToPlayer(entry.name .. ': chp 1-2 use Ajja; chp 3 uses 119 II.', SYS)
     elseif entry.family == 'aeonic' then
-        player:printToPlayer(
-            '[Pilgrimage] Aeonic progress is route-bound, not item-bound: use the listed Aeonic weaponskill with any compatible weapon.',
-            SYS)
+        player:printToPlayer(entry.name .. ': any matching weapon. Use ' .. entry.wsName .. '.', SYS)
     end
     for number = 1, 3 do
         local value = math.min(player:getCharVar(C.progressVar(entry.index, number)) or 0,
             entry.chapters[number].count)
+        local marker = ''
+        if value >= entry.chapters[number].count then
+            marker = ' done'
+        elseif number == chapter then
+            marker = '  (current)'
+        end
         player:printToPlayer(string.format(
-            '[Pilgrimage] Chapter %s %d/%d - Equip %s; kill with %s. %s',
-            ({ 'I', 'II', 'III' })[number], value, entry.chapters[number].count,
-            requiredStageText(entry, number), entry.wsName, requirementText(entry, number)), SYS)
+            '%s: %d/%d%s',
+            C.chapterPrefix(entry, number), value, entry.chapters[number].count, marker), SYS)
+        if number == chapter then
+            player:printToPlayer(C.howToText(entry, number), SYS)
+            local hint = C.archetypeHint(entry.chapters[number].archetypeRule)
+            if hint ~= '' then
+                player:printToPlayer('Must also be ' .. hint .. '.', SYS)
+            end
+        end
     end
     if chapter <= 3 then
-        player:printToPlayer(string.format(
-            '[Pilgrimage] Current Chapter %s is active: satisfy every condition above for each killing blow.',
-            ({ 'I', 'II', 'III' })[chapter]), SYS)
         printCurrentTargets(player, entry.chapters[chapter])
+    elseif chapter == 4 then
+        player:printToPlayer(entry.name .. ' pilgrimage complete.', SYS)
     end
     local options = {}
     if activeEntry(player, entry.index) and entry.family ~= 'aeonic' then

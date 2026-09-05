@@ -36,7 +36,7 @@ local STATMODS =
     Sorcery   = { { xi.mod.MATT, 3 }, { xi.mod.MACC, 3 } },
     Celerity  = { { xi.mod.HASTE_GEAR, 25 } },
     Warding   = { { xi.mod.DMGPHYS, -15 }, { xi.mod.DMGMAGIC, -15 } },
-    Vigor     = { { xi.mod.REGEN, 1 } },
+    Vigor     = { { xi.mod.REGEN, 2.5 } },
 }
 local PERLEVEL = { { xi.mod.ATT, 4 }, { xi.mod.ACC, 3 }, { xi.mod.DEF, 2 } }
 

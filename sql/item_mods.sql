@@ -62262,18 +62262,10 @@ INSERT INTO `item_mods` VALUES (26263,1,16);    -- DEF: 16
 INSERT INTO `item_mods` VALUES (26263,505,10);  -- OVERLOAD_THRESH: 10
 INSERT INTO `item_mods` VALUES (26263,1044,1);  -- AUTOMATON_LVL_BONUS: 1
 
--- Moonbeam Cape
+-- Moonbeam Cape (HP/DT back; HQ is Moonlight)
 INSERT INTO `item_mods` VALUES (26268,1,14);     -- DEF: 14
-INSERT INTO `item_mods` VALUES (26268,2,50);     -- HP: 50
-INSERT INTO `item_mods` VALUES (26268,5,50);     -- MP: 50
-INSERT INTO `item_mods` VALUES (26268,23,15);    -- ATT: 15
-INSERT INTO `item_mods` VALUES (26268,24,15);    -- RATT: 15
-INSERT INTO `item_mods` VALUES (26268,25,15);    -- ACC: 15
-INSERT INTO `item_mods` VALUES (26268,26,15);    -- RACC: 15
-INSERT INTO `item_mods` VALUES (26268,28,15);    -- MATT: 15
-INSERT INTO `item_mods` VALUES (26268,29,5);     -- MDEF: 5
-INSERT INTO `item_mods` VALUES (26268,30,15);    -- MACC: 15
-INSERT INTO `item_mods` VALUES (26268,160,-500); -- DMG: -500
+INSERT INTO `item_mods` VALUES (26268,2,250);    -- HP: 250
+INSERT INTO `item_mods` VALUES (26268,160,-500); -- DMG: -500 (-5%)
 
 -- Moonlight Cape
 INSERT INTO `item_mods` VALUES (26269,1,35);     -- DEF: 35

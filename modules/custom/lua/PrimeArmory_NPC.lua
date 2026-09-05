@@ -11,8 +11,9 @@
 --   Trial 5 (PW_Trial5_Done)  Turn in 99 each of three Aht Urhgan currencies
 --
 -- The 14 Prime weapons are issued ONLY by WeaponForge_NPC after the Ajja/Kaja
--- pilgrimage. This NPC retains one direct claim for the two support Primes
--- (Duban and Loughnashade), which have no weapon-skill pilgrimage chain.
+-- pilgrimage. This NPC retains one direct first claim for the two support
+-- Primes (Duban and Loughnashade), which have no weapon-skill pilgrimage.
+-- Repeats of those two go through Oggbi after a first damage Prime.
 --
 -- Zone: GM Home (zone 210).
 -----------------------------------

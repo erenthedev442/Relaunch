@@ -1,20 +1,24 @@
 -- !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat]
 -- Bypass the Augment Moogle — apply augments to a gear piece in inventory.
--- Replicates the Moogle's content-tier bands, mastery floor, affinity,
--- critical roll, crystalize chance, 10k gil cost, and completion hooks.
+-- Catalysts are spent from the Arcane Augmenter bank (same store as the NPC),
+-- not from the player's inventory. Gear and Maat's Cap still come from bag 0.
 --
 -- Used by the AugmentTrade Windower addon (tools/windower/augment_trade/).
 -- The addon sends: !augment <gear_id> <cat_id>:<qty> [<cat_id>:<qty> ...] [maat]
 
-local cmdprops = {
+---@type TCommand
+local commandObj = {}
+
+commandObj.cmdprops =
+{
     permission = 0,
-    parameters = 'true',
-    help       = '!augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat]',
+    parameters = 's',
 }
 
 local catalog  = require('modules/custom/lua/augment_catalog')
 local sage     = require('modules/custom/lua/augment_sage_catalog')
 local affinity = require('modules/custom/lua/augment_affinity_catalog')
+local bank     = require('modules/custom/lua/augment_catalyst_bank')
 local wh       = require('modules/custom/lua/weekly_hunts')
 
 local MAX_CATALYST_COUNT = 5
@@ -36,7 +40,7 @@ local NON_AUGMENTABLE = {
     [21262]=true,[21263]=true,[21268]=true,[22141]=true,
 }
 
-cmdprops.exec = function(player, args)
+commandObj.onTrigger = function(player, args)
     if not args or args:match('^%s*$') then
         player:printToPlayer(
             'Usage: !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat]',
@@ -130,22 +134,24 @@ cmdprops.exec = function(player, args)
         return
     end
 
-    local function inventoryQuantity(itemId)
-        local total = 0
-        for _, item in ipairs(player:findItems(itemId, 0) or {}) do
-            total = total + (item:getQuantity() or 0)
-        end
-        return total
+    local function bankQty(balances, itemId)
+        return tonumber(balances[itemId] or balances[tostring(itemId)]) or 0
     end
 
-    -- Verify player holds all catalysts in main inventory.
+    local bankRequests = {}
     for _, catId in ipairs(catalystOrder) do
-        local need = catalystCounts[catId]
-        local have = inventoryQuantity(catId)
-        if have < need then
-            local def = catalog[catId]
+        bankRequests[#bankRequests + 1] = { id = catId, qty = catalystCounts[catId] }
+    end
+
+    -- Catalysts live on the Arcane Augmenter, not in the player bag.
+    local balances = bank.balances(player)
+    for _, req in ipairs(bankRequests) do
+        local have = bankQty(balances, req.id)
+        if have < req.qty then
+            local def = catalog[req.id]
             player:printToPlayer(
-                string.format('Need %dx %s (have %d).', need, def and def.label or ('item '..catId), have),
+                string.format('Need %dx %s stored at the Arcane Augmenter (have %d).',
+                    req.qty, def and def.label or ('item '..req.id), have),
                 xi.msg.channel.SYSTEM_3)
             return
         end
@@ -277,43 +283,15 @@ cmdprops.exec = function(player, args)
         newMask = 0x1F
     end
 
-    local function takeFromInventory(itemId, quantity)
-        local remaining = quantity
-        local plan = {}
-        for _, item in ipairs(player:findItems(itemId, 0) or {}) do
-            plan[#plan + 1] = { slot = item:getSlotID(), qty = item:getQuantity() }
-        end
-        for _, entry in ipairs(plan) do
-            if remaining <= 0 then break end
-            local take = math.min(entry.qty, remaining)
-            if take > 0 and player:delItemAt(itemId, take, 0, entry.slot) then
-                remaining = remaining - take
-            end
-        end
-        return quantity - remaining
-    end
-
-    -- Consume the exact base gear, then catalysts from main-inventory stacks.
+    -- Consume the exact base gear, then banked catalysts (atomic).
     if not player:delItemAt(gearId, 1, 0, gear:getSlotID()) then
         player:printToPlayer('The selected gear moved; augmentation cancelled.', xi.msg.channel.SYSTEM_3)
         return
     end
-    local consumed = {}
-    for _, catId in ipairs(catalystOrder) do
-        local qty = catalystCounts[catId]
-        local removed = takeFromInventory(catId, qty)
-        if removed ~= qty then
-            player:addItem({ id = gearId, quantity = 1 })
-            for _, row in ipairs(consumed) do
-                player:addItem({ id = row.id, quantity = row.qty })
-            end
-            if removed > 0 then
-                player:addItem({ id = catId, quantity = removed })
-            end
-            player:printToPlayer('Catalyst consumption failed; consumed items were returned.', xi.msg.channel.SYSTEM_3)
-            return
-        end
-        consumed[#consumed + 1] = { id = catId, qty = qty }
+    if not bank.consume(player, bankRequests) then
+        player:addItem({ id = gearId, quantity = 1 })
+        player:printToPlayer('Stored catalyst consumption failed; gear was returned.', xi.msg.channel.SYSTEM_3)
+        return
     end
 
     -- Add augmented gear
@@ -327,11 +305,8 @@ cmdprops.exec = function(player, args)
     })
 
     if not augmented then
-        -- Restore everything on engine failure
-        player:addItem({ id=gearId, quantity=1 })
-        for _, catId in ipairs(catalystOrder) do
-            player:addItem({ id=catId, quantity=catalystCounts[catId] })
-        end
+        player:addItem({ id = gearId, quantity = 1 })
+        bank.refund(player, bankRequests)
         player:printToPlayer('Augmentation failed - items returned, no gil charged.', xi.msg.channel.SYSTEM_3)
         return
     end
@@ -399,4 +374,4 @@ cmdprops.exec = function(player, args)
         xi.msg.channel.SYSTEM_3)
 end
 
-return cmdprops
+return commandObj
