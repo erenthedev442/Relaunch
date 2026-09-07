@@ -45,9 +45,16 @@ describe('Affinity NM roster and progression integrity', function()
             assert(entry.mobId == home.mobId, name .. ' mobId')
         end
 
+        -- Dragon's Aery grass camp (not the old Fafnir-adjacent pad).
+        local nidhogg = nmCatalog.byName('Nidhogg')
+        assert(nidhogg.zoneId == xi.zone.DRAGONS_AERY)
+        assert(nidhogg.x == -19.7466 and nidhogg.y == -2.1555 and nidhogg.z == 57.6199)
+        assert((nidhogg.rot or 0) == 58)
+
         -- Lobby cave, not the One to be Feared / Warrior's Path airship.
         local proto = nmCatalog.byName('Proto-Omega')
-        assert(proto.x == 600.00 and proto.y == 130.36 and proto.z == 780.00)
+        assert(proto.x == 600.094 and proto.y == 136.438 and proto.z == 738.086)
+        assert(proto.warpX == 599.745 and proto.warpY == 134.055 and proto.warpZ == 757.949)
         assert(proto.y > 100, 'Proto-Omega must not sit on the airship deck')
     end)
 

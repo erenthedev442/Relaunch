@@ -74,7 +74,7 @@ def load_config():
               "then set LS_BRIDGE_WEBHOOK_URL + LS_BRIDGE_NAME.")
         sys.exit(1)
     spec: dict = {}
-    exec(cfg_path.read_text(encoding="utf-8"), spec, spec)  # nosec - user-owned file
+    exec(cfg_path.read_text(encoding="utf-8-sig"), spec, spec)  # nosec - user-owned file
 
     url = str(spec.get("LS_BRIDGE_WEBHOOK_URL", "") or "")
     if not url or "REPLACE_ME" in url:

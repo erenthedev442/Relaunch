@@ -124,8 +124,19 @@ local function warpTo(player, n)
         say(player, string.format('[Waypoint] Slot %d is empty. Save it first: !waypoint save %d', n, n))
         return
     end
+    if require('modules/custom/lua/travel_guard').refuseTravel(player) then
+        return
+    end
+
     if player:isEngaged() then
         say(player, '[Waypoint] You cannot warp while engaged in battle.')
+        return
+    end
+
+    -- Saved Abyssea slots stay on the character; under 75 they do not get
+    -- to use them. Same-zone hops skip onZoneIn, so refuseDestination also
+    -- ejects anyone already standing in Abyssea.
+    if xi.abyssea.refuseDestination(player, wp.zone) then
         return
     end
 

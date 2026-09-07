@@ -261,23 +261,40 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         end
     end)
 
-    it('excludes exact REMA and Prime native WS pairs', function()
+    it('keeps the ordinary curve on REMA and Prime native WS unless already tuned', function()
         local target = makeTarget(150, 1000000)
-        local cases =
-        {
-            { item = 20509, ws = xi.weaponskill.FINAL_HEAVEN },
-            { item = 21646, ws = xi.weaponskill.IMPERATOR },
-        }
+        local apoc = makePlayer({ [xi.slot.MAIN] = 21808 }, 99)
 
-        for _, case in ipairs(cases) do
-            local player = makePlayer({ [xi.slot.MAIN] = case.item }, 99)
-            xi.standardWsTuning.withStandardEffects(
-                player, target, case.ws, xi.slot.MAIN, {}, false,
-                function()
-                    assert(player:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 0)
-                    assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 0)
-                end)
-        end
+        -- 119 III Catastrophe must not fall below Entropy on the same weapon
+        -- when the REMA fTP wrapper does not run (live 2026-09-07 report).
+        xi.standardWsTuning.withStandardEffects(
+            apoc, target, xi.weaponskill.CATASTROPHE, xi.slot.MAIN, {}, false,
+            function()
+                assert(apoc:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 8000)
+                assert(apoc:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 99999)
+            end)
+
+        apoc:setLocalVar('RemaWsTuned', 1)
+        xi.standardWsTuning.withStandardEffects(
+            apoc, target, xi.weaponskill.CATASTROPHE, xi.slot.MAIN, {}, false,
+            function()
+                assert(apoc:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 0)
+                assert(apoc:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 0)
+            end)
+
+        local prime = makePlayer({ [xi.slot.MAIN] = 21646 }, 99)
+        xi.standardWsTuning.withStandardEffects(
+            prime, target, xi.weaponskill.IMPERATOR, xi.slot.MAIN, {}, false,
+            function()
+                assert(prime:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 8000)
+            end)
+
+        prime:setLocalVar('PrimeWsTuned', 1)
+        xi.standardWsTuning.withStandardEffects(
+            prime, target, xi.weaponskill.IMPERATOR, xi.slot.MAIN, {}, false,
+            function()
+                assert(prime:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 0)
+            end)
     end)
 
     it('keeps standard progression on final Ambuscade linked WSs with a 99,999 ceiling', function()

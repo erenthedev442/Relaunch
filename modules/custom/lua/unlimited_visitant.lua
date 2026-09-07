@@ -55,6 +55,13 @@ end
 -- visible-GM visitant grant, which ensurePermanentVisitant already covers for
 -- everyone.
 m:addOverride('xi.abyssea.onZoneIn', function(player)
+    -- Do not grant visitant (or swallow the access eject) for underleveled
+    -- boosts / rebirth 1s. unlimited_visitant loads after abyssea_access and
+    -- historically replaced onZoneIn without super().
+    if xi.abyssea.ejectIfIneligible(player) then
+        return
+    end
+
     ensurePermanentVisitant(player)
 end)
 
@@ -62,6 +69,10 @@ end)
 -- No super() -- skips the retail 304s timed grant + time message; we want
 -- permanent. onZoneIn has already granted by the time this runs.
 m:addOverride('xi.abyssea.afterZoneIn', function(player)
+    if xi.abyssea.ejectIfIneligible(player) then
+        return
+    end
+
     ensurePermanentVisitant(player)
 end)
 

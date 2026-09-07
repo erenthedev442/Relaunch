@@ -160,11 +160,31 @@ end
 -----------------------------------
 -- Spawn one floor mob (mirrors GameMaster.spawnWaveMob)
 -----------------------------------
+local function arenaFloorY(owner)
+    local py = owner:getYPos()
+    local plazaY = catalog.arenaFloorY or catalog.npcPos.y
+    if plazaY and math.abs(py - plazaY) <= 8 then
+        return plazaY
+    end
+    return py
+end
+
+local function pinToArenaFloor(mob, floorY)
+    if not mob or not floorY then
+        return
+    end
+    if mob:getYPos() < floorY - 6 then
+        mob:setPos(mob:getXPos(), floorY, mob:getZPos(), mob:getRotPos())
+    end
+end
+
 local function spawnFloorMob(owner, mobDef, level, mods, maxHP, floor)
-    local px, py, pz = owner:getXPos(), owner:getYPos(), owner:getZPos()
+    local px, pz = owner:getXPos(), owner:getZPos()
+    local py = arenaFloorY(owner)
     local angle = math.random() * math.pi * 2
-    local ring  = catalog.spawnRing
-    local dist  = ring.minRadius + math.random() * (ring.maxRadius - ring.minRadius)
+    local grounded = catalog.groundSpawn and catalog.groundSpawn[mobDef.name]
+    local ring = (grounded and catalog.groundSpawnRing) or catalog.spawnRing
+    local dist = ring.minRadius + math.random() * (ring.maxRadius - ring.minRadius)
     local mx, mz = px + math.cos(angle) * dist, pz + math.sin(angle) * dist
     local rot       = math.random(0, 255)
     local ownerName = owner:getName()
@@ -210,17 +230,35 @@ local function spawnFloorMob(owner, mobDef, level, mods, maxHP, floor)
 
         -- Mechanics ride the combat tick (all pcall-guarded in the library).
         onMobFight = function(mfMob, mfTarget)
+            pinToArenaFloor(mfMob, py)
             mechanics.tick(mfMob, mfTarget)
         end,
     })
 
     if mob then
+        if grounded then
+            -- Same class of bug as Game Master Yovra: pool animationsub
+            -- (Vrtra=4, Nidhogg=6) leaves the model buried. Force grounded.
+            pcall(function()
+                mob:setMobMod(xi.mobMod.SPAWN_ANIMATIONSUB, 0)
+                mob:setAnimationSub(0)
+                mob:setCarefulPathing(true)
+            end)
+        end
         mob:setSpawn(mx, py, mz, rot)
         mob:spawn()
+        if grounded then
+            pcall(function()
+                mob:setAnimationSub(0)
+            end)
+            mob:setPos(mx, py, mz, rot)
+        end
         mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)        -- no CP/JP farm
         local skillCaps = catalog.skillDamageCaps and catalog.skillDamageCaps[mobDef.name]
-        if skillCaps and skillCaps.DeathRay then
-            mob:setLocalVar('VoidspireDeathRayCap', skillCaps.DeathRay)
+        if skillCaps then
+            for skillName, cap in pairs(skillCaps) do
+                mob:setLocalVar('Voidspire' .. skillName .. 'Cap', cap)
+            end
         end
         for modId, val in pairs(mods) do mob:setMod(modId, val) end  -- AFTER spawn()
         mob:setMaxHP(maxHP)

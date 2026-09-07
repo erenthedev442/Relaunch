@@ -199,6 +199,8 @@ xi.spells.enhancing.calculateSongPower = function(caster, target, spell, spellId
         power = math.floor(power + caster:getMerit(meritEffect))
     end
 
+    power = math.floor(power + caster:getMerit(xi.merit.CON_BRIO))
+
     -- Additional Potency from Job Points.
     if jpEffect ~= 0 then
         power = math.floor(power + caster:getJobPointLevel(jpEffect))
@@ -257,6 +259,8 @@ xi.spells.enhancing.calculateSongDuration = function(caster, target, spell, inst
     if caster:hasStatusEffect(xi.effect.TROUBADOUR) then
         duration = math.floor(duration * 2)
     end
+
+    duration = math.floor(duration * (1 + caster:getMerit(xi.merit.CON_ANIMA) / 100))
 
     -- Finish
     return duration

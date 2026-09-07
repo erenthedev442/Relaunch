@@ -209,6 +209,16 @@ instanceObject.onInstanceTimeUpdate = function(instance, elapsed)
         return
     end
 
+    -- Fail empty leftovers and the 30-min time limit. Ambuscade does not use
+    -- xi.instance.updateInstanceTime, so a wipe/leave used to leave the copy
+    -- live and a lower-difficulty retry rejoined the high-diff fight.
+    if xi.ambuscade and xi.ambuscade.tickInstance then
+        local state = xi.ambuscade.tickInstance(instance, elapsed)
+        if state ~= 'live' then
+            return
+        end
+    end
+
     -- CLEAR-DETECT FIX (2026-07-12): the old check compared getName()
     -- against the packet name 'Ambuscade_Housemaker' with an underscore,
     -- but getName() returns the DISPLAY name ('Ambuscade Housemaker' with

@@ -38,6 +38,12 @@ local WARP_DELAY_MS = 8000
 local MH_UNLOCKED_2F = 0x0020
 
 commandObj.onTrigger = function(player)
+    -- Jail only. Do not use travel_guard here -- a mid-setup lock
+    -- must not block the stuck-event recovery path.
+    if require('modules/custom/lua/mordion_jail').refuseTravel(player) then
+        return
+    end
+
     -- 1. Standard event release. If the player isn't actually stuck,
     --    this is harmless (release() is a no-op when no event is
     --    active).
@@ -64,6 +70,11 @@ commandObj.onTrigger = function(player)
     --    tears down all per-zone state via a zone change.
     player:timer(WARP_DELAY_MS, function(playerArg)
         if playerArg:isInEvent() then
+            if xi.characterUpgrade and xi.characterUpgrade.refuseTravel and xi.characterUpgrade.refuseTravel(playerArg) then
+                playerArg:printToPlayer('[unstick] Released, but stay here until Setup Complete.')
+                return
+            end
+
             playerArg:printToPlayer('[unstick] Still stuck — warping home now.')
             playerArg:warp()
         else

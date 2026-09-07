@@ -568,22 +568,24 @@ INSERT INTO `mob_droplist` VALUES (29504, 0, 0, 1000, 9543, @UNCOMMON);
 -- Reuses zone-187 Vanguard Yagudo pools; coords from retail Dynamis-Windy stock spawns.
 -- ============================================================================
 
--- Fii Pexu is a Yagudo THF. The previous group reused pool 2464 directly,
--- whose packet name is Maa Febi the Steadfast; the client therefore rendered
--- the Wave 2 boss as an unrelated NPC. Clone its correct Yagudo model/job data
--- into a dedicated pool with Fii Pexu's packet identity.
+-- Fii Pexu is a Yagudo THF. Clone Maa Febi's model/job data into a dedicated
+-- pool. packet_name must be the DAT key (underscores). Spaces like
+-- 'Fii Pexu the Eternal' do not resolve and the client renders "NPC".
+-- namevis=1 so the nametag is not hidden. Lua also renameEntity()s on spawn.
 INSERT INTO `mob_pools`
 SELECT
-    8000, 'FiiPexuTheEternal', 'Fii Pexu the Eternal',
+    8000, 'Fii_Pexu_the_Eternal', 'Fii_Pexu_the_Eternal',
     `speciesid`, `modelid`, `mJob`, `sJob`, `cmbSkill`, `cmbDelay`, `cmbDmgMult`,
     `behavior`, `aggro`, `true_detection`, `links`, `mobType`, `immunity`,
     `name_prefix`, `flag`, `entityFlags`, `animationsub`, `hasSpellScript`,
-    `spellList`, `namevis`, `roamflag`, `skill_list_id`, `resist_id`,
+    `spellList`, 1, `roamflag`, `skill_list_id`, `resist_id`,
     `modelSize`, `modelHitboxSize`
 FROM `mob_pools`
 WHERE `poolid` = 2464
 ON DUPLICATE KEY UPDATE
-    `name` = VALUES(`name`), `packet_name` = VALUES(`packet_name`);
+    `name`        = VALUES(`name`),
+    `packet_name` = VALUES(`packet_name`),
+    `namevis`     = VALUES(`namevis`);
 
 -- ── mob_groups (unchanged: retail Vanguard family pools) ──
 REPLACE INTO `mob_groups` VALUES (1, 4070, 296, 'EvincingIdol_WindyD', 0, 128, 29601, 35000, 1000, 0, NULL);

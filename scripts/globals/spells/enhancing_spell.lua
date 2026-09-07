@@ -356,6 +356,10 @@ xi.spells.enhancing.calculateEnhancingFinalPower = function(caster, target, spel
             finalPower = finalPower + caster:getShieldDefense()
         end
 
+        if spell:getID() == xi.magic.spell.PROTECTRA_V then
+            finalPower = finalPower + caster:getMerit(xi.merit.PROTECTRA_V)
+        end
+
     -- Refresh
     elseif spellEffect == xi.effect.REFRESH then
         finalPower = finalPower + caster:getMod(xi.mod.ENHANCES_REFRESH)
@@ -371,6 +375,10 @@ xi.spells.enhancing.calculateEnhancingFinalPower = function(caster, target, spel
     elseif spellEffect == xi.effect.SHELL then
         if target:getMod(xi.mod.ENHANCES_PROT_SHELL_RCVD) > 0 then
             finalPower = finalPower + (tier * 39)
+        end
+
+        if spell:getID() == xi.magic.spell.SHELLRA_V then
+            finalPower = finalPower + caster:getMerit(xi.merit.SHELLRA_V)
         end
 
     -- Stoneskin

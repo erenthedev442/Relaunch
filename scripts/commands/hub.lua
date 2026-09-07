@@ -13,6 +13,10 @@ commandObj.cmdprops =
 }
 
 commandObj.onTrigger = function(player)
+    if require('modules/custom/lua/travel_guard').refuseTravel(player) then
+        return
+    end
+
     player:setPos(571.5259, -3.3592, 508.8601, 65, xi.zone.ABDHALJS_ISLE_PURGONORGO)
 end
 

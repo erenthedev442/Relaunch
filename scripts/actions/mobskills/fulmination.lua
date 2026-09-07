@@ -25,6 +25,12 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
         info.damage = math.floor(info.damage / 2)
     end
 
+    -- Voidspire Khimaira: MATT/MAGIC_DAMAGE scaling pushed this to ~19k at F76.
+    local voidCap = mob:getLocalVar('VoidspireFulminationCap')
+    if voidCap > 0 then
+        info.damage = math.min(info.damage, voidCap)
+    end
+
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 

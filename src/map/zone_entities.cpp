@@ -1927,6 +1927,28 @@ auto CZoneEntities::charTick(CCharEntity* PChar, timer::time_point tick) -> Task
         }
     }
 
+    // Jailed players must not live-zone or homepoint out. That path has
+    // smashed m_charsToChangeZone (float 1.0 written over a pointer).
+    // SHUTDOWN / leaveGame is still allowed so !gmjail can disconnect them.
+    if (PChar->m_GMlevel == 0 && PChar->getCharVar("inJail") > 0)
+    {
+        if (PChar->requestedWarp)
+        {
+            ShowWarning(fmt::format("Blocked requestedWarp out of jail for {}", PChar->name));
+            PChar->requestedWarp = false;
+        }
+
+        if (PChar->requestedZoneChange && PChar->loc.destination != ZONE_MORDION_GAOL)
+        {
+            ShowWarning(fmt::format("Blocked zone-change out of jail for {} -> zone {}", PChar->name, PChar->loc.destination));
+            PChar->requestedZoneChange = false;
+            if (PChar->status == STATUS_TYPE::DISAPPEAR)
+            {
+                PChar->status = STATUS_TYPE::NORMAL;
+            }
+        }
+    }
+
     if (PChar->requestedZoneChange || PChar->requestedWarp || PChar->status == STATUS_TYPE::SHUTDOWN)
     {
         m_charsToChangeZone.insert(PChar);
@@ -1955,6 +1977,9 @@ auto CZoneEntities::ZoneServer(timer::time_point tick) -> Task<void>
 
                 // Dynamic NMs (Reforge / Hunting League) are erased from
                 // m_mobList as soon as they DISAPPEAR. Skip any leftover.
+                // Static scripted NMs also sit DISAPPEAR until popped, so
+                // their PAI clock is frozen here; CAIContainer::Reset/Tick
+                // must not treat (now - zone-load) as one attack-timer step.
                 if (PMob->status == STATUS_TYPE::DISAPPEAR)
                 {
                     continue;
@@ -2091,6 +2116,15 @@ auto CZoneEntities::ZoneServer(timer::time_point tick) -> Task<void>
     {
         auto* PChar       = *it;
         bool  shouldErase = false;
+
+        // Stale pointer left after a smashed/overlapping zone-out (Mordion 09:27).
+        // IsEntityAlive is a registry lookup by pointer value — safe on dangling.
+        if (PChar == nullptr || !CBaseEntity::IsEntityAlive(PChar) || PChar->objtype != TYPE_PC)
+        {
+            ShowError("m_charsToChangeZone held a stale character pointer — dropping");
+            it = m_charsToChangeZone.erase(it);
+            continue;
+        }
 
         auto ipp = zoneutils::GetZoneIPP(PChar->loc.destination);
         if (ipp == 0 && PChar->status != STATUS_TYPE::SHUTDOWN)

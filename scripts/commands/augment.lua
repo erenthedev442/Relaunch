@@ -1,6 +1,6 @@
 -- !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat]
 -- Apply augments to a gear piece in inventory. Server-enforced: must be
--- within 6 yalms of the live Arcane Augmenter and have talked to / traded
+-- within 6 yalms of the live Arcane Augment and have talked to / traded
 -- him in the last 3 minutes (see augment_trade_guard.lua). The addon UI
 -- is not trusted.
 -- Catalysts are spent from the Arcane Augmenter bank (same store as the NPC),
@@ -23,7 +23,38 @@ local sage     = require('modules/custom/lua/augment_sage_catalog')
 local affinity = require('modules/custom/lua/augment_affinity_catalog')
 local bank     = require('modules/custom/lua/augment_catalyst_bank')
 local wh       = require('modules/custom/lua/weekly_hunts')
-local guard    = require('modules/custom/lua/augment_trade_guard')
+
+-- Live Abdhaljs Arcane Augment (dynamic NPC). Name lookup misses him
+-- because insertDynamicEntity stores DE_Augment_Moogle.
+local AUGMENT_NPC_ID = 16959491
+local AUGMENT_ZONE   = 44
+local AUGMENT_RANGE  = 6
+local AUGMENT_POS    = { x = 571.6949, y = -0.5056, z = 544.0399 }
+
+local function nearAugment(player)
+    local npc = GetEntityByID(AUGMENT_NPC_ID, nil, true)
+    if npc and player:checkDistance(npc) <= AUGMENT_RANGE then
+        return true
+    end
+    if player:getZoneID() == AUGMENT_ZONE then
+        return player:checkDistance(AUGMENT_POS.x, AUGMENT_POS.y, AUGMENT_POS.z) <= AUGMENT_RANGE
+    end
+    return false
+end
+
+local function denyAugment(player)
+    if not nearAugment(player) then
+        return 'You must be within 6 yalms of the Arcane Augment.'
+    end
+    local ok, tradeGuard = pcall(require, 'modules/custom/lua/augment_trade_guard')
+    if ok and tradeGuard and tradeGuard.armed then
+        if not tradeGuard.armed(player) then
+            return 'Talk to the Arcane Augment first, then Trade while standing next to him.'
+        end
+        return nil
+    end
+    return nil
+end
 
 local MAX_CATALYST_COUNT = 5
 local GIL_COST           = 10000
@@ -110,7 +141,7 @@ commandObj.onTrigger = function(player, args)
         return
     end
 
-    local deny = guard.denyReason(player)
+    local deny = denyAugment(player)
     if deny then
         player:printToPlayer(deny, xi.msg.channel.SYSTEM_3)
         return

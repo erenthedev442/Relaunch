@@ -25,6 +25,7 @@
 #include "entities/battleentity.h"
 
 #include "ai/ai_container.h"
+#include "map_constants.h"
 #include "packets/s2c/0x028_battle2.h"
 #include "packets/s2c/0x058_assist.h"
 #include "utils/battleutils.h"
@@ -96,7 +97,19 @@ bool CAttackState::Update(timer::time_point tick)
     }
     else
     {
-        m_attackTime -= (m_PEntity->PAI->getTick() - m_PEntity->PAI->getPrevTick());
+        auto delta = m_PEntity->PAI->getTick() - m_PEntity->PAI->getPrevTick();
+        if (delta < 0ms)
+        {
+            delta = 0ms;
+        }
+        else if (delta > kLogicUpdateInterval * 2)
+        {
+            // Frozen PAI clock on a first-after-restart scripted NM.
+            // An hours-long subtract leaves m_attackTime negative for the
+            // whole fight (CanAttack only adds one weapon delay per tick).
+            delta = kLogicUpdateInterval * 2;
+        }
+        m_attackTime -= delta;
     }
     return false;
 }

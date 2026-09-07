@@ -13,6 +13,7 @@ commandObj.cmdprops =
 }
 
 local SYS = xi.msg.channel.SYSTEM_3
+local travelGuard = require('modules/custom/lua/travel_guard')
 
 local showRoot
 local showActivities
@@ -39,6 +40,10 @@ local function runCommand(player, path, ...)
 end
 
 local function warp(player, label, zone, x, y, z, rot)
+    if travelGuard.refuseTravel(player) then
+        return
+    end
+
     player:printToPlayer(string.format('[Warp] Traveling to %s.', label), SYS)
     player:setPos(x, y, z, rot or 0, zone)
 end
@@ -397,6 +402,10 @@ showRoot = function(player)
         {
             'Home Point',
             function(p)
+                if travelGuard.refuseTravel(p) then
+                    return
+                end
+
                 p:warp()
             end,
         },
@@ -409,6 +418,10 @@ showRoot = function(player)
 end
 
 commandObj.onTrigger = function(player)
+    if travelGuard.refuseTravel(player) then
+        return
+    end
+
     showRoot(player)
 end
 

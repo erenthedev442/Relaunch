@@ -90,13 +90,29 @@ local function tell(instance, msg)
     end
 end
 
--- A pre-loaded instance entity reads as "not alive" before it is spawned.
--- This helper is therefore only for the statues, which are all spawned during
--- instance creation. Boss progression uses the armed/seen-alive guard below.
-local function isDead(instance, mobid)
+-- Instance entities exist before SpawnMob() and report not-alive in that
+-- state. Treating that as a statue kill burned every +1 min on the first
+-- tick, so later real kills never registered. Same seen-alive guard as bosses.
+local function noteStatueAlive(instance, mobid)
     local mob = GetMobByID(mobid, instance)
-    return mob ~= nil and not mob:isAlive()
+    if mob and mob:isAlive() then
+        instance:setLocalVar('stSeen' .. mobid, 1)
+        return true
+    end
+
+    return false
 end
+
+local function isStatueDefeated(instance, mobid)
+    if noteStatueAlive(instance, mobid) then
+        return false
+    end
+
+    return instance:getLocalVar('stSeen' .. mobid) == 1
+end
+
+-- Public for focused regression tests.
+xi.divergence.isStatueDefeated = isStatueDefeated
 
 local function bossStateKey(role, state)
     return string.format('divBoss%s%s', state, role)
@@ -147,6 +163,14 @@ local function attachBoss(instance, mobId)
     if mob then
         applyStats(mob, cfg.stats)
         partyHpScale.afterCustomHp(mob, instance)
+        -- Invented packet names (spaces, no DAT row) render as "NPC".
+        -- Nametag packet is 15 chars; use cfg.nametag when the full name is longer.
+        pcall(function()
+            mob:hideName(false)
+            if cfg.nametag then
+                mob:renameEntity(cfg.nametag, true)
+            end
+        end)
         mechanics.attach(mob, cfg)
     end
 end
@@ -239,14 +263,32 @@ local function extendTime(instance, addMin, elapsed)
     local cur = instance:getTimeLimit()            -- minutes
     local new = math.min(TIME_CAP_MIN, cur + addMin)
     if new <= cur then
-        return
+        return false
     end
     instance:setTimeLimit(new * 60)                -- setter takes seconds
     local remaining = math.floor(new * 60 - elapsed / 1000)
     for _, p in pairs(instance:getChars()) do
         p:countdown(remaining)
     end
+    return true
 end
+
+-- Credit a time-extension statue exactly once. Used from the DEATH listener
+-- and from the 1s poll so a missed GetMobByID after despawn still pays out.
+local function creditStatue(instance, mobid)
+    local key = 'st' .. mobid
+    if instance:getLocalVar(key) ~= 0 then
+        return false
+    end
+
+    instance:setLocalVar(key, 1)
+    local elapsed = instance:getLocalVar('divElapsed')
+    extendTime(instance, STATUE_EXTEND, elapsed)
+    tell(instance, '[Divergence] A statue crumbles -- time extended (+1 min).')
+    return true
+end
+
+xi.divergence.creditStatue = creditStatue
 
 -----------------------------------
 -- Lifecycle -- called from each zone's instances/<name>.lua
@@ -265,7 +307,20 @@ xi.divergence.onInstanceCreated = function(instance, cfg)
         spawnScaledMob(mobId, instance)
     end
     for _, mobId in ipairs(cfg.statues) do
-        spawnScaledMob(mobId, instance)
+        local mob = spawnScaledMob(mobId, instance)
+        if mob and mob.isAlive and mob:isAlive() then
+            instance:setLocalVar('stSeen' .. mobId, 1)
+        end
+
+        if mob and mob.addListener then
+            local listenerId = string.format('DIVERGENCE_STATUE_%d', mobId)
+            pcall(function()
+                mob:removeListener(listenerId)
+            end)
+            mob:addListener('DEATH', listenerId, function()
+                creditStatue(instance, mobId)
+            end)
+        end
     end
     spawnBoss(instance, cfg.midBoss, 'Mid')
 end
@@ -313,6 +368,7 @@ end
 
 xi.divergence.onInstanceTimeUpdate = function(instance, elapsed, cfg)
     partyHpScale.maybeResyncInstance(instance)
+    instance:setLocalVar('divElapsed', elapsed)
 
     -- Hard time limit (rolled here so extensions are a one-liner).
     if instance:getTimeLimit() * 60 - elapsed / 1000 <= 0 then
@@ -327,13 +383,12 @@ xi.divergence.onInstanceTimeUpdate = function(instance, elapsed, cfg)
     tickBoss(instance, cfg.megaBoss)
     tickBoss(instance, cfg.disjoined)
 
-    -- Time-extension statues -- credit each exactly once.
+    -- Time-extension statues -- credit each exactly once after they have
+    -- been seen alive. The DEATH listener is the primary path; this poll
+    -- catches a despawn that never fired DEATH.
     for _, sid in ipairs(cfg.statues) do
-        local key = 'st' .. sid
-        if instance:getLocalVar(key) == 0 and isDead(instance, sid) then
-            instance:setLocalVar(key, 1)
-            extendTime(instance, STATUE_EXTEND, elapsed)
-            tell(instance, '[Divergence] A statue crumbles -- time extended (+1 min).')
+        if isStatueDefeated(instance, sid) then
+            creditStatue(instance, sid)
         end
     end
 
@@ -679,6 +734,7 @@ xi.divergence.bossMechCfgs =
     [17990606] =
     {
         name            = 'Fii Pexu the Eternal',
+        nametag         = 'Fii Pexu',
         targetPartyOnly = true,
         stats  = STATS_MEGA,
         stance = { startHpp = 85, periodSec = 16, stances = {

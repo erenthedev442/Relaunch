@@ -452,6 +452,62 @@ xi.dynamis.zoneOnInitialize = function(zone)
     end
 end
 
+-- Granules persist in char_keyitems if the Dynamis effect is lost without
+-- onEffectLose (hub / warp / crash). A leftover KI silently blocks that TE
+-- for every later run.
+xi.dynamis.TIME_GRANULES =
+{
+    xi.ki.CRIMSON_GRANULES_OF_TIME,
+    xi.ki.AZURE_GRANULES_OF_TIME,
+    xi.ki.AMBER_GRANULES_OF_TIME,
+    xi.ki.ALABASTER_GRANULES_OF_TIME,
+    xi.ki.OBSIDIAN_GRANULES_OF_TIME,
+}
+
+xi.dynamis.clearTimeGranules = function(player)
+    if not player then
+        return
+    end
+
+    for _, ki in ipairs(xi.dynamis.TIME_GRANULES) do
+        player:delKeyItem(ki)
+    end
+end
+
+-- Extend remaining Dynamis time. KI is optional (GM !adddynatime has none).
+-- Uses remaining + resetStartTime so a unit mismatch on getDuration cannot
+-- shrink the timer.
+xi.dynamis.applyTimeExtension = function(player, minutes, ki)
+    if not player or minutes == nil or minutes < 1 then
+        return false
+    end
+
+    local effect = player:getStatusEffect(xi.effect.DYNAMIS)
+    if not effect then
+        return false
+    end
+
+    if ki and player:hasKeyItem(ki) then
+        return false
+    end
+
+    if ki then
+        npcUtil.giveKeyItem(player, ki)
+    end
+
+    local remaining = effect:getTimeRemaining()
+    effect:setDuration(remaining + minutes * 60 * 1000)
+    effect:resetStartTime()
+    player:setLocalVar('dynamis_lasttimeupdate', effect:getTimeRemaining() / 1000)
+
+    local ID = zones[player:getZoneID()]
+    if ID and ID.text and ID.text.DYNAMIS_TIME_EXTEND then
+        player:messageSpecial(ID.text.DYNAMIS_TIME_EXTEND, minutes)
+    end
+
+    return true
+end
+
 xi.dynamis.zoneOnZoneIn = function(player, prevZone)
     local zoneId = player:getZoneID()
     local info   = dynaInfo[zoneId]
@@ -464,6 +520,8 @@ xi.dynamis.zoneOnZoneIn = function(player, prevZone)
             player:addStatusEffect(xi.effect.SJ_RESTRICTION, { origin = player })
         end
 
+        -- Fresh hourglass: drop any granules left from a previous visit.
+        xi.dynamis.clearTimeGranules(player)
         player:addStatusEffect(xi.effect.DYNAMIS, { duration = 3600, origin = player, tick = 3, icon = 0 })
         player:timer(5500, function(playerArg)
             playerArg:messageSpecial(ID.text.DYNAMIS_TIME_BEGIN, 60, xi.ki.PRISMATIC_HOURGLASS)
@@ -533,6 +591,7 @@ xi.dynamis.megaBossOnDeath = function(mob, player, optParams)
 end
 
 xi.dynamis.timeExtensionOnDeath = function(mob, player, optParams)
+    optParams               = optParams or {}
     local mobId             = mob:getID()
     local zoneId            = mob:getZoneID()
     local ID                = zones[zoneId]
@@ -570,25 +629,31 @@ xi.dynamis.timeExtensionOnDeath = function(mob, player, optParams)
             found and
             te
         then
-            -- award KI and extension to those who have not yet received it
-            local effect = player:getStatusEffect(xi.effect.DYNAMIS)
-            if effect and not player:hasKeyItem(te.ki) then
-                npcUtil.giveKeyItem(player, te.ki)
-                local oldDuration = effect:getDuration()
-                effect:setDuration(oldDuration + te.minutes * 60 * 1000)
-                player:setLocalVar('dynamis_lasttimeupdate', effect:getTimeRemaining() / 1000)
-                player:messageSpecial(ID.text.DYNAMIS_TIME_EXTEND, te.minutes)
+            -- Trust / pet last hits call onMobDeath with a nil player. Credit
+            -- everyone still on the Dynamis clock instead of erroring out.
+            if player then
+                xi.dynamis.applyTimeExtension(player, te.minutes, te.ki)
+            else
+                local zone = mob.getZone and mob:getZone()
+                if zone and zone.getPlayers then
+                    for _, member in pairs(zone:getPlayers()) do
+                        xi.dynamis.applyTimeExtension(member, te.minutes, te.ki)
+                    end
+                end
             end
 
             -- spawn a new mob in this group
-            if optParams.isKiller then
+            if not player or optParams.isKiller then
                 local teId = group[math.random(1, #group)]
                 if teId ~= mobId then
                     DisallowRespawn(mobId, true)
                     DisallowRespawn(teId, false)
                 end
 
-                GetMobByID(teId):setRespawnTime(85)
+                local nextTe = GetMobByID(teId)
+                if nextTe then
+                    nextTe:setRespawnTime(85)
+                end
             end
         else
             printf('[xi.dynamis.timeExtensionOnDeath] called in zone %i on mob %s that does not appear in a time extension group.', zoneId, mob:getName())

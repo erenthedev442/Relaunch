@@ -2,6 +2,7 @@
 -- Cavernous Maw: hub replacement for the former !abyssea command.
 -----------------------------------
 require('modules/module_utils')
+require('scripts/globals/abyssea')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m = Module:new('abyssea_warp_npc')
@@ -16,9 +17,9 @@ local function showVisions(player)
         p:customMenu({
             title   = 'Visions',
             options = {
-                { 'Konschtat', function(q) q:setPos( 153,    -72,   -840, 140, xi.zone.ABYSSEA_KONSCHTAT) end },
-                { 'Tahrongi',  function(q) q:setPos( -24,     44,   -678, 240, xi.zone.ABYSSEA_TAHRONGI) end },
-                { 'La Theine', function(q) q:setPos(-480.5, -0.5,    794,  62, xi.zone.ABYSSEA_LA_THEINE) end },
+                { 'Konschtat', function(q) xi.abyssea.tryEnter(q, function(p) p:setPos( 153,    -72,   -840, 140, xi.zone.ABYSSEA_KONSCHTAT) end) end },
+                { 'Tahrongi',  function(q) xi.abyssea.tryEnter(q, function(p) p:setPos( -24,     44,   -678, 240, xi.zone.ABYSSEA_TAHRONGI) end) end },
+                { 'La Theine', function(q) xi.abyssea.tryEnter(q, function(p) p:setPos(-480.5, -0.5,    794,  62, xi.zone.ABYSSEA_LA_THEINE) end) end },
                 { 'Back',      function(q) showRoot(q) end },
             },
         })
@@ -30,9 +31,9 @@ local function showScars(player)
         p:customMenu({
             title   = 'Scars',
             options = {
-                { 'Attohwa',   function(q) q:setPos(-134,    -20,  -182, 108, xi.zone.ABYSSEA_ATTOHWA) end },
-                { 'Misareaux', function(q) q:setPos( 670,    -15,   318, 119, xi.zone.ABYSSEA_MISAREAUX) end },
-                { 'Vunkerl',   function(q) q:setPos(-351, -46.75, 699.5,  10, xi.zone.ABYSSEA_VUNKERL) end },
+                { 'Attohwa',   function(q) xi.abyssea.tryEnter(q, function(p) p:setPos(-134,    -20,  -182, 108, xi.zone.ABYSSEA_ATTOHWA) end) end },
+                { 'Misareaux', function(q) xi.abyssea.tryEnter(q, function(p) p:setPos( 670,    -15,   318, 119, xi.zone.ABYSSEA_MISAREAUX) end) end },
+                { 'Vunkerl',   function(q) xi.abyssea.tryEnter(q, function(p) p:setPos(-351, -46.75, 699.5,  10, xi.zone.ABYSSEA_VUNKERL) end) end },
                 { 'Back',      function(q) showRoot(q) end },
             },
         })
@@ -44,9 +45,9 @@ local function showHeroes(player)
         p:customMenu({
             title   = 'Heroes',
             options = {
-                { 'Altepa',     function(q) q:setPos( 435,   0,  320, 136, xi.zone.ABYSSEA_ALTEPA) end },
-                { 'Grauberg',   function(q) q:setPos(-555,  31, -760,   0, xi.zone.ABYSSEA_GRAUBERG) end },
-                { 'Uleguerand', function(q) q:setPos(-210, -40, -498,  32, xi.zone.ABYSSEA_ULEGUERAND) end },
+                { 'Altepa',     function(q) xi.abyssea.tryEnter(q, function(p) p:setPos( 435,   0,  320, 136, xi.zone.ABYSSEA_ALTEPA) end) end },
+                { 'Grauberg',   function(q) xi.abyssea.tryEnter(q, function(p) p:setPos(-555,  31, -760,   0, xi.zone.ABYSSEA_GRAUBERG) end) end },
+                { 'Uleguerand', function(q) xi.abyssea.tryEnter(q, function(p) p:setPos(-210, -40, -498,  32, xi.zone.ABYSSEA_ULEGUERAND) end) end },
                 { 'Back',       function(q) showRoot(q) end },
             },
         })

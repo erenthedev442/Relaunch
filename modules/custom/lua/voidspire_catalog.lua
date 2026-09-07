@@ -51,6 +51,21 @@ catalog.floorDelay   = 6    -- between a cleared floor and the next
 catalog.spawnStagger = 1    -- between mobs within a multi-mob floor
 catalog.spawnRing    = { minRadius = 6, maxRadius = 12 }
 
+-- Escha-Ru'Aun entry plaza sits at y=-34; the basin under it is ~y=-70.
+-- Hard-band wyrms (Vrtra / Tiamat / Nidhogg) have 5.7-yalm hitboxes and
+-- non-zero pool animationsubs. A 6-12 ring spawn plus navmesh snap drops
+-- the model through the platform (Vrtra "spawns underground" around F70).
+catalog.arenaFloorY = -34.0
+catalog.groundSpawnRing = { minRadius = 2, maxRadius = 4 }
+catalog.groundSpawn =
+{
+    Vrtra             = true,
+    Tiamat            = true,
+    Nidhogg           = true,
+    Hydra             = true,
+    ['King Behemoth'] = true,
+}
+
 -- ============================ FLOOR SCALING ============================
 -- Per-stat scaling with floor F. Voidspire.lua reads these.
 -- Standard ramp for a stat = clamp(base + per * (F - 1), .., cap).
@@ -253,11 +268,16 @@ catalog.floorMechanics =
 }
 
 -- Per-mobskill incoming-damage caps. Voidspire MATT/MAGIC_DAMAGE scaling
--- makes some family moves (Hakutaku Death Ray) one-shot at deep floors.
--- Applied on spawn via local var; the skill script clamps before takeDamage.
+-- makes some family moves (Hakutaku Death Ray, Khimaira Fulmination) one-shot
+-- at deep floors. Applied on spawn via local var; the skill script clamps
+-- before takeDamage. Fulmination at F76 was ~19.5k; target band is 4-6k
+-- except Tiamat's flying nukes, which sit just under 9k player HP.
 catalog.skillDamageCaps =
 {
     Hakutaku = { DeathRay = 5000 },
+    Khimaira = { Fulmination = 5500, Thunderstrike = 5500 },
+    Cerberus = { GatesOfHades = 5500 },
+    Tiamat   = { InfernoBlast = 8500, TebbadWingAir = 8000 },
 }
 
 -- Flavor banners announced the first time you cross into a new Court depth

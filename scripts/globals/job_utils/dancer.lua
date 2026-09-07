@@ -271,7 +271,7 @@ xi.job_utils.dancer.useStepAbility = function(player, target, ability, action, s
     local stepDurationGift = player:getJobPointLevel(xi.jp.STEP_DURATION)
     local debuffStacks     = 1
     local debuffDuration   = 60 + stepDurationGift
-    local hitRate          = xi.combat.physicalHitRate.getPhysicalHitRate(player, target, 10 + player:getMod(xi.mod.STEP_ACCURACY), xi.attackAnimation.RIGHT_ATTACK, false)
+    local hitRate          = xi.combat.physicalHitRate.getPhysicalHitRate(player, target, 10 + player:getMod(xi.mod.STEP_ACCURACY) + player:getMerit(xi.merit.STEP_ACCURACY), xi.attackAnimation.RIGHT_ATTACK, false)
     -- Only remove TP if the player doesn't have Trance.
     if not player:hasStatusEffect(xi.effect.TRANCE) then
         player:delTP(100 + player:getMod(xi.mod.STEP_TP_CONSUMED))
@@ -533,20 +533,40 @@ xi.job_utils.dancer.useTernaryFlourishAbility = function(player, target, ability
     return xi.effect.TERNARY_FLOURISH
 end
 
--- Climactic Flourish (RELAUNCH FIX 2026-07-13): stock LSB left the effect as a
--- bare stub -- no engine code checked it, so nothing forced crits and nothing
--- consumed on hit. The old ability code also deleted all 5 FINISHING_MOVE_N
--- enums and re-added CLIMACTIC 5 times, both wrong for the current single-
--- effect finishing-move system. Now: consume 1 finishing move, apply effect
--- once with power=3 and duration=60s. The effect handler grants CRITHITRATE
--- +100 and CRIT_DMG_INCREASE +50 while up. climactic_flourish_consumer.lua
--- (custom module) drops the effect after the next WS so it matches the retail
--- "next weaponskill" semantic.
+-- Spend one guaranteed-crit charge. Autos call this from
+-- climactic_flourish_consumer.lua; weaponskill hits call it from
+-- getSingleHitDamage. Removing the effect at 0 also drops the +100 crit rate.
+xi.job_utils.dancer.consumeClimacticCharge = function(player)
+    if not player or not player.getStatusEffect then
+        return false
+    end
+
+    local effect = player:getStatusEffect(xi.effect.CLIMACTIC_FLOURISH)
+    if not effect then
+        return false
+    end
+
+    local power = effect:getPower() or 0
+    if power <= 1 then
+        player:delStatusEffect(xi.effect.CLIMACTIC_FLOURISH)
+    else
+        effect:setPower(power - 1)
+    end
+
+    return true
+end
+
+-- Retail Climactic: consume ALL finishing moves (5, or 6 with empy head /
+-- JP gift) and grant that many guaranteed critical hits. The 2026-07-13
+-- stub-fix only spent 1 FM and wiped the buff on the next WS.
 xi.job_utils.dancer.useClimacticFlourishAbility = function(player, target, ability)
     local numMoves = getFinishingMoveCount(player)
+    if numMoves < 1 then
+        return 0
+    end
 
-    player:addStatusEffect(xi.effect.CLIMACTIC_FLOURISH, { power = 3, duration = 60, origin = player })
-    setFinishingMoves(player, numMoves - 1)
+    player:addStatusEffect(xi.effect.CLIMACTIC_FLOURISH, { power = numMoves, duration = 60, origin = player })
+    setFinishingMoves(player, 0)
 
     return xi.effect.CLIMACTIC_FLOURISH
 end

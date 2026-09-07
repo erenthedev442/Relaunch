@@ -23,7 +23,9 @@
 
 #include <DetourNavMesh.h>
 #include <DetourNavMeshQuery.h>
+#include <DetourStatus.h>
 
+#include "common/timer.h"
 #include "common/utils.h"
 #include "common/xirand.h"
 
@@ -385,13 +387,54 @@ auto CNavMesh::findPath(const position_t& start, const position_t& end) -> std::
         return {};
     }
 
-    // First, we're going to build up a list of polys that make up the path
+    // Blocking dtNavMeshQuery::findPath can stall the whole map tick when the
+    // start and end sit on disconnected mesh islands (Al'Taieu hang 2026-09-06:
+    // Ulxzomit / Ulhpemde / Ulphuabo, 16.8s). Use sliced search with a hard
+    // iteration + time budget; a failed path is "mob stands still", not a hang.
     int32 pathPolyCount = 0;
 
-    status = m_navMeshQuery.findPath(startRef, endRef, sNearestPoint, eNearestPoint, &filter, m_navMeshQueryPolyData.data(), &pathPolyCount, MAX_NAV_POLYS);
+    status = m_navMeshQuery.initSlicedFindPath(startRef, endRef, sNearestPoint, eNearestPoint, &filter, 0);
     if (dtStatusFailed(status))
     {
-        ShowError("CNavMesh::findPath findPath error (%u)", m_zoneID);
+        ShowError("CNavMesh::findPath initSlicedFindPath error (%u)", m_zoneID);
+        ShowError(detourStatusString(status));
+        return {};
+    }
+
+    constexpr int  kIterChunk = 64;
+    constexpr int  kMaxIters  = 2048;
+    constexpr auto kBudget    = std::chrono::milliseconds(3);
+    const auto     t0         = timer::now();
+    int            totalIters = 0;
+
+    while (dtStatusInProgress(status))
+    {
+        int doneIters = 0;
+        status        = m_navMeshQuery.updateSlicedFindPath(kIterChunk, &doneIters);
+        totalIters += doneIters;
+
+        if (dtStatusFailed(status))
+        {
+            ShowError("CNavMesh::findPath updateSlicedFindPath error (%u)", m_zoneID);
+            ShowError(detourStatusString(status));
+            int discarded = 0;
+            m_navMeshQuery.finalizeSlicedFindPath(m_navMeshQueryPolyData.data(), &discarded, static_cast<int>(MAX_NAV_POLYS));
+            return {};
+        }
+
+        if (dtStatusInProgress(status) && (totalIters >= kMaxIters || (timer::now() - t0) >= kBudget))
+        {
+            ShowWarning("CNavMesh::findPath budget exceeded (zone %u, %d iters) — dropping path", m_zoneID, totalIters);
+            int discarded = 0;
+            m_navMeshQuery.finalizeSlicedFindPath(m_navMeshQueryPolyData.data(), &discarded, static_cast<int>(MAX_NAV_POLYS));
+            return {};
+        }
+    }
+
+    status = m_navMeshQuery.finalizeSlicedFindPath(m_navMeshQueryPolyData.data(), &pathPolyCount, static_cast<int>(MAX_NAV_POLYS));
+    if (dtStatusFailed(status))
+    {
+        ShowError("CNavMesh::findPath finalizeSlicedFindPath error (%u)", m_zoneID);
         ShowError(detourStatusString(status));
         return {};
     }

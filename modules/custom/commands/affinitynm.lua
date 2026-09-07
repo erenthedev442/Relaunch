@@ -70,7 +70,23 @@ commandObj.onTrigger = function(player, arg)
     player:printToPlayer(string.format(
         'Warping to %s [%s%s] in %s, kupo!',
         entry.display, profile.label, affinity and (', ' .. affinity.label .. ' affinity') or '', entry.zone), SYS)
-    player:setPos(entry.x, entry.y, entry.z, 0, entry.zoneId)
+    player:setPos(
+        entry.warpX or entry.x,
+        entry.warpY or entry.y,
+        entry.warpZ or entry.z,
+        entry.warpRot or entry.rot or 0,
+        entry.zoneId)
+
+    -- Keep the live replica on the catalog camp (retail HNM scripts shuffle
+    -- spawn points; a camp move also needs the already-up copy relocated).
+    local mob = GetMobByID(entry.mobId)
+    if mob then
+        local rot = entry.rot or 0
+        mob:setSpawn(entry.x, entry.y, entry.z, rot)
+        if mob:isSpawned() then
+            mob:setPos(entry.x, entry.y, entry.z, rot)
+        end
+    end
 end
 
 return commandObj

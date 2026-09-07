@@ -10,6 +10,10 @@
 -- Monthly Hallmark cap: 200,000 HM per calendar month.
 -- Time bonus: up to +50% on sub-5-minute clears.
 -- Party scaling: +50% Breadwinner HP per extra party member (handled at engage).
+--
+-- Leftover copies: C++ fails instance 30000 when the last player leaves.
+-- Lua also refuses to join an empty / all-dead / wrong-difficulty leftover so
+-- a retry at a lower difficulty cannot reopen the previous high-diff fight.
 -----------------------------------
 xi = xi or {}
 xi.ambuscade = {}
@@ -599,6 +603,102 @@ local function liveAmbuscade(inst)
     return okStatus and not dead
 end
 
+local function charInAmbuscade(entity)
+    if not isPc(entity) then
+        return false
+    end
+    local ok, zoneId = pcall(function()
+        return entity:getZoneID()
+    end)
+    return ok and zoneId == xi.zone.MAQUETTE_ABDHALJS_LEGION_B
+end
+
+local function charIsDown(entity)
+    local okHP, hp = pcall(function()
+        return entity:getHP()
+    end)
+    if okHP then
+        return hp == 0
+    end
+    local okDead, dead = pcall(function()
+        return entity:isDead()
+    end)
+    return okDead and dead
+end
+
+-- True only when a living PC is still inside Legion B. Empty leftovers and
+-- all-dead wipes must not count as "a battle in progress".
+local function hasLivingOccupants(instance)
+    if not liveAmbuscade(instance) then
+        return false
+    end
+    local ok, chars = pcall(function()
+        return instance:getChars()
+    end)
+    if not ok or type(chars) ~= 'table' then
+        return false
+    end
+    for _, ch in pairs(chars) do
+        if charInAmbuscade(ch) and not charIsDown(ch) then
+            return true
+        end
+    end
+    return false
+end
+
+local function closeLeftover(instance)
+    if not liveAmbuscade(instance) or hasLivingOccupants(instance) then
+        return false
+    end
+    pcall(function()
+        instance:setLocalVar('Amb_Abandoned', 1)
+    end)
+    pcall(function()
+        instance:fail()
+    end)
+    return true
+end
+
+-- Called every instance tick. Time-limit fail was missing (updateInstanceTime
+-- is not used here), so leftovers sat live for the whole 30 minutes.
+local function tickInstance(instance, elapsed)
+    if not instance then
+        return 'dead'
+    end
+    local okDone, done = pcall(function()
+        return instance:completed() or instance:failed()
+    end)
+    if okDone and done then
+        return 'dead'
+    end
+
+    local timeLimit = 30
+    pcall(function()
+        timeLimit = instance:getTimeLimit()
+    end)
+    if elapsed and timeLimit and timeLimit > 0 and (elapsed / 1000) >= (timeLimit * 60) then
+        pcall(function()
+            instance:fail()
+        end)
+        return 'timeout'
+    end
+
+    local wipeTime = 0
+    pcall(function()
+        wipeTime = instance:getWipeTime()
+    end)
+    if wipeTime ~= 0 and not hasLivingOccupants(instance) then
+        closeLeftover(instance)
+        return 'abandoned'
+    end
+
+    return 'live'
+end
+
+xi.ambuscade.hasLivingOccupants = hasLivingOccupants
+xi.ambuscade.closeLeftover = closeLeftover
+xi.ambuscade.tickInstance = tickInstance
+
 local function clearRiftForInstance(instance)
     for key, rift in pairs(pendingRifts) do
         if rift and rift.instance == instance then
@@ -640,21 +740,39 @@ local function partyKey(player)
     return table.concat(ids, ':')
 end
 
+-- Fail empty / all-dead copies this player would otherwise rejoin, then start
+-- a fresh battle at the difficulty they just picked.
+local function closeOrphanedFor(player)
+    closeLeftover(player:getInstance())
+
+    local key = partyKey(player)
+    local rift = key and pendingRifts[key]
+    if rift then
+        closeLeftover(rift.instance)
+    end
+
+    for _, member in ipairs(partyPcs(player)) do
+        closeLeftover(member:getInstance())
+    end
+end
+
 -- If a party member is already inside a live Ambuscade instance, return it so
 -- the player JOINS that battle instead of getting a private copy. Without this
 -- every party member got their own instance (visible-but-untargetable "ghosts"
 -- of each other) and numChars was always 1, making Gallantry unobtainable.
+-- Empty leftovers and all-dead wipes are not joinable — those are closed and
+-- a new copy is created at the difficulty picked on the Tome.
 local function findPartyAmbuscade(player)
     local key = partyKey(player)
     local rift = key and pendingRifts[key]
-    if rift and liveAmbuscade(rift.instance) then
+    if rift and hasLivingOccupants(rift.instance) then
         return rift.instance
     end
 
     for _, member in ipairs(partyPcs(player)) do
         if member:getID() ~= player:getID() then
             local inst = member:getInstance()
-            if liveAmbuscade(inst) then
+            if hasLivingOccupants(inst) then
                 return inst
             end
         end
@@ -722,12 +840,28 @@ local function enterAmbuscade(player, diffOption)
         return
     end
 
+    -- Close leftover high-diff copies before deciding whether to join or
+    -- create. Otherwise a wipe / leave left the old fight live and the Tome
+    -- pulled everyone back into it regardless of the difficulty they picked.
+    closeOrphanedFor(player)
+
     local partyInst = findPartyAmbuscade(player)
     if partyInst then
-        -- setInstance registers the char on the instance (numChars now counts
-        -- them for Gallantry); the difficulty picked here is ignored -- the
-        -- battle already runs at its creator's difficulty.
-        admitToAmbuscade(player, partyInst, '[Ambuscade] Joining your party\'s battle already in progress!')
+        local ok, progress = pcall(function()
+            return partyInst:getProgress()
+        end)
+        if ok and progress == diffOption then
+            -- setInstance registers the char on the instance (numChars now
+            -- counts them for Gallantry). Same-difficulty join is intentional
+            -- so a party shares one copy.
+            admitToAmbuscade(player, partyInst, '[Ambuscade] Joining your party\'s battle already in progress!')
+            return
+        end
+
+        local name = (ok and DIFF_NAME[progress]) or 'another difficulty'
+        player:printToPlayer(string.format(
+            '[Ambuscade] Your party is already fighting %s. Leave that battle before starting a different difficulty.',
+            name), SYS)
         return
     end
 
@@ -1044,9 +1178,17 @@ end
 
 xi.ambuscade.onInstanceFailure = function(instance)
     clearRiftForInstance(instance)
+    local abandoned = false
+    pcall(function()
+        abandoned = instance:getLocalVar('Amb_Abandoned') == 1
+    end)
     local chars = instance:getChars()
     for _, player in pairs(chars) do
-        player:printToPlayer('[Ambuscade] Time limit reached. Your effort is not forgotten.', SYS)
+        if abandoned then
+            player:printToPlayer('[Ambuscade] The previous battle was closed.', SYS)
+        else
+            player:printToPlayer('[Ambuscade] Time limit reached. Your effort is not forgotten.', SYS)
+        end
         player:printToPlayer(string.format(
             '[Ambuscade] Auto-exit to Mhaura in %ds.', EXIT_GRACE_MS / 1000), SYS)
         scheduleWarpToMhaura(player)

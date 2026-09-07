@@ -50,7 +50,14 @@ local m = Module:new('game_master')
 --     kills        = total mobs killed this session (for end-message)
 --     markBonus    = per-kill HL_Points awarded
 --   }
-local sessions = {}
+-- FileWatcher re-runs this file. Keep the live session table so an in-flight
+-- run is not wiped when the module reloads (that looked like "last wave
+-- never spawned").
+local sessions = xi._gm_sessions
+if type(sessions) ~= 'table' then
+    sessions = {}
+end
+xi._gm_sessions = sessions
 local PARTICIPATION_RANGE = 50
 
 local function getSession(player)
@@ -184,20 +191,24 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
         objtype              = xi.objType.MOB,
         groupId              = mobDef.groupId,
         groupZoneId          = catalog.npcPos.zoneId,
-        name                 = mobDef.name,
+        -- Unique script name: DE callbacks are cached by name. Reusing
+        -- "Cerberus" for two concurrent Hard runs made the second start
+        -- steal the first run's onMobDeath, so wave 7 never queued.
+        name                 = catalog.nextWaveScriptName(),
+        packetName           = mobDef.name,
         x                    = mx,
         y                    = py,
         z                    = mz,
         rotation             = rot,
         minLevel             = diffDef.minLevel,
         maxLevel             = diffDef.maxLevel,
-        -- Detection bitfield from xi.detects. Without this, the engine
-        -- logs "has no detection methods!" per spawn AND the wave mob
-        -- never auto-aggros - players have to /target + /engage each
-        -- one manually, which trashes the wave-mode flow. Custom field
-        -- read in src/map/lua/luautils.cpp insertDynamicEntity.
+        -- Sight/hearing stay on so the owner's addEnmity below engages
+        -- immediately. isAggroable is off so a second run at the same
+        -- Game Master cannot wander-aggro the first player (lv 130-150
+        -- "random" HNMs). Helpers still generate enmity with Provoke
+        -- or damage.
         detection            = xi.detects.SIGHT_AND_HEARING,
-        isAggroable          = true,
+        isAggroable          = false,
         releaseIdOnDisappear = true,
 
         onMobDeath = function(deadMob, killer, optParams)
@@ -218,6 +229,16 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
             if not killer and optParams.noKiller == false then
                 return
             end
+
+            -- Look up the OWNER's session, not the killer's. If a
+            -- friend nukes the mob the owner's wave still advances.
+            local sess = sessions[ownerName]
+            if not sess then return end
+            -- Shared-name callback overwrite used to credit the wrong run.
+            if not sess.mobsAlive[deadMob:getID()] then
+                return
+            end
+
             if deadMob.getLocalVar and deadMob:getLocalVar('GM_Counted') == 1 then
                 return
             end
@@ -225,11 +246,6 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
                 deadMob:setLocalVar('GM_Counted', 1)
             end
             mechanics.cleanup(deadMob)
-
-            -- Look up the OWNER's session, not the killer's. If a
-            -- friend nukes the mob the owner's wave still advances.
-            local sess = sessions[ownerName]
-            if not sess then return end
 
             sess.mobsAlive[deadMob:getID()] = nil
             sess.kills = sess.kills + 1
@@ -291,8 +307,34 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
     -- incoming!" and nothing appears. Same pattern HuntingLeague.lua
     -- uses to put its NMs on the field (see line ~566).
     if mob then
+        -- Yovra / Jailer of Love: pool animationsub 1 or 3 is "in the sky"
+        -- (see mobutils.cpp). Retail Al'Taieu onMobSpawn sets sub 0. Dynamic
+        -- copies never run that script, and spawn() can zero the server
+        -- field without a client packet -- so the model stays invisible
+        -- and high above the Escha - Ru'Aun arena.
+        local isYovra = mobDef.groundSkyAnim
+        if not isYovra then
+            local okSpecies, species = pcall(function()
+                return mob:getSpecies()
+            end)
+            isYovra = okSpecies and species == 327
+        end
+        if isYovra then
+            pcall(function()
+                mob:setMobMod(xi.mobMod.SPAWN_ANIMATIONSUB, 0)
+            end)
+        end
+
         mob:setSpawn(mx, py, mz, rot)
         mob:spawn()
+
+        if isYovra then
+            if mob:getAnimationSub() == 0 then
+                mob:setAnimationSub(1)
+            end
+            mob:setAnimationSub(0)
+            mob:setPos(mx, py, mz, rot)
+        end
 
         -- Block capacity points on kill. Game Master is a challenge
         -- mode, not a CP farm. Requires MOBMOD_NO_CAPACITY_POINTS=200 in the
@@ -336,10 +378,8 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
         --                 VE=30000 matches the "force this target"
         --                 pattern used by Hraesvelg.
         --
-        -- Detection (SIGHT_AND_HEARING) and isAggroable stay enabled
-        -- so other players helping out can still grab the mob's
-        -- attention with Provoke / nukes - the owner just gets the
-        -- starting aggro for free.
+        -- Owner gets the opening claim and enmity. Helpers still pull
+        -- with Provoke / damage; bystanders in another run do not.
         mob:updateClaim(owner)
         mob:addEnmity(owner, 30000, 30000)
     end
@@ -783,7 +823,6 @@ end)
 --   xi._gm_endSession(player, false) -> despawn this run's mobs + clear it.
 --   xi._gm_sessions[name] = nil       -> clear a leaked entry for an OFFLINE owner.
 -----------------------------------
-xi._gm_sessions   = sessions
 xi._gm_endSession = endSession
 
 return m

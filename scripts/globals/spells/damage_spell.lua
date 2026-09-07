@@ -922,6 +922,34 @@ xi.spells.damage.calculateHelixMeritMultiplier = function(caster, spellId)
     return helixMeritMultiplier
 end
 
+local function isBanishFamily(spellId)
+    return
+        (spellId >= xi.magic.spell.BANISH and spellId <= xi.magic.spell.BANISH_V) or
+        (spellId >= xi.magic.spell.BANISHGA and spellId <= xi.magic.spell.BANISHGA_V)
+end
+
+local function isHolyFamily(spellId)
+    return spellId == xi.magic.spell.HOLY or spellId == xi.magic.spell.HOLY_II
+end
+
+-- Banish Effect: +2% damage vs undead per merit. Animus Misery: +5% Banish/Holy damage while active.
+xi.spells.damage.calculateDivineMeritMultiplier = function(caster, target, spellId)
+    local multiplier = 1
+
+    if isBanishFamily(spellId) and target:isUndead() then
+        multiplier = multiplier + caster:getMerit(xi.merit.BANISH_EFFECT) / 100
+    end
+
+    if
+        caster:hasStatusEffect(xi.effect.AFFLATUS_MISERY) and
+        (isBanishFamily(spellId) or isHolyFamily(spellId))
+    then
+        multiplier = multiplier + caster:getMerit(xi.merit.ANIMUS_MISERY) / 100
+    end
+
+    return multiplier
+end
+
 -- Non-primary targets honor Mod::DMG_AOE (alter-ego survivability, locus mobs, etc.).
 -- action may be a spell or mob/pet skill; both expose getPrimaryTargetID().
 -- Trusts: splash cushion is endgame-only (master 99+). While leveling, splash
@@ -1150,6 +1178,97 @@ local function calculateNukeWallFactor(target, spellElement, finalDamage)
 end
 
 -----------------------------------
+-- Spaekona's Coat: refund a slice of the elemental spell's MP cost
+-- when it deals damage. Client text still says 2% of damage; Relaunch
+-- nukes make that a full recast, so we ignore damage and return
+-- ELEM_DMG_TO_MP_COST_REFUND of MP actually spent. Once per cast.
+-----------------------------------
+local spaekonaCoatIds =
+{
+    [xi.item.SPAEKONAS_COAT   ] = true,
+    [xi.item.SPAEKONAS_COAT_P1] = true,
+    [xi.item.SPAEKONAS_COAT_P2] = true,
+    [xi.item.SPAEKONAS_COAT_P3] = true,
+    [23943]                     = true, -- Spaekona's Coat +4 (enum not generated)
+}
+
+xi.spells.damage.ELEM_DMG_TO_MP_COST_REFUND = 25
+
+xi.spells.damage.applyElementalDamageToMP = function(caster, target, spell, damage)
+    if
+        damage <= 0 or
+        caster == nil or
+        spell == nil or
+        type(caster.getMod) ~= 'function'
+    then
+        return 0
+    end
+
+    local hasCoat = caster:getMod(xi.mod.ELEM_DMG_TO_MP) > 0
+    if
+        not hasCoat and
+        type(caster.getEquipID) == 'function' and
+        spaekonaCoatIds[caster:getEquipID(xi.slot.BODY)]
+    then
+        hasCoat = true
+    end
+
+    if not hasCoat then
+        return 0
+    end
+
+    if
+        type(spell.getSkillType) == 'function' and
+        spell:getSkillType() ~= xi.skill.ELEMENTAL_MAGIC
+    then
+        return 0
+    end
+
+    if
+        type(caster.hasStatusEffect) == 'function' and
+        caster:hasStatusEffect(xi.effect.MANAFONT)
+    then
+        return 0
+    end
+
+    local seq    = type(caster.getLocalVar) == 'function' and caster:getLocalVar('SpellCastSeq') or 0
+    local mpCost = type(caster.getLocalVar) == 'function' and caster:getLocalVar('SpellMPSpent') or 0
+
+    -- FileWatcher / pre-rebuild: SpendCost does not yet stamp SpellMPSpent.
+    if mpCost <= 0 and seq == 0 and type(spell.getMPCost) == 'function' then
+        mpCost = spell:getMPCost() or 0
+    end
+
+    if mpCost <= 0 then
+        return 0
+    end
+
+    local restore = math.floor(mpCost * xi.spells.damage.ELEM_DMG_TO_MP_COST_REFUND / 100)
+    if restore <= 0 then
+        return 0
+    end
+
+    -- One refund per cast so -ga does not pay out per target.
+    if
+        seq > 0 and
+        type(caster.getLocalVar) == 'function' and
+        type(caster.setLocalVar) == 'function'
+    then
+        if caster:getLocalVar('elemDmgToMpSeq') == seq then
+            return 0
+        end
+
+        caster:setLocalVar('elemDmgToMpSeq', seq)
+    end
+
+    if type(caster.addMP) == 'function' then
+        caster:addMP(restore)
+    end
+
+    return restore
+end
+
+-----------------------------------
 -- Spell Helper Function
 -----------------------------------
 xi.spells.damage.useDamageSpell = function(caster, target, spell)
@@ -1166,6 +1285,10 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         cardinalChantBonus(caster, target, xi.direction.SOUTH, spellId, skillType)
     if standardEligible then
         bonusMacc = bonusMacc - standardMagic.getMagicAccuracyPenalty(caster, target)
+    end
+
+    if isBanishFamily(spellId) and target:isUndead() then
+        bonusMacc = bonusMacc + caster:getMerit(xi.merit.BANISH_EFFECT)
     end
 
     -- Skip everything if we nullify the spell.
@@ -1250,6 +1373,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     local undeadDivinePenalty       = xi.spells.damage.calculateUndeadDivinePenalty(target, skillType)
     local scarletDeliriumMultiplier = xi.combat.damage.scarletDeliriumMultiplier(caster)
     local helixMeritMultiplier      = xi.spells.damage.calculateHelixMeritMultiplier(caster, spellId)
+    local divineMeritMultiplier     = xi.spells.damage.calculateDivineMeritMultiplier(caster, target, spellId)
     local areaOfEffectResistance    = xi.spells.damage.calculateAreaOfEffectResistance(target, spell)
     local actionTypeMultiplier      = xi.spells.damage.calculateSpellActionTypeMultiplier(caster)
 
@@ -1275,6 +1399,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     finalDamage = math.floor(finalDamage * undeadDivinePenalty)
     finalDamage = math.floor(finalDamage * scarletDeliriumMultiplier)
     finalDamage = math.floor(finalDamage * helixMeritMultiplier)
+    finalDamage = math.floor(finalDamage * divineMeritMultiplier)
     finalDamage = math.floor(finalDamage * areaOfEffectResistance)
     finalDamage = math.floor(finalDamage * actionTypeMultiplier)
     finalDamage = math.floor(finalDamage * absorb)
@@ -1362,6 +1487,9 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     if isMagicBurstHit then
         caster:setLocalVar('OutgoingDamageIsMagicBurst', 0)
     end
+
+    -- Spaekona's Coat: 25% of elemental MP spent, once per cast.
+    xi.spells.damage.applyElementalDamageToMP(caster, target, spell, finalDamage)
 
     -- Handle Afflatus Misery.
     target:handleAfflatusMiseryDamage(finalDamage)

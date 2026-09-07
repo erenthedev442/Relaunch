@@ -548,9 +548,11 @@ catalog.fights =
         difficulty = 'mechanics', rewardClass = 'standard',
         entryPosByArea =
         {
-            [1] = { -570.0, 2.4, -461.0, 0 },
-            [2] = {   -7.0, 2.8,  101.0, 0 },
-            [3] = {  472.0, 3.0,  583.0, 0 },
+            -- Area 1 measured on the path (Mitchum). Old -570/2.4/-461 sat
+            -- off the arena floor. Areas 2-3 keep the existing copy offsets.
+            [1] = { -561.6636, 0.2291, -471.6963, 182 },
+            [2] = {    1.3364, 0.2291,   90.3037, 182 },
+            [3] = {  480.3364, 0.2291,  572.3037, 182 },
         },
     },
     -- Dawn (the final CoP fight vs Promathia). Empyreal Paradox entrance

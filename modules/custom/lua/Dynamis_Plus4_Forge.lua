@@ -8,16 +8,10 @@
 --
 -- Trade a reforged +3 piece + the required materials:
 --   *  3x your job's Paragon Card  (entry.pcard, from reforge_plus4_map.lua)  [ 6x for body]
---   * 12x Rusted ID Card   (9538)  [24x for body]
+--   * 60x Rusted ID Card   (9538)  [90x for body]
 --   *  6x Black  ID Card   (9540)  [12x for body]
--- ...and it comes back +4. Empyrean armor has no +4 tier, so it is not in the map.
---
--- Materials come from the [D] mobs (see modules/custom/sql/dynamis_plus4_materials.sql
--- for the Rusted/Black droplist rows, and the mega-boss P.Card drop hooked below).
---
--- The trade flow mirrors Divergence_Reforger.lua (consume+refund helper,
--- tradeHasExactly, confirmTrade, npcUtil.giveItem) but is driven off the
--- auto-generated +3->+4 map instead of a hand-seeded table.
+-- Extra cards in the trade are kept; only the recipe amount is consumed.
+-- Empyrean armor has no +4 tier, so it is not in the map.
 --
 -- NPC takes the (now retired) Divergence Smith's exact spot in Southern San d'Oria.
 -----------------------------------
@@ -25,6 +19,7 @@ require('modules/module_utils')
 require('scripts/zones/Southern_San_dOria/Zone')
 
 local plus4map = require('modules/custom/lua/reforge_plus4_map')
+local plus4 = require('modules/custom/lua/dynamis_plus4')
 local reforgeCatalog = require('modules/custom/lua/reforge_catalog')
 local gendered = require('modules/custom/lua/gendered_armor')
 
@@ -33,23 +28,12 @@ local m = Module:new('dynamis_plus4_forge')
 -- NPC placement (the retired Divergence Smith's exact spot).
 local NPC_POS = { x = 155.0, y = -2.0, z = 162.0, rot = 96 }
 
--- Material costs (tunable; raised 3x/owner rebalance 2026-07-12). All three
--- materials are body-taxed (body pieces are the strongest slot).
-local PCARD_QTY        = 3      -- x entry.pcard (job-matched Paragon Card), non-body
-local PCARD_QTY_BODY   = 6      -- body
-local RUSTED_ID        = 9538   -- Rusted Identification Card
--- 2026-07-13 (owner): a full-stack (99) requirement triggered a client/server
--- inventory-sync race in the trade path -- putting the ENTIRE stack of an item
--- into the trade window and having any part of the trade fail leaves the
--- client with an underflowed (-99 -> 4294967197) count, and the server flags
--- the cards as reserved. Jbae hit exactly this. Rolled back to sub-99 so
--- players always have leftover cards -- keeps the "this is a real farm gate"
--- intent (60/90 is still 5x the original 12/24 cost) without the edge case.
-local RUSTED_QTY       = 60     -- non-body
-local RUSTED_QTY_BODY  = 90     -- body
-local BLACK_ID         = 9540   -- Blackened Identification Card
-local BLACK_QTY        = 6      -- non-body
-local BLACK_QTY_BODY   = 12     -- body
+local PCARD_QTY       = plus4.PCARD_QTY
+local PCARD_QTY_BODY  = plus4.PCARD_QTY_BODY
+local RUSTED_QTY      = plus4.RUSTED_QTY
+local RUSTED_QTY_BODY = plus4.RUSTED_QTY_BODY
+local BLACK_QTY       = plus4.BLACK_QTY
+local BLACK_QTY_BODY  = plus4.BLACK_QTY_BODY
 
 -- The 4 [D] mega-bosses. Killing one hands the killer their main-job Paragon
 -- Card (pcard = 9280 + jobId). Names match modules/custom/sql/dynamis_divergence.sql
@@ -95,34 +79,24 @@ local function consume(player, id, qty)
     return true
 end
 
--- Build the material list for one upgrade (Paragon Card + ID cards, body-taxed).
-local function materialsFor(entry)
-    local pcard  = (entry.slot == 'body') and PCARD_QTY_BODY  or PCARD_QTY
-    local rusted = (entry.slot == 'body') and RUSTED_QTY_BODY or RUSTED_QTY
-    local black  = (entry.slot == 'body') and BLACK_QTY_BODY  or BLACK_QTY
-    return {
-        { id = entry.pcard, qty = pcard,     name = 'your job\'s Paragon Card' },
-        { id = RUSTED_ID,   qty = rusted,    name = 'Rusted ID Card'  },
-        { id = BLACK_ID,    qty = black,     name = 'Black ID Card'   },
-    }
-end
-
-local function costString(entry)
-    local parts = {}
-    for _, c in ipairs(materialsFor(entry)) do
-        parts[#parts + 1] = string.format('%dx %s', c.qty, c.name)
+local function refund(player, items)
+    for _, row in ipairs(items) do
+        if row.id and row.id > 0 and row.qty and row.qty > 0 then
+            pcall(function()
+                player:addItem({ id = row.id, quantity = row.qty })
+            end)
+        end
     end
-    return table.concat(parts, ', ')
 end
 
 m:addOverride('xi.zones.Southern_San_dOria.Zone.onInitialize', function(zone)
     super(zone)
 
-    -- matsInTrade: the materials were traded alongside the +3 piece and are
-    -- already confirmed on the trade -- confirmTrade consumes them. Otherwise
-    -- pull them from MAIN inventory (lone-piece trade).
-    local function doForge(player, entry, matsInTrade)
-        local mats = materialsFor(entry)
+    -- matsInTrade: confirm only the recipe amounts from the trade window
+    -- (leftover cards stay unconfirmed and return). Otherwise pull materials
+    -- from MAIN inventory (lone-piece trade).
+    local function doForge(player, trade, pieceId, entry, matsInTrade)
+        local mats = plus4.materialsFor(entry)
 
         -- Guard: entries with no job card (pcard 0) can't be forged here.
         if not entry.pcard or entry.pcard == 0 then
@@ -130,7 +104,7 @@ m:addOverride('xi.zones.Southern_San_dOria.Zone.onInitialize', function(zone)
             return
         end
 
-        -- RARE pre-check: giveItem would refuse a second +4 AFTER the trade
+        -- RARE pre-check: addItem would refuse a second +4 AFTER the trade
         -- and materials were consumed. Refuse before anything is spent.
         local resultId = gendered.resolve(player, entry.result)
         if player:hasItem(resultId) then
@@ -140,32 +114,47 @@ m:addOverride('xi.zones.Southern_San_dOria.Zone.onInitialize', function(zone)
             return
         end
 
+        local paidFromInv = {}
         if not matsInTrade then
-            -- Enough of every material?
-            for _, c in ipairs(mats) do
-                if player:getItemCount(c.id) < c.qty then
-                    player:printToPlayer(string.format('[+4 Forge] %s -> +4 costs %s. Kupo!', entry.name, costString(entry)), SYS)
+            for _, cost in ipairs(mats) do
+                if player:getItemCount(cost.id) < cost.qty then
+                    player:printToPlayer(string.format('[+4 Forge] %s -> +4 costs %s. Kupo!', entry.name, plus4.costString(entry)), SYS)
                     return
                 end
             end
 
-            -- Consume materials (abort + refund on any shortfall, BEFORE the trade).
-            local paid = {}
-            for _, c in ipairs(mats) do
-                if not consume(player, c.id, c.qty) then
-                    for id, qty in pairs(paid) do
-                        player:addItem({ id = id, quantity = qty })
-                    end
+            for _, cost in ipairs(mats) do
+                if not consume(player, cost.id, cost.qty) then
+                    refund(player, paidFromInv)
                     player:printToPlayer('[+4 Forge] Keep your cards as single MAIN-inventory stacks and try again, kupo!', SYS)
                     return
                 end
-                paid[c.id] = (paid[c.id] or 0) + c.qty
+                paidFromInv[#paidFromInv + 1] = { id = cost.id, qty = cost.qty }
             end
+        else
+            plus4.confirmRecipe(trade, pieceId, mats)
+        end
+        if not matsInTrade then
+            pcall(function()
+                trade:confirmItem(pieceId, 1)
+            end)
         end
 
-        -- Consume the traded +3 piece (and traded materials) and hand back the +4.
         player:confirmTrade()
-        npcUtil.giveItem(player, resultId)
+        local given = false
+        pcall(function()
+            given = player:addItem({ id = resultId, quantity = 1 })
+        end)
+        if not given then
+            refund(player, { { id = pieceId, qty = 1 } })
+            if matsInTrade then
+                refund(player, mats)
+            else
+                refund(player, paidFromInv)
+            end
+            player:printToPlayer('[+4 Forge] The +4 could not be granted -- your +3 and materials were returned, kupo!', SYS)
+            return
+        end
         player:printToPlayer(string.format('[+4 Forge] %s reforged to +4! Kupo!', entry.name), SYS)
     end
 
@@ -181,46 +170,36 @@ m:addOverride('xi.zones.Southern_San_dOria.Zone.onInitialize', function(zone)
         widescan   = 1,
 
         onTrade = function(player, npc, trade)
-            -- Accept both trade shapes the NPC/website describe:
-            --   1) +3 piece + the exact materials all in the trade window
+            -- Accept both trade shapes:
+            --   1) +3 piece + at least the required cards (leftover stack OK)
             --   2) +3 piece alone, materials pulled from MAIN inventory
-            for tradedId, entry in pairs(plus4map) do
-                local fullTrade = { tradedId }
-                for _, c in ipairs(materialsFor(entry)) do
-                    if c.id and c.id > 0 then
-                        fullTrade[#fullTrade + 1] = { c.id, c.qty }
-                    end
-                end
-
-                if npcUtil.tradeHasExactly(trade, fullTrade) then
-                    doForge(player, entry, true)
-                    return
-                elseif npcUtil.tradeHasExactly(trade, { tradedId }) then
-                    doForge(player, entry, false)
-                    return
-                elseif npcUtil.tradeHas(trade, { tradedId }) then
-                    -- The +3 piece is in the trade, but with the wrong extras
-                    -- (short on cards / unrelated items alongside it).
-                    player:printToPlayer(string.format('[+4 Forge] %s -> +4 costs %s. Kupo!', entry.name, costString(entry)), SYS)
-                    player:printToPlayer('[+4 Forge] Trade the +3 piece with exactly those materials, or trade it alone with the materials in your inventory, kupo!', SYS)
-                    return
-                end
+            -- Do not probe with npcUtil.tradeHas: it confirmItem()s on match.
+            local kind, pieceId, entry = plus4.classify(trade, plus4map, unsupportedEmpyreanPlus3)
+            if kind == 'recipe' then
+                doForge(player, trade, pieceId, entry, true)
+                return
             end
-
-            for tradedId in pairs(unsupportedEmpyreanPlus3) do
-                if npcUtil.tradeHas(trade, { tradedId }) then
-                    player:printToPlayer(
-                        '[+4 Forge] That is an Empyrean +3 piece. Empyrean armor has no +4 item; only Artifact and Relic +3 can be forged here, kupo!',
-                        SYS)
-                    return
-                end
+            if kind == 'piece_only' then
+                doForge(player, trade, pieceId, entry, false)
+                return
+            end
+            if kind == 'short' then
+                player:printToPlayer(string.format('[+4 Forge] %s -> +4 costs %s. Kupo!', entry.name, plus4.costString(entry)), SYS)
+                player:printToPlayer('[+4 Forge] Trade the +3 piece with those materials (extra cards are fine), or trade the piece alone with the materials in your inventory, kupo!', SYS)
+                return
+            end
+            if kind == 'empyrean' then
+                player:printToPlayer(
+                    '[+4 Forge] That is an Empyrean +3 piece. Empyrean armor has no +4 item; only Artifact and Relic +3 can be forged here, kupo!',
+                    SYS)
+                return
             end
 
             player:printToPlayer('[+4 Forge] Trade me a reforged +3 AF/Relic piece to upgrade it to +4, kupo!', SYS)
         end,
 
         onTrigger = function(player, npc)
-            player:printToPlayer('[+4 Forge] Trade a reforged +3 AF/Relic piece + your job\'s Paragon Card + Rusted/Black ID Cards, and I forge it to +4. Kupo!', SYS)
+            player:printToPlayer('[+4 Forge] Trade a reforged +3 AF/Relic piece + your job\'s Paragon Card + Rusted/Black ID Cards, and I forge it to +4. Extra cards in the trade are fine. Kupo!', SYS)
             player:printToPlayer(string.format('[+4 Forge] Cost: %dx Paragon Card (%dx body), %dx Rusted (%dx body) + %dx Black (%dx body) ID Cards. Empyrean has no +4.',
                 PCARD_QTY, PCARD_QTY_BODY, RUSTED_QTY, RUSTED_QTY_BODY, BLACK_QTY, BLACK_QTY_BODY), SYS)
         end,

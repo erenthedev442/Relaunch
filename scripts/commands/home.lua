@@ -12,6 +12,10 @@ commandObj.cmdprops =
 }
 
 commandObj.onTrigger = function(player)
+    if require('modules/custom/lua/travel_guard').refuseTravel(player) then
+        return
+    end
+
     player:warp()
 end
 

@@ -6,8 +6,8 @@
 -- sizes, and automaton parts -- everything the old "Unlocker" GM-Home NPC used
 -- to hand out on demand. The NPC is gone (owner request 2026-06-25); the grant
 -- now runs once via xi.player.onGameIn (firstLogin), sliced across ticks so
--- the 2s inactivity watchdog cannot kill xi_map. Paid Void Keeper trusts
--- are still withheld.
+-- the 2s inactivity watchdog cannot kill xi_map. The player is Bound in
+-- place until Setup Complete. Paid Void Keeper trusts are still withheld.
 -----------------------------------
 require('modules/module_utils')
 
@@ -15,6 +15,35 @@ local m = Module:new('character_upgrader')
 local spellGrant = require('modules/custom/lua/player_spell_grant_catalog')
 local trustGrant = require('modules/custom/lua/trust_grant_catalog')
 local remaCatalog = require('modules/custom/lua/rema_ws_tier_catalog')
+
+xi.characterUpgrade = xi.characterUpgrade or {}
+
+local COMPLETE_VAR = 'AutoUnlock_Complete'
+local STARTED_VAR  = 'AutoUnlock_Done'
+local UNITY_VAR    = 'AutoUnlock_UnityGrant'
+local RUNNING_VAR  = 'AutoUnlock_Running'
+local SYS          = xi.msg.channel.SYSTEM_3
+local LOCK_EFFECT  = xi.effect.BIND
+local LOCK_SECS    = 900
+local LOCK_FLAGS   = bit.bor(
+    xi.effectFlag.NO_CANCEL,
+    xi.effectFlag.HIDE_TIMER,
+    xi.effectFlag.NO_LOSS_MESSAGE
+)
+
+-- Late-grant probes. Mount companions sit at the high end of the KI table;
+-- HP 121 is unlocked after the KI pass. Missing either means they zoned
+-- before the sliced first-login grant finished.
+xi.characterUpgrade.SENTINEL_KIS =
+{
+    xi.ki.CHOCOBO_LICENSE,
+    xi.ki.CHOCOBO_COMPANION,
+    xi.ki.RAPTOR_COMPANION,
+    xi.ki.TIGER_COMPANION,
+    xi.ki.IXION_COMPANION,
+    xi.ki.PHUABO_COMPANION,
+    xi.ki.CRAKLAW_COMPANION,
+}
 
 -- Starter trusts (see exports/trust_cipher_drop_proposal.csv). Every other trust
 -- is earned via cipher drops, direct NM grants, or the Void Keeper.
@@ -130,6 +159,43 @@ local function isValidPlayer(player)
     return player ~= nil and player:isPC()
 end
 
+-- Bind holds a real client still without the fade-to-black cutscene lock.
+-- Warp commands still go through refuseTravel because setPos ignores Bind.
+local function lockPlayer(player)
+    if not isValidPlayer(player) then
+        return
+    end
+
+    pcall(function()
+        if player:hasStatusEffect(LOCK_EFFECT) then
+            player:delStatusEffectSilent(LOCK_EFFECT)
+        end
+
+        player:addStatusEffect(LOCK_EFFECT, {
+            origin   = player,
+            power    = 1,
+            duration = LOCK_SECS,
+            flag     = LOCK_FLAGS,
+            silent   = true,
+        })
+    end)
+end
+
+local function unlockPlayer(player)
+    if not player then
+        return
+    end
+
+    pcall(function()
+        if player.hasStatusEffect and player:hasStatusEffect(LOCK_EFFECT) then
+            player:delStatusEffectSilent(LOCK_EFFECT)
+        end
+    end)
+end
+
+xi.characterUpgrade.applyMovementLock = lockPlayer
+xi.characterUpgrade.clearMovementLock = unlockPlayer
+
 local function runJobs(player, jobs, index)
     if not isValidPlayer(player) then
         return
@@ -143,6 +209,18 @@ local function runJobs(player, jobs, index)
     pcall(job, player)
 
     if jobs[index + 1] then
+        local bound = false
+        pcall(function()
+            bound = player:hasStatusEffect(LOCK_EFFECT)
+        end)
+        if not bound then
+            lockPlayer(player)
+        end
+
+        if index % 80 == 0 then
+            player:printToPlayer('Still setting up -- you cannot move until Setup Complete, kupo!', 0, 'Unlocker')
+        end
+
         player:timer(STEP_GAP_MS, function(nextPlayer)
             runJobs(nextPlayer, jobs, index + 1)
         end)
@@ -392,16 +470,55 @@ local function giveAllAttachments(player)
     end
 end
 
+local function hasLateHomepoint(player)
+    -- giveAllHomepoints unlocks 0..121. Bit 25 of set 3 is index 121.
+    return player:hasTeleport(xi.teleport.type.HOMEPOINT, 25, 3)
+end
+
+local function hasAllSentinelKeyItems(player)
+    for _, kiId in ipairs(xi.characterUpgrade.SENTINEL_KIS) do
+        if kiId and not player:hasKeyItem(kiId) then
+            return false
+        end
+    end
+
+    return true
+end
+
+xi.characterUpgrade.isComplete = function(player)
+    if not player then
+        return false
+    end
+
+    if (player:getCharVar(COMPLETE_VAR) or 0) == 1 then
+        return true
+    end
+
+    -- Legacy characters finished before AutoUnlock_Complete existed.
+    if hasAllSentinelKeyItems(player) and hasLateHomepoint(player) then
+        player:setCharVar(COMPLETE_VAR, 1)
+        return true
+    end
+
+    return false
+end
+
 local function finishSetup(player)
-    local SYS = xi.msg.channel.SYSTEM_3
+    if (player:getCharVar(UNITY_VAR) or 0) == 0 then
+        player:addCurrency('unity_accolades', 500)
+        player:setCharVar(UNITY_VAR, 1)
+        player:printToPlayer('Starter Unity Accolades granted (Unity Wanted Board in Library)', SYS)
+    end
+
+    player:setCharVar(COMPLETE_VAR, 1)
+    player:setLocalVar(RUNNING_VAR, 0)
+    unlockPlayer(player)
     player:printToPlayer('[ Setup Complete ]', SYS)
     player:printToPlayer('Spells, weapon skills & job abilities', SYS)
     player:printToPlayer('Starter trusts: Shantotto, Kupipi, Trion, Tenzen', SYS)
     player:printToPlayer('All quests & missions completed', SYS)
-    player:printToPlayer('All key items, maps, homepoints, survival guides & outpost warps', SYS)
+    player:printToPlayer('All key items, maps, mounts, homepoints, survival guides & outpost warps', SYS)
     player:printToPlayer('Full wardrobes & automaton parts', SYS)
-    player:addCurrency('unity_accolades', 500)
-    player:printToPlayer('Starter Unity Accolades granted (Unity Wanted Board in Library)', SYS)
     player:printToPlayer('Welcome! Type !help to get started.', SYS)
 end
 
@@ -483,25 +600,89 @@ local function buildMaintenanceJobs(player)
     return jobs
 end
 
+-- Re-run the sliced grant. Jobs are idempotent (hasKeyItem / hasSpell /
+-- already-complete quests). Used on first login, after a mid-setup zone,
+-- and by !setup / !unlockfix. The player is Bound in place until
+-- finishSetup. Hub / home / warp / waypoint / warpty also refuse
+-- travel through travel_guard; !unstick does not.
+xi.characterUpgrade.resume = function(player, opts)
+    opts = opts or {}
+    if not isValidPlayer(player) then
+        return false
+    end
+
+    if not opts.force and xi.characterUpgrade.isComplete(player) then
+        return false
+    end
+
+    if player:getLocalVar(RUNNING_VAR) == 1 then
+        lockPlayer(player)
+        return true
+    end
+
+    player:setLocalVar(RUNNING_VAR, 1)
+    player:setCharVar(STARTED_VAR, 1)
+    player:setCharVar('AutoMissions_Done', 1)
+    player:setCharVar('ToAUMissionFix', 1)
+    player:setCharVar('MobSpellGrantFix', 1)
+    player:setCharVar('TrustRosterFix', 1)
+
+    local delayMs = opts.delayMs or 3000
+    if opts.force or (player:getCharVar(COMPLETE_VAR) or 0) == 1 then
+        player:setCharVar(COMPLETE_VAR, 0)
+    end
+
+    if opts.silent then
+        -- still start the work
+    elseif (player:getCharVar(COMPLETE_VAR) or 0) == 0 and not opts.force and not opts.firstLogin then
+        player:printToPlayer('Finishing your character setup -- you cannot move until Setup Complete, kupo!', 0, 'Unlocker')
+    else
+        player:printToPlayer('Setting up your new character -- you cannot move until Setup Complete, kupo!', 0, 'Unlocker')
+    end
+
+    lockPlayer(player)
+    startJobs(player, delayMs, buildFirstLoginJobs())
+    return true
+end
+
+xi.characterUpgrade.refuseTravel = function(player)
+    if not player then
+        return false
+    end
+
+    local running = player:getLocalVar(RUNNING_VAR) == 1
+    local started = (player:getCharVar(STARTED_VAR) or 0) == 1
+    local done    = xi.characterUpgrade.isComplete(player)
+    if not running and not (started and not done) then
+        return false
+    end
+
+    if not running then
+        xi.characterUpgrade.resume(player, { delayMs = 500 })
+    end
+
+    player:printToPlayer('You cannot move until Setup Complete, kupo! Mounts and key items are still being granted.', 0, 'Unlocker')
+    return true
+end
+
 -----------------------------------
--- Auto-grant once, at character creation (first login). Work is sliced across
--- ticks so the 2s inactivity watchdog cannot kill xi_map mid-setup.
--- gameLogin==1 + firstLogin gates a real first login (see reference_ongamein_
--- login_detection); the charvar makes it idempotent.
+-- Auto-grant at character creation. Work is sliced across ticks so the
+-- 2s inactivity watchdog cannot kill xi_map mid-setup.
+-- AutoUnlock_Done used to be set at the START, so zoning cancelled the
+-- remaining KI/mount timers and never came back. Complete is now stamped
+-- only in finishSetup; an interrupted grant resumes on the next login
+-- or zone-in.
 -----------------------------------
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     local isLogin = player:getLocalVar('gameLogin') == 1
     super(player, firstLogin, zoning)
 
-    if isLogin and firstLogin and (player:getCharVar('AutoUnlock_Done') or 0) == 0 then
-        player:setCharVar('AutoUnlock_Done', 1)
-        player:setCharVar('AutoMissions_Done', 1)
-        player:setCharVar('ToAUMissionFix', 1)
-        player:setCharVar('MobSpellGrantFix', 1)
-        player:setCharVar('TrustRosterFix', 1)
-        player:printToPlayer('Setting up your new character -- one moment, kupo!', 0, 'Unlocker')
-        startJobs(player, 3000, buildFirstLoginJobs())
-    elseif isLogin then
+    if not xi.characterUpgrade.isComplete(player) then
+        xi.characterUpgrade.resume(player, { firstLogin = firstLogin, delayMs = isLogin and 3000 or 500 })
+        return
+    end
+
+    if isLogin then
         startJobs(player, 3000, buildMaintenanceJobs(player))
     end
 end)

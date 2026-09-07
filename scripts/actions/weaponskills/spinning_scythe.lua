@@ -14,7 +14,9 @@
 ---@type TWeaponSkill
 local weaponskillObject = {}
 
--- TODO: Radius 5y at 2000 TP, 6y at 3000 TP
+-- AoE radius is the weapon_skills.radius column (stock 4). Relaunch uses 10
+-- via modules/custom/sql/spinning_scythe_aoe.sql to match Cyclone.
+-- Radius still does not scale with TP.
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1

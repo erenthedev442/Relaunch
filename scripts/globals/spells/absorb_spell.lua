@@ -149,6 +149,10 @@ xi.spells.absorb.doDrainingSpell = function(caster, target, spell)
     finalDamage = math.floor(finalDamage * liberatorMultiplier)
     finalDamage = math.floor(finalDamage * netherVoidMultiplier)
 
+    if modAbsorbed == xi.mod.MP then
+        finalDamage = finalDamage + caster:getMerit(xi.merit.ASPIR_ABSORPTION_AMOUNT)
+    end
+
     -- Final operations.
     if modAbsorbed == xi.mod.HP then
         finalDamage = utils.clamp(utils.handlePhalanx(target, finalDamage), 0, 131071)

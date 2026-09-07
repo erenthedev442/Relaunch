@@ -61,6 +61,7 @@ local categories =
             '!shop / !ah - shops and auction house',
             '!buff - apply your personal support package',
             '!autojp / !automerits - spend your own points',
+            '!setup - finish first-login unlocks if you left too early',
             '!profile [name] / !mystats / !reallevel - stats',
             '!catalysts - catalyst inventory',
             '!reroll <slot> - augment reroll preview',

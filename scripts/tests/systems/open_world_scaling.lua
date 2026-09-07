@@ -101,6 +101,10 @@ describe('Legendary open world scaling', function()
             setMod = function(_, modId, value)
                 mods[modId] = value
             end,
+
+            setMobMod = function(_, mobMod, value)
+                mobMods[mobMod] = value
+            end,
         }
 
         return mob
@@ -226,6 +230,82 @@ describe('Legendary open world scaling', function()
             assert(mob:getMaxHP() == 600000,
                 string.format('Expected static Apex Poxhound %d HP floor 600000', mobId))
         end
+    end)
+
+    it('raises Abyssea field trash to the matching exp-camp HP floor', function()
+        local trash = makeMob({
+            zoneId = xi.zone.ABYSSEA_KONSCHTAT,
+            level  = 80,
+            maxHP  = 2500,
+            isNM   = false,
+        })
+        xi.openWorldScaling.apply(trash)
+        assert(trash:getMaxHP() == 10000)
+        assert((trash:getMod(xi.mod.ATT) or 0) == 0)
+
+        local heroes = makeMob({
+            zoneId = xi.zone.ABYSSEA_ALTEPA,
+            level  = 85,
+            maxHP  = 5000,
+            isNM   = false,
+        })
+        xi.openWorldScaling.apply(heroes)
+        assert(heroes:getMaxHP() == 30000)
+
+        local nm = makeMob({
+            zoneId = xi.zone.ABYSSEA_KONSCHTAT,
+            level  = 80,
+            maxHP  = 4000,
+            isNM   = true,
+        })
+        xi.openWorldScaling.apply(nm)
+        assert(nm:getMaxHP() == 4000)
+    end)
+
+    it('leaves !expcamp Adoulin packs on their SQL HP instead of OWS floors', function()
+        local camp = makeMob({
+            mobId  = 17871008,
+            zoneId = xi.zone.KAMIHR_DRIFTS,
+            level  = 105,
+            maxHP  = 30000,
+        })
+        xi.openWorldScaling.apply(camp)
+        assert(camp:getMobMod(xi.mobMod.NO_CAPACITY_POINTS) == 1)
+
+        local eligible, reason = xi.openWorldScaling.checkEligibility(camp)
+        assert(not eligible)
+        assert(reason == 'catalog-exclusion' or reason == 'explicit-runtime-exclusion')
+
+        local field = makeMob({
+            mobId  = 1,
+            zoneId = xi.zone.KAMIHR_DRIFTS,
+            level  = 105,
+            maxHP  = 8500,
+        })
+        assert(xi.openWorldScaling.checkEligibility(field))
+        xi.openWorldScaling.apply(field)
+        assert(field:getMaxHP() == 100000)
+        assert((field:getMobMod(xi.mobMod.NO_CAPACITY_POINTS) or 0) == 0)
+    end)
+
+    it('flags every !expcamp pack so kills cannot award capacity points', function()
+        local gustaberg = makeMob({
+            mobId  = 17138034,
+            zoneId = xi.zone.NORTH_GUSTABERG_S,
+            level  = 105,
+            maxHP  = 30000,
+        })
+        assert(xi.openWorldScaling.applyExpCampNoCapacity(gustaberg))
+        assert(gustaberg:getMobMod(xi.mobMod.NO_CAPACITY_POINTS) == 1)
+
+        local boyahda = makeMob({
+            mobId  = 17404164,
+            zoneId = xi.zone.THE_BOYAHDA_TREE,
+            level  = 75,
+            maxHP  = 5000,
+        })
+        xi.openWorldScaling.apply(boyahda)
+        assert(boyahda:getMobMod(xi.mobMod.NO_CAPACITY_POINTS) == 1)
     end)
 
     it('honors runtime exclusion markers used by custom content', function()

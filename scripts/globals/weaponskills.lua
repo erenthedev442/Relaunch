@@ -166,9 +166,17 @@ local function getSingleHitDamage(attacker, target, dmg, ftp, wsParams, calcPara
     end
 
     local critChance = math.random() -- See if we land a critical hit
-    criticalHit = (wsParams.critVaries and critChance <= calcParams.critRate) or
-        calcParams.forcedFirstCrit or
-        calcParams.mightyStrikesApplicable
+    local climactic  = attacker.getStatusEffect and attacker:getStatusEffect(xi.effect.CLIMACTIC_FLOURISH)
+    if climactic and (climactic:getPower() or 0) > 0 then
+        criticalHit = true
+        if xi.job_utils and xi.job_utils.dancer and xi.job_utils.dancer.consumeClimacticCharge then
+            xi.job_utils.dancer.consumeClimacticCharge(attacker)
+        end
+    else
+        criticalHit = (wsParams.critVaries and critChance <= calcParams.critRate) or
+            calcParams.forcedFirstCrit or
+            calcParams.mightyStrikesApplicable
+    end
 
     if criticalHit then
         calcParams.criticalHit = true

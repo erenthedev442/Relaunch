@@ -356,8 +356,9 @@ local function configureMob(mobid)
         m:setMobMod(xi.mobMod.IDLE_DESPAWN, 0)
         local camp = nmCatalog.byId(m:getID())
         if camp then
-            m:setSpawn(camp.x, camp.y, camp.z, 0)
-            m:setPos(camp.x, camp.y, camp.z, 0)
+            local rot = camp.rot or 0
+            m:setSpawn(camp.x, camp.y, camp.z, rot)
+            m:setPos(camp.x, camp.y, camp.z, rot)
         end
         applyStats(m)
     end)
@@ -375,9 +376,10 @@ local function configureMob(mobid)
     -- !affinitynm camp. Pin every spawn to the catalog warp.
     local entry = nmCatalog.byId(mobid)
     if entry then
-        mob:setSpawn(entry.x, entry.y, entry.z, 0)
+        local rot = entry.rot or 0
+        mob:setSpawn(entry.x, entry.y, entry.z, rot)
         if mob:isSpawned() then
-            mob:setPos(entry.x, entry.y, entry.z, 0)
+            mob:setPos(entry.x, entry.y, entry.z, rot)
         end
     end
 

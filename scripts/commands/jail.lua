@@ -1,7 +1,8 @@
 -----------------------------------
 -- func: jail
 -- desc: Sends the target player to jail. (Mordion Gaol)
--- note: Only works if the target is on the same map process (cluster) as the GM or the target is offline
+-- note: Online targets are persisted to the cell then disconnected (next login
+--       lands in Mordion). Live setPos into zone 131 has been crashing the map.
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
@@ -127,12 +128,14 @@ commandObj.onTrigger = function(player, target, cellId, reason)
     player:printToPlayer(message)
     printf(message)
 
-    -- Send player to jail using either the online or offline method
+    -- Persist the cell in the DB first. Live setPos(..., 131) has been
+    -- crashing the map process; online targets are disconnected and land
+    -- in the cell on the next login.
     local dest = jailCells[chosenCell]
+    local jail = require('modules/custom/lua/mordion_jail')
 
     if targetObj and targetIsOnline then
-        targetObj:setCharVar('inJail', chosenCell)
-        targetObj:setPos(dest[1], dest[2], dest[3], 0, 131)
+        jail.applyOnlineJail(targetObj, chosenCell)
     else
         SendToJailOffline(targetID, chosenCell, dest[1], dest[2], dest[3], 0)
     end

@@ -40,6 +40,7 @@ commandObj.onTrigger = function(player)
     local lrot     = leader:getRotPos()
     local lzone    = leader:getZoneID()
 
+    local travelGuard = require('modules/custom/lua/travel_guard')
     local inst = leader:getInstance()
     local warped = 0
     for _, member in ipairs(player:getParty()) do
@@ -49,7 +50,7 @@ commandObj.onTrigger = function(player)
                 xi.ambuscade and
                 xi.ambuscade.canEnter and
                 not xi.ambuscade.canEnter(member)
-            if not blocked then
+            if not blocked and not travelGuard.refuseTravel(member) then
                 if inst then
                     member:setInstance(inst)
                 end

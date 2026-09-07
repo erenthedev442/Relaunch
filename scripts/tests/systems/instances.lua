@@ -36,6 +36,13 @@ describe('Instances', function()
         assert(dungeonCount == 10)
         assert(#dungeonCatalog.categories == 3)
         assert(dungeonCatalog.getDungeonByInstanceId(19700).label == "Crawlers' Nest")
+        local nest = dungeonCatalog.dungeons.crawlersNest
+        assert(nest.mobs[9].name == 'Dungeon Wasp 03')
+        assert(nest.mobs[10].name == 'Dungeon Wasp 04')
+        -- Those two used to sit at invented 275/-22.5 and 287/-20.3, which
+        -- clip through the entrance-tunnel wall.
+        assert(nest.mobs[9].x == 332.950 and nest.mobs[9].z == -18.821)
+        assert(nest.mobs[10].x == 315.000 and nest.mobs[10].z == -17.000)
         assert(dungeonCatalog.getDungeonByInstanceId(9999) == nil)
     end)
 

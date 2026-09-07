@@ -18,6 +18,7 @@ describe('GM command integrity', function()
             'modules/custom/commands/gmkeyitem',
             'modules/custom/commands/gmrepair',
             'modules/custom/commands/gmcontent',
+            'modules/custom/commands/unlockfix',
             'modules/custom/commands/announce',
             'modules/custom/commands/seek',
             'scripts/commands/rescue',

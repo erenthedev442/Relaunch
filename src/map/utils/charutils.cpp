@@ -3821,6 +3821,18 @@ void BuildingCharAbilityTable(CCharEntity* PChar)
         }
     }
 
+    // Learned JAs (Corsair dice rolls, etc.) can fall off the command list
+    // after a death/job/level rebuild while the unlock bit stays set. Re-apply
+    // every owned roll the current job can still use.
+    constexpr uint16 learnedBitCount = static_cast<uint16>(sizeof(PChar->m_LearnedAbilities) * 8);
+    for (uint16 abilityId = 0; abilityId < learnedBitCount; ++abilityId)
+    {
+        if (hasLearnedAbility(PChar, abilityId) && ability::CanLearnAbility(PChar, abilityId))
+        {
+            addAbility(PChar, abilityId);
+        }
+    }
+
     // To stop a character with no SJob to receive the traits with job = 0 in the DB.
     if (PChar->GetSJob() == JOB_NON)
     {
@@ -6481,6 +6493,15 @@ void SaveCharLook(CCharEntity* PChar)
 void SaveCharStats(CCharEntity* PChar)
 {
     TracyZoneScoped;
+
+    // Crash 2026-09-06 09:27: ACCESS_VIOLATION in setCharVar("jugpet-duration-seconds")
+    // while Mordion processed a zone-out/logout. The zone's m_charsToChangeZone set
+    // was already heap-smashed (float 1.0 on a pointer). Refuse work on a freed char.
+    if (PChar == nullptr || !CBaseEntity::IsEntityAlive(PChar))
+    {
+        ShowWarning("SaveCharStats skipped — character is gone");
+        return;
+    }
 
     db::preparedStmt("UPDATE char_stats "
                      "SET hp = ?, mp = ?, mhflag = ?, mjob = ?, sjob = ?, "

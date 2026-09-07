@@ -366,17 +366,37 @@ void CTargetFind::addAllInParty(CBattleEntity* PTarget, bool withPet)
 
 void CTargetFind::addAllInEnmityList()
 {
-    if (m_PBattleEntity->objtype == TYPE_MOB)
+    if (m_PBattleEntity->objtype != TYPE_MOB)
     {
-        CMobEntity* PMob = static_cast<CMobEntity*>(m_PBattleEntity);
+        return;
+    }
 
-        for (const auto& [_, PEnmityObject] : *PMob->PEnmityContainer->GetEnmityList())
+    CMobEntity* PMob = static_cast<CMobEntity*>(m_PBattleEntity);
+    if (PMob->PEnmityContainer == nullptr)
+    {
+        return;
+    }
+
+    // Pets, trusts, instance mobs, and zoning PCs can leave a non-null
+    // dangling PEnmityOwner after destroy(). IsEntityAlive is a pointer-value
+    // registry lookup — safe on freed memory. Live crash 2026-09-07 11:06 PDT
+    // dereferenced one of these in validEntity -> isDead() during an AoE.
+    std::vector<uint32> stale;
+    for (const auto& [entityId, PEnmityObject] : *PMob->PEnmityContainer->GetEnmityList())
+    {
+        CBattleEntity* POwner = PEnmityObject.PEnmityOwner;
+        if (!CBaseEntity::IsEntityAlive(POwner))
         {
-            if (PEnmityObject.PEnmityOwner)
-            {
-                addEntity(PEnmityObject.PEnmityOwner, false);
-            }
+            stale.push_back(entityId);
+            continue;
         }
+
+        addEntity(POwner, false);
+    }
+
+    for (uint32 entityId : stale)
+    {
+        PMob->PEnmityContainer->Clear(entityId);
     }
 }
 
@@ -394,7 +414,7 @@ void CTargetFind::addAllInRange(CBattleEntity* PTarget, float radius, ALLEGIANCE
             {
                 FOR_EACH_PAIR_CAST_SECOND(CBattleEntity*, PBattleEntity, spawnList)
                 {
-                    if (PBattleEntity && isWithinArea(&(PBattleEntity->loc.p)) && !PBattleEntity->isDead() &&
+                    if (CBaseEntity::IsEntityAlive(PBattleEntity) && isWithinArea(&(PBattleEntity->loc.p)) && !PBattleEntity->isDead() &&
                         PBattleEntity->allegiance == ALLEGIANCE_TYPE::PLAYER)
                     {
                         m_targets.emplace_back(PBattleEntity);
@@ -407,7 +427,7 @@ void CTargetFind::addAllInRange(CBattleEntity* PTarget, float radius, ALLEGIANCE
             // clang-format off
             zoneutils::GetZone(PTarget->getZone())->ForEachCharInstance(PTarget, [&](CCharEntity* PChar)
             {
-                if (PChar && isWithinArea(&(PChar->loc.p)) && !PChar->isDead())
+                if (CBaseEntity::IsEntityAlive(PChar) && isWithinArea(&(PChar->loc.p)) && !PChar->isDead())
                 {
                     m_targets.emplace_back(PChar);
                 }
@@ -419,10 +439,12 @@ void CTargetFind::addAllInRange(CBattleEntity* PTarget, float radius, ALLEGIANCE
 
 void CTargetFind::addEntity(CBattleEntity* PTarget, bool withPet)
 {
-    if (validEntity(PTarget))
+    if (!validEntity(PTarget))
     {
-        m_targets.emplace_back(PTarget);
+        return;
     }
+
+    m_targets.emplace_back(PTarget);
 
     // add my pet too, if its allowed
     if (withPet && PTarget->PPet != nullptr && validEntity(PTarget->PPet))
@@ -483,6 +505,13 @@ bool CTargetFind::validEntity(CBattleEntity* PTarget)
 {
     // Assume entity is valid only need to check target not null
     if (PTarget == nullptr)
+    {
+        return false;
+    }
+
+    // Must run before any other member access. AoE TargetFind walks raw
+    // enmity / spawn-list pointers; those can outlive the entity.
+    if (!CBaseEntity::IsEntityAlive(PTarget))
     {
         return false;
     }

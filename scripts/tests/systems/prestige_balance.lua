@@ -40,6 +40,20 @@ describe('Ascension Court progression curve', function()
         end
     end)
 
+    it('reveals Worlds End battlefield bosses and gives the Watcher a melee hitbox', function()
+        local worldEnd = catalog.trialScaling.tiers[5].roster.bosses
+        local wardens  = catalog.trialScaling.tiers[6].roster.bosses
+
+        assert(worldEnd[11390].reveal)
+        assert(worldEnd[11391].reveal)
+        assert(worldEnd[11392].reveal)
+        assert(worldEnd[11392].hitbox == 8.0)
+        assert(worldEnd[11392].modelSize == 2)
+        assert(wardens[11393].reveal)
+        assert(wardens[11394].reveal)
+        assert(wardens[11395].reveal)
+    end)
+
     it('reserves final empowerment for the P80-P100 Aeonic climb', function()
         local empowered = catalog.trialScaling.tiers[7]
         local ascendant = catalog.trialScaling.tiers[8]

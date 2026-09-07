@@ -24,6 +24,9 @@
 #include "ai/ai_container.h"
 
 #include "common/utils.h"
+#include "crash_context.h"
+
+#include <fmt/format.h>
 
 #include "entities/baseentity.h"
 #include "entities/mobentity.h"
@@ -426,6 +429,7 @@ bool CPathFind::FindPath(const position_t& start, const position_t& end)
 {
     TracyZoneScoped;
     TracyZoneString(m_POwner->getName());
+    crash_context::Note(fmt::format("findPath {} ({}) zone {}", m_POwner->getName(), m_POwner->id, m_POwner->getZone()));
 
     if (arePositionsClose(start, end))
     {

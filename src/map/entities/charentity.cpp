@@ -3246,6 +3246,13 @@ auto CCharEntity::getCharVarsWithSuffix(const std::string& suffix) -> std::vecto
 
 void CCharEntity::setCharVar(const std::string& charVarName, int32 value, uint32 expiry /* = 0 */)
 {
+    // Mordion 09:27 died here writing jugpet charvars during a smashed zone-out.
+    // If this entity has already been unregistered, do not touch the cache or SQL.
+    if (!CBaseEntity::IsEntityAlive(this))
+    {
+        return;
+    }
+
     charVarCache[charVarName] = { value, expiry };
     charutils::PersistCharVar(this->id, charVarName, value, expiry);
 }

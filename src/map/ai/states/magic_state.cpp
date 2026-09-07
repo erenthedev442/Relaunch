@@ -21,13 +21,17 @@
 
 #include "magic_state.h"
 
+#include <algorithm>
+
 #include "action/action.h"
 #include "action/interrupts.h"
 #include "ai/ai_container.h"
 #include "ai/controllers/pet_controller.h"
 #include "ai/states/inactive_state.h"
+#include "common/logging.h"
 #include "common/utils.h"
 #include "enmity_container.h"
+#include "entities/baseentity.h"
 #include "entities/battleentity.h"
 #include "entities/mobentity.h"
 #include "job_points.h"
@@ -437,6 +441,8 @@ bool CMagicState::HasCost()
 
 void CMagicState::SpendCost()
 {
+    int16 cost = 0;
+
     if (m_PSpell->getSpellGroup() == SPELLGROUP_NINJUTSU)
     {
         if (!(m_flags & MAGICFLAGS_IGNORE_TOOLS))
@@ -447,7 +453,7 @@ void CMagicState::SpendCost()
     }
     else if (m_PSpell->hasMPCost() && !m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT) && !(m_flags & MAGICFLAGS_IGNORE_MP))
     {
-        int16 cost = battleutils::CalculateSpellCost(m_PEntity, GetSpell());
+        cost = battleutils::CalculateSpellCost(m_PEntity, GetSpell());
 
         // RDM Job Point: Quick Magic Effect
         if (IsInstantCast() && m_PEntity->objtype == TYPE_PC)
@@ -467,10 +473,20 @@ void CMagicState::SpendCost()
 
         m_PEntity->addMP(-cost);
     }
+
+    // Spaekona's Coat (ELEM_DMG_TO_MP): Lua caps restore at MP actually spent this cast.
+    // Manafont / ignore-MP leave cost at 0 so the coat restores nothing.
+    m_PEntity->SetLocalVar("SpellMPSpent", static_cast<uint32>(std::max<int16>(0, cost)));
+    m_PEntity->SetLocalVar("SpellCastSeq", m_PEntity->GetLocalVar("SpellCastSeq") + 1);
 }
 
 timer::duration CMagicState::GetRecast()
 {
+    if (!CBaseEntity::IsEntityAlive(m_PEntity) || m_PEntity->StatusEffectContainer == nullptr)
+    {
+        return 0s;
+    }
+
     if (!m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_CHAINSPELL) && !m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_SPONTANEITY) &&
         !m_instantCast)
     {
@@ -481,6 +497,15 @@ timer::duration CMagicState::GetRecast()
 
 void CMagicState::ApplyEnmity(CBattleEntity* PTarget, int ce, int ve)
 {
+    // Spell scripts / AoE later hits can despawn the caster before this runs.
+    // Crash 2026-09-06 19:12: StatusEffectContainer was garbage (near-null r10)
+    // at magic_state.cpp:486 after MAGIC_USE. IsEntityAlive is safe on a dangling this.
+    if (!CBaseEntity::IsEntityAlive(m_PEntity) || m_PEntity->StatusEffectContainer == nullptr || m_PSpell == nullptr)
+    {
+        ShowWarning("CMagicState::ApplyEnmity skipped — caster or spell is gone");
+        return;
+    }
+
     bool enmityApplied = false;
 
     if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_TRANQUILITY) && m_PSpell->getSpellGroup() == SPELLGROUP_WHITE)

@@ -1368,6 +1368,7 @@ void CMobController::Despawn()
 void CMobController::Reset()
 {
     TracyZoneScoped;
+    m_Tick = timer::now();
     // Wait a little before roaming / casting spell / spawning pet
     m_LastActionTime = m_Tick - std::chrono::seconds(xirand::GetRandomNumber(PMob->getMobMod(MOBMOD_ROAM_COOL)));
 

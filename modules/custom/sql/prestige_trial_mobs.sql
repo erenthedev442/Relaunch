@@ -17,8 +17,9 @@
 --   Tier 4  P.Lv 40+    The World's End      : Omega / Ultima / Provenance Watcher
 --
 -- Picked to NOT collide with NMs your other custom systems use (Hunting League,
--- Hunters Guild, reforge NMs, GM-master arena). Provenance Watcher is native to
--- zone 222, a fitting apex for a trial held in Provenance itself.
+-- Hunters Guild, reforge NMs, GM-master arena). Provenance Watcher is cloned
+-- to pool 30111 so trial pops can show the model and use a melee-sized hitbox
+-- without changing the retail Walk of Echoes pool.
 --
 -- These reuse stock model + skill-kit data. Pools whose retail flags can hide
 -- dynamic entities are cloned below into Ascension-only pool IDs with
@@ -32,17 +33,18 @@
 -- under trialBosses (tier 0) and trialScaling.tiers[N].roster.bosses (tier 1-4).
 -- A boss's catalog `name` MUST match its mob_groups.name below.
 --
--- Idempotent + scoped to groupIds 11370-11395 at zoneid 222 -- safe to re-run.
+-- Idempotent + scoped to groupIds 11370-11395 / poolids 30100-30111
+-- at zoneid 222 -- safe to re-run.
 -- Apply (live Azure server): just run "Azure - Deploy to Server.bat" -- it
 -- auto-applies any changed modules/custom/sql/*.sql and restarts xi_map for you.
 -- (Manual equivalent on the box: sudo mariadb xidb < this-file, then
 --  sudo systemctl restart xi_map. mob_groups are read at map-server boot.)
 -- ============================================================================
 
--- Restore the eleven retail boss appearances that previously used avatar
+-- Restore the twelve retail boss appearances that previously used avatar
 -- stand-ins. Clone rather than UPDATE the shared retail pools: visibility flags
 -- are safe for Provenance dynamic entities while retail behavior stays intact.
-DELETE FROM `mob_pools` WHERE `poolid` BETWEEN 30100 AND 30110;
+DELETE FROM `mob_pools` WHERE `poolid` BETWEEN 30100 AND 30111;
 CREATE TEMPORARY TABLE `_prestige_retail_pools` AS
 SELECT *
 FROM `mob_pools`
@@ -58,9 +60,15 @@ WHERE `poolid` IN
     3313, -- Raja
     2474, -- Maere
     2973, -- Omega
-    4083  -- Ultima
+    4083, -- Ultima
+    4654  -- Provenance Watcher
 );
 
+-- Clear battlefield hide flags AND ground the pose. Retail Omega/Ultima ship
+-- animationsub 13 and Provenance Watcher ships 5; insertDynamicEntity sends
+-- that sub, then spawn() zeroes the server field without a client packet, so
+-- the model stays invisible. Clones start at sub 0 so the first packet is
+-- already the grounded, visible pose.
 UPDATE `_prestige_retail_pools`
 SET `poolid` =
     CASE `poolid`
@@ -75,9 +83,11 @@ SET `poolid` =
         WHEN 2474 THEN 30108
         WHEN 2973 THEN 30109
         WHEN 4083 THEN 30110
+        WHEN 4654 THEN 30111
     END,
-    `entityFlags` = `entityFlags` & ~0x188,
-    `namevis` = 1;
+    `entityFlags`  = `entityFlags` & ~0x188,
+    `namevis`      = 1,
+    `animationsub` = 0;
 
 INSERT INTO `mob_pools` SELECT * FROM `_prestige_retail_pools`;
 DROP TEMPORARY TABLE `_prestige_retail_pools`;
@@ -108,7 +118,7 @@ VALUES
     -- ---- Tier 4 : The World's End (P.Lv 40+) ----------------------------
     (11390, 30109, 222, 'Omega',                0, 128, 0, 105000, 30000, 0, NULL),
     (11391, 30110, 222, 'Ultima',               0, 128, 0, 105000, 30000, 0, NULL),
-    (11392, 4654, 222, 'Provenance_Watcher',   0, 128, 0, 110000, 30000, 0, NULL),  -- native apex (unchanged)
+    (11392, 30111, 222, 'Provenance_Watcher',   0, 128, 0, 110000, 30000, 0, NULL),
     -- ---- Tier 5 : The Celestial Wardens (P.Lv 60+) ----------------------
     -- Tiamat (3916), Kirin (2265), Absolute Virtue (21).  All three have
     -- retail FLAG_HIDE_MODEL; cleared below so they render as dynamic entities.
@@ -133,6 +143,15 @@ UPDATE `mob_pools`
 SET    `entityFlags` = `entityFlags` & ~0x180,  -- clear FLAG_HIDE_MODEL + FLAG_HIDE_HP
        `namevis`     = 1                         -- show targeting cursor + name
 WHERE  `poolid` = 4654;
+
+-- Trial clone: retail 4654 has NULL modelHitboxSize, so melee range collapses
+-- to ~2 yalms at the origin. The Watcher model is enormous -- players have to
+-- clip into the body (or wait for it to walk onto them). 80/10 = 8 yalms.
+-- modelSize 2 keeps the visual large without the unscaled default collision.
+UPDATE `mob_pools`
+SET    `modelSize`       = 2,
+       `modelHitboxSize` = 80
+WHERE  `poolid` = 30111;
 
 -- ============================================================================
 -- FJB 2026-06-21: Tier 5 pools also carry retail FLAG_HIDE_MODEL (0x080).

@@ -1556,7 +1556,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local AugmentMoogle = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Augment_Moogle',
-        packetName = string.format('%sArcane Augmenter', xi.icon.STAR_LARGE),
+        -- 15-char nametag packet: star (1) + "Arcane Augment" (14).
+        -- "Arcane Augmenter" was truncating on the client to "Arcane Augment".
+        packetName = string.format('%sArcane Augment', xi.icon.STAR_LARGE),
         look       = 1834,   -- Alexander model: divine mechanical deity, colossal scale
         -- GM Home Augment Sanctum (z=-45): centered, standalone, far from the main NPC cluster.
         x          = 571.6949,
@@ -2198,6 +2200,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             showConfirmMenu(player)
         end,
     })
+    if AugmentMoogle and AugmentMoogle.getID then
+        tradeGuard.setNpcId(AugmentMoogle:getID())
+    end
     utils.unused(AugmentMoogle)
 end)
 

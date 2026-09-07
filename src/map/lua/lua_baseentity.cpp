@@ -3463,6 +3463,19 @@ void CLuaBaseEntity::setPos(sol::variadic_args va)
         return;
     }
 
+    // Jailed players cannot be setPos'd out of Mordion. Check before writing
+    // loc.p so a refused zone-change cannot stamp destination xyz into the cell.
+    if (m_PBaseEntity->objtype == TYPE_PC && va[4].is<double>())
+    {
+        auto* PChar   = static_cast<CCharEntity*>(m_PBaseEntity);
+        auto  zoneid = va[4].as<uint16>();
+        if (zoneid != ZONEID::ZONE_MORDION_GAOL && PChar->m_GMlevel == 0 && PChar->getCharVar("inJail") > 0)
+        {
+            ShowWarning(fmt::format("Blocked setPos out of jail for {} -> zone {}", PChar->name, zoneid));
+            return;
+        }
+    }
+
     // Set
     m_PBaseEntity->loc.p.x        = x;
     m_PBaseEntity->loc.p.y        = y;
@@ -3536,6 +3549,12 @@ void CLuaBaseEntity::warp()
 
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
+        if (PChar->m_GMlevel == 0 && PChar->getCharVar("inJail") > 0)
+        {
+            ShowWarning(fmt::format("Blocked warp() out of jail for {}", PChar->name));
+            return;
+        }
+
         PChar->requestedWarp = true;
 
         // Save pet if any
@@ -11104,11 +11123,19 @@ void CLuaBaseEntity::addLearnedAbility(uint16 abilityID)
 
     auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
-    if (charutils::addLearnedAbility(PChar, abilityID))
+    // Always re-inject the command-list bit. A death/job/level rebuild can
+    // drop Allies' Roll (302) from m_Abilities while leaving the unlock bit
+    // set; addLearnedAbility() then no-ops and the die reports "already know".
+    const bool newlyLearned = charutils::addLearnedAbility(PChar, abilityID) != 0;
+    charutils::addAbility(PChar, abilityID);
+    if (newlyLearned)
     {
-        charutils::addAbility(PChar, abilityID);
         charutils::SaveLearnedAbilities(PChar);
-        PChar->pushPacket<GP_SERV_COMMAND_COMMAND_DATA>(PChar);
+    }
+
+    PChar->pushPacket<GP_SERV_COMMAND_COMMAND_DATA>(PChar);
+    if (newlyLearned)
+    {
         PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::LearnsNewAbility);
     }
 }
@@ -11139,26 +11166,37 @@ bool CLuaBaseEntity::hasLearnedAbility(uint16 abilityID)
  *          : not bool type, according to header, 0 is can learn
  ************************************************************************/
 
-uint32 CLuaBaseEntity::canLearnAbility(uint16 abilityID)
+auto CLuaBaseEntity::canLearnAbility(uint16 abilityID) -> std::tuple<uint32, uint16>
 {
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return 0;
+        return { 0, 0 };
     }
 
-    uint32 Message = 0;
+    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
-    if (charutils::hasLearnedAbility(static_cast<CCharEntity*>(m_PBaseEntity), abilityID))
+    if (charutils::hasLearnedAbility(PChar, abilityID))
     {
-        Message = 444;
-    }
-    else if (!ability::CanLearnAbility(static_cast<CCharEntity*>(m_PBaseEntity), abilityID))
-    {
-        Message = 443;
+        // Unlock bit set but the JA is missing from the command list: allow
+        // the die to be used again so addLearnedAbility can re-inject it.
+        // Item-check message 444 uses param as an ability ID; Allies' Die
+        // item_basic.subid is 138 (Deploy), which is why the client said
+        // "You already know Deploy".
+        if (charutils::hasAbility(PChar, abilityID))
+        {
+            return { 444, abilityID };
+        }
+
+        return { 0, 0 };
     }
 
-    return Message;
+    if (!ability::CanLearnAbility(PChar, abilityID))
+    {
+        return { 443, abilityID };
+    }
+
+    return { 0, 0 };
 }
 
 /************************************************************************

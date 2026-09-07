@@ -3371,6 +3371,12 @@ bool IsIntimidated(CBattleEntity* PAttacker, CBattleEntity* PDefender)
             break;
     }
 
+    // BST Killer Effects merit: +1% intimidation per rank while a killer trait is active.
+    if (KillerEffect > 0)
+    {
+        KillerEffect += GetMeritValue(PDefender, MERIT_KILLER_EFFECTS);
+    }
+
     // Add intimidation rate from Bully
     if (CStatusEffect* PDoubtEffect = PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_DOUBT))
     {

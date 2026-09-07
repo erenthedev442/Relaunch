@@ -149,7 +149,7 @@ xi.job_utils.dark_knight.useWeaponBash = function(player, target, ability, actio
     -- Damage
     local darkKnightLvl = utils.getActiveJobLevel(player, xi.job.DRK)
     local jpValue       = target:getJobPointLevel(xi.jp.WEAPON_BASH_EFFECT)
-    local damage        = math.floor((darkKnightLvl + 11) / 4 + player:getMod(xi.mod.WEAPON_BASH) + jpValue * 10)
+    local damage        = math.floor((darkKnightLvl + 11) / 4 + player:getMod(xi.mod.WEAPON_BASH) + player:getMerit(xi.merit.WEAPON_BASH_EFFECT) + jpValue * 10)
     target:takeDamage(damage, player, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
     target:updateEnmityFromDamage(player, damage)
 

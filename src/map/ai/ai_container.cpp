@@ -42,6 +42,7 @@
 #include "states/synth_state.h"
 #include "states/trigger_state.h"
 #include "states/weaponskill_state.h"
+#include "map_constants.h"
 #include "status_effect_container.h"
 
 CAIContainer::CAIContainer(CBaseEntity* _PEntity)
@@ -385,6 +386,12 @@ CController* CAIContainer::GetController()
 
 void CAIContainer::Reset()
 {
+    // Scripted NMs start DISAPPEAR and are not ticked until Spawn().
+    // Without this, the first Tick after a long idle treats (now - zone-load)
+    // as one step and dumps attack timers into a huge negative.
+    m_Tick     = timer::now();
+    m_PrevTick = m_Tick;
+
     if (PathFind)
     {
         PathFind->Clear();
@@ -405,8 +412,18 @@ auto CAIContainer::Tick(timer::time_point tick) -> Task<void>
 {
     TracyZoneScoped;
 
-    m_PrevTick = m_Tick;
-    m_Tick     = tick;
+    // A DISAPPEAR / just-spawned entity can have a frozen m_Tick. Cap the
+    // step so AttackState cannot subtract hours and swing every 400ms.
+    if (tick < m_Tick || (tick - m_Tick) > kLogicUpdateInterval * 2)
+    {
+        m_PrevTick = tick;
+        m_Tick     = tick;
+    }
+    else
+    {
+        m_PrevTick = m_Tick;
+        m_Tick     = tick;
+    }
 
     // TODO: timestamp in the event?
     EventHandler.triggerListener("TICK", PEntity);

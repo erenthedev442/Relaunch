@@ -3,14 +3,8 @@
 -- Description: Allows you to deal critical hits. Requires at least one finishing move.
 -- Obtained: DNC Level 80
 -- Recast Time: 00:01:30 (Flourishes III)
--- Duration: 00:01:00 (or the next weaponskill, whichever comes first)
--- Cost: 1 Finishing Move
---
--- RELAUNCH FIX 2026-07-13 (Jamesta report): the stock effect was a bare stub
--- so this ability did nothing. Real implementation lives in
---   scripts/globals/job_utils/dancer.lua      (spends 1 FM, applies the effect)
---   scripts/effects/climactic_flourish.lua    (adds CRITHITRATE+100, CDI+50)
---   modules/custom/lua/climactic_flourish_consumer.lua  (removes on next WS)
+-- Duration: 00:01:00, or until the granted crit charges are spent
+-- Cost: ALL Finishing Moves (each becomes one guaranteed crit)
 -----------------------------------
 require('scripts/globals/job_utils/dancer')
 

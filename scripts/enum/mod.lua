@@ -1018,6 +1018,7 @@ xi.mod =
 
     -- Other
     CURE2MP_PERCENT                 = 860, -- Converts % of "Cure" amount to MP
+    ELEM_DMG_TO_MP                  = 1202, -- Spaekona's Coat: presence flag. Refund is ELEM_DMG_TO_MP_COST_REFUND of MP spent.
     DIVINE_BENISON                  = 910, -- Adds fast cast and enmity reduction to -Na spells (includes Erase). Enmity reduction is half of the fast cast amount
     SAVETP                          = 880, -- SAVETP Effect for Miser's Roll / ATMA / Hagakure.
     SMITE                           = 898, -- Att increase with H2H or 2H weapons

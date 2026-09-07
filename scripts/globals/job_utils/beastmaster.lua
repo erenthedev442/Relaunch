@@ -608,6 +608,11 @@ xi.job_utils.beastmaster.useReward = function(player, target, ability)
         totalHealing = totalHealing + math.floor(totalHealing * rewardHealingMod / 100)
     end
 
+    local beastHealer = player:getMerit(xi.merit.BEAST_HEALER)
+    if beastHealer > 0 then
+        totalHealing = totalHealing + math.floor(totalHealing * beastHealer / 100)
+    end
+
     local diff = petMaxHP - petCurrentHP
 
     if diff < totalHealing then

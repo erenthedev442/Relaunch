@@ -60,11 +60,31 @@ describe('Wave Master progression', function()
         assert(not progress.has(player, 'Nightmare'))
     end)
 
+    it('marks Jailer of Love to be grounded off the yovra sky pose', function()
+        local found = false
+        for _, mob in ipairs(catalog.difficulties.Oblivion.mobs) do
+            if mob.groupId == 11441 then
+                found = true
+                assert(mob.groundSkyAnim == true)
+                assert(mob.name == 'Jailer of Love')
+            end
+        end
+        assert(found)
+    end)
+
     it('records one difficulty without erasing prior clears', function()
         local player, vars = makePlayer(7)
         assert(progress.markClear(player, 'Insane'))
         assert(vars.GM_Wave_Clears == 15)
         assert(not progress.markClear(player, 'Insane'))
         assert(vars.GM_Wave_Clears == 15)
+    end)
+
+    it('gives each wave spawn a unique script name', function()
+        local first = catalog.nextWaveScriptName()
+        local second = catalog.nextWaveScriptName()
+        assert(first:match('^GM_%d+$'))
+        assert(second:match('^GM_%d+$'))
+        assert(first ~= second)
     end)
 end)

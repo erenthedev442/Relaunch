@@ -125,6 +125,11 @@ bool CBattleEntity::IsDualWielding()
 
 auto CBattleEntity::isDead() const -> bool
 {
+    if (PAI == nullptr)
+    {
+        return true;
+    }
+
     return (health.hp <= 0 || status == STATUS_TYPE::DISAPPEAR || PAI->IsCurrentState<CDeathState>() || PAI->IsCurrentState<CDespawnState>());
 }
 

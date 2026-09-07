@@ -204,6 +204,14 @@ void CZoneInstance::DecreaseZoneCounter(CCharEntity* PChar)
             if (!(PInstance->Failed() || PInstance->Completed()))
             {
                 PInstance->SetWipeTime(PInstance->GetElapsedTime(timer::now()));
+                // Ambuscade (instance_list 30000) does not use the 180s wipe→fail
+                // path in instance.lua. Without Fail() here the empty copy stays
+                // live until the 30-min time limit, and a retry at a lower
+                // difficulty rejoins that leftover high-diff battle.
+                if (PInstance->GetID() == 30000)
+                {
+                    PInstance->Fail();
+                }
             }
         }
     }
@@ -234,12 +242,14 @@ void CZoneInstance::IncreaseZoneCounter(CCharEntity* PChar)
         return;
     }
 
-    // return char to instance (d/c or logout)
+    // return char to instance (d/c or logout). Skip copies that already
+    // failed or completed — leftover Ambuscade registrations used to pull
+    // a player back into a dead high-diff fight on the next zone-in.
     if (!PChar->PInstance)
     {
         for (const auto& PInstance : m_InstanceList)
         {
-            if (PInstance->CharRegistered(PChar))
+            if (PInstance->CharRegistered(PChar) && !PInstance->Failed() && !PInstance->Completed())
             {
                 PChar->PInstance = PInstance.get();
             }

@@ -14,7 +14,7 @@ UPDATE `mob_skills` SET
     `mob_anim_id` = 65,
     `mob_skill_name` = 'spinning_scythe',
     `mob_skill_aoe` = 1,
-    `mob_skill_aoe_radius` = 4.0,
+    `mob_skill_aoe_radius` = 10.0,
     `mob_skill_distance` = 7.0,
     `mob_valid_targets` = 4,
     `primary_sc` = 5,

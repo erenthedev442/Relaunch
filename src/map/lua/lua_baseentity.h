@@ -554,10 +554,10 @@ public:
 
     bool addWeaponSkillPoints(uint8 slotID, uint16 points);
 
-    void   addLearnedAbility(uint16 abilityID);
-    bool   hasLearnedAbility(uint16 abilityID);
-    uint32 canLearnAbility(uint16 abilityID);
-    void   delLearnedAbility(uint16 abilityID);
+    void addLearnedAbility(uint16 abilityID);
+    bool hasLearnedAbility(uint16 abilityID);
+    auto canLearnAbility(uint16 abilityID) -> std::tuple<uint32, uint16>;
+    void delLearnedAbility(uint16 abilityID);
 
     void   addSpell(uint16 spellID, const sol::optional<sol::table>& paramTable);
     bool   hasSpell(uint16 spellID);

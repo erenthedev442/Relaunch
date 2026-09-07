@@ -366,7 +366,10 @@ catalog.difficulties =
             { groupId = 11426, name = 'Absolute Virtue' },
             { groupId = 11428, name = 'Pandemonium Warden' },
             { groupId = 11427, name = 'Shinryu' },
-            { groupId = 11441, name = 'Jailer of Love' },
+            -- Yovra: pool animationsub 1 is "in the sky". Retail Al'Taieu
+            -- onMobSpawn sets sub 0; Wave Master must do the same or the
+            -- model stays invisible / high above Escha - Ru'Aun.
+            { groupId = 11441, name = 'Jailer of Love', groundSkyAnim = true },
         },
     },
 
@@ -486,5 +489,17 @@ catalog.spawnRing =
 -- Compatibility fallback for the spawn engine. Live tiers use one mob per wave,
 -- so no intra-wave stagger is needed.
 catalog.spawnStagger = 0
+
+-- insertDynamicEntity caches onMobDeath at xi.zones[zone].mobs['DE_' .. name].
+-- Two Wave Master runs that roll the same catalog mob (Hard has only 7 names)
+-- used to share that slot: the new run overwrote the live run's death
+-- callback, so the first player's last wave never queued. Unique script
+-- names keep the cache slots apart; packetName stays the display name.
+function catalog.nextWaveScriptName()
+    local seq = (tonumber(xi._gm_waveSpawnSeq) or catalog.waveSpawnSeq or 0) + 1
+    xi._gm_waveSpawnSeq = seq
+    catalog.waveSpawnSeq = seq
+    return string.format('GM_%u', seq)
+end
 
 return catalog

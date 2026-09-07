@@ -82,11 +82,15 @@ xi.primeWsTuning.withPrimeEffects = function(attacker, wsId, slot, callback)
     local priorCap     = attacker:getLocalVar(capVar)
     local priorAoECap  = attacker:getLocalVar('AoEWsDamageCap')
     local priorWsCap   = attacker:getLocalVar('StandardWsDamageCap')
+    local priorTuned   = attacker:getLocalVar('PrimeWsTuned')
+    local priorMult    = attacker:getLocalVar(progression.DAMAGE_MULTIPLIER_LOCAL_VAR)
     local primeCap     = progression.getPlayerPrimeDamageCap(
         attacker,
         catalog.getDamageCap(attacker:getMainJob()))
 
     attacker:addMod(modId, tuning.wsDamageBonus or catalog.WS_DAMAGE_BONUS)
+    attacker:setLocalVar('PrimeWsTuned', 1)
+    attacker:setLocalVar(progression.DAMAGE_MULTIPLIER_LOCAL_VAR, 0)
     attacker:setLocalVar(capVar, primeCap)
     attacker:setLocalVar('StandardWsDamageCap', primeCap)
     if priorAoECap > 0 and slot == xi.slot.MAIN then
@@ -108,6 +112,8 @@ xi.primeWsTuning.withPrimeEffects = function(attacker, wsId, slot, callback)
         attacker:setLocalVar(capVar, priorCap)
         attacker:setLocalVar('AoEWsDamageCap', priorAoECap)
         attacker:setLocalVar('StandardWsDamageCap', priorWsCap)
+        attacker:setLocalVar('PrimeWsTuned', priorTuned)
+        attacker:setLocalVar(progression.DAMAGE_MULTIPLIER_LOCAL_VAR, priorMult)
     end)
     activeCalculations[attacker] = nil
 

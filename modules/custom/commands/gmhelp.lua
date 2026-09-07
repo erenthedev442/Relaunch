@@ -53,6 +53,7 @@ local categories =
         {
             '!gmrepair quest|mission status <player> <log> <id>',
             '!gmrepair quest|mission add <player> <log> <id> <reason>',
+            '!unlockfix <player> <reason> - re-run first-login unlocks',
             'Actions: add, complete, delete, clearvars.',
             'Inspect first; only change the minimum broken state.',
         },
@@ -62,8 +63,8 @@ local categories =
         lines =
         {
             '!gmkick <player> <reason> - disconnect without jail',
-            '!gmjail <player> <cell> <reason> - move to Mordion Gaol',
-            '!gmpardon <player> <reason> - release from jail',
+            '!gmjail <player> <cell> <reason> - jail; they reconnect in the cell',
+            '!gmpardon <player> <reason> - release; they reconnect in Lower Jeuno',
             '!announce <message> - server-wide notice',
             '!hide / !togglegm - staff visibility controls',
         },

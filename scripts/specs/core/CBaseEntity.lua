@@ -2330,7 +2330,8 @@ end
 
 ---@nodiscard
 ---@param abilityID integer
----@return integer
+---@return integer message
+---@return integer abilityID
 function CBaseEntity:canLearnAbility(abilityID)
 end
 

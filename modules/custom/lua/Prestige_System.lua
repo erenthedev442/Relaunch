@@ -938,9 +938,40 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             return
         end
 
+        -- Battlefield-only poses (Omega/Ultima animationsub 13, Watcher 5)
+        -- are sent on insert, then spawn() zeroes the server field without a
+        -- client packet -- same invisible-model bug as Game Master Yovra.
+        if boss.reveal then
+            pcall(function()
+                mob:setMobMod(xi.mobMod.SPAWN_ANIMATIONSUB, 0)
+                mob:hideName(false)
+                mob:setUntargetable(false)
+            end)
+        end
+
         mob:setSpawn(sp.x, sp.y, sp.z, sp.rot)
         mob:spawn()
         mob:setLocalVar('PrestigeTrial', 1)
+
+        if boss.reveal then
+            pcall(function()
+                mob:setMobFlags(bit.band(mob:getMobFlags(), bit.bnot(0x188)))
+                if mob:getAnimationSub() == 0 then
+                    mob:setAnimationSub(1)
+                end
+                mob:setAnimationSub(0)
+            end)
+        end
+        if boss.hitbox then
+            pcall(function()
+                mob:setHitboxSize(boss.hitbox)
+            end)
+        end
+        if boss.modelSize then
+            pcall(function()
+                mob:setModelSize(boss.modelSize)
+            end)
+        end
         require('modules/custom/lua/blu_shared_effects').hardenAgainstStunLock(mob)
         -- Capacity/Job Points INTENTIONALLY enabled (2026-06-14): single-target
         -- trial boss -> a deliberate, difficulty-scaled JP source. (Was

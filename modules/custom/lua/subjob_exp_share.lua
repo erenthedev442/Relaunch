@@ -32,7 +32,11 @@
 require('modules/module_utils')
 require('scripts/globals/player')
 
+local rebirth = require('modules/custom/lua/job_rebirth_catalog')
+
 local m = Module:new('subjob_exp_share')
+
+xi.subjobExp = xi.subjobExp or {}
 
 -----------------------------------
 -- Config
@@ -89,17 +93,35 @@ local _jobAbbr = {
 -- (mob kills, FoV/GoV books, ROE - anything that routes through
 -- charutils::AddExperiencePoints, including merit/limit-mode exp at 99).
 -----------------------------------
+function xi.subjobExp.canShare(player, sjob)
+    sjob = sjob or (player and player:getSubJob())
+    if not player or sjob == nil or sjob == xi.job.NONE then
+        return false
+    end
+
+    -- First 99 as a sub is fine. After Job Rebirth the grind is a MAIN-job
+    -- trial: [RebirthExpCut] only stamps the current main, so a reborn sub
+    -- would otherwise take uncut 25% share and skip the listed penalty.
+    return not rebirth.hasRebirth(player, sjob)
+end
+
 local function _awardSubExp(player, mob, exp)
     if not exp or exp <= 0 then return end
 
     local sjob = player:getSubJob()
     if sjob == nil or sjob == xi.job.NONE then return end
 
-    -- Don't auto-level a REBORN subjob. A job that's been through Job Rebirth
-    -- (JobRebirth.lua sets Rebirth_Count_<job> > 0) is meant to be re-grinded as a
-    -- MAIN under its escalating EXP penalty; letting it ride the free 50% subjob
-    -- exp-share would bypass the rebirth challenge (and its penalty) entirely.
-    if (player:getCharVar('Rebirth_Count_' .. sjob) or 0) > 0 then return end
+    if not xi.subjobExp.canShare(player, sjob) then
+        if player:getLocalVar('SubExpRebirthWarn') ~= sjob then
+            player:setLocalVar('SubExpRebirthWarn', sjob)
+            player:printToPlayer(
+                string.format(
+                    'Your %s subjob has been reborn -- it will not gain EXP as a sub. Level it as your main so the rebirth EXP penalty applies.',
+                    _jobAbbr[sjob] or tostring(sjob)),
+                xi.msg.channel.SYSTEM_3)
+        end
+        return
+    end
 
     local mainLvl = player:getMainLvl()
     local subLvl  = player:getJobLevel(sjob)

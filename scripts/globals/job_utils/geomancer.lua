@@ -520,7 +520,8 @@ xi.job_utils.geomancer.spawnLuopan = function(player, target, spell)
     luopan:setLocalVar('GEO_POTENCY', potency)
 
     if player:hasStatusEffect(xi.effect.BLAZE_OF_GLORY) then
-        finalPotency = potency + 0.5 * potency
+        -- Primeval Zeal: +10% Blaze of Glory potency bonus per merit (50% -> 100% at 5/5).
+        finalPotency = potency + potency * (0.5 + player:getMerit(xi.merit.PRIMEVAL_ZEAL) / 100)
     end
 
     if player:hasStatusEffect(xi.effect.BOLSTER) then

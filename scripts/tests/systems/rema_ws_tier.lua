@@ -286,6 +286,35 @@ describe('Legendary REMA native-weaponskill enhancement', function()
         assert(player:getMod(modId) == 15)
     end)
 
+    it('zeros the ordinary 13x curve while a native REMA WS is being tuned', function()
+        local player = makePlayer({ [xi.slot.MAIN] = 21808 })
+        player:setLocalVar('StandardWsDamageMultiplier', 8000)
+
+        xi.remaWsTier.withTemporaryBonus(
+            player,
+            xi.weaponskill.CATASTROPHE,
+            xi.slot.MAIN,
+            function()
+                assert(player:getLocalVar('RemaWsTuned') == 1)
+                assert(player:getLocalVar('StandardWsDamageMultiplier') == 0)
+                assert(player:getLocalVar('StandardWsDamageCap') == 999999)
+            end)
+
+        assert(player:getLocalVar('RemaWsTuned') == 0)
+        assert(player:getLocalVar('StandardWsDamageMultiplier') == 8000)
+    end)
+
+    it('scales Catastrophe fTP on 119 III Apocalypse', function()
+        local player = makePlayer({ [xi.slot.MAIN] = 21808 })
+        local native = { ftpMod = { 2.75, 2.75, 2.75 } }
+        local tuned  = xi.remaWsTier.getTunedParams(
+            player, xi.weaponskill.CATASTROPHE, xi.slot.MAIN, native)
+
+        assert(math.abs(tuned.ftpMod[1] - 47.3) < 0.0001)
+        assert(tuned.ignoredDefense[1] == 0.15)
+        assert(native.ftpMod[1] == 2.75)
+    end)
+
     it('raises and restores the AoE cap for an exact final REMA WS', function()
         local player = makePlayer({ [xi.slot.MAIN] = 20509 })
         player:setLocalVar('AoEWsDamageCap', 79999)

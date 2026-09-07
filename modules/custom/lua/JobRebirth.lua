@@ -45,7 +45,7 @@ local JOB_ABBR =
 local function jobName(jobId) return JOB_ABBR[jobId] or ('Job ' .. tostring(jobId)) end
 
 -- Storage keys (all rebirth-owned; per main-job).
-local function countKey(jobId)   return 'Rebirth_Count_' .. jobId end
+local function countKey(jobId)   return cfg.countKey(jobId) end
 local function rpKey(jobId)      return 'Rebirth_RP_' .. jobId end
 local function catKey(jobId, id) return string.format('Rebirth_Cat_%d_%s', jobId, id) end
 

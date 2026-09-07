@@ -190,14 +190,73 @@ function scaling.resolveProfile(mob)
     return profile
 end
 
+local function applyHpFloor(mob, hpFloor)
+    if not hpFloor then
+        return false
+    end
+
+    local previousMaxHP = mob:getMaxHP()
+    if previousMaxHP < hpFloor then
+        mob:setMaxHP(hpFloor)
+        mob:setHP(hpFloor)
+        return true
+    end
+
+    return false
+end
+
+function scaling.applyAbysseaTrash(mob)
+    if not mob then
+        return false, 'not-mob'
+    end
+
+    local hpFloor = catalog.abysseaTrashFloors and catalog.abysseaTrashFloors[mob:getZoneID()]
+    if not hpFloor then
+        return false, 'not-abyssea-trash-zone'
+    end
+
+    if
+        not mob or
+        mob:getObjType() ~= xi.objType.MOB or
+        mob:isNM() or
+        mob:isMobType(xi.mobType.UNUSED) or
+        mob:isMobType(xi.mobType.FISHED) or
+        mob:isMobType(xi.mobType.CALLED) or
+        mob:isMobType(xi.mobType.BATTLEFIELD) or
+        mob:isMobType(xi.mobType.EVENT) or
+        mob:getInstance() or
+        mob:getBattlefield() or
+        mob:getMaster() or
+        mob:getMobMod(xi.mobMod.CHECK_AS_NM) > 0 or
+        mob:getLocalVar('OWS_EXCLUDE') > 0
+    then
+        return false, 'abyssea-special'
+    end
+
+    applyHpFloor(mob, hpFloor)
+    return true, hpFloor
+end
+
+function scaling.applyExpCampNoCapacity(mob)
+    if not mob or not catalog.expCampMobIds or not catalog.expCampMobIds[mob:getID()] then
+        return false
+    end
+
+    mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
+    return true
+end
+
 function scaling.apply(mob)
+    scaling.applyExpCampNoCapacity(mob)
+
+    local abyApplied = scaling.applyAbysseaTrash(mob)
     local eligible, reason = scaling.checkEligibility(mob)
     if not eligible then
-        if catalog.debug and mob then
+        if catalog.debug and mob and not abyApplied then
             printf('[OpenWorldScaling] skip %s: %s', mob:getName(), reason)
         end
 
-        return false, reason
+        return abyApplied, reason
     end
 
     local profile = scaling.resolveProfile(mob)

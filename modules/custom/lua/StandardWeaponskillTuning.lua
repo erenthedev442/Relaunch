@@ -1,8 +1,10 @@
 -----------------------------------
 -- Level-scaled baseline tuning for ordinary player weaponskills.
 --
--- Final REMA and Prime weapon/native-WS pairs are explicitly excluded and
--- continue through their existing private tuning modules. Final Ambuscade
+-- Final REMA and Prime native WS stay on this curve unless their private
+-- modules have already marked the swing tuned (they then zero the multiplier
+-- and raise the cap). That keeps Catastrophe from falling below Entropy on
+-- the same Apocalypse when the Relic wrapper does not apply. Final Ambuscade
 -- weapons keep this progression multiplier on every WS, with Ambuscade's own
 -- module supplying the 99,999 / linked-149,999 ceilings and linked 10% boost.
 -----------------------------------
@@ -27,12 +29,6 @@ local function pack(...)
 end
 
 local activeCalculations = setmetatable({}, { __mode = 'k' })
-
-local function specialEntry(attacker, wsId, slot)
-    local itemId = attacker:getEquipID(slot)
-    return remaCatalog.getEntry(itemId, wsId, slot) or
-        primeCatalog.getEntry(itemId, wsId, slot)
-end
 
 -- An AoE WS earns its premium ceiling from the final-stage weapon equipped in
 -- the main hand, even when the WS is not that weapon's linked/native WS.
@@ -74,13 +70,19 @@ local function getPremiumAoECap(attacker)
 end
 
 xi.standardWsTuning.isEligible = function(attacker, target, wsId, slot, wsParams)
+    -- Native REMA/Prime pairs used to skip this curve and rely on their
+    -- private fTP wrappers. If that wrapper does not run, Catastrophe (etc.)
+    -- does vanilla 2.75 fTP while Entropy on the same Apocalypse still gets
+    -- 13x and hits 99,999. Keep the ordinary curve unless those wrappers have
+    -- already marked the swing as tuned; they then zero the multiplier.
     return
         attacker ~= nil and
         target ~= nil and
         attacker:isPC() and
         target:isMob() and
         not (wsParams and wsParams.isJump) and
-        specialEntry(attacker, wsId, slot) == nil
+        attacker:getLocalVar('RemaWsTuned') == 0 and
+        attacker:getLocalVar('PrimeWsTuned') == 0
 end
 
 xi.standardWsTuning.withStandardEffects = function(

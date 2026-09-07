@@ -534,6 +534,7 @@ INSERT IGNORE INTO `item_mods` VALUES (23445, 68, 61);
 INSERT IGNORE INTO `item_mods` VALUES (23445, 114, 21);
 INSERT IGNORE INTO `item_mods` VALUES (23445, 311, 48);
 INSERT IGNORE INTO `item_mods` VALUES (23445, 384, 300);
+INSERT IGNORE INTO `item_mods` VALUES (23445, 1202, 2); -- ELEM_DMG_TO_MP: 2
 
 -- AF+3  BLM  hands  spaekonas_gloves_+3 (derived from spaekonas_gloves_+2)
 INSERT IGNORE INTO `item_mods` VALUES (23512, 1, 101);

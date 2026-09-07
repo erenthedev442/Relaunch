@@ -138,6 +138,10 @@ return
     --            by Absolute Virtue / Pandemonium Warden. REQUIRED -- without a
     --            level the engine spawns the mob at lv255 and it cannot be hit.
     --   hpBoost  multiplier applied to the mob's base HP after spawn()
+    --   reveal   battlefield bosses: clear hide-model flags and force
+    --            animationsub 0 so the client actually draws the body
+    --   hitbox   optional melee hitbox in yalms (Provenance Watcher)
+    --   modelSize optional visual size 0-3
     --   cry      one-line flavour barked to the summoner (the "fear" hook)
     --   mods     { [xi.mod.X] = value } applied AFTER spawn() (pairs-iterated)
     --
@@ -402,12 +406,15 @@ return
                   bosses =
                   {
                       [11390] = { name = 'Omega',  label = 'Omega, the Final Engine', level = 150, hpBoost = 60,
+                                  reveal = true,
                                   cry = '"Directive: extinction. Target: all that draws breath."',
                                   mods = { [xi.mod.DEF] = 3900, [xi.mod.ATT] = 16500, [xi.mod.ACC] = 6000, [xi.mod.EVASION] = 1700, [xi.mod.MATT] = 2450, [xi.mod.MACC] = 2550, [xi.mod.MEVA] = 2150, [xi.mod.MDEF] = 2150, [xi.mod.STR] = 750, [xi.mod.INT] = 700, [xi.mod.DOUBLE_ATTACK] = 26, [xi.mod.TRIPLE_ATTACK] = 9, [xi.mod.HASTE_GEAR] = 375, [xi.mod.REGEN] = 800 } },
                       [11391] = { name = 'Ultima', label = 'Ultima, the First Weapon', level = 150, hpBoost = 62,
+                                  reveal = true,
                                   cry = '"I predate your gods. I will outlast your world."',
                                   mods = { [xi.mod.DEF] = 4000, [xi.mod.ATT] = 16000, [xi.mod.ACC] = 6000, [xi.mod.EVASION] = 1750, [xi.mod.MATT] = 2700, [xi.mod.MACC] = 2700, [xi.mod.MEVA] = 2300, [xi.mod.MDEF] = 2300, [xi.mod.INT] = 750, [xi.mod.MND] = 600, [xi.mod.DOUBLE_ATTACK] = 25, [xi.mod.HASTE_GEAR] = 400, [xi.mod.REGEN] = 775 } },
                       [11392] = { name = 'Provenance_Watcher', label = 'The Provenance Watcher', level = 150, hpBoost = 63,
+                                  reveal = true, hitbox = 8.0, modelSize = 2,
                                   cry = '"You stand in MY domain now. Provenance answers to me alone."',
                                   mods = { [xi.mod.DEF] = 4100, [xi.mod.ATT] = 17500, [xi.mod.ACC] = 6300, [xi.mod.EVASION] = 1900, [xi.mod.MATT] = 2800, [xi.mod.MACC] = 2900, [xi.mod.MEVA] = 2450, [xi.mod.MDEF] = 2450, [xi.mod.STR] = 800, [xi.mod.INT] = 800, [xi.mod.DOUBLE_ATTACK] = 27, [xi.mod.TRIPLE_ATTACK] = 10, [xi.mod.HASTE_GEAR] = 425, [xi.mod.REGEN] = 850 } },
                   },
@@ -426,12 +433,15 @@ return
                   bosses =
                   {
                       [11393] = { name = 'Tiamat', label = 'Tiamat, the Planar Destroyer', level = 150, hpBoost = 75,
+                                  reveal = true,
                                   cry = '"Five heads, five hungers. Which one finishes you is a matter of whim."',
                                   mods = { [xi.mod.DEF] = 5000, [xi.mod.ATT] = 22000, [xi.mod.ACC] = 7200, [xi.mod.EVASION] = 2100, [xi.mod.MATT] = 3300, [xi.mod.MACC] = 3400, [xi.mod.MEVA] = 2800, [xi.mod.MDEF] = 2800, [xi.mod.STR] = 900, [xi.mod.VIT] = 750, [xi.mod.DOUBLE_ATTACK] = 28, [xi.mod.TRIPLE_ATTACK] = 11, [xi.mod.HASTE_GEAR] = 425, [xi.mod.REGEN] = 1100 } },
                       [11394] = { name = 'Kirin', label = 'Kirin, the Celestial Sovereign', level = 150, hpBoost = 78,
+                                  reveal = true,
                                   cry = '"I am the balance of heaven made manifest.  Tipping those scales is your last act."',
                                   mods = { [xi.mod.DEF] = 5200, [xi.mod.ATT] = 23000, [xi.mod.ACC] = 7500, [xi.mod.EVASION] = 2250, [xi.mod.MATT] = 3450, [xi.mod.MACC] = 3550, [xi.mod.MEVA] = 2950, [xi.mod.MDEF] = 2950, [xi.mod.STR] = 850, [xi.mod.AGI] = 850, [xi.mod.INT] = 850, [xi.mod.DOUBLE_ATTACK] = 27, [xi.mod.TRIPLE_ATTACK] = 12, [xi.mod.HASTE_GEAR] = 450, [xi.mod.REGEN] = 1150 } },
                       [11395] = { name = 'Absolute_Virtue', label = 'Absolute Virtue, the Eternal Judge', level = 150, hpBoost = 82,
+                                  reveal = true,
                                   cry = '"There is no passage beyond this point.  This is not a trial.  This is the end."',
                                   mods = { [xi.mod.DEF] = 5500, [xi.mod.ATT] = 25000, [xi.mod.ACC] = 7900, [xi.mod.EVASION] = 2400, [xi.mod.MATT] = 3800, [xi.mod.MACC] = 3900, [xi.mod.MEVA] = 3200, [xi.mod.MDEF] = 3200, [xi.mod.STR] = 1000, [xi.mod.INT] = 1000, [xi.mod.MND] = 850, [xi.mod.DOUBLE_ATTACK] = 30, [xi.mod.TRIPLE_ATTACK] = 14, [xi.mod.HASTE_GEAR] = 475, [xi.mod.REGEN] = 1250 } },
                   },

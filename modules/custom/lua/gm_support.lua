@@ -46,10 +46,14 @@ function support.requireReason(gm, reason)
     return reason
 end
 
-function support.confirm(gm, target, action, reason)
+function support.confirmName(gm, name, action, reason)
     gm:printToPlayer(
-        string.format('[GM Support] %s: %s. Reason: %s', target:getName(), action, reason),
+        string.format('[GM Support] %s: %s. Reason: %s', name, action, reason),
         support.channel)
+end
+
+function support.confirm(gm, target, action, reason)
+    support.confirmName(gm, target:getName(), action, reason)
 end
 
 return support

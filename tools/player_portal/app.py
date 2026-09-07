@@ -117,6 +117,7 @@ STORAGE_COL = {
 WARDROBE_LOCS = {8, 10, 11, 12, 13, 14, 15, 16}  # equipment-only containers
 VAULT_CAP = int(os.getenv("PORTAL_VAULT_CAP", "500"))  # per-character offline-vault item limit
 RESCUE_ZONE = int(os.getenv("PORTAL_RESCUE_ZONE", "210"))  # GM Home -- /api/char/rescue target (matches rescue_bot)
+MORDION_GAOL = 131  # chars.pos_zone / xi.zone.MORDION_GAOL — jailed chars must not warp/rescue out
 
 # Warp destinations for /api/char/warp -- safe home-point coords per city/hub.
 # ("home" is a special dest that uses the character's own chars.home_* point.)
@@ -585,6 +586,27 @@ def is_equippable(cur, itemid: int) -> bool:
         return True
     cur.execute("SELECT 1 FROM item_weapon WHERE itemId = %s LIMIT 1", (itemid,))
     return cur.fetchone() is not None
+
+
+def is_jailed(cur, charid: int) -> bool:
+    """True if the character is serving a Mordion sentence.
+
+    Primary flag is char_vars.inJail >= 1. pos_zone == 131 is a backstop
+    for a missing var so a jailed body cannot portal-warp out.
+    """
+    if _get_charvar(cur, charid, "inJail") >= 1:
+        return True
+    cur.execute("SELECT pos_zone FROM chars WHERE charid=%s", (charid,))
+    row = cur.fetchone() or {}
+    return int(row.get("pos_zone") or 0) == MORDION_GAOL
+
+
+def _refuse_if_jailed(cur, charid: int):
+    if is_jailed(cur, charid):
+        raise HTTPException(
+            status_code=403,
+            detail="This character is jailed in Mordion Gaol. A GM must pardon them before they can move.",
+        )
 
 
 def _get_charvar(cur, charid: int, varname: str) -> int:
@@ -1229,6 +1251,7 @@ def char_tools(charid: int, request: Request):
         with conn.cursor() as cur:
             owner = owned_char(cur, acct["id"], charid)
             online = not is_offline(cur, charid)
+            jailed = is_jailed(cur, charid)
             cur.execute("SELECT pos_zone, home_zone FROM chars WHERE charid = %s", (charid,))
             c = cur.fetchone() or {}
             cur.execute("SELECT face, race FROM char_look WHERE charid = %s", (charid,))
@@ -1248,6 +1271,7 @@ def char_tools(charid: int, request: Request):
             [{"key": k, "name": v["name"]} for k, v in WARP_DESTS.items()]
     return {
         "charid": charid, "name": owner["charname"], "online": online,
+        "jailed": jailed,
         "zone": zone, "homeZone": home,
         "race": int(look.get("race", 0)), "face": int(look.get("face", 0)),
         "mainJob": int(st.get("mjob", 0)), "subJob": int(st.get("sjob", 0)),
@@ -1265,6 +1289,7 @@ def char_rescue(body: CharBody, request: Request):
             owned_char(cur, acct["id"], body.charid)
             if not is_offline(cur, body.charid):
                 raise HTTPException(status_code=409, detail="That character is online -- log out of the game first.")
+            _refuse_if_jailed(cur, body.charid)
             cur.execute(
                 "UPDATE chars SET pos_zone=%s, pos_prevzone=%s, pos_x=0, pos_y=0, pos_z=0, pos_rot=0, moghouse=0 "
                 "WHERE charid=%s",
@@ -1303,6 +1328,7 @@ def char_warp(body: WarpBody, request: Request):
             owned_char(cur, acct["id"], body.charid)
             if not is_offline(cur, body.charid):
                 raise HTTPException(status_code=409, detail="That character is online -- log out of the game first.")
+            _refuse_if_jailed(cur, body.charid)
             if body.dest == "home":
                 cur.execute("SELECT home_zone AS zone, home_x AS x, home_y AS y, home_z AS z, home_rot AS rot "
                             "FROM chars WHERE charid=%s", (body.charid,))

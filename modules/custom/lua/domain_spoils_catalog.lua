@@ -91,6 +91,7 @@ catalog.vendorItems =
     -- ============ Reisenjima Fete armor (Zurim 800 DP -> 2000 marks) ==========
 
     -- ============ Endgame accessories / ammo (Zurim 1000 DP -> 2500 marks) ====
+    { id = 22293, cat = 'Weapons', sub = 'Ammo', name = 'Hauksbok Arrow',    cost = 5000 },
     { id = 22294, cat = 'Weapons', sub = 'Ammo', name = 'Hauksbok Bolt',     cost = 5000 },
     { id = 22295, cat = 'Weapons', sub = 'Ammo', name = 'Hauksbok Bullet',   cost = 5000 },
     { id = 22296, cat = 'Weapons', sub = 'Ammo', name = 'Voluspa Tathlum',   cost = 5000 },

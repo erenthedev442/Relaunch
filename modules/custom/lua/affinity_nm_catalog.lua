@@ -3,7 +3,11 @@
 -- 24 Affinity NMs. Sage registration remains owned by
 -- augment_affinity_catalog.lua; registerCat is only a cross-reference.
 -----------------------------------
-local catalog = {}
+local KEY     = 'modules/custom/lua/affinity_nm_catalog'
+local catalog = package.loaded[KEY]
+if type(catalog) ~= 'table' then
+    catalog = {}
+end
 
 catalog.clearVar       = 'Affinity_NM_Clears'
 catalog.migrationVar   = 'Affinity_NM_Clears_Mig1'
@@ -103,14 +107,14 @@ catalog.entries =
     { index=14, mobId=17310624, name='Suzaku',           display='Suzaku',           zoneId=130, zone="Ru'Aun Gardens",          zoneOverride='xi.zones.RuAun_Gardens.Zone.onInitialize',          x=-520.84, y=-70.22, z=-271.52, band='veteran'                  },
     { index=15, mobId=17507219, name='Kirin',            display='Kirin',            zoneId=178, zone="Shrine of Ru'Avitau",     zoneOverride='xi.zones.The_Shrine_of_RuAvitau.Zone.onInitialize', x=-68.00,  y=32.58,  z=3.50,    band='apex',     registerCat=11 },
     { index=16, mobId=17408916, name='Fafnir',           display='Fafnir',           zoneId=154, zone="Dragon's Aery",           zoneOverride='xi.zones.Dragons_Aery.Zone.onInitialize',           x=46.00,   y=6.00,   z=18.00,   band='veteran'                  },
-    { index=17, mobId=17408917, name='Nidhogg',          display='Nidhogg',          zoneId=154, zone="Dragon's Aery",           zoneOverride='xi.zones.Dragons_Aery.Zone.onInitialize',           x=46.00,   y=6.00,   z=24.00,   band='veteran'                  },
+    { index=17, mobId=17408917, name='Nidhogg',          display='Nidhogg',          zoneId=154, zone="Dragon's Aery",           zoneOverride='xi.zones.Dragons_Aery.Zone.onInitialize',           x=-19.7466, y=-2.1555, z=57.6199, rot=58, band='veteran'                  },
     { index=18, mobId=17556374, name='Vrtra',            display='Vrtra',            zoneId=190, zone="King Ranperre's Tomb",    zoneOverride='xi.zones.King_Ranperres_Tomb.Zone.onInitialize',    x=228.00,  y=7.134,  z=-311.00, band='veteran'                  },
     { index=19, mobId=16806807, name='Tiamat',           display='Tiamat',           zoneId=7,   zone='Attohwa Chasm',           zoneOverride='xi.zones.Attohwa_Chasm.Zone.onInitialize',          x=-529.519, y=-5.811, z=-43.413, band='veteran'                  },
     { index=20, mobId=17290136, name='King_Vinegarroon', display='King Vinegarroon', zoneId=125, zone='Western Altepa Desert',  zoneOverride='xi.zones.Western_Altepa_Desert.Zone.onInitialize',  x=-239.00, y=-0.23,  z=-650.00, band='standard', registerCat=7  },
     { index=21, mobId=17101721, name='Khimaira',         display='Khimaira',         zoneId=79,  zone='Caedarva Mire',           zoneOverride='xi.zones.Caedarva_Mire.Zone.onInitialize',          x=603.887, y=-16.140, z=414.765, band='standard'                 },
     { index=22, mobId=17027994, name='Cerberus',         display='Cerberus',         zoneId=61,  zone='Mount Zhayolm',           zoneOverride='xi.zones.Mount_Zhayolm.Zone.onInitialize',          x=316.00,  y=-23.00, z=-84.00,  band='standard'                 },
     { index=23, mobId=16913307, name='Absolute_Virtue',  display='Absolute Virtue',  zoneId=33,  zone="Al'Taieu",                zoneOverride='xi.zones.AlTaieu.Zone.onInitialize',                x=461.266, y=-1.643, z=-580.192, band='apex',     registerCat=9  },
-    { index=24, mobId=16909196, name='Proto-Omega',      display='Proto-Omega',      zoneId=32,  zone="Sealion's Den",           zoneOverride='xi.zones.Sealions_Den.Zone.onInitialize',           x=600.00,  y=130.36,  z=780.00,  band='apex',     registerCat=10 },
+    { index=24, mobId=16909196, name='Proto-Omega',      display='Proto-Omega',      zoneId=32,  zone="Sealion's Den",           zoneOverride='xi.zones.Sealions_Den.Zone.onInitialize',           x=600.094, y=136.438, z=738.086, rot=200, warpX=599.745, warpY=134.055, warpZ=757.949, warpRot=60, band='apex',     registerCat=10 },
 }
 
 function catalog.byId(mobId)

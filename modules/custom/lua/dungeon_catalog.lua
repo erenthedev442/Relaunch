@@ -68,22 +68,23 @@ catalog.dungeons =
         hpScale    = 5,
         mobs       = buildRoster(
         {
-            { 332.950, -33.111, -18.821, 17  },
-            { 315.000, -32.781, -17.000, 127 },
-            { 299.000, -32.000, -28.000, 120 },
-            { 251.000, -32.000, -17.000,  39 },
-            { 323.975, -32.946, -17.911, 127 },
-            { 307.000, -32.391, -22.500, 127 },
-            -- Wasps 07-12 + boss pulled into the entrance tunnel beside
-            -- Crawlers 01-06 (Jamesta 2026-08-01: straggler spawning in a wall
-            -- at the old deep coords X~259 Z~-54). Prior roster used stock
-            -- points 80u+ from entry; cluster now stays within ~55u.
-            { 316.475, -32.906, -19.500, 127 },
-            { 303.500, -32.196, -24.500, 127 },
-            { 275.000, -32.000, -22.500, 127 },
-            { 287.475, -32.391, -20.250, 127 },
-            { 309.750, -32.836, -18.400, 127 },
-            { 294.250, -32.196, -25.750, 127 },
+            -- Only three Worker Crawler stock points sit in the Rolanberry
+            -- entrance tunnel. The corridor bends; invented midpoints between
+            -- 299/-28 and 251/-17 cut the corner and spawn inside the wall
+            -- (Whiteyes 2026-09-07: Dungeon Wasp 03/04). Stay on those three
+            -- stock anchors and A-B / B-C interpolations only.
+            { 332.950, -33.111, -18.821, 17  }, -- Worker_Crawler stock
+            { 315.000, -32.781, -17.000, 127 }, -- Worker_Crawler stock
+            { 299.000, -32.000, -28.000, 120 }, -- Worker_Crawler stock
+            { 323.975, -32.946, -17.911, 127 }, -- A-B midpoint
+            { 307.000, -32.391, -22.500, 127 }, -- B-C midpoint
+            { 328.450, -33.030, -18.400,  17 }, -- A-B, near first stock
+            { 316.475, -32.906, -17.900, 127 }, -- A-B
+            { 303.500, -32.196, -24.500, 127 }, -- B-C
+            { 332.950, -33.111, -18.821, 17  }, -- Wasp 03: stock A (was 275/-22.5 in the wall)
+            { 315.000, -32.781, -17.000, 127 }, -- Wasp 04: stock B (was 287/-20.3 in the wall)
+            { 309.750, -32.836, -19.750, 127 }, -- B-C
+            { 299.000, -32.000, -28.000, 120 }, -- Wasp 06: stock C
             { 310.000, -32.500, -20.000, 127 }, -- Nestblight Exoray (boss)
         }, 'Dungeon Crawler', 'Dungeon Wasp', 'Nestblight Exoray', 10),
     },

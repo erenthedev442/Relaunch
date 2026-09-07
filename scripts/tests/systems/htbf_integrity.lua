@@ -175,6 +175,12 @@ describe('HTBF catalog integrity and balance', function()
         assert(nexus[2][3] == 659.5)
         assert(nexus[3][3] == -680.2)
 
+        -- Head Wind: on the Boneyard Gully path, not the old floating pad.
+        local hw = catalog.fights.head_wind.entryPosByArea
+        assert(hw[1][1] == -561.6636 and hw[1][2] == 0.2291 and hw[1][3] == -471.6963 and hw[1][4] == 182)
+        assert(hw[2][1] == 1.3364 and hw[2][2] == 0.2291 and hw[2][3] == 90.3037 and hw[2][4] == 182)
+        assert(hw[3][1] == 480.3364 and hw[3][2] == 0.2291 and hw[3][3] == 572.3037 and hw[3][4] == 182)
+
         -- Shadow Lord: on the throne-room floor, not 33' south of the mesh.
         local sl = catalog.fights.shadow_lord.entryPosByArea
         assert(sl[1][1] == -443.0 and sl[1][2] == -167.2 and sl[1][3] == -239.0 and sl[1][4] == 127)

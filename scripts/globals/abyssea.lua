@@ -20,6 +20,7 @@ xi.abyssea.exitPositions =
     [xi.zone.ABYSSEA_ALTEPA    ] = {    340,  -0.52,    -668, 192, 107 },
     [xi.zone.ABYSSEA_ULEGUERAND] = {    270,   -7.8,     -82,  64, 112 },
     [xi.zone.ABYSSEA_GRAUBERG  ] = {    -64,      0,     600,   0, 106 },
+    [xi.zone.ABYSSEA_EMPYREAL_PARADOX] = { -256.128, -20.000, 225.053, 218, 126 },
 }
 
 xi.abyssea.lightType =
@@ -1042,8 +1043,37 @@ xi.abyssea.qmOnEventFinish = function(player, csid, option, npc)
     end
 end
 
+xi.abyssea.isAbysseaZone = function(zoneId)
+    return zoneId ~= nil and xi.abyssea.exitPositions[zoneId] ~= nil
+end
+
 xi.abyssea.isInAbysseaZone = function(player)
-    return player:getCurrentRegion() == xi.region.ABYSSEA
+    if not player then
+        return false
+    end
+
+    if player.getZoneID and xi.abyssea.isAbysseaZone(player:getZoneID()) then
+        return true
+    end
+
+    return player.getCurrentRegion and player:getCurrentRegion() == xi.region.ABYSSEA
+end
+
+-- True when a travel command should not send this player to zoneId.
+function xi.abyssea.refuseDestination(player, zoneId)
+    if not xi.abyssea.isAbysseaZone(zoneId) or xi.abyssea.canEnterAbyssea(player) then
+        return false
+    end
+
+    -- Already inside: kick them to the overworld maw instead of leaving them
+    -- on a same-zone !waypoint hop (that path never fires onZoneIn).
+    if xi.abyssea.isInAbysseaZone(player) then
+        xi.abyssea.ejectIfIneligible(player)
+        return true
+    end
+
+    xi.abyssea.refuseEntryMessage(player)
+    return true
 end
 
 -----------------------------------
@@ -1146,8 +1176,46 @@ xi.abyssea.getLightValue = function(player, light)
     return bit.band(bit.rshift(player:getCharVar('abysseaLights'), (light - 1) * 2), 0xFF)
 end
 
+-- Abyssea is the 75-99 channel. Access module adds the GM exemption.
+xi.abyssea.MIN_ENTRY_LEVEL = 75
+
 xi.abyssea.canEnterAbyssea = function(player)
-    -- TODO
+    return player and player:getMainLvl() >= xi.abyssea.MIN_ENTRY_LEVEL
+end
+
+xi.abyssea.refuseEntryMessage = function(player)
+    if player and player.printToPlayer then
+        player:printToPlayer(
+            string.format('Abyssea is closed until level %d. Use the exp camps to get there.', xi.abyssea.MIN_ENTRY_LEVEL),
+            xi.msg.channel.SYSTEM_3)
+    end
+end
+
+function xi.abyssea.tryEnter(player, enterFn)
+    if not xi.abyssea.canEnterAbyssea(player) then
+        xi.abyssea.refuseEntryMessage(player)
+        return false
+    end
+
+    enterFn(player)
+    return true
+end
+
+-- Returns true when the player was (or should be) sent out.
+function xi.abyssea.ejectIfIneligible(player)
+    if xi.abyssea.canEnterAbyssea(player) then
+        return false
+    end
+
+    xi.abyssea.refuseEntryMessage(player)
+
+    local dest = player and xi.abyssea.exitPositions[player:getZoneID()]
+    if dest then
+        player:timer(0, function(p)
+            p:setPos(unpack(dest))
+        end)
+    end
+
     return true
 end
 
@@ -1277,8 +1345,8 @@ xi.abyssea.entranceMawOnTrigger = function(player, npc)
         return
     end
 
-    if player:getMainLvl() < 30 then
-        player:messageSpecial(ID.text.NOTHING_HAPPENS)
+    if not xi.abyssea.canEnterAbyssea(player) then
+        xi.abyssea.refuseEntryMessage(player)
         return
     end
 
@@ -1294,7 +1362,9 @@ end
 xi.abyssea.entranceMawOnEventFinish = function(player, csid, option, npc)
     local maw = abysseaEntranceMawData[player:getZoneID()]
     if maw and csid == maw.warpCsid and option == 1 then
-        player:setPos(unpack(maw.dest))
+        xi.abyssea.tryEnter(player, function(p)
+            p:setPos(unpack(maw.dest))
+        end)
     end
 end
 

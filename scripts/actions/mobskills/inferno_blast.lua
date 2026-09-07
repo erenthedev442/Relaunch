@@ -27,6 +27,12 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 
+    -- Voidspire Tiamat: fTP 7 + MATT ramp is ~11k. Cap just under 9k player HP.
+    local voidCap = mob:getLocalVar('VoidspireInfernoBlastCap')
+    if voidCap > 0 then
+        info.damage = math.min(info.damage, voidCap)
+    end
+
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
     end

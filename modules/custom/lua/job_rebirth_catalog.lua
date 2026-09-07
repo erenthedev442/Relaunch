@@ -15,7 +15,7 @@
 -- spend them at the Rebirth NPC on the boost categories. Each rebirth also
 -- stamps an escalating PER-JOB exp penalty so every re-grind is harder.
 -----------------------------------
-return
+local catalog =
 {
     -- ===== NPC placement (RuLude Gardens, zone 243) =====
     npcZone = 243,
@@ -69,3 +69,21 @@ return
     -- The mapped stat progression now deliberately completes at this cap.
     maxRebirths = 50,
 }
+
+function catalog.countKey(jobId)
+    return 'Rebirth_Count_' .. tostring(jobId)
+end
+
+function catalog.rebirthCount(player, jobId)
+    if not player or not jobId then
+        return 0
+    end
+
+    return player:getCharVar(catalog.countKey(jobId)) or 0
+end
+
+function catalog.hasRebirth(player, jobId)
+    return catalog.rebirthCount(player, jobId) > 0
+end
+
+return catalog

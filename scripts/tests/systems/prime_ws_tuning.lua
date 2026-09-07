@@ -182,6 +182,8 @@ describe('Relaunch Prime weaponskill pinnacle tuning', function()
                     catalog.PRIME_WS_TUNING[xi.weaponskill.IMPERATOR].wsDamageBonus)
                 assert(player:getLocalVar(capVar) == 1749999)
                 assert(player:getLocalVar('StandardWsDamageCap') == 1749999)
+                assert(player:getLocalVar('PrimeWsTuned') == 1)
+                assert(player:getLocalVar('StandardWsDamageMultiplier') == 0)
                 return 'prime'
             end)
 
@@ -189,6 +191,7 @@ describe('Relaunch Prime weaponskill pinnacle tuning', function()
         assert(player:getMod(modId) == 0)
         assert(player:getLocalVar(capVar) == 0)
         assert(player:getLocalVar('StandardWsDamageCap') == 0)
+        assert(player:getLocalVar('PrimeWsTuned') == 0)
     end)
 
     it('caps companion main job Prime WS without lowering pet progression', function()

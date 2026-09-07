@@ -80,6 +80,17 @@ def do_rescue(charname: str):
             return False, f":x: No character named **{charname}** exists on Relaunch 2.0."
         charid, canonical = row[0], row[1]
 
+        cur.execute("SELECT value FROM char_vars WHERE charid = %s AND varname = 'inJail'", (charid,))
+        jail_row = cur.fetchone()
+        jailed = jail_row is not None and int(jail_row[0] or 0) >= 1
+        if not jailed:
+            cur.execute("SELECT pos_zone FROM chars WHERE charid = %s", (charid,))
+            zone_row = cur.fetchone()
+            jailed = zone_row is not None and int(zone_row[0] or 0) == 131
+        if jailed:
+            return False, (f":no_entry: **{canonical}** is jailed in Mordion Gaol. "
+                           "A GM must `!gmpardon` them before they can be rescued.")
+
         cur.execute("DELETE FROM accounts_sessions WHERE charid = %s", (charid,))
         cleared = cur.rowcount
 

@@ -542,6 +542,7 @@ end
 
 local function calculateSwipeLungeDamage(player, target, skillModifier, gearBonus, numHits, multipliers)
     local damage = math.floor(skillModifier * (0.50 + 0.25 * numHits + gearBonus / 100))
+    damage = math.floor(damage * (1 + player:getMerit(xi.merit.MERIT_LUNGE_EFFECT) / 100))
 
     damage = damage + player:getMod(xi.mod.MAGIC_DAMAGE) -- add mdamage to base damage
     if player:getEquipID(xi.slot.MAIN) == 22086 then
