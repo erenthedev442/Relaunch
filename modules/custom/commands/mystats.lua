@@ -252,24 +252,30 @@ commandObj.onTrigger = function(player)
     -- DT mods are in 0.01% units (raw 1500 = 15%), same scale as the haste mods
     -- below -- so divide by 100 for the real percent. (%g keeps it clean for
     -- whole and fractional values: -1500 -> -15%, -240 -> -2.4%.)
-    -- Tier-I DT (matches the 'Phys DT' / 'Magic DT' augments) -- all share the
-    -- single -50% Damage Taken cap.
-    line(player, 'Dmg taken (cap -50%%): All %g%%   Phys %g%%   Magic %g%%   Breath %g%%',
-        player:getMod(xi.mod.DMG)      / 100,
-        player:getMod(xi.mod.DMGPHYS)  / 100,
-        player:getMod(xi.mod.DMGMAGIC) / 100,
+    --
+    -- There are FOUR distinct damage-taken mods here and they are NOT
+    -- interchangeable, so each gets its own labelled row using the exact name
+    -- the gear/augment uses:
+    --   Physical Damage Taken     DMGPHYS     161  -- shares the -50% DT cap
+    --   Physical Damage Taken II  DMGPHYS_II  190  -- Burtgang; bypasses that cap
+    --   Magic Damage Taken        DMGMAGIC    163  -- shares the -50% DT cap
+    --   Magic Damage Taken II     DMGMAGIC_II 831  -- Aegis; bypasses that cap
+    -- The II mods are separate engine mods applied in damage_multipliers.lua and
+    -- capped together at -87.5%, NOT added into their tier-I counterparts -- which
+    -- is exactly why they need their own rows rather than being folded in.
+    -- Printed unconditionally (even at 0) so "I have none" is distinguishable
+    -- from "this readout doesn't show it".
+    line(player, 'Dmg taken -- All %g%%   Breath %g%%   (cap -50%%)',
+        player:getMod(xi.mod.DMG)       / 100,
         player:getMod(xi.mod.DMGBREATH) / 100)
-
-    -- "II" damage-taken (DMGPHYS_II 190 / DMGMAGIC_II 831 -- Aegis/Burtgang/relic gear):
-    -- these BYPASS the -50% regular DT cap (combined II cap is -87.5%) and the engine
-    -- DOES apply them (damage_multipliers.lua) -- they were just never read here,
-    -- so they looked "not applied". Shown only when present (no clutter for everyone else).
-    local physDtII  = player:getMod(xi.mod.DMGPHYS_II)
-    local magicDtII = player:getMod(xi.mod.DMGMAGIC_II)
-    if physDtII ~= 0 or magicDtII ~= 0 then
-        line(player, 'Dmg taken II: Phys %g%%   Magic %g%%  (bypasses cap, to -87.5%%)',
-            physDtII / 100, magicDtII / 100)
-    end
+    line(player, 'Physical Damage Taken    %7g%%   (cap -50%%)',
+        player:getMod(xi.mod.DMGPHYS) / 100)
+    line(player, 'Physical Damage Taken II %7g%%   (bypasses cap, to -87.5%%)',
+        player:getMod(xi.mod.DMGPHYS_II) / 100)
+    line(player, 'Magic Damage Taken       %7g%%   (cap -50%%)',
+        player:getMod(xi.mod.DMGMAGIC) / 100)
+    line(player, 'Magic Damage Taken II    %7g%%   (bypasses cap, to -87.5%%)',
+        player:getMod(xi.mod.DMGMAGIC_II) / 100)
 
     -- =========================================================
     -- Elemental resistances. Read by numeric mod id 15-22 (Fire, Ice, Wind,
