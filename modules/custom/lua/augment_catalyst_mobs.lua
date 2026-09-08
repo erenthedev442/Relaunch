@@ -13,13 +13,13 @@
 -- re-run it and tools/docgen after ANY edit here so all surfaces stay in sync).
 -----------------------------------
 return {
-    ['Abashed_Heartwing'] = 2151,  -- Physical Damage Taken (T4, Abashed Heartwing L109)
+    ['Abashed_Heartwing'] = 2151,  -- Phys DT II (T4, Abashed Heartwing L109)
     ['Abraxas'] = 1196,  -- Delay (melee,not ranged) (T3, Abraxas L86)
     ['Abxzomit'] = 895,  -- Counter / Ram Horn (T3, Abxzomit L80)
     ['Strato_Hippogryph'] = 1690,  -- Subtle Blow (T0, Strato Hippogryph L54)
     ['Abyssobugard'] = 927,  -- Delay (melee,not ranged) (T3, Abyssobugard L85)
     ['Accursed_Sorcerer'] = 848,  -- Regen (T3, Accursed Sorcerer L89)
-    ['Acerbic_Jagil'] = 858,  -- Phys. dmg. taken (T4, Acerbic Jagil L104)
+    ['Acerbic_Jagil'] = 858,  -- Phys DT (T4, Acerbic Jagil L104)
     ['Desert_Manticore'] = 1123,  -- Damage Taken (T0, Desert Manticore L53)
     ['Acid_Grease'] = 2338,  -- Enspell Dmg (T2, Acid Grease L54)
     ['Treefrost_Gefyrst'] = 820,  -- Haste (T0, Treefrost Gefyrst L104)
@@ -75,7 +75,7 @@ return {
     -- Blizzard_Gigas: was 1663 'Ranged skill' -- removed (automaton-only mod).
     ['Blood_Soul'] = 954,  -- Mag. Acc. Mag.Atk.Bns (T2, Blood_Soul L50)
     ['Tunnel_Worm'] = 1470,  -- Resist Charm (T0, Tunnel Worm L1)
-    ['Boribaba'] = 936,  -- Magic dmg. taken (T4, Boribaba L95)
+    ['Boribaba'] = 936,  -- Magic DT (T4, Boribaba L95)
     ['Moblin_Chapman'] = 1638,  -- Occ. inc. resist to stat ailments (T0, Moblin Chapman L33)
     ['Brook_Sahagin'] = 1609,  -- Drain/Aspir Potency (T1, Brook Sahagin L45)
     ['Bugard'] = 939,  -- Pet Enemy crit. hit rate (T1, Bugard L37)
@@ -105,7 +105,7 @@ return {
     ['Death_Jacket'] = 2504,  -- Pet Magic Dmg. Taken (T1, Death Jacket L48)
     ['Wild_Dhalmel'] = 857,  -- Reverse Flourish (T0, Wild Dhalmel L14)
     ['Demon_Warlock'] = 886,  -- Mag. Acc (T2, Demon_Warlock L50)
-    ['Deviling_Bats'] = 2747,  -- Magic Damage Taken (T4, Deviling_Bats L95)
+    ['Deviling_Bats'] = 2747,  -- Magic DT II (T4, Deviling_Bats L95)
     ['Crawler'] = 816,  -- Waltz ability delay (T0, Crawler L3)
     ['Ding_Bats'] = 868,  -- Enhancing Magic Recast Delay (T0, Ding_Bats L1)
     ['Carrion_Worm'] = 943,  -- Mag. crit. hit dmg (T0, Carrion Worm L1)

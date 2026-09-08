@@ -25,13 +25,27 @@ minLevel (accessibility), Abyssea zones breaking ties (denser spawns).
 A catalyst with TWO mapped mobs keeps the runner-up as altMob/altZone so the
 website can list both; !augwarp ignores the alt fields.
 
-Run:  python tools/gen_catalyst_warp_table.py     (cwd = repo root)
+Stat labels come LIVE from augment_catalog.lua -- the Moogle's own names, and
+what the website's augments page prints -- so this table can never call an
+augment something the catalog doesn't (it once shipped "Physical Damage Taken"
+for a catalyst the catalog had renamed to "Phys DT II", and !augwarp, which
+substring-matches the label, had no match for the name players actually read).
+Retired spellings stay searchable via LABEL_ALIASES -> the row's `alias` field,
+which !augwarp matches alongside the label, so a rename never breaks the
+phrasing players already learned.
+
+Run:  python tools/gen_catalyst_warp_table.py            (cwd = repo root)
+      python tools/gen_catalyst_warp_table.py --check    (drift check, no write)
+--check exits 2 when the committed table differs from a fresh generation -- the
+guard against the table silently going stale after a label / mob / rate edit.
 Regenerate whenever augment_catalyst_mobs.lua, augment_catalog.lua, or
 mob spawn data changes, then re-run tools/docgen and commit BOTH outputs.
 """
 from __future__ import annotations
 
+import difflib
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -180,8 +194,21 @@ TRANSPORT_ZONES: frozenset[int] = frozenset({1, 3, 46, 47, 58, 59, 220, 221, 223
 # that actually drops the catalyst.
 WARP_OVERRIDES: dict[int, dict] = {}
 
+# Retired label spellings, keyed by itemId. Emitted as the row's `alias` field;
+# !augwarp searches it alongside `label` and `item`, so the wording a player
+# learned before a catalog rename still warps them to the same mob. Add a row
+# here when you rename a label in augment_catalog.lua -- never instead of
+# renaming it. An alias equal to the current label is dropped as redundant.
+LABEL_ALIASES: dict[int, str] = {
+    858:  'Phys. dmg. taken',        # -> 'Phys DT'
+    936:  'Magic dmg. taken',        # -> 'Magic DT'
+    2151: 'Physical Damage Taken',   # -> 'Phys DT II'
+    2747: 'Magic Damage Taken',      # -> 'Magic DT II'
+}
 
-def main() -> int:
+
+def main(argv: list[str]) -> int:
+    check = "--check" in argv
     catalysts   = parse_catalysts()
     mob_map     = parse_mob_map()
     drop_rate   = parse_drop_rate()          # percent
@@ -245,6 +272,9 @@ def main() -> int:
             "mob": mob.replace("_", " "), "lvl": pt["lvl"],
             "rate": rate_1000,
         }
+        alias = LABEL_ALIASES.get(iid)
+        if alias and alias.lower() != meta["label"].lower():
+            row["alias"] = alias
         if len(picks) > 1:
             alt_mob, alt_pt = picks[1]
             row["altMob"]  = alt_mob.replace("_", " ")
@@ -275,6 +305,8 @@ def main() -> int:
         alt = ""
         if "altMob" in r:
             alt = f", altMob='{q(r['altMob'])}', altZone='{q(r['altZone'])}'"
+        if "alias" in r:
+            alt += f", alias='{q(r['alias'])}'"
         lines.append(
             f"    [{iid}] = {{ item='{q(r['item'])}', label='{q(r['label'])}', "
             f"cat={r['cat']}, tier={r['tier']}, "
@@ -283,10 +315,30 @@ def main() -> int:
             f"mob='{q(r['mob'])}', lvl={r['lvl']}, rate={r['rate']}{alt} }},"
         )
     lines.append("}")
-    OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    text = "\n".join(lines) + "\n"
+
+    if check:
+        current = read(OUT).replace("\r\n", "\n") if OUT.exists() else ""
+        if current != text:
+            print("[catalyst_warp] DRIFT -- catalyst_warp_table.lua does not match its "
+                  "sources. Re-run tools/gen_catalyst_warp_table.py and commit the result.")
+            for d in difflib.unified_diff(current.splitlines(), text.splitlines(),
+                                          "committed", "regenerated", lineterm="", n=0):
+                print("  " + d)
+            return 2
+        print("[catalyst_warp] check OK -- committed table matches its sources.")
+    else:
+        # newline='\n': the committed table is LF. Without it Windows writes
+        # CRLF and every regeneration reads as a whole-file rewrite.
+        with OUT.open("w", encoding="utf-8", newline="\n") as fh:
+            fh.write(text)
 
     print(f"[catalyst_warp] catalysts={len(catalysts)} resolved={len(rows)} "
           f"unresolved={len(unresolved)}")
+    stale_aliases = sorted(set(LABEL_ALIASES) - set(rows))
+    if stale_aliases:
+        print(f"[catalyst_warp] WARN LABEL_ALIASES entries for catalysts no longer in "
+              f"augment_catalog.lua (drop them): {stale_aliases}")
     if ghost_mobs:
         print(f"[catalyst_warp] WARN mapped mobs with no usable spawn: {sorted(set(ghost_mobs))}")
     if unresolved:
@@ -297,4 +349,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(main(sys.argv[1:]))
