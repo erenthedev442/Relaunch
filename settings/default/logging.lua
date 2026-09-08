@@ -38,7 +38,7 @@ xi.settings.logging =
     PATTERN = '[%D %T:%e][%&]%^[%n]%$ %v (%!:%#)',
 
     -- Enable/Disable these logging types globally
-    LOG_DEBUG   = true,
+    LOG_DEBUG   = false,
     LOG_INFO    = true,
     LOG_WARNING = true,
     LOG_LUA     = true, -- Prints from Lua using `print()`
