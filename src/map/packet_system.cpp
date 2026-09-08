@@ -187,6 +187,15 @@ constexpr auto packetSizeRange() -> std::pair<std::size_t, std::size_t>
 // so at most one warning line per client per second is written. It NEVER drops
 // or delays a valid action -- only the logging of already-rejected packets is
 // throttled.
+//
+// It ALSO drives the flood penalty-box: when a single client's rejected-packet
+// RATE is far above anything a legitimate client produces, that char is briefly
+// MUTED (its packets dropped in dispatch) so it can't saturate the tick. Muting
+// -- not kicking -- is deliberate: kicking a flooding bot just triggers an
+// expensive LoadChar reconnect storm, which is worse than the flood.
+constexpr uint32 FLOOD_MUTE_THRESHOLD = 30;                      // rejected packets in ~1s -> mute
+constexpr auto   FLOOD_MUTE_DURATION  = std::chrono::seconds(5); // how long each mute lasts
+
 [[nodiscard]] uint32 bumpRejectedPacket(CCharEntity* PChar)
 {
     PChar->m_rejectedPacketCount++;
@@ -196,6 +205,14 @@ constexpr auto packetSizeRange() -> std::pair<std::size_t, std::size_t>
         PChar->m_lastRejectedPacketLog = now;
         const uint32 suppressed        = PChar->m_rejectedPacketCount;
         PChar->m_rejectedPacketCount   = 0;
+
+        // Penalty-box a genuine flood so it stops starving the single-threaded
+        // tick. Extends while the flood continues; expires on its own once the
+        // client stops. A legit client never approaches this rate.
+        if (suppressed > FLOOD_MUTE_THRESHOLD)
+        {
+            PChar->m_packetMutedUntil = now + FLOOD_MUTE_DURATION;
+        }
         return suppressed;
     }
     return 0;
@@ -400,6 +417,15 @@ constexpr auto packetHandlers_ = buildPacketHandlers();
 
 void PacketSystem::dispatch(uint16 packetId, MapSession* PSession, CCharEntity* PChar, CBasicPacket& data)
 {
+    // Flood penalty-box: a client muted for spamming invalid packets (see
+    // bumpRejectedPacket) has ALL its packets dropped here -- cheaply, before
+    // handler lookup / validation / logging -- so one bad client cannot
+    // saturate the single-threaded tick. Auto-expires; extends while it floods.
+    if (PChar && timer::now() < PChar->m_packetMutedUntil)
+    {
+        return;
+    }
+
     if (const auto handler = packetHandlers_[packetId])
     {
         if (rateLimiter_.isLimited(PChar, packetId))

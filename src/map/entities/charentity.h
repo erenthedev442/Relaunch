@@ -682,6 +682,12 @@ public:
     timer::time_point                      m_charPointsCacheTime{};
     bool                                   m_charPointsCacheLoaded{ false };
 
+    // Flood penalty-box. When this char spams invalid packets past a threshold,
+    // PacketSystem::dispatch drops ALL its packets until this time (see
+    // map/packet_system.cpp bumpRejectedPacket). Muting, not kicking: kicking a
+    // flooding bot triggers an expensive LoadChar reconnect storm.
+    timer::time_point m_packetMutedUntil{};
+
     void            SetPlayTime(timer::duration playTime); // Set playtime
     timer::duration GetPlayTime(bool needUpdate = true);   // Get playtime
 

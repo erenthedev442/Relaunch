@@ -22,6 +22,7 @@
 #include "0x00a_login.h"
 #include "packets/s2c/0x00a_login.h"
 
+#include "common/database.h"
 #include "ai/ai_container.h"
 #include "ai/helpers/action_queue.h"
 #include "entities/charentity.h"
@@ -67,6 +68,25 @@ void GP_CLI_COMMAND_LOGIN::process(MapSession* PSession, CCharEntity* PChar) con
     // Pending zone is same process transfer, and waiting is new login or different process.
     if (PSession->blowfish.status == BLOWFISH_PENDING_ZONE || PSession->blowfish.status == BLOWFISH_WAITING) // Call zone in, etc, only once.
     {
+        // Deny map entry to a banned/locked account. The lobby (xi_connect)
+        // checks accounts.status at auth, but a client can reconnect straight to
+        // the map with a still-valid session key and bypass it -- so re-check
+        // here. shuttingDown = 1 makes the networking loop destroySession(),
+        // which does a clean save/logout AND deletes the accounts_sessions row,
+        // so a locked account can't linger or immediately reconnect. Fail-open:
+        // if the account can't be read we let them in (never a false kick).
+        // (0x01 = ACCOUNT_STATUS_CODE::NORMAL; absence of that bit = banned.)
+        if (PSession->accountID != 0)
+        {
+            const auto rset = db::preparedStmt("SELECT status FROM accounts WHERE id = ? LIMIT 1", PSession->accountID);
+            if (rset && rset->rowsCount() && rset->next() && !(rset->get<uint8>("status") & 0x01))
+            {
+                ShowWarningFmt("Denying map entry to banned/locked account {} ({}).", PSession->accountID, PChar->getName());
+                PSession->shuttingDown = 1;
+                return;
+            }
+        }
+
         PSession->blowfish.status = BLOWFISH_ACCEPTED;
         PChar->clearPacketList();
 
