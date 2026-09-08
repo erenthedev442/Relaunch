@@ -618,6 +618,7 @@ public:
     auto hasEnteredBattlefield() const -> bool;
 
     // Battle Utilities
+    bool isValidEntity();
     bool isAlive();
     bool isDead();
 

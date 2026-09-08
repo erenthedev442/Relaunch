@@ -884,12 +884,15 @@ scheduleCombatLoop = function(master, pet)
     pet:timer(CONFIG.combatLoopMs, function(p)
         -- TEARDOWN GUARD (2026-07-17 crash fix): both refs can be userdata
         -- wrapping freed entities after a logout. pcall catches Lua-raised
-        -- errors; the nil-guarded getZone() catches the invalid-entity case
-        -- (engine warns + returns nil instead of dereferencing). Bail without
-        -- re-arming on any doubt -- the keeper respawns a fresh Fellow.
+        -- errors; isValidEntity() answers the invalid-entity case directly.
+        -- It replaced a getZone() ~= nil probe here: that worked, but getZone
+        -- is FJB_REQUIRE_ALIVE-guarded, so every probe against a logged-out
+        -- player logged a warning -- ~1,000 a day, burying real errors in the
+        -- map log. Bail without re-arming on any doubt: the keeper respawns a
+        -- fresh Fellow.
         local okZ, zoned = pcall(function()
-            return p ~= nil and p:getZone() ~= nil
-               and master ~= nil and master:getZone() ~= nil
+            return p ~= nil and p:isValidEntity()
+               and master ~= nil and master:isValidEntity()
         end)
         if not okZ or not zoned then return end
 
@@ -1168,10 +1171,10 @@ local function keeper(p, name, gen)
     -- keeper timers still fire against the PChar mid-teardown. The guarded C++
     -- bindings survive that (they warn and return nil) but spawnTrust into a
     -- half-freed party ACCESS_VIOLATIONs (see dmp/xi_map.exe_17-7_3-20-41).
-    -- getZone() is nil-guarded engine-side, so nil == teardown: bail WITHOUT
-    -- re-arming. onGameIn re-arms the keeper on the next login/zone-in.
-    local okZ, zone = pcall(function() return p:getZone() end)
-    if not okZ or zone == nil then return end
+    -- isValidEntity() reports teardown without logging: bail WITHOUT re-arming.
+    -- onGameIn re-arms the keeper on the next login/zone-in.
+    local okZ, valid = pcall(function() return p:isValidEntity() end)
+    if not okZ or not valid then return end
 
     if getN(p, V.active) ~= 1 then return end
 

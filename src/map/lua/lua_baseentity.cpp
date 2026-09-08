@@ -12555,6 +12555,28 @@ auto CLuaBaseEntity::hasEnteredBattlefield() const -> bool
 }
 
 /************************************************************************
+ *  Function: isValidEntity()
+ *  Purpose : Returns true if the underlying entity still exists.
+ *  Example : if not p:isValidEntity() then return end -- stop a keeper timer
+ *  Notes   : This is POINTER VALIDITY, not game state -- a KO'd player is a
+ *            valid entity, and isAlive() is the one that answers "not dead".
+ *
+ *            Deliberately NOT guarded by FJB_REQUIRE_ALIVE: asking "are you
+ *            still there?" must be answerable without logging a warning. Every
+ *            other binding warns on a freed entity, so Lua that needed a
+ *            liveness probe had no choice but to call a guarded binding and
+ *            read the nil -- fellow_companion.lua's keeper timers used
+ *            getZone() that way, which is why the live log carried ~1,000
+ *            "CLuaBaseEntity::getZone on a dead/null entity - suppressed"
+ *            warnings a day for a condition the script was handling correctly.
+ ************************************************************************/
+
+bool CLuaBaseEntity::isValidEntity()
+{
+    return CBaseEntity::IsEntityAlive(m_PBaseEntity);
+}
+
+/************************************************************************
  *  Function: isAlive()
  *  Purpose : Returns true if an Entity is alive
  *  Example : if mob:isAlive() then
@@ -20716,6 +20738,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("hasEnteredBattlefield", CLuaBaseEntity::hasEnteredBattlefield);
 
     // Battle Utilities
+    SOL_REGISTER("isValidEntity", CLuaBaseEntity::isValidEntity);
     SOL_REGISTER("isAlive", CLuaBaseEntity::isAlive);
     SOL_REGISTER("isDead", CLuaBaseEntity::isDead);
     SOL_REGISTER("hasRaiseTractorMenu", CLuaBaseEntity::hasRaiseTractorMenu);
