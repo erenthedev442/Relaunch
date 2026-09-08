@@ -131,6 +131,13 @@ xi.job_utils.thief.checkSteal = function(player, target, ability)
     end
 end
 
+xi.job_utils.thief.checkMug = function(player, target, ability)
+    local mugCatalog = require('modules/custom/lua/thief_mug_catalog')
+    ability:setRecast(mugCatalog.recastFor(player:getMainJob() == xi.job.THF))
+
+    return 0, 0
+end
+
 -----------------------------------
 -- Ability Use Functions
 -----------------------------------
@@ -333,19 +340,23 @@ end
 xi.job_utils.thief.useMug = function(player, target, ability, action)
     local thfLevel = utils.getActiveJobLevel(player, xi.job.THF)
     local gil      = 0
-    -- TODO: Need to verify if there's a message associated with this
-    local jpValue = player:getJobPointLevel(xi.jp.MUG_EFFECT)
+    local mugCatalog = require('modules/custom/lua/thief_mug_catalog')
 
-    if jpValue > 0 and player:getMainJob() == xi.job.THF then
-        local hpSteal = ((player:getStat(xi.mod.AGI) + player:getStat(xi.mod.DEX)) * jpValue) * 0.05
+    -- Main THF always drains, even when the gil check fails. /THF does not.
+    -- Old JP Mug Effect formula is not used for this.
+    if player:getMainJob() == xi.job.THF then
+        local hpSteal = mugCatalog.playerHeal(player)
         local mobHP = target:getHP()
 
         if hpSteal > mobHP then
             hpSteal = mobHP
         end
 
-        target:addHP(-hpSteal)
-        player:addHP(hpSteal)
+        if hpSteal > 0 then
+            target:addHP(-hpSteal)
+            player:addHP(hpSteal)
+            player:printToPlayer(string.format('[Mug] Stolen %d HP.', hpSteal), xi.msg.channel.SYSTEM_3)
+        end
     end
 
     local mugChance = 90 + thfLevel - target:getMainLvl()
