@@ -843,11 +843,28 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
 
         local pid    = player:getID()
         local active = summonedTrial[pid]
-        if active and active.alive then
-            player:printToPlayer(string.format(
-                '[Ascension] %s already stalks the void -- face what you have summoned.',
-                active.label), xi.msg.channel.SYSTEM_3)
-            return
+        if active then
+            -- Self-healing occupancy guard (same pattern as Reforge_System's
+            -- per-station check): only block if the summoned boss is PROVABLY
+            -- still alive. This flag is in-memory and is normally cleared on death,
+            -- clean zone-out, player death, or idle-out -- but if the boss went
+            -- away abnormally (disconnect instead of zone-out, the zone sleeping
+            -- and freeing the dynamic entity, a server hiccup) it used to stick
+            -- with NO live mob and block the player until a GM ran !resettrial.
+            -- getHP() is FJB_REQUIRE_ALIVE-guarded (returns 0 on a released
+            -- entity rather than crashing) and the read is pcall-wrapped, so a
+            -- failed or zero read is safely treated as "slot free".
+            local ok, hp = pcall(function()
+                return active.mob and active.mob:getHP() or 0
+            end)
+            if ok and hp > 0 then
+                player:printToPlayer(string.format(
+                    '[Ascension] %s already stalks the void -- face what you have summoned.',
+                    active.label), xi.msg.channel.SYSTEM_3)
+                return
+            end
+            -- Stale entry: the boss is gone. Clear it and let the summon proceed.
+            summonedTrial[pid] = nil
         end
 
         local gid, boss = nextTrialBoss(player)
