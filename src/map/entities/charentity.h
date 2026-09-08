@@ -671,6 +671,17 @@ public:
     timer::time_point m_lastRejectedPacketLog{}; // last time a rejected-packet warning was emitted
     uint32            m_rejectedPacketCount{};   // rejected packets suppressed since that log
 
+    // char_points in-memory cache. charutils::GetPoints previously ran an
+    // uncached "SELECT * FROM char_points" on EVERY call -- the profiled #1 hot
+    // query on the single-threaded map tick under point-farming load. This
+    // caches the row; SetPoints is write-through (updates DB + cache) so rapid
+    // read-modify-write AddPoints can't lose updates, and a short TTL reload
+    // picks up the once/day cross-process daily_tally write (world/daily_tally).
+    // See charutils::GetPoints / SetPoints.
+    std::unordered_map<std::string, int32> m_charPointsCache;
+    timer::time_point                      m_charPointsCacheTime{};
+    bool                                   m_charPointsCacheLoaded{ false };
+
     void            SetPlayTime(timer::duration playTime); // Set playtime
     timer::duration GetPlayTime(bool needUpdate = true);   // Get playtime
 

@@ -7517,6 +7517,32 @@ bool IsAidBlocked(CCharEntity* PInitiator, CCharEntity* PTarget)
     return false;
 }
 
+namespace
+{
+    // Cached char_points column-name set (the table schema is static for the
+    // life of the process). Used to validate SetPoints() types and to bulk-load
+    // the per-character GetPoints() cache. Thread-safe one-time init.
+    const std::unordered_set<std::string>& charPointsColumns()
+    {
+        static const std::unordered_set<std::string> columns = []
+        {
+            std::unordered_set<std::string> names;
+            for (const auto& name : db::getTableColumnNames("char_points"))
+            {
+                names.insert(name);
+            }
+            return names;
+        }();
+        return columns;
+    }
+
+    // How long a character's cached char_points snapshot is served before it is
+    // reloaded from the DB. Our own writes stay consistent via write-through
+    // (SetPoints), so this only bounds staleness from the once/day cross-process
+    // daily_tally write in world/daily_tally.cpp -- 3s is invisible there.
+    constexpr auto CHAR_POINTS_CACHE_TTL = std::chrono::seconds(3);
+} // namespace
+
 void AddPoints(CCharEntity* PChar, const char* type, int32 amount, int32 max)
 {
     TracyZoneScoped;
@@ -7543,19 +7569,8 @@ void SetPoints(CCharEntity* PChar, const char* type, int32 amount)
 {
     TracyZoneScoped;
 
-    // TODO: Extract this into some sort of database metadata system
-    //     : that's populated on startup.
-    static std::unordered_set<std::string> charPointsColumnNames;
-    if (charPointsColumnNames.empty())
-    {
-        const auto names = db::getTableColumnNames("char_points");
-        for (const auto& name : names)
-        {
-            charPointsColumnNames.insert(name);
-        }
-    }
-
-    if (charPointsColumnNames.find(type) == charPointsColumnNames.end())
+    const auto& columns = charPointsColumns();
+    if (columns.find(type) == columns.end())
     {
         ShowErrorFmt("charutils::SetPoints: Invalid type {} for {}", type, PChar->getName());
         return;
@@ -7567,6 +7582,15 @@ void SetPoints(CCharEntity* PChar, const char* type, int32 amount)
     const auto query = fmt::format("UPDATE char_points SET {} = ? WHERE charid = ?", type);
     db::preparedStmt(query, amount, PChar->id);
 
+    // Write-through: keep the in-memory cache in lockstep with our own writes so
+    // a rapid read-modify-write sequence (AddPoints) to the same column within
+    // the cache TTL can never lose an update. Only touch a cache that's loaded;
+    // an unloaded one is populated fresh (with this value) on the next GetPoints.
+    if (PChar->m_charPointsCacheLoaded)
+    {
+        PChar->m_charPointsCache[type] = amount;
+    }
+
     if (strcmp(type, "spark_of_eminence") == 0)
     {
         PChar->pushPacket<GP_SERV_COMMAND_UNITY>(PChar);
@@ -7577,10 +7601,32 @@ int32 GetPoints(CCharEntity* PChar, const char* type)
 {
     TracyZoneScoped;
 
+    // Serve from the write-through cache while it is fresh. This removes the
+    // per-call "SELECT * FROM char_points" that dominated the map tick under
+    // point-farming load (see charentity.h m_charPointsCache).
+    const auto now = timer::now();
+    if (PChar->m_charPointsCacheLoaded && (now - PChar->m_charPointsCacheTime) < CHAR_POINTS_CACHE_TTL)
+    {
+        const auto it = PChar->m_charPointsCache.find(type);
+        return it != PChar->m_charPointsCache.end() ? it->second : 0;
+    }
+
+    // (Re)load the whole row once; subsequent reads are served from memory until
+    // the TTL lapses. All char_points columns are integer types, so a bulk
+    // int32 snapshot is exact (same width GetPoints/SetPoints already use).
     const auto rset = db::preparedStmt("SELECT * FROM char_points WHERE charid = ? LIMIT 1", PChar->id);
     if (rset && rset->rowsCount() && rset->next())
     {
-        return rset->get<int32>(type);
+        PChar->m_charPointsCache.clear();
+        for (const auto& col : charPointsColumns())
+        {
+            PChar->m_charPointsCache[col] = rset->get<int32>(col);
+        }
+        PChar->m_charPointsCacheLoaded = true;
+        PChar->m_charPointsCacheTime   = now;
+
+        const auto it = PChar->m_charPointsCache.find(type);
+        return it != PChar->m_charPointsCache.end() ? it->second : 0;
     }
 
     return 0;
