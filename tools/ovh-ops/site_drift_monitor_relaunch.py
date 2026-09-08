@@ -44,10 +44,21 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 import time
 import urllib.request
+
+# The scheduled-task wrapper pipes our stdout/stderr through a cp1252 console.
+# A single non-cp1252 character in a log finding (e.g. wrangler's ANSI-colored
+# WARNING mojibake) used to raise UnicodeEncodeError mid-run and kill the
+# staleness alarm + state save every run (2026-09-08). Never let printing crash.
+for _s in (sys.stdout, sys.stderr):
+    try:
+        _s.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 
 NOW = time.time()
 THRESHOLD = int(os.environ.get("DRIFT_THRESHOLD", 5400))   # 90 min (refresh is hourly)
@@ -83,6 +94,8 @@ def tail(path, n=80):
 # [sync_audit] header are captured by the second pattern.
 AUDIT_TAG = ("[sync_audit]", "UNOWNED-PAGE", "NAKED-FACT", "MIRROR-CONST",
              "WARN", "MARKER MISSING", "[runtime-consumers]")
+_ANSI = re.compile(r"\x1b\[[0-9;]*[A-Za-z]")
+_CLEAN_SUMMARY = re.compile(r"\b0 error\(s\),\s*0 warning\(s\)")
 
 
 def audit_findings(log):
@@ -93,9 +106,26 @@ def audit_findings(log):
     if start != -1:
         text = text[start:]
     hits = []
+    # Generator PARSE-FAILURES: a generator RAN but errored, so its page keeps
+    # STALE content while the rest of the site publishes fine. This is the
+    # highest-signal drift and the least visible -- five of these sat unnoticed
+    # for weeks (2026-08-27 audit) because the guards check STRUCTURE, not
+    # whether a generator actually parsed. Surface it first, with the names.
+    m = re.search(r"SUMMARY:\s*\d+\s*ok,\s*(\d+)\s*failed", text)
+    if m and int(m.group(1)) > 0:
+        fm = re.search(r"^\s*failed\s*:\s*(.+)$", text, re.M)
+        names = fm.group(1).strip()[:180] if fm else "(see refresh log 'failed :' line)"
+        hits.append(f"[docgen] {m.group(1)} GENERATOR(S) FAILED -- page(s) publishing STALE: {names}")
     for line in text.splitlines():
         if any(tag in line for tag in AUDIT_TAG) and "[sync_audit] OK" not in line:
-            hits.append(line.strip()[:200])
+            # wrangler/npx emit ANSI colour codes; strip them so the finding is
+            # readable and its fingerprint stable across runs.
+            line = _ANSI.sub("", line).strip()
+            # A clean per-guard summary ("[runtime-consumers] 0 error(s),
+            # 0 warning(s)") carries a tag but is NOT a finding.
+            if _CLEAN_SUMMARY.search(line):
+                continue
+            hits.append(line[:200])
     return hits
 
 
@@ -157,21 +187,11 @@ def http_ok(url, timeout=15):
         return False
 
 
-def _kick(task):
-    """schtasks /run a portal task; return True if the launch command itself
-    succeeded (not whether the service recovered)."""
-    try:
-        subprocess.run(["schtasks", "/run", "/tn", task],
-                       capture_output=True, timeout=30)
-        return True
-    except Exception:
-        return False
-
-
 def _cycle(task):
     """Force-restart a portal task: /end first (kills a crash-looping or zombie
     instance -- otherwise /run is a no-op under MultipleInstances=IgnoreNew, the
-    2026-07-26 blind spot) then /run. Returns True if the /run launch succeeded."""
+    2026-07-26 blind spot) then /run. Returns True if the /run launch succeeded
+    (not whether the service recovered)."""
     try:
         subprocess.run(["schtasks", "/end", "/tn", task],
                        capture_output=True, timeout=30)
@@ -188,7 +208,7 @@ def _cycle(task):
 
 def portal_check():
     """None = healthy; else a problem string. Self-heals BOTH a dead app
-    (kick FFXIPortal) and a dead tunnel (kick FFXIPortalTunnel).
+    (force-cycle FFXIPortal) and a dead tunnel (force-cycle FFXIPortalTunnel).
 
     App liveness is checked LOCALLY first -- it's authoritative (no WAF in the
     path), unlike the public URL which reads 403-from-WAF as alive regardless
@@ -214,8 +234,11 @@ def portal_check():
     # 2) App is alive locally. Now the public URL only tells us about the tunnel.
     if http_ok(PORTAL_URL):
         return None
-    # Tunnel is down (5xx / no response). Kick it and re-check.
-    launched = _kick("FFXIPortalTunnel")
+    # Tunnel is down (5xx / no response). Force-cycle it and re-check: a hung
+    # cloudflared keeps the task "Running", so a plain /run would be refused.
+    # (2026-09-08: the task's daily trigger had StopAtDurationEnd=true, so the
+    # scheduler itself killed cloudflared -- result 267014 -- until fixed.)
+    launched = _cycle("FFXIPortalTunnel")
     time.sleep(20)
     if http_ok(PORTAL_URL):
         print("[drift] portal public URL was down; FFXIPortalTunnel kicked -- "
@@ -244,6 +267,15 @@ if findings and state.get("audit_fp") != fp:
     print(f"[drift] {len(findings)} audit warning(s) in last publish:")
     for ln in shown:
         print(f"  - {ln}")
+    # Durable, Discord-independent record. The webhook is a known single point of
+    # failure (it was dead through the 2026-08-27 audit, so findings reached no
+    # one). Always append to a plain-text alert log the owner can read directly.
+    try:
+        with open(os.path.join(OPS, "logs", "site_drift_alerts.log"), "a", encoding="utf-8") as _af:
+            _af.write(f"[{stamp}] {len(findings)} finding(s):\n"
+                      + "\n".join(f"    {ln}" for ln in shown) + "\n")
+    except OSError:
+        pass
     msg = (":warning: **Relaunch site sync audit** -- the last publish raised "
            f"{len(findings)} warning(s):\n"
            + "\n".join(f"- `{ln}`" for ln in shown)
