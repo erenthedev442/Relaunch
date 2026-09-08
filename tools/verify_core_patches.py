@@ -116,6 +116,16 @@ CHECKS = [
      "src/map/utils/trustutils.cpp", r"Mod::DMG_AOE\s*,.*ALTER_EGO_AOE_DMG_TAKEN", "present", 1),
     ("Trusts skip magic-detection aggro (mob_controller.cpp)",
      "src/map/ai/controllers/mob_controller.cpp", r"objtype == TYPE_TRUST", "present", 1),
+    # const-pointer Lua bindings (2026-09-07): luautils::GetItemByID and
+    # GetReadOnlyItem return `const CItem*`, and sol only converts that to a
+    # CLuaItem when a *const* sol_lua_push overload exists. Without it every
+    # `GetItemByID(id):method()` dies with "attempt to index ... (a userdata
+    # value)" and kills the calling onTrigger -- which took out every retail
+    # gil shop (xi.shop.isEquipment). A merge of upstream sol_bindings drops it.
+    ("const CItem* pushes convert to CLuaItem (sol_bindings.h)",
+     "src/map/lua/sol_bindings.h", r"SOL_BIND_DEC_CONST\(CLuaItem, CItem\)", "present", 1),
+    ("const CItem* pushes convert to CLuaItem (sol_bindings.cpp)",
+     "src/map/lua/sol_bindings.cpp", r"SOL_BIND_DEF_CONST\(CLuaItem, CItem\)", "present", 1),
     ("Patch markers present across src/ (broad-revert tripwire)",
      "src", r"FJB|LEGENDARY[- ]CUSTOM", "min", 30),
 ]

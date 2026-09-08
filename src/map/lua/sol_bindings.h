@@ -49,6 +49,13 @@
 #define SOL_BIND_DEC_SUB(LuaType, BaseCppType, CppType) \
     int sol_lua_push(sol::types<CppType*>, lua_State* L, CppType* obj);
 
+// sol picks sol_lua_push by the exact pushed type, so a `const CppType*` return
+// (e.g. luautils::GetItemByID) does not match the non-const overloads above and
+// falls back to a raw, metatable-less userdata: any `:method()` call on it dies
+// with "attempt to index ... (a userdata value)". Bind the const form as well.
+#define SOL_BIND_DEC_CONST(LuaType, CppType) \
+    int sol_lua_push(sol::types<const CppType*>, lua_State* L, const CppType* obj);
+
 #define SOL_BIND_DEF(LuaType, CppType)                                                      \
     int sol_lua_push(sol::types<CppType*>, lua_State* L, CppType* obj)                      \
     {                                                                                       \
@@ -59,6 +66,12 @@
     int sol_lua_push(sol::types<CppType*>, lua_State* L, CppType* obj)                                    \
     {                                                                                                     \
         return obj ? sol::stack::push<LuaType>(L, (BaseCppType*)obj) : sol::stack::push(L, sol::lua_nil); \
+    }
+
+#define SOL_BIND_DEF_CONST(LuaType, CppType)                                                \
+    int sol_lua_push(sol::types<const CppType*>, lua_State* L, const CppType* obj)          \
+    {                                                                                       \
+        return obj ? sol::stack::push<LuaType>(L, obj) : sol::stack::push(L, sol::lua_nil); \
     }
 // clang-format on
 
@@ -110,6 +123,7 @@ SOL_BIND_DEC(CLuaInstance, CInstance);
 class CLuaItem;
 class CItem;
 SOL_BIND_DEC(CLuaItem, CItem);
+SOL_BIND_DEC_CONST(CLuaItem, CItem);
 
 class CItemCurrency;
 class CItemEquipment;
