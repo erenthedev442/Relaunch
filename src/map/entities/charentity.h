@@ -661,6 +661,16 @@ public:
     std::unordered_map<uint16, timer::time_point> m_PacketRecievedTimestamps;
     uint16                                        m_LastPacketType{};
 
+    // Flood guard for REJECTED packets. A stuck/misbehaving client (e.g. a hung
+    // auto-action addon) can spam invalid packets -- classically
+    // GP_CLI_COMMAND_ACTION "invalid animation state" -- at tens/sec. Each reject
+    // is cheap, but the per-packet warning log is a synchronous disk write that
+    // storms the single-threaded main loop and spikes tick time (the
+    // "INACTIVITY WATCHDOG ... main tick has taken 2000ms" trips). These throttle
+    // that logging to ~once/sec per character. See map/packet_system.cpp.
+    timer::time_point m_lastRejectedPacketLog{}; // last time a rejected-packet warning was emitted
+    uint32            m_rejectedPacketCount{};   // rejected packets suppressed since that log
+
     void            SetPlayTime(timer::duration playTime); // Set playtime
     timer::duration GetPlayTime(bool needUpdate = true);   // Get playtime
 

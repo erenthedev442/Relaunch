@@ -178,6 +178,29 @@ constexpr auto packetSizeRange() -> std::pair<std::size_t, std::size_t>
     }
 }
 
+// Flood guard for rejected packets. Rejected packets (failed validation, or
+// rate-limited) are already dropped -- but the per-packet warning log is a
+// synchronous disk write, and a single stuck client spamming tens of invalid
+// packets/sec storms the log and spikes the single-threaded main tick to
+// 2000ms+ (tripping the inactivity watchdog -> server-wide lag). This bumps a
+// per-character counter and returns the suppressed count at most once/second,
+// so at most one warning line per client per second is written. It NEVER drops
+// or delays a valid action -- only the logging of already-rejected packets is
+// throttled.
+[[nodiscard]] uint32 bumpRejectedPacket(CCharEntity* PChar)
+{
+    PChar->m_rejectedPacketCount++;
+    const auto now = timer::now();
+    if (now - PChar->m_lastRejectedPacketLog >= std::chrono::seconds(1))
+    {
+        PChar->m_lastRejectedPacketLog = now;
+        const uint32 suppressed        = PChar->m_rejectedPacketCount;
+        PChar->m_rejectedPacketCount   = 0;
+        return suppressed;
+    }
+    return 0;
+}
+
 template <typename T>
 void ValidatedPacketHandler(MapSession* const PSession, CCharEntity* const PChar, CBasicPacket& data)
 {
@@ -217,7 +240,13 @@ void ValidatedPacketHandler(MapSession* const PSession, CCharEntity* const PChar
     }
     else
     {
-        ShowWarningFmt("Invalid {} packet from {}: {} ", T::name, PChar->getName(), result.errorString());
+        // Rejected: already dropped. Log at most once/sec per char (see bumpRejectedPacket)
+        // so a flooding client cannot storm the log and stall the main tick.
+        if (const uint32 suppressed = bumpRejectedPacket(PChar); suppressed > 0)
+        {
+            ShowWarningFmt("Invalid {} packet from {}: {} ({} rejected packet(s) in the last ~1s)",
+                           T::name, PChar->getName(), result.errorString(), suppressed);
+        }
     }
 }
 
@@ -375,10 +404,16 @@ void PacketSystem::dispatch(uint16 packetId, MapSession* PSession, CCharEntity* 
     {
         if (rateLimiter_.isLimited(PChar, packetId))
         {
-            ShowWarningFmt("Rate-limiting packet {} ({:#05x}) from {}",
-                           magic_enum::enum_name(static_cast<PacketC2S>(packetId)),
-                           packetId,
-                           PChar->getName());
+            // Dropped by the rate limiter. Log at most once/sec per char so a
+            // flooding client cannot storm the log (see bumpRejectedPacket).
+            if (const uint32 suppressed = bumpRejectedPacket(PChar); suppressed > 0)
+            {
+                ShowWarningFmt("Rate-limiting packet {} ({:#05x}) from {} ({} dropped in the last ~1s)",
+                               magic_enum::enum_name(static_cast<PacketC2S>(packetId)),
+                               packetId,
+                               PChar->getName(),
+                               suppressed);
+            }
             return;
         }
 
