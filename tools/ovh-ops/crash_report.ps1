@@ -107,7 +107,7 @@ if (Test-Path $MapLog) {
         if ($hit.Line -match '^\[(\d{2})/(\d{2})/(\d{2}) (\d{2}):(\d{2}):(\d{2})') {
             $t = Get-Date -Year (2000 + [int]$Matches[3]) -Month $Matches[1] -Day $Matches[2] `
                           -Hour $Matches[4] -Minute $Matches[5] -Second $Matches[6]
-            if ($t -ge $since) { Add-Event $t 'WATCHDOG' 'main tick blocked >=2000ms (stall, not a fault)' 'map-server.log' }
+            if ($t -ge $since) { Add-Event $t 'STALL' 'main tick blocked >=2000ms' 'map-server.log' }
         }
     }
 }
@@ -132,8 +132,22 @@ if (Test-Path $SupLog) {
 $binTime = $null
 if (Test-Path (Join-Path $ServerDir 'xi_map.exe')) { $binTime = (Get-Item (Join-Path $ServerDir 'xi_map.exe')).LastWriteTime }
 
+# ---- 4b. A stall is only FATAL if the process actually went ----------------
+# The watchdog is warn-then-kill: it logs at 2000ms and only exits if still
+# stalled at 15000ms. Counting every log line as a death overstated the damage
+# badly -- 95 "deaths" in a week that were really 95 two-second hitches, during
+# which xi_map never restarted once. Promote a stall to WATCHDOG-KILL only when
+# a restart followed it; everything else is a performance event, not an outage.
+foreach ($e in @($events | Where-Object { $_.Kind -eq 'STALL' })) {
+    $after = $restarts | Where-Object { ($_ - $e.Time).TotalSeconds -ge 0 -and ($_ - $e.Time).TotalSeconds -le 180 }
+    if ($after) {
+        $e.Kind   = 'WATCHDOG-KILL'
+        $e.Detail = 'main tick stalled past the 15s kill threshold'
+    }
+}
+
 # ---- 5. Silent deaths: a restart no other source explains ------------------
-$explained = @($events | Where-Object { $_.Kind -ne 'HUNG-KILL' })
+$explained = @($events | Where-Object { $_.Kind -ne 'HUNG-KILL' -and $_.Kind -ne 'STALL' })
 foreach ($r in $restarts) {
     $near = $explained | Where-Object { ($r - $_.Time).TotalSeconds -ge 0 -and ($r - $_.Time).TotalSeconds -le 180 }
     $boot = $events | Where-Object { $_.Kind -eq 'HUNG-KILL' -and ($r - $_.Time).TotalSeconds -ge 0 -and ($r - $_.Time).TotalSeconds -le 180 }
@@ -161,6 +175,8 @@ foreach ($e in $sorted) {
 "";
 "xi_map deaths in the last $Hours h  (since $($since.ToString('yyyy-MM-dd HH:mm')))"
 "=" * 78
+$stalls = @($sorted | Where-Object { $_.Kind -eq 'STALL' })
+$sorted = @($sorted | Where-Object { $_.Kind -ne 'STALL' })
 if (-not $sorted) {
     "No deaths recorded. Server was up for the whole window."
 } else {
@@ -196,6 +212,25 @@ if (-not $sorted) {
     $untriaged = @(Get-ChildItem -Path $DmpDir -Filter *.dmp -File -Recurse -ErrorAction SilentlyContinue |
                    Where-Object { $_.LastWriteTime -ge $since -and -not (Test-Path ([IO.Path]::ChangeExtension($_.FullName, '.triage.txt'))) })
     if ($untriaged) { "$($untriaged.Count) dump(s) in this window have no cdb triage yet -- run: triage_dump.ps1 -All" }
+}
+
+# Stalls are reported separately: they hurt play (a 2s+ freeze for everyone in
+# the zone) but they are not outages, and mixing them into the death list buries
+# the real crashes.
+if ($stalls) {
+    ""
+    "Main-tick stalls (>=2000ms, non-fatal) -- $($stalls.Count) in this window"
+    "-" * 78
+    $byHour = $stalls | Group-Object { $_.Time.ToString('MM-dd HH') + 'h' } | Sort-Object Name
+    $byHour | ForEach-Object { "{0,-12} {1,4}  {2}" -f $_.Name, $_.Count, ('#' * [Math]::Min(50, $_.Count)) }
+    $peak = $byHour | Sort-Object Count -Descending | Select-Object -First 1
+    if ($peak.Count -ge 10) {
+        ""
+        "  Peak hour $($peak.Name) had $($peak.Count) stalls. A burst like that is usually"
+        "  something heavy sharing the C: drive, not the game -- check what else ran then."
+        "  Ad-hoc docgen/backup runs MUST be started at Idle priority for this reason;"
+        "  the scheduled ops scripts self-lower, a manual `python generate.py` does not."
+    }
 }
 
 if ($Context -gt 0 -and $sorted -and (Test-Path $MapLog)) {
