@@ -37,7 +37,7 @@ local function wantsTomahawk(target)
         return false
     end
 
-    local eco = target:getEcoSystem()
+    local eco = target:getEcosystem()
     -- Skeletons (Undead), Slimes (Amorph), Elementals.
     return eco == xi.ecosystem.UNDEAD or
         eco == xi.ecosystem.AMORPH or
