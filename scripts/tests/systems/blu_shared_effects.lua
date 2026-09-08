@@ -95,6 +95,18 @@ describe('BLU shared effect helpers', function()
             subjobCaster, { hpMod = 10, lvlMod = 1.25 }) == 3000 / 10 + 99 / 1.25)
     end)
 
+    it('scales Blood Drain so only broken skill + INT + MND approach 4000', function()
+        local cap = sharedEffects.BLOOD_DRAIN_HEAL_CAP
+        assert(cap == 4000)
+        -- Fresh 99: skill 424, INT 90, MND 80 -> 100 + 296.8 + 180 + 96
+        assert(sharedEffects.bloodDrainBase(424, 90, 80) == 672)
+        -- Geared: skill 500, INT 200, MND 150
+        assert(sharedEffects.bloodDrainBase(500, 200, 150) == 1030)
+        -- Broken: skill 650, INT 400, MND 350
+        assert(sharedEffects.bloodDrainBase(650, 400, 350) == 1775)
+        assert(sharedEffects.bloodDrainBase(650, 400, 350) < cap)
+    end)
+
     it('honors coefficient-provided drain bases without changing their path', function()
         local caster = makeCaster()
         local intendedBase = 900 + 2.5 * 500 + 3 * 200

@@ -126,10 +126,9 @@ g_mixins.dynamis_dreamland = function(dynamisDreamlandMob)
         local th            = thCurrency[math.min(mob:getTHlevel(), 4)]
         local singleChance  = mob:getMainLvl() > 90 and math.floor(th.single * 1.5) or th.single
         local hundredChance = th.hundred
-        local currency      = mob:getLocalVar('dynamis_currency')
-        if currency == 0 then
-            currency = xi.item.TUKUKU_WHITESHELL + math.random(0, 2) * 3
-        end
+        -- Nightmares drop the currency that is in season this Vana hour.
+        -- dynamis_currency stays on the mob for proc windows only.
+        local currency      = require('modules/custom/lua/dynamis_hundred_piece').dreamlandSingle(VanadielHour())
 
         -- White (special) adds 100% hundred slot
         if mob:getLocalVar('dynamis_proc') >= 4 then
@@ -157,6 +156,9 @@ g_mixins.dynamis_dreamland = function(dynamisDreamlandMob)
         end
 
         killer:addTreasure(currency, mob, singleChance) -- base single slot
+
+        -- Same 1% 100-piece, using the in-season singles from above.
+        require('modules/custom/lua/dynamis_hundred_piece').tryDrop(mob, killer, currency)
     end)
 end
 

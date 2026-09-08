@@ -684,6 +684,12 @@ xi.spells.blue.useDrainSpell = function(caster, target, spell, params, damageCap
         return finalDamage
     end
 
+    -- True heal ceiling (Blood Drain). Applied after MAB / weather / staff
+    -- and before the mob is hit, so weapon-amp cannot sneak past it.
+    if params.drainHealCap and params.drainHealCap > 0 then
+        finalDamage = utils.clamp(finalDamage, 0, params.drainHealCap)
+    end
+
     if stockSubjob then
         finalDamage = utils.clamp(utils.handlePhalanx(target, finalDamage), 0, 131071)
         finalDamage = utils.clamp(utils.handleOneForAll(target, finalDamage), 0, 131071)

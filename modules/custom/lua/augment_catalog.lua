@@ -99,8 +99,11 @@ return {
     [1193] = { augId = 56,   base = 3,   mult = 30,  disp = 100,  cat = 4,  tier = 0, label = 'Breath dmg. taken' },
     [858]  = { augId = 54,   base = 3,   mult = 30,  disp = 100,  cat = 4,  tier = 0, label = 'Phys DT', maxBoost = 14 },
     [1123] = { augId = 71,   base = 3,   mult = 30,  disp = 100,  cat = 4,  tier = 0, label = 'Damage Taken' },
-    [2151] = { augId = 1155, base = 3,   mult = 30,  disp = 100,  cat = 4,  tier = 0, label = 'Phys DT II', maxBoost = 14 },
-    [2747] = { augId = 1156, base = 3,   mult = 30,  disp = 100,  cat = 4,  tier = 0, label = 'Magic DT II' },
+    -- PDT-II / MDT-II: one line per piece (Treasure Hunter rules), 1% each.
+    -- Ten pieces = 10%. Combat clamps augment II at 10% so extra slots cannot
+    -- overshoot; Burtgang / Epeolatry / Aegis keep their native II.
+    [2151] = { augId = 1155, base = 1,   mult = 100, disp = 100,  cat = 4,  tier = 0, label = 'Phys DT II', maxBoost = 0, flatValue = 1 },
+    [2747] = { augId = 1156, base = 1,   mult = 100, disp = 100,  cat = 4,  tier = 0, label = 'Magic DT II', maxBoost = 0, flatValue = 1 },
     [889]  = { augId = 363,  base = 1,   mult = 1,   disp = 1,    cat = 4,  tier = 0, label = 'Chance of successful block', maxBoost = 9 },
     [2505]  = { augId = 1472, base = 1,   mult = 1,   disp = 1,    cat = 4,  tier = 0, label = 'Parrying rate' },
     [3504] = { augId = 42,   base = 1,   mult = 1,   disp = 1,    cat = 4,  tier = 0, label = 'Enemy crit. hit rate' },

@@ -19,6 +19,24 @@ C.LEVEL_COST_BASE = 25
 C.LEVEL_COST_STEP = 5
 function C.levelCost(cur) return C.LEVEL_COST_BASE + cur * C.LEVEL_COST_STEP end
 
+-- Total PP paid to reach `level` from 0 (sum of each ascend).
+function C.levelSpend(level)
+    local spent = 0
+    for cur = 0, (level or 0) - 1 do
+        spent = spent + C.levelCost(cur)
+    end
+    return spent
+end
+
+-- Total PP paid to reach `rank` from 0 for one perk.
+function C.perkSpend(perk, rank)
+    local spent = 0
+    for cur = 0, (rank or 0) - 1 do
+        spent = spent + C.perkRankCost(perk, cur)
+    end
+    return spent
+end
+
 -- ── Perks (permanent, capped, login-applied addMods) ────────────────────────
 -- perRank * maxRank = the hard cap (owner-set: ATT/ACC/magic/pet +1000,
 -- DEF +2000, HP +5000). modKeys are xi.mod field NAMES, resolved at call time

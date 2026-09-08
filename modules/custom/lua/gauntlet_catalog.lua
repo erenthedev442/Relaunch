@@ -6,13 +6,29 @@
 -- (mechCfg) so a maxed character must actually struggle. Defeating a level pays
 -- a per-level reward; defeating level 10 grants a massive jackpot and enshrines
 -- the champion as an NPC in the Hall of Champions (B01).
+--
+-- FileWatcher dofile discards the return. Mutate the cached table so HP / DEF
+-- / weakness tweaks go live without a map restart. TheGauntlet.lua keeps a
+-- local reference to this same table and reads it at NM spawn.
 -----------------------------------
-local C = {}
+local CATALOG_KEY = 'modules/custom/lua/gauntlet_catalog'
+local C = package.loaded[CATALOG_KEY]
+if type(C) ~= 'table' then
+    C = {}
+end
+package.loaded[CATALOG_KEY] = C
 
 -- Zone IDs
 C.GROUP_ZONE = 210  -- mob template zone (GM Home -- all Apex groups defined here)
 C.ARENA_ZONE = 30   -- Riverne-Site_A01 (the 10-level combat zone)
 C.HALL_ZONE  = 29   -- Riverne-Site_B01 (Hall of Champions, read-only display)
+
+-- If the runner is farther than this, the NM draws them back in so they cannot
+-- kite past scripted AoE / CC / hold-fire. Wait is the retail utils.drawIn arm
+-- (first tick arms, the next tick after this many seconds actually pulls).
+C.DRAW_IN_YALMS = 8
+C.DRAW_IN_WAIT  = 1
+C.DRAW_IN_MSG   = 'drags you back into the fight!'
 
 -- Spawn positions (verified from zone scripts)
 C.WARP_IN  = { x = 732.55, y = -32.5, z = -506.544, rot = 90 }  -- Riverne A01 default spawn
@@ -33,16 +49,18 @@ C.NM_POOL = {
     [10] = { groupId = 11369, name = 'Shinryu',            skillListId = 475 },
 }
 
--- HP: a steep exponential wall calibrated against the server's 1M Prime WS
--- ceiling. 2026-07-13: reduced the full curve by 90% alongside the damage-
--- ceiling rebalance, preserving the original time-to-kill and mechanic cadence.
--- L1 = 5M, climbing to L10 ≈ 19.9M.
--- HP is the boss's int32 health, so this has huge headroom (no overflow); it's
--- the primary "harder" lever once the int16-capped mods below are maxed out.
-C.NM_BASE_HP = 5000000
-C.HP_GROWTH  = 1.166
+-- HP: flattened climb so late bosses are mechanics, not a 20M sponge.
+-- 2026-09-08 live test (v2): L1 = 4.50M, L10 ≈ 6.80M (1.047^ per level).
+-- Shinryu then gets +2.00M so the slightly softer hit/TP rate still has a long clock.
+C.NM_BASE_HP = 4500000
+C.HP_GROWTH  = 1.047
+C.SHINRYU_HP_BONUS = 2000000
 function C.nmHp(level)
-    return math.floor(C.NM_BASE_HP * (C.HP_GROWTH ^ (level - 1)))
+    local hp = math.floor(C.NM_BASE_HP * (C.HP_GROWTH ^ (level - 1)))
+    if level >= 10 then
+        hp = hp + C.SHINRYU_HP_BONUS
+    end
+    return hp
 end
 
 -- Mob level: keep every Gauntlet NM in a stable endgame band so Riverne's
@@ -74,22 +92,22 @@ end
 -- use mechanics/haste/HP for extra difficulty beyond that.
 --   ATT  L10 31,000  -- direct ATT cannot safely reach 50,000 without C++ changes
 --   ACC  L10 14,600  -- never misses, even evasion-stacked tanks
---   DEF  L10 10,000  -- lowered so physical players do not floor out as often
---   MEVA L10 4,500   -- moderated resist scaling
---   MDEF L10 8,000   -- heavy magic mitigation without the old spike
---   EVA  L10 4,000   -- moderated evasion scaling
+--   DEF  L1 9,000 / L10 11,250  -- closed window stays a wait-for-opening wall
+--   MDEF L1 5,000 / L10 6,620   -- nukes still muted until the weakness window
+--   EVA  L1 400 / L10 535       -- low in both windows so auto-attacks build TP
+--   MEVA L1 2,600 / L10 4,040
 C.BASE_ATT = 12000
 C.ATT_PER_LEVEL = 19500 / 9 -- L1 = 12,000 ... L10 = 31,500 after rounding (int16-safe)
 C.BASE_ACC = 3600
 C.ACC_PER_LEVEL = 1700   -- L1 = 3,600 ... L10 = 18,900 (real melee never misses)
-C.BASE_DEF = 10000
-C.DEF_PER_LEVEL = 8000 / 9 -- L1 = 10,000 ... L10 = 18,000 after rounding
-C.BASE_MDEF = 8000
-C.MDEF_PER_LEVEL = 6000 / 9 -- L1 = 8,000 ... L10 = 14,000 after rounding
-C.BASE_MEVA = 4000
-C.MEVA_PER_LEVEL = 3000 / 9   -- L1 = 4,000 ... L10 = 7,000
-C.BASE_EVA = 3500
-C.EVA_PER_LEVEL = 2500 / 9 -- L1 = 3,500 ... L10 = 6,000 after rounding
+C.BASE_DEF = 9000
+C.DEF_PER_LEVEL = 250 -- L1 = 9,000 ... L10 = 11,250
+C.BASE_MDEF = 5000
+C.MDEF_PER_LEVEL = 180 -- L1 = 5,000 ... L10 = 6,620
+C.BASE_MEVA = 2600
+C.MEVA_PER_LEVEL = 160 -- L1 = 2,600 ... L10 = 4,040
+C.BASE_EVA = 400
+C.EVA_PER_LEVEL = 15 -- L1 = 400 ... L10 = 535 (always hittable for TP)
 C.BASE_REGAIN = 250
 C.REGAIN_PER_LEVEL = 500 / 9 -- L1 = 250 ... L10 = 750 after rounding
 C.BASE_MATT = 15000
@@ -105,10 +123,18 @@ C.DEX_PER_LEVEL = 380    -- L10 = 3,420
 C.VIT_PER_LEVEL = 420    -- L10 = 3,780
 C.AGI_PER_LEVEL = 380    -- L10 = 3,420
 
+-- Shinryu-only ease: a little less raw hit and a little less TP spam.
+-- L1-L9 keep the shared climb. Values stay well under the int16 mod cap.
+C.SHINRYU_ATT_DELTA    = -2300 -- 31,500 -> 29,200
+C.SHINRYU_REGAIN_DELTA =  -90  -- 750 -> 660
+C.SHINRYU_MATT_DELTA   = -750  -- 16,500 -> 15,750
+C.SHINRYU_WEAPON_DELTA =  -15  -- 150 -> 135
+
 -- Flat stat mod table for a given Gauntlet level (xi.mod.* resolved at call time)
 function C.nmMods(level)
     local t = level - 1
-    return {
+    local mods =
+    {
         [xi.mod.ATT]  = math.floor(C.BASE_ATT + t * C.ATT_PER_LEVEL + 0.5),
         [xi.mod.ACC]  = C.BASE_ACC  + t * C.ACC_PER_LEVEL,
         [xi.mod.DEF]  = math.floor(C.BASE_DEF + t * C.DEF_PER_LEVEL + 0.5),
@@ -124,13 +150,23 @@ function C.nmMods(level)
         [xi.mod.VIT]  = t * C.VIT_PER_LEVEL,
         [xi.mod.AGI]  = t * C.AGI_PER_LEVEL,
     }
+    if level >= 10 then
+        mods[xi.mod.ATT]    = mods[xi.mod.ATT]    + C.SHINRYU_ATT_DELTA
+        mods[xi.mod.REGAIN] = mods[xi.mod.REGAIN] + C.SHINRYU_REGAIN_DELTA
+        mods[xi.mod.MATT]   = mods[xi.mod.MATT]   + C.SHINRYU_MATT_DELTA
+    end
+    return mods
 end
 
 -- MobMod tuning for a given Gauntlet level.
 function C.nmMobMods(level)
     local t = level - 1
+    local bonus = math.floor(C.BASE_WEAPON_BONUS + t * C.WEAPON_BONUS_PER_LEVEL + 0.5)
+    if level >= 10 then
+        bonus = bonus + C.SHINRYU_WEAPON_DELTA
+    end
     return {
-        [xi.mobMod.WEAPON_BONUS] = math.floor(C.BASE_WEAPON_BONUS + t * C.WEAPON_BONUS_PER_LEVEL + 0.5),
+        [xi.mobMod.WEAPON_BONUS] = bonus,
     }
 end
 
@@ -147,7 +183,35 @@ end
 -- Per-level reward for DEFEATING a level's NM (levels 1-9; level 10 pays the
 -- FINAL_REWARD jackpot below instead). Every fight pays out, so a run that ends
 -- before level 10 is still rewarded for the levels actually cleared.
+function C.persistClearsForLevel(clearedLevel)
+    -- FileWatcher cannot replace Challenge-NPC closures. Those still call
+    -- C.LEVEL_REWARD / C.FINAL_REWARD after incrementing sess.level, so the
+    -- job save is written from here until the next map restart.
+    clearedLevel = tonumber(clearedLevel) or 0
+    if clearedLevel < 1 then
+        return
+    end
+    local sessions = rawget(_G.xi or xi, '_gauntlet_sessions')
+    if type(sessions) ~= 'table' then
+        return
+    end
+    local expectedLevel = clearedLevel >= 10 and 11 or (clearedLevel + 1)
+    for name, sess in pairs(sessions) do
+        if type(sess) == 'table' and sess.phase == 'advancing' and sess.level == expectedLevel then
+            local ok, player = pcall(function() return GetPlayerByName(name) end)
+            if ok and player then
+                local jobId = sess.jobId
+                if not jobId then
+                    pcall(function() jobId = player:getMainJob() end)
+                end
+                pcall(C.onBossCleared, player, jobId, clearedLevel)
+            end
+        end
+    end
+end
+
 function C.LEVEL_REWARD(level)
+    pcall(C.persistClearsForLevel, level)
     return {
         gil    = level * 50000,    -- L1 = 50k ... L9 = 450k
         infamy = level * 10,       -- L1 = 10 ... L9 = 90 (cut 90% 2026-06-25)
@@ -163,12 +227,64 @@ C.MILESTONE_REWARDS = {
     [9] = { gil = 1500000, pp = 150, infamy = 150 },
 }
 
--- Final clear reward (level 10 NM kill)
-C.FINAL_REWARD = {
+-- Final clear reward (level 10 NM kill). Proxy so pre-reload grantFinalReward
+-- closures still reset the job save when they read r.gil / r.pp / r.infamy.
+C.FINAL_REWARD_DATA = {
     gil    = 5000000,    -- 5M gil
     pp     = 500,        -- Paragon Points
     infamy = 500,        -- Infamy
 }
+C.FINAL_REWARD = setmetatable({}, {
+    __index = function(_, key)
+        pcall(C.persistClearsForLevel, 10)
+        return C.FINAL_REWARD_DATA[key]
+    end,
+})
+
+-- Per-job continue. CharVar Gauntlet_Next_<jobId> stores the next boss to
+-- fight (1-10). A full clear on that job writes 1 so they cannot camp 10.
+C.JOB_SAVE_PREFIX = 'Gauntlet_Next_'
+
+function C.jobSaveVar(jobId)
+    return C.JOB_SAVE_PREFIX .. tostring(jobId or 0)
+end
+
+function C.nextAfterClear(clearedLevel)
+    if (clearedLevel or 0) >= 10 then
+        return 1
+    end
+    return (clearedLevel or 0) + 1
+end
+
+function C.clampStartLevel(level)
+    level = math.floor(tonumber(level) or 1)
+    if level < 1 or level > 10 then
+        return 1
+    end
+    return level
+end
+
+function C.jobNextLevel(player, jobId)
+    jobId = jobId or player:getMainJob()
+    return C.clampStartLevel(player:getCharVar(C.jobSaveVar(jobId)) or 1)
+end
+
+function C.saveJobNext(player, jobId, nextLevel)
+    player:setCharVar(C.jobSaveVar(jobId or player:getMainJob()), C.clampStartLevel(nextLevel))
+end
+
+function C.onBossCleared(player, jobId, clearedLevel)
+    C.saveJobNext(player, jobId, C.nextAfterClear(clearedLevel))
+end
+
+function C.jobLabel(jobId)
+    for name, id in pairs(xi.job) do
+        if id == jobId and name ~= 'NONE' and name ~= 'NON_JOB' then
+            return name
+        end
+    end
+    return 'this job'
+end
 
 -- Champion NPC appearance in Hall of Champions
 C.CHAMPION_LOOK = 2419  -- same heroic model as Rupture Sage
@@ -226,31 +342,33 @@ C.bossOverrides =
     medusaJavelin  = { level = 8, bindSec = 8 },
 }
 
-C.WEAK_WINDOW_EXTRA_DOWN = 1000
+-- Weakness-window targets. Almost flat so Shinryu is mechanics, not an 18k DEF wall.
+-- Closed minus these = the hold-fire defDown / mdefDown / evaDown / mevaDown.
+C.WEAK_DEF  = 2100
+C.WEAK_DEF_PER_LEVEL  = 40  -- L1 = 2,100 ... L10 = 2,460
+C.WEAK_MDEF = 0
+C.WEAK_MDEF_PER_LEVEL = 0  -- true nuke window: Floe MAB/MDB opens ~12x vs the old 1100
+C.WEAK_EVA  = 200
+C.WEAK_EVA_PER_LEVEL  = 10  -- L1 = 200 ... L10 = 290
+C.WEAK_MEVA = 450
+C.WEAK_MEVA_PER_LEVEL = 35  -- L1 = 450 ... L10 = 765
 
 function C.weakWindowMods(level)
     local t = level - 1
-    local currentDef  = math.floor(6000 + t * (4000 / 9) + 0.5)
-    local currentMdef = math.floor(6000 + t * (2000 / 9) + 0.5)
-    local currentEva  = math.floor(2500 + t * (1500 / 9) + 0.5)
-    local currentMeva = math.floor(2700 + t * 200 + 0.5)
-
-    local mult = 1.0
-    if level == 10 then
-        mult = 1.35 -- Shinryu gets the largest weakness drop.
-    elseif level == 9 then
-        mult = 1.20 -- PW gets a meaningful but smaller drop.
-    elseif level == 8 then
-        mult = 1.10 -- AV gets the lightest of the endgame trio.
-    elseif level == 1 then
-        mult = 1.15 -- Aquarius should always feel weaker, never tougher.
-    end
+    local closedDef  = math.floor(C.BASE_DEF  + t * C.DEF_PER_LEVEL  + 0.5)
+    local closedMdef = math.floor(C.BASE_MDEF + t * C.MDEF_PER_LEVEL + 0.5)
+    local closedEva  = math.floor(C.BASE_EVA  + t * C.EVA_PER_LEVEL  + 0.5)
+    local closedMeva = math.floor(C.BASE_MEVA + t * C.MEVA_PER_LEVEL + 0.5)
+    local weakDef    = math.floor(C.WEAK_DEF  + t * C.WEAK_DEF_PER_LEVEL  + 0.5)
+    local weakMdef   = math.floor(C.WEAK_MDEF + t * C.WEAK_MDEF_PER_LEVEL + 0.5)
+    local weakEva    = math.floor(C.WEAK_EVA  + t * C.WEAK_EVA_PER_LEVEL  + 0.5)
+    local weakMeva   = math.floor(C.WEAK_MEVA + t * C.WEAK_MEVA_PER_LEVEL + 0.5)
 
     return {
-        defDown  = math.floor(math.max(0, math.floor(C.BASE_DEF + t * C.DEF_PER_LEVEL + 0.5) - currentDef) * mult + 0.5) + C.WEAK_WINDOW_EXTRA_DOWN,
-        mdefDown = math.floor(math.max(0, math.floor(C.BASE_MDEF + t * C.MDEF_PER_LEVEL + 0.5) - currentMdef) * mult + 0.5) + C.WEAK_WINDOW_EXTRA_DOWN,
-        evaDown  = math.floor(math.max(0, math.floor(C.BASE_EVA + t * C.EVA_PER_LEVEL + 0.5) - currentEva) * mult + 0.5) + C.WEAK_WINDOW_EXTRA_DOWN,
-        mevaDown = math.floor(math.max(0, math.floor(C.BASE_MEVA + t * C.MEVA_PER_LEVEL + 0.5) - currentMeva) * mult + 0.5) + C.WEAK_WINDOW_EXTRA_DOWN,
+        defDown  = math.max(0, closedDef  - weakDef),
+        mdefDown = math.max(0, closedMdef - weakMdef),
+        evaDown  = math.max(0, closedEva  - weakEva),
+        mevaDown = math.max(0, closedMeva - weakMeva),
     }
 end
 
@@ -343,7 +461,7 @@ function C.holdFireCfg(level)
         pressure            = msg.pressure,
         pressureOptions     = msg.pressureOptions,
         pressureTickSec     = 3,
-        pressureDelaySec    = 2,
+        pressureDelaySec    = 5,
         pressureTickPct     = (level == 4 or level == 6) and 22 or 35,
         defDown             = C.weakWindowMods(level).defDown,
         mdefDown            = C.weakWindowMods(level).mdefDown,
@@ -357,29 +475,37 @@ function C.holdFireCfg(level)
     }
 end
 
+local function withDrawIn(cfg)
+    cfg.drawInYalms = C.DRAW_IN_YALMS
+    cfg.drawInWait  = C.DRAW_IN_WAIT
+    cfg.drawInMsg   = C.DRAW_IN_MSG
+    return cfg
+end
+
 function C.mechCfg(level)
     if level >= 10 then
-        -- Shinryu, the final trial -- full real-combat kit, merciless clock.
-        return {
+        -- Shinryu, the final trial -- full real-combat kit. Hit and haste
+        -- sit a notch under the first pass; HP carries the extra length.
+        return withDrawIn({
             name   = 'Shinryu',
-            enrage = { sec = 80, att = 10000, haste = 300, msg = 'unleashes its final fury!' },
-            stance = { startHpp = 95, periodSec = 6, stances = {
+            enrage = { sec = 80, att = 8800, haste = 260, msg = 'unleashes its final fury!' },
+            stance = { startHpp = 95, periodSec = 7, stances = {
                 { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'scales harden -- steel barely bites!' },
                 { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'wards the arcane -- magic fizzles!' },
             } },
-            cc     = { periodSec = 14, effect = xi.effect.SILENCE, dur = 8, msg = 'roars -- your voice is stolen!' },
+            cc     = { periodSec = 16, effect = xi.effect.SILENCE, dur = 8, msg = 'roars -- your voice is stolen!' },
             drain  = { periodSec = 15, heal = level * 1000 },
             holdFire = C.holdFireCfg(level),
             phases = {
                 { hp = 75, action = 'dispel', count = 7, msg = 'tears your blessings away!' },
-                { hp = 55, action = 'fury',   att = 7000,  haste = 200, msg = 'enters a killing frenzy!' },
+                { hp = 55, action = 'fury',   att = 6200,  haste = 175, msg = 'enters a killing frenzy!' },
                 { hp = 38, action = 'dispel', count = 5, msg = 'strips you bare again!' },
-                { hp = 22, action = 'fury',   att = 9000,  haste = 260, msg = 'goes utterly berserk!' },
-                { hp = 10, action = 'enrage', att = 12000, haste = 320, msg = 'will not be denied -- final form!' },
+                { hp = 22, action = 'fury',   att = 8000,  haste = 225, msg = 'goes utterly berserk!' },
+                { hp = 10, action = 'enrage', att = 10500, haste = 280, msg = 'will not be denied -- final form!' },
             },
-        }
+        })
     elseif level >= 9 then
-        return {
+        return withDrawIn({
             name   = 'Pandemonium Warden',
             enrage = { sec = 95, att = 8500, haste = 260, msg = 'shifts form and presses harder!' },
             stance = { startHpp = 88, periodSec = 7, stances = {
@@ -394,9 +520,9 @@ function C.mechCfg(level)
                 { hp = 42, action = 'fury',   att = 6000, haste = 180, msg = 'rages without restraint!' },
                 { hp = 18, action = 'enrage', att = 9000, haste = 250, msg = 'enters its final fury!' },
             },
-        }
+        })
     elseif level >= 7 then
-        return {
+        return withDrawIn({
             name   = (level == 8) and 'Absolute Virtue' or 'Kirin',
             enrage = { sec = 110, att = 7500, haste = 230, msg = 'reaches full battle-fury!' },
             stance = { startHpp = 82, periodSec = 8, stances = {
@@ -411,9 +537,9 @@ function C.mechCfg(level)
                 { hp = 26, action = 'fury',   att = 5500, haste = 160, msg = 'fights with renewed fury!' },
                 { hp = 12, action = 'enrage', att = 7500, haste = 220, msg = 'goes berserk!' },
             },
-        }
+        })
     elseif level >= 5 then
-        return {
+        return withDrawIn({
             name   = (level == 6) and 'Vrtra' or 'King Behemoth',
             enrage = { sec = 125, att = 6800, haste = 200, msg = 'intensifies its assault!' },
             stance = { startHpp = 75, periodSec = 10, stances = {
@@ -429,9 +555,9 @@ function C.mechCfg(level)
                 { hp = 45, action = 'dispel', count = 4, msg = 'tears your buffs away!' },
                 { hp = 18, action = 'fury',   att = 4500, haste = 150, msg = 'surges with sudden power!' },
             },
-        }
+        })
     elseif level >= 3 then
-        return {
+        return withDrawIn({
             name   = (level == 4) and 'Nidhogg' or 'Simurgh',
             enrage = { sec = 140, att = 6000, haste = 180, msg = 'grows restless -- pressing harder!' },
             stance = { startHpp = 60, periodSec = 13, stances = {
@@ -446,10 +572,10 @@ function C.mechCfg(level)
                 { hp = 40, action = 'dispel', count = 3, msg = 'strips your enhancements!' },
                 { hp = 18, action = 'fury',   att = 4000, haste = 130, msg = 'enters a fury state!' },
             },
-        }
+        })
     else
         -- Levels 1-2: entry pressure -- enrage, CC, dispel, and a fury phase.
-        return {
+        return withDrawIn({
             name   = (level == 2) and 'Serket' or 'Aquarius',
             enrage = { sec = 155, att = 5500, haste = 160, msg = 'grows impatient -- attacks quicken!' },
             cc     = { periodSec = 22, effect = xi.effect.TERROR, dur = 4, msg = 'looses a paralyzing screech!' },
@@ -459,7 +585,7 @@ function C.mechCfg(level)
                 { hp = 45, action = 'dispel', count = 2, msg = 'tears at your buffs!' },
                 { hp = 22, action = 'fury',   att = 3200, haste = 110, msg = 'thrashes in a frenzy!' },
             },
-        }
+        })
     end
 end
 

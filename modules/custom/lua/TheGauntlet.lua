@@ -17,6 +17,7 @@
 -- Requires ONE map restart to activate (addOverride module).
 --
 -- CharVars:  Gauntlet_Clears  (total level-10 clears)
+--            Gauntlet_Next_<jobId>  next boss on that main job (1-10; 1 after a full clear)
 -- Commands:  !gauntlet abort [name]  |  !gauntlet status  (scripts/commands/)
 -- Entry NPC: "The Gauntlet" in Leafallia (relaunch hub; x=-20, z=20)
 -----------------------------------
@@ -38,11 +39,42 @@ local SYS = xi.msg.channel.SYSTEM_3
 -- Session state (keyed by playerName)
 -- phase: 'choose' | 'fight' | 'advancing'
 -----------------------------------
-local sessions = {}
-xi._gauntlet_sessions = sessions
+if type(xi._gauntlet_sessions) ~= 'table' then
+    xi._gauntlet_sessions = {}
+end
+local sessions = xi._gauntlet_sessions
 
 local function getSession(player)   return sessions[player:getName()] end
 local function clearSession(player) sessions[player:getName()] = nil end
+
+local function applyJobStart(player, sess)
+    if not sess or sess.phase ~= 'choose' then
+        return sess
+    end
+    if (sess.clearedLevels or 0) ~= 0 or (sess.level or 1) ~= 1 then
+        return sess
+    end
+    sess.jobId = sess.jobId or player:getMainJob()
+    local nextLevel = C.jobNextLevel(player, sess.jobId)
+    if nextLevel > 1 then
+        sess.level = nextLevel
+        sess.clearedLevels = nextLevel - 1
+    end
+    return sess
+end
+
+local function persistJobProgress(player, sess)
+    if not player or not sess then
+        return
+    end
+    applyJobStart(player, sess)
+    local jobId = sess.jobId or player:getMainJob()
+    local nextLevel = sess.level
+    if (nextLevel or 0) > 10 then
+        nextLevel = 1
+    end
+    C.saveJobNext(player, jobId, nextLevel)
+end
 
 local function entityName(entity)
     local name
@@ -501,8 +533,14 @@ local function grantFinalReward(player)
             (player:getCharVar('Infamy') or 0) + r.infamy)
         local clears = (player:getCharVar('Gauntlet_Clears') or 0) + 1
         player:setCharVar('Gauntlet_Clears', clears)
+        local sess = getSession(player)
+        local jobId = sess and sess.jobId or player:getMainJob()
+        C.onBossCleared(player, jobId, 10)
 
         player:printToPlayer('[The Gauntlet] *** THE GAUNTLET IS CONQUERED! ***', SYS)
+        player:printToPlayer(string.format(
+            '[The Gauntlet] %s save reset to level 1. Another job keeps its own save.',
+            C.jobLabel(jobId)), SYS)
         player:printToPlayer(string.format(
             '[The Gauntlet] Reward: %s gil, +%d Paragon Points, +%d Infamy.',
             formatGil(r.gil), r.pp, r.infamy), SYS)
@@ -534,6 +572,7 @@ end
 -----------------------------------
 endRun = function(player, reason)
     local sess = getSession(player)
+    persistJobProgress(player, sess)
     cleanupNPCs(sess)
     clearSession(player)
 
@@ -560,6 +599,13 @@ endRun = function(player, reason)
         player:printToPlayer('[The Gauntlet] Run aborted.', SYS)
     elseif reason == 'grouped' then
         player:printToPlayer('[The Gauntlet] Solo challenge only. Run ended.', SYS)
+    end
+    if sess then
+        local jobId = sess.jobId or player:getMainJob()
+        local resume = C.clampStartLevel(player:getCharVar(C.jobSaveVar(jobId)))
+        player:printToPlayer(string.format(
+            '[The Gauntlet] %s save: resume at level %d. A different job starts at 1.',
+            C.jobLabel(jobId), resume), SYS)
     end
 
     player:timer(2500, function(p)
@@ -635,6 +681,9 @@ spawnNM = function(player, session)
             if level <= 9 then
                 grantLevelReward(resolved, level)
             end
+            pcall(function()
+                C.onBossCleared(resolved, sess.jobId or resolved:getMainJob(), level)
+            end)
             pcall(function()
                 trustDrops.tryAward(resolved, nm.name, 'gauntlet')
             end)
@@ -821,10 +870,30 @@ local function enterGauntlet(player)
         return
     end
     dismissTrusts(player)
-    sessions[player:getName()] = { level = 1, phase = 'choose', nm = nil, clearedLevels = 0 }
+    local jobId = player:getMainJob()
+    local level = C.jobNextLevel(player)
+    sessions[player:getName()] = {
+        level = level,
+        phase = 'choose',
+        nm = nil,
+        clearedLevels = level - 1,
+        jobId = jobId,
+    }
+    local jobName = C.jobLabel(jobId)
+    if level > 1 then
+        local nm = C.NM_POOL[level]
+        player:printToPlayer(string.format(
+            '[The Gauntlet] %s run resumes at level %d (%s). A different job starts at level 1.',
+            jobName, level, nm and nm.name or '?'), SYS)
+    else
+        player:printToPlayer(string.format(
+            '[The Gauntlet] %s run starts at level 1. Progress is saved per job.',
+            jobName), SYS)
+    end
     player:printToPlayer('[The Gauntlet] Entering the arena. Trusts are not permitted.', SYS)
     player:setPos(C.WARP_IN.x, C.WARP_IN.y, C.WARP_IN.z, C.WARP_IN.rot, C.ARENA_ZONE)
 end
+xi._gauntlet_enter = enterGauntlet
 
 -----------------------------------
 -- Override: Riverne-Site_A01 onInitialize -> shared Gauntlet NPCs
@@ -841,10 +910,11 @@ m:addOverride('xi.zones.Riverne-Site_A01.Zone.onZoneIn', function(player, prevZo
     local cs = super(player, prevZone)
     local sess = getSession(player)
     if sess then
+        applyJobStart(player, sess)
         dismissTrusts(player)
         player:delStatusEffect(xi.effect.LEVEL_RESTRICTION)
         player:timer(2000, function(p)
-            local s = sessions[p:getName()]
+            local s = applyJobStart(p, sessions[p:getName()])
             if not s then return end
             -- Announce current state
             if s.level == 10 then
@@ -1259,6 +1329,10 @@ end)
 
 -- Death in the arena ends the run
 m:addOverride('xi.player.onPlayerDeath', function(player, ...)
+    local sess = getSession(player)
+    if sess and player:getZoneID() == C.ARENA_ZONE then
+        persistJobProgress(player, sess)
+    end
     local cs = super(player, ...)
     if getSession(player) and player:getZoneID() == C.ARENA_ZONE then
         player:timer(2000, function(p) endRun(p, 'death') end)
@@ -1324,14 +1398,19 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
 
         onTrigger = function(player, npc)
             local clears = player:getCharVar('Gauntlet_Clears') or 0
+            local jobId = player:getMainJob()
+            local nextLevel = C.jobNextLevel(player)
             player:printToPlayer(
                 '[The Gauntlet] Ten escalating levels of solo combat in Riverne Site A01.', SYS)
             player:printToPlayer(
-                '[The Gauntlet] Levels 1-9: Defeat each NM to advance to the next level.', SYS)
+                '[The Gauntlet] Progress is saved per main job. Die on BLU at 4 and BLU resumes at 4; another job starts at 1.', SYS)
             player:printToPlayer(
-                '[The Gauntlet] Level 10: Defeat Shinryu and earn your legend.', SYS)
+                '[The Gauntlet] A full clear on that job resets it to level 1.', SYS)
             player:printToPlayer(
                 '[The Gauntlet] Reward: 5M gil | 500 Paragon Points | 500 Infamy.', SYS)
+            player:printToPlayer(string.format(
+                '[The Gauntlet] %s continues at level %d.',
+                C.jobLabel(jobId), nextLevel), SYS)
             if clears > 0 then
                 player:printToPlayer(string.format(
                     '[The Gauntlet] Your clear count: %d. The legend grows.', clears), SYS)
@@ -1341,7 +1420,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 { 'Enter The Gauntlet', function(p) enterGauntlet(p) end },
                 { 'Rules / Strategy',   function(p)
                     p:printToPlayer('[The Gauntlet] Solo challenge. Trusts are removed; pets are allowed.', SYS)
-                    p:printToPlayer('[The Gauntlet] Death, leaving the arena, or aborting ends the run.', SYS)
+                    p:printToPlayer('[The Gauntlet] Death, leaving the arena, or aborting ends the run. Your job save stays.', SYS)
                     p:printToPlayer('[The Gauntlet] Defeat levels 1-9 in order to unlock the Final Trial.', SYS)
                     p:printToPlayer('[The Gauntlet] Each boss has its own behaviour. Watch animations and messages.', SYS)
                     p:printToPlayer('[The Gauntlet] Rewards build as you progress, with milestone bonuses at 3, 6, and 9.', SYS)

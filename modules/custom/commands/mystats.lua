@@ -268,13 +268,16 @@ commandObj.onTrigger = function(player)
     line(player, 'Dmg taken -- All %g%%   Breath %g%%   (cap -50%%)',
         player:getMod(xi.mod.DMG)       / 100,
         player:getMod(xi.mod.DMGBREATH) / 100)
+    -- II mods bypass the -50% DT I floor. Augment II is 1% per piece and
+    -- combat-clamped at 10%. Unique weapons (Burtgang / Aegis / Epeolatry)
+    -- add their own II on top and still show in the raw total here.
     line(player, 'Physical Damage Taken    %7g%%   (cap -50%%)',
         player:getMod(xi.mod.DMGPHYS) / 100)
-    line(player, 'Physical Damage Taken II %7g%%   (bypasses cap, to -87.5%%)',
+    line(player, 'Physical Damage Taken II %7g%%   (augments 1%%/piece, max 10%%)',
         player:getMod(xi.mod.DMGPHYS_II) / 100)
     line(player, 'Magic Damage Taken       %7g%%   (cap -50%%)',
         player:getMod(xi.mod.DMGMAGIC) / 100)
-    line(player, 'Magic Damage Taken II    %7g%%   (bypasses cap, to -87.5%%)',
+    line(player, 'Magic Damage Taken II    %7g%%   (augments 1%%/piece, max 10%%)',
         player:getMod(xi.mod.DMGMAGIC_II) / 100)
 
     -- =========================================================

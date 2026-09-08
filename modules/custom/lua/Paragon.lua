@@ -17,11 +17,13 @@
 -- creep.
 --
 -- CharVars:
---   Paragon_Points        unspent currency (banked by Apex Trials)
+--   Paragon_Points        unspent currency (banked by Apex Trials / Gauntlet)
 --   Paragon_Level         prestige level (infinite)
 --   Paragon_Perk_<id>     rank in each perk (0..maxRank)
 --   Paragon_MightUnlock   1 once the Daily Might perk is bought
 --   Paragon_MightDay      UTC Julian day of the last Daily Might claim
+-- Reset & Refund returns every spent PP (levels + perks + Daily Might unlock)
+-- and clears those purchases so the player can reallocate. MightDay is kept.
 --
 -- Perk mods are re-applied on every game-in (login AND zone) because zoning
 -- wipes non-gear addMods -- same pattern as the cross-job trait trainer. NPC:
@@ -181,7 +183,45 @@ end
 -- another perk in paragon_catalog.lua auto-shows up in the submenu (up to 7 --
 -- one more slot before the submenu itself needs to page).
 -----------------------------------
-local openPerksMenu  -- forward decl
+local openPerksMenu    -- forward decl
+local openResetConfirm -- forward decl
+
+local function spentBreakdown(player)
+    local levelSpend = C.levelSpend(player:getCharVar('Paragon_Level') or 0)
+    local perkSpend  = 0
+    for _, perk in ipairs(C.PERKS) do
+        perkSpend = perkSpend + C.perkSpend(perk, player:getCharVar('Paragon_Perk_' .. perk.id) or 0)
+    end
+    local mightSpend = (player:getCharVar('Paragon_MightUnlock') or 0) == 1 and C.DAILY_MIGHT_UNLOCK or 0
+    return {
+        level = levelSpend,
+        perks = perkSpend,
+        might = mightSpend,
+        total = levelSpend + perkSpend + mightSpend,
+    }
+end
+
+local function resetSpend(player)
+    local spent = spentBreakdown(player)
+    if spent.total <= 0 then
+        player:printToPlayer('[Paragon] You have nothing to refund.', SYS)
+        return
+    end
+
+    player:setCharVar('Paragon_Level', 0)
+    for _, perk in ipairs(C.PERKS) do
+        player:setCharVar('Paragon_Perk_' .. perk.id, 0)
+    end
+    player:setCharVar('Paragon_MightUnlock', 0)
+
+    local pp = (player:getCharVar('Paragon_Points') or 0) + spent.total
+    player:setCharVar('Paragon_Points', pp)
+    applyPerks(player, true)
+
+    player:printToPlayer(string.format(
+        '[Paragon] Reset complete. Refunded %d PP (levels %d, perks %d, Daily Might %d). Unspent: %d. Spend them again whenever you want.',
+        spent.total, spent.level, spent.perks, spent.might, pp), SYS)
+end
 
 openMenu = function(player)
     -- Also catches a newly mastered job immediately after leaving the JP menu.
@@ -208,6 +248,9 @@ openMenu = function(player)
         end },
         { dailyLabel, function(p)
             runAction(p, 'Daily Might', dailyMight, reopen)
+        end },
+        { 'Reset & Refund', function(p)
+            p:timer(30, function(q) openResetConfirm(q) end)
         end },
         { 'Close', function() end },
     }
@@ -247,6 +290,34 @@ openPerksMenu = function(player)
     })
 end
 xi._paragon_openPerksMenu = openPerksMenu
+
+openResetConfirm = function(player)
+    local spent = spentBreakdown(player)
+    if spent.total <= 0 then
+        player:printToPlayer('[Paragon] You have nothing to refund.', SYS)
+        reopen(player)
+        return
+    end
+
+    player:printToPlayer(string.format(
+        '[Paragon] This refunds %d PP and clears Paragon Level, every perk rank, and the Daily Might unlock. Today\'s Might claim (if any) stays used.',
+        spent.total), SYS)
+    player:printToPlayer(string.format(
+        '[Paragon] Breakdown: levels %d, perks %d, Daily Might %d.',
+        spent.level, spent.perks, spent.might), SYS)
+
+    player:customMenu({
+        title       = 'Confirm Paragon Reset',
+        options     = {
+            { string.format('Refund %d PP', spent.total), function(p)
+                runAction(p, 'Reset', resetSpend, reopen)
+            end },
+            { 'Cancel', function(p) reopen(p) end },
+        },
+        onCancelled = menuCancelled,
+    })
+end
+xi._paragon_openResetConfirm = openResetConfirm
 
 -----------------------------------
 -- Re-apply perks on every game-in (login AND zone) -- mods are wiped on zone.
@@ -292,7 +363,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
 
         onTrigger = function(player, npc)
             player:printToPlayer(
-                '[Paragon] Spend Paragon Points (earned in Apex Trials) on prestige levels, capped perks, and the Daily Might buff.', SYS)
+                '[Paragon] Spend Paragon Points (Apex or Gauntlet) on prestige levels, capped perks, and Daily Might. Reset & Refund if you need to reallocate.', SYS)
             player:timer(30, function(p) openMenu(p) end)
         end,
     })

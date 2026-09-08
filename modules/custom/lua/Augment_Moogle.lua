@@ -1809,7 +1809,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 -- value is either your Augment Tier (tierValue) or a hard flat
                 -- number (flatValue). Extra catalysts add nothing but stacked
                 -- slots would multiply it -> one catalyst per trade, one line
-                -- per item. flatValue augments (currently just Treasure Hunter)
+                -- per item. flatValue augments (Treasure Hunter, Phys/Magic DT II)
                 -- deliberately do NOT scale with player tier: they cap out at
                 -- their written value on every gear piece.
                 if def2 and (def2.tierValue or def2.flatValue) then
@@ -1921,17 +1921,14 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 -- battleutils.cpp:4707.
                 [ 54] = 'Physical Dmg. Taken floors at -50% total. (PDT-II only goes lower.)',
                 [ 71] = 'Damage Taken floors at -50% total across gear.',
-                -- 1155/1156 are the tier-II catalysts (Marid Hide / Gargouille
-                -- Horn). They wrote the tier-I mods 161/163 until 2026-09-07 --
-                -- which made them duplicates of 54/55 and subject to the very
-                -- -50% floor these messages described. Repointed to DMGPHYS_II
-                -- (190) / DMGMAGIC_II (831); combat/damage_multipliers.lua
-                -- clamps those separately to a combined -87.5%.
-                [1155] = 'Physical Dmg. Taken II bypasses the -50% floor; combined Dmg. Taken floors at -87.5%.',
+                -- 1155/1156 write DMGPHYS_II / DMGMAGIC_II (Marid Hide /
+                -- Gargouille Horn). One line, 1% per piece; combat clamps
+                -- augment II at 10%. Unique weapons keep their own II.
+                [1155] = 'Phys DT II is +1% per piece (one line). Ten pieces = 10%. Burtgang / Epeolatry keep their own II.',
                 -- MDT (mod 163 DMGMAGIC) floored at -50% in
                 -- battleutils.cpp:4664.
                 [ 55] = 'Magic Dmg. Taken floors at -50% total. (MDT-II only goes lower.)',
-                [1156] = 'Magic Dmg. Taken II bypasses the -50% floor; combined Dmg. Taken floors at -87.5%.',
+                [1156] = 'Magic DT II is +1% per piece (one line). Ten pieces = 10%. Aegis keeps its own II.',
                 -- Breath Dmg Taken (mod 162) shares the same clamp path.
                 [ 56] = 'Breath Dmg. Taken floors at -50% total.',
                 -- Magic Burst Bonus (mod 487 MAGIC_BURST_BONUS_CAPPED).

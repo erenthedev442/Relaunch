@@ -566,7 +566,7 @@ return
         { id = 'RFSH',  label = 'Refresh',       mod = xi.mod.REFRESH,           perLevel = 1, cap = 10, apCost = 3, note = '+1 Refresh / level (max +10 MP/tick) [3 AP]' },
 
         -- ---- Utility --------------------------------------------------
-        { id = 'TH',  label = 'Treas.Hunter', mod = xi.mod.TREASURE_HUNTER, perLevel = 1, cap = 5, totalCost = 100, legacyCap = 50, legacyCost = 2, note = '+1 TH / level (max +5; 100 points total; server hard cap TH14)' },
+        { id = 'TH',  label = 'Treas.Hunter', mod = xi.mod.TREASURE_HUNTER, perLevel = 1, cap = 5, totalCost = 100, legacyCap = 50, legacyCost = 2, note = '+1 TH / level (max +5; 100 points total; shared cap TH14, main THF TH17)' },
         { id = 'GIL', label = 'Gilfinder',    mod = xi.mod.GILFINDER,        perLevel = 2, cap = 50, apCost = 1, note = '+2% Gilfinder / level (max +100%) [1 AP]'    },
 
         -- ---- Resistances ---------------------------------------------

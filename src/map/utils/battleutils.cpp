@@ -52,6 +52,7 @@
 #include "charutils.h"
 #include "enmity_container.h"
 #include "entities/battleentity.h"
+#include "entities/charentity.h"
 #include "entities/mobentity.h"
 #include "entities/petentity.h"
 #include "entities/trustentity.h"
@@ -1263,13 +1264,14 @@ void HandleEnspell(CBattleEntity* PAttacker, CBattleEntity* PDefender, action_re
                 PChar->getMod(Mod::TREASURE_HUNTER) > 0) // any job with TH mod (augments, Paragon board, gear) can proc
             {
                 auto PMob = dynamic_cast<CMobEntity*>(PDefender);
-                if (PMob && PMob->m_THLvl < 14)
+                const int16 thCap = GetTreasureHunterCap(PChar);
+                if (PMob && PMob->m_THLvl < thCap)
                 {
-                    int16 playerTH = std::clamp<int16>(PChar->getMod(Mod::TREASURE_HUNTER), 0, 14);
+                    int16 playerTH = GetTreasureHunterLevel(PChar);
 
                     int16 THdiff = PMob->m_THLvl - playerTH;
 
-                    // Auto-upgrade to the player's full TH, bounded by the TH14 hard cap.
+                    // Auto-upgrade to the player's full TH, bounded by their job cap.
                     if (THdiff < 0)
                     {
                         PMob->m_THLvl = playerTH;
@@ -4890,6 +4892,59 @@ int32 CheckAndApplyDamageCap(int32 damage, CBattleEntity* PDefender)
     return std::clamp(damage, damageCap - damageVariant, damageCap);
 }
 
+namespace
+{
+    // Keep in lockstep with scripts/globals/combat/damage_multipliers.lua.
+    // Augment PDT-II / MDT-II is 1%/piece; ten pieces = 10%. Unique weapons
+    // keep their native II on top of that.
+    constexpr int16 kAugmentDtIIRaw = 1000;
+
+    const std::unordered_map<uint16, int16> kUniquePhysDtII = {
+        { 18997, -1000 }, { 19066, -1200 }, { 19086, -1400 },
+        { 19618, -1600 }, { 19716, -1600 },
+        { 19825, -1800 }, { 19954, -1800 }, { 20649, -1800 },
+        { 20650, -1800 }, { 20687, -1800 },
+        { 21685, -2500 },
+    };
+
+    const std::unordered_map<uint16, int16> kUniqueMagicDtII = {
+        { 15070, -2500 },
+        { 16195, -3000 }, { 16196, -3500 }, { 16197, -4000 },
+        { 16198, -4500 }, { 16200, -5000 },
+        { 11927, -5000 },
+    };
+
+    int16 equippedUniqueII(CBattleEntity* PDefender, const std::unordered_map<uint16, int16>& uniqueMap)
+    {
+        auto* PChar = dynamic_cast<CCharEntity*>(PDefender);
+        if (!PChar)
+        {
+            return 0;
+        }
+
+        int16 sum = 0;
+        for (uint8 slot = SLOT_MAIN; slot <= SLOT_BACK; ++slot)
+        {
+            if (auto* PItem = PChar->getEquip(static_cast<SLOTTYPE>(slot)))
+            {
+                if (auto it = uniqueMap.find(PItem->getID()); it != uniqueMap.end())
+                {
+                    sum += it->second;
+                }
+            }
+        }
+
+        return sum;
+    }
+
+    float cappedAugmentII(int16 totalRaw, int16 uniqueRaw)
+    {
+        int16 augRaw = totalRaw - uniqueRaw;
+        augRaw       = std::clamp<int16>(augRaw, static_cast<int16>(-kAugmentDtIIRaw), 0);
+        return (uniqueRaw + augRaw) / 10000.0f;
+    }
+} // namespace
+
 // TODO: Study using lua functions.
 int32 MagicDmgTaken(CBattleEntity* PDefender, int32 damage, ELEMENT element)
 {
@@ -4912,8 +4967,8 @@ int32 MagicDmgTaken(CBattleEntity* PDefender, int32 damage, ELEMENT element)
     resist = 1.0f + PDefender->getMod(Mod::DMGMAGIC) / 10000.0f + PDefender->getMod(Mod::DMG) / 10000.0f;
     resist = std::max(resist, 0.5f);
 
-    resist += PDefender->getMod(Mod::DMGMAGIC_II) / 10000.0f;
-    resist = std::max(resist, 0.125f); // Total cap with MDT-% II included is 87.5%
+    resist += cappedAugmentII(PDefender->getMod(Mod::DMGMAGIC_II), equippedUniqueII(PDefender, kUniqueMagicDtII));
+    resist = std::max(resist, 0.125f); // Combined floor with unique MDT II (Aegis) is 87.5%
     damage = (int32)(damage * resist);
 
     if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 1)
@@ -4953,8 +5008,8 @@ int32 PhysicalDmgTaken(CBattleEntity* PDefender, int32 damage, DAMAGE_TYPE damag
     damage       = (int32)(damage * resist);
 
     resist = 1.0f + PDefender->getMod(Mod::DMGPHYS) / 10000.0f + PDefender->getMod(Mod::DMG) / 10000.0f;
-    resist = std::max(resist, 0.5f);                         // PDT caps at -50%
-    resist += PDefender->getMod(Mod::DMGPHYS_II) / 10000.0f; // Add Burtgang reduction after 50% cap. Extends cap to -68%
+    resist = std::max(resist, 0.5f); // PDT caps at -50%
+    resist += cappedAugmentII(PDefender->getMod(Mod::DMGPHYS_II), equippedUniqueII(PDefender, kUniquePhysDtII));
     damage = (int32)(damage * resist);
 
     if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 0)
@@ -5821,6 +5876,40 @@ int32 GetRangedAccuracyBonuses(CBattleEntity* battleEntity)
     return bonus;
 }
 
+int16 GetTreasureHunterCap(CBattleEntity* PEntity)
+{
+    int16 cap = 14;
+    if (PEntity != nullptr && PEntity->objtype == TYPE_PC && PEntity->GetMJob() == JOB_THF)
+    {
+        if (PEntity->hasTrait(TRAIT_TREASURE_HUNTER))
+        {
+            ++cap;
+        }
+
+        if (PEntity->hasTrait(TRAIT_TREASURE_HUNTER_II))
+        {
+            ++cap;
+        }
+
+        if (PEntity->hasTrait(TRAIT_TREASURE_HUNTER_III))
+        {
+            ++cap;
+        }
+    }
+
+    return cap;
+}
+
+int16 GetTreasureHunterLevel(CBattleEntity* PEntity)
+{
+    if (PEntity == nullptr)
+    {
+        return 0;
+    }
+
+    return std::clamp<int16>(PEntity->getMod(Mod::TREASURE_HUNTER), 0, GetTreasureHunterCap(PEntity));
+}
+
 void AddTraits(CBattleEntity* PEntity, TraitList_t* traitList, uint8 level)
 {
     auto* PChar = dynamic_cast<CCharEntity*>(PEntity);
@@ -5829,6 +5918,15 @@ void AddTraits(CBattleEntity* PEntity, TraitList_t* traitList, uint8 level)
     {
         if (level >= PTrait->getLevel() && PTrait->getLevel() > 0)
         {
+            // TH I/II/III are a main-job THF identity. /THF must not carry them.
+            const uint16 traitId = PTrait->getID();
+            if ((traitId == TRAIT_TREASURE_HUNTER ||
+                 traitId == TRAIT_TREASURE_HUNTER_II ||
+                 traitId == TRAIT_TREASURE_HUNTER_III) &&
+                PEntity->GetMJob() != JOB_THF)
+            {
+                continue;
+            }
             bool add = true;
 
             for (std::size_t j = 0; j < PEntity->TraitList.size(); ++j)

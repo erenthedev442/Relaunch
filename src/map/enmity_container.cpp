@@ -190,9 +190,8 @@ void CEnmityContainer::UpdateEnmity(CBattleEntity* PEntity, int32 CE, int32 VE, 
     // Apply TH only if this was a direct action
     if (directAction)
     {
-        // Apply the player's full TH contribution, but never let any source
-        // transfer more than the server-wide TH14 hard cap.
-        int16 THlevel = std::clamp<int16>(PEntity->getMod(Mod::TREASURE_HUNTER), 0, 14);
+        // Apply the player's full TH contribution, capped at 14 (17 on main THF).
+        int16 THlevel = battleutils::GetTreasureHunterLevel(PEntity);
         int16 GFlevel = PEntity->getMod(Mod::GILFINDER); // Is there a cap? Theoretical GF level cap could be GF 8 for 128/256 + 8*16 = 256/256
 
         if (m_EnmityHolder->m_THLvl < THlevel)

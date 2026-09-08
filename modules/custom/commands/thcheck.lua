@@ -1,7 +1,7 @@
 -----------------------------------
 -- !thcheck
 -- Treasure Hunter diagnostic. Shows:
---   1. your live TREASURE_HUNTER mod (all sources, hard-capped at TH14),
+--   1. your live TREASURE_HUNTER mod (capped at 14, or 17 on main THF),
 --   2. the cap that actually reaches mobs,
 --   3. your current target's APPLIED TH level (m_THLvl) -- engage/hit a mob,
 --      then run this to see exactly what TH it received.
@@ -23,8 +23,13 @@ commandObj.onTrigger = function(player)
     local SYS  = xi.msg.channel.SYSTEM_3
     local th = player:getMod(xi.mod.TREASURE_HUNTER)
 
-    player:printToPlayer(string.format('[TH] Your Treasure Hunter (all sources): %d / 14', th), SYS)
-    player:printToPlayer('[TH] HARD CAP TH14 -- gear, augments, traits, effects, Ascension, and Rebirth cannot exceed it.', SYS)
+    local cap = xi.combat.treasureHunter.playerCap(player)
+    player:printToPlayer(string.format('[TH] Your Treasure Hunter (all sources): %d / %d', th, cap), SYS)
+    if player:getMainJob() == xi.job.THF then
+        player:printToPlayer('[TH] Main THF: TH I/II/III sit above the shared 14. Need +14 from gear / augments / prestige to reach your cap.', SYS)
+    else
+        player:printToPlayer('[TH] HARD CAP TH14 -- gear, augments, prestige, and /THF cannot exceed it. Main THF reaches 17 at 90.', SYS)
+    end
 
     local ok, target = pcall(function() return player:getTarget() end)
     if ok and target and target:isMob() then

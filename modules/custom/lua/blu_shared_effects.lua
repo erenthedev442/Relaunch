@@ -280,6 +280,14 @@ bluSharedEffects.calculateDrainBase = function(caster, params)
     return math.floor(skillBase * params.dmgMultiplier)
 end
 
+-- Blood Drain: 4000 only when skill, INT, and MND are all stacked, then
+-- MAB / weather / staff still have to land. Weapon amp must not apply.
+bluSharedEffects.BLOOD_DRAIN_HEAL_CAP = 4000
+
+function bluSharedEffects.bloodDrainBase(blueSkill, int, mnd)
+    return math.floor(100 + 0.7 * (blueSkill or 0) + 2 * (int or 0) + 1.2 * (mnd or 0))
+end
+
 bluSharedEffects.calculateDiffusionDuration = function(duration, meritValue)
     -- Merit values are stored in five-point steps. The first merit enables
     -- Diffusion; each additional merit adds 5% duration.

@@ -21,6 +21,16 @@ local function simulateDrops(player, mob, kills)
     return dropsGotten
 end
 
+describe('Treasure Hunter drop table', function()
+    it('keeps climbing through TH15-17 and clamps above that', function()
+        assert(xi.combat.treasureHunter.getDropRate(14, 500) == 2000)
+        assert(xi.combat.treasureHunter.getDropRate(15, 500) == 2250)
+        assert(xi.combat.treasureHunter.getDropRate(16, 500) == 2500)
+        assert(xi.combat.treasureHunter.getDropRate(17, 500) == 2750)
+        assert(xi.combat.treasureHunter.getDropRate(99, 500) == 2750)
+    end)
+end)
+
 describe('Treasure Hunter', function()
     ---@type CClientEntityPair
     local player
@@ -47,14 +57,29 @@ describe('Treasure Hunter', function()
         player.assert:hasModifier(xi.mod.TREASURE_HUNTER, 4)
     end)
 
-    it('hard-caps player and applied mob Treasure Hunter at 14', function()
+    it('hard-caps THF75 at 16 (TH I+II above the shared 14)', function()
         player:addMod(xi.mod.TREASURE_HUNTER, 100)
-        player.assert:hasModifier(xi.mod.TREASURE_HUNTER, 14)
+        player.assert:hasModifier(xi.mod.TREASURE_HUNTER, 16)
+        assert(xi.combat.treasureHunter.playerCap(player) == 16)
+    end)
 
-        local mob = player.entities:get(17489925)
+    it('hard-caps THF90 at 17 and applied mob Treasure Hunter at 17', function()
+        local thief = xi.test.world:spawnPlayer({ zone = xi.zone.KUFTAL_TUNNEL, job = xi.job.THF, level = 90 })
+        thief:addMod(xi.mod.TREASURE_HUNTER, 100)
+        thief.assert:hasModifier(xi.mod.TREASURE_HUNTER, 17)
+        assert(xi.combat.treasureHunter.playerCap(thief) == 17)
+
+        local mob = thief.entities:get(17489925)
         assert(mob)
         mob:setTHlevel(100)
-        assert(mob:getTHlevel() == 14)
+        assert(mob:getTHlevel() == 17)
+    end)
+
+    it('hard-caps non-THF jobs at 14', function()
+        local warrior = xi.test.world:spawnPlayer({ zone = xi.zone.KUFTAL_TUNNEL, job = xi.job.WAR, level = 99 })
+        warrior:addMod(xi.mod.TREASURE_HUNTER, 100)
+        warrior.assert:hasModifier(xi.mod.TREASURE_HUNTER, 14)
+        assert(xi.combat.treasureHunter.playerCap(warrior) == 14)
     end)
 
     it('increases drop rates #long', function()

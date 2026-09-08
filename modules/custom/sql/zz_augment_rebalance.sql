@@ -108,7 +108,10 @@ UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 54   A
 UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 55   AND `modId` = 163 AND `isPet` = 0;  -- Magic dmg. taken
 UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 56   AND `modId` = 162 AND `isPet` = 0;  -- Breath dmg. taken
 UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 71   AND `modId` = 160 AND `isPet` = 0;  -- Damage Taken (all)
-UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 1155 AND `modId` = 161 AND `isPet` = 0;  -- Physical Damage Taken
-UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 1156 AND `modId` = 163 AND `isPet` = 0;  -- Magic Damage Taken
+-- 2026-09-08: PDT-II / MDT-II are 1% per piece (Treasure Hunter rules),
+-- writing the real II mods so they bypass the -50% DT I floor. Ten pieces
+-- = 10%. Combat clamps any extra augment II at 10%.
+UPDATE `augments` SET `value` = -1, `multiplier` = 100, `modId` = 190 WHERE `augmentId` = 1155 AND `isPet` = 0;  -- Phys DT II -> DMGPHYS_II
+UPDATE `augments` SET `value` = -1, `multiplier` = 100, `modId` = 831 WHERE `augmentId` = 1156 AND `isPet` = 0;  -- Magic DT II -> DMGMAGIC_II
 UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 1246 AND `modId` = 161 AND `isPet` = 1;  -- Pet: Phy. Dmg. Taken
 UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 1247 AND `modId` = 163 AND `isPet` = 1;  -- Pet: Magic Dmg. Taken

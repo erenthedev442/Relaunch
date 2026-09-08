@@ -23,13 +23,13 @@
 --   the WeaponForge Aeonic steps. Dead legacy charVars (Escha_Beads/Escha_Silt)
 --   are folded into escha_beads on first access. The real escha_silt CURRENCY is
 --   left alone -- it's the Eschan portal travel cost + Domain Invasion fuel.
--- Exchange at the Geas Fete Warden for Beitetsu / Riftcinder / Riftborn Boulder.
+-- Exchange at the Geas Fete Warden for Beitetsu / Riftcinder / Eschalixir+2.
+-- Riftborn Boulders are Abyssea-only so Geas cannot farm Mythic and Empy
+-- from the same kill.
 --
 -- Drop materials from kills (Lua-only, no mob_droplist rows needed):
---   Every NM: 1 guaranteed Beitetsu, then independent 80/70/50/30/20/10/5%
---   rolls for pieces 2-8. Treasure Hunter raises each non-guaranteed roll
---   through the same helper used by normal droplists.
---   Empy band (T1-T2): Riftborn Boulder (Empy I->II / II->III forge mats).
+--   Every NM: tier-scaled Beitetsu (see geas_fete_catalog.lua). Treasure
+--   Hunter raises each bonus roll through the same helper used by droplists.
 --   Aeonic band (T3-T4): Escha Silt + Attestations (T4 always, T3 chance).
 --   T2+: Riftcinder. T4: Eschalixir+2.
 --
@@ -37,6 +37,7 @@
 -- restart-gated (addOverride).
 -----------------------------------
 require('modules/module_utils')
+local geasCatalog = require('modules/custom/lua/geas_fete_catalog')
 local trustDrops = require('modules/custom/lua/trust_cipher_drops')
 require('scripts/zones/Escha_ZiTah/Zone')
 require('scripts/zones/Escha_RuAun/Zone')
@@ -69,7 +70,6 @@ local FETE_BOSS_DROP_RATE = 0.25
 local FETE_DROP_GUARANTEE = true
 
 local BEITETSU         = 4060  -- chunk of beitetsu
-local RIFTBORN_BOULDER = 4061  -- riftborn boulder
 local RIFTCINDER       = 3499  -- pinch of riftcinder
 local ESCHALIXIR_2     = 9086  -- eschalixir +2
 local PULSE_CELL       = 3840  -- alternate solo path for final Ambuscade weapons
@@ -693,8 +693,6 @@ end
 -- ===================================================================
 -- DROP HELPERS (awarded to each credited player on mob death)
 -- ===================================================================
-local BEITETSU_CHANCES = { 100, 80, 70, 50, 30, 20, 10, 5 }
-
 local function passesTreasureHunterRoll(mob, basePct)
     if basePct >= 100 then return true end
 
@@ -719,12 +717,13 @@ local function passesTreasureHunterRoll(mob, basePct)
     return math.random(1, 10000) <= math.max(0, math.min(10000, rate))
 end
 
-local function awardBeitetsu(player, mob)
-    local quantity = 0
-    for _, chance in ipairs(BEITETSU_CHANCES) do
-        if passesTreasureHunterRoll(mob, chance) then
-            quantity = quantity + 1
-        end
+local function awardBeitetsu(player, mob, tier)
+    local quantity = geasCatalog.rollBeitetsu(tier, function(chance)
+        return passesTreasureHunterRoll(mob, chance)
+    end)
+
+    if quantity <= 0 then
+        return
     end
 
     if not player:addItem({ id = BEITETSU, quantity = quantity }) then
@@ -741,44 +740,16 @@ local function awardBeitetsu(player, mob)
         quantity, thLevel), S)
 end
 
--- Empy-band Riftborn: T1 drip, T2 primary farm (avg ~2.9; up to 4).
-local function riftbornQuantity(tier)
-    if tier == 1 then
-        return (math.random() < 0.50) and 1 or 0
-    elseif tier == 2 then
-        local n = 2
-        if math.random() < 0.60 then
-            n = n + 1
-        end
-        if math.random() < 0.30 then
-            n = n + 1
-        end
-        return n
-    end
-    return 0
-end
-
 local function awardDrops(player, mob, def)
     local t = def.tier
-    awardBeitetsu(player, mob)
+    awardBeitetsu(player, mob, t)
 
-    -- Riftcinder: T2+ only
+    -- Riftcinder: T2+ only. Riftborn Boulders are Abyssea-only.
     local rc = (t >= 2) and math.random(1, t) or 0
-    -- Riftborn Boulder: Empy band only (T1-T2). T3-T4 are Aeonic silt/Attestations.
-    local rb = riftbornQuantity(t)
     -- Eschalixir +2: boss only, always
     local lix = (t == 4) and 1 or 0
 
     if rc  > 0 then player:addItem({ id = RIFTCINDER,       quantity = rc  }) end
-    if rb  > 0 then
-        if player:addItem({ id = RIFTBORN_BOULDER, quantity = rb }) then
-            player:printToPlayer(string.format(
-                '[Geas Fete] Riftborn Boulder x%d.', rb), S)
-        else
-            player:printToPlayer(string.format(
-                '[Geas Fete] Riftborn Boulder x%d was lost -- make inventory room!', rb), S)
-        end
-    end
     if lix > 0 then player:addItem({ id = ESCHALIXIR_2,     quantity = lix }) end
 
     -- T3-only alternate path to the final Ambuscade weapon material.
@@ -1497,7 +1468,6 @@ local function buildShop(player, zone, zoneId, mainFn, menu)
     local SHOP = {
         { label='Beitetsu',         id=BEITETSU,         stack=99, cost=200  },
         { label='Riftcinder',       id=RIFTCINDER,       stack=99, cost=150  },
-        { label='Riftborn Boulder', id=RIFTBORN_BOULDER, stack=99, cost=500  },
         { label='Eschalixir+2',     id=ESCHALIXIR_2,     stack=12, cost=2000 },
     }
 

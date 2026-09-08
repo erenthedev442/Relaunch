@@ -2153,9 +2153,8 @@ int16 CBattleEntity::getMod(Mod modID)
             case Mod::BARRAGE_COUNT:
                 return capGear(320);
             case Mod::TREASURE_HUNTER:
-                // Server-wide hard cap: gear, augments, traits, effects, and
-                // progression systems may contribute, but the total cannot exceed TH14.
-                return std::min<int16>(value, 14);
+                // Shared sources cap at 14. Main-job THF adds TH I/II/III above that (15/16/17).
+                return std::min<int16>(value, battleutils::GetTreasureHunterCap(this));
             case Mod::PHANTOM_ROLL:
                 return capGear(150);
             case Mod::REGEN:

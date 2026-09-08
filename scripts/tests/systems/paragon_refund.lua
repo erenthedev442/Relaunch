@@ -1,0 +1,18 @@
+local C = require('modules/custom/lua/paragon_catalog')
+
+describe('Paragon reset refund math', function()
+    it('sums ascend costs from level 0', function()
+        assert(C.levelSpend(0) == 0)
+        assert(C.levelSpend(1) == C.levelCost(0))
+        assert(C.levelSpend(3) == C.levelCost(0) + C.levelCost(1) + C.levelCost(2))
+        assert(C.levelSpend(3) == 25 + 30 + 35)
+    end)
+
+    it('sums perk rank costs from rank 0', function()
+        local vigor = C.perkById('vigor')
+        assert(vigor ~= nil)
+        assert(C.perkSpend(vigor, 0) == 0)
+        assert(C.perkSpend(vigor, 1) == vigor.costBase)
+        assert(C.perkSpend(vigor, 3) == 20 + 28 + 36)
+    end)
+end)

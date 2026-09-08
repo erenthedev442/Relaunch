@@ -1427,18 +1427,11 @@ INSERT INTO `augments` VALUES (1151,0,0,0,0,0);
 INSERT INTO `augments` VALUES (1152,10,1,1,0,0); -- DEF +10 (increases by 10)
 INSERT INTO `augments` VALUES (1153,0,68,3,0,0); -- Evasion +3
 INSERT INTO `augments` VALUES (1154,0,31,3,0,0); -- Mag. Evasion +3
--- Tier-II damage taken. These are the 'Phys DT II' / 'Magic DT II' catalysts
--- (Marid Hide / Gargouille Horn) in modules/custom/lua/augment_catalog.lua.
--- They previously wrote modIds 161/163 -- the SAME mods as the tier-I 'Phys DT'
--- / 'Magic DT' augments (augIds 54/55) -- inherited from upstream and never
--- repointed when the II labels were added. That made them exact duplicates of
--- tier I: subject to the -50% Damage Taken cap, so they could not do the one
--- thing the label and the docs promise (push mitigation past -50%). Now on
--- DMGPHYS_II 190 / DMGMAGIC_II 831, which damage_multipliers.lua clamps
--- separately to a combined -87.5%. Same /10000 scale, so multiplier and value
--- are unchanged -- only the target mod moves.
-INSERT INTO `augments` VALUES (1155,30,190,-3,0,0); -- Physical Damage Taken II (retuned T1~-2%..T5~-10%; bypasses the -50% cap)
-INSERT INTO `augments` VALUES (1156,30,831,-3,0,0); -- Magic Damage Taken II (retuned T1~-2%..T5~-10%; bypasses the -50% cap)
+-- Tier-II damage taken (Marid Hide / Gargouille Horn). Writes DMGPHYS_II 190
+-- / DMGMAGIC_II 831 so they bypass the -50% DT I floor. 1% per piece, one
+-- line; combat clamps augment II at 10%. Unique weapons keep their own II.
+INSERT INTO `augments` VALUES (1155,100,190,-1,0,0); -- Physical Damage Taken II (1%/piece, one line; DMGPHYS_II)
+INSERT INTO `augments` VALUES (1156,100,831,-1,0,0); -- Magic Damage Taken II (1%/piece, one line; DMGMAGIC_II)
 INSERT INTO `augments` VALUES (1157,0,168,2,0,0); -- Spell Interruption Rate Down 2%
 INSERT INTO `augments` VALUES (1158,0,958,2,0,0); -- Occ. Resistance to Status Ailments +2
 

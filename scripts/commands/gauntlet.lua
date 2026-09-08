@@ -1,4 +1,5 @@
 -----------------------------------
+-- !gauntlet              -- any player: enter using your current job save
 -- !gauntlet abort        -- any player: cancel your own active run
 -- !gauntlet abort <name> -- owner/dev GM5: cancel another player's run
 -- !gauntlet status       -- support GM1: list all active sessions
@@ -18,7 +19,15 @@ cmdObj.onTrigger = function(player, args)
     local sessions = xi._gauntlet_sessions
     local C = require('modules/custom/lua/gauntlet_catalog')
 
-    if sub == 'abort' then
+    if sub == '' or sub == 'enter' then
+        local enter = xi._gauntlet_enter
+        if not enter then
+            player:printToPlayer('[gauntlet] TheGauntlet module not loaded.', SYS)
+            return
+        end
+        enter(player)
+
+    elseif sub == 'abort' then
         local target
         if name and name ~= '' then
             if player:getGMLevel() < 5 then
@@ -134,13 +143,15 @@ cmdObj.onTrigger = function(player, args)
             phase = 'choose',
             nm = nil,
             clearedLevels = level - 1,
+            jobId = target:getMainJob(),
         }
+        C.saveJobNext(target, target:getMainJob(), level)
         target:delStatusEffect(xi.effect.LEVEL_RESTRICTION)
         target:setPos(C.WARP_IN.x, C.WARP_IN.y, C.WARP_IN.z, C.WARP_IN.rot, C.ARENA_ZONE)
         player:printToPlayer(string.format('[gauntlet] Set %s to Gauntlet level %d.', target:getName(), level), SYS)
 
     else
-        player:printToPlayer('[gauntlet] Usage: !gauntlet abort | abort <name> | status | fix <name> | set <name> <level>', SYS)
+        player:printToPlayer('[gauntlet] Usage: !gauntlet | enter | abort | abort <name> | status | fix <name> | set <name> <level>', SYS)
     end
 end
 

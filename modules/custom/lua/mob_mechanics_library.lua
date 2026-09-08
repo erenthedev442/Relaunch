@@ -34,6 +34,7 @@
 --     cc     = { periodSec=24, effect=xi.effect.TERROR, power=1, dur=5, msg='lets out a paralysing roar!' },
 --     drain  = { periodSec=10, healPct=3 },                              -- self-heal % max HP (anti-turtle)
 --     drain  = { periodSec=15, heal=10000 },                             -- fixed self-heal; takes precedence
+--     drawInYalms = 8, drawInWait = 1, drawInMsg = '...',               -- yank the runner if they kite too far
 --     phases = { { hp=75, action='adds',   count=3, addGroupId=..., addZoneId=210, addLevel=150, regen=120, msg='...' },
 --                { hp=50, action='fury',   att=3000, haste=120, msg='...' },
 --                { hp=25, action='nuke',   dmgPct=40, msg='...' },
@@ -41,10 +42,18 @@
 --     doom   = { startHpp=15, dur=30, msg='marks you for death!' },      -- low-HP execute pressure
 --   }
 -----------------------------------
-local M = {}
-
--- [mobId] = per-fight state table
-local mechState = {}
+-- FileWatcher dofile discards the return. Mutate the cached table and keep
+-- mechState on it so a live tweak does not wipe in-flight fights.
+local LIBRARY_KEY = 'modules/custom/lua/mob_mechanics_library'
+local M = package.loaded[LIBRARY_KEY]
+if type(M) ~= 'table' then
+    M = {}
+end
+package.loaded[LIBRARY_KEY] = M
+if type(M._state) ~= 'table' then
+    M._state = {}
+end
+local mechState = M._state
 
 -- Resolve a drain pulse without touching entity state. Fixed healing is useful
 -- for encounters whose HP pools change independently of their intended regen.
@@ -119,6 +128,97 @@ local function playerOwner(entity)
     end
 
     return nil
+end
+
+local function gauntletCatalog()
+    local cached = package.loaded['modules/custom/lua/gauntlet_catalog']
+    if type(cached) == 'table' then
+        return cached
+    end
+
+    local ok, gC = pcall(require, 'modules/custom/lua/gauntlet_catalog')
+    if ok and type(gC) == 'table' then
+        return gC
+    end
+end
+
+-- Pull the runner (not a pet) if they kite past drawInYalms. In-flight Gauntlet
+-- attaches that predate the cfg field still pick this up in Riverne A01.
+local function drawInSettings(mob, cfg)
+    if cfg and cfg.drawInYalms and cfg.drawInYalms > 0 then
+        return cfg.drawInYalms, cfg.drawInWait or 1, cfg.drawInMsg
+    end
+
+    local gC = gauntletCatalog()
+    if not gC or not gC.DRAW_IN_YALMS or gC.DRAW_IN_YALMS <= 0 then
+        return nil
+    end
+
+    local zoneId
+    pcall(function() zoneId = mob:getZoneID() end)
+    if zoneId == gC.ARENA_ZONE then
+        return gC.DRAW_IN_YALMS, gC.DRAW_IN_WAIT or 1, gC.DRAW_IN_MSG
+    end
+end
+
+local function drawInSubject(target, st)
+    if st and st.ownerName then
+        local runner
+        pcall(function() runner = GetPlayerByName(st.ownerName) end)
+        if runner then
+            local alive
+            pcall(function() alive = runner:getHP() > 0 end)
+            if alive then
+                return runner
+            end
+        end
+        return nil
+    end
+
+    local owner = playerOwner(target)
+    if not owner then
+        return nil
+    end
+
+    local alive
+    pcall(function() alive = owner:getHP() > 0 end)
+    if alive then
+        return owner
+    end
+end
+
+local function tickDrawIn(mob, target, st, cfg)
+    local yalms, wait, msg = drawInSettings(mob, cfg)
+    if not yalms then
+        return
+    end
+
+    local subject = drawInSubject(target, st)
+    if not subject then
+        return
+    end
+
+    local pos
+    pcall(function() pos = mob:getPos() end)
+    if not pos then
+        return
+    end
+
+    local pulled = false
+    pcall(function()
+        pulled = utils.drawIn(subject, {
+            conditions = { mob:checkDistance(subject) > yalms },
+            position   = pos,
+            wait       = wait,
+        })
+    end)
+
+    if pulled and msg then
+        pcall(function()
+            local tag = (st and st.name) and ('[%s] '):format(st.name) or '[The Gauntlet] '
+            subject:printToPlayer(tag .. msg, xi.msg.channel.SYSTEM_1)
+        end)
+    end
 end
 
 -- Hostile mechanics can opt into hitting the current hate target's party,
@@ -420,6 +520,9 @@ end
 local function clearHoldFirePressure(st)
     st.holdFirePressureTarget = nil
     st.holdFirePressureEffect = nil
+    st.holdFirePressurePower = nil
+    st.holdFirePressureDotTick = nil
+    st.holdFirePressurePending = nil
     st.nextHoldFirePressureTick = nil
 end
 
@@ -454,7 +557,11 @@ local function applyHoldFirePressure(mob, target, holdCfg, st, now)
 
     st.holdFirePressureTarget = pressureTarget
     st.holdFirePressureEffect = pressure.effect
-    st.nextHoldFirePressureTick = now + (holdCfg.pressureDelaySec or holdCfg.pressureTickSec or 3)
+    st.holdFirePressurePower  = pressure.power or 1
+    st.holdFirePressureDotTick = pressure.tick
+    st.holdFirePressurePending = true
+    -- First aura tick waits after the warning line so the player can stop attacking.
+    st.nextHoldFirePressureTick = now + (holdCfg.pressureDelaySec or holdCfg.pressureTickSec or 5)
 
     clearActionBlockingCc(pressureTarget)
 
@@ -462,15 +569,6 @@ local function applyHoldFirePressure(mob, target, holdCfg, st, now)
         st.curseGraceUntil = now + (holdCfg.curseGraceSec or holdCfg.pressureDelaySec or 5)
         pcall(function() mob:setLocalVar('Gauntlet_CurseGraceUntil', st.curseGraceUntil) end)
     end
-
-    pcall(function()
-        pressureTarget:addStatusEffect(pressure.effect, {
-            power = pressure.power or 1,
-            duration = holdCfg.warnSec or 15,
-            origin = mob,
-            tick = pressure.tick,
-        })
-    end)
 end
 
 local function tickHoldFirePressure(mob, holdCfg, st, now)
@@ -504,6 +602,22 @@ local function tickHoldFirePressure(mob, holdCfg, st, now)
     if blocked then
         st.nextHoldFirePressureTick = now + 1
         return
+    end
+
+    if st.holdFirePressurePending then
+        local remaining = holdCfg.warnSec or 15
+        if st.holdFireUntil then
+            remaining = math.max(1, st.holdFireUntil - now)
+        end
+        pcall(function()
+            target:addStatusEffect(effect, {
+                power = st.holdFirePressurePower or 1,
+                duration = remaining,
+                origin = mob,
+                tick = st.holdFirePressureDotTick,
+            })
+        end)
+        st.holdFirePressurePending = false
     end
 
     local active = false
@@ -706,6 +820,9 @@ function M.tick(mob, target)
     local now = os.time()
     local hpp = 100
     pcall(function() hpp = mob:getHPP() end)
+
+    -- Before the rest of the kit so kiting cannot dodge hold-fire / AoE / CC.
+    tickDrawIn(mob, target, st, cfg)
 
     -- Hold-fire warning / exhaustion reward. During exhaustion, suppress the rest
     -- of the scripted kit so the player gets a real punish window.

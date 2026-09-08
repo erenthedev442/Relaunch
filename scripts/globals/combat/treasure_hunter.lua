@@ -23,6 +23,10 @@ xi.combat.treasureHunter.treasureHunterTable =
     [12] = { 7600, 6500, 2950, 1550,  825, 400, 115 },
     [13] = { 7800, 6750, 3100, 1750,  900, 450, 130 },
     [14] = { 8000, 7000, 3250, 2000, 1000, 500, 150 },
+    -- Main-job THF only (TH I/II/III sit above the shared 14).
+    [15] = { 8200, 7250, 3400, 2250, 1100, 550, 170 },
+    [16] = { 8400, 7500, 3550, 2500, 1200, 600, 190 },
+    [17] = { 8600, 7750, 3700, 2750, 1300, 650, 210 },
 }
 
 xi.combat.treasureHunter.dropBracketTable =
@@ -36,13 +40,38 @@ xi.combat.treasureHunter.dropBracketTable =
     [7] = {    0 }, -- Set to 0, for weird cases in DB.
 }
 
+xi.combat.treasureHunter.SHARED_CAP   = 14
+xi.combat.treasureHunter.THF_MAIN_CAP = 17
+
+-- Shared gear / prestige / augments stop at 14. Main THF keeps TH I/II/III above that.
+xi.combat.treasureHunter.playerCap = function(player)
+    local cap = xi.combat.treasureHunter.SHARED_CAP
+    if not player or player:getMainJob() ~= xi.job.THF then
+        return cap
+    end
+
+    if player:hasTrait(xi.trait.TREASURE_HUNTER) then
+        cap = cap + 1
+    end
+
+    if player:hasTrait(xi.trait.TREASURE_HUNTER_II) then
+        cap = cap + 1
+    end
+
+    if player:hasTrait(xi.trait.TREASURE_HUNTER_III) then
+        cap = cap + 1
+    end
+
+    return cap
+end
+
 xi.combat.treasureHunter.getDropRate = function(thLevel, dropRate)
     -- Sanitize parameters
     local thTier     = utils.defaultIfNil(thLevel, 0)
     local thDropRate = utils.defaultIfNil(dropRate, 0)
 
-    -- RELAUNCH: every TH source shares a server-wide hard cap of TH14.
-    thTier     = utils.clamp(math.floor(thTier), 0, 14)
+    -- Shared sources cap at 14. Main-job THF can apply 15-17.
+    thTier     = utils.clamp(math.floor(thTier), 0, 17)
     thDropRate = utils.clamp(thDropRate, 0, 10000)
 
     -- Early returns: Drop is guaranteed or non-existant.

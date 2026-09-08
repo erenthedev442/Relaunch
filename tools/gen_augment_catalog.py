@@ -55,6 +55,7 @@ OVERRIDE_SQL = ROOT / "modules" / "custom" / "sql" / "zz_augment_rebalance.sql"
 # sane ~1%->25% curve in zz_augment_rebalance.sql so that % is meaningful.
 MOD_DISPLAY_SCALE = {
     160: 100, 161: 100, 162: 100, 163: 100, 164: 100,   # damage-taken family -> %
+    190: 100, 831: 100,                                 # PDT-II / MDT-II -> %
     175: 100,                                            # skillchain dmg -> %
     506: 10,                                             # proc chance -> %
     507: 100,                                            # occ. extra
@@ -133,12 +134,10 @@ LABEL_OVERRIDE = {
     # value quote-free: a literal " in a Moogle/customMenu label corrupts the menu.)
     343: 'Drain/Aspir Potency',
     # Damage-taken pairs: the tier-I mod (DMGPHYS 54 / DMGMAGIC 55) shares the
-    # -50% DT cap; the tier-II mod (DMGPHYS_II 1155 / DMGMAGIC_II 1156) bypasses
-    # that cap (down to -87.5%). The stock SQL comments ("Phys. dmg. taken" vs
-    # "Physical Damage Taken") only differ by casing and are indistinguishable in
-    # the Moogle menu, so relabel to the compact I/II form (owner request
-    # 2026-08-10). Kept <=18 chars for the Moogle menu truncation; the full
-    # cap-vs-bypass explanation lives on the augments docs page.
+    # -50% DT cap; the tier-II mod (1155 / 1156) writes DMGPHYS_II / DMGMAGIC_II
+    # at 1% per piece (one line). Ten pieces = 10%. The stock SQL comments
+    # ("Phys. dmg. taken" vs "Physical Damage Taken") only differ by casing, so
+    # relabel to the compact I/II form (owner request 2026-08-10).
     54:   'Phys DT',
     55:   'Magic DT',
     1155: 'Phys DT II',
@@ -366,6 +365,10 @@ MAXBOOST = {
     # maxBoost 0 is kept as a safety floor for any consumer that doesn't know
     # the tierValue flag (it then behaves like the old fixed +1/slot).
     147: 0,
+
+    # PDT-II / MDT-II -- 1% flat per piece, one line (see FLAT_VALUE).
+    1155: 0,
+    1156: 0,
 }
 
 # Tier-fixed augments (owner requests 2026-07-11): a SINGLE catalyst whose
@@ -377,6 +380,13 @@ MAXBOOST = {
 TIER_VALUE = {
     147: 1,  # Treasure Hunter  -> +1 at T1 .. +5 at T5
     67:  2,  # All songs        -> +2 at T1 .. +10 at T5
+}
+
+# Flat single-line augments: one catalyst per piece, constant value.
+# Emitted as `flatValue = N`; Augment_Moogle treats these like Treasure Hunter.
+FLAT_VALUE = {
+    1155: 1,  # Phys DT II   -> -1% per piece (engine raw -100)
+    1156: 1,  # Magic DT II  -> -1% per piece
 }
 
 # Specific item IDs kept OUT of the catalyst pool entirely -- never offered as
@@ -1354,16 +1364,18 @@ def main():
             mb_val = MAXBOOST.get(aid)
             mb_suffix = f", maxBoost = {mb_val}" if mb_val is not None else ""
             tv_suffix = f", tierValue = {TIER_VALUE[aid]}" if aid in TIER_VALUE else ""
+            fv_suffix = f", flatValue = {FLAT_VALUE[aid]}" if aid in FLAT_VALUE else ""
             lines.append(
                 f"    {id_str} = {{ augId = {aug_str} base = {base_str} "
                 f"mult = {mult_str} disp = {disp_str} cat = {cat_str} "
-                f"label = {lua_str(label_final)}{mb_suffix}{tv_suffix} }},"
+                f"label = {lua_str(label_final)}{mb_suffix}{tv_suffix}{fv_suffix} }},"
             )
             jentries.append({
                 "itemId": iid, "augId": aid, "label": label_final,
                 "base": base_val, "mult": mult_val, "disp": disp_val,
                 "cat": _cat_idx + 1, "maxBoost": mb_val,
                 "tierValue": TIER_VALUE.get(aid, 0),
+                "flatValue": FLAT_VALUE.get(aid, 0),
             })
         json_groups.append({"category": CAT_NAMES[cidx], "entries": jentries})
 

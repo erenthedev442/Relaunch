@@ -256,6 +256,11 @@ bool    DoRandomDealToEntity(CCharEntity* PChar, CBattleEntity* PTarget);
 void turnTowardsTarget(CBaseEntity* PEntity, CBaseEntity* PTarget, bool force = false);
 
 void AddTraits(CBattleEntity* PEntity, TraitList_t* TraitList, uint8 level);
+
+// Shared TH sources (gear / augments / prestige) cap at 14 for every job.
+// Main-job THF keeps the TH I/II/III +3 above that, so their live cap is 17.
+int16 GetTreasureHunterCap(CBattleEntity* PEntity);
+int16 GetTreasureHunterLevel(CBattleEntity* PEntity);
 bool HasClaim(CBattleEntity* PEntity, CBattleEntity* PTarget);
 
 timer::duration CalculateSpellCastTime(CBattleEntity*, CMagicState*);
