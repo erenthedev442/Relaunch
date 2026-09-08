@@ -1301,7 +1301,21 @@ CBaseEntity* GetNPCByID(uint32 npcid, const sol::object& instanceObj)
 
     if (!PNpc)
     {
-        ShowWarning("luautils::GetNPCByID NPC doesn't exist (%d)", npcid);
+        // Name the Lua caller. Dozens of scripts call GetNPCByID, so a bare id is
+        // unactionable: the live log carried 2,529 of these in six hours, 2,528 of
+        // them for id 0, with no way to tell which script was asking for nothing.
+        // Level 1 is the Lua frame that called this C function (level 0 is us).
+        lua_Debug ar;
+        auto*     L = lua.lua_state();
+        if (lua_getstack(L, 1, &ar) && lua_getinfo(L, "Sl", &ar))
+        {
+            ShowWarning("luautils::GetNPCByID NPC doesn't exist (%d) - called from %s:%d",
+                        npcid, ar.short_src, ar.currentline);
+        }
+        else
+        {
+            ShowWarning("luautils::GetNPCByID NPC doesn't exist (%d)", npcid);
+        }
         return nullptr;
     }
 
