@@ -1921,11 +1921,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 -- battleutils.cpp:4707.
                 [ 54] = 'Physical Dmg. Taken floors at -50% total. (PDT-II only goes lower.)',
                 [ 71] = 'Damage Taken floors at -50% total across gear.',
-                [1155] = 'Physical Dmg. Taken floors at -50% total. (PDT-II only goes lower.)',
+                -- 1155/1156 are the tier-II catalysts (Marid Hide / Gargouille
+                -- Horn). They wrote the tier-I mods 161/163 until 2026-09-07 --
+                -- which made them duplicates of 54/55 and subject to the very
+                -- -50% floor these messages described. Repointed to DMGPHYS_II
+                -- (190) / DMGMAGIC_II (831); combat/damage_multipliers.lua
+                -- clamps those separately to a combined -87.5%.
+                [1155] = 'Physical Dmg. Taken II bypasses the -50% floor; combined Dmg. Taken floors at -87.5%.',
                 -- MDT (mod 163 DMGMAGIC) floored at -50% in
                 -- battleutils.cpp:4664.
                 [ 55] = 'Magic Dmg. Taken floors at -50% total. (MDT-II only goes lower.)',
-                [1156] = 'Magic Dmg. Taken floors at -50% total. (MDT-II only goes lower.)',
+                [1156] = 'Magic Dmg. Taken II bypasses the -50% floor; combined Dmg. Taken floors at -87.5%.',
                 -- Breath Dmg Taken (mod 162) shares the same clamp path.
                 [ 56] = 'Breath Dmg. Taken floors at -50% total.',
                 -- Magic Burst Bonus (mod 487 MAGIC_BURST_BONUS_CAPPED).

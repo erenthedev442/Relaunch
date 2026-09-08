@@ -87,6 +87,11 @@ ROLE_WEIGHTS = {
         160: -0.06,   # DMG
         161: -0.06,   # DMGPHYS
         163: -0.06,   # DMGMAGIC
+        # Tier-II DT (Marid Hide / Gargouille Horn augments, repointed here
+        # 2026-09-07). Weighted slightly harder than tier I because they bypass
+        # the -50% Damage Taken floor -- they keep working when tier I is capped.
+        190: -0.08,   # DMGPHYS_II
+        831: -0.08,   # DMGMAGIC_II
         162: -0.04,   # DMGBREATH
         164: -0.04,   # DMGRANGE
     },
@@ -198,6 +203,8 @@ MOD_SANITY_CAP = {
     161: 5000,        # DMGPHYS
     162: 5000,        # DMGBREATH
     163: 5000,        # DMGMAGIC
+    190: 8750,        # DMGPHYS_II  (bypasses the -50% floor; combined cap -87.5%)
+    831: 8750,        # DMGMAGIC_II (bypasses the -50% floor; combined cap -87.5%)
     164: 5000,        # DMGRANGE
     165: 20,          # CRITHITRATE
     170: 30,          # FASTCAST
