@@ -15,10 +15,21 @@ local GROUP =
     SEIRYU   = 11402,
     SUZAKU   = 11403,
     GENBU    = 11404,
+    PADFOOT  = 11405,
     TINNIN   = 11409,
     BRIAREUS = 11410,
     IRATHAM  = 11411,
 }
+
+-- Retail Seiryu dumps a TP move about every 20s (REGAIN 450, then 700 under
+-- 50%). On Reforge's 7200 ATT mid-tier that reads as a blender. Kirin keeps
+-- the 1000 apex cadence; Seiryu just needs to stop outrunning his own ladder.
+M.SEIRYU_REGAIN = { ready = 180, low = 280 }
+
+-- Retail Abyssea Briareus refills 3000 TP every fight tick during Meikyo so
+-- Colossal Slam fires as fast as animation allows. That is the "something
+-- changed -- he didn't used to smack so hard so quickly" report.
+M.BRIAREUS_MEIKYO_SLAMS = 2
 
 local jobSpecialMixin = require('scripts/mixins/job_special')
 
@@ -68,6 +79,47 @@ function M.irathamSpellListAtHpp(hpp)
     return 153
 end
 
+function M.seiryuRegainAtHpp(hpp)
+    if hpp < 50 then
+        return M.SEIRYU_REGAIN.low
+    end
+
+    return M.SEIRYU_REGAIN.ready
+end
+
+-- Sky-god add-effect. Seiryu / Byakko were 100% of half each auto as extra
+-- magic on 7.2k-9.6k ATT, which is why they read hotter than Suzaku / Genbu
+-- on the same ladder. Soften those two; leave the "working reasonably" gods.
+function M.addEffectParams(groupId, damage)
+    local element = additionalElements[groupId]
+    if not element then
+        return nil
+    end
+
+    local chance = 100
+    local divisor = 2
+    if groupId == GROUP.SEIRYU or groupId == GROUP.BYAKKO then
+        chance = 40
+        divisor = 4
+    end
+
+    return {
+        chance  = chance,
+        element = element,
+        power   = math.floor(damage / divisor),
+    }
+end
+
+function M.rewriteChosenSkill(groupId, chosenSkillId)
+    -- Padfoot Rage is Berserk +45% for 120s. On 7200 ATT that is the "worth
+    -- a second look" Relic mid-tier. Keep Charge / Chop / Song.
+    if groupId == GROUP.PADFOOT and chosenSkillId == xi.mobSkill.RAGE_1 then
+        return xi.mobSkill.LAMB_CHOP_1
+    end
+
+    return chosenSkillId
+end
+
 local function regenerateTinninHead(mob, animationSub)
     mob:setLocalVar('RF_TinninHeadAt', os.time() + math.random(90, 210))
     mob:setAnimationSub(animationSub - 1)
@@ -96,6 +148,7 @@ function M.attach(mob, groupId)
         mob:setMod(xi.mod.DOUBLE_ATTACK, 10)
         mob:setMod(xi.mod.COUNTER, 20)
     elseif groupId == GROUP.SUZAKU then
+        mob:setLocalVar('RF_MagicDelayed', 1)
         mob:setMobMod(xi.mobMod.MAGIC_COOL, 35)
         mob:setMagicCastingEnabled(false)
         mob:timer(math.random(5000, 10000), function(mobArg)
@@ -104,8 +157,17 @@ function M.attach(mob, groupId)
             end
         end)
     elseif groupId == GROUP.SEIRYU then
+        -- Hundred Fists on 7200 ATT mid-tier is the other half of the Seiryu
+        -- speed-demon report. Hold it until 40% and at least 45s into the fight.
+        xi.mix.jobSpecial.config(mob, {
+            delay = 45,
+            specials = {
+                { id = xi.mobSkill.HUNDRED_FISTS_1, hpp = 40, cooldown = 180 },
+            },
+        })
+        mob:setLocalVar('RF_MagicDelayed', 1)
         mob:setMobMod(xi.mobMod.MAGIC_COOL, 35)
-        mob:setMod(xi.mod.REGAIN, 450)
+        mob:setMod(xi.mod.REGAIN, M.seiryuRegainAtHpp(100))
         mob:setMagicCastingEnabled(false)
         mob:timer(math.random(5000, 10000), function(mobArg)
             if mobArg then
@@ -119,6 +181,7 @@ function M.attach(mob, groupId)
             end
         end)
     elseif groupId == GROUP.BYAKKO then
+        mob:setLocalVar('RF_MagicDelayed', 1)
         mob:setMagicCastingEnabled(false)
         mob:timer(math.random(5000, 10000), function(mobArg)
             if mobArg then
@@ -128,6 +191,7 @@ function M.attach(mob, groupId)
     elseif groupId == GROUP.KIRIN then
         -- Preserve Kirin's relentless native TP cadence without importing its
         -- fixed-zone god-add IDs into the shared multi-station arena.
+        mob:setLocalVar('RF_MagicDelayed', 1)
         mob:setMod(xi.mod.REGAIN, 1000)
         mob:setMagicCastingEnabled(false)
         mob:timer(5000, function(mobArg)
@@ -159,13 +223,17 @@ local function tickBriareus(mob)
     end
 
     if mob:hasStatusEffect(xi.effect.MEIKYO_SHISUI) then
-        mob:setTP(3000)
+        if mob:getLocalVar('RF_BriareusMeikyoSlams') < M.BRIAREUS_MEIKYO_SLAMS then
+            mob:setTP(3000)
+        end
+    else
+        mob:setLocalVar('RF_BriareusMeikyoSlams', 0)
     end
 end
 
 local function tickTinnin(mob, target)
-    if mob:checkDistance(target) >= mob:getMeleeRange(target) * 2 then
-        if utils.drawIn(target, { position = mob:getPos() }) then
+    if mob:checkDistance(target) > 8 then
+        if utils.drawIn(target, { position = mob:getPos(), wait = 1 }) then
             mob:addTP(3000)
         end
     end
@@ -188,7 +256,7 @@ function M.tick(mob, target, groupId)
         mob:setMod(xi.mod.ATT, M.genbuAttackAtHpp(baseAttack, mob:getHPP()))
         mob:setMod(xi.mod.REGAIN, mob:getHPP() < 50 and 80 or 0)
     elseif groupId == GROUP.SEIRYU then
-        mob:setMod(xi.mod.REGAIN, mob:getHPP() < 50 and 700 or 450)
+        mob:setMod(xi.mod.REGAIN, M.seiryuRegainAtHpp(mob:getHPP()))
     elseif groupId == GROUP.BRIAREUS then
         tickBriareus(mob)
     elseif groupId == GROUP.IRATHAM then
@@ -209,7 +277,12 @@ function M.roam(mob, groupId)
     end
 end
 
-function M.chooseMobSkill(mob, groupId)
+function M.chooseMobSkill(mob, groupId, target, chosenSkillId)
+    local rewritten = M.rewriteChosenSkill(groupId, chosenSkillId)
+    if rewritten and rewritten ~= chosenSkillId then
+        return rewritten
+    end
+
     if groupId ~= GROUP.BRIAREUS then
         return 0
     end
@@ -217,7 +290,11 @@ function M.chooseMobSkill(mob, groupId)
     local cueMove = mob:getLocalVar('CUE_MOVE')
     mob:setLocalVar('CUE_MOVE', 0)
     if mob:hasStatusEffect(xi.effect.MEIKYO_SHISUI) then
-        return 2578
+        if mob:getLocalVar('RF_BriareusMeikyoSlams') < M.BRIAREUS_MEIKYO_SLAMS then
+            return 2578
+        end
+
+        return 0
     end
 
     return cueMove
@@ -229,6 +306,10 @@ function M.onWeaponSkill(mob, target, skill, groupId)
     if groupId == GROUP.SEIRYU and skillId == xi.mobSkill.HUNDRED_FISTS_1 then
         mob:setMagicCastingEnabled(false)
         mob:setMobAbilityEnabled(false)
+    elseif groupId == GROUP.BRIAREUS and skillId == 2578 then
+        if mob:hasStatusEffect(xi.effect.MEIKYO_SHISUI) then
+            mob:setLocalVar('RF_BriareusMeikyoSlams', mob:getLocalVar('RF_BriareusMeikyoSlams') + 1)
+        end
     elseif groupId == GROUP.TINNIN then
         if target == mob:getTarget() and skillId == xi.mobSkill.BAROFIELD then
             mob:useMobAbility(xi.mobSkill.POLAR_BLAST)
@@ -261,16 +342,16 @@ function M.onCriticalHit(mob, groupId)
 end
 
 function M.onAdditionalEffect(mob, target, damage, groupId)
-    local element = additionalElements[groupId]
-    if not element then
+    local params = M.addEffectParams(groupId, damage)
+    if not params then
         return
     end
 
     return xi.combat.action.executeAddEffectDamage(mob, target, {
-        chance         = 100,
+        chance         = params.chance,
         attackType     = xi.attackType.MAGICAL,
-        magicalElement = element,
-        basePower      = math.floor(damage / 2),
+        magicalElement = params.element,
+        basePower      = params.power,
         actorStat      = xi.mod.INT,
     })
 end

@@ -264,6 +264,11 @@ end
 xi.player.onPlayerLevelDown = function(player)
 end
 
+-- Fired when Level Sync or a zone level cap changes GetMLevel.
+-- Not a real delevel -- do not treat this as onPlayerLevelDown.
+xi.player.onLevelRestriction = function(player)
+end
+
 xi.player.onPlayerMount = function(player)
     -- For PM3-3 The Road Forks.  This value will be checked periodically, and break
     -- the Mimeo Jewel should a player be mounted, zone, or disconnect.

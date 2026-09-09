@@ -993,12 +993,13 @@ local function applyDifficulty(mob, def, player)
     return pcCount
 end
 
+-- Instant-lose CCs for solo/trusts. Doom stays off this list: it is a
+-- holy-water check, not a wipe.
 local SOLO_FAIL_EFFECTS =
 {
     xi.effect.PETRIFICATION,
     xi.effect.GRADUAL_PETRIFICATION,
     xi.effect.TERROR,
-    xi.effect.DOOM,
     xi.effect.CHARM_I,
     xi.effect.SLEEP_I,
     xi.effect.SLEEP_II,

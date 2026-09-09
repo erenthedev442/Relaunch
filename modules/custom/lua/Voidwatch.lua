@@ -49,6 +49,7 @@ local SYS       = xi.msg.channel.SYSTEM_3
 
 -- ── Sessions (per player, keyed by name) ────────────────────────────────────
 local sessions = {}
+local lastSpawnByPlayer = {}
 xi._voidwatch_sessions = sessions
 local function getSession(p)   return sessions[p:getName()] end
 local function clearSession(p) sessions[p:getName()] = nil end
@@ -319,16 +320,7 @@ local function giveItem(player, itemid)
 end
 
 -- ── Spawn one stratum-scaled Voidwalker at the player ───────────────────────
-local SOLO_FAIL_EFFECTS =
-{
-    xi.effect.PETRIFICATION,
-    xi.effect.GRADUAL_PETRIFICATION,
-    xi.effect.TERROR,
-    xi.effect.DOOM,
-    xi.effect.CHARM_I,
-    xi.effect.SLEEP_I,
-    xi.effect.SLEEP_II,
-}
+local SOLO_FAIL_EFFECTS = C.SOLO_FAIL_EFFECTS
 
 local function clearSoloFailEffects(ownerName, mob)
     local owner
@@ -357,7 +349,16 @@ local function spawnVoidwalker(owner, stratum, clears)
     local mx, mz = px + math.cos(angle) * dist, pz + math.sin(angle) * dist
     local ownerName = owner:getName()
     local roster = stratum.roster
-    local entry = roster[math.random(#roster)]
+    local killed = {}
+    for _, candidate in ipairs(roster or {}) do
+        if (owner:getCharVar('VW_NM_' .. candidate.name) or 0) ~= 0 then
+            killed[candidate.name] = true
+        end
+    end
+    local entry = C.pickRosterEntry(roster, killed, lastSpawnByPlayer[ownerName])
+    if entry then
+        lastSpawnByPlayer[ownerName] = entry.name
+    end
     local level = C.nmLevel(stratum)
 
     local mob = owner:getZone():insertDynamicEntity({

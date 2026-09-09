@@ -1,10 +1,10 @@
 -----------------------------------
 -- hades_catalog.lua
 --
--- Hades daily quests + weekend shop (shop catalog lands later this week).
+-- Hades daily quests + weekend shop.
 -- Five slots every UTC day, same board for every player, 150 Soul Shards
--- if and only if all five are cleared. Relic voucher price is locked at
--- 2100 (two perfect weeks) so later shop prices can be set from that.
+-- if and only if all five are cleared. Weekend shop sells one ware from
+-- each live stall (Steel, Mail, Gild). Hades sets that week's prices.
 -----------------------------------
 -- FileWatcher dofile discards the return. Mutate the cached table so
 -- board changes go live without a map restart.
@@ -21,7 +21,8 @@ catalog.boardRev = 3
 catalog.currencyName = 'Soul Shards'
 catalog.currencyCv   = 'Hades_Shards'
 catalog.dailyCap     = 150
-catalog.relicPrice   = 2100 -- 14 * 150; shop is not live yet
+catalog.relicPrice   = nil -- weeklyPrice() on the voucher catalog is the live cost
+catalog.weekOffer    = nil -- replaced by weekOffers()
 
 catalog.points =
 {
@@ -69,11 +70,129 @@ function catalog.isShopOpen()
     return wday == 0 or wday == 6
 end
 
+function catalog.weekOffers(weekId)
+    return require('modules/custom/lua/hades_shop_catalog').weekOffers(weekId)
+end
+
 function catalog.shopStatusLine()
     if catalog.isShopOpen() then
-        return 'The ferry is up. Wares are still being negotiated -- return later this week.'
+        return 'The ferry is up. Steel, Mail, and Gild this week -- the same stalls for every soul.'
     end
-    return 'The market sinks until Saturday. Quests run every day; the shop opens Saturday and Sunday.'
+    return 'The market sinks until Saturday. Steel, Mail, and Gild return when the ferry rises. Quests run every day.'
+end
+
+local function sayHades(player, line)
+    player:printToPlayer('Hades : ' .. line, xi.msg.channel.SYSTEM_3)
+end
+
+function catalog.tryBuyRelicVoucher(player, poolIndex)
+    if not player then
+        return false
+    end
+
+    if not catalog.isShopOpen() then
+        sayHades(player, 'The ferry is down. Come back when the weekend keeps.')
+        return false
+    end
+
+    local shop = require('modules/custom/lua/hades_shop_catalog')
+    local offer = catalog.weekOffers()[poolIndex or 0]
+    local row = offer and offer.row
+    local price = offer and offer.price
+    if not row or not price or price < 1 then
+        sayHades(player, 'The dead have no wares at that stall.')
+        return false
+    end
+
+    local shards = player:getCharVar(catalog.currencyCv) or 0
+    local wareName = shop.shopName(offer)
+    if shards < price then
+        sayHades(player, string.format(
+            'You hold %d %s. %s costs %d.',
+            shards, catalog.currencyName, wareName, price))
+        return false
+    end
+
+    if shop.owns(player, offer) then
+        sayHades(player, string.format(
+            'This stall is %s. You already carry that one. The other stalls still stand.',
+            row.name))
+        return false
+    end
+
+    if not shop.award(player, offer, 'Hades') then
+        return false
+    end
+
+    player:setCharVar(catalog.currencyCv, shards - price)
+    if offer.key == 'armor' or offer.key == 'accessory' then
+        if row.sourced then
+            if offer.key == 'armor' then
+                sayHades(player, 'The dead still wear their mail.')
+            else
+                sayHades(player, 'The dead still keep their jewels.')
+            end
+        else
+            sayHades(player, 'This one never washed ashore here. Until now.')
+        end
+        sayHades(player, string.format('Take %s.', row.name))
+    elseif row.kind == 'ambuscade' then
+        sayHades(player, 'The dead left steel, not paper.')
+        sayHades(player, string.format('Take %s. It is already whole.', row.name))
+    else
+        sayHades(player, 'The dead paid in relics once. I still have their papers.')
+        sayHades(player, string.format(
+            'This one bears the name %s. Take it to the Weapon Forger -- if you have already walked that path yourself.',
+            row.name))
+    end
+    player:printToPlayer(
+        string.format('[Hades] Received: %s. %s remaining: %d.',
+            wareName, catalog.currencyName, shards - price),
+        xi.msg.channel.SYSTEM_3)
+    return true
+end
+
+function catalog.showShop(player, backFn)
+    local S = xi.msg.channel.SYSTEM_3
+    player:printToPlayer('[Hades] ' .. catalog.shopStatusLine(), S)
+    player:printToPlayer(
+        string.format('[Hades] You hold %d %s.',
+            player:getCharVar(catalog.currencyCv) or 0, catalog.currencyName),
+        S)
+
+    local opts = {}
+    if catalog.isShopOpen() then
+        local shop = require('modules/custom/lua/hades_shop_catalog')
+        for _, offer in ipairs(catalog.weekOffers()) do
+            local poolIndex = offer.pool
+            local row = offer.row
+            player:printToPlayer(
+                string.format('[Hades] %s: %s -- %d %s.',
+                    offer.label, shop.shopName(offer),
+                    offer.price, catalog.currencyName),
+                S)
+            opts[#opts + 1] =
+            {
+                string.format('%s %d', row.name, offer.price),
+                function(p)
+                    catalog.tryBuyRelicVoucher(p, poolIndex)
+                    catalog.showShop(p, backFn)
+                end,
+            }
+        end
+    end
+    opts[#opts + 1] =
+    {
+        'Back',
+        function(p)
+            if backFn then
+                backFn(p)
+            end
+        end,
+    }
+
+    local snapshot = { title = 'Hades Shop', options = opts }
+    player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
 function catalog.zoneLabel(zoneId)

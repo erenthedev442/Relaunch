@@ -437,6 +437,7 @@ void OnPlayerDeath(CCharEntity* PChar);
 void OnPlayerLevelUp(CCharEntity* PChar);
 void OnJobChange(CCharEntity* PChar); // FJB: fired on /job swap (custom jobs e.g. "Boom")
 void OnPlayerLevelDown(CCharEntity* PChar);
+void OnLevelRestriction(CCharEntity* PChar); // Level Sync / zone cap changed GetMLevel
 void OnPlayerMount(CCharEntity* PChar);
 void OnPlayerEmote(CCharEntity* PChar, Emote EmoteID);
 void OnPlayerVolunteer(CCharEntity* PChar, const std::string& text);

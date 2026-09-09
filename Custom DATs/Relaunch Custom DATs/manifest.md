@@ -7,7 +7,7 @@ DATs pack.
 
 | File | Overrides | Notes |
 |------|-----------|-------|
-| `ROM/286/73.DAT` | item text: `26169` Legendary Ring; `23875-78` Track Suit set | Ring: 114-byte record edit. Track Suit: 4 free-id records cloned from donor armor (24213/23859/23831) with Lv.1/all-jobs/all-races attrs + new names. |
+| `ROM/286/73.DAT` | item text: `26169` Legendary Ring; `23875-78` Track Suit; `23879-92` Relic vouchers | Ring: in-place rename. Track Suit: cloned donor armor. Relic vouchers: 16 free-id records cloned from Artemis's Quiver (26344) via `_rebuild_item_text.ps1`. |
 | `ROM/310/13.DAT` | trust model 3121 (Matsui-P) | Year-round mesh for spell 1004 / look `0x0000310C`. Copied from retail `ROM/310/13.DAT`. Does not include campaign spell 1003. |
 | `ROM/339/21-36.DAT` (16 files) | model 515 textures, all 8 races | Legendary Track Suit: body/legs/feet repainted **blue/white** (DXT3 color blocks only; alpha + file size byte-identical to retail). |
 | `ROM/341/16,18,20,22,24,26,28.DAT` (7 files) | model 615 textures, all races | Legend Sweater + scarf repainted **crimson/white** (same integrity guarantees). |
@@ -25,6 +25,8 @@ in the 17 MB file changed.
 | Item ID | Retail Name  | Relaunch Name  | Status | Notes |
 |--------:|--------------|----------------|--------|-------|
 | `26169` | Reraise Ring | Legendary Ring | Done (`ROM/286/73.DAT`) | Functional Legacy migration reward. |
+| `23879-23892` | (free ids) | `Spharai Voucher` … `Annihilator Voucher` | Done (`ROM/286/73.DAT`) | Hades weekend Relic 119 III vouchers. |
+| `23867-23868` | (free ids) | `Aegis Voucher`, `Gjallarhorn Voucher` | Done (`ROM/286/73.DAT`) | Support relics in the same weekly wheel. |
 
 ## Required Display Text
 
@@ -57,6 +59,8 @@ The server-side behavior lives in:
 
 - `modules/custom/sql/legendary_ring.sql`  (item_basic / item_equipment / item_mods)
 - `modules/custom/lua/legacy_ring_grant.lua`  (login grant)
+- `modules/custom/sql/relic_vouchers.sql`  (Hades Relic 119 III vouchers)
+- `modules/custom/lua/relic_voucher_catalog.lua`  (weekly roll + Weapon Forger redeem)
 
 The DAT pack is visual only. If DAT text disagrees with the server, the server
 wins.
@@ -79,6 +83,8 @@ The bundled addon `Windower/addons/relaunch/relaunch.lua` fixes both:
 | Insert       | `23876` | Cloned from Arrogance Brais  → "Track Pants"  |
 | Insert       | `23877` | Cloned from Emerald Crackows → "Track Shoes"  |
 | Insert       | `23878` | Cloned from Arrogance Jacket → "Legend Sweater" |
+| Insert       | `23879-23892` | Cloned from Artemis's Quiver → Relic vouchers |
+| Insert       | `23867-23868` | Cloned from Artemis's Quiver → Aegis / Gjallarhorn vouchers |
 
 Install auto-detects Windower4 and copies the addon into `addons\relaunch\`;
 if it finds `Windower4\scripts\init.txt` it offers to append `lua load relaunch`

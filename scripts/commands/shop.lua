@@ -222,6 +222,16 @@ local stock =
         { 5308, 1 },  -- Toolbag (Uchi)  -> 99x Uchitake        -- Katon (fire)
     },
 
+    -- Puppetmaster Automaton Oils: consumed by Repair (stack of 12). Same
+    -- prices as Gavrie in Whitegate. (Shop > Job Supplies > PUP Oils)
+    pup =
+    {
+        { xi.item.CAN_OF_AUTOMATON_OIL,      50 },  -- Automaton Oil      (Repair 20 HP / 10%)
+        { xi.item.CAN_OF_AUTOMATON_OIL_P1,  250 },  -- Automaton Oil +1   (Repair 40 HP / 20%)
+        { xi.item.CAN_OF_AUTOMATON_OIL_P2,  500 },  -- Automaton Oil +2   (Repair 60 HP / 30%)
+        { xi.item.CAN_OF_AUTOMATON_OIL_P3, 1000 },  -- Automaton Oil +3   (Repair 80 HP / 40%)
+    },
+
     -- Corsair Quick Draw cards (ammo slot, consumed on Quick Draw). Cheap --
     -- a COR burns through these fast, so keep a stack handy. (Shop > Job Supplies > Corsair Cards)
     cards =
@@ -573,6 +583,7 @@ showJobSuppliesMenu = function(player)
         { 'Corsair Dice',  function(p) openStock(p, stock.dice) end },
         { 'Corsair Cards', function(p) openStock(p, stock.cards) end },
         { 'Ninja Tools',   function(p) openStock(p, stock.ninja) end },
+        { 'PUP Oils',      function(p) openStock(p, stock.pup) end },
         { 'Back',          function(p) showMainMenu(p) end },
     })
 end

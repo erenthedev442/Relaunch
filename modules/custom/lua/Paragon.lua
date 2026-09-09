@@ -22,6 +22,7 @@
 --   Paragon_Perk_<id>     rank in each perk (0..maxRank)
 --   Paragon_MightUnlock   1 once the Daily Might perk is bought
 --   Paragon_MightDay      UTC Julian day of the last Daily Might claim
+--   Paragon_MightUntil    unix time Daily Might expires (held across Level Sync)
 -- Reset & Refund returns every spent PP (levels + perks + Daily Might unlock)
 -- and clears those purchases so the player can reallocate. MightDay is kept.
 --
@@ -52,9 +53,112 @@ end
 -- only the delta without doubling or stripping unrelated sources of a mod.
 -----------------------------------
 local function perkPercent(player)
-    if player:getMainLvl() < 99 then return 0 end
-    return (player:getSpentJobPoints() or 0) >= MASTER_JP and 100 or 50
+    return C.perkStrength(player:getMainLvl(), player:getSpentJobPoints() or 0, MASTER_JP)
 end
+
+local function mightSpecs()
+    return {
+        { id = xi.effect.MAX_HP_BOOST, power = C.DAILY_MIGHT_HP,      tick = 0 },
+        { id = xi.effect.REGAIN,       power = C.DAILY_MIGHT_REGAIN,  tick = 3 },
+        { id = xi.effect.REFRESH,      power = C.DAILY_MIGHT_REFRESH, tick = 3 },
+        { id = xi.effect.REGEN,        power = C.DAILY_MIGHT_REGEN,   tick = 3 },
+    }
+end
+
+local function isTaggedMight(effect)
+    return effect
+        and effect:getSourceType() == xi.effectSourceType.TEMPORARY_ITEM
+        and effect:getSourceTypeParam() == C.DAILY_MIGHT_SOURCE
+end
+
+local function findMightEffect(player, effectId)
+    return player:getStatusEffectBySource(effectId, xi.effectSourceType.TEMPORARY_ITEM, C.DAILY_MIGHT_SOURCE)
+end
+
+local function hasLegacyMight(player)
+    local hp = player:getStatusEffect(xi.effect.MAX_HP_BOOST)
+    return hp ~= nil and hp:getPower() == C.DAILY_MIGHT_HP and not isTaggedMight(hp)
+end
+
+local function captureMightRemaining(player)
+    if C.mightRemaining(player:getCharVar('Paragon_MightUntil') or 0, os.time()) > 0 then
+        return
+    end
+    for _, spec in ipairs(mightSpecs()) do
+        local effect = findMightEffect(player, spec.id)
+        if not effect and spec.id == xi.effect.MAX_HP_BOOST and hasLegacyMight(player) then
+            effect = player:getStatusEffect(spec.id)
+        end
+        if effect then
+            local remainMs = effect:getTimeRemaining() or 0
+            if remainMs > 0 then
+                player:setCharVar('Paragon_MightUntil', os.time() + math.floor(remainMs / 1000))
+                return
+            end
+        end
+    end
+end
+
+local function stripDailyMight(player)
+    captureMightRemaining(player)
+    local legacy = hasLegacyMight(player)
+    for _, spec in ipairs(mightSpecs()) do
+        pcall(function()
+            player:delStatusEffect(spec.id, nil, xi.effectSourceType.TEMPORARY_ITEM, C.DAILY_MIGHT_SOURCE)
+        end)
+        if legacy then
+            local effect = player:getStatusEffect(spec.id)
+            if effect and effect:getPower() == spec.power and not isTaggedMight(effect) then
+                pcall(function() player:delStatusEffectSilent(spec.id) end)
+            end
+        end
+    end
+end
+
+local function applyDailyMight(player, duration)
+    local dur = duration or C.mightRemaining(player:getCharVar('Paragon_MightUntil') or 0, os.time())
+    if dur <= 0 then
+        return
+    end
+    for _, spec in ipairs(mightSpecs()) do
+        player:addStatusEffect(spec.id, {
+            power          = spec.power,
+            duration       = dur,
+            origin         = player,
+            tick           = spec.tick,
+            subType        = 0,
+            subPower       = 0,
+            sourceType     = xi.effectSourceType.TEMPORARY_ITEM,
+            sourceTypeParam = C.DAILY_MIGHT_SOURCE,
+            silent         = true,
+        })
+    end
+end
+
+-- forceOff: strip and leave it off (Gauntlet). Otherwise apply only at 99+.
+local function refreshDailyMight(player, forceOff)
+    if not player then
+        return
+    end
+    if forceOff or player:getMainLvl() < 99 then
+        stripDailyMight(player)
+        return
+    end
+
+    local remain = C.mightRemaining(player:getCharVar('Paragon_MightUntil') or 0, os.time())
+    if remain <= 0 then
+        captureMightRemaining(player)
+        remain = C.mightRemaining(player:getCharVar('Paragon_MightUntil') or 0, os.time())
+    end
+
+    if findMightEffect(player, xi.effect.MAX_HP_BOOST) or hasLegacyMight(player) then
+        return
+    end
+    if remain > 0 then
+        applyDailyMight(player, remain)
+    end
+end
+xi._paragon_refreshDailyMight = refreshDailyMight
 
 local function applyPerks(player, resetApplied)
     local percent = perkPercent(player)
@@ -77,6 +181,15 @@ local function applyPerks(player, resetApplied)
     end
 end
 xi._paragon_applyPerks = applyPerks
+
+local function syncParagon(player, resetApplied)
+    if not player then
+        return
+    end
+    applyPerks(player, resetApplied)
+    refreshDailyMight(player, false)
+end
+xi._paragon_sync = syncParagon
 
 -----------------------------------
 -- Spending actions (each re-opens the menu afterwards)
@@ -164,13 +277,13 @@ local function dailyMight(player)
         return
     end
     player:setCharVar('Paragon_MightDay', today)
-
-    local dur = C.DAILY_MIGHT_DURATION
-    player:addStatusEffect(xi.effect.MAX_HP_BOOST, { power = C.DAILY_MIGHT_HP,      duration = dur, origin = player, tick = 0, subType = 0, subPower = 0 })
-    player:addStatusEffect(xi.effect.REGAIN,       { power = C.DAILY_MIGHT_REGAIN,  duration = dur, origin = player, tick = 3, subType = 0, subPower = 0 })
-    player:addStatusEffect(xi.effect.REFRESH,      { power = C.DAILY_MIGHT_REFRESH, duration = dur, origin = player, tick = 3, subType = 0, subPower = 0 })
-    player:addStatusEffect(xi.effect.REGEN,        { power = C.DAILY_MIGHT_REGEN,   duration = dur, origin = player, tick = 3, subType = 0, subPower = 0 })
-    player:printToPlayer("[Paragon] Paragon's Might surges through you! +HP, Regain, Refresh & Regen for 2 hours.", SYS)
+    player:setCharVar('Paragon_MightUntil', os.time() + C.DAILY_MIGHT_DURATION)
+    refreshDailyMight(player, false)
+    if player:getMainLvl() < 99 then
+        player:printToPlayer("[Paragon] Daily Might is claimed. It applies when you are level 99 again (Level Sync and zone caps hold it).", SYS)
+    else
+        player:printToPlayer("[Paragon] Paragon's Might surges through you! +HP, Regain, Refresh & Regen for 2 hours.", SYS)
+    end
 end
 
 -----------------------------------
@@ -321,27 +434,61 @@ xi._paragon_openResetConfirm = openResetConfirm
 
 -----------------------------------
 -- Re-apply perks on every game-in (login AND zone) -- mods are wiped on zone.
+-- Level Sync / zone caps change GetMLevel in C++ and never fire onPlayerLevelDown.
 -----------------------------------
 m:addOverride('xi.player.onGameIn', function(player, ...)
     super(player, ...)
     player:timer(2000, function(p)
-        if p then applyPerks(p, true) end
+        if p then syncParagon(p, true) end
     end)
 end)
 
 m:addOverride('xi.player.onJobChange', function(player)
     super(player)
-    applyPerks(player)
+    syncParagon(player)
 end)
 
 m:addOverride('xi.player.onPlayerLevelUp', function(player)
     super(player)
-    applyPerks(player)
+    syncParagon(player)
 end)
 
 m:addOverride('xi.player.onPlayerLevelDown', function(player)
     super(player)
-    applyPerks(player)
+    syncParagon(player)
+end)
+
+m:addOverride('xi.player.onLevelRestriction', function(player)
+    super(player)
+    syncParagon(player)
+end)
+
+m:addOverride('xi.effects.level_sync.onEffectGain', function(target, effect)
+    super(target, effect)
+    if target.getObjType and target:getObjType() == xi.objType.PC then
+        syncParagon(target)
+    end
+end)
+
+m:addOverride('xi.effects.level_sync.onEffectLose', function(target, effect)
+    super(target, effect)
+    if target.getObjType and target:getObjType() == xi.objType.PC then
+        syncParagon(target)
+    end
+end)
+
+m:addOverride('xi.effects.level_restriction.onEffectGain', function(target, effect)
+    super(target, effect)
+    if target.getObjType and target:getObjType() == xi.objType.PC then
+        syncParagon(target)
+    end
+end)
+
+m:addOverride('xi.effects.level_restriction.onEffectLose', function(target, effect)
+    super(target, effect)
+    if target.getObjType and target:getObjType() == xi.objType.PC then
+        syncParagon(target)
+    end
 end)
 
 -----------------------------------

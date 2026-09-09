@@ -1,4 +1,4 @@
--- !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat]
+-- !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat] [confirm]
 -- Apply augments to a gear piece in inventory. Server-enforced: must be
 -- within 6 yalms of the live Arcane Augment and have talked to / traded
 -- him in the last 3 minutes (see augment_trade_guard.lua). The addon UI
@@ -122,21 +122,31 @@ local NON_AUGMENTABLE = {
 commandObj.onTrigger = function(player, args)
     if not args or args:match('^%s*$') then
         player:printToPlayer(
-            'Usage: !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat]',
+            'Usage: !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat] [confirm]',
             xi.msg.channel.SYSTEM_3)
         return
     end
 
     local parts = {}
     for p in args:gmatch('%S+') do table.insert(parts, p) end
-    local requestedMaat = #parts > 0 and parts[#parts]:lower() == 'maat'
-    if requestedMaat then
-        table.remove(parts)
+    local requestedMaat = false
+    local confirmed = false
+    while #parts > 0 do
+        local last = parts[#parts]:lower()
+        if last == 'confirm' then
+            confirmed = true
+            table.remove(parts)
+        elseif last == 'maat' then
+            requestedMaat = true
+            table.remove(parts)
+        else
+            break
+        end
     end
 
     if #parts < 2 then
         player:printToPlayer(
-            'Usage: !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat]',
+            'Usage: !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat] [confirm]',
             xi.msg.channel.SYSTEM_3)
         return
     end
@@ -163,14 +173,42 @@ commandObj.onTrigger = function(player, args)
         return
     end
 
+    local lockMask = 0
+    if gear.getExDataRaw then
+        local okRaw, raw = pcall(function()
+            return gear:getExDataRaw()
+        end)
+        if okRaw and raw then
+            lockMask = bit.band(raw[LOCK_MASK_BYTE] or 0, 0x1F)
+        end
+    end
+
+    local existingCount = 0
+    local lockedAugs = {}
     for slot = 0, 4 do
         local existing = gear:getAugment(slot)
-        if existing and existing[1] ~= 0 then
-            player:printToPlayer(
-                'That item is already augmented. Use the Arcane Augmenter so crystalized lines are preserved safely.',
-                xi.msg.channel.SYSTEM_3)
-            return
+        local augId = existing and existing[1] or 0
+        if augId ~= 0 then
+            existingCount = existingCount + 1
+            if bit.band(lockMask, bit.lshift(1, slot)) ~= 0 then
+                lockedAugs[#lockedAugs + 1] = { id = augId, value = existing[2] or 0 }
+            end
         end
+    end
+
+    local fullyCrystalized = lockMask == 0x1F or #lockedAugs >= MAX_CATALYST_COUNT
+    if fullyCrystalized then
+        player:printToPlayer(
+            'That piece is fully crystalized. Use Scour (25,000 gil) to strip it first.',
+            xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    if existingCount > 0 and not confirmed then
+        player:printToPlayer(
+            'This will overwrite the current augment. Add confirm to continue (crystalized lines stay locked).',
+            xi.msg.channel.SYSTEM_3)
+        return
     end
 
     if NON_AUGMENTABLE[gearId] then
@@ -219,9 +257,19 @@ commandObj.onTrigger = function(player, args)
         player:printToPlayer('You must specify at least one catalyst.', xi.msg.channel.SYSTEM_3)
         return
     end
-    if requestedMaat and totalCatalysts ~= MAX_CATALYST_COUNT then
+    if #lockedAugs + totalCatalysts > MAX_CATALYST_COUNT then
         player:printToPlayer(
-            "Maat's Cap requires exactly five catalyst slots.",
+            string.format(
+                'This piece has %d crystalized slot%s -- only %d free. Scour it at the Arcane Augmenter to free them.',
+                #lockedAugs,
+                #lockedAugs == 1 and '' or 's',
+                MAX_CATALYST_COUNT - #lockedAugs),
+            xi.msg.channel.SYSTEM_3)
+        return
+    end
+    if requestedMaat and (#lockedAugs + totalCatalysts) ~= MAX_CATALYST_COUNT then
+        player:printToPlayer(
+            "Maat's Cap needs five slots in total (crystalized + new).",
             xi.msg.channel.SYSTEM_3)
         return
     end
@@ -307,11 +355,16 @@ commandObj.onTrigger = function(player, args)
         return
     end
 
-    -- Build augment slots
+    -- Build augment slots. Crystalized lines stay; new rolls fill the free slots.
     local exAugsBySlot = {}
     local labelSummary = {}
     local newMask      = 0
     local allPerfect   = true
+    for i, locked in ipairs(lockedAugs) do
+        exAugsBySlot[#exAugsBySlot + 1] = { id = locked.id, value = locked.value }
+        newMask = bit.bor(newMask, bit.lshift(1, i - 1))
+        labelSummary[#labelSummary + 1] = string.format('crystalized slot %d kept', i)
+    end
 
     for _, catId in ipairs(catalystOrder) do
         local def   = catalog[catId]
@@ -362,7 +415,7 @@ commandObj.onTrigger = function(player, args)
         table.insert(labelSummary, string.format('%s %s%s', def.label, valStr, boostStr))
     end
 
-    if #exAugsBySlot ~= totalCatalysts then
+    if #exAugsBySlot ~= (totalCatalysts + #lockedAugs) then
         player:printToPlayer('Augmentation cancelled: catalyst slot count mismatch.', xi.msg.channel.SYSTEM_3)
         return
     end

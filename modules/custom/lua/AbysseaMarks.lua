@@ -15,6 +15,7 @@ local encounterRuntime = require('modules/custom/lua/abyssea_marks_mechanics')
 local encounterBalance = require('modules/custom/lua/abyssea_marks_balance')
 local partyHpScale = require('modules/custom/lua/party_hp_scale')
 local rosterProgress = require('modules/custom/lua/abyssea_marks_progress')
+local boulderCatalog = require('modules/custom/lua/abyssea_boulder_catalog')
 local trustDrops = require('modules/custom/lua/trust_cipher_drops')
 
 local MARKS_CV         = 'HL_Points'
@@ -23,9 +24,8 @@ local INFAMY_LIFE_CV   = 'Infamy_Lifetime'
 local MARKS_INFAMY_LV  = '[MarksPopInfamy]'
 local MARKS_GIL_LV     = '[MarksPopGil]'
 local MARKS_CRUOR_LV   = '[MarksPopCruor]'
-local RIFTBORN_BOULDER = 4061
-local BOULDER_CASE     = 6182
-local BOULDER_CASE_RATE = 0.025
+local RIFTBORN_BOULDER = boulderCatalog.RIFTBORN_BOULDER
+local BOULDER_CASE     = boulderCatalog.BOULDER_CASE
 local MARKS_DAMAGE_CAP = 6000
 
 -- Per zone tier: mark cost + rewards, then the common pacing block applied at
@@ -288,8 +288,8 @@ local function recordRosterClear(player, mob, cfg)
     end
 end
 
-local function awardBoulderSpoils(player)
-    local boulders = math.random(1, 3)
+local function awardBoulderSpoils(player, tier)
+    local boulders = boulderCatalog.rollBoulders(tier)
     if player:addItem({ id = RIFTBORN_BOULDER, quantity = boulders }) then
         player:printToPlayer(
             string.format('[Abyssea] Spoils: %d Riftborn Boulder%s.',
@@ -302,7 +302,7 @@ local function awardBoulderSpoils(player)
             xi.msg.channel.SYSTEM_3)
     end
 
-    if math.random() < BOULDER_CASE_RATE then
+    if boulderCatalog.rollCase(tier) then
         if player:addItem({ id = BOULDER_CASE, quantity = 1 }) then
             player:printToPlayer(
                 '[Abyssea] RARE SPOILS: A Boulder Case falls from the fiend!',
@@ -509,7 +509,7 @@ xi.mob.marksRewardHook = function(mob, player, isKiller, isWeaponSkillKill)
         local cfg = zoneConfig[player:getZoneID()]
         if cfg then
             recordRosterClear(player, mob, cfg)
-            awardBoulderSpoils(player)
+            awardBoulderSpoils(player, cfg.tier)
         end
     end)
 

@@ -65,6 +65,42 @@ describe('Gauntlet damage-ceiling rebalance', function()
         end
     end)
 
+    it('keeps each runner\'s Shinryu callback on a unique dynamic name', function()
+        assert(catalog.dynamicMobName('Alice', 10) == 'Gtl_Alice_10')
+        assert(catalog.dynamicMobName('Bob', 10) == 'Gtl_Bob_10')
+        assert(catalog.dynamicMobName('Alice', 10) ~= catalog.dynamicMobName('Bob', 10))
+        assert(catalog.dynamicMobName('Bad Name!', 9) == 'Gtl_BadName_9')
+    end)
+
+    it('refuses Gauntlet credit on wipe or a foreign Shinryu death', function()
+        local liveKill =
+        {
+            noCredit     = false,
+            ownerDead    = false,
+            phase        = 'fight',
+            sessionMobId = 100,
+            deadMobId    = 100,
+            sessionLevel = 10,
+            spawnLevel   = 10,
+        }
+        assert(catalog.shouldCreditNmDeath(liveKill) == true)
+
+        liveKill.ownerDead = true
+        assert(catalog.shouldCreditNmDeath(liveKill) == false)
+        liveKill.ownerDead = false
+
+        liveKill.noCredit = true
+        assert(catalog.shouldCreditNmDeath(liveKill) == false)
+        liveKill.noCredit = false
+
+        liveKill.deadMobId = 101
+        assert(catalog.shouldCreditNmDeath(liveKill) == false)
+        liveKill.deadMobId = 100
+
+        liveKill.phase = 'choose'
+        assert(catalog.shouldCreditNmDeath(liveKill) == false)
+    end)
+
     it('resumes the next uncleared boss per job and resets after a full clear', function()
         assert(catalog.nextAfterClear(1) == 2)
         assert(catalog.nextAfterClear(3) == 4)

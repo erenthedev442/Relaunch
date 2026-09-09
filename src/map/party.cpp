@@ -30,6 +30,7 @@
 #include "party.h"
 #include "status_effect_container.h"
 #include "treasure_pool.h"
+#include "lua/luautils.h"
 #include "utils/blueutils.h"
 #include "utils/charutils.h"
 #include "utils/jailutils.h"
@@ -1353,6 +1354,7 @@ void CParty::RefreshSync()
             charutils::BuildingCharWeaponSkills(member);
             charutils::CheckValidEquipment(member);
             member->pushPacket<GP_SERV_COMMAND_COMMAND_DATA>(member);
+            luautils::OnLevelRestriction(member);
         }
         member->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(member, member, 0, syncLevel, MsgStd::LevelSyncActivated);
     }

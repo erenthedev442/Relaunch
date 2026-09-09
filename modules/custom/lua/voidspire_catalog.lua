@@ -46,24 +46,38 @@ catalog.npcPositions =
 }
 
 -- Run tempo (seconds). Endless tempo is tighter than the GM's finite waves.
-catalog.graceDelay   = 8    -- after "Descend" before floor 1 spawns
-catalog.floorDelay   = 6    -- between a cleared floor and the next
-catalog.spawnStagger = 1    -- between mobs within a multi-mob floor
-catalog.spawnRing    = { minRadius = 6, maxRadius = 12 }
+catalog.graceDelay       = 8    -- after "Descend" before floor 1 spawns
+catalog.floorDelay       = 6    -- between a cleared floor and the next
+catalog.spawnStagger     = 1    -- between mobs within a multi-mob floor
+catalog.spawnRetries     = 3    -- insertDynamicEntity can miss when Escha is busy
+catalog.floorWatchdogSec = 18   -- if the floor mob vanished with no death callback
+catalog.spawnRing        = { minRadius = 6, maxRadius = 12 }
 
 -- Escha-Ru'Aun entry plaza sits at y=-34; the basin under it is ~y=-70.
--- Hard-band wyrms (Vrtra / Tiamat / Nidhogg) have 5.7-yalm hitboxes and
--- non-zero pool animationsubs. A 6-12 ring spawn plus navmesh snap drops
--- the model through the platform (Vrtra "spawns underground" around F70).
+-- Large HNMs (Khimaira / Cerberus / wyrms / gods) have 5-6 yalm hitboxes
+-- and some pools ship a non-zero animationsub. A 6-12 ring plus navmesh
+-- snap drops the model through the platform. Every Voidspire spawn is
+-- forced onto the plaza floor with a tight ring.
 catalog.arenaFloorY = -34.0
+catalog.groundAllSpawns = true
 catalog.groundSpawnRing = { minRadius = 2, maxRadius = 4 }
 catalog.groundSpawn =
 {
-    Vrtra             = true,
+    Cerberus          = true,
+    Khimaira          = true,
+    Hydra             = true,
     Tiamat            = true,
     Nidhogg           = true,
-    Hydra             = true,
     ['King Behemoth'] = true,
+    Vrtra             = true,
+    Byakko            = true,
+    Suzaku            = true,
+    Genbu             = true,
+    Seiryu            = true,
+    Bahamut           = true,
+    Ouryu             = true,
+    Fafnir            = true,
+    Jormungand        = true,
 }
 
 -- ============================ FLOOR SCALING ============================
@@ -267,18 +281,47 @@ catalog.floorMechanics =
     },
 }
 
--- Per-mobskill incoming-damage caps. Voidspire MATT/MAGIC_DAMAGE scaling
--- makes some family moves (Hakutaku Death Ray, Khimaira Fulmination) one-shot
--- at deep floors. Applied on spawn via local var; the skill script clamps
--- before takeDamage. Fulmination at F76 was ~19.5k; target band is 4-6k
--- except Tiamat's flying nukes, which sit just under 9k player HP.
+-- Hard ceiling on every Voidspire hit (melee, spells, TP moves, mechanics).
+-- Stamped as EncounterOutgoingDamageCap + GeasFeteMobSkillDamageCap on spawn
+-- so C++ takeDamage and the mobskill path both clamp. Dreadstorm was never
+-- in the per-skill table and was still landing 15k+.
+catalog.outgoingDamageCap = 7500
+
+-- Optional lower per-skill bands. Nothing here may exceed outgoingDamageCap.
+-- Applied on spawn via local var; the skill script clamps before takeDamage.
 catalog.skillDamageCaps =
 {
     Hakutaku = { DeathRay = 5000 },
-    Khimaira = { Fulmination = 5500, Thunderstrike = 5500 },
+    Khimaira = { Fulmination = 5500, Thunderstrike = 5500, Dreadstorm = 7500 },
     Cerberus = { GatesOfHades = 5500 },
-    Tiamat   = { InfernoBlast = 8500, TebbadWingAir = 8000 },
+    Tiamat   = { InfernoBlast = 7500, TebbadWingAir = 7500 },
 }
+
+-- insertDynamicEntity caches onMobDeath at xi.zones[zone].mobs['DE_' .. name].
+-- Two Voidspire runs (or Voidspire + Game Master) that roll the same catalog
+-- mob used to share that slot: the new spawn overwrote the live run's death
+-- callback, so the first player's floor never queued and the next mob never
+-- appeared. Unique script names keep the cache slots apart; packetName stays
+-- the display name.
+function catalog.nextFloorScriptName()
+    local seq = (tonumber(xi._voidspire_floorSpawnSeq) or catalog.floorSpawnSeq or 0) + 1
+    xi._voidspire_floorSpawnSeq = seq
+    catalog.floorSpawnSeq = seq
+    return string.format('VS_%u', seq)
+end
+
+-- OnMobDeath is invoked once per alliance member in zone. Only the killing
+-- blow -- or a no-player kill (trust / DoT / setHP) -- may advance the floor.
+function catalog.shouldCountFloorKill(killer, optParams)
+    optParams = optParams or {}
+    if killer and optParams.isKiller == false then
+        return false
+    end
+    if not killer and optParams.noKiller == false then
+        return false
+    end
+    return true
+end
 
 -- Flavor banners announced the first time you cross into a new Court depth
 -- during a run (cosmetic only).

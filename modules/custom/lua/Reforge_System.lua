@@ -40,6 +40,48 @@ local JOBS_PG_SZ = 6   -- jobs per page on the job picker
 -- onMobEngage / onMobRoam in the spawner). Tunable in the catalog; 0 disables.
 local DESPAWN_SECS = catalog.unengagedDespawnSecs or 180
 
+-- Engage grace used to only delay updateEnmity. Oversized models (Seiryu,
+-- Byakko, Briareus, Hadhayosh) already overlap the popper, so the first tag
+-- started autos / TP / job specials immediately. Bukhis looked like the only
+-- one who waited 2.5s because he is small and has no native regain. Freeze
+-- combat for the whole window, then thaw.
+local function freezeEngageGrace(mob, graceSecs)
+    pcall(function()
+        mob:setLocalVar('RF_GraceUntil', os.time() + math.ceil(graceSecs))
+        mob:setAutoAttackEnabled(false)
+        mob:setMobAbilityEnabled(false)
+        mob:setMagicCastingEnabled(false)
+        mob:setTP(0)
+    end)
+end
+
+local function thawEngageGrace(mob)
+    pcall(function()
+        mob:setLocalVar('RF_GraceUntil', 0)
+        mob:setAutoAttackEnabled(true)
+        mob:setMobAbilityEnabled(true)
+        if mob:getLocalVar('RF_MagicDelayed') == 0 then
+            mob:setMagicCastingEnabled(true)
+        end
+        mob:setTP(0)
+    end)
+end
+
+local function stillInEngageGrace(mob)
+    local untilAt = 0
+    pcall(function()
+        untilAt = mob:getLocalVar('RF_GraceUntil')
+    end)
+    if untilAt <= 0 then
+        return false
+    end
+    if os.time() < untilAt then
+        return true
+    end
+    thawEngageGrace(mob)
+    return false
+end
+
 -----------------------------------
 -- Salvage trade: set of all base-tier item IDs across every job/set/slot.
 -- Built once at module load so the onTrade handler has an O(1) lookup.
@@ -566,6 +608,9 @@ buildSourceNMMenu = function(player, srcDef, station)
                     end,
 
                     onMobFight = function(mfMob, mfTarget)
+                        if stillInEngageGrace(mfMob) then
+                            return
+                        end
                         mechanics.tick(mfMob, mfTarget)
                         native.tick(mfMob, mfTarget, md.groupId)
                     end,
@@ -698,13 +743,14 @@ buildSourceNMMenu = function(player, srcDef, station)
                 mechanics.attach(mob, mechCfg)
                 native.attach(mob, md.groupId)
 
-                -- Claim immediately so the kill locks to the popper; delay
-                -- enmity by engageGraceSecs so oversized NMs don't smash a
-                -- caster on the same tick as spawn (station-2 Seiryu report).
+                -- Claim immediately so the kill locks to the popper. Freeze
+                -- autos / TP / magic for engageGraceSecs so oversized models
+                -- cannot clip a caster on the spawn tick (or the first tag).
                 -- isAggroable is false above so sight can't bypass the grace.
                 mob:updateClaim(p)
                 local graceSecs = catalog.engageGraceSecs or 0
                 if graceSecs > 0 then
+                    freezeEngageGrace(mob, graceSecs)
                     local graceMob = mob
                     local graceStation = station
                     p:timer(math.floor(graceSecs * 1000), function(pp)
@@ -715,6 +761,7 @@ buildSourceNMMenu = function(player, srcDef, station)
                         end)
                         if not aliveOk or not alive then return end
                         if pp:getZoneID() ~= catalog.huntZoneId then return end
+                        thawEngageGrace(graceMob)
                         pcall(function()
                             graceMob:updateClaim(pp)
                             graceMob:updateEnmity(pp)

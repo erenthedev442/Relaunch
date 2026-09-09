@@ -1,0 +1,37 @@
+local C = require('modules/custom/lua/abyssea_boulder_catalog')
+
+describe('Abyssea Riftborn Boulders', function()
+    it('pays more raw boulders on higher tiers', function()
+        assert(C.expectedRaw(1) < C.expectedRaw(2))
+        assert(C.expectedRaw(2) < C.expectedRaw(3))
+        assert(C.spec(1).min == 4 and C.spec(1).max == 6)
+        assert(C.spec(2).min == 8 and C.spec(2).max == 12)
+        assert(C.spec(3).min == 20 and C.spec(3).max == 30)
+    end)
+
+    it('rolls inside the tier band', function()
+        local lo = function(min) return min end
+        local hi = function(_, max) return max end
+        assert(C.rollBoulders(1, lo) == 4)
+        assert(C.rollBoulders(1, hi) == 6)
+        assert(C.rollBoulders(3, lo) == 20)
+        assert(C.rollBoulders(3, hi) == 30)
+    end)
+
+    it('makes Heroes the Empy farm versus Visions and Scars', function()
+        assert(C.EMPY_BOULDERS == 3300)
+        assert(C.empyKills(1) > 590 and C.empyKills(1) < 620)
+        assert(C.empyKills(2) > 300 and C.empyKills(2) < 320)
+        assert(C.empyKills(3) > 120 and C.empyKills(3) < 135)
+        assert(C.empyKills(3) * 2 < C.empyKills(2))
+        assert(C.empyKills(3) * 4 < C.empyKills(1))
+    end)
+
+    it('drops Boulder Cases more often on higher tiers', function()
+        assert(C.spec(1).caseRate == 0.05)
+        assert(C.spec(2).caseRate == 0.08)
+        assert(C.spec(3).caseRate == 0.12)
+        assert(C.rollCase(1, function() return 0.049 end) == true)
+        assert(C.rollCase(1, function() return 0.050 end) == false)
+    end)
+end)

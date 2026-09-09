@@ -94,6 +94,8 @@ PORTAL_DB_WRITE_USER=portal_rw
 PORTAL_DB_WRITE_PASS=<the write password from step 3>
 PORTAL_JWT_SECRET=<see note>
 PORTAL_COOKIE_SECURE=true
+PORTAL_LAUNCHER_KEY=legendary-launcher-feed
+PORTAL_LAUNCHER_DIR=C:/server/portal-launcher
 ```
 - **JWT secret:** to keep existing logins valid, copy `PORTAL_JWT_SECRET` from the old
   Azure `.env`. To force everyone to re-log in (clean cut), generate a fresh one:

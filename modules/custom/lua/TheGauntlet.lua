@@ -15,6 +15,9 @@
 -- while keeping their own session state.
 --
 -- Requires ONE map restart to activate (addOverride module).
+-- Dynamic NMs use unique DE_ names (Gtl_<player>_<level>) so two Shinryu
+-- fights do not share one onMobDeath. Player death dismisses the NM
+-- without credit.
 --
 -- CharVars:  Gauntlet_Clears  (total level-10 clears)
 --            Gauntlet_Next_<jobId>  next boss on that main job (1-10; 1 after a full clear)
@@ -369,6 +372,23 @@ local function cleanupNPCs(sess)
     -- The Gauntlet NPCs are shared zone entities now; never despawn them per player.
 end
 
+-- Remove an NM without awarding a clear. setHP(0) still fires onMobDeath;
+-- Gauntlet_NoCredit plus shouldCreditNmDeath refuse the jackpot.
+local function dismissNm(mob)
+    if type(mob) ~= 'userdata' then
+        return
+    end
+    pcall(function() mob:setLocalVar('Gauntlet_NoCredit', 1) end)
+    pcall(function() mechanics.cleanup(mob) end)
+    pcall(function()
+        if mob:getHP() > 0 then
+            mob:setHP(0)
+        end
+    end)
+end
+
+xi._gauntlet_dismissNm = dismissNm
+
 -----------------------------------
 -- Forward declarations
 -----------------------------------
@@ -546,22 +566,6 @@ local function grantFinalReward(player)
             formatGil(r.gil), r.pp, r.infamy), SYS)
         player:printToPlayer(
             '[The Gauntlet] Your legend is etched in the Hall of Champions forever.', SYS)
-
-        if clears == 1 then
-            player:printToPlayer(string.format(
-                '[The Gauntlet] Congratulations, %s! You have conquered The Gauntlet for the first time!',
-                player:getName()), SYS)
-            player:printToPlayer(
-                '[The Gauntlet] You have earned a one-time Prime Trial completion reward.', SYS)
-            player:printToPlayer(
-                '[The Gauntlet] Please message GM Eren on Discord with proof of completion to claim your reward.', SYS)
-        else
-            player:printToPlayer(string.format(
-                '[The Gauntlet] Congratulations, %s! You have conquered The Gauntlet again.',
-                player:getName()), SYS)
-            player:printToPlayer(
-                '[The Gauntlet] Your one-time Prime Trial completion reward has already been earned.', SYS)
-        end
     end)
 
     pcall(function() saveChampion(player:getName(), player:getID()) end)
@@ -577,8 +581,7 @@ endRun = function(player, reason)
     clearSession(player)
 
     if sess and sess.nm then
-        pcall(function() mechanics.cleanup(sess.nm) end)  -- free mech state + adds
-        pcall(function() sess.nm:setHP(0) end)
+        dismissNm(sess.nm)
     end
 
     local recoverOnExit = reason == 'death'
@@ -650,7 +653,8 @@ spawnNM = function(player, session)
         objtype              = xi.objType.MOB,
         groupId              = nm.groupId,
         groupZoneId          = C.GROUP_ZONE,
-        name                 = nm.name,
+        name                 = C.dynamicMobName(ownerName, level),
+        packetName           = nm.name,
         x = mx, y = py, z = mz,
         rotation             = 180,
         minLevel             = C.nmLevel(level),
@@ -660,10 +664,33 @@ spawnNM = function(player, session)
         releaseIdOnDisappear = true,
 
         onMobDeath = function(deadMob, killer)
-            mechanics.cleanup(deadMob)   -- free mech state + despawn any adds
+            local noCredit = false
+            pcall(function() noCredit = (deadMob:getLocalVar('Gauntlet_NoCredit') or 0) == 1 end)
+            pcall(function() mechanics.cleanup(deadMob) end)
+
             local sess = sessions[ownerName]
-            if not sess then return end
-            if sess.level ~= level then return end
+            local owner = GetPlayerByName(ownerName)
+            local deadMobId, sessionMobId
+            pcall(function() deadMobId = deadMob:getID() end)
+            if sess and sess.nm then
+                pcall(function() sessionMobId = sess.nm:getID() end)
+            end
+            local ownerDead = true
+            if owner then
+                pcall(function() ownerDead = owner:isDead() end)
+            end
+
+            if not C.shouldCreditNmDeath({
+                noCredit     = noCredit,
+                ownerDead    = ownerDead,
+                phase        = sess and sess.phase or nil,
+                sessionMobId = sessionMobId,
+                deadMobId    = deadMobId,
+                sessionLevel = sess and sess.level or nil,
+                spawnLevel   = level,
+            }) then
+                return
+            end
 
             sess.nm = nil
             if level <= 9 then

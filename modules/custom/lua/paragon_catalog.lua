@@ -75,6 +75,21 @@ C.DAILY_MIGHT_HP       = 1500   -- MAX_HP_BOOST (flat)
 C.DAILY_MIGHT_REGAIN   = 5      -- REGAIN (TP/tick)
 C.DAILY_MIGHT_REFRESH  = 10     -- REFRESH (flat MP/tick)
 C.DAILY_MIGHT_REGEN    = 15     -- REGEN   (flat HP/tick)
+-- Tags Daily Might so level-sync can strip it without touching other Regen/Refresh.
+C.DAILY_MIGHT_SOURCE   = 0x5041
+
+-- Permanent perk strength for the current main job. Level Sync / zone caps
+-- change GetMLevel, so a 99 synced to 75 is 0% until the cap lifts.
+function C.perkStrength(mainLvl, spentJp, masterJp)
+    if (mainLvl or 0) < 99 then
+        return 0
+    end
+    return (spentJp or 0) >= (masterJp or 2100) and 100 or 50
+end
+
+function C.mightRemaining(untilUnix, nowUnix)
+    return math.max(0, (untilUnix or 0) - (nowUnix or 0))
+end
 
 -- ── Title flair by Paragon Level (displayed text, NOT a client title) ────────
 C.TITLE_TIERS = {

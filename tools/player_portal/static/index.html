@@ -446,12 +446,13 @@ function renderTools(d) {
   panel.classList.remove("hidden");
   const off = !d.online, jailed = !!d.jailed;
   const dis = off ? "" : " disabled";
-  const moveDis = (off && !jailed) ? "" : " disabled";
+  const rescueDis = jailed ? " disabled" : "";
+  const warpDis = (off && !jailed) ? "" : " disabled";
   const banner = jailed
     ? `<div class="invnote">This character is jailed in Mordion Gaol. Warp and rescue are disabled until a GM pardons them.</div>`
     : off
     ? `<div class="invnote on">Offline — these tools are ready to use.</div>`
-    : `<div class="invnote">This character is online. Log out of the game to use these tools.</div>`;
+    : `<div class="invnote">This character still has a game session. Rescue will clear it and send them to GM Home (use this for a black screen). Close the client first if you can. Warp needs a clean logout.</div>`;
   const raceOpts = Object.entries(RACES).map(([v, n]) => `<option value="${v}"${+v === d.race ? " selected" : ""}>${n}</option>`).join("");
   const faceOpts = Array.from({ length: 16 }, (_, i) => `<option value="${i}"${i === d.face ? " selected" : ""}>Face ${i}</option>`).join("");
   const warpOpts = (d.warpDests || []).map((x) => `<option value="${esc(x.key)}">${esc(x.name)}</option>`).join("");
@@ -462,8 +463,8 @@ function renderTools(d) {
     `<div class="invtop"><span class="invtitle">${esc(d.name)} — tools <span class="dim">${esc(d.zone)}</span></span><button class="mini" id="toolsClose">Close</button></div>` +
     banner +
     `<div class="tsec"><div class="tlabel">Move</div><div class="mrow">
-       <button class="mini" id="rescueBtn"${moveDis}>Rescue → GM Home</button>
-       <select id="warpSel"${moveDis}>${warpOpts}</select><button class="mini" id="warpBtn"${moveDis}>Warp</button>
+       <button class="mini" id="rescueBtn"${rescueDis}>Rescue → GM Home</button>
+       <select id="warpSel"${warpDis}>${warpOpts}</select><button class="mini" id="warpBtn"${warpDis}>Warp</button>
      </div></div>
      <div class="tsec"><div class="tlabel">Change job</div><div class="mrow">
        <select id="mjobSel"${dis}>${mainOpts}</select><span class="dim">/</span><select id="sjobSel"${dis}>${subOpts}</select>
@@ -492,10 +493,12 @@ function renderTools(d) {
       syncGallery();
     });
   }
+  const act = async (path, body, msg) => { if (await invAction(path, body)) { alert(msg); reloadTools(d.charid); } };
+  if (!jailed) {
+    $("rescueBtn").addEventListener("click", () => { if (confirm(`Move ${d.name} to GM Home? Use this if they are stuck or on a black screen.`)) act("/api/char/rescue", { charid: d.charid }, "Moved to GM Home — close the game if it is still open, then log in."); });
+  }
   if (off) {
-    const act = async (path, body, msg) => { if (await invAction(path, body)) { alert(msg); reloadTools(d.charid); } };
     if (!jailed) {
-      $("rescueBtn").addEventListener("click", () => { if (confirm(`Move ${d.name} to GM Home? Use this if the character is stuck.`)) act("/api/char/rescue", { charid: d.charid }, "Moved to GM Home — effective at next login."); });
       $("warpBtn").addEventListener("click", () => act("/api/char/warp", { charid: d.charid, dest: $("warpSel").value }, "Warped — effective at next login."));
     }
     $("jobBtn").addEventListener("click", () => act("/api/char/job", { charid: d.charid, mainJob: +$("mjobSel").value, subJob: +$("sjobSel").value }, "Job changed — effective at next login."));

@@ -7410,6 +7410,8 @@ uint8 CLuaBaseEntity::levelRestriction(const sol::object& level)
                 PChar->pushPacket<CCharSyncPacket>(PChar);
             }
 
+            luautils::OnLevelRestriction(PChar);
+
             if (PChar->PPet)
             {
                 if (PChar->PPet->objtype == TYPE_MOB)

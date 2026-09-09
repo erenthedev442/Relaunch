@@ -111,10 +111,12 @@ origin (above) is simpler and more secure — prefer it unless you have a reason
 
 | Method | Path          | Body                          | Returns                                  |
 |--------|---------------|-------------------------------|------------------------------------------|
-| POST   | `/api/login`  | `{ "login", "password" }`     | sets `HttpOnly` session cookie           |
+| POST   | `/api/login`  | `{ "login", "password" }`     | sets `HttpOnly` session cookie + `{ token }` |
 | GET    | `/api/me`     | — (cookie)                    | `{ login, email, since, characters[] }`  |
 | POST   | `/api/logout` | — (cookie)                    | clears the cookie                        |
 | GET    | `/api/health` | —                             | `{ ok: true }`                           |
+| GET    | `/launcher/manifest.json` | `X-Launcher-Key`     | launcher self-update feed                |
+| GET    | `/launcher/LegendaryLauncher.zip` | `X-Launcher-Key` | published launcher zip                   |
 
 `characters[]` per character: `name, nation, mainJob, mainLvl, subJob, subLvl,
 hp, mp, gil, playtimeH, kills, deaths, battles, hlTier, ascensions, nmKills,
@@ -145,3 +147,7 @@ reference for what's available.
   the box is always up.
 - This is a **standalone service** — it is *not* started by the game deploy/rebuild.
   It ships to the box with `tools/` but you run it separately (systemd above).
+- **Launcher self-update:** set `PORTAL_LAUNCHER_KEY` and `PORTAL_LAUNCHER_DIR`
+  (see `.env.example`). Publish with Legendary-Launcher `tools\Publish-Launcher.ps1 -Upload`.
+  Testers unzip that build once; later opens check `/launcher/manifest.json` and
+  replace the exe automatically. Leave the key empty to keep `/launcher/*` as 404.

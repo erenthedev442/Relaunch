@@ -5208,6 +5208,13 @@ void OnPlayerLevelDown(CCharEntity* PChar)
     callGlobal<void>("xi.player.onPlayerLevelDown", PChar);
 }
 
+void OnLevelRestriction(CCharEntity* PChar)
+{
+    TracyZoneScoped;
+
+    callGlobal<void>("xi.player.onLevelRestriction", PChar);
+}
+
 void OnPlayerMount(CCharEntity* PChar)
 {
     TracyZoneScoped;

@@ -202,6 +202,16 @@ C.WHITE_BONUS_RARE_AT = 3    -- Pearl lights >= this -> a guaranteed bonus rare 
 -- Retail note: the Tier-I trigger NMs (Gorehound, Gjenganger, Raker_Bee) and the
 -- fork-stub Aglaophotis have NO retail droplist; they get the shared pools + a
 -- modest valuable (Philosopher's Stone / Sattva Ring) so every NM has a full table.
+-- Never put Mog Bonanza / login-campaign prize weapons here (Air Knife, Cath Palug
+-- Hammer, Ice Brand, Chocobo Knife, etc.). Those leaked in when Infamy weapons
+-- were dumped onto NM tables.
+-- Never put Sortie / Limbus SU armor here (Magnificent Crown, Clemency Somen,
+-- Revelation Gauntlets, etc.). Those pieces stay in the item tables for later
+-- Limbus/Sortie use -- they are not Voidwatch drops.
+-- Never put later-content i119 here either (Skirmish Qaaxo / Xaddi / Artsieq,
+-- Delve Gorney / Weatherspoon +1, Reisenjima Culminus / Srivatsa / Priwen,
+-- HTBF Ma'iitsoh Haube, Incursion Eosuchus Club, Voluspa, WKR Kerehcatl, etc.).
+-- Rare tables are the retail VNM signature pieces only (dropids 3168-3186).
 C.NM_COMMON =
 {
     703, 700, 887, 702, 895, 902, 653, 644, 737, 745, 746, 866, 645, 654, 738,
@@ -245,42 +255,117 @@ function C.earringReward(stratumKey)
     return reward.pool, reward.chance
 end
 
+-- Retail VNM signature gear only (plus the modest seed items on empty NMs).
+C.VOIDWATCH_RARES =
+{
+    [11502] = true, -- Acubens Helm (Krabkatoa)
+    [11544] = true, -- Veela Cape (Skuld)
+    [11585] = true, -- Beguiling Collar (Blobdingnag)
+    [11586] = true, -- Backlash Torque (Yacumama)
+    [11587] = true, -- Nyx Gorget (Erebus)
+    [11628] = true, -- Strigoi Ring (Lord Ruthven)
+    [11629] = true, -- Zilant Ring (Yilbegan)
+    [11631] = true, -- Blobnag Ring (Blobdingnag)
+    [11632] = true, -- Karka Ring (Krabkatoa)
+    [11633] = true, -- Galdr Ring (Yilbegan)
+    [11635] = true, -- Alert Ring (Farruca Fly)
+    [14162] = true, -- Agrona's Leggings (Yilbegan)
+    [15544] = true, -- Sattva Ring (seeded empty NM)
+    [15859] = true, -- Succor Ring (Dawon)
+    [15953] = true, -- Marching Belt (Lord Ruthven)
+    [15954] = true, -- Fierce Belt (Capricornus)
+    [15955] = true, -- Fatality Belt (Jyeshtha)
+    [16054] = true, -- Hirudinea Earring (Lamprey Lord)
+    [16056] = true, -- Pagondas Earring (Feuerunke)
+    [16151] = true, -- Leonine Mask (Dawon)
+    [16307] = true, -- Repelling Collar (Tammuz)
+    [19245] = true, -- Jinx Ampulla (Shoggoth)
+    [19248] = true, -- Lucky Coin (Yilbegan)
+    [4175]  = true, -- Vile Elixir +1 (shared VNM rare-tier consumable)
+    [942]   = true, -- Philosopher's Stone (seeded empty NM)
+}
+
+function C.isVoidwatchRare(id)
+    return C.VOIDWATCH_RARES[tonumber(id) or 0] == true
+end
+
 C.NM_LOOT =
 {
-    -- Rich pools (retail Tier-III Voidwalkers): gear + signature material.
-    Krabkatoa    = { rare = { 11502, 11632, 26970, 27724, 20827  }, uncommon = { 2884, 2879, 4172, 4174, 4173, 4175 } },
-    Blobdingnag  = { rare = { 11631, 11585, 24188, 24131, 26400  }, uncommon = { 2876, 2882, 4172, 4174, 4173, 4175 } },
-    Dawon        = { rare = { 15859, 16151, 28015, 20945  }, uncommon = { 2570, 4172, 4174, 4173, 4175 } },
-    Lord_Ruthven = { rare = { 11628, 15953, 27775, 20672  }, uncommon = { 2883, 2877, 4172, 4174, 4173, 4175 } },
-    Yilbegan     = { rare = { 11629, 11633, 14162, 19248, 25600, 21104  }, uncommon = { 2878, 4172, 4174, 4173, 4175 } },
+    -- Rich pools (retail Tier-III Voidwalkers): signature gear only.
+    Krabkatoa    = { rare = { 11502, 11632 }, uncommon = { 2884, 2879, 4172, 4174, 4173, 4175 } },
+    Blobdingnag  = { rare = { 11631, 11585 }, uncommon = { 2876, 2882, 4172, 4174, 4173, 4175 } },
+    Dawon        = { rare = { 15859, 16151 }, uncommon = { 2570, 4172, 4174, 4173, 4175 } },
+    Lord_Ruthven = { rare = { 11628, 15953 }, uncommon = { 2883, 2877, 4172, 4174, 4173, 4175 } },
+    Yilbegan     = { rare = { 11629, 11633, 14162, 19248 }, uncommon = { 2878, 4172, 4174, 4173, 4175 } },
     -- Single-gear pools (retail Tier-II): the signature equip + shared consumables.
-    Yacumama     = { rare = { 11586, 27857, 26721, 21712  }, uncommon = { 4172, 4174, 4173, 4175 } },
-    Farruca_Fly  = { rare = { 11635, 28287, 25654, 21221  }, uncommon = { 4172, 4174, 4173, 4175 } },
-    Skuld        = { rare = { 11544, 24178, 28152, 21228  }, uncommon = { 4172, 4174, 4173, 4175 } },
-    Capricornus  = { rare = { 15954, 28013, 28174, 28649  }, uncommon = { 4172, 4174, 4173, 4175 } },
-    Lamprey_Lord = { rare = { 16054, 28016, 28154, 26487  }, uncommon = { 4172, 4174, 4173, 4175 } },
-    Jyeshtha     = { rare = { 15955, 24128, 21528, 26403  }, uncommon = { 4172, 4174, 4173, 4175 } },
-    Feuerunke    = { rare = { 16056, 27725, 21568  }, uncommon = { 4172, 4174, 4173, 4175 } },
-    Tammuz       = { rare = { 16307, 24182, 21570  }, uncommon = { 4172, 4174, 4173, 4175 } },
-    Erebus       = { rare = { 11587, 24166, 21569  }, uncommon = { 4172, 4174, 4173, 4175 } },
-    Shoggoth     = { rare = { 19245, 27096, 28155, 28648  }, uncommon = { 4172, 4174, 4173, 4175 } },
-    -- Retail-empty NMs: seeded so every NM has a full table (see note above).
-    Aglaophotis  = { rare = { 15544, 26702, 21071  }, uncommon = { 4172, 4174, 4173, 4175 } },
-    Gjenganger   = { rare = { 942, 24274, 21529  }, uncommon = { 4172, 4174, 4173, 4175 } },
-    Gorehound    = { rare = { 942, 28280, 25853, 21256  }, uncommon = { 4172, 4174, 4173, 4175 } },
-    Raker_Bee    = { rare = { 942, 28296, 27720, 22042  }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Yacumama     = { rare = { 11586 }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Farruca_Fly  = { rare = { 11635 }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Skuld        = { rare = { 11544 }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Capricornus  = { rare = { 15954 }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Lamprey_Lord = { rare = { 16054 }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Jyeshtha     = { rare = { 15955 }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Feuerunke    = { rare = { 16056 }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Tammuz       = { rare = { 16307 }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Erebus       = { rare = { 11587 }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Shoggoth     = { rare = { 19245 }, uncommon = { 4172, 4174, 4173, 4175 } },
+    -- Retail-empty NMs: modest seed only (see note above).
+    Aglaophotis  = { rare = { 15544 }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Gjenganger   = { rare = { 942 }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Gorehound    = { rare = { 942 }, uncommon = { 4172, 4174, 4173, 4175 } },
+    Raker_Bee    = { rare = { 942 }, uncommon = { 4172, 4174, 4173, 4175 } },
 }
+-- Sortie / Limbus SU4-SU5 armor (Hope / Magnificent / Clemency / Revelation, etc.).
+-- Item rows stay; Voidwatch must never roll them.
+C.LIMBUS_ARMOR_LO = 24120
+C.LIMBUS_ARMOR_HI = 24194
+
+function C.isLimbusArmor(id)
+    id = tonumber(id) or 0
+    return id >= C.LIMBUS_ARMOR_LO and id <= C.LIMBUS_ARMOR_HI
+end
+
+local function withoutLeaks(list, rareOnly)
+    if not list then
+        return list
+    end
+    local out = {}
+    for _, id in ipairs(list) do
+        if not C.isLimbusArmor(id) and (not rareOnly or C.isVoidwatchRare(id)) then
+            out[#out + 1] = id
+        end
+    end
+    return out
+end
+
 function C.nmLoot(name)
     local t = C.NM_LOOT[name]
     if not t then
-        return { rare = C.LOOT.rare, uncommon = C.LOOT.uncommon, common = C.NM_COMMON }
+        return {
+            rare     = withoutLeaks(C.LOOT.rare, true),
+            uncommon = withoutLeaks(C.LOOT.uncommon, false),
+            common   = withoutLeaks(C.NM_COMMON, false),
+        }
     end
+    local rare = (t.rare and #t.rare > 0) and t.rare or C.LOOT.rare
+    local uncommon = (t.uncommon and #t.uncommon > 0) and t.uncommon or C.LOOT.uncommon
     return {
-        rare     = (t.rare and #t.rare > 0)         and t.rare     or C.LOOT.rare,
-        uncommon = (t.uncommon and #t.uncommon > 0) and t.uncommon or C.LOOT.uncommon,
-        common   = t.common or C.NM_COMMON,
+        rare     = withoutLeaks(rare, true),
+        uncommon = withoutLeaks(uncommon, false),
+        common   = withoutLeaks(t.common or C.NM_COMMON, false),
     }
 end
+
+-- Instant-lose CCs stripped from solo/trusts on the fight tick.
+-- Doom stays off this list everywhere: it is a holy-water check, not a wipe.
+C.SOLO_FAIL_EFFECTS =
+{
+    xi.effect.PETRIFICATION,
+    xi.effect.GRADUAL_PETRIFICATION,
+    xi.effect.TERROR,
+    xi.effect.CHARM_I,
+    xi.effect.SLEEP_I,
+    xi.effect.SLEEP_II,
+}
 
 -- ── Stratum pressure (retail donor abilities remain the fight's identity) ───
 -- Avoid generic immunity dances, unavoidable max-HP nukes, terror and doom:
@@ -427,6 +512,40 @@ end
 -- Mythic Stage II preflight via xi.voidwatch.uniqueNmCount below.
 C.UNIQUE_NM_COUNT = 0
 for _ in pairs(C.UNIQUE_NMS) do C.UNIQUE_NM_COUNT = C.UNIQUE_NM_COUNT + 1 end
+
+-- Prefer NMs the opener has not recorded yet (VW_NM_<name>), and never
+-- immediately repeat the last spawn when another roster entry exists.
+-- Without this, Amber's 1-in-3 roll can serve Yilbegan five times while
+-- Lord Ruthven sits unused -- and Mythic Stage II needs all 19 uniques.
+function C.pickRosterEntry(roster, killedSet, lastName)
+    if not roster or #roster == 0 then
+        return nil
+    end
+
+    local unseen, seen = {}, {}
+    for _, entry in ipairs(roster) do
+        if killedSet and killedSet[entry.name] then
+            seen[#seen + 1] = entry
+        else
+            unseen[#unseen + 1] = entry
+        end
+    end
+
+    local pool = #unseen > 0 and unseen or seen
+    if lastName and #pool > 1 then
+        local filtered = {}
+        for _, entry in ipairs(pool) do
+            if entry.name ~= lastName then
+                filtered[#filtered + 1] = entry
+            end
+        end
+        if #filtered > 0 then
+            pool = filtered
+        end
+    end
+
+    return pool[math.random(#pool)]
+end
 
 
 -- REMOVED 2026-07-13 (owner: Voidwatch drops should match the docs page): the

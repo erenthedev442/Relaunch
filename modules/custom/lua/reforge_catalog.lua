@@ -96,9 +96,9 @@ catalog.stations =
 -- NM is abandoned after a fight. Set to 0 to disable. (Mirrors HuntingLeague.)
 catalog.unengagedDespawnSecs = 180  -- 3 minutes
 
--- Seconds after pop before the NM takes enmity on the spawner. Claim still
--- locks immediately so nobody can steal the kill; this buffer stops oversized
--- models (esp. station 2) from DA'ing a caster for ~800 on the spawn tick.
+-- Seconds after pop before the NM can act. Claim still locks immediately so
+-- nobody can steal the kill. Autos, TP moves, magic, and enmity all wait so
+-- oversized models cannot clip a caster on the spawn tick (or the first tag).
 -- Set to 0 to restore instant engage. (Mirrors ApexTrials' delayed enmity.)
 catalog.engageGraceSecs = 2.5
 
@@ -1064,7 +1064,9 @@ catalog.mechCfgs[11403] = {
     cc = { periodSec = 22, effect = xi.effect.TERROR, dur = 5, msg = 'unleashes a terrifying Phoenix Cry!' },
 }
 
--- Seiryu [Lv200] - mid-tier: AoE + drain + phase nuke
+-- Seiryu [Lv200] - mid-tier: AoE + drain + phase nuke.
+-- Native regain / Hundred Fists / 100% wind add-effect were the AF
+-- "speed demon" kit; those are softened in reforge_native_mechanics.lua.
 catalog.mechCfgs[11402] = {
     name  = 'Seiryu',
     aoe   = { periodSec = 12, dmgPct = 22, msg = 'surges with draconic energy!' },
@@ -1075,7 +1077,8 @@ catalog.mechCfgs[11402] = {
     },
 }
 
--- Byakko [Lv225] - hard: stance + CC + drain + fury + dispel + doom
+-- Byakko [Lv225] - hard: stance + CC + drain + fury + dispel + doom.
+-- Extra heat was the 100% light add-effect on 9600 ATT autos (native).
 catalog.mechCfgs[11401] = {
     name   = 'Byakko',
     stance = { startHpp = 100, periodSec = 16,
@@ -1137,7 +1140,8 @@ catalog.mechCfgs[11406] = {
     cc = { periodSec = 22, effect = xi.effect.TERROR, dur = 5, msg = 'emits a Sonic Roar of pure terror!' },
 }
 
--- Padfoot [Lv200] - mid-tier: AoE + drain + nuke
+-- Padfoot [Lv200] - mid-tier: AoE + drain + nuke.
+-- Rage (Berserk +45% / 120s) is rewritten to Lamb Chop on this copy.
 catalog.mechCfgs[11405] = {
     name  = 'Padfoot',
     aoe   = { periodSec = 12, dmgPct = 22, noEnmity = true, msg = 'unleashes Spectral Howl across the area!' },
@@ -1207,7 +1211,8 @@ catalog.mechCfgs[11411] = {
     cc = { periodSec = 22, effect = xi.effect.TERROR, dur = 5, msg = 'howls with an Abyssal Wail!' },
 }
 
--- Briareus [Lv200] - mid-tier: AoE + drain + nuke
+-- Briareus [Lv200] - mid-tier: AoE + drain + nuke.
+-- Meikyo no longer refills 3000 TP every tick (2 Colossal Slams, then stop).
 catalog.mechCfgs[11410] = {
     name  = 'Briareus',
     aoe   = { periodSec = 12, dmgPct = 22, msg = 'swings a Hundred-Arm Cyclone!' },
@@ -1236,7 +1241,8 @@ catalog.mechCfgs[11412] = {
     doom = { startHpp = 18, dur = 28, msg = 'brands you with the Clipped Wing Curse!' },
 }
 
--- Hadhayosh [Lv250] - pre-Apex bridge: full suite, forgiving sustain/clock
+-- Hadhayosh [Lv250] - same pulse budget as Kirin / Tinnin. Earlier fury and
+-- a hotter nova made this apex read as a speed demon next to those two.
 catalog.mechCfgs[11414] = {
     name   = 'Hadhayosh',
     enrage = { sec = 240, att = 5000, haste = 200, msg = 'Hadhayosh loses all restraint -- ENRAGE!' },
@@ -1246,17 +1252,30 @@ catalog.mechCfgs[11414] = {
             { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'absorbs the Void into its mass -- magic is void! Use steel!' },
         }
     },
-    aoe   = { periodSec = 11, dmgPct = 25, msg = 'pulses with a Void Shockwave across the earth!' },
-    cc    = { periodSec = 18, effect = xi.effect.TERROR, dur = 7, msg = 'bellows a world-shaking Behemoth\'s Roar!' },
+    aoe   = { periodSec = 11, dmgPct = 24, msg = 'pulses with a Void Shockwave across the earth!' },
+    cc    = { periodSec = 19, effect = xi.effect.TERROR, dur = 7, msg = 'bellows a world-shaking Behemoth\'s Roar!' },
     drain = { periodSec = 10, healPct = 0.75 },
     phases = {
-        { hp = 65, action = 'fury',   att = 3500, haste = 120, msg = 'enters Abyssal Phase -- attacks accelerate!' },
-        { hp = 30, action = 'nuke',   dmgPct = 44, msg = 'converges the Abyss into one Final Erasure!' },
+        { hp = 60, action = 'fury',   att = 3500, haste = 120, msg = 'enters Abyssal Phase -- attacks accelerate!' },
+        { hp = 25, action = 'nuke',   dmgPct = 42, msg = 'converges the Abyss into one Final Erasure!' },
         { hp = 15, action = 'dispel', count = 5, msg = 'unmakes your enhancements with Void Annihilation!' },
         { hp = 10, action = 'enrage', att = 8000, haste = 250, msg = 'becomes the Void itself!' },
     },
     doom = { startHpp = 12, dur = 25, msg = 'marks you with the Mark of Nothingness!' },
 }
+
+-- Every reforged NM yanks kiting players (and their party) back inside 8
+-- yalms so TP moves cannot be sidestepped. Stamped here so a new catalog
+-- entry cannot ship without it.
+catalog.drawInYalms = 8
+catalog.drawInWait  = 1
+catalog.drawInMsg   = 'drags you back into range!'
+for _, cfg in pairs(catalog.mechCfgs) do
+    cfg.drawInYalms = catalog.drawInYalms
+    cfg.drawInWait  = catalog.drawInWait
+    cfg.drawInMsg   = catalog.drawInMsg
+    cfg.drawInParty = true
+end
 
 -- =========================================================
 -- LOOT POOL HELPER

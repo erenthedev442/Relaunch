@@ -277,6 +277,38 @@ function C.onBossCleared(player, jobId, clearedLevel)
     C.saveJobNext(player, jobId, C.nextAfterClear(clearedLevel))
 end
 
+-- LSB caches dynamic-entity Lua callbacks by DE_<name>. Two Shinryu
+-- named "Shinryu" share one onMobDeath, so the last spawn steals credit.
+function C.dynamicMobName(ownerName, level)
+    local owner = tostring(ownerName or 'unknown'):gsub('[^%w]', '')
+    if owner == '' then
+        owner = 'unknown'
+    end
+    return string.format('Gtl_%s_%d', owner, math.floor(tonumber(level) or 0))
+end
+
+-- Wipe / foreign-death guard. A real clear is: this runner's current fight
+-- mob died, they are still alive, and nobody marked the kill as no-credit.
+function C.shouldCreditNmDeath(info)
+    info = info or {}
+    if info.noCredit then
+        return false
+    end
+    if info.ownerDead then
+        return false
+    end
+    if info.phase ~= 'fight' then
+        return false
+    end
+    if not info.deadMobId or info.deadMobId ~= info.sessionMobId then
+        return false
+    end
+    if info.sessionLevel ~= info.spawnLevel then
+        return false
+    end
+    return true
+end
+
 function C.jobLabel(jobId)
     for name, id in pairs(xi.job) do
         if id == jobId and name ~= 'NONE' and name ~= 'NON_JOB' then

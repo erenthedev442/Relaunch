@@ -27,6 +27,7 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local m       = Module:new('weapon_forge_npc')
 local catalog = require('modules/custom/lua/weapon_forge_catalog')
 local relicCatalog = require('modules/custom/lua/relic_forge_catalog')
+local relicVouchers = require('modules/custom/lua/relic_voucher_catalog')
 local itemCurrency = require('modules/custom/lua/hl_seal_currency')
 local pilgrimage = require('modules/custom/lua/legendary_pilgrimage_catalog')
 local mastery = require('modules/custom/lua/weapon_mastery_catalog')
@@ -1085,6 +1086,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         widescan   = 1,
 
         onTrade = function(player, npc, trade)
+            if relicVouchers.tryRedeem(player, trade) then
+                return
+            end
             player:printToPlayer(
                 '[Weapon Forge] No need to trade -- speak with me and choose a weapon from the menu.',
                 xi.msg.channel.SYSTEM_3)

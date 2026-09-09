@@ -51,8 +51,9 @@ end
 -- Mega-Boss kill, SU5_DROPS_PER_KILL random weapon(s) from this pool land in
 -- the treasure pool for the whole run to lot. (Owner decision 2026-07-12:
 -- moved here from the removed any-Abyssea-mob 5% roll in
--- abyssea_su5_drops.lua.) The docgen dynamis_divergence.py PARSES this table
--- (id/name/slot/job fields) -- keep the row shape.
+-- abyssea_su5_drops.lua.) Bound Ex / no-sale / no-AH by sql/zz_su5_weapons_bound.sql
+-- -- keep that ID list in sync. The docgen dynamis_divergence.py PARSES this
+-- table (id/name/slot/job fields) -- keep the row shape.
 local SU5_DROPS_PER_KILL = 1
 local SU5_WEAPONS =
 {

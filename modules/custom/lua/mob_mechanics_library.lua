@@ -35,6 +35,7 @@
 --     drain  = { periodSec=10, healPct=3 },                              -- self-heal % max HP (anti-turtle)
 --     drain  = { periodSec=15, heal=10000 },                             -- fixed self-heal; takes precedence
 --     drawInYalms = 8, drawInWait = 1, drawInMsg = '...',               -- yank the runner if they kite too far
+--     drawInParty = true,                                               -- also yank the hate target's party
 --     phases = { { hp=75, action='adds',   count=3, addGroupId=..., addZoneId=210, addLevel=150, regen=120, msg='...' },
 --                { hp=50, action='fury',   att=3000, haste=120, msg='...' },
 --                { hp=25, action='nuke',   dmgPct=40, msg='...' },
@@ -187,14 +188,47 @@ local function drawInSubject(target, st)
     end
 end
 
+local function drawInCandidates(target, st, cfg)
+    local primary = drawInSubject(target, st)
+    if not primary then
+        return {}
+    end
+    if not (cfg and cfg.drawInParty) then
+        return { primary }
+    end
+
+    local out = { primary }
+    local seen = {}
+    local primaryId = entityId(primary)
+    if primaryId then
+        seen[primaryId] = true
+    end
+
+    local ok, party = pcall(function()
+        return primary:getParty()
+    end)
+    if ok and party then
+        for _, member in ipairs(party) do
+            local id = entityId(member)
+            if id and not seen[id] then
+                local alive
+                pcall(function()
+                    alive = member:getHP() > 0
+                end)
+                if alive then
+                    seen[id] = true
+                    out[#out + 1] = member
+                end
+            end
+        end
+    end
+
+    return out
+end
+
 local function tickDrawIn(mob, target, st, cfg)
     local yalms, wait, msg = drawInSettings(mob, cfg)
     if not yalms then
-        return
-    end
-
-    local subject = drawInSubject(target, st)
-    if not subject then
         return
     end
 
@@ -204,20 +238,22 @@ local function tickDrawIn(mob, target, st, cfg)
         return
     end
 
-    local pulled = false
-    pcall(function()
-        pulled = utils.drawIn(subject, {
-            conditions = { mob:checkDistance(subject) > yalms },
-            position   = pos,
-            wait       = wait,
-        })
-    end)
-
-    if pulled and msg then
+    local tag = (st and st.name) and ('[%s] '):format(st.name) or '[The Gauntlet] '
+    for _, subject in ipairs(drawInCandidates(target, st, cfg)) do
+        local pulled = false
         pcall(function()
-            local tag = (st and st.name) and ('[%s] '):format(st.name) or '[The Gauntlet] '
-            subject:printToPlayer(tag .. msg, xi.msg.channel.SYSTEM_1)
+            pulled = utils.drawIn(subject, {
+                conditions = { mob:checkDistance(subject) > yalms },
+                position   = pos,
+                wait       = wait,
+            })
         end)
+
+        if pulled and msg then
+            pcall(function()
+                subject:printToPlayer(tag .. msg, xi.msg.channel.SYSTEM_1)
+            end)
+        end
     end
 end
 
@@ -354,6 +390,10 @@ local function aoePulse(mob, aoeCfg, st, target)
     for _, p in ipairs(mechanicPlayersNear(mob, target, radius, st)) do
         pcall(function()
             local dmg = math.floor(p:getMaxHP() * (aoeCfg.dmgPct or 20) / 100)
+            local cap = mob:getLocalVar('EncounterOutgoingDamageCap') or 0
+            if cap > 0 then
+                dmg = math.min(dmg, cap)
+            end
             if dmg > 0 then
                 if aoeCfg.noEnmity then
                     p:takeDamage(dmg)
@@ -629,6 +669,10 @@ local function tickHoldFirePressure(mob, holdCfg, st, now)
 
     pcall(function()
         local damage = math.max(1, math.floor(target:getMaxHP() * (holdCfg.pressureTickPct or 20) / 100))
+        local cap = mob:getLocalVar('EncounterOutgoingDamageCap') or 0
+        if cap > 0 then
+            damage = math.min(damage, cap)
+        end
         target:takeDamage(damage, mob, xi.attackType.SPECIAL, xi.damageType.NONE)
     end)
     st.nextHoldFirePressureTick = now + (holdCfg.pressureTickSec or 3)

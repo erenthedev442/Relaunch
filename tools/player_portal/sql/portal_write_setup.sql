@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS portal_item_log (
 CREATE USER IF NOT EXISTS 'portal_rw'@'127.0.0.1' IDENTIFIED BY 'CHANGE_ME_strong_db_password';
 GRANT SELECT, UPDATE, DELETE ON xidb.char_inventory   TO 'portal_rw'@'127.0.0.1';
 GRANT INSERT                 ON xidb.portal_item_log  TO 'portal_rw'@'127.0.0.1';
-GRANT SELECT                 ON xidb.accounts_sessions TO 'portal_rw'@'127.0.0.1';
+GRANT SELECT, DELETE         ON xidb.accounts_sessions TO 'portal_rw'@'127.0.0.1';
 GRANT SELECT                 ON xidb.chars            TO 'portal_rw'@'127.0.0.1';
 GRANT SELECT                 ON xidb.char_storage     TO 'portal_rw'@'127.0.0.1';
 GRANT SELECT                 ON xidb.char_equip       TO 'portal_rw'@'127.0.0.1';

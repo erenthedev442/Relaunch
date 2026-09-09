@@ -1,0 +1,206 @@
+local vouchers   = require('modules/custom/lua/relic_voucher_catalog')
+local forge      = require('modules/custom/lua/weapon_forge_catalog')
+local ambuscade  = require('modules/custom/lua/ambuscade_weapons_catalog')
+local armor      = require('modules/custom/lua/hades_armor_catalog')
+local accessory  = require('modules/custom/lua/hades_accessory_catalog')
+local shop       = require('modules/custom/lua/hades_shop_catalog')
+local hades      = require('modules/custom/lua/hades_catalog')
+
+local function mockPlayer(vars, items)
+    vars  = vars or {}
+    items = items or {}
+    return {
+        getCharVar = function(_, key) return vars[key] or 0 end,
+        getItemCount = function(_, id) return items[id] or 0 end,
+        getFreeSlotsCount = function() return 2 end,
+    }
+end
+
+describe('Hades Relic 119 III vouchers', function()
+    it('covers every Relic voucher and every Ambuscade final in one Steel pool', function()
+        assert(#vouchers.weapons == 30)
+        assert(#forge.relicChains == 14)
+        assert(#ambuscade.CHAINS == 14)
+        local relics, ambuscades = 0, 0
+        for _, row in ipairs(vouchers.weapons) do
+            if row.kind == 'relic' then
+                relics = relics + 1
+            elseif row.kind == 'ambuscade' then
+                ambuscades = ambuscades + 1
+            end
+        end
+        assert(relics == 16)
+        assert(ambuscades == 14)
+        assert(vouchers.byWeaponId[11927].name == 'Aegis')
+        assert(vouchers.byWeaponId[18840].name == 'Gjallarhorn')
+        assert(vouchers.byVoucherId[23867].weaponId == 11927)
+        assert(vouchers.byVoucherId[23868].weaponId == 18840)
+        assert(vouchers.byVoucherId[24276] == nil)
+
+        local seenVoucher = {}
+        local seenWeapon  = {}
+        for _, row in ipairs(vouchers.weapons) do
+            assert(row.weaponId > 0)
+            assert(row.name ~= '')
+            assert(not seenWeapon[row.weaponId])
+            seenWeapon[row.weaponId] = true
+            if row.kind == 'relic' then
+                assert(row.voucherId ~= nil)
+                assert(vouchers.voucherName(row) == row.name .. ' Voucher')
+                assert(vouchers.shopName(row) == row.name .. ' Voucher')
+                assert(not seenVoucher[row.voucherId])
+                seenVoucher[row.voucherId] = true
+            else
+                assert(row.voucherId == nil)
+                assert(vouchers.shopName(row) == row.name)
+            end
+        end
+
+        for _, chain in ipairs(forge.relicChains) do
+            local row = vouchers.byWeaponId[chain.s3]
+            assert(row ~= nil, string.format('missing voucher for %s (%s)', chain.name, tostring(chain.s3)))
+            assert(row.name == chain.name)
+            assert(row.kind == 'relic')
+        end
+
+        for _, chain in ipairs(ambuscade.CHAINS) do
+            local finalId = chain.stages[5]
+            local row = vouchers.byWeaponId[finalId]
+            assert(row ~= nil, string.format('missing Ambuscade offer for %s', chain.label))
+            assert(row.kind == 'ambuscade')
+            assert(row.weaponId == finalId)
+        end
+    end)
+
+    it('only redeems after a from-scratch Relic finish', function()
+        assert(vouchers.hasForgedRelic(mockPlayer({ WF_Relic_Final = 1 })) == true)
+        assert(vouchers.hasForgedRelic(mockPlayer({})) == false)
+    end)
+
+    it('picks one Steel ware for the whole UTC week', function()
+        local a = vouchers.weeklyRelic(202636)
+        local b = vouchers.weeklyRelic(202636)
+        assert(a.weaponId == b.weaponId)
+        assert(vouchers.weeklyPrice(202636, a) == vouchers.weeklyPrice(202636, b))
+    end)
+
+    it('lets a player miss the Steel stall if they already hold that weapon', function()
+        local week = vouchers.weeklyRelic(202636)
+        assert(vouchers.ownsRelic(mockPlayer({}, { [week.weaponId] = 1 }), week) == true)
+        assert(vouchers.ownsRelic(mockPlayer({}, {}), week) == false)
+    end)
+
+    it('lets Hades set a weekly Relic or Ambuscade price inside the band', function()
+        assert(vouchers.PRICE.relic.lo == 1901)
+        assert(vouchers.PRICE.relic.hi == 2099)
+        assert(vouchers.PRICE.ambuscade.lo == 901)
+        assert(vouchers.PRICE.ambuscade.hi == 1099)
+        local row = vouchers.weeklyRelic(202636)
+        local price = vouchers.weeklyPrice(202636, row)
+        if row.kind == 'relic' then
+            assert(price >= 1901 and price <= 2099)
+        else
+            assert(price >= 901 and price <= 1099)
+        end
+    end)
+end)
+
+describe('Hades Mail stall', function()
+    it('holds at least 200 119 armor pieces with rarity prices', function()
+        assert(#armor.items >= 200)
+        assert(#shop.POOLS == 3)
+        assert(shop.POOLS[1].key == 'weapon')
+        assert(shop.POOLS[2].key == 'armor')
+        assert(shop.POOLS[3].key == 'accessory')
+
+        local unsourced, sourced = 0, 0
+        local seen = {}
+        for _, row in ipairs(armor.items) do
+            assert(row.id > 0)
+            assert(row.name ~= '')
+            assert(not seen[row.id])
+            seen[row.id] = true
+            if row.sourced then
+                sourced = sourced + 1
+                assert(row.price >= armor.SOURCED_LO and row.price <= armor.SOURCED_HI)
+            else
+                unsourced = unsourced + 1
+                assert(row.price == armor.UNSOURCED_PRICE)
+            end
+        end
+        assert(unsourced >= 80)
+        assert(sourced >= 80)
+        assert(armor.byId[23768].name == 'Nyame Mail')
+        assert(armor.byId[23768].sourced == false)
+        assert(armor.byId[23768].price == 1499)
+    end)
+
+    it('picks one Mail piece for the whole UTC week', function()
+        local a = armor.weeklyPiece(202636)
+        local b = armor.weeklyPiece(202636)
+        assert(a.id == b.id)
+        assert(a.price == b.price)
+    end)
+
+    it('sells Steel, Mail, and Gild together as the weekend board', function()
+        local offers = hades.weekOffers(202636)
+        assert(#offers == 3)
+        assert(offers[1].key == 'weapon')
+        assert(offers[2].key == 'armor')
+        assert(offers[3].key == 'accessory')
+        assert(offers[1].row.weaponId == vouchers.weeklyRelic(202636).weaponId)
+        assert(offers[2].row.id == armor.weeklyPiece(202636).id)
+        assert(offers[2].price == offers[2].row.price)
+        assert(offers[3].row.id == accessory.weeklyPiece(202636).id)
+        assert(offers[3].price == offers[3].row.price)
+
+        local mail = offers[2]
+        local owner = mockPlayer({}, { [mail.row.id] = 1 })
+        assert(shop.owns(owner, mail) == true)
+        assert(shop.owns(mockPlayer({}, {}), mail) == false)
+
+        local gild = offers[3]
+        local gildOwner = mockPlayer({}, { [gild.row.id] = 1 })
+        assert(shop.owns(gildOwner, gild) == true)
+        assert(shop.owns(mockPlayer({}, {}), gild) == false)
+    end)
+end)
+
+describe('Hades Gild stall', function()
+    it('holds at least 200 accessories with rarity prices', function()
+        assert(#accessory.items >= 200)
+
+        local unsourced, sourced = 0, 0
+        local seen = {}
+        for _, row in ipairs(accessory.items) do
+            assert(row.id > 0)
+            assert(row.name ~= '')
+            assert(not seen[row.id])
+            seen[row.id] = true
+            if row.sourced then
+                sourced = sourced + 1
+                assert(row.price >= accessory.SOURCED_LO and row.price <= accessory.SOURCED_HI)
+            else
+                unsourced = unsourced + 1
+                assert(row.price == accessory.UNSOURCED_PRICE)
+            end
+        end
+        assert(unsourced >= 80)
+        assert(sourced >= 80)
+        assert(accessory.byId[27541].name == 'Cessance Earring')
+        assert(accessory.byId[27541].sourced == false)
+        assert(accessory.byId[27541].price == 1499)
+        assert(accessory.byId[26088].name == 'Malignance Earring')
+        assert(accessory.byId[26088].sourced == true)
+        assert(accessory.byId[26088].price >= 499 and accessory.byId[26088].price <= 999)
+        assert(accessory.byId[26189] == nil) -- Moonbeam Ring stays on the medal vendor
+        assert(accessory.byId[26269] == nil) -- Moonlight Cape stays on Infamy
+    end)
+
+    it('picks one Gild piece for the whole UTC week', function()
+        local a = accessory.weeklyPiece(202636)
+        local b = accessory.weeklyPiece(202636)
+        assert(a.id == b.id)
+        assert(a.price == b.price)
+    end)
+end)

@@ -100,8 +100,13 @@ cmdObj.onTrigger = function(player, args)
 
         local sess = sessions[target:getName()]
         if sess and sess.nm then
-            pcall(function() sess.nm:setHP(0) end)
-            pcall(function() sess.nm:despawn() end)
+            local dismiss = xi._gauntlet_dismissNm
+            if dismiss then
+                dismiss(sess.nm)
+            else
+                pcall(function() sess.nm:setLocalVar('Gauntlet_NoCredit', 1) end)
+                pcall(function() sess.nm:setHP(0) end)
+            end
         end
 
         sessions[target:getName()] = nil
@@ -134,8 +139,13 @@ cmdObj.onTrigger = function(player, args)
 
         local old = sessions[target:getName()]
         if old and old.nm then
-            pcall(function() old.nm:setHP(0) end)
-            pcall(function() old.nm:despawn() end)
+            local dismiss = xi._gauntlet_dismissNm
+            if dismiss then
+                dismiss(old.nm)
+            else
+                pcall(function() old.nm:setLocalVar('Gauntlet_NoCredit', 1) end)
+                pcall(function() old.nm:setHP(0) end)
+            end
         end
 
         sessions[target:getName()] = {

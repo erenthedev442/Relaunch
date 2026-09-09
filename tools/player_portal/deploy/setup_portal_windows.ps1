@@ -138,6 +138,8 @@ if (-not $SkipApp) {
             "PORTAL_COOKIE_SECURE=true"
             "PORTAL_COOKIE_SAMESITE=lax"
             "PORTAL_CORS_ORIGINS="
+            "PORTAL_LAUNCHER_KEY=legendary-launcher-feed"
+            "PORTAL_LAUNCHER_DIR=C:/server/portal-launcher"
         ) | Set-Content $envPath -Encoding utf8
         Ok ".env written"
     } elseif (-not (Test-Path $envPath)) {

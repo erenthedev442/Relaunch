@@ -85,7 +85,7 @@ describe('Affinity NM roster and progression integrity', function()
         assert(nmCatalog.level == 99)
         assert(nmCatalog.ccCaps[xi.effect.PETRIFICATION] == 8)
         assert(nmCatalog.ccCaps[xi.effect.TERROR] == 6)
-        assert(nmCatalog.ccCaps[xi.effect.DOOM] == 15)
+        assert(nmCatalog.ccCaps[xi.effect.DOOM] == nil)
 
         for index, key in ipairs(order) do
             local profile = nmCatalog.profiles[key]

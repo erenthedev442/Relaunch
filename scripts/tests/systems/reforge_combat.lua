@@ -42,6 +42,8 @@ describe('Reforge combat catalog', function()
                 assert(mob.mods[xi.mod.ACC] == expectedAccuracy[tier])
                 assert(catalog.mechCfgs[mob.groupId] ~= nil)
                 assert(catalog.mechCfgs[mob.groupId].name == mob.name)
+                assert(catalog.mechCfgs[mob.groupId].drawInYalms == 8)
+                assert(catalog.mechCfgs[mob.groupId].drawInParty == true)
                 assert(mob.minLv == 99 and mob.maxLv == 99)
             end
         end
@@ -102,6 +104,38 @@ describe('Reforge combat catalog', function()
         assert(native.irathamSpellListAtHpp(19) == 155)
     end)
 
+    it('softens the Sep 2026 speed-demon NMs without touching the fine ones', function()
+        assert(catalog.engageGraceSecs == 2.5)
+
+        assert(native.seiryuRegainAtHpp(100) == 180)
+        assert(native.seiryuRegainAtHpp(50) == 180)
+        assert(native.seiryuRegainAtHpp(49) == 280)
+        assert(native.seiryuRegainAtHpp(49) < 450)
+
+        local seiryuFx = native.addEffectParams(11402, 4000)
+        local byakkoFx = native.addEffectParams(11401, 4000)
+        local genbuFx  = native.addEffectParams(11404, 4000)
+        assert(seiryuFx.chance == 40 and seiryuFx.power == 1000)
+        assert(byakkoFx.chance == 40 and byakkoFx.power == 1000)
+        assert(genbuFx.chance == 100 and genbuFx.power == 2000)
+        assert(native.addEffectParams(11410, 4000) == nil)
+
+        assert(native.rewriteChosenSkill(11405, xi.mobSkill.RAGE_1) == xi.mobSkill.LAMB_CHOP_1)
+        assert(native.rewriteChosenSkill(11405, xi.mobSkill.SHEEP_CHARGE_1) == xi.mobSkill.SHEEP_CHARGE_1)
+        assert(native.rewriteChosenSkill(11410, xi.mobSkill.RAGE_1) == xi.mobSkill.RAGE_1)
+
+        assert(native.BRIAREUS_MEIKYO_SLAMS == 2)
+
+        local kirin = catalog.mechCfgs[11400]
+        local hadha = catalog.mechCfgs[11414]
+        assert(hadha.aoe.dmgPct == kirin.aoe.dmgPct)
+        assert(hadha.aoe.periodSec == kirin.aoe.periodSec)
+        assert(hadha.cc.periodSec == kirin.cc.periodSec)
+        assert(hadha.phases[1].hp == kirin.phases[1].hp)
+        assert(hadha.phases[2].hp == kirin.phases[2].hp)
+        assert(hadha.phases[2].dmgPct == kirin.phases[2].dmgPct)
+    end)
+
     it('executes portable native callback decisions', function()
         local cue = 2576
         local briareus =
@@ -122,6 +156,24 @@ describe('Reforge combat catalog', function()
         assert(native.chooseMobSkill(briareus, 11410) == 2576)
         assert(cue == 0)
         assert(native.chooseMobSkill(briareus, 11404) == 0)
+        assert(native.chooseMobSkill(briareus, 11405, nil, xi.mobSkill.RAGE_1) == xi.mobSkill.LAMB_CHOP_1)
+
+        local slams = 0
+        local meikyo = true
+        local meikyoBriareus =
+        {
+            getLocalVar = function(_, key)
+                return key == 'RF_BriareusMeikyoSlams' and slams or 0
+            end,
+            setLocalVar = function()
+            end,
+            hasStatusEffect = function()
+                return meikyo
+            end,
+        }
+        assert(native.chooseMobSkill(meikyoBriareus, 11410) == 2578)
+        slams = 2
+        assert(native.chooseMobSkill(meikyoBriareus, 11410) == 0)
 
         local mods = {}
         local genbu =
@@ -140,6 +192,19 @@ describe('Reforge combat catalog', function()
         native.tick(genbu, nil, 11404)
         assert(mods[xi.mod.ATT] == 3300)
         assert(mods[xi.mod.REGAIN] == 80)
+
+        local seiryuMods = {}
+        local seiryu =
+        {
+            getHPP = function()
+                return 40
+            end,
+            setMod = function(_, modId, value)
+                seiryuMods[modId] = value
+            end,
+        }
+        native.tick(seiryu, nil, 11402)
+        assert(seiryuMods[xi.mod.REGAIN] == 280)
     end)
 
     it('keeps all armor loot pools complete', function()
@@ -171,6 +236,7 @@ describe('Reforge combat catalog', function()
         end
 
         assert(catalog.mechCfgs[11409].stance == nil)
+        assert(catalog.drawInYalms == 8)
     end)
 
     it('defines eight independent stations with a separated second camp', function()

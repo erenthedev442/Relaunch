@@ -4,7 +4,7 @@
 -- Hades daily quests. Five slots every UTC day, same board for everyone.
 -- Kills and deliveries only mark progress. Soul Shards are paid when the
 -- player talks to Hades and turns the ready tasks in. 150 only if all
--- five are turned in. Weekend shop is a stub until the catalog lands.
+-- five are turned in. Weekend shop sells a random Relic 119 III voucher.
 --
 -- Public API (same require cache as the Module loader):
 --   hades.fire(player, eventType, meta)
@@ -421,12 +421,7 @@ local function showRoot(player)
     {
         catalog.isShopOpen() and 'Shop (weekend)' or 'Shop (closed)',
         function(p)
-            p:printToPlayer('[Hades] ' .. catalog.shopStatusLine(), S)
-            p:printToPlayer(
-                string.format('[Hades] You hold %d %s. Relic wares will cost %d.',
-                    hades.getShards(p), catalog.currencyName, catalog.relicPrice),
-                S)
-            showRoot(p)
+            catalog.showShop(p, showRoot)
         end,
     }
     opts[#opts + 1] = { 'Close', function(_) end }
@@ -539,7 +534,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
             end
             if catalog.isShopOpen() then
                 player:printToPlayer(
-                    '[Hades] The ferry is up. Turn in what you have finished. Wares are still being negotiated.',
+                    '[Hades] The ferry is up. Turn in what you have finished. Relic paper is for sale.',
                     S)
             else
                 player:printToPlayer(

@@ -69,13 +69,13 @@ catalog.profiles =
 }
 
 -- Retail skill lists stay on the pools. These only cap the lockout durations
--- so Absolute Terror / petrify / Doom cannot freeze a solo player for 30-60s.
+-- so Absolute Terror / petrify cannot freeze a solo player for 30-60s.
+-- Doom is a holy-water check and is not shortened.
 catalog.ccCaps =
 {
     [xi.effect.PETRIFICATION]         = 8,
     [xi.effect.GRADUAL_PETRIFICATION] = 8,
     [xi.effect.TERROR]                = 6,
-    [xi.effect.DOOM]                  = 15,
     [xi.effect.CHARM_I]               = 8,
     [xi.effect.CHARM_II]              = 8,
 }

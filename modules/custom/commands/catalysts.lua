@@ -17,6 +17,9 @@ local bank = require('modules/custom/lua/augment_catalyst_bank')
 
 commandObj.onTrigger = function(player)
     local S = xi.msg.channel.SYSTEM_3
+    if xi.augmentTiers and xi.augmentTiers.emitInfo then
+        xi.augmentTiers.emitInfo(player)
+    end
     local balances = bank.balances(player)
 
     -- Collect non-zero balances and sort by name for a stable, readable list.

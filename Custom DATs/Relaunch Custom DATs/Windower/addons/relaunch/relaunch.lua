@@ -54,6 +54,22 @@ local INSERTS = {
     [19969] = { donor = 20753, name = 'Epeolatry'      },  -- 119 I
     [19970] = { donor = 21070, name = 'Idris'          },  -- 99
     [19971] = { donor = 21070, name = 'Idris'          },  -- 119 I
+    [23879] = { donor = 26344, name = 'Spharai Voucher' },
+    [23880] = { donor = 26344, name = 'Mandau Voucher' },
+    [23881] = { donor = 26344, name = 'Excalibur Voucher' },
+    [23882] = { donor = 26344, name = 'Ragnarok Voucher' },
+    [23883] = { donor = 26344, name = 'Guttler Voucher' },
+    [23884] = { donor = 26344, name = 'Bravura Voucher' },
+    [23885] = { donor = 26344, name = 'Apocalypse Voucher' },
+    [23886] = { donor = 26344, name = 'Gungnir Voucher' },
+    [23887] = { donor = 26344, name = 'Kikoku Voucher' },
+    [23888] = { donor = 26344, name = 'Amanomurakumo Voucher' },
+    [23889] = { donor = 26344, name = 'Mjollnir Voucher' },
+    [23890] = { donor = 26344, name = 'Claustrum Voucher' },
+    [23891] = { donor = 26344, name = 'Yoichinoyumi Voucher' },
+    [23892] = { donor = 26344, name = 'Annihilator Voucher' },
+    [23867] = { donor = 26344, name = 'Aegis Voucher' },
+    [23868] = { donor = 26344, name = 'Gjallarhorn Voucher' },
 }
 
 local applied = { rename = 0, insert = 0, skipped = 0 }

@@ -56,6 +56,16 @@ second overlay or the new Epeo/Idris IDs stay WAR/THF leftovers.
 - Without this file an older client dump may T-pose; updated clients already have it
 - Do **not** `/ma "Matsui-P"` — that is seasonal spell 1003 and R0s the client
 
+### Relic 119 III Vouchers (Hades)
+
+- Relics `23879-23892` plus `23867` Aegis and `23868` Gjallarhorn
+- Weekend Hades shop offers the same Relic voucher to everyone that UTC week
+- Ambuscade weeks sell the finished weapon; they do not use extra DAT ids
+- Players who already own that weapon miss the week; there is no reroll
+- Trade Relic vouchers to the Weapon Forger after you have finished a Relic from scratch
+- Client text is cloned from Artemis's Quiver (`26344`) in `ROM/286/73.DAT`
+- Without this pack the vouchers still redeem -- they just show blank names
+
 ### Legendary Ring
 
 - Item ID: `26169`

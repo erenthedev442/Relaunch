@@ -590,13 +590,6 @@ local function clampNativeControl(state)
     if not owner then return end
 
     for _, player in ipairs(partyPCs(owner)) do
-        -- Doom belongs to explicit failed mechanics on this roster. Native
-        -- Apocalyptic Ray spam between tells is removed instead of turning a
-        -- random TP choice into an unavoidable progression reset.
-        if not state.punishmentUntil or now() >= state.punishmentUntil then
-            pcall(function() player:delStatusEffect(xi.effect.DOOM) end)
-        end
-
         for effectId, maxSec in pairs(CONTROL_LIMITS) do
             pcall(function()
                 local effect = player:getStatusEffect(effectId)

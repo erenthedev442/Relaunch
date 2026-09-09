@@ -90,7 +90,7 @@ CREATE USER IF NOT EXISTS 'portal_rw'@'127.0.0.1' IDENTIFIED BY '${RW_PASS}';
 GRANT SELECT, INSERT, UPDATE, DELETE ON ${DB_NAME}.char_inventory TO 'portal_rw'@'127.0.0.1';
 GRANT INSERT                 ON ${DB_NAME}.portal_item_log   TO 'portal_rw'@'127.0.0.1';
 GRANT SELECT, INSERT, DELETE ON ${DB_NAME}.portal_vault      TO 'portal_rw'@'127.0.0.1';
-GRANT SELECT                 ON ${DB_NAME}.accounts_sessions TO 'portal_rw'@'127.0.0.1';
+GRANT SELECT, DELETE         ON ${DB_NAME}.accounts_sessions TO 'portal_rw'@'127.0.0.1';
 GRANT SELECT                 ON ${DB_NAME}.chars             TO 'portal_rw'@'127.0.0.1';
 GRANT SELECT                 ON ${DB_NAME}.char_storage      TO 'portal_rw'@'127.0.0.1';
 GRANT SELECT (charid, containerid, slotid) ON ${DB_NAME}.char_equip TO 'portal_rw'@'127.0.0.1';

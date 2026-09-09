@@ -130,7 +130,7 @@ CREATE USER IF NOT EXISTS 'portal_rw'@'localhost' IDENTIFIED BY 'CHANGE_ME_write
 GRANT SELECT, INSERT, UPDATE, DELETE ON xi_relaunch.char_inventory   TO 'portal_rw'@'localhost';
 GRANT INSERT                 ON xi_relaunch.portal_item_log   TO 'portal_rw'@'localhost';
 GRANT SELECT, INSERT, DELETE ON xi_relaunch.portal_vault      TO 'portal_rw'@'localhost';
-GRANT SELECT                 ON xi_relaunch.accounts_sessions TO 'portal_rw'@'localhost';
+GRANT SELECT, DELETE         ON xi_relaunch.accounts_sessions TO 'portal_rw'@'localhost';
 GRANT SELECT                 ON xi_relaunch.chars             TO 'portal_rw'@'localhost';
 GRANT SELECT                 ON xi_relaunch.char_storage      TO 'portal_rw'@'localhost';
 GRANT SELECT (charid, containerid, slotid) ON xi_relaunch.char_equip TO 'portal_rw'@'localhost';

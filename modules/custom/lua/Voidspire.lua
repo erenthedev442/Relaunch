@@ -17,6 +17,10 @@
 --     ref crashes the map server inside C++ setHP, uncatchable by pcall); the
 --     session is cleared BEFORE despawning on abort; NO_CAPACITY_POINTS blocks
 --     CP/JP farming.
+--   * Unique DE script names + one-shot floor-clear (Game Master 2026): the
+--     engine caches onMobDeath by mob name. Reusing "Khimaira" (or sharing it
+--     with a Game Master wave) stole the live run's death callback, so the
+--     floor never queued and the next mob never appeared.
 --   * Reuses the Game Master mob pool (game_master_catalog) -- NO new SQL.
 -----------------------------------
 require('modules/module_utils')
@@ -37,13 +41,58 @@ local m = Module:new('voidspire')
 --   kills        - total kills this run
 --   affixOrder   - per-run shuffled affix list; floor N uses the first
 --                  affixCountForFloor(N) entries
---   bannersShown - { floor -> true } depth banners already shown this run
+--   bannersShown    - { floor -> true } depth banners already shown this run
+--   nextFloorQueued - true while the between-floor timer is pending so
+--                     alliance onMobDeath cannot queue six startFloor calls
 local sessions = {}
 local function getSession(player)  return sessions[player:getName()] end
 local function clearSession(player) sessions[player:getName()] = nil end
 
 -- forward declarations (assigned below; referenced earlier via upvalues)
-local startFloor, endRun, showWardenMenu, onFloorCleared
+local startFloor, endRun, showWardenMenu, onFloorCleared, countFloorProgress
+
+local function mobIsFightable(mob)
+    if type(mob) ~= 'userdata' then
+        return false
+    end
+    local ok, hp = pcall(function()
+        return mob:getHP()
+    end)
+    if not ok or not hp or hp <= 0 then
+        return false
+    end
+    local okAlive, alive = pcall(function()
+        return mob:isAlive()
+    end)
+    if okAlive and alive == false then
+        return false
+    end
+    return true
+end
+
+local function pruneDeadFloorMobs(sess)
+    if not sess or not sess.mobsAlive then
+        return
+    end
+    local living = {}
+    for id, mob in pairs(sess.mobsAlive) do
+        if mobIsFightable(mob) then
+            living[id] = mob
+        end
+    end
+    sess.mobsAlive = living
+end
+
+local function floorIsLive(sess)
+    if not sess then
+        return false
+    end
+    pruneDeadFloorMobs(sess)
+    for _ in pairs(sess.mobsAlive or {}) do
+        return true
+    end
+    return false
+end
 
 -----------------------------------
 -- Scaling helpers (read voidspire_catalog)
@@ -163,7 +212,7 @@ end
 local function arenaFloorY(owner)
     local py = owner:getYPos()
     local plazaY = catalog.arenaFloorY or catalog.npcPos.y
-    if plazaY and math.abs(py - plazaY) <= 8 then
+    if plazaY and math.abs(py - plazaY) <= 12 then
         return plazaY
     end
     return py
@@ -173,7 +222,7 @@ local function pinToArenaFloor(mob, floorY)
     if not mob or not floorY then
         return
     end
-    if mob:getYPos() < floorY - 6 then
+    if mob:getYPos() < floorY - 2 then
         mob:setPos(mob:getXPos(), floorY, mob:getZPos(), mob:getRotPos())
     end
 end
@@ -182,7 +231,8 @@ local function spawnFloorMob(owner, mobDef, level, mods, maxHP, floor)
     local px, pz = owner:getXPos(), owner:getZPos()
     local py = arenaFloorY(owner)
     local angle = math.random() * math.pi * 2
-    local grounded = catalog.groundSpawn and catalog.groundSpawn[mobDef.name]
+    local grounded = catalog.groundAllSpawns
+        or (catalog.groundSpawn and catalog.groundSpawn[mobDef.name])
     local ring = (grounded and catalog.groundSpawnRing) or catalog.spawnRing
     local dist = ring.minRadius + math.random() * (ring.maxRadius - ring.minRadius)
     local mx, mz = px + math.cos(angle) * dist, pz + math.sin(angle) * dist
@@ -194,7 +244,12 @@ local function spawnFloorMob(owner, mobDef, level, mods, maxHP, floor)
         objtype              = xi.objType.MOB,
         groupId              = mobDef.groupId,
         groupZoneId          = catalog.npcPos.zoneId,
-        name                 = mobDef.name,
+        -- Unique script name: DE callbacks are cached by name. Reusing
+        -- "Khimaira" for two concurrent runs (or a Game Master wave of
+        -- the same pool mob) made the second start steal the first
+        -- run's onMobDeath, so the next floor never queued.
+        name                 = catalog.nextFloorScriptName(),
+        packetName           = mobDef.name,
         x = mx, y = py, z = mz, rotation = rot,
         minLevel             = level,   -- REQUIRED (else L255 garbage)
         maxLevel             = level,
@@ -202,30 +257,17 @@ local function spawnFloorMob(owner, mobDef, level, mods, maxHP, floor)
         isAggroable          = true,
         releaseIdOnDisappear = true,
 
-        onMobDeath = function(deadMob, killer)
-            mechanics.cleanup(deadMob)              -- free mechanics state + despawn its adds
-            local sess = sessions[ownerName]
-            if not sess then return end
-            sess.mobsAlive[deadMob:getID()] = nil
-            sess.kills = sess.kills + 1
-
-            -- Killing-blow credit goes to whoever landed it (owner or a helper).
-            if killer then
-                killer:setCharVar('Custom_NM_Kills',
-                    (killer:getCharVar('Custom_NM_Kills') or 0) + 1)
+        onMobDeath = function(deadMob, killer, optParams)
+            if not catalog.shouldCountFloorKill(killer, optParams) then
+                return
             end
+            countFloorProgress(deadMob, ownerName, killer)
+        end,
 
-            -- Any floor mob still alive? (All floor mobs spawn upfront, so there
-            -- are no pending spawns to wait on -- unlike the GM's staggered wave.)
-            for _ in pairs(sess.mobsAlive) do return end  -- still alive -> bail
-
-            -- Floor cleared. Resolve the owner from the live list (captured ref
-            -- may be stale after a zone+return) and hand off to onFloorCleared,
-            -- which schedules the next floor on a TIMER -- so this callback is
-            -- NOT re-entrant (no synchronous endRun loop like GM's abort path).
-            local resolved = GetPlayerByName(ownerName)
-            if not resolved then sessions[ownerName] = nil; return end
-            onFloorCleared(resolved, sess)
+        -- Vanish-without-death (fall-through, ID release) used to leave
+        -- mobsAlive holding a ghost and the next floor never started.
+        onMobDespawn = function(despawnedMob)
+            countFloorProgress(despawnedMob, ownerName, nil)
         end,
 
         -- Mechanics ride the combat tick (all pcall-guarded in the library).
@@ -235,7 +277,13 @@ local function spawnFloorMob(owner, mobDef, level, mods, maxHP, floor)
         end,
     })
 
-    if mob then
+    if not mob then
+        return nil
+    end
+
+    -- insertDynamicEntity REGISTERS the mob but does not place it. A throw
+    -- between here and spawn() used to leave a silent empty floor.
+    local placed = pcall(function()
         if grounded then
             -- Same class of bug as Game Master Yovra: pool animationsub
             -- (Vrtra=4, Nidhogg=6) leaves the model buried. Force grounded.
@@ -251,15 +299,19 @@ local function spawnFloorMob(owner, mobDef, level, mods, maxHP, floor)
             pcall(function()
                 mob:setAnimationSub(0)
             end)
-            mob:setPos(mx, py, mz, rot)
         end
+        mob:setPos(mx, py, mz, rot)
         mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)        -- no CP/JP farm
+        local outgoingCap = catalog.outgoingDamageCap or 7500
+        mob:setLocalVar('EncounterOutgoingDamageCap', outgoingCap)
+        mob:setLocalVar('GeasFeteMobSkillDamageCap', outgoingCap)
         local skillCaps = catalog.skillDamageCaps and catalog.skillDamageCaps[mobDef.name]
         if skillCaps then
             for skillName, cap in pairs(skillCaps) do
-                mob:setLocalVar('Voidspire' .. skillName .. 'Cap', cap)
+                mob:setLocalVar('Voidspire' .. skillName .. 'Cap', math.min(cap, outgoingCap))
             end
         end
+        pinToArenaFloor(mob, py)
         for modId, val in pairs(mods) do mob:setMod(modId, val) end  -- AFTER spawn()
         mob:setMaxHP(maxHP)
         mob:setHP(maxHP)
@@ -269,68 +321,139 @@ local function spawnFloorMob(owner, mobDef, level, mods, maxHP, floor)
 
         -- Attach hardcore mechanics AFTER stats/HP are finalized (library is pcall-safe).
         mechanics.attach(mob, floorMechCfg(floor or 1))
+    end)
+    if not placed then
+        pcall(function()
+            if mob.getHP and mob:getHP() > 0 then
+                mob:setHP(0)
+            end
+        end)
+        return nil
     end
     return mob
+end
+
+-- One-shot floor credit. Alliance onMobDeath + onMobDespawn both land here;
+-- VS_Counted / mobsAlive membership keep it from advancing twice.
+countFloorProgress = function(deadMob, ownerName, killer)
+    pcall(function()
+        mechanics.cleanup(deadMob)
+    end)
+    local sess = sessions[ownerName]
+    if not sess or not deadMob then
+        return
+    end
+
+    local id
+    local okId = pcall(function()
+        id = deadMob:getID()
+    end)
+    if not okId or not id or not sess.mobsAlive[id] then
+        return
+    end
+    if deadMob.getLocalVar and deadMob:getLocalVar('VS_Counted') == 1 then
+        return
+    end
+    if deadMob.setLocalVar then
+        deadMob:setLocalVar('VS_Counted', 1)
+    end
+
+    sess.mobsAlive[id] = nil
+    sess.kills = (sess.kills or 0) + 1
+
+    -- Killing-blow credit goes to whoever landed it (owner or a helper).
+    if killer then
+        pcall(function()
+            killer:setCharVar('Custom_NM_Kills',
+                (killer:getCharVar('Custom_NM_Kills') or 0) + 1)
+        end)
+    end
+
+    pruneDeadFloorMobs(sess)
+    if floorIsLive(sess) then
+        return
+    end
+
+    -- Floor cleared. Resolve the owner from the live list (captured ref
+    -- may be stale after a zone+return) and hand off to onFloorCleared.
+    local resolved = GetPlayerByName(ownerName)
+    if not resolved then
+        sessions[ownerName] = nil
+        return
+    end
+    onFloorCleared(resolved, sess)
 end
 
 -----------------------------------
 -- Floor cleared -> reward, best, milestones, next floor
 -----------------------------------
 onFloorCleared = function(player, sess)
+    -- One timer per clear. Alliance onMobDeath used to queue six of these,
+    -- and a Lua error in the reward block used to skip the next floor entirely.
+    if not sess or sess.nextFloorQueued then
+        return
+    end
+    sess.nextFloorQueued = true
+
     local floor = sess.floor
     sess.clearedFloor = floor
 
-    -- Floor-clear marks (modest -- the prize is the score, not a mark farm).
-    local marks = catalog.markBase + catalog.markPerFloor * floor
-    player:setCharVar('HL_Points', (player:getCharVar('HL_Points') or 0) + marks)
+    pcall(function()
+        -- Floor-clear marks (modest -- the prize is the score, not a mark farm).
+        local marks = catalog.markBase + catalog.markPerFloor * floor
+        player:setCharVar('HL_Points', (player:getCharVar('HL_Points') or 0) + marks)
 
-    -- Personal best.
-    local best, newBest = player:getCharVar('Voidspire_Best_Floor') or 0, false
-    if floor > best then
-        player:setCharVar('Voidspire_Best_Floor', floor)
-        newBest = true
-    end
+        -- Personal best.
+        local best, newBest = player:getCharVar('Voidspire_Best_Floor') or 0, false
+        if floor > best then
+            player:setCharVar('Voidspire_Best_Floor', floor)
+            newBest = true
+        end
 
-    -- Depth milestones (bonus marks; title via achievement hook). RELAUNCH:
-    -- ONCE PER UTC WEEK PER CHARACTER. The bonus was re-awardable every descent
-    -- (floor 25 = 10k marks/run = an unlimited mark farm that bypassed HL); now
-    -- each floor's milestone pays only on its first clear of the current ISO week,
-    -- gated by VS_MS<floor>_Week. (The TITLE is still one-time via the achievement
-    -- hook below; granting an owned title no-ops.)
-    local msWeek = tonumber(os.date('!%G%V'))  -- ISO week-year+week, e.g. 202626
-    for _, ms in ipairs(catalog.milestones) do
-        if floor == ms.floor then
-            local wkCv = string.format('VS_MS%d_Week', ms.floor)
-            if (player:getCharVar(wkCv) or 0) ~= msWeek then
-                player:setCharVar(wkCv, msWeek)
-                player:setCharVar('HL_Points', (player:getCharVar('HL_Points') or 0) + ms.marks)
-                player:printToPlayer(string.format(
-                    '[Voidspire] DEPTH %d -- weekly milestone bonus +%d marks!', ms.floor, ms.marks),
-                    xi.msg.channel.SYSTEM_3)
-            else
-                player:printToPlayer(string.format(
-                    '[Voidspire] Depth %d milestone already claimed this week.', ms.floor),
-                    xi.msg.channel.SYSTEM_1)
+        -- Depth milestones (bonus marks; title via achievement hook). RELAUNCH:
+        -- ONCE PER UTC WEEK PER CHARACTER. The bonus was re-awardable every descent
+        -- (floor 25 = 10k marks/run = an unlimited mark farm that bypassed HL); now
+        -- each floor's milestone pays only on its first clear of the current ISO week,
+        -- gated by VS_MS<floor>_Week. (The TITLE is still one-time via the achievement
+        -- hook below; granting an owned title no-ops.)
+        local msWeek = tonumber(os.date('!%G%V'))  -- ISO week-year+week, e.g. 202626
+        for _, ms in ipairs(catalog.milestones) do
+            if floor == ms.floor then
+                local wkCv = string.format('VS_MS%d_Week', ms.floor)
+                if (player:getCharVar(wkCv) or 0) ~= msWeek then
+                    player:setCharVar(wkCv, msWeek)
+                    player:setCharVar('HL_Points', (player:getCharVar('HL_Points') or 0) + ms.marks)
+                    player:printToPlayer(string.format(
+                        '[Voidspire] DEPTH %d -- weekly milestone bonus +%d marks!', ms.floor, ms.marks),
+                        xi.msg.channel.SYSTEM_3)
+                else
+                    player:printToPlayer(string.format(
+                        '[Voidspire] Depth %d milestone already claimed this week.', ms.floor),
+                        xi.msg.channel.SYSTEM_1)
+                end
             end
         end
-    end
 
-    -- Achievement hook. GUARDED: the hook is added to achievements.lua in a
-    -- later step; the module must not crash if it isn't there yet.
-    local okAch, ach = pcall(require, 'modules/custom/lua/achievements')
-    if okAch and ach and ach.onVoidspireFloor then
-        pcall(function() ach.onVoidspireFloor(player, floor) end)
-    end
+        -- Achievement hook. GUARDED: the hook is added to achievements.lua in a
+        -- later step; the module must not crash if it isn't there yet.
+        local okAch, ach = pcall(require, 'modules/custom/lua/achievements')
+        if okAch and ach and ach.onVoidspireFloor then
+            pcall(function() ach.onVoidspireFloor(player, floor) end)
+        end
 
-    player:printToPlayer(string.format(
-        '[Voidspire] Floor %d cleared! +%d marks.%s', floor, marks,
-        newBest and ' -- NEW PERSONAL BEST!' or ''),
-        xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format(
+            '[Voidspire] Floor %d cleared! +%d marks.%s', floor, marks,
+            newBest and ' -- NEW PERSONAL BEST!' or ''),
+            xi.msg.channel.SYSTEM_3)
+    end)
 
     -- Descend after a short breather. Guard against the run ending (logout /
     -- zone / abort) while the timer is pending.
     player:timer(catalog.floorDelay * 1000, function(p)
         local s = sessions[p:getName()]
+        if s then
+            s.nextFloorQueued = false
+        end
         if not s or s.floor ~= floor then return end
         startFloor(p)
     end)
@@ -347,6 +470,12 @@ startFloor = function(player)
         return
     end
 
+    -- Extra alliance-death timers must not start a new floor on top of a live one.
+    sess.nextFloorQueued = false
+    if floorIsLive(sess) then
+        return
+    end
+
     sess.floor     = sess.floor + 1
     local floor    = sess.floor
     sess.mobsAlive = {}   -- fresh set; never carries a freed prior-floor ref
@@ -357,6 +486,11 @@ startFloor = function(player)
     local maxHP   = floorMaxHP(floor, affixes)
     local count   = mobCountForFloor(floor)
     local pool    = mobPoolForFloor(floor)
+    if not pool or #pool == 0 then
+        player:printToPlayer('[Voidspire] Spawn failed -- ending run.', xi.msg.channel.SYSTEM_3)
+        endRun(player, 'error')
+        return
+    end
 
     -- Depth banner (first crossing this run).
     for _, b in ipairs(catalog.depthBanners) do
@@ -375,19 +509,50 @@ startFloor = function(player)
         xi.msg.channel.SYSTEM_3)
 
     -- Spawn the whole floor at once (<= mobsCap mobs -- no stagger needed).
+    local retries = catalog.spawnRetries or 3
     for _ = 1, count do
-        local mobDef = pool[math.random(#pool)]
-        local mob = spawnFloorMob(player, mobDef, level, mods, maxHP, floor)
-        if mob then sess.mobsAlive[mob:getID()] = mob end
+        local mob, ok
+        for _ = 1, retries do
+            local mobDef = pool[math.random(#pool)]
+            ok, mob = pcall(spawnFloorMob, player, mobDef, level, mods, maxHP, floor)
+            if ok and mob then
+                break
+            end
+            mob = nil
+        end
+        if mob and mobIsFightable(mob) then
+            sess.mobsAlive[mob:getID()] = mob
+        elseif mob then
+            pcall(function()
+                if mob.getHP and mob:getHP() > 0 then
+                    mob:setHP(0)
+                end
+            end)
+        end
     end
 
     -- Safety: if nothing spawned (pool/engine issue) don't soft-lock the run.
-    local any = false
-    for _ in pairs(sess.mobsAlive) do any = true; break end
-    if not any then
+    if not floorIsLive(sess) then
         player:printToPlayer('[Voidspire] Spawn failed -- ending run.', xi.msg.channel.SYSTEM_3)
         endRun(player, 'error')
+        return
     end
+
+    -- If the floor mob vanishes with no death/despawn callback, continue
+    -- instead of sitting on an empty plaza until the player abandons.
+    local watchdogMs = (catalog.floorWatchdogSec or 18) * 1000
+    player:timer(watchdogMs, function(p)
+        local s = sessions[p:getName()]
+        if not s or s.floor ~= floor or s.nextFloorQueued then
+            return
+        end
+        if floorIsLive(s) then
+            return
+        end
+        p:printToPlayer('[Voidspire] The foe vanished into the void. Continuing...',
+            xi.msg.channel.SYSTEM_3)
+        onFloorCleared(p, s)
+    end)
 end
 
 -----------------------------------
@@ -450,6 +615,7 @@ showWardenMenu = function(player)
             sessions[p:getName()] = {
                 floor = 0, clearedFloor = 0, mobsAlive = {}, zoneId = p:getZoneID(),
                 kills = 0, affixOrder = rollAffixOrder(), bannersShown = {},
+                nextFloorQueued = false,
             }
             p:printToPlayer(string.format(
                 '[Voidspire] The spire opens. First foes in %d seconds -- survive as deep as you can!',
@@ -498,6 +664,23 @@ m:addOverride('xi.player.onPlayerDeath', function(player, ...)
     if getSession(player) then
         endRun(player, 'death')
     end
+end)
+
+-- Combat-log / skill-message clamp. C++ takeDamage already honours
+-- EncounterOutgoingDamageCap; this keeps the floating number in sync so
+-- Dreadstorm cannot report 15k while HP only lost 7500.
+m:addOverride('xi.mobskills.processDamage', function(actor, target, skill, action, info)
+    local cap = 0
+    if actor and actor.getLocalVar then
+        cap = actor:getLocalVar('EncounterOutgoingDamageCap') or 0
+    end
+    if cap > 0 and info and (info.damage or 0) > cap then
+        info.damage = cap
+        if info.hybridDamage and info.hybridDamage > cap then
+            info.hybridDamage = cap
+        end
+    end
+    return super(actor, target, skill, action, info)
 end)
 
 return m

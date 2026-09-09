@@ -6,12 +6,14 @@ and returns account/character data. READ-ONLY against xidb.
 
 Public (no login):
   GET  /api/status                 -> who's online now + population
+  GET  /launcher/manifest.json     -> launcher self-update feed (X-Launcher-Key)
+  GET  /launcher/LegendaryLauncher.zip
   GET  /api/profile/{name}         -> a character's public trophy page data
   GET  /c/{name}                   -> the public profile page (HTML)
   GET  /status.html                -> the live server status page
 
-Authenticated (session cookie):
-  POST /api/login   { login, password }   -> sets session cookie
+Authenticated (session cookie or Authorization: Bearer):
+  POST /api/login   { login, password }   -> sets session cookie + returns token
   GET  /api/me                             -> account + characters (+ progression)
   GET  /api/inventory/{charid}             -> your character's inventory (own account only)
   POST /api/logout                         -> clears the cookie
@@ -28,6 +30,7 @@ SECURITY NOTES
 from __future__ import annotations
 
 import datetime
+import hmac
 import html
 import json
 import os
@@ -79,6 +82,12 @@ DISCORD_WEBHOOK = os.getenv("PORTAL_DISCORD_WEBHOOK", "")
 VAPID_PUBLIC    = os.getenv("PORTAL_VAPID_PUBLIC", "")
 VAPID_PRIVATE   = os.getenv("PORTAL_VAPID_PRIVATE", "")
 VAPID_SUBJECT   = os.getenv("PORTAL_VAPID_SUBJECT", "mailto:admin@ffxi-legendary.com")
+# Private launcher feed. Empty key = routes 404 until you publish a build.
+LAUNCHER_KEY = os.getenv("PORTAL_LAUNCHER_KEY", "")
+LAUNCHER_DIR = Path(os.getenv(
+    "PORTAL_LAUNCHER_DIR",
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "launcher_feed"),
+))
 
 if len(JWT_SECRET) < 32:
     raise RuntimeError(
@@ -680,7 +689,7 @@ app = FastAPI(title="Legendary FFXI Player Portal", docs_url=None, redoc_url=Non
 if CORS_ORIGINS:
     app.add_middleware(
         CORSMiddleware, allow_origins=CORS_ORIGINS, allow_credentials=True,
-        allow_methods=["GET", "POST"], allow_headers=["Content-Type"],
+        allow_methods=["GET", "POST"], allow_headers=["Content-Type", "Authorization"],
     )
 
 
@@ -715,8 +724,18 @@ def make_token(account_id: int, login: str) -> str:
     )
 
 
+def request_token(request: Request) -> str:
+    """Session cookie (website) or Authorization: Bearer (Legendary Launcher)."""
+    auth = request.headers.get("Authorization") or ""
+    if auth.lower().startswith("bearer "):
+        token = auth[7:].strip()
+        if token:
+            return token
+    return (request.cookies.get(COOKIE_NAME) or "").strip()
+
+
 def require_account(request: Request) -> dict:
-    token = request.cookies.get(COOKIE_NAME)
+    token = request_token(request)
     if not token:
         raise HTTPException(status_code=401, detail="Not logged in.")
     try:
@@ -724,6 +743,21 @@ def require_account(request: Request) -> dict:
     except jwt.PyJWTError:
         raise HTTPException(status_code=401, detail="Session expired -- log in again.")
     return {"id": int(payload["sub"]), "login": payload["login"]}
+
+
+def clear_stuck_session(cur, charid: int) -> int:
+    """Delete accounts_sessions for a stuck/black-screen character.
+
+    Returns the number of rows removed. Returns -1 if portal_rw has no DELETE
+    grant yet (see sql/portal_rescue_session.sql).
+    """
+    try:
+        cur.execute("DELETE FROM accounts_sessions WHERE charid = %s", (charid,))
+        return int(cur.rowcount or 0)
+    except (pymysql.err.OperationalError, pymysql.err.ProgrammingError) as exc:
+        if exc.args and exc.args[0] == 1142:
+            return -1
+        raise
 
 
 # --------------------------------------------------------------- auth routes --
@@ -752,12 +786,18 @@ def login(body: LoginBody, request: Request, response: Response):
     if not row or not ok:
         raise HTTPException(status_code=401, detail="Invalid login or password.")
 
+    token = make_token(row["id"], login_name)
     response.set_cookie(
-        COOKIE_NAME, make_token(row["id"], login_name),
+        COOKIE_NAME, token,
         httponly=True, secure=COOKIE_SECURE, samesite=COOKIE_SAMESITE,
         max_age=JWT_TTL_HOURS * 3600, path="/",
     )
-    return {"ok": True, "login": login_name}
+    return {
+        "ok": True,
+        "login": login_name,
+        "token": token,
+        "expiresIn": JWT_TTL_HOURS * 3600,
+    }
 
 
 @app.post("/api/logout")
@@ -775,7 +815,7 @@ def me(request: Request):
             cur.execute("SELECT current_email, timecreate, priv FROM accounts WHERE id = %s", (acct["id"],))
             arow = cur.fetchone() or {}
             cur.execute(
-                "SELECT c.charid, c.charname, c.nation, c.playtime, "
+                "SELECT c.charid, c.charname, c.nation, c.playtime, c.pos_zone, "
                 "       COALESCE(s.mjob,0) AS mjob, COALESCE(s.sjob,0) AS sjob, "
                 "       COALESCE(s.mlvl,1) AS mlvl, COALESCE(s.slvl,1) AS slvl, "
                 "       COALESCE(s.hp,0)   AS hp,   COALESCE(s.mp,0)   AS mp, "
@@ -791,43 +831,70 @@ def me(request: Request):
                 (GIL_ITEM, acct["id"]),
             )
             chars = cur.fetchall()
-            prog = load_progression(cur, [c["charid"] for c in chars])
+            ids = [c["charid"] for c in chars]
+            prog = load_progression(cur, ids)
+            online_ids = set()
+            jail_ids = set()
+            if ids:
+                marks = ",".join(["%s"] * len(ids))
+                cur.execute(
+                    f"SELECT charid FROM accounts_sessions WHERE charid IN ({marks})",
+                    ids,
+                )
+                online_ids = {int(r["charid"]) for r in cur.fetchall()}
+                cur.execute(
+                    f"SELECT charid, value FROM char_vars "
+                    f"WHERE varname = 'inJail' AND charid IN ({marks})",
+                    ids,
+                )
+                for row in cur.fetchall():
+                    try:
+                        if int(row["value"] or 0) >= 1:
+                            jail_ids.add(int(row["charid"]))
+                    except (TypeError, ValueError):
+                        pass
+
+            characters = []
+            for c in chars:
+                pv   = prog.get(c["charid"], {})
+                mjob = c["mjob"]
+                pos_zone = int(c.get("pos_zone") or 0)
+                jailed = c["charid"] in jail_ids or pos_zone == MORDION_GAOL
+                characters.append({
+                    "charid":       c["charid"],
+                    "name":         c["charname"],
+                    "nation":       NATIONS.get(c["nation"], "?"),
+                    "mainJob":      JOBS.get(mjob, "?"),
+                    "mainLvl":      c["mlvl"],
+                    "subJob":       JOBS.get(c["sjob"], "NON"),
+                    "subLvl":       c["slvl"],
+                    "hp":           c["hp"],
+                    "mp":           c["mp"],
+                    "gil":          int(c["gil"]),
+                    "playtimeH":    (c["playtime"] or 0) // 3600,
+                    "kills":        int(c["kills"]),
+                    "deaths":       int(c["deaths"]),
+                    "battles":      int(c["battles"]),
+                    "online":              c["charid"] in online_ids,
+                    "jailed":              jailed,
+                    "zone":                zone_name(cur, pos_zone),
+                    "hlTier":              pv.get("HL_Tier", 0),
+                    "ascensions":          pv.get("Prestige_Ascensions_Total", 0),
+                    "nmKills":             pv.get("Custom_NM_Kills", 0),
+                    "prestigeLvl":         pv.get(f"Prestige_Level_{mjob}", 0),
+                    "rebirthCount":        pv.get(f"Rebirth_Count_{mjob}", 0),
+                    "legacyRewardClaimed": bool(pv.get(LEGACY_REWARD_CLAIMED_VAR, 0)),
+                })
+            payload = {
+                "login":      acct["login"],
+                "email":      arow.get("current_email", ""),
+                "since":      str(arow.get("timecreate", "")),
+                "isGm":       int(arow.get("priv", 0) or 0) >= GM_PRIV_MIN,
+                "characters": characters,
+            }
     finally:
         conn.close()
-
-    characters = []
-    for c in chars:
-        pv   = prog.get(c["charid"], {})
-        mjob = c["mjob"]
-        characters.append({
-            "charid":       c["charid"],
-            "name":         c["charname"],
-            "nation":       NATIONS.get(c["nation"], "?"),
-            "mainJob":      JOBS.get(mjob, "?"),
-            "mainLvl":      c["mlvl"],
-            "subJob":       JOBS.get(c["sjob"], "NON"),
-            "subLvl":       c["slvl"],
-            "hp":           c["hp"],
-            "mp":           c["mp"],
-            "gil":          int(c["gil"]),
-            "playtimeH":    (c["playtime"] or 0) // 3600,
-            "kills":        int(c["kills"]),
-            "deaths":       int(c["deaths"]),
-            "battles":      int(c["battles"]),
-            "hlTier":              pv.get("HL_Tier", 0),
-            "ascensions":          pv.get("Prestige_Ascensions_Total", 0),
-            "nmKills":             pv.get("Custom_NM_Kills", 0),
-            "prestigeLvl":         pv.get(f"Prestige_Level_{mjob}", 0),
-            "rebirthCount":        pv.get(f"Rebirth_Count_{mjob}", 0),
-            "legacyRewardClaimed": bool(pv.get(LEGACY_REWARD_CLAIMED_VAR, 0)),
-        })
-    return {
-        "login":      acct["login"],
-        "email":      arow.get("current_email", ""),
-        "since":      str(arow.get("timecreate", "")),
-        "isGm":       int(arow.get("priv", 0) or 0) >= GM_PRIV_MIN,
-        "characters": characters,
-    }
+    return payload
 
 
 @app.get("/api/inventory/{charid}")
@@ -1281,22 +1348,31 @@ def char_tools(charid: int, request: Request):
 
 @app.post("/api/char/rescue")
 def char_rescue(body: CharBody, request: Request):
-    """Move a stuck OFFLINE character to GM Home (safe zone), like !rescue. Own-account only."""
+    """Unstick a character: clear a stale session and send them to GM Home.
+
+    Same tool as the website / launcher Rescue button. Own-account only.
+    Jailed characters stay in Mordion. A live black-screen session is cleared
+    so the player can log back in (needs DELETE on accounts_sessions).
+    """
     acct = require_account(request)
     conn = db_write()
     try:
         with conn.cursor() as cur:
             owned_char(cur, acct["id"], body.charid)
-            if not is_offline(cur, body.charid):
-                raise HTTPException(status_code=409, detail="That character is online -- log out of the game first.")
             _refuse_if_jailed(cur, body.charid)
+            cleared = clear_stuck_session(cur, body.charid)
+            if cleared < 0 and not is_offline(cur, body.charid):
+                raise HTTPException(
+                    status_code=409,
+                    detail="That character still has a game session. Close the client first, then try again.",
+                )
             cur.execute(
                 "UPDATE chars SET pos_zone=%s, pos_prevzone=%s, pos_x=0, pos_y=0, pos_z=0, pos_rot=0, moghouse=0 "
                 "WHERE charid=%s",
                 (RESCUE_ZONE, RESCUE_ZONE, body.charid),
             )
         conn.commit()
-        return {"ok": True}
+        return {"ok": True, "clearedSession": cleared > 0}
     except HTTPException:
         conn.rollback()
         raise
@@ -2825,6 +2901,48 @@ def card_page(name: str):
         return HTMLResponse(_og_html(name))
     except Exception:
         return FileResponse(os.path.join(_static_dir, "profile.html"))
+
+
+def require_launcher_key(request: Request) -> None:
+    if not LAUNCHER_KEY:
+        raise HTTPException(status_code=404, detail="Launcher feed is not published.")
+    got = (request.headers.get("x-launcher-key") or request.query_params.get("key") or "").strip()
+    if not got or not hmac.compare_digest(got, LAUNCHER_KEY):
+        raise HTTPException(status_code=401, detail="Launcher key required.")
+
+
+def launcher_file(name: str) -> Path:
+    if name not in {"manifest.json", "LegendaryLauncher.zip"}:
+        raise HTTPException(status_code=404, detail="Not found.")
+    path = (LAUNCHER_DIR / name).resolve()
+    root = LAUNCHER_DIR.resolve()
+    if path.parent != root or path.name != name:
+        raise HTTPException(status_code=404, detail="Not found.")
+    if not path.is_file():
+        raise HTTPException(status_code=404, detail="Launcher package is not on this host yet.")
+    return path
+
+
+@app.get("/launcher/manifest.json")
+def launcher_manifest(request: Request):
+    """Private launcher self-update manifest. Testers do not type the key — the app sends it."""
+    require_launcher_key(request)
+    return FileResponse(
+        launcher_file("manifest.json"),
+        media_type="application/json",
+        headers={"Cache-Control": "no-store"},
+    )
+
+
+@app.get("/launcher/LegendaryLauncher.zip")
+def launcher_package(request: Request):
+    require_launcher_key(request)
+    return FileResponse(
+        launcher_file("LegendaryLauncher.zip"),
+        media_type="application/zip",
+        filename="LegendaryLauncher.zip",
+        headers={"Cache-Control": "no-store"},
+    )
 
 
 # Serve the login page + assets. Registered LAST so the /api/* + /c routes win.
