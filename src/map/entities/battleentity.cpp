@@ -995,7 +995,7 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
 {
     TracyZoneScoped;
 
-    // This is the authoritative per-event HP-damage ceiling. It runs before
+    // This is the authoritative per-hit HP-damage ceiling. It runs before
     // listeners, tracking, and damage-derived effects so every downstream
     // system observes the same capped value. Negative damage/healing is left
     // unchanged. Forced-death scripts must opt into the narrow bypass.

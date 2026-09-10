@@ -84,6 +84,8 @@ local function getMultiAttacks(attacker, target, wsParams, firstHit, offHand)
     elseif firstHit then
         -- Mythic AM3 uses one distribution: 20% triple, 40% double,
         -- 40% single.  Separate rolls incorrectly reduce the double rate.
+        -- Extra OA2/OA3 hits are summed into the same finaldmg and delivered
+        -- once; they cannot bypass the WS event HP cap.
         local aftermathRoll = math.random(1, 100)
         if aftermathRoll <= oaThriceRate then
             bonusHits = bonusHits + 2
@@ -992,6 +994,8 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
 
     -- Hard delivery ceiling. Linked Ambuscade WS uses 149,999; other final
     -- Ambuscade WS use 99,999. Falls back to StandardWsDamageCap otherwise.
+    -- C++ TakeWeaponskillDamage also hard-stops pre-Prime WS at 999,999
+    -- after Overwhelm. Skillchains and magic bursts are not clipped here.
     local hardCap = attacker:getLocalVar('AmbuscadeWsDamageCap')
     if hardCap <= 0 then
         hardCap = attacker:getLocalVar('StandardWsDamageCap')
@@ -1000,6 +1004,21 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
     if finaldmg > 0 and hardCap > 0 then
         finaldmg = math.min(finaldmg, hardCap)
         wsResults.finalDmg = finaldmg
+    end
+
+    -- Absolute pre-Prime WS wall. Applies even when no StandardWsDamageCap
+    -- window is open. Prime may raise it; skillchains never see this.
+    if finaldmg > 0 then
+        local primeCap = attacker:getLocalVar('PrimeWsDamageCap') or 0
+        local wsWall   = 999999
+        if primeCap > wsWall then
+            wsWall = math.min(primeCap, 1999999)
+        end
+
+        if finaldmg > wsWall then
+            finaldmg = wsWall
+            wsResults.finalDmg = finaldmg
+        end
     end
 
     if wsResults.hitsLanded > 0 then

@@ -165,4 +165,12 @@ describe('Global HP damage cap', function()
             string.format('Expected lower target cap %d to win, got %d damage',
                 targetCap, maxHP - target:getHP()))
     end)
+
+    it('does not treat a skillchain or magic hit as a weaponskill cap window', function()
+        target:takeDamage(damageCap, player, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
+        target:takeDamage(damageCap, player, xi.attackType.SPECIAL, xi.damageType.ELEMENTAL)
+
+        assert(target:getHP() == maxHP - (2 * damageCap),
+            'Skillchains and other takeDamage paths must keep their own ceiling')
+    end)
 end)

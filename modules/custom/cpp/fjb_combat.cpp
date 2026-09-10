@@ -241,6 +241,44 @@ int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap)
     return effectiveCap;
 }
 
+int32 ApplyPrePrimeWeaponskillCap(CBattleEntity* PAttacker, int32 damage)
+{
+    constexpr int32 PRE_PRIME_WS_CAP      = 999999;
+    constexpr int32 PRIME_ABSOLUTE_WS_CAP = 1999999;
+
+    if (damage <= 0 || PAttacker == nullptr)
+    {
+        return damage;
+    }
+
+    int32 cap = PRE_PRIME_WS_CAP;
+    const auto primeCap = static_cast<int32>(PAttacker->GetLocalVar("PrimeWsDamageCap"));
+    if (primeCap > cap)
+    {
+        cap = std::min(primeCap, PRIME_ABSOLUTE_WS_CAP);
+    }
+
+    const auto aoeCap = static_cast<int32>(PAttacker->GetLocalVar("AoEWsDamageCap"));
+    if (aoeCap > 0 && aoeCap < cap)
+    {
+        cap = aoeCap;
+    }
+
+    const auto ambuscadeCap = static_cast<int32>(PAttacker->GetLocalVar("AmbuscadeWsDamageCap"));
+    if (ambuscadeCap > 0 && ambuscadeCap < cap)
+    {
+        cap = ambuscadeCap;
+    }
+
+    const auto standardCap = static_cast<int32>(PAttacker->GetLocalVar("StandardWsDamageCap"));
+    if (standardCap > 0 && standardCap < cap)
+    {
+        cap = standardCap;
+    }
+
+    return std::min(damage, cap);
+}
+
 int32 ApplyTrustLevelingHpPortionCap(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage)
 {
     // Per-hit roll inside the trust's tier band (% of mob max HP). Defaults to

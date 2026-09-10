@@ -24,6 +24,13 @@ bool IsPlayerControlled(CBattleEntity* PAttacker);
 // lower it. All overrides are synchronous entity local variables.
 int32 ResolveOutgoingHpDamageCap(CBattleEntity* PAttacker, int32 globalCap);
 
+// Hard ceiling for TakeWeaponskillDamage only. Pre-Prime player WS cannot
+// exceed 999,999 even if a leftover spell-cap local var would raise
+// takeDamage. PrimeWsDamageCap may raise this (bounded at 1,999,999).
+// Lower AoE / Ambuscade / standard WS windows still apply. Skillchains and
+// magic bursts do not use this helper.
+int32 ApplyPrePrimeWeaponskillCap(CBattleEntity* PAttacker, int32 damage);
+
 // While the trust's master is below level 99, clamp a single hit against a mob
 // to a per-hit random % of that mob's max HP. Band comes from spawn localVars
 // TrustLevelingPortionBpsMin/Max (catalog tier: C 8–10%, B 10–15%, A 10–18%,

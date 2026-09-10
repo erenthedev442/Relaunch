@@ -117,6 +117,11 @@ local function applyWSEffects(attacker, target, damage)
             if fx.kind == 'crit' and targetAlive then
                 if math.random(100) <= tier * fx.chancePerTier then
                     local bonus = math.floor(damage * fx.bonusPct / 100)
+                    -- This burst is extra weaponskill damage, not a skillchain.
+                    -- Keep the WS itself at the pre-Prime 999,999 wall.
+                    local primeCap = attacker:getLocalVar('PrimeWsDamageCap') or 0
+                    local wsCap    = (primeCap > 999999) and math.min(primeCap, 1999999) or 999999
+                    bonus          = math.min(bonus, math.max(0, wsCap - damage))
                     if bonus > 0 then
                         target:takeDamage(bonus, attacker, xi.attackType.PHYSICAL, damType)
                     end

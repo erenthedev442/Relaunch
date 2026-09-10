@@ -2438,6 +2438,14 @@ int32 TakeWeaponskillDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, 
     // and apply already reflects any per-NM cap.
     damage = CheckAndApplyDamageCap(damage, PDefender);
 
+    // Pre-Prime player WS hard stop at 999,999. Runs after Overwhelm so a
+    // 999,999 Lua result cannot grow past the wall. Ignores leftover
+    // BlueSpellDamageCap raises. Skillchains do not enter this function.
+    if (IsPlayerControlled(PAttacker))
+    {
+        damage = ApplyPrePrimeWeaponskillCap(PAttacker, damage);
+    }
+
     // FJB true-damage: a player-controlled weaponskill (PC or a pet/trust, e.g. a
     // PUP automaton) is allowed to exceed the 131,071 per-hit packet ceiling and
     // land the FULL value on the target's HP. The client's 17-bit action-packet
