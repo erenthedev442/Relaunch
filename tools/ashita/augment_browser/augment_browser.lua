@@ -7,7 +7,7 @@
 
 addon.name      = 'augment_browser'
 addon.author    = 'Eren{Legendary}'
-addon.version   = '1.0.0'
+addon.version   = '1.0.1'
 addon.desc      = 'Legendary augment catalog, catalyst names, and farm locations.'
 addon.commands  = { '/augmentbrowser', '/ab' }
 
@@ -59,9 +59,7 @@ local info = { rank=0, tier=1, count=0, aff=0, hl_tier=1, prestige=0, rebirths=0
 local bank, bank_buf = {}, {}
 local sorted = {}
 local sel_id = 0
-local f_tier, f_cat = 0, 0
-local f_owned = { false }
-local f_avail = { false }
+local f_cat = 0
 
 local function say(msg)
     print(chat.header('AugmentBrowser'):append(chat.message(msg)))
@@ -243,10 +241,7 @@ local function filtered()
         local owned = catalyst_qty(e.id) > 0
         if cur_tab == 'mine' and not owned then
             -- skip
-        elseif (f_tier == 0 or e.tier == f_tier)
-            and (f_cat == 0 or e.cat == f_cat)
-            and (not f_owned[1] or owned)
-            and (not f_avail[1] or e.tier <= info.rank)
+        elseif (f_cat == 0 or e.cat == f_cat)
             and matches_search(e.label, item_name(e.id), e.id, cat_name(e.cat), cat_short(e.cat), farm_text(e.id)) then
             out[#out + 1] = e
         end
@@ -489,16 +484,6 @@ local function draw_list()
         end
     end
 
-    local tier_lbl = f_tier == 0 and '  Tier  ' or ('  T' .. f_tier .. '   ')
-    if chip(tier_lbl, f_tier > 0) then
-        f_tier = f_tier + 1
-        if f_tier > 5 then f_tier = 0 end
-    end
-    imgui.SameLine()
-    imgui.Checkbox('Owned', f_owned)
-    imgui.SameLine()
-    imgui.Checkbox('Open', f_avail)
-
     local shown = filtered()
     if sel_id == 0 and shown[1] then
         sel_id = shown[1].id
@@ -659,19 +644,13 @@ ashita.events.register('command', 'ab_cmd', function(e)
         elseif t == 'rank' or t == '2' then cur_tab = 'rank'
         elseif t == 'mine' or t == '3' then cur_tab = 'mine' end
         visible[1] = true
-    elseif cmd == 'tier' then
-        f_tier = math.min(5, math.max(0, tonumber(args[3]) or 0))
     elseif cmd == 'cat' then
         f_cat = math.min(MAX_CAT, math.max(0, tonumber(args[3]) or 0))
-    elseif cmd == 'owned' then
-        f_owned[1] = not f_owned[1]
-    elseif cmd == 'avail' then
-        f_avail[1] = not f_avail[1]
     elseif cmd == 'sync' then
         send_auginfo()
         say('Syncing...')
     else
         say('/ab   /ab find haste   /ab tab catalog/rank/mine')
-        say('tier 0-5   cat 0-' .. MAX_CAT .. '   owned   avail   sync')
+        say('cat 0-' .. MAX_CAT .. '   sync')
     end
 end)

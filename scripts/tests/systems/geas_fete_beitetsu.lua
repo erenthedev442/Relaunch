@@ -13,6 +13,17 @@ describe('Geas Fete Beitetsu', function()
         assert(C.BEITETSU_BY_TIER[4].guaranteed == 55)
     end)
 
+    it('does not sell Beitetsu, Plutons, or Riftborn Boulders for beads', function()
+        local file = assert(io.open('modules/custom/lua/Geas_Fete.lua', 'r'))
+        local text = file:read('*a')
+        file:close()
+
+        assert(not text:find("label='Beitetsu'", 1, true))
+        assert(not text:find("label='Pluton'", 1, true))
+        assert(not text:find("label='Riftborn", 1, true))
+        assert(text:find("label='Riftcinder'", 1, true))
+    end)
+
     it('always grants the tier floor when bonus rolls fail', function()
         local none = function() return false end
         assert(C.rollBeitetsu(1, none) == 3)

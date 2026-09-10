@@ -4,7 +4,7 @@
 -- UI matches Augment Trade. Toggle: //ab
 -----------------------------------
 _addon.name     = 'AugmentBrowser'
-_addon.version  = '2.0.0'
+_addon.version  = '2.0.1'
 _addon.author   = 'Eren{Legendary}'
 _addon.commands = {'augmentbrowser', 'ab'}
 
@@ -58,7 +58,7 @@ local RIGHT_W = 410
 local BODY_TOP = TITLE_H + TAB_H + 8
 local FOOT_H  = 72
 local SEARCH_H = 78
-local FILTER_H = 126
+local FILTER_H = 84
 local PANEL_H = BODY_TOP + 8 + 26 + SEARCH_H + FILTER_H + 26 + 22 + PAGE_SIZE * (ROW_H + 4) + 24 + FOOT_H
 
 local C = {
@@ -128,8 +128,7 @@ local sel_id = 0
 local search_q = ''
 local search_focus = false
 local shift_down = false
-local f_tier, f_cat = 0, 0
-local f_owned, f_avail = false, false
+local f_cat = 0
 local widgets = {}
 local ui_ready = false
 local hover_key = nil
@@ -306,10 +305,7 @@ local function filtered()
         local owned = catalyst_qty(e.id) > 0
         if cur_tab == 'mine' and not owned then
             -- skip
-        elseif (f_tier == 0 or e.tier == f_tier)
-            and (f_cat == 0 or e.cat == f_cat)
-            and (not f_owned or owned)
-            and (not f_avail or e.tier <= info.rank)
+        elseif (f_cat == 0 or e.cat == f_cat)
             and matches_search(e.label, item_name(e.id), e.id, cat_name(e.cat), cat_short(e.cat), farm_text(e.id)) then
             out[#out + 1] = e
         end
@@ -486,9 +482,6 @@ local function ensure_ui()
         { 'f_c9',   ' Skill ' },
         { 'f_c10',  '  EXP  ' },
         { 'f_c11',  '  Job  ' },
-        { 'f_tier', '  Tier  ' },
-        { 'f_owned',' Owned ' },
-        { 'f_avail',' Open  ' },
     }
     for _, row in ipairs(chips) do
         add_btn(row[1], row[2], C.btn, C.hover, 12, 6)
@@ -498,9 +491,6 @@ local function ensure_ui()
         widgets['f_c'..i].action = 'set_cat'
         widgets['f_c'..i].arg = i
     end
-    widgets.f_tier.action = 'cycle_tier'
-    widgets.f_owned.action = 'toggle_owned'
-    widgets.f_avail.action = 'toggle_avail'
 
     for i = 1, PAGE_SIZE do
         add_btn('row'..i, ' ', C.row, C.hover, 13, 8, LISTF)
@@ -618,7 +608,6 @@ local function hide_list_chrome()
     hide_key('next')
     for _, key in ipairs({
         'f_all','f_c1','f_c2','f_c3','f_c4','f_c5','f_c6','f_c7','f_c8','f_c9','f_c10','f_c11',
-        'f_tier','f_owned','f_avail',
     }) do
         hide_key(key)
     end
@@ -812,10 +801,6 @@ local function render_list()
         chip(row[1], cx, y + 42, row[3], f_cat == row[2])
         cx = cx + 88
     end
-    local tier_lbl = f_tier == 0 and '  Tier  ' or ('  T' .. f_tier .. '   ')
-    chip('f_tier', x + 6, y + 84, tier_lbl, f_tier > 0)
-    chip('f_owned', x + 94, y + 84, ' Owned ', f_owned)
-    chip('f_avail', x + 182, y + 84, ' Open  ', f_avail)
     y = y + FILTER_H
 
     local shown = filtered()
@@ -966,16 +951,6 @@ local function handle_action(w)
         windower.add_to_chat(207, '[AugmentBrowser] Refreshing rank and bank...')
     elseif w.action == 'set_cat' then
         f_cat = tonumber(w.arg) or 0
-        cur_page = 1
-    elseif w.action == 'cycle_tier' then
-        f_tier = f_tier + 1
-        if f_tier > 5 then f_tier = 0 end
-        cur_page = 1
-    elseif w.action == 'toggle_owned' then
-        f_owned = not f_owned
-        cur_page = 1
-    elseif w.action == 'toggle_avail' then
-        f_avail = not f_avail
         cur_page = 1
     elseif w.action == 'select' then
         sel_id = w.id or 0
@@ -1179,19 +1154,13 @@ windower.register_event('addon command', function(cmd, ...)
         cur_page = cur_page + 1; render()
     elseif cmd == 'p' or cmd == 'prev' then
         cur_page = math.max(1, cur_page - 1); render()
-    elseif cmd == 'tier' then
-        f_tier = math.min(5, math.max(0, tonumber(arg1) or 0)); cur_page = 1; render()
     elseif cmd == 'cat' then
         f_cat = math.min(MAX_CAT, math.max(0, tonumber(arg1) or 0)); cur_page = 1; render()
-    elseif cmd == 'owned' then
-        f_owned = not f_owned; cur_page = 1; render()
-    elseif cmd == 'avail' then
-        f_avail = not f_avail; cur_page = 1; render()
     elseif cmd == 'sync' then
         send_auginfo()
         windower.add_to_chat(207, '[AugmentBrowser] Syncing...')
     else
         windower.add_to_chat(207, '[AugmentBrowser]  //ab   //ab find haste   //ab tab catalog/rank/mine')
-        windower.add_to_chat(207, '  tier 0-5   cat 0-' .. MAX_CAT .. '   owned   avail   sync')
+        windower.add_to_chat(207, '  cat 0-' .. MAX_CAT .. '   sync')
     end
 end)

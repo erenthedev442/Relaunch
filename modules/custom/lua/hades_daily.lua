@@ -4,7 +4,7 @@
 -- Hades daily quests. Five slots every UTC day, same board for everyone.
 -- Kills and deliveries only mark progress. Soul Shards are paid when the
 -- player talks to Hades and turns the ready tasks in. 150 only if all
--- five are turned in. Weekend shop sells a random Relic 119 III voucher.
+-- five are turned in. Weekend shop is the silent second form (16959511).
 --
 -- Public API (same require cache as the Module loader):
 --   hades.fire(player, eventType, meta)
@@ -417,13 +417,6 @@ local function showRoot(player)
             showRoot(p)
         end,
     }
-    opts[#opts + 1] =
-    {
-        catalog.isShopOpen() and 'Shop (weekend)' or 'Shop (closed)',
-        function(p)
-            catalog.showShop(p, showRoot)
-        end,
-    }
     opts[#opts + 1] = { 'Close', function(_) end }
 
     hadesMenu.title   = string.format('Hades  %d/5 turned in', doneCount)
@@ -507,11 +500,66 @@ for _, dest in ipairs(catalog.deliveries) do
 end
 
 -----------------------------------
--- NPC
+-- NPCs: talking Hades (dailies) + silent second form (weekend shop)
 -----------------------------------
-m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone), function(zone)
-    super(zone)
+local function bindShopNpc(npc)
+    if not npc then
+        return false
+    end
+
+    pcall(function()
+        npc:hideName(true)
+    end)
+    pcall(function()
+        npc:renameEntity('', true)
+    end)
+    pcall(function()
+        npc:setUntargetable(false)
+    end)
+    pcall(function()
+        npc:setStatus(xi.status.NORMAL)
+    end)
+    pcall(function()
+        npc:removeListener('HADES_SHOP')
+    end)
+    npc:addListener('ON_TRIGGER', 'HADES_SHOP', function(player, _)
+        catalog.sayShopSilence(player)
+        if catalog.isShopOpen() then
+            catalog.showShop(player, nil, true)
+        end
+    end)
+    return true
+end
+
+local function spawnShopFallback(zone)
+    local pos = catalog.shopNpcPos
     local npc = zone:insertDynamicEntity({
+        objtype    = xi.objType.NPC,
+        name       = '',
+        packetName = '',
+        look       = '0x0000710A00000000000000000000000000000000',
+        x          = pos.x,
+        y          = pos.y,
+        z          = pos.z,
+        rotation   = pos.rotation,
+        widescan   = 0,
+        onTrigger  = function(player, _)
+            catalog.sayShopSilence(player)
+            if catalog.isShopOpen() then
+                catalog.showShop(player, nil, true)
+            end
+        end,
+    })
+    if npc then
+        pcall(function()
+            npc:hideName(true)
+        end)
+    end
+    return npc
+end
+
+local function placeDailyHades(zone)
+    return zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Hades',
         packetName = string.format('%sHades', xi.icon.MOON),
@@ -534,18 +582,38 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
             end
             if catalog.isShopOpen() then
                 player:printToPlayer(
-                    '[Hades] The ferry is up. Turn in what you have finished. Relic paper is for sale.',
+                    '[Hades] The ferry is up. Turn in what you have finished. The second form keeps the wares of souls who have perished. Seek him.',
                     S)
             else
                 player:printToPlayer(
-                    '[Hades] Bring me proof of the day\'s work. The shop waits until Saturday.',
+                    '[Hades] Bring me proof of the day\'s work. The silent one opens only when the weekend keeps.',
                     S)
             end
             showRoot(player)
         end,
     })
+end
+
+local function applyLiveNpcs()
+    local daily = GetNPCByID(16959532)
+    if daily then
+        pcall(function()
+            daily:setPos(catalog.npcPos.x, catalog.npcPos.y, catalog.npcPos.z, catalog.npcPos.rotation)
+        end)
+    end
+    bindShopNpc(GetNPCByID(catalog.shopNpcId))
+end
+
+m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone), function(zone)
+    super(zone)
+    local npc = placeDailyHades(zone)
     utils.unused(npc)
+    if not bindShopNpc(GetNPCByID(catalog.shopNpcId)) then
+        spawnShopFallback(zone)
+    end
 end)
+
+pcall(applyLiveNpcs)
 
 m.fire           = hades.fire
 m.fireCustomKill = hades.fireCustomKill

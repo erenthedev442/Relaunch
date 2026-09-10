@@ -1,8 +1,9 @@
--- !scour <gear_item_id> [confirm]
+-- !scour <gear_item_id>[@slot] [confirm]
 -- Strip ALL augments, including crystalized lines. Same 25,000 gil cost
 -- as trading the piece to the Arcane Augmenter. Server-enforced: must be
 -- within 6 yalms and have talked to / traded him in the last 3 minutes.
--- The addon UI is not trusted.
+-- The addon UI is not trusted. Gear is resolved by inventory slot when
+-- the player has two of the same item. Equipped copies are refused.
 
 ---@type TCommand
 local commandObj = {}
@@ -12,6 +13,8 @@ commandObj.cmdprops =
     permission = 0,
     parameters = 's',
 }
+
+local tradeGuard = require('modules/custom/lua/augment_trade_guard')
 
 local AUGMENT_NPC_ID = 16959491
 local AUGMENT_ZONE   = 44
@@ -78,7 +81,7 @@ end
 commandObj.onTrigger = function(player, args)
     if not args or args:match('^%s*$') then
         player:printToPlayer(
-            'Usage: !scour <gear_item_id> confirm   (25,000 gil, strips crystalized too)',
+            'Usage: !scour <gear_item_id>[@slot] confirm   (25,000 gil, strips crystalized too)',
             xi.msg.channel.SYSTEM_3)
         return
     end
@@ -98,9 +101,11 @@ commandObj.onTrigger = function(player, args)
         end
     end
 
-    if #parts ~= 1 then
+    local gearId, bagSlot = tradeGuard.parseGearToken(parts[1])
+    bagSlot = bagSlot or tradeGuard.takeSlotArg(parts)
+    if not gearId or gearId <= 0 or #parts ~= 1 then
         player:printToPlayer(
-            'Usage: !scour <gear_item_id> confirm   (25,000 gil, strips crystalized too)',
+            'Usage: !scour <gear_item_id>[@slot] confirm   (25,000 gil, strips crystalized too)',
             xi.msg.channel.SYSTEM_3)
         return
     end
@@ -111,15 +116,9 @@ commandObj.onTrigger = function(player, args)
         return
     end
 
-    local gearId = tonumber(parts[1])
-    if not gearId or gearId <= 0 then
-        player:printToPlayer('Invalid gear item ID: ' .. tostring(parts[1]), xi.msg.channel.SYSTEM_3)
-        return
-    end
-
-    local gear = player:findItem(gearId, 0)
+    local gear, gearErr = tradeGuard.resolveHeldGear(player, gearId, bagSlot)
     if not gear then
-        player:printToPlayer('You do not have that gear piece in your inventory.', xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(gearErr or 'You do not have that gear piece in your inventory.', xi.msg.channel.SYSTEM_3)
         return
     end
     if not (gear:isType(xi.itemType.WEAPON) or gear:isType(xi.itemType.ARMOR)) then
@@ -172,6 +171,13 @@ commandObj.onTrigger = function(player, args)
         player:printToPlayer(
             string.format('Need %d gil to scour (you have %d).', SCOUR_GIL_COST, player:getGil()),
             xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    local stillBusy = tradeGuard.heldBusyReason(gear)
+    if stillBusy then
+        player:addGil(SCOUR_GIL_COST)
+        player:printToPlayer(stillBusy, xi.msg.channel.SYSTEM_3)
         return
     end
 

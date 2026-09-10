@@ -8,7 +8,7 @@
 
 addon.name      = 'augment_trade'
 addon.author    = 'Eren{Legendary}'
-addon.version   = '1.0.5'
+addon.version   = '1.0.7'
 addon.desc      = 'Arcane Augmenter bank + inventory trade UI.'
 addon.commands  = { '/augmenttrade', '/at' }
 
@@ -80,6 +80,7 @@ local f_slot  = 'all'
 local f_sort  = 'name'
 local sel_cats = {}
 local sel_gear = 0
+local sel_slot = 0
 local last_inv = 0
 local last_range = 0
 local last_near = false
@@ -212,6 +213,37 @@ end
 
 local function inventory_qty(id)
     return inv[id] or 0
+end
+
+local function clear_sel_gear()
+    sel_gear = 0
+    sel_slot = 0
+end
+
+local function has_sel_gear()
+    return sel_gear > 0 and sel_slot > 0
+end
+
+local function gear_token()
+    return string.format('%d@%d', sel_gear, sel_slot)
+end
+
+local function equipped_inv_slots()
+    local slots = {}
+    local invMgr = AshitaCore:GetMemoryManager():GetInventory()
+    for eq = 0, 15 do
+        local ok, eitem = pcall(function()
+            return invMgr:GetEquippedItem(eq)
+        end)
+        if ok and eitem and tonumber(eitem.Index) and eitem.Index ~= 0 then
+            local container = math.floor(bit.band(eitem.Index, 0xFF00) / 0x0100)
+            local index = bit.band(eitem.Index, 0x00FF)
+            if container == 0 and index > 0 and index <= 80 then
+                slots[index] = true
+            end
+        end
+    end
+    return slots
 end
 
 local function catalyst_qty(id)
@@ -396,9 +428,22 @@ local function selected_qty(id)
     return idx and sel_cats[idx].qty or 0
 end
 
+local function prune_selection()
+    if not has_sel_gear() then
+        return
+    end
+    for _, e in ipairs(gear_rows) do
+        if e.id == sel_gear and e.slot == sel_slot and not e.equipped then
+            return
+        end
+    end
+    clear_sel_gear()
+end
+
 local function rebuild_rows()
     gear_rows = {}
     cat_rows = {}
+    local worn = equipped_inv_slots()
     local invMgr = AshitaCore:GetMemoryManager():GetInventory()
     for s = 1, 80 do
         local it = invMgr:GetContainerItem(0, s)
@@ -411,6 +456,7 @@ local function rebuild_rows()
                 kind = gear_kind(it.Id),
                 augs = read_inv_augs(it),
                 lock_mask = lock_mask_of(it),
+                equipped = worn[s] and true or false,
             }
         end
     end
@@ -449,6 +495,7 @@ local function update_inventory()
         end
     end
     rebuild_rows()
+    prune_selection()
 end
 
 local function player_index()
@@ -532,11 +579,11 @@ local function near_augmenter()
 end
 
 local function selected_gear_row()
-    if sel_gear <= 0 then
+    if not has_sel_gear() then
         return nil
     end
     for _, e in ipairs(gear_rows) do
-        if e.id == sel_gear then
+        if e.id == sel_gear and e.slot == sel_slot then
             return e
         end
     end
@@ -564,11 +611,15 @@ local function validate_trade()
     if not near_augmenter() then
         return false, 'You must be within 6 yalms of the Arcane Augment.'
     end
-    if sel_gear <= 0 then
+    if not has_sel_gear() then
         return false, 'No gear set.'
     end
-    if inventory_qty(sel_gear) < 1 then
+    local row = selected_gear_row()
+    if not row then
         return false, 'Gear is not in inventory (bag only; not wardrobe/satchel).'
+    end
+    if row.equipped then
+        return false, 'Unequip that piece first.'
     end
     if not is_equipment(sel_gear) then
         return false, 'That ID is not augmentable gear.'
@@ -656,24 +707,67 @@ local function unpick_one(id)
     end
 end
 
-local function choose_gear(id, toggle)
+local function choose_gear(id, toggle, slot)
     update_inventory()
-    id = tonumber(id)
-    if not id or id <= 0 then
-        return
+    if type(id) == 'string' then
+        local tid, tslot = id:match('^(%d+)@(%d+)$')
+        if tid then
+            id, slot = tonumber(tid), tonumber(tslot)
+        else
+            id = tonumber(id)
+        end
+    else
+        id = tonumber(id)
     end
-    if inventory_qty(id) < 1 then
-        say('That item is not in inventory.')
+    slot = tonumber(slot)
+    if not id or id <= 0 then
         return
     end
     if not is_equipment(id) then
         say('That ID is not augmentable gear.')
         return
     end
-    if toggle and sel_gear == id then
-        sel_gear = 0
+    if not slot then
+        local free
+        for _, e in ipairs(gear_rows) do
+            if e.id == id and not e.equipped then
+                if free then
+                    say('You have more than one unequipped copy. Click the specific row.')
+                    return
+                end
+                free = e
+            end
+        end
+        if not free then
+            if inventory_qty(id) > 0 then
+                say('Unequip that piece first.')
+            else
+                say('That item is not in inventory.')
+            end
+            return
+        end
+        slot = free.slot
+    end
+    local row
+    for _, e in ipairs(gear_rows) do
+        if e.id == id and e.slot == slot then
+            row = e
+            break
+        end
+    end
+    if not row then
+        say('That item is not in inventory.')
+        return
+    end
+    if row.equipped then
+        say('Unequip that piece first.')
+        return
+    end
+    if toggle and sel_gear == id and sel_slot == slot then
+        clear_sel_gear()
     else
         sel_gear = id
+        sel_slot = slot
     end
 end
 
@@ -696,7 +790,7 @@ local function do_trade(use_maat, skip_confirm)
         pending_confirm = { kind = 'overwrite', maat = use_maat and true or false }
         return
     end
-    local parts = { tostring(sel_gear) }
+    local parts = { gear_token() }
     for _, s in ipairs(sel_cats) do
         parts[#parts + 1] = s.id .. ':' .. s.qty
     end
@@ -711,7 +805,7 @@ local function do_trade(use_maat, skip_confirm)
     input_line(cmd)
     pending_confirm = nil
     sel_cats = {}
-    sel_gear = 0
+    clear_sel_gear()
 end
 
 local function do_scour(skip_confirm)
@@ -720,12 +814,17 @@ local function do_scour(skip_confirm)
         say('You must be within 6 yalms of the Arcane Augment. Command not sent.')
         return
     end
-    if sel_gear <= 0 then
+    if not has_sel_gear() then
         say('Select a gear piece first. Command not sent.')
         return
     end
-    if inventory_qty(sel_gear) < 1 then
+    local row = selected_gear_row()
+    if not row then
         say('Gear is not in inventory (bag only; not wardrobe/satchel). Command not sent.')
+        return
+    end
+    if row.equipped then
+        say('Unequip that piece first. Command not sent.')
         return
     end
     local augn, locked = selected_aug_state()
@@ -737,12 +836,12 @@ local function do_scour(skip_confirm)
         pending_confirm = { kind = 'scour' }
         return
     end
-    local cmd = '!scour ' .. tostring(sel_gear) .. ' confirm'
+    local cmd = '!scour ' .. gear_token() .. ' confirm'
     say('Sending: ' .. cmd)
     input_line(cmd)
     pending_confirm = nil
     sel_cats = {}
-    sel_gear = 0
+    clear_sel_gear()
 end
 
 local function build_sorted()
@@ -959,17 +1058,25 @@ local function draw_window()
                 imgui.SameLine()
                 if chip('  Acc  ', f_slot == 'acc') then f_slot = 'acc' end
 
-                imgui.TextColored(MUTE, pad('ITEM', 28) .. '  ' .. pad('SLOT', 8) .. '  QTY')
+                imgui.TextColored(MUTE, pad('ITEM', 28) .. '  ' .. pad('SLOT', 8))
                 imgui.BeginChild('##at_gear', { 0, -8 }, ImGuiChildFlags_Borders)
                 local shown = filter_gear(gear_rows)
                 for _, e in ipairs(shown) do
-                    local label = string.format('%s  %s  x%d##g%d_%d',
-                        pad(e.name, 28), pad(e.kind, 8), e.count or 1, e.id, e.slot)
-                    if imgui.Selectable(label, sel_gear == e.id, ImGuiSelectableFlags_AllowDoubleClick) then
-                        choose_gear(e.id, false)
-                    end
-                    if imgui.IsItemHovered() and imgui.IsMouseDoubleClicked(0) then
-                        cur_tab = 'cats'
+                    local kind = e.equipped and 'eq' or (e.kind or '')
+                    local label = string.format('%s  %s##g%d_%d',
+                        pad(e.name, 28), pad(kind, 8), e.id, e.slot)
+                    if e.equipped then
+                        imgui.TextColored(MUTE, label:gsub('##.*', ''))
+                        if imgui.IsItemHovered() and imgui.SetTooltip then
+                            imgui.SetTooltip('Unequip this piece before augmenting.')
+                        end
+                    else
+                        if imgui.Selectable(label, sel_gear == e.id and sel_slot == e.slot, ImGuiSelectableFlags_AllowDoubleClick) then
+                            choose_gear(e.id, false, e.slot)
+                        end
+                        if imgui.IsItemHovered() and imgui.IsMouseDoubleClicked(0) then
+                            cur_tab = 'cats'
+                        end
                     end
                 end
                 if #shown == 0 then
@@ -1030,7 +1137,7 @@ local function draw_window()
         local g = selected_gear_row()
         if g then
             imgui.TextColored(INK, string.format('%s', g.name))
-            imgui.TextColored(MUTE, string.format('[%s]   x%d', g.kind, g.count or 1))
+            imgui.TextColored(MUTE, string.format('[%s]', g.kind))
         else
             imgui.TextColored(MUTE, 'Click a piece on the left')
         end
@@ -1094,12 +1201,12 @@ local function draw_window()
             if imgui.Button('   Clear   ', { 90, 36 }) then
                 pending_confirm = nil
                 sel_cats = {}
-                sel_gear = 0
+                clear_sel_gear()
             end
             imgui.PopStyleColor(2)
             imgui.Dummy({ 1, 6 })
             local augn, locked = selected_aug_state()
-            local can_scour = sel_gear > 0 and (augn > 0 or locked > 0)
+            local can_scour = has_sel_gear() and (augn > 0 or locked > 0)
             imgui.PushStyleColor(ImGuiCol_Button, rgb(140, 64, 54, 0.85))
             imgui.PushStyleColor(ImGuiCol_ButtonHovered, rgb(170, 80, 70))
             imgui.PushStyleColor(ImGuiCol_Text, INK)
@@ -1116,7 +1223,7 @@ local function draw_window()
             end
         end
         imgui.Dummy({ 1, 10 })
-        imgui.TextColored(MUTE, 'Left-click gear to select. Double-click jumps to the bank. Catalysts come from the NPC store, not your bag. Stay within 6 yalms.')
+        imgui.TextColored(MUTE, 'Left-click unequipped gear to select. Equipped pieces must come off first. Double-click jumps to the bank.')
         if bag_leftover > 0 then
             imgui.TextColored(GOLD, string.format('%d catalyst(s) still in your bag — store them with the NPC first.', bag_leftover))
         end
@@ -1259,7 +1366,7 @@ ashita.events.register('command', 'at_cmd', function(e)
         visible[1] = true
     elseif cmd == 'clear' then
         sel_cats = {}
-        sel_gear = 0
+        clear_sel_gear()
         visible[1] = true
     elseif cmd == 'trade' then
         do_trade((args[3] or ''):lower() == 'maat')

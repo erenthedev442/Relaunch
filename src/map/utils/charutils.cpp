@@ -1760,7 +1760,7 @@ auto AddItem(CCharEntity* PChar, uint8 LocationID, std::unique_ptr<CItem> PItem,
     }
 
     uint32 krakenSerial = 0;
-    if (PItem->getID() == krakenclub::ItemId && PItem->getSignature().empty())
+    if (krakenclub::isKrakenClub(PItem->getID()) && PItem->getSignature().empty())
     {
         krakenSerial = krakenclub::stampNewItem(PChar, PItem.get());
         if (krakenSerial == 0)
@@ -1805,7 +1805,7 @@ auto AddItem(CCharEntity* PChar, uint8 LocationID, std::unique_ptr<CItem> PItem,
 
     if (krakenSerial != 0)
     {
-        krakenclub::announce(PChar, PInserted->getSignature());
+        krakenclub::announce(PChar, PInserted->getSignature(), PInserted->getID());
     }
 
     return SlotID;

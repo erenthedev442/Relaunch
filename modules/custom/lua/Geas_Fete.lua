@@ -23,7 +23,8 @@
 --   the WeaponForge Aeonic steps. Dead legacy charVars (Escha_Beads/Escha_Silt)
 --   are folded into escha_beads on first access. The real escha_silt CURRENCY is
 --   left alone -- it's the Eschan portal travel cost + Domain Invasion fuel.
--- Exchange at the Geas Fete Warden for Beitetsu / Riftcinder / Eschalixir+2.
+-- Exchange at the Geas Fete Warden for Riftcinder / Eschalixir+2 only.
+-- Beitetsu, Plutons, and Riftborn Boulders are not sold for beads.
 -- Riftborn Boulders are Abyssea-only so Geas cannot farm Mythic and Empy
 -- from the same kill.
 --
@@ -1457,17 +1458,16 @@ local function qmPopMenu(player, npc, zoneId, gids, page)
     player:timer(30, function(p) p:customMenu(menu) end)
 end
 
--- Exchange shop: spend currency on materials. Each material opens a quantity
--- submenu (x1 / x10 / x<stack> / Max) -- the Aeonic/Mythic forge steps need
--- materials by the thousands (Mythic II+III alone is 10,300 Beitetsu), so
--- one-per-click is not viable. Max buys as many as beads AND bag space allow.
+-- Exchange shop: spend beads on leftover Escha mats. Beitetsu / Plutons /
+-- Riftborn Boulders stay off this list -- those are kill drops only.
+-- Each material opens a quantity submenu (x1 / x10 / x<stack> / Max).
+-- Max buys as many as beads AND bag space allow.
 local function buildShop(player, zone, zoneId, mainFn, menu)
     local clbl   = CURRENCY_LABEL[zoneId] or 'pts'
     local shopFn -- forward decl
 
     -- Keep one entry per line: the site's geas_fete docgen parses label=/cost=.
     local SHOP = {
-        { label='Beitetsu',         id=BEITETSU,         stack=99, cost=200  },
         { label='Riftcinder',       id=RIFTCINDER,       stack=99, cost=150  },
         { label='Eschalixir+2',     id=ESCHALIXIR_2,     stack=12, cost=2000 },
     }

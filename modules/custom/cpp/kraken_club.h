@@ -9,7 +9,13 @@ class CItem;
 
 namespace krakenclub
 {
-inline constexpr uint16 ItemId = 17440;
+inline constexpr uint16 ItemId        = 17440;
+inline constexpr uint16 PlusOneItemId = 19972;
+
+inline bool isKrakenClub(uint16 itemId)
+{
+    return itemId == ItemId || itemId == PlusOneItemId;
+}
 
 // Assigns the next persistent LEG serial to a newly-created Kraken Club.
 // Returns zero if the serial could not be allocated; callers must fail closed.
@@ -19,5 +25,5 @@ auto stampNewItem(CCharEntity* PChar, CItem* PItem) -> uint32;
 void releaseSerial(uint32 serial);
 
 // Congratulates the recipient across every map server.
-void announce(CCharEntity* PChar, const std::string& signature);
+void announce(CCharEntity* PChar, const std::string& signature, uint16 itemId);
 } // namespace krakenclub

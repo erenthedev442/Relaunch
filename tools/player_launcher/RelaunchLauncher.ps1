@@ -56,7 +56,7 @@ $AddonCatalog = @(
     @{ Id = 'tparty';         Label = 'Party HP / TP';            Ashita = $true;  Windower = $false; StockAshita = $true;  StockWindower = $false }
     @{ Id = 'relaunch';       Label = 'Relaunch helper';          Ashita = $true;  Windower = $true;  StockAshita = $false; StockWindower = $false }
     @{ Id = 'augment_browser';Label = 'Augment Browser (Windower)'; Ashita = $false; Windower = $true; StockAshita = $false; StockWindower = $false }
-    @{ Id = 'augment_trade';  Label = 'Augment Trade (Windower)'; Ashita = $false; Windower = $true;  StockAshita = $false; StockWindower = $false }
+    @{ Id = 'augment_trade';  Label = 'Augment Trade';             Ashita = $true;  Windower = $true;  StockAshita = $false; StockWindower = $false }
 )
 
 # ---------------------------------------------------------------------------
@@ -214,9 +214,15 @@ function Copy-DirContents($src, $dst) {
 
 function Install-RelaunchAddons($client) {
     if ($client -eq 'Ashita') {
-        $src = Join-Path $Root 'addons\ashita\relaunch'
-        $dst = Join-Path $AshitaDir 'addons\relaunch'
-        if (Copy-DirContents $src $dst) { Write-Log 'Installed Relaunch Ashita addon.' }
+        $pairs = @(
+            @{ Src = Join-Path $Root 'addons\ashita\relaunch'; Dst = Join-Path $AshitaDir 'addons\relaunch' }
+            @{ Src = Join-Path $RepoRoot 'tools\ashita\augment_trade'; Dst = Join-Path $AshitaDir 'addons\augment_trade' }
+        )
+        foreach ($p in $pairs) {
+            if (Copy-DirContents $p.Src $p.Dst) {
+                Write-Log ("Copied addon {0}" -f (Split-Path $p.Dst -Leaf))
+            }
+        }
         return
     }
 

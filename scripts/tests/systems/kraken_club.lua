@@ -34,7 +34,32 @@ describe('Kraken Club acquisition', function()
     it('does not allow Invasion to create another Kraken Club source', function()
         for _, itemId in ipairs(invasionLoot) do
             assert(itemId ~= xi.item.KRAKEN_CLUB)
+            assert(itemId ~= xi.item.KRAKEN_CLUB_P1)
         end
+    end)
+
+    it('defines Kraken Club +1 as a 119 all-jobs 8-hit offhand', function()
+        assert(xi.item.KRAKEN_CLUB_P1 == 19972)
+
+        local sql = assert(io.open('modules/custom/sql/zz_kraken_club_plus_one.sql', 'r'))
+        local text = sql:read('*a')
+        sql:close()
+
+        assert(text:find("%(19972, 'kraken_club_%+1', 11, 0, 269, 269, 228, 3, 8, 264, 16, 0%)"))
+        assert(text:find("%(19972, 'kraken_club_%+1', 99, 119, 4194303, 110,"))
+        assert(text:find('%(19972,  25, 25%)'))
+        assert(text:find('%(19972,  73,  4%)'))
+        assert(text:find('%(19972, 289,  5%)'))
+        assert(not text:find('INSERT INTO `mob_droplist`', 1, true))
+    end)
+
+    it('stamps LEG serials on both Kraken Club ids', function()
+        local header = assert(io.open('modules/custom/cpp/kraken_club.h', 'r'))
+        local text = header:read('*a')
+        header:close()
+
+        assert(text:find('PlusOneItemId = 19972', 1, true))
+        assert(text:find('isKrakenClub', 1, true))
     end)
 
     it('rebuilds inscribed gear through addHeldGear so augmenting cannot mint a new serial', function()

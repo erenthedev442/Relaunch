@@ -51,4 +51,5 @@ Relaunch-authored addons in this folder are ours.
 | `Launch Relaunch.bat` | Double-click entry |
 | `RelaunchLauncher.ps1` | UI + download + config |
 | `addons/ashita/relaunch/` | Ashita welcome addon |
+| `tools/ashita/augment_trade/` | Ashita Augment Trade (`/at`) |
 | `%LOCALAPPDATA%\Relaunch\launcher.json` | Your last settings |

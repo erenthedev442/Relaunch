@@ -7,7 +7,7 @@
 -- Chat commands still work (//at or //augmenttrade).
 -----------------------------------
 _addon.name     = 'AugmentTrade'
-_addon.version  = '5.3.9'
+_addon.version  = '5.4.2'
 _addon.author   = 'Eren{Legendary}'
 _addon.commands = {'augmenttrade', 'at'}
 
@@ -83,6 +83,7 @@ local f_sort  = 'name'
 
 local sel_cats = {}
 local sel_gear = 0
+local sel_slot = 0
 local search_q = ''
 local search_focus = false
 local shift_down = false
@@ -535,11 +536,65 @@ local function has_maat()
     return inventory_qty(15194) > 0 or inventory_qty(29000) > 0
 end
 
+local function clear_sel_gear()
+    sel_gear = 0
+    sel_slot = 0
+end
+
+local function has_sel_gear()
+    return sel_gear > 0 and sel_slot > 0
+end
+
+local function gear_token()
+    return string.format('%d@%d', sel_gear, sel_slot)
+end
+
+local function equipped_inv_slots(bag)
+    local slots = {}
+    local items = windower.ffxi.get_items()
+    local eq = items and items.equipment
+    if type(eq) == 'table' then
+        local names = {
+            'main', 'sub', 'range', 'ammo', 'head', 'body', 'hands', 'legs', 'feet',
+            'neck', 'waist', 'left_ear', 'right_ear', 'left_ring', 'right_ring', 'back',
+        }
+        for _, name in ipairs(names) do
+            local idx = tonumber(eq[name]) or 0
+            local bagId = tonumber(eq[name .. '_bag']) or 0
+            if idx > 0 and bagId == 0 then
+                slots[idx] = true
+            end
+        end
+    end
+    if type(bag) == 'table' then
+        for s = 1, 80 do
+            local it = bag[s]
+            if type(it) == 'table' and (it.status == 5 or it.status == 19) then
+                slots[s] = true
+            end
+        end
+    end
+    return slots
+end
+
+local function prune_selection()
+    if not has_sel_gear() then
+        return
+    end
+    for _, e in ipairs(gear_rows) do
+        if e.id == sel_gear and e.slot == sel_slot and not e.equipped then
+            return
+        end
+    end
+    clear_sel_gear()
+end
+
 local function rebuild_rows()
     gear_rows = {}
     cat_rows = {}
     local bags = windower.ffxi.get_items()
     local bag = bags and (bags[0] or bags.inventory)
+    local worn = equipped_inv_slots(bag)
     if type(bag) == 'table' then
         for s = 1, 80 do
             local it = bag[s]
@@ -550,6 +605,7 @@ local function rebuild_rows()
                     kind = gear_kind(it.id),
                     augs = read_augments(it),
                     lock_mask = lock_mask_of(it),
+                    equipped = worn[s] and true or false,
                 }
             end
         end
@@ -591,6 +647,7 @@ local function update_inventory()
         end
     end
     rebuild_rows()
+    prune_selection()
 end
 
 local function selected_qty(id)
@@ -680,17 +737,18 @@ local function near_augmenter()
     return dist ~= nil and dist <= TRADE_RANGE
 end
 
-local function find_gear_row(id)
+local function find_gear_row(id, slot)
+    slot = tonumber(slot)
     for _, e in ipairs(gear_rows) do
-        if e.id == id then
+        if e.id == id and (not slot or e.slot == slot) then
             return e
         end
     end
     return nil
 end
 
-local function gear_aug_state(id)
-    local row = find_gear_row(id)
+local function gear_aug_state(id, slot)
+    local row = find_gear_row(id, slot or sel_slot)
     local augs = row and row.augs or {}
     local mask = row and tonumber(row.lock_mask) or 0
     local locked = 0
@@ -707,11 +765,15 @@ local function validate_trade()
     if not near_augmenter() then
         return false, 'You must be within 6 yalms of the Arcane Augment.'
     end
-    if sel_gear <= 0 then
+    if not has_sel_gear() then
         return false, 'No gear set.'
     end
-    if inventory_qty(sel_gear) < 1 then
+    local row = find_gear_row(sel_gear, sel_slot)
+    if not row then
         return false, 'Gear is not in inventory (bag only; not wardrobe/satchel).'
+    end
+    if row.equipped then
+        return false, 'Unequip that piece first.'
     end
     if not is_equipment(sel_gear) then
         return false, 'That ID is not augmentable gear.'
@@ -801,24 +863,61 @@ local function unpick_one(id)
     end
 end
 
-local function choose_gear(id, toggle)
+local function choose_gear(id, toggle, slot)
     update_inventory()
-    id = tonumber(id)
-    if not id or id <= 0 then
-        return
+    if type(id) == 'string' then
+        local tid, tslot = id:match('^(%d+)@(%d+)$')
+        if tid then
+            id, slot = tonumber(tid), tonumber(tslot)
+        else
+            id = tonumber(id)
+        end
+    else
+        id = tonumber(id)
     end
-    if inventory_qty(id) < 1 then
-        windower.add_to_chat(207, '[AugmentTrade] That item is not in inventory.')
+    slot = tonumber(slot)
+    if not id or id <= 0 then
         return
     end
     if not is_equipment(id) then
         windower.add_to_chat(207, '[AugmentTrade] That ID is not augmentable gear.')
         return
     end
-    if toggle and sel_gear == id then
-        sel_gear = 0
+    if not slot then
+        local free
+        for _, e in ipairs(gear_rows) do
+            if e.id == id and not e.equipped then
+                if free then
+                    windower.add_to_chat(207, '[AugmentTrade] You have more than one unequipped copy. Click the specific row.')
+                    return
+                end
+                free = e
+            end
+        end
+        if not free then
+            if inventory_qty(id) > 0 then
+                windower.add_to_chat(207, '[AugmentTrade] Unequip that piece first.')
+            else
+                windower.add_to_chat(207, '[AugmentTrade] That item is not in inventory.')
+            end
+            return
+        end
+        slot = free.slot
+    end
+    local row = find_gear_row(id, slot)
+    if not row then
+        windower.add_to_chat(207, '[AugmentTrade] That item is not in inventory.')
+        return
+    end
+    if row.equipped then
+        windower.add_to_chat(207, '[AugmentTrade] Unequip that piece first.')
+        return
+    end
+    if toggle and sel_gear == id and sel_slot == slot then
+        clear_sel_gear()
     else
         sel_gear = id
+        sel_slot = slot
     end
 end
 
@@ -845,7 +944,7 @@ local function do_trade(use_maat, skip_confirm)
         pending_confirm = { kind = 'overwrite', maat = use_maat and true or false }
         return
     end
-    local parts = { tostring(sel_gear) }
+    local parts = { gear_token() }
     for _, s in ipairs(sel_cats) do
         parts[#parts+1] = s.id .. ':' .. s.qty
     end
@@ -859,7 +958,7 @@ local function do_trade(use_maat, skip_confirm)
     windower.send_command('input !augment ' .. table.concat(parts, ' '))
     pending_confirm = nil
     sel_cats = {}
-    sel_gear = 0
+    clear_sel_gear()
 end
 
 local function do_scour(skip_confirm)
@@ -868,15 +967,20 @@ local function do_scour(skip_confirm)
         windower.add_to_chat(207, '[AugmentTrade] You must be within 6 yalms of the Arcane Augment. Command not sent.')
         return
     end
-    if sel_gear <= 0 then
+    if not has_sel_gear() then
         windower.add_to_chat(207, '[AugmentTrade] Select a gear piece first. Command not sent.')
         return
     end
-    if inventory_qty(sel_gear) < 1 then
+    local row = find_gear_row(sel_gear, sel_slot)
+    if not row then
         windower.add_to_chat(207, '[AugmentTrade] Gear is not in inventory (bag only; not wardrobe/satchel). Command not sent.')
         return
     end
-    local augn, locked = gear_aug_state(sel_gear)
+    if row.equipped then
+        windower.add_to_chat(207, '[AugmentTrade] Unequip that piece first. Command not sent.')
+        return
+    end
+    local augn, locked = gear_aug_state(sel_gear, sel_slot)
     if augn == 0 and locked == 0 then
         windower.add_to_chat(207, '[AugmentTrade] That piece has no augments to scour. Command not sent.')
         return
@@ -885,11 +989,11 @@ local function do_scour(skip_confirm)
         pending_confirm = { kind = 'scour' }
         return
     end
-    windower.add_to_chat(207, '[AugmentTrade] Sending: !scour ' .. tostring(sel_gear) .. ' confirm')
-    windower.send_command('input !scour ' .. tostring(sel_gear) .. ' confirm')
+    windower.add_to_chat(207, '[AugmentTrade] Sending: !scour ' .. gear_token() .. ' confirm')
+    windower.send_command('input !scour ' .. gear_token() .. ' confirm')
     pending_confirm = nil
     sel_cats = {}
-    sel_gear = 0
+    clear_sel_gear()
 end
 
 local function build_sorted()
@@ -1203,16 +1307,18 @@ local function hide_rows()
         hide_key('row'..i)
         widgets['row'..i].action = nil
         widgets['row'..i].id = nil
+        widgets['row'..i].slot = nil
         widgets['row'..i].enabled = false
         pcall(windower.prim.set_visibility, PRIM['sel'..i], false)
     end
 end
 
-local function fill_row(i, x, y, label, action, id, idle, enabled)
+local function fill_row(i, x, y, label, action, id, idle, enabled, slot)
     local key = 'row'..i
     local w = widgets[key]
     w.action = enabled and action or nil
     w.id = id
+    w.slot = slot
     w.enabled = enabled and true or false
     w.idle = idle or C.row
     w.hover = C.hover
@@ -1243,9 +1349,9 @@ local function page_slice(list, page)
 end
 
 local function selected_gear_row()
-    if sel_gear <= 0 then return nil end
+    if not has_sel_gear() then return nil end
     for _, e in ipairs(gear_rows) do
-        if e.id == sel_gear then return e end
+        if e.id == sel_gear and e.slot == sel_slot then return e end
     end
     return nil
 end
@@ -1378,7 +1484,7 @@ local function render_left()
     if cur_tab == 'cats' then
         place('colhead', x + 8, y, pad('AUGMENT', 20) .. '      ' .. pad('ROLL', 10) .. '      ' .. pad('CATALYST', 22) .. '      ' .. pad('QTY', 5) .. '      CAT')
     else
-        place('colhead', x + 8, y, pad('ITEM', 24) .. '    ' .. pad('SLOT', 8) .. '    ' .. pad('QTY', 5) .. '    AUGMENTS')
+        place('colhead', x + 8, y, pad('ITEM', 24) .. '    ' .. pad('SLOT', 8) .. '    AUGMENTS')
     end
     y = y + 24
     hide_rows()
@@ -1410,10 +1516,13 @@ local function render_left()
                     locked and nil or 'pick', e.id,
                     locked and C.locked or (seln > 0 and C.sel or C.row), not locked)
             else
-                local on = sel_gear == e.id
+                local on = sel_gear == e.id and sel_slot == e.slot
+                local kind = e.equipped and 'eq' or (e.kind or '')
                 fill_row(ri, x + 8, y,
-                    pad(e.name, 24) .. '    ' .. pad(e.kind or '', 8) .. '    ' .. pad('x'..e.count, 5) .. '    ' .. aug_short(e.augs),
-                    'gear', e.id, on and C.gear or C.row, true)
+                    pad(e.name, 24) .. '    ' .. pad(kind, 8) .. '    ' .. aug_short(e.augs),
+                    e.equipped and nil or 'gear', e.id,
+                    on and C.gear or (e.equipped and C.locked or C.row),
+                    not e.equipped, e.slot)
             end
             y = y + ROW_H + 4
         end
@@ -1444,9 +1553,10 @@ local function render_mid()
     place('gear', x + INSET, y, row.name)
     y = y + 28
     mute('cats')
-    place('cats', x + INSET, y, string.format('Slot   %s\nQty    x%d',
-        row.kind ~= '' and row.kind or 'Gear', row.count))
-    y = y + 48
+    place('cats', x + INSET, y, string.format('Slot   %s%s',
+        row.kind ~= '' and row.kind or 'Gear',
+        row.equipped and '  (equipped)' or ''))
+    y = y + 32
     gold('hint')
     place('hint', x + INSET, y, 'CURRENT AUGMENTS')
     y = y + 22
@@ -1547,7 +1657,7 @@ local function render_footer()
     local y = panel_h - FOOT_H + 10
     local used = sel_total_slots()
     local near = near_augmenter()
-    local can_trade = sel_gear > 0 and #sel_cats > 0 and near
+    local can_trade = has_sel_gear() and #sel_cats > 0 and near
     local maat_ok = can_trade and used == MAX_SLOTS and has_maat()
     if pending_confirm then
         set_btn_state('trade', true, C.trade)
@@ -1574,7 +1684,7 @@ local function render_footer()
     widgets.maat.action = 'maat'
     widgets.scour.action = 'scour'
     local augn, locked = gear_aug_state(sel_gear)
-    local can_scour = sel_gear > 0 and near and (augn > 0 or locked > 0)
+    local can_scour = has_sel_gear() and near and (augn > 0 or locked > 0)
     set_btn_state('trade', can_trade, C.trade)
     set_btn_state('maat', maat_ok, C.maat)
     set_btn_state('clear', true, C.clear)
@@ -1591,7 +1701,7 @@ local function render_footer()
     if not near then
         place('foot', PAD, y + 42, 'Stand within 6 yalms of the Arcane Augment and click him once, then Trade.')
     else
-        place('foot', PAD, y + 42, 'Click the Arcane Augment once, then Trade. Scour strips crystalized lines (25,000 gil).')
+        place('foot', PAD, y + 42, 'Click the Arcane Augment once, then Trade. Unequip the piece first. Scour is 25,000 gil.')
     end
 end
 
@@ -1660,14 +1770,14 @@ local function handle_action(w, btn)
     elseif action == 'clear' then
         pending_confirm = nil
         sel_cats = {}
-        sel_gear = 0
+        clear_sel_gear()
     elseif action == 'clear_gear' then
-        sel_gear = 0
+        clear_sel_gear()
     elseif action == 'clear_tray' then
         sel_cats = {}
     elseif action == 'help' then
         windower.add_to_chat(207, '[AugmentTrade] Left list is inventory (Gear) or the Arcane Augmenter bank (Catalysts).')
-        windower.add_to_chat(207, '[AugmentTrade] Click gear to select. Double-click jumps to the bank. Left-click a catalyst to add, right-click to remove.')
+        windower.add_to_chat(207, '[AugmentTrade] Click unequipped gear to select. Equipped pieces must come off first. Double-click jumps to the bank. Left-click a catalyst to add, right-click to remove.')
         windower.add_to_chat(207, '[AugmentTrade] Trade needs a piece plus at least one catalyst. Click the Arcane Augment once and stay within 6 yalms. +Maat needs five slots and Maat\'s Cap. The server rejects trades that skip that.')
         windower.add_to_chat(207, '[AugmentTrade] Scour strips every augment including crystalized for 25,000 gil.')
     elseif action == 'trade' then
@@ -1689,10 +1799,10 @@ local function handle_action(w, btn)
         pending_confirm = nil
     elseif action == 'gear' then
         local now = os.clock()
-        local key = 'gear'..tostring(w.id)
+        local key = 'gear'..tostring(w.id)..'@'..tostring(w.slot)
         local dbl = last_click.key == key and (now - last_click.t) < 0.4
-        choose_gear(w.id, false)
-        if dbl and sel_gear == w.id then
+        choose_gear(w.id, false, w.slot)
+        if dbl and sel_gear == w.id and sel_slot == w.slot then
             cur_tab = 'cats'
         end
         last_click.key, last_click.t = key, now
@@ -2161,7 +2271,7 @@ windower.register_event('addon command', function(cmd, ...)
 
     elseif cmd == 'clear' then
         sel_cats = {}
-        sel_gear = 0
+        clear_sel_gear()
         visible = true; render()
 
     elseif cmd == 'trade' then

@@ -94,22 +94,17 @@ function C.award(player, offer, tag)
         return require('modules/custom/lua/relic_voucher_catalog').award(player, offer.row, tag)
     end
 
+    local prefix = (tag and tag ~= '') and string.format('[%s] ', tag) or ''
     if player:getFreeSlotsCount() < 1 then
-        player:printToPlayer(
-            string.format('[%s] Free an inventory slot first.', tag or 'Hades'),
-            C.SYS)
+        player:printToPlayer(prefix .. 'Free an inventory slot first.', C.SYS)
         return false
     end
     if hasItem(player, offer.row.id) then
-        player:printToPlayer(
-            string.format('[%s] You already hold %s.', tag or 'Hades', offer.row.name),
-            C.SYS)
+        player:printToPlayer(prefix .. string.format('You already hold %s.', offer.row.name), C.SYS)
         return false
     end
     if not player:addItem({ id = offer.row.id, quantity = 1 }) then
-        player:printToPlayer(
-            string.format('[%s] The ware slipped back into the dark. Try again.', tag or 'Hades'),
-            C.SYS)
+        player:printToPlayer(prefix .. 'The ware slipped back into the dark. Try again.', C.SYS)
         return false
     end
     return true

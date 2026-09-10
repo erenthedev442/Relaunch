@@ -30,9 +30,10 @@ Prefer not to touch client files? Load it as an overlay instead:
 4. Restart the game client.
 
 This pack is Ring + Track Suit + Matsui-P’s year-round mesh. Epeolatry /
-Idris / extra relic jobs live in `Custom DATs/Legendary-Relic-Weapon-DATs/`
-(`ROM/118/108.DAT` and `ROM/0/6.DAT`). Enable that folder in XIPivot as a
-second overlay or the new Epeo/Idris IDs stay WAR/THF leftovers.
+Idris / Kraken Club +1 / extra relic jobs live in
+`Custom DATs/Legendary-Relic-Weapon-DATs/` (`ROM/118/108.DAT` and `ROM/0/6.DAT`).
+Enable that folder in XIPivot as a second overlay or the new Epeo/Idris/Kraken
++1 IDs stay blank or WAR/THF leftovers.
 
 ## Current Overrides
 

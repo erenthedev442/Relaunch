@@ -56,6 +56,80 @@ function Find-Dmg([byte[]]$arr) {
     return -1
 }
 
+function Write-CString($arr, [int]$from, [int]$maxLen, [string]$text) {
+    $bytes = [Text.Encoding]::ASCII.GetBytes($text)
+    if ($bytes.Length -ge $maxLen) {
+        throw "String '$text' does not fit in $maxLen bytes"
+    }
+    for ($i = 0; $i -lt $maxLen; $i++) { $arr[$from + $i] = 0 }
+    [Buffer]::BlockCopy($bytes, 0, $arr, $from, $bytes.Length)
+}
+
+function Paint-KrakenPlusOneIcon([byte[]]$arr) {
+    $bmp = -1
+    for ($i = 0x200; $i -lt 0x400; $i++) {
+        if ($arr[$i] -eq 0x28 -and $arr[$i + 4] -eq 32 -and $arr[$i + 8] -eq 32 -and ([BitConverter]::ToUInt16($arr, $i + 14) -eq 8)) {
+            $bmp = $i
+            break
+        }
+    }
+    if ($bmp -lt 0) { throw 'Kraken Club +1: no 32x32 8-bit icon' }
+
+    $palOff = $bmp + 40
+    $pixOff = $palOff + 1024
+    $used = @{}
+    for ($i = 0; $i -lt 1024; $i++) { $used[$arr[$pixOff + $i]] = $true }
+
+    $white = -1
+    for ($i = 0; $i -lt 256; $i++) {
+        $b = $arr[$palOff + $i * 4]
+        $g = $arr[$palOff + $i * 4 + 1]
+        $r = $arr[$palOff + $i * 4 + 2]
+        if ($r -ge 248 -and $g -ge 248 -and $b -ge 248) {
+            $white = $i
+            break
+        }
+    }
+    if ($white -lt 0) {
+        for ($i = 255; $i -ge 0; $i--) {
+            if (-not $used.ContainsKey([byte]$i)) { $white = $i; break }
+        }
+    }
+    if ($white -lt 0) { throw 'Kraken Club +1: no free palette index for white' }
+
+    $arr[$palOff + $white * 4]     = 255
+    $arr[$palOff + $white * 4 + 1] = 255
+    $arr[$palOff + $white * 4 + 2] = 255
+    $arr[$palOff + $white * 4 + 3] = 0x80
+
+    $marks = New-Object System.Collections.Generic.List[object]
+    for ($x = 0; $x -lt 32; $x++) {
+        $marks.Add(@($x, 0)); $marks.Add(@($x, 1)); $marks.Add(@($x, 30)); $marks.Add(@($x, 31))
+    }
+    for ($y = 0; $y -lt 32; $y++) {
+        $marks.Add(@(0, $y)); $marks.Add(@(1, $y)); $marks.Add(@(30, $y)); $marks.Add(@(31, $y))
+    }
+
+    $plus = @('00100', '00100', '11111', '00100', '00100')
+    $one  = @('010', '110', '010', '010', '111')
+    for ($r = 0; $r -lt 5; $r++) {
+        for ($c = 0; $c -lt 5; $c++) {
+            if ($plus[$r][$c] -eq '1') { $marks.Add(@((20 + $c), (24 + $r))) }
+        }
+        for ($c = 0; $c -lt 3; $c++) {
+            if ($one[$r][$c] -eq '1') { $marks.Add(@((26 + $c), (24 + $r))) }
+        }
+    }
+
+    foreach ($p in $marks) {
+        $x = [int]$p[0]
+        $y = [int]$p[1]
+        if ($x -ge 0 -and $x -le 31 -and $y -ge 0 -and $y -le 31) {
+            $arr[$pixOff + ((31 - $y) * 32 + $x)] = [byte]$white
+        }
+    }
+}
+
 function Replace-Digits($arr, [int]$from, [int]$to, [string]$old, [string]$new) {
     $oldB = [Text.Encoding]::ASCII.GetBytes($old)
     $newB = [Text.Encoding]::ASCII.GetBytes($new)
@@ -80,9 +154,13 @@ $epeo119IDesc = "DMG:199 Delay:489`nGreat Sword skill +242`nParrying skill +242`
 $idris99Desc = "DMG:80 Delay:280`n`"Exudation`"`nAftermath: Increases Magic Accuracy and `"Magic Atk. Bonus`"`nOccasionally attacks twice or thrice"
 $idris119IDesc = "DMG:110 Delay:280`nClub skill +242`nParrying skill +242`nMagic Accuracy skill +228`n`"Exudation`"`nAftermath: Increases Magic Accuracy and `"Magic Atk. Bonus`"`nOccasionally attacks twice or thrice"
 $idris119Desc = "DMG:139 Delay:280`nMagic Accuracy+25`n`"Magic Atk. Bonus`"+25`nMagic Damage+155`nClub skill +242`nParrying skill +242`nMagic Accuracy skill +228`nLuopan: Damage taken -25%`n`"Exudation`"`nAftermath: Increases Magic Accuracy and `"Magic Atk. Bonus`"`nOccasionally attacks twice or thrice"
+$krakenP1Desc = "DMG:16 Delay:264`nOccasionally attacks 2 to 8 times`nAccuracy+25`nStore TP+4`nSubtle Blow+5`nClub skill +269`nParrying skill +269`nMagic Accuracy skill +228"
 
-$RUN     = [uint32]0x00400000
-$GEO     = [uint32]0x00200000
+$RUN       = [uint32]0x00400000
+$GEO       = [uint32]0x00200000
+$ALL_JOBS  = [uint32]0x007FFFFE
+$KRAKEN_NQ = 17440
+$KRAKEN_P1 = 19972
 
 New-Item -ItemType Directory -Force -Path (Join-Path $package 'ROM\118') | Out-Null
 New-Item -ItemType Directory -Force -Path (Join-Path $package 'ROM\0') | Out-Null
@@ -161,6 +239,40 @@ foreach ($rel in $sources.GetEnumerator()) {
     $off = (21070 - $firstId) * $recordSize
     for ($i = 0; $i -lt $recordSize; $i++) { $file[$off + $i] = Rol5 $dec[$i] }
 
+    # Kraken Club +1: unused hole 19972, cloned look from 17440, white box + "+1" on the icon.
+    $dec = Decode-Id $file $KRAKEN_NQ
+    Poke-U32 $dec 0 $KRAKEN_P1
+    Poke-U16 $dec 0x04 0x8860
+    Poke-U16 $dec 0x0E 99
+    Poke-U32 $dec 0x14 $ALL_JOBS
+    Poke-U16 $dec 0x1C 16
+    Poke-U16 $dec 0x1E 264
+    Poke-U16 $dec 0x20 ([uint16][Math]::Floor(16 * 6000 / 264))
+    $dec[0x32] = 119
+    if ($isEnglish) {
+        Write-CString $dec 0x80 16 'Kraken Club +1'
+        Write-CString $dec 0xAC 16 'kraken club +1'
+        Write-CString $dec 0xD4 16 'kraken clubs +1'
+        $descOff = 0x100
+        $text = [Text.Encoding]::ASCII.GetBytes($krakenP1Desc)
+        if (($descOff + $text.Length + 1) -gt 0x280) { throw 'Kraken Club +1 EN desc too long' }
+        for ($i = $descOff; $i -lt 0x280; $i++) { $dec[$i] = 0 }
+        [Buffer]::BlockCopy($text, 0, $dec, $descOff, $text.Length)
+    }
+    else {
+        $nameOff = 0x68
+        while ($nameOff -lt 0x7C -and $dec[$nameOff] -ne 0) { $nameOff++ }
+        if ($nameOff + 2 -ge 0x7C) { throw 'Kraken Club +1 JP name has no room for +1' }
+        $dec[$nameOff]     = [byte][char]'+'
+        $dec[$nameOff + 1] = [byte][char]'1'
+        $dec[$nameOff + 2] = 0
+        $hits = Replace-Digits $dec 0x80 0x180 '11' '16'
+        if ($hits -lt 1) { throw 'JP Kraken Club +1: DMG 11 not found' }
+    }
+    Paint-KrakenPlusOneIcon $dec
+    $off = ($KRAKEN_P1 - $firstId) * $recordSize
+    for ($i = 0; $i -lt $recordSize; $i++) { $file[$off + $i] = Rol5 $dec[$i] }
+
     $out = Join-Path $package $rel.Key
     [IO.File]::WriteAllBytes($out, $file)
     $hash = (Get-FileHash -LiteralPath $out -Algorithm SHA256).Hash.ToLowerInvariant()
@@ -179,6 +291,7 @@ $checks = @(
     @{ Id = 21070; Jobs = $GEO;     Dmg = 139; Ilvl = 119; Name = 'Idris';     Needle = 'DMG:139'; Forbid = 'Geomancy' }
     @{ Id = 21080; Jobs = $GEO;     Dmg = 175; Ilvl = 119; Name = 'Idris';     Needle = 'Geomancy' }
     @{ Id = 21685; Jobs = $RUN; Dmg = 305; Ilvl = 119; Name = 'Epeolatry' }
+    @{ Id = 19972; Jobs = $ALL_JOBS; Dmg = 16; Ilvl = 119; Name = 'Kraken Club +1'; Needle = 'Accuracy+25' }
 )
 foreach ($c in $checks) {
     $dec = Decode-Id $en $c.Id

@@ -1,13 +1,16 @@
--- !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat] [confirm]
+-- !augment <gear_item_id>[@slot] <catalyst_id>[:<qty>] ... [maat] [confirm]
 -- Apply augments to a gear piece in inventory. Server-enforced: must be
 -- within 6 yalms of the live Arcane Augment and have talked to / traded
 -- him in the last 3 minutes (see augment_trade_guard.lua). The addon UI
 -- is not trusted.
 -- Catalysts are spent from the Arcane Augmenter bank (same store as the NPC),
 -- not from the player's inventory. Gear and Maat's Cap still come from bag 0.
+-- Gear is resolved by inventory slot when the player has two of the same
+-- item. Equipped copies are refused -- findItem + delItemAt used to hit
+-- the worn piece and addItem a duplicate.
 --
--- Used by the AugmentTrade Windower addon (tools/windower/augment_trade/).
--- The addon sends: !augment <gear_id> <cat_id>:<qty> [<cat_id>:<qty> ...] [maat]
+-- Used by the AugmentTrade addons (tools/ashita|windower/augment_trade/).
+-- The addon sends: !augment <gear_id>@<slot> <cat_id>:<qty> ... [maat]
 
 ---@type TCommand
 local commandObj = {}
@@ -18,11 +21,12 @@ commandObj.cmdprops =
     parameters = 's',
 }
 
-local catalog  = require('modules/custom/lua/augment_catalog')
-local sage     = require('modules/custom/lua/augment_sage_catalog')
-local affinity = require('modules/custom/lua/augment_affinity_catalog')
-local bank     = require('modules/custom/lua/augment_catalyst_bank')
-local wh       = require('modules/custom/lua/weekly_hunts')
+local catalog    = require('modules/custom/lua/augment_catalog')
+local sage       = require('modules/custom/lua/augment_sage_catalog')
+local affinity   = require('modules/custom/lua/augment_affinity_catalog')
+local bank       = require('modules/custom/lua/augment_catalyst_bank')
+local tradeGuard = require('modules/custom/lua/augment_trade_guard')
+local wh         = require('modules/custom/lua/weekly_hunts')
 
 -- Live Abdhaljs Arcane Augment (dynamic NPC). Name lookup misses him
 -- because insertDynamicEntity stores DE_Augment_Moogle.
@@ -97,17 +101,20 @@ end
 
 local function takeMaatCap(player, token)
     if not token then
-        token = player:findItem(CRIT_TOKEN_ID, 0) or player:findItem(CRIT_TOKEN_LEGACY, 0)
+        token = tradeGuard.findFreeInvItem(player, CRIT_TOKEN_ID)
+            or tradeGuard.findFreeInvItem(player, CRIT_TOKEN_LEGACY)
     end
-    if not token then
+    if not token or tradeGuard.heldBusyReason(token) then
         return false, nil
     end
     local tokenId = token:getID()
     if player:delItemAt(tokenId, 1, 0, token:getSlotID()) then
         return true, tokenId
     end
-    token = player:findItem(CRIT_TOKEN_ID, 0) or player:findItem(CRIT_TOKEN_LEGACY, 0)
-    if token and player:delItemAt(token:getID(), 1, 0, token:getSlotID()) then
+    token = tradeGuard.findFreeInvItem(player, CRIT_TOKEN_ID)
+        or tradeGuard.findFreeInvItem(player, CRIT_TOKEN_LEGACY)
+    if token and not tradeGuard.heldBusyReason(token)
+        and player:delItemAt(token:getID(), 1, 0, token:getSlotID()) then
         return true, token:getID()
     end
     return false, nil
@@ -122,7 +129,7 @@ local NON_AUGMENTABLE = {
 commandObj.onTrigger = function(player, args)
     if not args or args:match('^%s*$') then
         player:printToPlayer(
-            'Usage: !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat] [confirm]',
+            'Usage: !augment <gear_item_id>[@slot] <catalyst_id>[:<qty>] ... [maat] [confirm]',
             xi.msg.channel.SYSTEM_3)
         return
     end
@@ -146,7 +153,7 @@ commandObj.onTrigger = function(player, args)
 
     if #parts < 2 then
         player:printToPlayer(
-            'Usage: !augment <gear_item_id> <catalyst_id>[:<qty>] ... [maat] [confirm]',
+            'Usage: !augment <gear_item_id>[@slot] <catalyst_id>[:<qty>] ... [maat] [confirm]',
             xi.msg.channel.SYSTEM_3)
         return
     end
@@ -157,15 +164,16 @@ commandObj.onTrigger = function(player, args)
         return
     end
 
-    local gearId = tonumber(parts[1])
+    local gearId, bagSlot = tradeGuard.parseGearToken(parts[1])
+    bagSlot = bagSlot or tradeGuard.takeSlotArg(parts)
     if not gearId or gearId <= 0 then
         player:printToPlayer('Invalid gear item ID: ' .. tostring(parts[1]), xi.msg.channel.SYSTEM_3)
         return
     end
 
-    local gear = player:findItem(gearId, 0)
+    local gear, gearErr = tradeGuard.resolveHeldGear(player, gearId, bagSlot)
     if not gear then
-        player:printToPlayer('You do not have that gear piece in your inventory.', xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(gearErr or 'You do not have that gear piece in your inventory.', xi.msg.channel.SYSTEM_3)
         return
     end
     if not (gear:isType(xi.itemType.WEAPON) or gear:isType(xi.itemType.ARMOR)) then
@@ -339,13 +347,19 @@ commandObj.onTrigger = function(player, args)
     -- Roll once per trade; affinity rolls each individual slot twice.
     local critPct       = sage.critChance[rank + 1] or 0.0
     local critTokenItem = requestedMaat and
-        (player:findItem(CRIT_TOKEN_ID, 0) or player:findItem(CRIT_TOKEN_LEGACY, 0)) or nil
+        (tradeGuard.findFreeInvItem(player, CRIT_TOKEN_ID)
+            or tradeGuard.findFreeInvItem(player, CRIT_TOKEN_LEGACY)) or nil
     local isCrit        = requestedMaat or (math.random() < critPct)
     local rollFloor     = math.min(slice.min + rank, slice.max)
     local crystalPct    = (xi.augmentTiers.crystalChance and xi.augmentTiers.crystalChance[rank]) or 0
     local canCrystalize = bit.band(gear:getFlag(), INSCRIBABLE) == 0
     if requestedMaat and not critTokenItem then
-        player:printToPlayer("You do not have Maat's Cap.", xi.msg.channel.SYSTEM_3)
+        local worn = player:findItem(CRIT_TOKEN_ID, 0) or player:findItem(CRIT_TOKEN_LEGACY, 0)
+        if worn then
+            player:printToPlayer("Unequip Maat's Cap first.", xi.msg.channel.SYSTEM_3)
+        else
+            player:printToPlayer("You do not have Maat's Cap.", xi.msg.channel.SYSTEM_3)
+        end
         return
     end
     if requestedMaat and not canCrystalize then
@@ -449,6 +463,13 @@ commandObj.onTrigger = function(player, args)
         player:printToPlayer(
             string.format('Need %d gil (you have %d).', GIL_COST, player:getGil()),
             xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    local stillBusy = tradeGuard.heldBusyReason(gear)
+    if stillBusy then
+        player:addGil(GIL_COST)
+        player:printToPlayer(stillBusy, xi.msg.channel.SYSTEM_3)
         return
     end
 

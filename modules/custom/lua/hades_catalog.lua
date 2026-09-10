@@ -33,8 +33,21 @@ catalog.points =
     custom      = 50,
 }
 
--- West of Daily Board / Weekly Hunts on the hub row (zone 44).
+-- Daily Hades (v1). Shop is the silent second form (placeholder 16959511).
 catalog.npcPos =
+{
+    zone     = 'Abdhaljs_Isle-Purgonorgo',
+    zoneId   = 44,
+    x        = 649.2089,
+    y        =   0.3000,
+    z        = 567.0547,
+    rotation =  96,
+}
+
+-- Live hub placeholder the owner placed. Keep this ID; do not respawn him.
+catalog.shopNpcId = 16959511
+-- Used only if that placeholder is missing after a restart.
+catalog.shopNpcPos =
 {
     zone     = 'Abdhaljs_Isle-Purgonorgo',
     zoneId   = 44,
@@ -56,7 +69,7 @@ catalog.intro =
     'So. Another soul who still draws breath.',
     'I keep the crossing. The dead have no use for gil -- they pay in weight, in memory, in what they leave behind.',
     'You will run my errands. Five, each day the sun keeps. Slay what I name. Carry what I seal. Then come back to me -- not a command. Me.',
-    'Do this, and I press Soul Shards into your palm. Hoard them. When the ferry rises on the weekend, I may have wares worth the crossing.',
+    'Do this, and I press Soul Shards into your palm. Hoard them. When the ferry rises on the weekend, my other form keeps the wares the dead left behind.',
     'Fail, and the day dies with you. I do not carry debts into tomorrow. Now... look upon today\'s work.',
 }
 
@@ -85,13 +98,25 @@ local function sayHades(player, line)
     player:printToPlayer('Hades : ' .. line, xi.msg.channel.SYSTEM_3)
 end
 
-function catalog.tryBuyRelicVoucher(player, poolIndex)
+local function sayDots(player)
+    player:printToPlayer('......', xi.msg.channel.SYSTEM_3)
+end
+
+function catalog.sayShopSilence(player)
+    sayDots(player)
+end
+
+function catalog.tryBuyRelicVoucher(player, poolIndex, silent)
     if not player then
         return false
     end
 
     if not catalog.isShopOpen() then
-        sayHades(player, 'The ferry is down. Come back when the weekend keeps.')
+        if silent then
+            sayDots(player)
+        else
+            sayHades(player, 'The ferry is down. Come back when the weekend keeps.')
+        end
         return false
     end
 
@@ -100,31 +125,51 @@ function catalog.tryBuyRelicVoucher(player, poolIndex)
     local row = offer and offer.row
     local price = offer and offer.price
     if not row or not price or price < 1 then
-        sayHades(player, 'The dead have no wares at that stall.')
+        if silent then
+            sayDots(player)
+        else
+            sayHades(player, 'The dead have no wares at that stall.')
+        end
         return false
     end
 
     local shards = player:getCharVar(catalog.currencyCv) or 0
     local wareName = shop.shopName(offer)
     if shards < price then
-        sayHades(player, string.format(
-            'You hold %d %s. %s costs %d.',
-            shards, catalog.currencyName, wareName, price))
+        if silent then
+            sayDots(player)
+        else
+            sayHades(player, string.format(
+                'You hold %d %s. %s costs %d.',
+                shards, catalog.currencyName, wareName, price))
+        end
         return false
     end
 
     if shop.owns(player, offer) then
-        sayHades(player, string.format(
-            'This stall is %s. You already carry that one. The other stalls still stand.',
-            row.name))
+        if silent then
+            sayDots(player)
+        else
+            sayHades(player, string.format(
+                'This stall is %s. You already carry that one. The other stalls still stand.',
+                row.name))
+        end
         return false
     end
 
-    if not shop.award(player, offer, 'Hades') then
+    if not shop.award(player, offer, silent and '' or 'Hades') then
+        if silent then
+            sayDots(player)
+        end
         return false
     end
 
     player:setCharVar(catalog.currencyCv, shards - price)
+    if silent then
+        sayDots(player)
+        return true
+    end
+
     if offer.key == 'armor' or offer.key == 'accessory' then
         if row.sourced then
             if offer.key == 'armor' then
@@ -152,13 +197,15 @@ function catalog.tryBuyRelicVoucher(player, poolIndex)
     return true
 end
 
-function catalog.showShop(player, backFn)
+function catalog.showShop(player, backFn, silent)
     local S = xi.msg.channel.SYSTEM_3
-    player:printToPlayer('[Hades] ' .. catalog.shopStatusLine(), S)
-    player:printToPlayer(
-        string.format('[Hades] You hold %d %s.',
-            player:getCharVar(catalog.currencyCv) or 0, catalog.currencyName),
-        S)
+    if not silent then
+        player:printToPlayer('[Hades] ' .. catalog.shopStatusLine(), S)
+        player:printToPlayer(
+            string.format('[Hades] You hold %d %s.',
+                player:getCharVar(catalog.currencyCv) or 0, catalog.currencyName),
+            S)
+    end
 
     local opts = {}
     if catalog.isShopOpen() then
@@ -166,32 +213,36 @@ function catalog.showShop(player, backFn)
         for _, offer in ipairs(catalog.weekOffers()) do
             local poolIndex = offer.pool
             local row = offer.row
-            player:printToPlayer(
-                string.format('[Hades] %s: %s -- %d %s.',
-                    offer.label, shop.shopName(offer),
-                    offer.price, catalog.currencyName),
-                S)
+            if not silent then
+                player:printToPlayer(
+                    string.format('[Hades] %s: %s -- %d %s.',
+                        offer.label, shop.shopName(offer),
+                        offer.price, catalog.currencyName),
+                    S)
+            end
             opts[#opts + 1] =
             {
                 string.format('%s %d', row.name, offer.price),
                 function(p)
-                    catalog.tryBuyRelicVoucher(p, poolIndex)
-                    catalog.showShop(p, backFn)
+                    catalog.tryBuyRelicVoucher(p, poolIndex, silent)
+                    catalog.showShop(p, backFn, silent)
                 end,
             }
         end
     end
-    opts[#opts + 1] =
-    {
-        'Back',
-        function(p)
-            if backFn then
+    if backFn then
+        opts[#opts + 1] =
+        {
+            'Back',
+            function(p)
                 backFn(p)
-            end
-        end,
-    }
+            end,
+        }
+    else
+        opts[#opts + 1] = { 'Close', function(_) end }
+    end
 
-    local snapshot = { title = 'Hades Shop', options = opts }
+    local snapshot = { title = silent and '......' or 'Hades Shop', options = opts }
     player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 

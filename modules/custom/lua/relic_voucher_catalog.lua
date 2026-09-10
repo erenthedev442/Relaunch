@@ -151,10 +151,9 @@ function C.award(player, row, tag)
     if not player or not row then
         return false
     end
+    local prefix = (tag and tag ~= '') and string.format('[%s] ', tag) or ''
     if player:getFreeSlotsCount() < 1 then
-        player:printToPlayer(
-            string.format('[%s] Free an inventory slot first.', tag or 'Hades'),
-            C.SYS)
+        player:printToPlayer(prefix .. 'Free an inventory slot first.', C.SYS)
         return false
     end
 
@@ -163,15 +162,11 @@ function C.award(player, row, tag)
         return false
     end
     if hasItem(player, itemId) then
-        player:printToPlayer(
-            string.format('[%s] You already hold %s.', tag or 'Hades', C.shopName(row)),
-            C.SYS)
+        player:printToPlayer(prefix .. string.format('You already hold %s.', C.shopName(row)), C.SYS)
         return false
     end
     if not player:addItem({ id = itemId, quantity = 1 }) then
-        player:printToPlayer(
-            string.format('[%s] The ware slipped back into the dark. Try again.', tag or 'Hades'),
-            C.SYS)
+        player:printToPlayer(prefix .. 'The ware slipped back into the dark. Try again.', C.SYS)
         return false
     end
     return true

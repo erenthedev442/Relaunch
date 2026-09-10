@@ -13,7 +13,7 @@ namespace krakenclub
 {
 auto stampNewItem(CCharEntity* PChar, CItem* PItem) -> uint32
 {
-    if (PChar == nullptr || PItem == nullptr || PItem->getID() != ItemId || !PItem->getSignature().empty())
+    if (PChar == nullptr || PItem == nullptr || !isKrakenClub(PItem->getID()) || !PItem->getSignature().empty())
     {
         return 0;
     }
@@ -37,7 +37,7 @@ auto stampNewItem(CCharEntity* PChar, CItem* PItem) -> uint32
 
     if (serial == 0)
     {
-        ShowErrorFmt("Kraken Club: failed to allocate a serial for {}", PChar->getName());
+        ShowErrorFmt("Kraken Club: failed to allocate a serial for {} (item {})", PChar->getName(), PItem->getID());
         return 0;
     }
 
@@ -53,17 +53,18 @@ void releaseSerial(const uint32 serial)
     }
 }
 
-void announce(CCharEntity* PChar, const std::string& signature)
+void announce(CCharEntity* PChar, const std::string& signature, uint16 itemId)
 {
     if (PChar == nullptr || signature.empty())
     {
         return;
     }
 
+    const char* name = (itemId == PlusOneItemId) ? "Kraken Club +1" : "Kraken Club";
     message::send(ipc::ChatMessageServerMessage{
         .senderId    = PChar->id,
         .senderName  = "Relaunch",
-        .message     = std::format("Congratulations to {} on obtaining Kraken Club {}!", PChar->getName(), signature),
+        .message     = std::format("Congratulations to {} on obtaining {} {}!", PChar->getName(), name, signature),
         .messageType = MESSAGE_SYSTEM_3,
     });
 }
