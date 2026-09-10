@@ -1,11 +1,12 @@
 -- ============================================================================
 -- relic_vouchers.sql
 --
--- Hades weekend shop: Relic vouchers only. Ambuscade weeks sell the finished
--- weapon (no extra item ids). Trade a Relic voucher to the Weapon Forger
--- after WF_Relic_Final == 1.
+-- Hades weekend shop: Relic and Odyssey vouchers. Ambuscade / Geas weeks
+-- sell the finished weapon (no extra item ids). Trade a Relic or Odyssey
+-- voucher to the Weapon Forger after WF_Relic_Final == 1 on any job.
 --
 -- Relic ids 23879-23892 + 23867 Aegis + 23868 Gjallarhorn.
+-- Odyssey ids 24276-24282 and 24290-24295 (24283-24289 are real CSM gloves).
 --
 -- Flags = 62528 = NOAUCTION + CANTRADENPC + NOSALE + NODELIVERY + EX + RARE.
 -- Apply, then RESTART the map (item_basic is cached at boot). Idempotent.
@@ -31,4 +32,17 @@ INSERT INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `name_jp`, `typ
     (23889, 0, 'mjollnir_voucher',       'mjollnir_voucher',       '', 1, 1, 62528, 0, 0),
     (23890, 0, 'claustrum_voucher',      'claustrum_voucher',      '', 1, 1, 62528, 0, 0),
     (23891, 0, 'yoichinoyumi_voucher',   'yoichinoyumi_voucher',   '', 1, 1, 62528, 0, 0),
-    (23892, 0, 'annihilator_voucher',    'annihilator_voucher',    '', 1, 1, 62528, 0, 0);
+    (23892, 0, 'annihilator_voucher',    'annihilator_voucher',    '', 1, 1, 62528, 0, 0),
+    (24276, 0, 'sakpatas_fists_voucher', 'sakpatas_fists_voucher', '', 1, 1, 62528, 0, 0),
+    (24277, 0, 'gletis_knife_voucher',   'gletis_knife_voucher',   '', 1, 1, 62528, 0, 0),
+    (24278, 0, 'sakpatas_sword_voucher', 'sakpatas_sword_voucher', '', 1, 1, 62528, 0, 0),
+    (24279, 0, 'agwus_claymore_voucher', 'agwus_claymore_voucher', '', 1, 1, 62528, 0, 0),
+    (24280, 0, 'ikengas_axe_voucher',    'ikengas_axe_voucher',    '', 1, 1, 62528, 0, 0),
+    (24281, 0, 'agwus_axe_voucher',      'agwus_axe_voucher',      '', 1, 1, 62528, 0, 0),
+    (24282, 0, 'bunzis_chopper_voucher', 'bunzis_chopper_voucher', '', 1, 1, 62528, 0, 0),
+    (24290, 0, 'agwus_scythe_voucher',   'agwus_scythe_voucher',   '', 1, 1, 62528, 0, 0),
+    (24291, 0, 'ikengas_lance_voucher',  'ikengas_lance_voucher',  '', 1, 1, 62528, 0, 0),
+    (24292, 0, 'bunzis_rod_voucher',     'bunzis_rod_voucher',     '', 1, 1, 62528, 0, 0),
+    (24293, 0, 'mpacas_staff_voucher',   'mpacas_staff_voucher',   '', 1, 1, 62528, 0, 0),
+    (24294, 0, 'gletis_xbow_voucher',    'gletis_xbow_voucher',    '', 1, 1, 62528, 0, 0),
+    (24295, 0, 'mpacas_bow_voucher',     'mpacas_bow_voucher',     '', 1, 1, 62528, 0, 0);

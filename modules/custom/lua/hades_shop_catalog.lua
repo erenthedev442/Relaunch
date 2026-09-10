@@ -2,8 +2,8 @@
 -- hades_shop_catalog.lua
 --
 -- Weekend ferry stalls. Each live pool sells one ware, the same roll
--- for every player that UTC week. Steel (Relic / Ambuscade), Mail
--- (119 armor), Gild (accessories). Later pools plug in here.
+-- for every player that UTC week. Steel (Relic / Odyssey / Ambuscade /
+-- Geas named), Mail (119 armor), Gild (accessories). Later pools plug in here.
 -----------------------------------
 local CATALOG_KEY = 'modules/custom/lua/hades_shop_catalog'
 local C = package.loaded[CATALOG_KEY]

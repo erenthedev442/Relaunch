@@ -24,11 +24,23 @@ $vouchers = @(
     @{ Id = 23892; Name = 'Annihilator Voucher' }
     @{ Id = 23867; Name = 'Aegis Voucher' }
     @{ Id = 23868; Name = 'Gjallarhorn Voucher' }
+    @{ Id = 24276; Name = "Sakpata's Fists Voucher" }
+    @{ Id = 24277; Name = "Gleti's Knife Voucher" }
+    @{ Id = 24278; Name = "Sakpata's Sword Voucher" }
+    @{ Id = 24279; Name = "Agwu's Claymore Voucher" }
+    @{ Id = 24280; Name = "Ikenga's Axe Voucher" }
+    @{ Id = 24281; Name = "Agwu's Axe Voucher" }
+    @{ Id = 24282; Name = "Bunzi's Chopper Voucher" }
+    @{ Id = 24290; Name = "Agwu's Scythe Voucher" }
+    @{ Id = 24291; Name = "Ikenga's Lance Voucher" }
+    @{ Id = 24292; Name = "Bunzi's Rod Voucher" }
+    @{ Id = 24293; Name = "Mpaca's Staff Voucher" }
+    @{ Id = 24294; Name = "Gleti's Crossbow Voucher" }
+    @{ Id = 24295; Name = "Mpaca's Bow Voucher" }
 )
 
-# Unused hole we briefly cloned vouchers into. Restore stock stubs so these
-# ids stay free.
-$clearIds = @(24276, 24277, 24278, 24279, 24280, 24281, 24282, 24290, 24291, 24292, 24293, 24294, 24295, 24296)
+# 24283-24289 are real CSM gloves. 24296 stays a free stub.
+$clearIds = @(24296)
 $blankId  = 23869
 
 function Ror5([byte]$b) {
@@ -83,7 +95,7 @@ if (-not $donorName.StartsWith('Artemis')) {
     throw "Donor $donorId is '$donorName', expected Artemis's Quiver"
 }
 
-$desc = "A Hades relic voucher. Trade it to the Weapon Forger after you have forged a Relic 119 III of your own."
+$desc = "A Hades weapon voucher. Trade it to the Weapon Forger after you have forged a Relic 119 III of your own."
 
 foreach ($v in $vouchers) {
     $dec = [byte[]]::new($recordSize)

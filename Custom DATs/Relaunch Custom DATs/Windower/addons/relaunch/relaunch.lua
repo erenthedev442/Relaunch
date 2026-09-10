@@ -71,6 +71,19 @@ local INSERTS = {
     [23892] = { donor = 26344, name = 'Annihilator Voucher' },
     [23867] = { donor = 26344, name = 'Aegis Voucher' },
     [23868] = { donor = 26344, name = 'Gjallarhorn Voucher' },
+    [24276] = { donor = 26344, name = "Sakpata's Fists Voucher" },
+    [24277] = { donor = 26344, name = "Gleti's Knife Voucher" },
+    [24278] = { donor = 26344, name = "Sakpata's Sword Voucher" },
+    [24279] = { donor = 26344, name = "Agwu's Claymore Voucher" },
+    [24280] = { donor = 26344, name = "Ikenga's Axe Voucher" },
+    [24281] = { donor = 26344, name = "Agwu's Axe Voucher" },
+    [24282] = { donor = 26344, name = "Bunzi's Chopper Voucher" },
+    [24290] = { donor = 26344, name = "Agwu's Scythe Voucher" },
+    [24291] = { donor = 26344, name = "Ikenga's Lance Voucher" },
+    [24292] = { donor = 26344, name = "Bunzi's Rod Voucher" },
+    [24293] = { donor = 26344, name = "Mpaca's Staff Voucher" },
+    [24294] = { donor = 26344, name = "Gleti's Crossbow Voucher" },
+    [24295] = { donor = 26344, name = "Mpaca's Bow Voucher" },
 }
 
 local applied = { rename = 0, insert = 0, skipped = 0 }

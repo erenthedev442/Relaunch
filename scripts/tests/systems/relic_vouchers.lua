@@ -17,25 +17,31 @@ local function mockPlayer(vars, items)
 end
 
 describe('Hades Relic 119 III vouchers', function()
-    it('covers every Relic voucher and every Ambuscade final in one Steel pool', function()
-        assert(#vouchers.weapons == 30)
+    it('covers Relic + Odyssey vouchers and Ambuscade + Geas named in two Steel bands', function()
         assert(#forge.relicChains == 14)
         assert(#ambuscade.CHAINS == 14)
-        local relics, ambuscades = 0, 0
+        local counts = { relic = 0, odyssey = 0, ambuscade = 0, geas = 0 }
         for _, row in ipairs(vouchers.weapons) do
-            if row.kind == 'relic' then
-                relics = relics + 1
-            elseif row.kind == 'ambuscade' then
-                ambuscades = ambuscades + 1
-            end
+            counts[row.kind] = (counts[row.kind] or 0) + 1
         end
-        assert(relics == 16)
-        assert(ambuscades == 14)
+        assert(counts.relic == 16)
+        assert(counts.odyssey == 13)
+        assert(counts.ambuscade == 14)
+        assert(counts.geas == 67)
+        assert(#vouchers.weapons == 110)
+        assert(#vouchers.rareItems == 29)
+        assert(#vouchers.commonItems == 81)
+        assert(vouchers.POOL_WEIGHT.rare == 16)
+        assert(vouchers.POOL_WEIGHT.common == 14)
         assert(vouchers.byWeaponId[11927].name == 'Aegis')
         assert(vouchers.byWeaponId[18840].name == 'Gjallarhorn')
         assert(vouchers.byVoucherId[23867].weaponId == 11927)
         assert(vouchers.byVoucherId[23868].weaponId == 18840)
-        assert(vouchers.byVoucherId[24276] == nil)
+        assert(vouchers.byVoucherId[24276].weaponId == 21527)
+        assert(vouchers.byVoucherId[24276].kind == 'odyssey')
+        assert(vouchers.isOdysseyWeapon(21527) == true)
+        assert(vouchers.isOdysseyWeapon(21621) == false)
+        assert(vouchers.byWeaponId[27645] == nil) -- Genmei Shield stays out
 
         local seenVoucher = {}
         local seenWeapon  = {}
@@ -44,7 +50,7 @@ describe('Hades Relic 119 III vouchers', function()
             assert(row.name ~= '')
             assert(not seenWeapon[row.weaponId])
             seenWeapon[row.weaponId] = true
-            if row.kind == 'relic' then
+            if vouchers.isVoucherKind(row.kind) then
                 assert(row.voucherId ~= nil)
                 assert(vouchers.voucherName(row) == row.name .. ' Voucher')
                 assert(vouchers.shopName(row) == row.name .. ' Voucher')
@@ -93,15 +99,65 @@ describe('Hades Relic 119 III vouchers', function()
     it('lets Hades set a weekly Relic or Ambuscade price inside the band', function()
         assert(vouchers.PRICE.relic.lo == 1901)
         assert(vouchers.PRICE.relic.hi == 2099)
+        assert(vouchers.PRICE.odyssey.lo == 1901)
+        assert(vouchers.PRICE.odyssey.hi == 2099)
         assert(vouchers.PRICE.ambuscade.lo == 901)
         assert(vouchers.PRICE.ambuscade.hi == 1099)
+        assert(vouchers.PRICE.geas.lo == 901)
+        assert(vouchers.PRICE.geas.hi == 1099)
         local row = vouchers.weeklyRelic(202636)
         local price = vouchers.weeklyPrice(202636, row)
-        if row.kind == 'relic' then
+        if vouchers.isVoucherKind(row.kind) then
             assert(price >= 1901 and price <= 2099)
         else
             assert(price >= 901 and price <= 1099)
         end
+    end)
+
+    it('keeps Relic-tier and Ambuscade-tier week weights, then rolls uniformly inside each band', function()
+        local seen = { relic = 0, odyssey = 0, ambuscade = 0, geas = 0 }
+        for week = 0, 179 do
+            local row = vouchers.weeklyRelic(week)
+            seen[row.kind] = seen[row.kind] + 1
+            assert(row == vouchers.weeklyRelic(week))
+        end
+        assert(seen.relic > 0)
+        assert(seen.odyssey > 0)
+        assert(seen.ambuscade > 0)
+        assert(seen.geas > 0)
+        assert((seen.relic + seen.odyssey) > (seen.ambuscade + seen.geas) * 0.7)
+        assert((seen.relic + seen.odyssey) < (seen.ambuscade + seen.geas) * 1.6)
+    end)
+
+    it('keeps Odyssey WS ids aligned with the voucher list and out of Invasion', function()
+        local ws = require('modules/custom/lua/standard_ws_tuning_catalog')
+        local odysseyIds = {}
+        for _, row in ipairs(vouchers.weapons) do
+            if row.kind == 'odyssey' then
+                odysseyIds[row.weaponId] = true
+                assert(ws.isOdysseyWeapon(row.weaponId) == true)
+            end
+        end
+        local listed = 0
+        for itemId in pairs(ws.ODYSSEY_WEAPON_IDS) do
+            listed = listed + 1
+            assert(odysseyIds[itemId] == true)
+        end
+        assert(listed == 13)
+
+        local invasion = require('modules/custom/lua/invasion_loot_pool')
+        local raw = {}
+        for _, itemId in ipairs(invasion) do
+            raw[itemId] = true
+        end
+        for itemId in pairs(odysseyIds) do
+            assert(raw[itemId] == true) -- still in the generated dump
+        end
+
+        local invFile = assert(io.open('modules/custom/lua/Invasion.lua', 'r'))
+        local invText = invFile:read('*a')
+        invFile:close()
+        assert(invText:find("row.kind == 'odyssey'", 1, true))
     end)
 end)
 

@@ -16,9 +16,24 @@
 -- RETIRED for launch — keep in sync with modules/custom/lua/Invasion.lua.
 -----------------------------------
 local catalog   = require('modules/custom/lua/invasion_catalog')
+local AMBU_WPN_IDS = require('modules/custom/lua/ambuscade_weapons_catalog').EXCLUSIVE_IDS
+local RESERVED_LOOT =
+{
+    [26169] = true, -- Legendary Ring: legacy/starter grant only
+    [21299] = true, -- Yoichi's Arrow: Yoichi's Quiver only
+    [26343] = true, -- Yoichi's Quiver: granted with final Yoichinoyumi
+}
+local okOdy, steel = pcall(require, 'modules/custom/lua/relic_voucher_catalog')
+if okOdy and steel and steel.weapons then
+    for _, row in ipairs(steel.weapons) do
+        if row.kind == 'odyssey' then
+            RESERVED_LOOT[row.weaponId] = true
+        end
+    end
+end
 local LOOT_POOL = {}
 for _, id in ipairs(require('modules/custom/lua/invasion_loot_pool')) do
-    if id ~= 26169 then -- Legendary Ring: legacy/starter grant only
+    if not AMBU_WPN_IDS[id] and not RESERVED_LOOT[id] then
         LOOT_POOL[#LOOT_POOL + 1] = id
     end
 end

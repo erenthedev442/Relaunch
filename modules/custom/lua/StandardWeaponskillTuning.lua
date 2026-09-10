@@ -7,6 +7,9 @@
 -- the same Apocalypse when the Relic wrapper does not apply. Final Ambuscade
 -- weapons keep this progression multiplier on every WS, with Ambuscade's own
 -- module supplying the 99,999 / linked-149,999 ceilings and linked 10% boost.
+-- Odyssey 119s stay on this curve with a small fTP bump and a 349,999 ceiling.
+-- Finished REMA native WS stay on their private wrapper. Other WS on those
+-- sticks keep this curve and a 500,000 gear ceiling. Prime is unchanged.
 -----------------------------------
 require('modules/module_utils')
 
@@ -39,9 +42,15 @@ for _, entry in ipairs(ambuCatalog.entries) do
     end
 end
 
+for itemId in pairs(catalog.ODYSSEY_WEAPON_IDS or {}) do
+    premiumMainhandAoECaps[itemId] = catalog.ODYSSEY_DAMAGE_CAP
+end
+
 for itemId, entry in pairs(remaCatalog.BY_ITEM_ID) do
     if entry.enabled and entry.slot == xi.slot.MAIN then
-        premiumMainhandAoECaps[itemId] = remaCatalog.AOE_DAMAGE_CAP
+        -- Off-native WS on a finished REMA. Native AoE still uses
+        -- remaCatalog.AOE_DAMAGE_CAP inside the RemaWsTuned wrapper.
+        premiumMainhandAoECaps[itemId] = catalog.REMA_OFF_NATIVE_DAMAGE_CAP
     end
 end
 
@@ -105,32 +114,51 @@ xi.standardWsTuning.withStandardEffects = function(
         attacker:getMainLvl(), target:getMainLvl())
     local multiplier     = catalog.getWeaponskillMultiplier(attacker, target, slot)
     local damageCap      = catalog.getWeaponskillCap(attacker, slot)
+    -- Odyssey 119s: ordinary JP curve, 349,999 hard cap, no Ambu floor/boost.
+    -- Splash hits stamp AoEWsDamageCap at 79,999 in C++; raise that too so
+    -- every Odyssey WS (ST and AoE) shares the same ceiling.
+    if catalog.isOdysseyWeapon(attacker:getEquipID(slot)) then
+        damageCap = catalog.ODYSSEY_DAMAGE_CAP
+        if attacker:getLocalVar('AoEWsDamageCap') > 0 then
+            attacker:setLocalVar('AoEWsDamageCap', catalog.ODYSSEY_DAMAGE_CAP)
+        end
+    end
+
     -- Final Ambuscade weapons use a 99,999 ceiling on every WS. The linked
     -- native WS may later break that soft ceiling via Ambuscade's 10% boost.
-    if ambuCatalog.isFinalWeapon(attacker:getEquipID(slot), slot) then
+    if
+        not catalog.isOdysseyWeapon(attacker:getEquipID(slot)) and
+        ambuCatalog.isFinalWeapon(attacker:getEquipID(slot), slot)
+    then
         damageCap = math.max(damageCap, ambuCatalog.DAMAGE_CAP)
     end
 
     -- Pre-119 III REMA matches Ambuscade (99,999). The native WS is 149,999
-    -- until the 119 III weapon is complete. Finished 119 III ordinary WS
-    -- still gets the 99,999 floor so Sequence is never worse than Naegling.
+    -- until the weapon is finished. Finished Relic / Empy / Mythic / Aeonic
+    -- keep their private native wrapper; every other WS on that stick can
+    -- climb to 500,000 on gear and augments alone.
     local remaInfo = catalog.getRemaPathInfo(attacker:getEquipID(slot))
     if remaInfo then
-        if
-            not remaInfo.final and
-            remaInfo.wsId == wsId and
-            remaInfo.slot == slot
-        then
-            damageCap = math.max(damageCap, catalog.REMA_PRE_III_NATIVE_WS_CAP)
+        if not remaInfo.final then
+            if remaInfo.wsId == wsId and remaInfo.slot == slot then
+                damageCap = math.max(damageCap, catalog.REMA_PRE_III_NATIVE_WS_CAP)
+            else
+                damageCap = math.max(damageCap, catalog.REMA_PRE_III_DAMAGE_CAP)
+            end
         else
-            damageCap = math.max(damageCap, catalog.REMA_PRE_III_DAMAGE_CAP)
+            damageCap = math.max(damageCap, catalog.REMA_OFF_NATIVE_DAMAGE_CAP)
+            damageCap = catalog.getPlayerRemaDamageCap(attacker, damageCap)
         end
     end
 
     local premiumAoECap  = getPremiumAoECap(attacker)
-    if premiumAoECap > damageCap then
-        damageCap = premiumAoECap
-        attacker:setLocalVar('AoEWsDamageCap', premiumAoECap)
+    if premiumAoECap > 0 then
+        if premiumAoECap > damageCap then
+            damageCap = premiumAoECap
+        end
+        if premiumAoECap > attacker:getLocalVar('AoEWsDamageCap') then
+            attacker:setLocalVar('AoEWsDamageCap', premiumAoECap)
+        end
     end
 
     attacker:setLocalVar(multiplierVar, math.floor(multiplier * 1000 + 0.5))
@@ -181,17 +209,19 @@ end
 m:addOverride('xi.weaponskills.doPhysicalWeaponskill',
     function(attacker, target, wsId, wsParams, tp, action, primaryMsg, taChar)
         local original = super
+        local tuned = catalog.applyOdysseyFtp(attacker, xi.slot.MAIN, wsParams)
         return callPreservedOriginal(
-            attacker, target, wsId, xi.slot.MAIN, wsParams, false, original,
-            attacker, target, wsId, wsParams, tp, action, primaryMsg, taChar)
+            attacker, target, wsId, xi.slot.MAIN, tuned, false, original,
+            attacker, target, wsId, tuned, tp, action, primaryMsg, taChar)
     end)
 
 m:addOverride('xi.weaponskills.doRangedWeaponskill',
     function(attacker, target, wsId, wsParams, tp, action, primaryMsg)
         local original = super
+        local tuned = catalog.applyOdysseyFtp(attacker, xi.slot.RANGED, wsParams)
         return callPreservedOriginal(
-            attacker, target, wsId, xi.slot.RANGED, wsParams, false, original,
-            attacker, target, wsId, wsParams, tp, action, primaryMsg)
+            attacker, target, wsId, xi.slot.RANGED, tuned, false, original,
+            attacker, target, wsId, tuned, tp, action, primaryMsg)
     end)
 
 m:addOverride('xi.weaponskills.doMagicWeaponskill',
@@ -205,9 +235,10 @@ m:addOverride('xi.weaponskills.doMagicWeaponskill',
             slot = xi.slot.RANGED
         end
 
+        local tuned = catalog.applyOdysseyFtp(attacker, slot, wsParams)
         return callPreservedOriginal(
-            attacker, target, wsId, slot, wsParams, true, original,
-            attacker, target, wsId, wsParams, tp, action, primaryMsg)
+            attacker, target, wsId, slot, tuned, true, original,
+            attacker, target, wsId, tuned, tp, action, primaryMsg)
     end)
 
 xi.standardWsTuning.moduleInstalled = true

@@ -18,10 +18,19 @@ package.loaded[KEY] = catalog
 catalog.DAMAGE_MULTIPLIER_LOCAL_VAR = 'StandardWsDamageMultiplier'
 catalog.DAMAGE_CAP_LOCAL_VAR        = 'StandardWsDamageCap'
 catalog.DAMAGE_CAP                  = 79999
+-- Odyssey 119 hard ceiling. A small fTP / curve bump beats Ambuscade; the
+-- rest of the 349,999 is gear, WSD and augments -- not a REMA-style dump.
+catalog.ODYSSEY_DAMAGE_CAP          = 349999
+catalog.ODYSSEY_FTP_SCALE           = 1.35
+catalog.ODYSSEY_MULTIPLIER_BONUS    = 1.15
 catalog.NON_ITEM_LEVEL_119_CAP      = 40000
 -- Pre-119 III REMA (99 / 119 I / 119 II) must never sit below Ambuscade.
 catalog.REMA_PRE_III_DAMAGE_CAP     = 99999
 catalog.REMA_PRE_III_NATIVE_WS_CAP  = 149999
+-- Finished Relic / Empyrean / Mythic / Aeonic: native WS keeps its private
+-- fTP wrapper and NATIVE_DAMAGE_CAP. Every other WS on that stick uses the
+-- ordinary curve and this ceiling -- gear and augments do the climbing.
+catalog.REMA_OFF_NATIVE_DAMAGE_CAP  = 500000
 catalog.TARGET_HP_FRACTION          = 0.30 -- retained for Fellow progression caps
 catalog.ENDGAME_PLAYER_LEVEL        = 99
 catalog.MASTER_JOB_POINTS           = 2100
@@ -101,6 +110,57 @@ local function isAmbuFinalWeapon(itemId)
 
     local info = ambu.BY_ITEM[itemId]
     return info ~= nil and info.stage == 5
+end
+
+-- Hades Odyssey 119s. Hardcoded so WS tuning does not depend on the Steel
+-- catalog loading; relic_vouchers.lua asserts these match kind == 'odyssey'.
+catalog.ODYSSEY_WEAPON_IDS =
+{
+    [21527] = true, -- Sakpata's Fists
+    [21567] = true, -- Gleti's Knife
+    [21637] = true, -- Sakpata's Sword
+    [21675] = true, -- Agwu's Claymore
+    [21723] = true, -- Ikenga's Axe
+    [21724] = true, -- Agwu's Axe
+    [21780] = true, -- Bunzi's Chopper
+    [21832] = true, -- Agwu's Scythe
+    [21884] = true, -- Ikenga's Lance
+    [22041] = true, -- Bunzi's Rod
+    [22100] = true, -- Mpaca's Staff
+    [22150] = true, -- Gleti's Crossbow
+    [22151] = true, -- Mpaca's Bow
+}
+
+function catalog.isOdysseyWeapon(itemId)
+    return itemId ~= nil and catalog.ODYSSEY_WEAPON_IDS[itemId] == true
+end
+
+-- Private copy so the retail ftpMod table is never mutated.
+function catalog.applyOdysseyFtp(attacker, slot, wsParams)
+    if
+        not wsParams or
+        not wsParams.ftpMod or
+        not attacker or
+        not attacker.getEquipID or
+        not catalog.isOdysseyWeapon(attacker:getEquipID(slot))
+    then
+        return wsParams
+    end
+
+    local scale = catalog.ODYSSEY_FTP_SCALE or 1
+    if scale == 1 then
+        return wsParams
+    end
+
+    local tuned = {}
+    for key, value in pairs(wsParams) do
+        tuned[key] = value
+    end
+    tuned.ftpMod = {}
+    for index, value in ipairs(wsParams.ftpMod) do
+        tuned.ftpMod[index] = value * scale
+    end
+    return tuned
 end
 
 local remaPathByItem = {}
@@ -229,7 +289,7 @@ function catalog.getPetDamageCap(player)
         return catalog.PET_AMBU_DAMAGE_CAP
     end
 
-    if isAmbuFinalWeapon(itemId) then
+    if isAmbuFinalWeapon(itemId) or catalog.isOdysseyWeapon(itemId) then
         return catalog.PET_AMBU_DAMAGE_CAP
     end
 
@@ -257,6 +317,10 @@ function catalog.getPlayerSplashDamageCap(player)
         end
 
         return 149999
+    end
+
+    if catalog.isOdysseyWeapon(itemId) then
+        return catalog.ODYSSEY_DAMAGE_CAP
     end
 
     if catalog.isRemaPathWeapon(itemId) or isAmbuFinalWeapon(itemId) then
@@ -408,6 +472,14 @@ function catalog.getWeaponProgression(player, slot)
 end
 
 function catalog.getWeaponskillCap(player, slot)
+    if
+        player and
+        player.getEquipID and
+        catalog.isOdysseyWeapon(player:getEquipID(slot))
+    then
+        return catalog.ODYSSEY_DAMAGE_CAP
+    end
+
     local weapon = player:getEquippedItem(slot)
     if weapon ~= nil and (weapon:getILvl() or 0) >= 119 then
         return catalog.DAMAGE_CAP
@@ -426,7 +498,12 @@ function catalog.getWeaponskillMultiplier(player, target, slot)
         catalog.getLevelGapFactor(player:getMainLvl(), target:getMainLvl()) *
         levelRatio
 
-    return 1 + (endgameMultiplier - 1) * progressionFactor
+    local mult = 1 + (endgameMultiplier - 1) * progressionFactor
+    if catalog.isOdysseyWeapon(player:getEquipID(slot or xi.slot.MAIN)) then
+        mult = mult * (catalog.ODYSSEY_MULTIPLIER_BONUS or 1)
+    end
+
+    return mult
 end
 
 function catalog.getPetDamageMultiplier(player, target)
@@ -452,7 +529,11 @@ function catalog.getPetDamageMultiplier(player, target)
         end
     elseif isRemaFinalWeapon(itemId) then
         mult = mult * catalog.PET_REMA_MULTIPLIER_BONUS
-    elseif catalog.isRemaPathWeapon(itemId) or isAmbuFinalWeapon(itemId) then
+    elseif
+        catalog.isRemaPathWeapon(itemId) or
+        isAmbuFinalWeapon(itemId) or
+        catalog.isOdysseyWeapon(itemId)
+    then
         mult = mult * catalog.PET_AMBU_MULTIPLIER_BONUS
     end
 

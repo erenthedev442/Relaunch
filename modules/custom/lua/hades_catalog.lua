@@ -4,7 +4,8 @@
 -- Hades daily quests + weekend shop.
 -- Five slots every UTC day, same board for every player, 150 Soul Shards
 -- if and only if all five are cleared. Weekend shop sells one ware from
--- each live stall (Steel, Mail, Gild). Hades sets that week's prices.
+-- each live stall (Steel, Mail, Gild). Steel is Relic/Odyssey paper or
+-- finished Ambuscade / Geas named. Hades sets that week's prices.
 -----------------------------------
 -- FileWatcher dofile discards the return. Mutate the cached table so
 -- board changes go live without a map restart.
@@ -181,9 +182,14 @@ function catalog.tryBuyRelicVoucher(player, poolIndex, silent)
             sayHades(player, 'This one never washed ashore here. Until now.')
         end
         sayHades(player, string.format('Take %s.', row.name))
-    elseif row.kind == 'ambuscade' then
+    elseif row.kind == 'ambuscade' or row.kind == 'geas' then
         sayHades(player, 'The dead left steel, not paper.')
         sayHades(player, string.format('Take %s. It is already whole.', row.name))
+    elseif row.kind == 'odyssey' then
+        sayHades(player, 'The dead paid in relics once. This paper is newer -- an Odyssey name.')
+        sayHades(player, string.format(
+            'This one bears the name %s. Take it to the Weapon Forger -- if you have already walked the Relic path on any job.',
+            row.name))
     else
         sayHades(player, 'The dead paid in relics once. I still have their papers.')
         sayHades(player, string.format(

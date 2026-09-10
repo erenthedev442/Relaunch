@@ -1,10 +1,14 @@
 -----------------------------------
 -- relic_voucher_catalog.lua
 --
--- Hades weekend Steel stall. One Relic voucher or finished Ambuscade
--- weapon, the same name and price for every player that UTC week.
--- Relics trade to the Weapon Forger after WF_Relic_Final. If you already
--- hold that weapon you miss the stall -- there is no reroll.
+-- Hades weekend Steel stall. One ware, the same name and price for every
+-- player that UTC week.
+--
+-- Rare band (same weight as today's Relic weeks): Relic vouchers and
+-- Odyssey vouchers. Common band (same weight as today's Ambuscade weeks):
+-- finished Ambuscade finals and Geas Fete named 119s.
+-- Relic and Odyssey papers trade to the Weapon Forger after WF_Relic_Final
+-- on any job. If you already hold that ware you miss the stall -- no reroll.
 -----------------------------------
 local CATALOG_KEY = 'modules/custom/lua/relic_voucher_catalog'
 local C = package.loaded[CATALOG_KEY]
@@ -23,16 +27,34 @@ C.successLines =
     'Very well, adventurer. Here is your relic.',
 }
 
+C.odysseySuccessLine =
+    'Very well, adventurer. Here is your Odyssey weapon.'
+
 C.tooWeakLine =
     'I\'m afraid you are not powerful enough yet to wield such a weapon. Come back to me at a later date.'
 
-C.WEEK_SALT  = 17
-C.PRICE_SALT = 41
+-- Pool pick uses WEEK_SALT so Relic-tier weeks stay ~16/30. Item pick inside
+-- a pool uses a second salt so the ware is not locked to the pool roll.
+C.WEEK_SALT   = 17
+C.RARE_SALT   = 23 -- must not be a multiple of the rare pool size (29)
+C.COMMON_SALT = 31 -- coprime with the common pool size (81)
+C.PRICE_SALT  = 41
+C.POOL_WEIGHT =
+{
+    rare   = 16,
+    common = 14,
+}
 C.PRICE =
 {
     relic     = { lo = 1901, hi = 2099 },
+    odyssey   = { lo = 1901, hi = 2099 },
     ambuscade = { lo =  901, hi = 1099 },
+    geas      = { lo =  901, hi = 1099 },
 }
+
+C.VOUCHER_KINDS = { relic = true, odyssey = true }
+C.RARE_KINDS    = { relic = true, odyssey = true }
+C.COMMON_KINDS  = { ambuscade = true, geas = true }
 
 C.weapons =
 {
@@ -52,6 +74,21 @@ C.weapons =
     { voucherId = 23892, weaponId = 22140, name = 'Annihilator',   kind = 'relic' },
     { voucherId = 23867, weaponId = 11927, name = 'Aegis',         kind = 'relic' },
     { voucherId = 23868, weaponId = 18840, name = 'Gjallarhorn',   kind = 'relic' },
+
+    { voucherId = 24276, weaponId = 21527, name = 'Sakpata\'s Fists',   kind = 'odyssey' },
+    { voucherId = 24277, weaponId = 21567, name = 'Gleti\'s Knife',     kind = 'odyssey' },
+    { voucherId = 24278, weaponId = 21637, name = 'Sakpata\'s Sword',   kind = 'odyssey' },
+    { voucherId = 24279, weaponId = 21675, name = 'Agwu\'s Claymore',   kind = 'odyssey' },
+    { voucherId = 24280, weaponId = 21723, name = 'Ikenga\'s Axe',      kind = 'odyssey' },
+    { voucherId = 24281, weaponId = 21724, name = 'Agwu\'s Axe',        kind = 'odyssey' },
+    { voucherId = 24282, weaponId = 21780, name = 'Bunzi\'s Chopper',   kind = 'odyssey' },
+    { voucherId = 24290, weaponId = 21832, name = 'Agwu\'s Scythe',     kind = 'odyssey' },
+    { voucherId = 24291, weaponId = 21884, name = 'Ikenga\'s Lance',    kind = 'odyssey' },
+    { voucherId = 24292, weaponId = 22041, name = 'Bunzi\'s Rod',       kind = 'odyssey' },
+    { voucherId = 24293, weaponId = 22100, name = 'Mpaca\'s Staff',     kind = 'odyssey' },
+    { voucherId = 24294, weaponId = 22150, name = 'Gleti\'s Crossbow',  kind = 'odyssey' },
+    { voucherId = 24295, weaponId = 22151, name = 'Mpaca\'s Bow',       kind = 'odyssey' },
+
     { weaponId = 21519, name = 'Karambit',    kind = 'ambuscade' },
     { weaponId = 21565, name = 'Tauret',      kind = 'ambuscade' },
     { weaponId = 21621, name = 'Naegling',    kind = 'ambuscade' },
@@ -66,18 +103,102 @@ C.weapons =
     { weaponId = 22086, name = 'Xoanon',      kind = 'ambuscade' },
     { weaponId = 22107, name = 'Ullr',        kind = 'ambuscade' },
     { weaponId = 22218, name = 'Khonsu',      kind = 'ambuscade' },
+
+    { weaponId = 19209, name = 'Molybdosis',       kind = 'geas' },
+    { weaponId = 20505, name = 'Condemners',       kind = 'geas' },
+    { weaponId = 20506, name = 'Suwaiyas',         kind = 'geas' },
+    { weaponId = 20518, name = 'Eshus',            kind = 'geas' },
+    { weaponId = 20519, name = 'Hammerfists',      kind = 'geas' },
+    { weaponId = 20520, name = 'Midnights',        kind = 'geas' },
+    { weaponId = 20523, name = 'Chastisers',       kind = 'geas' },
+    { weaponId = 20579, name = 'Skinflayer',       kind = 'geas' },
+    { weaponId = 20592, name = 'Sangoma',          kind = 'geas' },
+    { weaponId = 20597, name = 'Enchufla',         kind = 'geas' },
+    { weaponId = 20598, name = 'Shijo',            kind = 'geas' },
+    { weaponId = 20599, name = 'Kali',             kind = 'geas' },
+    { weaponId = 20677, name = 'Colada',           kind = 'geas' },
+    { weaponId = 20678, name = 'Firangi',          kind = 'geas' },
+    { weaponId = 20690, name = 'Reikiko',          kind = 'geas' },
+    { weaponId = 20699, name = 'Koboto',           kind = 'geas' },
+    { weaponId = 20700, name = 'Nixxer',           kind = 'geas' },
+    { weaponId = 20701, name = 'Iris',             kind = 'geas' },
+    { weaponId = 20702, name = 'Emissary',         kind = 'geas' },
+    { weaponId = 20797, name = 'Skullrender',      kind = 'geas' },
+    { weaponId = 20842, name = 'Reikiono',         kind = 'geas' },
+    { weaponId = 20845, name = 'Instigator',       kind = 'geas' },
+    { weaponId = 20846, name = 'Jokushuono',       kind = 'geas' },
+    { weaponId = 20847, name = 'Router',           kind = 'geas' },
+    { weaponId = 20887, name = 'Dacnomania',       kind = 'geas' },
+    { weaponId = 20889, name = 'Misanthropy',      kind = 'geas' },
+    { weaponId = 20892, name = 'Deathbane',        kind = 'geas' },
+    { weaponId = 20893, name = 'Shukuyu\'s Scythe', kind = 'geas' },
+    { weaponId = 20932, name = 'Habile Mazrak',    kind = 'geas' },
+    { weaponId = 20937, name = 'Rhomphaia',        kind = 'geas' },
+    { weaponId = 20938, name = 'Annealed Lance',   kind = 'geas' },
+    { weaponId = 20979, name = 'Aizushintogo',     kind = 'geas' },
+    { weaponId = 20983, name = 'Mijin',            kind = 'geas' },
+    { weaponId = 21021, name = 'Umaru',            kind = 'geas' },
+    { weaponId = 21022, name = 'Shishio',          kind = 'geas' },
+    { weaponId = 21027, name = 'Ichigohitofuri',   kind = 'geas' },
+    { weaponId = 21031, name = 'Sensui',           kind = 'geas' },
+    { weaponId = 21072, name = 'Gada',             kind = 'geas' },
+    { weaponId = 21073, name = 'Izcalli',          kind = 'geas' },
+    { weaponId = 21083, name = 'Sucellus',         kind = 'geas' },
+    { weaponId = 21084, name = 'Queller Rod',      kind = 'geas' },
+    { weaponId = 21085, name = 'Solstice',         kind = 'geas' },
+    { weaponId = 21149, name = 'Espiritus',        kind = 'geas' },
+    { weaponId = 21150, name = 'Akademos',         kind = 'geas' },
+    { weaponId = 21151, name = 'Lathi',            kind = 'geas' },
+    { weaponId = 21152, name = 'Reikikon',         kind = 'geas' },
+    { weaponId = 21215, name = 'Vijaya Bow',       kind = 'geas' },
+    { weaponId = 21390, name = 'Albin Bane',       kind = 'geas' },
+    { weaponId = 21482, name = 'Compensator',      kind = 'geas' },
+    { weaponId = 21686, name = 'Zulfiqar',         kind = 'geas' },
+    { weaponId = 21687, name = 'Takoba',           kind = 'geas' },
+    { weaponId = 21698, name = 'Bidenhander',      kind = 'geas' },
+    { weaponId = 21746, name = 'Digirbalag',       kind = 'geas' },
+    { weaponId = 21747, name = 'Freydis',          kind = 'geas' },
+    { weaponId = 21754, name = 'Aganoshe',         kind = 'geas' },
+    { weaponId = 21755, name = 'Hodadenon',        kind = 'geas' },
+    { weaponId = 21804, name = 'Obschine',         kind = 'geas' },
+    { weaponId = 21854, name = 'Reienkyo',         kind = 'geas' },
+    { weaponId = 21855, name = 'Lembing',          kind = 'geas' },
+    { weaponId = 21904, name = 'Kanaria',          kind = 'geas' },
+    { weaponId = 21905, name = 'Taka',             kind = 'geas' },
+    { weaponId = 22054, name = 'Grioavolr',        kind = 'geas' },
+    { weaponId = 22055, name = 'Oranyan',          kind = 'geas' },
+    { weaponId = 22056, name = 'Gozuki Mezuki',    kind = 'geas' },
+    { weaponId = 22113, name = 'Teller',           kind = 'geas' },
+    { weaponId = 22114, name = 'Steinthor',        kind = 'geas' },
+    { weaponId = 22119, name = 'Wochowsen',        kind = 'geas' },
 }
 
 C.byVoucherId = {}
 C.byWeaponId  = {}
+C.rareItems   = {}
+C.commonItems = {}
 for _, row in ipairs(C.weapons) do
-    if row.kind == 'relic' then
+    if C.VOUCHER_KINDS[row.kind] then
         row.voucherName = row.name .. ' Voucher'
     end
     if row.voucherId then
         C.byVoucherId[row.voucherId] = row
     end
     C.byWeaponId[row.weaponId] = row
+    if C.RARE_KINDS[row.kind] then
+        C.rareItems[#C.rareItems + 1] = row
+    else
+        C.commonItems[#C.commonItems + 1] = row
+    end
+end
+
+function C.isVoucherKind(kind)
+    return C.VOUCHER_KINDS[kind] == true
+end
+
+function C.isOdysseyWeapon(itemId)
+    local row = C.byWeaponId[itemId]
+    return row ~= nil and row.kind == 'odyssey'
 end
 
 function C.voucherName(row)
@@ -88,10 +209,10 @@ function C.shopName(row)
     if not row then
         return 'a Relic'
     end
-    if row.kind == 'ambuscade' then
-        return row.name
+    if C.isVoucherKind(row.kind) then
+        return C.voucherName(row)
     end
-    return C.voucherName(row)
+    return row.name
 end
 
 function C.hasForgedRelic(player)
@@ -118,17 +239,32 @@ function C.weekId(timestamp)
 end
 
 function C.weeklyRelic(weekId)
-    local n = #C.weapons
-    if n == 0 then
+    weekId = weekId or C.weekId()
+    local rareW   = C.POOL_WEIGHT.rare
+    local commonW = C.POOL_WEIGHT.common
+    local total   = rareW + commonW
+    if total < 1 then
         return nil
     end
-    weekId = weekId or C.weekId()
-    return C.weapons[(((weekId or 0) * (C.WEEK_SALT or 17)) % n) + 1]
+
+    local poolRoll = ((weekId or 0) * (C.WEEK_SALT or 17)) % total
+    local pool, itemSalt
+    if poolRoll < rareW then
+        pool     = C.rareItems
+        itemSalt = C.RARE_SALT or 29
+    else
+        pool     = C.commonItems
+        itemSalt = C.COMMON_SALT or 31
+    end
+    if not pool or #pool == 0 then
+        return nil
+    end
+    return pool[(((weekId or 0) * itemSalt) % #pool) + 1]
 end
 
-C.weeklyWare  = nil
+C.weeklyWare  = C.weeklyRelic
 C.weeklyWares = nil
-C.POOLS       = nil
+C.POOLS       = C.POOL_WEIGHT
 C.poolItems   = nil
 
 function C.weeklyPrice(weekId, row)
@@ -157,7 +293,7 @@ function C.award(player, row, tag)
         return false
     end
 
-    local itemId = row.kind == 'ambuscade' and row.weaponId or row.voucherId
+    local itemId = C.isVoucherKind(row.kind) and row.voucherId or row.weaponId
     if not itemId then
         return false
     end
@@ -236,7 +372,11 @@ function C.tryRedeem(player, trade)
     end
 
     local relicCatalog = require('modules/custom/lua/relic_forge_catalog')
-    if player:getFreeSlotsCount() < relicCatalog.grantSlotNeed(player, row.weaponId, false) then
+    local slotNeed = 1
+    if row.kind == 'relic' then
+        slotNeed = relicCatalog.grantSlotNeed(player, row.weaponId, false)
+    end
+    if player:getFreeSlotsCount() < slotNeed then
         sayForger(player, 'Free an inventory slot, then trade me the voucher again.')
         return true
     end
@@ -244,18 +384,25 @@ function C.tryRedeem(player, trade)
     player:confirmTrade()
     if not player:addItem({ id = row.weaponId, quantity = 1 }) then
         player:printToPlayer(
-            '[Weapon Forge] ERROR: the voucher was taken but the relic could not be granted -- contact a GM.',
+            '[Weapon Forge] ERROR: the voucher was taken but the weapon could not be granted -- contact a GM.',
             C.SYS)
         return true
     end
 
-    for _, line in ipairs(C.successLines) do
-        sayForger(player, line)
+    if row.kind == 'odyssey' then
+        sayForger(player, C.successLines[1])
+        sayForger(player, C.odysseySuccessLine)
+    else
+        for _, line in ipairs(C.successLines) do
+            sayForger(player, line)
+        end
     end
     player:printToPlayer(
         string.format('[Weapon Forge] Received: %s.', row.name),
         C.SYS)
-    relicCatalog.grantCompanions(player, row.weaponId, 'Weapon Forge')
+    if row.kind == 'relic' then
+        relicCatalog.grantCompanions(player, row.weaponId, 'Weapon Forge')
+    end
     return true
 end
 

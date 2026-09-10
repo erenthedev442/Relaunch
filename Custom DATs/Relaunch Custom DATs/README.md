@@ -57,13 +57,13 @@ Enable that folder in XIPivot as a second overlay or the new Epeo/Idris/Kraken
 - Without this file an older client dump may T-pose; updated clients already have it
 - Do **not** `/ma "Matsui-P"` — that is seasonal spell 1003 and R0s the client
 
-### Relic 119 III Vouchers (Hades)
+### Relic / Odyssey Vouchers (Hades)
 
 - Relics `23879-23892` plus `23867` Aegis and `23868` Gjallarhorn
-- Weekend Hades shop offers the same Relic voucher to everyone that UTC week
-- Ambuscade weeks sell the finished weapon; they do not use extra DAT ids
-- Players who already own that weapon miss the week; there is no reroll
-- Trade Relic vouchers to the Weapon Forger after you have finished a Relic from scratch
+- Odyssey `24276-24282` and `24290-24295` (do not use `24283-24289`, those are CSM gloves)
+- Weekend Steel stall is one ware for everyone that UTC week: Relic/Odyssey paper or a finished Ambuscade / Geas named 119
+- Players who already own that ware miss the week; there is no reroll
+- Trade Relic or Odyssey vouchers to the Weapon Forger after you have finished a Relic from scratch on any job
 - Client text is cloned from Artemis's Quiver (`26344`) in `ROM/286/73.DAT`
 - Without this pack the vouchers still redeem -- they just show blank names
 

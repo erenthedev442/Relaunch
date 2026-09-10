@@ -112,6 +112,9 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         assert(catalog.DAMAGE_CAP == 79999)
         assert(catalog.REMA_PRE_III_DAMAGE_CAP == 99999)
         assert(catalog.REMA_PRE_III_NATIVE_WS_CAP == 149999)
+        assert(catalog.REMA_OFF_NATIVE_DAMAGE_CAP == 500000)
+        assert(catalog.ODYSSEY_FTP_SCALE == 1.35)
+        assert(catalog.ODYSSEY_MULTIPLIER_BONUS == 1.15)
         assert(catalog.PET_AMBU_DAMAGE_CAP == 99999)
         assert(catalog.PET_REMA_DAMAGE_CAP == 999999)
         assert(catalog.PET_PRIME_DAMAGE_CAP == 1499999)
@@ -208,6 +211,13 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         assert(catalog.getWeaponskillCap(onionSword, xi.slot.MAIN) == 40000)
         assert(catalog.getWeaponskillCap(level99Sword, xi.slot.MAIN) == 40000)
         assert(catalog.getWeaponskillCap(itemLevel119Sword, xi.slot.MAIN) == 79999)
+        assert(catalog.ODYSSEY_DAMAGE_CAP == 349999)
+        local sakpata = makePlayer({ [xi.slot.MAIN] = 21637 }, 99) -- Sakpata's Sword
+        local gletiXbow = makePlayer({ [xi.slot.RANGED] = 22150 }, 99)
+        assert(catalog.isOdysseyWeapon(21637) == true)
+        assert(catalog.getWeaponskillCap(sakpata, xi.slot.MAIN) == 349999)
+        assert(catalog.getWeaponskillCap(gletiXbow, xi.slot.RANGED) == 349999)
+        assert(catalog.getWeaponskillCap(itemLevel119Sword, xi.slot.MAIN) == 79999)
     end)
 
     it('adds a progressive accuracy penalty only beyond the grace band', function()
@@ -241,8 +251,9 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         local cases =
         {
             { item = 21621, cap =  99999 }, -- Naegling
-            { item = 20695, cap = 149999 }, -- Sequence
+            { item = 20695, cap = 500000 }, -- Sequence (off-native REMA)
             { item = 21646, cap = 199999 }, -- Caliburnus
+            { item = 21637, cap = 349999 }, -- Sakpata's Sword (Odyssey)
         }
 
         for _, case in ipairs(cases) do
@@ -271,7 +282,7 @@ describe('Level-scaled ordinary weaponskill tuning', function()
             apoc, target, xi.weaponskill.CATASTROPHE, xi.slot.MAIN, {}, false,
             function()
                 assert(apoc:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 8000)
-                assert(apoc:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 99999)
+                assert(apoc:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 500000)
             end)
 
         apoc:setLocalVar('RemaWsTuned', 1)
@@ -310,7 +321,30 @@ describe('Level-scaled ordinary weaponskill tuning', function()
             end)
     end)
 
-    it('keeps pre-119 III REMA at the Ambuscade floor and native WS at 149,999', function()
+    it('caps Odyssey weaponskills at 349,999 with a small fTP and curve bump', function()
+        local player = makePlayer({ [xi.slot.MAIN] = 21637 }, 99) -- Sakpata's Sword
+        local target = makeTarget(150, 1000000)
+        local native = { ftpMod = { 4.0, 10.25, 13.75 } }
+
+        assert(math.abs(catalog.getWeaponskillMultiplier(player, target, xi.slot.MAIN) - 9.2) < 0.000001)
+        local tuned = catalog.applyOdysseyFtp(player, xi.slot.MAIN, native)
+        assert(math.abs(tuned.ftpMod[1] - 5.4) < 0.0001)
+        assert(math.abs(tuned.ftpMod[3] - 18.5625) < 0.0001)
+        assert(native.ftpMod[1] == 4.0)
+
+        local naegling = makePlayer({ [xi.slot.MAIN] = 21621 }, 99)
+        assert(catalog.applyOdysseyFtp(naegling, xi.slot.MAIN, native) == native)
+
+        xi.standardWsTuning.withStandardEffects(
+            player, target, xi.weaponskill.SAVAGE_BLADE, xi.slot.MAIN,
+            {}, false,
+            function()
+                assert(player:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 9200)
+                assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 349999)
+            end)
+    end)
+
+    it('keeps pre-119 III REMA staged and lets finished REMA off-native WS climb to 500,000', function()
         local target = makeTarget(150, 1000000)
         local excalibur119I = makePlayer({ [xi.slot.MAIN] = 20645 }, 99)
         local sequence = makePlayer({ [xi.slot.MAIN] = 20695 }, 99)
@@ -333,7 +367,34 @@ describe('Level-scaled ordinary weaponskill tuning', function()
             sequence, target, xi.weaponskill.SAVAGE_BLADE, xi.slot.MAIN,
             {}, false,
             function()
-                assert(sequence:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 99999)
+                assert(sequence:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 500000)
+                assert(sequence:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 8000)
+            end)
+
+        local aeneas = makePlayer({ [xi.slot.MAIN] = 20594 }, 99)
+        xi.standardWsTuning.withStandardEffects(
+            aeneas, target, xi.weaponskill.EVISCERATION, xi.slot.MAIN,
+            {}, false,
+            function()
+                assert(aeneas:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 500000)
+                assert(aeneas:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 8000)
+            end)
+
+        aeneas:setLocalVar('RemaWsTuned', 1)
+        xi.standardWsTuning.withStandardEffects(
+            aeneas, target, xi.weaponskill.EXENTERATOR, xi.slot.MAIN,
+            {}, false,
+            function()
+                assert(aeneas:getLocalVar(catalog.DAMAGE_MULTIPLIER_LOCAL_VAR) == 0)
+                assert(aeneas:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 0)
+            end)
+
+        local bstSequence = makePlayer({ [xi.slot.MAIN] = 20695 }, 99, 0, xi.job.BST)
+        xi.standardWsTuning.withStandardEffects(
+            bstSequence, target, xi.weaponskill.SAVAGE_BLADE, xi.slot.MAIN,
+            {}, false,
+            function()
+                assert(bstSequence:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 249999)
             end)
     end)
 

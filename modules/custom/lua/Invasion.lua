@@ -42,6 +42,14 @@ local RESERVED_LOOT =
     [21299] = true, -- Yoichi's Arrow: Yoichi's Quiver only
     [26343] = true, -- Yoichi's Quiver: granted with final Yoichinoyumi
 }
+local okOdy, steel = pcall(require, 'modules/custom/lua/relic_voucher_catalog')
+if okOdy and steel and steel.weapons then
+    for _, row in ipairs(steel.weapons) do
+        if row.kind == 'odyssey' then
+            RESERVED_LOOT[row.weaponId] = true
+        end
+    end
+end
 local LOOT_POOL = {}
 for _, id in ipairs(require('modules/custom/lua/invasion_loot_pool')) do
     if not AMBU_WPN_IDS[id] and not RESERVED_LOOT[id] then LOOT_POOL[#LOOT_POOL + 1] = id end
