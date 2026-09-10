@@ -6,7 +6,7 @@ describe('Mythic Forge identifier alignment', function()
     it('offers every final mythic weapon from the main forge catalog', function()
         assert(#forge.weapons == #weaponForge.mythicChains)
         assert(forge.currencyId == 4060)
-        assert(forge.cost == 3500)
+        assert(forge.cost == 5000)
 
         for index, chain in ipairs(weaponForge.mythicChains) do
             local forged = forge.weapons[index]

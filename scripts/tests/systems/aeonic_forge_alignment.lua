@@ -6,7 +6,7 @@ describe('Aeonic Forge identifier alignment', function()
     it('offers every final Aeonic weapon from the main forge catalog', function()
         assert(#forge.weapons == #weaponForge.chains + 2)
         assert(forge.currencyKey == 'escha_silt')
-        assert(forge.cost == 50000)
+        assert(forge.cost == 100000)
         assert(weaponForge.aeonicBase.eschaBeads == 50000)
         assert(weaponForge.aeonicBase.hlRank == 5)
 

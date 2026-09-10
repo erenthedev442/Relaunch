@@ -5,7 +5,7 @@ describe('Empyrean Forge identifier alignment', function()
     it('offers all final Empyrean weapons plus Ochain and Daurdabla', function()
         assert(#forge.weapons == 16)
         assert(forge.currencyId == 4061)
-        assert(forge.cost == 1000)
+        assert(forge.cost == 2500)
 
         for index = 1, 14 do
             local forged = forge.weapons[index]

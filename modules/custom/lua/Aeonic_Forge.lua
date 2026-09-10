@@ -1,14 +1,17 @@
 -----------------------------------
 -- Aeonic repeat forge
 --
--- Completing one Aeonic through the full Weapon Forge path unlocks direct
--- repeat forging of final Aeonic weapons for Escha Silt only.
+-- Completing an Aeonic through the full Weapon Forge path banks one
+-- discounted Escha Silt repeat. The shop then closes until they finish
+-- another Aeonic the real way. Later proper Aeonics skip Relic / Empyrean
+-- / Mythic channel requirements.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m       = Module:new('aeonic_forge')
 local catalog = require('modules/custom/lua/aeonic_forge_catalog')
+local repeatCredits = require('modules/custom/lua/rema_repeat_credits')
 
 local NPC_POS     = { x = 505.4466, y = -3.0279, z = 487.2905, rot = 250 }
 local TEMPRIX_LOOK = '0x0000E20300000000000000000000000000000000'
@@ -40,6 +43,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer(
                 PREFIX .. ' Complete one Aeonic to 119 III through the full Weapon Forge path first.',
                 xi.msg.channel.SYSTEM_3)
+            return
+        elseif not eligible and reason == 'no_credit' then
+            player:printToPlayer(repeatCredits.closedMessage('aeonic', PREFIX), xi.msg.channel.SYSTEM_3)
             return
         elseif not eligible and reason == 'maat' then
             player:printToPlayer(string.format(
@@ -78,6 +84,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return
         end
 
+        repeatCredits.trySpend(player, 'aeonic')
         player:printToPlayer(string.format(
             PREFIX .. ' %s has been reforged from the crucible of eternity!',
             weapon.name), xi.msg.channel.SYSTEM_3)
@@ -160,9 +167,13 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                     xi.msg.channel.SYSTEM_3)
                 return
             end
+            if repeatCredits.available(player, 'aeonic') <= 0 then
+                player:printToPlayer(repeatCredits.closedMessage('aeonic', PREFIX), xi.msg.channel.SYSTEM_3)
+                return
+            end
 
             player:printToPlayer(string.format(
-                PREFIX .. ' Repeat Aeonic weapons cost %s each.', costStr()),
+                PREFIX .. ' Repeat Aeonic weapons cost %s each. One repeat remains.', costStr()),
                 xi.msg.channel.SYSTEM_3)
             showWeapons(player, 1)
         end,

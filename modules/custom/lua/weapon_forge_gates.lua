@@ -207,12 +207,21 @@ M.STAGE_GATES =
     {
         [0] =
         {
-            label = 'Final Relic and a final Empyrean or Mythic forged, and 50 rebirths on one job',
+            label = 'First Aeonic: final Relic and a final Empyrean or Mythic, and 50 rebirths on one job. Later Aeonics skip the earlier channels',
             check = function(p)
+                if not anyRebirthCap50()(p) then
+                    return false
+                end
+
+                -- After one proper Aeonic, the player can start another
+                -- without walking Relic / Empyrean / Mythic again.
+                if (p:getCharVar('WF_Aeonic_Final') or 0) == 1 then
+                    return true
+                end
+
                 return (p:getCharVar('WF_Relic_Final') or 0) == 1
                     and ((p:getCharVar('WF_Empyrean_Final') or 0) == 1
                         or (p:getCharVar('WF_Mythic_Final') or 0) == 1)
-                    and anyRebirthCap50()(p)
             end,
         },
         [1] =

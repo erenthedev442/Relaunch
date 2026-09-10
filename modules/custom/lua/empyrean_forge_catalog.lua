@@ -8,7 +8,7 @@ local C =
 {
     currencyId   = 4061,
     currencyName = 'Riftborn Boulder',
-    cost         = 1000,
+    cost         = 2500,
     weapons      = {},
 }
 

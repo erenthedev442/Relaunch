@@ -166,6 +166,18 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(gates.checkGate(player, 'aeonic', 0))
     end)
 
+    it('lets a later proper Aeonic skip Relic Empyrean and Mythic channels', function()
+        local vars = { WF_Aeonic_Final = 1, Rebirth_Count_1 = 50 }
+        local player = {}
+        function player:getCharVar(name) return vars[name] or 0 end
+
+        assert(gates.checkGate(player, 'aeonic', 0))
+        assert(gates.pathUnlocked(player, 'aeonic'))
+
+        vars.Rebirth_Count_1 = 0
+        assert(not gates.checkGate(player, 'aeonic', 0))
+    end)
+
     it('uses the intended live Prime costs', function()
         assert(catalog.costs.toStage2.hlRank == 5)
         assert(catalog.costs.toStage2.medals.id == 9541)
@@ -295,12 +307,17 @@ describe('Weapon Forge catalog and gate integrity', function()
         local supportOk, supportReason = aeonicRepeat.canRepeat(player, 26403)
         assert(not supportOk and supportReason == 'first_aeonic')
         assert(not aeonicRepeat.canRepeat(player, 21398))
+
+        vars.WF_Aeonic_Final = 1
+        vars.WF_Aeonic_RepeatSpent = 1
+        local spentOk, spentReason = aeonicRepeat.canRepeat(player, 26403)
+        assert(not spentOk and spentReason == 'no_credit')
     end)
 
     it('keeps Aeonic currency time above the prior REMA paths', function()
         local costs = catalog.aeonicCosts
         assert(catalog.aeonicBase.eschaBeads == 50000)
-        assert(costs.toStage1.eschaSilt + costs.toStage2.eschaSilt + costs.toStage3.eschaSilt == 50000)
+        assert(costs.toStage1.eschaSilt + costs.toStage2.eschaSilt + costs.toStage3.eschaSilt == 100000)
         assert(costs.toStage1.attestations + costs.toStage2.attestations + costs.toStage3.attestations == 6)
         assert(costs.toStage3.reforgeMarks == 2000)
         assert(costs.toStage1.hlRank == 5 and costs.toStage2.hlRank == 5 and costs.toStage3.hlRank == 5)

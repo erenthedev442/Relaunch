@@ -21,9 +21,9 @@
 --   Stage 3 (119III)  Unique Aeonic final form (Godhands / Aeneas / Sequence …).
 --
 --   Costs:
---     Malformed → 119I : 1×  Attestation  +   3,000 Escha Silt
---     119I      → 119II: 2×  Attestation  +  12,000 Escha Silt
---     119II     → Aeonic: 3×  Attestation  +  35,000 Escha Silt
+--     Malformed → 119I : 1×  Attestation  +   6,000 Escha Silt
+--     119I      → 119II: 2×  Attestation  +  24,000 Escha Silt
+--     119II     → Aeonic: 3×  Attestation  +  70,000 Escha Silt
 --                                          +  2,000 Reforge Marks (any pool)
 --
 --   Attestations drop from Geas Fete T4 (always 1, 40% chance of a second)
@@ -78,21 +78,21 @@ catalog.aeonicCosts =
     {
         hlRank           = 5,
         attestations     = 1,
-        eschaSilt        = 3000,
+        eschaSilt        = 6000,
     },
     -- 119I → 119II
     toStage2 =
     {
         hlRank           = 5,
         attestations     = 2,
-        eschaSilt        = 12000,
+        eschaSilt        = 24000,
     },
     -- 119II → Aeonic 119III
     toStage3 =
     {
         hlRank           = 5,
         attestations     = 3,
-        eschaSilt        = 35000,
+        eschaSilt        = 70000,
         reforgeMarks     = 2000,
     },
 }

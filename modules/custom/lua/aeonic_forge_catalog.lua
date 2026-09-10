@@ -4,12 +4,13 @@
 
 local weaponForge = require('modules/custom/lua/weapon_forge_catalog')
 local aeonicMaat  = require('modules/custom/lua/aeonic_maat_catalog')
+local repeatCredits = require('modules/custom/lua/rema_repeat_credits')
 
 local C =
 {
     currencyKey  = 'escha_silt',
     currencyName = 'Escha Silt',
-    cost         = 50000,
+    cost         = 100000,
     weapons      = {},
 }
 
@@ -42,6 +43,9 @@ C.weapons[#C.weapons + 1] =
 function C.canRepeat(player, finalId)
     if (player:getCharVar('WF_Aeonic_Final') or 0) ~= 1 then
         return false, 'first_aeonic'
+    end
+    if repeatCredits.available(player, 'aeonic') <= 0 then
+        return false, 'no_credit'
     end
     if not aeonicMaat.byFinalId[finalId] then
         return true, nil

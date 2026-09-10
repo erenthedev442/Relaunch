@@ -8,7 +8,7 @@ local C =
 {
     currencyId   = weaponForge.forgeMats.beitetsu,
     currencyName = 'Beitetsu',
-    cost         = 3500,
+    cost         = 5000,
     weapons      = {},
 }
 

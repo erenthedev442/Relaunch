@@ -15,6 +15,8 @@ local catalog = {}
 catalog.PRIME_EQUIVALENT_BONUS = 2.00
 catalog.AOE_DAMAGE_CAP         = 149999
 catalog.NATIVE_DAMAGE_CAP      = 999999
+-- Off-native WS on these weapons are not tuned here. Standard WS tuning
+-- gives them the ordinary JP curve and a 500,000 gear ceiling.
 
 catalog.REMA_TIER_SCALE =
 {
@@ -25,41 +27,40 @@ catalog.REMA_TIER_SCALE =
 }
 
 -- Family-wide progression applied after each native WS's individual fTP
--- calibration below.  The ratios mirror the intended endgame bands on the
--- Visions training target: Relic 200-300k, Empyrean/Mythic 300-500k and
--- Aeonic 600-700k with an appropriately geared player.
+-- calibration below. 999k is Aeonic's ceiling. Relic / Empyrean / Mythic
+-- should live below that and climb with gear: typical 400-600k, very geared
+-- 700k+, with only the best setups kissing the cap.
 --
--- fTP remains the primary tier multiplier so attributes, attack/MAB and
--- player WS-damage augments continue to scale the complete result. Physical
--- and ranged WSs also receive TP-scaled attack, accuracy and partial defense
--- relief for consistency against endgame defensive profiles. Magical WSs use
--- fTP, the existing family WS-damage bonus and a family magic-accuracy boost,
+-- fTP is the weapon's flat dump -- keep it lower so Attack, MAB, WSD and
+-- augments decide the last few hundred thousand. Physical / ranged WSs also
+-- get TP-scaled attack, accuracy and partial defense relief. Magical WSs use
+-- fTP, the family WS-damage bonus and a family magic-accuracy boost,
 -- preserving their native MAB, attributes, affinity and resistance path.
 catalog.REMA_FAMILY_TUNING =
 {
     RELIC =
     {
-        targetDamage   = { 200000, 300000 },
-        ftpScale       = 2.00,
-        attackScale    = { 1.10, 1.20, 1.30 },
+        targetDamage   = { 400000, 700000 },
+        ftpScale       = 1.50,
+        attackScale    = { 1.15, 1.28, 1.42 },
         accuracyBonus  = { 100, 150, 200 },
         magicAccBonus  = 150,
         ignoredDefense = { 0.15, 0.15, 0.15 },
     },
     EMPYREAN =
     {
-        targetDamage   = { 300000, 500000 },
-        ftpScale       = 2.75,
-        attackScale    = { 1.20, 1.35, 1.50 },
+        targetDamage   = { 450000, 750000 },
+        ftpScale       = 2.10,
+        attackScale    = { 1.25, 1.42, 1.62 },
         accuracyBonus  = { 150, 200, 250 },
         magicAccBonus  = 225,
         ignoredDefense = { 0.25, 0.25, 0.25 },
     },
     MYTHIC =
     {
-        targetDamage   = { 300000, 500000 },
-        ftpScale       = 2.75,
-        attackScale    = { 1.20, 1.35, 1.50 },
+        targetDamage   = { 500000, 800000 },
+        ftpScale       = 2.15,
+        attackScale    = { 1.25, 1.42, 1.62 },
         accuracyBonus  = { 150, 200, 250 },
         magicAccBonus  = 225,
         ignoredDefense = { 0.25, 0.25, 0.25 },

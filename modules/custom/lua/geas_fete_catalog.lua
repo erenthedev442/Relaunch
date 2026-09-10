@@ -28,8 +28,8 @@ C.BEITETSU_BY_TIER =
     [2] = { guaranteed = 10, chances = { 80, 50 } },
     -- 25-28, avg 26.7 (~385 T3 kills)
     [3] = { guaranteed = 25, chances = { 80, 70, 50 } },
-    -- 55-59, avg 57.7 (~180 T4 kills)
-    [4] = { guaranteed = 55, chances = { 90, 80, 60, 40 } },
+    -- 42-52, avg 47.2 (~220 T4 kills)
+    [4] = { guaranteed = 42, chances = { 90, 80, 70, 60, 50, 45, 40, 35, 30, 25 } },
 }
 
 function C.beitetsuExpected(tier)

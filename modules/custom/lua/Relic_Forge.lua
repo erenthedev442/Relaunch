@@ -4,9 +4,11 @@
 --
 -- The 16 Stage-5 Relic weapons (Lv.119 III) were pulled from the Prime Armory
 -- forge, the GearProgression vendor, and the Invasion drop pool -- this NPC is
--- now available here as a repeat-relic shortcut after the player has completed
--- one Relic through the full Weapon Forge progression. Each repeat forge costs
--- the retail final-stage currency type again.
+-- now available here as a one-time repeat-relic shortcut after the player has
+-- completed a Relic through the full Weapon Forge progression. Each proper
+-- finish banks one discounted repeat; the shop then closes until they finish
+-- another Relic the real way. Each repeat forge costs the retail final-stage
+-- currency type again.
 --
 -- NPC lives in Leafallia (the relaunch end-game hub, alongside Prime Armory /
 -- Apex / Paragon / etc.). The Dynamis *gate* is the currency cost, not the NPC
@@ -30,6 +32,7 @@ local NPC_POS = { x = 572.000, y = -3.360, z = 534.200, rot = 64 }
 -- defense-ignore tuning in rema_ws_tier_catalog.lua.  Shield/instrument retain
 -- their highest real Relic IDs; neither participates in damage-WS tuning.
 local relicCatalog = require('modules/custom/lua/relic_forge_catalog')
+local repeatCredits = require('modules/custom/lua/rema_repeat_credits')
 local RELICS = relicCatalog.weapons
 local FORGE_COST = relicCatalog.repeatCurrencyCost
 local PLUTON_COST = relicCatalog.repeatPlutonCost
@@ -71,6 +74,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer(
                 '[Relic Forge] Complete one Relic to 119 III through the full Weapon Forge path first, kupo!',
                 xi.msg.channel.SYSTEM_3)
+            return
+        end
+        if repeatCredits.available(player, 'relic') <= 0 then
+            player:printToPlayer(repeatCredits.closedMessage('relic', '[Relic Forge]'), xi.msg.channel.SYSTEM_3)
             return
         end
         -- RARE pre-check: the engine refuses a second copy, and consuming
@@ -127,6 +134,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return
         end
         relicCatalog.grantCompanions(player, relic.id, 'Relic Forge')
+        repeatCredits.trySpend(player, 'relic')
         player:printToPlayer(string.format(
             '[Relic Forge] %s, forged from the spoils of Dynamis! Kupo!', relic.name),
             xi.msg.channel.SYSTEM_3)
@@ -197,8 +205,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                     xi.msg.channel.SYSTEM_3)
                 return
             end
+            if repeatCredits.available(player, 'relic') <= 0 then
+                player:printToPlayer(repeatCredits.closedMessage('relic', '[Relic Forge]'), xi.msg.channel.SYSTEM_3)
+                return
+            end
             player:printToPlayer(string.format(
-                '[Relic Forge] Repeat Relics cost %d of their Dynamis currency plus %d Plutons, kupo!',
+                '[Relic Forge] Repeat Relics cost %d of their Dynamis currency plus %d Plutons, kupo! One repeat remains.',
                 FORGE_COST, PLUTON_COST), xi.msg.channel.SYSTEM_3)
             showRelics(player, 1)
         end,

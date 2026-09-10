@@ -1,8 +1,9 @@
 -----------------------------------
 -- Empyrean repeat forge
 --
--- Completing one Empyrean through the full Weapon Forge path unlocks direct
--- repeat forging of final Empyrean weapons plus Ochain and Daurdabla.
+-- Completing an Empyrean through the full Weapon Forge path banks one
+-- discounted repeat of a final Empyrean (plus Ochain and Daurdabla). The
+-- shop then closes until they finish another Empyrean the real way.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
@@ -10,6 +11,7 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local m        = Module:new('empyrean_forge')
 local catalog  = require('modules/custom/lua/empyrean_forge_catalog')
 local currency = require('modules/custom/lua/hl_seal_currency')
+local repeatCredits = require('modules/custom/lua/rema_repeat_credits')
 
 local NPC_POS   = { x = 603.6885, y = -3.2039, z = 487.9435, rot = 144 }
 local PAGE_SIZE = 4
@@ -49,6 +51,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 xi.msg.channel.SYSTEM_3)
             return
         end
+        if repeatCredits.available(player, 'empyrean') <= 0 then
+            player:printToPlayer(repeatCredits.closedMessage('empyrean', '[Empyrean Forge]'), xi.msg.channel.SYSTEM_3)
+            return
+        end
 
         if player:getFreeSlotsCount() == 0 then
             player:printToPlayer('[Empyrean Forge] Free an inventory slot first, kupo!', xi.msg.channel.SYSTEM_3)
@@ -85,6 +91,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return
         end
 
+        repeatCredits.trySpend(player, 'empyrean')
         player:printToPlayer(string.format(
             '[Empyrean Forge] %s has been forged anew! Kupo!', weapon.name),
             xi.msg.channel.SYSTEM_3)
@@ -165,9 +172,13 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                     xi.msg.channel.SYSTEM_3)
                 return
             end
+            if repeatCredits.available(player, 'empyrean') <= 0 then
+                player:printToPlayer(repeatCredits.closedMessage('empyrean', '[Empyrean Forge]'), xi.msg.channel.SYSTEM_3)
+                return
+            end
 
             player:printToPlayer(string.format(
-                '[Empyrean Forge] Repeat equipment costs %s each, kupo!', costStr()),
+                '[Empyrean Forge] Repeat equipment costs %s each, kupo! One repeat remains.', costStr()),
                 xi.msg.channel.SYSTEM_3)
             showWeapons(player, 1)
         end,

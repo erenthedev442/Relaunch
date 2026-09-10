@@ -28,6 +28,7 @@ local m       = Module:new('weapon_forge_npc')
 local catalog = require('modules/custom/lua/weapon_forge_catalog')
 local relicCatalog = require('modules/custom/lua/relic_forge_catalog')
 local relicVouchers = require('modules/custom/lua/relic_voucher_catalog')
+local repeatCredits = require('modules/custom/lua/rema_repeat_credits')
 local itemCurrency = require('modules/custom/lua/hl_seal_currency')
 local pilgrimage = require('modules/custom/lua/legendary_pilgrimage_catalog')
 local mastery = require('modules/custom/lua/weapon_mastery_catalog')
@@ -256,7 +257,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         -- this permanent milestone.
         -- Persists so trading/losing the weapon doesn't retract the milestone.
         if fromStage == 2 then
+            local alreadyHadFinal = player:getCharVar('WF_Aeonic_Final') or 0
             player:setCharVar('WF_Aeonic_Final', 1)
+            repeatCredits.noteProperCompletion(player, 'aeonic', alreadyHadFinal)
         end
         return true
     end
@@ -827,7 +830,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         -- Stage I preflight. singleStep Ergon jumps base -> 119 III while
         -- held-stage is still 1, so key off the item handed over, not k+1.
         if toId == chain.s3 and def and def.key then
-            player:setCharVar('WF_' .. def.key:sub(1,1):upper() .. def.key:sub(2) .. '_Final', 1)
+            local family = def.key
+            local alreadyHadFinal = player:getCharVar('WF_' .. family:sub(1, 1):upper() .. family:sub(2) .. '_Final') or 0
+            player:setCharVar('WF_' .. family:sub(1, 1):upper() .. family:sub(2) .. '_Final', 1)
+            if repeatCredits.FAMILIES[family] then
+                repeatCredits.noteProperCompletion(player, family, alreadyHadFinal)
+            end
         end
     end
 

@@ -1,8 +1,9 @@
 -----------------------------------
 -- Mythic repeat forge
 --
--- Completing one Mythic through the full Weapon Forge path unlocks direct
--- repeat forging of final mythic weapons for Beitetsu only.
+-- Completing a Mythic through the full Weapon Forge path banks one
+-- discounted Beitetsu repeat. The shop then closes until they finish
+-- another Mythic the real way.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
@@ -10,6 +11,7 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local m        = Module:new('mythic_forge')
 local catalog  = require('modules/custom/lua/mythic_forge_catalog')
 local currency = require('modules/custom/lua/hl_seal_currency')
+local repeatCredits = require('modules/custom/lua/rema_repeat_credits')
 
 local NPC_POS   = { x = 532.9669, y = -3.1591, z = 469.2771, rot = 188 }
 -- Einherjar / retail Odin on Sleipnir (mob pool 2941). Do NOT use mob_groups.dropid
@@ -71,6 +73,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 xi.msg.channel.SYSTEM_3)
             return
         end
+        if repeatCredits.available(player, 'mythic') <= 0 then
+            player:printToPlayer(repeatCredits.closedMessage('mythic', PREFIX), xi.msg.channel.SYSTEM_3)
+            return
+        end
 
         if player:getFreeSlotsCount() == 0 then
             player:printToPlayer(PREFIX .. ' Free an inventory slot first.', xi.msg.channel.SYSTEM_3)
@@ -107,6 +113,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return
         end
 
+        repeatCredits.trySpend(player, 'mythic')
         player:printToPlayer(string.format(
             PREFIX .. ' %s has been tempered anew from imperial steel and runic fire!',
             weapon.name), xi.msg.channel.SYSTEM_3)
@@ -189,9 +196,13 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                     xi.msg.channel.SYSTEM_3)
                 return
             end
+            if repeatCredits.available(player, 'mythic') <= 0 then
+                player:printToPlayer(repeatCredits.closedMessage('mythic', PREFIX), xi.msg.channel.SYSTEM_3)
+                return
+            end
 
             player:printToPlayer(string.format(
-                PREFIX .. ' Repeat mythics cost %s each.', costStr()),
+                PREFIX .. ' Repeat mythics cost %s each. One repeat remains.', costStr()),
                 xi.msg.channel.SYSTEM_3)
             showWeapons(player, 1)
         end,
