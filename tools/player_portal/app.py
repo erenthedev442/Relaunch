@@ -2945,5 +2945,16 @@ def launcher_package(request: Request):
     )
 
 
+@app.get("/downloads/LegendaryLauncher.zip")
+def launcher_public_package():
+    """Public zip for the unlisted docs page. Self-update still uses the keyed feed."""
+    return FileResponse(
+        launcher_file("LegendaryLauncher.zip"),
+        media_type="application/zip",
+        filename="LegendaryLauncher.zip",
+        headers={"Cache-Control": "no-store"},
+    )
+
+
 # Serve the login page + assets. Registered LAST so the /api/* + /c routes win.
 app.mount("/", StaticFiles(directory=_static_dir, html=True), name="static")
