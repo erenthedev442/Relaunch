@@ -21,6 +21,8 @@
 --
 -- CharVars:  Gauntlet_Clears  (total level-10 clears)
 --            Gauntlet_Next_<jobId>  next boss on that main job (1-10; 1 after a full clear)
+-- Challenge NPC: if the job save is past level 1, pick that boss or rematch
+--            any earlier NM. Rematches do not move the job save backward.
 -- Commands:  !gauntlet abort [name]  |  !gauntlet status  (scripts/commands/)
 -- Entry NPC: "The Gauntlet" in Leafallia (relaunch hub; x=-20, z=20)
 -----------------------------------
@@ -242,9 +244,16 @@ local function blockOutsideHealing(caster, target)
     return true
 end
 
+local function sessionFightLevel(sess)
+    if not sess then
+        return nil
+    end
+    return sess.fightLevel or sess.level
+end
+
 local function isGauntletKirinTarget(mob, target)
     local active, _, sess = isActiveRunner(target)
-    if not active or not sess or sess.level ~= 7 then
+    if not active or not sess or sessionFightLevel(sess) ~= 7 then
         return false
     end
 
@@ -258,7 +267,7 @@ end
 
 local function isGauntletLevelTarget(mob, target, level)
     local active, _, sess = isActiveRunner(target)
-    return active and sess and sess.nm == mob and sess.level == level
+    return active and sess and sess.nm == mob and sessionFightLevel(sess) == level
 end
 
 local function inCurseGrace(mob)
@@ -392,7 +401,7 @@ xi._gauntlet_dismissNm = dismissNm
 -----------------------------------
 -- Forward declarations
 -----------------------------------
-local spawnGauntletNPCs, spawnNM, advanceLevel, endRun
+local spawnGauntletNPCs, spawnNM, advanceLevel, endRun, showChallengeMenu, startChallengeFight
 
 local function formatGil(gil)
     if gil >= 1000000 then
@@ -538,6 +547,21 @@ local function grantLevelReward(player, level)
     end)
 end
 
+-- Rematch / farm kill: same per-level gil/PP/Infamy, no milestone, no job-save write.
+local function grantFarmReward(player, level)
+    local r = C.levelPayout(level)
+    pcall(function()
+        player:addGil(r.gil)
+        player:setCharVar('Paragon_Points',
+            (player:getCharVar('Paragon_Points') or 0) + r.pp)
+        player:setCharVar('Infamy',
+            (player:getCharVar('Infamy') or 0) + r.infamy)
+        player:printToPlayer(string.format(
+            '[The Gauntlet] Rematch reward: +%s gil, +%d Paragon Points, +%d Infamy.',
+            formatGil(r.gil), r.pp, r.infamy), SYS)
+    end)
+end
+
 -----------------------------------
 -- Final clear reward
 -----------------------------------
@@ -592,7 +616,7 @@ endRun = function(player, reason)
         player:forceRaise(3)
     end
 
-    local lvl = sess and sess.level or 0
+    local lvl = sess and sessionFightLevel(sess) or 0
     if reason == 'death' then
         player:printToPlayer(string.format(
             '[The Gauntlet] You fell at Level %d. The Gauntlet claims another soul.', lvl), SYS)
@@ -632,13 +656,20 @@ xi._gauntlet_endRun = endRun
 spawnNM = function(player, session)
     if not canStartFight(player) then
         session.phase = 'choose'
+        session.fightLevel = nil
+        session.farmFight = nil
         return
     end
 
     stripForeignBuffs(player)
 
-    local level     = session.level
+    local level     = sessionFightLevel(session)
     local nm        = C.NM_POOL[level]
+    if not nm then
+        player:printToPlayer('[The Gauntlet] ERROR: spawn failed. Aborting.', SYS)
+        endRun(player, 'error')
+        return
+    end
     local ownerName = player:getName()
 
     local px = C.WARP_IN.x
@@ -686,20 +717,42 @@ spawnNM = function(player, session)
                 phase        = sess and sess.phase or nil,
                 sessionMobId = sessionMobId,
                 deadMobId    = deadMobId,
-                sessionLevel = sess and sess.level or nil,
+                sessionLevel = sess and sessionFightLevel(sess) or nil,
                 spawnLevel   = level,
             }) then
                 return
             end
 
+            local resolved = GetPlayerByName(ownerName)
+            if not resolved then sessions[ownerName] = nil; return end
+
             sess.nm = nil
+            sess.fightLevel = nil
+
+            local progressLevel = sess.level or level
+            if C.isFarmFight(progressLevel, level) then
+                sess.farmFight = nil
+                sess.phase = 'choose'
+                resolved:printToPlayer(string.format(
+                    '[The Gauntlet] %s is defeated! Rematch -- %s save stays at level %d.',
+                    nm.name, C.jobLabel(sess.jobId or resolved:getMainJob()), progressLevel), SYS)
+                if level <= 9 then
+                    grantFarmReward(resolved, level)
+                end
+                pcall(function()
+                    trustDrops.tryAward(resolved, nm.name, 'gauntlet')
+                end)
+                resolved:printToPlayer(
+                    '[The Gauntlet] Talk to Challenge to rematch again or continue your save.', SYS)
+                return
+            end
+
+            sess.farmFight = nil
             if level <= 9 then
                 sess.clearedLevels = (sess.clearedLevels or 0) + 1
             end
             sess.level = sess.level + 1
             sess.phase = 'advancing'
-            local resolved = GetPlayerByName(ownerName)
-            if not resolved then sessions[ownerName] = nil; return end
             resolved:printToPlayer(string.format(
                 '[The Gauntlet] %s is defeated! Level %d cleared!',
                 nm.name, level), SYS)
@@ -761,6 +814,9 @@ spawnNM = function(player, session)
     if C.SILENCE_RES_DOWN and C.SILENCE_RES_DOWN[level] then
         mob:addMod(xi.mod.SILENCERES, C.SILENCE_RES_DOWN[level])
     end
+    if C.SILENCE_RANK_DOWN and C.SILENCE_RANK_DOWN[level] then
+        mob:addMod(xi.mod.SILENCE_RES_RANK, C.SILENCE_RANK_DOWN[level])
+    end
     for mobModId, val in pairs(C.nmMobMods(level)) do
         if val ~= 0 then mob:setMobMod(mobModId, val) end
     end
@@ -782,7 +838,12 @@ spawnNM = function(player, session)
     player:printToPlayer(string.format(
         '[The Gauntlet] Level %d — %s  (Lv%d / %s HP)',
         level, nm.name, C.nmLevel(level), C.formatHp(hp)), SYS)
-    player:printToPlayer('[The Gauntlet] Defeat it to advance. Death ends your run.', SYS)
+    if C.isFarmFight(session.level, level) then
+        player:printToPlayer(
+            '[The Gauntlet] Rematch. Your job save does not move. Death still ends the run.', SYS)
+    else
+        player:printToPlayer('[The Gauntlet] Defeat it to advance. Death ends your run.', SYS)
+    end
 end
 
 -----------------------------------
@@ -810,13 +871,104 @@ advanceLevel = function(player, session)
         player:printToPlayer('[The Gauntlet] Level 10: the final trial. No retreat.', SYS)
         player:printToPlayer('[The Gauntlet] Face Shinryu and earn your legend — or be expelled.', SYS)
         player:printToPlayer('[The Gauntlet] Approach the Final Trial NPC when ready.', SYS)
+        player:printToPlayer('[The Gauntlet] Challenge still rematches levels 1-9 without moving your save.', SYS)
     else
         local nm = C.NM_POOL[level]
         player:printToPlayer(string.format('[The Gauntlet] Level %d reached.', level), SYS)
         player:printToPlayer(string.format(
-            '[The Gauntlet] Approach the Challenge NPC to fight %s  (Lv%d / %s HP).',
-            nm.name, C.nmLevel(level), C.formatHp(C.nmHp(level))), SYS)
+            '[The Gauntlet] Challenge: continue vs %s, or rematch an earlier NM.',
+            nm.name), SYS)
     end
+end
+
+startChallengeFight = function(player, sess, laneId, selectedLevel)
+    if not sess or sess.phase ~= 'choose' then
+        return
+    end
+    if not C.canSelectChallengeLevel(sess.level, selectedLevel) then
+        player:printToPlayer('[The Gauntlet] That NM is still locked on this job save.', SYS)
+        return
+    end
+    if (sess.clearedLevels or 0) ~= sess.level - 1 then
+        player:printToPlayer(
+            '[The Gauntlet] Your progress is out of sequence. Restart the run.', SYS)
+        return
+    end
+    if not canStartFight(player) then
+        return
+    end
+    if not assignLane(player, sess, laneId) then
+        return
+    end
+
+    sess.fightLevel = selectedLevel
+    sess.farmFight = C.isFarmFight(sess.level, selectedLevel) or nil
+    sess.phase = 'fight'
+    spawnNM(player, sess)
+end
+
+showChallengeMenu = function(player, sess, laneId, page)
+    if not sess or sess.phase ~= 'choose' then
+        return
+    end
+
+    local maxLevel = C.maxChallengeLevel(sess.level)
+    if maxLevel <= 1 then
+        startChallengeFight(player, sess, laneId, 1)
+        return
+    end
+
+    page = page or 1
+    local pageSize = C.CHALLENGE_MENU_PAGE or 4
+    local totalPages = math.max(1, math.ceil(maxLevel / pageSize))
+    if page < 1 then
+        page = 1
+    elseif page > totalPages then
+        page = totalPages
+    end
+
+    local startLevel = (page - 1) * pageSize + 1
+    local endLevel = math.min(startLevel + pageSize - 1, maxLevel)
+    local options = {}
+
+    for level = startLevel, endLevel do
+        local fightLevel = level
+        options[#options + 1] =
+        {
+            C.challengeMenuLabel(fightLevel),
+            function(p)
+                local live = sessions[p:getName()]
+                startChallengeFight(p, live, laneId, fightLevel)
+            end,
+        }
+    end
+
+    if page > 1 then
+        options[#options + 1] =
+        {
+            '<< Prev',
+            function(p)
+                local live = sessions[p:getName()]
+                showChallengeMenu(p, live, laneId, page - 1)
+            end,
+        }
+    end
+
+    if page < totalPages then
+        options[#options + 1] =
+        {
+            'Next >>',
+            function(p)
+                local live = sessions[p:getName()]
+                showChallengeMenu(p, live, laneId, page + 1)
+            end,
+        }
+    end
+
+    options[#options + 1] = { 'Close', function() end }
+
+    local snapshot = { title = 'Gauntlet', options = options }
+    player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
 -----------------------------------
@@ -844,17 +996,32 @@ spawnGauntletNPCs = function(zone)
             onTrigger = function(trigPlayer, npc)
                 local playerName = trigPlayer:getName()
                 local sess = sessions[playerName]
-                if not sess or sess.phase ~= 'choose' or sess.level > 9 then return end
-                if not canStartFight(trigPlayer) then return end
-                if not assignLane(trigPlayer, sess, thisLaneId) then return end
+                if not sess or sess.phase ~= 'choose' then
+                    return
+                end
+                if sess.level > 10 then
+                    return
+                end
                 if (sess.clearedLevels or 0) ~= sess.level - 1 then
                     trigPlayer:printToPlayer(
                         '[The Gauntlet] Your progress is out of sequence. Restart the run.', SYS)
                     return
                 end
 
-                sess.phase = 'fight'
-                spawnNM(trigPlayer, sess)
+                local maxLevel = C.maxChallengeLevel(sess.level)
+                if maxLevel <= 1 then
+                    startChallengeFight(trigPlayer, sess, thisLaneId, 1)
+                    return
+                end
+
+                local resumeName = sess.level >= 10
+                    and 'Shinryu -- Final Trial'
+                    or ((C.NM_POOL[sess.level] and C.NM_POOL[sess.level].name) or '?')
+                trigPlayer:printToPlayer(string.format(
+                    '[The Gauntlet] %s save is level %d (%s). Pick a rematch or continue.',
+                    C.jobLabel(sess.jobId or trigPlayer:getMainJob()),
+                    sess.level, resumeName), SYS)
+                showChallengeMenu(trigPlayer, sess, thisLaneId, 1)
             end,
         })
 
@@ -879,6 +1046,8 @@ spawnGauntletNPCs = function(zone)
                 if not canStartFight(trigPlayer) then return end
                 if not assignLane(trigPlayer, sess, thisLaneId) then return end
 
+                sess.fightLevel = nil
+                sess.farmFight = nil
                 sess.phase = 'fight'
 
                 trigPlayer:printToPlayer('[The Gauntlet] Shinryu descends!', SYS)
@@ -912,6 +1081,8 @@ local function enterGauntlet(player)
         player:printToPlayer(string.format(
             '[The Gauntlet] %s run resumes at level %d (%s). A different job starts at level 1.',
             jobName, level, nm and nm.name or '?'), SYS)
+        player:printToPlayer(
+            '[The Gauntlet] Challenge lets you rematch any earlier NM. Your save stays put.', SYS)
     else
         player:printToPlayer(string.format(
             '[The Gauntlet] %s run starts at level 1. Progress is saved per job.',
@@ -945,14 +1116,18 @@ m:addOverride('xi.zones.Riverne-Site_A01.Zone.onZoneIn', function(player, prevZo
             if not s then return end
             -- Announce current state
             if s.level == 10 then
-                p:printToPlayer('[The Gauntlet] Level 10: defeat Shinryu. No retreat.', SYS)
-                p:printToPlayer('[The Gauntlet] Approach the Final Trial NPC when ready.', SYS)
+                p:printToPlayer('[The Gauntlet] Level 10: defeat Shinryu at Final Trial. No retreat.', SYS)
+                p:printToPlayer('[The Gauntlet] Challenge rematches levels 1-9 without moving your save.', SYS)
             else
                 local nm = C.NM_POOL[s.level]
                 p:printToPlayer(string.format(
-                    '[The Gauntlet] Level %d — Challenge: %s  (Lv%d / %s HP).',
+                    '[The Gauntlet] Level %d — continue vs %s  (Lv%d / %s HP).',
                     s.level, nm and nm.name or '?',
                     C.nmLevel(s.level), C.formatHp(C.nmHp(s.level))), SYS)
+                if s.level > 1 then
+                    p:printToPlayer(
+                        '[The Gauntlet] Talk to Challenge to rematch an earlier NM or continue.', SYS)
+                end
             end
             p:printToPlayer('[The Gauntlet] No Trusts. Defeat each NM to advance.', SYS)
         end)
@@ -1432,6 +1607,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer(
                 '[The Gauntlet] Progress is saved per main job. Die on BLU at 4 and BLU resumes at 4; another job starts at 1.', SYS)
             player:printToPlayer(
+                '[The Gauntlet] A saved job can rematch any earlier NM at Challenge. The save does not move backward.', SYS)
+            player:printToPlayer(
                 '[The Gauntlet] A full clear on that job resets it to level 1.', SYS)
             player:printToPlayer(
                 '[The Gauntlet] Reward: 5M gil | 500 Paragon Points | 500 Infamy.', SYS)
@@ -1449,6 +1626,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                     p:printToPlayer('[The Gauntlet] Solo challenge. Trusts are removed; pets are allowed.', SYS)
                     p:printToPlayer('[The Gauntlet] Death, leaving the arena, or aborting ends the run. Your job save stays.', SYS)
                     p:printToPlayer('[The Gauntlet] Defeat levels 1-9 in order to unlock the Final Trial.', SYS)
+                    p:printToPlayer('[The Gauntlet] After you save progress, Challenge can rematch earlier NMs (Aquarius, Serket, ...).', SYS)
                     p:printToPlayer('[The Gauntlet] Each boss has its own behaviour. Watch animations and messages.', SYS)
                     p:printToPlayer('[The Gauntlet] Rewards build as you progress, with milestone bonuses at 3, 6, and 9.', SYS)
                 end },

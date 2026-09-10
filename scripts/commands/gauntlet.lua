@@ -69,8 +69,9 @@ cmdObj.onTrigger = function(player, args)
         for nm, sess in pairs(sessions) do
             count = count + 1
             player:printToPlayer(string.format(
-                '[gauntlet] %s: level=%d phase=%s nm=%s',
-                nm, sess.level or 0, sess.phase or '?',
+                '[gauntlet] %s: level=%d fight=%s phase=%s nm=%s',
+                nm, sess.level or 0, sess.fightLevel or '-',
+                sess.phase or '?',
                 sess.nm and 'alive' or 'none'), SYS)
             if sess.lane then
                 player:printToPlayer(string.format(

@@ -197,7 +197,7 @@ function C.persistClearsForLevel(clearedLevel)
     end
     local expectedLevel = clearedLevel >= 10 and 11 or (clearedLevel + 1)
     for name, sess in pairs(sessions) do
-        if type(sess) == 'table' and sess.phase == 'advancing' and sess.level == expectedLevel then
+        if type(sess) == 'table' and sess.phase == 'advancing' and sess.level == expectedLevel and not sess.farmFight then
             local ok, player = pcall(function() return GetPlayerByName(name) end)
             if ok and player then
                 local jobId = sess.jobId
@@ -210,13 +210,20 @@ function C.persistClearsForLevel(clearedLevel)
     end
 end
 
-function C.LEVEL_REWARD(level)
-    pcall(C.persistClearsForLevel, level)
+-- Currency for a kill. Progress fights persist the job save via LEVEL_REWARD;
+-- rematch / farm kills use this table only so a Serket farm cannot rewind
+-- Gauntlet_Next_<jobId>.
+function C.levelPayout(level)
     return {
         gil    = level * 50000,    -- L1 = 50k ... L9 = 450k
         infamy = level * 10,       -- L1 = 10 ... L9 = 90 (cut 90% 2026-06-25)
         pp     = level * 1,        -- L1 = 1 ... L9 = 9 (cut 90% 2026-06-25)
     }
+end
+
+function C.LEVEL_REWARD(level)
+    pcall(C.persistClearsForLevel, level)
+    return C.levelPayout(level)
 end
 
 -- Milestone bonuses keep partial runs worthwhile without making level farming
@@ -275,6 +282,51 @@ end
 
 function C.onBossCleared(player, jobId, clearedLevel)
     C.saveJobNext(player, jobId, C.nextAfterClear(clearedLevel))
+end
+
+-- Challenge NPC rematches. Job save is the highest unlocked boss (1-10).
+-- Shinryu stays on Final Trial so a level-10 save cannot camp the jackpot
+-- from the Challenge moogle. Short labels fit the ~150-byte customMenu cap.
+C.CHALLENGE_MENU_PAGE = 4
+C.NM_MENU_NAME =
+{
+    [1]  = 'Aquarius',
+    [2]  = 'Serket',
+    [3]  = 'Simurgh',
+    [4]  = 'Nidhogg',
+    [5]  = 'Behemoth',
+    [6]  = 'Vrtra',
+    [7]  = 'Kirin',
+    [8]  = 'A.Virtue',
+    [9]  = 'P.Warden',
+    [10] = 'Shinryu',
+}
+
+function C.maxChallengeLevel(progressLevel)
+    progressLevel = C.clampStartLevel(progressLevel)
+    if progressLevel >= 10 then
+        return 9
+    end
+    return progressLevel
+end
+
+function C.canSelectChallengeLevel(progressLevel, selectedLevel)
+    selectedLevel = math.floor(tonumber(selectedLevel) or 0)
+    if selectedLevel < 1 or selectedLevel > 9 then
+        return false
+    end
+    return selectedLevel <= C.maxChallengeLevel(progressLevel)
+end
+
+function C.isFarmFight(progressLevel, fightLevel)
+    fightLevel = math.floor(tonumber(fightLevel) or 0)
+    progressLevel = math.floor(tonumber(progressLevel) or 0)
+    return fightLevel >= 1 and progressLevel > fightLevel
+end
+
+function C.challengeMenuLabel(level)
+    local name = C.NM_MENU_NAME[level] or (C.NM_POOL[level] and C.NM_POOL[level].name) or '?'
+    return string.format('%d %s', level, name)
 end
 
 -- LSB caches dynamic-entity Lua callbacks by DE_<name>. Two Shinryu
@@ -351,7 +403,14 @@ C.RANGED_DAMAGE_REDUCTION = -5000 -- -50% ranged damage outside hold-fire weakne
 C.SILENCE_RES_DOWN =
 {
     [7] = -75, -- Kirin: silence should land reliably without lowering MEVA.
-    [9] = -75, -- Pandemonium Warden: same, silence-specific only.
+    [9] = -100, -- Pandemonium Warden: a bit easier than Kirin, silence-only.
+}
+
+-- Status resist rank is the main land-rate lever. PW's template is rank 4
+-- Silence; shave two ranks so Silence sticks more often without a MEVA cut.
+C.SILENCE_RANK_DOWN =
+{
+    [9] = -2,
 }
 
 -- =========================================================
