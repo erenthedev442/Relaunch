@@ -71,12 +71,20 @@ local function enter(player, portal, opt)
         return
     end
 
+    -- findPartyInstance returns a live instance, a PENDING sentinel (a party member
+    -- opened this rift seconds ago and is still loading in -- joinPlayer waits and
+    -- retries instead of opening a second copy), or nil. See the party-run registry
+    -- in scripts/globals/dynamis_divergence.lua (relaunch 2026-09-09).
     local partyInst = xi.divergence.findPartyInstance(player, portal.instanceId)
     if partyInst then
         player:printToPlayer(string.format(
             '[Divergence] The rift to %s opens (paid %d %s Marks, %d remain). Good luck, kupo!',
             portal.label, ENTRY_COST.qty, opt.short, remaining), xi.msg.channel.SYSTEM_3)
-        print(string.format('[Divergence] %s joining existing instance %d (%s)', player:getName(), portal.instanceId, portal.label))
+        if xi.divergence.isPendingRun and xi.divergence.isPendingRun(partyInst) then
+            print(string.format('[Divergence] %s waiting for party instance %d (%s) to finish opening', player:getName(), portal.instanceId, portal.label))
+        else
+            print(string.format('[Divergence] %s joining existing instance %d (%s)', player:getName(), portal.instanceId, portal.label))
+        end
         xi.divergence.joinPlayer(player, partyInst, { entryPos = portal.entryPos })
         return
     end
@@ -84,6 +92,11 @@ local function enter(player, portal, opt)
     player:printToPlayer(string.format('[Divergence] The rift to %s opens (paid %d %s Marks, %d remain). Good luck, kupo!',
         portal.label, ENTRY_COST.qty, opt.short, remaining), xi.msg.channel.SYSTEM_3)
     print(string.format('[Divergence] %s creating instance %d (%s)', player:getName(), portal.instanceId, portal.label))
+    if xi.divergence.noteRunCreated then
+        -- Record BEFORE createInstance so a party member pressing Enter during the
+        -- 1-2 s load window is told to wait instead of opening a second copy.
+        xi.divergence.noteRunCreated(player, portal.instanceId)
+    end
     player:createInstance(portal.instanceId)
 end
 

@@ -326,33 +326,152 @@ xi.divergence.onInstanceCreated = function(instance, cfg)
     spawnBoss(instance, cfg.midBoss, 'Mid')
 end
 
+-----------------------------------
+-- Party-run registry (relaunch 2026-09-09)
+--
+-- The live "is a party member already in a [D] copy?" scan below cannot see a
+-- member for the ~2-5 s they are mid-zone into the instance: findPartyInstance
+-- returned nil for a second party member who pressed Enter 2-4 s after the
+-- first one was placed, so the party got split across two private copies
+-- (log: "X creating instance 29500" twice, then "Y joining existing instance").
+-- That split is what !warpty later tried to repair, which crashed xi_map three
+-- times on 2026-09-09.
+--
+-- Fix: remember, per party, who last opened which rift and when. While that
+-- record is fresh and the creator is not yet visible, report the run as
+-- PENDING (a sentinel table) and let joinPlayer wait and retry instead of
+-- opening a second copy.
+-----------------------------------
+local PENDING_WINDOW_SEC = 30    -- how long a fresh "creating" record counts as still-opening
+local JOIN_RETRY_MS      = 2000  -- poll interval while waiting for the creator to land
+local JOIN_MAX_RETRIES   = 8     -- ~16 s of waiting before falling back to a private copy
+
+xi.divergence.partyRuns = xi.divergence.partyRuns or {}
+
+-- Party key = leader's char ID (getLeaderID() returns the party ID, which IS the
+-- leader's charID); solo players key on themselves.
+local function partyKey(player)
+    local ok, lid = pcall(function() return player:getLeaderID() end)
+    if ok and lid and lid ~= 0 then
+        return lid
+    end
+    return player:getID()
+end
+xi.divergence.partyKey = partyKey
+
+local function isPendingRun(inst)
+    return type(inst) == 'table' and inst.pending == true
+end
+xi.divergence.isPendingRun = isPendingRun
+
+-- Record that `player` is opening (or has just been placed into) the run for
+-- `instanceId`. Called by the portal right before createInstance and by
+-- placePlayer, so the record exists both before and after the copy loads.
+xi.divergence.noteRunCreated = function(player, instanceId)
+    pcall(function()
+        xi.divergence.partyRuns[partyKey(player)] =
+        {
+            creatorId  = player:getID(),
+            instanceId = instanceId,
+            t          = os.time(),
+        }
+    end)
+end
+
 xi.divergence.placePlayer = function(player, instance, cfg)
     player:setInstance(instance)
+    xi.divergence.noteRunCreated(player, instance:getID())
     local p = cfg.entryPos
     player:setPos(p[1], p[2], p[3], p[4], instance:getZone():getID())
     partyHpScale.maybeResyncInstance(instance)
 end
 
+local function isLiveRun(inst, instanceId)
+    return inst ~= nil and
+        inst:getID() == instanceId and
+        not inst:completed() and
+        not inst:failed()
+end
+
 -- If a party member is already inside a live [D] run, join that copy instead of
 -- spawning a private instance (same fix as Ambuscade party entry).
+--
+-- Returns one of:
+--   * a live instance object            -> join it
+--   * { pending = true, instanceId = n } -> a party member opened this rift within the
+--                                          last PENDING_WINDOW_SEC but is not visible
+--                                          yet (mid-zone / still loading); wait for it
+--   * nil                                -> nobody in the party has this run; create one
 xi.divergence.findPartyInstance = function(player, instanceId)
     for _, member in pairs(player:getParty()) do
         if member:getID() ~= player:getID() then
             local inst = member:getInstance()
-            if
-                inst and
-                inst:getID() == instanceId and
-                not inst:completed() and
-                not inst:failed()
-            then
+            if isLiveRun(inst, instanceId) then
                 return inst
             end
         end
     end
-    return nil
+
+    -- Live scan found nothing: consult the registry for a run that is still opening.
+    local result = nil
+    pcall(function()
+        local rec = xi.divergence.partyRuns[partyKey(player)]
+        if not rec or rec.instanceId ~= instanceId or rec.creatorId == player:getID() then
+            return
+        end
+
+        local creator = GetPlayerByID(rec.creatorId)
+        local inst = creator and creator:getInstance() or nil
+        if isLiveRun(inst, instanceId) then
+            result = inst
+        elseif os.time() - rec.t <= PENDING_WINDOW_SEC then
+            result = { pending = true, instanceId = instanceId }
+        end
+    end)
+    return result
+end
+
+-- Poll until the party's opening run becomes visible, then join it. Falls back
+-- to a private copy (the pre-fix behaviour) if it never shows up, so a player
+-- who already paid the toll always ends up inside a rift.
+xi.divergence.waitForPartyRun = function(player, instanceId, cfg, attempt)
+    attempt = attempt or 0
+    if attempt == 0 then
+        player:printToPlayer(
+            '[Divergence] Your party\'s rift is still opening -- hold on a moment, kupo!',
+            xi.msg.channel.SYSTEM_3)
+    end
+
+    player:timer(JOIN_RETRY_MS, function(p)
+        if p:getInstance() ~= nil then
+            return -- already placed somewhere meanwhile
+        end
+
+        local inst = xi.divergence.findPartyInstance(p, instanceId)
+        if inst and not isPendingRun(inst) then
+            print(string.format('[Divergence] %s joining party instance %d after waiting %d s',
+                p:getName(), instanceId, (attempt + 1) * JOIN_RETRY_MS / 1000))
+            xi.divergence.joinPlayer(p, inst, cfg)
+        elseif isPendingRun(inst) and attempt + 1 < JOIN_MAX_RETRIES then
+            xi.divergence.waitForPartyRun(p, instanceId, cfg, attempt + 1)
+        else
+            print(string.format('[Divergence] %s gave up waiting for party instance %d -- creating a private copy',
+                p:getName(), instanceId))
+            p:printToPlayer(
+                '[Divergence] Could not find your party\'s run -- opening your own rift instead, kupo!',
+                xi.msg.channel.SYSTEM_3)
+            xi.divergence.noteRunCreated(p, instanceId)
+            p:createInstance(instanceId)
+        end
+    end)
 end
 
 xi.divergence.joinPlayer = function(player, instance, cfg)
+    if isPendingRun(instance) then
+        xi.divergence.waitForPartyRun(player, instance.instanceId, cfg, 0)
+        return
+    end
+
     xi.divergence.placePlayer(player, instance, cfg)
     xi.divergence.startCountdown(player)
     player:printToPlayer(
