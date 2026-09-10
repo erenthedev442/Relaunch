@@ -191,6 +191,26 @@ void CZoneInstance::DecreaseZoneCounter(CCharEntity* PChar)
 {
     TracyZoneScoped;
     CInstance* PInstance = PChar->PInstance;
+
+    // Relaunch 2026-09-09 (SpawnPCs null-zone crash): trust the copy that actually HOLDS the
+    // character over PChar->PInstance. Lua setInstance re-pointed PInstance to another live
+    // copy of the same instance while the character was still inside its original copy
+    // (!warpty on a split Dynamis Divergence party); removing it from PInstance's list then
+    // erased the wrong character and left this one, zone-less, in its real copy.
+    for (const auto& inst : m_InstanceList)
+    {
+        if (inst && inst->HoldsChar(PChar))
+        {
+            if (inst.get() != PInstance)
+            {
+                ShowErrorFmt("[CZoneInstance] {} is held by a different copy of instance {} than PInstance points to -- removing from the holder",
+                             PChar->getName(), inst->GetID());
+                PInstance = inst.get();
+            }
+            break;
+        }
+    }
+
     if (PInstance)
     {
         PInstance->DecreaseZoneCounter(PChar);

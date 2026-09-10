@@ -630,10 +630,34 @@ void CZoneEntities::DecreaseZoneCounter(CCharEntity* PChar)
         fishingutils::InterruptFishing(PChar);
     }
 
-    m_charList.erase(PChar->targid);
-    m_charTargIds.erase(PChar->targid);
+    // Relaunch 2026-09-09 (SpawnPCs null-zone crash): only erase the slot if it really is
+    // this character. A character whose PInstance was re-pointed to another instance copy
+    // while it was still inside its original copy reaches here through the WRONG entity
+    // list; erasing blindly by targid dropped an unrelated character from that list and
+    // left the zoning character behind in its real list with a null zone pointer.
+    if (const auto it = m_charList.find(PChar->targid); it != m_charList.end() && it->second == PChar)
+    {
+        m_charList.erase(it);
+        m_charTargIds.erase(PChar->targid);
+    }
+    else
+    {
+        ShowErrorFmt("CZoneEntities::DecreaseZoneCounter: {} (targid {:#x}) does not occupy that slot in {} -- nothing erased",
+                     PChar->getName(), PChar->targid, m_zone->getName());
+    }
 
     ShowDebug("CZone:: %s DecreaseZoneCounter <%u> %s", m_zone->getName(), m_charList.size(), PChar->getName());
+}
+
+bool CZoneEntities::HoldsChar(const CCharEntity* PChar) const
+{
+    if (PChar == nullptr)
+    {
+        return false;
+    }
+
+    const auto it = m_charList.find(PChar->targid);
+    return it != m_charList.end() && it->second == PChar;
 }
 
 uint16 CZoneEntities::GetNewCharTargID()
@@ -1058,6 +1082,16 @@ float getSignificanceScore(CCharEntity* originChar, CCharEntity* targetChar)
 void CZoneEntities::SpawnPCs(CCharEntity* PChar)
 {
     TracyZoneScoped;
+
+    // Relaunch 2026-09-09: three ACCESS_VIOLATIONs here (xi_map 18:09 / 22:18 / 22:29) from a
+    // character that was still in an instance copy's char list after a mis-routed zone-out
+    // had already nulled its zone pointer. Never dereference loc.zone blindly.
+    if (PChar == nullptr || PChar->loc.zone == nullptr)
+    {
+        ShowErrorFmt("CZoneEntities::SpawnPCs: {} has no zone (mid zone-change or stale list entry) -- skipping",
+                     PChar ? PChar->getName() : "null");
+        return;
+    }
 
     // TODO: This is a temporary fix so that Feretory and Mog Garden _seem_ like a solo zones.
     if (PChar->loc.zone->GetID() == ZONE_FERETORY || PChar->loc.zone->GetID() == ZONE_MOG_GARDEN)
@@ -2233,14 +2267,26 @@ auto CZoneEntities::ZoneServer(timer::time_point tick) -> Task<void>
 
         std::size_t maxIterations = std::min<std::size_t>(m_charTargIds.size(), std::min<std::size_t>(10000U / m_charTargIds.size(), 20U));
 
+        std::vector<uint16> staleTargIds;
+
         for (std::size_t i = 0; i < maxIterations; i++)
         {
-            CCharEntity* PChar = static_cast<CCharEntity*>(m_charList[*charTargIdIter]);
+            const uint16 targid = *charTargIdIter;
+            CCharEntity* PChar  = static_cast<CCharEntity*>(m_charList[targid]);
             ++charTargIdIter;
 
             if (charTargIdIter == m_charTargIds.end())
             {
                 charTargIdIter = m_charTargIds.begin();
+            }
+
+            // Relaunch 2026-09-09: a listed character with no zone pointer is a stale entry left
+            // behind by a mis-routed zone-out (PInstance re-pointed to another copy while inside).
+            // Dropping it here is the self-heal; dereferencing it in SpawnPCs was the crash.
+            if (PChar && PChar->loc.zone == nullptr)
+            {
+                staleTargIds.push_back(targid);
+                continue;
             }
 
             if (PChar && PChar->requestedInfoSync)
@@ -2251,6 +2297,17 @@ auto CZoneEntities::ZoneServer(timer::time_point tick) -> Task<void>
         }
 
         m_lastCharComputeTargId = *charTargIdIter;
+
+        for (const auto targid : staleTargIds)
+        {
+            if (const auto it = m_charList.find(targid); it != m_charList.end())
+            {
+                ShowErrorFmt("CZoneEntities::ZoneServer: dropping zone-less character {} (targid {:#x}) from {}'s char list",
+                             it->second ? it->second->getName() : "null", targid, m_zone->getName());
+                m_charList.erase(it);
+            }
+            m_charTargIds.erase(targid);
+        }
     }
 
     //

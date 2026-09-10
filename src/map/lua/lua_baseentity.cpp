@@ -12197,6 +12197,19 @@ void CLuaBaseEntity::setInstance(CLuaInstance* PLuaInstance)
 
     CInstance*   PInstance   = PLuaInstance->GetInstance();
     CCharEntity* PChar       = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+
+    // Relaunch 2026-09-09 (SpawnPCs null-zone crash): a character that is physically inside a
+    // different live instance copy must not be re-pointed. Its next zone-out would remove it
+    // from the NEW copy's list (erasing an unrelated character there) and leave it behind in
+    // its real copy with a null zone pointer -> ACCESS_VIOLATION in CZoneEntities::SpawnPCs.
+    // Scripts must move the character out of the current instance first.
+    if (PChar && PChar->PInstance && PChar->PInstance != PInstance && PChar->PInstance->HoldsChar(PChar))
+    {
+        ShowWarning(fmt::format("setInstance: {} is still inside instance {} -- refusing to re-point to instance {}; leave the current instance first",
+                                PChar->getName(), PChar->PInstance->GetID(), PInstance ? PInstance->GetID() : 0));
+        return;
+    }
+
     m_PBaseEntity->PInstance = PInstance;
 
     if (PInstance && PChar)

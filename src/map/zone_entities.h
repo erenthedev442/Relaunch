@@ -90,6 +90,7 @@ public:
     EntityList_t GetCharList() const;
     EntityList_t GetMobList() const;
     bool         CharListEmpty() const;
+    bool         HoldsChar(const CCharEntity* PChar) const; // true if PChar occupies its targid slot in THIS list
 
     void ForEachChar(const std::function<void(CCharEntity*)>& func);
     void ForEachMob(const std::function<void(CMobEntity*)>& func);
