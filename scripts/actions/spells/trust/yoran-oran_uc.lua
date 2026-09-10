@@ -3,7 +3,7 @@
 -- Spell ID: 980 | Pool ID: 5980
 -- WHM/BLM. A-tier support healer — no kit inject; scaler owns cure path.
 -- Retail: Afflatus Solace, Cure I–VI, Protectra/Shellra, -na, Erase, Stoneskin.
--- Regain 50, no AA / no enemy casts. Standback ~15'.
+-- Regain 50, no AA / no enemy casts. Follows the summoner (not the enemy).
 -- Nott (listener, low priority) restores MP; may keep curing at 3000 TP.
 -- Cure Potency locked at retail 50% cap (not package+50). Mid Unity MP+20%.
 -----------------------------------
@@ -96,6 +96,10 @@ spellObject.onMobSpawn = function(mob)
 
     mob:setAutoAttackEnabled(false)
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, DIST_SAFE)
+    -- Stay on the summoner. DIST_SAFE parked 15' from the *enemy* at a
+    -- random angle, so HPP_LT never saw the tank after opening buffs.
+    mob:setLocalVar('TrustFollowMaster', 1)
+    mob:setLocalVar('TrustEngageWithMaster', 1)
 
     mob:addListener('COMBAT_TICK', 'YORAN_UC_AI', function(mobArg)
         -- Lock cure potency at retail 50% cap after A-tier package applies.

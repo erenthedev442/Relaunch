@@ -1,8 +1,8 @@
 -----------------------------------
 -- Trust: Cherukiki
 -- WHM/BLM. Cure I–VI, Protect/ra, Shell/ra, Regen I–IV, Haste, Slow/Para/Silence.
--- Does not engage. Favors Regen over Cure. Native Regen 5 + Regen potency.
--- ~15' when not top enmity. Haste on master / self / melee DDs (not NIN).
+-- Favors Regen over Cure. Native Regen 5 + Regen potency.
+-- Follows the summoner (not the enemy). Haste on master / self / melee DDs (not NIN).
 -- C-tier healer (support) — modest cures via trust_power_scaling.
 -----------------------------------
 ---@type TSpellTrust
@@ -117,6 +117,11 @@ spellObject.onMobSpawn = function(mob)
     mob:setAutoAttackEnabled(false)
     mob:setMobAbilityEnabled(false)
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, DIST_SAFE)
+    -- Stay on the summoner. DIST_SAFE parked 15' from the *enemy* at a
+    -- random angle, so Regen / Cure gambits missed the party after the
+    -- opening shields. Hate still falls through to MELEE.
+    mob:setLocalVar('TrustFollowMaster', 1)
+    mob:setLocalVar('TrustEngageWithMaster', 1)
 
     mob:addListener('COMBAT_TICK', 'CHERUKIKI_AI', function(mobArg)
         -- ~15' without hate; close up if she draws enmity.

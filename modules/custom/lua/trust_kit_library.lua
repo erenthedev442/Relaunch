@@ -64,7 +64,11 @@ local function healer(mob)
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.SHELL }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.SHELLRA })
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.HASTE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.HASTE })
     mob:setAutoAttackEnabled(false)
-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.MID_RANGE)
+    -- Stay on the summoner. MID_RANGE parks 6' from the enemy and the
+    -- party-gambit window then misses the tank after opening buffs.
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
+    mob:setLocalVar('TrustFollowMaster', 1)
+    mob:setLocalVar('TrustEngageWithMaster', 1)
 end
 
 local function buffer(mob)

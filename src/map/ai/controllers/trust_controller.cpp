@@ -177,14 +177,22 @@ auto CTrustController::DoCombatTick(timer::time_point tick) -> Task<void>
 
             int16 movementDistance = PTrust->getMobMod(MOBMOD_TRUST_DISTANCE);
 
-            // Aura / GEO trusts (Sylvie): stay on the summoner so the Indi
-            // bubble (~6') actually covers them. MID_RANGE parks 6' from the
-            // *enemy*, which left melee players on the far side of the mob
-            // outside the colure. 2.0' + PathOutToDistance's ±2.5 window
-            // means she only repaths if farther than ~4.5' from the master.
-            if (PTrust->GetLocalVar("TrustFollowMaster") == 1)
+            // Support / healer / GEO trusts: stay on the summoner. Parking
+            // MID_RANGE or DIST_SAFE on the *enemy* at a random angle left
+            // the party outside the gambit assist window after opening
+            // self-buffs (Protectra / Shellra / Haste), so healers cast
+            // 2-3 spells and then stood idle. If this trust has top enmity,
+            // fall through to TRUST_DISTANCE so standback WHMs can still
+            // close (Apururu / Cherukiki).
+            if (PTrust->GetLocalVar("TrustFollowMaster") == 1 && GetTopEnmity() != PTrust)
             {
-                PathOutToDistance(PMaster, 2.0f);
+                float followDist = static_cast<float>(PTrust->GetLocalVar("TrustFollowMasterDist"));
+                if (followDist <= 0.0f)
+                {
+                    followDist = 2.0f;
+                }
+
+                PathOutToDistance(PMaster, followDist);
             }
             else
             {

@@ -98,6 +98,10 @@ spellObject.onMobSpawn = function(mob)
 
     mob:setAutoAttackEnabled(false)
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
+    -- Stay on the summoner. LONG_RANGE parked 12' from the *enemy*,
+    -- which put party HPP_LT / Haste outside the gambit window.
+    mob:setLocalVar('TrustFollowMaster', 1)
+    mob:setLocalVar('TrustEngageWithMaster', 1)
 
     setHoldTP(mob)
     tryArcielaRefreshAura(mob)

@@ -5,7 +5,7 @@
 -- Regain 75, no AA / no enemy casts. Nott (listener) restores MP/HP.
 -- Curaga on sleep or 3+ yellow; Haste master/self/melee DDs (not NIN).
 -- Convert @ <10% MP; Devotion @ ally <20% MP; Martyr when silenced.
--- ~15' standback without hate. Devotion/Martyr close to ~10'.
+-- Follows the summoner (not the enemy). Devotion/Martyr close to ~10'; melee if she pulls hate.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -218,6 +218,12 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.REGAIN, 75)
     mob:setAutoAttackEnabled(false)
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, DIST_SAFE)
+    -- Stay on the summoner. DIST_SAFE parked 15' from the *enemy* at a
+    -- random angle, which put the tank outside the party-gambit window
+    -- after Protectra / Shellra / Haste. Hate still falls through to
+    -- TRUST_DISTANCE (MELEE / DIST_JA) in the controller.
+    mob:setLocalVar('TrustFollowMaster', 1)
+    mob:setLocalVar('TrustEngageWithMaster', 1)
 
     mob:addListener('COMBAT_TICK', 'APURURU_UC_AI', function(mobArg)
         -- Positioning: 15' without hate; melee if she pulls; close for JA range.

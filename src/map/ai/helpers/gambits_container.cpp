@@ -135,6 +135,11 @@ auto CGambitsContainer::Tick(timer::time_point tick) -> Task<void>
     }
 
     // Didn't WS/MS, go for other Gambits
+    // Cure / Haste / Regen / -na are 20'. The old 15' gate starved
+    // standback healers: they park ~15' from the enemy at a random
+    // angle, so the tank is often 16-27' away and HPP_LT never fires.
+    static constexpr float PartyAssistRange = 20.0f;
+
     for (auto& gambit : gambits)
     {
         if (tick < gambit.last_used + std::chrono::seconds(gambit.retry_delay))
@@ -145,7 +150,7 @@ auto CGambitsContainer::Tick(timer::time_point tick) -> Task<void>
         auto isValidMember = [this](CBattleEntity* PSettableTarget, CBattleEntity* PPartyTarget)
         {
             return !PSettableTarget && PPartyTarget->isAlive() && POwner->loc.zone == PPartyTarget->loc.zone &&
-                   distance(POwner->loc.p, PPartyTarget->loc.p) <= 15.0f;
+                   distance(POwner->loc.p, PPartyTarget->loc.p) <= PartyAssistRange;
         };
 
         G_TARGET targetType = gambit.target_selector;

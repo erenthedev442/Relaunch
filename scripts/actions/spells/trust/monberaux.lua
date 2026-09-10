@@ -141,6 +141,10 @@ spellObject.onMobSpawn = function(mob)
     mob:setAutoAttackEnabled(false)
     mob:setMobAbilityEnabled(true) -- Mix skills via gambits (MS), not TP WS
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
+    -- Stay on the summoner so Mix / Cover stay in range (and so party
+    -- gambits can see the tank). NO_MOVE used to leave him at the pull.
+    mob:setLocalVar('TrustFollowMaster', 1)
+    mob:setLocalVar('TrustEngageWithMaster', 1)
 
     -- No TP / no engage. Cover when master holds hate (stand behind him).
     mob:addListener('COMBAT_TICK', 'MONBERAUX_CTICK', function(mobArg)

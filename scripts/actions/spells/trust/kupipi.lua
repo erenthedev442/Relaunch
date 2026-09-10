@@ -4,7 +4,7 @@
 -- WS: Starlight / Moonlight (MP restore). No Flash/Haste/Raise.
 -- Status removal first → heals → buffs → Slow then Paralyze.
 -- Cure: party <50% / asleep; tank or top enmity <75%.
--- Stays put to 20'; moves to 15' if pulled farther.
+-- Follows the summoner (not the enemy) so party cures stay in range.
 -- C-tier healer (support) — no manual power stack (scaler owns it).
 -----------------------------------
 ---@type TSpellTrust
@@ -62,9 +62,12 @@ spellObject.onMobSpawn = function(mob)
     -- Starlight / Moonlight ASAP for MP sustain (no SC props).
     mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.HIGHEST)
 
-    -- Hold position; if target drifts past 20', path to 15'.
+    -- Hold near the summoner. The old NO_MOVE / 15'-from-enemy follow
+    -- left her on the far side of the mob so party cures never selected.
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
     mob:setAutoAttackEnabled(true)
+    mob:setLocalVar('TrustFollowMaster', 1)
+    mob:setLocalVar('TrustEngageWithMaster', 1)
 
     mob:addListener('COMBAT_TICK', 'KUPIPI_RANGE', function(mobArg)
         local battleTarget = mobArg:getTarget()
