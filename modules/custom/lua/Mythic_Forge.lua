@@ -10,7 +10,7 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m        = Module:new('mythic_forge')
 local catalog  = require('modules/custom/lua/mythic_forge_catalog')
-local currency = require('modules/custom/lua/hl_seal_currency')
+local currency = require('modules/custom/lua/hades_hold_currency')
 local repeatCredits = require('modules/custom/lua/rema_repeat_credits')
 
 local NPC_POS   = { x = 532.9669, y = -3.1591, z = 469.2771, rot = 188 }
@@ -43,17 +43,7 @@ local function costStr()
 end
 
 local function refundCurrency(player)
-    local remaining = catalog.cost
-    while remaining > 0 do
-        local quantity = math.min(remaining, 99)
-        if not player:addItem({ id = catalog.currencyId, quantity = quantity }) then
-            return false
-        end
-
-        remaining = remaining - quantity
-    end
-
-    return true
+    return currency.add(player, catalog.currencyId, catalog.cost)
 end
 
 m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
@@ -90,7 +80,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return
         end
 
-        local held = player:getItemCount(catalog.currencyId)
+        local held = currency.count(player, catalog.currencyId)
         if held < catalog.cost then
             player:printToPlayer(string.format(
                 PREFIX .. ' Need %s (you have %d).', costStr(), held),

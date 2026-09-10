@@ -2,8 +2,16 @@
 -- hades_shop_catalog.lua
 --
 -- Weekend ferry stalls. Each live pool sells one ware, the same roll
--- for every player that UTC week. Steel (Relic / Odyssey / Ambuscade /
--- Geas named), Mail (119 armor), Gild (accessories). Later pools plug in here.
+-- for every player that UTC week.
+--   Steel  -- Relic / Odyssey paper or finished Ambuscade / Geas
+--   Mail   -- 119 armor
+--   Gild   -- accessories
+--   Crate  -- REMA / Dynamis / Paragon currency (once per week)
+--   Trusts -- grantable alter egos (not Meat / Gemma / Corvus / Cornelia / Matsui-P)
+--   Cosmetics -- event / lockstyle gear
+--
+-- Pin a future week by setting any of the keys below. Unset keys still roll.
+--   C.PINNED[202636] = { weapon = 21722, crate = 'beitetsu_300', trust = 897, cosmetic = 26955 }
 -----------------------------------
 local CATALOG_KEY = 'modules/custom/lua/hades_shop_catalog'
 local C = package.loaded[CATALOG_KEY]
@@ -16,9 +24,26 @@ C.SYS = xi.msg.channel.SYSTEM_3
 
 C.POOLS =
 {
-    { key = 'weapon',    label = 'Steel' },
-    { key = 'armor',     label = 'Mail'  },
-    { key = 'accessory', label = 'Gild'  },
+    { key = 'weapon',    label = 'Steel'  },
+    { key = 'armor',     label = 'Mail'   },
+    { key = 'accessory', label = 'Gild'   },
+    { key = 'crate',     label = 'Crate'  },
+    { key = 'trust',     label = 'Trusts' },
+    { key = 'cosmetic',  label = 'Cosmetics' },
+}
+
+-- Optional per-week overrides. See header.
+-- First weekend is fully pinned so the board cannot drift, and every
+-- stall stays at or under one week of Soul Shards (1050).
+C.PINNED = C.PINNED or {}
+C.PINNED[202636] =
+{
+    weapon    = 21722,       -- Dolichenus (finished Ambuscade axe)
+    armor     = 23798,       -- Crepuscular Mail
+    accessory = 27555,       -- Warden's Ring
+    crate     = '10kbyne_50',
+    trust     = 932,         -- Fablinix
+    cosmetic  = 11318,       -- Otokoeshi Yukata
 }
 
 local function hasItem(player, itemId)
@@ -32,35 +57,70 @@ local function hasItem(player, itemId)
 end
 
 function C.weekOffers(weekId)
-    local weapons    = require('modules/custom/lua/relic_voucher_catalog')
-    local armor      = require('modules/custom/lua/hades_armor_catalog')
-    local accessory  = require('modules/custom/lua/hades_accessory_catalog')
+    local weapons   = require('modules/custom/lua/relic_voucher_catalog')
+    local armor     = require('modules/custom/lua/hades_armor_catalog')
+    local accessory = require('modules/custom/lua/hades_accessory_catalog')
+    local crate     = require('modules/custom/lua/hades_crate_catalog')
+    local trusts    = require('modules/custom/lua/hades_trust_catalog')
+    local cosmetics = require('modules/custom/lua/hades_cosmetic_catalog')
     weekId = weekId or weapons.weekId()
 
-    local steel = weapons.weeklyRelic(weekId)
-    local mail  = armor.weeklyPiece(weekId)
-    local gild  = accessory.weeklyPiece(weekId)
+    local pin   = C.PINNED[weekId] or {}
+    local steel = (pin.weapon and weapons.byWeaponId[pin.weapon]) or weapons.weeklyRelic(weekId)
+    local mail  = (pin.armor and armor.byId[pin.armor]) or armor.weeklyPiece(weekId)
+    local gild  = (pin.accessory and accessory.byId[pin.accessory]) or accessory.weeklyPiece(weekId)
+    local box   = crate.weeklyCrate(weekId, pin.crate)
+    local ego   = trusts.weeklyTrust(weekId, pin.trust)
+    local look  = cosmetics.weeklyPiece(weekId, pin.cosmetic)
+
     return {
         {
-            pool  = 1,
-            key   = 'weapon',
-            label = 'Steel',
-            row   = steel,
-            price = weapons.weeklyPrice(weekId, steel),
+            pool   = 1,
+            key    = 'weapon',
+            label  = 'Steel',
+            weekId = weekId,
+            row    = steel,
+            price  = pin.weaponPrice or weapons.weeklyPrice(weekId, steel),
         },
         {
-            pool  = 2,
-            key   = 'armor',
-            label = 'Mail',
-            row   = mail,
-            price = mail and mail.price or 0,
+            pool   = 2,
+            key    = 'armor',
+            label  = 'Mail',
+            weekId = weekId,
+            row    = mail,
+            price  = mail and mail.price or 0,
         },
         {
-            pool  = 3,
-            key   = 'accessory',
-            label = 'Gild',
-            row   = gild,
-            price = gild and gild.price or 0,
+            pool   = 3,
+            key    = 'accessory',
+            label  = 'Gild',
+            weekId = weekId,
+            row    = gild,
+            price  = gild and gild.price or 0,
+        },
+        {
+            pool   = 4,
+            key    = 'crate',
+            label  = 'Crate',
+            weekId = weekId,
+            row    = box,
+            price  = box and box.price or 0,
+        },
+        {
+            pool   = 5,
+            key    = 'trust',
+            label  = 'Trusts',
+            weekId = weekId,
+            row    = ego,
+            price  = ego and ego.price or 0,
+        },
+        {
+            pool   = 6,
+            key    = 'cosmetic',
+            label  = 'Cosmetics',
+            weekId = weekId,
+            row    = look,
+            price  = look and look.price or 0,
         },
     }
 end
@@ -83,6 +143,12 @@ function C.owns(player, offer)
         local weapons = require('modules/custom/lua/relic_voucher_catalog')
         return weapons.ownsRelic(player, offer.row) or weapons.ownsVoucher(player, offer.row)
     end
+    if offer.key == 'crate' then
+        return require('modules/custom/lua/hades_crate_catalog').owns(player, offer.weekId)
+    end
+    if offer.key == 'trust' then
+        return require('modules/custom/lua/hades_trust_catalog').owns(player, offer.row)
+    end
     return hasItem(player, offer.row.id)
 end
 
@@ -92,6 +158,12 @@ function C.award(player, offer, tag)
     end
     if offer.key == 'weapon' then
         return require('modules/custom/lua/relic_voucher_catalog').award(player, offer.row, tag)
+    end
+    if offer.key == 'crate' then
+        return require('modules/custom/lua/hades_crate_catalog').award(player, offer.row, offer.weekId)
+    end
+    if offer.key == 'trust' then
+        return require('modules/custom/lua/hades_trust_catalog').award(player, offer.row)
     end
 
     local prefix = (tag and tag ~= '') and string.format('[%s] ', tag) or ''

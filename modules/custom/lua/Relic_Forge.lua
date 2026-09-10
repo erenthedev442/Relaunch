@@ -14,14 +14,14 @@
 -- Apex / Paragon / etc.). The Dynamis *gate* is the currency cost, not the NPC
 -- location.
 --
--- Currency and Plutons are consumed through hl_seal_currency so costs can span
--- stacks and containers safely.
+-- Currency and Plutons are consumed through the Hades hold (then bags) so
+-- weekend crates and split stacks both count.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m = Module:new('relic_forge')
-local currency = require('modules/custom/lua/hl_seal_currency')
+local currency = require('modules/custom/lua/hades_hold_currency')
 
 local NPC_POS = { x = 572.000, y = -3.360, z = 534.200, rot = 64 }
 
@@ -43,15 +43,7 @@ local function costStr(relic)
 end
 
 local function refundItem(player, itemId, amount)
-    local remaining = amount
-    while remaining > 0 do
-        local quantity = math.min(remaining, 99)
-        if not player:addItem({ id = itemId, quantity = quantity }) then
-            return false
-        end
-        remaining = remaining - quantity
-    end
-    return true
+    return currency.add(player, itemId, amount)
 end
 
 m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
@@ -102,16 +94,16 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer('[Relic Forge] Free an inventory slot first, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
-        if player:getItemCount(relic.currency) < FORGE_COST then
+        if currency.count(player, relic.currency) < FORGE_COST then
             player:printToPlayer(string.format(
                 '[Relic Forge] Not enough Dynamis currency -- need %s (you have %d). Kupo!',
-                costStr(relic), player:getItemCount(relic.currency)), xi.msg.channel.SYSTEM_3)
+                costStr(relic), currency.count(player, relic.currency)), xi.msg.channel.SYSTEM_3)
             return
         end
-        if player:getItemCount(PLUTON_ID) < PLUTON_COST then
+        if currency.count(player, PLUTON_ID) < PLUTON_COST then
             player:printToPlayer(string.format(
                 '[Relic Forge] Not enough Plutons -- need %d (you have %d). Kupo!',
-                PLUTON_COST, player:getItemCount(PLUTON_ID)), xi.msg.channel.SYSTEM_3)
+                PLUTON_COST, currency.count(player, PLUTON_ID)), xi.msg.channel.SYSTEM_3)
             return
         end
         if not currency.take(player, relic.currency, FORGE_COST) then

@@ -29,7 +29,7 @@ local catalog = require('modules/custom/lua/weapon_forge_catalog')
 local relicCatalog = require('modules/custom/lua/relic_forge_catalog')
 local relicVouchers = require('modules/custom/lua/relic_voucher_catalog')
 local repeatCredits = require('modules/custom/lua/rema_repeat_credits')
-local itemCurrency = require('modules/custom/lua/hl_seal_currency')
+local holdCurrency = require('modules/custom/lua/hades_hold_currency')
 local pilgrimage = require('modules/custom/lua/legendary_pilgrimage_catalog')
 local mastery = require('modules/custom/lua/weapon_mastery_catalog')
 require('modules/custom/lua/LegendaryWeaponPilgrimage')
@@ -612,8 +612,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         local function item(id, qty, name)
             if id and qty and qty > 0 then
                 list[#list + 1] = {
-                    have = function(p) return p:getItemCount(id) end,
-                    take = function(p) return itemCurrency.take(p, id, qty) end,
+                    have = function(p) return holdCurrency.count(p, id) end,
+                    take = function(p) return holdCurrency.take(p, id, qty) end,
                     qty = qty,
                     name = name,
                 }
@@ -640,17 +640,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 local highQty = math.max(1, math.floor(lowQty / rate))
                 list[#list + 1] =
                 {
-                    have = function(p) return p:getItemCount(chain.currency) end,
+                    have = function(p) return holdCurrency.count(p, chain.currency) end,
                     meets = function(p)
-                        return p:getItemCount(chain.currency) >= lowQty
-                            or p:getItemCount(chain.highCurrency) >= highQty
+                        return holdCurrency.count(p, chain.currency) >= lowQty
+                            or holdCurrency.count(p, chain.highCurrency) >= highQty
                     end,
                     take = function(p)
-                        if p:getItemCount(chain.highCurrency) >= highQty then
-                            return itemCurrency.take(p, chain.highCurrency, highQty)
+                        if holdCurrency.count(p, chain.highCurrency) >= highQty then
+                            return holdCurrency.take(p, chain.highCurrency, highQty)
                         end
 
-                        return itemCurrency.take(p, chain.currency, lowQty)
+                        return holdCurrency.take(p, chain.currency, lowQty)
                     end,
                     qty = lowQty,
                     name = chain.currencyName,
@@ -788,7 +788,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                         need,
                         req.have(player),
                         req.name,
-                        player:getItemCount(req.highCurrency),
+                        holdCurrency.count(player, req.highCurrency),
                         req.highCurrencyName), S)
                 else
                     player:printToPlayer(string.format(

@@ -4,8 +4,9 @@
 -- Hades daily quests + weekend shop.
 -- Five slots every UTC day, same board for every player, 150 Soul Shards
 -- if and only if all five are cleared. Weekend shop sells one ware from
--- each live stall (Steel, Mail, Gild). Steel is Relic/Odyssey paper or
--- finished Ambuscade / Geas named. Hades sets that week's prices.
+-- each of six stalls (Steel, Mail, Gild, Crate, Trusts, Cosmetics). Steel is
+-- Relic/Odyssey paper or finished Ambuscade / Geas named. Hades sets
+-- that week's prices. Pin a week on hades_shop_catalog.PINNED.
 -----------------------------------
 -- FileWatcher dofile discards the return. Mutate the cached table so
 -- board changes go live without a map restart.
@@ -90,9 +91,9 @@ end
 
 function catalog.shopStatusLine()
     if catalog.isShopOpen() then
-        return 'The ferry is up. Steel, Mail, and Gild this week -- the same stalls for every soul.'
+        return 'The ferry is up. Six stalls this week -- Steel, Mail, Gild, Crate, Trusts, and Cosmetics. Same board for every soul.'
     end
-    return 'The market sinks until Saturday. Steel, Mail, and Gild return when the ferry rises. Quests run every day.'
+    return 'The market sinks until Saturday. Six stalls return when the ferry rises. Quests run every day.'
 end
 
 local function sayHades(player, line)
@@ -150,6 +151,12 @@ function catalog.tryBuyRelicVoucher(player, poolIndex, silent)
     if shop.owns(player, offer) then
         if silent then
             sayDots(player)
+        elseif offer.key == 'crate' then
+            sayHades(player, 'You already took this week\'s crate. The other stalls still stand.')
+        elseif offer.key == 'trust' then
+            sayHades(player, string.format(
+                'This stall is %s. You already know that name. The other stalls still stand.',
+                row.name))
         else
             sayHades(player, string.format(
                 'This stall is %s. You already carry that one. The other stalls still stand.',
@@ -171,7 +178,18 @@ function catalog.tryBuyRelicVoucher(player, poolIndex, silent)
         return true
     end
 
-    if offer.key == 'armor' or offer.key == 'accessory' then
+    if offer.key == 'crate' then
+        sayHades(player, 'The dead hoarded what they could not spend.')
+        sayHades(player, string.format(
+            'The crate is banked -- %s. Forges take from this hold before your bags.',
+            wareName))
+    elseif offer.key == 'trust' then
+        sayHades(player, 'A name the dead still answer.')
+        sayHades(player, string.format('%s will walk with you now.', row.name))
+    elseif offer.key == 'cosmetic' then
+        sayHades(player, 'Vanity survives the crossing.')
+        sayHades(player, string.format('Wear %s if you still care how you look.', row.name))
+    elseif offer.key == 'armor' or offer.key == 'accessory' then
         if row.sourced then
             if offer.key == 'armor' then
                 sayHades(player, 'The dead still wear their mail.')
@@ -218,7 +236,6 @@ function catalog.showShop(player, backFn, silent)
         local shop = require('modules/custom/lua/hades_shop_catalog')
         for _, offer in ipairs(catalog.weekOffers()) do
             local poolIndex = offer.pool
-            local row = offer.row
             if not silent then
                 player:printToPlayer(
                     string.format('[Hades] %s: %s -- %d %s.',
@@ -226,9 +243,12 @@ function catalog.showShop(player, backFn, silent)
                         offer.price, catalog.currencyName),
                     S)
             end
+            -- customMenu packs title + labels into ~150 bytes. Six full
+            -- ware names overflow; stall + price is enough -- chat already
+            -- printed the real name.
             opts[#opts + 1] =
             {
-                string.format('%s %d', row.name, offer.price),
+                string.format('%s %d', offer.label, offer.price),
                 function(p)
                     catalog.tryBuyRelicVoucher(p, poolIndex, silent)
                     catalog.showShop(p, backFn, silent)
