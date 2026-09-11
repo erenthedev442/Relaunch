@@ -1,5 +1,5 @@
 -- Allow portal Rescue to clear a stuck / black-screen session.
--- portal_rw already UPDATEs chars to GM Home; this adds DELETE on
+-- portal_rw already UPDATEs chars to Lower Jeuno; this adds DELETE on
 -- accounts_sessions so the player can log back in without Discord !rescue.
 --
 -- Idempotent. Run once on the live box as a DB admin:

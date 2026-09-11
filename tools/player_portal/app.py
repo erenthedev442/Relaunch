@@ -125,7 +125,9 @@ STORAGE_COL = {
 }
 WARDROBE_LOCS = {8, 10, 11, 12, 13, 14, 15, 16}  # equipment-only containers
 VAULT_CAP = int(os.getenv("PORTAL_VAULT_CAP", "500"))  # per-character offline-vault item limit
-RESCUE_ZONE = int(os.getenv("PORTAL_RESCUE_ZONE", "210"))  # GM Home -- /api/char/rescue target (matches rescue_bot)
+# Same landing as CLuaBaseEntity::resetPlayer and tools/discord_bot/rescue_bot.py
+RESCUE_ZONE = 245  # Lower Jeuno
+RESCUE_ROT, RESCUE_X, RESCUE_Y, RESCUE_Z = 86, 33.464, -5.000, 69.162
 MORDION_GAOL = 131  # chars.pos_zone / xi.zone.MORDION_GAOL — jailed chars must not warp/rescue out
 
 # Warp destinations for /api/char/warp -- safe home-point coords per city/hub.
@@ -136,7 +138,6 @@ WARP_DESTS = {
     "windurst":  {"name": "Windurst",   "zone": 241, "x": 106.239,  "y": -5.0, "z": -55.0,    "rot": 40},
     "jeuno":     {"name": "Jeuno",      "zone": 245, "x": -100.792, "y": 0.0,  "z": -181.577, "rot": 17},
     "whitegate": {"name": "Whitegate",  "zone": 50,  "x": -96.686,  "y": 0.0,  "z": -67.688,  "rot": 110},
-    "gmhome":    {"name": "GM Home",    "zone": 210, "x": 0.0,      "y": 0.0,  "z": 0.0,      "rot": 0},
 }
 
 # Custom-system progression for the per-character quest-log (/api/progress).
@@ -1348,9 +1349,9 @@ def char_tools(charid: int, request: Request):
 
 @app.post("/api/char/rescue")
 def char_rescue(body: CharBody, request: Request):
-    """Unstick a character: clear a stale session and send them to GM Home.
+    """Unstick a character: clear a stale session and send them to Lower Jeuno.
 
-    Same tool as the website / launcher Rescue button. Own-account only.
+    Same landing as engine resetPlayer and Discord !rescue. Own-account only.
     Jailed characters stay in Mordion. A live black-screen session is cleared
     so the player can log back in (needs DELETE on accounts_sessions).
     """
@@ -1367,9 +1368,11 @@ def char_rescue(body: CharBody, request: Request):
                     detail="That character still has a game session. Close the client first, then try again.",
                 )
             cur.execute(
-                "UPDATE chars SET pos_zone=%s, pos_prevzone=%s, pos_x=0, pos_y=0, pos_z=0, pos_rot=0, moghouse=0 "
+                "UPDATE chars SET pos_zone=%s, pos_prevzone=%s, pos_rot=%s, "
+                "pos_x=%s, pos_y=%s, pos_z=%s, boundary=0, moghouse=0 "
                 "WHERE charid=%s",
-                (RESCUE_ZONE, RESCUE_ZONE, body.charid),
+                (RESCUE_ZONE, RESCUE_ZONE, RESCUE_ROT,
+                 RESCUE_X, RESCUE_Y, RESCUE_Z, body.charid),
             )
         conn.commit()
         return {"ok": True, "clearedSession": cleared > 0}
@@ -2923,6 +2926,17 @@ def launcher_file(name: str) -> Path:
     return path
 
 
+@app.get("/launcher")
+@app.get("/launcher/")
+def launcher_landing():
+    """Public download page. The keyed feed stays on /launcher/manifest.json."""
+    return FileResponse(
+        os.path.join(_static_dir, "launcher.html"),
+        media_type="text/html",
+        headers={"Cache-Control": "no-store"},
+    )
+
+
 @app.get("/launcher/manifest.json")
 def launcher_manifest(request: Request):
     """Private launcher self-update manifest. Testers do not type the key — the app sends it."""
@@ -2947,7 +2961,7 @@ def launcher_package(request: Request):
 
 @app.get("/downloads/LegendaryLauncher.zip")
 def launcher_public_package():
-    """Public zip for the unlisted docs page. Self-update still uses the keyed feed."""
+    """Public zip for the website and /launcher page. Self-update still uses the keyed feed."""
     return FileResponse(
         launcher_file("LegendaryLauncher.zip"),
         media_type="application/zip",
