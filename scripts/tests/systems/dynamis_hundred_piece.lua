@@ -49,8 +49,9 @@ describe('Dynamis hundred-piece', function()
             == xi.item.MONTIONT_SILVERPIECE)
     end)
 
-    it('is a flat 1 percent roll', function()
-        assert(hundred.CHANCE_PERCENT == 1)
+    it('rolls 5 percent on trash and 25 percent on NMs', function()
+        assert(hundred.CHANCE_PERCENT == 5)
+        assert(hundred.NM_CHANCE_PERCENT == 25)
     end)
 
     it('never pays a 10,000-piece', function()

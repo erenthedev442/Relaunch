@@ -79,24 +79,14 @@ describe('Apex Trials weapon-gate curve', function()
         assert(catalog.mechCfg(200).name == 'Apex Absolute')
 
         for _, tier in ipairs({ 1, 11, 31, 50, 51, 75, 100, 200 }) do
-            assert(catalog.mechCfg(tier).drain == nil)
+            local cfg = catalog.mechCfg(tier)
+            assert(cfg.drain == nil)
+            assert(cfg.aoe == nil)
+            for _, phase in ipairs(cfg.phases or {}) do
+                assert(phase.action ~= 'nuke')
+            end
             assert(catalog.affixMods('Vampiric', tier)[xi.mod.REGEN] == nil)
             assert(catalog.affixMods('Regenerating', tier)[xi.mod.REGEN] == nil)
-        end
-    end)
-
-    it('ramps scripted pulse damage from entry to elite tiers', function()
-        assert(catalog.pulseDamagePct(1) == 5)
-        assert(catalog.pulseDamagePct(99) == 20)
-        assert(catalog.pulseDamagePct(200) == 30)
-        assert(catalog.pulseDamagePct(10000) == 30)
-
-        local previous = 0
-        for tier = 1, 200 do
-            local damage = catalog.pulseDamagePct(tier)
-            assert(damage >= previous)
-            assert(catalog.mechCfg(tier).aoe.dmgPct == damage)
-            previous = damage
         end
     end)
 end)

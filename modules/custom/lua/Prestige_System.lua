@@ -25,6 +25,7 @@
 --      Tier-5 NM dies; stamps the account-wide per-cycle Trial progress.
 --
 -- ALL tuning lives in prestige_catalog.lua. Do not hard-code numbers here.
+-- 2026-09-12: Hunt Marks cost is a flat 300 (catalog markCostBase/Cap).
 --
 -- Player CharVars (<job> = numeric main-job id from getMainJob()):
 --   Prestige_Level_<job>       -- completed ascensions for that job

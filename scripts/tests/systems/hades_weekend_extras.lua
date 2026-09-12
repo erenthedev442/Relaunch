@@ -81,7 +81,7 @@ describe('Hades Crate stall', function()
         local vars = {}
         local player = mockPlayer(vars)
         local week = 202636
-        local offer = shop.weekOffers(week)[4]
+        local offer = shop.weekOffers(week)[6]
         assert(shop.owns(player, offer) == false)
         assert(crate.award(player, offer.row, week) == true)
         assert(vars.HD_CrateWeek == week)
@@ -223,7 +223,7 @@ describe('Hades Trusts stall', function()
     end)
 
     it('lets a player miss Trusts if they already know that spell', function()
-        local offer = shop.weekOffers(202636)[5]
+        local offer = shop.weekOffers(202636)[7]
         local owner = mockPlayer({}, {}, { [offer.row.spellId] = true })
         assert(shop.owns(owner, offer) == true)
         assert(shop.owns(mockPlayer({}, {}, {}), offer) == false)
@@ -259,7 +259,7 @@ describe('Hades Cosmetics stall', function()
     end)
 
     it('lets a player miss Cosmetics if they already hold that piece', function()
-        local offer = shop.weekOffers(202636)[6]
+        local offer = shop.weekOffers(202636)[8]
         local owner = mockPlayer({}, { [offer.row.id] = 1 })
         assert(shop.owns(owner, offer) == true)
         assert(shop.owns(mockPlayer({}, {}), offer) == false)
@@ -276,11 +276,11 @@ describe('Hades shop pins', function()
             cosmetic = 10250,
         }
         local offers = shop.weekOffers(202636)
-        assert(offers[4].row.key == 'pluton_200')
-        assert(offers[5].row.spellId == 1019)
-        assert(offers[6].row.id == 10250)
+        assert(offers[6].row.key == 'pluton_200')
+        assert(offers[7].row.spellId == 1019)
+        assert(offers[8].row.id == 10250)
         shop.PINNED[202636] = previous
         local restored = shop.weekOffers(202636)
-        assert(restored[4].row.key ~= nil)
+        assert(restored[6].row.key ~= nil)
     end)
 end)

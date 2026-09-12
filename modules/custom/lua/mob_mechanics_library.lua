@@ -506,9 +506,10 @@ end
 -- Boss telegraphs an unstable-energy window: strike the boss during the window
 -- and the striker eats a 1-shot; hold fire and the boss enters exhaustion where
 -- it stops attacking and eats bonus damage. During the warning window a
--- catalog-supplied "pressure" status effect ticks the whole party so the DPS
--- window is REAL: you have to survive the tick, not just idle-through. Reader
--- gates in TheGauntlet.lua (holdFireLocked) fire off Gauntlet_HoldFireActive /
+-- catalog-supplied "pressure" status is applied with the warning so the player
+-- can Erase / Poisona / Cursna it. The first %HP pulse waits pressureDelaySec
+-- (default 5) and only fires if the icon is still up. Reader gates in
+-- TheGauntlet.lua (holdFireLocked) fire off Gauntlet_HoldFireActive /
 -- Gauntlet_HoldFireExhausted local-vars set here.
 -----------------------------------
 local function setBossFrozen(mob, frozen)
@@ -578,6 +579,27 @@ local function clearActionBlockingCc(target)
     pcall(function() target:delStatusEffectSilent(xi.effect.AMNESIA) end)
 end
 
+local function holdFirePressureDelay(holdCfg)
+    return holdCfg.pressureDelaySec or holdCfg.curseGraceSec or 5
+end
+
+local function applyHoldFirePressureEffect(mob, target, holdCfg, st, now)
+    local remaining = holdCfg.warnSec or 15
+    if st.holdFireUntil then
+        remaining = math.max(1, st.holdFireUntil - now)
+    end
+
+    -- tick=0: no engine DoT. The %HP pulse is scripted below.
+    pcall(function()
+        target:addStatusEffect(st.holdFirePressureEffect, {
+            power = st.holdFirePressurePower or 1,
+            duration = remaining,
+            origin = mob,
+            tick = 0,
+        })
+    end)
+end
+
 local function applyHoldFirePressure(mob, target, holdCfg, st, now)
     local pressure = holdCfg.pressure
     if holdCfg.pressureOptions and #holdCfg.pressureOptions > 0 then
@@ -595,18 +617,19 @@ local function applyHoldFirePressure(mob, target, holdCfg, st, now)
         return
     end
 
+    local delay = holdFirePressureDelay(holdCfg)
     st.holdFirePressureTarget = pressureTarget
     st.holdFirePressureEffect = pressure.effect
     st.holdFirePressurePower  = pressure.power or 1
     st.holdFirePressureDotTick = pressure.tick
-    st.holdFirePressurePending = true
-    -- First aura tick waits after the warning line so the player can stop attacking.
-    st.nextHoldFirePressureTick = now + (holdCfg.pressureDelaySec or holdCfg.pressureTickSec or 5)
+    st.holdFirePressurePending = false
+    st.nextHoldFirePressureTick = now + delay
 
     clearActionBlockingCc(pressureTarget)
+    applyHoldFirePressureEffect(mob, pressureTarget, holdCfg, st, now)
 
     if pressure.effect == xi.effect.CURSE_I or pressure.effect == xi.effect.CURSE_II then
-        st.curseGraceUntil = now + (holdCfg.curseGraceSec or holdCfg.pressureDelaySec or 5)
+        st.curseGraceUntil = now + delay
         pcall(function() mob:setLocalVar('Gauntlet_CurseGraceUntil', st.curseGraceUntil) end)
     end
 end
@@ -644,20 +667,12 @@ local function tickHoldFirePressure(mob, holdCfg, st, now)
         return
     end
 
+    -- Mid-reload catch-up: older windows stored the icon as pending.
     if st.holdFirePressurePending then
-        local remaining = holdCfg.warnSec or 15
-        if st.holdFireUntil then
-            remaining = math.max(1, st.holdFireUntil - now)
-        end
-        pcall(function()
-            target:addStatusEffect(effect, {
-                power = st.holdFirePressurePower or 1,
-                duration = remaining,
-                origin = mob,
-                tick = st.holdFirePressureDotTick,
-            })
-        end)
+        applyHoldFirePressureEffect(mob, target, holdCfg, st, now)
         st.holdFirePressurePending = false
+        st.nextHoldFirePressureTick = now + holdFirePressureDelay(holdCfg)
+        return
     end
 
     local active = false

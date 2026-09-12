@@ -56,13 +56,38 @@ function Find-Dmg([byte[]]$arr) {
     return -1
 }
 
-function Write-CString($arr, [int]$from, [int]$maxLen, [string]$text) {
+function Pad-FfxiNameCell([string]$text) {
     $bytes = [Text.Encoding]::ASCII.GetBytes($text)
-    if ($bytes.Length -ge $maxLen) {
-        throw "String '$text' does not fit in $maxLen bytes"
-    }
-    for ($i = 0; $i -lt $maxLen; $i++) { $arr[$from + $i] = 0 }
-    [Buffer]::BlockCopy($bytes, 0, $arr, $from, $bytes.Length)
+    $n = $bytes.Length + 1
+    if ($n -lt 8) { $n = 8 }
+    elseif ($n % 4) { $n += 4 - ($n % 4) }
+    $out = New-Object byte[] $n
+    [Buffer]::BlockCopy($bytes, 0, $out, 0, $bytes.Length)
+    ,$out
+}
+
+# 0xF840 weapons use aligned name cells + uint32 markers + a 24-byte gap
+# (Idris / Epeolatry). A raw C-string wipe of 0x28 bytes destroys those
+# markers and the client R0s on zone-in when it holds the item.
+function Write-FfxiWeaponNames($arr, [string]$enName, [string]$enLog, [string]$enPlural) {
+    $flag = [byte[]](1, 0, 0, 0)
+    $gap  = New-Object byte[] 24
+    $parts = New-Object System.Collections.Generic.List[byte]
+    $parts.AddRange((Pad-FfxiNameCell $enName))
+    $parts.AddRange($flag)
+    $parts.AddRange($flag)
+    $parts.AddRange($gap)
+    $parts.AddRange((Pad-FfxiNameCell $enLog))
+    $parts.AddRange($flag)
+    $parts.AddRange($gap)
+    $parts.AddRange((Pad-FfxiNameCell $enPlural))
+    $parts.AddRange($flag)
+    $parts.AddRange($gap)
+    $block = $parts.ToArray()
+    if ((0x80 + $block.Length) -gt 0x280) { throw "name block too long ($($block.Length))" }
+    for ($i = 0x80; $i -lt 0x280; $i++) { $arr[$i] = 0 }
+    [Buffer]::BlockCopy($block, 0, $arr, 0x80, $block.Length)
+    return (0x80 + $block.Length)
 }
 
 function Paint-KrakenPlusOneIcon([byte[]]$arr) {
@@ -81,51 +106,49 @@ function Paint-KrakenPlusOneIcon([byte[]]$arr) {
     for ($i = 0; $i -lt 1024; $i++) { $used[$arr[$pixOff + $i]] = $true }
 
     $white = -1
-    for ($i = 0; $i -lt 256; $i++) {
-        $b = $arr[$palOff + $i * 4]
-        $g = $arr[$palOff + $i * 4 + 1]
-        $r = $arr[$palOff + $i * 4 + 2]
-        if ($r -ge 248 -and $g -ge 248 -and $b -ge 248) {
-            $white = $i
-            break
-        }
+    for ($i = 255; $i -ge 0; $i--) {
+        if (-not $used.ContainsKey([byte]$i)) { $white = $i; break }
     }
     if ($white -lt 0) {
-        for ($i = 255; $i -ge 0; $i--) {
-            if (-not $used.ContainsKey([byte]$i)) { $white = $i; break }
+        for ($i = 0; $i -lt 256; $i++) {
+            $b = $arr[$palOff + $i * 4]
+            $g = $arr[$palOff + $i * 4 + 1]
+            $r = $arr[$palOff + $i * 4 + 2]
+            if ($r -ge 248 -and $g -ge 248 -and $b -ge 248) { $white = $i; break }
         }
     }
     if ($white -lt 0) { throw 'Kraken Club +1: no free palette index for white' }
 
-    $arr[$palOff + $white * 4]     = 255
-    $arr[$palOff + $white * 4 + 1] = 255
-    $arr[$palOff + $white * 4 + 2] = 255
-    $arr[$palOff + $white * 4 + 3] = 0x80
-
-    $marks = New-Object System.Collections.Generic.List[object]
-    for ($x = 0; $x -lt 32; $x++) {
-        $marks.Add(@($x, 0)); $marks.Add(@($x, 1)); $marks.Add(@($x, 30)); $marks.Add(@($x, 31))
+    $free = New-Object System.Collections.Generic.List[int]
+    for ($i = 255; $i -ge 0; $i--) {
+        if (-not $used.ContainsKey([byte]$i)) { $free.Add($i) }
+    }
+    if ($free.Count -lt 3) { throw 'Kraken Club +1: need 3 free palette indexes for HQ plate' }
+    $outer = [int]$free[0]
+    $bevel = [int]$free[1]
+    $fill  = [int]$free[2]
+    foreach ($slot in @(
+        @{ I = $outer; C = 184 },
+        @{ I = $bevel; C = 160 },
+        @{ I = $fill;  C = 136 }
+    )) {
+        $arr[$palOff + $slot.I * 4]     = [byte]$slot.C
+        $arr[$palOff + $slot.I * 4 + 1] = [byte]$slot.C
+        $arr[$palOff + $slot.I * 4 + 2] = [byte]$slot.C
+        $arr[$palOff + $slot.I * 4 + 3] = 0x80
     }
     for ($y = 0; $y -lt 32; $y++) {
-        $marks.Add(@(0, $y)); $marks.Add(@(1, $y)); $marks.Add(@(30, $y)); $marks.Add(@(31, $y))
-    }
-
-    $plus = @('00100', '00100', '11111', '00100', '00100')
-    $one  = @('010', '110', '010', '010', '111')
-    for ($r = 0; $r -lt 5; $r++) {
-        for ($c = 0; $c -lt 5; $c++) {
-            if ($plus[$r][$c] -eq '1') { $marks.Add(@((20 + $c), (24 + $r))) }
-        }
-        for ($c = 0; $c -lt 3; $c++) {
-            if ($one[$r][$c] -eq '1') { $marks.Add(@((26 + $c), (24 + $r))) }
-        }
-    }
-
-    foreach ($p in $marks) {
-        $x = [int]$p[0]
-        $y = [int]$p[1]
-        if ($x -ge 0 -and $x -le 31 -and $y -ge 0 -and $y -le 31) {
-            $arr[$pixOff + ((31 - $y) * 32 + $x)] = [byte]$white
+        for ($x = 0; $x -lt 32; $x++) {
+            $off = $pixOff + ((31 - $y) * 32 + $x)
+            $idx = $arr[$off]
+            $b = $arr[$palOff + $idx * 4]
+            $g = $arr[$palOff + $idx * 4 + 1]
+            $r = $arr[$palOff + $idx * 4 + 2]
+            if (($r + $g + $b) -gt 80) { continue }
+            $ring = [Math]::Min([Math]::Min($x, $y), [Math]::Min(31 - $x, 31 - $y))
+            if ($ring -le 1) { $arr[$off] = [byte]$outer }
+            elseif ($ring -eq 2) { $arr[$off] = [byte]$bevel }
+            else { $arr[$off] = [byte]$fill }
         }
     }
 }
@@ -160,7 +183,7 @@ $RUN       = [uint32]0x00400000
 $GEO       = [uint32]0x00200000
 $ALL_JOBS  = [uint32]0x007FFFFE
 $KRAKEN_NQ = 17440
-$KRAKEN_P1 = 19972
+$KRAKEN_P1 = 19973
 
 New-Item -ItemType Directory -Force -Path (Join-Path $package 'ROM\118') | Out-Null
 New-Item -ItemType Directory -Force -Path (Join-Path $package 'ROM\0') | Out-Null
@@ -196,7 +219,18 @@ foreach ($rel in $sources.GetEnumerator()) {
         Poke-U32 $dec 0x14 $c.Jobs
         Poke-U16 $dec 0x1C $c.Dmg
         $dec[0x32] = $c.Ilvl
-        if ($isEnglish -and $c.EnDesc) {
+        if ($c.ContainsKey('Delay')) {
+            Poke-U16 $dec 0x1E $c.Delay
+            Poke-U16 $dec 0x20 ([uint16][Math]::Floor($c.Dmg * 6000 / $c.Delay))
+        }
+        if ($isEnglish -and $c.ContainsKey('EnName')) {
+            $descOff = Write-FfxiWeaponNames $dec $c.EnName $c.EnLog $c.EnPlural
+            if ($c.EnDesc) {
+                $text = [Text.Encoding]::ASCII.GetBytes($c.EnDesc)
+                if (($descOff + $text.Length + 1) -gt 0x280) { throw 'EN desc too long after rename' }
+                [Buffer]::BlockCopy($text, 0, $dec, $descOff, $text.Length)
+            }
+        } elseif ($isEnglish -and $c.EnDesc) {
             $descOff = Find-Dmg $dec
             if ($descOff -lt 0) { throw "No DMG: on donor $($c.Donor)" }
             $text = [Text.Encoding]::ASCII.GetBytes($c.EnDesc)
@@ -239,39 +273,17 @@ foreach ($rel in $sources.GetEnumerator()) {
     $off = (21070 - $firstId) * $recordSize
     for ($i = 0; $i -lt $recordSize; $i++) { $file[$off + $i] = Rol5 $dec[$i] }
 
-    # Kraken Club +1: unused hole 19972, cloned look from 17440, white box + "+1" on the icon.
-    $dec = Decode-Id $file $KRAKEN_NQ
-    Poke-U32 $dec 0 $KRAKEN_P1
-    Poke-U16 $dec 0x04 0x8860
-    Poke-U16 $dec 0x0E 99
-    Poke-U32 $dec 0x14 $ALL_JOBS
-    Poke-U16 $dec 0x1C 16
-    Poke-U16 $dec 0x1E 264
-    Poke-U16 $dec 0x20 ([uint16][Math]::Floor(16 * 6000 / 264))
-    $dec[0x32] = 119
     if ($isEnglish) {
-        Write-CString $dec 0x80 16 'Kraken Club +1'
-        Write-CString $dec 0xAC 16 'kraken club +1'
-        Write-CString $dec 0xD4 16 'kraken clubs +1'
-        $descOff = 0x100
-        $text = [Text.Encoding]::ASCII.GetBytes($krakenP1Desc)
-        if (($descOff + $text.Length + 1) -gt 0x280) { throw 'Kraken Club +1 EN desc too long' }
-        for ($i = $descOff; $i -lt 0x280; $i++) { $dec[$i] = 0 }
-        [Buffer]::BlockCopy($text, 0, $dec, $descOff, $text.Length)
+        $dec = Decode-Id $file 21410
+        $nameBytes = [Text.Encoding]::ASCII.GetBytes('Martial Wraps')
+        for ($i = 0; $i -lt 16; $i++) { $dec[0x80 + $i] = 0 }
+        [Buffer]::BlockCopy($nameBytes, 0, $dec, 0x80, $nameBytes.Length)
+        $off = (21410 - $firstId) * $recordSize
+        for ($i = 0; $i -lt $recordSize; $i++) { $file[$off + $i] = Rol5 $dec[$i] }
     }
-    else {
-        $nameOff = 0x68
-        while ($nameOff -lt 0x7C -and $dec[$nameOff] -ne 0) { $nameOff++ }
-        if ($nameOff + 2 -ge 0x7C) { throw 'Kraken Club +1 JP name has no room for +1' }
-        $dec[$nameOff]     = [byte][char]'+'
-        $dec[$nameOff + 1] = [byte][char]'1'
-        $dec[$nameOff + 2] = 0
-        $hits = Replace-Digits $dec 0x80 0x180 '11' '16'
-        if ($hits -lt 1) { throw 'JP Kraken Club +1: DMG 11 not found' }
-    }
-    Paint-KrakenPlusOneIcon $dec
-    $off = ($KRAKEN_P1 - $firstId) * $recordSize
-    for ($i = 0; $i -lt $recordSize; $i++) { $file[$off + $i] = Rol5 $dec[$i] }
+
+    # 19972 and 19973 stay retail empty stubs. A named 0xF840 clone at
+    # 19973 still R0s zone-in (name-table rewrite was not sufficient).
 
     $out = Join-Path $package $rel.Key
     [IO.File]::WriteAllBytes($out, $file)
@@ -291,7 +303,9 @@ $checks = @(
     @{ Id = 21070; Jobs = $GEO;     Dmg = 139; Ilvl = 119; Name = 'Idris';     Needle = 'DMG:139'; Forbid = 'Geomancy' }
     @{ Id = 21080; Jobs = $GEO;     Dmg = 175; Ilvl = 119; Name = 'Idris';     Needle = 'Geomancy' }
     @{ Id = 21685; Jobs = $RUN; Dmg = 305; Ilvl = 119; Name = 'Epeolatry' }
-    @{ Id = 19972; Jobs = $ALL_JOBS; Dmg = 16; Ilvl = 119; Name = 'Kraken Club +1'; Needle = 'Accuracy+25' }
+    @{ Id = 19972; Jobs = [uint32]0; Dmg = 0; Ilvl = 0; Name = '.'; Flags = 0xF040 }
+    @{ Id = 19973; Jobs = [uint32]0; Dmg = 0; Ilvl = 0; Name = '.'; Flags = 0xF040 }
+    @{ Id = 21410; Jobs = [uint32]0x007FFFFE; Dmg = 0; Ilvl = 0; Name = 'Martial Wraps' }
 )
 foreach ($c in $checks) {
     $dec = Decode-Id $en $c.Id
@@ -304,6 +318,10 @@ foreach ($c in $checks) {
     if ($dec[0x32] -ne $c.Ilvl) { throw "ilvl mismatch id $($c.Id)" }
     $name = [Text.Encoding]::ASCII.GetString($dec, 0x80, 24).Split([char]0)[0]
     if (-not $name.StartsWith($c.Name)) { throw "name mismatch id $($c.Id): '$name'" }
+    if ($c.ContainsKey('Flags')) {
+        $flags = [BitConverter]::ToUInt16($dec, 0x04)
+        if ($flags -ne $c.Flags) { throw ("flags mismatch id {0}: 0x{1:X4}" -f $c.Id, $flags) }
+    }
     $text = [Text.Encoding]::ASCII.GetString($dec, 0x80, 0x200)
     if ($c.Needle) {
         if ($text.IndexOf($c.Needle) -lt 0) { throw "missing $($c.Needle) on $($c.Id)" }

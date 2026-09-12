@@ -10,7 +10,7 @@ class CItem;
 namespace krakenclub
 {
 inline constexpr uint16 ItemId        = 17440;
-inline constexpr uint16 PlusOneItemId = 19972;
+inline constexpr uint16 PlusOneItemId = 19973;
 
 inline bool isKrakenClub(uint16 itemId)
 {

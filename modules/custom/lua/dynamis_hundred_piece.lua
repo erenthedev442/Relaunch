@@ -1,13 +1,13 @@
 -----------------------------------
 -- dynamis_hundred_piece.lua
 --
--- Extra Dynamis currency: every mixin kill has a flat 1% chance (no Treasure
--- Hunter) to drop the zone / family 100-piece.
+-- Extra Dynamis currency: mixin kills drop the zone / family 100-piece
+-- (no Treasure Hunter). Trash is 5%; NMs are 25%.
 --
 --   Sandy  -> Montiont Silverpiece
 --   Bastok -> One Hundred Byne Bill
 --   Windy  -> Lungo-Nango Jadeshell
---   Jeuno  -> one shared 1% pool among those three
+--   Jeuno  -> one shared pool among those three
 --   (Ranperre Goldpiece is the Sandy 10,000-piece, not the 100.)
 --   Beauc / Xarc -> match the singles the mob already drops
 --   Dreamland nightmares -> current Vana 8-hour window (same blocks as procs)
@@ -21,7 +21,8 @@ if type(M) ~= 'table' then
 end
 package.loaded[KEY] = M
 
-M.CHANCE_PERCENT = 1
+M.CHANCE_PERCENT    = 5
+M.NM_CHANCE_PERCENT = 25
 
 -- 10,000-pieces. Never a kill drop. Players only get these by trading 100s
 -- at Lootblox / Antiquix / Haggleblix (or relic stage trades).
@@ -97,7 +98,12 @@ function M.tryDrop(mob, killer, singleCurrency)
         return false
     end
 
-    if math.random(1, 100) > M.CHANCE_PERCENT then
+    local chance = M.CHANCE_PERCENT
+    if mob.isNM and mob:isNM() then
+        chance = M.NM_CHANCE_PERCENT
+    end
+
+    if math.random(1, 100) > chance then
         return false
     end
 
@@ -106,7 +112,7 @@ function M.tryDrop(mob, killer, singleCurrency)
         return false
     end
 
-    -- Already won the 1% roll. addTreasure default rate is a guaranteed pool add.
+    -- Already won the roll. addTreasure default rate is a guaranteed pool add.
     killer:addTreasure(itemId, mob)
     return true
 end

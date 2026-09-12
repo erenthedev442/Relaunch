@@ -259,43 +259,68 @@ bool CMagicState::Update(timer::time_point tick)
         if (m_interrupted)
         {
             m_PEntity->OnCastInterrupted(*this, action, msg, false);
-            m_PEntity->PAI->EventHandler.triggerListener("MAGIC_INTERRUPTED", m_PEntity, PTarget, m_PSpell.get(), &action);
         }
         else
         {
             m_PEntity->OnCastFinished(*this, action);
-            m_PEntity->PAI->EventHandler.triggerListener("MAGIC_USE", m_PEntity, PTarget, m_PSpell.get(), &action);
-            for (auto& actionTarget : action.targets)
+        }
+
+        // Spell scripts / AoE later hits can despawn the caster before we notify.
+        // Crash 2026-09-12 08:28: ACCESS_VIOLATION at MAGIC_USE — PAI was 0x0F
+        // (magic_state.cpp:267). IsEntityAlive is safe on a dangling this.
+        const bool casterAlive = CBaseEntity::IsEntityAlive(m_PEntity) && m_PEntity->PAI != nullptr;
+
+        if (casterAlive)
+        {
+            if (m_interrupted)
             {
-                auto* PActionTarget = dynamic_cast<CBattleEntity*>(zoneutils::GetEntity(actionTarget.actorId));
-                if (PActionTarget)
+                m_PEntity->PAI->EventHandler.triggerListener("MAGIC_INTERRUPTED", m_PEntity, PTarget, m_PSpell.get(), &action);
+            }
+            else
+            {
+                m_PEntity->PAI->EventHandler.triggerListener("MAGIC_USE", m_PEntity, PTarget, m_PSpell.get(), &action);
+                for (auto& actionTarget : action.targets)
                 {
-                    PActionTarget->PAI->EventHandler.triggerListener("MAGIC_TAKE", PActionTarget, m_PEntity, m_PSpell.get(), &action);
+                    auto* PActionTarget = dynamic_cast<CBattleEntity*>(zoneutils::GetEntity(actionTarget.actorId));
+                    if (PActionTarget && PActionTarget->PAI)
+                    {
+                        PActionTarget->PAI->EventHandler.triggerListener("MAGIC_TAKE", PActionTarget, m_PEntity, m_PSpell.get(), &action);
+                    }
                 }
             }
-        }
 
-        // Zero messageID so spells dont emit messages
-        if (GetSpell()->getFlag() & SPELLFLAG_NO_FINISH_MSG)
+            // Zero messageID so spells dont emit messages
+            if (GetSpell()->getFlag() & SPELLFLAG_NO_FINISH_MSG)
+            {
+                action.ForEachResult([&](action_result_t& result)
+                                     {
+                                         result.messageID = MsgBasic::None;
+                                     });
+            }
+
+            if (m_PEntity->loc.zone)
+            {
+                m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_BATTLE2>(action));
+            }
+        }
+        else
         {
-            action.ForEachResult([&](action_result_t& result)
-                                 {
-                                     result.messageID = MsgBasic::None;
-                                 });
+            ShowWarning("CMagicState::Update skipped MAGIC_USE — caster is gone");
         }
-
-        m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_BATTLE2>(action));
 
         Complete();
     }
     else if (IsCompleted() && tick > GetEntryTime() + m_castTime + m_PSpell->getAnimationTime())
     {
-        if (m_PEntity->objtype == TYPE_PC)
+        if (CBaseEntity::IsEntityAlive(m_PEntity) && m_PEntity->PAI != nullptr)
         {
-            CCharEntity* PChar = static_cast<CCharEntity*>(m_PEntity);
-            PChar->m_charHistory.spellsCast++;
+            if (m_PEntity->objtype == TYPE_PC)
+            {
+                CCharEntity* PChar = static_cast<CCharEntity*>(m_PEntity);
+                PChar->m_charHistory.spellsCast++;
+            }
+            m_PEntity->PAI->EventHandler.triggerListener("MAGIC_STATE_EXIT", m_PEntity, m_PSpell.get());
         }
-        m_PEntity->PAI->EventHandler.triggerListener("MAGIC_STATE_EXIT", m_PEntity, m_PSpell.get());
         return true;
     }
     return false;

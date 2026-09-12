@@ -1,7 +1,7 @@
 -- ============================================================================
 -- zz_epeo_idris_ladder.sql
 --
--- Real 99 / 119 I IDs for Epeolatry and Idris (retail hole 19968-19971; 19972 is Kraken Club +1).
+-- Real 99 / 119 I IDs for Epeolatry and Idris (retail hole 19968-19971; 19973 is Kraken Club +1).
 -- Client DATs clone looks from 20753 / 21070. Server jobs match the forge:
 -- Epeo RUN only, Idris GEO.
 --

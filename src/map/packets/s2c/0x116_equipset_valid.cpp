@@ -108,10 +108,13 @@ GP_SERV_COMMAND_EQUIPSET_VALID::GP_SERV_COMMAND_EQUIPSET_VALID(const CCharEntity
 
         if (const CItemWeapon* newItemWeapon = dynamic_cast<CItemWeapon*>(newItem))
         {
-            // Remove sub for H2H
+            // H2H keeps grips (Martial Wraps); strip shields and offhand weapons
             if (newItemWeapon->isHandToHand())
             {
-                equipSet[SLOT_SUB] = nullptr;
+                if ((PSub && PSub->getSkillType() != SKILL_NONE) || (equipSet[SLOT_SUB] && equipSet[SLOT_SUB]->IsShield()))
+                {
+                    equipSet[SLOT_SUB] = nullptr;
+                }
             }
 
             // Remove one handed weapons or shield from sub if new item is two handed
@@ -136,10 +139,10 @@ GP_SERV_COMMAND_EQUIPSET_VALID::GP_SERV_COMMAND_EQUIPSET_VALID(const CCharEntity
                 }
             }
 
-            // Equipping grip, remove non-2h weapon
+            // Equipping grip, remove 1H weapons (H2H and 2H keep the grip)
             if (newItemWeapon->getSkillType() == SKILL_NONE && newItemWeapon->getEquipSlotId() & 0x02)
             {
-                if (PWeapon && !PWeapon->isTwoHanded())
+                if (PWeapon && !PWeapon->isTwoHanded() && !PWeapon->isHandToHand())
                 {
                     equipSet[SLOT_MAIN] = nullptr;
                 }

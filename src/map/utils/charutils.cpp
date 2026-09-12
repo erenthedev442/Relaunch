@@ -2503,7 +2503,8 @@ bool EquipArmor(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 conta
                                 if (sub->isType(ITEM_WEAPON))
                                 {
                                     CItemWeapon* PWeapon = static_cast<CItemWeapon*>(sub);
-                                    if (PWeapon->getSkillType() != SKILL_NONE || static_cast<CItemWeapon*>(PItem)->getSkillType() == SKILL_HAND_TO_HAND)
+                                    // Grips (SKILL_NONE) stay on 2H and H2H -- Martial Wraps is the MNK case.
+                                    if (PWeapon->getSkillType() != SKILL_NONE)
                                     {
                                         UnequipItem(PChar, SLOT_SUB, Recalculate::No);
                                     }
@@ -2561,6 +2562,10 @@ bool EquipArmor(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 conta
                             {
                                 UnequipItem(PChar, SLOT_MAIN, Recalculate::No);
                             }
+                            else if (static_cast<CItemWeapon*>(PItem)->getSkillType() != SKILL_NONE)
+                            {
+                                return false;
+                            }
                             break;
                         }
                         case SKILL_DAGGER:
@@ -2602,7 +2607,15 @@ bool EquipArmor(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 conta
                         }
                     }
                 }
-                PChar->look.sub = PItem->getModelId();
+                if (weapon && weapon->getSkillType() == SKILL_HAND_TO_HAND &&
+                    PItem->isType(ITEM_WEAPON) && static_cast<CItemWeapon*>(PItem)->getSkillType() == SKILL_NONE)
+                {
+                    PChar->look.sub = weapon->getModelId() + 0x1000;
+                }
+                else
+                {
+                    PChar->look.sub = PItem->getModelId();
+                }
                 UpdateWeaponStyle(PChar, equipSlotID, PItem);
             }
             break;
@@ -3384,7 +3397,8 @@ void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 contai
         auto PItemWeapon = dynamic_cast<CItemWeapon*>(PItem);
         auto PMainItem   = dynamic_cast<CItemWeapon*>(PChar->getEquip(SLOT_MAIN));
 
-        if (PItemWeapon && PItemWeapon->getSkillType() == SKILL_NONE && (!PMainItem || !PMainItem->isTwoHanded()))
+        if (PItemWeapon && PItemWeapon->getSkillType() == SKILL_NONE &&
+            (!PMainItem || (!PMainItem->isTwoHanded() && !PMainItem->isHandToHand())))
         {
             PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::Requires2HForGrip);
             return;
@@ -3408,11 +3422,13 @@ void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 contai
             }
         }
 
-        // Disallow everything but shields if you're using H2H
-        // Equipping a shield will unequip the H2H weapon and you will go barefisted with a shield
+        // H2H blocks shields and offhand weapons; grips (Martial Wraps) are allowed.
         if (PMainItem && PMainItem->getSkillType() == SKILL_HAND_TO_HAND)
         {
-            return;
+            if (!PItemWeapon || PItemWeapon->getSkillType() != SKILL_NONE)
+            {
+                return;
+            }
         }
     }
 

@@ -135,8 +135,8 @@ g_mixins.dynamis_beastmen = function(dynamisBeastmenMob)
 
         killer:addTreasure(currency, mob, singleChance) -- base single slot
 
-        -- Flat 1% 100-piece (no TH). Cities use the zone piece; Jeuno is one
-        -- shared pool; Beauc / Xarc / Dreamland vanguard follow this mob's singles.
+        -- Flat 100-piece (no TH): 5% trash / 25% NMs. Cities use the zone
+        -- piece; Jeuno is one shared pool; Beauc / Xarc follow this mob's singles.
         require('modules/custom/lua/dynamis_hundred_piece').tryDrop(mob, killer, currency)
     end)
 end

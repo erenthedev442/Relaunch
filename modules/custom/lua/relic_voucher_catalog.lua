@@ -1,7 +1,7 @@
 -----------------------------------
 -- relic_voucher_catalog.lua
 --
--- Hades weekend Steel stall. One ware, the same name and price for every
+-- Hades weekend Steel stalls. Two wares, the same names and prices for every
 -- player that UTC week.
 --
 -- Rare band (same weight as today's Relic weeks): Relic vouchers and
@@ -238,8 +238,9 @@ function C.weekId(timestamp)
     return tonumber(os.date('!%Y%W', timestamp or os.time()))
 end
 
-function C.weeklyRelic(weekId)
+function C.weeklyRelic(weekId, slot)
     weekId = weekId or C.weekId()
+    slot   = slot or 1
     local rareW   = C.POOL_WEIGHT.rare
     local commonW = C.POOL_WEIGHT.common
     local total   = rareW + commonW
@@ -247,7 +248,7 @@ function C.weeklyRelic(weekId)
         return nil
     end
 
-    local poolRoll = ((weekId or 0) * (C.WEEK_SALT or 17)) % total
+    local poolRoll = ((weekId or 0) * ((C.WEEK_SALT or 17) + (slot - 1) * 11)) % total
     local pool, itemSalt
     if poolRoll < rareW then
         pool     = C.rareItems
@@ -259,7 +260,15 @@ function C.weeklyRelic(weekId)
     if not pool or #pool == 0 then
         return nil
     end
-    return pool[(((weekId or 0) * itemSalt) % #pool) + 1]
+    local idx = (((weekId or 0) * itemSalt + (slot - 1) * 13) % #pool) + 1
+    local row = pool[idx]
+    if slot > 1 then
+        local first = C.weeklyRelic(weekId, 1)
+        if first and row and first.weaponId == row.weaponId then
+            row = pool[(idx % #pool) + 1]
+        end
+    end
+    return row
 end
 
 C.weeklyWare  = C.weeklyRelic
@@ -267,12 +276,13 @@ C.weeklyWares = nil
 C.POOLS       = C.POOL_WEIGHT
 C.poolItems   = nil
 
-function C.weeklyPrice(weekId, row)
+function C.weeklyPrice(weekId, row, slot)
     weekId = weekId or C.weekId()
-    row = row or C.weeklyRelic(weekId)
+    slot   = slot or 1
+    row    = row or C.weeklyRelic(weekId, slot)
     local band = row and C.PRICE[row.kind] or C.PRICE.relic
     local span = (band.hi - band.lo) + 1
-    return band.lo + (((weekId or 0) * (C.PRICE_SALT or 41)) % span)
+    return band.lo + (((weekId or 0) * ((C.PRICE_SALT or 41) + (slot - 1) * 7)) % span)
 end
 
 function C.ownsRelic(player, row)

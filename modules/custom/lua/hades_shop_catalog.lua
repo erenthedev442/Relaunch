@@ -3,15 +3,15 @@
 --
 -- Weekend ferry stalls. Each live pool sells one ware, the same roll
 -- for every player that UTC week.
---   Steel  -- Relic / Odyssey paper or finished Ambuscade / Geas
---   Mail   -- 119 armor
---   Gild   -- accessories
---   Crate  -- REMA / Dynamis / Paragon currency (once per week)
---   Trusts -- grantable alter egos (not Meat / Gemma / Corvus / Cornelia / Matsui-P)
---   Cosmetics -- event / lockstyle gear
+--   Steel / Steel II -- Relic / Odyssey paper or finished Ambuscade / Geas
+--   Mail / Mail II   -- 119 armor
+--   Gild             -- accessories
+--   Crate            -- REMA / Dynamis / Paragon currency (once per week)
+--   Trusts           -- grantable alter egos (not Meat / Gemma / Corvus / Cornelia / Matsui-P)
+--   Cosmetics        -- event / lockstyle gear
 --
 -- Pin a future week by setting any of the keys below. Unset keys still roll.
---   C.PINNED[202636] = { weapon = 21722, crate = 'beitetsu_300', trust = 897, cosmetic = 26955 }
+--   C.PINNED[202636] = { weapon = 21722, weapon2 = 21621, crate = 'beitetsu_300', trust = 897, cosmetic = 26955 }
 -----------------------------------
 local CATALOG_KEY = 'modules/custom/lua/hades_shop_catalog'
 local C = package.loaded[CATALOG_KEY]
@@ -24,11 +24,13 @@ C.SYS = xi.msg.channel.SYSTEM_3
 
 C.POOLS =
 {
-    { key = 'weapon',    label = 'Steel'  },
-    { key = 'armor',     label = 'Mail'   },
-    { key = 'accessory', label = 'Gild'   },
-    { key = 'crate',     label = 'Crate'  },
-    { key = 'trust',     label = 'Trusts' },
+    { key = 'weapon',    label = 'Steel'     },
+    { key = 'weapon',    label = 'Steel II'  },
+    { key = 'armor',     label = 'Mail'      },
+    { key = 'armor',     label = 'Mail II'   },
+    { key = 'accessory', label = 'Gild'      },
+    { key = 'crate',     label = 'Crate'     },
+    { key = 'trust',     label = 'Trusts'    },
     { key = 'cosmetic',  label = 'Cosmetics' },
 }
 
@@ -39,7 +41,10 @@ C.PINNED = C.PINNED or {}
 C.PINNED[202636] =
 {
     weapon    = 21722,       -- Dolichenus (finished Ambuscade axe)
+    weapon2   = 21621,       -- Naegling
+    weapon2Price = 899,
     armor     = 23798,       -- Crepuscular Mail
+    armor2    = 27496,       -- Herculean Boots
     accessory = 27555,       -- Warden's Ring
     crate     = '10kbyne_50',
     trust     = 932,         -- Fablinix
@@ -65,13 +70,15 @@ function C.weekOffers(weekId)
     local cosmetics = require('modules/custom/lua/hades_cosmetic_catalog')
     weekId = weekId or weapons.weekId()
 
-    local pin   = C.PINNED[weekId] or {}
-    local steel = (pin.weapon and weapons.byWeaponId[pin.weapon]) or weapons.weeklyRelic(weekId)
-    local mail  = (pin.armor and armor.byId[pin.armor]) or armor.weeklyPiece(weekId)
-    local gild  = (pin.accessory and accessory.byId[pin.accessory]) or accessory.weeklyPiece(weekId)
-    local box   = crate.weeklyCrate(weekId, pin.crate)
-    local ego   = trusts.weeklyTrust(weekId, pin.trust)
-    local look  = cosmetics.weeklyPiece(weekId, pin.cosmetic)
+    local pin    = C.PINNED[weekId] or {}
+    local steel  = (pin.weapon and weapons.byWeaponId[pin.weapon]) or weapons.weeklyRelic(weekId, 1)
+    local steel2 = (pin.weapon2 and weapons.byWeaponId[pin.weapon2]) or weapons.weeklyRelic(weekId, 2)
+    local mail   = (pin.armor and armor.byId[pin.armor]) or armor.weeklyPiece(weekId, 1)
+    local mail2  = (pin.armor2 and armor.byId[pin.armor2]) or armor.weeklyPiece(weekId, 2)
+    local gild   = (pin.accessory and accessory.byId[pin.accessory]) or accessory.weeklyPiece(weekId)
+    local box    = crate.weeklyCrate(weekId, pin.crate)
+    local ego    = trusts.weeklyTrust(weekId, pin.trust)
+    local look   = cosmetics.weeklyPiece(weekId, pin.cosmetic)
 
     return {
         {
@@ -80,10 +87,18 @@ function C.weekOffers(weekId)
             label  = 'Steel',
             weekId = weekId,
             row    = steel,
-            price  = pin.weaponPrice or weapons.weeklyPrice(weekId, steel),
+            price  = pin.weaponPrice or weapons.weeklyPrice(weekId, steel, 1),
         },
         {
             pool   = 2,
+            key    = 'weapon',
+            label  = 'Steel II',
+            weekId = weekId,
+            row    = steel2,
+            price  = pin.weapon2Price or weapons.weeklyPrice(weekId, steel2, 2),
+        },
+        {
+            pool   = 3,
             key    = 'armor',
             label  = 'Mail',
             weekId = weekId,
@@ -91,7 +106,15 @@ function C.weekOffers(weekId)
             price  = mail and mail.price or 0,
         },
         {
-            pool   = 3,
+            pool   = 4,
+            key    = 'armor',
+            label  = 'Mail II',
+            weekId = weekId,
+            row    = mail2,
+            price  = mail2 and mail2.price or 0,
+        },
+        {
+            pool   = 5,
             key    = 'accessory',
             label  = 'Gild',
             weekId = weekId,
@@ -99,7 +122,7 @@ function C.weekOffers(weekId)
             price  = gild and gild.price or 0,
         },
         {
-            pool   = 4,
+            pool   = 6,
             key    = 'crate',
             label  = 'Crate',
             weekId = weekId,
@@ -107,7 +130,7 @@ function C.weekOffers(weekId)
             price  = box and box.price or 0,
         },
         {
-            pool   = 5,
+            pool   = 7,
             key    = 'trust',
             label  = 'Trusts',
             weekId = weekId,
@@ -115,7 +138,7 @@ function C.weekOffers(weekId)
             price  = ego and ego.price or 0,
         },
         {
-            pool   = 6,
+            pool   = 8,
             key    = 'cosmetic',
             label  = 'Cosmetics',
             weekId = weekId,

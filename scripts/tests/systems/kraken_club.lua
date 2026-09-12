@@ -39,17 +39,17 @@ describe('Kraken Club acquisition', function()
     end)
 
     it('defines Kraken Club +1 as a 119 all-jobs 8-hit offhand', function()
-        assert(xi.item.KRAKEN_CLUB_P1 == 19972)
+        assert(xi.item.KRAKEN_CLUB_P1 == 19973)
 
         local sql = assert(io.open('modules/custom/sql/zz_kraken_club_plus_one.sql', 'r'))
         local text = sql:read('*a')
         sql:close()
 
-        assert(text:find("%(19972, 'kraken_club_%+1', 11, 0, 269, 269, 228, 3, 8, 264, 16, 0%)"))
-        assert(text:find("%(19972, 'kraken_club_%+1', 99, 119, 4194303, 110,"))
-        assert(text:find('%(19972,  25, 25%)'))
-        assert(text:find('%(19972,  73,  4%)'))
-        assert(text:find('%(19972, 289,  5%)'))
+        assert(text:find("%(19973, 'kraken_club_%+1', 11, 0, 269, 269, 228, 3, 8, 264, 16, 0%)"))
+        assert(text:find("%(19973, 'kraken_club_%+1', 99, 119, 4194303, 110,"))
+        assert(text:find('%(19973,  25, 25%)'))
+        assert(text:find('%(19973,  73,  4%)'))
+        assert(text:find('%(19973, 289,  5%)'))
         assert(not text:find('INSERT INTO `mob_droplist`', 1, true))
     end)
 
@@ -58,7 +58,7 @@ describe('Kraken Club acquisition', function()
         local text = header:read('*a')
         header:close()
 
-        assert(text:find('PlusOneItemId = 19972', 1, true))
+        assert(text:find('PlusOneItemId = 19973', 1, true))
         assert(text:find('isKrakenClub', 1, true))
     end)
 

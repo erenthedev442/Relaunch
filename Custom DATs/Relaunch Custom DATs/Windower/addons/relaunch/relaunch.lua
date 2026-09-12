@@ -39,6 +39,7 @@ local res = require('resources')
 -- read by different code paths in various addons.
 local RENAMES = {
     [26169] = 'Legendary Ring',   -- retail: Reraise Ring
+    [21410] = 'Martial Wraps',    -- retail: Giuoco Grip (MNK H2H augment slot)
 }
 
 -- Insert table: id -> { donor_id, name }. donor_id is a retail item
@@ -54,7 +55,7 @@ local INSERTS = {
     [19969] = { donor = 20753, name = 'Epeolatry'      },  -- 119 I
     [19970] = { donor = 21070, name = 'Idris'          },  -- 99
     [19971] = { donor = 21070, name = 'Idris'          },  -- 119 I
-    [19972] = { donor = 17440, name = 'Kraken Club +1' },
+    [19973] = { donor = 17440, name = 'Kraken Club +1' },
     [23879] = { donor = 26344, name = 'Spharai Voucher' },
     [23880] = { donor = 26344, name = 'Mandau Voucher' },
     [23881] = { donor = 26344, name = 'Excalibur Voucher' },

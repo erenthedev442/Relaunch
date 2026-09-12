@@ -4,7 +4,8 @@
 -- Hades daily quests + weekend shop.
 -- Five slots every UTC day, same board for every player, 150 Soul Shards
 -- if and only if all five are cleared. Weekend shop sells one ware from
--- each of six stalls (Steel, Mail, Gild, Crate, Trusts, Cosmetics). Steel is
+-- each of eight stalls (Steel, Steel II, Mail, Mail II, Gild, Crate, Trusts,
+-- Cosmetics). Steel is
 -- Relic/Odyssey paper or finished Ambuscade / Geas named. Hades sets
 -- that week's prices. Pin a week on hades_shop_catalog.PINNED.
 -----------------------------------
@@ -18,7 +19,7 @@ end
 package.loaded[CATALOG_KEY] = catalog
 
 -- Bump when slot lists change so hades_daily drops its same-day cache.
-catalog.boardRev = 3
+catalog.boardRev = 4
 
 catalog.currencyName = 'Soul Shards'
 catalog.currencyCv   = 'Hades_Shards'
@@ -91,9 +92,9 @@ end
 
 function catalog.shopStatusLine()
     if catalog.isShopOpen() then
-        return 'The ferry is up. Six stalls this week -- Steel, Mail, Gild, Crate, Trusts, and Cosmetics. Same board for every soul. Crate hold is on the menu.'
+        return 'The ferry is up. Eight stalls this week -- Steel, Steel II, Mail, Mail II, Gild, Crate, Trusts, and Cosmetics. Same board for every soul. Crate hold is on the menu.'
     end
-    return 'The market sinks until Saturday. Six stalls return when the ferry rises. Quests run every day. Crate hold stays open.'
+    return 'The market sinks until Saturday. Eight stalls return when the ferry rises. Quests run every day. Crate hold stays open.'
 end
 
 local function sayHades(player, line)
@@ -239,8 +240,8 @@ function catalog.showShop(player, backFn, silent)
                     offer.label, shop.shopName(offer),
                     offer.price, catalog.currencyName),
                 S)
-            -- customMenu packs title + labels into ~150 bytes. Six full
-            -- ware names overflow; stall + price is enough -- chat already
+            -- customMenu packs title + labels into ~150 bytes. Full ware
+            -- names overflow; stall + price is enough -- chat already
             -- printed the real name.
             opts[#opts + 1] =
             {

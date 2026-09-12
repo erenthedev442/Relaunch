@@ -157,7 +157,7 @@ g_mixins.dynamis_dreamland = function(dynamisDreamlandMob)
 
         killer:addTreasure(currency, mob, singleChance) -- base single slot
 
-        -- Same 1% 100-piece, using the in-season singles from above.
+        -- Same 5%/25% 100-piece, using the in-season singles from above.
         require('modules/custom/lua/dynamis_hundred_piece').tryDrop(mob, killer, currency)
     end)
 end

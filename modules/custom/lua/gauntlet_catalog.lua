@@ -552,6 +552,7 @@ function C.holdFireCfg(level)
         pressure            = msg.pressure,
         pressureOptions     = msg.pressureOptions,
         pressureTickSec     = 3,
+        -- Icon lands with the warning. First %HP pulse waits this long if still up.
         pressureDelaySec    = 5,
         pressureTickPct     = (level == 4 or level == 6) and 22 or 35,
         defDown             = C.weakWindowMods(level).defDown,

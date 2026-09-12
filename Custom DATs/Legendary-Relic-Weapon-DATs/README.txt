@@ -14,6 +14,7 @@ These client files do two jobs:
 
 1) Extra jobs on the listed relic lines (same as before)
 2) New unused-ID records for Epeolatry / Idris 99 and 119 I
+3) Rename item 21410 Giuoco Grip -> Martial Wraps (MNK H2H augment grip)
 
 Files
 -----
@@ -26,7 +27,8 @@ New items (empty retail hole 19968-20479)
 19969  Epeolatry   119 I   RUN       cloned look from 20753, DMG 199 (below 20753's 243)
 19970  Idris       99      GEO       cloned look from 21070, DMG 80, no ilvl
 19971  Idris       119 I   GEO       cloned look from 21070, DMG 110 (below 21070's 139), no GEO+10
-19972  Kraken Club +1 119  All Jobs  cloned look from 17440, DMG 16, 8-hit, white box + "+1" icon
+19972  (leave empty)   retail stub -- leave unused
+19973  Kraken Club +1 119  All Jobs  cloned from 21070; 0xF840 name cells + markers (do not C-string wipe)
 
 Also patched so every Epeo stage stays RUN-only:
 20753  Epeolatry   119     RUN

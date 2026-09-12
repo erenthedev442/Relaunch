@@ -57,11 +57,10 @@ return
         { minLevel = 81, ap = 20 },   -- P.Lv 81+
     },
 
-    -- Hunt Marks cost to ascend, escalating with current Prestige_Level:
+    -- Hunt Marks cost to ascend. Flat 300 (was 500/1000/.../3000).
     --   cost(level) = min(markCostBase * (level + 1), markCostCap)
-    -- base 500 -> 500, 1000, 1500, 2000, 2500, 3000, 3000, 3000, ...
-    markCostBase   = 500,
-    markCostCap    = 3000,
+    markCostBase   = 300,
+    markCostCap    = 300,
 
     -- Hard cap on prestige levels. nil = uncapped (endless "Paragon"
     -- tail for leaderboard flex). Set a number to cap it.
