@@ -114,10 +114,6 @@ uint16 AddCapacityBonus(CCharEntity* PChar, uint16 capacityPoints);
 void   AddCapacityPoints(CCharEntity* PChar, CBaseEntity* PMob, uint32 capacityPoints, int16 levelDiff = 0, bool isCapacityChain = false);
 void   DistributeCapacityPoints(CCharEntity* PChar, CMobEntity* PMob);
 
-// Relaunch: tier (1..5) that "Unity Ranking: X+a~b" gear uses for this player,
-// 0 when not pledged to a Unity. Drives LATENT::UNITY_RANKING.
-uint8 GetUnityRankTier(CCharEntity* PChar);
-
 void  TrySkillUP(CCharEntity* PChar, SKILLTYPE SkillID, uint8 lvl, bool forceSkillUp = false, bool useSubSkill = false);
 bool  isArtsBonusActive(CCharEntity* PChar, SKILLTYPE SkillID);
 int16 ArtsBonusSkill(CCharEntity* PChar, SKILLTYPE SkillID);
