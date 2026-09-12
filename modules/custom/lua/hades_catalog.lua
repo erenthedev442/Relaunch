@@ -91,9 +91,9 @@ end
 
 function catalog.shopStatusLine()
     if catalog.isShopOpen() then
-        return 'The ferry is up. Six stalls this week -- Steel, Mail, Gild, Crate, Trusts, and Cosmetics. Same board for every soul.'
+        return 'The ferry is up. Six stalls this week -- Steel, Mail, Gild, Crate, Trusts, and Cosmetics. Same board for every soul. Crate hold is on the menu.'
     end
-    return 'The market sinks until Saturday. Six stalls return when the ferry rises. Quests run every day.'
+    return 'The market sinks until Saturday. Six stalls return when the ferry rises. Quests run every day. Crate hold stays open.'
 end
 
 local function sayHades(player, line)
@@ -181,7 +181,7 @@ function catalog.tryBuyRelicVoucher(player, poolIndex, silent)
     if offer.key == 'crate' then
         sayHades(player, 'The dead hoarded what they could not spend.')
         sayHades(player, string.format(
-            'The crate is banked -- %s. Forges take from this hold before your bags.',
+            'The crate is banked -- %s. Forges take from this hold before your bags. Ask either form for Crate hold if you want a stack in your bags.',
             wareName))
     elseif offer.key == 'trust' then
         sayHades(player, 'A name the dead still answer.')
@@ -223,26 +223,22 @@ end
 
 function catalog.showShop(player, backFn, silent)
     local S = xi.msg.channel.SYSTEM_3
-    if not silent then
-        player:printToPlayer('[Hades] ' .. catalog.shopStatusLine(), S)
-        player:printToPlayer(
-            string.format('[Hades] You hold %d %s.',
-                player:getCharVar(catalog.currencyCv) or 0, catalog.currencyName),
-            S)
-    end
+    player:printToPlayer('[Hades] ' .. catalog.shopStatusLine(), S)
+    player:printToPlayer(
+        string.format('[Hades] You hold %d %s.',
+            player:getCharVar(catalog.currencyCv) or 0, catalog.currencyName),
+        S)
 
     local opts = {}
     if catalog.isShopOpen() then
         local shop = require('modules/custom/lua/hades_shop_catalog')
         for _, offer in ipairs(catalog.weekOffers()) do
             local poolIndex = offer.pool
-            if not silent then
-                player:printToPlayer(
-                    string.format('[Hades] %s: %s -- %d %s.',
-                        offer.label, shop.shopName(offer),
-                        offer.price, catalog.currencyName),
-                    S)
-            end
+            player:printToPlayer(
+                string.format('[Hades] %s: %s -- %d %s.',
+                    offer.label, shop.shopName(offer),
+                    offer.price, catalog.currencyName),
+                S)
             -- customMenu packs title + labels into ~150 bytes. Six full
             -- ware names overflow; stall + price is enough -- chat already
             -- printed the real name.
@@ -256,6 +252,15 @@ function catalog.showShop(player, backFn, silent)
             }
         end
     end
+    opts[#opts + 1] =
+    {
+        'Crate hold',
+        function(p)
+            catalog.showCrateHold(p, function(pp)
+                catalog.showShop(pp, backFn, silent)
+            end, silent)
+        end,
+    }
     if backFn then
         opts[#opts + 1] =
         {
@@ -269,6 +274,91 @@ function catalog.showShop(player, backFn, silent)
     end
 
     local snapshot = { title = silent and '......' or 'Hades Shop', options = opts }
+    player:timer(30, function(p) p:customMenu(snapshot) end)
+end
+
+local HOLD_PAGE = 4
+
+function catalog.printHoldLedger(player)
+    local hold = require('modules/custom/lua/hades_hold_currency')
+    local rows = hold.heldRows(player)
+    if #rows == 0 then
+        player:printToPlayer(
+            '[Hades] Crate hold is empty. Weekend crates bank here. Forges spend this before your bags.',
+            xi.msg.channel.SYSTEM_3)
+        return rows
+    end
+    player:printToPlayer(
+        string.format(
+            '[Hades] Crate hold -- banked currency. Forges spend this first. Take one stack (up to %d) into a free slot.',
+            hold.STACK),
+        xi.msg.channel.SYSTEM_3)
+    for _, row in ipairs(rows) do
+        if row.bags > 0 then
+            player:printToPlayer(string.format(
+                '[Hades]   %s: %d (Hold) + %d (bags) = %d',
+                row.label, row.held, row.bags, row.held + row.bags),
+                xi.msg.channel.SYSTEM_3)
+        else
+            player:printToPlayer(string.format(
+                '[Hades]   %s: %d (Hold)',
+                row.label, row.held),
+                xi.msg.channel.SYSTEM_3)
+        end
+    end
+    return rows
+end
+
+function catalog.showCrateHold(player, backFn, silent, page)
+    if not player then
+        return
+    end
+
+    local hold = require('modules/custom/lua/hades_hold_currency')
+    local rows = catalog.printHoldLedger(player)
+    page = page or 1
+    local pages = math.max(1, math.ceil(#rows / HOLD_PAGE))
+    if page > pages then
+        page = pages
+    end
+
+    local opts = {}
+    local first = ((page - 1) * HOLD_PAGE) + 1
+    local last  = math.min(first + HOLD_PAGE - 1, #rows)
+    for i = first, last do
+        local row = rows[i]
+        local itemId = row.itemId
+        opts[#opts + 1] =
+        {
+            string.format('%s %d', row.label, row.held),
+            function(p)
+                hold.withdraw(p, itemId, hold.STACK)
+                catalog.showCrateHold(p, backFn, silent, page)
+            end,
+        }
+    end
+    if page < pages then
+        opts[#opts + 1] =
+        {
+            string.format('Next (%d/%d)', page + 1, pages),
+            function(p)
+                catalog.showCrateHold(p, backFn, silent, page + 1)
+            end,
+        }
+    end
+    if backFn then
+        opts[#opts + 1] =
+        {
+            'Back',
+            function(p)
+                backFn(p)
+            end,
+        }
+    else
+        opts[#opts + 1] = { 'Close', function(_) end }
+    end
+
+    local snapshot = { title = silent and '......' or 'Crate hold', options = opts }
     player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 

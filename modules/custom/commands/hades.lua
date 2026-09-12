@@ -1,7 +1,7 @@
 -----------------------------------
 -- !hades
--- Reminder only: prints today's five objectives and whether each is
--- ready to turn in. Shards are paid at the Hades NPC, not here.
+-- desc: Print today's five Hades objectives and which are ready to turn in at the NPC.
+-- Reminder only. Shards are paid at the Hades NPC, not here.
 -----------------------------------
 ---@type TCommand
 local commandObj = {}

@@ -417,6 +417,13 @@ local function showRoot(player)
             showRoot(p)
         end,
     }
+    opts[#opts + 1] =
+    {
+        'Crate hold',
+        function(p)
+            catalog.showCrateHold(p, showRoot, false)
+        end,
+    }
     opts[#opts + 1] = { 'Close', function(_) end }
 
     hadesMenu.title   = string.format('Hades  %d/5 turned in', doneCount)
@@ -502,60 +509,86 @@ end
 -----------------------------------
 -- NPCs: talking Hades (dailies) + silent second form (weekend shop)
 -----------------------------------
-local function bindShopNpc(npc)
-    if not npc then
-        return false
+local function openSecondForm(player)
+    catalog.sayShopSilence(player)
+    if catalog.isShopOpen() then
+        catalog.showShop(player, nil, true)
+    else
+        catalog.showCrateHold(player, nil, true)
     end
-
-    pcall(function()
-        npc:hideName(true)
-    end)
-    pcall(function()
-        npc:renameEntity('', true)
-    end)
-    pcall(function()
-        npc:setUntargetable(false)
-    end)
-    pcall(function()
-        npc:setStatus(xi.status.NORMAL)
-    end)
-    pcall(function()
-        npc:removeListener('HADES_SHOP')
-    end)
-    npc:addListener('ON_TRIGGER', 'HADES_SHOP', function(player, _)
-        catalog.sayShopSilence(player)
-        if catalog.isShopOpen() then
-            catalog.showShop(player, nil, true)
-        end
-    end)
-    return true
 end
 
-local function spawnShopFallback(zone)
-    local pos = catalog.shopNpcPos
+local function getShopPlaceholder()
+    local ent = GetNPCByID(catalog.shopNpcId)
+    if ent then
+        return ent
+    end
+    ent = GetEntityByID(catalog.shopNpcId)
+    if ent then
+        return ent
+    end
+    local ok, mob = pcall(GetMobByID, catalog.shopNpcId)
+    if ok and mob then
+        return mob
+    end
+    return nil
+end
+
+-- Empty / hidden names never receive a talk packet. The placeholder is
+-- also sometimes a MOB look, which cannot open a menu. Stand a talkable
+-- NPC on his body and hide the original so only the big form sells.
+local function spawnTalkableShop(zone, x, y, z, rot)
+    if xi.hades_shop_entity then
+        pcall(function()
+            xi.hades_shop_entity:setStatus(xi.status.DISAPPEAR)
+        end)
+        xi.hades_shop_entity = nil
+    end
     local npc = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
-        name       = '',
-        packetName = '',
+        name       = '......',
+        packetName = '......',
         look       = '0x0000710A00000000000000000000000000000000',
-        x          = pos.x,
-        y          = pos.y,
-        z          = pos.z,
-        rotation   = pos.rotation,
-        widescan   = 0,
+        x          = x,
+        y          = y,
+        z          = z,
+        rotation   = rot,
+        widescan   = 1,
         onTrigger  = function(player, _)
-            catalog.sayShopSilence(player)
-            if catalog.isShopOpen() then
-                catalog.showShop(player, nil, true)
-            end
+            openSecondForm(player)
         end,
     })
     if npc then
         pcall(function()
-            npc:hideName(true)
+            npc:hideName(false)
         end)
+        xi.hades_shop_entity = npc
     end
     return npc
+end
+
+local function placeSecondForm(zone)
+    local pos = catalog.shopNpcPos
+    local x, y, z, rot = pos.x, pos.y, pos.z, pos.rotation
+    local placeholder = getShopPlaceholder()
+    if placeholder then
+        pcall(function()
+            x   = placeholder:getXPos()
+            y   = placeholder:getYPos()
+            z   = placeholder:getZPos()
+            rot = placeholder:getRotPos()
+        end)
+        pcall(function()
+            placeholder:setUntargetable(true)
+        end)
+        pcall(function()
+            placeholder:hideName(true)
+        end)
+        pcall(function()
+            placeholder:setStatus(xi.status.INVISIBLE)
+        end)
+    end
+    return spawnTalkableShop(zone, x, y, z, rot)
 end
 
 local function placeDailyHades(zone)
@@ -601,16 +634,17 @@ local function applyLiveNpcs()
             daily:setPos(catalog.npcPos.x, catalog.npcPos.y, catalog.npcPos.z, catalog.npcPos.rotation)
         end)
     end
-    bindShopNpc(GetNPCByID(catalog.shopNpcId))
+    local zone = GetZone(catalog.npcPos.zoneId)
+    if zone then
+        placeSecondForm(zone)
+    end
 end
 
 m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone), function(zone)
     super(zone)
     local npc = placeDailyHades(zone)
     utils.unused(npc)
-    if not bindShopNpc(GetNPCByID(catalog.shopNpcId)) then
-        spawnShopFallback(zone)
-    end
+    placeSecondForm(zone)
 end)
 
 pcall(applyLiveNpcs)

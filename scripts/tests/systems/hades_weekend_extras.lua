@@ -4,16 +4,35 @@ local cosmetics = require('modules/custom/lua/hades_cosmetic_catalog')
 local hold      = require('modules/custom/lua/hades_hold_currency')
 local shop      = require('modules/custom/lua/hades_shop_catalog')
 
-local function mockPlayer(vars, items, spells)
+local function mockPlayer(vars, items, spells, opts)
     vars   = vars or {}
     items  = items or {}
     spells = spells or {}
+    opts   = opts or {}
+    local freeSlots = opts.freeSlots
+    if freeSlots == nil then
+        freeSlots = 2
+    end
+    local addOk = opts.addItem
+    if addOk == nil then
+        addOk = true
+    end
     return {
         getCharVar = function(_, key) return vars[key] or 0 end,
         setCharVar = function(_, key, value) vars[key] = value end,
         getItemCount = function(_, id) return items[id] or 0 end,
-        getFreeSlotsCount = function() return 2 end,
+        getFreeSlotsCount = function() return freeSlots end,
         hasSpell = function(_, id) return spells[id] == true end,
+        printToPlayer = function() end,
+        addItem = function(_, spec)
+            if not addOk then
+                return false
+            end
+            local id  = spec.id
+            local qty = spec.quantity or 1
+            items[id] = (items[id] or 0) + qty
+            return true
+        end,
     }
 end
 
@@ -91,6 +110,74 @@ describe('Hades Hold currency', function()
         assert(hold.take(player, 4060, 80) == true)
         assert(hold.held(player, 4060) == 0)
         assert(items[4060] == 20)
+    end)
+
+    it('withdraws one stack from Hold without touching bags', function()
+        local vars = {}
+        local items = { [4060] = 20 }
+        local player = mockPlayer(vars, items)
+        hold.add(player, 4060, 300)
+        local ok, qty = hold.withdraw(player, 4060, 99)
+        assert(ok == true)
+        assert(qty == 99)
+        assert(hold.held(player, 4060) == 201)
+        assert(items[4060] == 119)
+        assert(hold.count(player, 4060) == 320)
+    end)
+
+    it('caps a withdraw at the remaining Hold and at 99', function()
+        local vars = {}
+        local items = {}
+        local player = mockPlayer(vars, items)
+        hold.add(player, 1457, 50)
+        local ok, qty = hold.withdraw(player, 1457, 99)
+        assert(ok == true)
+        assert(qty == 50)
+        assert(hold.held(player, 1457) == 0)
+        assert(items[1457] == 50)
+    end)
+
+    it('refuses a withdraw when Hold is empty or inventory is full', function()
+        local vars = {}
+        local items = { [4060] = 100 }
+        local empty = mockPlayer(vars, items)
+        local ok = hold.withdraw(empty, 4060, 99)
+        assert(ok == false)
+        assert(items[4060] == 100)
+
+        local fullVars = {}
+        local fullItems = {}
+        local full = mockPlayer(fullVars, fullItems, {}, { freeSlots = 0 })
+        hold.add(full, 4060, 80)
+        assert(hold.withdraw(full, 4060, 99) == false)
+        assert(hold.held(full, 4060) == 80)
+        assert(fullItems[4060] == nil)
+    end)
+
+    it('refunds Hold when addItem fails and leaves forges able to take the rest', function()
+        local vars = {}
+        local items = {}
+        local player = mockPlayer(vars, items, {}, { addItem = false })
+        hold.add(player, 4060, 300)
+        assert(hold.withdraw(player, 4060, 99) == false)
+        assert(hold.held(player, 4060) == 300)
+
+        local okPlayer = mockPlayer(vars, items)
+        assert(hold.withdraw(okPlayer, 4060, 99) == true)
+        assert(hold.held(okPlayer, 4060) == 201)
+        assert(hold.take(okPlayer, 4060, 200) == true)
+        assert(hold.held(okPlayer, 4060) == 1)
+        assert(items[4060] == 99)
+    end)
+
+    it('lists only currencies that are actually banked', function()
+        local player = mockPlayer({}, { [4060] = 20 })
+        hold.add(player, 1457, 50)
+        local rows = hold.heldRows(player)
+        assert(#rows == 1)
+        assert(rows[1].itemId == 1457)
+        assert(rows[1].held == 50)
+        assert(rows[1].label == '10k Byne')
     end)
 end)
 
