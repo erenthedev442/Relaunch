@@ -94,9 +94,11 @@ enum class LATENT : uint16
     MAINJOB                = 62, // mainjob - PARAM: JOBTYPE
     IN_ADOULIN             = 63, //
     IN_GARRISON            = 64, // while in an active Garrison
+    UNITY_RANKING          = 65, // Relaunch: "Unity Ranking: X+a~b" gear. PARAM: tier 1..5 (1 = Unity ranked 1st, 5 = ranked 5th or lower).
+                                 // Active only while the player is in a Unity whose current tier == PARAM (see charutils::GetUnityRankTier).
 };
 
-#define MAX_LATENTEFFECTID 65
+#define MAX_LATENTEFFECTID 66
 
 /************************************************************************
  *                                                                       *

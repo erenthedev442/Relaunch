@@ -128,6 +128,11 @@ xi.settings.main =
     -- Note: EXP rates are also influenced by conf setting
     EXP_RATE            = 1.000, -- Multiplies exp from script (except FoV/GoV).
     CAPACITY_RATE       = 1.000, -- Multiplies capacity points gained.
+    -- Relaunch: "Unity Ranking: X+a~b" gear (Unity Wanted rewards). 0 = scale the bonus with the
+    -- live weekly Unity ranking (1st = max ... 5th or lower = min, retail behaviour).
+    -- 1..5 = treat every pledged player as that tier (1 = everyone gets the max bonus).
+    -- Players not pledged to a Unity never get the bonus. Needs a map restart to change.
+    UNITY_RANKING_FIXED_TIER = 0,
     BOOK_EXP_RATE       = 1.000, -- Multiplies exp from FoV/GoV book pages.
     TABS_RATE           = 1.000, -- Multiplies tabs earned from fov.
     ROE_EXP_RATE        = 1.000, -- Multiplies exp earned from records of eminence.

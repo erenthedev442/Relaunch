@@ -31,6 +31,7 @@
 #include "modifier.h"
 #include "status_effect_container.h"
 #include "utils/battleutils.h"
+#include "utils/charutils.h"
 #include "utils/zoneutils.h"
 
 #include "time_server.h"
@@ -675,6 +676,7 @@ void CLatentEffectContainer::CheckLatentsZone()
                 case LATENT::NATION_CONTROL:
                 case LATENT::NATION_CITIZEN:
                 case LATENT::ZONE_HOME_NATION:
+                case LATENT::UNITY_RANKING: // weekly rank / pledge changes are picked up on the next zone-in
                     return ProcessLatentEffect(latentEffect);
                     break;
                 default:
@@ -1204,6 +1206,15 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect, bo
         case LATENT::IN_GARRISON:
             expression = m_POwner->isInGarrison() && m_POwner->GetMLevel() >= latentEffect.GetConditionsValue();
             break;
+        case LATENT::UNITY_RANKING:
+        {
+            // Relaunch: "Unity Ranking: X+a~b" gear. Each item carries one row per
+            // tier (PARAM 1..5); exactly the row matching the player's current Unity
+            // tier is active. Tier 0 (not pledged to a Unity) activates nothing.
+            const uint8 tier = charutils::GetUnityRankTier(m_POwner);
+            expression       = tier != 0 && tier == latentEffect.GetConditionsValue();
+            break;
+        }
         case LATENT::FOOD_ACTIVE:
             expression = m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_FOOD) &&
                          m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_FOOD)->GetSourceTypeParam() == latentEffect.GetConditionsValue();

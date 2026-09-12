@@ -5633,6 +5633,48 @@ void DistributeCapacityPoints(CCharEntity* PChar, CMobEntity* PMob)
 
 /************************************************************************
  *                                                                       *
+ *  Relaunch: Unity Ranking tier for "Unity Ranking: X+a~b" gear.        *
+ *                                                                       *
+ *  The weekly Unity ranking (roeutils::RoeSystem.unityLeaderRank, 1 =   *
+ *  best, ties share a rank) collapses to five tiers: rank 1 -> tier 1   *
+ *  (max bonus) ... rank 5 or worse -> tier 5 (min bonus). Not pledged   *
+ *  to a Unity -> 0 (no bonus at all).                                   *
+ *                                                                       *
+ *  main.UNITY_RANKING_FIXED_TIER (1..5) overrides the live ranking so   *
+ *  every pledged player counts as that tier; 0 = use the real ranking.  *
+ *                                                                       *
+ ************************************************************************/
+
+uint8 GetUnityRankTier(CCharEntity* PChar)
+{
+    if (PChar == nullptr)
+    {
+        return 0;
+    }
+
+    const uint8 unity = PChar->profile.unity_leader;
+    if (unity < 1 || unity > 11)
+    {
+        return 0;
+    }
+
+    const uint8 fixedTier = settings::get<uint8>("main.UNITY_RANKING_FIXED_TIER");
+    if (fixedTier >= 1 && fixedTier <= 5)
+    {
+        return fixedTier;
+    }
+
+    const uint8 rank = roeutils::RoeSystem.unityLeaderRank[unity - 1];
+    if (rank == 0) // rankings not tabulated yet (server just started): treat as bottom tier
+    {
+        return 5;
+    }
+
+    return std::min<uint8>(rank, 5);
+}
+
+/************************************************************************
+ *                                                                       *
  *  Return adjusted Capacity point value based on bonuses                *
  *  Note: rawBonus uses whole number percentage values until returning   *
  *                                                                       *
