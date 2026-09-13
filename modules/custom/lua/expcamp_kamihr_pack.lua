@@ -65,9 +65,15 @@ local function attachLinkHook(mob)
         return
     end
 
-    pcall(function()
-        mob:removeListener('EXPCAMP_KAMIHR_LINK')
-    end)
+    -- Do not removeListener here. Last night's map crash was
+    -- OnGameIn -> removeListener -> removeFromAllListeners while a
+    -- player was already in Kamihr. A localvar is enough to keep
+    -- FileWatcher from stacking a second ENGAGE hook.
+    if mob:getLocalVar('ExpCampLinkHook') == 1 then
+        return
+    end
+
+    mob:setLocalVar('ExpCampLinkHook', 1)
     mob:addListener('ENGAGE', 'EXPCAMP_KAMIHR_LINK', function(engaged, target)
         linkNearby(engaged, target)
     end)
