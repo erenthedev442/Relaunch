@@ -365,9 +365,15 @@ describe('Level-scaled direct magic tuning', function()
         assert(catalog.getAoEDamageCap(makeCaster(
             99, true, xi.job.BLM, { [xi.slot.MAIN] = 22062 }), firega) == 149999)
         assert(catalog.getAoEDamageCap(makeCaster(
+            99, true, xi.job.BLM, { [xi.slot.MAIN] = 21637 }), firega) == 149999)
+        assert(catalog.getAoEDamageCap(makeCaster(
+            99, true, xi.job.BLM, { [xi.slot.MAIN] = 22100 }), firega) == 149999)
+        assert(catalog.getAoEDamageCap(makeCaster(
             99, true, xi.job.BLM, { [xi.slot.MAIN] = 22106 }), firega) == 199999)
         assert(catalog.getOutgoingDamageCap(makeCaster(
             99, true, xi.job.BLM, { [xi.slot.MAIN] = 22062 }), firega) == 149999)
+        assert(catalog.getOutgoingDamageCap(makeCaster(
+            99, true, xi.job.BLM, { [xi.slot.MAIN] = 21637 }), firega) == 149999)
     end)
 
     it('keeps the aimed-at AoE target on the single-target ceiling', function()
@@ -388,6 +394,7 @@ describe('Level-scaled direct magic tuning', function()
 
     it('caps BLU AoE splash to the shared iLvl ladder while the aimed-at mob keeps the ST ceiling', function()
         local prime = makeCaster(99, true, xi.job.BLU, { [xi.slot.MAIN] = 21646 })
+        local odyssey = makeCaster(99, true, xi.job.BLU, { [xi.slot.MAIN] = 21637 })
         local item119 = makeCaster(
             99, true, xi.job.BLU, { [xi.slot.MAIN] = { id = 1, ilvl = 119 } })
         local pre119 = makeCaster(
@@ -399,6 +406,7 @@ describe('Level-scaled direct magic tuning', function()
 
         assert(catalog.getOutgoingDamageCap(prime, floe, primary) == 999999)
         assert(catalog.getOutgoingDamageCap(prime, floe, splash) == 199999)
+        assert(catalog.getOutgoingDamageCap(odyssey, floe, splash) == 149999)
         assert(catalog.getOutgoingDamageCap(item119, floe, primary) == 79999)
         assert(catalog.getOutgoingDamageCap(item119, floe, splash) == 79999)
         assert(catalog.applyPlayerOutgoingLimits(item119, primary, floe, 125745) == 79999)

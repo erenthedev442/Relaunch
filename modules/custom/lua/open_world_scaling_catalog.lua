@@ -154,6 +154,8 @@ catalog.levelProfiles =
 --   1) OWS HP floors skip Adoulin 95/105 packs (SQL HP is the camp bar).
 --   2) NO_CAPACITY_POINTS on spawn -- camp HP is too low to be a CP channel.
 -- Keep in sync with modules/custom/sql/expcamp_camps.sql.
+-- Kamihr clones extra Ashen Tigers via ExpCampPack localvar
+-- (see expcamp_kamihr_pack.lua); those IDs are not listed here.
 local expCampPackIds =
 {
     -- 1 La Theine Grass Funguar

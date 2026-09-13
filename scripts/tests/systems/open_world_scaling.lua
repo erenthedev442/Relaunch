@@ -306,6 +306,17 @@ describe('Legendary open world scaling', function()
         })
         xi.openWorldScaling.apply(boyahda)
         assert(boyahda:getMobMod(xi.mobMod.NO_CAPACITY_POINTS) == 1)
+
+        local cloned = makeMob({
+            mobId     = 0x800,
+            targId    = 0x700,
+            zoneId    = xi.zone.KAMIHR_DRIFTS,
+            level     = 105,
+            maxHP     = 30000,
+            localVars = { ExpCampPack = 1 },
+        })
+        assert(xi.openWorldScaling.applyExpCampNoCapacity(cloned))
+        assert(cloned:getMobMod(xi.mobMod.NO_CAPACITY_POINTS) == 1)
     end)
 
     it('honors runtime exclusion markers used by custom content', function()

@@ -238,7 +238,12 @@ function scaling.applyAbysseaTrash(mob)
 end
 
 function scaling.applyExpCampNoCapacity(mob)
-    if not mob or not catalog.expCampMobIds or not catalog.expCampMobIds[mob:getID()] then
+    if not mob then
+        return false
+    end
+
+    local catalogHit = catalog.expCampMobIds and catalog.expCampMobIds[mob:getID()]
+    if not catalogHit and mob:getLocalVar('ExpCampPack') <= 0 then
         return false
     end
 

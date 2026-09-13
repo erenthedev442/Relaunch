@@ -17,7 +17,7 @@
 -- was aimed at uses the single-target ceiling so an AoE nuke is still a
 -- full single-target spell. Main-job BLU splash uses the same weapon
 -- multiplier as the aimed-at mob, then the shared iLvl AoE ladder
--- (40k / 79,999 / 99,999 / 149,999 / 199,999).
+-- (40k / 79,999 / 99,999 / 149,999 / 199,999). Odyssey splash is 149,999.
 -- Main BLM is the nuke identity. SCH native nukes are 0.90 of that. RDM,
 -- /BLM, and /SCH are much weaker so people cannot level every job by
 -- subbing a nuker and spamming Stone / Stonega / Helix.
@@ -278,28 +278,9 @@ function catalog.getAoEDamageCap(caster, spell)
         return catalog.AOE_PRE_119_CAP
     end
 
-    local mainWeapon = caster:getEquipID(xi.slot.MAIN)
-    if primeWeaponIds[mainWeapon] then
-        return primeCatalog.AOE_DAMAGE_CAP
-    end
-
-    if remaWeaponIds[mainWeapon] then
-        return remaCatalog.AOE_DAMAGE_CAP
-    end
-
-    if progression.isRemaPathWeapon(mainWeapon) then
-        return catalog.AMBU_DAMAGE_CAP
-    end
-
-    if ambuCatalog.isFinalWeapon(mainWeapon, xi.slot.MAIN) then
-        return ambuCatalog.AOE_DAMAGE_CAP
-    end
-
-    if getMainHandILvl(caster) >= 119 then
-        return catalog.AOE_ITEM_119_CAP
-    end
-
-    return catalog.AOE_PRE_119_CAP
+    -- Same splash ladder as WS / pets: 40k / 80k / 99k / 149k / 199k.
+    -- Odyssey matches finished REMA at 149,999.
+    return progression.getPlayerSplashDamageCap(caster)
 end
 
 -- True for every extra mob an AoE spell tags. The aimed-at target is false

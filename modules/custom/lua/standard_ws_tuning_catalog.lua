@@ -20,7 +20,9 @@ catalog.DAMAGE_CAP_LOCAL_VAR        = 'StandardWsDamageCap'
 catalog.DAMAGE_CAP                  = 79999
 -- Odyssey 119 hard ceiling. A small fTP / curve bump beats Ambuscade; the
 -- rest of the 349,999 is gear, WSD and augments -- not a REMA-style dump.
+-- Splash matches finished REMA (149,999), not this single-target ceiling.
 catalog.ODYSSEY_DAMAGE_CAP          = 349999
+catalog.ODYSSEY_AOE_DAMAGE_CAP      = 149999
 catalog.ODYSSEY_FTP_SCALE           = 1.35
 catalog.ODYSSEY_MULTIPLIER_BONUS    = 1.15
 catalog.NON_ITEM_LEVEL_119_CAP      = 40000
@@ -28,8 +30,9 @@ catalog.NON_ITEM_LEVEL_119_CAP      = 40000
 catalog.REMA_PRE_III_DAMAGE_CAP     = 99999
 catalog.REMA_PRE_III_NATIVE_WS_CAP  = 149999
 -- Finished Relic / Empyrean / Mythic / Aeonic: native WS keeps its private
--- fTP wrapper and NATIVE_DAMAGE_CAP. Every other WS on that stick uses the
--- ordinary curve and this ceiling -- gear and augments do the climbing.
+-- fTP wrapper and NATIVE_DAMAGE_CAP. Every other single-target WS on that
+-- stick uses the ordinary curve and this ceiling -- gear and augments do
+-- the climbing. Splash never uses this value; see getPlayerSplashDamageCap.
 catalog.REMA_OFF_NATIVE_DAMAGE_CAP  = 500000
 catalog.TARGET_HP_FRACTION          = 0.30 -- retained for Fellow progression caps
 catalog.ENDGAME_PLAYER_LEVEL        = 99
@@ -320,7 +323,7 @@ function catalog.getPlayerSplashDamageCap(player)
     end
 
     if catalog.isOdysseyWeapon(itemId) then
-        return catalog.ODYSSEY_DAMAGE_CAP
+        return catalog.ODYSSEY_AOE_DAMAGE_CAP
     end
 
     if catalog.isRemaPathWeapon(itemId) or isAmbuFinalWeapon(itemId) then

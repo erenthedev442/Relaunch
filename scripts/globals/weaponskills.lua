@@ -1006,6 +1006,16 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
         wsResults.finalDmg = finaldmg
     end
 
+    -- Splash hits only: C++ stamps AoEWsDamageCap on non-primary targets.
+    -- The aimed-at target keeps the single-target Standard/Ambuscade cap
+    -- (e.g. 500,000 off-native REMA). Must run after the ST hard cap so
+    -- splash cannot ride that higher ceiling.
+    local aoeCap = attacker:getLocalVar('AoEWsDamageCap')
+    if finaldmg > 0 and aoeCap > 0 then
+        finaldmg = math.min(finaldmg, aoeCap)
+        wsResults.finalDmg = finaldmg
+    end
+
     -- Absolute pre-Prime WS wall. Applies even when no StandardWsDamageCap
     -- window is open. Prime may raise it; skillchains never see this.
     if finaldmg > 0 then

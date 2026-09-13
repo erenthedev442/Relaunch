@@ -16,9 +16,10 @@ commandObj.cmdprops =
 }
 
 -- { label, zone, x, y, z, rot } -- index = the !expcamp number.
--- Camp packs (relocated in-zone IDs, band levels, HP, half-respawn) live in
--- modules/custom/sql/expcamp_camps.sql. New high-targid inserts are not used
--- -- those slots show as NPC / Moogle on stock clients.
+-- Camp packs (relocated in-zone IDs, band levels, HP, 60s respawn) live in
+-- modules/custom/sql/expcamp_camps.sql. Kamihr clones 40 extra Ashen Tigers
+-- via insertDynamicEntity (see expcamp_kamihr_pack.lua); 12 retail + 40
+-- clones = 52.
 local camps =
 {
     { '10-25 La Theine Plateau',     xi.zone.LA_THEINE_PLATEAU,      656.9457,  31.6260,  108.5068,  47 },
@@ -42,7 +43,7 @@ local camps =
     { '90-99 Marjami Ravine',        xi.zone.MARJAMI_RAVINE,         368.9198, -59.0928,  141.0159,   5 },
     { '90-99 North Gustaberg [S]',   xi.zone.NORTH_GUSTABERG_S,     -547.5531,  39.7761,  434.5975, 117 },
     { '95-99 Foret de Hennetiel',    xi.zone.FORET_DE_HENNETIEL,    -185.5345,  -2.1250,  548.4019,  47 },
-    { '95-99 Kamihr Drifts',         xi.zone.KAMIHR_DRIFTS,          210.00,    20.30,    315.00,   192 },
+    { '95-99 Kamihr Drifts',         xi.zone.KAMIHR_DRIFTS,          162.89,    20.00,    316.88,    64 },
 }
 
 -- Camp 5 pack (Giant Ranger / Hunter) lives on these retail IDs.
@@ -60,8 +61,26 @@ local qufimPack =
     { id = 17293633, x = -195.792, y = -19.917, z = 312.650, rot = 224 },
 }
 
-local function relocateQufimPack()
-    for _, p in ipairs(qufimPack) do
+-- Camp 22 pack. Relocate on load / warp so FileWatcher can move
+-- the line without a map restart. Only these 12 retail IDs exist.
+local kamihrPack =
+{
+    { id = 17871008, x = 162.892, y = 20.000, z = 316.883, rot = 64 },
+    { id = 17871009, x = 162.237, y = 20.004, z = 309.880, rot = 64 },
+    { id = 17871010, x = 161.582, y = 20.009, z = 302.878, rot = 64 },
+    { id = 17871020, x = 160.927, y = 20.013, z = 295.876, rot = 64 },
+    { id = 17871019, x = 160.272, y = 20.018, z = 288.874, rot = 64 },
+    { id = 17871021, x = 159.617, y = 20.022, z = 281.871, rot = 64 },
+    { id = 17871013, x = 158.963, y = 20.027, z = 274.869, rot = 64 },
+    { id = 17871014, x = 158.308, y = 20.031, z = 267.867, rot = 64 },
+    { id = 17871023, x = 157.653, y = 20.035, z = 260.864, rot = 64 },
+    { id = 17871024, x = 156.998, y = 20.040, z = 253.862, rot = 64 },
+    { id = 17870997, x = 156.343, y = 20.044, z = 246.860, rot = 64 },
+    { id = 17870998, x = 155.688, y = 20.049, z = 239.858, rot = 64 },
+}
+
+local function relocatePack(pack)
+    for _, p in ipairs(pack) do
         local mob = GetMobByID(p.id)
         if mob then
             pcall(function()
@@ -72,7 +91,16 @@ local function relocateQufimPack()
     end
 end
 
+local function relocateQufimPack()
+    relocatePack(qufimPack)
+end
+
+local function relocateKamihrPack()
+    relocatePack(kamihrPack)
+end
+
 pcall(relocateQufimPack)
+pcall(relocateKamihrPack)
 
 commandObj.onTrigger = function(player, arg)
     local n    = tonumber(arg)
@@ -89,6 +117,10 @@ commandObj.onTrigger = function(player, arg)
     if n == 5 then
         player:timer(1500, function()
             relocateQufimPack()
+        end)
+    elseif n == 22 then
+        player:timer(1500, function()
+            relocateKamihrPack()
         end)
     end
 end
