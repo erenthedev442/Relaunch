@@ -18,6 +18,10 @@ local m = Module:new('expcamp_kamihr_pack')
 local campZone
 local staleRespawnSeconds = math.max(60, (catalog.respawnSeconds or 60) + 45)
 local linkRadius          = catalog.linkRadius or 10
+local sightRange          = catalog.sightRange or 15
+local facingCone          = catalog.facingCone or 64
+-- Bump when the ENGAGE closure changes so FileWatcher can replace it.
+local linkHookGen         = 2
 
 local function eachCampTiger(fn)
     for _, id in ipairs(catalog.retailIds) do
@@ -34,8 +38,27 @@ local function eachCampTiger(fn)
 end
 
 -- Dynamic mobs never get superFamilyID, so they never join the retail
--- Ashen Tiger party and the C++ linker ignores them. Pull neighbors
--- inside the normal family-link radius ourselves.
+-- Ashen Tiger party. Emulate C++ CanLink instead of a radius-only
+-- cascade: facing the engaged tiger inside 10y, or facing the player
+-- inside sight range.
+local function canSee(looker, subject)
+    return looker and subject and looker.isFacing and looker:isFacing(subject, facingCone)
+end
+
+local function shouldLink(other, engaged, target)
+    if canSee(other, engaged) and other:checkDistance(engaged) <= linkRadius then
+        return true
+    end
+
+    if target and target.isAlive and target:isAlive() and
+        canSee(other, target) and other:checkDistance(target) <= sightRange
+    then
+        return true
+    end
+
+    return false
+end
+
 local function linkNearby(mob, target)
     if not mob or not target or not target.isAlive or not target:isAlive() then
         return
@@ -50,7 +73,7 @@ local function linkNearby(mob, target)
             return
         end
 
-        if mob:checkDistance(other) > linkRadius then
+        if not shouldLink(other, mob, target) then
             return
         end
 
@@ -65,18 +88,19 @@ local function attachLinkHook(mob)
         return
     end
 
-    -- Do not removeListener here. Last night's map crash was
-    -- OnGameIn -> removeListener -> removeFromAllListeners while a
-    -- player was already in Kamihr. A localvar is enough to keep
-    -- FileWatcher from stacking a second ENGAGE hook.
-    if mob:getLocalVar('ExpCampLinkHook') == 1 then
+    if mob:getLocalVar('ExpCampLinkHook') == linkHookGen then
         return
     end
 
-    mob:setLocalVar('ExpCampLinkHook', 1)
+    -- Replace the radius-only v1 hook. This runs from FileWatcher /
+    -- zone-in, not from inside ENGAGE.
+    pcall(function()
+        mob:removeListener('EXPCAMP_KAMIHR_LINK')
+    end)
     mob:addListener('ENGAGE', 'EXPCAMP_KAMIHR_LINK', function(engaged, target)
         linkNearby(engaged, target)
     end)
+    mob:setLocalVar('ExpCampLinkHook', linkHookGen)
 end
 
 local function applyCampFlags(mob, index)
@@ -113,8 +137,6 @@ local function spawnAt(index, point)
         rotation             = point.rot,
         minLevel             = catalog.minLv,
         maxLevel             = catalog.maxLv,
-        detection            = xi.detects.SIGHT_AND_HEARING,
-        isAggroable          = true,
         respawn              = catalog.respawnSeconds,
         releaseIdOnDisappear = false,
 

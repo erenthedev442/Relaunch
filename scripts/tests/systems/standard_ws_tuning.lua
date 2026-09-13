@@ -166,6 +166,21 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         assert(catalog.getPetAoEDamageCap(makePlayer(
             { [xi.slot.MAIN] = { id = 1, ilvl = 1, reqLvl = 1 } }, 99)) ==
             catalog.NON_ITEM_LEVEL_119_CAP)
+        assert(catalog.getPlayerSplashDamageCap(makePlayer(
+            { [xi.slot.MAIN] = 20695 }, 99)) == 149999) -- Sequence
+        assert(catalog.getPlayerSplashDamageCap(makePlayer(
+            { [xi.slot.MAIN] = 20509 }, 99)) == 149999) -- Spharai
+        assert(catalog.getPlayerSplashDamageCap(makePlayer(
+            { [xi.slot.MAIN] = 20515 }, 99)) == 149999) -- Godhands
+        assert(catalog.getPlayerSplashDamageCap(makePlayer(
+            { [xi.slot.MAIN] = 20512 }, 99)) == 149999) -- Verethragna
+        assert(catalog.getPlayerSplashDamageCap(makePlayer(
+            { [xi.slot.MAIN] = 20843 }, 99)) == 149999) -- Chango
+        assert(catalog.getPlayerSplashDamageCap(makePlayer(
+            { [xi.slot.MAIN] = 21637 }, 99)) == 149999) -- Sakpata's Sword
+        assert(catalog.getPlayerSplashDamageCap(makePlayer(
+            { [xi.slot.MAIN] = 22100 }, 99)) == 149999) -- Mpaca's Staff
+        assert(catalog.ODYSSEY_AOE_DAMAGE_CAP == 149999)
     end)
 
     it('refreshes a live pet cap from the currently equipped main hand', function()
@@ -250,10 +265,15 @@ describe('Level-scaled ordinary weaponskill tuning', function()
         local target = makeTarget(150, 1000000)
         local cases =
         {
-            { item = 21621, cap =  99999 }, -- Naegling
-            { item = 20695, cap = 500000 }, -- Sequence (off-native REMA)
-            { item = 21646, cap = 199999 }, -- Caliburnus
-            { item = 21637, cap = 349999 }, -- Sakpata's Sword (Odyssey)
+            { item = 21621, st =  99999, aoe =  99999, ws = xi.weaponskill.CIRCLE_BLADE }, -- Naegling
+            { item = 20695, st = 500000, aoe = 149999, ws = xi.weaponskill.CIRCLE_BLADE }, -- Sequence
+            { item = 20509, st = 500000, aoe = 149999, ws = xi.weaponskill.SPINNING_ATTACK }, -- Spharai
+            { item = 20515, st = 500000, aoe = 149999, ws = xi.weaponskill.SPINNING_ATTACK }, -- Godhands
+            { item = 20512, st = 500000, aoe = 149999, ws = xi.weaponskill.SPINNING_ATTACK }, -- Verethragna
+            { item = 20511, st = 500000, aoe = 149999, ws = xi.weaponskill.SPINNING_ATTACK }, -- Kenkonken
+            { item = 20843, st = 500000, aoe = 149999, ws = xi.weaponskill.FELL_CLEAVE }, -- Chango
+            { item = 21646, st = 199999, aoe = 199999, ws = xi.weaponskill.CIRCLE_BLADE }, -- Caliburnus
+            { item = 21637, st = 349999, aoe = 149999, ws = xi.weaponskill.CIRCLE_BLADE }, -- Sakpata's Sword
         }
 
         for _, case in ipairs(cases) do
@@ -261,11 +281,11 @@ describe('Level-scaled ordinary weaponskill tuning', function()
             player:setLocalVar('AoEWsDamageCap', 79999)
 
             xi.standardWsTuning.withStandardEffects(
-                player, target, xi.weaponskill.CIRCLE_BLADE, xi.slot.MAIN,
+                player, target, case.ws, xi.slot.MAIN,
                 {}, false,
                 function()
-                    assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == case.cap)
-                    assert(player:getLocalVar('AoEWsDamageCap') == case.cap)
+                    assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == case.st)
+                    assert(player:getLocalVar('AoEWsDamageCap') == case.aoe)
                 end)
 
             assert(player:getLocalVar('AoEWsDamageCap') == 79999)

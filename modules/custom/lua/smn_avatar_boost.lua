@@ -59,7 +59,14 @@ local function applyAvatarBoost(master, pet)
 
     local skillOverCap = math.max(xi.summon.getSummoningSkillOverCap(pet), 0)
     -- 1.0 at 99, ~0.09 at level 9 — matches BST jug floor scaling.
+    -- Rebirth jobs are below 99 but already paid for the pet tree.
     local levelScale = math.min((master:getMainLvl() or 1) / 99, 1.0)
+    pcall(function()
+        local rebirth = require('modules/custom/lua/job_rebirth_catalog')
+        if rebirth.hasRebirth(master, master:getMainJob()) then
+            levelScale = 1.0
+        end
+    end)
 
     local function scaled(amount)
         return math.floor(amount * levelScale)
@@ -97,6 +104,17 @@ local function applyAvatarBoost(master, pet)
         pet:updateHealth()
         pet:addHP(bonusHP)
     end
+
+    pet:setLocalVar('SmnBoostAtt', pet:getMod(xi.mod.ATT))
+end
+
+local function reapplyAvatarBoost(master, pet)
+    if not pet or pet:isDead() or not master or not master:isAlive() then
+        return
+    end
+
+    pet:setLocalVar('smnBoostApplied', 0)
+    applyAvatarBoost(master, pet)
 end
 
 m:addOverride('xi.pet.spawnPet', function(caster, petID, state, target)
@@ -106,8 +124,39 @@ m:addOverride('xi.pet.spawnPet', function(caster, petID, state, target)
         local pet = caster:getPet()
         if pet then
             applyAvatarBoost(caster, pet)
+            pet:timer(800, function(live)
+                if not live or live:isDead() then
+                    return
+                end
+
+                local expected = live:getLocalVar('SmnBoostAtt')
+                if expected > 0 and live:getMod(xi.mod.ATT) >= expected then
+                    return
+                end
+
+                reapplyAvatarBoost(caster, live)
+            end)
         end
     end
+end)
+
+m:addOverride('xi.player.onLevelRestriction', function(player)
+    super(player)
+    if not player or not player:isPC() or player:getMainJob() ~= xi.job.SMN then
+        return
+    end
+
+    local pet = player:getPet()
+    if not (pet and pet.getPetID and isAvatarPet(pet:getPetID())) then
+        return
+    end
+
+    local expected = pet:getLocalVar('SmnBoostAtt')
+    if expected > 0 and pet:getMod(xi.mod.ATT) >= expected then
+        return
+    end
+
+    reapplyAvatarBoost(player, pet)
 end)
 
 return m

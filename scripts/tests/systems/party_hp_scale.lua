@@ -62,6 +62,9 @@ describe('Party HP scale', function()
         pc.getAlliance = function()
             return alliance or { pc }
         end
+        pc.getParty = function()
+            return { pc }
+        end
         return pc
     end
 
@@ -125,6 +128,21 @@ describe('Party HP scale', function()
         end
 
         assert(scale.countFromPlayer(p1) == 2)
+    end)
+
+    it('counts only the party when asked, not the rest of the alliance', function()
+        local p1 = makePC(43)
+        local p2 = makePC(43)
+        local ally = makePC(43)
+        p1.getAlliance = function()
+            return { p1, p2, ally }
+        end
+        p1.getParty = function()
+            return { p1, p2 }
+        end
+
+        assert(scale.countFromPlayer(p1) == 3)
+        assert(scale.countFromParty(p1) == 2)
     end)
 
     it('counts instance characters and caps at 6', function()

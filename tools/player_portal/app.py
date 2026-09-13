@@ -2314,7 +2314,7 @@ LEADERBOARDS = [
 
 @app.get("/api/leaderboards")
 def leaderboards(board: str = "", limit: int = 10):
-    """Top players across several ladders. Public; GM accounts excluded."""
+    """Top players across several ladders. Public; GM + opted-out excluded."""
     limit = max(1, min(int(limit or 10), 25))
     conn = db()
     out = {}
@@ -2323,18 +2323,30 @@ def leaderboards(board: str = "", limit: int = 10):
             # Exclude staff by in-game GM level (gmlevel 0 == a normal player).
             # NOTE: accounts.priv == 1 is the *normal* player value here, so it
             # cannot be used to exclude GMs -- gmlevel is the right field.
+            # Leaderboard_OptOut=1 is the same hide used by Discord / !top / the
+            # website generator (!optout).
+            _opt_join = (
+                "LEFT JOIN char_vars opt ON opt.charid=c.charid "
+                "AND opt.varname='Leaderboard_OptOut' "
+            )
+            _visible = (
+                "COALESCE(c.gmlevel,0)=0 AND (opt.value IS NULL OR opt.value=0)"
+            )
+
             def top_from_history():
                 cur.execute(
                     "SELECT c.charname, h.enemies_defeated AS v FROM chars c "
                     "JOIN char_history h ON h.charid=c.charid "
-                    "WHERE COALESCE(c.gmlevel,0)=0 AND h.enemies_defeated > 0 "
+                    f"{_opt_join}"
+                    f"WHERE {_visible} AND h.enemies_defeated > 0 "
                     "ORDER BY h.enemies_defeated DESC LIMIT %s", (limit,))
                 return [{"name": r["charname"], "value": int(r["v"])} for r in cur.fetchall()]
 
             def top_from_playtime():
                 cur.execute(
                     "SELECT c.charname, c.playtime AS v FROM chars c "
-                    "WHERE COALESCE(c.gmlevel,0)=0 AND c.playtime > 0 "
+                    f"{_opt_join}"
+                    f"WHERE {_visible} AND c.playtime > 0 "
                     "ORDER BY c.playtime DESC LIMIT %s", (limit,))
                 return [{"name": r["charname"], "value": int(r["v"]) // 3600} for r in cur.fetchall()]
 
@@ -2342,7 +2354,8 @@ def leaderboards(board: str = "", limit: int = 10):
                 cur.execute(
                     "SELECT c.charname, v.value AS v FROM char_vars v "
                     "JOIN chars c ON c.charid=v.charid "
-                    "WHERE v.varname=%s AND v.value > 0 AND COALESCE(c.gmlevel,0)=0 "
+                    f"{_opt_join}"
+                    f"WHERE v.varname=%s AND v.value > 0 AND {_visible} "
                     "ORDER BY v.value DESC LIMIT %s", (varname, limit))
                 return [{"name": r["charname"], "value": int(r["v"])} for r in cur.fetchall()]
 
@@ -2351,7 +2364,8 @@ def leaderboards(board: str = "", limit: int = 10):
                 cur.execute(
                     f"SELECT c.charname, ({cols}) AS v FROM char_jobs j "
                     "JOIN chars c ON c.charid=j.charid "
-                    f"WHERE COALESCE(c.gmlevel,0)=0 HAVING v > 0 ORDER BY v DESC LIMIT %s", (limit,))
+                    f"{_opt_join}"
+                    f"WHERE {_visible} HAVING v > 0 ORDER BY v DESC LIMIT %s", (limit,))
                 return [{"name": r["charname"], "value": int(r["v"])} for r in cur.fetchall()]
 
             wanted = [b for b in LEADERBOARDS if not board or b["key"] == board]

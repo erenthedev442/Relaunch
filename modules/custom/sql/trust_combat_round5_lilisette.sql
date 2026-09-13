@@ -38,8 +38,8 @@ UPDATE `mob_skills` SET
     `mob_skill_aoe` = 0,
     `mob_skill_distance` = 7.0,
     `mob_valid_targets` = 4,
-    `primary_sc` = 0,
-    `secondary_sc` = 0
+    `primary_sc` = 11,
+    `secondary_sc` = 8
 WHERE `mob_skill_id` = 3310;
 
 UPDATE `mob_skills` SET

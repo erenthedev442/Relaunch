@@ -98,6 +98,23 @@ local GEAR_HQ = {
     26671, 26847, 27023, 27199, 27375,  -- Souveran +1
 }
 
+-- Escha - Ru'Aun i119 sets. Retail source for these five families; they
+-- were never added when Reisenjima armor was wired as a direct drop.
+local RUAUN_GEAR_NQ = {
+    25617, 25690, 27121, 27306, 27477,  -- Kaykaus  mitra/bliaut/cuffs/tights/boots
+    26676, 26852, 27028, 27204, 27380,  -- Apogee   crown/dalmatica/mitts/slacks/pumps
+    25615, 25688, 27119, 27304, 27475,  -- Amalric  coif/doublet/gages/slops/nails
+    26668, 26844, 27020, 27196, 27372,  -- Lustratio cap/harness/mittens/subligar/leggings
+    25609, 25682, 27113, 27298, 27469,  -- Emicho   coronet/haubert/gauntlets/hose/gambieras
+}
+local RUAUN_GEAR_HQ = {
+    25618, 25691, 27122, 27307, 27478,  -- Kaykaus +1
+    26677, 26853, 27029, 27205, 27381,  -- Apogee +1
+    25616, 25689, 27120, 27305, 27476,  -- Amalric +1
+    26669, 26845, 27021, 27197, 27373,  -- Lustratio +1
+    25610, 25683, 27114, 27299, 27470,  -- Emicho +1
+}
+
 -- Attestations (retail IDs 1556-1569) — weapon-type-specific Aeonic materials.
 -- T4 drops 1-2; T3 has a 15% chance of 1. Collect the type for your Aeonic.
 local ATTESTATIONS = {
@@ -296,7 +313,7 @@ local NM_CATALOG = {
         { name='Zduhac', gid=55, tier=1, hp=400000, currency=600, cooldown=0, drops = { { id=25844, name='Chironic Hose' }, { id=22270, name='Expeditious Pinion' } } },
         { name='Oryx', gid=56, tier=1, hp=400000, currency=600, cooldown=0, drops = { { id=22198, name='Potent Grip' }, { id=25642, name='Herculean Helm' } } },
         -- Tier 2 (retail 129) ------------------------------------
-        { name='Strophadia', gid=57, tier=2, hp=900000, currency=1200, cooldown=0, drops = { { id=21854, name='Reienkyo' }, { id=20579, name='Skinflayer' }, { id=27547, name='Dignitary\'s Earring' } } },
+        { name='Strophadia', gid=57, tier=2, difficulty='strophadia', hp=900000, currency=1200, cooldown=0, drops = { { id=21854, name='Reienkyo' }, { id=20579, name='Skinflayer' }, { id=27547, name='Dignitary\'s Earring' } } },
         { name='Gajasimha', gid=58, tier=2, hp=900000, currency=1200, cooldown=0, drops = { { id=20505, name='Condemners' }, { id=21804, name='Obschine' }, { id=26174, name='Persis Ring' }, { id=22113, name='Teller' } } },
         { name='Ironside', gid=59, tier=2, hp=900000, currency=1200, cooldown=0, drops = { { id=20677, name='Colada' }, { id=26019, name='Homeric Gorget' }, { id=21904, name='Kanaria' } } },
         { name='Sarsaok', gid=60, tier=2, hp=900000, currency=1200, cooldown=0, drops = { { id=22271, name='Pemphredo Tathlum' }, { id=21021, name='Umaru' }, { id=21686, name='Zulfiqar' } } },
@@ -804,21 +821,33 @@ local function awardDrops(player, mob, def)
         end
     end
 
-    -- Reisenjima-crafted armor (Adhemar/Argosy/Carmine/Rao/Ryuo/Souveran/Naga):
-    -- T2 rolls an NQ piece, T3/boss roll NQ and the +1. Random piece from the
-    -- whole pool -- the hunt is the gate, not a job lock.
-    local nqChance = ({ [2] = 0.20, [3] = 0.35, [4] = 0.50 })[t] or 0
+    -- Zone-native i119 sets. Reisenjima keeps Adhemar/Argosy/etc.;
+    -- Ru'Aun is Kaykaus/Apogee/Amalric/Lustratio/Emicho.
+    local zoneId = (mob.getZoneID and mob:getZoneID()) or 0
+    local nqPool, hqPool, nqMsg, hqMsg
+    if zoneId == RUAUN then
+        nqPool, hqPool = RUAUN_GEAR_NQ, RUAUN_GEAR_HQ
+        nqMsg = '[Geas Fete] The vanquished NM yields a piece of Escha - Ru\'Aun armor!'
+        hqMsg = '[Geas Fete] A pristine (+1) piece of Escha - Ru\'Aun armor drops!'
+    elseif zoneId == REISEN then
+        nqPool, hqPool = GEAR_NQ, GEAR_HQ
+        nqMsg = '[Geas Fete] The vanquished NM yields a piece of Reisenjima armor!'
+        hqMsg = '[Geas Fete] A pristine (+1) piece of Reisenjima armor drops!'
+    end
+    -- Ru'Aun Warders are T1 -- they were the hole. Give them an NQ roll;
+    -- +1 still starts at T3 like Reisenjima.
+    local nqChance = ({ [1] = (zoneId == RUAUN) and 0.15 or 0, [2] = 0.20, [3] = 0.35, [4] = 0.50 })[t] or 0
     local hqChance = ({ [3] = 0.10, [4] = 0.25 })[t] or 0
-    if math.random() < nqChance then
-        local id = GEAR_NQ[math.random(#GEAR_NQ)]
+    if nqPool and math.random() < nqChance then
+        local id = nqPool[math.random(#nqPool)]
         if player:addItem({ id = id, quantity = 1 }) then
-            player:printToPlayer('[Geas Fete] The vanquished NM yields a piece of Reisenjima armor!', S)
+            player:printToPlayer(nqMsg, S)
         end
     end
-    if math.random() < hqChance then
-        local id = GEAR_HQ[math.random(#GEAR_HQ)]
+    if hqPool and math.random() < hqChance then
+        local id = hqPool[math.random(#hqPool)]
         if player:addItem({ id = id, quantity = 1 }) then
-            player:printToPlayer('[Geas Fete] A pristine (+1) piece of Reisenjima armor drops!', S)
+            player:printToPlayer(hqMsg, S)
         end
     end
 
@@ -886,9 +915,15 @@ local TIER_TUNING = {
     -- tempo and magic pressure account for how punishing that complete kit is
     -- to one player relying on trusts.
     teles = { level = 150, hp = 8000000, att = 8000, acc = 1000, macc = 950, matt = 3000,
-              regain = 140, da = 22, ta = 5, def = 1450, eva = 1250, mdef = 400, meva = 475,
+              regain = 50, da = 22, ta = 5, def = 1450, eva = 1250, mdef = 400, meva = 475,
               str = 250, dex = 250, hasteGear = 1600, weaponDmg = 350, eleRes = 85,
-              mobSkillDamageCap = 4500 },
+              magicCool = 20, mobSkillDamageCap = 3200 },
+    -- Same Harpeia kit as Teles (Woe silence, Typhoean Rage amnesia).
+    -- Tier-2 regain 150 let her chain 3-4k AOEs with no gap.
+    strophadia = { level = 130, hp = 7000000, att = 8000, acc = 900, macc = 900, matt = 2800,
+                   regain = 40, da = 20, ta = 5, def = 1200, eva = 1100, mdef = 350, meva = 400,
+                   str = 225, dex = 225, hasteGear = 1200, weaponDmg = 300, eleRes = 75,
+                   magicCool = 22, mobSkillDamageCap = 2500 },
 }
 
 local MECHANIC_TUNING =
@@ -936,6 +971,13 @@ local MECHANIC_TUNING =
         },
         enrage = { sec = 900, att = 2000, haste = 175 },
     },
+    strophadia = {
+        targetPartyOnly = true,
+        phases = {
+            { hp = 35, action = 'fury', att = 500, haste = 100 },
+        },
+        enrage = { sec = 720, att = 1500, haste = 150 },
+    },
 }
 
 local function applyDifficulty(mob, def, player)
@@ -955,6 +997,9 @@ local function applyDifficulty(mob, def, player)
     mob:addMod(xi.mod.MACC,          t.macc)
     mob:addMod(xi.mod.MATT,          t.matt)
     mob:addMod(xi.mod.REGAIN,        t.regain)
+    if t.magicCool then
+        mob:setMobMod(xi.mobMod.MAGIC_COOL, t.magicCool)
+    end
     mob:addMod(xi.mod.DOUBLE_ATTACK, t.da)
     if t.ta > 0 then
         mob:addMod(xi.mod.TRIPLE_ATTACK, t.ta)
@@ -1231,7 +1276,19 @@ local CAMP_SPAWN_NO_SCATTER =
 local function spawnNM(player, zone, zoneId, def, campNpc)
     local px, py, pz = campNpc:getXPos(), campNpc:getYPos(), campNpc:getZPos()
     local mx, mz = px, pz
-    if not CAMP_SPAWN_NO_SCATTER[campNpc:getID()] then
+    -- Golden Kist (and other Fete NMs) used a 5-7y random ring at the ???
+    -- height and landed inside rocks / fog with no WS or spell line.
+    -- Walk outward on navmesh before falling back to the old scatter.
+    local placed = false
+    for _, radius in ipairs({ 8, 12, 16 }) do
+        local ok, position = pcall(GetFurthestValidPosition, campNpc, radius, 0)
+        if ok and type(position) == 'table' and position.x ~= nil then
+            mx, py, mz = position.x, position.y, position.z
+            placed = true
+            break
+        end
+    end
+    if not placed and not CAMP_SPAWN_NO_SCATTER[campNpc:getID()] then
         local angle = math.random() * math.pi * 2
         local dist  = 5 + math.random(0, 2)
         mx = px + math.cos(angle) * dist

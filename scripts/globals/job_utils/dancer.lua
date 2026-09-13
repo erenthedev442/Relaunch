@@ -217,7 +217,7 @@ end
 
 xi.job_utils.dancer.checkWaltzAbility = function(player, target, ability)
     local waltzInfo = waltzAbilities[ability:getID()]
-    local waltzCost = waltzInfo[1] - player:getMod(xi.mod.WALTZ_COST) * 10
+    local waltzCost = math.max(0, waltzInfo[1] - player:getMod(xi.mod.WALTZ_COST) * 10)
 
     if target:getHP() == 0 then
         return xi.msg.basic.CANNOT_ON_THAT_TARG, 0
@@ -239,7 +239,9 @@ xi.job_utils.dancer.checkWaltzAbility = function(player, target, ability)
         local recastMod = player:getMod(xi.mod.WALTZ_DELAY)
 
         if recastMod ~= 0 then
-            newRecast = newRecast + recastMod
+            -- Waltz Delay augs are "less recast". A positive pot (custom
+            -- apply) used to ADD seconds. Always subtract the magnitude.
+            newRecast = newRecast - math.abs(recastMod)
         end
 
         -- Apply 'Fan Dance' Waltz recast reduction.  All tiers above 1 grant 5%
@@ -580,7 +582,7 @@ end
 xi.job_utils.dancer.useWaltzAbility = function(player, target, ability, action)
     local abilityId      = ability:getID()
     local waltzInfo      = waltzAbilities[abilityId]
-    local waltzCost      = waltzInfo[1] - player:getMod(xi.mod.WALTZ_COST) * 10
+    local waltzCost      = math.max(0, waltzInfo[1] - player:getMod(xi.mod.WALTZ_COST) * 10)
     local statMultiplier = waltzInfo[2]
     local amtCured       = 0
 

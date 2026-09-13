@@ -32,9 +32,18 @@ DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 759 AND `mob_skill_id` IN 
 INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Raaz',759,3931); -- Sweeping Gouge
 INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Raaz',759,3932); -- Zealous Snort
 
--- Lynx (Gaston) — Charged Whisker
-DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 765 AND `mob_skill_id` = 746;
-INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Lynx',765,3912);
+-- Lynx (Gaston) — ability IDs 730/731/790 on this list execute Meikyo,
+-- Mijin Gakure, and Shoulder Slam. That KO'd pet and master when Ready
+-- or auto-Ready picked 731. Use the mapped pet mob-skill IDs.
+DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 765 AND `mob_skill_id` IN (730, 731, 746, 790);
+INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Lynx',765,3898); -- Chaotic Eye
+INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Lynx',765,3899); -- Blaster
+INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Lynx',765,3912); -- Charged Whisker
+INSERT IGNORE INTO `mob_skill_lists` VALUES ('Jug_Lynx',765,3954); -- Frenzied Rage (Dohatsu)
+
+UPDATE `mob_skills`
+SET `mob_valid_targets` = 1
+WHERE `mob_skill_id` = 3954 AND `mob_skill_name` = 'frenzied_rage';
 
 -- Apkallu (Iyo)
 DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 755 AND `mob_skill_id` IN (756, 757);

@@ -15,10 +15,21 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local duration = 120
 
     skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.ATTACK_BOOST, power, 0, duration))
+    if not mob:hasStatusEffect(xi.effect.ATTACK_BOOST) then
+        mob:addStatusEffect(xi.effect.ATTACK_BOOST, {
+            power = power,
+            duration = duration,
+            origin = mob,
+        })
+    end
 
     local master = mob:getMaster()
     if master and master:isAlive() then
-        master:addStatusEffect(xi.effect.ATTACK_BOOST, power, 0, duration)
+        master:addStatusEffect(xi.effect.ATTACK_BOOST, {
+            power = power,
+            duration = duration,
+            origin = mob,
+        })
     end
 
     return xi.effect.ATTACK_BOOST

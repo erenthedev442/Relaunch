@@ -3992,7 +3992,12 @@ int32 TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, i
 
         case TYPE_MOB:
         {
-            static_cast<CMobEntity*>(PDefender)->PEnmityContainer->UpdateEnmityFromDamage(taChar ? taChar : PAttacker, std::abs(std::clamp(damage, -131071, 131071))); // assume negative damage (healing) deals the same enmity as dealing damage
+            // Coronach (and any WS that stamps WS_StaticEnmity) keeps hate
+            // at the scripted CE/VE. Skillchain damage must not add more.
+            if (PAttacker->GetLocalVar("WS_StaticEnmity") == 0)
+            {
+                static_cast<CMobEntity*>(PDefender)->PEnmityContainer->UpdateEnmityFromDamage(taChar ? taChar : PAttacker, std::abs(std::clamp(damage, -131071, 131071))); // assume negative damage (healing) deals the same enmity as dealing damage
+            }
         }
         break;
         default:

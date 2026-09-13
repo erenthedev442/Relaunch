@@ -15,6 +15,15 @@ describe('Empyrean Forge identifier alignment', function()
             assert(entry.name == forged.name)
         end
 
+        local gandiva
+        for _, weapon in ipairs(forge.weapons) do
+            if weapon.name == 'Gandiva' then
+                gandiva = weapon
+            end
+        end
+        assert(gandiva and gandiva.id == 22130)
+        assert(gandiva.companions and gandiva.companions[1] == 26344)
+
         assert(forge.weapons[15].id == 11926)
         assert(forge.weapons[15].name == 'Ochain')
         assert(forge.weapons[16].id == 18839)

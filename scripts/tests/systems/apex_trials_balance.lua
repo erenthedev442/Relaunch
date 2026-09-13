@@ -89,4 +89,12 @@ describe('Apex Trials weapon-gate curve', function()
             assert(catalog.affixMods('Regenerating', tier)[xi.mod.REGEN] == nil)
         end
     end)
+
+    it('gives each climber a unique boss script name', function()
+        local first = catalog.nextBossScriptName('Hasalia')
+        local second = catalog.nextBossScriptName('Sahalia')
+        assert(first ~= second)
+        assert(first:match('^Apex_Hasalia_%d+$'))
+        assert(second:match('^Apex_Sahalia_%d+$'))
+    end)
 end)

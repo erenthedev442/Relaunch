@@ -81,6 +81,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return
         end
 
+        for _, extraId in ipairs(weapon.companions or {}) do
+            if extraId > 0 and not player:hasItem(extraId) then
+                player:addItem({ id = extraId, quantity = 1 })
+            end
+        end
+
         repeatCredits.trySpend(player, 'empyrean')
         player:printToPlayer(string.format(
             '[Empyrean Forge] %s has been forged anew! Kupo!', weapon.name),
@@ -156,6 +162,16 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end,
 
         onTrigger = function(player, npc)
+            if (player:hasItem(22130) or player:hasItem(22116)) and
+                not player:hasItem(26344) and
+                player:getFreeSlotsCount() > 0
+            then
+                player:addItem({ id = 26344, quantity = 1 })
+                player:printToPlayer(
+                    "[Empyrean Forge] Artemis's Quiver is now how Gandiva issues arrows, kupo!",
+                    xi.msg.channel.SYSTEM_3)
+            end
+
             if (player:getCharVar('WF_Empyrean_Final') or 0) ~= 1 then
                 player:printToPlayer(
                     '[Empyrean Forge] Complete one Empyrean to 119 III through the full Weapon Forge path to unlock repeat forging, kupo!',

@@ -7,16 +7,17 @@
 -- the same Apocalypse when the Relic wrapper does not apply. Final Ambuscade
 -- weapons keep this progression multiplier on every WS, with Ambuscade's own
 -- module supplying the 99,999 / linked-149,999 ceilings and linked 10% boost.
--- Odyssey 119s stay on this curve with a small fTP bump and a 349,999 ceiling.
+-- Odyssey 119s stay on this curve with a 349,999 single-target ceiling.
+-- Splash matches finished REMA at 149,999.
 -- Finished REMA native WS stay on their private wrapper. Other WS on those
--- sticks keep this curve and a 500,000 gear ceiling. Prime is unchanged.
+-- sticks keep this curve and a 500,000 single-target ceiling. Splash uses
+-- the shared 40k / 80k / 99k / 149k / 199k ladder (149,999 on finished REMA).
+-- Prime is unchanged.
 -----------------------------------
 require('modules/module_utils')
 
-local catalog      = require('modules/custom/lua/standard_ws_tuning_catalog')
-local remaCatalog  = require('modules/custom/lua/rema_ws_tier_catalog')
-local primeCatalog = require('modules/custom/lua/prime_ws_tuning_catalog')
-local ambuCatalog  = require('modules/custom/lua/ambuscade_ws_tuning_catalog')
+local catalog     = require('modules/custom/lua/standard_ws_tuning_catalog')
+local ambuCatalog = require('modules/custom/lua/ambuscade_ws_tuning_catalog')
 
 xi.standardWsTuning         = xi.standardWsTuning or {}
 xi.standardWsTuning.catalog = catalog
@@ -33,49 +34,15 @@ end
 
 local activeCalculations = setmetatable({}, { __mode = 'k' })
 
--- An AoE WS earns its premium ceiling from the final-stage weapon equipped in
--- the main hand, even when the WS is not that weapon's linked/native WS.
-local premiumMainhandAoECaps = {}
-for _, entry in ipairs(ambuCatalog.entries) do
-    if entry.slot == xi.slot.MAIN then
-        premiumMainhandAoECaps[entry.itemId] = ambuCatalog.AOE_DAMAGE_CAP
-    end
-end
-
-for itemId in pairs(catalog.ODYSSEY_WEAPON_IDS or {}) do
-    premiumMainhandAoECaps[itemId] = catalog.ODYSSEY_DAMAGE_CAP
-end
-
-for itemId, entry in pairs(remaCatalog.BY_ITEM_ID) do
-    if entry.enabled and entry.slot == xi.slot.MAIN then
-        -- Off-native WS on a finished REMA. Native AoE still uses
-        -- remaCatalog.AOE_DAMAGE_CAP inside the RemaWsTuned wrapper.
-        premiumMainhandAoECaps[itemId] = catalog.REMA_OFF_NATIVE_DAMAGE_CAP
-    end
-end
-
-for itemId, info in pairs(catalog.REMA_PATH or {}) do
-    if
-        not info.final and
-        info.slot == xi.slot.MAIN and
-        premiumMainhandAoECaps[itemId] == nil
-    then
-        premiumMainhandAoECaps[itemId] = catalog.REMA_PRE_III_DAMAGE_CAP
-    end
-end
-
-for _, entry in pairs(primeCatalog.PRIME_WS_TUNING) do
-    if entry.slot == xi.slot.MAIN then
-        premiumMainhandAoECaps[entry.itemId] = primeCatalog.AOE_DAMAGE_CAP
-    end
-end
-
+-- Splash-only. C++ stamps AoEWsDamageCap on non-primary hits; the aimed-at
+-- target keeps the single-target ceiling. Use the same ladder as magic -ga
+-- and pet splash so off-native REMA cannot inherit the 500,000 ST cap.
 local function getPremiumAoECap(attacker)
     if attacker:getLocalVar('AoEWsDamageCap') <= 0 then
         return 0
     end
 
-    return premiumMainhandAoECaps[attacker:getEquipID(xi.slot.MAIN)] or 0
+    return catalog.getPlayerSplashDamageCap(attacker)
 end
 
 xi.standardWsTuning.isEligible = function(attacker, target, wsId, slot, wsParams)
@@ -114,14 +81,11 @@ xi.standardWsTuning.withStandardEffects = function(
         attacker:getMainLvl(), target:getMainLvl())
     local multiplier     = catalog.getWeaponskillMultiplier(attacker, target, slot)
     local damageCap      = catalog.getWeaponskillCap(attacker, slot)
-    -- Odyssey 119s: ordinary JP curve, 349,999 hard cap, no Ambu floor/boost.
-    -- Splash hits stamp AoEWsDamageCap at 79,999 in C++; raise that too so
-    -- every Odyssey WS (ST and AoE) shares the same ceiling.
+    -- Odyssey 119s: ordinary JP curve, 349,999 single-target cap, no Ambu
+    -- floor/boost. Splash is raised later via getPlayerSplashDamageCap
+    -- (149,999, same as finished REMA).
     if catalog.isOdysseyWeapon(attacker:getEquipID(slot)) then
         damageCap = catalog.ODYSSEY_DAMAGE_CAP
-        if attacker:getLocalVar('AoEWsDamageCap') > 0 then
-            attacker:setLocalVar('AoEWsDamageCap', catalog.ODYSSEY_DAMAGE_CAP)
-        end
     end
 
     -- Final Ambuscade weapons use a 99,999 ceiling on every WS. The linked
@@ -135,8 +99,8 @@ xi.standardWsTuning.withStandardEffects = function(
 
     -- Pre-119 III REMA matches Ambuscade (99,999). The native WS is 149,999
     -- until the weapon is finished. Finished Relic / Empy / Mythic / Aeonic
-    -- keep their private native wrapper; every other WS on that stick can
-    -- climb to 500,000 on gear and augments alone.
+    -- keep their private native wrapper; every other single-target WS on that
+    -- stick can climb to 500,000. Splash stays on getPlayerSplashDamageCap.
     local remaInfo = catalog.getRemaPathInfo(attacker:getEquipID(slot))
     if remaInfo then
         if not remaInfo.final then

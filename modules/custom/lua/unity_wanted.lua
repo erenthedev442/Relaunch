@@ -130,12 +130,15 @@ local function spawnWantedNm(player, nm, pos)
     local spawnPos    = pos or catalog.arena['T' .. nm.tier]
     local despawnSecs = catalog.despawnSecs
     local ownerName   = player:getName()
+    xi._uw_spawnSeq   = (tonumber(xi._uw_spawnSeq) or 0) + 1
+    local scriptName  = catalog.dynamicMobName(ownerName, nm.id, xi._uw_spawnSeq)
 
     local mob = zone:insertDynamicEntity({
         objtype              = xi.objType.MOB,
         groupId              = nm.groupId,
         groupZoneId          = catalog.huntZoneId,
-        name                 = nm.name,
+        name                 = scriptName,
+        packetName           = nm.name,
         x                    = spawnPos.x,
         y                    = spawnPos.y,
         z                    = spawnPos.z,
@@ -173,27 +176,34 @@ local function spawnWantedNm(player, nm, pos)
 
         onMobDeath = function(deadMob)
             -- LSB invokes onMobDeath once per eligible alliance member. Settle
-            -- this paid hunt exactly once against the player who purchased it;
-            -- do not rely on the runtime mob name or final-hit entity.
+            -- this paid hunt exactly once against the player who purchased it.
+            -- Owner/mark come from the mob so a shared DE_ cache cannot pay
+            -- the later popper for someone else's kill.
             if deadMob:getLocalVar('UW_Rewarded') == 1 then return end
 
-            local owner = GetPlayerByName(ownerName)
+            local ownerId = deadMob:getLocalVar('UW_OwnerId')
+            local nmId    = deadMob:getLocalVar('UW_NmId')
+            local owner   = ownerId > 0 and GetPlayerByID(ownerId) or nil
+            if not owner then
+                owner = GetPlayerByName(ownerName)
+            end
             if not owner then return end
 
+            local mark = nmById[nmId] or nm
             deadMob:setLocalVar('UW_Rewarded', 1)
             if owner:getHP() <= 0 then
                 owner:printToPlayer(string.format(
                     '[Unity] %s falls, but the contract fails because you were knocked out.',
-                    nm.label), S)
+                    mark.label), S)
                 return
             end
 
-            local reward = catalog.rewards[nm.tier]
-            local isWeekly = (nm.id == weeklyFeaturedId())
+            local reward = catalog.rewards[mark.tier]
+            local isWeekly = (mark.id == weeklyFeaturedId())
             if isWeekly then
                 reward = reward * 2
                 owner:printToPlayer(
-                    string.format('[Unity] Weekly bonus! %s yields double accolades!', nm.label), S)
+                    string.format('[Unity] Weekly bonus! %s yields double accolades!', mark.label), S)
             end
             owner:addCurrency('unity_accolades', reward)
             -- Lifetime EARNED accolades (never reduced by shop spending).
@@ -202,18 +212,18 @@ local function spawnWantedNm(player, nm, pos)
                 (owner:getCharVar('Unity_Accolades_Lifetime') or 0) + reward)
             -- Distinct-NM conquest tally (read by trust_progression_cap.lua's
             -- 4th-trust-slot gate). The per-NM flag dedupes so re-kills don't count.
-            local conqFlag = 'UW_Conq_' .. nm.id
+            local conqFlag = 'UW_Conq_' .. mark.id
             if (owner:getCharVar(conqFlag) or 0) == 0 then
                 owner:setCharVar(conqFlag, 1)
                 owner:setCharVar('Unity_NMs_Conquered',
                     (owner:getCharVar('Unity_NMs_Conquered') or 0) + 1)
             end
             owner:printToPlayer(
-                string.format('[Unity] %s defeated! +%d accolades (total: %d)', nm.label,
+                string.format('[Unity] %s defeated! +%d accolades (total: %d)', mark.label,
                     reward, owner:getCurrency('unity_accolades')), S)
 
             pcall(function()
-                trustDrops.tryAward(owner, nm.name, 'unity')
+                trustDrops.tryAward(owner, mark.name, 'unity')
             end)
         end,
     })
@@ -221,6 +231,9 @@ local function spawnWantedNm(player, nm, pos)
         player:printToPlayer('[Unity] Spawn failed — zone may be full. Try again or contact a GM.', S)
         return 'refund'
     end
+
+    mob:setLocalVar('UW_OwnerId', player:getID())
+    mob:setLocalVar('UW_NmId', nm.id)
 
     -- insertDynamicEntity only allocates and registers the entity. As with the
     -- other dynamic NM systems, set its spawn point and explicitly pop it.

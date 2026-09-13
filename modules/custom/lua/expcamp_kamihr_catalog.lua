@@ -66,8 +66,11 @@ catalog.dynamicCount = #catalog.dynamicPoints
 catalog.totalCount   = #catalog.retailIds + catalog.dynamicCount
 
 -- insertDynamicEntity never copies superFamilyID, so clones do not
--- join the retail tiger party. We emulate family link at this radius.
+-- join the retail tiger party. Emulate C++ CanLink: 10y to the
+-- engaged tiger if they are facing it, or 15y if they can see the player.
 catalog.linkRadius = 10
+catalog.sightRange = 15
+catalog.facingCone = 64
 
 catalog.retailIdSet = {}
 for _, id in ipairs(catalog.retailIds) do

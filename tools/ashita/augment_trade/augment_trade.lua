@@ -208,7 +208,15 @@ local function is_equipment(id)
     if not id or id <= 0 or is_catalog_catalyst(id) or NON_AUGMENTABLE[id] then
         return false
     end
-    return item_slots(id) > 0
+    if item_slots(id) > 0 then
+        return true
+    end
+
+    -- Older armor (Velocious Belt, Shell Shield) can report Slots=0 in
+    -- the DAT while still being valid equipment the moogle will accept.
+    local res = item_res(id)
+    local typ = res and tonumber(res.Type) or 0
+    return typ == 4 or typ == 5
 end
 
 local function inventory_qty(id)

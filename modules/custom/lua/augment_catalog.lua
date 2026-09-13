@@ -163,7 +163,9 @@ return {
     -- catalyst. Banked 1452 remains withdrawable via augment_catalyst_bank.
     [1626] = { augId = 369,  base = 1,   mult = 1,   disp = 1,    cat = 7, tier = 0, label = 'Avatar Blood Pact Dmg', maxBoost = 11 },
     [2153] = { augId = 1246, base = 3,   mult = 30,  disp = 100,  cat = 7, tier = 0, label = 'Pet Phy. Dmg. Taken' },
-    [2518] = { augId = 2100, base = 5,   mult = 1,   disp = 1,    cat = 7, tier = 0, label = 'Beast Affinity',        maxBoost = 31 },
+    -- 1378 is the retail "Enhances Beast Affinity" id (client-visible).
+    -- 2100 wrapped to 52 in the 11-bit aug field ("MP recovered while healing").
+    [2518] = { augId = 1378, base = 5,   mult = 1,   disp = 1,    cat = 7, tier = 0, label = 'Beast Affinity',        maxBoost = 31 },
 
     -- ── cat 8: Potency ──────────────────────────────────────────────────────────
     [1609] = { augId = 343,  base = 1,   mult = 1,   disp = 1,    cat = 8, tier = 0, label = 'Drain/Aspir Potency' },

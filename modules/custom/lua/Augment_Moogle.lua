@@ -2027,6 +2027,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 [2046] = 'Phantom Roll Effect gear ceiling is +150.',
                 [ 137] = 'Regen gear ceiling is +600 HP per tick.',
                 [2100] = 'Beast Affinity gear ceiling is +900.',
+                [1378] = 'Beast Affinity gear ceiling is +900.',
                 [ 110] = 'Pet Regen gear ceiling is +1280 HP per tick.',
                 [1264] = 'Meditate Duration gear ceiling is +320 seconds.',
                 [1153] = 'Evasion gear ceiling is +850.',

@@ -117,7 +117,7 @@ catalog.scaling =
     mods =
     {
         -- offense (physical)
-        [xi.mod.ATT]           = { base = 1500, per = 65,   cap = 8000 },
+        [xi.mod.ATT]           = { base = 1500, per = 45,   cap = 5500 },
         [xi.mod.ACC]           = { base = 300,  per = 6,    cap = 900 },
         [xi.mod.STR]           = { base = 50,   per = 3,    cap = 350 },
         [xi.mod.DEX]           = { base = 50,   per = 3,    cap = 350 },
@@ -126,14 +126,14 @@ catalog.scaling =
         [xi.mod.TRIPLE_ATTACK] = { base = 0,    per = 0.1,  cap = 10 },
         -- Weapon DMG used to sit at ~level (Suzaku Dread Dive ~400-600 at F95-100).
         -- MAIN_DMG_RATING feeds GetWeaponDamage so physical specials track the floor.
-        [xi.mod.MAIN_DMG_RATING] = { base = 25, per = 2.0,  cap = 220 },
+        [xi.mod.MAIN_DMG_RATING] = { base = 25, per = 1.4,  cap = 160 },
         -- offense (magic) — Stormwind / Firaga / Flare were dead without this.
         -- Magical skills use MATT/MDEF and MAGIC_DAMAGE; ATT alone does nothing.
         -- F100 ballpark: MATT~1400, MAGIC_DAMAGE~850 → Stormwind thousands, not ~50.
         [xi.mod.MATT]          = { base = 200,  per = 12,   cap = 1400 },
         [xi.mod.MACC]          = { base = 200,  per = 6,    cap = 900 },
         [xi.mod.INT]           = { base = 40,   per = 2.5,  cap = 300 },
-        [xi.mod.MAGIC_DAMAGE]  = { base = 50,   per = 8,    cap = 900 },
+        [xi.mod.MAGIC_DAMAGE]  = { base = 50,   per = 5,    cap = 600 },
         -- endurance (gentle, low caps -- keep mobs damageable)
         [xi.mod.DEF]           = { base = 0,    per = 5,    cap = 500 },
         [xi.mod.EVA]           = { base = 0,    per = 3,    cap = 300 },
@@ -285,16 +285,16 @@ catalog.floorMechanics =
 -- Stamped as EncounterOutgoingDamageCap + GeasFeteMobSkillDamageCap on spawn
 -- so C++ takeDamage and the mobskill path both clamp. Dreadstorm was never
 -- in the per-skill table and was still landing 15k+.
-catalog.outgoingDamageCap = 7500
+catalog.outgoingDamageCap = 5500
 
 -- Optional lower per-skill bands. Nothing here may exceed outgoingDamageCap.
 -- Applied on spawn via local var; the skill script clamps before takeDamage.
 catalog.skillDamageCaps =
 {
-    Hakutaku = { DeathRay = 5000 },
-    Khimaira = { Fulmination = 5500, Thunderstrike = 5500, Dreadstorm = 7500 },
-    Cerberus = { GatesOfHades = 5500 },
-    Tiamat   = { InfernoBlast = 7500, TebbadWingAir = 7500 },
+    Hakutaku = { DeathRay = 4000 },
+    Khimaira = { Fulmination = 4500, Thunderstrike = 4500, Dreadstorm = 5500 },
+    Cerberus = { GatesOfHades = 4500 },
+    Tiamat   = { InfernoBlast = 5500, TebbadWingAir = 5500 },
 }
 
 -- insertDynamicEntity caches onMobDeath at xi.zones[zone].mobs['DE_' .. name].

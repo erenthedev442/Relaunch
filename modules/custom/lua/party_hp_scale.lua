@@ -126,6 +126,35 @@ function scale.isScalableMob(mob)
     return true
 end
 
+-- Shared farm hubs (Reforge) sit many LS members in one alliance.
+-- Alliance-wide counting inflated HP whenever a second member was in zone.
+function scale.countFromParty(player)
+    player = resolvePC(player)
+    if not player then
+        return 1
+    end
+
+    local zoneId = player.getZoneID and player:getZoneID() or nil
+    local n = 0
+    local group = (player.getParty and player:getParty()) or { player }
+    for _, member in ipairs(group) do
+        if
+            isPC(member) and
+            (zoneId == nil or not member.getZoneID or member:getZoneID() == zoneId)
+        then
+            n = n + 1
+        end
+    end
+
+    if n < 1 then
+        n = 1
+    elseif n > 6 then
+        n = 6
+    end
+
+    return n
+end
+
 function scale.countFromPlayer(player)
     player = resolvePC(player)
     if not player then
@@ -229,7 +258,10 @@ function scale.syncFromCombat(mob, target)
 
     local player = resolvePC(target)
     if player then
-        scale.apply(mob, scale.countFromPlayer(player))
+        local n = mob:getLocalVar('PartyHpScalePartyOnly') == 1
+            and scale.countFromParty(player)
+            or scale.countFromPlayer(player)
+        scale.apply(mob, n)
     end
 end
 
@@ -274,7 +306,7 @@ function scale.catalogCurrentHp(mob)
     return hp
 end
 
-function scale.afterCustomHp(mob, source)
+function scale.afterCustomHp(mob, source, opts)
     if not scale.isScalableMob(mob) then
         return
     end
@@ -308,6 +340,12 @@ function scale.afterCustomHp(mob, source)
     end
 
     if source then
+        if opts and opts.partyOnly then
+            mob:setLocalVar('PartyHpScalePartyOnly', 1)
+            scale.apply(mob, scale.countFromParty(source))
+            return
+        end
+
         scale.apply(mob, scale.countFromPlayer(source))
     end
 end

@@ -28,7 +28,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     params.overrideVE = 240
     params.rangedAccuracyBonus = 100
 
+    -- TakeSkillchainDamage adds CE/VE from SC damage. Coronach is static
+    -- 80/240 regardless of the WS or the Darkness/Fragmentation close.
+    player:setLocalVar('WS_StaticEnmity', 1)
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
+    player:setLocalVar('WS_StaticEnmity', 0)
 
     -- Apply aftermath
     xi.aftermath.addStatusEffect(player, tp, xi.slot.RANGED, xi.aftermath.type.RELIC)

@@ -220,7 +220,15 @@ local function applyEndgameScaling(master, pet)
     -- making the pet "the new meat". 1.0 at level 99, ~0.27 at level 27. Master-share
     -- contributions already track the master's real (lower) stats, so they self-scale
     -- and are intentionally NOT level-scaled. All flat floors below use floorMult.
+    -- Rebirth is the exception: the job is back at 1-98 but the 50-rank pet
+    -- tree is already paid for. Keep those floors at 99-scale.
     local levelScale = math.min((master:getMainLvl() or 1) / 99, 1.0)
+    pcall(function()
+        local rebirth = require('modules/custom/lua/job_rebirth_catalog')
+        if rebirth.hasRebirth(master, master:getMainJob()) then
+            levelScale = 1.0
+        end
+    end)
     local floorMult  = beastAffMult * levelScale * power
     local magicalReadyMult  = getReadyInvestmentMultiplier(master, true)
 
@@ -255,28 +263,28 @@ local function applyEndgameScaling(master, pet)
         pet:setDamage(weaponDmg)
     end
 
-    -- PET AUGMENTS: the engine only forwards the PET_* mods (990-995) to avatars,
-    -- wyverns, and automatons -- NEVER jug pets -- so a BST's "Pet: Attack/Accuracy/
-    -- Magic/Attributes/TP Bonus" augments + gear do nothing by default. Wire them
-    -- onto the jug pet here (mirrors CalculateAvatarStats:913-922) so the existing
-    -- catalog pet augments finally work for BST. addMod(x, 0) is a no-op when unrolled.
-    local petAtkDef   = master:getMod(xi.mod.PET_ATK_DEF)
-    local petAccEva   = master:getMod(xi.mod.PET_ACC_EVA)
-    local petMabMdb   = master:getMod(xi.mod.PET_MAB_MDB)
-    local petMaccMeva = master:getMod(xi.mod.PET_MACC_MEVA)
-    pet:addMod(xi.mod.ATT,      petAtkDef)
-    pet:addMod(xi.mod.DEF,      petAtkDef)
-    pet:addMod(xi.mod.ACC,      petAccEva)
-    pet:addMod(xi.mod.EVA,      petAccEva)
-    pet:addMod(xi.mod.MATT,     petMabMdb)
-    pet:addMod(xi.mod.MDEF,     petMabMdb)
-    pet:addMod(xi.mod.MACC,     petMaccMeva)
-    pet:addMod(xi.mod.MEVA,     petMaccMeva)
-    pet:addMod(xi.mod.TP_BONUS, master:getMod(xi.mod.PET_TP_BONUS))
-    local petAttr = master:getMod(xi.mod.PET_ATTR_BONUS) -- "Pet: Attributes" -> all 7
-    if petAttr ~= 0 then
-        for _, attr in ipairs({ xi.mod.STR, xi.mod.DEX, xi.mod.VIT, xi.mod.AGI, xi.mod.INT, xi.mod.MND, xi.mod.CHR }) do
-            pet:addMod(attr, petAttr)
+    -- PET_* (Ascension / Rebirth Pet Boost + gear). After the next map rebuild
+    -- CalculateJugPetStats forwards these and sets JugPetModsFromEngine so we
+    -- do not double them. Until then, copy them here like avatars already get.
+    if pet:getLocalVar('JugPetModsFromEngine') == 0 then
+        local petAtkDef   = master:getMod(xi.mod.PET_ATK_DEF)
+        local petAccEva   = master:getMod(xi.mod.PET_ACC_EVA)
+        local petMabMdb   = master:getMod(xi.mod.PET_MAB_MDB)
+        local petMaccMeva = master:getMod(xi.mod.PET_MACC_MEVA)
+        pet:addMod(xi.mod.ATT,      petAtkDef)
+        pet:addMod(xi.mod.DEF,      petAtkDef)
+        pet:addMod(xi.mod.ACC,      petAccEva)
+        pet:addMod(xi.mod.EVA,      petAccEva)
+        pet:addMod(xi.mod.MATT,     petMabMdb)
+        pet:addMod(xi.mod.MDEF,     petMabMdb)
+        pet:addMod(xi.mod.MACC,     petMaccMeva)
+        pet:addMod(xi.mod.MEVA,     petMaccMeva)
+        pet:addMod(xi.mod.TP_BONUS, master:getMod(xi.mod.PET_TP_BONUS))
+        local petAttr = master:getMod(xi.mod.PET_ATTR_BONUS)
+        if petAttr ~= 0 then
+            for _, attr in ipairs({ xi.mod.STR, xi.mod.DEX, xi.mod.VIT, xi.mod.AGI, xi.mod.INT, xi.mod.MND, xi.mod.CHR }) do
+                pet:addMod(attr, petAttr)
+            end
         end
     end
 
@@ -298,6 +306,33 @@ local function applyEndgameScaling(master, pet)
     if CONFIG.autoEngage then
         scheduleAutoEngage(pet)
     end
+
+    pet:setLocalVar('JugOverhaulAtt', pet:getMod(xi.mod.ATT))
+end
+
+local function reapplyIfWiped(master, pet)
+    if not pet or pet:isDead() or not master or not master:isAlive() then
+        return
+    end
+
+    local expected = pet:getLocalVar('JugOverhaulAtt')
+    if expected > 0 and pet:getMod(xi.mod.ATT) >= expected then
+        return
+    end
+
+    pet:setLocalVar('bstOverhaulApplied', 0)
+    applyEndgameScaling(master, pet)
+end
+
+local function scheduleOverhaulReapply(master, pet)
+    -- setLevelRestriction / CalculateJugPetStats runs restoreModifiers after
+    -- spawn and wipes Lua addMod. PET_* then look like a level-1 jug.
+    -- Two pulses: spawn-finish (~800ms) and a late recalc (~2.5s).
+    for _, delayMs in ipairs({ 800, 2500 }) do
+        pet:timer(delayMs, function(live)
+            reapplyIfWiped(master, live)
+        end)
+    end
 end
 
 -- ── Hook ───────────────────────────────────────────────────────────────────
@@ -311,7 +346,22 @@ m:addOverride('xi.pet.spawnPet', function(caster, petID, state, target)
         local pet = caster:getPet()
         if pet then
             applyEndgameScaling(caster, pet)
+            scheduleOverhaulReapply(caster, pet)
         end
+    end
+end)
+
+-- C++ setLevelRestriction restoreModifiers + CalculateJugPetStats runs
+-- immediately before this hook. Re-stamp the Lua floors after that wipe.
+m:addOverride('xi.player.onLevelRestriction', function(player)
+    super(player)
+    if not player or not player:isPC() then
+        return
+    end
+
+    local pet = player:getPet()
+    if pet and pet.getPetID and pet:getPetID() >= JUG_MIN then
+        reapplyIfWiped(player, pet)
     end
 end)
 

@@ -13,11 +13,17 @@ local C =
 }
 
 for _, chain in ipairs(weaponForge.empyreanChains) do
+    local companions = {}
+    if chain.name == 'Gandiva' then
+        companions = { 26344 } -- Artemis's Quiver (arrows); bow is not usable
+    end
+
     C.weapons[#C.weapons + 1] =
     {
-        id   = chain.s3,
-        name = chain.name,
-        info = string.format('%s Empyrean weapon. Jobs: %s.', chain.type, chain.jobs),
+        id          = chain.s3,
+        name        = chain.name,
+        info        = string.format('%s Empyrean weapon. Jobs: %s.', chain.type, chain.jobs),
+        companions  = companions,
     }
 end
 

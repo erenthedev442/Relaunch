@@ -78,6 +78,19 @@ return {
     -- it (owner pricing 2026-07-12).
     upgradeCost = { [1] = 4000, [2] = 15000, [3] = 40000 },
 
+    -- insertDynamicEntity caches onMobDeath at xi.zones[zone].mobs['DE_' .. name].
+    -- Two same-name pops in one zone used to share that slot, so the later
+    -- spawn stole the first kill's accolades. Unique script names keep the
+    -- cache slots apart; packetName stays the catalog display name.
+    dynamicMobName = function(ownerName, nmId, seq)
+        local owner = tostring(ownerName or 'unknown'):gsub('[^%w]', '')
+        if owner == '' then
+            owner = 'unknown'
+        end
+
+        return string.format('UW_%s_%d_%u', owner, tonumber(nmId) or 0, tonumber(seq) or 0)
+    end,
+
     -- Difficulty scaling applied on spawn (unity_wanted.lua). The base mob HP is
     -- far too low -- ~10k even at T3, killable with auto-attacks -- so set an
     -- absolute HP floor + offensive mods per tier. TUNE HERE. (HP is int32, safe

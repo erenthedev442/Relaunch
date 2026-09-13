@@ -29,6 +29,19 @@ C.EXIT_WARP  = { zoneId = 44, x = 571.471, y = -3.360, z = 512.586, rot = 65 }
 C.BOSS_GROUPS = { 11366, 11367, 11368, 11369 }
 C.BOSS_NAMES  = { 'Apex Devourer', 'Paragon Sentinel', 'Ascendant Tyrant', 'Voidlord Eternal' }
 
+-- insertDynamicEntity caches onMobDeath at DE_<name>. Four shared display
+-- names meant a second climber stole the first kill callback, so the next
+-- boss never spawned.
+function C.nextBossScriptName(ownerName)
+    local seq = (tonumber(xi._apex_bossSpawnSeq) or 0) + 1
+    xi._apex_bossSpawnSeq = seq
+    local owner = tostring(ownerName or 'unknown'):gsub('[^%w]', '')
+    if owner == '' then
+        owner = 'unknown'
+    end
+    return string.format('Apex_%s_%u', owner, seq)
+end
+
 -- ── Scaling knobs ───────────────────────────────────────────────────────────
 C.LEVEL_CAP = 130
 

@@ -71,6 +71,31 @@ describe('Unity Wanted progression', function()
     end)
 end)
 
+describe('Unity Wanted parallel pops', function()
+    it('gives each pop its own onMobDeath cache name', function()
+        local first = catalog.dynamicMobName('Hasalia', 43, 1)
+        local second = catalog.dynamicMobName('Sahalia', 43, 2)
+        local other = catalog.dynamicMobName('Hasalia', 38, 3)
+
+        assert(first == 'UW_Hasalia_43_1')
+        assert(second == 'UW_Sahalia_43_2')
+        assert(first ~= second)
+        assert(first ~= other)
+        assert(catalog.dynamicMobName('Hasalia-Two', 43, 4) == 'UW_HasaliaTwo_43_4')
+        assert(catalog.dynamicMobName('Pekkle', 39, 10) == 'UW_Pekkle_39_10')
+    end)
+
+    it('lists Specter Worm as Unity T3 id 39', function()
+        local worm
+        for _, nm in ipairs(catalog.nms) do
+            if nm.name == 'Specter_Worm' then
+                worm = nm
+            end
+        end
+        assert(worm and worm.id == 39 and worm.tier == 3)
+    end)
+end)
+
 describe('Unity Wanted encounter invariants', function()
     it('gives every T2 and T3 mark a mechanics profile', function()
         local upperTierCount = 0

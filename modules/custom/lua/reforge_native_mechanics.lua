@@ -124,16 +124,14 @@ local function regenerateTinninHead(mob, animationSub)
     mob:setLocalVar('RF_TinninHeadAt', os.time() + math.random(90, 210))
     mob:setAnimationSub(animationSub - 1)
 
-    local multiplier = 0.05
-    if animationSub == 1 and mob:getLocalVar('RF_TinninHead3Regen') == 0 then
+    if animationSub == 1 then
         mob:setLocalVar('RF_TinninHead3Regen', 1)
-        multiplier = 0.25
-    elseif animationSub == 2 and mob:getLocalVar('RF_TinninHead2Regen') == 0 then
+    elseif animationSub == 2 then
         mob:setLocalVar('RF_TinninHead2Regen', 1)
-        multiplier = 0.25
     end
 
-    mob:addHP(mob:getMaxHP() * multiplier)
+    -- Retail head-grow is visual. The old 25% first-head restore fully
+    -- refilled T5 Tinnin when Barofield fired as the grow-back tell.
 end
 
 function M.attach(mob, groupId)

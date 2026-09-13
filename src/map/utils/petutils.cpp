@@ -1153,8 +1153,16 @@ void CalculateJugPetStats(CBattleEntity* PMaster, CPetEntity* PPet)
                        PChar->getMod(Mod::JUG_LVL_BONUS) +
                        weaponLevelBonus;
 
-    // Endgame equipment must never create an over-levelled pet while levelling.
-    if (PMaster->GetMLevel() < 99)
+    // Endgame equipment must never create an over-levelled pet while levelling
+    // a first-life job. Rebirth already paid the pet tree (Ascension/Rebirth
+    // Pet Boost cap 50); keep the 99-scale ceiling so those mods are not
+    // flattened to the current grind level.
+    int32 rebirthCount = 0;
+    if (PChar != nullptr)
+    {
+        rebirthCount = PChar->getCharVar(fmt::format("Rebirth_Count_{}", static_cast<uint8>(PMaster->GetMJob())));
+    }
+    if (PMaster->GetMLevel() < 99 && rebirthCount <= 0)
     {
         weaponLevelCap = PMaster->GetMLevel();
     }
@@ -1197,6 +1205,42 @@ void CalculateJugPetStats(CBattleEntity* PMaster, CPetEntity* PPet)
     PPet->setModifier(Mod::LIGHT_SLEEP_RES_RANK, PPetData->light_sleep_res_rank);
     PPet->setModifier(Mod::DARK_SLEEP_RES_RANK, PPetData->dark_sleep_res_rank);
     PPet->setModifier(Mod::BLIND_RES_RANK, PPetData->blind_res_rank);
+
+    // Jug pets used to skip PET_* (Ascension / Rebirth Pet Boost). Avatars
+    // keep those through addStatRecalculationModifier so restoreModifiers /
+    // setLevelRestriction cannot wipe them. BstJugPetOverhaul.lua copies the
+    // same mods until this rebuild is live, then skips when this flag is set.
+    if (PMaster->objtype == TYPE_PC)
+    {
+        const int16 petAtkDef   = PMaster->getMod(Mod::PET_ATK_DEF);
+        const int16 petAccEva   = PMaster->getMod(Mod::PET_ACC_EVA);
+        const int16 petMabMdb   = PMaster->getMod(Mod::PET_MAB_MDB);
+        const int16 petMaccMeva = PMaster->getMod(Mod::PET_MACC_MEVA);
+        const int16 petAttr     = PMaster->getMod(Mod::PET_ATTR_BONUS);
+        const int16 petTp       = PMaster->getMod(Mod::PET_TP_BONUS);
+
+        PPet->addStatRecalculationModifier(Mod::ATT, petAtkDef);
+        PPet->addStatRecalculationModifier(Mod::DEF, petAtkDef);
+        PPet->addStatRecalculationModifier(Mod::ACC, petAccEva);
+        PPet->addStatRecalculationModifier(Mod::EVA, petAccEva);
+        PPet->addStatRecalculationModifier(Mod::MATT, petMabMdb);
+        PPet->addStatRecalculationModifier(Mod::MDEF, petMabMdb);
+        PPet->addStatRecalculationModifier(Mod::MACC, petMaccMeva);
+        PPet->addStatRecalculationModifier(Mod::MEVA, petMaccMeva);
+        PPet->addStatRecalculationModifier(Mod::TP_BONUS, petTp);
+        if (petAttr != 0)
+        {
+            PPet->addStatRecalculationModifier(Mod::STR, petAttr);
+            PPet->addStatRecalculationModifier(Mod::DEX, petAttr);
+            PPet->addStatRecalculationModifier(Mod::VIT, petAttr);
+            PPet->addStatRecalculationModifier(Mod::AGI, petAttr);
+            PPet->addStatRecalculationModifier(Mod::INT, petAttr);
+            PPet->addStatRecalculationModifier(Mod::MND, petAttr);
+            PPet->addStatRecalculationModifier(Mod::CHR, petAttr);
+        }
+
+        PPet->SetLocalVar("JugPetModsFromEngine", 1);
+    }
 
     FinalizePetStatistics(PMaster, PPet);
 }
