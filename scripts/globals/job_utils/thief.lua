@@ -287,6 +287,22 @@ xi.job_utils.thief.useHide = function(player, target, ability)
     return xi.effect.HIDE
 end
 
+-- getDuration / getTimeRemaining / getTick are milliseconds.
+-- addStatusEffect duration and tick are seconds. Passing 30000 ms as
+-- seconds turns a 30s mob Invincible into 8h20m.
+xi.job_utils.thief.copiedEffectDurationSeconds = function(durationMs, remainingMs, extraSeconds)
+    local ms = tonumber(remainingMs) or 0
+    if ms <= 0 then
+        ms = tonumber(durationMs) or 0
+    end
+
+    return math.max(0, math.floor(ms / 1000) + (tonumber(extraSeconds) or 0))
+end
+
+xi.job_utils.thief.copiedEffectTickSeconds = function(tickMs)
+    return math.max(0, math.floor((tonumber(tickMs) or 0) / 1000))
+end
+
 xi.job_utils.thief.useLarceny = function(player, target, ability, action)
     local effectStolen
     local effectID = 0
@@ -314,8 +330,8 @@ xi.job_utils.thief.useLarceny = function(player, target, ability, action)
         local newID       = effectStolen:getEffectType()
         local newIcon     = effectStolen:getIcon()
         local newPower    = effectStolen:getPower()
-        local newTick     = effectStolen:getTick()
-        local newDuration = effectStolen:getDuration() + jpValue
+        local newTick     = xi.job_utils.thief.copiedEffectTickSeconds(effectStolen:getTick())
+        local newDuration = xi.job_utils.thief.copiedEffectDurationSeconds(effectStolen:getDuration(), effectStolen:getTimeRemaining(), jpValue)
         local newSubType  = effectStolen:getSubType()
         local newSubPower = effectStolen:getSubPower()
         local newTier     = effectStolen:getTier()
