@@ -65,4 +65,13 @@ end
 catalog.dynamicCount = #catalog.dynamicPoints
 catalog.totalCount   = #catalog.retailIds + catalog.dynamicCount
 
+-- insertDynamicEntity never copies superFamilyID, so clones do not
+-- join the retail tiger party. We emulate family link at this radius.
+catalog.linkRadius = 10
+
+catalog.retailIdSet = {}
+for _, id in ipairs(catalog.retailIds) do
+    catalog.retailIdSet[id] = true
+end
+
 return catalog

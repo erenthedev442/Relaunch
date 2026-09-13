@@ -17,6 +17,61 @@ local m = Module:new('expcamp_kamihr_pack')
 
 local campZone
 local staleRespawnSeconds = math.max(60, (catalog.respawnSeconds or 60) + 45)
+local linkRadius          = catalog.linkRadius or 10
+
+local function eachCampTiger(fn)
+    for _, id in ipairs(catalog.retailIds) do
+        fn(GetMobByID(id))
+    end
+
+    if not campZone then
+        return
+    end
+
+    for _, mob in ipairs(campZone:queryEntitiesByName(catalog.queryName) or {}) do
+        fn(mob)
+    end
+end
+
+-- Dynamic mobs never get superFamilyID, so they never join the retail
+-- Ashen Tiger party and the C++ linker ignores them. Pull neighbors
+-- inside the normal family-link radius ourselves.
+local function linkNearby(mob, target)
+    if not mob or not target or not target.isAlive or not target:isAlive() then
+        return
+    end
+
+    eachCampTiger(function(other)
+        if not other or other:getID() == mob:getID() then
+            return
+        end
+
+        if not other:isAlive() or other:isEngaged() then
+            return
+        end
+
+        if mob:checkDistance(other) > linkRadius then
+            return
+        end
+
+        pcall(function()
+            other:updateEnmity(target)
+        end)
+    end)
+end
+
+local function attachLinkHook(mob)
+    if not mob or not mob.addListener then
+        return
+    end
+
+    pcall(function()
+        mob:removeListener('EXPCAMP_KAMIHR_LINK')
+    end)
+    mob:addListener('ENGAGE', 'EXPCAMP_KAMIHR_LINK', function(engaged, target)
+        linkNearby(engaged, target)
+    end)
+end
 
 local function applyCampFlags(mob, index)
     mob:setLocalVar('ExpCampPack', 1)
@@ -25,12 +80,15 @@ local function applyCampFlags(mob, index)
         mob:setLocalVar('ExpCampIndex', index)
     end
 
+    mob:setLink(1)
     mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
     mob:setMobMod(xi.mobMod.NO_DROPS, 1)
     if catalog.maxHP and catalog.maxHP > 0 then
         mob:setMaxHP(catalog.maxHP)
         mob:setHP(catalog.maxHP)
     end
+
+    attachLinkHook(mob)
 end
 
 local function spawnAt(index, point)
@@ -81,6 +139,10 @@ local function ensurePopulation()
         return
     end
 
+    for _, id in ipairs(catalog.retailIds) do
+        attachLinkHook(GetMobByID(id))
+    end
+
     local existing = campZone:queryEntitiesByName(catalog.queryName)
     local used     = {}
     local now      = GetSystemTime()
@@ -90,6 +152,8 @@ local function ensurePopulation()
         if index > 0 then
             used[index] = true
         end
+
+        attachLinkHook(mob)
 
         if not mob:isAlive() then
             local diedAt = mob:getLocalVar('ExpCampDiedAt')
