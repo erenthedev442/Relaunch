@@ -83,12 +83,22 @@ end)
 m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSkillKill)
     super(mob, player, isKiller, isWeaponSkillKill)
 
-    if mob:isNM() and isKiller then
-        local nmName, _ = string.gsub(mob:getName(), '_', ' ')
-        checkWorldFirstServerVar(player,
-            'NM_KILL_' .. string.upper(mob:getName()),
-            string.format('%s has been killed for the first time by %s!', nmName, player:getName()))
+    if not (mob:isNM() and isKiller) then
+        return
     end
+
+    -- insertDynamicEntity stores the script name as DE_<unique>. Apex / Unity
+    -- Wanted / Game Master / Voidspire mint a new name per spawn so death
+    -- callbacks do not collide. Announcing those as world-firsts is spam.
+    local rawName = mob:getName() or ''
+    if rawName:sub(1, 3) == 'DE_' then
+        return
+    end
+
+    local nmName, _ = string.gsub(rawName, '_', ' ')
+    checkWorldFirstServerVar(player,
+        'NM_KILL_' .. string.upper(rawName),
+        string.format('%s has been killed for the first time by %s!', nmName, player:getName()))
 end)
 
 --[[
