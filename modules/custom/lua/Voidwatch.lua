@@ -296,16 +296,23 @@ local function removeListeners(player, ownerName)
 end
 
 local function registerPartyListeners(owner, sess)
-    sess.listenerPlayers = {}
+    -- Store names, not entity userdata. A party member who zones is a new
+    -- CCharEntity; the old Lua object is a dangling pointer. removeListener
+    -- on that object took the map down during onGameIn (2026-09-12 / 09-14).
+    sess.listenerNames = {}
     for _, member in ipairs(eligiblePlayers(owner)) do
         registerListeners(member, sess.ownerName)
-        sess.listenerPlayers[#sess.listenerPlayers + 1] = member
+        sess.listenerNames[#sess.listenerNames + 1] = member:getName()
     end
 end
 
 local function removeSessionListeners(sess)
-    for _, player in ipairs((sess and sess.listenerPlayers) or {}) do
-        removeListeners(player, sess.ownerName)
+    for _, name in ipairs((sess and sess.listenerNames) or {}) do
+        local player
+        pcall(function() player = GetPlayerByName(name) end)
+        if player and player.isValidEntity and player:isValidEntity() then
+            removeListeners(player, sess.ownerName)
+        end
     end
 end
 

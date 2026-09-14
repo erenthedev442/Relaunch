@@ -199,6 +199,25 @@
         ShowWarning("CLuaBaseEntity::%s on a dead/null entity - suppressed.", __func__); \
         return; \
     }
+// Listener bindings walk PAI->EventHandler. A live entity with a null PAI, or a
+// Lua userdata whose entity was already destroyed, used to ACCESS_VIOLATION in
+// CAIEventHandler::removeFromAllListeners during onGameIn (2026-09-12 22:42
+// and 2026-09-14 07:11). pcall cannot catch that. addListener already had the
+// alive check; remove/trigger/has did not.
+#define FJB_REQUIRE_ALIVE_PAI(retval) \
+    FJB_REQUIRE_ALIVE(retval); \
+    if (m_PBaseEntity->PAI == nullptr) \
+    { \
+        ShowWarning("CLuaBaseEntity::%s on entity with no PAI - suppressed.", __func__); \
+        return retval; \
+    }
+#define FJB_REQUIRE_ALIVE_PAI_VOID() \
+    FJB_REQUIRE_ALIVE_VOID(); \
+    if (m_PBaseEntity->PAI == nullptr) \
+    { \
+        ShowWarning("CLuaBaseEntity::%s on entity with no PAI - suppressed.", __func__); \
+        return; \
+    }
 
 
 #include <magic_enum/magic_enum.hpp>
@@ -13166,7 +13185,7 @@ void CLuaBaseEntity::resetRecasts()
 
 void CLuaBaseEntity::addListener(const std::string& eventName, const std::string& identifier, const sol::function& func)
 {
-    FJB_REQUIRE_ALIVE_VOID();
+    FJB_REQUIRE_ALIVE_PAI_VOID();
 
     m_PBaseEntity->PAI->EventHandler.addListener(eventName, func, identifier);
 }
@@ -13180,6 +13199,8 @@ void CLuaBaseEntity::addListener(const std::string& eventName, const std::string
 
 void CLuaBaseEntity::removeListener(const std::string& identifier)
 {
+    FJB_REQUIRE_ALIVE_PAI_VOID();
+
     m_PBaseEntity->PAI->EventHandler.removeListener(identifier);
 }
 
@@ -13193,6 +13214,8 @@ void CLuaBaseEntity::removeListener(const std::string& identifier)
 
 void CLuaBaseEntity::triggerListener(const std::string& eventName, sol::variadic_args args)
 {
+    FJB_REQUIRE_ALIVE_PAI_VOID();
+
     m_PBaseEntity->PAI->EventHandler.triggerListener(eventName, sol::as_args(args));
 }
 
@@ -13207,6 +13230,8 @@ void CLuaBaseEntity::triggerListener(const std::string& eventName, sol::variadic
 
 bool CLuaBaseEntity::hasListener(const std::string& eventName)
 {
+    FJB_REQUIRE_ALIVE_PAI(false);
+
     return m_PBaseEntity->PAI->EventHandler.hasListener(eventName);
 }
 

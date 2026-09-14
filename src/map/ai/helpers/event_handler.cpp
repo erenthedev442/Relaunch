@@ -19,6 +19,7 @@
 ===========================================================================
 */
 
+#include <algorithm>
 #include <map/ai/helpers/event_handler.h>
 
 void CAIEventHandler::addListener(const std::string& eventName, const sol::function& luaFunc, const std::string& identifier)
@@ -69,17 +70,37 @@ void CAIEventHandler::removeFromAllListeners(const std::string& identifier)
     TracyZoneScoped;
     TracyZoneString(identifier);
 
+    if (eventListeners_.empty())
+    {
+        return;
+    }
+
     const auto isSameIdentifier = [&identifier](const AIEvent& event)
     {
         return identifier == event.identifier_;
     };
 
-    for (auto& [_, listeners] : eventListeners_)
+    // Copy keys first. Destroying a sol::function during erase can re-enter
+    // addListener (Lua GC / __gc) and rehash eventListeners_ under a live
+    // range-for, which is the same class of crash as mutating the vector
+    // during triggerListener.
+    std::vector<std::string> names;
+    names.reserve(eventListeners_.size());
+    for (const auto& [name, _] : eventListeners_)
     {
-        // Partition the vector so that all elements that match the identifier are at the end
-        auto it = std::remove_if(listeners.begin(), listeners.end(), isSameIdentifier);
+        names.push_back(name);
+    }
 
-        // Erase the partitioned elements
+    for (const auto& name : names)
+    {
+        auto itMap = eventListeners_.find(name);
+        if (itMap == eventListeners_.end())
+        {
+            continue;
+        }
+
+        auto& listeners = itMap->second;
+        auto  it        = std::remove_if(listeners.begin(), listeners.end(), isSameIdentifier);
         listeners.erase(it, listeners.end());
     }
 }
