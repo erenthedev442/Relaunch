@@ -253,32 +253,19 @@ describe('Hades Cosmetics stall', function()
 end)
 
 describe('Hades Leveling stall', function()
-    it('lists the full lv.1 EXP / Capacity set at a flat shard price', function()
+    it('puts every lv.1 EXP / Capacity look in the weekend Cosmetics pool', function()
         assert(#leveling.items == 24)
-        assert(leveling.PRICE == 199)
-        local seen = {}
         for _, row in ipairs(leveling.items) do
-            assert(row.id > 0)
-            assert(row.name ~= '')
-            assert(row.price == leveling.PRICE)
-            assert(not seen[row.id])
-            seen[row.id] = true
-            assert(leveling.byId[row.id] == row)
+            local look = cosmetics.byId[row.id]
+            assert(look, string.format('missing Cosmetics entry for %s (%d)', row.name, row.id))
+            assert(look.name == row.name or look.id == row.id)
         end
-        -- Event / login holes that had no other Legendary source.
-        assert(seen[11812]) -- Charity Cap
-        assert(seen[13121]) -- Beast Collar
-        assert(seen[15455]) -- Red Sash
-        assert(seen[15456]) -- Dash Sash
-        assert(seen[11400]) -- Noble Poulaines
-        assert(seen[28510]) -- Metal Slime Earring
-    end)
-
-    it('lets a player miss a Leveling piece they already hold', function()
-        local row = leveling.byId[11812]
-        local offer = { key = 'leveling', row = row, price = row.price }
-        assert(shop.owns(mockPlayer({}, { [11812] = 1 }), offer) == true)
-        assert(shop.owns(mockPlayer({}, {}), offer) == false)
+        assert(cosmetics.byId[11812].name == 'Charity Cap')
+        assert(cosmetics.byId[13121].name == 'Beast Collar')
+        assert(cosmetics.byId[15455].name == 'Red Sash')
+        assert(cosmetics.byId[15456].name == 'Dash Sash')
+        assert(cosmetics.byId[11400].name == 'Noble Poulaines')
+        assert(cosmetics.byId[28510].name == 'Metal Slime Earring')
     end)
 end)
 

@@ -43,26 +43,32 @@ xi.combat.treasureHunter.dropBracketTable =
 xi.combat.treasureHunter.SHARED_CAP   = 14
 xi.combat.treasureHunter.THF_MAIN_CAP = 17
 
--- Shared gear / prestige / augments stop at 14. Main THF keeps TH I/II/III above that.
+-- Shared gear / prestige / rebirth / augments / /THF trait stop at 14.
+-- Main THF keeps TH I/II/III above that (15/16/17). Nothing else can exceed it.
 xi.combat.treasureHunter.playerCap = function(player)
     local cap = xi.combat.treasureHunter.SHARED_CAP
-    if not player or player:getMainJob() ~= xi.job.THF then
+    if not player or not player.getMainJob or player:getMainJob() ~= xi.job.THF then
         return cap
     end
 
-    if player:hasTrait(xi.trait.TREASURE_HUNTER) then
+    if player.hasTrait and player:hasTrait(xi.trait.TREASURE_HUNTER) then
         cap = cap + 1
     end
 
-    if player:hasTrait(xi.trait.TREASURE_HUNTER_II) then
+    if player.hasTrait and player:hasTrait(xi.trait.TREASURE_HUNTER_II) then
         cap = cap + 1
     end
 
-    if player:hasTrait(xi.trait.TREASURE_HUNTER_III) then
+    if player.hasTrait and player:hasTrait(xi.trait.TREASURE_HUNTER_III) then
         cap = cap + 1
     end
 
-    return cap
+    return math.min(cap, xi.combat.treasureHunter.THF_MAIN_CAP)
+end
+
+xi.combat.treasureHunter.clampLevel = function(player, thLevel)
+    local level = utils.defaultIfNil(thLevel, 0)
+    return utils.clamp(math.floor(level), 0, xi.combat.treasureHunter.playerCap(player))
 end
 
 xi.combat.treasureHunter.getDropRate = function(thLevel, dropRate)

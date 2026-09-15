@@ -1,6 +1,8 @@
 -----------------------------------
 -- Ranger Job Utilities
 -----------------------------------
+require('scripts/globals/combat/treasure_hunter')
+
 xi = xi or {}
 xi.job_utils = xi.job_utils or {}
 xi.job_utils.ranger = xi.job_utils.ranger or {}
@@ -325,6 +327,7 @@ xi.job_utils.ranger.useBountyShot = function(player, target, ability, action)
     end
 
     -- 100% success rate if bounty shot level is higher than their TH level
+    bountyShotTHLevel = xi.combat.treasureHunter.clampLevel(player, bountyShotTHLevel)
     if bountyShotTHLevel > mobTHLevel then
         ability:setMsg(xi.msg.basic.JA_TH_EFFECTIVENESS)
         target:setTHlevel(bountyShotTHLevel)
@@ -334,7 +337,11 @@ xi.job_utils.ranger.useBountyShot = function(player, target, ability, action)
 
     -- https://www.bg-wiki.com/ffxi/Bounty_Shot
     -- https://wiki.ffo.jp/html/22203.html
-    if mobTHLevel < 12 + player:getMod(xi.mod.TREASURE_HUNTER_CAP) then
+    -- JP TREASURE_HUNTER_CAP is retail Bounty Shot room (12+gifts). Still
+    -- cannot exceed the player's live TH ceiling (14, or 17 on main THF).
+    local bountyCap = xi.combat.treasureHunter.clampLevel(
+        player, 12 + player:getMod(xi.mod.TREASURE_HUNTER_CAP))
+    if mobTHLevel < bountyCap then
         local treausureHunterLevelDiff = mobTHLevel - bountyShotTHLevel
 
         -- TODO: this rate is the same as THF treasure hunter procs. It is unclear if this has the same rate or better than THF auto attacks.
@@ -345,7 +352,7 @@ xi.job_utils.ranger.useBountyShot = function(player, target, ability, action)
         local procRateBonus = 1.0 + (target:getMod(xi.mod.TREASURE_HUNTER_PROC) + player:getMod(xi.mod.TREASURE_HUNTER_PROC)) / 100
 
         if math.random() < procRate * procRateBonus then
-            newTHLevel = mobTHLevel + 1
+            newTHLevel = xi.combat.treasureHunter.clampLevel(player, mobTHLevel + 1)
 
             ability:setMsg(xi.msg.basic.JA_TH_EFFECTIVENESS)
 

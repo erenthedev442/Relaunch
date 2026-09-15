@@ -3,8 +3,8 @@
 --
 -- Weekend Cosmetics stall. One piece per UTC week, same name for
 -- every player. Event / lockstyle gear -- suits, masques, yukatas,
--- seasonal hats, formal sets -- including +1 versions the Boutique
--- does not sell.
+-- seasonal hats, formal sets, and the lv.1 EXP / Capacity looks.
+-- Not a weekday shop. Talking Hades does not sell these mid-week.
 -----------------------------------
 local CATALOG_KEY = 'modules/custom/lua/hades_cosmetic_catalog'
 local C = package.loaded[CATALOG_KEY]
@@ -164,6 +164,30 @@ C.items =
     { id = 25759, name = 'Rhapsody Shirt +1',    price = PLUS },
     { id = 26517, name = 'Shadow Lord Shirt',    price = COMMON },
     { id = 27759, name = 'Korrigan Beret',       price = COMMON },
+
+    -- Lv.1 EXP / Capacity looks. These used to be a weekday shop on talking
+    -- Hades; they belong in this weekend Cosmetics roll, not a standing list.
+    { id = 11812, name = 'Charity Cap',          price = COMMON },
+    { id = 14430, name = 'Federation Aketon',    price = COMMON },
+    { id = 14072, name = 'Chocobo Gloves',       price = COMMON },
+    { id = 14173, name = 'Chocobo Boots',        price = COMMON },
+    { id = 13121, name = 'Beast Collar',         price = COMMON },
+    { id = 15455, name = 'Red Sash',             price = COMMON },
+    { id = 28511, name = 'Slime Earring',        price = COMMON },
+    { id = 28509, name = 'She-Slime Earring',    price = COMMON },
+    { id = 13492, name = "Copper Ring +1",       price = COMMON },
+    { id = 13454, name = 'Copper Ring',          price = COMMON },
+    { id = 11009, name = "Shaper's Shawl",       price = COMMON },
+    { id = 14832, name = "Tanner's Gloves",      price = COMMON },
+    { id = 14290, name = "Vagabond's Hose",      price = COMMON },
+    { id = 11400, name = 'Noble Poulaines',      price = COMMON },
+    { id = 13122, name = "Miner's Pendant",      price = COMMON },
+    { id = 15456, name = 'Dash Sash',            price = COMMON },
+    { id = 28510, name = 'Metal Slime Earring',  price = COMMON },
+    { id = 13402, name = 'Cassie Earring',       price = COMMON },
+    { id = 15823, name = "Tanner's Ring",        price = COMMON },
+    { id = 15819, name = "Carpenter's Ring",     price = COMMON },
+    { id = 16257, name = 'Ghost Cape',           price = COMMON },
 }
 
 C.byId = {}

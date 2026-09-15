@@ -1,10 +1,9 @@
 -----------------------------------
 -- hades_leveling_catalog.lua
 --
--- Weekend Leveling stall. Standing list (not a weekly one-piece roll)
--- of the lv.1 all-jobs EXP / Capacity augment-set pieces. Event-only
--- names that have no other Legendary source live here so they are
--- obtainable. 199 Soul Shards each. Already-owned pieces stay closed.
+-- Checklist of lv.1 all-jobs EXP / Capacity looks. These are NOT a
+-- shop. They roll on the weekend Cosmetics stall
+-- (hades_cosmetic_catalog). Talking Hades must not sell them mid-week.
 -----------------------------------
 local CATALOG_KEY = 'modules/custom/lua/hades_leveling_catalog'
 local C = package.loaded[CATALOG_KEY]

@@ -8,8 +8,8 @@
 --   Gild             -- accessories
 --   Crate            -- REMA / Dynamis / Paragon currency (once per week)
 --   Trusts           -- grantable alter egos (not Meat / Gemma / Corvus / Cornelia / Matsui-P)
---   Cosmetics        -- event / lockstyle gear
--- Leveling (talking Hades) is a standing lv.1 EXP / Capacity list, not a weekly stall.
+--   Cosmetics        -- event / lockstyle gear and the lv.1 EXP / Capacity looks
+-- Nothing sells mid-week. Crate hold is a bank, not a stall.
 --
 -- Pin a future week by setting any of the keys below. Unset keys still roll.
 --   C.PINNED[202636] = { weapon = 21722, weapon2 = 21621, crate = 'beitetsu_300', trust = 897, cosmetic = 26955 }

@@ -19,8 +19,8 @@
 -- multiplier as the aimed-at mob, then the shared iLvl AoE ladder
 -- (40k / 79,999 / 99,999 / 149,999 / 199,999). Odyssey splash is 149,999.
 -- Main BLM is the nuke identity. SCH native nukes are 0.90 of that. RDM,
--- /BLM, and /SCH are much weaker so people cannot level every job by
--- subbing a nuker and spamming Stone / Stonega / Helix.
+-- /BLM, /SCH, and /BLU are much weaker so people cannot level every job by
+-- subbing a nuker and spamming Stone / Stonega / Helix / Subduction.
 -----------------------------------
 
 local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
@@ -55,9 +55,9 @@ catalog.AOE_PRE_119_CAP = 40000
 catalog.AOE_ITEM_119_CAP = 79999
 
 -- Main-job identity. A spell that is not native on the current main job
--- (learned only from /BLM or /SCH, or a BLM-only nuke on SCH/BLM) uses
--- SUBJOB_POWER. That is the leveling-cheese gate: WAR/BLM Stonega and
--- WAR/SCH Stone / Helix are both 0.20, not the main-job factor.
+-- (learned only from /BLM, /SCH, or /BLU, or a BLM-only nuke on SCH/BLM)
+-- uses SUBJOB_POWER. That is the leveling-cheese gate: WAR/BLM Stonega,
+-- WAR/SCH Stone / Helix, and WAR/BLU Subduction are all 0.20.
 catalog.SUBJOB_POWER = 0.20
 catalog.MAIN_JOB_POWER =
 {
@@ -329,11 +329,11 @@ function catalog.getCasterPowerFactor(caster, spell)
     end
 
     local skill = spell:getSkillType()
+    local mainJob = caster:getMainJob()
     if skill == xi.skill.BLUE_MAGIC then
-        return 1.00
+        return mainJob == xi.job.BLU and 1.00 or catalog.SUBJOB_POWER
     end
 
-    local mainJob = caster:getMainJob()
     if not isNativeMainJobSpell(caster, spell) then
         return catalog.SUBJOB_POWER
     end

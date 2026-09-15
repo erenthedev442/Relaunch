@@ -2157,7 +2157,8 @@ int16 CBattleEntity::getMod(Mod modID)
             case Mod::BARRAGE_COUNT:
                 return capGear(320);
             case Mod::TREASURE_HUNTER:
-                // Shared sources cap at 14. Main-job THF adds TH I/II/III above that (15/16/17).
+                // Shared sources (including /THF trait) cap at 14. Main-job THF
+                // adds TH I/II/III above that (15/16/17). Nothing else can exceed it.
                 return std::min<int16>(value, battleutils::GetTreasureHunterCap(this));
             case Mod::PHANTOM_ROLL:
                 return capGear(150);

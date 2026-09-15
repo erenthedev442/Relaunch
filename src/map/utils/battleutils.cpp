@@ -1313,7 +1313,7 @@ void HandleEnspell(CBattleEntity* PAttacker, CBattleEntity* PDefender, action_re
 
                     if (xirand::GetRandomNumber<float>(0.0f, 1.0f) <= procRate)
                     {
-                        PMob->m_THLvl++;
+                        PMob->m_THLvl = std::min<int16>(PMob->m_THLvl + 1, thCap);
 
                         Action->additionalEffect = ActionProcAddEffect::LightDamage; // Looks like enlight, and is reflected in the capture
                         Action->addEffectMessage = static_cast<MsgBasic>(MsgStd::TreasureHunterProc);
@@ -5891,6 +5891,9 @@ int32 GetRangedAccuracyBonuses(CBattleEntity* battleEntity)
 
 int16 GetTreasureHunterCap(CBattleEntity* PEntity)
 {
+    // Shared ceiling for gear / augments / prestige / rebirth / /THF trait.
+    // JP TREASURE_HUNTER_CAP gifts must not raise this. Only a main-job THF
+    // PC can sit above 14, and only via TH I/II/III (15/16/17).
     int16 cap = 14;
     if (PEntity != nullptr && PEntity->objtype == TYPE_PC && PEntity->GetMJob() == JOB_THF)
     {
@@ -5910,7 +5913,7 @@ int16 GetTreasureHunterCap(CBattleEntity* PEntity)
         }
     }
 
-    return cap;
+    return std::min<int16>(cap, 17);
 }
 
 int16 GetTreasureHunterLevel(CBattleEntity* PEntity)
@@ -5931,15 +5934,6 @@ void AddTraits(CBattleEntity* PEntity, TraitList_t* traitList, uint8 level)
     {
         if (level >= PTrait->getLevel() && PTrait->getLevel() > 0)
         {
-            // TH I/II/III are a main-job THF identity. /THF must not carry them.
-            const uint16 traitId = PTrait->getID();
-            if ((traitId == TRAIT_TREASURE_HUNTER ||
-                 traitId == TRAIT_TREASURE_HUNTER_II ||
-                 traitId == TRAIT_TREASURE_HUNTER_III) &&
-                PEntity->GetMJob() != JOB_THF)
-            {
-                continue;
-            }
             bool add = true;
 
             for (std::size_t j = 0; j < PEntity->TraitList.size(); ++j)

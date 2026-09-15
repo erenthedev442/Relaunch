@@ -3,6 +3,8 @@
 -- Replaces Aldo
 -- THF/DNC melee DD + support
 -----------------------------------
+require('scripts/globals/combat/treasure_hunter')
+
 ---@type TSpellTrust
 local spellObject = {}
 
@@ -158,9 +160,10 @@ spellObject.onMobSpawn = function(mob)
 
         if lockeTH < 1 then
             lockeTH = 1
-        elseif lockeTH > 30 then
-            lockeTH = 30
         end
+
+        -- Trusts share the non-main-THF ceiling. LockeTH cannot push past 14.
+        lockeTH = math.min(lockeTH, xi.combat.treasureHunter.SHARED_CAP)
     end
 
     mob:addMod(xi.mod.TREASURE_HUNTER, lockeTH)

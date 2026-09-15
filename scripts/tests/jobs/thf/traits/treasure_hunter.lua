@@ -31,6 +31,43 @@ describe('Treasure Hunter drop table', function()
     end)
 end)
 
+describe('Treasure Hunter player cap', function()
+    local function makePlayer(mainJob, traits)
+        traits = traits or {}
+        return
+        {
+            getMainJob = function()
+                return mainJob
+            end,
+            hasTrait = function(_, trait)
+                return traits[trait] == true
+            end,
+        }
+    end
+
+    it('keeps /THF at 14 even with TH I/II/III', function()
+        local warThf = makePlayer(xi.job.WAR, {
+            [xi.trait.TREASURE_HUNTER] = true,
+            [xi.trait.TREASURE_HUNTER_II] = true,
+            [xi.trait.TREASURE_HUNTER_III] = true,
+        })
+
+        assert(xi.combat.treasureHunter.playerCap(warThf) == 14)
+        assert(xi.combat.treasureHunter.clampLevel(warThf, 99) == 14)
+    end)
+
+    it('raises main THF to 17 with all three traits and no further', function()
+        local thief = makePlayer(xi.job.THF, {
+            [xi.trait.TREASURE_HUNTER] = true,
+            [xi.trait.TREASURE_HUNTER_II] = true,
+            [xi.trait.TREASURE_HUNTER_III] = true,
+        })
+
+        assert(xi.combat.treasureHunter.playerCap(thief) == 17)
+        assert(xi.combat.treasureHunter.clampLevel(thief, 99) == 17)
+    end)
+end)
+
 describe('Treasure Hunter', function()
     ---@type CClientEntityPair
     local player
@@ -79,6 +116,24 @@ describe('Treasure Hunter', function()
         local warrior = xi.test.world:spawnPlayer({ zone = xi.zone.KUFTAL_TUNNEL, job = xi.job.WAR, level = 99 })
         warrior:addMod(xi.mod.TREASURE_HUNTER, 100)
         warrior.assert:hasModifier(xi.mod.TREASURE_HUNTER, 14)
+        assert(xi.combat.treasureHunter.playerCap(warrior) == 14)
+    end)
+
+    it('gives 99 /THF trait TH3 and still hard-caps at 14', function()
+        local warrior = xi.test.world:spawnPlayer({ zone = xi.zone.KUFTAL_TUNNEL, job = xi.job.WAR, level = 99 })
+        warrior:changesJob(xi.job.THF)
+        warrior:setsLevel(99)
+        warrior.assert:hasModifier(xi.mod.TREASURE_HUNTER, 3)
+        assert(xi.combat.treasureHunter.playerCap(warrior) == 14)
+        warrior:addMod(xi.mod.TREASURE_HUNTER, 100)
+        warrior.assert:hasModifier(xi.mod.TREASURE_HUNTER, 14)
+    end)
+
+    it('gives 45 /THF trait TH2 only', function()
+        local warrior = xi.test.world:spawnPlayer({ zone = xi.zone.KUFTAL_TUNNEL, job = xi.job.WAR, level = 99 })
+        warrior:changesJob(xi.job.THF)
+        warrior:setsLevel(45)
+        warrior.assert:hasModifier(xi.mod.TREASURE_HUNTER, 2)
         assert(xi.combat.treasureHunter.playerCap(warrior) == 14)
     end)
 

@@ -310,6 +310,19 @@ describe('Level-scaled direct magic tuning', function()
         assert(catalog.getCasterPowerFactor(makeCaster(99, true, xi.job.SAM), fireV) == 0.20)
     end)
 
+    it('keeps main BLU at full power and treats /BLU like /BLM', function()
+        local subduction = makeSpell(
+            xi.magic.spell.SUBDUCTION, xi.skill.BLUE_MAGIC, 99, xi.job.BLU)
+
+        assert(catalog.getCasterPowerFactor(makeCaster(99, true, xi.job.BLU), subduction) == 1.00)
+        assert(catalog.getCasterPowerFactor(makeCaster(99, true, xi.job.WAR), subduction) == 0.20)
+        assert(catalog.getCasterPowerFactor(makeCaster(99, true, xi.job.BLM), subduction) == 0.20)
+        assert(catalog.applyPlayerOutgoingLimits(
+            makeCaster(99, true, xi.job.WAR), makeTarget(40, 5000), subduction, 10000) == 2000)
+        assert(catalog.applyPlayerOutgoingLimits(
+            makeCaster(99, true, xi.job.BLU), makeTarget(40, 5000), subduction, 10000) == 10000)
+    end)
+
     it('keeps SCH at 0.90 and treats /SCH like /BLM', function()
         local target = makeTarget(50, 9000)
         local schFireIV = makeSpell(

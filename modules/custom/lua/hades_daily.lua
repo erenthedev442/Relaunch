@@ -419,13 +419,6 @@ local function showRoot(player)
     }
     opts[#opts + 1] =
     {
-        'Leveling',
-        function(p)
-            catalog.showLevelingShop(p, showRoot, false)
-        end,
-    }
-    opts[#opts + 1] =
-    {
         'Crate hold',
         function(p)
             catalog.showCrateHold(p, showRoot, false)
