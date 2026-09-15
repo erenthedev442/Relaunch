@@ -177,19 +177,23 @@ bool CAutomatonEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags
 
 void CAutomatonEntity::OnCastFinished(CMagicState& state, action_t& action)
 {
+    CSpell*        PSpell     = state.GetSpell();
+    const auto     spellId    = PSpell ? PSpell->getID() : static_cast<SpellID>(0);
+    const bool     tookEffect = PSpell && PSpell->tookEffect();
+    CBattleEntity* PTarget    = dynamic_cast<CBattleEntity*>(state.GetTarget());
+
     CMobEntity::OnCastFinished(state, action);
 
-    auto* PSpell  = state.GetSpell();
-    auto* PTarget = dynamic_cast<CBattleEntity*>(state.GetTarget());
-
-    if (!PSpell)
+    // Same class of bug as CTrustEntity::OnCastFinished (2026-09-14 18:43):
+    // parent OnSpellCast can despawn the puppet before recast/skillup.
+    if (!CBaseEntity::IsEntityAlive(this) || PRecastContainer == nullptr || spellId == static_cast<SpellID>(0))
     {
         return;
     }
 
-    PRecastContainer->Add(RECAST_MAGIC, static_cast<Recast>(PSpell->getID()), action.recast);
+    PRecastContainer->Add(RECAST_MAGIC, static_cast<Recast>(spellId), action.recast);
 
-    if (PSpell->tookEffect() && PTarget)
+    if (tookEffect && CBaseEntity::IsEntityAlive(PTarget))
     {
         puppetutils::TrySkillUP(this, SKILL_AUTOMATON_MAGIC, PTarget->GetMLevel());
 

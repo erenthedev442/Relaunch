@@ -185,11 +185,20 @@ void CTrustEntity::OnCastFinished(CMagicState& state, action_t& action)
 {
     // NOTE: This is purposefully calling CBattleEntity's impl.
     // TODO: Calling a grand-parent's impl. of an overridden function is bad
+    CSpell*    PSpell  = state.GetSpell();
+    const auto spellId = PSpell ? PSpell->getID() : static_cast<SpellID>(0);
+
     CBattleEntity::OnCastFinished(state, action);
 
-    auto* PSpell = state.GetSpell();
+    // OnSpellCast / later hits can despawn the trust (master zone, death, warp).
+    // Crash 2026-09-14 18:43: ACCESS_VIOLATION at PSpell->getID() after parent
+    // returned on a destroyed caster (trustentity.cpp:192).
+    if (!CBaseEntity::IsEntityAlive(this) || PRecastContainer == nullptr || spellId == static_cast<SpellID>(0))
+    {
+        return;
+    }
 
-    PRecastContainer->Add(RECAST_MAGIC, static_cast<Recast>(PSpell->getID()), action.recast);
+    PRecastContainer->Add(RECAST_MAGIC, static_cast<Recast>(spellId), action.recast);
 }
 
 void CTrustEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)

@@ -27,6 +27,7 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local m       = Module:new('weapon_forge_npc')
 local catalog = require('modules/custom/lua/weapon_forge_catalog')
 local relicCatalog = require('modules/custom/lua/relic_forge_catalog')
+local mythicCatalog = require('modules/custom/lua/mythic_forge_catalog')
 local relicVouchers = require('modules/custom/lua/relic_voucher_catalog')
 local repeatCredits = require('modules/custom/lua/rema_repeat_credits')
 local holdCurrency = require('modules/custom/lua/hades_hold_currency')
@@ -709,12 +710,14 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         local k = heldStage(player, chain)
         if k == 4 then
             local extras = relicCatalog.companionSlotNeed(player, chain.s3)
+                + mythicCatalog.companionSlotNeed(player, chain.s3)
             if extras > 0 then
                 if player:getFreeSlotsCount() < extras then
                     player:printToPlayer('[Weapon Forge] Free an inventory slot before forging.', S)
                     return
                 end
                 relicCatalog.grantCompanions(player, chain.s3, 'Weapon Forge')
+                mythicCatalog.grantCompanions(player, chain.s3, 'Weapon Forge')
                 return
             end
             player:printToPlayer(string.format('[Weapon Forge] Your %s is already fully forged, kupo!', chain.name), S)
@@ -808,7 +811,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer('[Weapon Forge] You no longer have the weapon to forge.', S)
             return
         end
-        if player:getFreeSlotsCount() < relicCatalog.grantSlotNeed(player, toId, fromId ~= nil) then
+        local companionSlots = relicCatalog.companionSlotNeed(player, toId)
+            + mythicCatalog.companionSlotNeed(player, toId)
+        local slotsNeeded = fromId ~= nil and math.max(1, companionSlots) or (1 + companionSlots)
+        if player:getFreeSlotsCount() < slotsNeeded then
             player:printToPlayer('[Weapon Forge] Free an inventory slot before forging.', S)
             return
         end
@@ -826,6 +832,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end
         player:printToPlayer(string.format('[Weapon Forge] Your %s advances to %s!', chain.name, nextStageLabel(chain, k)), S)
         relicCatalog.grantCompanions(player, toId, 'Weapon Forge')
+        mythicCatalog.grantCompanions(player, toId, 'Weapon Forge')
         -- Final Empyrean / Mythic / Relic completion flag. Read by the Prime
         -- Stage I preflight. singleStep Ergon jumps base -> 119 III while
         -- held-stage is still 1, so key off the item handed over, not k+1.

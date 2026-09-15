@@ -103,6 +103,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return
         end
 
+        for _, extraId in ipairs(weapon.companions or {}) do
+            if extraId > 0 and not player:hasItem(extraId) then
+                player:addItem({ id = extraId, quantity = 1 })
+            end
+        end
+
         repeatCredits.trySpend(player, 'mythic')
         player:printToPlayer(string.format(
             PREFIX .. ' %s has been tempered anew from imperial steel and runic fire!',
@@ -180,6 +186,16 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end,
 
         onTrigger = function(player, npc)
+            if (player:hasItem(22139) or player:hasItem(21266)) and
+                not player:hasItem(26346) and
+                player:getFreeSlotsCount() > 0
+            then
+                player:addItem({ id = 26346, quantity = 1 })
+                player:printToPlayer(
+                    PREFIX .. ' Quelling Bolt Quiver is now how Gastraphetes issues bolts.',
+                    xi.msg.channel.SYSTEM_3)
+            end
+
             if (player:getCharVar('WF_Mythic_Final') or 0) ~= 1 then
                 player:printToPlayer(
                     PREFIX .. ' Walk the full Mythic path at the Weapon Forge before I will temper another blade for you.',

@@ -245,6 +245,112 @@ function C.archetypePass(attacker, target, rule, tp)
     return true
 end
 
+-- Magian-style family matching. Retail buckets are ecosystems, but several
+-- live species are tagged in a neighbouring bucket (SoA "toads" are Poroggo /
+-- Beastmen, Abyssea Vorageans are their own ecosystem). Superfamily aliases
+-- keep those on the family the player is actually hunting.
+local SF = xi.mobSuperFamily or {}
+C.SUPERFAMILY_ECOLOGY_ALIASES =
+{
+    [SF.POROGGO or 65]     = { xi.ecosystem.AQUAN },
+    [SF.AMOEBAN or 199]    = { xi.ecosystem.AMORPH },
+    [SF.CLIONIDAE or 200]  = { xi.ecosystem.AMORPH },
+    [SF.LIMULE or 201]     = { xi.ecosystem.AQUAN },
+    [SF.MUREX or 202]      = { xi.ecosystem.AQUAN },
+}
+
+C.ECOSYSTEM_ALIASES =
+{
+    [xi.ecosystem.ARCHAICMACHINE] = { xi.ecosystem.ARCANA },
+    [xi.ecosystem.EMPTY]          = { xi.ecosystem.ARCANA },
+    [xi.ecosystem.WEAPONS]        = { xi.ecosystem.ARCANA },
+}
+
+function C.ecologyIdsForMob(mob)
+    local ids = {}
+    if not mob then
+        return ids
+    end
+
+    local ecosystem = mob.getEcosystem and mob:getEcosystem()
+    if ecosystem ~= nil then
+        ids[ecosystem] = true
+        for _, alias in ipairs(C.ECOSYSTEM_ALIASES[ecosystem] or {}) do
+            ids[alias] = true
+        end
+    end
+
+    local superFamily = mob.getSuperFamily and mob:getSuperFamily()
+    for _, alias in ipairs(C.SUPERFAMILY_ECOLOGY_ALIASES[superFamily] or {}) do
+        ids[alias] = true
+    end
+
+    return ids
+end
+
+function C.ecologyMatches(mob, ecosystems)
+    if not ecosystems or #ecosystems == 0 then
+        return true
+    end
+
+    local ids = C.ecologyIdsForMob(mob)
+    for _, allowed in ipairs(ecosystems) do
+        if ids[allowed] then
+            return true
+        end
+    end
+
+    return false
+end
+
+-- Relic chapter 1 asked for Lv99+. SoA/Reisenjima trash often has unset (0)
+-- spawn levels, and NMs of the family should always count.
+function C.magianLevelOk(mob, minLevel)
+    if not minLevel then
+        return true
+    end
+
+    if mob and mob.isNM and mob:isNM() then
+        return true
+    end
+
+    local level = (mob and mob.getMainLvl and mob:getMainLvl()) or 0
+    if level <= 0 then
+        return true
+    end
+
+    return level >= minLevel
+end
+
+-- Family / ecology chapters must not use checkKillCredit's TooWeak gate.
+-- A 99 hunting Reisenjima chapuli stored at level 0 (or Abyssea yellows) is
+-- rejected as TooWeak even though the kill is valid. Named-NM chapters keep
+-- the engine helper.
+function C.hasKillCredit(player, mob, requirement)
+    if not player or not mob or (player.isDead and player:isDead()) then
+        return false
+    end
+
+    if mob.getCallForHelpFlag and mob:getCallForHelpFlag() then
+        return false
+    end
+
+    local tag = requirement and requirement.tag
+    if tag == 'magian_family' or tag == 'abyssea_ecology' or tag == 'job_mastery' then
+        if player.checkDistance and player:checkDistance(mob) > 100 then
+            return false
+        end
+
+        return true
+    end
+
+    if player.checkKillCredit then
+        return player:checkKillCredit(mob)
+    end
+
+    return true
+end
+
 local function add(family, source, index, stages, finalId)
     local ws = family == 'prime' and primeByFinal[finalId] or remaByFinal[finalId]
     assert(ws, string.format('Pilgrimage missing native WS for final item %d', finalId))
@@ -456,7 +562,7 @@ end
 local function targetKindText(entry, requirement)
     local tag = requirement.tag
     if tag == 'magian_family' then
-        return string.format('Lv%d+ %s', requirement.minLevel, familyList(requirement))
+        return string.format('Lv%d+ %s (NMs count)', requirement.minLevel, familyList(requirement))
     elseif tag == 'abyssea_ecology' then
         return familyList(requirement) .. ' in Abyssea'
     elseif tag == 'job_mastery' then

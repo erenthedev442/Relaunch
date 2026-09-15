@@ -23,4 +23,25 @@ describe('Mythic Forge identifier alignment', function()
             assert(entry.name == forged.name)
         end
     end)
+
+    it('grants Quelling Bolt Quiver with Gastraphetes 119 III', function()
+        assert.same({ 26346 }, forge.companionsFor(22139))
+        assert.same({ 26346 }, forge.companionsFor(21266))
+
+        for _, forged in ipairs(forge.weapons) do
+            if forged.id ~= 22139 then
+                assert.same({}, forge.companionsFor(forged.id), forged.name)
+            end
+        end
+
+        local gastr
+        for _, weapon in ipairs(forge.weapons) do
+            if weapon.name == 'Gastraphetes' then
+                gastr = weapon
+            end
+        end
+        assert(gastr and gastr.id == 22139)
+        assert(gastr.companions and gastr.companions[1] == 26346)
+        assert(gastr.info:find('Quelling Bolt Quiver', 1, true))
+    end)
 end)

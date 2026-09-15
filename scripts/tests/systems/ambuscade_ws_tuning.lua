@@ -166,4 +166,28 @@ describe('Final Ambuscade weaponskill tuning', function()
                 assert(player:getLocalVar(tuning.DAMAGE_CAP_LOCAL_VAR) == 149999)
             end)
     end)
+
+    it('does not stamp the Ambuscade ceiling onto ranged magic WS', function()
+        local player = makePlayer(
+        {
+            [xi.slot.MAIN]   = 21621, -- Naegling
+            [xi.slot.RANGED] = 22139, -- Gastraphetes
+        })
+        player:setLocalVar('StandardWsDamageCap', 149999)
+
+        xi.ambuscadeWsTuning.withAmbuscadeEffects(
+            player, target, xi.weaponskill.TRUEFLIGHT, xi.slot.RANGED,
+            function()
+                assert(player:getLocalVar('StandardWsDamageCap') == 149999)
+                assert(player:getLocalVar(tuning.DAMAGE_CAP_LOCAL_VAR) == 0)
+                assert(player:getLocalVar(tuning.BASE_DAMAGE_CAP_LOCAL_VAR) == 0)
+            end)
+
+        -- The old MAIN-slot path is what capped Trueflight at 99,999.
+        xi.ambuscadeWsTuning.withAmbuscadeEffects(
+            player, target, xi.weaponskill.TRUEFLIGHT, xi.slot.MAIN,
+            function()
+                assert(player:getLocalVar('StandardWsDamageCap') == 99999)
+            end)
+    end)
 end)

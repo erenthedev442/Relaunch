@@ -384,7 +384,7 @@ catalog.mythicChains =
     { type = 'Staff', jobs = 'SMN', name = 'Nirvana', base = 19833, s1 = 21141, s2 = 21142, s3 = 22063 },
     { type = 'Staff', jobs = 'BLM', name = 'Laevateinn', base = 19822, s1 = 21139, s2 = 21140, s3 = 22062 },
     { type = 'Staff', jobs = 'SCH', name = 'Tupsimati', base = 19838, s1 = 21137, s2 = 21138, s3 = 22061 },
-    { type = 'Archery', jobs = 'RNG', name = 'Gastraphetes', base = 19829, s1 = 21247, s2 = 21266, s3 = 22139 },
+    { type = 'Marksmanship', jobs = 'RNG', name = 'Gastraphetes', base = 19829, s1 = 21247, s2 = 21266, s3 = 22139 },
     { type = 'Marksmanship', jobs = 'COR', name = 'Death Penalty', base = 19835, s1 = 21263, s2 = 21268, s3 = 22141 },
     -- Custom 99 / 119 I IDs in the unused 19968-20479 hole (19973 is Kraken Club +1). Client DATs clone
     -- looks from 20753 / 21070; 119 I damage sits below those 119 II donors.

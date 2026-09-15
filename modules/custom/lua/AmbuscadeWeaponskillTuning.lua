@@ -234,8 +234,19 @@ m:addOverride('xi.weaponskills.doPhysicalWeaponskill',
 m:addOverride('xi.weaponskills.doMagicWeaponskill',
     function(attacker, target, wsId, wsParams, tp, action, primaryMsg)
         local original = super
+        -- Trueflight / Leaden Salute / Wildfire are ranged magic WS. Looking
+        -- at MAIN here treated Naegling (etc.) as the swing weapon and stamped
+        -- Ambuscade's 99,999 ceiling over the pilgrimage / REMA cap.
+        local slot = xi.slot.MAIN
+        if
+            wsParams.skill == xi.skill.ARCHERY or
+            wsParams.skill == xi.skill.MARKSMANSHIP
+        then
+            slot = xi.slot.RANGED
+        end
+
         return callPreservedOriginal(
-            attacker, target, wsId, xi.slot.MAIN, original,
+            attacker, target, wsId, slot, original,
             attacker, target, wsId, wsParams, tp, action, primaryMsg)
     end)
 

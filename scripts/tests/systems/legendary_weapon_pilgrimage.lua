@@ -298,6 +298,79 @@ describe('Legendary Weapon Pilgrimage integrity', function()
         end
     end)
 
+    it('credits Magian families including aliases, NMs, and unset SoA levels', function()
+        local spharai = pilgrimage.byFinalId[20509]
+        assert(spharai and spharai.name == 'Spharai')
+        local ecos = spharai.chapters[1].ecosystems
+        assert(ecos[1] == xi.ecosystem.VERMIN)
+        assert(ecos[2] == xi.ecosystem.AMORPH)
+        assert(ecos[3] == xi.ecosystem.AQUAN)
+
+        local function stubMob(opts)
+            return
+            {
+                getEcosystem = function() return opts.ecosystem end,
+                getSuperFamily = function() return opts.superFamily or 0 end,
+                getMainLvl = function() return opts.level or 0 end,
+                isNM = function() return opts.nm == true end,
+                getCallForHelpFlag = function() return opts.cfh == true end,
+            }
+        end
+
+        local chapuli = stubMob({ ecosystem = xi.ecosystem.VERMIN, superFamily = xi.mobSuperFamily.CHAPULI, level = 0 })
+        local beetle  = stubMob({ ecosystem = xi.ecosystem.VERMIN, superFamily = xi.mobSuperFamily.BEETLE, level = 0 })
+        local toad    = stubMob({ ecosystem = xi.ecosystem.BEASTMEN, superFamily = xi.mobSuperFamily.POROGGO, level = 0 })
+        local frog    = stubMob({ ecosystem = xi.ecosystem.AQUAN, superFamily = xi.mobSuperFamily.FROG, level = 119 })
+        local limule  = stubMob({ ecosystem = xi.ecosystem.VORAGEAN, superFamily = xi.mobSuperFamily.LIMULE, level = 85 })
+        local amoeban = stubMob({ ecosystem = xi.ecosystem.VORAGEAN, superFamily = xi.mobSuperFamily.AMOEBAN, level = 85 })
+        local clionid = stubMob({ ecosystem = xi.ecosystem.VORAGEAN, superFamily = xi.mobSuperFamily.CLIONIDAE, level = 85 })
+        local murex   = stubMob({ ecosystem = xi.ecosystem.VORAGEAN, superFamily = xi.mobSuperFamily.MUREX, level = 85 })
+        local gear     = stubMob({ ecosystem = xi.ecosystem.ARCHAICMACHINE, superFamily = xi.mobSuperFamily.GEAR, level = 99 })
+        local empty    = stubMob({ ecosystem = xi.ecosystem.EMPTY, superFamily = xi.mobSuperFamily.CRAVER, level = 99 })
+        local animated = stubMob({ ecosystem = xi.ecosystem.WEAPONS, superFamily = xi.mobSuperFamily.ANIMATED_WEAPONS, level = 99 })
+        local tiger    = stubMob({ ecosystem = xi.ecosystem.BEAST, superFamily = xi.mobSuperFamily.TIGER, level = 119 })
+        local nmToad   = stubMob({ ecosystem = xi.ecosystem.BEASTMEN, superFamily = xi.mobSuperFamily.POROGGO, level = 50, nm = true })
+        local weakBeetle = stubMob({ ecosystem = xi.ecosystem.VERMIN, superFamily = xi.mobSuperFamily.BEETLE, level = 8 })
+
+        assert(pilgrimage.ecologyMatches(chapuli, ecos))
+        assert(pilgrimage.ecologyMatches(beetle, ecos))
+        assert(pilgrimage.ecologyMatches(toad, ecos))
+        assert(pilgrimage.ecologyMatches(frog, ecos))
+        assert(pilgrimage.ecologyMatches(limule, ecos))
+        assert(pilgrimage.ecologyMatches(amoeban, ecos))
+        assert(pilgrimage.ecologyMatches(clionid, ecos))
+        assert(pilgrimage.ecologyMatches(murex, ecos))
+        assert(not pilgrimage.ecologyMatches(tiger, ecos))
+        assert(not pilgrimage.ecologyMatches(limule, { xi.ecosystem.AMORPH }))
+        assert(not pilgrimage.ecologyMatches(amoeban, { xi.ecosystem.AQUAN }))
+        assert(pilgrimage.ecologyMatches(gear, { xi.ecosystem.ARCANA }))
+        assert(pilgrimage.ecologyMatches(empty, { xi.ecosystem.ARCANA }))
+        assert(pilgrimage.ecologyMatches(animated, { xi.ecosystem.ARCANA }))
+
+        assert(pilgrimage.magianLevelOk(chapuli, 99))
+        assert(pilgrimage.magianLevelOk(beetle, 99))
+        assert(pilgrimage.magianLevelOk(toad, 99))
+        assert(pilgrimage.magianLevelOk(nmToad, 99))
+        assert(pilgrimage.magianLevelOk(frog, 99))
+        assert(not pilgrimage.magianLevelOk(weakBeetle, 99))
+
+        local familyReq = { tag = 'magian_family' }
+        local namedReq  = { tag = 'unity_nm' }
+        local player =
+        {
+            isDead = function() return false end,
+            checkDistance = function() return 20 end,
+            checkKillCredit = function() return false end,
+        }
+        assert(pilgrimage.hasKillCredit(player, chapuli, familyReq))
+        assert(not pilgrimage.hasKillCredit(player, chapuli, namedReq))
+        player.checkDistance = function() return 101 end
+        assert(not pilgrimage.hasKillCredit(player, chapuli, familyReq))
+        player.checkDistance = function() return 20 end
+        chapuli.getCallForHelpFlag = function() return true end
+        assert(not pilgrimage.hasKillCredit(player, chapuli, familyReq))
+    end)
+
     it('prints weapon-name chapter labels and real weaponskill names', function()
         local anni = pilgrimage.byFinalId[22140]
         assert(anni and anni.name == 'Annihilator')
@@ -305,7 +378,7 @@ describe('Legendary Weapon Pilgrimage integrity', function()
         assert(pilgrimage.chapterPrefix(anni, 1) == 'Annihilator chp 1')
         assert(pilgrimage.equipText(anni, 1) == 'Annihilator')
         assert(pilgrimage.howToText(anni, 1) ==
-            'Equip Annihilator. Coronach killing blow on Lv99+ Undead/Vermin/Amorph.')
+            'Equip Annihilator. Coronach killing blow on Lv99+ Undead/Vermin/Amorph (NMs count).')
         assert(pilgrimage.archetypeHint(anni.archetypeRule) == 'at 1500+ TP')
         assert(pilgrimage.howToText(anni, 2) ==
             'Equip Annihilator 119 I. Coronach killing blow on a listed Unity NM (each once).')
@@ -329,6 +402,14 @@ describe('Legendary Weapon Pilgrimage integrity', function()
         local conqu = pilgrimage.byFinalId[21757]
         assert(conqu.wsName == "King's Justice")
         assert(pilgrimage.howToText(conqu, 2):find('Nyzul', 1, true))
+
+        local gastr = pilgrimage.byFinalId[22139]
+        assert(gastr and gastr.name == 'Gastraphetes')
+        assert(gastr.weaponType == 'Marksmanship')
+        assert(gastr.archetype == 'gun_tactical')
+        assert(gastr.wsId == xi.weaponskill.TRUEFLIGHT)
+        assert(gastr.slot == xi.slot.RANGED)
+        assert(gastr.stages[1] == 19829 and gastr.stages[2] == 21247 and gastr.stages[3] == 21266)
 
         assert(pilgrimage.byFinalId[20509].wsName == 'Final Heaven')
         assert(pilgrimage.byFinalId[21906].wsName == 'Blade: Metsu')

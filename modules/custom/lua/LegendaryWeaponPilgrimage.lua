@@ -190,25 +190,18 @@ end
 
 local function targetEligible(player, mob, entry, chapter)
     local requirement = entry.chapters[chapter]
-    local function ecosystemMatches()
-        local ecosystem = mob:getEcosystem()
-        for _, allowed in ipairs(requirement.ecosystems or {}) do
-            if ecosystem == allowed then return true end
-        end
-        return requirement.ecosystems == nil
-    end
     if requirement.targets then
         return targetIndex(requirement, mob) ~= nil
     end
     if requirement.tag == 'abyssea_ecology' then
-        return ABYSSEA_ZONES[mob:getZoneID()] == true and ecosystemMatches()
+        return ABYSSEA_ZONES[mob:getZoneID()] == true and C.ecologyMatches(mob, requirement.ecosystems)
     elseif requirement.tag == 'job_mastery' then
         local jobName = JOB_NAMES[player:getMainJob()]
         return jobName ~= nil and entry.jobs:find(jobName, 1, true) ~= nil and mob:isNM()
     elseif requirement.tag == 'magian_family' then
-        return mob:getMainLvl() >= requirement.minLevel
+        return C.magianLevelOk(mob, requirement.minLevel)
             and (not requirement.minMaxHP or mob:getMaxHP() >= requirement.minMaxHP)
-            and ecosystemMatches()
+            and C.ecologyMatches(mob, requirement.ecosystems)
     end
     return false
 end
@@ -218,7 +211,6 @@ local function creditWeaponskillKill(mob, player, wsId)
         not wsId or
         wsId <= 0 or
         player:isDead() or
-        not player:checkKillCredit(mob) or
         mob:getLocalVar('LWP_WsCreditedPlayer') == player:getID()
     then
         return
@@ -237,6 +229,7 @@ local function creditWeaponskillKill(mob, player, wsId)
             player:getLocalVar('LWP_SnapTarget') == mob:getID() and
             player:getLocalVar('LWP_SnapWS') == entry.wsId and
             player:getLocalVar('LWP_SnapPass') == 1 and
+            C.hasKillCredit(player, mob, requirement) and
             targetEligible(player, mob, entry, chapter)
         then
             markProgress(player, entry, chapter, displayName(mob))

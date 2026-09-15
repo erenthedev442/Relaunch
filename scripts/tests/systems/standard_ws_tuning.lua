@@ -418,6 +418,34 @@ describe('Level-scaled ordinary weaponskill tuning', function()
             end)
     end)
 
+    it('caps pre-119 III Gastraphetes Trueflight at 149,999 on the ranged slot', function()
+        local target = makeTarget(150, 1000000)
+        for _, itemId in ipairs({ 19829, 21247, 21266 }) do
+            local info = catalog.getRemaPathInfo(itemId)
+            assert(info ~= nil and info.final == false)
+            assert(info.wsId == xi.weaponskill.TRUEFLIGHT)
+            assert(info.slot == xi.slot.RANGED)
+
+            local player = makePlayer({ [xi.slot.RANGED] = itemId }, 99)
+            xi.standardWsTuning.withStandardEffects(
+                player, target, xi.weaponskill.TRUEFLIGHT, xi.slot.RANGED, {}, false,
+                function()
+                    assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 149999, itemId)
+                end)
+
+            -- Off-native marksman WS on the same stick stay at 99,999.
+            xi.standardWsTuning.withStandardEffects(
+                player, target, xi.weaponskill.LAST_STAND, xi.slot.RANGED, {}, false,
+                function()
+                    assert(player:getLocalVar(catalog.DAMAGE_CAP_LOCAL_VAR) == 99999, itemId)
+                end)
+        end
+
+        local finished = catalog.getRemaPathInfo(22139)
+        assert(finished ~= nil and finished.final == true)
+        assert(finished.wsId == xi.weaponskill.TRUEFLIGHT)
+    end)
+
     it('still tunes ordinary WSs used with a special weapon', function()
         local player = makePlayer({ [xi.slot.MAIN] = 20509 }, 99)
         local target = makeTarget(155, 120000)
