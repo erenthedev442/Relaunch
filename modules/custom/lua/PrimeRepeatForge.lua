@@ -6,6 +6,8 @@ require('scripts/globals/player')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m        = Module:new('prime_repeat_forge')
+-- FileWatcher: a failed boot require leaves package.loaded as false.
+package.loaded['modules/custom/lua/prime_repeat_catalog'] = nil
 local C        = require('modules/custom/lua/prime_repeat_catalog')
 local forge    = require('modules/custom/lua/weapon_forge_catalog')
 local currency = require('modules/custom/lua/hl_seal_currency')
