@@ -41,21 +41,33 @@ local function clearTaken(player)
     setTaken(player, 0)
 end
 
+local function mobLevel(ent)
+    if ent and ent.isMob and ent:isMob() and ent.getMainLvl then
+        return ent:getMainLvl()
+    end
+
+    return 0
+end
+
 local function mobLevelFromTarget(player)
-    local target = player.getTarget and player:getTarget()
-    if target and target.isMob and target:isMob() and target.getMainLvl then
-        return target:getMainLvl()
+    -- Battle target only exists while engaged. Spell spam without drawing
+    -- a weapon still generates hate — use cursor + notoriety as well.
+    local best = mobLevel(player.getTarget and player:getTarget())
+    best = math.max(best, mobLevel(player.getCursorTarget and player:getCursorTarget()))
+
+    local list = player.getNotorietyList and player:getNotorietyList()
+    if type(list) == 'table' then
+        for _, mob in pairs(list) do
+            best = math.max(best, mobLevel(mob))
+        end
     end
 
     local pet = player.getPet and player:getPet()
     if pet and pet.getTarget then
-        local petTarget = pet:getTarget()
-        if petTarget and petTarget.isMob and petTarget:isMob() and petTarget.getMainLvl then
-            return petTarget:getMainLvl()
-        end
+        best = math.max(best, mobLevel(pet:getTarget()))
     end
 
-    return 0
+    return best
 end
 
 local function applyPenalty(player)

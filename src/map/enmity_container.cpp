@@ -24,6 +24,7 @@
 #include "common/utils.h"
 
 #include "ai/ai_container.h"
+#include "ai/controllers/mob_controller.h"
 #include "alliance.h"
 #include "enmity_container.h"
 #include "entities/baseentity.h"
@@ -266,6 +267,25 @@ void CEnmityContainer::UpdateEnmity(CBattleEntity* PEntity, int32 CE, int32 VE, 
     if (!tameable)
     {
         m_tameable = false;
+    }
+
+    // Hate from spells / ranged / JA must wake a roaming mob even if the
+    // player never drew a weapon. Sight-cone deaggro also has to wait —
+    // otherwise a caster behind the mob is dropped on the first combat tick.
+    if (m_EnmityHolder != nullptr && m_EnmityHolder->PAI != nullptr)
+    {
+        if (auto* controller = dynamic_cast<CMobController*>(m_EnmityHolder->PAI->GetController()))
+        {
+            controller->TapDeaggroTime();
+        }
+
+        if (m_EnmityHolder->PAI->IsRoaming() && (m_EnmityHolder->m_roamFlags & ROAMFLAG_IGNORE) == 0)
+        {
+            if (CBattleEntity* PHighest = GetHighestEnmity(); PHighest != nullptr)
+            {
+                m_EnmityHolder->PAI->Engage(PHighest->targid);
+            }
+        }
     }
 }
 

@@ -597,8 +597,11 @@ void CMagicState::ApplyEnmity(CBattleEntity* PTarget, int ce, int ve)
 
                     mob->PEnmityContainer->UpdateEnmity(m_PEntity, ce, ve);
                     enmityApplied = true;
-                    if (PTarget->isDead() && (!isMob || (isMob && m_PEntity->isCharmed)))
-                    { // claim mob only on death (for aoe)
+                    // Players (and charmed pets) claim on the hit, not only on
+                    // the killing blow — otherwise a caster who never engages
+                    // can chip a roaming mob with no claim and no fight-back.
+                    if (!isMob || m_PEntity->isCharmed)
+                    {
                         battleutils::ClaimMob(PTarget, m_PEntity);
                     }
                     battleutils::DirtyExp(PTarget, m_PEntity);

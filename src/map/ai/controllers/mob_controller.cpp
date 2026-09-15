@@ -186,7 +186,8 @@ auto CMobController::CheckLock(CBattleEntity* PTarget) const -> bool
 auto CMobController::CheckDetection(CBattleEntity* PTarget) -> bool
 {
     TracyZoneScoped;
-    if (CanPursueTarget(PTarget) || CanDetectTarget(PTarget) ||
+    const bool inHateRange = PTarget && PMob->PEnmityContainer && PMob->PEnmityContainer->IsWithinEnmityRange(PTarget);
+    if (CanPursueTarget(PTarget) || CanDetectTarget(PTarget) || inHateRange ||
         PMob->StatusEffectContainer->HasStatusEffect({ EFFECT_BIND, EFFECT_SLEEP, EFFECT_SLEEP_II, EFFECT_LULLABY, EFFECT_PETRIFICATION }))
     {
         TapDeaggroTime();
