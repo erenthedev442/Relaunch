@@ -67,13 +67,15 @@ namespace
         return nullptr;
     }
 
-    // Main-job-RNG player ranged-damage multiplier (auto-shots, Barrage,
-    // ranged weaponskills, Eagle Eye Shot — everything funnels through
-    // TakePhysical/TakeWeaponskillDamage with a ranged slot). Melee swings,
-    // COR, and /RNG subs are untouched. Silent server-side trim per the
-    // no-visible-multiplier balance policy.
+    // Main-job-RNG player ranged-damage multiplier for auto-shots, Barrage,
+    // and Eagle Eye Shot (TakePhysicalDamage with a ranged slot). Melee
+    // swings, COR, /RNG subs, and native REMA/Prime weaponskills are
+    // untouched. Silent server-side trim per the no-visible-multiplier
+    // balance policy.
     // 2026-07-10: RNG outpacing other DDs on relaunch — 0.80 (pending tune;
     // edit here + rebuild to adjust).
+    // 2026-09-15: Coronach on 119 III Annihilator was landing 263,828 then
+    // this 0.80 trim printed 211,062, which looked like a hard cap.
     constexpr float RANGER_RANGED_DMG_MULTIPLIER = 0.80f;
 } // namespace
 
@@ -520,6 +522,15 @@ int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRan
     if (damage > 0 && isRanged && PAttacker != nullptr && PAttacker->objtype == TYPE_PC &&
         PAttacker->GetMJob() == JOB_RNG)
     {
+        // Relic/Empyrean/Mythic/Aeonic/Prime native WS already sit on their
+        // own 999,999+ ceilings. Do not tax those swings — Coronach on
+        // Annihilator 119 III was 263,828 * 0.80 = 211,062.
+        if (PAttacker->GetLocalVar("RemaWsTuned") > 0 ||
+            PAttacker->GetLocalVar("PrimeWsTuned") > 0)
+        {
+            return damage;
+        }
+
         // Preserve the active standard-WS ceiling. The post-Lua 0.80 adjustment
         // must not reduce a capped 40,000/79,999/premium-AoE result.
         const auto standardWsCap = static_cast<int32>(PAttacker->GetLocalVar("StandardWsDamageCap"));

@@ -9387,6 +9387,27 @@ int32 CLuaBaseEntity::getMerit(uint16 merit)
 }
 
 /************************************************************************
+ *  Function: getMeritRank()
+ *  Purpose : Returns spent ranks (0-5) for a merit, ignoring job mask and
+ *            the SQL value multiplier. Used by merit weaponskill WSC so
+ *            extra ranks still apply on jobs that can use the WS.
+ *  Example : player:getMeritRank(xi.merit.RESOLUTION)
+ ************************************************************************/
+
+uint8 CLuaBaseEntity::getMeritRank(uint16 merit)
+{
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        auto*          PChar  = static_cast<CCharEntity*>(m_PBaseEntity);
+        const Merit_t* PMerit = PChar->PMeritPoints->GetMerit(static_cast<MERIT_TYPE>(merit));
+
+        return PMerit ? PMerit->count : 0;
+    }
+
+    return 0;
+}
+
+/************************************************************************
  *  Function: getMeritCount()
  *  Purpose : Returns the current value of merits a player has
  *  Example : player:getMeritCount()
@@ -20625,6 +20646,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("addExp", CLuaBaseEntity::addExp);
     SOL_REGISTER("delExp", CLuaBaseEntity::delExp);
     SOL_REGISTER("getMerit", CLuaBaseEntity::getMerit);
+    SOL_REGISTER("getMeritRank", CLuaBaseEntity::getMeritRank);
     SOL_REGISTER("getMeritCount", CLuaBaseEntity::getMeritCount);
     SOL_REGISTER("setMerits", CLuaBaseEntity::setMerits);
 

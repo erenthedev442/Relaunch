@@ -324,8 +324,9 @@ end
 
 -- Family / ecology chapters must not use checkKillCredit's TooWeak gate.
 -- A 99 hunting Reisenjima chapuli stored at level 0 (or Abyssea yellows) is
--- rejected as TooWeak even though the kill is valid. Named-NM chapters keep
--- the engine helper.
+-- rejected as TooWeak even though the kill is valid. Named-NM chapters skip
+-- it too: Unity worms burrow (3D range > 100) and dynamic pops can store
+-- level 0 / HiPCLvl 0. CFH and a dead player still reject.
 function C.hasKillCredit(player, mob, requirement)
     if not player or not mob or (player.isDead and player:isDead()) then
         return false
@@ -341,6 +342,10 @@ function C.hasKillCredit(player, mob, requirement)
             return false
         end
 
+        return true
+    end
+
+    if requirement and requirement.targets then
         return true
     end
 
@@ -499,19 +504,57 @@ function C.isComplete(player, finalId)
     return entry ~= nil and C.chapter(player, entry) == 4
 end
 
-function C.targetIndex(requirement, name)
-    local wanted = normalize(name)
-    for index, target in ipairs(requirement.targets or {}) do
-        if normalize(target) == wanted then return index end
+local unityNameById
+
+local function unityNameForId(nmId)
+    if not unityNameById then
+        unityNameById = {}
+        local ok, unity = pcall(require, 'modules/custom/lua/unity_wanted_catalog')
+        if ok and unity and unity.nms then
+            for _, nm in ipairs(unity.nms) do
+                unityNameById[nm.id] = nm.name
+            end
+        end
     end
 
-    -- Instanced Divergence mobs have no packetName and expose internal names
-    -- such as Disjoined_Elvaan_D. The client-visible catalog name omits the
-    -- instance suffix, so canonicalize it only for this objective family.
-    if requirement.tag == 'divergence_disjoined' then
-        wanted = normalize((name or ''):gsub('_[dD]$', ''))
-        for index, target in ipairs(requirement.targets or {}) do
-            if normalize(target) == wanted then return index end
+    return unityNameById[nmId]
+end
+
+local function killNameCandidates(name)
+    local names = { name }
+    local strippedCopy = (name or ''):gsub('_c%d+$', '')
+    if strippedCopy ~= name then
+        names[#names + 1] = strippedCopy
+    end
+
+    local strippedD = (name or ''):gsub('_[dD]$', '')
+    if strippedD ~= name then
+        names[#names + 1] = strippedD
+    end
+
+    -- Overworld Unity pops: UW_<owner>_<nmId>_<seq>
+    local nmId = tonumber((name or ''):match('^UW_.-_(%d+)_%d+$'))
+    if nmId then
+        local mapped = unityNameForId(nmId)
+        if mapped then
+            names[#names + 1] = mapped
+        end
+    end
+
+    return names
+end
+
+function C.targetIndex(requirement, name)
+    if not requirement or not requirement.targets then
+        return nil
+    end
+
+    for _, candidate in ipairs(killNameCandidates(name)) do
+        local wanted = normalize(candidate)
+        for index, target in ipairs(requirement.targets) do
+            if normalize(target) == wanted then
+                return index
+            end
         end
     end
 

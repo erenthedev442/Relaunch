@@ -3339,7 +3339,7 @@ INSERT INTO `mob_skills` VALUES (3306,302,'setting_the_stage',1,0.0,18.0,2000,10
 INSERT INTO `mob_skills` VALUES (3307,303,'last_laugh',1,0.0,18.0,2000,1000,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (3308,1714,'thorned_dance',0,0.0,18.0,2000,1000,1,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (3309,1715,'sensual_dance',1,18.0,18.0,2000,1000,1,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (3310,1712,'dancers_fury',0,0.0,7.0,2000,1000,4,0,0,0,11,8,0); -- Fusion / Impaction
+INSERT INTO `mob_skills` VALUES (3310,1712,'dancers_fury',0,0.0,7.0,2000,1000,4,0,0,0,12,4,0); -- Fragmentation / Scission
 INSERT INTO `mob_skills` VALUES (3311,1713,'whirling_edge',1,8.0,7.0,2000,1000,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (3312,1716,'rousing_samba',1,18.0,18.0,2000,1000,1,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (3313,1717,'vivifying_waltz',1,18.0,18.0,2000,1000,1,0,0,0,0,0,0);

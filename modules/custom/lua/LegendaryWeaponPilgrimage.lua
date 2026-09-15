@@ -162,18 +162,23 @@ function P.isComplete(player, finalId)
     return C.isComplete(player, finalId)
 end
 
-local function markProgress(player, entry, chapter, targetName)
+local function markProgress(player, entry, chapter, mobOrName)
     local requirement = entry.chapters[chapter]
     local progressVar = C.progressVar(entry.index, chapter)
     local current = player:getCharVar(progressVar) or 0
     if current >= requirement.count then return end
 
     if requirement.distinct then
-        local targetIndex = C.targetIndex(requirement, targetName)
-        if not targetIndex then return end
+        local resolved
+        if type(mobOrName) == 'string' then
+            resolved = C.targetIndex(requirement, mobOrName)
+        elseif mobOrName then
+            resolved = targetIndex(requirement, mobOrName)
+        end
+        if not resolved then return end
         local maskVar = C.maskVar(entry.index, chapter)
         local mask = player:getCharVar(maskVar) or 0
-        local flag = bit.lshift(1, targetIndex - 1)
+        local flag = bit.lshift(1, resolved - 1)
         if bit.band(mask, flag) ~= 0 then return end
         player:setCharVar(maskVar, bit.bor(mask, flag))
     end
@@ -232,7 +237,7 @@ local function creditWeaponskillKill(mob, player, wsId)
             C.hasKillCredit(player, mob, requirement) and
             targetEligible(player, mob, entry, chapter)
         then
-            markProgress(player, entry, chapter, displayName(mob))
+            markProgress(player, entry, chapter, mob)
             credited = true
         end
     end
@@ -270,9 +275,9 @@ local function onDefeatedMob(mob, player, opt)
             entry.chapters[chapter].kind == 'support_ws' and
             equippedForChapter(player, entry, chapter) and
             not player:isDead() and
-            player:checkKillCredit(mob)
+            C.hasKillCredit(player, mob, entry.chapters[chapter])
         then
-            markProgress(player, entry, chapter, displayName(mob))
+            markProgress(player, entry, chapter, mob)
         end
         player:setLocalVar('LWP_SupportEntry', 0)
         player:setLocalVar('LWP_SupportChapter', 0)

@@ -26,8 +26,10 @@
 -- Currency faucet: xi.mob.onMobDeathEx (rotation + optional NM trickle).
 -- Command: !empower (view) / !empower give <n> (GM test grant).  commands/empower.lua
 -- Grant API for other systems: xi.spellSkillMastery.grant(player, n)
--- Rotation credit is PARTY-WIDE (every same-zone party member claims once per
--- period; catalog.rotation.partyWide). The small NM trickle stays killer-only.
+-- Kill credit: xi.spellSkillMastery.creditKill(player, mob)
+-- Rotation and NM trickle credit every same-zone alliance PC. Hunt NMs also
+-- call creditKill from hunters_guild_hunts so a trust last-hit still pays
+-- (onMobDeathEx never runs unless the killer is a PC).
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
@@ -186,6 +188,49 @@ local function claimRotation(p, idx, label)
     if C.rotation.announce then
         p:printToPlayer(string.format('[Mastery] Rotation target %s defeated! +%d %s.',
             label, C.rotation.reward, C.CURRENCY_NAME), SYS)
+    end
+end
+
+-- One kill, one credit per player. onMobDeathEx does not run when a trust or
+-- pet lands the last hit; hunters_guild_hunts calls this as the fallback.
+xi.spellSkillMastery.creditKill = function(player, mob)
+    if not player or not mob then
+        return
+    end
+    if player.getObjType and player:getObjType() ~= xi.objType.PC then
+        return
+    end
+
+    local paidKey = string.format('MS_%u', player:getID())
+    if mob:getLocalVar(paidKey) == 1 then
+        return
+    end
+    mob:setLocalVar(paidKey, 1)
+
+    local idx, label
+    if C.rotation.enabled then
+        local list, byName = currentActive()
+        idx = byName[normalizeName(mob:getName())]
+            or byName[normalizeName(mob:getPacketName and mob:getPacketName() or '')]
+        if idx then
+            label = list[idx].label
+        end
+    end
+
+    if idx then
+        claimRotation(player, idx, label)
+        return
+    end
+
+    local s = C.sigils
+    if mob:isNM() and s.nmTrickle then
+        local amt = math.min(s.nmMax, math.floor(s.nmBase + (mob:getMainLvl() or 0) * s.nmPerLevel))
+        if amt > 0 then
+            grantSigils(player, amt, s.announceNM)
+        end
+    elseif s.mobChance > 0 and (mob:getMainLvl() or 0) >= s.mobMinLevel
+           and math.random(100) <= s.mobChance then
+        grantSigils(player, s.mobAmount, false)
     end
 end
 
@@ -418,47 +463,13 @@ end
 -----------------------------------
 -- Sigil faucet: the NM ROTATION is the primary source; an optional small
 -- trickle on any NM keeps players from going fully dry between targets.
+-- Alliance members are each passed in separately by onMobDeathEx when the
+-- killer is a PC. Trust/pet last-hits skip this hook entirely.
 -----------------------------------
 m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSkillKill)
     super(mob, player, isKiller, isWeaponSkillKill)
     pcall(function()
-        if not isKiller or player == nil then return end
-        if player:getObjType() ~= xi.objType.PC then return end
-
-        -- Rotation target? (matched by name, independent of the isNM flag.)
-        local idx, label
-        if C.rotation.enabled then
-            local list, byName = currentActive()
-            idx = byName[normalizeName(mob:getName())]
-            if idx then label = list[idx].label end
-        end
-
-        if idx then
-            -- Credit every same-zone PC party member (or just the killer if
-            -- partyWide is off). Each member claims independently, once/period.
-            local zoneId  = mob:getZoneID()
-            local members = { player }
-            if C.rotation.partyWide then
-                local ok, party = pcall(function() return player:getParty() end)
-                if ok and party and #party > 0 then members = party end
-            end
-            for _, mem in ipairs(members) do
-                if mem and mem:getObjType() == xi.objType.PC and mem:getZoneID() == zoneId then
-                    claimRotation(mem, idx, label)
-                end
-            end
-            return  -- rotation NM handled; skip the trickle
-        end
-
-        -- Secondary trickle (killer only).
-        local s = C.sigils
-        if mob:isNM() and s.nmTrickle then
-            local amt = math.min(s.nmMax, math.floor(s.nmBase + (mob:getMainLvl() or 0) * s.nmPerLevel))
-            if amt > 0 then grantSigils(player, amt, s.announceNM) end
-        elseif s.mobChance > 0 and (mob:getMainLvl() or 0) >= s.mobMinLevel
-               and math.random(100) <= s.mobChance then
-            grantSigils(player, s.mobAmount, false)
-        end
+        xi.spellSkillMastery.creditKill(player, mob)
     end)
 end)
 

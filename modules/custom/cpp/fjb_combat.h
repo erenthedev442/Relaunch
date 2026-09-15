@@ -66,10 +66,9 @@ void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_vie
 // Role output now comes from frames, attachments and maneuvers.
 int32 ApplyAutomatonDamageBonus(CBattleEntity* PAttacker, int32 damage);
 
-// Scale a main-job-RNG player's outgoing RANGED damage (auto-shots, ranged
-// weaponskills, Eagle Eye Shot) by RANGER_RANGED_DMG_MULTIPLIER. Returns
-// damage unchanged for melee swings, other jobs (incl. COR), non-PCs, or
-// damage <= 0.
+// Scale a main-job-RNG player's outgoing RANGED auto-shot / Barrage / EES
+// damage by RANGER_RANGED_DMG_MULTIPLIER. Native REMA/Prime weaponskills,
+// melee swings, other jobs (incl. COR), non-PCs, and damage <= 0 are unchanged.
 int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRanged);
 
 // Trust auto-attacks (melee + ranged via TakePhysicalDamage): 0.55x at master 99,

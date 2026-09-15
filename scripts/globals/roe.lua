@@ -261,14 +261,21 @@ local function completeRecord(player, record)
         player:setEminenceCompleted(record)
     end
 
-    if
-        player:getUnityLeader() > 0 and
-        rewards['accolades'] ~= nil and
-        type(rewards['accolades']) == 'number'
-    then
+    if rewards['accolades'] ~= nil and type(rewards['accolades']) == 'number' then
+        -- Relaunch skips the retail Unity NPC grind. Alts used to complete
+        -- RoE (sparks/exp) with unity_leader 0 and silently get 0 accolades.
+        if (player:getUnityLeader() or 0) == 0 then
+            player:setUnityLeader(1)
+        end
+
+        local rank = player:getUnityRank() or 1
+        if rank < 1 then
+            rank = 1
+        end
+
         local bonusAccoladeRate = 1.0
         if record ~= 5 then -- Do not grant a bonus for All for One
-            bonusAccoladeRate = bonusAccoladeRate + ((player:getUnityRank() - 1) * 0.05)
+            bonusAccoladeRate = bonusAccoladeRate + ((rank - 1) * 0.05)
         end
 
         local accoladePayout = math.floor(rewards['accolades'] * bonusAccoladeRate)

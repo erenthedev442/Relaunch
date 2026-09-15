@@ -119,6 +119,28 @@ local function resolveKiller(mob, player)
     return nil
 end
 
+-- Mastery Sigils: onMobDeathEx never fires when a trust/pet last-hits.
+-- Resolve the owning PC (same as hunt rep) and credit once per player.
+local function creditMasterySigils(mob, killer)
+    local mastery = xi.spellSkillMastery
+    if not (mastery and mastery.creditKill) then
+        return
+    end
+
+    if catalog.killerOnly then
+        mastery.creditKill(killer, mob)
+        return
+    end
+
+    local zoneId = mob:getZoneID()
+    local alliance = killer:getAlliance() or { killer }
+    for _, member in ipairs(alliance) do
+        if member and member:getObjType() == xi.objType.PC and member:getZoneID() == zoneId then
+            mastery.creditKill(member, mob)
+        end
+    end
+end
+
 -- Distribute hunt rep to either just the killer or every alliance
 -- member, per catalog.killerOnly. Keeps the call sites uniform.
 local function distributeRep(mob, killer, target, guildKey)
@@ -168,6 +190,7 @@ for guildKey, targets in pairs(catalog.huntTargets) do
                 local killer = resolveKiller(mob, player)
                 if killer then
                     distributeRep(mob, killer, capturedT, capturedG)
+                    pcall(creditMasterySigils, mob, killer)
                 else
                     print(string.format(
                         "[hunters_guild_hunts] %s died but no PC killer resolved - no rep awarded",

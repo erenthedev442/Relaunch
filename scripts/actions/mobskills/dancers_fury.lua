@@ -2,6 +2,8 @@
 -- Dancer's Fury
 -- Family: Humanoid (Trust: Lilisette)
 -- Description: Single-target dagger TP move. Damage varies with TP.
+-- Skillchain: Fragmentation / Scission (retail). Fusion was closing Light
+-- with Savage Blade.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}

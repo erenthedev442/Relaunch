@@ -410,7 +410,7 @@ local QM_POINTS = {
         [17961739] = { 76 },  -- Vir'ava (portal #12 pad)
         [17961740] = { 90 },  -- Ark Angel EV
         [17961741] = { 91 },  -- Ark Angel GK
-        [17961742] = { 85 },  -- Ark Angel HM (inland of portal #15)
+        [17961742] = { 85 },  -- Ark Angel HM (portal #15 pad)
         -- 17961777 was AA MR at (0,0,0) — zone-center void / Ru'Avitau OOB.
         -- Folded onto 17961700 (portal #4 / stock AA MR camp) above.
     },
@@ -1270,7 +1270,7 @@ local CAMP_SPAWN_NO_SCATTER =
 {
     [17961733] = true, -- Hanbi (portal #6)
     [17961739] = true, -- Vir'ava (portal #12)
-    [17961742] = true, -- Ark Angel HM (portal #15)
+    [17961742] = true, -- Ark Angel HM (portal #15 pad)
 }
 
 local function spawnNM(player, zone, zoneId, def, campNpc)
@@ -1641,6 +1641,9 @@ local CAMP_WARP_OVERRIDE =
     [17969990] = { x = 640.599, y = -374.000, z = -911.200 }, -- Ingress #7 (Gajasimha / Yakshi)
     [17969992] = { x = -580.000, y = -417.400, z = -1065.000 }, -- Ingress #9 (Oryx / Ironside / Old Shuck)
     [17969993] = { x = -389.220, y = -439.710, z = -835.130 }, -- Ingress #10 (Maju / Onychophora)
+    -- Portal #15 is a tiny southern pad at Y=-52. The ??? at Z=-555 sat in the
+    -- gap toward the #1 plaza (Y=-34); the +2.5 warp offset made it worse.
+    [17961742] = { x = -1.200, y = -52.000, z = -580.500 }, -- Eschan Portal #15 (Ark Angel HM)
 }
 
 local function warpToCamp(player, zoneId, npcId, label)

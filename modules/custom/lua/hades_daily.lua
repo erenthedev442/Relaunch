@@ -491,17 +491,52 @@ end)
 -----------------------------------
 -- Delivery: talking to today's town NPC
 -----------------------------------
+-- Static NPCs send getName() without the isRenamed 0x01 prefix. Classic
+-- DAT rows still show Ostalie / Zhikkom. ToAU (Chayaya, Gavrie, Nanaroon),
+-- WotG, and SoA IDs often have no client name row, so the plate is "NPC".
+local function applyDeliveryName(npc, dest)
+    if not npc or not dest then
+        return
+    end
+    local display = dest.speaker or dest.npc
+    pcall(function()
+        npc:hideName(false)
+        npc:renameEntity(display, true)
+    end)
+end
+
+local function applyDeliveryNames()
+    for _, dest in ipairs(catalog.deliveries) do
+        if dest.npcId then
+            applyDeliveryName(GetNPCByID(dest.npcId), dest)
+        end
+    end
+end
+
 for _, dest in ipairs(catalog.deliveries) do
+    local thisDest = dest
+    local npcName = dest.npc
+    local npcId = dest.npcId
     local scriptPath = string.format('scripts/zones/%s/npcs/%s', dest.zone, dest.npc)
     pcall(require, scriptPath)
     local hook = string.format('xi.zones.%s.npcs.%s.onTrigger', dest.zone, dest.npc)
-    local npcName = dest.npc
     pcall(function()
         m:addOverride(hook, function(player, npc)
+            applyDeliveryName(npc, thisDest)
             pcall(function()
                 hades.tryDeliver(player, npcName)
             end)
             super(player, npc)
+        end)
+    end)
+
+    local zonePath = string.format('scripts/zones/%s/Zone', dest.zone)
+    pcall(require, zonePath)
+    local zoneHook = string.format('xi.zones.%s.Zone.onInitialize', dest.zone)
+    pcall(function()
+        m:addOverride(zoneHook, function(zone)
+            super(zone)
+            applyDeliveryName(GetNPCByID(npcId), thisDest)
         end)
     end)
 end
@@ -638,6 +673,7 @@ local function applyLiveNpcs()
     if zone then
         placeSecondForm(zone)
     end
+    applyDeliveryNames()
 end
 
 m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone), function(zone)

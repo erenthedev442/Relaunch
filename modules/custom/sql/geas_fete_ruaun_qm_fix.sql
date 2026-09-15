@@ -5,7 +5,7 @@
 --   Warder of Love  17961734 — overhang NE of portal #7 (sky / camera jank)
 --   Hanbi           17961733 — void off bridge near portal #6
 --   Vir'ava         17961739 — void off map near portal #12
---   Ark Angel HM    17961742 — void off southern tip near portal #15
+--   Ark Angel HM    17961742 — void between portal #15 pad and #1 plaza
 --   Ma camp         17961705 — ensure targetable (Ma / Peirithoos / Kouryu)
 --   Ark Angel MR    17961777 — hide dead (0,0,0) twin; MR lives on 17961700
 -- Relocate onto solid ground. Idempotent. Map restart for NPC moves;
@@ -45,12 +45,12 @@ SET
     pos_z = -140.000
 WHERE npcid = 17961739;
 
--- Ark Angel HM — inland of portal #15 tip (was on the southern edge).
+-- Ark Angel HM — portal #15 pad (Z=-555 was still void between #15 and #1).
 UPDATE `npc_list`
 SET
-    pos_x =   -1.000,
+    pos_x =   -1.200,
     pos_y =  -52.000,
-    pos_z = -555.000
+    pos_z = -578.000
 WHERE npcid = 17961742;
 
 -- Ma / Peirithoos / Kouryu — keep the clickable twin targetable.

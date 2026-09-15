@@ -54,6 +54,14 @@ describe('Ascension Court progression curve', function()
         assert(wardens[11395].reveal)
     end)
 
+    it('keeps Raja magic and magical TP at 60% of the prior Voidfang values', function()
+        local raja = catalog.trialScaling.tiers[4].roster.bosses[11388]
+        assert(raja and raja.name == 'Raja')
+        assert(raja.mods[xi.mod.MATT] == 1290) -- was 2150
+        assert(raja.mods[xi.mod.INT] == 390)   -- was 650
+        assert(raja.mods[xi.mod.ATT] == 12000)
+    end)
+
     it('reserves final empowerment for the P80-P100 Aeonic climb', function()
         local empowered = catalog.trialScaling.tiers[7]
         local ascendant = catalog.trialScaling.tiers[8]

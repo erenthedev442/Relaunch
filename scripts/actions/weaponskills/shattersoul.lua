@@ -23,11 +23,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local params   = {}
     params.numHits = 3
     params.ftpMod  = { 1.375, 1.375, 1.375 }
-    params.int_wsc = player:getMerit(xi.merit.SHATTERSOUL) * 0.17
-
-    if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
-        params.int_wsc = 0.7 + player:getMerit(xi.merit.SHATTERSOUL) * 0.03
-    end
+    params.int_wsc = xi.weaponskills.getMeritWeaponSkillWSC(player, xi.merit.SHATTERSOUL)
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 

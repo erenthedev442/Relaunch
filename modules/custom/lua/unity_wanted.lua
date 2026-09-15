@@ -657,19 +657,38 @@ end
 -----------------------------------
 -- Bypass the retail Unity "10 RoE records" gate.
 -- On Relaunch there is no retail RoE grind; auto-join leader 1 then forward.
+-- Alts never talked to a Unity NPC, so RoE sparks paid and accolades did not.
 -- We replace xi.unity.onTrigger directly (not via addOverride, which is for
 -- zone-module paths only). The original is preserved in _origUnityTrigger.
 -----------------------------------
+local function ensureUnityMembership(player)
+    if not player or not player.getUnityLeader then
+        return
+    end
+
+    if (player:getUnityLeader() or 0) == 0 then
+        player:setUnityLeader(1)
+    end
+
+    if not player:getEminenceCompleted(5) then
+        pcall(function()
+            xi.roe.onRecordTrigger(player, 5, { progress = 1, claim = true })
+        end)
+    end
+end
+
 do
     local _orig = xi.unity and xi.unity.onTrigger
     xi.unity = xi.unity or {}
     xi.unity.onTrigger = function(player, npc)
-        if not player:getEminenceCompleted(5) then
-            player:setUnityLeader(1)
-            xi.roe.onRecordTrigger(player, 5)
-        end
+        ensureUnityMembership(player)
         if _orig then _orig(player, npc) end
     end
 end
+
+m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
+    super(player, firstLogin, zoning)
+    pcall(ensureUnityMembership, player)
+end)
 
 return m

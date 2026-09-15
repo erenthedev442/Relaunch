@@ -18,6 +18,42 @@ require('scripts/globals/combat/physical_utilities')
 xi = xi or {}
 xi.weaponskills = xi.weaponskills or {}
 
+-- Merit weaponskills store SQL value=3 (the +3% WSC per rank), so getMerit()
+-- returns count * 3. Retail is 17% WSC per rank, or 70% + 3% per rank (Adoulin).
+-- Prefer getMeritRank (raw 0-5) so the bonus still applies on jobs that can
+-- USE the WS but cannot buy it in the merit menu.
+xi.weaponskills.getMeritWeaponSkillRanks = function(player, meritId)
+    if not player then
+        return 0
+    end
+
+    if player.getMainLvl and player:getMainLvl() < 96 then
+        return 0
+    end
+
+    if player.getMeritRank then
+        local rank = player:getMeritRank(meritId)
+        if type(rank) == 'number' then
+            return rank
+        end
+    end
+
+    if player.getMerit then
+        return math.floor((player:getMerit(meritId) or 0) / 3)
+    end
+
+    return 0
+end
+
+xi.weaponskills.getMeritWeaponSkillWSC = function(player, meritId)
+    local ranks = xi.weaponskills.getMeritWeaponSkillRanks(player, meritId)
+    if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
+        return 0.7 + ranks * 0.03
+    end
+
+    return ranks * 0.17
+end
+
 local function shadowAbsorb(target)
     local targetShadows = target:getMod(xi.mod.UTSUSEMI)
     local shadowType    = xi.mod.UTSUSEMI

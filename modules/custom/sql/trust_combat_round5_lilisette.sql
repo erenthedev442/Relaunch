@@ -32,14 +32,16 @@ UPDATE `mob_skills` SET
     `secondary_sc` = 0
 WHERE `mob_skill_id` = 3309;
 
+-- Fragmentation / Scission (retail). Was Fusion / Impaction, which made Light
+-- with Savage Blade.
 UPDATE `mob_skills` SET
     `mob_anim_id` = 1712,
     `mob_skill_name` = 'dancers_fury',
     `mob_skill_aoe` = 0,
     `mob_skill_distance` = 7.0,
     `mob_valid_targets` = 4,
-    `primary_sc` = 11,
-    `secondary_sc` = 8
+    `primary_sc` = 12,
+    `secondary_sc` = 4
 WHERE `mob_skill_id` = 3310;
 
 UPDATE `mob_skills` SET

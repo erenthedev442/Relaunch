@@ -298,6 +298,43 @@ describe('Legendary Weapon Pilgrimage integrity', function()
         end
     end)
 
+    it('matches Unity Specter Worm from catalog, instance, and UW_ script names', function()
+        local amano = pilgrimage.byFinalId[21954]
+        assert(amano and amano.name == 'Amanomurakumo')
+        local requirement = amano.chapters[2]
+        assert(requirement.tag == 'unity_nm')
+        assert(requirement.distinct)
+
+        local wormIndex
+        for index, name in ipairs(requirement.targets) do
+            if pilgrimage.normalizeName(name) == 'specterworm' then
+                wormIndex = index
+            end
+        end
+        assert(wormIndex, 'Amanomurakumo ch2 must list Specter Worm')
+
+        assert(pilgrimage.targetIndex(requirement, 'Specter Worm') == wormIndex)
+        assert(pilgrimage.targetIndex(requirement, 'Specter_Worm') == wormIndex)
+        assert(pilgrimage.targetIndex(requirement, 'Specter_Worm_c3') == wormIndex)
+        assert(pilgrimage.targetIndex(requirement, 'UW_Blitzace_39_12') == wormIndex)
+        assert(pilgrimage.targetIndex(requirement, 'UW_Jamesta_39_1') == wormIndex)
+        assert(not pilgrimage.targetIndex(requirement, 'UW_Blitzace_1_12'))
+
+        local player =
+        {
+            isDead = function() return false end,
+            checkDistance = function() return 250 end,
+            checkKillCredit = function() return false end,
+        }
+        local worm =
+        {
+            getCallForHelpFlag = function() return false end,
+        }
+        assert(pilgrimage.hasKillCredit(player, worm, requirement))
+        worm.getCallForHelpFlag = function() return true end
+        assert(not pilgrimage.hasKillCredit(player, worm, requirement))
+    end)
+
     it('credits Magian families including aliases, NMs, and unset SoA levels', function()
         local spharai = pilgrimage.byFinalId[20509]
         assert(spharai and spharai.name == 'Spharai')

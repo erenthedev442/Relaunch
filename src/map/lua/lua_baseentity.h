@@ -464,6 +464,7 @@ public:
     void  addCapacityPoints(uint32 capacity);
     void  delExp(uint32 exp);
     int32 getMerit(uint16 merit);
+    uint8 getMeritRank(uint16 merit);
     uint8 getMeritCount();
     void  setMerits(uint8 numPoints);
 

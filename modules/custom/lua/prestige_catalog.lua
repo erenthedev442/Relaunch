@@ -390,7 +390,10 @@ return
                                   mods = { [xi.mod.DEF] = 3100, [xi.mod.ATT] = 12500, [xi.mod.ACC] = 5000, [xi.mod.EVASION] = 1400, [xi.mod.MATT] = 1900, [xi.mod.MACC] = 2050, [xi.mod.MEVA] = 1750, [xi.mod.MDEF] = 1750, [xi.mod.STR] = 650, [xi.mod.VIT] = 600, [xi.mod.DOUBLE_ATTACK] = 22, [xi.mod.HASTE_GEAR] = 325, [xi.mod.REGEN] = 575 } },
                       [11388] = { name = 'Raja', label = 'Raja, the Voidfang', level = 150, hpBoost = 48,
                                   cry = '"No cage has held me, and no flesh has survived me."',
-                                  mods = { [xi.mod.DEF] = 2950, [xi.mod.ATT] = 12000, [xi.mod.ACC] = 5100, [xi.mod.EVASION] = 1500, [xi.mod.MATT] = 2150, [xi.mod.MACC] = 2250, [xi.mod.MEVA] = 1450, [xi.mod.MDEF] = 1850, [xi.mod.INT] = 650, [xi.mod.STR] = 600, [xi.mod.DOUBLE_ATTACK] = 24, [xi.mod.HASTE_GEAR] = 350, [xi.mod.REGEN] = 550, [xi.mod.SILENCE_RES_RANK] = -11 } },
+                                  -- Spells and magical TP (Stygian Cyclone / Malign Invocation)
+                                  -- share MAB. 2150 MATT sat at/near the 10x mob MAB cap vs
+                                  -- normal MDEF, so Firaga IV ignored DT. 60% MATT/INT.
+                                  mods = { [xi.mod.DEF] = 2950, [xi.mod.ATT] = 12000, [xi.mod.ACC] = 5100, [xi.mod.EVASION] = 1500, [xi.mod.MATT] = 1290, [xi.mod.MACC] = 2250, [xi.mod.MEVA] = 1450, [xi.mod.MDEF] = 1850, [xi.mod.INT] = 390, [xi.mod.STR] = 600, [xi.mod.DOUBLE_ATTACK] = 24, [xi.mod.HASTE_GEAR] = 350, [xi.mod.REGEN] = 550, [xi.mod.SILENCE_RES_RANK] = -11 } },
                       [11389] = { name = 'Maere', label = 'Maere, the Living Nightmare', level = 150, hpBoost = 49,
                                   cry = '"You will not wake from this one."',
                                   mods = { [xi.mod.DEF] = 2850, [xi.mod.ATT] = 11500, [xi.mod.ACC] = 5200, [xi.mod.EVASION] = 1550, [xi.mod.MATT] = 2050, [xi.mod.MACC] = 2150, [xi.mod.MEVA] = 1850, [xi.mod.MDEF] = 1750, [xi.mod.AGI] = 600, [xi.mod.INT] = 600, [xi.mod.DOUBLE_ATTACK] = 22, [xi.mod.TRIPLE_ATTACK] = 7, [xi.mod.HASTE_GEAR] = 350, [xi.mod.REGEN] = 550 } },

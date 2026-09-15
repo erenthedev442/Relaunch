@@ -16,12 +16,8 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local params       = {}
     params.numHits     = 4
     params.ftpMod      = { 0.75, 1.25, 1.75 }
-    params.str_wsc     = player:getMerit(xi.merit.STARDIVER) * 0.17
+    params.str_wsc     = xi.weaponskills.getMeritWeaponSkillWSC(player, xi.merit.STARDIVER)
     params.multiHitfTP = true
-
-    if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
-        params.str_wsc = 0.7 + player:getMerit(xi.merit.STARDIVER) * 0.03
-    end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 

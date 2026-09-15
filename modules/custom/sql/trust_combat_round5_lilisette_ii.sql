@@ -23,15 +23,16 @@ ON DUPLICATE KEY UPDATE
     `primary_sc` = 0,
     `secondary_sc` = 0;
 
--- Affirm Dancer's Fury SC props (closes common chains).
+-- Retail Dancer's Fury is Fragmentation / Scission (not Fusion / Impaction).
+-- Fusion + Savage Blade was closing Light.
 UPDATE `mob_skills` SET
     `mob_anim_id` = 1712,
     `mob_skill_name` = 'dancers_fury',
     `mob_skill_aoe` = 0,
     `mob_skill_distance` = 7.0,
     `mob_valid_targets` = 4,
-    `primary_sc` = 11,
-    `secondary_sc` = 8
+    `primary_sc` = 12,
+    `secondary_sc` = 4
 WHERE `mob_skill_id` = 3310;
 
 -- Single-target Whirling Edge (Alter Ego II).
