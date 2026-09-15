@@ -5,7 +5,8 @@
 -- Five slots every UTC day, same board for every player, 150 Soul Shards
 -- if and only if all five are cleared. Weekend shop sells one ware from
 -- each of eight stalls (Steel, Steel II, Mail, Mail II, Gild, Crate, Trusts,
--- Cosmetics). Steel is
+-- Cosmetics) plus a standing Leveling list of the lv.1 EXP / Capacity set.
+-- Steel is
 -- Relic/Odyssey paper or finished Ambuscade / Geas named. Hades sets
 -- that week's prices. Pin a week on hades_shop_catalog.PINNED.
 -----------------------------------
@@ -92,9 +93,9 @@ end
 
 function catalog.shopStatusLine()
     if catalog.isShopOpen() then
-        return 'The ferry is up. Eight stalls this week -- Steel, Steel II, Mail, Mail II, Gild, Crate, Trusts, and Cosmetics. Same board for every soul. Crate hold is on the menu.'
+        return 'The ferry is up. Eight stalls this week -- Steel, Steel II, Mail, Mail II, Gild, Crate, Trusts, and Cosmetics. Same board for every soul. Leveling and Crate hold are on the talking form.'
     end
-    return 'The market sinks until Saturday. Eight stalls return when the ferry rises. Quests run every day. Crate hold stays open.'
+    return 'The market sinks until Saturday. Eight stalls return when the ferry rises. Quests run every day. Leveling and Crate hold stay open on the talking form.'
 end
 
 local function sayHades(player, line)
@@ -222,6 +223,147 @@ function catalog.tryBuyRelicVoucher(player, poolIndex, silent)
     return true
 end
 
+function catalog.tryBuyLeveling(player, itemId, silent)
+    if not player then
+        return false
+    end
+
+    local leveling = require('modules/custom/lua/hades_leveling_catalog')
+    local shop = require('modules/custom/lua/hades_shop_catalog')
+    local row = leveling.byId[itemId]
+    if not row then
+        if silent then
+            sayDots(player)
+        else
+            sayHades(player, 'The dead have no wares at that stall.')
+        end
+        return false
+    end
+
+    local offer =
+    {
+        key    = 'leveling',
+        row    = row,
+        price  = row.price,
+    }
+    local shards = player:getCharVar(catalog.currencyCv) or 0
+    if shards < offer.price then
+        if silent then
+            sayDots(player)
+        else
+            sayHades(player, string.format(
+                'You hold %d %s. %s costs %d.',
+                shards, catalog.currencyName, row.name, offer.price))
+        end
+        return false
+    end
+
+    if shop.owns(player, offer) then
+        if silent then
+            sayDots(player)
+        else
+            sayHades(player, string.format(
+                'You already carry %s. The rest of Leveling still stands.',
+                row.name))
+        end
+        return false
+    end
+
+    if not shop.award(player, offer, silent and '' or 'Hades') then
+        if silent then
+            sayDots(player)
+        end
+        return false
+    end
+
+    player:setCharVar(catalog.currencyCv, shards - offer.price)
+    if silent then
+        sayDots(player)
+        return true
+    end
+
+    sayHades(player, 'The first mile still has to be walked.')
+    sayHades(player, string.format('Take %s.', row.name))
+    player:printToPlayer(
+        string.format('[Hades] Received: %s. %s remaining: %d.',
+            row.name, catalog.currencyName, shards - offer.price),
+        xi.msg.channel.SYSTEM_3)
+    return true
+end
+
+function catalog.showLevelingShop(player, backFn, silent, page)
+    if not player then
+        return
+    end
+
+    local leveling = require('modules/custom/lua/hades_leveling_catalog')
+    local shop = require('modules/custom/lua/hades_shop_catalog')
+    local S = xi.msg.channel.SYSTEM_3
+    page = page or 1
+    local pages = math.max(1, math.ceil(#leveling.items / leveling.PAGE))
+    if page > pages then
+        page = pages
+    end
+
+    player:printToPlayer(
+        string.format(
+            '[Hades] Leveling -- lv.1 EXP / Capacity set. %d %s each. Already-owned pieces stay closed.',
+            leveling.PRICE, catalog.currencyName),
+        S)
+
+    local opts = {}
+    local first = ((page - 1) * leveling.PAGE) + 1
+    local last  = math.min(first + leveling.PAGE - 1, #leveling.items)
+    for i = first, last do
+        local row = leveling.items[i]
+        local owned = shop.owns(player, { key = 'leveling', row = row })
+        player:printToPlayer(
+            string.format('[Hades]   %s%s', row.name, owned and ' (owned)' or ''),
+            S)
+        local itemId = row.id
+        opts[#opts + 1] =
+        {
+            string.format('%s %d', row.name, row.price),
+            function(p)
+                catalog.tryBuyLeveling(p, itemId, silent)
+                catalog.showLevelingShop(p, backFn, silent, page)
+            end,
+        }
+    end
+    if page < pages then
+        opts[#opts + 1] =
+        {
+            string.format('Next (%d/%d)', page + 1, pages),
+            function(p)
+                catalog.showLevelingShop(p, backFn, silent, page + 1)
+            end,
+        }
+    end
+    if page > 1 then
+        opts[#opts + 1] =
+        {
+            string.format('Prev (%d/%d)', page - 1, pages),
+            function(p)
+                catalog.showLevelingShop(p, backFn, silent, page - 1)
+            end,
+        }
+    end
+    if backFn then
+        opts[#opts + 1] =
+        {
+            'Back',
+            function(p)
+                backFn(p)
+            end,
+        }
+    else
+        opts[#opts + 1] = { 'Close', function(_) end }
+    end
+
+    local snapshot = { title = silent and '......' or 'Leveling', options = opts }
+    player:timer(30, function(p) p:customMenu(snapshot) end)
+end
+
 function catalog.showShop(player, backFn, silent)
     local S = xi.msg.channel.SYSTEM_3
     player:printToPlayer('[Hades] ' .. catalog.shopStatusLine(), S)
@@ -252,6 +394,16 @@ function catalog.showShop(player, backFn, silent)
                 end,
             }
         end
+    else
+        opts[#opts + 1] =
+        {
+            'Leveling',
+            function(p)
+                catalog.showLevelingShop(p, function(pp)
+                    catalog.showShop(pp, backFn, silent)
+                end, silent)
+            end,
+        }
     end
     opts[#opts + 1] =
     {

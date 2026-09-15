@@ -49,6 +49,11 @@ int32 ApplyTrustEndgameSoftClamp(CBattleEntity* PAttacker, int32 damage);
 // No-op for support roles (TrustDdRole == 0), fellows, or mobs <= 120.
 int32 ApplyTrustEndgameLevelDamageMult(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage);
 
+// Player (or PC-owned pet/trust) below combat level 99: crush outgoing past
+// +20, nearly nothing at +30, then clamp to 10-100 at +40 so prestige nukes
+// cannot leak. Uses GetMLevel so Level Sync counts. No-op at 99+ or non-mobs.
+int32 ApplyOverlevelOutgoingCap(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage);
+
 // Master 99+: physical hit-rate assist through mob level 120; steep miss penalty
 // above 120. hitrate is 0–100. Shadows / forced misses are caller-side.
 uint8 ApplyTrustEndgameHitRateAdjust(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 hitrate);

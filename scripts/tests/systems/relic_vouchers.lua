@@ -99,16 +99,20 @@ describe('Hades Relic 119 III vouchers', function()
     it('lets Hades set a weekly Relic or Ambuscade price inside the band', function()
         assert(vouchers.PRICE.relic.lo == 1901)
         assert(vouchers.PRICE.relic.hi == 2099)
-        assert(vouchers.PRICE.odyssey.lo == 1901)
-        assert(vouchers.PRICE.odyssey.hi == 2099)
+        assert(vouchers.PRICE.odyssey.lo == 1400)
+        assert(vouchers.PRICE.odyssey.hi == 1500)
         assert(vouchers.PRICE.ambuscade.lo == 901)
         assert(vouchers.PRICE.ambuscade.hi == 1099)
-        assert(vouchers.PRICE.geas.lo == 901)
-        assert(vouchers.PRICE.geas.hi == 1099)
+        assert(vouchers.PRICE.geas.lo == 499)
+        assert(vouchers.PRICE.geas.hi == 599)
         local row = vouchers.weeklyRelic(202636)
         local price = vouchers.weeklyPrice(202636, row)
-        if vouchers.isVoucherKind(row.kind) then
+        if row.kind == 'relic' then
             assert(price >= 1901 and price <= 2099)
+        elseif row.kind == 'odyssey' then
+            assert(price >= 1400 and price <= 1500)
+        elseif row.kind == 'geas' then
+            assert(price >= 499 and price <= 599)
         else
             assert(price >= 901 and price <= 1099)
         end

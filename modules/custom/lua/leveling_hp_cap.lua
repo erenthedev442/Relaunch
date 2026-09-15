@@ -8,6 +8,8 @@
 -- That leftover is not a crash workaround — finish the mob instead of
 -- forcing a 5-damage tap. The combat log keeps the hit that landed.
 -----------------------------------
+local overlevel = require('modules/custom/lua/overlevel_combat')
+
 local cap = {}
 
 cap.FRACTION       = 1 / 3
@@ -15,6 +17,11 @@ cap.ENDGAME_LEVEL  = 99
 
 function cap.apply(sourceLevel, target, damage)
     if type(damage) ~= 'number' or damage <= 0 or target == nil then
+        return damage
+    end
+
+    damage = overlevel.scaleOutgoing(sourceLevel, target, damage)
+    if type(damage) ~= 'number' or damage <= 0 then
         return damage
     end
 

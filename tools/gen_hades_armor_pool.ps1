@@ -1,5 +1,6 @@
 # Build modules/custom/lua/hades_armor_catalog.lua from exports/gear_source_audit.csv.
 # Sourced 119 armor: 499-999 by +tier and score. Invasion-only / no real source: 1499.
+# Omen-only Caturae bodies: 949 (Invasion is retired; Omen is not a live farm).
 
 $ErrorActionPreference = 'Stop'
 $root   = Split-Path -Parent $PSScriptRoot
@@ -7,8 +8,9 @@ $csv    = Join-Path $root 'exports\gear_source_audit.csv'
 $out    = Join-Path $root 'modules\custom\lua\hades_armor_catalog.lua'
 $slots  = @('Head', 'Body', 'Hands', 'Legs', 'Feet')
 
-function Armor-Price([string]$name, [int]$score, [bool]$sourced) {
+function Armor-Price([string]$name, [int]$score, [bool]$sourced, [string]$relaunch, [string]$slot) {
     if (-not $sourced) { return 1499 }
+    if ($slot -eq 'Body' -and $relaunch -eq 'Omen') { return 949 }
     $tier = 0
     if ($name -match '\+3$') { $tier = 3 }
     elseif ($name -match '\+2$') { $tier = 2 }
@@ -101,6 +103,7 @@ $lines = New-Object System.Collections.Generic.List[string]
 [void]$lines.Add('-- sourced = has a retail or curated relaunch source.')
 [void]$lines.Add('-- Invasion-only pieces are unsourced and cost 1499.')
 [void]$lines.Add('-- Sourced pieces cost 499-999 from +tier and score.')
+[void]$lines.Add('-- Omen Caturae bodies stay sourced but cost OMEN_BODY_PRICE.')
 [void]$lines.Add('-----------------------------------')
 [void]$lines.Add("local CATALOG_KEY = 'modules/custom/lua/hades_armor_catalog'")
 [void]$lines.Add('local C = package.loaded[CATALOG_KEY]')
@@ -112,13 +115,14 @@ $lines = New-Object System.Collections.Generic.List[string]
 [void]$lines.Add('C.UNSOURCED_PRICE = 1499')
 [void]$lines.Add('C.SOURCED_LO      = 499')
 [void]$lines.Add('C.SOURCED_HI      = 999')
+[void]$lines.Add('C.OMEN_BODY_PRICE = 949')
 [void]$lines.Add('')
 [void]$lines.Add('C.items =')
 [void]$lines.Add('{')
 
 $uCount = 0
 foreach ($row in $all) {
-    $price = Armor-Price $row.name $row.score $row.sourced
+    $price = Armor-Price $row.name $row.score $row.sourced $row.relaunch $row.slot
     $src = 'true'
     if (-not $row.sourced) {
         $src = 'false'

@@ -72,9 +72,11 @@ xi.settings.map =
     EXP_PARTY_GAP_PENALTIES = true,
 
     -- A party member's experience points are nullified if the level difference with the highest-level party member exceeds this value.
+    -- Uses GetMLevel (Level Sync / restriction combat level), so a 99 synced
+    -- down to 65 counts as 65 and can share EXP with other 65s.
     -- When set to 0, there is no nullification of EXP regardless of how wide the gap is between party members.
-    -- When set to 10, if you are level 65 or below in a party with a level 75, you will receive no EXP.
-    EXP_PARTY_GAP_NO_EXP = 35,
+    -- When set to 10, a 65 in a party with an unsynced 99 gets nothing; 90+ can still group with 99s.
+    EXP_PARTY_GAP_NO_EXP = 10,
 
     -- Capacity Point Settings
     -- 3.0 to match main.lua (owner 2026-08-07): the engine reads THIS map value

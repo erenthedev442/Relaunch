@@ -140,6 +140,8 @@ commandObj.onTrigger = function(player, bossArg, targetPlayerName)
 
     mob:setSpawn(sp.x, sp.y, sp.z, sp.rot)
     mob:spawn()
+    mob:updateClaim(player)
+    mob:updateEnmity(player)
 
     -- Apply catalog mods and HP (no tier scaling -- baseline fight).
     if boss.mods then

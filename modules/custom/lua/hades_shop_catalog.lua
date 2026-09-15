@@ -9,6 +9,7 @@
 --   Crate            -- REMA / Dynamis / Paragon currency (once per week)
 --   Trusts           -- grantable alter egos (not Meat / Gemma / Corvus / Cornelia / Matsui-P)
 --   Cosmetics        -- event / lockstyle gear
+-- Leveling (talking Hades) is a standing lv.1 EXP / Capacity list, not a weekly stall.
 --
 -- Pin a future week by setting any of the keys below. Unset keys still roll.
 --   C.PINNED[202636] = { weapon = 21722, weapon2 = 21621, crate = 'beitetsu_300', trust = 897, cosmetic = 26955 }
@@ -49,6 +50,12 @@ C.PINNED[202636] =
     crate     = '10kbyne_50',
     trust     = 932,         -- Fablinix
     cosmetic  = 11318,       -- Otokoeshi Yukata
+}
+-- Natural roll was Instigator + Shishio. Swap Steel to an Odyssey voucher.
+C.PINNED[202637] =
+{
+    weapon  = 21567, -- Gleti's Knife
+    weapon2 = 21022, -- Shishio
 }
 
 local function hasItem(player, itemId)

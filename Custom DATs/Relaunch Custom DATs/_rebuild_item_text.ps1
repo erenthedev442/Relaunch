@@ -108,6 +108,19 @@ foreach ($v in $vouchers) {
     Write-Record $file $v.Id $dec
 }
 
+# Pre-September 286/73 stores a glove-like bitmap on Futhark Coat +1/+2/+3.
+# Stamp the NQ coat icon (matches the wiki dark-coat graphic) onto those rows.
+$coatIcon = Decode-Id $file 26842
+$coatIconName = [Text.Encoding]::ASCII.GetString($coatIcon, 0x74, 24).Split([char]0)[0]
+if ($coatIconName -ne 'Futhark Coat') {
+    throw "Icon donor 26842 is '$coatIconName', expected Futhark Coat"
+}
+foreach ($id in @(26843, 23151, 23486)) {
+    $dec = Decode-Id $file $id
+    [Buffer]::BlockCopy($coatIcon, 0x295, $dec, 0x295, 0x828)
+    Write-Record $file $id $dec
+}
+
 $blank = Decode-Id $file $blankId
 foreach ($id in $clearIds) {
     $dec = [byte[]]::new($recordSize)
@@ -134,6 +147,11 @@ if ($jName -ne 'Track Jacket') { throw "Track Jacket clobbered: '$jName'" }
 $ring = Decode-Id $file 26169
 $rName = [Text.Encoding]::ASCII.GetString($ring, 0x74, 24).Split([char]0)[0]
 if ($rName -ne 'Legendary Ring') { throw "Legendary Ring clobbered: '$rName'" }
+foreach ($id in @(23151, 26843, 23486)) {
+    $dec = Decode-Id $file $id
+    $name = [Text.Encoding]::ASCII.GetString($dec, 0x74, 24).Split([char]0)[0]
+    if ($name -notlike 'Futhark Coat*') { throw "Coat $id name clobbered: '$name'" }
+}
 
 foreach ($id in $clearIds) {
     $dec = Decode-Id $file $id

@@ -486,6 +486,11 @@ local function spawnAdds(mob, phase, st)
                 add:spawn()
                 add:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
                 add:setMobMod(xi.mobMod.NO_DROPS, 1)
+                local tgt = mob:getTarget()
+                if tgt then
+                    add:updateClaim(tgt)
+                    add:updateEnmity(tgt)
+                end
             end)
             st.addsAlive[add:getID()] = add
         end

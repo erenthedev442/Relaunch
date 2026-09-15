@@ -1052,6 +1052,11 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             mechanics.attach(mob, mechCfg)
         end
 
+        -- Same as Hunting League / Abyssea pops: claimed + hate on the summoner
+        -- so a second player cannot snatch the Trial the moment it appears.
+        mob:updateClaim(player)
+        mob:updateEnmity(player)
+
         summonedTrial[pid] = { alive = true, label = boss.label, gid = gid, mob = mob }
 
         -- Summon announcements: the summoner flavor ("You have summoned X.

@@ -47,9 +47,9 @@ C.POOL_WEIGHT =
 C.PRICE =
 {
     relic     = { lo = 1901, hi = 2099 },
-    odyssey   = { lo = 1901, hi = 2099 },
+    odyssey   = { lo = 1400, hi = 1500 },
     ambuscade = { lo =  901, hi = 1099 },
-    geas      = { lo =  901, hi = 1099 },
+    geas      = { lo =  499, hi =  599 },
 }
 
 C.VOUCHER_KINDS = { relic = true, odyssey = true }

@@ -533,6 +533,71 @@ int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRan
     return damage;
 }
 
+int32 ApplyOverlevelOutgoingCap(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage)
+{
+    constexpr uint8 ENDGAME_LEVEL        = 99;
+    constexpr int   OUTGOING_SCRATCH_GAP = 40;
+    constexpr int32 SCRATCH_MIN          = 10;
+    constexpr int32 SCRATCH_MAX          = 100;
+
+    if (damage <= 0 || PAttacker == nullptr || PDefender == nullptr)
+    {
+        return damage;
+    }
+
+    if (PDefender->objtype != TYPE_MOB)
+    {
+        return damage;
+    }
+
+    CBattleEntity* PSource = PAttacker;
+    if (PAttacker->objtype != TYPE_PC)
+    {
+        if (PAttacker->PMaster == nullptr || PAttacker->PMaster->objtype != TYPE_PC)
+        {
+            return damage;
+        }
+
+        PSource = PAttacker->PMaster;
+    }
+
+    if (PSource->GetMLevel() >= ENDGAME_LEVEL)
+    {
+        return damage;
+    }
+
+    const int gap = static_cast<int>(PDefender->GetMLevel()) - static_cast<int>(PSource->GetMLevel());
+    if (gap < 21)
+    {
+        return damage;
+    }
+
+    // Match Lua overlevel_combat: crush past +20, nearly nothing at +30,
+    // then an absolute 10-100 scratch at +40 so prestige nukes cannot leak.
+    float mult = 1.0f;
+    if (gap >= 30)
+    {
+        mult = 0.01f;
+    }
+    else
+    {
+        mult = std::max(0.05f, 1.0f - 0.1f * static_cast<float>(gap - 20));
+    }
+
+    int32 scaled = static_cast<int32>(std::floor(static_cast<float>(damage) * mult));
+    if (scaled < 0)
+    {
+        scaled = 0;
+    }
+
+    if (gap < OUTGOING_SCRATCH_GAP)
+    {
+        return scaled;
+    }
+
+    return std::clamp(scaled, SCRATCH_MIN, SCRATCH_MAX);
+}
+
 int32 ApplyTrustAutoAttackDamageAdjust(CBattleEntity* PAttacker, int32 damage)
 {
     // Auto-swings only — wired exclusively from TakePhysicalDamage, not WS/magic.

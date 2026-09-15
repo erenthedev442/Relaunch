@@ -512,9 +512,18 @@ local function resolve_cat_name(name)
     return name_to_id[norm_name(name)]
 end
 
+-- DAT holes: empty slots (and category != Armor/Weapon) on real equip.
+local DAT_SLOT0_EQUIP = {
+    [12415] = true, -- Shell Shield (category is often "Shield", not "Armor")
+    [15899] = true, -- Velocious Belt
+}
+
 local function is_equipment(id)
     if not id or id <= 0 or is_catalog_catalyst(id) or NON_AUGMENTABLE[id] then
         return false
+    end
+    if DAT_SLOT0_EQUIP[id] then
+        return true
     end
     if res_items and res_items[id] then
         local it = res_items[id]
@@ -524,7 +533,12 @@ local function is_equipment(id)
             end
         end
         local cat = tostring(it.category or ''):lower()
-        if cat:find('weapon', 1, true) or cat:find('armor', 1, true) then
+        if cat:find('weapon', 1, true) or cat:find('armor', 1, true)
+            or cat:find('shield', 1, true) or cat:find('grip', 1, true) then
+            return true
+        end
+        local typ = tonumber(it.type) or 0
+        if typ == 4 or typ == 5 then
             return true
         end
         return false

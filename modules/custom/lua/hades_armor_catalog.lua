@@ -8,6 +8,8 @@
 -- sourced = has a retail or curated relaunch source.
 -- Invasion-only pieces are unsourced and cost 1499.
 -- Sourced pieces cost 499-999 from +tier and score.
+-- Omen Caturae bodies stay sourced but cost OMEN_BODY_PRICE: Invasion is
+-- retired, Omen is not a live farm, and those bodies are 1% even when it is.
 -----------------------------------
 local CATALOG_KEY = 'modules/custom/lua/hades_armor_catalog'
 local C = package.loaded[CATALOG_KEY]
@@ -19,6 +21,7 @@ package.loaded[CATALOG_KEY] = C
 C.UNSOURCED_PRICE = 1499
 C.SOURCED_LO      = 499
 C.SOURCED_HI      = 999
+C.OMEN_BODY_PRICE = 949
 
 C.items =
 {
@@ -110,9 +113,9 @@ C.items =
     { id = 25766, name = 'Hjarrandi Breastplate', slot = 'Body', sourced = false, price = 1499 },
     { id = 25783, name = 'Mallquis Saio', slot = 'Body', sourced = false, price = 1499 },
     { id = 25784, name = 'Mallquis Saio +1', slot = 'Body', sourced = false, price = 1499 },
-    { id = 25785, name = 'Dagon Breastplate', slot = 'Body', sourced = true, price = 550 },
-    { id = 25786, name = 'Ashera Harness', slot = 'Body', sourced = true, price = 556 },
-    { id = 25787, name = 'Shamash Robe', slot = 'Body', sourced = true, price = 546 },
+    { id = 25785, name = 'Dagon Breastplate', slot = 'Body', sourced = true, price = 949 },
+    { id = 25786, name = 'Ashera Harness', slot = 'Body', sourced = true, price = 949 },
+    { id = 25787, name = 'Shamash Robe', slot = 'Body', sourced = true, price = 949 },
     { id = 25790, name = 'Sulevias Platemail +2', slot = 'Body', sourced = false, price = 1499 },
     { id = 25791, name = 'Meghanada Cuirie +2', slot = 'Body', sourced = false, price = 1499 },
     { id = 25792, name = 'Hizamaru Haramaki +2', slot = 'Body', sourced = false, price = 1499 },

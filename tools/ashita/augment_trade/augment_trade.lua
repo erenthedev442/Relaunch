@@ -193,6 +193,12 @@ local function gear_kind(id)
             return SLOT_NAMES[bit] or ''
         end
     end
+    if id == 12415 then
+        return 'Shield'
+    end
+    if id == 15899 then
+        return 'Waist'
+    end
     return ''
 end
 
@@ -204,19 +210,32 @@ local function is_catalog_catalyst(id)
     return id and id > 0 and catalog[id] ~= nil
 end
 
+-- DAT holes: Slots=0 (and sometimes Type=0) on real equip the moogle accepts.
+local DAT_SLOT0_EQUIP = {
+    [12415] = true, -- Shell Shield
+    [15899] = true, -- Velocious Belt
+}
+
 local function is_equipment(id)
     if not id or id <= 0 or is_catalog_catalyst(id) or NON_AUGMENTABLE[id] then
         return false
+    end
+    if DAT_SLOT0_EQUIP[id] then
+        return true
     end
     if item_slots(id) > 0 then
         return true
     end
 
-    -- Older armor (Velocious Belt, Shell Shield) can report Slots=0 in
-    -- the DAT while still being valid equipment the moogle will accept.
+    -- Older armor can report Slots=0 in the DAT while still being valid
+    -- equipment. Type 4 = weapon, 5 = armor. Flags bit 0x0800 = can-equip.
     local res = item_res(id)
     local typ = res and tonumber(res.Type) or 0
-    return typ == 4 or typ == 5
+    if typ == 4 or typ == 5 then
+        return true
+    end
+    local flags = res and tonumber(res.Flags) or 0
+    return bit.band(flags, 0x0800) ~= 0
 end
 
 local function inventory_qty(id)

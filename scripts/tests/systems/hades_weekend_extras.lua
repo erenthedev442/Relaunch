@@ -1,6 +1,7 @@
 local crate     = require('modules/custom/lua/hades_crate_catalog')
 local trusts    = require('modules/custom/lua/hades_trust_catalog')
 local cosmetics = require('modules/custom/lua/hades_cosmetic_catalog')
+local leveling  = require('modules/custom/lua/hades_leveling_catalog')
 local hold      = require('modules/custom/lua/hades_hold_currency')
 local shop      = require('modules/custom/lua/hades_shop_catalog')
 
@@ -249,7 +250,39 @@ describe('Hades Cosmetics stall', function()
         assert(cosmetics.byId[26955].price == 399)
         assert(cosmetics.byId[10250].name == 'Moogle Suit')
     end)
+end)
 
+describe('Hades Leveling stall', function()
+    it('lists the full lv.1 EXP / Capacity set at a flat shard price', function()
+        assert(#leveling.items == 24)
+        assert(leveling.PRICE == 199)
+        local seen = {}
+        for _, row in ipairs(leveling.items) do
+            assert(row.id > 0)
+            assert(row.name ~= '')
+            assert(row.price == leveling.PRICE)
+            assert(not seen[row.id])
+            seen[row.id] = true
+            assert(leveling.byId[row.id] == row)
+        end
+        -- Event / login holes that had no other Legendary source.
+        assert(seen[11812]) -- Charity Cap
+        assert(seen[13121]) -- Beast Collar
+        assert(seen[15455]) -- Red Sash
+        assert(seen[15456]) -- Dash Sash
+        assert(seen[11400]) -- Noble Poulaines
+        assert(seen[28510]) -- Metal Slime Earring
+    end)
+
+    it('lets a player miss a Leveling piece they already hold', function()
+        local row = leveling.byId[11812]
+        local offer = { key = 'leveling', row = row, price = row.price }
+        assert(shop.owns(mockPlayer({}, { [11812] = 1 }), offer) == true)
+        assert(shop.owns(mockPlayer({}, {}), offer) == false)
+    end)
+end)
+
+describe('Hades Cosmetics stall (week roll)', function()
     it('picks one look for the whole UTC week and honors a pin', function()
         local a = cosmetics.weeklyPiece(202636)
         local b = cosmetics.weeklyPiece(202636)

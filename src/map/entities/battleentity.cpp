@@ -1017,6 +1017,10 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
 
         // Trusts while leveling: per-hit tier band % of mob max HP (C/B/A/S).
         amount = ApplyTrustLevelingHpPortionCap(attacker, this, amount);
+
+        // Sub-99 players (and their pets/trusts) vs a mob 40+ levels higher:
+        // 10-100 per hit. GetMLevel so Level Sync uses the synced combat level.
+        amount = ApplyOverlevelOutgoingCap(attacker, this, amount);
     }
     else if (attacker != nullptr && attacker->GetLocalVar("TrustOutgoingIsAutoAttack") == 1)
     {
