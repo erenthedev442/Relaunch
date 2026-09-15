@@ -210,8 +210,12 @@ xi.spellSkillMastery.creditKill = function(player, mob)
     local idx, label
     if C.rotation.enabled then
         local list, byName = currentActive()
+        local packetName = ''
+        if type(mob.getPacketName) == 'function' then
+            packetName = mob:getPacketName() or ''
+        end
         idx = byName[normalizeName(mob:getName())]
-            or byName[normalizeName(mob:getPacketName and mob:getPacketName() or '')]
+            or byName[normalizeName(packetName)]
         if idx then
             label = list[idx].label
         end

@@ -64,7 +64,11 @@ for index, chain in ipairs(forge.chains) do
 
     assert(#recipe.relics > 0, 'Prime repeat missing Relic for ' .. chain.type)
     assert(#recipe.empyreans > 0, 'Prime repeat missing Empyrean for ' .. chain.type)
-    assert(#recipe.mythics > 0, 'Prime repeat missing Mythic for ' .. chain.type)
+    -- Archery has no Mythic bow. Proof is Relic + Empyrean + Aeonic, same as
+    -- Shield/Instrument which are appended after this loop.
+    if chain.type ~= 'Archery' then
+        assert(#recipe.mythics > 0, 'Prime repeat missing Mythic for ' .. chain.type)
+    end
 
     C.recipes[index] = recipe
 end
