@@ -37,7 +37,11 @@ catalog.points =
     custom      = 50,
 }
 
--- Daily Hades (v1). Shop is the silent second form (placeholder 16959511).
+-- Daily Hades is the owner-placed NPC 16959529. Do not move him.
+-- FROZEN 2026-09-15 (owner lock). Do not change coords/look/id without
+-- explicit permission. Weekend shop is Hades v2 look 2680 named '......'.
+-- Oggbi stands with them on the NE beach. Leave him alone.
+catalog.dailyNpcId = 16959529
 catalog.npcPos =
 {
     zone     = 'Abdhaljs_Isle-Purgonorgo',
@@ -48,17 +52,16 @@ catalog.npcPos =
     rotation =  96,
 }
 
--- Live hub placeholder the owner placed. Keep this ID; do not respawn him.
-catalog.shopNpcId = 16959511
--- Used only if that placeholder is missing after a restart.
+-- Silent weekend shop: Hades variant 2 (model 2680), at the owner's !pos.
+catalog.shopLook   = 2680
 catalog.shopNpcPos =
 {
     zone     = 'Abdhaljs_Isle-Purgonorgo',
     zoneId   = 44,
-    x        = 508.0119,
-    y        =  -3.1516,
-    z        = 516.0237,
-    rotation =  64,
+    x        = 646.3604,
+    y        =   0.3000,
+    z        = 570.6538,
+    rotation =  96,
 }
 
 catalog.cvDay        = 'HD_Day'

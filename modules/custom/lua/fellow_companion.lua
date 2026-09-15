@@ -497,6 +497,21 @@ local function tpVar(roleKey) return 'Fellow_TP_' .. roleKey end
 -- nil -> the combat loop falls back to a chassis-picked Ready move.
 local function chosenWs(p)
     local roleKey = getRole(p)
+    if isEren(p) then
+        local choice = getN(p, tpVar(roleKey))
+        if choice > 0 then
+            local erenMove = EREN_MOVES[choice]
+            if erenMove then
+                return erenMove.ws
+            end
+            local rd    = CONFIG.roles[roleKey]
+            local entry = rd and rd.moves and rd.moves[choice]
+            if entry and EREN_SAFE[entry.ws] then
+                return entry.ws
+            end
+        end
+        return EREN_DEFAULT_WS[roleKey] or xi.mobSkill.FULMINOUS_SMASH
+    end
     local choice  = getN(p, tpVar(roleKey))
     if choice > 0 then
         local rd    = CONFIG.roles[roleKey]
@@ -511,8 +526,14 @@ end
 
 local MAGUS_MOVE_ELEMENTS =
 {
-    [xi.mobSkill.THUNDER_IV]    = xi.element.THUNDER,
-    [xi.mobSkill.THUNDERSTRIKE] = xi.element.THUNDER,
+    [xi.mobSkill.THUNDER_IV]      = xi.element.THUNDER,
+    [xi.mobSkill.THUNDERSTRIKE]   = xi.element.THUNDER,
+    [xi.mobSkill.FULMINOUS_SMASH] = xi.element.THUNDER,
+    [xi.mobSkill.FLAMING_KICK]    = xi.element.FIRE,
+    [xi.mobSkill.ICY_GRASP]       = xi.element.ICE,
+    [xi.mobSkill.FLASH_FLOOD]     = xi.element.WATER,
+    [xi.mobSkill.ERODING_FLESH]   = xi.element.EARTH,
+    [xi.mobSkill.VIVISECTION]     = xi.element.DARK,
 }
 
 local function chosenMagusElement(p)
@@ -536,6 +557,44 @@ end
 local DEFAULT_FELLOW_NAME = 'Fellow'
 local function chosenName(p)
     return FN.read(p) or CONFIG.names[getN(p, V.nameIdx)] or DEFAULT_FELLOW_NAME
+end
+
+-- Hidden name: Eren uses Hades look 2674 and only that model's skill list
+-- (Hadesv1 3389-3394 / anims 2399-2404). Role Combo/Thunder IV/bow shots
+-- crash the client on this skeleton.
+local EREN_LOOK = 2674
+local EREN_MOVES =
+{
+    { name = 'Fulminous Smash', ws = xi.mobSkill.FULMINOUS_SMASH },
+    { name = 'Flaming Kick',    ws = xi.mobSkill.FLAMING_KICK    },
+    { name = 'Icy Grasp',       ws = xi.mobSkill.ICY_GRASP       },
+    { name = 'Flash Flood',     ws = xi.mobSkill.FLASH_FLOOD     },
+    { name = 'Eroding Flesh',   ws = xi.mobSkill.ERODING_FLESH   },
+    { name = 'Vivisection',     ws = xi.mobSkill.VIVISECTION     },
+}
+local EREN_SAFE =
+{
+    [xi.mobSkill.FULMINOUS_SMASH] = true,
+    [xi.mobSkill.FLAMING_KICK]    = true,
+    [xi.mobSkill.ICY_GRASP]       = true,
+    [xi.mobSkill.FLASH_FLOOD]     = true,
+    [xi.mobSkill.ERODING_FLESH]   = true,
+    [xi.mobSkill.VIVISECTION]     = true,
+}
+local EREN_DEFAULT_WS =
+{
+    vanguard  = xi.mobSkill.FULMINOUS_SMASH,
+    berserker = xi.mobSkill.VIVISECTION,
+    bulwark   = xi.mobSkill.ERODING_FLESH,
+    oracle    = xi.mobSkill.FLASH_FLOOD,
+    magus     = xi.mobSkill.FLAMING_KICK,
+    hunter    = xi.mobSkill.FULMINOUS_SMASH,
+    mastered  = xi.mobSkill.VIVISECTION,
+}
+
+local function isEren(p)
+    local name = chosenName(p)
+    return type(name) == 'string' and name:lower() == 'eren'
 end
 
 local function xpToNext(level) return CONFIG.xpBase * level end
@@ -660,6 +719,7 @@ local function applyFellow(p, pet)
 
     local lvl  = getLevel(p)
     local role = roleDef(p)
+    local eren = isEren(p)
 
     local masterPower = fellowPowerProgress(p)
     pet:setLocalVar(
@@ -698,7 +758,11 @@ local function applyFellow(p, pet)
     -- scales it further. pcall-guarded: a pet always has a weapon, but never let a
     -- nil weapon abort the whole apply.
     pcall(function()
-        pet:setDamage(normalWeaponDamage(p))
+        local dmg = normalWeaponDamage(p)
+        if eren then
+            dmg = math.floor(dmg * 1.05)
+        end
+        pet:setDamage(dmg)
     end)
 
     -- MAGIC: clamp MATT AFTER every mod source (attributes + role + advanced
@@ -715,8 +779,23 @@ local function applyFellow(p, pet)
     pet:addMod(xi.mod.DMGMAGIC, surv.mdt or CONFIG.mdt)
 
     local targetHP = lerp(surv.hpMin or 2500, surv.hpMax or 5000, combatProgress(p))
+    if eren then
+        targetHP = math.floor(targetHP * 1.05)
+    end
     pet:setMaxHP(targetHP)
     pet:setHP(targetHP)
+
+    if eren then
+        for _, modId in ipairs({
+            xi.mod.STR, xi.mod.DEX, xi.mod.VIT, xi.mod.AGI,
+            xi.mod.INT, xi.mod.MND, xi.mod.CHR,
+        }) do
+            pet:addMod(modId, math.max(1, math.floor(pet:getMod(modId) * 0.05)))
+        end
+        pet:addMod(xi.mod.ATTP, 5)
+        pet:addMod(xi.mod.CURE_POTENCY, 5)
+        pet:setLocalVar('fellowEren', 1)
+    end
 
     local roleKey = getRole(p)
     -- Disable autonomous trust TP moves. The combat loop below exclusively
@@ -726,7 +805,8 @@ local function applyFellow(p, pet)
 
     -- Give the two specialist roles real trust-controller behavior instead of
     -- making Naji's melee chassis pretend to cast or shoot.
-    if roleKey == 'oracle' then
+    -- Eren/Hades has no humanoid cast or bow skeleton -- skip those packages.
+    if roleKey == 'oracle' and not eren then
         -- Apururu's healer list supplies level-scaled Cure I-VI, Curaga I-V,
         -- Haste, Protectra/Shellra, -na spells, Stoneskin and Erase. Oracle
         -- uses only normal trust-controller casts: MP, recasts, animations,
@@ -779,7 +859,7 @@ local function applyFellow(p, pet)
         -- menu. Keep it inside the selected move's 10-yalm range; LONG_RANGE
         -- holds at 12 yalms and makes useMobAbility silently reject Thunder IV.
         pet:setMobMod(xi.mobMod.TRUST_DISTANCE, 7)
-    elseif roleKey == 'hunter' then
+    elseif roleKey == 'hunter' and not eren then
         pet:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 })
         pet:addMod(xi.mod.STORETP, 86)
         pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
@@ -865,8 +945,12 @@ local function applyFellow(p, pet)
     if nm then pcall(function() pet:renameEntity(nm, true) end) end
 
     -- Visual NPC model overlay. Outfit overrides Appearance when set.
-    local mdlId = getOutfitModelId(p) or chosenModelId(p)
+    -- Eren always wears Hades 2674, never the picker / outfit model.
+    local mdlId = eren and EREN_LOOK or (getOutfitModelId(p) or chosenModelId(p))
     if mdlId then pcall(function() pet:setModelId(mdlId) end) end
+    if eren then
+        p:printToPlayer('[Fellow] Eren answers in the guise of Hades.', SYS)
+    end
 
     scheduleCombatLoop(p, pet)
 end
@@ -919,7 +1003,8 @@ scheduleCombatLoop = function(master, pet)
             -- Match normal trust behavior: drawing a weapon is not enough.
             -- The Fellow assists only after the master has generated enmity.
             -- Hunter uses ranged attacks, so its melee auto-attack stays disabled.
-            p:setAutoAttackEnabled(active and not hasBeh('ranged'))
+            -- Eren/Hades has no bow skeleton; it melee-assists like other roles.
+            p:setAutoAttackEnabled(active and not (hasBeh('ranged') and not isEren(master)))
             if not active then
                 if p:isEngaged() then p:disengage() end
                 p:setLocalVar('fellowCombatStartedAt', 0)
@@ -935,7 +1020,7 @@ scheduleCombatLoop = function(master, pet)
             -- Oracle uses visible trust-controller spells exclusively. The
             -- pulse remains only for Mastered, whose hybrid role intentionally
             -- does not install Oracle's full healer spell package.
-            local usesSpellHealing = getRole(master) == 'oracle'
+            local usesSpellHealing = getRole(master) == 'oracle' and not isEren(master)
             if hasBeh('heal') and not usesSpellHealing
                and now - (p:getLocalVar('fellowHealAt') or 0) >= CONFIG.healCooldownSec then
                 local healTarget = master
@@ -954,6 +1039,7 @@ scheduleCombatLoop = function(master, pet)
                     local range = rdef.healPower or { CONFIG.healMin, CONFIG.healMax }
                     local amount = math.max(CONFIG.healMin, scaledRoleValue(master, range))
                     if getRole(master) == 'mastered' then amount = math.floor(amount * 0.7) end
+                    if isEren(master) then amount = math.floor(amount * 1.05) end
                     healTarget:addHP(amount)
                     p:setLocalVar('fellowHealAt', now)
                 end
@@ -1822,10 +1908,14 @@ openName = function(p, page)
         {
             (not custom and selected == idx) and (name .. ' *') or name,
             function(pp)
+                local wasEren = isEren(pp)
                 FN.clear(pp)
                 setN(pp, V.nameIdx, idx)
                 local fellow = getFellowTrust(pp)
                 if fellow then pcall(function() fellow:renameEntity(name, true) end) end
+                if wasEren then
+                    respawnIfOut(pp)
+                end
                 pp:printToPlayer(string.format('[Fellow] Name set to "%s".', name), SYS)
                 openName(pp, page)
             end,
@@ -1927,8 +2017,9 @@ openTpMove = function(p, page)
     page = page or 0
     local roleKey  = getRole(p)
     local roleName = (CONFIG.roles[roleKey] or {}).name or roleKey
-    local roleMoves = (CONFIG.roles[roleKey] or {}).moves or {}
+    local roleMoves = isEren(p) and EREN_MOVES or ((CONFIG.roles[roleKey] or {}).moves or {})
     -- Prepend "(Default)" so realIdx 0 = role default; realIdx N = role's moves[N].
+    -- Eren only lists the Hades v1 kit so the picker cannot offer crash anims.
     local all = { { name = '(Default)' } }
     for _, t in ipairs(roleMoves) do all[#all + 1] = t end
     local per   = CONFIG.namesPerPage
@@ -2041,6 +2132,7 @@ xi.fellow.summon      = function(p) summon(p) end
 xi.fellow.dismiss     = function(p) dismiss(p) end
 xi.fellow.status      = function(p) statusReport(p) end
 xi.fellow.getTrust    = function(p) return getFellowTrust(p) end
+xi.fellow.respawnIfOut = function(p) respawnIfOut(p) end
 xi.fellow.addXp       = function(p, n) addXp(p, n) end
 xi.fellow.grantPoints = function(p, n) ensureBorn(p); setN(p, V.points, getPoints(p) + math.max(0, n)) end
 xi.fellow.allocatedModAmount = allocatedModAmount

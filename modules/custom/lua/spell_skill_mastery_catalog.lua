@@ -26,7 +26,7 @@ catalog.CURRENCY_VAR  = 'MasterySigils'     -- charVar holding the player's sigi
 catalog.CURRENCY_NAME = 'Mastery Sigils'
 
 -- NPC placement (center of the GM Home mastery conversation semicircle) ------
-catalog.npcPos = { x = 537.9993, y = -3.4665, z = 497.0069, rot = 216 }
+catalog.npcPos = { x = 537.9993, y = -3.4665, z = 497.0069, rot = 216 } -- FROZEN 2026-09-15
 
 -- ── Sigil faucet (secondary; the rotation below is the primary source) ──────
 -- Optional small trickle on ANY NM kill so players are never fully dry between

@@ -22,6 +22,8 @@
 -----------------------------------
 require('modules/module_utils')
 local catalog = require('modules/custom/lua/abjuration_forge_catalog')
+local consumeItem = require('modules/custom/lua/consume_upgrade_item')
+local bags = require('modules/custom/lua/hl_seal_currency')
 
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
@@ -147,8 +149,15 @@ local function upgradePiece(player, nqId)
     end
 
     -- Consume NQ + materials, then hand the +1. Refund on RARE/EX collision.
-    player:delItem(nqId, 1)
-    player:delItem(matId, matQty)
+    if not consumeItem.one(player, nqId) then
+        player:printToPlayer('[Forge] Could not consume that piece. Unequip it and try again, kupo.', S)
+        return
+    end
+    if not bags.take(player, matId, matQty) then
+        player:addItem({ id = nqId, quantity = 1 })
+        player:printToPlayer('[Forge] Could not consume the upgrade materials. Piece returned, kupo.', S)
+        return
+    end
     if not player:addItem({ id = target.id, quantity = 1 }) then
         player:addItem({ id = nqId, quantity = 1 })
         player:addItem({ id = matId, quantity = matQty })

@@ -4,7 +4,10 @@
 -- Hades daily quests. Five slots every UTC day, same board for everyone.
 -- Kills and deliveries only mark progress. Soul Shards are paid when the
 -- player talks to Hades and turns the ready tasks in. 150 only if all
--- five are turned in. Weekend shop is the silent second form (16959511).
+-- five are turned in. Weekend shop is Hades variant 2 (look 2680, '......').
+--
+-- FROZEN HUB 2026-09-15: do not setPos/hide/rebind any hub NPC except the
+-- weekend shop entity this file spawns. Never GetNPCByID-hijack 16959511/32.
 --
 -- Public API (same require cache as the Module loader):
 --   hades.fire(player, eventType, meta)
@@ -542,7 +545,9 @@ for _, dest in ipairs(catalog.deliveries) do
 end
 
 -----------------------------------
--- NPCs: talking Hades (dailies) + silent second form (weekend shop)
+-- NPCs: talking Hades 16959529 (dailies) + silent 2680 shop ('......')
+-- NE beach is only: 16959529, the 2680 shop, and Oggbi. Never hide Oggbi,
+-- never move 16959529, never park a body on the plaza Alexander sentinels.
 -----------------------------------
 local function openSecondForm(player)
     catalog.sayShopSilence(player)
@@ -553,41 +558,137 @@ local function openSecondForm(player)
     end
 end
 
-local function getShopPlaceholder()
-    local ent = GetNPCByID(catalog.shopNpcId)
-    if ent then
-        return ent
+local function showDailyHades(player)
+    ensureDay(player, { init = true })
+    if (player:getCharVar(catalog.cvMet) or 0) == 0 then
+        player:setCharVar(catalog.cvMet, 1)
+        for _, line in ipairs(catalog.intro) do
+            player:printToPlayer(string.format('Hades : %s', line), S)
+        end
     end
-    ent = GetEntityByID(catalog.shopNpcId)
-    if ent then
-        return ent
+    for _, line in ipairs(hades.formatStatus(player)) do
+        player:printToPlayer(line, S)
     end
-    local ok, mob = pcall(GetMobByID, catalog.shopNpcId)
-    if ok and mob then
-        return mob
+    if catalog.isShopOpen() then
+        player:printToPlayer(
+            '[Hades] The ferry is up. Turn in what you have finished. The second form keeps the wares of souls who have perished. Seek him.',
+            S)
+    else
+        player:printToPlayer(
+            '[Hades] Bring me proof of the day\'s work. The silent one opens only when the weekend keeps.',
+            S)
     end
-    return nil
+    showRoot(player)
 end
 
--- Empty / hidden names never receive a talk packet. The placeholder is
--- also sometimes a MOB look, which cannot open a menu. Stand a talkable
--- NPC on his body and hide the original so only the big form sells.
-local function spawnTalkableShop(zone, x, y, z, rot)
+local function restoreVisible(ent)
+    if not ent then
+        return
+    end
+    pcall(function()
+        ent:setStatus(xi.status.NORMAL)
+    end)
+    pcall(function()
+        ent:setUntargetable(false)
+    end)
+end
+
+local function restoreOggbi()
+    local zone = GetZone(catalog.npcPos.zoneId)
+    if not zone then
+        return
+    end
+    local oggbiPos = require('modules/custom/lua/prime_repeat_catalog').oggbi
+    local names = { 'Oggbi', 'Oggbi_Prime_Repeat', 'DE_Oggbi_Prime_Repeat' }
+    if zone.queryEntitiesByName then
+        for _, name in ipairs(names) do
+            local ents = zone:queryEntitiesByName(name)
+            if type(ents) == 'table' then
+                for _, ent in pairs(ents) do
+                    restoreVisible(ent)
+                    pcall(function()
+                        ent:hideName(false)
+                        ent:setPos(oggbiPos.x, oggbiPos.y, oggbiPos.z, oggbiPos.rotation)
+                        if oggbiPos.race then
+                            ent:setLook({ race = oggbiPos.race, face = oggbiPos.face })
+                        end
+                        if type(oggbiPos.gear) == 'table' then
+                            for _, piece in ipairs(oggbiPos.gear) do
+                                ent:setModelId(piece[1], piece[2])
+                            end
+                        end
+                    end)
+                end
+            end
+        end
+    end
+end
+
+local function despawnWrongShopBodies()
     if xi.hades_shop_entity then
         pcall(function()
             xi.hades_shop_entity:setStatus(xi.status.DISAPPEAR)
         end)
         xi.hades_shop_entity = nil
     end
+    local zone = GetZone(catalog.npcPos.zoneId)
+    if not zone then
+        return
+    end
+    if zone.queryEntitiesByName then
+        local hades = zone:queryEntitiesByName('Hades')
+        if type(hades) == 'table' then
+            for _, ent in pairs(hades) do
+                if ent and ent.getID and ent:getID() ~= catalog.dailyNpcId then
+                    pcall(function()
+                        ent:setStatus(xi.status.DISAPPEAR)
+                    end)
+                end
+            end
+        end
+        -- Only strip Hades shop clones on the NE beach. Never touch plaza
+        -- NPCs (Sparks mithra / Mastery) even if a nameplate was blanked.
+        for _, dotsName in ipairs({ '......', '.....', '...' }) do
+            local dots = zone:queryEntitiesByName(dotsName)
+            if type(dots) == 'table' then
+                for _, ent in pairs(dots) do
+                    pcall(function()
+                        if ent.getXPos and ent:getXPos() > 600 then
+                            ent:setStatus(xi.status.DISAPPEAR)
+                        end
+                    end)
+                end
+            end
+        end
+    end
+end
+
+local function bindDailyNpc(npc)
+    if not npc then
+        return false
+    end
+    restoreVisible(npc)
+    pcall(function()
+        npc:hideName(false)
+        npc:removeListener('HADES_DAILY')
+    end)
+    npc:addListener('ON_TRIGGER', 'HADES_DAILY', function(player, _)
+        showDailyHades(player)
+    end)
+    return true
+end
+
+local function spawnSilentShop(zone)
+    local pos = catalog.shopNpcPos
     local npc = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = '......',
         packetName = '......',
-        look       = '0x0000710A00000000000000000000000000000000',
-        x          = x,
-        y          = y,
-        z          = z,
-        rotation   = rot,
+        look       = catalog.shopLook,
+        x          = pos.x,
+        y          = pos.y,
+        z          = pos.z,
+        rotation   = pos.rotation,
         widescan   = 1,
         onTrigger  = function(player, _)
             openSecondForm(player)
@@ -596,91 +697,34 @@ local function spawnTalkableShop(zone, x, y, z, rot)
     if npc then
         pcall(function()
             npc:hideName(false)
+            npc:setModelId(catalog.shopLook)
         end)
         xi.hades_shop_entity = npc
     end
     return npc
 end
 
-local function placeSecondForm(zone)
-    local pos = catalog.shopNpcPos
-    local x, y, z, rot = pos.x, pos.y, pos.z, pos.rotation
-    local placeholder = getShopPlaceholder()
-    if placeholder then
-        pcall(function()
-            x   = placeholder:getXPos()
-            y   = placeholder:getYPos()
-            z   = placeholder:getZPos()
-            rot = placeholder:getRotPos()
-        end)
-        pcall(function()
-            placeholder:setUntargetable(true)
-        end)
-        pcall(function()
-            placeholder:hideName(true)
-        end)
-        pcall(function()
-            placeholder:setStatus(xi.status.INVISIBLE)
-        end)
+local function placeSilentShop()
+    local zone = GetZone(catalog.npcPos.zoneId)
+    if not zone then
+        return
     end
-    return spawnTalkableShop(zone, x, y, z, rot)
-end
-
-local function placeDailyHades(zone)
-    return zone:insertDynamicEntity({
-        objtype    = xi.objType.NPC,
-        name       = 'Hades',
-        packetName = string.format('%sHades', xi.icon.MOON),
-        look       = '0x0000720A00000000000000000000000000000000',
-        x          = catalog.npcPos.x,
-        y          = catalog.npcPos.y,
-        z          = catalog.npcPos.z,
-        rotation   = catalog.npcPos.rotation,
-        widescan   = 1,
-        onTrigger  = function(player, _)
-            ensureDay(player, { init = true })
-            if (player:getCharVar(catalog.cvMet) or 0) == 0 then
-                player:setCharVar(catalog.cvMet, 1)
-                for _, line in ipairs(catalog.intro) do
-                    player:printToPlayer(string.format('Hades : %s', line), S)
-                end
-            end
-            for _, line in ipairs(hades.formatStatus(player)) do
-                player:printToPlayer(line, S)
-            end
-            if catalog.isShopOpen() then
-                player:printToPlayer(
-                    '[Hades] The ferry is up. Turn in what you have finished. The second form keeps the wares of souls who have perished. Seek him.',
-                    S)
-            else
-                player:printToPlayer(
-                    '[Hades] Bring me proof of the day\'s work. The silent one opens only when the weekend keeps.',
-                    S)
-            end
-            showRoot(player)
-        end,
-    })
+    despawnWrongShopBodies()
+    spawnSilentShop(zone)
 end
 
 local function applyLiveNpcs()
-    local daily = GetNPCByID(16959532)
-    if daily then
-        pcall(function()
-            daily:setPos(catalog.npcPos.x, catalog.npcPos.y, catalog.npcPos.z, catalog.npcPos.rotation)
-        end)
-    end
-    local zone = GetZone(catalog.npcPos.zoneId)
-    if zone then
-        placeSecondForm(zone)
-    end
+    restoreOggbi()
+    bindDailyNpc(GetNPCByID(catalog.dailyNpcId))
+    placeSilentShop()
     applyDeliveryNames()
 end
 
 m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone), function(zone)
     super(zone)
-    local npc = placeDailyHades(zone)
-    utils.unused(npc)
-    placeSecondForm(zone)
+    restoreOggbi()
+    bindDailyNpc(GetNPCByID(catalog.dailyNpcId))
+    placeSilentShop()
 end)
 
 pcall(applyLiveNpcs)

@@ -31,6 +31,8 @@ local mythicCatalog = require('modules/custom/lua/mythic_forge_catalog')
 local relicVouchers = require('modules/custom/lua/relic_voucher_catalog')
 local repeatCredits = require('modules/custom/lua/rema_repeat_credits')
 local holdCurrency = require('modules/custom/lua/hades_hold_currency')
+local consumeItem = require('modules/custom/lua/consume_upgrade_item')
+local remadepe = require('modules/custom/lua/rema_stage_dedupe')
 local pilgrimage = require('modules/custom/lua/legendary_pilgrimage_catalog')
 local mastery = require('modules/custom/lua/weapon_mastery_catalog')
 require('modules/custom/lua/LegendaryWeaponPilgrimage')
@@ -377,8 +379,13 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return false
         end
 
-        -- All checks passed — consume items.
-        player:delItem(fromItem.id, 1)
+        -- All checks passed — consume the previous stage even if it is equipped.
+        if not consumeItem.one(player, fromItem.id) then
+            player:printToPlayer(
+                string.format('[Weapon Forge] Could not consume the %s. Unequip it and try again.', fromItem.name),
+                xi.msg.channel.SYSTEM_3)
+            return false
+        end
         player:delItem(cost.medals.id, cost.medals.qty)
         if cost.reforgeMarks then
             drainMarks(player, cost.reforgeMarks)
@@ -398,6 +405,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 '[Weapon Forge] The %s shimmers and transforms — behold the %s!',
                 fromItem.name, toItem.name),
             xi.msg.channel.SYSTEM_3)
+        remadepe.sweep(player)
         -- Stage III (final Prime) completion flag. Doesn't gate anything today
         -- (the Prime path IS the final ladder) but ships alongside the other
         -- four so a preflight can enumerate "which final tier does this player
@@ -823,14 +831,18 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer(string.format('[Weapon Forge] You already hold the %s stage — it is RARE, so a second cannot be forged.', nextStageLabel(chain, k)), S)
             return
         end
+        if fromId and not consumeItem.one(player, fromId) then
+            player:printToPlayer('[Weapon Forge] Could not consume the previous stage. Unequip it and try again.', S)
+            return
+        end
         for _, req in ipairs(reqs) do req.take(player) end
         if marks then drainMarks(player, marks) end
-        if fromId then player:delItem(fromId, 1) end
         if not player:addItem({ id = toId, quantity = 1 }) then
             player:printToPlayer('[Weapon Forge] ERROR: the forge consumed your materials but could not hand over the weapon — contact a GM with this message.', S)
             return
         end
         player:printToPlayer(string.format('[Weapon Forge] Your %s advances to %s!', chain.name, nextStageLabel(chain, k)), S)
+        remadepe.sweep(player)
         relicCatalog.grantCompanions(player, toId, 'Weapon Forge')
         mythicCatalog.grantCompanions(player, toId, 'Weapon Forge')
         -- Final Empyrean / Mythic / Relic completion flag. Read by the Prime

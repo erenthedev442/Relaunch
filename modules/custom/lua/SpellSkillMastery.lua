@@ -514,4 +514,61 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     })
 end)
 
+-- FileWatcher: Hades shop code hid/moved random 16959xxx IDs. Put this sage
+-- back on the mastery pad and restore her menu without a map restart.
+local function restoreSpellMasterySage()
+    local zone = GetZone(44)
+    if not zone then
+        return
+    end
+    local found
+    if zone.queryEntitiesByName then
+        local ents = zone:queryEntitiesByName('Spell_Mastery_Sage')
+        if type(ents) == 'table' then
+            for _, ent in pairs(ents) do
+                found = ent
+                break
+            end
+        end
+    end
+    if found then
+        pcall(function()
+            found:setStatus(xi.status.NORMAL)
+            found:setUntargetable(false)
+            found:hideName(false)
+            found:renameEntity(string.format('%sSpell Mastery', xi.icon.STAR_LARGE), true)
+            found:setPos(C.npcPos.x, C.npcPos.y, C.npcPos.z, C.npcPos.rot)
+            found:removeListener('HADES_SHOP')
+            found:removeListener('HADES_DAILY')
+            found:removeListener('SPELL_MASTERY')
+            found:addListener('ON_TRIGGER', 'SPELL_MASTERY', function(player, _)
+                player:printToPlayer('[Spell Mastery] Empower your weapon skills and magic with Mastery Sigils, earned in battle.', SYS)
+                openMain(player)
+            end)
+        end)
+        return
+    end
+    if xi._spell_mastery_live then
+        return
+    end
+    xi._spell_mastery_live = true
+    zone:insertDynamicEntity({
+        objtype    = xi.objType.NPC,
+        name       = 'Spell_Mastery_Sage',
+        packetName = string.format('%sSpell Mastery', xi.icon.STAR_LARGE),
+        look       = 225,
+        x          = C.npcPos.x,
+        y          = C.npcPos.y,
+        z          = C.npcPos.z,
+        rotation   = C.npcPos.rot,
+        widescan   = 1,
+        onTrigger  = function(player, npc)
+            player:printToPlayer('[Spell Mastery] Empower your weapon skills and magic with Mastery Sigils, earned in battle.', SYS)
+            openMain(player)
+        end,
+    })
+end
+
+pcall(restoreSpellMasterySage)
+
 return m

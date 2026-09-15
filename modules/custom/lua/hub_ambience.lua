@@ -10,10 +10,9 @@
 --     z550-580) so they never block a vendor's click target.
 --
 -- LOOK IDS: only globally-valid NPC models render in an arbitrary zone (a
--- zone-local mob model would show invisible here). The four below are PROVEN
--- valid on this client (already in use by working custom NPCs):
+-- zone-local mob model would show invisible here). Proven on this client:
 --     1997 = Chocobo        2948 = Sheep
---     1834 = Alexander (giant iron colossus -- the exotic centerpiece)
+--     1834 = Alexander (plaza walkway sentinels -- not the NE beach)
 --     2883 = (proven wildcard look, in use elsewhere)
 -- After a restart, !pos-check the plaza and nudge any that clip terrain; if any
 -- render invisible, its look id isn't valid here -- swap it. See EXOTIC_EXTRAS
@@ -24,11 +23,16 @@ require('modules/module_utils')
 local m = Module:new('hub_ambience')
 
 -- { name, look, x, y, z, rot }
+-- Two Alexander colossi flank the arrival walkway. FROZEN 2026-09-15:
+-- they stay here. Never spawn look 1834 on the NE Hades/Oggbi beach.
+local PLAZA_SENTINELS =
+{
+    { 'Sentinel', 1834, 501.0, -3.0, 546.0,  64 },
+    { 'Sentinel', 1834, 539.0, -3.0, 546.0, 192 },
+}
+
 local CRITTERS =
 {
-    -- Two Alexander colossi flank the arrival walkway as exotic "guardians"
-    { 'Sentinel',  1834, 501.0, -3.0, 546.0,  64 },
-    { 'Sentinel',  1834, 539.0, -3.0, 546.0, 192 },
     -- Chocobo flock roaming the edges
     { 'Chocobo',   1997, 508.0, -3.0, 546.0,  64 },
     { 'Chocobo',   1997, 524.0, -3.0, 546.0, 192 },
@@ -57,10 +61,30 @@ local CRITTERS =
 --   2416 Fenrir         2417 Carbuncle   2884 Moogle-lord  2950 Buffalo
 -- (These are UNVERIFIED on this client -- try a couple, keep the ones that show.)
 
-m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
-    super(zone)
-    for _, c in ipairs(CRITTERS) do
-        local critter = zone:insertDynamicEntity({
+local function despawnNeSentinels(zone)
+    if not zone or not zone.queryEntitiesByName then
+        return
+    end
+    local ents = zone:queryEntitiesByName('Sentinel')
+    if type(ents) ~= 'table' then
+        return
+    end
+    for _, ent in pairs(ents) do
+        pcall(function()
+            if ent.getXPos and ent:getXPos() > 580 then
+                ent:setStatus(xi.status.DISAPPEAR)
+            end
+        end)
+    end
+end
+
+local function spawnPlazaSentinels(zone)
+    if not zone or xi.hub_plaza_sentinels then
+        return
+    end
+    xi.hub_plaza_sentinels = {}
+    for _, c in ipairs(PLAZA_SENTINELS) do
+        local ent = zone:insertDynamicEntity({
             objtype   = xi.objType.NPC,
             name      = c[1],
             look      = c[2],
@@ -72,10 +96,45 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             onTrade   = function(player, npc, trade) end,
             onTrigger = function(player, npc) end,
         })
-        critter:hideName(true)
-        critter:setUntargetable(true)
-        utils.unused(critter)
+        if ent then
+            ent:hideName(true)
+            ent:setUntargetable(true)
+            xi.hub_plaza_sentinels[#xi.hub_plaza_sentinels + 1] = ent
+        end
     end
+end
+
+local function spawnCritter(zone, c)
+    local critter = zone:insertDynamicEntity({
+        objtype   = xi.objType.NPC,
+        name      = c[1],
+        look      = c[2],
+        x         = c[3],
+        y         = c[4],
+        z         = c[5],
+        rotation  = c[6],
+        widescan  = 0,
+        onTrade   = function(player, npc, trade) end,
+        onTrigger = function(player, npc) end,
+    })
+    critter:hideName(true)
+    critter:setUntargetable(true)
+    utils.unused(critter)
+end
+
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
+    super(zone)
+    despawnNeSentinels(zone)
+    spawnPlazaSentinels(zone)
+    for _, c in ipairs(CRITTERS) do
+        spawnCritter(zone, c)
+    end
+end)
+
+pcall(function()
+    local zone = GetZone(44)
+    despawnNeSentinels(zone)
+    spawnPlazaSentinels(zone)
 end)
 
 return m

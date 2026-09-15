@@ -116,11 +116,18 @@ function FN.apply(player, raw)
     if not FN.isClean(name) then
         return false, 'That name was rejected by the language filter, kupo.'
     end
+    local previous = FN.read(player)
     FN.pack(player, name)
     -- The Fellow is a flagged trust, not player:getPet().
     local fellow = xi.fellow and xi.fellow.getTrust and xi.fellow.getTrust(player)
     if fellow then
         pcall(function() fellow:renameEntity(name, true) end)
+    end
+    -- Eren swaps look + skill set; a live rename must respawn to apply Hades 2674.
+    local nowEren = name:lower() == 'eren'
+    local wasEren = type(previous) == 'string' and previous:lower() == 'eren'
+    if (nowEren or wasEren) and xi.fellow and xi.fellow.respawnIfOut then
+        pcall(function() xi.fellow.respawnIfOut(player) end)
     end
     return true, name
 end

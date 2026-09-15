@@ -17,6 +17,7 @@
 -----------------------------------
 require('modules/module_utils')
 local catalog    = require('modules/custom/lua/reforge_catalog')
+local consumeItem = require('modules/custom/lua/consume_upgrade_item')
 local gendered   = require('modules/custom/lua/gendered_armor')
 local hg         = require('modules/custom/lua/hunters_guild')
 local wh         = require('modules/custom/lua/weekly_hunts')
@@ -431,7 +432,14 @@ buildUpgradeMenu = function(player, jobDef, setKey, slotKey, tiers)
                     end
 
                     spendMarks(p, setKey, cost)
-                    p:delItem(fromHeld, 1)
+                    if not consumeItem.one(p, fromHeld) then
+                        spendMarks(p, setKey, -cost)
+                        p:printToPlayer(
+                            'Could not consume the previous piece. Unequip it and try again, kupo!',
+                            xi.msg.channel.SYSTEM_3)
+                        buildUpgradeMenu(p, jobDef, setKey, slotKey, tiers)
+                        return
+                    end
                     if not p:addItem({ id = toGive, quantity = 1 }) then
                         -- Grant failed anyway (race, storage-slip, etc.):
                         -- roll the whole transaction back.

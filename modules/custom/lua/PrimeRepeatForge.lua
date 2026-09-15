@@ -55,15 +55,12 @@ local function refundMedals(player)
     return true
 end
 
-m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
-    super(zone)
+local function sendMenu(player, title, options)
+    local snapshot = { title = title, options = options }
+    player:timer(30, function(p) p:customMenu(snapshot) end)
+end
 
-    local function sendMenu(player, title, options)
-        local snapshot = { title = title, options = options }
-        player:timer(30, function(p) p:customMenu(snapshot) end)
-    end
-
-    local function doForge(player, recipe)
+local function doForge(player, recipe)
         if (player:getCharVar(C.initialPrimeVar) or 0) ~= 1 then
             player:printToPlayer(
                 PREFIX .. ' A first Prime must be won through the full pilgrimage. I have no shortcut for an untested hand.',
@@ -129,7 +126,20 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             recipe.prime.name), SYS)
     end
 
-    local Oggbi = zone:insertDynamicEntity({
+local function applyOggbiLook(npc)
+    if not npc then
+        return
+    end
+    pcall(function()
+        npc:setLook({ race = C.oggbi.race, face = C.oggbi.face })
+        for _, piece in ipairs(C.oggbi.gear) do
+            npc:setModelId(piece[1], piece[2])
+        end
+    end)
+end
+
+local function spawnOggbi(zone)
+    local npc = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Oggbi_Prime_Repeat',
         packetName = string.format('%sOggbi', xi.icon.STAR_LARGE),
@@ -186,8 +196,43 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             })
         end,
     })
-    utils.unused(Oggbi)
+    applyOggbiLook(npc)
+    return npc
+end
 
+local function despawnOggbiBodies(zone)
+    if not zone or not zone.queryEntitiesByName then
+        return
+    end
+    local names = { 'Oggbi_Prime_Repeat', 'DE_Oggbi_Prime_Repeat', 'Oggbi' }
+    for _, name in ipairs(names) do
+        local ents = zone:queryEntitiesByName(name)
+        if type(ents) == 'table' then
+            for _, ent in pairs(ents) do
+                pcall(function()
+                    ent:setStatus(xi.status.DISAPPEAR)
+                end)
+            end
+        end
+    end
+end
+
+local function restoreOggbi()
+    local zone = GetZone(44)
+    if not zone then
+        return
+    end
+    -- Live restore kept a stripped Galka body. Replace it with a fresh Oggbi.
+    despawnOggbiBodies(zone)
+    xi._oggbi_live_spawn = nil
+    local npc = spawnOggbi(zone)
+    applyOggbiLook(npc)
+    xi._oggbi_live_spawn = true
+end
+
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
+    super(zone)
+    spawnOggbi(zone)
     local Apparition = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Prime_Lineage_Apparition',
@@ -201,5 +246,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     })
     utils.unused(Apparition)
 end)
+
+pcall(restoreOggbi)
 
 return m

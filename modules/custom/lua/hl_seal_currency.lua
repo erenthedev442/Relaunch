@@ -17,8 +17,20 @@
 -- take() removes the full amount across every stack and container that
 -- getItemCount counts, and returns whether it actually succeeded. Callers
 -- MUST treat a false return as "do not hand over the reward."
+--
+-- Equipped copies are unequipped first. UpdateItem refuses busy Equipped
+-- items, and delItemAt used to report success even when nothing was removed.
+-- The final getItemCount check is the source of truth.
 -----------------------------------
 local M = {}
+
+local function unequipOwned(player, itemId)
+    for slot = 0, (xi.MAX_SLOTID or 15) do
+        if player:getEquipID(slot) == itemId then
+            player:unequipItem(slot)
+        end
+    end
+end
 
 -- Remove exactly `amount` of `itemId` from the player, spanning all stacks
 -- and all containers (0 .. MAX_CONTAINER_ID-1 == the same sweep
@@ -31,9 +43,12 @@ function M.take(player, itemId, amount)
     end
 
     -- Affordability gate (counts every container + stack).
-    if player:getItemCount(itemId) < amount then
+    local before = player:getItemCount(itemId)
+    if before < amount then
         return false
     end
+
+    unequipOwned(player, itemId)
 
     local remaining = amount
 
@@ -64,7 +79,7 @@ function M.take(player, itemId, amount)
         end
     end
 
-    return remaining <= 0
+    return player:getItemCount(itemId) <= (before - amount)
 end
 
 return M

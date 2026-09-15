@@ -31,3 +31,9 @@ repo via LEGENDARY_LIVE_ROOT).
 the docs refresh task on the box (which builds + publishes from Relaunch-Docs).
 The deploy commits only the "Relaunch Deploy" marker here; the changelog is
 regenerated into Relaunch-Docs.
+
+## Hub NPCs (hard rule)
+`!hub` (zone 44, Abdhaljs Isle-Purgonorgo) NPC positions, looks, names, and
+click handlers are frozen. Do not move, hide, rename, rebind, or despawn them
+unless the owner explicitly names the NPC and the new coords/look. Never hijack
+live dynamic IDs with `GetNPCByID`. See `.cursor/rules/hub-npc-lock.mdc`.

@@ -19,8 +19,20 @@ local C =
     gil             = 250000000,
     oggbi =
     {
+        -- FROZEN 2026-09-15. Do not move or change look without owner permission.
         x = 649.7283, y = 0.3000, z = 562.4038, rotation = 169,
+        -- Same look as Port Bastok Oggbi (npc_list 17743997) — hub spawn.
         look = '0x0100030811101120113011401150006000700000',
+        race = 8,
+        face = 3,
+        gear =
+        {
+            { 17, 4 }, -- head
+            { 17, 5 }, -- body
+            { 17, 6 }, -- hands
+            { 17, 7 }, -- legs
+            { 17, 8 }, -- feet
+        },
     },
     apparition =
     {

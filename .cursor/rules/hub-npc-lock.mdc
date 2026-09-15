@@ -1,0 +1,32 @@
+---
+description: Frozen !hub NPC positions, looks, and identities — do not move without explicit owner permission
+alwaysApply: true
+---
+
+# Hub NPC lock (zone 44)
+
+`!hub` is Abdhaljs Isle-Purgonorgo (zone 44). Positions, looks, names, and click handlers of hub NPCs are **frozen**. Do not move, hide, rename, rebind, despawn, or `setPos` them unless the owner **explicitly** names that NPC and the new coords/look.
+
+## Never
+
+- Guess live dynamic IDs (`16959511`, `16959532`, `16959554`, …). They change every map boot.
+- Bind Hades shop/dailies onto whatever `GetNPCByID` returns.
+- Mass-despawn by name (`......`, `Sentinel`, `Hades`) across the whole zone.
+- Park, hide, or overlay one hub NPC on another.
+
+## Locked cluster (2026-09-15)
+
+| NPC | Identity | Pos (x, y, z, rot) |
+|---|---|---|
+| Daily Hades | `16959529` — do not `setPos` | where he already stands (~649.21, 0.30, 567.05, 96) |
+| Weekend shop | `......`, look **2680** | 646.3604, 0.3000, 570.6538, 96 |
+| Oggbi | `Oggbi_Prime_Repeat`, Bastok look hex | 649.7283, 0.3000, 562.4038, 169 |
+| Sparks mithra | `Sparks_Exchange`, look 221 | 554.400, -3.3322, 476.000, 160 |
+| Spell Mastery | `Spell_Mastery_Sage`, look 225 | 537.9993, -3.4665, 497.0069, 216 |
+| Weapon Mastery | `Weapon_Mastery_Sage`, look 212 | 540.9993, -3.4665, 498.0069, 90 |
+| Plaza Alexanders | `Sentinel`, look 1834 | 501.0 / 539.0, -3.0, 546.0 |
+| Arcane Augmenter | look 1834 | leave at its plaza pad; not the NE beach |
+
+NE beach is only: talking Hades, 2680 `......` shop, Oggbi.
+
+If a hub NPC is missing, restore **that** NPC at the locked coords. Do not steal another body.

@@ -4574,10 +4574,10 @@ bool CLuaBaseEntity::delItem(uint16 itemID, int32 quantity, const sol::object& c
 
     if (SlotID != ERROR_SLOTID)
     {
-        charutils::UpdateItem(PChar, location, SlotID, -quantity);
+        const auto updated = charutils::UpdateItem(PChar, location, SlotID, -quantity);
         PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
 
-        return true;
+        return updated != 0;
     }
 
     return false;
@@ -4606,10 +4606,10 @@ bool CLuaBaseEntity::delItemAt(const uint16 itemID, const int32 quantity, uint8 
 
     if (const auto* PItem = PChar->getStorage(containerId)->GetItem(slotId); PItem && PItem->getID() == itemID)
     {
-        charutils::UpdateItem(PChar, containerId, slotId, -quantity);
+        const auto updated = charutils::UpdateItem(PChar, containerId, slotId, -quantity);
         PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
 
-        return true;
+        return updated != 0;
     }
 
     return false;

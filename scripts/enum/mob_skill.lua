@@ -1306,5 +1306,12 @@ xi.mobSkill =
     VENOM_SPRAY_3                 = 3884,
     MANDIBULAR_BITE_3             = 3885,
 
+    FULMINOUS_SMASH               = 3389, -- Hades v1 (look 2674)
+    FLAMING_KICK                  = 3390,
+    ICY_GRASP                     = 3391,
+    FLASH_FLOOD                   = 3392,
+    ERODING_FLESH                 = 3393,
+    VIVISECTION                   = 3394,
+
     MIX_FINAL_ELIXIR              = 4231, -- Monbereaux Trust
 }

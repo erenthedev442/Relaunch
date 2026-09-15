@@ -52,6 +52,7 @@ xi.sparks_exchange.jp_tiers = { 1, 5, 20 }
 xi.sparks_exchange.hm_tiers = { 100, 1000, 5000 }
 
 -- ===== static NPC config (requires restart to change) =====
+-- FROZEN 2026-09-15. Do not move or rebind without owner permission.
 local cfg = {
     npcPos = { x = 554.400, y = -3.3322, z = 476.000, rot = 160 },
     name   = 'Currency Exchange',
@@ -301,5 +302,72 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
 end)
 
 bindLiveBroker()
+
+-- FileWatcher: Hades bound shop text onto whoever held 16959511 this boot
+-- (the Sparks mithra). Restore name, pad, and conversion menu in place.
+local function restoreSparksBroker()
+    bindLiveBroker()
+    local zone = GetZone(44)
+    if not zone then
+        return
+    end
+    local packet = string.format('%s%s', xi.icon.STAR_LARGE, cfg.name)
+    local found
+    if zone.queryEntitiesByName then
+        local ents = zone:queryEntitiesByName('Sparks_Exchange')
+        if type(ents) == 'table' then
+            for _, ent in pairs(ents) do
+                found = ent
+                break
+            end
+        end
+    end
+    if not found then
+        local stolen = GetNPCByID(16959511)
+        if stolen and stolen.getXPos and stolen:getXPos() < 580 then
+            found = stolen
+        end
+    end
+    if found then
+        pcall(function()
+            found:setStatus(xi.status.NORMAL)
+            found:setUntargetable(false)
+            found:hideName(false)
+            found:renameEntity(packet, true)
+            found:setPos(cfg.npcPos.x, cfg.npcPos.y, cfg.npcPos.z, cfg.npcPos.rot)
+            found:removeListener('HADES_SHOP')
+            found:removeListener('HADES_DAILY')
+            found:removeListener('SPARKS_EXCHANGE')
+            found:addListener('ON_TRIGGER', 'SPARKS_EXCHANGE', function(player, _)
+                xi.sparks_exchange.openMain(player)
+            end)
+        end)
+        return
+    end
+    if xi._sparks_exchange_live then
+        return
+    end
+    xi._sparks_exchange_live = true
+    zone:insertDynamicEntity({
+        objtype    = xi.objType.NPC,
+        name       = 'Sparks_Exchange',
+        packetName = packet,
+        look       = 221,
+        x          = cfg.npcPos.x,
+        y          = cfg.npcPos.y,
+        z          = cfg.npcPos.z,
+        rotation   = cfg.npcPos.rot,
+        widescan   = 1,
+        onTrade = function(player, npc, trade)
+            player:printToPlayer('[Sparks] Just use the menu, kupo!', S)
+        end,
+        onTrigger = function(player, npc)
+            xi.sparks_exchange.openMain(player)
+        end,
+    })
+    bindLiveBroker()
+end
+
+pcall(restoreSparksBroker)
 
 return m

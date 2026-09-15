@@ -459,6 +459,7 @@ end
 -----------------------------------
 
 -- GM Home: right side of the mastery conversation semicircle.
+-- FROZEN 2026-09-15 at 540.9993, -3.4665, 498.0069, rot 90.
 m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
@@ -489,6 +490,69 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     })
     utils.unused(npc)
 end)
+
+local function talkWeaponMastery(player)
+    if getSession(player) then
+        player:printToPlayer('[Mastery] You have an active challenge. Use !mastery abort to reset.', xi.msg.channel.SYSTEM_3)
+        return
+    end
+    player:printToPlayer(
+        '[Mastery] Trial 4 is a true solo duel. Complete Trials 1-3 and one Aeonic, then equip an item-level 119 weapon of the family you choose.',
+        xi.msg.channel.SYSTEM_3)
+    player:printToPlayer(
+        '[Mastery] Each Guardian authorizes only its matching forged Prime. Any one clear authorizes a support Prime.',
+        xi.msg.channel.SYSTEM_3)
+    showMasteryMenu(player, 1)
+end
+
+local function restoreWeaponMasterySage()
+    local zone = GetZone(44)
+    if not zone then
+        return
+    end
+    local found
+    if zone.queryEntitiesByName then
+        local ents = zone:queryEntitiesByName('Weapon_Mastery_Sage')
+        if type(ents) == 'table' then
+            for _, ent in pairs(ents) do
+                found = ent
+                break
+            end
+        end
+    end
+    if found then
+        pcall(function()
+            found:setStatus(xi.status.NORMAL)
+            found:setUntargetable(false)
+            found:hideName(false)
+            found:renameEntity('Weapon Mastery', true)
+            found:setPos(540.9993, -3.4665, 498.0069, 90)
+            found:removeListener('HADES_SHOP')
+            found:removeListener('HADES_DAILY')
+            found:removeListener('WEAPON_MASTERY')
+            found:addListener('ON_TRIGGER', 'WEAPON_MASTERY', talkWeaponMastery)
+        end)
+        return
+    end
+    if xi._weapon_mastery_live then
+        return
+    end
+    xi._weapon_mastery_live = true
+    zone:insertDynamicEntity({
+        objtype    = xi.objType.NPC,
+        name       = 'Weapon_Mastery_Sage',
+        packetName = 'Weapon Mastery',
+        look       = 212,
+        x          = 540.9993,
+        y          =  -3.4665,
+        z          = 498.0069,
+        rotation   = 90,
+        widescan   =  1,
+        onTrigger  = talkWeaponMastery,
+    })
+end
+
+pcall(restoreWeaponMasterySage)
 
 -- Walk of Echoes: start the challenge after zone-in.
 m:addOverride('xi.zones.Walk_of_Echoes.Zone.onZoneIn', function(player, prevZone)

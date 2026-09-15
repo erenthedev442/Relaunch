@@ -1987,6 +1987,21 @@ uint32 UpdateItem(CCharEntity* PChar, uint8 LocationID, uint8 slotID, int32 quan
     // Equipped ammo decrements its stack on consumption without leaving the slot.
     const bool isEquippedAmmo = PItem->state() == ItemState::Equipped &&
                                 PChar->getEquip(SLOT_AMMO) == PItem;
+
+    // Removing worn gear must unequip first. Lua delItem used to report success
+    // while UpdateItem refused Equipped/busy items, so upgrade forges handed
+    // the next tier and left the previous one on the player.
+    if (quantity < 0 && PItem->state() == ItemState::Equipped && !isEquippedAmmo)
+    {
+        for (uint8 slot = 0; slot < 16; ++slot)
+        {
+            if (PChar->getEquip(static_cast<SLOTTYPE>(slot)) == PItem)
+            {
+                UnequipItem(PChar, slot);
+            }
+        }
+    }
+
     if (PItem->isBusy() && !isEquippedAmmo && !force)
     {
         ShowWarningFmt("UpdateItem: refusing to mutate busy item {} in state {} (loc={}, slot={}, char={})",
