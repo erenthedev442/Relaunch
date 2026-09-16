@@ -16471,6 +16471,34 @@ void CLuaBaseEntity::removeAllGambits()
 }
 
 /************************************************************************
+ *  Function: clearTrustTPSkills()
+ *  Purpose : Strip the trust's autonomous TP skill list so Lua can own WS.
+ *  Example : fellow:clearTrustTPSkills()
+ *  Notes   : removeAllGambits() does not clear tp_skills. Naji still fires
+ *            Vorpal Blade (player WS 40) until this list is emptied.
+ ************************************************************************/
+
+void CLuaBaseEntity::clearTrustTPSkills()
+{
+    FJB_REQUIRE_ALIVE_VOID();
+
+    const auto* PTrust = dynamic_cast<CTrustEntity*>(m_PBaseEntity);
+    if (!PTrust)
+    {
+        ShowWarning("Invalid Entity calling function (%s).", m_PBaseEntity->getName());
+        return;
+    }
+
+    auto* controller = static_cast<CTrustController*>(PTrust->PAI->GetController());
+    if (!controller || !controller->m_GambitsContainer)
+    {
+        return;
+    }
+
+    controller->m_GambitsContainer->tp_skills.clear();
+}
+
+/************************************************************************
  *  Function: setTrustTPSkillSettings(trigger, select, value)
  *  Purpose :
  *  Example : mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 1500)
@@ -21030,6 +21058,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("addGambit", CLuaBaseEntity::addGambit);
     SOL_REGISTER("removeGambit", CLuaBaseEntity::removeGambit);
     SOL_REGISTER("removeAllGambits", CLuaBaseEntity::removeAllGambits);
+    SOL_REGISTER("clearTrustTPSkills", CLuaBaseEntity::clearTrustTPSkills);
     SOL_REGISTER("setTrustTPSkillSettings", CLuaBaseEntity::setTrustTPSkillSettings);
 
     // Mob Entity-Specific

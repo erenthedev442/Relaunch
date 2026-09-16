@@ -3416,6 +3416,10 @@ end
 function CBaseEntity:removeAllGambits()
 end
 
+---@return nil
+function CBaseEntity:clearTrustTPSkills()
+end
+
 ---@param trigger integer
 ---@param select integer
 ---@param value integer?

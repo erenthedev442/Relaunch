@@ -113,12 +113,23 @@ async function load() {
     const r = await fetch("/api/status", { cache: "no-store" });
     if (!r.ok) throw new Error();
     const d = await r.json();
-    $("dot").classList.add("up");
-    $("state").textContent = "online";
-    $("count").textContent = d.online;
+    const up = d.up !== false;
+    $("count").textContent = up ? d.online : 0;
     sparkline(d.history);
     const roster = $("roster");
-    if (d.players.length) {
+    if (!up) {
+      $("dot").classList.remove("up");
+      $("state").textContent = "offline";
+      $("sub").textContent = "Game world is down";
+      roster.innerHTML = "";
+      $("empty").textContent = "Server is down — nobody is online.";
+      $("empty").style.display = "block";
+      return;
+    }
+    $("dot").classList.add("up");
+    $("state").textContent = "online";
+    $("sub").textContent = "Live from the game server";
+    if (d.players && d.players.length) {
       $("empty").style.display = "none";
       roster.innerHTML = d.players.map((p) => {
         const sub = p.sub && p.sub !== "NON" ? ` / <span class="jb">${p.sub}</span>${p.subLvl}` : "";
@@ -130,12 +141,13 @@ async function load() {
       }).join("");
     } else {
       roster.innerHTML = "";
+      $("empty").textContent = "No one is online right now — be the first in.";
       $("empty").style.display = "block";
     }
   } catch {
     $("dot").classList.remove("up");
     $("state").textContent = "unreachable";
-    $("count").textContent = "—";
+    $("count").textContent = "0";
     $("sparklbl").textContent = "Server not responding.";
   }
 }

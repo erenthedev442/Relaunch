@@ -91,12 +91,17 @@ function esc(s){ const d=document.createElement('div'); d.textContent=s??''; ret
 
 async function loadPresence(){
   try{
-    const d = await fetch('/api/status').then(r=>r.json());
-    $('#onlineCount').textContent = d.online;
+    const d = await fetch('/api/status', {cache:'no-store'}).then(r=>r.json());
     const host = $('#presence');
+    if(d.up === false){
+      $('#onlineCount').textContent = '0';
+      host.innerHTML='<span class="empty">Server is down — nobody is online.</span>';
+      return;
+    }
+    $('#onlineCount').textContent = d.online;
     if(!d.players.length){ host.innerHTML='<span class="empty">No one online right now — be the first!</span>'; return; }
     host.innerHTML = d.players.map(p=>`<span class="who"><b>${esc(p.name)}</b> <span class="z">${esc(p.job)}${p.lvl}·${esc(p.zone)}</span></span>`).join('');
-  }catch(e){ $('#presence').innerHTML='<span class="empty">Could not load.</span>'; }
+  }catch(e){ $('#onlineCount').textContent='0'; $('#presence').innerHTML='<span class="empty">Could not load.</span>'; }
 }
 
 async function loadFeed(){

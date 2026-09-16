@@ -55,4 +55,18 @@ describe('Eren fellow role bonuses', function()
         assert(fellow.eren.oracleCurePotencyII == 20)
         assert(fellow.eren.oracleHealMult == 1.20)
     end)
+
+    it('maps Eren TP-menu picks onto Hades v1 skills instead of Naji Vorpal Blade', function()
+        assert(fellow.resolveErenWs('vanguard', 0) == xi.mobSkill.FULMINOUS_SMASH)
+        assert(fellow.resolveErenWs('vanguard', 1) == xi.mobSkill.FULMINOUS_SMASH)
+        assert(fellow.resolveErenWs('vanguard', 2) == xi.mobSkill.FLAMING_KICK)
+        assert(fellow.resolveErenWs('berserker', 0) == xi.mobSkill.VIVISECTION)
+        assert(fellow.resolveErenWs('magus', 6) == xi.mobSkill.VIVISECTION)
+        assert(fellow.resolveErenWs('vanguard', 2) ~= xi.mobSkill.VORPAL_BLADE_1)
+        for _, move in ipairs(fellow.erenMoves) do
+            assert(move.ws ~= xi.mobSkill.VORPAL_BLADE_1)
+            assert(move.ws >= xi.mobSkill.FULMINOUS_SMASH)
+            assert(move.ws <= xi.mobSkill.VIVISECTION)
+        end
+    end)
 end)

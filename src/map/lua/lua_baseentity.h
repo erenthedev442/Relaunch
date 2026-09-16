@@ -797,6 +797,7 @@ public:
     auto   addGambit(uint16 targ, const sol::table& predicates, const sol::table& reactions, const sol::object& retry) -> std::string;
     void   removeGambit(const std::string& id);
     void   removeAllGambits();
+    void   clearTrustTPSkills();
     void   setTrustTPSkillSettings(uint16 trigger, uint16 select, const sol::object& value);
 
     bool   hasPet();

@@ -5,7 +5,7 @@ Authenticates players against the live LandSandBoat `accounts` table (bcrypt)
 and returns account/character data. READ-ONLY against xidb.
 
 Public (no login):
-  GET  /api/status                 -> who's online now + population
+  GET  /api/status                 -> who's online now + population (0 if world down)
   GET  /launcher/manifest.json     -> launcher self-update feed (X-Launcher-Key)
   GET  /launcher/LegendaryLauncher.zip
   GET  /api/profile/{name}         -> a character's public trophy page data
@@ -35,6 +35,7 @@ import html
 import json
 import os
 import re
+import socket
 import time
 import urllib.parse
 import urllib.request
@@ -478,6 +479,102 @@ def db_write():
     )
 
 
+# Live world probe for /api/status. Leftover accounts_sessions rows survive a
+# hard map/connect kill, so a session COUNT during downtime is a ghost roster.
+# Ports match settings/default/network.lua (login auth + world ZMQ).
+GAME_PROBE_HOST = os.getenv("PORTAL_GAME_HOST", "127.0.0.1")
+GAME_AUTH_PORT = int(os.getenv("PORTAL_GAME_AUTH_PORT", "54231"))
+GAME_ZMQ_PORT = int(os.getenv("PORTAL_GAME_ZMQ_PORT", "54003"))
+GAME_PROBE_TTL = float(os.getenv("PORTAL_GAME_PROBE_TTL", "2"))
+_game_up_cache = {"t": 0.0, "up": False}
+
+
+def _tcp_open(host: str, port: int, timeout: float = 0.15) -> bool:
+    try:
+        with socket.create_connection((host, port), timeout=timeout):
+            return True
+    except OSError:
+        return False
+
+
+def _nt_exe_running(exe: str) -> bool | None:
+    """True/False if we could snapshot processes; None if the probe failed."""
+    if os.name != "nt":
+        return None
+    try:
+        import ctypes
+        from ctypes import wintypes
+
+        kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        TH32CS_SNAPPROCESS = 0x2
+
+        class PROCESSENTRY32W(ctypes.Structure):
+            _fields_ = (
+                ("dwSize", wintypes.DWORD),
+                ("cntUsage", wintypes.DWORD),
+                ("th32ProcessID", wintypes.DWORD),
+                ("th32DefaultHeapID", ctypes.c_void_p),
+                ("th32ModuleID", wintypes.DWORD),
+                ("cntThreads", wintypes.DWORD),
+                ("th32ParentProcessID", wintypes.DWORD),
+                ("pcPriClassBase", wintypes.LONG),
+                ("dwFlags", wintypes.DWORD),
+                ("szExeFile", wintypes.WCHAR * 260),
+            )
+
+        CreateToolhelp32Snapshot = kernel32.CreateToolhelp32Snapshot
+        CreateToolhelp32Snapshot.argtypes = [wintypes.DWORD, wintypes.DWORD]
+        CreateToolhelp32Snapshot.restype = wintypes.HANDLE
+        Process32FirstW = kernel32.Process32FirstW
+        Process32FirstW.argtypes = [wintypes.HANDLE, ctypes.POINTER(PROCESSENTRY32W)]
+        Process32FirstW.restype = wintypes.BOOL
+        Process32NextW = kernel32.Process32NextW
+        Process32NextW.argtypes = [wintypes.HANDLE, ctypes.POINTER(PROCESSENTRY32W)]
+        Process32NextW.restype = wintypes.BOOL
+
+        snap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0)
+        if not snap or snap == wintypes.HANDLE(-1).value:
+            return None
+        try:
+            pe = PROCESSENTRY32W()
+            pe.dwSize = ctypes.sizeof(PROCESSENTRY32W)
+            if not Process32FirstW(snap, ctypes.byref(pe)):
+                return None
+            target = exe.lower()
+            while True:
+                if (pe.szExeFile or "").lower() == target:
+                    return True
+                if not Process32NextW(snap, ctypes.byref(pe)):
+                    return False
+        finally:
+            kernel32.CloseHandle(snap)
+    except Exception:
+        return None
+
+
+def game_world_up() -> bool:
+    """True only when the game stack is actually accepting players.
+
+    Cached a couple of seconds so launcher polling cannot stall on process
+    snapshots or TCP timeouts.
+    """
+    now = time.monotonic()
+    if now - _game_up_cache["t"] < GAME_PROBE_TTL:
+        return _game_up_cache["up"]
+    map_running = _nt_exe_running("xi_map.exe")
+    if map_running is False:
+        up = False
+    else:
+        auth_up = _tcp_open(GAME_PROBE_HOST, GAME_AUTH_PORT)
+        if map_running is True:
+            up = auth_up
+        else:
+            up = auth_up and _tcp_open(GAME_PROBE_HOST, GAME_ZMQ_PORT)
+    _game_up_cache["t"] = now
+    _game_up_cache["up"] = up
+    return up
+
+
 def is_bcrypt_hash(h: str) -> bool:
     return len(h) == 60 and h.startswith("$2") and h[3] == "$"
 
@@ -704,8 +801,10 @@ async def _cache_control(request: Request, call_next):
     """
     response = await call_next(request)
     path = request.url.path
-    if path == "/sw.js":
+    if path == "/sw.js" or path == "/api/status":
         response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+        if path == "/api/status":
+            response.headers["CDN-Cache-Control"] = "no-store"
     elif path == "/" or path.endswith(".html") or path == "/manifest.webmanifest":
         response.headers["Cache-Control"] = "no-cache, must-revalidate, max-age=0"
     return response
@@ -1614,44 +1713,58 @@ def legacy_reward_claim(body: LegacyRewardBody, request: Request):
 # ------------------------------------------------------------- public routes --
 @app.get("/api/status")
 def status():
-    """Who's online right now, plus population history if the sampler table exists."""
-    conn = db()
+    """Who's online right now, plus population history if the sampler table exists.
+
+    Always 200 + JSON so the launcher cannot hang or crash on a 5xx/HTML body.
+    When the game stack is down, leftover accounts_sessions are ignored.
+    """
+    empty = {"up": False, "online": 0, "players": [], "history": []}
     try:
-        with conn.cursor() as cur:
-            cur.execute(
-                "SELECT c.charname, c.pos_zone, "
-                "       COALESCE(s.mjob,0) AS mjob, COALESCE(s.mlvl,1) AS mlvl, "
-                "       COALESCE(s.sjob,0) AS sjob, COALESCE(s.slvl,1) AS slvl "
-                "FROM accounts_sessions ses "
-                "JOIN chars c ON c.charid = ses.charid "
-                "LEFT JOIN char_stats s ON s.charid = c.charid "
-                "ORDER BY c.charname"
-            )
-            sess = cur.fetchall()
-            players = [{
-                "name": r["charname"],
-                "job":  JOBS.get(r["mjob"], "?"),
-                "lvl":  r["mlvl"],
-                "sub":  JOBS.get(r["sjob"], "NON"),
-                "subLvl": r["slvl"],
-                "zone": zone_name(cur, r["pos_zone"]),
-            } for r in sess]
-
-            history = []
-            try:
+        if not game_world_up():
+            return empty
+        conn = db()
+        try:
+            with conn.cursor() as cur:
                 cur.execute(
-                    "SELECT UNIX_TIMESTAMP(ts) AS t, online FROM portal_pop_history "
-                    "ORDER BY ts DESC LIMIT 288"
+                    "SELECT c.charname, c.pos_zone, "
+                    "       COALESCE(s.mjob,0) AS mjob, COALESCE(s.mlvl,1) AS mlvl, "
+                    "       COALESCE(s.sjob,0) AS sjob, COALESCE(s.slvl,1) AS slvl "
+                    "FROM accounts_sessions ses "
+                    "JOIN chars c ON c.charid = ses.charid "
+                    "LEFT JOIN char_stats s ON s.charid = c.charid "
+                    "ORDER BY c.charname"
                 )
-                history = [{"t": int(r["t"]), "n": int(r["online"])} for r in reversed(cur.fetchall())]
-            except (pymysql.err.ProgrammingError, pymysql.err.OperationalError):
-                # sampler table not created (or not granted) -> graph shows "collecting".
-                # A no-grant read returns 1142 (OperationalError), not 1146, so catch both.
-                pass
-    finally:
-        conn.close()
+                sess = cur.fetchall()
+                players = [{
+                    "name": r["charname"],
+                    "job":  JOBS.get(r["mjob"], "?"),
+                    "lvl":  r["mlvl"],
+                    "sub":  JOBS.get(r["sjob"], "NON"),
+                    "subLvl": r["slvl"],
+                    "zone": zone_name(cur, r["pos_zone"]),
+                } for r in sess]
 
-    return {"online": len(players), "players": players, "history": history}
+                history = []
+                try:
+                    cur.execute(
+                        "SELECT UNIX_TIMESTAMP(ts) AS t, online FROM portal_pop_history "
+                        "ORDER BY ts DESC LIMIT 288"
+                    )
+                    history = [{"t": int(r["t"]), "n": int(r["online"])} for r in reversed(cur.fetchall())]
+                except (pymysql.err.ProgrammingError, pymysql.err.OperationalError):
+                    # sampler table not created (or not granted) -> graph shows "collecting".
+                    # A no-grant read returns 1142 (OperationalError), not 1146, so catch both.
+                    pass
+        finally:
+            conn.close()
+        return {"up": True, "online": len(players), "players": players, "history": history}
+    except Exception as e:
+        print(f"[status] {type(e).__name__}: {e}", flush=True)
+        try:
+            up = game_world_up()
+        except Exception:
+            up = False
+        return {"up": up, "online": 0, "players": [], "history": []}
 
 
 @app.get("/api/profile/{name}")
@@ -2179,13 +2292,16 @@ def admin_overview(request: Request):
     conn = db()
     try:
         with conn.cursor() as cur:
-            cur.execute("SELECT c.charname, c.pos_zone, a.login, COALESCE(s.mjob,0) AS mjob, "
-                        "COALESCE(s.mlvl,1) AS mlvl FROM accounts_sessions ses "
-                        "JOIN chars c ON c.charid = ses.charid "
-                        "LEFT JOIN char_stats s ON s.charid = c.charid "
-                        "LEFT JOIN accounts a ON a.id = c.accid ORDER BY c.charname")
-            online = [{"name": r["charname"], "login": r["login"], "job": JOBS.get(r["mjob"], "?"),
-                       "lvl": r["mlvl"], "zone": zone_name(cur, r["pos_zone"])} for r in cur.fetchall()]
+            if game_world_up():
+                cur.execute("SELECT c.charname, c.pos_zone, a.login, COALESCE(s.mjob,0) AS mjob, "
+                            "COALESCE(s.mlvl,1) AS mlvl FROM accounts_sessions ses "
+                            "JOIN chars c ON c.charid = ses.charid "
+                            "LEFT JOIN char_stats s ON s.charid = c.charid "
+                            "LEFT JOIN accounts a ON a.id = c.accid ORDER BY c.charname")
+                online = [{"name": r["charname"], "login": r["login"], "job": JOBS.get(r["mjob"], "?"),
+                           "lvl": r["mlvl"], "zone": zone_name(cur, r["pos_zone"])} for r in cur.fetchall()]
+            else:
+                online = []
             cur.execute("SELECT COUNT(*) AS n FROM accounts"); acct_ct = (cur.fetchone() or {}).get("n", 0)
             cur.execute("SELECT COUNT(*) AS n FROM chars");    char_ct = (cur.fetchone() or {}).get("n", 0)
             cur.execute("SELECT login, timecreate FROM accounts ORDER BY timecreate DESC LIMIT 12")
@@ -2254,7 +2370,7 @@ def admin_legacy(request: Request):
 
 @app.get("/api/health")
 def health():
-    return {"ok": True}
+    return {"ok": True, "game": game_world_up()}
 
 
 # ========================================================= community feel =====

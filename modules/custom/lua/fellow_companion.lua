@@ -510,6 +510,71 @@ local function getOutfitModelId(p)
     local entry = CONFIG.outfits[getN(p, V.outfit)]
     return entry and entry.modelId
 end
+
+-- Naming is free-text via the !fellowname command (fellow_name.lua). The old
+-- preset name list (CONFIG.names / Fellow_NameIdx) was replaced 2026-07-09;
+-- fall back to a generic default until the player sets a custom name.
+local DEFAULT_FELLOW_NAME = 'Fellow'
+local function chosenName(p)
+    return FN.read(p) or CONFIG.names[getN(p, V.nameIdx)] or DEFAULT_FELLOW_NAME
+end
+
+-- Hidden name: Eren uses Hades look 2674 and only that model's skill list
+-- (Hadesv1 3389-3394 / anims 2399-2404). Role Combo/Thunder IV/bow shots
+-- crash the client on this skeleton.
+-- Declared before chosenWs: Lua locals are not visible above their statement,
+-- so a later isEren()/EREN_MOVES lookup inside chosenWs was a nil global and
+-- the combat loop silently fell through to Naji Vorpal Blade.
+local EREN_LOOK = 2674
+local EREN_MOVES =
+{
+    { name = 'Fulminous Smash', ws = xi.mobSkill.FULMINOUS_SMASH },
+    { name = 'Flaming Kick',    ws = xi.mobSkill.FLAMING_KICK    },
+    { name = 'Icy Grasp',       ws = xi.mobSkill.ICY_GRASP       },
+    { name = 'Flash Flood',     ws = xi.mobSkill.FLASH_FLOOD     },
+    { name = 'Eroding Flesh',   ws = xi.mobSkill.ERODING_FLESH   },
+    { name = 'Vivisection',     ws = xi.mobSkill.VIVISECTION     },
+}
+local EREN_SAFE =
+{
+    [xi.mobSkill.FULMINOUS_SMASH] = true,
+    [xi.mobSkill.FLAMING_KICK]    = true,
+    [xi.mobSkill.ICY_GRASP]       = true,
+    [xi.mobSkill.FLASH_FLOOD]     = true,
+    [xi.mobSkill.ERODING_FLESH]   = true,
+    [xi.mobSkill.VIVISECTION]     = true,
+}
+local EREN_DEFAULT_WS =
+{
+    vanguard  = xi.mobSkill.FULMINOUS_SMASH,
+    berserker = xi.mobSkill.VIVISECTION,
+    bulwark   = xi.mobSkill.ERODING_FLESH,
+    oracle    = xi.mobSkill.FLASH_FLOOD,
+    magus     = xi.mobSkill.FLAMING_KICK,
+    hunter    = xi.mobSkill.FULMINOUS_SMASH,
+    mastered  = xi.mobSkill.VIVISECTION,
+}
+
+local function isEren(p)
+    local name = chosenName(p)
+    return type(name) == 'string' and name:lower() == 'eren'
+end
+
+local function resolveErenWs(roleKey, choice)
+    if choice and choice > 0 then
+        local erenMove = EREN_MOVES[choice]
+        if erenMove then
+            return erenMove.ws
+        end
+        local rd    = CONFIG.roles[roleKey]
+        local entry = rd and rd.moves and rd.moves[choice]
+        if entry and EREN_SAFE[entry.ws] then
+            return entry.ws
+        end
+    end
+    return EREN_DEFAULT_WS[roleKey] or xi.mobSkill.FULMINOUS_SMASH
+end
+
 -- Per-role TP-move override charVar (0/unset = use the role's defaultWs).
 local function tpVar(roleKey) return 'Fellow_TP_' .. roleKey end
 -- The signature TP move fired at TP cap, resolved PER ROLE (not by appearance):
@@ -518,19 +583,7 @@ local function tpVar(roleKey) return 'Fellow_TP_' .. roleKey end
 local function chosenWs(p)
     local roleKey = getRole(p)
     if isEren(p) then
-        local choice = getN(p, tpVar(roleKey))
-        if choice > 0 then
-            local erenMove = EREN_MOVES[choice]
-            if erenMove then
-                return erenMove.ws
-            end
-            local rd    = CONFIG.roles[roleKey]
-            local entry = rd and rd.moves and rd.moves[choice]
-            if entry and EREN_SAFE[entry.ws] then
-                return entry.ws
-            end
-        end
-        return EREN_DEFAULT_WS[roleKey] or xi.mobSkill.FULMINOUS_SMASH
+        return resolveErenWs(roleKey, getN(p, tpVar(roleKey)))
     end
     local choice  = getN(p, tpVar(roleKey))
     if choice > 0 then
@@ -571,52 +624,6 @@ local function masterHasTargetEnmity(master, target)
 
     return ok and hasEnmity
 end
--- Naming is free-text via the !fellowname command (fellow_name.lua). The old
--- preset name list (CONFIG.names / Fellow_NameIdx) was replaced 2026-07-09;
--- fall back to a generic default until the player sets a custom name.
-local DEFAULT_FELLOW_NAME = 'Fellow'
-local function chosenName(p)
-    return FN.read(p) or CONFIG.names[getN(p, V.nameIdx)] or DEFAULT_FELLOW_NAME
-end
-
--- Hidden name: Eren uses Hades look 2674 and only that model's skill list
--- (Hadesv1 3389-3394 / anims 2399-2404). Role Combo/Thunder IV/bow shots
--- crash the client on this skeleton.
-local EREN_LOOK = 2674
-local EREN_MOVES =
-{
-    { name = 'Fulminous Smash', ws = xi.mobSkill.FULMINOUS_SMASH },
-    { name = 'Flaming Kick',    ws = xi.mobSkill.FLAMING_KICK    },
-    { name = 'Icy Grasp',       ws = xi.mobSkill.ICY_GRASP       },
-    { name = 'Flash Flood',     ws = xi.mobSkill.FLASH_FLOOD     },
-    { name = 'Eroding Flesh',   ws = xi.mobSkill.ERODING_FLESH   },
-    { name = 'Vivisection',     ws = xi.mobSkill.VIVISECTION     },
-}
-local EREN_SAFE =
-{
-    [xi.mobSkill.FULMINOUS_SMASH] = true,
-    [xi.mobSkill.FLAMING_KICK]    = true,
-    [xi.mobSkill.ICY_GRASP]       = true,
-    [xi.mobSkill.FLASH_FLOOD]     = true,
-    [xi.mobSkill.ERODING_FLESH]   = true,
-    [xi.mobSkill.VIVISECTION]     = true,
-}
-local EREN_DEFAULT_WS =
-{
-    vanguard  = xi.mobSkill.FULMINOUS_SMASH,
-    berserker = xi.mobSkill.VIVISECTION,
-    bulwark   = xi.mobSkill.ERODING_FLESH,
-    oracle    = xi.mobSkill.FLASH_FLOOD,
-    magus     = xi.mobSkill.FLAMING_KICK,
-    hunter    = xi.mobSkill.FULMINOUS_SMASH,
-    mastered  = xi.mobSkill.VIVISECTION,
-}
-
-local function isEren(p)
-    local name = chosenName(p)
-    return type(name) == 'string' and name:lower() == 'eren'
-end
-
 local function xpToNext(level) return CONFIG.xpBase * level end
 
 local function levelProgress(p)
@@ -881,6 +888,11 @@ local function applyFellow(p, pet)
     -- fires the move selected in the Fellow menu, so Naji/list randomness can
     -- no longer consume TP on a different move.
     pet:setMobMod(xi.mobMod.SKILL_LIST, 9999)
+    -- SKILL_LIST 9999 only blanks mob-skill picks. Naji's chassis still has
+    -- Burning Blade / Red Lotus / Vorpal Blade loaded as player WS (ids 33/34/40)
+    -- in the trust gambit TP list, and onMobSpawn sets ASAP @ 1000 TP. That
+    -- spends TP on Vorpal before !fellow can fire the selected Hades move.
+    pcall(function() pet:clearTrustTPSkills() end)
 
     -- Give the two specialist roles real trust-controller behavior instead of
     -- making Naji's melee chassis pretend to cast or shoot.
@@ -1583,7 +1595,7 @@ local function statusReport(p)
     -- TP move in effect for the current role (per-role override, else role default).
     local roleKey  = getRole(p)
     local tpChoice  = getN(p, tpVar(roleKey))
-    local roleMoves = (CONFIG.roles[roleKey] or {}).moves or {}
+    local roleMoves = isEren(p) and EREN_MOVES or ((CONFIG.roles[roleKey] or {}).moves or {})
     local tpName    = (tpChoice > 0 and roleMoves[tpChoice] and roleMoves[tpChoice].name)
         or '(role default)'
     p:printToPlayer(string.format('  TP move (%s): %s', role.name, tpName), SYS)
@@ -2224,6 +2236,8 @@ xi.fellow.outgoingCap        = fellowOutgoingCap
 xi.fellow.aoeCap             = fellowAoECap
 xi.fellow.endgameDamageBand  = fellowEndgameDamageBand
 xi.fellow.eren               = CONFIG.eren
+xi.fellow.resolveErenWs      = resolveErenWs
+xi.fellow.erenMoves          = EREN_MOVES
 
 -- Diagnostic (!fellow debug): dump the LIVE Fellow's ACTUAL mods, read straight off
 -- the spawned pet. Spend a point (it applies instantly while the Fellow is out) and
