@@ -304,3 +304,34 @@ describe('Hades shop pins', function()
         assert(restored[6].row.key ~= nil)
     end)
 end)
+
+describe('Hades crate hold withdraw menu', function()
+    local catalog = require('modules/custom/lua/hades_catalog')
+
+    it('labels hold rows as Take so withdraw is a visible action', function()
+        assert(catalog.crateHoldTakeLabel({ label = 'Pluton' }) == 'Take Pluton')
+        assert(catalog.crateHoldTakeLabel({ label = '10k Byne' }) == 'Take 10k Byne')
+    end)
+
+    it('keeps crate-hold pages under the 150-byte customMenu cap', function()
+        local labels = { 'Take 10k Byne', 'Take Stripeshell', 'Take M.Silver', 'Next (2/3)', 'Back' }
+        assert(catalog.menuPackedSize('Crate hold', labels) < 150)
+        assert(catalog.menuPackedSize('......', labels) < 150)
+    end)
+
+    it('pages weekend stalls so Crate hold is never last behind all eight wares', function()
+        local offers = shop.weekOffers(202636)
+        assert(#offers == 8)
+        assert(catalog.SHOP_STALLS_PER_PAGE < #offers)
+
+        local page1 = { 'Crate hold' }
+        for i = 1, catalog.SHOP_STALLS_PER_PAGE do
+            local offer = offers[i]
+            page1[#page1 + 1] = string.format('%s %d', offer.label, offer.price)
+        end
+        page1[#page1 + 1] = 'Next (2/2)'
+        page1[#page1 + 1] = 'Close'
+        assert(catalog.menuPackedSize('Hades Shop', page1) < 150)
+        assert(catalog.menuPackedSize('......', page1) < 150)
+    end)
+end)

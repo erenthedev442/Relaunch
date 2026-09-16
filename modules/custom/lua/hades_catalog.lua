@@ -250,7 +250,23 @@ function catalog.showLevelingShop(player, backFn, silent, page)
     end
 end
 
-function catalog.showShop(player, backFn, silent)
+-- customMenu packs quoted title + every label into ~150 bytes.
+catalog.SHOP_STALLS_PER_PAGE = 4
+catalog.HOLD_PAGE            = 3
+
+function catalog.menuPackedSize(title, labels)
+    local n = 2 + #(title or '')
+    for _, label in ipairs(labels or {}) do
+        n = n + 2 + #(label or '')
+    end
+    return n
+end
+
+function catalog.crateHoldTakeLabel(row)
+    return string.format('Take %s', (row and row.label) or 'stack')
+end
+
+function catalog.showShop(player, backFn, silent, page)
     local S = xi.msg.channel.SYSTEM_3
     player:printToPlayer('[Hades] ' .. catalog.shopStatusLine(), S)
     player:printToPlayer(
@@ -258,38 +274,65 @@ function catalog.showShop(player, backFn, silent)
             player:getCharVar(catalog.currencyCv) or 0, catalog.currencyName),
         S)
 
-    local opts = {}
+    local offers = {}
     if catalog.isShopOpen() then
         local shop = require('modules/custom/lua/hades_shop_catalog')
-        for _, offer in ipairs(catalog.weekOffers()) do
-            local poolIndex = offer.pool
+        offers = catalog.weekOffers()
+        for _, offer in ipairs(offers) do
             player:printToPlayer(
                 string.format('[Hades] %s: %s -- %d %s.',
                     offer.label, shop.shopName(offer),
                     offer.price, catalog.currencyName),
                 S)
-            -- customMenu packs title + labels into ~150 bytes. Full ware
-            -- names overflow; stall + price is enough -- chat already
-            -- printed the real name.
-            opts[#opts + 1] =
-            {
-                string.format('%s %d', offer.label, offer.price),
-                function(p)
-                    catalog.tryBuyRelicVoucher(p, poolIndex, silent)
-                    catalog.showShop(p, backFn, silent)
-                end,
-            }
         end
     end
-    opts[#opts + 1] =
+
+    page = page or 1
+    local stallPages = math.max(1, math.ceil(#offers / catalog.SHOP_STALLS_PER_PAGE))
+    if page > stallPages then
+        page = stallPages
+    end
+
+    -- Crate hold first so the 150-byte cap cannot clip withdraw behind 8 stalls.
+    local opts =
     {
-        'Crate hold',
-        function(p)
-            catalog.showCrateHold(p, function(pp)
-                catalog.showShop(pp, backFn, silent)
-            end, silent)
-        end,
+        {
+            'Crate hold',
+            function(p)
+                catalog.showCrateHold(p, function(pp)
+                    catalog.showShop(pp, backFn, silent, page)
+                end, silent)
+            end,
+        },
     }
+    local first = ((page - 1) * catalog.SHOP_STALLS_PER_PAGE) + 1
+    local last  = math.min(first + catalog.SHOP_STALLS_PER_PAGE - 1, #offers)
+    for i = first, last do
+        local offer = offers[i]
+        local poolIndex = offer.pool
+        opts[#opts + 1] =
+        {
+            string.format('%s %d', offer.label, offer.price),
+            function(p)
+                catalog.tryBuyRelicVoucher(p, poolIndex, silent)
+                catalog.showShop(p, backFn, silent, page)
+            end,
+        }
+    end
+    if stallPages > 1 and page > 1 then
+        opts[#opts + 1] =
+        {
+            string.format('Prev (%d/%d)', page - 1, stallPages),
+            function(p) catalog.showShop(p, backFn, silent, page - 1) end,
+        }
+    end
+    if stallPages > 1 and page < stallPages then
+        opts[#opts + 1] =
+        {
+            string.format('Next (%d/%d)', page + 1, stallPages),
+            function(p) catalog.showShop(p, backFn, silent, page + 1) end,
+        }
+    end
     if backFn then
         opts[#opts + 1] =
         {
@@ -306,8 +349,6 @@ function catalog.showShop(player, backFn, silent)
     player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
-local HOLD_PAGE = 4
-
 function catalog.printHoldLedger(player)
     local hold = require('modules/custom/lua/hades_hold_currency')
     local rows = hold.heldRows(player)
@@ -319,7 +360,7 @@ function catalog.printHoldLedger(player)
     end
     player:printToPlayer(
         string.format(
-            '[Hades] Crate hold -- banked currency. Forges spend this first. Take one stack (up to %d) into a free slot.',
+            '[Hades] Crate hold -- banked currency. Forges spend this first. Pick Take to withdraw one stack (up to %d) into a free slot.',
             hold.STACK),
         xi.msg.channel.SYSTEM_3)
     for _, row in ipairs(rows) do
@@ -346,20 +387,20 @@ function catalog.showCrateHold(player, backFn, silent, page)
     local hold = require('modules/custom/lua/hades_hold_currency')
     local rows = catalog.printHoldLedger(player)
     page = page or 1
-    local pages = math.max(1, math.ceil(#rows / HOLD_PAGE))
+    local pages = math.max(1, math.ceil(#rows / catalog.HOLD_PAGE))
     if page > pages then
         page = pages
     end
 
     local opts = {}
-    local first = ((page - 1) * HOLD_PAGE) + 1
-    local last  = math.min(first + HOLD_PAGE - 1, #rows)
+    local first = ((page - 1) * catalog.HOLD_PAGE) + 1
+    local last  = math.min(first + catalog.HOLD_PAGE - 1, #rows)
     for i = first, last do
         local row = rows[i]
         local itemId = row.itemId
         opts[#opts + 1] =
         {
-            string.format('%s %d', row.label, row.held),
+            catalog.crateHoldTakeLabel(row),
             function(p)
                 hold.withdraw(p, itemId, hold.STACK)
                 catalog.showCrateHold(p, backFn, silent, page)
