@@ -51,6 +51,19 @@ function B.hpScale(realPlayers)
     return require('modules/custom/lua/party_hp_scale').multiplier(realPlayers)
 end
 
+-- Infamy/Cruor credit. Same in-zone PC count as HP scaling: a partner in
+-- Jeuno must not pay party credit on a solo-HP fight.
+B.PARTY_MULT = 2.0
+B.TRUST_MULT = 1.5
+
+function B.creditMultipliers(inZonePcCount, inZoneTrustCount)
+    local pcs    = math.floor(tonumber(inZonePcCount) or 1)
+    local trusts = math.floor(tonumber(inZoneTrustCount) or 0)
+    local partyMult = pcs >= 2 and B.PARTY_MULT or 1.0
+    local trustMult = trusts == 0 and B.TRUST_MULT or 1.0
+    return partyMult, trustMult
+end
+
 -- Gil is one pot per kill. The no-trust bonus can grow the pot; extra
 -- PCs do not. The pot is then split across in-zone alliance members so a
 -- 6-box and a solo extract the same total gil from Orthrus.

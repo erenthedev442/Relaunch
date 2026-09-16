@@ -2254,10 +2254,11 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
     {
         damage = -corrected;
     }
-    else if (PAttacker->objtype == TYPE_TRUST)
+    else if (PAttacker->objtype == TYPE_TRUST || !IsPlayerControlled(PAttacker))
     {
         // Trust/Fellow leveling (and other takeDamage ceilings) are authoritative
-        // for HP. Report the HP actually lost so floating numbers match.
+        // for HP. Mob hits also report HP actually lost so a 30+ overlevel
+        // pierce shows as a killing blow instead of the pre-DT 40.
         damage = corrected;
     }
 
@@ -2468,9 +2469,10 @@ int32 TakeWeaponskillDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, 
     {
         damage = -corrected;
     }
-    else if (PAttacker->objtype == TYPE_TRUST)
+    else if (PAttacker->objtype == TYPE_TRUST || !IsPlayerControlled(PAttacker))
     {
-        // Match action-packet WS numbers to HP actually removed (leveling portion).
+        // Match action-packet WS numbers to HP actually removed (leveling portion
+        // for trusts, overlevel incoming pierce for mobs).
         damage = corrected;
     }
 

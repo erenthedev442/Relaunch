@@ -1,7 +1,9 @@
 -----------------------------------
--- Applies overlevel_combat while a player below 99 is fighting a much
--- higher mob. UDMG mods cover the first hits (int16 caps around 4x);
--- a once-per-second pulse finishes the "one shot" at 30+ levels.
+-- Applies overlevel_combat while a player below 99 has enmity on a much
+-- higher mob. UDMG mods cover the 16–29 gap (int16 caps around 4x).
+-- At 30+ the pulse is gone: a real auto / spell / TP move from that foe
+-- is made lethal (Lua TP numbers here; C++ ApplyOverlevelIncomingPierce
+-- covers autos, spells, and takeDamage).
 -----------------------------------
 require('modules/module_utils')
 require('scripts/globals/player')
@@ -10,10 +12,9 @@ local combat = require('modules/custom/lua/overlevel_combat')
 
 local m = Module:new('overlevel_penalty')
 
-local UDMG_VAR   = 'OverlevelUDMG'
-local TICK_VAR   = 'OverlevelSec'
-local WARN_VAR   = 'OverlevelWarn'
-local LISTENER   = 'OVERLEVEL_PENALTY_TICK'
+local UDMG_VAR = 'OverlevelUDMG'
+local WARN_VAR = 'OverlevelWarn'
+local LISTENER = 'OVERLEVEL_PENALTY_TICK'
 
 local TAKEN_MODS =
 {
@@ -49,11 +50,10 @@ local function mobLevel(ent)
     return 0
 end
 
-local function mobLevelFromTarget(player)
-    -- Battle target only exists while engaged. Spell spam without drawing
-    -- a weapon still generates hate — use cursor + notoriety as well.
+local function mobLevelFromEnmity(player)
+    -- Only hate / engagement. Cursor-targeting a 105 in a mixed zone must
+    -- not apply the gap — that was the layout problem with the old pulse.
     local best = mobLevel(player.getTarget and player:getTarget())
-    best = math.max(best, mobLevel(player.getCursorTarget and player:getCursorTarget()))
 
     local list = player.getNotorietyList and player:getNotorietyList()
     if type(list) == 'table' then
@@ -83,37 +83,31 @@ local function applyPenalty(player)
         return
     end
 
-    local mobLevel = mobLevelFromTarget(player)
-    if mobLevel <= 0 then
+    local foeLevel = mobLevelFromEnmity(player)
+    if foeLevel <= 0 then
         clearTaken(player)
         return
     end
 
-    local gap     = combat.gap(playerLevel, mobLevel)
+    local gap     = combat.gap(playerLevel, foeLevel)
     local allowed = combat.allowedGap(player)
     if gap <= allowed then
         clearTaken(player)
         return
     end
 
-    setTaken(player, combat.udmgFromMult(combat.incomingMult(gap, allowed)))
+    -- 30+: attacker-specific pierce on the actual hit. Do not stamp global
+    -- UDMG or a nearby on-level mob also hits 4x while the 105 is on hate.
+    if combat.shouldPierceIncoming(gap) then
+        clearTaken(player)
+    else
+        setTaken(player, combat.udmgFromMult(combat.incomingMult(gap, allowed)))
+    end
 
     local now = os.time()
-    if now == (player:getLocalVar(TICK_VAR) or 0) then
-        return
-    end
-
-    player:setLocalVar(TICK_VAR, now)
-
-    local pulse = combat.pulseFraction(gap, allowed)
-    if pulse > 0 then
-        local hit = math.max(1, math.floor(player:getMaxHP() * pulse))
-        player:takeDamage(hit)
-    end
-
     if now >= (player:getLocalVar(WARN_VAR) or 0) then
         player:setLocalVar(WARN_VAR, now + 15)
-        player:printToPlayer('This foe is far above your level. The gap will crush you.', xi.msg.channel.SYSTEM_3)
+        player:printToPlayer('This foe is far above your level. Its blows will ignore your defenses.', xi.msg.channel.SYSTEM_3)
     end
 end
 
@@ -125,6 +119,16 @@ end)
 m:addOverride('xi.player.onPlayerDeath', function(player, ...)
     clearTaken(player)
     super(player, ...)
+end)
+
+-- TP move combat-log number matches the lethal HP debit from takeDamage.
+m:addOverride('xi.mobskills.processDamage', function(actor, target, skill, action, info)
+    local ok = super(actor, target, skill, action, info)
+    if ok and info and type(info.damage) == 'number' then
+        info.damage = combat.applyIncomingPierce(actor, target, info.damage)
+    end
+
+    return ok
 end)
 
 return m

@@ -63,4 +63,18 @@ describe('Abyssea marks Relic-led balance contract', function()
         assert(balance.hpScale(3) == 2.10)
         assert(balance.hpScale(6) == 4.00)
     end)
+
+    it('does not pay party credit unless a second PC is in the same zone', function()
+        local partyMult, trustMult = balance.creditMultipliers(1, 0)
+        assert(partyMult == 1.0)
+        assert(trustMult == 1.5)
+
+        partyMult, trustMult = balance.creditMultipliers(2, 0)
+        assert(partyMult == 2.0)
+        assert(trustMult == 1.5)
+
+        partyMult, trustMult = balance.creditMultipliers(1, 1)
+        assert(partyMult == 1.0)
+        assert(trustMult == 1.0)
+    end)
 end)

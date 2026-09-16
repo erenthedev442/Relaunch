@@ -2,7 +2,8 @@
 -- Overlevel combat (leveling only).
 -- A padded level-1 cannot farm 105s. Players below 99 may stretch 15–20
 -- levels above them if they are deep into Ascension / Rebirth / Paragon.
--- Past 20 the incoming multiplier is severe. At 30+ they die.
+-- Past 20 the incoming multiplier is severe. At 30+ a real hit from that
+-- foe ignores DEF / MDEF / DT and is lethal (no HP-percent pulse).
 -- Combat level is GetMLevel (Level Sync / restriction), never real job
 -- level, so a maxed rebirth 99 synced to 65 is treated as a 65.
 -----------------------------------
@@ -76,7 +77,8 @@ function combat.gap(playerLevel, mobLevel)
     return (mobLevel or 0) - (playerLevel or 0)
 end
 
--- Incoming: 1.0 inside the allowed band, then ramps. Always lethal at 30+.
+-- Incoming: 1.0 inside the allowed band, then ramps. At 30+ C++ / pierceIncoming
+-- makes the actual swing/spell/TP move lethal; this multiplier is unused there.
 function combat.incomingMult(gap, allowed)
     allowed = allowed or combat.BASE_GAP
     if (gap or 0) <= 0 then
@@ -166,20 +168,93 @@ function combat.scaleOutgoing(sourceLevel, target, damage)
     return combat.clampOutgoing(combat.gap(sourceLevel, target:getMainLvl()), damage)
 end
 
-function combat.pulseFraction(gap, allowed)
-    if (gap or 0) >= combat.HARD_GAP then
-        return 1
-    end
-
-    if gap > 20 then
-        return 0.10 + 0.04 * (gap - 20)
-    end
-
-    if gap > (allowed or combat.BASE_GAP) then
-        return 0.04 * (gap - allowed)
-    end
-
+-- Removed: mixed-level zones were killing players from a tick / cursor,
+-- not from a real hit. Kept as a no-op so older callers stay loadable.
+function combat.pulseFraction(_gap, _allowed)
     return 0
+end
+
+function combat.shouldPierceIncoming(gap)
+    return (gap or 0) >= combat.HARD_GAP
+end
+
+-- Floor a connected hit to the defender's max HP when the attacker is 30+
+-- levels above a sub-99 player. pDIF / MAB caps plus DT still leave ~40
+-- on a 105 vs 29; this is the retail "you die if you pull it" outcome.
+function combat.pierceIncoming(attackerLevel, defenderLevel, defenderMaxHp, damage)
+    if type(damage) ~= 'number' or damage <= 0 then
+        return damage
+    end
+
+    if (defenderLevel or 0) >= combat.ENDGAME_LEVEL then
+        return damage
+    end
+
+    if not combat.shouldPierceIncoming(combat.gap(defenderLevel, attackerLevel)) then
+        return damage
+    end
+
+    local lethal = tonumber(defenderMaxHp) or 0
+    if lethal < 1 then
+        return damage
+    end
+
+    if damage < lethal then
+        return math.floor(lethal)
+    end
+
+    return damage
+end
+
+local function playerMaster(ent)
+    if not ent then
+        return nil
+    end
+
+    if ent.isPC and ent:isPC() then
+        return ent
+    end
+
+    local master = ent.getMaster and ent:getMaster()
+    if master and master.isPC and master:isPC() then
+        return master
+    end
+
+    return nil
+end
+
+local function mobSource(ent)
+    if not ent then
+        return nil
+    end
+
+    if ent.isMob and ent:isMob() then
+        return ent
+    end
+
+    local master = ent.getMaster and ent:getMaster()
+    if master and master.isMob and master:isMob() then
+        return master
+    end
+
+    return nil
+end
+
+function combat.applyIncomingPierce(attacker, defender, damage)
+    if type(damage) ~= 'number' or damage <= 0 or not attacker or not defender then
+        return damage
+    end
+
+    local source = mobSource(attacker)
+    local victim = playerMaster(defender)
+    if not source or not victim then
+        return damage
+    end
+
+    local mobLevel    = source.getMainLvl and source:getMainLvl() or 0
+    local playerLevel = combat.combatLevel(victim)
+    local maxHp       = defender.getMaxHP and defender:getMaxHP() or 0
+    return combat.pierceIncoming(mobLevel, playerLevel, maxHp, damage)
 end
 
 return combat

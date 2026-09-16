@@ -64,7 +64,47 @@ describe('Overlevel combat while leveling', function()
         assert(combat.incomingMult(30, 15) == 100)
         assert(combat.incomingMult(104, 20) == 100)
         assert(combat.outgoingMult(30) == 0.01)
-        assert(combat.pulseFraction(30, 20) == 1)
+        assert(combat.pulseFraction(30, 20) == 0)
+        assert(combat.shouldPierceIncoming(29) == false)
+        assert(combat.shouldPierceIncoming(30) == true)
+        assert(combat.pierceIncoming(105, 29, 2500, 40) == 2500)
+        assert(combat.pierceIncoming(105, 99, 2500, 40) == 40)
+        assert(combat.pierceIncoming(44, 29, 2500, 40) == 40)
+        assert(combat.pierceIncoming(105, 29, 2500, 0) == 0)
+    end)
+
+    it('applies incoming pierce from a mob onto a player or their pet', function()
+        local foe = mobAt(105)
+        local pc = player({ level = 29 })
+        pc.isPC = function()
+            return true
+        end
+        pc.isMob = function()
+            return false
+        end
+        pc.getMaxHP = function()
+            return 1800
+        end
+
+        assert(combat.applyIncomingPierce(foe, pc, 40) == 1800)
+
+        local pet =
+        {
+            isPC = function()
+                return false
+            end,
+            isMob = function()
+                return false
+            end,
+            getMaster = function()
+                return pc
+            end,
+            getMaxHP = function()
+                return 600
+            end,
+        }
+        assert(combat.applyIncomingPierce(foe, pet, 12) == 600)
+        assert(combat.applyIncomingPierce(pc, foe, 40) == 40)
     end)
 
     it('crushes outgoing past +20 and leaves +20 alone', function()

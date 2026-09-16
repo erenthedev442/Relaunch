@@ -138,7 +138,8 @@ return
     --            level the engine spawns the mob at lv255 and it cannot be hit.
     --   hpBoost  multiplier applied to the mob's base HP after spawn()
     --   reveal   battlefield bosses: clear hide-model flags and force
-    --            animationsub 0 so the client actually draws the body
+    --            animationsub 0 (never 1 -- Omega's Limbus form is invisible
+    --            in Provenance) so the client actually draws the body
     --   hitbox   optional melee hitbox in yalms (Provenance Watcher)
     --   modelSize optional visual size 0-3
     --   cry      one-line flavour barked to the summoner (the "fear" hook)

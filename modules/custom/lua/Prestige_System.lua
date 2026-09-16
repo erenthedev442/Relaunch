@@ -823,6 +823,34 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
         buildMainMenu(player)
     end
 
+    -- spawn() copies SPAWN_ANIMATIONSUB onto the server field with no client
+    -- packet, so insert still showed Omega/Watcher at pool sub 13/5 (invisible
+    -- in Provenance). setAnimationSub only packets when the value changes.
+    -- Dirty with an unused sub then restore 0. Never use 1: that is Omega's
+    -- Limbus quadruped form, which does not draw in zone 222.
+    local function forceGroundedModel(mob)
+        pcall(function()
+            mob:setMobFlags(bit.band(mob:getMobFlags(), bit.bnot(0x188)))
+            mob:hideName(false)
+            mob:setUntargetable(false)
+            if mob:getAnimationSub() ~= 0 then
+                mob:setAnimationSub(0)
+            else
+                mob:setAnimationSub(3)
+                mob:setAnimationSub(0)
+            end
+        end)
+        pcall(function()
+            mob:timer(1, function(later)
+                pcall(function()
+                    later:setAnimationSub(0)
+                    later:hideName(false)
+                    later:setUntargetable(false)
+                end)
+            end)
+        end)
+    end
+
     -----------------------------------
     -- "Face the Trial": summon the next uncleared Nightmare Court boss right
     -- where the summoner stands (at the Altar). One live boss per player at a
@@ -972,12 +1000,9 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
         mob:setLocalVar('PrestigeTrial', 1)
 
         if boss.reveal then
+            forceGroundedModel(mob)
             pcall(function()
-                mob:setMobFlags(bit.band(mob:getMobFlags(), bit.bnot(0x188)))
-                if mob:getAnimationSub() == 0 then
-                    mob:setAnimationSub(1)
-                end
-                mob:setAnimationSub(0)
+                mob:setPos(sp.x, sp.y, sp.z, sp.rot)
             end)
         end
         if boss.hitbox then

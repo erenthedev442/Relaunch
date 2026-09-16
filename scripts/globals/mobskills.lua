@@ -103,19 +103,34 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
     if mob:getLocalVar('fellowApplied') == 1 then
         -- Magus AoE nukes trade coverage for power. The role marks
         -- Thunderstrike for quarter damage while leaving single-target and
-        -- other endgame moves at their established output.
+        -- other endgame moves at their established output. Named Eren Magus
+        -- skips that quartering and uses fellowAoEDamageCap (99,999) instead.
         local aoeScale = mob:getLocalVar('fellowAoEDamageScale')
+        local aoeCap = mob:getLocalVar('fellowAoEDamageCap')
+        local absoluteCap = mob:getLocalVar('fellowAbsoluteDamageCap')
         local progressionFloor = mob:getLocalVar('fellowProgressionDamageFloor')
         local progressionCap   = mob:getLocalVar('fellowProgressionDamageCap')
-        if aoeScale > 0 and (skill:isAoE() or skill:isConal()) then
+        local isAoE = skill:isAoE() or skill:isConal()
+        if absoluteCap <= 0 then
+            absoluteCap = 99999
+        end
+        if aoeScale > 0 and isAoE then
             damage = math.floor(damage * aoeScale / 100)
             progressionFloor = math.floor(progressionFloor * aoeScale / 100)
             progressionCap = math.floor(progressionCap * aoeScale / 100)
         end
+        if isAoE and aoeCap > 0 then
+            if progressionCap > 0 then
+                progressionCap = math.min(progressionCap, aoeCap)
+            else
+                progressionCap = aoeCap
+            end
+            absoluteCap = math.min(absoluteCap, aoeCap)
+        end
 
         if damage > 0 and (hitsLanded or 0) > 0 and progressionCap > 0 then
             damage = math.max(damage, progressionFloor)
-            damage = math.min(damage, progressionCap, target:getHP(), 99999)
+            damage = math.min(damage, progressionCap, target:getHP(), absoluteCap)
         end
 
         return damage

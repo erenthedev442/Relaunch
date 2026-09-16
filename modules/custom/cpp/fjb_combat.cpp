@@ -609,6 +609,66 @@ int32 ApplyOverlevelOutgoingCap(CBattleEntity* PAttacker, CBattleEntity* PDefend
     return std::clamp(scaled, SCRATCH_MIN, SCRATCH_MAX);
 }
 
+int32 ApplyOverlevelIncomingPierce(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage)
+{
+    constexpr uint8 ENDGAME_LEVEL = 99;
+    constexpr int   HARD_GAP      = 30;
+
+    if (damage <= 0 || PAttacker == nullptr || PDefender == nullptr)
+    {
+        return damage;
+    }
+
+    CBattleEntity* PVictim = nullptr;
+    if (PDefender->objtype == TYPE_PC)
+    {
+        PVictim = PDefender;
+    }
+    else if (PDefender->PMaster != nullptr && PDefender->PMaster->objtype == TYPE_PC)
+    {
+        PVictim = PDefender->PMaster;
+    }
+    else
+    {
+        return damage;
+    }
+
+    if (PVictim->GetMLevel() >= ENDGAME_LEVEL)
+    {
+        return damage;
+    }
+
+    CBattleEntity* PSource = nullptr;
+    if (PAttacker->objtype == TYPE_MOB)
+    {
+        PSource = PAttacker;
+    }
+    else if (PAttacker->PMaster != nullptr && PAttacker->PMaster->objtype == TYPE_MOB)
+    {
+        PSource = PAttacker->PMaster;
+    }
+    else
+    {
+        return damage;
+    }
+
+    const int gap = static_cast<int>(PSource->GetMLevel()) - static_cast<int>(PVictim->GetMLevel());
+    if (gap < HARD_GAP)
+    {
+        return damage;
+    }
+
+    // pDIF / MAB and DT leave ~40 on a 105 vs a padded 29. Floor to max HP
+    // so the connecting auto, spell, or TP move is actually lethal.
+    const int32 lethal = static_cast<int32>(PDefender->GetMaxHP());
+    if (lethal > damage)
+    {
+        return lethal;
+    }
+
+    return damage;
+}
+
 int32 ApplyTrustAutoAttackDamageAdjust(CBattleEntity* PAttacker, int32 damage)
 {
     // Auto-swings only — wired exclusively from TakePhysicalDamage, not WS/magic.

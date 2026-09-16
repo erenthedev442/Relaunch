@@ -123,6 +123,26 @@ local CONFIG =
     pdt          = -1500,
     mdt          = -1500,
 
+    -- Hidden name cheat: only while the Fellow is named "Eren". Any other
+    -- name keeps the stock profile (99,999 absolute / 50-70k endgame band).
+    eren =
+    {
+        dpsAbsoluteCap      = 149999,
+        magusAoECap         = 99999,
+        tankDt              = -5000, -- DT I floor (50%)
+        tankHpMult          = 1.50,
+        oracleCurePotencyII = 20,
+        oracleHealMult      = 1.20,
+        statBonus           = 1.05,
+        dpsRoles            =
+        {
+            vanguard  = true,
+            berserker = true,
+            hunter    = true,
+            mastered  = true,
+        },
+    },
+
     -- PHYSICAL SCALING (2026-07-09 rebalance). The Fellow is a raw Lynx pet whose
     -- base weapon DMG is tiny, so autos + physical WS were stuck (~600 / ~4k) no
     -- matter how much ATT it piled on -- ATT only raises pDIF (caps ~3x); it can't
@@ -647,28 +667,77 @@ local function normalWeaponDamage(p)
         fellowPowerProgress(p) * masterScale))
 end
 
+local FELLOW_ABSOLUTE_CAP = 99999
+local FELLOW_ENDGAME_CAP  = 70000
+
+local function isErenDpsRole(roleKey)
+    return CONFIG.eren.dpsRoles[roleKey] == true
+end
+
+-- C++ takeDamage reads EncounterOutgoingDamageCap first, so raising this
+-- is what lets Eren DPS/Magus break the stock fellow 99,999 ceiling.
+local function fellowOutgoingCap(eren, roleKey, masterPower)
+    local power = masterPower or 1
+    if eren and (isErenDpsRole(roleKey) or roleKey == 'magus') then
+        return math.max(1, math.floor(CONFIG.eren.dpsAbsoluteCap * power))
+    end
+    return math.max(1, math.floor(FELLOW_ABSOLUTE_CAP * power))
+end
+
+local function fellowAoECap(eren, roleKey)
+    if eren and roleKey == 'magus' then
+        return CONFIG.eren.magusAoECap
+    end
+    return 0
+end
+
 -- Signature skills use an explicit damage band. While leveling, a maxed Fellow
 -- deals 20-30% of the target's current max HP (and can never one-shot it). On
 -- Lv99 content, the full-investment target is 50-70k, still hard-limited to 50%
--- of the target's max HP. Partial builds scale both ends of the band together.
-local function fellowDamageBudget(p, target)
-    local power = fellowPowerProgress(p)
-    local targetHp = math.max(1, target:getMaxHP())
-    local fullFloor
-    local fullCap
-
-    if p:getMainLvl() >= 99 then
-        local hpCeiling = math.floor(targetHp * 0.50)
-        fullFloor = math.min(50000, hpCeiling)
-        fullCap   = math.min(70000, hpCeiling)
-    else
-        fullFloor = math.floor(targetHp * 0.20)
-        fullCap   = math.floor(targetHp * 0.30)
+-- of the target's max HP. Named Eren in a DPS/Magus role raises the 70k end
+-- of that band to 149,999 (still HP-relative so it cannot one-shot). Partial
+-- builds scale both ends of the band together.
+local function fellowEndgameDamageBand(eren, roleKey, targetMaxHp, power)
+    power = power or 1
+    local hpCeiling = math.floor(math.max(1, targetMaxHp) * 0.50)
+    local bandCap = FELLOW_ENDGAME_CAP
+    if eren and (isErenDpsRole(roleKey) or roleKey == 'magus') then
+        bandCap = CONFIG.eren.dpsAbsoluteCap
     end
-
+    local fullFloor = math.min(50000, hpCeiling)
+    local fullCap   = math.min(bandCap, hpCeiling)
     return
         math.max(1, math.floor(fullFloor * power)),
         math.max(1, math.floor(fullCap * power))
+end
+
+local function fellowDamageBudget(p, target)
+    local power = fellowPowerProgress(p)
+    local targetHp = math.max(1, target:getMaxHP())
+
+    if p:getMainLvl() >= 99 then
+        return fellowEndgameDamageBand(isEren(p), getRole(p), targetHp, power)
+    end
+
+    local fullFloor = math.floor(targetHp * 0.20)
+    local fullCap   = math.floor(targetHp * 0.30)
+    return
+        math.max(1, math.floor(fullFloor * power)),
+        math.max(1, math.floor(fullCap * power))
+end
+
+local function stampFellowSkillBudget(pet, master, tgt, spellMove)
+    local damageFloor, damageCap = fellowDamageBudget(master, tgt)
+    local roleKey = getRole(master)
+    local eren = isEren(master)
+    pet:setLocalVar('fellowProgressionDamageFloor', damageFloor)
+    pet:setLocalVar('fellowProgressionDamageCap', damageCap)
+    local outgoingCap = fellowOutgoingCap(eren, roleKey, fellowPowerProgress(master))
+    pet:setLocalVar('EncounterOutgoingDamageCap', outgoingCap)
+    pet:setLocalVar('fellowAbsoluteDamageCap', outgoingCap)
+    pet:setLocalVar('fellowAoEDamageCap', fellowAoECap(eren, roleKey))
+    pet:setLocalVar('fellowAoEDamageScale',
+        (spellMove == xi.mobSkill.THUNDERSTRIKE and not eren) and 25 or 0)
 end
 
 local function currentGrade(p)
@@ -717,14 +786,16 @@ local function applyFellow(p, pet)
     if not pet or pet:getLocalVar('fellowApplied') ~= 0 then return end
     pet:setLocalVar('fellowApplied', 1)
 
-    local lvl  = getLevel(p)
-    local role = roleDef(p)
-    local eren = isEren(p)
+    local lvl     = getLevel(p)
+    local role    = roleDef(p)
+    local roleKey = getRole(p)
+    local eren    = isEren(p)
 
     local masterPower = fellowPowerProgress(p)
-    pet:setLocalVar(
-        'EncounterOutgoingDamageCap',
-        math.max(1, math.floor(99999 * masterPower)))
+    local outgoingCap = fellowOutgoingCap(eren, roleKey, masterPower)
+    pet:setLocalVar('EncounterOutgoingDamageCap', outgoingCap)
+    pet:setLocalVar('fellowAbsoluteDamageCap', outgoingCap)
+    pet:setLocalVar('fellowAoEDamageCap', fellowAoECap(eren, roleKey))
     for _, mv in ipairs(CONFIG.perLevel) do
         pet:addMod(mv[1], math.floor(mv[2] * lvl * masterPower))
     end
@@ -760,7 +831,7 @@ local function applyFellow(p, pet)
     pcall(function()
         local dmg = normalWeaponDamage(p)
         if eren then
-            dmg = math.floor(dmg * 1.05)
+            dmg = math.floor(dmg * CONFIG.eren.statBonus)
         end
         pet:setDamage(dmg)
     end)
@@ -779,8 +850,10 @@ local function applyFellow(p, pet)
     pet:addMod(xi.mod.DMGMAGIC, surv.mdt or CONFIG.mdt)
 
     local targetHP = lerp(surv.hpMin or 2500, surv.hpMax or 5000, combatProgress(p))
-    if eren then
-        targetHP = math.floor(targetHP * 1.05)
+    if eren and roleKey == 'bulwark' then
+        targetHP = math.floor(targetHP * CONFIG.eren.tankHpMult)
+    elseif eren then
+        targetHP = math.floor(targetHP * CONFIG.eren.statBonus)
     end
     pet:setMaxHP(targetHP)
     pet:setHP(targetHP)
@@ -795,9 +868,15 @@ local function applyFellow(p, pet)
         pet:addMod(xi.mod.ATTP, 5)
         pet:addMod(xi.mod.CURE_POTENCY, 5)
         pet:setLocalVar('fellowEren', 1)
+        if roleKey == 'oracle' then
+            pet:addMod(xi.mod.CURE_POTENCY_II, CONFIG.eren.oracleCurePotencyII)
+        elseif roleKey == 'bulwark' then
+            -- Overwrite Warding/role PDT so the tank sits on the DT I floor.
+            pet:setMod(xi.mod.DMG, CONFIG.eren.tankDt)
+            pet:setMod(xi.mod.DMGPHYS, CONFIG.eren.tankDt)
+            pet:setMod(xi.mod.DMGMAGIC, CONFIG.eren.tankDt)
+        end
     end
-
-    local roleKey = getRole(p)
     -- Disable autonomous trust TP moves. The combat loop below exclusively
     -- fires the move selected in the Fellow menu, so Naji/list randomness can
     -- no longer consume TP on a different move.
@@ -989,12 +1068,18 @@ scheduleCombatLoop = function(master, pet)
             local function hasBeh(name) return beh == name or (behs and behs[name]) end
             local lvl  = getLevel(master)
             local now  = os.time()
+            local roleKey = getRole(master)
+            local eren = isEren(master)
+            local outgoingCap = fellowOutgoingCap(eren, roleKey, fellowPowerProgress(master))
+            p:setLocalVar('EncounterOutgoingDamageCap', outgoingCap)
+            p:setLocalVar('fellowAbsoluteDamageCap', outgoingCap)
+            p:setLocalVar('fellowAoEDamageCap', fellowAoECap(eren, roleKey))
             local masterTarget = master:getTarget()
             local active = masterHasTargetEnmity(master, masterTarget)
 
             -- Oracle has 10 Refresh while fighting and 20 between fights.
             local oracleBonus = p:getLocalVar('fellowOracleRefreshBonus') or 0
-            local desiredOracleBonus = getRole(master) == 'oracle' and (active and 0 or 10) or 0
+            local desiredOracleBonus = roleKey == 'oracle' and (active and 0 or 10) or 0
             if oracleBonus ~= desiredOracleBonus then
                 p:addMod(xi.mod.REFRESH, desiredOracleBonus - oracleBonus)
                 p:setLocalVar('fellowOracleRefreshBonus', desiredOracleBonus)
@@ -1039,7 +1124,12 @@ scheduleCombatLoop = function(master, pet)
                     local range = rdef.healPower or { CONFIG.healMin, CONFIG.healMax }
                     local amount = math.max(CONFIG.healMin, scaledRoleValue(master, range))
                     if getRole(master) == 'mastered' then amount = math.floor(amount * 0.7) end
-                    if isEren(master) then amount = math.floor(amount * 1.05) end
+                    if isEren(master) then
+                        amount = math.floor(amount * CONFIG.eren.statBonus)
+                        if getRole(master) == 'oracle' then
+                            amount = math.floor(amount * CONFIG.eren.oracleHealMult)
+                        end
+                    end
                     healTarget:addHP(amount)
                     p:setLocalVar('fellowHealAt', now)
                 end
@@ -1144,11 +1234,7 @@ scheduleCombatLoop = function(master, pet)
                        (burstReady and CONFIG.burstCooldownSec or CONFIG.nukeCooldownSec) then
                     local spellMove = chosenWs(master)
                     if spellMove and spellMove > 0 then
-                        local damageFloor, damageCap = fellowDamageBudget(master, tgt)
-                        p:setLocalVar('fellowProgressionDamageFloor', damageFloor)
-                        p:setLocalVar('fellowProgressionDamageCap', damageCap)
-                        p:setLocalVar('fellowAoEDamageScale',
-                            spellMove == xi.mobSkill.THUNDERSTRIKE and 25 or 0)
+                        stampFellowSkillBudget(p, master, tgt, spellMove)
                         p:setLocalVar('fellowCanMagicBurst', burstReady and 1 or 0)
                         p:setLocalVar('fellowMovePendingAt', now)
                         p:useMobAbility(spellMove, tgt)
@@ -1166,11 +1252,9 @@ scheduleCombatLoop = function(master, pet)
                     local ws = chosenWs(master)
                     if ws and ws > 0 and tgt and not tgt:isDead() then
                         -- Every role is constrained by the same investment curve
-                        -- and target-relative damage budget.
-                        local damageFloor, damageCap = fellowDamageBudget(master, tgt)
-                        p:setLocalVar('fellowProgressionDamageFloor', damageFloor)
-                        p:setLocalVar('fellowProgressionDamageCap', damageCap)
-                        p:setLocalVar('fellowAoEDamageScale', 0)
+                        -- and target-relative damage budget. Eren DPS/Magus
+                        -- stamp a raised ceiling; other names keep the stock band.
+                        stampFellowSkillBudget(p, master, tgt, ws)
 
                         if rdef.wsDamage then
                             local normalDmg = normalWeaponDamage(master)
@@ -2136,6 +2220,10 @@ xi.fellow.respawnIfOut = function(p) respawnIfOut(p) end
 xi.fellow.addXp       = function(p, n) addXp(p, n) end
 xi.fellow.grantPoints = function(p, n) ensureBorn(p); setN(p, V.points, getPoints(p) + math.max(0, n)) end
 xi.fellow.allocatedModAmount = allocatedModAmount
+xi.fellow.outgoingCap        = fellowOutgoingCap
+xi.fellow.aoeCap             = fellowAoECap
+xi.fellow.endgameDamageBand  = fellowEndgameDamageBand
+xi.fellow.eren               = CONFIG.eren
 
 -- Diagnostic (!fellow debug): dump the LIVE Fellow's ACTUAL mods, read straight off
 -- the spawned pet. Spend a point (it applies instantly while the Fellow is out) and

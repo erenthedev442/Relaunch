@@ -3,7 +3,7 @@
 -- Lets players spend Hunt Marks to pop Abyssea ??? NMs
 -- when they lack the normal pop key items.
 -- The NM's killer earns Gil + Infamy with multipliers for
--- Infamy still rewards a real party and a no-trust clear. Gil is one pot
+-- Infamy still rewards a real in-zone party and a no-trust clear. Gil is one pot
 -- per kill (no-trust bonus only), split across in-zone alliance members.
 -----------------------------------
 require('modules/module_utils')
@@ -240,8 +240,8 @@ end
 -- Tuning knobs, hoisted so tools/docgen can read the LIVE values via
 -- lua_const() instead of mirroring them (the docgen previously hardcoded
 -- 2.0 / 1.5 in abyssea_nms.py — same drift pattern as elsewhere).
-local PARTY_MULT = 2.0    -- >=2 real PCs -> Infamy/Cruor x this (not gil)
-local TRUST_MULT = 1.5    -- 0 trusts     -> Infamy/Cruor/Gil pot x this
+local PARTY_MULT = 2.0    -- >=2 in-zone PCs -> Infamy/Cruor x this (not gil)
+local TRUST_MULT = 1.5    -- 0 in-zone trusts -> Infamy/Cruor/Gil pot x this
 
 -- One complete zone roster opens the next Atma progression step. The shared
 -- progress module also uses the original 136-NM totals for the first-Empyrean
@@ -323,38 +323,51 @@ m:addOverride('xi.abyssea.procMonster', function(mob, player, triggerType)
 end)
 
 -- Returns (partyMult, trustMult).
--- partyMult = 2.0 when 2+ real PCs are in party, else 1.0.
--- trustMult = 1.5 when NO trusts anywhere in the party, else 1.0.
+-- partyMult = 2.0 when 2+ real PCs are in THIS zone (same count as HP scale).
+-- trustMult = 1.5 when no trusts are out in THIS zone, else 1.0.
 --
--- IMPORTANT: getPartyMember / PParty->members hold PC-type entities ONLY
--- (src/map/party.cpp:604 gates AddMember to TYPE_PC). Trusts live in each
--- PC's own PChar->PTrusts vector, so the previous getPartyMember loop could
--- never see them and the "no trusts" bonus was awarded on EVERY Abyssea
--- kill regardless of trust presence.
---
--- getPartyWithTrusts() (src/map/lua/lua_baseentity.cpp:11493) wraps
--- CCharEntity::ForPartyWithTrusts which iterates PCs AND every PC's PTrusts
--- (charentity.h:418) -- for solo it yields self + own PTrusts, for a party
--- it yields all PCs + all their PTrusts. So counting isTrust() entries
--- gives an accurate zone-wide trust total. Wrapped in pcall so a missing
--- API never breaks the reward path.
+-- getPartyWithTrusts() walks every party PC plus their PTrusts, including
+-- members parked in Jeuno. HP scaling already ignores those; credit must too.
+local function memberInZone(player, mem)
+    if not player or not mem or not player.getZoneID then
+        return false
+    end
+
+    local zoneId = player:getZoneID()
+    if not mem.getZoneID then
+        return true
+    end
+
+    return mem:getZoneID() == zoneId
+end
+
 local function calcMultipliers(player)
     local partyMult = 1.0
     local trustMult = 1.0
 
     local ok = pcall(function()
-        local pcCount    = 0
+        local pcCount    = partyHpScale.countFromPlayer(player)
         local trustCount = 0
         local all = player:getPartyWithTrusts() or {}
         for _, mem in ipairs(all) do
-            if mem:isTrust() and mem:getLocalVar('fellowApplied') ~= 1 then
+            if
+                mem:isTrust() and
+                mem:getLocalVar('fellowApplied') ~= 1 and
+                memberInZone(player, mem)
+            then
                 trustCount = trustCount + 1
-            elseif not mem:isTrust() then
-                pcCount = pcCount + 1
             end
         end
-        if pcCount >= 2    then partyMult = PARTY_MULT end
-        if trustCount == 0 then trustMult = TRUST_MULT end
+        if pcCount >= 2 then
+            partyMult = PARTY_MULT
+        else
+            partyMult = 1.0
+        end
+        if trustCount == 0 then
+            trustMult = TRUST_MULT
+        else
+            trustMult = 1.0
+        end
     end)
 
     -- If the API call failed, default to no bonus (safe fallback).
@@ -444,8 +457,8 @@ end
 -- mobs.lua), so a Lua-sync reload of mobs.lua can't clobber it.
 -- The core calls this once per in-zone alliance/party member (ForAlliance in
 -- luautils OnMobDeath). Infamy and Cruor are still paid to each member, with:
---   x2.0  - 2+ real players in party
---   x1.5  - no trusts in party
+--   x2.0  - 2+ real players in this zone (same rule as HP scale)
+--   x1.5  - no trusts out in this zone
 -- Gil is one shared pot (base * no-trust bonus only), split across the
 -- in-zone alliance so six characters cannot withdraw six full T3 payouts.
 -- ============================================================

@@ -54,6 +54,12 @@ int32 ApplyTrustEndgameLevelDamageMult(CBattleEntity* PAttacker, CBattleEntity* 
 // cannot leak. Uses GetMLevel so Level Sync counts. No-op at 99+ or non-mobs.
 int32 ApplyOverlevelOutgoingCap(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage);
 
+// Mob (or mob-owned pet) hitting a sub-99 PC (or their pet/trust): if the
+// source is 30+ levels above the player's combat level, floor the connected
+// hit to the defender's max HP. DEF / MDEF / DT / ascension cannot save them.
+// Misses and fully-nullified hits (damage <= 0) are unchanged.
+int32 ApplyOverlevelIncomingPierce(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage);
+
 // Master 99+: physical hit-rate assist through mob level 120; steep miss penalty
 // above 120. hitrate is 0–100. Shadows / forced misses are caller-side.
 uint8 ApplyTrustEndgameHitRateAdjust(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 hitrate);

@@ -1021,6 +1021,11 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
         // Sub-99 players (and their pets/trusts) vs a mob 40+ levels higher:
         // 10-100 per hit. GetMLevel so Level Sync uses the synced combat level.
         amount = ApplyOverlevelOutgoingCap(attacker, this, amount);
+
+        // Sub-99 players taking a connected hit from a mob 30+ levels higher:
+        // DEF/MDEF/DT cannot save them. After outgoing caps so a 105 auto is
+        // not then crushed by the player's own outgoing scratch cap.
+        amount = ApplyOverlevelIncomingPierce(attacker, this, amount);
     }
     else if (attacker != nullptr && attacker->GetLocalVar("TrustOutgoingIsAutoAttack") == 1)
     {
