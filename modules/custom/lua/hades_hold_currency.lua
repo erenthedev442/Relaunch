@@ -89,6 +89,96 @@ function M.count(player, itemId)
     return M.held(player, itemId) + bagsCount
 end
 
+-- Mid-tier (100 Byne / Montiont / Jadeshell) per one high-tier
+-- (10k Byne / Goldpiece / Stripeshell). This box is 10:1, not retail 100:1.
+function M.exchangeRate()
+    local rate = 10
+    if xi and xi.settings and xi.settings.main then
+        rate = tonumber(xi.settings.main.CURRENCY_EXCHANGE_RATE) or 10
+    end
+    if not rate or rate < 1 then
+        rate = 10
+    end
+    return math.floor(rate)
+end
+
+-- Value in mid-tier units: lowCount + highCount * rate.
+function M.countMixed(player, lowId, highId)
+    local rate = M.exchangeRate()
+    local low  = M.count(player, lowId)
+    local high = (highId and highId ~= 0) and M.count(player, highId) or 0
+    return low + high * rate, low, high, rate
+end
+
+-- Spend high-tier first, then fill the remainder with mid-tier. If the
+-- leftover is smaller than one high piece and they do not have enough
+-- mid-tier, one extra high piece covers it (slight overpay).
+local function planMix(needLow, lowHave, highHave, rate)
+    local remaining = needLow
+    local highTake  = 0
+    while remaining > 0 and highTake < highHave do
+        if remaining >= rate then
+            highTake  = highTake + 1
+            remaining = remaining - rate
+        elseif lowHave >= remaining then
+            break
+        else
+            highTake  = highTake + 1
+            remaining = 0
+        end
+    end
+    local lowTake = remaining
+    if lowTake > lowHave then
+        return nil
+    end
+    return lowTake, highTake
+end
+
+-- Take `needLow` mid-tier units, mixing high-tier at exchangeRate.
+-- Returns ok, takenLow, takenHigh. Restores high-tier if mid-tier take fails.
+function M.takeMixed(player, lowId, highId, needLow)
+    needLow = math.floor(tonumber(needLow) or 0)
+    if needLow <= 0 then
+        return true, 0, 0
+    end
+    if not player or not lowId then
+        return false, 0, 0
+    end
+
+    local value, lowHave, highHave, rate = M.countMixed(player, lowId, highId)
+    if value < needLow then
+        return false, 0, 0
+    end
+
+    local lowTake, highTake = planMix(needLow, lowHave, highHave, rate)
+    if lowTake == nil then
+        return false, 0, 0
+    end
+
+    if highTake > 0 then
+        if not highId or not M.take(player, highId, highTake) then
+            return false, 0, 0
+        end
+    end
+    if lowTake > 0 and not M.take(player, lowId, lowTake) then
+        if highTake > 0 then
+            M.add(player, highId, highTake)
+        end
+        return false, 0, 0
+    end
+
+    return true, lowTake, highTake
+end
+
+function M.refundMixed(player, lowId, highId, takenLow, takenHigh)
+    if takenHigh and takenHigh > 0 then
+        M.add(player, highId, takenHigh)
+    end
+    if takenLow and takenLow > 0 then
+        M.add(player, lowId, takenLow)
+    end
+end
+
 function M.label(itemId)
     return M.LABELS[itemId] or ('Item ' .. tostring(itemId or 0))
 end

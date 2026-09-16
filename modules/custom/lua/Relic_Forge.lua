@@ -15,7 +15,8 @@
 -- location.
 --
 -- Currency and Plutons are consumed through the Hades hold (then bags) so
--- weekend crates and split stacks both count.
+-- weekend crates and split stacks both count. Hundred-tier and 10k-tier
+-- Dynamis currency mix at CURRENCY_EXCHANGE_RATE (10:1).
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
@@ -40,6 +41,18 @@ local PLUTON_ID   = relicCatalog.plutonId
 
 local function costStr(relic)
     return string.format('%d %s + %d Plutons', FORGE_COST, relic.currencyName, PLUTON_COST)
+end
+
+local function mixNeedLine(relic, player)
+    local value, low, high, rate = currency.countMixed(player, relic.currency, relic.highCurrency)
+    return string.format(
+        '%s (mix %s at %d:1; you have %d + %d = %d value)',
+        costStr(relic),
+        relic.highCurrencyName,
+        rate,
+        low,
+        high,
+        value)
 end
 
 local function refundItem(player, itemId, amount)
@@ -94,10 +107,11 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer('[Relic Forge] Free an inventory slot first, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
-        if currency.count(player, relic.currency) < FORGE_COST then
+        local mixValue = currency.countMixed(player, relic.currency, relic.highCurrency)
+        if mixValue < FORGE_COST then
             player:printToPlayer(string.format(
-                '[Relic Forge] Not enough Dynamis currency -- need %s (you have %d). Kupo!',
-                costStr(relic), currency.count(player, relic.currency)), xi.msg.channel.SYSTEM_3)
+                '[Relic Forge] Not enough Dynamis currency -- need %s. Kupo!',
+                mixNeedLine(relic, player)), xi.msg.channel.SYSTEM_3)
             return
         end
         if currency.count(player, PLUTON_ID) < PLUTON_COST then
@@ -106,21 +120,23 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 PLUTON_COST, currency.count(player, PLUTON_ID)), xi.msg.channel.SYSTEM_3)
             return
         end
-        if not currency.take(player, relic.currency, FORGE_COST) then
+        local paid, takenLow, takenHigh = currency.takeMixed(
+            player, relic.currency, relic.highCurrency, FORGE_COST)
+        if not paid then
             player:printToPlayer(
                 '[Relic Forge] I could not gather the full currency payment, so nothing was forged, kupo!',
                 xi.msg.channel.SYSTEM_3)
             return
         end
         if not currency.take(player, PLUTON_ID, PLUTON_COST) then
-            refundItem(player, relic.currency, FORGE_COST)
+            currency.refundMixed(player, relic.currency, relic.highCurrency, takenLow, takenHigh)
             player:printToPlayer(
                 '[Relic Forge] I could not gather the Pluton payment, so your Dynamis currency was returned, kupo!',
                 xi.msg.channel.SYSTEM_3)
             return
         end
         if not player:addItem({ id = relic.id, quantity = 1 }) then
-            refundItem(player, relic.currency, FORGE_COST)
+            currency.refundMixed(player, relic.currency, relic.highCurrency, takenLow, takenHigh)
             refundItem(player, PLUTON_ID, PLUTON_COST)
             player:printToPlayer('[Relic Forge] The forging failed -- your currency and Plutons have been returned, kupo!', xi.msg.channel.SYSTEM_3)
             return
@@ -202,8 +218,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 return
             end
             player:printToPlayer(string.format(
-                '[Relic Forge] Repeat Relics cost %d of their Dynamis currency plus %d Plutons, kupo! One repeat remains.',
-                FORGE_COST, PLUTON_COST), xi.msg.channel.SYSTEM_3)
+                '[Relic Forge] Repeat Relics cost %d hundred-tier Dynamis currency plus %d Plutons, kupo! Mix 10k-tier at %d:1. One repeat remains.',
+                FORGE_COST, PLUTON_COST, currency.exchangeRate()), xi.msg.channel.SYSTEM_3)
             showRelics(player, 1)
         end,
     })

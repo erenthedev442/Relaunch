@@ -638,40 +638,32 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         cur('cruor',             step.cruor,       'Cruor')
         cur('imperial_standing', step.standing,    'Imperial Standing')
         if step.relicCurrency and chain.currency then
-            if step.highTierAlt and chain.highCurrency then
-                local lowQty  = step.relicCurrency
-                local rate    = xi.settings.main.CURRENCY_EXCHANGE_RATE or 10
-                if rate < 1 then
-                    rate = 10
-                end
-                -- Always charge the mid-tier equivalent. highTierAlt=5 was
-                -- leftover retail 100:1 math; this box exchanges at 10:1.
-                local highQty = math.max(1, math.floor(lowQty / rate))
+            if chain.highCurrency then
+                local lowQty = step.relicCurrency
+                local rate   = holdCurrency.exchangeRate()
                 list[#list + 1] =
                 {
-                    have = function(p) return holdCurrency.count(p, chain.currency) end,
+                    have = function(p)
+                        return select(1, holdCurrency.countMixed(p, chain.currency, chain.highCurrency))
+                    end,
                     meets = function(p)
-                        return holdCurrency.count(p, chain.currency) >= lowQty
-                            or holdCurrency.count(p, chain.highCurrency) >= highQty
+                        return select(1, holdCurrency.countMixed(p, chain.currency, chain.highCurrency)) >= lowQty
                     end,
                     take = function(p)
-                        if holdCurrency.count(p, chain.highCurrency) >= highQty then
-                            return holdCurrency.take(p, chain.highCurrency, highQty)
-                        end
-
-                        return holdCurrency.take(p, chain.currency, lowQty)
+                        local ok = holdCurrency.takeMixed(p, chain.currency, chain.highCurrency, lowQty)
+                        return ok
                     end,
                     qty = lowQty,
                     name = chain.currencyName,
-                    highQty = highQty,
+                    lowCurrency = chain.currency,
                     highCurrency = chain.highCurrency,
                     highCurrencyName = chain.highCurrencyName,
                     display = string.format(
-                        '%dx %s OR %dx %s',
+                        '%dx %s (mix %s at %d:1)',
                         lowQty,
                         chain.currencyName,
-                        highQty,
-                        chain.highCurrencyName),
+                        chain.highCurrencyName,
+                        rate),
                 }
             else
                 item(chain.currency, step.relicCurrency, chain.currencyName)
@@ -794,13 +786,15 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             if not meets then
                 local need = req.display or string.format('%dx %s', req.qty, req.name)
                 if req.highCurrency then
+                    local value, low, high = holdCurrency.countMixed(player, req.lowCurrency, req.highCurrency)
                     player:printToPlayer(string.format(
-                        '[Weapon Forge] Need %s. You have %d %s and %d %s.',
+                        '[Weapon Forge] Need %s. You have %d %s + %d %s = %d value.',
                         need,
-                        req.have(player),
+                        low,
                         req.name,
-                        holdCurrency.count(player, req.highCurrency),
-                        req.highCurrencyName), S)
+                        high,
+                        req.highCurrencyName,
+                        value), S)
                 else
                     player:printToPlayer(string.format(
                         '[Weapon Forge] Need %s (you have %d %s).',
@@ -921,17 +915,11 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return
         end
         if def.key == 'relic' and page == 1 then
-            local rate = xi.settings.main.CURRENCY_EXCHANGE_RATE or 10
-            if rate < 1 then
-                rate = 10
-            end
-            local highQty = math.max(1, math.floor(500 / rate))
             player:printToPlayer(
                 string.format(
-                    '[Weapon Forge] Relic 119 II->III accepts either 500 hundred-tier Dynamis currency '
-                    .. 'OR %d ten-thousand-tier (1 per %d mid-tier).',
-                    highQty,
-                    rate),
+                    '[Weapon Forge] Relic Dynamis currency mixes: each 10k-tier piece is worth %d hundred-tier. '
+                    .. 'Applies to every Relic step (50 / 50 / 100 / 500).',
+                    holdCurrency.exchangeRate()),
                 xi.msg.channel.SYSTEM_3)
         end
         local n     = #def.chains
