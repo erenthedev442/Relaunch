@@ -22,6 +22,7 @@ require('scripts/globals/player')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local waveProgress = require('modules/custom/lua/game_master_progress')
 local mastery = require('modules/custom/lua/weapon_mastery_catalog')
+local remaAnnounce = require('modules/custom/lua/rema_finish_announce')
 
 local m = Module:new('prime_armory')
 local LOUGHNASHADE_ID = 22307
@@ -366,6 +367,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         if weapon.id == LOUGHNASHADE_ID then
             player:addSpell(xi.magic.spell.ARIA_OF_PASSION, { silentLog = true })
         end
+        remaAnnounce.broadcast(player, 'prime', weapon.name)
 
         if weapon.ws and weapon.ws:sub(1, 1) ~= '(' then
             player:printToPlayer(string.format(

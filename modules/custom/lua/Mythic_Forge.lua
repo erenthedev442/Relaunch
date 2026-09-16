@@ -12,6 +12,7 @@ local m        = Module:new('mythic_forge')
 local catalog  = require('modules/custom/lua/mythic_forge_catalog')
 local currency = require('modules/custom/lua/hades_hold_currency')
 local repeatCredits = require('modules/custom/lua/rema_repeat_credits')
+local remaAnnounce = require('modules/custom/lua/rema_finish_announce')
 
 local NPC_POS   = { x = 532.9669, y = -3.1591, z = 469.2771, rot = 188 }
 -- Einherjar / retail Odin on Sleipnir (mob pool 2941). Do NOT use mob_groups.dropid
@@ -110,6 +111,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end
 
         repeatCredits.trySpend(player, 'mythic')
+        remaAnnounce.broadcast(player, 'mythic', weapon.name)
         player:printToPlayer(string.format(
             PREFIX .. ' %s has been tempered anew from imperial steel and runic fire!',
             weapon.name), xi.msg.channel.SYSTEM_3)

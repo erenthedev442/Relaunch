@@ -35,6 +35,7 @@ local consumeItem = require('modules/custom/lua/consume_upgrade_item')
 local remadepe = require('modules/custom/lua/rema_stage_dedupe')
 local pilgrimage = require('modules/custom/lua/legendary_pilgrimage_catalog')
 local mastery = require('modules/custom/lua/weapon_mastery_catalog')
+local remaAnnounce = require('modules/custom/lua/rema_finish_announce')
 require('modules/custom/lua/LegendaryWeaponPilgrimage')
 local pilgrimageRuntime = xi.legendaryPilgrimage
 
@@ -263,6 +264,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             local alreadyHadFinal = player:getCharVar('WF_Aeonic_Final') or 0
             player:setCharVar('WF_Aeonic_Final', 1)
             repeatCredits.noteProperCompletion(player, 'aeonic', alreadyHadFinal)
+            remaAnnounce.broadcast(player, 'aeonic', chain.aeonic.s3.name)
         end
         return true
     end
@@ -416,6 +418,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             -- through this full path. Armory-only shield/harp claims do not
             -- satisfy this milestone.
             player:setCharVar('WF_PrimeWeapon_Final', 1)
+            remaAnnounce.broadcast(player, 'prime', toItem.name)
         end
         return true
     end
@@ -849,6 +852,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             if repeatCredits.FAMILIES[family] then
                 repeatCredits.noteProperCompletion(player, family, alreadyHadFinal)
             end
+            remaAnnounce.broadcast(player, family, chain.name)
         end
     end
 

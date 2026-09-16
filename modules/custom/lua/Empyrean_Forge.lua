@@ -12,6 +12,7 @@ local m        = Module:new('empyrean_forge')
 local catalog  = require('modules/custom/lua/empyrean_forge_catalog')
 local currency = require('modules/custom/lua/hades_hold_currency')
 local repeatCredits = require('modules/custom/lua/rema_repeat_credits')
+local remaAnnounce = require('modules/custom/lua/rema_finish_announce')
 
 local NPC_POS   = { x = 603.6885, y = -3.2039, z = 487.9435, rot = 144 }
 local PAGE_SIZE = 4
@@ -88,6 +89,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end
 
         repeatCredits.trySpend(player, 'empyrean')
+        remaAnnounce.broadcast(player, 'empyrean', weapon.name)
         player:printToPlayer(string.format(
             '[Empyrean Forge] %s has been forged anew! Kupo!', weapon.name),
             xi.msg.channel.SYSTEM_3)

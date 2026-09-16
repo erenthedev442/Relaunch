@@ -12,6 +12,7 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local m       = Module:new('aeonic_forge')
 local catalog = require('modules/custom/lua/aeonic_forge_catalog')
 local repeatCredits = require('modules/custom/lua/rema_repeat_credits')
+local remaAnnounce = require('modules/custom/lua/rema_finish_announce')
 
 local NPC_POS     = { x = 505.4466, y = -3.0279, z = 487.2905, rot = 250 }
 local TEMPRIX_LOOK = '0x0000E20300000000000000000000000000000000'
@@ -85,6 +86,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end
 
         repeatCredits.trySpend(player, 'aeonic')
+        remaAnnounce.broadcast(player, 'aeonic', weapon.name)
         player:printToPlayer(string.format(
             PREFIX .. ' %s has been reforged from the crucible of eternity!',
             weapon.name), xi.msg.channel.SYSTEM_3)

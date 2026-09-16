@@ -34,6 +34,7 @@ local NPC_POS = { x = 572.000, y = -3.360, z = 534.200, rot = 64 }
 -- their highest real Relic IDs; neither participates in damage-WS tuning.
 local relicCatalog = require('modules/custom/lua/relic_forge_catalog')
 local repeatCredits = require('modules/custom/lua/rema_repeat_credits')
+local remaAnnounce = require('modules/custom/lua/rema_finish_announce')
 local RELICS = relicCatalog.weapons
 local FORGE_COST = relicCatalog.repeatCurrencyCost
 local PLUTON_COST = relicCatalog.repeatPlutonCost
@@ -143,6 +144,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end
         relicCatalog.grantCompanions(player, relic.id, 'Relic Forge')
         repeatCredits.trySpend(player, 'relic')
+        remaAnnounce.broadcast(player, 'relic', relic.name)
         player:printToPlayer(string.format(
             '[Relic Forge] %s, forged from the spoils of Dynamis! Kupo!', relic.name),
             xi.msg.channel.SYSTEM_3)

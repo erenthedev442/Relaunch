@@ -11,6 +11,7 @@ package.loaded['modules/custom/lua/prime_repeat_catalog'] = nil
 local C        = require('modules/custom/lua/prime_repeat_catalog')
 local forge    = require('modules/custom/lua/weapon_forge_catalog')
 local currency = require('modules/custom/lua/hl_seal_currency')
+local remaAnnounce = require('modules/custom/lua/rema_finish_announce')
 
 local SYS    = xi.msg.channel.SYSTEM_3
 local PREFIX = '[Oggbi]'
@@ -121,6 +122,7 @@ local function doForge(player, recipe)
         if recipe.prime.id == 22307 and not player:hasSpell(xi.magic.spell.ARIA_OF_PASSION) then
             player:addSpell(xi.magic.spell.ARIA_OF_PASSION, { silentLog = true })
         end
+        remaAnnounce.broadcast(player, 'prime', recipe.prime.name)
         player:printToPlayer(string.format(
             PREFIX .. ' The lineage is complete. Rise, %s.',
             recipe.prime.name), SYS)
