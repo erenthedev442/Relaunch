@@ -545,10 +545,78 @@ for _, dest in ipairs(catalog.deliveries) do
 end
 
 -----------------------------------
--- NPCs: talking Hades 16959529 (dailies) + silent 2680 shop ('......')
--- NE beach is only: 16959529, the 2680 shop, and Oggbi. Never hide Oggbi,
--- never move 16959529, never park a body on the plaza Alexander sentinels.
+-- NPCs: talking Daily Hades (look 2674, dailies) + silent 2680 shop ('......')
+-- NE beach is only those two plus Oggbi. Never hide Oggbi, never GetNPCByID
+-- a boot-stale dynamic id, never park a body on the plaza Alexander sentinels.
 -----------------------------------
+local NE_BEACH_X = 600
+local DAILY_LOOK = catalog.dailyLook or 2674
+
+local function entityAlive(ent)
+    local ok = false
+    pcall(function()
+        ok = ent ~= nil
+            and ent:isValidEntity()
+            and ent:getStatus() ~= xi.status.DISAPPEAR
+    end)
+    return ok
+end
+
+local function isOggbiEntity(ent)
+    local name = ''
+    pcall(function()
+        name = tostring(ent:getName() or '')
+    end)
+    return name:find('Oggbi', 1, true) ~= nil
+end
+
+local function isNeBeach(ent)
+    local ok = false
+    pcall(function()
+        ok = ent.getXPos and ent:getXPos() > NE_BEACH_X
+    end)
+    return ok
+end
+
+local function hideEntity(ent)
+    pcall(function()
+        ent:setStatus(xi.status.DISAPPEAR)
+    end)
+end
+
+local function eachNeBeachEntity(zone, fn)
+    if not zone then
+        return
+    end
+    local function walk(ok, list)
+        if not ok or type(list) ~= 'table' then
+            return
+        end
+        for _, ent in pairs(list) do
+            local objtype
+            pcall(function()
+                objtype = ent:getObjType()
+            end)
+            if ent and objtype == xi.objType.NPC and isNeBeach(ent) and not isOggbiEntity(ent) then
+                fn(ent)
+            end
+        end
+    end
+    if zone.getNPCs then
+        walk(pcall(function()
+            return zone:getNPCs()
+        end))
+    end
+end
+
+local function modelId(ent)
+    local look = 0
+    pcall(function()
+        look = ent:getModelId() or 0
+    end)
+    return look
+end
+
 local function openSecondForm(player)
     catalog.sayShopSilence(player)
     if catalog.isShopOpen() then
@@ -626,41 +694,30 @@ end
 
 local function despawnWrongShopBodies()
     if xi.hades_shop_entity then
-        pcall(function()
-            xi.hades_shop_entity:setStatus(xi.status.DISAPPEAR)
-        end)
+        hideEntity(xi.hades_shop_entity)
         xi.hades_shop_entity = nil
     end
     local zone = GetZone(catalog.npcPos.zoneId)
     if not zone then
         return
     end
-    if zone.queryEntitiesByName then
-        local hades = zone:queryEntitiesByName('Hades')
-        if type(hades) == 'table' then
-            for _, ent in pairs(hades) do
-                if ent and ent.getID and ent:getID() ~= catalog.dailyNpcId then
-                    pcall(function()
-                        ent:setStatus(xi.status.DISAPPEAR)
-                    end)
-                end
-            end
+    -- Only the NE beach. Hide leftover Hades v2 (2680) bodies -- named
+    -- '......' clones AND the old unnamed placement. Daily Hades is 2674
+    -- and is left alone. Oggbi is skipped in eachNeBeachEntity.
+    eachNeBeachEntity(zone, function(ent)
+        local look = modelId(ent)
+        if look == DAILY_LOOK then
+            return
         end
-        -- Only strip Hades shop clones on the NE beach. Never touch plaza
-        -- NPCs (Sparks mithra / Mastery) even if a nameplate was blanked.
-        for _, dotsName in ipairs({ '......', '.....', '...' }) do
-            local dots = zone:queryEntitiesByName(dotsName)
-            if type(dots) == 'table' then
-                for _, ent in pairs(dots) do
-                    pcall(function()
-                        if ent.getXPos and ent:getXPos() > 600 then
-                            ent:setStatus(xi.status.DISAPPEAR)
-                        end
-                    end)
-                end
-            end
+        local pname = ''
+        pcall(function()
+            pname = tostring(ent:getPacketName() or ent:getName() or '')
+        end)
+        -- Leftover unnamed 2680 (and any nameless clone) on this beach only.
+        if look == catalog.shopLook or pname == '' or pname == 'DE_' then
+            hideEntity(ent)
         end
-    end
+    end)
 end
 
 local function bindDailyNpc(npc)
@@ -670,12 +727,65 @@ local function bindDailyNpc(npc)
     restoreVisible(npc)
     pcall(function()
         npc:hideName(false)
+        npc:setUntargetable(false)
         npc:removeListener('HADES_DAILY')
+        npc:setPos(catalog.npcPos.x, catalog.npcPos.y, catalog.npcPos.z, catalog.npcPos.rotation)
+        npc:setModelId(DAILY_LOOK)
     end)
     npc:addListener('ON_TRIGGER', 'HADES_DAILY', function(player, _)
         showDailyHades(player)
     end)
+    xi.hades_daily_entity = npc
     return true
+end
+
+local function findDailyHades(zone)
+    if entityAlive(xi.hades_daily_entity) and modelId(xi.hades_daily_entity) == DAILY_LOOK then
+        return xi.hades_daily_entity
+    end
+    local found = nil
+    eachNeBeachEntity(zone, function(ent)
+        if not found and modelId(ent) == DAILY_LOOK then
+            found = ent
+        end
+    end)
+    return found
+end
+
+local function spawnDailyHades(zone)
+    local pos = catalog.npcPos
+    local npc = zone:insertDynamicEntity({
+        objtype    = xi.objType.NPC,
+        name       = 'Hades',
+        packetName = 'Hades',
+        look       = DAILY_LOOK,
+        x          = pos.x,
+        y          = pos.y,
+        z          = pos.z,
+        rotation   = pos.rotation,
+        widescan   = 1,
+        onTrigger  = function(player, _)
+            showDailyHades(player)
+        end,
+    })
+    if npc then
+        bindDailyNpc(npc)
+        print('[hades_daily] spawned Daily Hades look 2674 on the NE pad')
+    end
+    return npc
+end
+
+local function placeDailyHades()
+    local zone = GetZone(catalog.npcPos.zoneId)
+    if not zone then
+        return
+    end
+    local existing = findDailyHades(zone)
+    if existing then
+        bindDailyNpc(existing)
+        return
+    end
+    spawnDailyHades(zone)
 end
 
 local function spawnSilentShop(zone)
@@ -697,6 +807,7 @@ local function spawnSilentShop(zone)
     if npc then
         pcall(function()
             npc:hideName(false)
+            npc:setUntargetable(false)
             npc:setModelId(catalog.shopLook)
         end)
         xi.hades_shop_entity = npc
@@ -715,7 +826,7 @@ end
 
 local function applyLiveNpcs()
     restoreOggbi()
-    bindDailyNpc(GetNPCByID(catalog.dailyNpcId))
+    placeDailyHades()
     placeSilentShop()
     applyDeliveryNames()
 end
@@ -723,7 +834,7 @@ end
 m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone), function(zone)
     super(zone)
     restoreOggbi()
-    bindDailyNpc(GetNPCByID(catalog.dailyNpcId))
+    placeDailyHades()
     placeSilentShop()
 end)
 

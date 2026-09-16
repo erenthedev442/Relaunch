@@ -37,11 +37,12 @@ catalog.points =
     custom      = 50,
 }
 
--- Daily Hades is the owner-placed NPC 16959529. Do not move him.
--- FROZEN 2026-09-15 (owner lock). Do not change coords/look/id without
--- explicit permission. Weekend shop is Hades v2 look 2680 named '......'.
--- Oggbi stands with them on the NE beach. Leave him alone.
-catalog.dailyNpcId = 16959529
+-- Daily Hades is look 2674 (same mesh as Eren), named Hades, on this pad.
+-- Do not bind him with GetNPCByID -- live dynamic IDs die every map boot.
+-- Weekend shop is Hades v2 look 2680 named '......'. Oggbi stays with them.
+-- NE beach is only those three. FROZEN 2026-09-15 coords/looks.
+catalog.dailyLook  = 2674
+catalog.dailyNpcId = 16959529 -- stale boot id; do not GetNPCByID this
 catalog.npcPos =
 {
     zone     = 'Abdhaljs_Isle-Purgonorgo',

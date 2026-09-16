@@ -9,7 +9,7 @@ alwaysApply: true
 
 ## Never
 
-- Guess live dynamic IDs (`16959511`, `16959532`, `16959554`, …). They change every map boot.
+- Guess live dynamic IDs (`16959511`, `16959529`, `16959532`, `16959554`, …). They change every map boot.
 - Bind Hades shop/dailies onto whatever `GetNPCByID` returns.
 - Mass-despawn by name (`......`, `Sentinel`, `Hades`) across the whole zone.
 - Park, hide, or overlay one hub NPC on another.
@@ -18,7 +18,7 @@ alwaysApply: true
 
 | NPC | Identity | Pos (x, y, z, rot) |
 |---|---|---|
-| Daily Hades | `16959529` — do not `setPos` | where he already stands (~649.21, 0.30, 567.05, 96) |
+| Daily Hades | look **2674**, packet name `Hades` — spawn via `hades_daily`, never `GetNPCByID` | 649.2089, 0.3000, 567.0547, 96 |
 | Weekend shop | `......`, look **2680** | 646.3604, 0.3000, 570.6538, 96 |
 | Oggbi | `Oggbi_Prime_Repeat`, Bastok look hex | 649.7283, 0.3000, 562.4038, 169 |
 | Sparks mithra | `Sparks_Exchange`, look 221 | 554.400, -3.3322, 476.000, 160 |
