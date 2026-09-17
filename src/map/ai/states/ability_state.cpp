@@ -27,6 +27,7 @@
 #include "ai/ai_container.h"
 #include "common/utils.h"
 #include "enmity_container.h"
+#include "entities/baseentity.h"
 #include "entities/charentity.h"
 #include "entities/mobentity.h"
 #include "entities/petentity.h"
@@ -205,19 +206,31 @@ bool CAbilityState::Update(timer::time_point tick)
         {
             action_t action{};
             m_PEntity->OnAbility(*this, action);
-            m_PEntity->PAI->EventHandler.triggerListener("ABILITY_USE", m_PEntity, GetTarget(), m_PAbility.get(), &action);
-            // Only send packet if action was populated (e.g. interrupts return early)
-            if (!action.targets.empty())
+            // Ability scripts (pet dismiss, warp, death, zone) can despawn the
+            // actor before we notify. Same hole as MAGIC_USE (2026-09-12).
+            // Crash 2026-09-17 05:10: ACCESS_VIOLATION at ABILITY_USE —
+            // CAbilityState::Update+0x14a, PAI was null (ability_state.cpp:208).
+            const bool actorAlive = CBaseEntity::IsEntityAlive(m_PEntity) && m_PEntity->PAI != nullptr;
+            if (actorAlive)
             {
-                m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_BATTLE2>(action));
-            }
-            for (auto& actionTarget : action.targets)
-            {
-                auto* PActionTarget = dynamic_cast<CBattleEntity*>(zoneutils::GetEntity(actionTarget.actorId));
-                if (PActionTarget)
+                m_PEntity->PAI->EventHandler.triggerListener("ABILITY_USE", m_PEntity, GetTarget(), m_PAbility.get(), &action);
+                // Only send packet if action was populated (e.g. interrupts return early)
+                if (!action.targets.empty() && m_PEntity->loc.zone)
                 {
-                    PActionTarget->PAI->EventHandler.triggerListener("ABILITY_TAKE", m_PEntity, PActionTarget, m_PAbility.get(), &action);
+                    m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_BATTLE2>(action));
                 }
+                for (auto& actionTarget : action.targets)
+                {
+                    auto* PActionTarget = dynamic_cast<CBattleEntity*>(zoneutils::GetEntity(actionTarget.actorId));
+                    if (PActionTarget && PActionTarget->PAI)
+                    {
+                        PActionTarget->PAI->EventHandler.triggerListener("ABILITY_TAKE", m_PEntity, PActionTarget, m_PAbility.get(), &action);
+                    }
+                }
+            }
+            else
+            {
+                ShowWarning("CAbilityState::Update skipped ABILITY_USE — actor is gone");
             }
         }
 
@@ -226,12 +239,15 @@ bool CAbilityState::Update(timer::time_point tick)
 
     if (IsCompleted() && tick > GetEntryTime() + m_castTime + m_PAbility->getAnimationTime())
     {
-        if (m_PEntity->objtype == TYPE_PC)
+        if (CBaseEntity::IsEntityAlive(m_PEntity) && m_PEntity->PAI != nullptr)
         {
-            CCharEntity* PChar = static_cast<CCharEntity*>(m_PEntity);
-            PChar->m_charHistory.abilitiesUsed++;
+            if (m_PEntity->objtype == TYPE_PC)
+            {
+                CCharEntity* PChar = static_cast<CCharEntity*>(m_PEntity);
+                PChar->m_charHistory.abilitiesUsed++;
+            }
+            m_PEntity->PAI->EventHandler.triggerListener("ABILITY_STATE_EXIT", m_PEntity, m_PAbility.get());
         }
-        m_PEntity->PAI->EventHandler.triggerListener("ABILITY_STATE_EXIT", m_PEntity, m_PAbility.get());
         return true;
     }
 
