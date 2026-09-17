@@ -18,6 +18,7 @@ local forgeGates = require('modules/custom/lua/weapon_forge_gates')
 local pilgrimageCatalog = require('modules/custom/lua/legendary_pilgrimage_catalog')
 require('modules/custom/lua/LegendaryWeaponPilgrimage')
 local pilgrimageRuntime = xi.legendaryPilgrimage
+local attestBank = require('modules/custom/lua/aeonic_attestation_bank')
 
 -- ===================================================================
 -- CONSTANTS
@@ -127,6 +128,14 @@ showPage = function(player, page)
                 pp:printToPlayer(string.format(
                     '[Temprix] %s pilgrimage begun. Complete Chapter I to begin attunement.',
                     wCapture.name), S)
+                local moved = attestBank.depositActive(pp)
+                if moved > 0 then
+                    pp:printToPlayer(attestBank.statusText(pp, wCapture.chain), S)
+                else
+                    pp:printToPlayer(
+                        '[Temprix] Matching attestations you farm now are held at the Weapon Forge. Chat will show 1/1, 1/2, 2/2 as they land.',
+                        S)
+                end
                 pp:timer(30, function(p2) showPage(p2, pageCapture) end)
             end,
         }

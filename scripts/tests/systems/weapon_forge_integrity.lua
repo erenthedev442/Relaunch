@@ -149,10 +149,33 @@ describe('Weapon Forge catalog and gate integrity', function()
         assert(gates.PATH_LOCKED_MSG:find('long way to go', 1, true))
     end)
 
+    it('treats owned 119 III Relic Empyrean or Mythic as finished for Aeonic', function()
+        local vars = {}
+        local items = {}
+        local player = {}
+        function player:getCharVar(name) return vars[name] or 0 end
+        function player:getItemCount(id) return items[id] or 0 end
+
+        items[20509] = 1 -- Spharai 119 III
+        items[20512] = 1 -- Verethragna 119 III
+        assert(gates.pathUnlocked(player, 'empyrean'))
+        assert(gates.pathUnlocked(player, 'mythic'))
+        assert(gates.pathUnlocked(player, 'aeonic'))
+        assert(not gates.checkGate(player, 'aeonic', 0))
+        vars.Rebirth_Count_1 = 50
+        assert(gates.checkGate(player, 'aeonic', 0))
+
+        items[20512] = 0
+        items[21757] = 1 -- Conqueror 119 III instead of Empyrean
+        assert(gates.pathUnlocked(player, 'aeonic'))
+        assert(gates.checkGate(player, 'aeonic', 0))
+    end)
+
     it('places Aeonic after Relic plus a finished Empyrean or Mythic', function()
         local vars = {}
         local player = {}
         function player:getCharVar(name) return vars[name] or 0 end
+        function player:getItemCount() return 0 end
 
         assert(not gates.checkGate(player, 'aeonic', 0))
         vars.WF_Relic_Final = 1

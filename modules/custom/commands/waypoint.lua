@@ -70,11 +70,15 @@ local function readWaypoint(player, n)
 end
 
 local function saveWaypoint(player, n)
+    if require('modules/custom/lua/travel_guard').refuseInstanceSave(player) then
+        return false
+    end
     player:setCharVar(kZone(n), player:getZoneID() + 1)  -- +1 so 0 means "empty"
     player:setCharVar(kX(n),   math.floor(player:getXPos() * 1000 + 0.5))
     player:setCharVar(kY(n),   math.floor(player:getYPos() * 1000 + 0.5))
     player:setCharVar(kZ(n),   math.floor(player:getZPos() * 1000 + 0.5))
     player:setCharVar(kRot(n), player:getRotPos())
+    return true
 end
 
 local function clearWaypoint(player, n)
@@ -140,6 +144,10 @@ local function warpTo(player, n)
         return
     end
 
+    if require('modules/custom/lua/travel_guard').refuseInstanceTravel(player, wp.zone) then
+        return
+    end
+
     if player:getZoneID() == wp.zone then
         player:setPos(wp.x, wp.y, wp.z, wp.rot)             -- same zone: instant reposition
     else
@@ -168,7 +176,9 @@ commandObj.onTrigger = function(player, arg1, arg2)
             say(player, string.format('[Waypoint] Pick a slot 1-%d, e.g. !waypoint save 1', MAX_SLOTS))
             return
         end
-        saveWaypoint(player, n)
+        if not saveWaypoint(player, n) then
+            return
+        end
         say(player, string.format('[Waypoint] Saved your position to waypoint %d.', n))
         return
     elseif cmd == 'clear' or cmd == 'del' or cmd == 'delete' or cmd == 'remove' then

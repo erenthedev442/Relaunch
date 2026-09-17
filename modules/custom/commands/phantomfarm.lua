@@ -34,8 +34,10 @@ local S = xi.msg.channel.SYSTEM_3
 -- get built. Keys are the human-typeable arg (case-insensitive).
 local FARMS =
 {
-    bibiki   = { catalogPath = 'modules/custom/lua/capacity_farm_catalog',   label = 'Bibiki Bay'          },
-    ranperre = { catalogPath = 'modules/custom/lua/ranperre_farm_catalog',   label = "King Ranperre's Tomb" },
+    bibiki   = { catalogPath = 'modules/custom/lua/capacity_farm_catalog',     label = 'Bibiki Bay'            },
+    ranperre = { catalogPath = 'modules/custom/lua/ranperre_farm_catalog',     label = "King Ranperre's Tomb" },
+    ronfaure  = { catalogPath = 'modules/custom/lua/ronfaure_s_farm_catalog',    label = 'East Ronfaure [S] north' },
+    ronfaure4 = { catalogPath = 'modules/custom/lua/ronfaure_s_farm4_catalog',   label = 'East Ronfaure [S] south' },
 }
 
 -- Direct insertDynamicEntity call that mirrors capacity_farm_engine.lua's
@@ -140,7 +142,7 @@ commandObj.onTrigger = function(player, farmArg, actionArg)
     local key = farmArg and string.lower(farmArg) or nil
     local farm = key and FARMS[key]
     if not farm then
-        player:printToPlayer('Usage: !phantomfarm <bibiki|ranperre> [refill]', S)
+        player:printToPlayer('Usage: !phantomfarm <bibiki|ranperre|ronfaure|ronfaure4> [refill]', S)
         return
     end
 

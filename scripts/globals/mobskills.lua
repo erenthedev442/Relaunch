@@ -111,6 +111,14 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
         local progressionFloor = mob:getLocalVar('fellowProgressionDamageFloor')
         local progressionCap   = mob:getLocalVar('fellowProgressionDamageCap')
         local isAoE = skill:isAoE() or skill:isConal()
+        -- Eren Magus is the only Fellow role allowed to splash. Other Eren
+        -- Hades weaponskills use the same 18-yalm anims; zero secondary hits.
+        if isAoE and aoeCap <= 0 then
+            local primary = mob:getLocalVar('fellowSkillPrimaryId')
+            if primary > 0 and target:getID() ~= primary then
+                return 0
+            end
+        end
         if absoluteCap <= 0 then
             absoluteCap = 99999
         end
@@ -119,18 +127,29 @@ local function applyPlayerCompanionScaling(mob, target, skill, damage, hitsLande
             progressionFloor = math.floor(progressionFloor * aoeScale / 100)
             progressionCap = math.floor(progressionCap * aoeScale / 100)
         end
+        -- Never take more than half the target's max HP in one skill, including
+        -- Magus AoE splash. Stops Eren 149,999 / 99,999 from one-shotting
+        -- leveling mobs; bosses with huge HP still hit the role cap.
+        local hpHalf = math.floor(math.max(1, target:getMaxHP()) * 0.50)
         if isAoE and aoeCap > 0 then
+            local bound = math.min(aoeCap, hpHalf)
             if progressionCap > 0 then
-                progressionCap = math.min(progressionCap, aoeCap)
-            else
-                progressionCap = aoeCap
+                bound = math.min(bound, progressionCap)
             end
-            absoluteCap = math.min(absoluteCap, aoeCap)
+            progressionFloor = bound
+            progressionCap = bound
+            absoluteCap = math.min(absoluteCap, bound)
         end
 
-        if damage > 0 and (hitsLanded or 0) > 0 and progressionCap > 0 then
-            damage = math.max(damage, progressionFloor)
-            damage = math.min(damage, progressionCap, target:getHP(), absoluteCap)
+        if damage > 0 and (hitsLanded or 0) > 0 then
+            if progressionCap > 0 then
+                if progressionFloor > progressionCap then
+                    progressionFloor = progressionCap
+                end
+                damage = math.max(damage, progressionFloor)
+                damage = math.min(damage, progressionCap)
+            end
+            damage = math.min(damage, hpHalf, target:getHP(), absoluteCap)
         end
 
         return damage

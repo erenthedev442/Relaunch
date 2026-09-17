@@ -127,19 +127,36 @@ local CONFIG =
     -- name keeps the stock profile (99,999 absolute / 50-70k endgame band).
     eren =
     {
-        dpsAbsoluteCap      = 149999,
+        dpsAbsoluteCap      = 149999, -- display cap; floor matches so WS stop sitting at 120k
+        dpsWsFloor          = 149999,
         magusAoECap         = 99999,
+        hpPctCap            = 50, -- every move, including Magus AoE, max 50% of target max HP
         tankDt              = -5000, -- DT I floor (50%)
         tankHpMult          = 1.50,
-        oracleCurePotencyII = 20,
-        oracleHealMult      = 1.20,
+        -- Eren melee HP: around 6k, not identical. Magus stays the glass cleaver.
+        dpsHp               =
+        {
+            berserker = 5790,
+            vanguard  = 6180,
+            hunter    = 6410,
+        },
+        -- Retail haste buckets (1/10000). Gear 25% + magic 43.75% + JA 25%
+        -- then DELAY_REDUCTION_CAP 80%. DA is a percent, clamped at 100.
+        dpsHasteGear        = 2500,
+        dpsHasteMagic       = 4375,
+        dpsHasteAbility     = 2500,
+        dpsDoubleAttack     = 100,
+        oracleCurePotencyII = 30,  -- getCureFinal caps II at 30%
+        oracleCureBonus     = 900, -- flat HP after % potency (Cure VI 1300 -> ~2200)
+        oracleHealMult      = 1.70,
         statBonus           = 1.05,
+        wsCooldownSec       = 3,
+        nukeCooldownSec     = 8, -- Magus is the cleaver; slower than melee WS in solo
         dpsRoles            =
         {
             vanguard  = true,
             berserker = true,
             hunter    = true,
-            mastered  = true,
         },
     },
 
@@ -682,11 +699,14 @@ local function isErenDpsRole(roleKey)
 end
 
 -- C++ takeDamage reads EncounterOutgoingDamageCap first, so raising this
--- is what lets Eren DPS/Magus break the stock fellow 99,999 ceiling.
+-- is what lets Eren DPS break the stock fellow 99,999 ceiling.
 local function fellowOutgoingCap(eren, roleKey, masterPower)
     local power = masterPower or 1
-    if eren and (isErenDpsRole(roleKey) or roleKey == 'magus') then
+    if eren and isErenDpsRole(roleKey) then
         return math.max(1, math.floor(CONFIG.eren.dpsAbsoluteCap * power))
+    end
+    if eren and roleKey == 'magus' then
+        return math.max(1, math.floor(CONFIG.eren.magusAoECap * power))
     end
     return math.max(1, math.floor(FELLOW_ABSOLUTE_CAP * power))
 end
@@ -698,21 +718,33 @@ local function fellowAoECap(eren, roleKey)
     return 0
 end
 
--- Signature skills use an explicit damage band. While leveling, a maxed Fellow
--- deals 20-30% of the target's current max HP (and can never one-shot it). On
--- Lv99 content, the full-investment target is 50-70k, still hard-limited to 50%
--- of the target's max HP. Named Eren in a DPS/Magus role raises the 70k end
--- of that band to 149,999 (still HP-relative so it cannot one-shot). Partial
--- builds scale both ends of the band together.
+-- Signature skills use an explicit damage band. Stock Fellows stay on the
+-- 50-70k / 50% HP curve. Named Eren DPS (Vanguard/Hunter/Berserker) sit on
+-- the 149,999 weaponskill cap, Magus on 99,999 per target -- but every Eren
+-- hit (including Magus AoE) is still clamped to 50% of the target's max HP
+-- so leveling trash cannot be one-shot. Remaining HP can still last-hit
+-- once the mob is already under that half.
+local function fellowHpPctCeiling(targetMaxHp, pct)
+    return math.max(1, math.floor(math.max(1, targetMaxHp) * ((pct or 50) / 100)))
+end
+
 local function fellowEndgameDamageBand(eren, roleKey, targetMaxHp, power)
     power = power or 1
-    local hpCeiling = math.floor(math.max(1, targetMaxHp) * 0.50)
-    local bandCap = FELLOW_ENDGAME_CAP
-    if eren and (isErenDpsRole(roleKey) or roleKey == 'magus') then
-        bandCap = CONFIG.eren.dpsAbsoluteCap
+    local hpCeiling = fellowHpPctCeiling(targetMaxHp, eren and CONFIG.eren.hpPctCap or 50)
+    if eren and isErenDpsRole(roleKey) then
+        local floor = math.max(1, math.floor(CONFIG.eren.dpsWsFloor * power))
+        local cap   = math.max(1, math.floor(CONFIG.eren.dpsAbsoluteCap * power))
+        cap   = math.min(cap, hpCeiling)
+        floor = math.min(floor, cap)
+        return floor, cap
+    end
+    if eren and roleKey == 'magus' then
+        local magus = math.max(1, math.floor(CONFIG.eren.magusAoECap * power))
+        magus = math.min(magus, hpCeiling)
+        return magus, magus
     end
     local fullFloor = math.min(50000, hpCeiling)
-    local fullCap   = math.min(bandCap, hpCeiling)
+    local fullCap   = math.min(FELLOW_ENDGAME_CAP, hpCeiling)
     return
         math.max(1, math.floor(fullFloor * power)),
         math.max(1, math.floor(fullCap * power))
@@ -740,11 +772,18 @@ local function stampFellowSkillBudget(pet, master, tgt, spellMove)
     pet:setLocalVar('fellowProgressionDamageFloor', damageFloor)
     pet:setLocalVar('fellowProgressionDamageCap', damageCap)
     local outgoingCap = fellowOutgoingCap(eren, roleKey, fellowPowerProgress(master))
+    local hpHalf = fellowHpPctCeiling(tgt:getMaxHP(), eren and CONFIG.eren.hpPctCap or 50)
+    outgoingCap = math.min(outgoingCap, hpHalf)
     pet:setLocalVar('EncounterOutgoingDamageCap', outgoingCap)
     pet:setLocalVar('fellowAbsoluteDamageCap', outgoingCap)
     pet:setLocalVar('fellowAoEDamageCap', fellowAoECap(eren, roleKey))
     pet:setLocalVar('fellowAoEDamageScale',
         (spellMove == xi.mobSkill.THUNDERSTRIKE and not eren) and 25 or 0)
+    local primaryId = 0
+    pcall(function()
+        primaryId = tgt:getID() or 0
+    end)
+    pet:setLocalVar('fellowSkillPrimaryId', primaryId)
 end
 
 local function currentGrade(p)
@@ -857,7 +896,9 @@ local function applyFellow(p, pet)
     pet:addMod(xi.mod.DMGMAGIC, surv.mdt or CONFIG.mdt)
 
     local targetHP = lerp(surv.hpMin or 2500, surv.hpMax or 5000, combatProgress(p))
-    if eren and roleKey == 'bulwark' then
+    if eren and CONFIG.eren.dpsHp[roleKey] then
+        targetHP = CONFIG.eren.dpsHp[roleKey]
+    elseif eren and roleKey == 'bulwark' then
         targetHP = math.floor(targetHP * CONFIG.eren.tankHpMult)
     elseif eren then
         targetHP = math.floor(targetHP * CONFIG.eren.statBonus)
@@ -877,11 +918,29 @@ local function applyFellow(p, pet)
         pet:setLocalVar('fellowEren', 1)
         if roleKey == 'oracle' then
             pet:addMod(xi.mod.CURE_POTENCY_II, CONFIG.eren.oracleCurePotencyII)
+            pet:addMod(xi.mod.CURE_POTENCY_BONUS, CONFIG.eren.oracleCureBonus)
+            pet:addMod(xi.mod.REFRESH, 10)
         elseif roleKey == 'bulwark' then
             -- Overwrite Warding/role PDT so the tank sits on the DT I floor.
             pet:setMod(xi.mod.DMG, CONFIG.eren.tankDt)
             pet:setMod(xi.mod.DMGPHYS, CONFIG.eren.tankDt)
             pet:setMod(xi.mod.DMGMAGIC, CONFIG.eren.tankDt)
+        elseif isErenDpsRole(roleKey) then
+            -- Store TP so these three spam Hades weaponskills instead of
+            -- waiting on the stock 8-second fellow cadence.
+            local storeTp = 70
+            if roleKey == 'berserker' then
+                storeTp = 110
+            elseif roleKey == 'hunter' then
+                storeTp = 90
+            end
+            pet:addMod(xi.mod.STORETP, storeTp)
+            pet:setMod(xi.mod.HASTE_GEAR, CONFIG.eren.dpsHasteGear)
+            pet:setMod(xi.mod.HASTE_MAGIC, CONFIG.eren.dpsHasteMagic)
+            pet:setMod(xi.mod.HASTE_ABILITY, CONFIG.eren.dpsHasteAbility)
+            pet:setMod(xi.mod.DOUBLE_ATTACK, CONFIG.eren.dpsDoubleAttack)
+        elseif roleKey == 'magus' then
+            pet:addMod(xi.mod.REFRESH, 8)
         end
     end
     -- Disable autonomous trust TP moves. The combat loop below exclusively
@@ -896,8 +955,10 @@ local function applyFellow(p, pet)
 
     -- Give the two specialist roles real trust-controller behavior instead of
     -- making Naji's melee chassis pretend to cast or shoot.
-    -- Eren/Hades has no humanoid cast or bow skeleton -- skip those packages.
-    if roleKey == 'oracle' and not eren then
+    -- Eren Oracle still uses Apururu's spell list + MP-return; Cure anims may
+    -- T-pose on Hades 2674 but the WHM kit is what makes it a healer.
+    -- Eren Hunter has no bow skeleton -- melee + Sharpshot, not ranged WS.
+    if roleKey == 'oracle' then
         -- Apururu's healer list supplies level-scaled Cure I-VI, Curaga I-V,
         -- Haste, Protectra/Shellra, -na spells, Stoneskin and Erase. Oracle
         -- uses only normal trust-controller casts: MP, recasts, animations,
@@ -950,10 +1011,12 @@ local function applyFellow(p, pet)
         -- menu. Keep it inside the selected move's 10-yalm range; LONG_RANGE
         -- holds at 12 yalms and makes useMobAbility silently reject Thunder IV.
         pet:setMobMod(xi.mobMod.TRUST_DISTANCE, 7)
-    elseif roleKey == 'hunter' and not eren then
-        pet:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 })
-        pet:addMod(xi.mod.STORETP, 86)
-        pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
+    elseif roleKey == 'hunter' then
+        if not eren then
+            pet:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, 0, 0 })
+            pet:addMod(xi.mod.STORETP, 86)
+            pet:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
+        end
     elseif roleKey == 'bulwark' then
         -- Fellows suppress Naji's inherited Provoke at raw spawn. Add it back
         -- only for the dedicated tank role; otherwise NOT_HAS_TOP_ENMITY keeps
@@ -962,14 +1025,21 @@ local function applyFellow(p, pet)
             ai.t.SELF,
             { ai.c.NOT_HAS_TOP_ENMITY, 0 },
             { ai.r.JA, ai.s.SPECIFIC, xi.ja.PROVOKE })
+        pet:addGambit(
+            ai.t.SELF,
+            { ai.c.NOT_STATUS, xi.effect.SENTINEL },
+            { ai.r.JA, ai.s.SPECIFIC, xi.ja.SENTINEL })
 
         -- Use the same sustained-enmity system as the server's real trust tanks.
-        -- This profile supplies the CE/VE pressure and retargeting needed to
-        -- hold against players and other trusts instead of merely flashing Provoke.
+        -- Eren's was over-holding; keep a real tank without AAEV-level drain.
         xi.trust.enableTankEnmity(pet,
         {
             profile = 'strong',
-            drainMaster = 15,
+            tickCE = eren and 3800 or 5000,
+            tickVE = eren and 7600 or 10000,
+            actionCE = eren and 2000 or 2500,
+            actionVE = eren and 4000 or 5000,
+            drainMaster = eren and 8 or 15,
             includeParty = true,
             listenerName = 'FELLOW_BULWARK_TANK_ENMITY',
         })
@@ -1014,6 +1084,7 @@ local function applyFellow(p, pet)
                 fellow:setLocalVar('fellowProgressionDamageCap', 0)
                 fellow:setLocalVar('fellowProgressionDamageFloor', 0)
                 fellow:setLocalVar('fellowAoEDamageScale', 0)
+                fellow:setLocalVar('fellowSkillPrimaryId', 0)
                 fellow:setLocalVar('fellowCanMagicBurst', 0)
             end
         end)
@@ -1114,25 +1185,33 @@ scheduleCombatLoop = function(master, pet)
                 p:engage(masterTarget:getTargID())
             end
 
-            -- Oracle uses visible trust-controller spells exclusively. The
-            -- pulse remains only for Mastered, whose hybrid role intentionally
-            -- does not install Oracle's full healer spell package.
-            local usesSpellHealing = getRole(master) == 'oracle' and not isEren(master)
-            if hasBeh('heal') and not usesSpellHealing
-               and now - (p:getLocalVar('fellowHealAt') or 0) >= CONFIG.healCooldownSec then
+            -- Oracle uses visible trust-controller spells. Eren Oracle also
+            -- keeps the addHP pulse so a missed Hades cast anim still heals.
+            local usesSpellHealing = roleKey == 'oracle'
+            local erenSupportHeal = eren and (roleKey == 'oracle' or roleKey == 'bulwark')
+            if ((hasBeh('heal') and not usesSpellHealing) or erenSupportHeal)
+               and now - (p:getLocalVar('fellowHealAt') or 0) >= (eren and 3 or CONFIG.healCooldownSec) then
                 local healTarget = master
                 local lowestHpp = master:getHP() * 100 / math.max(1, master:getMaxHP())
-                local okParty, party = pcall(function() return master:getPartyWithTrusts() end)
-                if okParty and party then
-                    for _, member in pairs(party) do
-                        if member and member:isAlive() and member:getZoneID() == master:getZoneID() then
-                            local hpp = member:getHP() * 100 / math.max(1, member:getMaxHP())
-                            if hpp < lowestHpp then healTarget = member; lowestHpp = hpp end
+                if roleKey == 'bulwark' then
+                    healTarget = p
+                    lowestHpp = p:getHP() * 100 / math.max(1, p:getMaxHP())
+                else
+                    local okParty, party = pcall(function() return master:getPartyWithTrusts() end)
+                    if okParty and party then
+                        for _, member in pairs(party) do
+                            if member and member:isAlive() and member:getZoneID() == master:getZoneID() then
+                                local hpp = member:getHP() * 100 / math.max(1, member:getMaxHP())
+                                if hpp < lowestHpp then healTarget = member; lowestHpp = hpp end
+                            end
                         end
                     end
                 end
 
-                if lowestHpp <= CONFIG.healHpp then
+                local healThreshold = (eren and roleKey == 'oracle') and 90
+                    or (roleKey == 'bulwark' and 60)
+                    or CONFIG.healHpp
+                if lowestHpp <= healThreshold then
                     local range = rdef.healPower or { CONFIG.healMin, CONFIG.healMax }
                     local amount = math.max(CONFIG.healMin, scaledRoleValue(master, range))
                     if getRole(master) == 'mastered' then amount = math.floor(amount * 0.7) end
@@ -1140,6 +1219,8 @@ scheduleCombatLoop = function(master, pet)
                         amount = math.floor(amount * CONFIG.eren.statBonus)
                         if getRole(master) == 'oracle' then
                             amount = math.floor(amount * CONFIG.eren.oracleHealMult)
+                        elseif roleKey == 'bulwark' then
+                            amount = math.max(amount, math.floor(p:getMaxHP() * 0.12))
                         end
                     end
                     healTarget:addHP(amount)
@@ -1147,7 +1228,8 @@ scheduleCombatLoop = function(master, pet)
                 end
             end
 
-            if hasBeh('heal') and not usesSpellHealing and master:isEngaged()
+            if hasBeh('heal') and (not usesSpellHealing or eren)
+               and master:isEngaged()
                and now - (p:getLocalVar('fellowCleanseAt') or 0) >= CONFIG.cleanseCooldownSec then
                 local removable =
                 {
@@ -1186,6 +1268,7 @@ scheduleCombatLoop = function(master, pet)
                         local ce = lerp(CONFIG.tauntMinCE, CONFIG.tauntMaxCE, combatProgress(master))
                         local ve = lerp(CONFIG.tauntMinVE, CONFIG.tauntMaxVE, combatProgress(master))
                         if getRole(master) == 'mastered' then ce = math.floor(ce * 0.6); ve = math.floor(ve * 0.6) end
+                        if eren then ce = math.floor(ce * 0.7); ve = math.floor(ve * 0.7) end
                         tgt:addEnmity(p, ce, ve)
                         p:setLocalVar('fellowTauntAt', now)
                     end)
@@ -1239,11 +1322,38 @@ scheduleCombatLoop = function(master, pet)
                 end
                 local burstReady = burstTier > 0
 
+                if eren and not movePending and p:canUseAbilities() then
+                    local function tryJa(ja, var, recast)
+                        if now - (p:getLocalVar(var) or 0) >= recast then
+                            pcall(function()
+                                p:useJobAbility(ja, p)
+                            end)
+                            p:setLocalVar(var, now)
+                        end
+                    end
+                    if roleKey == 'vanguard' then
+                        tryJa(xi.ja.WARCRY, 'fellowJaWarcry', 30)
+                        tryJa(xi.ja.AGGRESSOR, 'fellowJaAggressor', 60)
+                    elseif roleKey == 'berserker' then
+                        tryJa(xi.ja.BERSERK, 'fellowJaBerserk', 60)
+                        tryJa(xi.ja.BLOOD_RAGE, 'fellowJaBloodRage', 60)
+                    elseif roleKey == 'hunter' then
+                        tryJa(xi.ja.SHARPSHOT, 'fellowJaSharpshot', 60)
+                        tryJa(xi.ja.VELOCITY_SHOT, 'fellowJaVelocity', 60)
+                    end
+                end
+
+                local nukeCd = (eren and CONFIG.eren.nukeCooldownSec) or CONFIG.nukeCooldownSec
+                -- Stock Magus can clip to burstCooldownSec on a burst window.
+                -- Eren Magus is the cleaver: keep the slower solo cadence.
+                local magusCd = nukeCd
+                if burstReady and not eren then
+                    magusCd = CONFIG.burstCooldownSec
+                end
                 if hasBeh('nuke') and p:isEngaged() and tgt and not tgt:isDead()
                    and not movePending
                    and p:canUseAbilities()
-                   and now - (p:getLocalVar('fellowNukeAt') or 0) >=
-                       (burstReady and CONFIG.burstCooldownSec or CONFIG.nukeCooldownSec) then
+                   and now - (p:getLocalVar('fellowNukeAt') or 0) >= magusCd then
                     local spellMove = chosenWs(master)
                     if spellMove and spellMove > 0 then
                         stampFellowSkillBudget(p, master, tgt, spellMove)
@@ -1257,10 +1367,18 @@ scheduleCombatLoop = function(master, pet)
                 -- master's target on its own AI (no petAttack needed -- that was
                 -- a BST/pet order). We just force its signature role TP move when
                 -- it's engaged with capped TP.
-                if not hasBeh('nuke') and p:isEngaged() and p:getTP() >= CONFIG.autoReadyTP
+                -- Eren Oracle stays on cures; other Eren DPS roles spam Hades
+                -- weaponskills on a shorter cadence.
+                local wsCd = CONFIG.wsCooldownSec
+                if eren and isErenDpsRole(roleKey) then
+                    wsCd = CONFIG.eren.wsCooldownSec
+                end
+                local skipWsForHealer = eren and roleKey == 'oracle'
+                if not hasBeh('nuke') and not skipWsForHealer
+                   and p:isEngaged() and p:getTP() >= CONFIG.autoReadyTP
                    and not movePending
                    and p:canUseAbilities()
-                   and now - (p:getLocalVar('fellowWsAt') or 0) >= CONFIG.wsCooldownSec then
+                   and now - (p:getLocalVar('fellowWsAt') or 0) >= wsCd then
                     local ws = chosenWs(master)
                     if ws and ws > 0 and tgt and not tgt:isDead() then
                         -- Every role is constrained by the same investment curve

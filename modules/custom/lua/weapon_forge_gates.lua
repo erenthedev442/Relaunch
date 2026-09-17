@@ -59,6 +59,37 @@ local function familyStarted(player, chains)
     return false
 end
 
+-- 119 III in any bag/wardrobe counts as that family being finished. GM grants
+-- and repeat-forge weapons do not always set WF_*_Final.
+local function ownsStage3(player, chains)
+    if not player.getItemCount or not chains then
+        return false
+    end
+    for _, chain in ipairs(chains) do
+        local s3 = chain.s3
+        if type(s3) == 'table' then
+            s3 = s3.id
+        end
+        if s3 and s3 > 0 and player:getItemCount(s3) > 0 then
+            return true
+        end
+    end
+    return false
+end
+
+local function familyComplete(player, family)
+    if hasFinal(player, family) then
+        return true
+    end
+    local chains =
+    {
+        Relic    = catalog.relicChains,
+        Empyrean = catalog.empyreanChains,
+        Mythic   = catalog.mythicChains,
+    }
+    return ownsStage3(player, chains[family])
+end
+
 -- True when this family is already complete or the player is allowed to
 -- obtain its starter. Stage gates (Unity, Nyzul, rebirth, …) still apply.
 function M.pathUnlocked(player, category)
@@ -66,21 +97,21 @@ function M.pathUnlocked(player, category)
         return true
     end
     if category == 'empyrean' then
-        return hasFinal(player, 'Relic')
-            or hasFinal(player, 'Empyrean')
+        return familyComplete(player, 'Relic')
+            or familyComplete(player, 'Empyrean')
             or familyStarted(player, catalog.empyreanChains)
     end
     if category == 'mythic' then
-        return hasFinal(player, 'Relic')
-            or hasFinal(player, 'Mythic')
+        return familyComplete(player, 'Relic')
+            or familyComplete(player, 'Mythic')
             or familyStarted(player, catalog.mythicChains)
     end
     if category == 'aeonic' then
         if hasFinal(player, 'Aeonic') or (player:getCharVar('LWP_AeonicActive') or 0) > 0 then
             return true
         end
-        return hasFinal(player, 'Relic')
-            and (hasFinal(player, 'Empyrean') or hasFinal(player, 'Mythic'))
+        return familyComplete(player, 'Relic')
+            and (familyComplete(player, 'Empyrean') or familyComplete(player, 'Mythic'))
     end
     if category == 'prime' then
         return hasFinal(player, 'Aeonic')
@@ -219,9 +250,8 @@ M.STAGE_GATES =
                     return true
                 end
 
-                return (p:getCharVar('WF_Relic_Final') or 0) == 1
-                    and ((p:getCharVar('WF_Empyrean_Final') or 0) == 1
-                        or (p:getCharVar('WF_Mythic_Final') or 0) == 1)
+                return familyComplete(p, 'Relic')
+                    and (familyComplete(p, 'Empyrean') or familyComplete(p, 'Mythic'))
             end,
         },
         [1] =

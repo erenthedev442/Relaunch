@@ -337,8 +337,12 @@ commandObj.onTrigger = function(player, args)
             return
         end
         if (def.tierValue or def.flatValue) and catalystCounts[catId] > 1 then
+            local shownVal = def.flatValue or (xi.augmentTiers and xi.augmentTiers.tierFixedValue
+                and xi.augmentTiers.tierFixedValue(def.tierValue, tier, rank)) or 1
+            local suffix   = def.flatValue and '' or ' at your Augment Tier'
             player:printToPlayer(
-                string.format('[%s] is single-line; use one catalyst.', def.label),
+                string.format('[%s] is single-line (+%d%s) -- trade a SINGLE catalyst, kupo!',
+                    def.label, shownVal, suffix),
                 xi.msg.channel.SYSTEM_3)
             return
         end

@@ -38,6 +38,7 @@ local mastery = require('modules/custom/lua/weapon_mastery_catalog')
 local remaAnnounce = require('modules/custom/lua/rema_finish_announce')
 require('modules/custom/lua/LegendaryWeaponPilgrimage')
 local pilgrimageRuntime = xi.legendaryPilgrimage
+local attestBank = require('modules/custom/lua/aeonic_attestation_bank')
 
 local NPC_POS = { x = 568.500, y = -3.360, z = 535.400, rot = 64 }
 
@@ -198,10 +199,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             end
         end
 
-        local haveAtt = player:getItemCount(ae.attestationId)
+        local haveAtt = attestBank.totalHave(player, ae.attestationId)
         if haveAtt < stepCost.attestations then
             player:printToPlayer(
-                string.format('[Weapon Forge] Need %dx %s (you have %d).',
+                string.format('[Weapon Forge] Need %dx %s (you have %d at the forge).',
                     stepCost.attestations, ae.attestationName, haveAtt), S)
             return false
         end
@@ -240,14 +241,21 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return false
         end
 
+        -- Matching attestations live on the forge bank; leftover bag copies
+        -- are still accepted so a pre-banked drop is not stranded.
+        if not attestBank.consume(player, ae.attestationId, stepCost.attestations) then
+            if fromStage == 2 then player:delItem(chain.aeonic.s3.id, 1) end
+            player:printToPlayer('[Weapon Forge] Attestation count changed. Try again.', S)
+            return false
+        end
+
         if not pilgrimageRuntime.advanceAeonic(player, pilgrimage.byFinalId[chain.aeonic.s3.id], fromStage) then
+            attestBank.add(player, ae.attestationId, stepCost.attestations)
             if fromStage == 2 then player:delItem(chain.aeonic.s3.id, 1) end
             player:printToPlayer('[Weapon Forge] Aeonic route state changed. Try again.', S)
             return false
         end
 
-        -- All checks passed — advance the route, then consume the agreed cost.
-        player:delItem(ae.attestationId, stepCost.attestations)
         player:delCurrency('escha_silt', stepCost.eschaSilt)
         if stepCost.reforgeMarks then
             drainMarks(player, stepCost.reforgeMarks)
@@ -263,6 +271,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         if fromStage == 2 then
             local alreadyHadFinal = player:getCharVar('WF_Aeonic_Final') or 0
             player:setCharVar('WF_Aeonic_Final', 1)
+            player:setCharVar('LWP_AeonicActive', 0)
             repeatCredits.noteProperCompletion(player, 'aeonic', alreadyHadFinal)
             remaAnnounce.broadcast(player, 'aeonic', chain.aeonic.s3.name)
         end
@@ -511,6 +520,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                     ae.s3.name),
                 xi.msg.channel.SYSTEM_3)
             player:printToPlayer('Cost: ' .. aeonicCostLine(chain, fromStage), xi.msg.channel.SYSTEM_3)
+            local heldLine = attestBank.statusText(player, chain)
+            if heldLine then player:printToPlayer(heldLine, xi.msg.channel.SYSTEM_3) end
             local gl = gateLine(player, 'aeonic', fromStage, chain)
             if gl ~= '' then player:printToPlayer(gl, xi.msg.channel.SYSTEM_3) end
         else
@@ -542,6 +553,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                             chain.type, ae.s3.name),
                         xi.msg.channel.SYSTEM_3)
                     p:printToPlayer('Cost: ' .. aeonicCostLine(chain, fromStage), xi.msg.channel.SYSTEM_3)
+                    local heldLine = attestBank.statusText(p, chain)
+                    if heldLine then p:printToPlayer(heldLine, xi.msg.channel.SYSTEM_3) end
                 else
                     p:printToPlayer(
                         string.format('%s  |  Jobs: %s', chainLine(chain, fromStage), chain.type),
@@ -1001,6 +1014,14 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         player:printToPlayer(string.format(
             '[Weapon Forge] %s pilgrimage begun. Complete Chapter I to begin its attunement.',
             chain.aeonic.s3.name), S)
+        local moved = attestBank.depositActive(player)
+        if moved > 0 then
+            player:printToPlayer(attestBank.statusText(player, chain), S)
+        else
+            player:printToPlayer(
+                '[Weapon Forge] Matching attestations you farm now are held here. Chat will show 1/1, 1/2, 2/2 as they land.',
+                S)
+        end
         return true
     end
 
@@ -1108,6 +1129,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             if relicVouchers.tryRedeem(player, trade) then
                 return
             end
+            if attestBank.tryTradeDeposit(player, trade) then
+                return
+            end
             player:printToPlayer(
                 '[Weapon Forge] No need to trade -- speak with me and choose a weapon from the menu.',
                 xi.msg.channel.SYSTEM_3)
@@ -1130,6 +1154,15 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 .. 'from a weapon in your bag; Empyrean, Mythic, and Relic I can start from the '
                 .. 'base and forge up through 119 / 119 II / 119 III. Choose a path.',
                 xi.msg.channel.SYSTEM_3)
+            local moved, chain = attestBank.depositActive(player)
+            if moved > 0 then
+                player:printToPlayer(attestBank.statusText(player, chain), xi.msg.channel.SYSTEM_3)
+            else
+                local heldLine = attestBank.statusText(player)
+                if heldLine then
+                    player:printToPlayer(heldLine, xi.msg.channel.SYSTEM_3)
+                end
+            end
             showForgeRoot(player)
         end,
     })

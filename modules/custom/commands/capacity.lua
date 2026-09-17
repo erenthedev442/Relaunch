@@ -5,9 +5,10 @@
 --         !capacity            -> Bibiki Bay (default)
 --         !capacity bibiki     -> Bibiki Bay
 --         !capacity ranperre   -> King Ranperre's Tomb
+--         !capacity ronfaure   -> East Ronfaure [S] north square (also !capacity3)
+--         !capacity 4          -> East Ronfaure [S] south square (also !capacity4)
 --       Landing spots MUST stay in sync with warpPos in the
---       corresponding catalog files (capacity_farm_catalog.lua /
---       ranperre_farm_catalog.lua).
+--       corresponding catalog files.
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
@@ -33,6 +34,18 @@ local FARMS =
         -- ranperre_farm_catalog.lua.
         pos     = { -54.55, 7.21, 82.03, 0 },
         label   = "King Ranperre's Tomb",
+    },
+    {
+        keys    = { 'ronfaure', 'ers', 'east', '3', 'capacity3' },
+        zone    = xi.zone.EAST_RONFAURE_S,
+        pos     = { 510.8990, -59.5513, 471.9462, 92 },
+        label   = 'East Ronfaure [S] (north)',
+    },
+    {
+        keys    = { '4', 'capacity4', 'ronfaure2', 'ers2', 'south' },
+        zone    = xi.zone.EAST_RONFAURE_S,
+        pos     = { 577.1001, -51.1170, 149.4120, 116 },
+        label   = 'East Ronfaure [S] (south)',
     },
 }
 
@@ -64,6 +77,8 @@ commandObj.onTrigger = function(player, dest)
     player:printToPlayer('Usage: !capacity [destination]', xi.msg.channel.SYSTEM_3)
     player:printToPlayer('  (no arg) / bibiki   - Bibiki Bay (120k HP)', xi.msg.channel.SYSTEM_3)
     player:printToPlayer("  ranperre            - King Ranperre's Tomb (120k HP)", xi.msg.channel.SYSTEM_3)
+    player:printToPlayer('  ronfaure / 3        - East Ronfaure [S] north (also !capacity3)', xi.msg.channel.SYSTEM_3)
+    player:printToPlayer('  4 / south           - East Ronfaure [S] south (also !capacity4)', xi.msg.channel.SYSTEM_3)
 end
 
 return commandObj

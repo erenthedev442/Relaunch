@@ -486,7 +486,39 @@ xi.divergence.startCountdown = function(player)
     end
 end
 
+-- Last player left (C++ sets wipeTime on CharListEmpty). Fail the copy so it
+-- is destroyed instead of ticking empty until the 90-minute limit, and so
+-- CharRegistered cannot !waypoint the leaver back in unpaid.
+-- Fresh copies keep wipeTime 0 until someone has zoned in and then left, so
+-- the createInstance → zone-in window is not failed.
+xi.divergence.shouldFailAbandoned = function(instance)
+    if not instance then
+        return false
+    end
+    if instance.failed and instance:failed() then
+        return false
+    end
+    if instance.completed and instance:completed() then
+        return false
+    end
+    if (instance:getWipeTime() or 0) == 0 then
+        return false
+    end
+    for _, p in pairs(instance:getChars() or {}) do
+        if p then
+            return false
+        end
+    end
+    return true
+end
+
 xi.divergence.onInstanceTimeUpdate = function(instance, elapsed, cfg)
+    if xi.divergence.shouldFailAbandoned(instance) then
+        print(string.format('[Divergence] failing abandoned instance %d (last player left)', instance:getID()))
+        instance:fail()
+        return
+    end
+
     partyHpScale.maybeResyncInstance(instance)
     instance:setLocalVar('divElapsed', elapsed)
 

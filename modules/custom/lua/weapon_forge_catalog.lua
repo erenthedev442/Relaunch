@@ -27,7 +27,9 @@
 --                                          +  2,000 Reforge Marks (any pool)
 --
 --   Attestations drop from Geas Fete T4 (always 1, 40% chance of a second)
---   and T3 (15% chance of 1), random among the 14 weapon types.
+--   and T3 (15% chance of 1), random among the 14 weapon types. Matching
+--   drops on an active Aeonic pilgrimage are banked at the Weapon Forge
+--   (see aeonic_attestation_bank.lua) because the items are Rare/Ex.
 --   Dynamis-Beaucedine Hydra Corps NMs do NOT drop them.
 --
 -- Reforge Marks are pooled from CharVars: RF_AF_Marks, RF_Relic_Marks, RF_Empy_Marks.

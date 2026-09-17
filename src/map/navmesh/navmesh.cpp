@@ -334,6 +334,44 @@ auto CNavMesh::findPath(const position_t& start, const position_t& end) -> std::
         return {};
     }
 
+    // Whole-call + per-tick budgets. Al'Taieu hangs (2026-09-06 and 2026-09-17)
+    // spent ~16s inside Detour; the old 3ms check only ran *after* a 64-iter
+    // sliced chunk / findStraightPath, so a single blocking call could still
+    // trip the inactivity watchdog. A failed path is "mob stands still".
+    constexpr auto kPathBudget = std::chrono::milliseconds(3);
+    constexpr auto kTickBudget = std::chrono::milliseconds(40);
+    constexpr int  kIterChunk  = 8;
+    constexpr int  kMaxIters   = 512;
+    constexpr uint16 kAlTaieuZone = 33;
+
+    static thread_local timer::time_point              tickWindow{};
+    static thread_local std::chrono::milliseconds      tickSpent{ 0 };
+
+    const auto t0  = timer::now();
+    if (tickWindow.time_since_epoch().count() == 0 || t0 - tickWindow > std::chrono::milliseconds(400))
+    {
+        tickWindow = t0;
+        tickSpent  = std::chrono::milliseconds(0);
+    }
+    if (tickSpent >= kTickBudget)
+    {
+        return {};
+    }
+
+    auto spentSoFar = [&]()
+    {
+        return std::chrono::duration_cast<std::chrono::milliseconds>(timer::now() - t0);
+    };
+    auto overBudget = [&]()
+    {
+        return spentSoFar() >= kPathBudget;
+    };
+    auto dropPath = [&]() -> std::vector<pathpoint_t>
+    {
+        tickSpent += spentSoFar();
+        return {};
+    };
+
     DebugNavmesh("CNavMesh::findPath (%f, %f, %f) -> (%f, %f, %f) (zone: %u) (MAX_NAV_POLYS: %u)", start.x, start.y, start.z, end.x, end.y, end.z, m_zoneID, MAX_NAV_POLYS);
     dtStatus status = 0;
 
@@ -353,22 +391,32 @@ auto CNavMesh::findPath(const position_t& start, const position_t& end) -> std::
     float sNearestPoint[3];
     float eNearestPoint[3];
 
+    // Al'Taieu's mesh is a pile of disconnected islands; keep nearest-poly
+    // search tight so findNearestPoly cannot wander the whole sea.
+    const float* pickExt = (m_zoneID == kAlTaieuZone) ? smallPolyPickExt : polyPickExt;
+
     // Validate spos into startRef and sNearestPoint
-    status = m_navMeshQuery.findNearestPoly(spos, polyPickExt, &filter, &startRef, sNearestPoint);
-    if (dtStatusFailed(status))
+    status = m_navMeshQuery.findNearestPoly(spos, pickExt, &filter, &startRef, sNearestPoint);
+    if (dtStatusFailed(status) || overBudget())
     {
         DebugNavmesh("CNavMesh::findPath start point invalid (%f, %f, %f) (%u)", spos[0], spos[1], spos[2], m_zoneID);
-        ShowError(detourStatusString(status));
-        return {};
+        if (dtStatusFailed(status))
+        {
+            ShowError(detourStatusString(status));
+        }
+        return dropPath();
     }
 
     // Validate epos into endRef and eNearestPoint
-    status = m_navMeshQuery.findNearestPoly(epos, polyPickExt, &filter, &endRef, eNearestPoint);
-    if (dtStatusFailed(status))
+    status = m_navMeshQuery.findNearestPoly(epos, pickExt, &filter, &endRef, eNearestPoint);
+    if (dtStatusFailed(status) || overBudget())
     {
-        ShowError("CNavMesh::findPath end point invalid (%f, %f, %f) (%u)", epos[0], epos[1], epos[2], m_zoneID);
-        ShowError(detourStatusString(status));
-        return {};
+        if (dtStatusFailed(status))
+        {
+            ShowError("CNavMesh::findPath end point invalid (%f, %f, %f) (%u)", epos[0], epos[1], epos[2], m_zoneID);
+            ShowError(detourStatusString(status));
+        }
+        return dropPath();
     }
 
     // TODO: Do we need these isValidPolyRef checks? We've just found the nearest polys and checked them with dtStatusFailed.
@@ -377,35 +425,36 @@ auto CNavMesh::findPath(const position_t& start, const position_t& end) -> std::
     if (!m_navMesh->isValidPolyRef(startRef))
     {
         DebugNavmesh("CNavMesh::findPath Start poly invalid: (%f, %f, %f) (%u)", start.x, start.y, start.z, m_zoneID);
-        return {};
+        return dropPath();
     }
 
     // Make sure the end poly is valid
     if (!m_navMesh->isValidPolyRef(endRef))
     {
         DebugNavmesh("CNavMesh::findPath End poly invalid: (%f, %f, %f) (%u)", end.x, end.y, end.z, m_zoneID);
-        return {};
+        return dropPath();
     }
 
-    // Blocking dtNavMeshQuery::findPath can stall the whole map tick when the
-    // start and end sit on disconnected mesh islands (Al'Taieu hang 2026-09-06:
-    // Ulxzomit / Ulhpemde / Ulphuabo, 16.8s). Use sliced search with a hard
-    // iteration + time budget; a failed path is "mob stands still", not a hang.
     int32 pathPolyCount = 0;
 
     status = m_navMeshQuery.initSlicedFindPath(startRef, endRef, sNearestPoint, eNearestPoint, &filter, 0);
-    if (dtStatusFailed(status))
+    if (dtStatusFailed(status) || overBudget())
     {
-        ShowError("CNavMesh::findPath initSlicedFindPath error (%u)", m_zoneID);
-        ShowError(detourStatusString(status));
-        return {};
+        if (dtStatusFailed(status))
+        {
+            ShowError("CNavMesh::findPath initSlicedFindPath error (%u)", m_zoneID);
+            ShowError(detourStatusString(status));
+        }
+        return dropPath();
     }
 
-    constexpr int  kIterChunk = 64;
-    constexpr int  kMaxIters  = 2048;
-    constexpr auto kBudget    = std::chrono::milliseconds(3);
-    const auto     t0         = timer::now();
-    int            totalIters = 0;
+    int totalIters = 0;
+
+    auto abortSliced = [&]()
+    {
+        int discarded = 0;
+        m_navMeshQuery.finalizeSlicedFindPath(m_navMeshQueryPolyData.data(), &discarded, static_cast<int>(MAX_NAV_POLYS));
+    };
 
     while (dtStatusInProgress(status))
     {
@@ -417,26 +466,27 @@ auto CNavMesh::findPath(const position_t& start, const position_t& end) -> std::
         {
             ShowError("CNavMesh::findPath updateSlicedFindPath error (%u)", m_zoneID);
             ShowError(detourStatusString(status));
-            int discarded = 0;
-            m_navMeshQuery.finalizeSlicedFindPath(m_navMeshQueryPolyData.data(), &discarded, static_cast<int>(MAX_NAV_POLYS));
-            return {};
+            abortSliced();
+            return dropPath();
         }
 
-        if (dtStatusInProgress(status) && (totalIters >= kMaxIters || (timer::now() - t0) >= kBudget))
+        if (dtStatusInProgress(status) && (totalIters >= kMaxIters || overBudget()))
         {
             ShowWarning("CNavMesh::findPath budget exceeded (zone %u, %d iters) — dropping path", m_zoneID, totalIters);
-            int discarded = 0;
-            m_navMeshQuery.finalizeSlicedFindPath(m_navMeshQueryPolyData.data(), &discarded, static_cast<int>(MAX_NAV_POLYS));
-            return {};
+            abortSliced();
+            return dropPath();
         }
     }
 
     status = m_navMeshQuery.finalizeSlicedFindPath(m_navMeshQueryPolyData.data(), &pathPolyCount, static_cast<int>(MAX_NAV_POLYS));
-    if (dtStatusFailed(status))
+    if (dtStatusFailed(status) || overBudget())
     {
-        ShowError("CNavMesh::findPath finalizeSlicedFindPath error (%u)", m_zoneID);
-        ShowError(detourStatusString(status));
-        return {};
+        if (dtStatusFailed(status))
+        {
+            ShowError("CNavMesh::findPath finalizeSlicedFindPath error (%u)", m_zoneID);
+            ShowError(detourStatusString(status));
+        }
+        return dropPath();
     }
 
     // At this point, findPath() has generated a list of polys that make up a path, but these polys aren't guaranteed to contain a complete path
@@ -446,7 +496,7 @@ auto CNavMesh::findPath(const position_t& start, const position_t& end) -> std::
     if (pathPolyCount <= 0)
     {
         ShowError("CNavMesh::findPath Unable to generate polys for path (%f, %f, %f)->(%f, %f, %f) (%u)", start.x, start.y, start.z, end.x, end.y, end.z, m_zoneID);
-        return {};
+        return dropPath();
     }
 
     // Find the best straight path possible between sNearestPoint and eNearestPoint within the bounds of all the polys in pathPolys.
@@ -455,11 +505,14 @@ auto CNavMesh::findPath(const position_t& start, const position_t& end) -> std::
     // NOTE: The DT_STRAIGHTPATH_ALL_CROSSINGS flag can exasorbate the issue of getting trapped in local minima.
     status = m_navMeshQuery.findStraightPath(sNearestPoint, eNearestPoint, m_navMeshQueryPolyData.data(), pathPolyCount, m_navMeshQueryStraightPathFloatData.data(), m_navMeshQueryStraightPathFlagData.data(), m_navMeshQueryStraightPathPolyData.data(), &straightPathCount, MAX_NAV_POLYS /*, DT_STRAIGHTPATH_ALL_CROSSINGS */);
 
-    if (dtStatusFailed(status))
+    if (dtStatusFailed(status) || overBudget())
     {
-        ShowError("CNavMesh::findPath findStraightPath error (%u)", m_zoneID);
-        ShowError(detourStatusString(status));
-        return {};
+        if (dtStatusFailed(status))
+        {
+            ShowError("CNavMesh::findPath findStraightPath error (%u)", m_zoneID);
+            ShowError(detourStatusString(status));
+        }
+        return dropPath();
     }
 
     // Now that we have list of sequential positions in straightPath, we need to check to see if eNearestPoint is the final point. If it isn't we've been given a partial path.
@@ -493,7 +546,7 @@ auto CNavMesh::findPath(const position_t& start, const position_t& end) -> std::
     // We have now exhausted our path, return empty results.
     if (straightPathCount <= 1)
     {
-        return {};
+        return dropPath();
     }
 
     // TODO: Detect local minima and re-try pathing with a larger buffer.
@@ -513,6 +566,7 @@ auto CNavMesh::findPath(const position_t& start, const position_t& end) -> std::
         outPoints.emplace_back(pathpoint_t{ { pathPos[0], pathPos[1], pathPos[2], 0, 0 }, 0s, false });
     }
 
+    tickSpent += spentSoFar();
     return outPoints;
 }
 

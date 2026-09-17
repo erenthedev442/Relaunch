@@ -400,7 +400,9 @@ end
 --   gearDelivered = bool  (addItem succeeded; never returnAll the base item)
 -- }
 -----------------------------------
-local playerState = {}
+-- Survive FileWatcher reloads so a mid-confirm session cannot lose held gear.
+xi.augmentMooglePlayerState = xi.augmentMooglePlayerState or {}
+local playerState = xi.augmentMooglePlayerState
 
 local function getState(player)
     local key = player:getName()
@@ -571,7 +573,9 @@ for _, entries in ipairs(bankCategories) do
     end)
 end
 
-local bankSelections = {}
+-- Survive FileWatcher reloads so a mid-build selection cannot vanish mid-click.
+xi.augmentMoogleBankSelections = xi.augmentMoogleBankSelections or {}
+local bankSelections = xi.augmentMoogleBankSelections
 
 local function readableItemName(itemId)
     local name = itemNames[itemId] or string.format('catalyst_%d', itemId)
@@ -598,6 +602,10 @@ local function getBankSelection(player)
         }
     end
     return bankSelections[key]
+end
+
+local function isSingleLineDef(def)
+    return def ~= nil and (def.tierValue or def.flatValue) ~= nil
 end
 
 local function clearBankSelection(player)
@@ -717,6 +725,12 @@ local function validateRecipeForRepeat(player, requests)
             return false, string.format(
                 '[%s] requires Augment Tier %d -- yours is %d, kupo!',
                 def.label, need, playerTier)
+        end
+        if isSingleLineDef(def) and (req.qty or 0) > 1 then
+            clearLastRecipe(player)
+            return false, string.format(
+                '[%s] is single-line (+1) -- your saved set has %d. That repeat was cleared; pick one catalyst, kupo!',
+                def.label, req.qty)
         end
     end
 
@@ -935,6 +949,18 @@ showBankQuantity = function(player, entry, categoryId, page)
     local remaining = math.min(
         (balances[entry.itemId] or 0) - (selection.counts[entry.itemId] or 0),
         MAX_CATALYST_COUNT - selection.total)
+    local def = catalog[entry.itemId]
+    if isSingleLineDef(def) then
+        local already = selection.counts[entry.itemId] or 0
+        if already >= 1 then
+            local playerTier = augmentTier(player)
+            local rank = player:getCharVar('Augment_Mastery') or 0
+            rejectSingleLineStack(player, def, playerTier, rank)
+            showBankMain(player)
+            return
+        end
+        remaining = math.min(remaining, 1)
+    end
     if remaining < 1 then
         showBankItems(player, categoryId, page, 'build')
         return
@@ -1489,104 +1515,117 @@ showScourMenu = function(player)
     player:timer(30, function(p) p:customMenu(menu) end)
 end
 
--- Fixed-value augments such as Treasure Hunter intentionally occupy exactly
--- one slot. When a player trades a stack, offer to keep one rather than
--- treating the entire trade as an opaque error.
-local function confirmSingleLineTrade(player, context)
-    local def         = context.def
-    local keptValue   = def.flatValue or tierFixedValue(def.tierValue, context.playerTier, context.sageRank)
-    local excessCount = context.count - 1
-    local menu =
-    {
-        title = string.format('Oops, kupo! %s is one slot only.', def.label),
-        options =
-        {
-            {
-                string.format('Yes - apply 1 (+%d)', keptValue),
-                function(p)
-                    if p:getGil() < GIL_COST then
-                        p:printToPlayer(
-                            string.format('You need %d gil to augment, kupo! Gear and catalysts returned.', GIL_COST),
-                            xi.msg.channel.SYSTEM_3)
-                        return
+-- Treasure Hunter / Phys DT II / Magic DT II (and other flat/tier-fixed
+-- lines) occupy exactly one slot. Extra catalysts used to fill the 5/5
+-- build and then refuse every later trade, so the gear looked "stuck".
+-- Reject, print the warning, clear that build, and do not apply anything.
+-- The engine unreserves the current trade after onTrade returns.
+local function rejectSingleLineStack(player, def, playerTier, sageRank)
+    local shownVal = def.flatValue or tierFixedValue(def.tierValue, playerTier, sageRank)
+    local suffix   = def.flatValue and '' or ' at your Augment Tier'
+    player:printToPlayer(string.format(
+        '[%s] is single-line (+%d%s) -- trade a SINGLE catalyst, kupo!',
+        def.label, shownVal, suffix),
+        xi.msg.channel.SYSTEM_3)
+
+    local selection = getBankSelection(player)
+    if selection.total > 0 then
+        clearBankSelection(player)
+        player:printToPlayer(
+            '[Arcane Bank] That augment build was cleared. Pick one catalyst, then trade the gear again, kupo!',
+            xi.msg.channel.SYSTEM_3)
+    end
+
+    -- A previous extra-catalyst confirm could have swallowed the piece.
+    -- Return it if we are still holding it. Do not addItem the current
+    -- trade's gear -- that copy is still in the player's inventory.
+    local st = getState(player)
+    if st.itemId ~= 0 and not st.gearDelivered then
+        returnAll(player)
+        player:printToPlayer(
+            '[Arcane Augmenter] Your gear was returned, kupo!',
+            xi.msg.channel.SYSTEM_3)
+    end
+    return true
+end
+
+local function scrubInvalidSingleLineBuild(player)
+    local selection = getBankSelection(player)
+    local playerTier = augmentTier(player)
+    local rank = player:getCharVar('Augment_Mastery') or 0
+    for itemId, qty in pairs(selection.counts or {}) do
+        local def = catalog[itemId]
+        if isSingleLineDef(def) and (qty or 0) > 1 then
+            return rejectSingleLineStack(player, def, playerTier, rank)
+        end
+    end
+    return false
+end
+
+local function tradeHasSingleLineStack(player, trade)
+    local catalystCounts = {}
+    local catalystOrder  = {}
+    local totalCatalysts = 0
+    if trade then
+        for slot = 0, 7 do
+            local tradeItem = trade:getItem(slot)
+            if tradeItem then
+                local itemId = tradeItem:getID()
+                local qty    = trade:getSlotQty(slot)
+                if qty == nil or qty < 1 then
+                    qty = 1
+                end
+                if catalog[itemId] then
+                    if not catalystCounts[itemId] then
+                        catalystCounts[itemId] = 0
+                        catalystOrder[#catalystOrder + 1] = itemId
                     end
+                    catalystCounts[itemId] = catalystCounts[itemId] + qty
+                    totalCatalysts         = totalCatalysts + qty
+                end
+            end
+        end
+    end
+    if totalCatalysts == 0 then
+        local selection = getBankSelection(player)
+        if selection.total > 0 then
+            for _, request in ipairs(selectionRequests(selection)) do
+                if not catalystCounts[request.id] then
+                    catalystCounts[request.id] = 0
+                    catalystOrder[#catalystOrder + 1] = request.id
+                end
+                catalystCounts[request.id] = catalystCounts[request.id] + request.qty
+            end
+        end
+    end
 
-                    -- Complete the original trade, then return only the
-                    -- surplus physical catalysts. Bank catalysts are not
-                    -- consumed until the later final confirmation.
-                    p:tradeComplete()
-                    if not context.bankMode and excessCount > 0 then
-                        local refunded = p:addItem({ id = context.itemId, quantity = excessCount })
-                        if not refunded then
-                            addHeldGear(p, context.gearId, context.signature)
-                            p:addItem({ id = context.itemId, quantity = context.count })
-                            p:printToPlayer(
-                                'Could not return the extra catalysts; your gear and all catalysts were returned. Free an inventory slot and try again, kupo!',
-                                xi.msg.channel.SYSTEM_3)
-                            return
-                        end
-                    end
-
-                    local exAugsBySlot = {}
-                    local newMask = 0
-                    for _, locked in ipairs(context.lockedAugs) do
-                        table.insert(exAugsBySlot, { id = locked.id, value = locked.value, cat = nil })
-                        newMask = bit.bor(newMask, bit.lshift(1, #exAugsBySlot - 1))
-                    end
-                    table.insert(exAugsBySlot,
-                    {
-                        id       = def.augId,
-                        value    = keptValue - def.base,
-                        maxValue = keptValue - def.base,
-                        cat      = def.cat,
-                    })
-
-                    playerState[p:getName()] =
-                    {
-                        itemId        = context.gearId,
-                        signature     = context.signature or '',
-                        exAugsBySlot  = exAugsBySlot,
-                        labelSummary  = { string.format('%s  ->  %d', def.label, keptValue) },
-                        catalystsHeld = context.bankMode and {} or { { id = context.itemId, qty = 1 } },
-                        bankCatalysts = context.bankMode and { { id = context.itemId, qty = 1 } } or nil,
-                        bankConsumed  = false,
-                        gearDelivered = false,
-                        isCrit        = false,
-                        usedCritToken = false,
-                        maatEligible  = false,
-                        maatLabelSummary = {},
-                        newMask       = newMask,
-                        crystalNews   = {},
-                    }
-                    if context.bankMode then
-                        clearBankSelection(p)
-                    end
-
-                    p:printToPlayer(string.format(
-                        '[Arcane Augmenter] %s +%d staged; %d extra catalyst%s returned, kupo!',
-                        def.label, keptValue, excessCount, excessCount == 1 and '' or 's'),
-                        xi.msg.channel.SYSTEM_3)
-                    showConfirmMenu(p)
-                end,
-            },
-            {
-                'No - return everything',
-                function(p)
-                    p:printToPlayer('Gear and all catalysts returned unchanged, kupo!', xi.msg.channel.SYSTEM_3)
-                end,
-            },
-        },
-        onCancelled = function(p)
-            p:printToPlayer('Augmentation cancelled; gear and catalysts returned unchanged, kupo!', xi.msg.channel.SYSTEM_3)
-        end,
-    }
-
-    player:timer(30, function(p) p:customMenu(menu) end)
+    local playerTier = augmentTier(player)
+    local rank       = player:getCharVar('Augment_Mastery') or 0
+    for _, itemId in ipairs(catalystOrder) do
+        local def2 = catalog[itemId]
+        if
+            def2 and
+            (def2.tierValue or def2.flatValue) and
+            (catalystCounts[itemId] or 0) > 1
+        then
+            return rejectSingleLineStack(player, def2, playerTier, rank)
+        end
+    end
+    return false
 end
 
 -----------------------------------
 -- Module override
 -----------------------------------
+local function augmenterNpcTable()
+    local zoneTable = xi.zones and xi.zones['Abdhaljs_Isle-Purgonorgo']
+    return zoneTable and zoneTable.npcs and zoneTable.npcs.DE_Augment_Moogle
+end
+
+-- Do not stack Zone.onInitialize on FileWatcher reloads -- that would spawn
+-- a second Arcane Augmenter on the next map boot.
+if not xi._augmentMoogleZoneHooked and not augmenterNpcTable() then
+    xi._augmentMoogleZoneHooked = true
 m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
@@ -1627,6 +1666,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 else
                     showConfirmMenu(player)
                 end
+                return
+            end
+            if scrubInvalidSingleLineBuild(player) then
+                showBankMain(player)
                 return
             end
             showBankMain(player)
@@ -1851,27 +1894,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 -- their written value on every gear piece.
                 if def2 and (def2.tierValue or def2.flatValue) then
                     if (catalystCounts[itemId] or 0) > 1 then
-                        local shownVal = def2.flatValue or tierFixedValue(def2.tierValue, playerTier, rank)
-                        local suffix   = def2.flatValue and '' or ' at your Augment Tier'
-                        if #catalystOrder == 1 then
-                            confirmSingleLineTrade(player,
-                            {
-                                def        = def2,
-                                itemId     = itemId,
-                                count      = catalystCounts[itemId],
-                                gearId     = gearId,
-                                signature  = readSignature(gearItemObj),
-                                lockedAugs = lockedAugs,
-                                playerTier = playerTier,
-                                sageRank   = rank,
-                                bankMode   = bankMode,
-                            })
-                            return
-                        end
-                        player:printToPlayer(string.format(
-                            '[%s] is single-line (+%d%s) -- trade a SINGLE catalyst, kupo!',
-                            def2.label, shownVal, suffix),
-                            xi.msg.channel.SYSTEM_3)
+                        rejectSingleLineStack(player, def2, playerTier, rank)
                         return
                     end
                     for _, la in ipairs(lockedAugs) do
@@ -2246,5 +2269,49 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     end
     utils.unused(AugmentMoogle)
 end)
+end
+
+-- FileWatcher: wrap the live dynamic NPC so extra-catalyst TH / DT-II
+-- trades reject immediately without a map restart. Keep the original
+-- onTrade so later reloads do not nest wrappers.
+local function bindLiveAugmenter()
+    local npcTable  = augmenterNpcTable()
+    if not npcTable then
+        return
+    end
+    if type(npcTable.onTrade) == 'function' then
+        if not npcTable._rawOnTrade then
+            npcTable._rawOnTrade = npcTable.onTrade
+        end
+        local raw = npcTable._rawOnTrade
+        npcTable.onTrade = function(player, npc, trade)
+            tradeGuard.arm(player)
+            if tradeHasSingleLineStack(player, trade) then
+                return
+            end
+            return raw(player, npc, trade)
+        end
+    end
+    if type(npcTable.onTrigger) == 'function' then
+        if not npcTable._rawOnTrigger then
+            npcTable._rawOnTrigger = npcTable.onTrigger
+        end
+        local rawTrigger = npcTable._rawOnTrigger
+        npcTable.onTrigger = function(player, npc)
+            tradeGuard.arm(player)
+            local st = getState(player)
+            if st.itemId ~= 0 or st.gearDelivered or st.bankConsumed then
+                return rawTrigger(player, npc)
+            end
+            if scrubInvalidSingleLineBuild(player) then
+                showBankMain(player)
+                return
+            end
+            return rawTrigger(player, npc)
+        end
+    end
+end
+
+bindLiveAugmenter()
 
 return m

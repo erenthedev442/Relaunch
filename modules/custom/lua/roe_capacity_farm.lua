@@ -1,5 +1,5 @@
 -----------------------------------
--- Capacity camps (Bibiki Bay, King Ranperre's Tomb) are a CP channel.
+-- Capacity camps (Bibiki Bay, King Ranperre's Tomb, East Ronfaure [S]) are a CP channel.
 -- Alts were standing in party with Conflict / Vanquish RoE accepted and
 -- collecting ROE_EXP_RATE payouts off the main's kills. Kill-triggered
 -- records do not progress in these two zones. Claims already completed
@@ -14,6 +14,7 @@ local blockedZones =
 {
     [xi.zone.BIBIKI_BAY]          = true,
     [xi.zone.KING_RANPERRES_TOMB] = true,
+    [xi.zone.EAST_RONFAURE_S]     = true,
 }
 
 function xi.roe.blocksCapacityFarmKill(player, recordID, params)

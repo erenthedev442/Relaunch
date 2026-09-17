@@ -14,7 +14,7 @@
 ---@type TWeaponSkill
 local weaponskillObject = {}
 
--- TODO: Radius 5y at 2334 TP
+-- Splash radius is weapon_skills.radius (20 via spinning_attack_aoe.sql).
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 2

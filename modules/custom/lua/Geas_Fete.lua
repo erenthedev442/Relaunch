@@ -32,6 +32,8 @@
 --   Every NM: tier-scaled Beitetsu (see geas_fete_catalog.lua). Treasure
 --   Hunter raises each bonus roll through the same helper used by droplists.
 --   Aeonic band (T3-T4): Escha Silt + Attestations (T4 always, T3 chance).
+--   Matching attestations on an active Aeonic pilgrimage go to the Weapon
+--   Forge bank (Rare/Ex otherwise caps the bag at one).
 --   T2+: Riftcinder. T4: Eschalixir+2.
 --
 -- All NMs spawn via insertDynamicEntity (no mob_spawn_points rows needed).
@@ -40,6 +42,7 @@
 require('modules/module_utils')
 local geasCatalog = require('modules/custom/lua/geas_fete_catalog')
 local trustDrops = require('modules/custom/lua/trust_cipher_drops')
+local attestBank = require('modules/custom/lua/aeonic_attestation_bank')
 require('scripts/zones/Escha_ZiTah/Zone')
 require('scripts/zones/Escha_RuAun/Zone')
 require('scripts/zones/Reisenjima/Zone')  -- for the redirect signpost override
@@ -783,15 +786,14 @@ local function awardDrops(player, mob, def)
     end
 
     -- Aeonic Attestations: T4 always 1 (+40% second); T3 15% chance of 1.
+    -- Matching type on an active pilgrimage is banked at the Weapon Forge.
     if t == 4 then
-        player:addItem({ id = ATTESTATIONS[math.random(#ATTESTATIONS)], quantity = 1 })
+        attestBank.grantDrop(player, ATTESTATIONS[math.random(#ATTESTATIONS)])
         if math.random() < 0.40 then
-            player:addItem({ id = ATTESTATIONS[math.random(#ATTESTATIONS)], quantity = 1 })
+            attestBank.grantDrop(player, ATTESTATIONS[math.random(#ATTESTATIONS)])
         end
     elseif t == 3 and math.random() < 0.15 then
-        if player:addItem({ id = ATTESTATIONS[math.random(#ATTESTATIONS)], quantity = 1 }) then
-            player:printToPlayer('[Geas Fete] An Attestation crystallizes from the NM!', S)
-        end
+        attestBank.grantDrop(player, ATTESTATIONS[math.random(#ATTESTATIONS)])
     end
 
     -- Retail signature drops: each NM's own drop list (see NM_CATALOG),

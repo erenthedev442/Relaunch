@@ -224,12 +224,20 @@ void CZoneInstance::DecreaseZoneCounter(CCharEntity* PChar)
             if (!(PInstance->Failed() || PInstance->Completed()))
             {
                 PInstance->SetWipeTime(PInstance->GetElapsedTime(timer::now()));
-                // Ambuscade (instance_list 30000) does not use the 180s wipe→fail
-                // path in instance.lua. Without Fail() here the empty copy stays
-                // live until the 30-min time limit, and a retry at a lower
-                // difficulty rejoins that leftover high-diff battle.
-                if (PInstance->GetID() == 30000)
+                // These copies do not use instance.lua's 180s wipe→fail path.
+                // Without Fail() here the empty copy stays live until its time
+                // limit (90 min for Dynamis [D]) and CharRegistered lets a
+                // player !waypoint back in without paying the entry toll.
+                // Ambuscade (30000) has the same leftover-rejoin bug.
+                const auto zoneId = GetID();
+                if (PInstance->GetID() == 30000 ||
+                    zoneId == ZONE_DYNAMIS_SAN_DORIA_D ||
+                    zoneId == ZONE_DYNAMIS_BASTOK_D ||
+                    zoneId == ZONE_DYNAMIS_WINDURST_D ||
+                    zoneId == ZONE_DYNAMIS_JEUNO_D)
                 {
+                    ShowInfoFmt("[CZoneInstance] Failing abandoned instance {} in {} (last player left)",
+                                PInstance->GetID(), getName());
                     PInstance->Fail();
                 }
             }

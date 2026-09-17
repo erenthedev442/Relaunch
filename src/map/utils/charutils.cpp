@@ -5957,12 +5957,19 @@ void AddExperiencePoints(bool expFromRaise, bool awardRegionPoints, bool fromScr
     }
 
     // Relaunch capacity farms award merits alongside Capacity Points, but never
-    // normal job EXP. Their shared Lua engine marks every Bibiki/Ranperre farm
-    // mob after spawn so the normal EXP calculation, bonuses, and messages are
-    // retained while the final award is always routed to limit points.
+    // normal job EXP. Their shared Lua engine marks every farm mob after spawn
+    // so the final award is always routed to limit points. Under-99 get nothing
+    // (camps are a 99 CP / merit channel; Lua also KO's them before this).
     if (PMob && PMob->GetLocalVar("CapacityFarmLimitOnly") > 0)
     {
-        onLimitMode = true;
+        if (PChar->GetMLevel() < 99)
+        {
+            exp = 0;
+        }
+        else
+        {
+            onLimitMode = true;
+        }
     }
 
     // exp added from raise shouldn't display a message. Don't need a message for zero exp either

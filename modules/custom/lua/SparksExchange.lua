@@ -43,7 +43,7 @@ local JP_DEL_CHUNK = 500
 -- or !exec changes take effect immediately -- no restart needed.
 xi.sparks_exchange = xi.sparks_exchange or {}
 xi.sparks_exchange.sp_rate  = 2   -- gil per Spark. Cap (~1m sparks) = ~2m gil. Was 10 (~10m).
-xi.sparks_exchange.ac_rate  = 100
+xi.sparks_exchange.ac_rate  = 20   -- gil per Accolade. Cap (~1m accolades) = ~20m gil. Was 100 (~100m).
 xi.sparks_exchange.jp_rate  = 4000
 xi.sparks_exchange.hm_rate  = 1000  -- gil per Hunt Mark. Tune live: !exec xi.sparks_exchange.hm_rate = 1500
 xi.sparks_exchange.sp_tiers = { 1000, 10000, 50000 }

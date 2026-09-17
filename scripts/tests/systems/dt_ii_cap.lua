@@ -8,6 +8,8 @@ describe('augment PDT-II / MDT-II', function()
         assert(magic.augId == 1156 and magic.flatValue == 1 and magic.maxBoost == 0)
         assert(phys.mult == 100 and magic.mult == 100)
         assert(phys.disp == 100 and magic.disp == 100)
+        local th = catalog[863]
+        assert(th.augId == 147 and th.flatValue == 1 and th.maxBoost == 0)
     end)
 
     it('caps augment II at 10% and leaves unique weapons alone', function()

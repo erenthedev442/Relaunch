@@ -10,6 +10,90 @@
 -----------------------------------
 require('modules/module_utils')
 
+-- FileWatcher dofile discards return; keep the same table require() already has.
+local KEY = 'modules/custom/lua/capacity_farm_engine'
+local exported = package.loaded[KEY]
+if type(exported) ~= 'table' then
+    exported = {}
+end
+package.loaded[KEY] = exported
+
+local function punishUnder99(player)
+    if not player or not player.isPC or not player:isPC() then
+        return
+    end
+    if not player:isAlive() then
+        return
+    end
+    if (player:getMainLvl() or 0) >= 99 then
+        return
+    end
+    player:printToPlayer(
+        'Capacity farms are for level 99 only. No experience is awarded here.',
+        xi.msg.channel.SYSTEM_3)
+    player:setHP(0)
+end
+
+local function attach99Only(mob)
+    if not mob then
+        return
+    end
+    pcall(function()
+        mob:addListener('ENGAGE', 'CAPACITY_99ONLY', function(_, target)
+            punishUnder99(target)
+        end)
+        mob:addListener('DEATH', 'CAPACITY_99ONLY_DEATH', function(_, killer)
+            if killer and killer.getAlliance then
+                for _, member in ipairs(killer:getAlliance() or {}) do
+                    punishUnder99(member)
+                end
+            else
+                punishUnder99(killer)
+            end
+        end)
+    end)
+end
+
+local function applySoundAggroTo(mob, soundRange, sightRange)
+    if not mob then
+        return
+    end
+    local range = soundRange or 20
+    mob:setMobMod(xi.mobMod.DETECTION, xi.detects.SIGHT_AND_HEARING)
+    mob:setMobMod(xi.mobMod.SOUND_RANGE, range)
+    if sightRange then
+        mob:setMobMod(xi.mobMod.SIGHT_RANGE, sightRange)
+    elseif (mob:getMobMod(xi.mobMod.SIGHT_RANGE) or 0) < 15 then
+        mob:setMobMod(xi.mobMod.SIGHT_RANGE, 15)
+    end
+    -- insertDynamicEntity only sets isAggroable (other mobs attacking this
+    -- one). Auto-aggro on players is m_Aggro, which comes from the HL pool
+    -- and can be 0. Force it on every stamp / spawn.
+    pcall(function()
+        mob:setAggressive(true)
+        mob:setMobMod(xi.mobMod.ALWAYS_AGGRO, 1)
+    end)
+    -- Same dynamic entity respawns; restoreModifiers() wipes DETECTION unless
+    -- a SPAWN listener re-applies it after onMobSpawn.
+    pcall(function()
+        mob:addListener('SPAWN', 'CAPACITY_SOUND', function(m)
+            m:setMobMod(xi.mobMod.DETECTION, xi.detects.SIGHT_AND_HEARING)
+            m:setMobMod(xi.mobMod.SOUND_RANGE, range)
+            if sightRange then
+                m:setMobMod(xi.mobMod.SIGHT_RANGE, sightRange)
+            elseif (m:getMobMod(xi.mobMod.SIGHT_RANGE) or 0) < 15 then
+                m:setMobMod(xi.mobMod.SIGHT_RANGE, 15)
+            end
+            m:setAggressive(true)
+            m:setMobMod(xi.mobMod.ALWAYS_AGGRO, 1)
+        end)
+    end)
+    attach99Only(mob)
+    pcall(function()
+        mob:setLocalVar('CapacityFarmLimitOnly', 1)
+    end)
+end
+
 local function makeFarm(catalog)
     local _zoneName = catalog.zonePath:match('xi%.zones%.(.+)')
     require(string.format('scripts/zones/%s/Zone', _zoneName))
@@ -63,6 +147,61 @@ local function makeFarm(catalog)
         return (dx*dx + dy*dy + dz*dz) <= (aggroBuffer * aggroBuffer)
     end
 
+    -- Random point in a 4-corner quad (bilinear). Extra jitter keeps the
+    -- camp from looking like a grid or a line.
+    local function pickInQuad(quad)
+        local u = 0.05 + 0.90 * math.random()
+        local v = 0.05 + 0.90 * math.random()
+        local a, b, c, d = quad[1], quad[2], quad[3], quad[4]
+        local x = (1 - u) * (1 - v) * a.x + u * (1 - v) * b.x + u * v * c.x + (1 - u) * v * d.x
+        local y = (1 - u) * (1 - v) * a.y + u * (1 - v) * b.y + u * v * c.y + (1 - u) * v * d.y
+        local z = (1 - u) * (1 - v) * a.z + u * (1 - v) * b.z + u * v * c.z + (1 - u) * v * d.z
+        x = x + (math.random() - 0.5) * 8
+        z = z + (math.random() - 0.5) * 8
+        return x, y, z
+    end
+
+    local function pickSpawn()
+        if catalog.spawnQuad and #catalog.spawnQuad == 4 then
+            local x, y, z
+            for _ = 1, 16 do
+                x, y, z = pickInQuad(catalog.spawnQuad)
+                if not insideAggro(x, y, z) then
+                    return x, y, z
+                end
+            end
+            return x, y, z
+        end
+
+        local pts = safePoints
+        if pts and #pts > 0 then
+            local p = pts[math.random(#pts)]
+            return p.x, p.y, p.z
+        end
+
+        local cx, cy, cz = catalog.campCenter.x, catalog.campCenter.y, catalog.campCenter.z
+        for _ = 1, 8 do
+            local x = cx + math.random(-catalog.spreadX, catalog.spreadX)
+            local z = cz + math.random(-catalog.spreadZ, catalog.spreadZ)
+            if not insideAggro(x, cy, z) then
+                return x, cy, z
+            end
+        end
+        return cx, cy, cz
+    end
+
+    local function pickTemplate(x, y, z)
+        local pool = catalog.templates
+        if catalog.waterTemplates and catalog.waterMinX and x >= catalog.waterMinX then
+            pool = catalog.waterTemplates
+        end
+        local tpl = pool[math.random(#pool)]
+        if type(tpl) == 'table' then
+            return tpl.groupId, tpl.groupZoneId or catalog.groupZoneId
+        end
+        return tpl, catalog.groupZoneId
+    end
+
     local campZone
     local ensurePopulation  -- forward decl
     -- Native respawn normally completes well inside this window (15s death
@@ -70,43 +209,27 @@ local function makeFarm(catalog)
     -- disappeared after this is stale and is recovered in-place.
     local staleRespawnSeconds = math.max(60, (catalog.respawnSeconds or 5) + 45)
 
+    local function applySoundAggro(mob)
+        if catalog.soundAggro then
+            applySoundAggroTo(mob, catalog.soundRange or 20, catalog.sightRange)
+        else
+            attach99Only(mob)
+            pcall(function()
+                mob:setLocalVar('CapacityFarmLimitOnly', 1)
+            end)
+        end
+    end
+
+    if catalog.spawnQuad and #catalog.spawnQuad == 4 then
+        print(string.format('[%s] random quad scatter (%d corners), warp buffer %.1fy',
+            logTag, #catalog.spawnQuad, aggroBuffer))
+    end
+
     local function spawnOne()
         if not campZone then return end
 
-        local x, y, z
-        local pts = safePoints
-        if pts and #pts > 0 then
-            local p = pts[math.random(#pts)]
-            x, y, z = p.x, p.y, p.z
-        else
-            -- Random fallback around campCenter: reject picks inside the warp
-            -- aggro buffer and retry a few times before falling back to the
-            -- centre coord (safer than a spinning loop if the buffer swallows
-            -- the whole spread box).
-            local c = catalog.campCenter
-            for _ = 1, 8 do
-                x = c.x + math.random(-catalog.spreadX, catalog.spreadX)
-                y = c.y
-                z = c.z + math.random(-catalog.spreadZ, catalog.spreadZ)
-                if not insideAggro(x, y, z) then break end
-            end
-            if insideAggro(x, y, z) then
-                x, y, z = c.x, c.y, c.z
-            end
-        end
-
-        -- Templates may be plain numbers (use catalog.groupZoneId) or
-        -- {groupId=N, groupZoneId=M} tables for cross-zone mixed pools.
-        local tpl  = catalog.templates[math.random(#catalog.templates)]
-        local gid, gzid
-        if type(tpl) == 'table' then
-            gid  = tpl.groupId
-            gzid = tpl.groupZoneId or catalog.groupZoneId
-        else
-            gid  = tpl
-            gzid = catalog.groupZoneId
-        end
-
+        local x, y, z = pickSpawn()
+        local gid, gzid = pickTemplate(x, y, z)
         local rot = math.random(0, 255)
 
         local mob = campZone:insertDynamicEntity({
@@ -114,6 +237,7 @@ local function makeFarm(catalog)
             groupId     = gid,
             groupZoneId = gzid,
             name        = catalog.mobName,
+            packetName  = catalog.packetName or catalog.mobName,
             x           = x,
             y           = y,
             z           = z,
@@ -135,6 +259,7 @@ local function makeFarm(catalog)
             -- reverts to the pool baseline, so re-apply after it runs.
             onMobSpawn = function(m)
                 m:setLocalVar('CapacityFarmDiedAt', 0)
+                applySoundAggro(m)
                 m:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)
                 m:setMobMod(xi.mobMod.NO_DROPS, 1)
                 -- Preserve the normal kill reward for merits while preventing
@@ -149,7 +274,7 @@ local function makeFarm(catalog)
                 end
             end,
 
-            onMobDeath = function(deadMob)
+            onMobDeath = function(deadMob, player)
                 -- onMobDeath can run once per eligible alliance member. Keep
                 -- the first timestamp, and refresh this module instance's zone
                 -- reference so FileWatcher reloads cannot strand the pool.
@@ -157,6 +282,9 @@ local function makeFarm(catalog)
                 if deadMob:getLocalVar('CapacityFarmDiedAt') == 0 then
                     deadMob:setLocalVar('CapacityFarmDiedAt', GetSystemTime())
                 end
+                -- Fires before C++ DistributeExperiencePoints. Dead members
+                -- get 0 EXP / 0 merits / 0 CP.
+                punishUnder99(player)
             end,
         })
         if not mob then
@@ -187,6 +315,7 @@ local function makeFarm(catalog)
         -- death/despawn/spawn-wave window has elapsed.
         for _, mob in ipairs(existing or {}) do
             if mob:isAlive() then
+                applySoundAggro(mob)
                 alive = alive + 1
             else
                 local diedAt = mob:getLocalVar('CapacityFarmDiedAt')
@@ -245,7 +374,88 @@ local function makeFarm(catalog)
         end
     end)
 
+    -- FileWatcher: restamp every living farm mob so sound aggro is not
+    -- stuck behind a map restart or the next death/respawn.
+    local okApply, applyErr = pcall(function()
+        local zoneId = catalog.zoneId
+        if not zoneId then
+            print(string.format('[%s] sound aggro: no zoneId', logTag))
+            return
+        end
+        local zone = GetZone(zoneId)
+        if not zone then
+            print(string.format('[%s] sound aggro: zone %s not loaded', logTag, tostring(zoneId)))
+            return
+        end
+        campZone = zone
+        local existing = zone:queryEntitiesByName('DE_' .. catalog.mobName)
+        local n = 0
+        for _, mob in ipairs(existing or {}) do
+            applySoundAggro(mob)
+            n = n + 1
+        end
+        print(string.format('[%s] sound aggro applied to %d live %s', logTag, n, catalog.mobName))
+    end)
+    if not okApply then
+        print(string.format('[%s] sound aggro failed: %s', logTag, tostring(applyErr)))
+    end
+
+    -- FileWatcher of a new farm module never re-registers Zone hooks. Seed
+    -- (or top up) the pool now so the camp exists without a map restart.
+    if not campZone and catalog.zoneId then
+        pcall(function()
+            campZone = GetZone(catalog.zoneId)
+        end)
+    end
+    if campZone then
+        if catalog.resettleOnLoad and catalog.spawnQuad then
+            local existing = campZone:queryEntitiesByName('DE_' .. catalog.mobName)
+            local moved = 0
+            for _, mob in ipairs(existing or {}) do
+                local x, y, z = pickSpawn()
+                local rot = math.random(0, 255)
+                pcall(function()
+                    mob:setSpawn(x, y, z, rot)
+                    if mob:isSpawned() then
+                        DespawnMob(mob:getID())
+                    end
+                end)
+                moved = moved + 1
+            end
+            catalog.resettleOnLoad = false
+            print(string.format('[%s] resettled %d %s onto random quad points (repop ~5s)',
+                logTag, moved, catalog.mobName))
+        end
+        ensurePopulation()
+    end
+
     return m
+end
+
+-- FileWatcher of this factory does not re-run CapacityFarm.lua. Stamp the
+-- cached Bibiki catalog here so a mid-file reload still hits every live Phantom.
+do
+    local cat = package.loaded['modules/custom/lua/capacity_farm_catalog']
+    if type(cat) == 'table' and cat.zoneId and cat.mobName then
+        local ok, err = pcall(function()
+            local zone = GetZone(cat.zoneId)
+            if not zone then
+                print('[capacity_farm_engine] sound aggro: Bibiki zone not loaded')
+                return
+            end
+            local existing = zone:queryEntitiesByName('DE_' .. cat.mobName)
+            local n = 0
+            local soundRange = cat.soundRange or 20
+            for _, mob in ipairs(existing or {}) do
+                applySoundAggroTo(mob, soundRange, cat.sightRange)
+                n = n + 1
+            end
+            print(string.format('[capacity_farm_engine] sound aggro applied to %d live %s', n, cat.mobName))
+        end)
+        if not ok then
+            print('[capacity_farm_engine] sound aggro failed: ' .. tostring(err))
+        end
+    end
 end
 
 -- Return as a callable table so moduleutils::LoadLuaModules (which scans every
@@ -255,7 +465,6 @@ end
 -- thanks to the __call metamethod. Empty overrides list satisfies the Module
 -- shape check but adds no runtime hooks -- the actual capacity-farm Modules
 -- are created dynamically by makeFarm() and registered as normal per zone.
-return setmetatable(
-    { overrides = {}, makeFarm = makeFarm },
-    { __call = function(_, catalog) return makeFarm(catalog) end }
-)
+exported.overrides = exported.overrides or {}
+exported.makeFarm  = makeFarm
+return setmetatable(exported, { __call = function(_, catalog) return makeFarm(catalog) end })

@@ -11,8 +11,14 @@
 -- uses to BLOCK CP; here we want CP, so we never set it.
 --
 -- Pairs with a CAPACITY_RATE bump in settings/map.lua (box-only) for pace.
+-- FileWatcher dofile discards return; mutate the cached table.
 -----------------------------------
-local catalog = {}
+local KEY = 'modules/custom/lua/capacity_farm_catalog'
+local catalog = package.loaded[KEY]
+if type(catalog) ~= 'table' then
+    catalog = {}
+end
+package.loaded[KEY] = catalog
 
 catalog.zoneId   = xi.zone.BIBIKI_BAY          -- 4
 catalog.zonePath = 'xi.zones.Bibiki_Bay'
@@ -71,5 +77,10 @@ catalog.cpBonus  = 2000                 -- flat bonus Capacity Points to the kil
 -- Diagnostic logging. Reports missing entities, mobs still awaiting native
 -- respawn, and stale entities recovered by the Lua watchdog.
 catalog.debug    = true
+
+-- 360-degree sound aggro (plus sight). SOUND_RANGE 20 matches the warp
+-- buffer comment. FileWatcher restamps every live Capacity Phantom.
+catalog.soundAggro = true
+catalog.soundRange = 20
 
 return catalog
