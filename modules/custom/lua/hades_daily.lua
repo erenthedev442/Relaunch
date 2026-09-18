@@ -427,6 +427,19 @@ local function showRoot(player)
             catalog.showCrateHold(p, showRoot, false)
         end,
     }
+    if
+        xi.erenQuest and
+        xi.erenQuest.shouldShowHades and
+        xi.erenQuest.shouldShowHades(player)
+    then
+        opts[#opts + 1] =
+        {
+            'The Name Beyond the Ferry',
+            function(p)
+                xi.erenQuest.openHades(p)
+            end,
+        }
+    end
     opts[#opts + 1] = { 'Close', function(_) end }
 
     hadesMenu.title   = string.format('Hades  %d/5 turned in', doneCount)

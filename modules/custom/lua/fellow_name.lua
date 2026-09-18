@@ -109,6 +109,10 @@ end
 -- Sanitize + filter + persist, and rename the live Fellow if it is out.
 -- Returns (true, cleanName) on success, or (false, errorMessage) on rejection.
 function FN.apply(player, raw)
+    if (player:getCharVar('Fellow_ErenUnlocked') or 0) == 1 then
+        return false, 'Eren is a permanent transformation. That name can no longer be changed.'
+    end
+
     local name = FN.sanitize(raw)
     if not name then
         return false, 'Use letters and spaces for the name (max 15 chars), e.g. !fellowname Sir Fluffy.'
@@ -116,17 +120,25 @@ function FN.apply(player, raw)
     if not FN.isClean(name) then
         return false, 'That name was rejected by the language filter, kupo.'
     end
+    if name:lower() == 'eren' then
+        local gmLevel = 0
+        pcall(function() gmLevel = player:getGMLevel() or 0 end)
+        if gmLevel > 0 or (player:getCharVar('ErenQuestTester') or 0) == 1 then
+            return false, 'Eren is reserved for The Name Beyond the Ferry. A name alone can no longer unlock that form.'
+        end
+        return false, 'That name is reserved and cannot be selected.'
+    end
     local previous = FN.read(player)
     FN.pack(player, name)
+    player:setCharVar('Fellow_ErenLegacy', 0)
     -- The Fellow is a flagged trust, not player:getPet().
     local fellow = xi.fellow and xi.fellow.getTrust and xi.fellow.getTrust(player)
     if fellow then
         pcall(function() fellow:renameEntity(name, true) end)
     end
-    -- Eren swaps look + skill set; a live rename must respawn to apply Hades 2674.
-    local nowEren = name:lower() == 'eren'
+    -- A legacy name-only Eren loses its reserved status when renamed.
     local wasEren = type(previous) == 'string' and previous:lower() == 'eren'
-    if (nowEren or wasEren) and xi.fellow and xi.fellow.respawnIfOut then
+    if wasEren and xi.fellow and xi.fellow.respawnIfOut then
         pcall(function() xi.fellow.respawnIfOut(player) end)
     end
     return true, name

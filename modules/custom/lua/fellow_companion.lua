@@ -44,6 +44,7 @@
 require('modules/module_utils')
 local FN = require('modules/custom/lua/fellow_name')  -- custom free-text name (replaced the preset list)
 local progression = require('modules/custom/lua/standard_ws_tuning_catalog')
+local erenQuest = require('modules/custom/lua/eren_quest_catalog')
 
 local m   = Module:new('fellow_companion')
 local SYS = xi.msg.channel.SYSTEM_3
@@ -516,6 +517,7 @@ local function roleDef(p) return CONFIG.roles[getRole(p)] or CONFIG.roles[CONFIG
 
 -- Appearance = NPC model ID applied via setModelId after spawn; Name = live display name.
 local function chosenModelId(p)
+    if erenQuest.isUnlocked(p) then return 2674 end
     local mdl = CONFIG.models[getN(p, V.modelPet)]
     -- A disabled (crash-risk) or missing look falls back to the default Lynx
     -- chassis (no overlay) so a stored selection can never crash the client.
@@ -524,6 +526,7 @@ local function chosenModelId(p)
 end
 -- Outfit overrides Appearance when set (0 = no outfit).
 local function getOutfitModelId(p)
+    if erenQuest.isUnlocked(p) then return 2674 end
     local entry = CONFIG.outfits[getN(p, V.outfit)]
     return entry and entry.modelId
 end
@@ -533,10 +536,12 @@ end
 -- fall back to a generic default until the player sets a custom name.
 local DEFAULT_FELLOW_NAME = 'Fellow'
 local function chosenName(p)
+    if erenQuest.isUnlocked(p) then return 'Eren' end
+    erenQuest.migrateLegacy(p, false)
     return FN.read(p) or CONFIG.names[getN(p, V.nameIdx)] or DEFAULT_FELLOW_NAME
 end
 
--- Hidden name: Eren uses Hades look 2674 and only that model's skill list
+-- Quest-unlocked Eren uses Hades look 2674 and only that model's skill list
 -- (Hadesv1 3389-3394 / anims 2399-2404). Role Combo/Thunder IV/bow shots
 -- crash the client on this skeleton.
 -- Declared before chosenWs: Lua locals are not visible above their statement,
@@ -573,8 +578,7 @@ local EREN_DEFAULT_WS =
 }
 
 local function isEren(p)
-    local name = chosenName(p)
-    return type(name) == 'string' and name:lower() == 'eren'
+    return erenQuest.isUnlocked(p)
 end
 
 local function resolveErenWs(roleKey, choice)
@@ -1585,6 +1589,16 @@ local function respawnIfOut(p)
     armKeeper(p, 700)  -- keeper re-spawns the new chassis shortly
 end
 
+-- Private quest instances cross a zone boundary, which clears the normal active
+-- flag and can leave the regular summon cooldown running. Recreate only this
+-- player's Fellow without bypassing any ordinary player-facing summon rules.
+local function ensureSummonedForInstance(p)
+    if getFellowTrust(p) then return end
+    setN(p, V.active, 1)
+    p:setLocalVar('fellowSummonPending', 1)
+    armKeeper(p, 30)
+end
+
 -- ════════════════════════════════ Respec ════════════════════════════════════
 -- Reset penalty: on a stats reset you get back the pool of allocated points
 -- MINUS this percent (rounded DOWN, so tiny builds lose nothing). Discourages
@@ -1786,12 +1800,21 @@ openMain = function(p)
         { string.format('Allocate Points (%d)', getPoints(p)), function(pp) openAllocate(pp) end },
         { 'Upgrade Path', function(pp) openProgress(pp) end },
         { 'Choose Role',  function(pp) openRole(pp) end },
-        { 'Name',         function(pp) openName(pp) end },
-        { 'Appearance',   function(pp) openModel(pp, 0) end },
-        { 'Outfit',       function(pp) openOutfit(pp, 0) end },
-        { 'View Status',  function(pp) statusReport(pp); openMain(pp) end },
-        { 'Close',        function(pp) end },
     }
+    if not erenQuest.isUnlocked(p) then
+        options[#options + 1] = { 'Name',       function(pp) openName(pp) end }
+        options[#options + 1] = { 'Appearance', function(pp) openModel(pp, 0) end }
+        options[#options + 1] = { 'Outfit',     function(pp) openOutfit(pp, 0) end }
+    end
+    local hasErenQuest = xi.erenQuest and xi.erenQuest.shouldShowOfficer and xi.erenQuest.shouldShowOfficer(p)
+    if hasErenQuest then
+        options[#options + 1] = { erenQuest.isUnlocked(p) and 'Eren Memories' or 'A Voice Beyond Mastery',
+            function(pp) xi.erenQuest.openOfficer(pp) end }
+    end
+    if not hasErenQuest or erenQuest.isUnlocked(p) then
+        options[#options + 1] = { 'View Status', function(pp) statusReport(pp); openMain(pp) end }
+    end
+    options[#options + 1] = { 'Close', function() end }
     show(p, string.format('Fellow Officer  Lv.%d', lvl), options)
 end
 
@@ -2322,6 +2345,9 @@ m:addOverride('xi.player.onGameIn', function(player, gameLogin, zoning)
     super(player, gameLogin, zoning)
     pcall(function()
         if getN(player, V.born) == 1 then migrateProgression(player) end
+        if not zoning then
+            erenQuest.migrateLegacy(player, true)
+        end
         -- Trusts are dismissed by the engine at a zone line. Mirror that
         -- behavior instead of having the keeper silently recreate the Fellow.
         if zoning then
@@ -2346,7 +2372,11 @@ xi.fellow.summon      = function(p) summon(p) end
 xi.fellow.dismiss     = function(p) dismiss(p) end
 xi.fellow.status      = function(p) statusReport(p) end
 xi.fellow.getTrust    = function(p) return getFellowTrust(p) end
+xi.fellow.resolveName = function(p) return chosenName(p) end
 xi.fellow.respawnIfOut = function(p) respawnIfOut(p) end
+xi.fellow.ensureSummonedForInstance = function(p) ensureSummonedForInstance(p) end
+xi.fellow.isMastered  = function(p) return isMastered(p) end
+xi.fellow.isEren      = function(p) return isEren(p) end
 xi.fellow.addXp       = function(p, n) addXp(p, n) end
 xi.fellow.grantPoints = function(p, n) ensureBorn(p); setN(p, V.points, getPoints(p) + math.max(0, n)) end
 xi.fellow.allocatedModAmount = allocatedModAmount

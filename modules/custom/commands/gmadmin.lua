@@ -44,6 +44,7 @@ local categories =
             '!worldboss status|spawn|kill|reset',
             '!affinitypop - force affinity event spawns',
             '!mastery grant|reset / !primetrial - progression repair',
+            '!erenquesttest grant|revoke|status <player> - private quest access',
             '!tower / !gauntlet admin subcommands - session surgery',
             'Retired invasion tooling remains owner-only.',
         },

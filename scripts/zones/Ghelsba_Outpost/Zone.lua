@@ -4,6 +4,7 @@
 ---@type TZone
 local zoneObject = {}
 local unityInstance = require('modules/custom/lua/unity_wanted_instance_runtime')
+local erenInstance = require('modules/custom/lua/eren_quest_instance')
 
 zoneObject.onInitialize = function(zone)
     xi.helm.initZone(zone, xi.helmType.LOGGING)
@@ -25,7 +26,13 @@ zoneObject.onZoneIn = function(player, prevZone)
     return cs
 end
 
-zoneObject.onInstanceZoneIn = unityInstance.onInstanceZoneIn
+zoneObject.onInstanceZoneIn = function(player, instance)
+    if instance and instance:getID() == 14001 then
+        erenInstance.onInstanceZoneIn(player, instance)
+        return
+    end
+    unityInstance.onInstanceZoneIn(player, instance)
+end
 zoneObject.onInstanceLoadFailed = unityInstance.onInstanceLoadFailed
 
 zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranking, isConquestAlliance)

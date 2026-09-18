@@ -1,6 +1,6 @@
--- Hidden Fellow name "Eren" raises DPS weaponskills to 149,999, Magus AoE
--- to 99,999 per target, tank DT, and Oracle Cure Potency II. Any other name
--- keeps the stock 99,999 / 50-70k profile.
+-- Quest-unlocked Eren raises DPS weaponskills to 149,999, Magus AoE to
+-- 99,999 per target, tank DT, and Oracle Cure Potency II. The name alone no
+-- longer grants the form.
 
 describe('Eren fellow role bonuses', function()
     local fellow
@@ -91,5 +91,26 @@ describe('Eren fellow role bonuses', function()
             assert(move.ws >= xi.mobSkill.FULMINOUS_SMASH)
             assert(move.ws <= xi.mobSkill.VIVISECTION)
         end
+    end)
+
+    it('requires the permanent unlock flag rather than the chosen name', function()
+        local vars =
+        {
+            Fellow_NameCustom = 1,
+            Fellow_NameW0 = string.byte('E') +
+                bit.lshift(string.byte('r'), 8) +
+                bit.lshift(string.byte('e'), 16) +
+                bit.lshift(string.byte('n'), 24),
+            Fellow_ErenUnlocked = 0,
+        }
+        local player =
+        {
+            getCharVar = function(_, key) return vars[key] or 0 end,
+            setCharVar = function(_, key, value) vars[key] = value end,
+        }
+
+        assert(fellow.isEren(player) == false)
+        vars.Fellow_ErenUnlocked = 1
+        assert(fellow.isEren(player) == true)
     end)
 end)
