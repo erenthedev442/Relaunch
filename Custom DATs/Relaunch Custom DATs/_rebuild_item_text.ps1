@@ -1,47 +1,15 @@
 $ErrorActionPreference = 'Stop'
 
+# September 2026: 0x1400 records. Only in-place string edits on live retail
+# rows. Cloning a full item onto a stub id R0s this client.
+
 $package    = $PSScriptRoot
+$ffxi       = 'C:\Program Files (x86)\PlayOnline\SquareEnix\FINAL FANTASY XI'
 $datRel     = 'ROM\286\73.DAT'
+$srcPath    = Join-Path $ffxi $datRel
 $datPath    = Join-Path $package $datRel
-$recordSize = 0xC00
+$recordSize = 0x1400
 $firstId    = 23040
-$donorId    = 26344
-
-$vouchers = @(
-    @{ Id = 23879; Name = 'Spharai Voucher' }
-    @{ Id = 23880; Name = 'Mandau Voucher' }
-    @{ Id = 23881; Name = 'Excalibur Voucher' }
-    @{ Id = 23882; Name = 'Ragnarok Voucher' }
-    @{ Id = 23883; Name = 'Guttler Voucher' }
-    @{ Id = 23884; Name = 'Bravura Voucher' }
-    @{ Id = 23885; Name = 'Apocalypse Voucher' }
-    @{ Id = 23886; Name = 'Gungnir Voucher' }
-    @{ Id = 23887; Name = 'Kikoku Voucher' }
-    @{ Id = 23888; Name = 'Amanomurakumo Voucher' }
-    @{ Id = 23889; Name = 'Mjollnir Voucher' }
-    @{ Id = 23890; Name = 'Claustrum Voucher' }
-    @{ Id = 23891; Name = 'Yoichinoyumi Voucher' }
-    @{ Id = 23892; Name = 'Annihilator Voucher' }
-    @{ Id = 23867; Name = 'Aegis Voucher' }
-    @{ Id = 23868; Name = 'Gjallarhorn Voucher' }
-    @{ Id = 24276; Name = "Sakpata's Fists Voucher" }
-    @{ Id = 24277; Name = "Gleti's Knife Voucher" }
-    @{ Id = 24278; Name = "Sakpata's Sword Voucher" }
-    @{ Id = 24279; Name = "Agwu's Claymore Voucher" }
-    @{ Id = 24280; Name = "Ikenga's Axe Voucher" }
-    @{ Id = 24281; Name = "Agwu's Axe Voucher" }
-    @{ Id = 24282; Name = "Bunzi's Chopper Voucher" }
-    @{ Id = 24290; Name = "Agwu's Scythe Voucher" }
-    @{ Id = 24291; Name = "Ikenga's Lance Voucher" }
-    @{ Id = 24292; Name = "Bunzi's Rod Voucher" }
-    @{ Id = 24293; Name = "Mpaca's Staff Voucher" }
-    @{ Id = 24294; Name = "Gleti's Crossbow Voucher" }
-    @{ Id = 24295; Name = "Mpaca's Bow Voucher" }
-)
-
-# 24283-24289 are real CSM gloves. 24296 stays a free stub.
-$clearIds = @(24296)
-$blankId  = 23869
 
 function Ror5([byte]$b) {
     [byte]((($b -shr 5) -bor (($b -band 0x1F) -shl 3)) -band 0xFF)
@@ -62,105 +30,49 @@ function Write-Record([byte[]]$file, [int]$id, [byte[]]$dec) {
     for ($i = 0; $i -lt $recordSize; $i++) { $file[$off + $i] = Rol5 $dec[$i] }
 }
 
-function Poke-U32($arr, [int]$off, [uint32]$value) {
-    $b = [BitConverter]::GetBytes($value)
-    $arr[$off]     = $b[0]
-    $arr[$off + 1] = $b[1]
-    $arr[$off + 2] = $b[2]
-    $arr[$off + 3] = $b[3]
-}
-
-function Write-CString($arr, [int]$from, [int]$to, [string]$text) {
+# Overwrite a C-string but stop before the 01 00 00 00 language flag.
+function Poke-Slot([byte[]]$arr, [int]$from, [int]$flagAt, [string]$text) {
     $bytes = [Text.Encoding]::ASCII.GetBytes($text)
-    if (($from + $bytes.Length + 1) -gt $to) {
-        throw "String '$text' does not fit in $from..$to"
+    if (($from + $bytes.Length + 1) -gt $flagAt) {
+        throw "String '$text' does not fit in $from..$flagAt"
     }
-    for ($i = $from; $i -lt $to; $i++) { $arr[$i] = 0 }
+    for ($i = $from; $i -lt $flagAt; $i++) { $arr[$i] = 0 }
     [Buffer]::BlockCopy($bytes, 0, $arr, $from, $bytes.Length)
 }
 
-if (-not (Test-Path -LiteralPath $datPath)) {
-    throw "Missing $datPath -- run this from the Relaunch Custom DATs pack."
+if (-not (Test-Path -LiteralPath $srcPath)) {
+    throw "Missing retail $srcPath. Update FFXI first."
 }
 
+New-Item -ItemType Directory -Force -Path (Split-Path $datPath) | Out-Null
+Copy-Item -LiteralPath $srcPath -Destination $datPath -Force
 $file = [IO.File]::ReadAllBytes($datPath)
-if (($file.Length % $recordSize) -ne 2272 -and ($file.Length % $recordSize) -ne 0) {
-    # 17301504 % 3072 = 2272; the stock file is still ID-aligned from 23040.
-    Write-Host ("note: trailing $($file.Length % $recordSize) bytes after last full record")
+if (($file.Length % $recordSize) -ne 0) {
+    throw "Retail $datRel is $($file.Length) bytes; expected a 0x1400-stride file."
 }
 
-$donor = Decode-Id $file $donorId
-$donorName = [Text.Encoding]::ASCII.GetString($donor, 0x74, 24).Split([char]0)[0]
-if (-not $donorName.StartsWith('Artemis')) {
-    throw "Donor $donorId is '$donorName', expected Artemis's Quiver"
+$ring = Decode-Id $file 26169
+$name = [Text.Encoding]::ASCII.GetString($ring, 0x78, 24).Split([char]0)[0]
+if ($name -ne 'Reraise Ring' -and $name -ne 'Legendary Ring') {
+    throw "Item 26169 is '$name', expected Reraise Ring"
 }
-
-$desc = "A Hades weapon voucher. Trade it to the Weapon Forger after you have forged a Relic 119 III of your own."
-
-foreach ($v in $vouchers) {
-    $dec = [byte[]]::new($recordSize)
-    [Buffer]::BlockCopy($donor, 0, $dec, 0, $recordSize)
-    Poke-U32 $dec 0 ([uint32]$v.Id)
-    Write-CString $dec 0x074 0x0A8 $v.Name
-    Write-CString $dec 0x0A8 0x0D8 $v.Name.ToLowerInvariant()
-    Write-CString $dec 0x0D8 0x108 ($v.Name.ToLowerInvariant() + 's')
-    Write-CString $dec 0x108 0x180 $desc
-    Write-Record $file $v.Id $dec
-}
-
-# Pre-September 286/73 stores a glove-like bitmap on Futhark Coat +1/+2/+3.
-# Stamp the NQ coat icon (matches the wiki dark-coat graphic) onto those rows.
-$coatIcon = Decode-Id $file 26842
-$coatIconName = [Text.Encoding]::ASCII.GetString($coatIcon, 0x74, 24).Split([char]0)[0]
-if ($coatIconName -ne 'Futhark Coat') {
-    throw "Icon donor 26842 is '$coatIconName', expected Futhark Coat"
-}
-foreach ($id in @(26843, 23151, 23486)) {
-    $dec = Decode-Id $file $id
-    [Buffer]::BlockCopy($coatIcon, 0x295, $dec, 0x295, 0x828)
-    Write-Record $file $id $dec
-}
-
-$blank = Decode-Id $file $blankId
-foreach ($id in $clearIds) {
-    $dec = [byte[]]::new($recordSize)
-    [Buffer]::BlockCopy($blank, 0, $dec, 0, $recordSize)
-    Poke-U32 $dec 0 ([uint32]$id)
-    Write-Record $file $id $dec
-}
+Poke-Slot $ring 0x78 0x8C 'Legendary Ring'
+Poke-Slot $ring 0xA8 0xB8 'legendary ring'
+Poke-Slot $ring 0xD4 0xE4 'legendary rings'
+Poke-Slot $ring 0x100 0x180 "Capacity Points Boost +300%`nExperience Points Boost +300%`nAuto Reraise Effect"
+Write-Record $file 26169 $ring
 
 $tmp = $datPath + '.tmp'
 [IO.File]::WriteAllBytes($tmp, $file)
 Move-Item -LiteralPath $tmp -Destination $datPath -Force
 
-foreach ($v in $vouchers) {
-    $dec = Decode-Id $file $v.Id
-    $idField = [BitConverter]::ToUInt32($dec, 0)
-    if ($idField -ne $v.Id) { throw "ID field $idField != $($v.Id)" }
-    $name = [Text.Encoding]::ASCII.GetString($dec, 0x74, 24).Split([char]0)[0]
-    if ($name -ne $v.Name) { throw "name mismatch id $($v.Id): '$name'" }
-}
-
-$jacket = Decode-Id $file 23875
-$jName = [Text.Encoding]::ASCII.GetString($jacket, 0x74, 24).Split([char]0)[0]
-if ($jName -ne 'Track Jacket') { throw "Track Jacket clobbered: '$jName'" }
 $ring = Decode-Id $file 26169
-$rName = [Text.Encoding]::ASCII.GetString($ring, 0x74, 24).Split([char]0)[0]
-if ($rName -ne 'Legendary Ring') { throw "Legendary Ring clobbered: '$rName'" }
-foreach ($id in @(23151, 26843, 23486)) {
-    $dec = Decode-Id $file $id
-    $name = [Text.Encoding]::ASCII.GetString($dec, 0x74, 24).Split([char]0)[0]
-    if ($name -notlike 'Futhark Coat*') { throw "Coat $id name clobbered: '$name'" }
-}
-
-foreach ($id in $clearIds) {
-    $dec = Decode-Id $file $id
-    $name = [Text.Encoding]::ASCII.GetString($dec, 0x74, 24).Split([char]0)[0]
-    if ($name -notin @('', '.')) { throw "clear id $id still named '$name'" }
-}
+$got = [Text.Encoding]::ASCII.GetString($ring, 0x78, 24).Split([char]0)[0]
+if ($got -ne 'Legendary Ring') { throw "Legendary Ring write failed: '$got'" }
+if ($ring[0x8C] -ne 1) { throw 'name language flag wiped' }
+if ($ring[0xB8] -ne 1) { throw 'log language flag wiped' }
 
 $hash = (Get-FileHash -LiteralPath $datPath -Algorithm SHA256).Hash.ToLowerInvariant()
 Write-Output 'OK'
 Write-Output ("{0}  {1} bytes  sha256={2}" -f $datRel, $file.Length, $hash)
-$vouchers | ForEach-Object { Write-Output ("  {0}  {1}" -f $_.Id, $_.Name) }
-$clearIds | ForEach-Object { Write-Output ("  {0}  (cleared)" -f $_) }
+Write-Output '  26169  Legendary Ring (in-place, flags kept)'

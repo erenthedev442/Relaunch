@@ -2,12 +2,19 @@ $ErrorActionPreference = 'Stop'
 
 $package    = $PSScriptRoot
 $ffxi       = 'C:\Program Files (x86)\PlayOnline\SquareEnix\FINAL FANTASY XI'
-$recordSize = 0xC00
+$recordSize = 0x1400
 $firstId    = 0x4000
+# 0x1400 header inserts 4 bytes; names / jobs / dmg sit 4 later than 0xC00.
+$jobsOff    = 0x18
+$dmgOff     = 0x20
+$delayOff   = 0x22
+$dpsOff     = 0x24
+$ilvlOff    = 0x36
+$nameOff    = 0x84
+$textEnd    = 0x284
 
 $sources = [ordered]@{
     'ROM\118\108.DAT' = Join-Path $ffxi 'ROM\118\108.DAT'
-    'ROM\0\6.DAT'     = Join-Path $ffxi 'ROM\0\6.DAT'
 }
 
 $relicGroups = @(
@@ -48,7 +55,7 @@ function Poke-U32($arr, [int]$off, [uint32]$value) {
 }
 
 function Find-Dmg([byte[]]$arr) {
-    for ($i = 0x80; $i -lt 0x200; $i++) {
+    for ($i = $nameOff; $i -lt 0x200; $i++) {
         if ($arr[$i] -eq 0x44 -and $arr[$i+1] -eq 0x4D -and $arr[$i+2] -eq 0x47 -and $arr[$i+3] -eq 0x3A) {
             return $i
         }
@@ -84,10 +91,10 @@ function Write-FfxiWeaponNames($arr, [string]$enName, [string]$enLog, [string]$e
     $parts.AddRange($flag)
     $parts.AddRange($gap)
     $block = $parts.ToArray()
-    if ((0x80 + $block.Length) -gt 0x280) { throw "name block too long ($($block.Length))" }
-    for ($i = 0x80; $i -lt 0x280; $i++) { $arr[$i] = 0 }
-    [Buffer]::BlockCopy($block, 0, $arr, 0x80, $block.Length)
-    return (0x80 + $block.Length)
+    if (($nameOff + $block.Length) -gt $textEnd) { throw "name block too long ($($block.Length))" }
+    for ($i = $nameOff; $i -lt $textEnd; $i++) { $arr[$i] = 0 }
+    [Buffer]::BlockCopy($block, 0, $arr, $nameOff, $block.Length)
+    return ($nameOff + $block.Length)
 }
 
 function Paint-KrakenPlusOneIcon([byte[]]$arr) {
@@ -193,66 +200,63 @@ $report = New-Object System.Collections.Generic.List[string]
 foreach ($rel in $sources.GetEnumerator()) {
     $src = Get-Item -LiteralPath $rel.Value
     $file = [IO.File]::ReadAllBytes($src.FullName)
-    if (($file.Length % $recordSize) -ne 0) { throw "Unexpected size $($file.Length) for $($rel.Key)" }
+    if (($file.Length % $recordSize) -ne 0) { throw "Unexpected size $($file.Length) for $($rel.Key) (need 0x1400 stride)" }
     $isEnglish = $rel.Key -like '*118*'
 
     foreach ($g in $relicGroups) {
         foreach ($id in $g.IDs) {
             $dec = Decode-Id $file $id
-            $jobs = [BitConverter]::ToUInt32($dec, 0x14) -bor $g.Bit
-            Poke-U32 $dec 0x14 $jobs
+            $jobs = [BitConverter]::ToUInt32($dec, $jobsOff) -bor $g.Bit
+            Poke-U32 $dec $jobsOff $jobs
             $off = ($id - $firstId) * $recordSize
             for ($i = 0; $i -lt $recordSize; $i++) { $file[$off + $i] = Rol5 $dec[$i] }
         }
     }
 
-    $clones = @(
-        @{ Donor = 20753; NewId = 19968; Jobs = $RUN; Dmg = [uint16]154; Ilvl = [byte]0;   EnDesc = $epeo99Desc;    JpOld = '243'; JpNew = '154' }
-        @{ Donor = 20753; NewId = 19969; Jobs = $RUN; Dmg = [uint16]199; Ilvl = [byte]119; EnDesc = $epeo119IDesc;  JpOld = '243'; JpNew = '199' }
-        @{ Donor = 21070; NewId = 19970; Jobs = $GEO;     Dmg = [uint16]80;  Ilvl = [byte]0;   EnDesc = $idris99Desc;   JpOld = '139'; JpNew = '80' }
-        @{ Donor = 21070; NewId = 19971; Jobs = $GEO;     Dmg = [uint16]110; Ilvl = [byte]119; EnDesc = $idris119IDesc; JpOld = '139'; JpNew = '110' }
-    )
+    $clones = @()
+    # 0x1400: stuffing full Epeolatry/Idris records into retail stub ids 19968-19971
+    # R0s the new client. Job bits on live relic ids plus Martial Wraps stay.
 
     foreach ($c in $clones) {
         $dec = Decode-Id $file $c.Donor
         Poke-U32 $dec 0 $c.NewId
-        Poke-U32 $dec 0x14 $c.Jobs
-        Poke-U16 $dec 0x1C $c.Dmg
-        $dec[0x32] = $c.Ilvl
+        Poke-U32 $dec $jobsOff $c.Jobs
+        Poke-U16 $dec $dmgOff $c.Dmg
+        $dec[$ilvlOff] = $c.Ilvl
         if ($c.ContainsKey('Delay')) {
-            Poke-U16 $dec 0x1E $c.Delay
-            Poke-U16 $dec 0x20 ([uint16][Math]::Floor($c.Dmg * 6000 / $c.Delay))
+            Poke-U16 $dec $delayOff $c.Delay
+            Poke-U16 $dec $dpsOff ([uint16][Math]::Floor($c.Dmg * 6000 / $c.Delay))
         }
         if ($isEnglish -and $c.ContainsKey('EnName')) {
             $descOff = Write-FfxiWeaponNames $dec $c.EnName $c.EnLog $c.EnPlural
             if ($c.EnDesc) {
                 $text = [Text.Encoding]::ASCII.GetBytes($c.EnDesc)
-                if (($descOff + $text.Length + 1) -gt 0x280) { throw 'EN desc too long after rename' }
+                if (($descOff + $text.Length + 1) -gt $textEnd) { throw 'EN desc too long after rename' }
                 [Buffer]::BlockCopy($text, 0, $dec, $descOff, $text.Length)
             }
         } elseif ($isEnglish -and $c.EnDesc) {
             $descOff = Find-Dmg $dec
             if ($descOff -lt 0) { throw "No DMG: on donor $($c.Donor)" }
             $text = [Text.Encoding]::ASCII.GetBytes($c.EnDesc)
-            if (($descOff + $text.Length + 1) -gt 0x280) { throw 'EN desc too long' }
-            for ($i = $descOff; $i -lt 0x280; $i++) { $dec[$i] = 0 }
+            if (($descOff + $text.Length + 1) -gt $textEnd) { throw 'EN desc too long' }
+            for ($i = $descOff; $i -lt $textEnd; $i++) { $dec[$i] = 0 }
             [Buffer]::BlockCopy($text, 0, $dec, $descOff, $text.Length)
         }
         if (-not $isEnglish -and $c.JpOld) {
-            $hits = Replace-Digits $dec 0x80 0x280 $c.JpOld $c.JpNew
+            $hits = Replace-Digits $dec $nameOff $textEnd $c.JpOld $c.JpNew
             if ($hits -lt 1) { throw "JP $($c.NewId): '$($c.JpOld)' not found" }
         }
         if (-not $isEnglish -and $c.Donor -eq 21070) {
-            $null = Replace-Digits $dec 0x80 0x280 '+10' '   '
+            $null = Replace-Digits $dec $nameOff $textEnd '+10' '   '
         }
-        $null = Replace-Digits $dec 0x80 0x280 ([string]$c.Donor) ([string]$c.NewId)
+        $null = Replace-Digits $dec $nameOff $textEnd ([string]$c.Donor) ([string]$c.NewId)
         $off = ($c.NewId - $firstId) * $recordSize
         for ($i = 0; $i -lt $recordSize; $i++) { $file[$off + $i] = Rol5 $dec[$i] }
     }
 
     foreach ($id in 20753, 21685) {
         $dec = Decode-Id $file $id
-        Poke-U32 $dec 0x14 $RUN
+        Poke-U32 $dec $jobsOff $RUN
         $off = ($id - $firstId) * $recordSize
         for ($i = 0; $i -lt $recordSize; $i++) { $file[$off + $i] = Rol5 $dec[$i] }
     }
@@ -263,11 +267,11 @@ foreach ($rel in $sources.GetEnumerator()) {
         $descOff = Find-Dmg $dec
         if ($descOff -lt 0) { throw 'No DMG: on 21070' }
         $text = [Text.Encoding]::ASCII.GetBytes($idris119Desc)
-        if (($descOff + $text.Length + 1) -gt 0x280) { throw '21070 EN desc too long' }
-        for ($i = $descOff; $i -lt 0x280; $i++) { $dec[$i] = 0 }
+        if (($descOff + $text.Length + 1) -gt $textEnd) { throw '21070 EN desc too long' }
+        for ($i = $descOff; $i -lt $textEnd; $i++) { $dec[$i] = 0 }
         [Buffer]::BlockCopy($text, 0, $dec, $descOff, $text.Length)
     } else {
-        $hits = Replace-Digits $dec 0x80 0x280 '+10' '   '
+        $hits = Replace-Digits $dec $nameOff $textEnd '+10' '   '
         if ($hits -lt 1) { throw 'JP 21070: +10 (Geomancy) not found' }
     }
     $off = (21070 - $firstId) * $recordSize
@@ -276,8 +280,8 @@ foreach ($rel in $sources.GetEnumerator()) {
     if ($isEnglish) {
         $dec = Decode-Id $file 21410
         $nameBytes = [Text.Encoding]::ASCII.GetBytes('Martial Wraps')
-        for ($i = 0; $i -lt 16; $i++) { $dec[0x80 + $i] = 0 }
-        [Buffer]::BlockCopy($nameBytes, 0, $dec, 0x80, $nameBytes.Length)
+        for ($i = 0; $i -lt 16; $i++) { $dec[$nameOff + $i] = 0 }
+        [Buffer]::BlockCopy($nameBytes, 0, $dec, $nameOff, $nameBytes.Length)
         $off = (21410 - $firstId) * $recordSize
         for ($i = 0; $i -lt $recordSize; $i++) { $file[$off + $i] = Rol5 $dec[$i] }
     }
@@ -295,13 +299,7 @@ foreach ($rel in $sources.GetEnumerator()) {
 
 $en = [IO.File]::ReadAllBytes((Join-Path $package 'ROM\118\108.DAT'))
 $checks = @(
-    @{ Id = 19968; Jobs = $RUN; Dmg = 154; Ilvl = 0;   Name = 'Epeolatry'; Needle = 'DMG:154' }
-    @{ Id = 19969; Jobs = $RUN; Dmg = 199; Ilvl = 119; Name = 'Epeolatry'; Needle = 'DMG:199' }
-    @{ Id = 19970; Jobs = $GEO;     Dmg = 80;  Ilvl = 0;   Name = 'Idris';     Needle = 'DMG:80' }
-    @{ Id = 19971; Jobs = $GEO;     Dmg = 110; Ilvl = 119; Name = 'Idris';     Needle = 'DMG:110'; Forbid = 'Geomancy' }
     @{ Id = 20753; Jobs = $RUN; Dmg = 243; Ilvl = 119; Name = 'Epeolatry' }
-    @{ Id = 21070; Jobs = $GEO;     Dmg = 139; Ilvl = 119; Name = 'Idris';     Needle = 'DMG:139'; Forbid = 'Geomancy' }
-    @{ Id = 21080; Jobs = $GEO;     Dmg = 175; Ilvl = 119; Name = 'Idris';     Needle = 'Geomancy' }
     @{ Id = 21685; Jobs = $RUN; Dmg = 305; Ilvl = 119; Name = 'Epeolatry' }
     @{ Id = 19972; Jobs = [uint32]0; Dmg = 0; Ilvl = 0; Name = '.'; Flags = 0xF040 }
     @{ Id = 19973; Jobs = [uint32]0; Dmg = 0; Ilvl = 0; Name = '.'; Flags = 0xF040 }
@@ -311,18 +309,18 @@ foreach ($c in $checks) {
     $dec = Decode-Id $en $c.Id
     $idField = [BitConverter]::ToUInt32($dec, 0)
     if ($idField -ne $c.Id) { throw "ID field $idField != $($c.Id)" }
-    $jobs = [BitConverter]::ToUInt32($dec, 0x14)
+    $jobs = [BitConverter]::ToUInt32($dec, $jobsOff)
     if ($jobs -ne $c.Jobs) { throw ("jobs mismatch id {0}: 0x{1:X8}" -f $c.Id, $jobs) }
-    $dmg = [BitConverter]::ToUInt16($dec, 0x1C)
+    $dmg = [BitConverter]::ToUInt16($dec, $dmgOff)
     if ($dmg -ne $c.Dmg) { throw "dmg mismatch id $($c.Id) got $dmg" }
-    if ($dec[0x32] -ne $c.Ilvl) { throw "ilvl mismatch id $($c.Id)" }
-    $name = [Text.Encoding]::ASCII.GetString($dec, 0x80, 24).Split([char]0)[0]
+    if ($dec[$ilvlOff] -ne $c.Ilvl) { throw "ilvl mismatch id $($c.Id)" }
+    $name = [Text.Encoding]::ASCII.GetString($dec, $nameOff, 24).Split([char]0)[0]
     if (-not $name.StartsWith($c.Name)) { throw "name mismatch id $($c.Id): '$name'" }
     if ($c.ContainsKey('Flags')) {
         $flags = [BitConverter]::ToUInt16($dec, 0x04)
         if ($flags -ne $c.Flags) { throw ("flags mismatch id {0}: 0x{1:X4}" -f $c.Id, $flags) }
     }
-    $text = [Text.Encoding]::ASCII.GetString($dec, 0x80, 0x200)
+    $text = [Text.Encoding]::ASCII.GetString($dec, $nameOff, 0x200)
     if ($c.Needle) {
         if ($text.IndexOf($c.Needle) -lt 0) { throw "missing $($c.Needle) on $($c.Id)" }
     }
@@ -331,7 +329,7 @@ foreach ($c in $checks) {
     }
 }
 $mandau = Decode-Id $en 18270
-if (([BitConverter]::ToUInt32($mandau, 0x14) -band [uint32]0x00080000) -eq 0) {
+if (([BitConverter]::ToUInt32($mandau, $jobsOff) -band [uint32]0x00080000) -eq 0) {
     throw 'Mandau DNC bit missing'
 }
 
