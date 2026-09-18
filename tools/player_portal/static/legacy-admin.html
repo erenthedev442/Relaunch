@@ -58,6 +58,7 @@ async function load(){
   let r; try{ r=await fetch('/api/admin/legacy',{credentials:'include'}); }
   catch(e){ root.innerHTML='<div class="deny">Failed to connect.</div>'; return; }
   if(r.status===401){ root.innerHTML='<div class="deny">Log in with a staff (GM) account to view this page.</div>'; return; }
+  if(r.status===403){ root.innerHTML='<div class="deny">Staff access only.</div>'; return; }
   if(!r.ok){ root.innerHTML='<div class="deny">Could not load the snapshot.</div>'; return; }
   DATA=await r.json();
   render();

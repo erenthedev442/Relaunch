@@ -120,7 +120,7 @@ GRANT SELECT ON xi_relaunch.portal_vault       TO 'portal_ro'@'localhost';
 GRANT SELECT (charid, title, accent, featured, showcase) ON xi_relaunch.portal_profile TO 'portal_ro'@'localhost';
 GRANT SELECT (name, value) ON xi_relaunch.server_variables TO 'portal_ro'@'localhost';   -- live events board reads [WB]* / [Inv]* schedule state
 GRANT SELECT (extra) ON xi_relaunch.char_inventory TO 'portal_ro'@'localhost';           -- gear page: augment-presence detection
-GRANT SELECT (priv) ON xi_relaunch.accounts TO 'portal_ro'@'localhost';                  -- admin dashboard gate (accounts.priv = GM level)
+GRANT SELECT (priv) ON xi_relaunch.accounts TO 'portal_ro'@'localhost';                  -- staff fallback: ADMIN=2 / ROOT=4. Primary staff gate is chars.gmlevel.
 GRANT SELECT (itemid, stack, seller_name, price, buyer_name, sale, sell_date) ON xi_relaunch.auction_house TO 'portal_ro'@'localhost';  -- AH price-check + trends
 GRANT SELECT (itemId, modId, value) ON xi_relaunch.item_mods TO 'portal_ro'@'localhost';  -- gear set builder: real item stats
 GRANT SELECT ON xi_relaunch.portal_activity TO 'portal_ro'@'localhost';                    -- live activity feed

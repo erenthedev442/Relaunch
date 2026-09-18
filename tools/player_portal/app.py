@@ -801,10 +801,9 @@ async def _cache_control(request: Request, call_next):
     """
     response = await call_next(request)
     path = request.url.path
-    if path == "/sw.js" or path == "/api/status":
+    if path == "/sw.js" or path == "/api/status" or path.endswith("/LegendaryLauncher.zip"):
         response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
-        if path == "/api/status":
-            response.headers["CDN-Cache-Control"] = "no-store"
+        response.headers["CDN-Cache-Control"] = "no-store"
     elif path == "/" or path.endswith(".html") or path == "/manifest.webmanifest":
         response.headers["Cache-Control"] = "no-cache, must-revalidate, max-age=0"
     return response
@@ -843,6 +842,23 @@ def require_account(request: Request) -> dict:
     except jwt.PyJWTError:
         raise HTTPException(status_code=401, detail="Session expired -- log in again.")
     return {"id": int(payload["sub"]), "login": payload["login"]}
+
+
+# Staff gate. accounts.priv USER=1 is the default for every player
+# (src/login/auth_session.h ACCOUNT_PRIVILEGE_CODE). ADMIN=2 / ROOT=4 are
+# unused on most GM logins here; in-game staff is chars.gmlevel >= 1.
+GM_PRIV_ADMIN = 2
+GM_LEVEL_MIN = 1
+
+
+def account_is_staff(cur, accid: int) -> bool:
+    cur.execute("SELECT COALESCE(MAX(gmlevel),0) AS g FROM chars WHERE accid=%s", (accid,))
+    gml = int((cur.fetchone() or {}).get("g", 0) or 0)
+    if gml >= GM_LEVEL_MIN:
+        return True
+    cur.execute("SELECT priv FROM accounts WHERE id=%s", (accid,))
+    priv = int((cur.fetchone() or {}).get("priv", 0) or 0)
+    return priv >= GM_PRIV_ADMIN
 
 
 def clear_stuck_session(cur, charid: int) -> int:
@@ -916,6 +932,7 @@ def me(request: Request):
             arow = cur.fetchone() or {}
             cur.execute(
                 "SELECT c.charid, c.charname, c.nation, c.playtime, c.pos_zone, "
+                "       COALESCE(c.gmlevel,0) AS gmlevel, "
                 "       COALESCE(s.mjob,0) AS mjob, COALESCE(s.sjob,0) AS sjob, "
                 "       COALESCE(s.mlvl,1) AS mlvl, COALESCE(s.slvl,1) AS slvl, "
                 "       COALESCE(s.hp,0)   AS hp,   COALESCE(s.mp,0)   AS mp, "
@@ -955,7 +972,9 @@ def me(request: Request):
                         pass
 
             characters = []
+            max_gml = 0
             for c in chars:
+                max_gml = max(max_gml, int(c.get("gmlevel") or 0))
                 pv   = prog.get(c["charid"], {})
                 mjob = c["mjob"]
                 pos_zone = int(c.get("pos_zone") or 0)
@@ -989,7 +1008,7 @@ def me(request: Request):
                 "login":      acct["login"],
                 "email":      arow.get("current_email", ""),
                 "since":      str(arow.get("timecreate", "")),
-                "isGm":       int(arow.get("priv", 0) or 0) >= GM_PRIV_MIN,
+                "isGm":       int(arow.get("priv", 0) or 0) >= GM_PRIV_ADMIN or max_gml >= GM_LEVEL_MIN,
                 "characters": characters,
             }
     finally:
@@ -2270,18 +2289,15 @@ def recap(charid: int, request: Request):
 
 
 # ================================================================ admin ========
-GM_PRIV_MIN = 1   # accounts.priv >= this counts as staff
-
 def require_gm(request: Request) -> dict:
     acct = require_account(request)
     conn = db()
     try:
         with conn.cursor() as cur:
-            cur.execute("SELECT priv FROM accounts WHERE id=%s", (acct["id"],))
-            row = cur.fetchone() or {}
+            ok = account_is_staff(cur, acct["id"])
     finally:
         conn.close()
-    if int(row.get("priv", 0) or 0) < GM_PRIV_MIN:
+    if not ok:
         raise HTTPException(status_code=403, detail="Staff access required.")
     return acct
 
@@ -3063,7 +3079,11 @@ def launcher_landing():
     return FileResponse(
         os.path.join(_static_dir, "launcher.html"),
         media_type="text/html",
-        headers={"Cache-Control": "no-store"},
+        headers={
+            "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+            "Pragma": "no-cache",
+            "Expires": "0",
+        },
     )
 
 
@@ -3074,7 +3094,11 @@ def launcher_manifest(request: Request):
     return FileResponse(
         launcher_file("manifest.json"),
         media_type="application/json",
-        headers={"Cache-Control": "no-store"},
+        headers={
+            "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+            "Pragma": "no-cache",
+            "Expires": "0",
+        },
     )
 
 
@@ -3085,7 +3109,12 @@ def launcher_package(request: Request):
         launcher_file("LegendaryLauncher.zip"),
         media_type="application/zip",
         filename="LegendaryLauncher.zip",
-        headers={"Cache-Control": "no-store"},
+        headers={
+            "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+            "CDN-Cache-Control": "no-store",
+            "Pragma": "no-cache",
+            "Expires": "0",
+        },
     )
 
 
@@ -3096,7 +3125,12 @@ def launcher_public_package():
         launcher_file("LegendaryLauncher.zip"),
         media_type="application/zip",
         filename="LegendaryLauncher.zip",
-        headers={"Cache-Control": "no-store"},
+        headers={
+            "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+            "CDN-Cache-Control": "no-store",
+            "Pragma": "no-cache",
+            "Expires": "0",
+        },
     )
 
 
