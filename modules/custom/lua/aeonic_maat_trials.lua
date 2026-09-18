@@ -1,6 +1,8 @@
 -----------------------------------
 -- Weapon-specific solo Maat trials for final Aeonic forging.
 --
+-- Maat changeJobs to the job you enter on, then fights with that job's
+-- spells / abilities and the Aeonic's weapon skills (not the H2H template).
 -- Entry: "Aeonic Maat" beside Maat in Ru'Lude Gardens.
 -- Arena: Waughroon Shrine. Every challenger receives a private, claim-locked
 -- dynamic Maat. Trusts and the custom Fellow are dismissed on entry and on
@@ -120,6 +122,181 @@ local function ownerMessage(owner, text)
     end
 end
 
+-- Template Maat is H2H. Every trial forces the entering job's spells / JAs
+-- and the Aeonic's weapon skills instead of the fist skill list.
+local WEAPON_WS =
+{
+    momentum      = { xi.mobSkill.COMBO_1, xi.mobSkill.HOWLING_FIST_1, xi.mobSkill.DRAGON_KICK_1, xi.mobSkill.RAGING_FISTS_1 },
+    performance   = { xi.mobSkill.EVISCERATION, xi.mobSkill.SHARK_BITE, xi.mobSkill.DANCING_EDGE, xi.mobSkill.ENERGY_DRAIN },
+    rune_cycle    = { xi.mobSkill.SAVAGE_BLADE_1, xi.mobSkill.VORPAL_BLADE_1, xi.mobSkill.SPIRITS_WITHIN_1, xi.mobSkill.SHINING_BLADE_1, xi.mobSkill.SERAPH_BLADE_1 },
+    doom_brand    = { xi.mobSkill.HARD_SLASH_1, xi.mobSkill.CRESCENT_MOON_1, xi.mobSkill.SICKLE_MOON_1, xi.mobSkill.DIMIDIATION_1 },
+    beast_rage    = { xi.mobSkill.RAGING_AXE, xi.mobSkill.RAMPAGE_1, xi.mobSkill.SPINNING_AXE, xi.mobSkill.AVALANCHE_AXE },
+    war_cry       = { xi.mobSkill.STURMWIND, xi.mobSkill.RAGING_RUSH, xi.mobSkill.ARMOR_BREAK },
+    dread_cycle   = { xi.mobSkill.SPIRAL_HELL, xi.mobSkill.GUILLOTINE_1, xi.mobSkill.VORPAL_SCYTHE, xi.mobSkill.SPINNING_SCYTHE_1 },
+    sky_assault   = { xi.mobSkill.IMPULSE_DRIVE, xi.mobSkill.RAIDEN_THRUST_1, xi.mobSkill.PENTA_THRUST, xi.mobSkill.WHEELING_THRUST },
+    shadow_wheel  = { xi.mobSkill.BLADE_JIN, xi.mobSkill.BLADE_EI, xi.mobSkill.BLADE_CHI, xi.mobSkill.BLADE_TO, xi.mobSkill.BLADE_RETSU },
+    skillchain    = { xi.mobSkill.TACHI_YUKIKAZE_1, xi.mobSkill.TACHI_JINPU, xi.mobSkill.TACHI_GEKKO, xi.mobSkill.TACHI_KASHA },
+    sanctuary     = { xi.mobSkill.TRUE_STRIKE_1, xi.mobSkill.SKULLBREAKER_1, xi.mobSkill.SERAPH_STRIKE_1, xi.mobSkill.RANDGRITH_1 },
+    grimoire      = { xi.mobSkill.EARTH_CRUSHER, xi.mobSkill.SUNBURST, xi.mobSkill.FULL_SWING, xi.mobSkill.ROCK_CRUSHER },
+    deadzone      = { xi.mobSkill.SIDEWINDER_1, xi.mobSkill.FLAMING_ARROW, xi.mobSkill.PIERCING_ARROW },
+    crooked_roll  = { xi.mobSkill.DETONATOR_1, xi.mobSkill.SLUG_SHOT_1, xi.mobSkill.HOT_SHOT_1, xi.mobSkill.SNIPER_SHOT_1 },
+}
+
+local function pick(list)
+    if not list or #list == 0 then return nil end
+    return list[math.random(#list)]
+end
+
+local function tryCast(mob, spellId, target)
+    if not mob or not spellId or not target then
+        return false
+    end
+    return pcall(function()
+        if mob.getMaxMP and mob:getMaxMP() > 0 then
+            mob:setMP(mob:getMaxMP())
+        end
+        mob:castSpell(spellId, target)
+    end)
+end
+
+local function tryJA(mob, jaId, target)
+    if not mob or not jaId then
+        return false
+    end
+    return pcall(function()
+        mob:useJobAbility(jaId, target or mob)
+    end)
+end
+
+local function tryWS(mob, skillId, target)
+    if not mob or not skillId or not target then
+        return false
+    end
+    pcall(function() mob:setTP(3000) end)
+    return pcall(function() mob:useMobAbility(skillId, target) end)
+end
+
+local function isSequence(st)
+    return st and st.trial and st.trial.mechanic == 'rune_cycle'
+end
+
+local function jobPeriod(_)
+    return 12
+end
+
+local function weaponWs(st)
+    local mechanic = st and st.trial and st.trial.mechanic
+    return WEAPON_WS[mechanic] or WEAPON_WS.rune_cycle
+end
+
+local function strike(mob, owner, st, text)
+    tryWS(mob, pick(weaponWs(st)), owner)
+    if text then
+        ownerMessage(owner, text)
+    end
+end
+
+-- Per-job spells / abilities. Weaponskills come from the Aeonic's weapon.
+-- Damage is only from those actions — no guaranteed %HP pulses.
+local JOB_KIT =
+{
+    [xi.job.WAR] = { jas = { xi.jobAbility.BERSERK, xi.jobAbility.WARCRY, xi.jobAbility.AGGRESSOR }, label = 'Warrior' },
+    [xi.job.MNK] = { jas = { xi.jobAbility.FOCUS, xi.jobAbility.DODGE, xi.jobAbility.BOOST }, label = 'Monk' },
+    [xi.job.WHM] = { jas = { xi.jobAbility.DIVINE_SEAL }, nukes = { xi.magic.spell.HOLY_II, xi.magic.spell.BANISHGA_II, xi.magic.spell.DIA_III }, selfs = { xi.magic.spell.CURE_V }, label = 'White Mage' },
+    [xi.job.BLM] = { jas = { xi.jobAbility.ELEMENTAL_SEAL }, nukes = { xi.magic.spell.FIRE_V, xi.magic.spell.THUNDER_V, xi.magic.spell.BLIZZARD_V, xi.magic.spell.FLARE, xi.magic.spell.QUAKE }, label = 'Black Mage' },
+    [xi.job.RDM] = { jas = { xi.jobAbility.CONVERT }, nukes = { xi.magic.spell.THUNDER_V, xi.magic.spell.FIRE_V, xi.magic.spell.SLOW_II, xi.magic.spell.BLIND_II, xi.magic.spell.DISPEL }, selfs = { xi.magic.spell.HASTE_II, xi.magic.spell.PHALANX, xi.magic.spell.TEMPER }, label = 'Red Mage' },
+    [xi.job.THF] = { jas = { xi.jobAbility.SNEAK_ATTACK, xi.jobAbility.TRICK_ATTACK }, label = 'Thief' },
+    [xi.job.PLD] = { jas = { xi.jobAbility.SENTINEL, xi.jobAbility.RAMPART }, hits = { xi.jobAbility.SHIELD_BASH }, nukes = { xi.magic.spell.HOLY_II, xi.magic.spell.FLASH, xi.magic.spell.BANISHGA_II }, label = 'Paladin' },
+    [xi.job.DRK] = { jas = { xi.jobAbility.SOULEATER, xi.jobAbility.LAST_RESORT }, nukes = { xi.magic.spell.DRAIN_II, xi.magic.spell.ASPIR_II, xi.magic.spell.ABSORB_STR }, label = 'Dark Knight' },
+    [xi.job.BST] = { jas = { xi.jobAbility.FAMILIAR, xi.jobAbility.REWARD }, label = 'Beastmaster' },
+    [xi.job.BRD] = { jas = { xi.jobAbility.SOUL_VOICE }, nukes = { xi.magic.spell.FOE_REQUIEM_VII, xi.magic.spell.HORDE_LULLABY }, label = 'Bard' },
+    [xi.job.RNG] = { jas = { xi.jobAbility.SHARPSHOT, xi.jobAbility.BARRAGE, xi.jobAbility.UNLIMITED_SHOT }, label = 'Ranger' },
+    [xi.job.SAM] = { jas = { xi.jobAbility.MEDITATE, xi.jobAbility.THIRD_EYE, xi.jobAbility.HAGAKURE }, label = 'Samurai' },
+    [xi.job.NIN] = { jas = { xi.jobAbility.MIJIN_GAKURE }, nukes = { xi.magic.spell.KATON_SAN, xi.magic.spell.HYOTON_SAN, xi.magic.spell.RAITON_SAN }, selfs = { xi.magic.spell.UTSUSEMI_NI }, label = 'Ninja' },
+    [xi.job.DRG] = { hits = { xi.jobAbility.JUMP, xi.jobAbility.HIGH_JUMP, xi.jobAbility.SPIRIT_JUMP }, label = 'Dragoon' },
+    [xi.job.SMN] = { jas = { xi.jobAbility.ASTRAL_FLOW }, nukes = { xi.magic.spell.FLARE, xi.magic.spell.THUNDER_V }, label = 'Summoner' },
+    [xi.job.BLU] = { jas = { xi.jobAbility.BURST_AFFINITY, xi.jobAbility.CHAIN_AFFINITY, xi.jobAbility.EFFLUX, xi.jobAbility.UNBRIDLED_LEARNING }, nukes = { xi.magic.spell.SPECTRAL_FLOE, xi.magic.spell.TENEBRAL_CRUSH, xi.magic.spell.ANVIL_LIGHTNING, xi.magic.spell.THRASHING_ASSAULT, xi.magic.spell.SUDDEN_LUNGE }, selfs = { xi.magic.spell.MIGHTY_GUARD, xi.magic.spell.WHITE_WIND, xi.magic.spell.OCCULTATION }, label = 'Blue Mage' },
+    [xi.job.COR] = { jas = { xi.jobAbility.WILD_CARD, xi.jobAbility.CHAOS_ROLL, xi.jobAbility.HUNTERS_ROLL, xi.jobAbility.SAMURAI_ROLL }, label = 'Corsair' },
+    [xi.job.PUP] = { jas = { xi.jobAbility.OVERDRIVE, xi.jobAbility.DEPLOY }, label = 'Puppetmaster' },
+    [xi.job.DNC] = { jas = { xi.jobAbility.BUILDING_FLOURISH, xi.jobAbility.REVERSE_FLOURISH, xi.jobAbility.BOX_STEP }, label = 'Dancer' },
+    [xi.job.SCH] = { jas = { xi.jobAbility.TABULA_RASA }, nukes = { xi.magic.spell.GEOHELIX, xi.magic.spell.LUMINOHELIX, xi.magic.spell.STONE_V, xi.magic.spell.FIRE_V }, selfs = { xi.magic.spell.CURE_V }, label = 'Scholar' },
+    [xi.job.GEO] = { jas = { xi.jobAbility.BOLSTER }, nukes = { xi.magic.spell.STONE_V, xi.magic.spell.AERO_V, xi.magic.spell.DIA_III }, label = 'Geomancer' },
+    [xi.job.RUN] = { jas = { xi.jobAbility.SWORDPLAY, xi.jobAbility.VALLATION, xi.jobAbility.PFLUG }, hits = { xi.jobAbility.LUNGE }, nukes = { xi.magic.spell.FLASH, xi.magic.spell.FOIL }, label = 'Rune Fencer' },
+}
+
+local function runJobKit(mob, owner, st, phase)
+    local job = st.jobId
+    local kit = JOB_KIT[job]
+    local wsList = weaponWs(st)
+    phase = phase or 'job'
+
+    -- Sequence BLU keeps the dedicated magic / physical windows.
+    if isSequence(st) and job == xi.job.BLU then
+        if not st.seqOpened then
+            st.seqOpened = true
+            tryJA(mob, xi.jobAbility.DIFFUSION, mob)
+            tryCast(mob, xi.magic.spell.MIGHTY_GUARD, mob)
+            tryCast(mob, xi.magic.spell.ERRATIC_FLUTTER, mob)
+            ownerMessage(owner, 'Maat opens with Mighty Guard, Erratic Flutter, and Diffusion.')
+            return
+        end
+        if phase == 'magic' then
+            tryJA(mob, xi.jobAbility.BURST_AFFINITY, mob)
+            tryCast(mob, pick({
+                xi.magic.spell.SPECTRAL_FLOE, xi.magic.spell.TENEBRAL_CRUSH,
+                xi.magic.spell.ANVIL_LIGHTNING, xi.magic.spell.ENTOMB, xi.magic.spell.SUBDUCTION,
+            }), owner)
+            ownerMessage(owner, 'Maat spends Burst Affinity on a heavy blue-magic nuke.')
+            return
+        end
+        if phase == 'phys' then
+            tryJA(mob, xi.jobAbility.CHAIN_AFFINITY, mob)
+            tryJA(mob, xi.jobAbility.EFFLUX, mob)
+            tryCast(mob, pick({
+                xi.magic.spell.THRASHING_ASSAULT, xi.magic.spell.QUADRASTRIKE,
+                xi.magic.spell.SUDDEN_LUNGE, xi.magic.spell.PARALYZING_TRIAD,
+            }), owner)
+            tryWS(mob, pick(wsList), owner)
+            ownerMessage(owner, 'Maat chains a physical blue spell into a sword weaponskill.')
+            return
+        end
+    end
+
+    if isSequence(st) and job == xi.job.RDM and phase == 'magic' then
+        tryJA(mob, xi.jobAbility.CHAINSPELL, mob)
+        tryCast(mob, pick({ xi.magic.spell.THUNDER_V, xi.magic.spell.FIRE_V, xi.magic.spell.DIA_III }), owner)
+        ownerMessage(owner, 'Maat Chainspells a Red Mage volley.')
+        return
+    end
+    if isSequence(st) and job == xi.job.PLD and phase == 'magic' then
+        tryCast(mob, pick({ xi.magic.spell.HOLY_II, xi.magic.spell.FLASH, xi.magic.spell.BANISHGA_II }), owner)
+        ownerMessage(owner, 'Maat invokes divine magic through Sequence.')
+        return
+    end
+    if isSequence(st) and job == xi.job.RUN and phase == 'magic' then
+        tryJA(mob, xi.jobAbility.LUNGE, owner)
+        tryCast(mob, pick({ xi.magic.spell.FLASH, xi.magic.spell.FOIL }), owner)
+        ownerMessage(owner, 'Maat Lunges through his runes.')
+        return
+    end
+
+    if kit and kit.hits then
+        tryJA(mob, pick(kit.hits), owner)
+    end
+    if kit and kit.jas then
+        tryJA(mob, pick(kit.jas), mob)
+    end
+    if kit and kit.nukes and (phase == 'magic' or phase == 'job' or phase == 'burst') then
+        tryCast(mob, pick(kit.nukes), owner)
+    end
+    if kit and kit.selfs and phase == 'job' and mob:getHPP() < 70 then
+        tryCast(mob, pick(kit.selfs), mob)
+    end
+    tryWS(mob, pick(wsList), owner)
+    ownerMessage(owner, string.format('Maat fights as %s.',
+        (kit and kit.label) or 'your job'))
+end
+
 local function dismissCompanions(player)
     local ok, party = pcall(function() return player:getPartyWithTrusts() end)
     if not ok or not party then return end
@@ -136,13 +313,6 @@ local function dismissCompanions(player)
 end
 
 local isGrouped = catalog.isGrouped
-
-local function damageOwner(mob, owner, percent, text)
-    if not owner or owner:getHP() <= 0 then return end
-    local damage = math.max(1, math.floor(owner:getMaxHP() * percent / 100))
-    owner:takeDamage(damage, mob, xi.attackType.SPECIAL, xi.damageType.ELEMENTAL)
-    if text then ownerMessage(owner, text) end
-end
 
 local function addDispellableBuff(mob, effect, power, duration)
     mob:delStatusEffect(effect)
@@ -223,8 +393,18 @@ local function activateJobSpecial(mob, owner, st)
             end
         end)
         if st.jobId == xi.job.SMN then
-            damageOwner(mob, owner, 25, "Maat's avatar answers Astral Flow!")
+            ownerMessage(owner, "Maat's avatar answers Astral Flow!")
         end
+    end
+
+    runJobKit(mob, owner, st, 'burst')
+    if isSequence(st) and st.jobId == xi.job.BLU then
+        tryJA(mob, xi.jobAbility.BURST_AFFINITY, mob)
+        tryJA(mob, xi.jobAbility.UNBRIDLED_LEARNING, mob)
+        tryCast(mob, xi.magic.spell.SPECTRAL_FLOE, owner)
+        tryCast(mob, xi.magic.spell.ANVIL_LIGHTNING, owner)
+        tryWS(mob, xi.mobSkill.SAVAGE_BLADE_1, owner)
+        ownerMessage(owner, 'Azure Lore: Spectral Floe, Anvil Lightning, Savage Blade.')
     end
 end
 
@@ -232,27 +412,14 @@ local function runJobAction(mob, owner, st)
     local job = st.jobId
     if job == xi.job.WAR then
         addDispellableBuff(mob, xi.effect.BERSERK, 35, 20)
-        ownerMessage(owner, 'Maat uses a maximized Berserk.')
     elseif job == xi.job.MNK then
         addDispellableBuff(mob, xi.effect.COUNTERSTANCE, 75, 18)
-        ownerMessage(owner, 'Maat assumes Counterstance.')
-    elseif job == xi.job.WHM then
-        mob:addHP(math.floor(mob:getMaxHP() * 0.06))
-        ownerMessage(owner, 'Maat invokes an instant curative prayer.')
-    elseif job == xi.job.BLM then
-        damageOwner(mob, owner, 16, 'Maat releases an instant elemental burst.')
     elseif job == xi.job.RDM then
         addDispellableBuff(mob, xi.effect.HASTE, 3000, 20)
-        owner:addStatusEffect(xi.effect.SLOW, { power = 2500, duration = 12, origin = mob })
-        ownerMessage(owner, 'Maat quickens himself and weighs down your attacks.')
-    elseif job == xi.job.THF then
-        damageOwner(mob, owner, 18, 'Maat slips behind you for a perfect Sneak Attack.')
     elseif job == xi.job.PLD then
         addDispellableBuff(mob, xi.effect.SENTINEL, 80, 18)
-        ownerMessage(owner, 'Maat braces behind Sentinel.')
     elseif job == xi.job.DRK then
         addDispellableBuff(mob, xi.effect.DREAD_SPIKES, 25, 15)
-        ownerMessage(owner, 'Dread Spikes coil around Maat.')
     elseif job == xi.job.BST then
         mob:addMod(xi.mod.ATT, 350)
         mob:addMod(xi.mod.DOUBLE_ATTACK, 3)
@@ -260,26 +427,12 @@ local function runJobAction(mob, owner, st)
             add:addMod(xi.mod.ATT, 500)
             add:addMod(xi.mod.DOUBLE_ATTACK, 5)
         end)
-        ownerMessage(owner, 'Maat channels Familiar and grows more feral.')
-    elseif job == xi.job.RNG then
-        damageOwner(mob, owner, 17, 'Maat fires an unerring barrage.')
-    elseif job == xi.job.SAM then
-        mob:setTP(3000)
-        damageOwner(mob, owner, 18, 'Maat spends 3000 TP on a perfectly timed weaponskill.')
-        mob:setTP(0)
     elseif job == xi.job.NIN then
         addDispellableBuff(mob, xi.effect.COPY_IMAGE_4, 4, 30)
-        ownerMessage(owner, 'Four perfect shadows surround Maat.')
-    elseif job == xi.job.DRG then
-        damageOwner(mob, owner, 16, 'Maat crashes down with a perfectly timed Jump.')
-    elseif job == xi.job.SMN then
-        damageOwner(mob, owner, 17, 'Maat channels an avatar through an instant blood pact.')
     elseif job == xi.job.BLU then
-        damageOwner(mob, owner, 15, 'Maat releases a mastered blue-magic combination.')
-        owner:addStatusEffect(xi.effect.PARALYSIS, { power = 35, duration = 10, origin = mob })
+        owner:addStatusEffect(xi.effect.PARALYSIS, { power = 35, duration = 8, origin = mob })
     elseif job == xi.job.COR then
         addDispellableBuff(mob, xi.effect.HUNTERS_ROLL, 3500, 25)
-        ownerMessage(owner, "Maat's Hunter's Roll lands on XI.")
     elseif job == xi.job.PUP then
         mob:addStatusEffect(xi.effect.OVERDRIVE, { power = 1, duration = 20, origin = mob })
         forCompanions(st, function(add)
@@ -287,32 +440,18 @@ local function runJobAction(mob, owner, st)
                 power = 1, duration = 20, origin = mob,
             })
         end)
-        damageOwner(mob, owner, 12, 'Maat coordinates an Overdrive volley.')
     elseif job == xi.job.DNC then
         mob:addHP(math.floor(mob:getMaxHP() * 0.03))
         addDispellableBuff(mob, xi.effect.HASTE, 2500, 18)
-        ownerMessage(owner, 'Maat closes his wounds with a perfected Waltz.')
-    elseif job == xi.job.SCH then
-        st.schDark = not st.schDark
-        if st.schDark then
-            damageOwner(mob, owner, 15, 'Maat executes an instant Dark Arts helix.')
-        else
-            mob:addHP(math.floor(mob:getMaxHP() * 0.04))
-            ownerMessage(owner, 'Maat converts to Light Arts and restores himself.')
-        end
     elseif job == xi.job.GEO then
         addDispellableBuff(mob, xi.effect.BOLSTER, 1, 18)
-        mob:addMod(xi.mod.ATT, 250)
-        ownerMessage(owner, 'Maat intensifies his geomantic field.')
-    elseif job == xi.job.RUN then
-        addDispellableBuff(mob, xi.effect.ELEMENTAL_SFORZO, 1, 16)
-        ownerMessage(owner, 'Maat invokes Elemental Sforzo.')
     end
+    runJobKit(mob, owner, st, 'job')
 end
 
 local PROFILE_PERIOD =
 {
-    momentum = 8, performance = 24, rune_cycle = 18, doom_brand = 25,
+    momentum = 8, performance = 24, rune_cycle = 12, doom_brand = 25,
     beast_rage = 20, war_cry = 15, dread_cycle = 38, sky_assault = 18,
     shadow_wheel = 28, skillchain = 32, sanctuary = 30, grimoire = 17,
     deadzone = 5, crooked_roll = 30,
@@ -329,7 +468,7 @@ local function runProfileAction(mob, owner, st, now)
     elseif mechanic == 'performance' then
         if st.jobId ~= xi.job.BRD then
             addDispellableBuff(mob, xi.effect.EVASION_BOOST, 1800, 12)
-            damageOwner(mob, owner, 10, 'Maat vanishes into a deadly flourish.')
+            strike(mob, owner, st, 'Maat vanishes into a deadly flourish.')
         end
 
     elseif mechanic == 'rune_cycle' then
@@ -338,15 +477,17 @@ local function runProfileAction(mob, owner, st, now)
             mob:setMod(xi.mod.DMGPHYS, -4000)
             mob:setMod(xi.mod.DMGMAGIC, 1500)
             ownerMessage(owner, 'Runic Reversal: weapons are resisted; magic pierces him.')
+            runJobKit(mob, owner, st, 'magic')
         else
             mob:setMod(xi.mod.DMGPHYS, 1500)
             mob:setMod(xi.mod.DMGMAGIC, -4000)
             ownerMessage(owner, 'Runic Reversal: magic is resisted; weapons pierce him.')
+            runJobKit(mob, owner, st, 'phys')
         end
 
     elseif mechanic == 'doom_brand' then
         st.brandDue = now + 6
-        ownerMessage(owner, 'The Lionheart Brand ignites. Prepare for the detonation!')
+        ownerMessage(owner, 'The Lionheart Brand ignites. Prepare for the weaponskill!')
 
     elseif mechanic == 'beast_rage' then
         st.beastStacks = math.min((st.beastStacks or 0) + 1, 5)
@@ -357,7 +498,7 @@ local function runProfileAction(mob, owner, st, now)
 
     elseif mechanic == 'war_cry' then
         mob:addMod(xi.mod.ATT, 250)
-        damageOwner(mob, owner, 16, 'Chango answers Maat with an unavoidable warcry.')
+        strike(mob, owner, st, 'Chango answers Maat with a warcry weaponskill.')
 
     elseif mechanic == 'dread_cycle' then
         addDispellableBuff(mob, xi.effect.DREAD_SPIKES, 30, 18)
@@ -365,7 +506,7 @@ local function runProfileAction(mob, owner, st, now)
         ownerMessage(owner, 'The Dread Covenant awakens. Dispel the spikes or stop attacking.')
 
     elseif mechanic == 'sky_assault' then
-        damageOwner(mob, owner, 22, 'Maat descends from beyond your sight with Skybreaker.')
+        strike(mob, owner, st, 'Maat descends from beyond your sight with Skybreaker.')
         owner:addStatusEffect(xi.effect.WEIGHT, { power = 35, duration = 8, origin = mob })
 
     elseif mechanic == 'shadow_wheel' then
@@ -390,16 +531,22 @@ local function runProfileAction(mob, owner, st, now)
 
     elseif mechanic == 'grimoire' then
         st.grimoireStep = ((st.grimoireStep or 0) % 3) + 1
-        local names = { 'Pyrohelix', 'Cryohelix', 'Noctohelix' }
-        damageOwner(mob, owner, 14 + st.grimoireStep * 2,
-            string.format('The Forbidden Grimoire opens to %s.', names[st.grimoireStep]))
+        local helix =
+        {
+            { xi.magic.spell.PYROHELIX, 'Pyrohelix' },
+            { xi.magic.spell.CRYOHELIX, 'Cryohelix' },
+            { xi.magic.spell.NOCTOHELIX, 'Noctohelix' },
+        }
+        local page = helix[st.grimoireStep]
+        tryCast(mob, page[1], owner)
+        ownerMessage(owner, string.format('The Forbidden Grimoire opens to %s.', page[2]))
 
     elseif mechanic == 'deadzone' then
         local distance = mob:checkDistance(owner)
         if distance < 8 then
-            damageOwner(mob, owner, 20, "You are inside the archer's deadzone!")
+            strike(mob, owner, st, "You are inside the archer's deadzone — Maat fires point-blank.")
         elseif distance > 22 then
-            damageOwner(mob, owner, 14, 'You stray beyond cover and Maat lines up a distant shot!')
+            strike(mob, owner, st, 'You stray beyond cover and Maat lines up a distant shot.')
         else
             ownerMessage(owner, 'You hold the safe firing lane between 8 and 22 yalms.')
         end
@@ -471,7 +618,7 @@ local function trialTick(mob, target)
             mob:updateClaim(owner)
             mob:addEnmity(owner, 30000, 30000)
             st.startedAt = os.time()
-            st.nextJobAt = st.startedAt + 20
+            st.nextJobAt = st.startedAt + jobPeriod(st)
             st.nextProfileAt = st.startedAt + (PROFILE_PERIOD[st.trial.mechanic] or 20)
             maintainBardSongs(mob, owner, st, st.startedAt)
         end
@@ -490,20 +637,19 @@ local function trialTick(mob, target)
 
     if st.brandDue and now >= st.brandDue then
         st.brandDue = nil
-        damageOwner(mob, owner, 35, 'The Lionheart Brand detonates!')
+        strike(mob, owner, st, 'The Lionheart Brand lands a weaponskill!')
     end
     if st.shadowBurstDue and now >= st.shadowBurstDue then
         st.shadowBurstDue = nil
         if mob:hasStatusEffect(xi.effect.COPY_IMAGE_4) then
-            damageOwner(mob, owner, 28, 'The Wheel of Shadows detonates through its remaining images!')
+            strike(mob, owner, st, 'The Wheel of Shadows cuts through its remaining images!')
         else
             ownerMessage(owner, 'The stripped Wheel of Shadows collapses harmlessly.')
         end
     end
     if (st.chainHits or 0) > 0 and now >= (st.nextChainHit or 0) then
         local step = 4 - st.chainHits
-        damageOwner(mob, owner, 10 + step * 3,
-            string.format('Perfect Skillchain step %d/3 lands!', step))
+        strike(mob, owner, st, string.format('Perfect Skillchain step %d/3!', step))
         st.chainHits = st.chainHits - 1
         st.nextChainHit = now + 2
     end
@@ -514,7 +660,7 @@ local function trialTick(mob, target)
 
     if now >= (st.nextJobAt or now + 1) then
         runJobAction(mob, owner, st)
-        st.nextJobAt = now + 24
+        st.nextJobAt = now + jobPeriod(st)
     end
     if now >= (st.nextProfileAt or now + 1) then
         runProfileAction(mob, owner, st, now)
@@ -637,6 +783,19 @@ local function spawnTrial(player, trial, jobId)
     mob:setAggressive(false)
     for modId, value in pairs(BASE_MODS) do
         mob:setMod(modId, value)
+    end
+    pcall(function()
+        mob:setMaxMP(50000)
+        mob:setMP(50000)
+    end)
+    mob:setMobMod(xi.mobMod.MAGIC_COOL, 8)
+    mob:setMobMod(xi.mobMod.STANDBACK_COOL, 0)
+    if trial.mechanic == 'rune_cycle' then
+        mob:addMod(xi.mod.ATT, 2800)
+        mob:addMod(xi.mod.ACC, 900)
+        mob:addMod(xi.mod.MATT, 1400)
+        mob:addMod(xi.mod.MACC, 900)
+        mob:setMobMod(xi.mobMod.GA_CHANCE, 80)
     end
     local hp = PROFILE_HP[trial.mechanic] or 8000000
     mob:setMaxHP(hp)
